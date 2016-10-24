@@ -100,7 +100,6 @@
 						<td>Intake description here</td>
 						<td></td>
 					</tr>
-					<t
 						<td>
 							<table>
 								<tr>
