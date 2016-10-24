@@ -66,12 +66,16 @@
 	<!-- only disabled for demonstration purposes -->
 	<ul id="singleFieldTags"></ul>
 
+	 <button onclick="MakeUrl()">Click me</button> 
 
 	<script type="text/javascript">
 	var SourceUrl = "http://www.google.com/?tracker=blah1";
 	var queryUrl = "";
 	var landingUrl = "";
 	var finalUrl = SourceUrl;
+	var result = "";
+	var sercval = "";
+	var mySingleField = "";
 	
 		$(document).ready(function() {
 			$('input[type="checkbox"]').on('change', function(e) {
@@ -90,9 +94,7 @@
 					dataStrings.push(key + "=" + value.join(','));
 				});
 
-				var result = dataStrings.join('&');
-				finalUrl = finalUrl +"&"+ result;
-				alert(finalUrl);
+				result = dataStrings.join('&');
 
 				<!--
 				$.post('/ajax-post-url/', data);
@@ -122,7 +124,7 @@
 
 		$(function() {
 		  //For showing default url  
-		  MakeUrl();
+		  //MakeUrl();
 		    
 		  $('#querySelct').on('change', function () {
 		      if($(this).val() == 0) {
@@ -130,7 +132,6 @@
 		      } else {
 		          queryUrl = $(this).val();
 		      }
-		      MakeUrl();
 		      return false;
 		  });
 		    
@@ -140,25 +141,24 @@
 		      } else {
 		         landingUrl = $(this).val();
 		      }
-		     MakeUrl();
 		     return false;
 		  });
 		});
-
-		function MakeUrl() {
-		    finalUrl = finalUrl + queryUrl + landingUrl;
-		    alert(finalUrl);
-// 		   $('#urlBox').val(finalUrl);
-// 		  $('#MyLink').attr('href', finalUrl);
-		}
 		
-		var tbv = "";
-		$('#txt_email').keyup(function () {
-			$('#txt_username').val($(this).val());
-			tbv = $('#txt_username').val();
-			finalUrl = finalUrl +"&sercval="+ tbv;
-			alert(finalUrl); 
-	     });
+// 		var tbv = "";
+// 		$('#txt_email').keyup(function () {
+// 			$('#txt_username').val($(this).val());
+			var tbv = $('#txt_username').val();
+			sercval = "&sercval="+ tbv;
+// 	     });
+
+		var MSV = $('#mySingleField').val();
+		mySingleField = "&mySingleField="+ MSV;
+		
+		function MakeUrl() {
+		    finalUrl = SourceUrl + queryUrl + landingUrl + result+sercval+mySingleField;
+		    alert(finalUrl);
+		}
 		
 	</script>
 </body>
