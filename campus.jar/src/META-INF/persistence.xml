@@ -1,0 +1,18 @@
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="campus" transaction-type="RESOURCE_LOCAL">
+		<description>JBOSS Hibernate Provider</description>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source></non-jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+           <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://220.247.201.82:20020;databaseName=dev-3"></property>
+           <property name="javax.persistence.jdbc.user" value="as"></property>
+           <property name="javax.persistence.jdbc.password" value="BigF!lesu9"></property>
+       </properties>
+
+	</persistence-unit>
+</persistence>
