@@ -3,9 +3,7 @@
 body,html
   font-family: 'Raleway', sans-serif
   a
-    //all: initial
     text-decoration: none
-
     &:hover,
     &:focus,
     &.active
@@ -31,10 +29,30 @@ body,html
       img
         width: 100%
 
+    .search-area
+      display: block
+      position: relative
+
+      .main-search-bar
+        display: block
+
+        .bar-holder
+          display: block
+          position: relative
+          top: -42px
+
+          input
+            width: 80%
+            line-height: 64px
+            border: 12px solid rgba(125,125,125,0.5)
+            font-size: 24px
+            color: #918a8a
+            padding-left: 30px
+
   // right side banner panel
   .banner-panel
     width: 17%
     display: inline-block
     background: #37474f
     position: relative
-    height: 500px
+    height: 1000px
