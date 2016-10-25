@@ -15,6 +15,7 @@
 <body>
 <div align="center" >
 <form>
+<c:out >
 <table>
 	<tr>
 		<td>
