@@ -112,12 +112,13 @@ textarea:focus, input:focus {
   display: block;
   position: relative; }
   .main-screen .content-panel {
-    display: block;
-    position: relative; }
+    display: inline-block;
+    position: relative;
+    width: 83%; }
     .main-screen .content-panel .main-slider {
-      display: inline-block;
+      display: block;
       position: relative;
-      width: 83%; }
+      width: 100%; }
       .main-screen .content-panel .main-slider img {
         width: 100%; }
   .main-screen .banner-panel {
