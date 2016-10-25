@@ -4,18 +4,19 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%-- <%@ page import="com.genesiis.xeno.entity.View,java.util.ArrayList" %> --%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="dist/js/contactUs.js"></script>
 <meta charset="utf-8">
 <title>Contact Us</title>
 </head>
 <body>
 <div align="center" >
-<form>
-<c:out >
+<form method="post"  name="contactUsForm" >
+	
 <table>
 	<tr>
 		<td>
@@ -24,22 +25,22 @@
 					<td colspan=2> <h1>Contact Us</h1> <h3>(Feel Free to talk to us)</h3></td>
 					</tr>
 					<tr>
-						<td><label for="first-name">First name *</label></td>
-						<td><label for="last-name">Last name *</label></td>
+						<td><label for="firstName">First name *</label></td>
+						<td><label for="lastName">Last name *</label></td>
 					</tr>
 					<tr>		
-						<td><input type="text" name="first-name" value="" size="40"  required /></td>
-						<td><input type="text" name="last-name" value="" size="40"  required /></td>
+						<td><input type="text" name="firstName" value="" size="40"  required /></td>
+						<td><input type="text" name="lastName" value="" size="40"  required /></td>
 
 					</tr>
 					<tr>
-						<td><label for="email">Email *</label></td>
-						<td><label for="tel">Phone number</label></td>		
+						<td><label for="emailAddress">Email *</label></td>
+						<td><label for="contactNumber">Phone number</label></td>		
 					</tr>
 					
 					<tr>
-						<td><input type="text" name="email" value="" size="40" required /></td>
-						<td><input type="text" name="tel" value="" size="40"  required /></td>
+						<td><input type="email" name="emailAddress" value="" size="40" required /></td>
+						<td><input type="text" name="contactNumber" value="" size="40"   /></td>
 					</tr>
 					<tr>
 						<td><label for="subject">Subject *</label></td>
@@ -49,10 +50,10 @@
 						<td>
 							<select name="subject"  required>
 								<option value="">Select</option>
-								<option value="Course inquery">Course inquery</option>
-								<option value="Complain">Complain</option>
-								<option value="Feedback on this website">Feedback on this website</option>
-								<option value="Other">Other</option>
+								<option value="courseInquery">Course inquiry</option>
+								<option value="complain">Complain</option>
+								<option value="feedbackOnThisWebsite">Feedback on this web site</option>
+								<option value="other">Other</option>
 							</select>
 						</td>
 						<td>
@@ -67,15 +68,15 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td><br><label for="human"> <h4>We need to verify you are human *</h4> </label></td>
+						<td><br><label for="humanTest"> <h4>We need to verify you are human *</h4> </label></td>
 						<td></td>
 					</tr>
 					<tr>
-						<td><label>How much is 10 - 4 ? </label> <input type="text" name="human" size="40"  required/></td>
+						<td><label>How much is 10 - 4 ? </label> <input type="text" name="humanTest" size="40"  required/></td>
 						<td></td>
 					</tr>
 					<tr>
-						<td><br><input type="submit" value="Send Message"/></td>
+						<td><br><button type="submit" name="CCO" id="CCO" value="FBTSA"  onclick="validateForm()">Submit Query</button></td> <!-- FEED BACK TO SUPER ADMIN -->
 						<td></td>
 					</tr>
 				</table>		
