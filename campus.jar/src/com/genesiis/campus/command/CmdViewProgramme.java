@@ -45,19 +45,19 @@ public class CmdViewProgramme implements ICommand{
 			programme.setCode(programmeId);
 			
 			Collection<Collection<String>> programmeDAOCollection = programmeDAO.findById(programme);
-			//view.setCollection(programmeDAOCollection);
+			view.setCollection(programmeDAOCollection);
 			
 			Collection<Collection<String>> semesterDAOCollection = semesterDAO.findById(programme);
 		//	view.setCollection(semesterDAOCollection);
 			
 
 			Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
-			view.setCollection(moduleDAOCollection);
+			//view.setCollection(moduleDAOCollection);
 			
 			Collection<Collection<String>> intakeDAOCollection = intakeDAO.findById(programme);
 			
-			helper.setAttribute("programmeView", programmeDAOCollection);
-			helper.setAttribute("moduleView", moduleDAOCollection);
+			helper.setAttribute("semesterView", semesterDAOCollection);
+			//helper.setAttribute("moduleView", moduleDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
