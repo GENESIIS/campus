@@ -1,6 +1,7 @@
 package com.genesiis.campus.validation;
-//20161024 DN c10-contacting-us created the initial Operation.java version
 
+//20161024 DN c10-contacting-us created the initial Operation.java version
+//20161025 CM c13-Display course details added a new attribute to the enum
 
 /**
  * Operation class facilitate in binding the CCO
@@ -8,9 +9,9 @@ package com.genesiis.campus.validation;
  */
 public enum Operation {
 
-
-	BAD_OPERATION("BO", "commandNotFound.jsp");
-			
+	BAD_OPERATION("BO", "commandNotFound.jsp"),
+	VIEW_PROGRAMME("VPD", "programmeDetails.jsp");
+	
 	private final String commandString;
 	private final String viewJspUrl;
 
