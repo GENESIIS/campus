@@ -1,4 +1,5 @@
 <!-- c11-criteria-based-filter-search : designed a sample UI to implement filter search. -->
+<!-- c11-criteria-based-filter-search : modified the JavaScript code to add addsearchData() method to pass data to the servlet. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -17,18 +18,18 @@
 
 </head>
 <body>
-	<h1>Hello World..!!</h1>
+	<h1>Filter Search</h1>
 
 	<div>
-		Email: <input type="text" id="txt_email" /> 
-		<br>
-		Username: <input type="text" id="txt_username" /> 
+		Text: <input type="text" id="txt_username" /> 
 		<br /> <br /> <br /> 
 		
-		
-		<input type="text" value="" id="urlBox" readonly /> 
-		<br /> <br /> 
-		
+		<select id="landingSelect">
+			<option value="0" label="choose one">Category</option>
+			<option value="&cid=1" label="landing 1">landing 1</option>
+			<option value="&cid=2" label="landing 2">landing 2</option>
+		</select>
+		<br /><br />
 		
 		<select id="querySelct">
 			<option value="0" label="choose one">choose one</option>
@@ -40,11 +41,7 @@
 			<option value="&queryid=6" label="option 6">option 6</option>
 		</select> 
 		
-		<select id="landingSelect">
-			<option value="0" label="choose one">choose one</option>
-			<option value="&cid=1" label="landing 1">landing 1</option>
-			<option value="&cid=2" label="landing 2">landing 2</option>
-		</select>
+
 
 	</div>
 
@@ -66,7 +63,7 @@
 	<!-- only disabled for demonstration purposes -->
 	<ul id="singleFieldTags"></ul>
 
-	 <button onclick="MakeUrl()">Click me</button> 
+	 <button onclick="addsearchData()">Click me</button> 
 
 	<script type="text/javascript">
 	var SourceUrl = "http://www.google.com/?tracker=blah1";
@@ -122,10 +119,7 @@
 		});
 		
 
-		$(function() {
-		  //For showing default url  
-		  //MakeUrl();
-		    
+		$(function() {	    
 		  $('#querySelct').on('change', function () {
 		      if($(this).val() == 0) {
 		         queryUrl = "";
@@ -145,21 +139,46 @@
 		  });
 		});
 		
-// 		var tbv = "";
-// 		$('#txt_email').keyup(function () {
-// 			$('#txt_username').val($(this).val());
-			var tbv = $('#txt_username').val();
-			sercval = "&sercval="+ tbv;
-// 	     });
+
+		var tbv = $('#txt_username').val();
+		sercval = "&sercval=" + tbv;
 
 		var MSV = $('#mySingleField').val();
-		mySingleField = "&mySingleField="+ MSV;
+		mySingleField = "&mySingleField=" + MSV;
+
+// 		function MakeUrl() {
+			finalUrl = SourceUrl + queryUrl + landingUrl + result + sercval
+					+ mySingleField;
+// 			alert(finalUrl);
+// 		}
 		
-		function MakeUrl() {
-		    finalUrl = SourceUrl + queryUrl + landingUrl + result+sercval+mySingleField;
-		    alert(finalUrl);
+		// Get data and sent to EmployeeController.java.
+		function addsearchData() {
+
+			var searchData = {
+				"searchData" : finalUrl
+			};
+
+			$.ajax({
+				type : "POST",
+				url : 'PublicController',
+				data : {
+					jsonData : JSON.stringify(searchData),
+					CCO : "GET_SEARCH_DATA"
+				},
+				dataType : "json",
+				success : function(data) {
+// 					alert(data);
+// 					if (data == "Details added successfully.") {
+// 						clearAddemployeeform();
+// 					}
+				},
+				error : function(e) {
+					alert("Error " + e);
+					console.log(e);
+				}
+			});
 		}
-		
 	</script>
 </body>
 </html>
