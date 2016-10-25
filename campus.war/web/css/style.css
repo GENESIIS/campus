@@ -70,6 +70,9 @@ textarea:focus, input:focus {
   .clearfix:after {
     clear: both; }
 
+.colr-white {
+  color: white; }
+
 /*Font Face */
 /* Layout */
 .header {
@@ -79,7 +82,8 @@ textarea:focus, input:focus {
   display: block;
   position: relative;
   background: #37474f;
-  height: 100%; }
+  height: 100%;
+  z-index: 99; }
   .header .top {
     display: block;
     position: relative;
@@ -103,10 +107,61 @@ textarea:focus, input:focus {
       height: 100px;
       width: 100%;
       background: #2f66c1; }
-      .header .bottom .menu-bar .top {
-        color: #fff;
-        font-family: Oswald;
-        font-size: 18px; }
+      .header .bottom .menu-bar .home {
+        display: inline-block;
+        position: relative;
+        width: 115px;
+        height: 100%;
+        padding-top: 20px; }
+      .header .bottom .menu-bar .menu-tabs {
+        display: inline-block;
+        position: relative;
+        width: calc(83% - 115px);
+        height: 100%; }
+        .header .bottom .menu-bar .menu-tabs .top-menus {
+          color: #fff;
+          font-family: Oswald;
+          font-size: 18px;
+          width: 100%;
+          height: 50%;
+          display: block;
+          padding: 20px 20px 0 20px; }
+          .header .bottom .menu-bar .menu-tabs .top-menus li {
+            padding-right: 16px;
+            padding-left: 16px; }
+          .header .bottom .menu-bar .menu-tabs .top-menus:nth-child(1) {
+            padding-left: 0; }
+          .header .bottom .menu-bar .menu-tabs .top-menus li > a {
+            color: #fff; }
+            .header .bottom .menu-bar .menu-tabs .top-menus li > a:hover {
+              color: #85d0fd; }
+        .header .bottom .menu-bar .menu-tabs .bottom-menus {
+          display: block;
+          width: 100%;
+          height: 50%;
+          font-size: 18px;
+          color: #fff;
+          padding: 15px 20px 0 20px; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus li {
+            padding-right: 16px;
+            padding-left: 16px; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus:nth-child(2) {
+            padding-left: 0; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus li > a {
+            color: #fff; }
+            .header .bottom .menu-bar .menu-tabs .bottom-menus li > a:hover {
+              color: #85d0fd; }
+      .header .bottom .menu-bar .keyword-search {
+        display: inline-block;
+        width: 17%;
+        height: 100%; }
+
+body, html {
+  font-family: "Raleway", sans-serif; }
+  body a, html a {
+    text-decoration: none; }
+    body a:hover, body a:focus, body a.active, html a:hover, html a:focus, html a.active {
+      text-decoration: none !important; }
 
 .main-screen {
   display: block;
@@ -129,3 +184,9 @@ textarea:focus, input:focus {
     height: 500px; }
 
 /* Modules */
+.btn-home {
+  display: block;
+  width: 54px;
+  height: 54px;
+  background: url("../i/icons.png");
+  background-position: -32px -162px; }
