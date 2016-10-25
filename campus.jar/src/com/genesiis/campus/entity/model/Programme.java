@@ -1,5 +1,8 @@
 package com.genesiis.campus.entity.model;
 
+//20161025 JH c7-list-higher-education-courses entity class Programme.java created 
+//20161025 JH c7-list-higher-education-courses create getters and setter methods
+
 import java.sql.Date;
 
 public class Programme {
