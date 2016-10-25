@@ -1,5 +1,8 @@
 package com.genesiis.campus.factory;
 
+//20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
+
+
 /**
  * FactoryProducer class bares the responsibility of producing 
  * the Factory  
