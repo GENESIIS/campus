@@ -1,56 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!-- 20161024 AS c12-social-media-share-panale-as project initiated -->
+<!-- 20161025 AS c12-social-media-share-panale-as side share panale and top share panale button and js created -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 
 
-<link href="dist/css/fshare.css" rel="stylesheet" type="text/css" />
+<link href="dist/css/contact-buttons.css" rel="stylesheet"
+	type="text/css" />
+<link href="dist/css/demo.css" rel="stylesheet" type="text/css" />
 <script src="dist/js/fshare.js" type="text/javascript"></script>
 <script src="dist/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		//             $('.quake-slider').quake({
-		//                 effects: ['swirlFadeIn', 'swirlFadeOut', 'randomFade', 'linearPeal', 'linearPealReverse', 'swirlFadeIn', 'swirlFadeOut',
-		//             'diagonalFade', 'blind', 'blindFade', 'explode', 'swirlFadeIn',
-		//             'mixBarsFancy', 'blindFadeReverse', 'slideIn', 'slideInFancy', 'swirlFadeOut'],
-		//                 thumbnails: true,
-		//                 captionOpacity: '0.3',
-		//                 captionOrientations: ['top', 'right', 'bottom', 'left']
-		//             });
-
-		$('#floating-bar').fshare({
-			theme : 'compact',
-			upperLimitElementId : 'upper-limit-element',
-			lowerLimitElementId : 'lower-limit-element'
-		});
-	});
-</script>
 
 
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
 	<h1>Hello World..!!</h1>
 
+	<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 
-	<div>
+	<script>
+		window.twttr = (function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+			if (d.getElementById(id))
+				return t;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "https://platform.twitter.com/widgets.js";
+			fjs.parentNode.insertBefore(js, fjs);
 
-		<iframe
-			src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Ficehrm-hosted.gamonoid.com%2Flogin.php&layout=button&size=large&mobile_iframe=true&appId=539799292734817&width=72&height=28"
-			width="72" height="28" style="border: none; overflow: hidden"
-			scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+			t._e = [];
+			t.ready = function(f) {
+				t._e.push(f);
+			};
+
+			return t;
+		}(document, "script", "twitter-wjs"));
+	</script>
+
+
+
+	<table align="center" style="border: 0px;">
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		<tr>
+		<tr>
+			<td>
+				<!-- Place this tag where you want the share button to render. -->
+				<div class="g-plus" data-action="share" data-annotation="bubble"
+					data-href="http://education.topjobs.lk/"></div> <!-- Place this tag after the last share tag. -->
+				<script type="text/javascript">
+					(function() {
+						var po = document.createElement('script');
+						po.type = 'text/javascript';
+						po.async = true;
+						po.src = 'https://apis.google.com/js/platform.js';
+						var s = document.getElementsByTagName('script')[0];
+						s.parentNode.insertBefore(po, s);
+					})();
+				</script>
+			</td>
+			<td><div class="fb-share-button"
+					data-href="http://education.topjobs.lk/PublicController"
+					data-layout="button_count" data-size="small"
+					data-mobile-iframe="true">
+					<a class="fb-xfbml-parse-ignore" target="_blank"
+						href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
+				</div></td>
+			<td><a class="twitter-share-button"
+				href="https://twitter.com/intent/tweet?" data-size="small">
+					Tweet</a></td>
+			<td><script src="//platform.linkedin.com/in.js"
+					type="text/javascript">
+				lang: en_US
+			</script> <script type="IN/Share"
+					data-url="http://education.topjobs.lk/PublicController"
+					data-counter="right"></script></td>
+		</tr>
+
+	</table>
+
+
+
+	<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		
+	</script>
 	</div>
-	<div id="floating-bar"></div>
-<br><br>
-	<div>
-		<a href="https://plus.google.com/share?url={URL}"
-			onclick="javascript:window.open(this.href,
-  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img
-			src="https://www.gstatic.com/images/icons/gplus-64.png"
-			alt="Share on Google+" /></a>
-	</div>
+
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="dist/js/jquery.contact-buttons.js"></script>
+	<script src="dist/js/demo.js"></script>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-36251023-1' ]);
+		_gaq.push([ '_setDomainName', 'jqueryscript.net' ]);
+		_gaq.push([ '_trackPageview' ]);
+
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
 </body>
 </html>
