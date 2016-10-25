@@ -198,11 +198,32 @@ body, html {
           width: 90%; }
           .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
             width: 29.5%;
-            display: block;
-            background: rgba(225, 225, 225, 0.6); }
+            background: rgba(225, 225, 225, 0.6);
+            padding: 8px;
+            margin-top: 20px; }
             .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box {
+              background: #fff;
               display: block;
-              width: 100%; }
+              width: 100%;
+              font-family: "Slabo 27px", serif; }
+              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name {
+                display: block;
+                padding: 16px; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name a {
+                  font-size: 26px;
+                  color: #818181;
+                  font-family: "Slabo 27px", serif; }
+              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info {
+                display: block; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
+                  display: inline-block;
+                  position: relative; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
+                  display: inline-block;
+                  position: relative;
+                  font-size: 15px;
+                  color: #919191;
+                  line-height: 16px; }
   .main-screen .banner-panel {
     width: 17%;
     display: inline-block;
