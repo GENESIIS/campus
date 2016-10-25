@@ -192,6 +192,17 @@ body, html {
             font-size: 24px;
             color: #918a8a;
             padding-left: 30px; }
+      .main-screen .content-panel .search-area .filter-boxes {
+        display: block; }
+        .main-screen .content-panel .search-area .filter-boxes .box-holder {
+          width: 90%; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
+            width: 29.5%;
+            display: block;
+            background: rgba(225, 225, 225, 0.6); }
+            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box {
+              display: block;
+              width: 100%; }
   .main-screen .banner-panel {
     width: 17%;
     display: inline-block;
