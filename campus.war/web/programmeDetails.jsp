@@ -1,6 +1,8 @@
-+<!-- 20161024 CM  c13-display course details-cm Created programeDetails.jsp -->
+<!-- 20161024 CM  c13-display course details-cm Created programeDetails.jsp -->
+<!-- 20161024 CM  c13-display course details-cm Add jstl codes to programeDetails.jsp -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,20 +38,23 @@
 			</td>
 			<td>
 				<table>
+				<c:forEach var="programmeView" items="${programmeView}" varStatus="loop">
+					<c:set var="name" value="${programmeView[0] }" />
+				<%-- 	<c:set var="image" value="${programmeView[1] }" /> --%>
+					<c:set var="description" value="${programmeView[1] }" />
+					<c:set var="duration" value="${programmeView[2] }" />
+					<c:set var="entryRequirements" value="${programmeView[3] }" />
+					<c:set var="counselorName" value="${programmeView[4] }" />
+					<c:set var="counselorPhone" value="${programmeView[5] }" />
+				</c:forEach>
 					<tr>
 						<td>
-							<h2>Bachelor Of Computer Science</h2>
+							<h2><c:out value="${name}"></c:out></h2>
 						</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td><p>The Bachelor of Computer Science involves the use
-								of the most up-to-date technology and methods, and includes a
-								major emphasis on software development. The course is oriented
-								towards applications in areas such as defence, aerospace and
-								medicine, where complex software plays a major role and often of
-								a safety-critical nature; as well as in businesses that require
-								extensive computer support, such as banking and manufacturing.</p></td>
+						<td><p><c:out value="${description}"></c:out></p></td>
 						<td></td>
 					</tr>
 					<tr>
