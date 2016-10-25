@@ -1,5 +1,8 @@
 package com.genesiis.campus.factory;
 
+//20161025 CM c13-Display course details INIT FactoryProducer.java
+//20161025 CM c13-Display course details Created getFactory() method
+
 /**
  * FactoryProducer class bares the responsibility of producing 
  * the Factory  
@@ -15,11 +18,9 @@ public class FactoryProducer {
 	 * @return ICmdFactory
 	 */
 	public static ICmdFactory getFactory(String choice) {
-		if (choice.equalsIgnoreCase("/EmployeeController")) {
-			//return new EmployeeCmdFactory();
+		if (choice.equalsIgnoreCase("/PublicController")) {
+			return new PublicCmdFactory();
 
-		} else if (choice.equalsIgnoreCase("/PayrollController")) {
-			//return new PayrollCmdFactory();
 		}
 
 		return null;
