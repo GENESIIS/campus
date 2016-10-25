@@ -38,110 +38,111 @@
 			</td>
 			<td>
 				<table>
-					<c:forEach var="programmeView" items="${programmeView}"
+					<c:forEach var="programme" items="${result.collection}"
 						varStatus="loop">
-						<c:set var="name" value="${programmeView[0] }" />
-						<%-- 	<c:set var="image" value="${programmeView[1] }" /> --%>
-						<c:set var="description" value="${programmeView[1] }" />
-						<c:set var="duration" value="${programmeView[2] }" />
-						<c:set var="entryRequirements" value="${programmeView[3] }" />
-						<c:set var="counselorName" value="${programmeView[4] }" />
-						<c:set var="counselorPhone" value="${programmeView[5] }" />
+						<c:forEach items="${programme}" var="item" varStatus="count">
+							<c:choose>
+
+								<c:when test="${count.index == 0}">
+									<c:set var="ProgrammeName" value="${item }" />
+								</c:when>
+								<c:when test="${count.index == 1}">
+									<c:set var="ProgrammeDescription" value="${item }" />
+								</c:when>
+								<c:when test="${count.index == 2}">
+									<c:set var="ProgrammeDuration" value="${item }" />
+								</c:when>
+								<c:when test="${count.index == 3}">
+									<c:set var="entryRequirements" value="${item }" />
+								</c:when>
+								<c:when test="${count.index == 4}">
+									<c:set var="counselorName" value="${item }" />
+								</c:when>
+								<c:when test="${count.index == 5}">
+									<c:set var="counselorPhone" value="${item }" />
+								</c:when>
+							</c:choose>
+						</c:forEach>
 					</c:forEach>
 					<tr>
 						<td>
 							<h2>
-								<c:out value="${name}"></c:out>
+								<c:out value="${ProgrammeName}"></c:out>
 							</h2>
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td><p>
-								<c:out value="${description}"></c:out>
+								<c:out value="${ProgrammeDescription}"></c:out>
 							</p></td>
 						<td></td>
 					</tr>
 					<tr>
-						<td>Duration : <c:out value="${duration}"></c:out></td>
+						<td>Duration : <c:out value="${ProgrammeDuration}"></c:out></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td><h3>Course Details</h3></td>
 						<td></td>
 					</tr>
-
-					<c:forEach var="semester" items="${result.collection}"
-						varStatus="loop">
-						<c:forEach items="${semester}" var="item" varStatus="count">
-							<c:choose>
-
-								<c:when test="${count.index == 0}">
-									<tr>
-										<td><strong><c:out value="${item}"></c:out></strong></td>
-									</tr>
-								</c:when>
-								<c:when test="${count.index == 1}">
-									<tr>
-										<td>Year: <c:out value="${item}"></c:out></td>
-									</tr>
-								</c:when>
-								<c:when test="${count.index == 2}">
-									<tr>
-										<td>Semester: <c:out value="${item}"></c:out></td>
-									</tr>
-								</c:when>
-
-							</c:choose>
-
-
-						</c:forEach>
-						<tr>
-							<td>
-								<table>
-									<tr>
-										<th>Unit</th>
-										<th>Unit code</th>
-										<th>Credit Point</th>
-									</tr>
-									<c:forEach var="module" items="${moduleView}" varStatus="loop">
-										<tr>
-											<td><c:out value="${module[0]}"></c:out></td>
-											<td><c:out value="${module[1]}"></c:out></td>
-											<td><c:out value="${module[2]}"></c:out></td>
-										</tr>
-									</c:forEach>
-								</table>
-							</td>
-						</tr>
-					</c:forEach>
-
-					<!-- <tr>
-						<td><strong>1st Year - 1st Semester</strong></td>
-						<td></td>
-					</tr> -->
-					<!-- 	<tr>
+					<tr>
 						<td>
 							<table>
 								<tr>
+									<th>Semester</th>
 									<th>Unit</th>
+									<th>Description</th>
 									<th>Unit code</th>
 									<th>Credit Point</th>
+									
 								</tr>
-								<tr>
-									<td>Object Oriented Programming</td>
-									<td>1003</td>
-									<td>12.5</td>
-								</tr>
-								<tr>
-									<td>Database Management</td>
-									<td>1004</td>
-									<td>12.5</td>
-								</tr>
+
+								<c:forEach var="modules" items="${result.collection}"
+									varStatus="loop">
+									<tr>
+										<c:forEach items="${modules}" var="item" varStatus="count">
+											<c:choose>
+										
+												<c:when test="${count.index == 6}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 10}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 11}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 12}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 13}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+									<tr>
+								</c:forEach>
 
 							</table>
 						</td>
-					</tr> -->
+					</tr>
+
+					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
+						<tr>
+							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Year : <c:out value="${semester[1]}"></c:out></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Semester: <c:out value="${semester[1]}"></c:out></td>
+							<td></td>
+						</tr>
+					</c:forEach>
+
 					<tr>
 						<td><h3>Entry Requirements</h3></td>
 						<td></td>
@@ -156,6 +157,7 @@
 						<td><h3>Intakes</h3></td>
 						<td></td>
 					</tr>
+
 					<c:forEach var="intake" items="${intakeView}" varStatus="loop">
 						<tr>
 							<td><strong><c:out value="${intake[0]}"></c:out></strong></td>
@@ -165,32 +167,32 @@
 							<td><c:out value="${intake[1]}"></c:out></td>
 							<td></td>
 						</tr>
-							<tr>
-						<td>
-							<table>
-								<tr>
-									<td>Open Date</td>
-									<td><c:out value="${intake[2]}"></c:out></td>
-								</tr>
-								<tr>
-									<td>Close Date</td>
-									<td><c:out value="${intake[3]}"></c:out></td>
-								</tr>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td>Open Date</td>
+										<td><c:out value="${intake[2]}"></c:out></td>
+									</tr>
+									<tr>
+										<td>Close Date</td>
+										<td><c:out value="${intake[3]}"></c:out></td>
+									</tr>
 
-								<tr>
-									<td>Commencement Date</td>
-									<td><c:out value="${intake[4]}"></c:out></td>
-								</tr>
-								<tr>
-									<td>Fee</td>
-									<td><c:out value="${intake[5]}"></c:out></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
+									<tr>
+										<td>Commencement Date</td>
+										<td><c:out value="${intake[4]}"></c:out></td>
+									</tr>
+									<tr>
+										<td>Fee</td>
+										<td><c:out value="${intake[5]}"></c:out></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
 					</c:forEach>
 
-				
+
 					<tr>
 						<td><h3>Contact Details</h3></td>
 						<td></td>
