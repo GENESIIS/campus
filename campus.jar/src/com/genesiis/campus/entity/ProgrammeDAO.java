@@ -49,20 +49,38 @@ public class ProgrammeDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 
-			String query = "SELECT * FROM [CAMPUS].[PROGRAMME] WHERE [CAMPUS].[PROGRAMME].CODE = ?";
+			String query = "Select p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,"
+					+ "s.NAME,s.DESCRIPTION,s.YEARNO,s.SEMESTERNO,"
+					+ "m.NAME,m.DESCRIPTION,m.INTERNALCODEOFMODULE,m.CREDITVALUE,"
+					+ "i.NAME,i.DESCRIPTION,i.OPENINGDATE,i.CLOSEINGDATE,i.COMMENCEMENTDATE,i.FEE "
+					+ "from CAMPUS.PROGRAMME p inner join CAMPUS.INTAKE i on p.CODE=i.PROGRAMME inner join CAMPUS.SEMESTER s on "
+					+ "s.programme = p.code inner join CAMPUS.MODULE m on m.semester = s.code where p.CODE=?";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
-				singleprogrameDetails.add(rs.getString("name"));
-				singleprogrameDetails.add(rs.getString("description"));
-				singleprogrameDetails.add(rs.getString("duration"));
-				singleprogrameDetails.add(rs.getString("entryRequirements"));
-				singleprogrameDetails.add(rs.getString("counselorName"));
-				singleprogrameDetails.add(rs.getString("counselorPhone"));
-				singleprogrameDetails.add(rs.getString("counselorName"));
+				singleprogrameDetails.add(rs.getString(1));//Programme name
+				singleprogrameDetails.add(rs.getString(2));//Description
+				singleprogrameDetails.add(rs.getString(3));//Duration
+				singleprogrameDetails.add(rs.getString(4));//Entry requirements
+				singleprogrameDetails.add(rs.getString(5));//Counselor Name
+				singleprogrameDetails.add(rs.getString(6));//counselorPhone
+				singleprogrameDetails.add(rs.getString(7));//Semester Name
+				singleprogrameDetails.add(rs.getString(8));//Description
+				singleprogrameDetails.add(rs.getString(9));//Year No
+				singleprogrameDetails.add(rs.getString(10));//Semester No
+				singleprogrameDetails.add(rs.getString(11));//Module Name
+				singleprogrameDetails.add(rs.getString(12));//Description
+				singleprogrameDetails.add(rs.getString(13));//Internal code of module
+				singleprogrameDetails.add(rs.getString(14));//credit value
+				singleprogrameDetails.add(rs.getString(15));//Intake name
+				singleprogrameDetails.add(rs.getString(16));//description
+				singleprogrameDetails.add(rs.getString(17));//Opening date
+				singleprogrameDetails.add(rs.getString(18));//Closeing date
+				singleprogrameDetails.add(rs.getString(19));//Commencement date
+				singleprogrameDetails.add(rs.getString(20));//Fee
 				
 				programmeDetails.add(singleprogrameDetails);
 
