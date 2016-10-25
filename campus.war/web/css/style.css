@@ -73,19 +73,58 @@ textarea:focus, input:focus {
 /*Font Face */
 /* Layout */
 .header {
-  height: 150px;
+  top: 0;
+  left: 0;
+  padding: 0;
   display: block;
   position: relative;
-  background: #37474f; }
-  .header .logo-brand {
-    position: absolute;
-    vertical-align: middle;
-    top: 37%;
-    left: 3%; }
-    .header .logo-brand .logo-txt {
-      font-size: 35px;
-      font-weight: 600;
-      font-family: Orbitron;
-      color: white; }
+  background: #37474f;
+  height: 100%; }
+  .header .top {
+    display: block;
+    position: relative;
+    height: 150px; }
+    .header .top .logo-brand {
+      position: absolute;
+      vertical-align: middle;
+      top: 37%;
+      left: 3%; }
+      .header .top .logo-brand .logo-txt {
+        font-size: 35px;
+        font-weight: 600;
+        font-family: Orbitron;
+        color: #fff; }
+  .header .bottom {
+    display: block;
+    position: relative; }
+    .header .bottom .menu-bar {
+      display: block;
+      position: relative;
+      height: 100px;
+      width: 100%;
+      background: #2f66c1; }
+      .header .bottom .menu-bar .top {
+        color: #fff;
+        font-family: Oswald;
+        font-size: 18px; }
+
+.main-screen {
+  display: block;
+  position: relative; }
+  .main-screen .content-panel {
+    display: block;
+    position: relative; }
+    .main-screen .content-panel .main-slider {
+      display: inline-block;
+      position: relative;
+      width: 83%; }
+      .main-screen .content-panel .main-slider img {
+        width: 100%; }
+  .main-screen .banner-panel {
+    width: 17%;
+    display: inline-block;
+    background: #37474f;
+    position: relative;
+    height: 500px; }
 
 /* Modules */
