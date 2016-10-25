@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161025 CM c13-Display course details INIT ProgrammeDAO.java
+//20161025 CM c13-Display course details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +10,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.command.CmdViewProgramme;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.xeno.entity.model.Formula;
 
 public class ProgrammeDAO implements ICrud {
 
+	static Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -51,8 +56,14 @@ public class ProgrammeDAO implements ICrud {
 
 			if (rs.next()) {
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
-
-				singleprogrameDetails.add(rs.getString("CODE"));
+				singleprogrameDetails.add(rs.getString("name"));
+				singleprogrameDetails.add(rs.getString("description"));
+				singleprogrameDetails.add(rs.getString("duration"));
+				singleprogrameDetails.add(rs.getString("entryRequirements"));
+				singleprogrameDetails.add(rs.getString("counselorName"));
+				singleprogrameDetails.add(rs.getString("counselorPhone"));
+				singleprogrameDetails.add(rs.getString("counselorName"));
+				
 				programmeDetails.add(singleprogrameDetails);
 
 			}
