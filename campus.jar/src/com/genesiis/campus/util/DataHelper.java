@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
+//20161025 CM c13-Display course details add VIEW_PROGRAMME enum element related entry
 
 import java.io.IOException;
 
@@ -50,7 +51,9 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		
+		case VIEW_PROGRAMME:
+			resultPage = o.getPageURL();
+			break;
 		default:
 			break;
 		}
