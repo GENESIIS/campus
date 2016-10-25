@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20161025 JH c7-list-higher-education-courses entity class Programme.java created 
 //20161025 JH c7-list-higher-education-courses create getters and setter methods
+//20161025 JH c7-list-higher-education-courses add new fields 
 
 import java.sql.Date;
 
@@ -17,14 +18,19 @@ public class Programme {
 	private String entryRequiremtns;
 	private String counselerName;
 	private String counselerPhone;
-	private Date displayDatrtDate;
-	private Date expirationDate;
+	private Date displayStartDate;
+	private Date expiryDate;
 	private int programmeStatus;
 	private int courseProvider;
 	private int major;
 	private int category;
 	private int level;
 	private int town;
+	private boolean isActive;
+	private Date crtOn;
+	private String crtBy;
+	private Date modOn;
+	private String modBy;
 	
 	/**
 	 * @return the code
@@ -138,25 +144,25 @@ public class Programme {
 	 * @return the displayDatrtDate
 	 */
 	public Date getDisplayDatrtDate() {
-		return displayDatrtDate;
+		return expiryDate;
 	}
 	/**
 	 * @param displayDatrtDate the displayDatrtDate to set
 	 */
 	public void setDisplayDatrtDate(Date displayDatrtDate) {
-		this.displayDatrtDate = displayDatrtDate;
+		this.expiryDate = displayDatrtDate;
 	}
 	/**
 	 * @return the expirationDate
 	 */
 	public Date getExpirationDate() {
-		return expirationDate;
+		return expiryDate;
 	}
 	/**
 	 * @param expirationDate the expirationDate to set
 	 */
 	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
+		this.expiryDate = expirationDate;
 	}
 	/**
 	 * @return the programmeStatus
@@ -230,6 +236,89 @@ public class Programme {
 	public void setTown(int town) {
 		this.town = town;
 	}
-
+	/**
+	 * @return the displayStartDate
+	 */
+	public Date getDisplayStartDate() {
+		return displayStartDate;
+	}
+	/**
+	 * @param displayStartDate the displayStartDate to set
+	 */
+	public void setDisplayStartDate(Date displayStartDate) {
+		this.displayStartDate = displayStartDate;
+	}
+	/**
+	 * @return the expiryDate
+	 */
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	/**
+	 * @param expiryDate the expiryDate to set
+	 */
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	/**
+	 * @return the isActive
+	 */
+	public boolean isActive() {
+		return isActive;
+	}
+	/**
+	 * @param isActive the isActive to set
+	 */
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	/**
+	 * @return the crtOn
+	 */
+	public Date getCrtOn() {
+		return crtOn;
+	}
+	/**
+	 * @param crtOn the crtOn to set
+	 */
+	public void setCrtOn(Date crtOn) {
+		this.crtOn = crtOn;
+	}
+	/**
+	 * @return the crtBy
+	 */
+	public String getCrtBy() {
+		return crtBy;
+	}
+	/**
+	 * @param crtBy the crtBy to set
+	 */
+	public void setCrtBy(String crtBy) {
+		this.crtBy = crtBy;
+	}
+	/**
+	 * @return the modOn
+	 */
+	public Date getModOn() {
+		return modOn;
+	}
+	/**
+	 * @param modOn the modOn to set
+	 */
+	public void setModOn(Date modOn) {
+		this.modOn = modOn;
+	}
+	/**
+	 * @return the modBy
+	 */
+	public String getModBy() {
+		return modBy;
+	}
+	/**
+	 * @param modBy the modBy to set
+	 */
+	public void setModBy(String modBy) {
+		this.modBy = modBy;
+	}
 	
 }
