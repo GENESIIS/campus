@@ -10,7 +10,7 @@ public enum Operation {
 
 
 	BAD_OPERATION("BO", "commandNotFound.jsp"),
-	LIST_PROGRAMME_CATEGORIES("LPC", "higherEducation.jsp");
+	LIST_HIGHER_EDUCATION_PROGRAMMES("LHEP" , "higherEducation.jsp");
 			
 	private final String commandString;
 	private final String viewJspUrl;
