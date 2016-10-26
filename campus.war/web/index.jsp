@@ -9,11 +9,10 @@
 </head>
 <body>
 	<h1>Hello World..!!</h1>
-	<button type="submit" name="CCO" id="CCO" value="LPC"
-		class="pure-button pure-button-primary">List Programme
-		Categories</button>
 		
 	<form action="PublicController" method="POST">
+		<button type="submit" name="CCO" id="CCO" value="LHEP"
+		class="pure-button pure-button-primary">Higher Education</button>
 		<table>
 			<tr>
 				<th>Code</th>
