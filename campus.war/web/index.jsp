@@ -8,5 +8,12 @@
 </head>
 <body>
 	<h1>Hello World..!! </h1>
+	<h1>List Institutes </h1>
+	
+	<form action="PublicController" method="POST">
+								<button type="submit" name="CCO" id="CCO" value="LAAI"
+									class="pure-button pure-button-primary">List Higher Education Institutes</button>
+							</form>
+	
 </body>
 </html>
