@@ -7,6 +7,7 @@ import java.sql.Date;
 
 public class CourseProvider {
 
+	private int code;
 	private String uniquePrefix;
 	private String name;
 	private String description;
