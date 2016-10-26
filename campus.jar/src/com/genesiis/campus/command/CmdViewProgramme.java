@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161025 CM c13-Display course details INIT CmdViewProgramme.java
 //20161025 CM c13-Display course details Modified execute() method. 
 //20161025 CM c13-Display course details Modified execute() method. Set ProgrammeView attribute.
+//20161026 CM c13-Display course details Modified execute() method. Remove Module attribute.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -10,7 +11,6 @@ import java.util.Collection;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.IntakeDAO;
-import com.genesiis.campus.entity.ModuleDAO;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.SemesterDAO;
 import com.genesiis.campus.entity.model.Programme;
@@ -38,7 +38,6 @@ public class CmdViewProgramme implements ICommand{
 			final Programme programme=new Programme();
 			 ICrud programmeDAO=new ProgrammeDAO();
 			 ICrud semesterDAO=new SemesterDAO();
-			 ICrud moduleDAO=new ModuleDAO();
 			 ICrud intakeDAO=new IntakeDAO();
 			int programmeId= Integer.parseInt(helper.getParameter("programmeCode"));
 			
@@ -51,13 +50,13 @@ public class CmdViewProgramme implements ICommand{
 		//	view.setCollection(semesterDAOCollection);
 			
 
-			Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
-			//view.setCollection(moduleDAOCollection);
+//			Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
+//			//view.setCollection(moduleDAOCollection);
 			
 			Collection<Collection<String>> intakeDAOCollection = intakeDAO.findById(programme);
 			
 			helper.setAttribute("semesterView", semesterDAOCollection);
-			helper.setAttribute("moduleView", moduleDAOCollection);
+		//	helper.setAttribute("moduleView", moduleDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
