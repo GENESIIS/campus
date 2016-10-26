@@ -35,4 +35,4 @@ build.properties
 .orig
 
 #ignore the .gitignore files
-#.gitignore
+.gitignore
