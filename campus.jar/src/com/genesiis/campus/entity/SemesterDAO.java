@@ -54,8 +54,6 @@ public class SemesterDAO implements ICrud{
 
 			while (rs.next()) {
 				final ArrayList<String> singleSemeterDetail = new ArrayList<String>();
-				final ArrayList<String> singleModule = new ArrayList<String>();
-			// default semester value name as "default"
 				
 				singleSemeterDetail.add(rs.getString("name"));
 				singleSemeterDetail.add(rs.getString("yearNo"));
