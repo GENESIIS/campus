@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161025 JH c7-list-higher-education-courses execute method created and coding
 //20161025 JH c7-list-higher-education-courses execute method coding 
 //20161026 JH c7-list-higher-education-courses CmdListHigherEducationCourses modified
+//20161026 JH c7-higher-education-landing-page class renamed as CmdListHigherEducationProgrammes.java
 
 import java.sql.SQLException;
 
@@ -20,11 +21,11 @@ import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 
-public class CmdListHigherEducationCourses implements ICommand {
-	static org.apache.log4j.Logger log = Logger.getLogger(CmdListHigherEducationCourses.class.getName());
+public class CmdListHigherEducationProgrammes implements ICommand {
+	static org.apache.log4j.Logger log = Logger.getLogger(CmdListHigherEducationProgrammes.class.getName());
 	private IView programmeData;
 	
-	public CmdListHigherEducationCourses(){
+	public CmdListHigherEducationProgrammes(){
 	}
 	
 	/**
@@ -50,7 +51,6 @@ public class CmdListHigherEducationCourses implements ICommand {
 			Date date = new Date();
 			String category = helper.getParameter("categoryId");
 			
-			programme.setCategory(1);
 			programme.setActive(true);
 			programme.setExpiryDate(date);
 			programme.setCategory(Integer.parseInt(category));
