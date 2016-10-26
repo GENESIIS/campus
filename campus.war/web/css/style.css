@@ -180,11 +180,13 @@ body, html {
 
 .main-screen {
   display: block;
-  position: relative; }
+  position: relative;
+  background: #37474f; }
   .main-screen .content-panel {
     display: inline-block;
     position: relative;
-    width: 83%; }
+    width: 83%;
+    background: #fff; }
     .main-screen .content-panel .main-slider {
       display: block;
       position: relative;
@@ -208,14 +210,15 @@ body, html {
             color: #918a8a;
             padding-left: 30px; }
       .main-screen .content-panel .search-area .filter-boxes {
-        display: block; }
+        display: block;
+        padding-bottom: 60px; }
         .main-screen .content-panel .search-area .filter-boxes .box-holder {
           width: 90%; }
           .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
             width: 29.5%;
             background: rgba(225, 225, 225, 0.6);
             padding: 8px;
-            margin-top: 20px;
+            margin-top: 30px;
             margin-right: 5.5%;
             transition: all 0.3s; }
             .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li:hover {
@@ -262,7 +265,7 @@ body, html {
     display: inline-block;
     background: #37474f;
     position: relative;
-    height: 1200px; }
+    height: 100%; }
 
 /* Modules */
 .btn-home {
