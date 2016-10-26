@@ -14,5 +14,8 @@ angular.module('CampusApp',['ngRoute'])
             })
             .when('/contact',{
                 templateUrl : "partials/contact.html"
+            })
+            .when('/courses',{
+                templateUrl : "partials/courses.html"
             });
     });

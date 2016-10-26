@@ -60,12 +60,21 @@ body,html
             background: rgba(225, 225, 225, 0.6)
             padding: 8px
             margin-top: 20px
+            margin-right: 5.5%
+            transition: all 0.3s
+            &:hover
+              background: #508ef6
+
+            &:nth-child(3n)
+              margin-right: 0
+              float: right
 
             .category-box
               background: #fff
               display: block
               width: 100%
               font-family: 'Slabo 27px', serif
+              padding-bottom: 20px
 
               .category-name
                 display: block
@@ -94,7 +103,12 @@ body,html
                   color: #919191
                   line-height: 16px
                   padding-right: 8px
-                  padding-left: 8px
+                  padding-left: 2px
+
+                  a
+                    padding-top: 20px
+                    color: #3a74d6
+                    font-size: 16px
 
   // right side banner panel
   .banner-panel
@@ -102,4 +116,4 @@ body,html
     display: inline-block
     background: #37474f
     position: relative
-    height: 1000px
+    height: 1200px
