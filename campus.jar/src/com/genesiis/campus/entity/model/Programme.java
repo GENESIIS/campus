@@ -15,7 +15,7 @@ public class Programme {
 	private String email;
 	private String image;
 	private String description;
-	private String duration;
+	private double duration;
 	private String entryRequiremtns;
 	private String counselerName;
 	private String counselerPhone;
@@ -96,13 +96,13 @@ public class Programme {
 	/**
 	 * @return the duration
 	 */
-	public String getDuration() {
+	public double getDuration() {
 		return duration;
 	}
 	/**
 	 * @param duration the duration to set
 	 */
-	public void setDuration(String duration) {
+	public void setDuration(double duration) {
 		this.duration = duration;
 	}
 	/**
