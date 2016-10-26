@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.model;
 //20161025 JH c7-list-higher-education-courses entity class Programme.java created 
 //20161025 JH c7-list-higher-education-courses create getters and setter methods
 //20161025 JH c7-list-higher-education-courses add new fields 
+//20161026 JH c7-list-higher-education-courses setExpiryDate method modified
 
 import java.sql.Date;
 
