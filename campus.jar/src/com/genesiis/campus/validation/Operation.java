@@ -9,7 +9,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	BAD_OPERATION("BO", "commandNotFound.jsp");
+	BAD_OPERATION("BO", "commandNotFound.jsp"),
+	LIST_CORPORATE_TRAINING_PROGRAMMES("LCTP", "corporateTraining.jsp");
 			
 	private final String commandString;
 	private final String viewJspUrl;
