@@ -1,12 +1,11 @@
 package com.genesiis.campus.command;
 
-
-import java.sql.SQLException;
-
 //20161025 JH c7-list-higher-education-courses command class CmdListHigherEducationCourses.java created
 //20161025 JH c7-list-higher-education-courses execute method created and coding
+//20161025 JH c7-list-higher-education-courses execute method coding 
+//20161026 JH c7-list-higher-education-courses CmdListHigherEducationCourses modified
 
-
+import java.sql.SQLException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,8 +24,7 @@ public class CmdListHigherEducationCourses implements ICommand {
 	static org.apache.log4j.Logger log = Logger.getLogger(CmdListHigherEducationCourses.class.getName());
 	private IView programmeData;
 	
-	public CmdListHigherEducationCourses(IView programmeData){
-		this.programmeData = programmeData;
+	public CmdListHigherEducationCourses(){
 	}
 	
 	/**
@@ -43,20 +41,23 @@ public class CmdListHigherEducationCourses implements ICommand {
 		
 		final HigherEducationProgrammeDAO higherEducationProgrammeDAO = new HigherEducationProgrammeDAO();
 		final Programme programme = new Programme();
-		final Collection<Collection<String>> programmes = null;
+		Collection<Collection<String>> programmes = null;
 		
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try{
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
+			String category = helper.getParameter("categoryId");
 			
 			programme.setCategory(1);
 			programme.setActive(true);
+			programme.setExpiryDate(date);
+			programme.setCategory(Integer.parseInt(category));
 			
 		programmes = higherEducationProgrammeDAO.findById(programme);
 		iview.setCollection(programmes);
-			
+		
 		}catch(Exception exception){
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
