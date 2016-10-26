@@ -9,10 +9,11 @@ import org.apache.log4j.Logger;
 
 //20161025 JH c7-list-higher-education-courses data access object class InstituteDAO.java created
 //20161025 JH c7-list-higher-education-courses implement unimplemented methods
+//20161026 JH c7-higher-education-landing-page InstituteDAO.java renamed as CourseProviderDAO.java
 
-public class InstituteDAO implements ICrud{
+public class CourseProviderDAO implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(InstituteDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
