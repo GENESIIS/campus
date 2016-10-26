@@ -86,7 +86,7 @@
 						<td><h3>Course Details</h3></td>
 						<td></td>
 					</tr>
-					<tr>
+					<%-- 				<tr>
 						<td>
 							<table>
 								<tr>
@@ -126,11 +126,12 @@
 
 							</table>
 						</td>
-					</tr>
-
+					</tr> --%>
+					<%-- 
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
-							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
+							<td><c:set var="semesters" value="${semester[0]}" /> <strong><c:out
+										value="${semester[0]}"></c:out></strong></td>
 							<td></td>
 						</tr>
 						<tr>
@@ -140,8 +141,53 @@
 						<tr>
 							<td>Semester: <c:out value="${semester[1]}"></c:out></td>
 							<td></td>
-						</tr>
-					</c:forEach>
+						</tr> --%>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<th>Semester</th>
+									<th>Unit</th>
+									<th>Description</th>
+									<th>Unit code</th>
+									<th>Credit Point</th>
+
+								</tr>
+
+								<c:forEach var="modules" items="${result.collection}"
+									varStatus="loop">
+									<tr>
+										<c:forEach items="${modules}" var="item" varStatus="count">
+											<c:choose>
+												<c:when test="${count.index == 6}">
+													<td><c:set var="semesterInM" value="${item}" /> <c:out
+															value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 10}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 11}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 12}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+												<c:when test="${count.index == 13}">
+													<td><c:out value="${item}"></c:out></td>
+												</c:when>
+
+
+
+
+											</c:choose>
+										</c:forEach>
+									<tr>
+								</c:forEach>
+
+							</table>
+						</td>
+					</tr>
+					<%-- 	</c:forEach> --%>
 
 					<tr>
 						<td><h3>Entry Requirements</h3></td>
