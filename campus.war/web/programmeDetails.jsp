@@ -127,10 +127,11 @@
 							</table>
 						</td>
 					</tr> --%>
-					<%-- 
+
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
-							<td><c:set var="semesters" value="${semester[0]}" /> <strong><c:out
+						<c:set var="semesters" value="${semester[0]}" /> 
+							<td><strong><c:out
 										value="${semester[0]}"></c:out></strong></td>
 							<td></td>
 						</tr>
@@ -141,53 +142,56 @@
 						<tr>
 							<td>Semester: <c:out value="${semester[1]}"></c:out></td>
 							<td></td>
-						</tr> --%>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<th>Semester</th>
-									<th>Unit</th>
-									<th>Description</th>
-									<th>Unit code</th>
-									<th>Credit Point</th>
-
-								</tr>
-
-								<c:forEach var="modules" items="${result.collection}"
-									varStatus="loop">
+						</tr>
+						<tr>
+							<td>
+								<table>
 									<tr>
-										<c:forEach items="${modules}" var="item" varStatus="count">
-											<c:choose>
-												<c:when test="${count.index == 6}">
-													<td><c:set var="semesterInM" value="${item}" /> <c:out
-															value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 10}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 11}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 12}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 13}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
+										
+										<th>Unit</th>
+										<th>Description</th>
+										<th>Unit code</th>
+										<th>Credit Point</th>
 
+									</tr>
 
+									<c:forEach var="modules" items="${result.collection}"
+										varStatus="loop">
+										<tr>
+											<c:forEach items="${modules}" var="item" varStatus="count">
+												<c:choose>
+													<c:when test="${count.index == 6}">
+														<%-- <c:if test="${(status.index - 1) eq ${item}"></c:if> --%>
+														<c:set var="semesterInM" value="${item}" />
+														<%--  <c:out value="${item}"></c:out> --%>
+													</c:when>
+												</c:choose>
+												
+												<c:if test="${semesters eq semesterInM }">
+												<c:choose>
+													<c:when test="${count.index == 10}">
+														<td><c:out value="${item}"></c:out></td>
+													</c:when>
+													<c:when test="${count.index == 11}">
+														<td><c:out value="${item}"></c:out></td>
+													</c:when>
+													<c:when test="${count.index == 12}">
+														<td><c:out value="${item}"></c:out></td>
+													</c:when>
+													<c:when test="${count.index == 13}">
+														<td><c:out value="${item}"></c:out></td>
+													</c:when>
+												</c:choose>
+												</c:if>
+												
+											</c:forEach>
+										<tr>
+									</c:forEach>
 
-
-											</c:choose>
-										</c:forEach>
-									<tr>
-								</c:forEach>
-
-							</table>
-						</td>
-					</tr>
-					<%-- 	</c:forEach> --%>
+								</table>
+							</td>
+						</tr>
+					</c:forEach>
 
 					<tr>
 						<td><h3>Entry Requirements</h3></td>
