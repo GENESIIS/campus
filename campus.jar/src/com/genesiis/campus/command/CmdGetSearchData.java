@@ -32,19 +32,27 @@ public class CmdGetSearchData implements ICommand {
 
 		/** searching simple keyword */
 		System.out.println("==================searching simple keyword===========================");
-		obj.search("vishal");
+		obj.search("1");
 
 		/** searching using wild card */
-		System.out.println("==================searching using wild card===========================");
-		obj.search("neh*");
+		System.out.println("==================searching using wild card Admin*===========================");
+		obj.search("Admin*");
+		
+//		/** searching using wild card */
+//		System.out.println("==================searching using wild card *Admin*===========================");
+//		obj.search("*Admin*");
+//		
+//		/** searching using wild card */
+//		System.out.println("==================searching using wild card *Admin===========================");
+//		obj.search("*Admin");
 
 		/** searching using logical OR operator */
 		System.out.println("==================searching using logical OR operator===========================");
-		obj.search("vishal OR neha");
+		obj.search("Admin OR User");
 
 		/** searching using logical AND operator */
 		System.out.println("==================searching using logical AND operator===========================");
-		obj.search("vishal AND neha");
+		obj.search("Admin AND 1");
 		
 		
 		return null;

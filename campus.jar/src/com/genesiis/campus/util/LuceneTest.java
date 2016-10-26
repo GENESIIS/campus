@@ -165,7 +165,7 @@ public class LuceneTest
 			{
 				/** get the next document */
 				doc = searcher.doc(hits.scoreDocs[i].doc);
-				System.out.println("==========" + (i + 1) + " : Start Record=========\nId :: " + doc.get("id") + "\nName :: " + doc.get("name") + "\nDetails :: " + doc.get("details") + "\n==========End Record=========\n");
+				System.out.println("==========" + (i + 1) + " : Start Record=========\nCODE :: " + doc.get("CODE") + "\nTYPE :: " + doc.get("TYPE") + "\nCOMPANY :: " + doc.get("COMPANY") + "\n==========End Record=========\n");
 			}
 		}
 		catch (Exception e)
@@ -174,16 +174,4 @@ public class LuceneTest
 		}
 
 	}
-
-	/**
-	 * main method to check the output
-	 * 
-	 * @param args
-	 */
-//	public static void main(String[] args)
-//	{
-//
-//
-//	}
-
 }
