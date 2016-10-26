@@ -15,8 +15,8 @@ public class FactoryProducer {
 	 * @return ICmdFactory
 	 */
 	public static ICmdFactory getFactory(String choice) {
-		if (choice.equalsIgnoreCase("/EmployeeController")) {
-			//return new EmployeeCmdFactory();
+		if (choice.equalsIgnoreCase("/PublicController")) {
+			return new PublicCmdFactory();
 
 		} else if (choice.equalsIgnoreCase("/PayrollController")) {
 			//return new PayrollCmdFactory();
