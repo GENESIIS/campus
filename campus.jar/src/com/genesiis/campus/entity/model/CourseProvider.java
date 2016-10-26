@@ -1,0 +1,538 @@
+package com.genesiis.campus.entity.model;
+
+import java.sql.Date;
+
+//20161026 JH c7-higher-education-landing-page CourseProvider.java entity class created
+//20161026 JH c7-higher-education-landing-page create getters and setters
+
+public class CourseProvider {
+
+	private String uniquePrefix;
+	private String name;
+	private String description;
+	private String generalEmail;
+	private String courseInquiryEmail;
+	private String landPhoneCountryCode;
+	private String landPhoneAreaCode;
+	private String landPhoneNo;
+	private String landPhpneNo2;
+	private String faxNo;
+	private String mobilePhoneCountryCode;
+	private String mobilePhoneNetworkCode;
+	private String mobilePhoneNumber;
+	private String headerImagePath;
+	private String logoImagePath;
+	private String speciality;
+	private String weblink;
+	private String facebookURL;
+	private String twitterURL;
+	private String myspaceURL;
+	private String linkedinURL;
+	private String instagramURL;
+	private String viberNumber;
+	private String whatsappNumber;
+	private String streetNo;
+	private String streetName;
+	private String crtBy;
+	private String modBy;
+	
+	private Date expirationDate;
+	private Date crtOn;
+	private Date monOn;
+	
+	private boolean isTutorRelated;
+	private boolean isAdminAllowed;
+	
+	private int accountType;
+	private int courseProviderStatus;
+	private int courseProviderType;
+	private int userType;
+	private int principal;
+	private int tutor;
+	
+	private int code;
+	/**
+	 * @return the code
+	 */
+	public int getCode() {
+		return code;
+	}
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(int code) {
+		this.code = code;
+	}
+	/**
+	 * @return the uniquePrefix
+	 */
+	public String getUniquePrefix() {
+		return uniquePrefix;
+	}
+	/**
+	 * @param uniquePrefix the uniquePrefix to set
+	 */
+	public void setUniquePrefix(String uniquePrefix) {
+		this.uniquePrefix = uniquePrefix;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	/**
+	 * @return the generalEmail
+	 */
+	public String getGeneralEmail() {
+		return generalEmail;
+	}
+	/**
+	 * @param generalEmail the generalEmail to set
+	 */
+	public void setGeneralEmail(String generalEmail) {
+		this.generalEmail = generalEmail;
+	}
+	/**
+	 * @return the courseInquiryEmail
+	 */
+	public String getCourseInquiryEmail() {
+		return courseInquiryEmail;
+	}
+	/**
+	 * @param courseInquiryEmail the courseInquiryEmail to set
+	 */
+	public void setCourseInquiryEmail(String courseInquiryEmail) {
+		this.courseInquiryEmail = courseInquiryEmail;
+	}
+	/**
+	 * @return the landPhoneCountryCode
+	 */
+	public String getLandPhoneCountryCode() {
+		return landPhoneCountryCode;
+	}
+	/**
+	 * @param landPhoneCountryCode the landPhoneCountryCode to set
+	 */
+	public void setLandPhoneCountryCode(String landPhoneCountryCode) {
+		this.landPhoneCountryCode = landPhoneCountryCode;
+	}
+	/**
+	 * @return the landPhoneAreaCode
+	 */
+	public String getLandPhoneAreaCode() {
+		return landPhoneAreaCode;
+	}
+	/**
+	 * @param landPhoneAreaCode the landPhoneAreaCode to set
+	 */
+	public void setLandPhoneAreaCode(String landPhoneAreaCode) {
+		this.landPhoneAreaCode = landPhoneAreaCode;
+	}
+	/**
+	 * @return the landPhoneNo
+	 */
+	public String getLandPhoneNo() {
+		return landPhoneNo;
+	}
+	/**
+	 * @param landPhoneNo the landPhoneNo to set
+	 */
+	public void setLandPhoneNo(String landPhoneNo) {
+		this.landPhoneNo = landPhoneNo;
+	}
+	/**
+	 * @return the landPhpneNo2
+	 */
+	public String getLandPhpneNo2() {
+		return landPhpneNo2;
+	}
+	/**
+	 * @param landPhpneNo2 the landPhpneNo2 to set
+	 */
+	public void setLandPhpneNo2(String landPhpneNo2) {
+		this.landPhpneNo2 = landPhpneNo2;
+	}
+	/**
+	 * @return the faxNo
+	 */
+	public String getFaxNo() {
+		return faxNo;
+	}
+	/**
+	 * @param faxNo the faxNo to set
+	 */
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
+	/**
+	 * @return the mobilePhoneCountryCode
+	 */
+	public String getMobilePhoneCountryCode() {
+		return mobilePhoneCountryCode;
+	}
+	/**
+	 * @param mobilePhoneCountryCode the mobilePhoneCountryCode to set
+	 */
+	public void setMobilePhoneCountryCode(String mobilePhoneCountryCode) {
+		this.mobilePhoneCountryCode = mobilePhoneCountryCode;
+	}
+	/**
+	 * @return the mobilePhoneNetworkCode
+	 */
+	public String getMobilePhoneNetworkCode() {
+		return mobilePhoneNetworkCode;
+	}
+	/**
+	 * @param mobilePhoneNetworkCode the mobilePhoneNetworkCode to set
+	 */
+	public void setMobilePhoneNetworkCode(String mobilePhoneNetworkCode) {
+		this.mobilePhoneNetworkCode = mobilePhoneNetworkCode;
+	}
+	/**
+	 * @return the mobilePhoneNumber
+	 */
+	public String getMobilePhoneNumber() {
+		return mobilePhoneNumber;
+	}
+	/**
+	 * @param mobilePhoneNumber the mobilePhoneNumber to set
+	 */
+	public void setMobilePhoneNumber(String mobilePhoneNumber) {
+		this.mobilePhoneNumber = mobilePhoneNumber;
+	}
+	/**
+	 * @return the headerImagePath
+	 */
+	public String getHeaderImagePath() {
+		return headerImagePath;
+	}
+	/**
+	 * @param headerImagePath the headerImagePath to set
+	 */
+	public void setHeaderImagePath(String headerImagePath) {
+		this.headerImagePath = headerImagePath;
+	}
+	/**
+	 * @return the logoImagePath
+	 */
+	public String getLogoImagePath() {
+		return logoImagePath;
+	}
+	/**
+	 * @param logoImagePath the logoImagePath to set
+	 */
+	public void setLogoImagePath(String logoImagePath) {
+		this.logoImagePath = logoImagePath;
+	}
+	/**
+	 * @return the speciality
+	 */
+	public String getSpeciality() {
+		return speciality;
+	}
+	/**
+	 * @param speciality the speciality to set
+	 */
+	public void setSpeciality(String speciality) {
+		this.speciality = speciality;
+	}
+	/**
+	 * @return the weblink
+	 */
+	public String getWeblink() {
+		return weblink;
+	}
+	/**
+	 * @param weblink the weblink to set
+	 */
+	public void setWeblink(String weblink) {
+		this.weblink = weblink;
+	}
+	/**
+	 * @return the facebookURL
+	 */
+	public String getFacebookURL() {
+		return facebookURL;
+	}
+	/**
+	 * @param facebookURL the facebookURL to set
+	 */
+	public void setFacebookURL(String facebookURL) {
+		this.facebookURL = facebookURL;
+	}
+	/**
+	 * @return the twitterURL
+	 */
+	public String getTwitterURL() {
+		return twitterURL;
+	}
+	/**
+	 * @param twitterURL the twitterURL to set
+	 */
+	public void setTwitterURL(String twitterURL) {
+		this.twitterURL = twitterURL;
+	}
+	/**
+	 * @return the myspaceURL
+	 */
+	public String getMyspaceURL() {
+		return myspaceURL;
+	}
+	/**
+	 * @param myspaceURL the myspaceURL to set
+	 */
+	public void setMyspaceURL(String myspaceURL) {
+		this.myspaceURL = myspaceURL;
+	}
+	/**
+	 * @return the linkedinURL
+	 */
+	public String getLinkedinURL() {
+		return linkedinURL;
+	}
+	/**
+	 * @param linkedinURL the linkedinURL to set
+	 */
+	public void setLinkedinURL(String linkedinURL) {
+		this.linkedinURL = linkedinURL;
+	}
+	/**
+	 * @return the instagramURL
+	 */
+	public String getInstagramURL() {
+		return instagramURL;
+	}
+	/**
+	 * @param instagramURL the instagramURL to set
+	 */
+	public void setInstagramURL(String instagramURL) {
+		this.instagramURL = instagramURL;
+	}
+	/**
+	 * @return the viberNumber
+	 */
+	public String getViberNumber() {
+		return viberNumber;
+	}
+	/**
+	 * @param viberNumber the viberNumber to set
+	 */
+	public void setViberNumber(String viberNumber) {
+		this.viberNumber = viberNumber;
+	}
+	/**
+	 * @return the whatsappNumber
+	 */
+	public String getWhatsappNumber() {
+		return whatsappNumber;
+	}
+	/**
+	 * @param whatsappNumber the whatsappNumber to set
+	 */
+	public void setWhatsappNumber(String whatsappNumber) {
+		this.whatsappNumber = whatsappNumber;
+	}
+	/**
+	 * @return the streetNo
+	 */
+	public String getStreetNo() {
+		return streetNo;
+	}
+	/**
+	 * @param streetNo the streetNo to set
+	 */
+	public void setStreetNo(String streetNo) {
+		this.streetNo = streetNo;
+	}
+	/**
+	 * @return the streetName
+	 */
+	public String getStreetName() {
+		return streetName;
+	}
+	/**
+	 * @param streetName the streetName to set
+	 */
+	public void setStreetName(String streetName) {
+		this.streetName = streetName;
+	}
+	/**
+	 * @return the crtBy
+	 */
+	public String getCrtBy() {
+		return crtBy;
+	}
+	/**
+	 * @param crtBy the crtBy to set
+	 */
+	public void setCrtBy(String crtBy) {
+		this.crtBy = crtBy;
+	}
+	/**
+	 * @return the modBy
+	 */
+	public String getModBy() {
+		return modBy;
+	}
+	/**
+	 * @param modBy the modBy to set
+	 */
+	public void setModBy(String modBy) {
+		this.modBy = modBy;
+	}
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	/**
+	 * @return the crtOn
+	 */
+	public Date getCrtOn() {
+		return crtOn;
+	}
+	/**
+	 * @param crtOn the crtOn to set
+	 */
+	public void setCrtOn(Date crtOn) {
+		this.crtOn = crtOn;
+	}
+	/**
+	 * @return the monOn
+	 */
+	public Date getMonOn() {
+		return monOn;
+	}
+	/**
+	 * @param monOn the monOn to set
+	 */
+	public void setMonOn(Date monOn) {
+		this.monOn = monOn;
+	}
+	/**
+	 * @return the isTutorRelated
+	 */
+	public boolean isTutorRelated() {
+		return isTutorRelated;
+	}
+	/**
+	 * @param isTutorRelated the isTutorRelated to set
+	 */
+	public void setTutorRelated(boolean isTutorRelated) {
+		this.isTutorRelated = isTutorRelated;
+	}
+	/**
+	 * @return the isAdminAllowed
+	 */
+	public boolean isAdminAllowed() {
+		return isAdminAllowed;
+	}
+	/**
+	 * @param isAdminAllowed the isAdminAllowed to set
+	 */
+	public void setAdminAllowed(boolean isAdminAllowed) {
+		this.isAdminAllowed = isAdminAllowed;
+	}
+	/**
+	 * @return the accountType
+	 */
+	public int getAccountType() {
+		return accountType;
+	}
+	/**
+	 * @param accountType the accountType to set
+	 */
+	public void setAccountType(int accountType) {
+		this.accountType = accountType;
+	}
+	/**
+	 * @return the courseProviderStatus
+	 */
+	public int getCourseProviderStatus() {
+		return courseProviderStatus;
+	}
+	/**
+	 * @param courseProviderStatus the courseProviderStatus to set
+	 */
+	public void setCourseProviderStatus(int courseProviderStatus) {
+		this.courseProviderStatus = courseProviderStatus;
+	}
+	/**
+	 * @return the courseProviderType
+	 */
+	public int getCourseProviderType() {
+		return courseProviderType;
+	}
+	/**
+	 * @param courseProviderType the courseProviderType to set
+	 */
+	public void setCourseProviderType(int courseProviderType) {
+		this.courseProviderType = courseProviderType;
+	}
+	/**
+	 * @return the userType
+	 */
+	public int getUserType() {
+		return userType;
+	}
+	/**
+	 * @param userType the userType to set
+	 */
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+	/**
+	 * @return the principal
+	 */
+	public int getPrincipal() {
+		return principal;
+	}
+	/**
+	 * @param principal the principal to set
+	 */
+	public void setPrincipal(int principal) {
+		this.principal = principal;
+	}
+	/**
+	 * @return the tutor
+	 */
+	public int getTutor() {
+		return tutor;
+	}
+	/**
+	 * @param tutor the tutor to set
+	 */
+	public void setTutor(int tutor) {
+		this.tutor = tutor;
+	}
+
+	
+
+	
+}
