@@ -7,7 +7,6 @@
 		<dependencies>
 			<module name="org.apache.commons.fileupload" />
 			<module name="org.apache.commons.io" />
-		
 			<module name="com.google.gson" />
 			<module name="org.apache.commons.lang3"/><!-- merged in from release 294 sha 917b431-->
 			<!-- <module name="org.apache.catalina.connector" /> remove until JBAP6 implementation of catalina.connector can be found. this is a JBAS5 implementation--> 
@@ -19,7 +18,6 @@
 			<module name="org.apache.commons.fileupload" />
 			<module name="org.apache.commons.io" />
 			<module name="org.apache.commons.lang3" />
-		
 			<module name="com.google.gson" />
 		</dependencies>
 	</sub-deployment>
