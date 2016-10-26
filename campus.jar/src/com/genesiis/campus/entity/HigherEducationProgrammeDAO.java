@@ -76,6 +76,8 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			
 			while(rs.next()){
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+				
+				log.info(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("EMAIL"));
@@ -98,11 +100,12 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("MODON"));
 				singleProgrammeList.add(rs.getString("MODBY"));			
 				
-				
+				final Collection<String> singleProgrammeCollection = singleProgrammeList;
+				programmeCollection.add(singleProgrammeCollection);  
 				
 			}
 			
-			
+			log.info("size >>>>>>>>>>>." + programmeCollection.size());
 			
 		}catch (SQLException exception) {
 			log.error("findById(Object code) sql exception" + exception.toString());
@@ -118,7 +121,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			conn.close();
 
 		}
-		return null;
+		return programmeCollection;
 	}
 
 	@Override
