@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161025 CM c13-Display course details INIT ProgrammeDAO.java
 //20161025 CM c13-Display course details Modified findById() method
+//20161026 CM c13-Display course details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
@@ -58,8 +60,9 @@ public class ProgrammeDAO implements ICrud {
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
-
+HashMap<String, Object> hashmap=new HashMap<String, Object>();
 			while (rs.next()) {
+			
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
 				singleprogrameDetails.add(rs.getString(1));//Programme name
 				singleprogrameDetails.add(rs.getString(2));//Description
@@ -81,6 +84,7 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(18));//Closeing date
 				singleprogrameDetails.add(rs.getString(19));//Commencement date
 				singleprogrameDetails.add(rs.getString(20));//Fee
+				
 				
 				programmeDetails.add(singleprogrameDetails);
 
