@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
+//20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 
 import java.io.IOException;
 import java.util.Collection;
@@ -54,6 +55,9 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
+		case CONTACT_US_PUBLC:
+			resultPage = o.getPageURL();
+			break;
 		case BAD_OPERATION:
 			resultPage = o.getPageURL();
 			break;
