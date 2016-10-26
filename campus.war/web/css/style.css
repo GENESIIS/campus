@@ -217,13 +217,18 @@ body, html {
                 display: block; }
                 .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
                   display: inline-block;
-                  position: relative; }
+                  position: relative;
+                  width: 46%; }
+                  .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image img {
+                    width: 90%; }
                 .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
                   display: inline-block;
+                  width: 54%;
                   position: relative;
                   font-size: 15px;
                   color: #919191;
-                  line-height: 16px; }
+                  line-height: 16px;
+                  padding-right: 10px; }
   .main-screen .banner-panel {
     width: 17%;
     display: inline-block;
