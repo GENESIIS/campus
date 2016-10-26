@@ -5,12 +5,16 @@ package com.genesiis.campus.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.genesiis.campus.command.CmdGetSearchData;
 import com.google.gson.Gson;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author pabodha This class is to get help on building dynamic SQL queries.
  */
 public class QueryBuildingHelper {
+	static Logger log = Logger.getLogger(QueryBuildingHelper.class.getName());
 	/**
 	 * To create dynamic query according to the incoming data
 	 * 
