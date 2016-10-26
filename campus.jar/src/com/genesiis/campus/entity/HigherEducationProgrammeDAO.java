@@ -8,15 +8,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class HigherEducationProgrammeDAO implements ICrud {
-	
-	static org.apache.log4j.Logger log = Logger.getLogger(HigherEducationProgrammeDAO.class.getName());
+
+	static org.apache.log4j.Logger log = Logger
+			.getLogger(HigherEducationProgrammeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -36,11 +39,10 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		return 0;
 	}
 
-	
-	
 	/**
-	 * findById method is used to get all programmes under the higher education 
-	 * category. 
+	 * findById method is used to get all programmes under the higher education
+	 * category.
+	 * 
 	 * @param code
 	 * @return string collection of programmes
 	 * @author JH
@@ -50,24 +52,64 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
+	
 		
+		Programme programme = null;
 		int status = 0;
 		String returnMessage = "";
+		final Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 		
-		String getAllQuery = "SELECT * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY = ?";
+		String getAllQuery = "SELECT * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY =? and PROGRAMMESTATUS = ? and EXPIRYDATE >= GETDATE()";
 				
 		try{
+			
+			
+			programme = (Programme) code;
 			conn = ConnectionManager.getConnection();
-			preparedStatement.setInt(1, 1);
+			preparedStatement = conn.prepareStatement(getAllQuery);
+			
+
+			preparedStatement.setInt(1, programme.getCategory());
+			preparedStatement.setInt(2, programme.getProgrammeStatus());
+			
+			final ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()){
+				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+				singleProgrammeList.add(rs.getString("CODE"));
+				singleProgrammeList.add(rs.getString("NAME"));
+				singleProgrammeList.add(rs.getString("EMAIL"));
+				singleProgrammeList.add(rs.getString("IMAGE"));
+				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+				singleProgrammeList.add(rs.getString("DURATION"));
+				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS"));
+				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
+				singleProgrammeList.add(rs.getString("COUNSELORPHONE"));
+				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+				singleProgrammeList.add(rs.getString("EXPIRYDATE"));
+				singleProgrammeList.add(rs.getString("PROGRAMMESTATUS"));
+				singleProgrammeList.add(rs.getString("COURSEPROVIDER"));
+				singleProgrammeList.add(rs.getString("MAJOR"));
+				singleProgrammeList.add(rs.getString("CATEGORY"));
+				singleProgrammeList.add(rs.getString("LEVEL"));
+				singleProgrammeList.add(rs.getString("CLASSTYPE"));
+				singleProgrammeList.add(rs.getString("CRTON"));
+				singleProgrammeList.add(rs.getString("CRTBY"));
+				singleProgrammeList.add(rs.getString("MODON"));
+				singleProgrammeList.add(rs.getString("MODBY"));			
+				
+				
+				
+			}
+			
 			
 			
 		}catch (SQLException exception) {
-			log.error("getAll() sql exception" + exception.toString());
+			log.error("findById(Object code) sql exception" + exception.toString());
 			throw exception;
 
 		} catch (Exception exception) {
-			log.error("getAll() " + exception.toString());
+			log.error("findById(Object code) " + exception.toString());
 			throw exception;
 		} finally {
 			if (preparedStatement != null) {
@@ -78,8 +120,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
