@@ -22,10 +22,10 @@ $.contactButtons({
   effect  : 'slide-on-scroll',
   buttons : {
     'facebook':   { class: 'facebook', use: true, link: 'http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href), extras: 'target="_top "' },
-    'linkedin':   { class: 'linkedin', use: true, link: 'https://www.linkedin.com/share?=' + encodeURIComponent(location.href), extras: 'target="_top "' },
+    'linkedin':   { class: 'linkedin', use: true, link: 'http://www.linkedin.com/shareArticle?mini=true&amp;url=' + encodeURIComponent(location.href), extras: 'target="_top "' },
     'google':     { class: 'gplus',    use: true, link: 'https://plus.google.com/share?url={' +encodeURIComponent(location.href), extras: 'target="_top "}'},
-    'twitter':   { class: 'twitter',   use: true, link: 'https://twitter.com/intent/tweet?original_referer=' + encodeURIComponent(location.href), extras: 'target="_top "' },
-    'phone':      { class: 'phone separated',    use: true, link: '+000' },
-    'email':      { class: 'email',    use: true, link: 'test@web.com' }
+    'twitter':   { class: 'twitter',   use: true, link: 'https://twitter.com/share?url=' + encodeURIComponent(location.href), extras: 'target="_top "' },
+    'phone':      { class: 'phone separated',    use: true, link: '+94 11 2329 868' },
+    'email':      { class: 'email',    use: true, link: ' info@genesiis.com' }
   }
 });

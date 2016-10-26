@@ -4,6 +4,7 @@
 
 <!-- 20161024 AS c12-social-media-share-panale-as project initiated -->
 <!-- 20161025 AS c12-social-media-share-panale-as side share panale and top share panale button and js created -->
+<!-- 20161026 AS c12-social-media-share-panale-as linkedIn getlink function embedded   -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -12,9 +13,7 @@
 
 <link href="dist/css/contact-buttons.css" rel="stylesheet"
 	type="text/css" />
-<link href="dist/css/demo.css" rel="stylesheet" type="text/css" />
-<script src="dist/js/fshare.js" type="text/javascript"></script>
-<script src="dist/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<link href="dist/css/sharepanale.css" rel="stylesheet" type="text/css" />
 
 
 <link rel="stylesheet"
@@ -26,6 +25,7 @@
 	<h1>Hello World..!!</h1>
 
 	<div id="fb-root"></div>
+<!-- 	facebook function script -->
 	<script>
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
@@ -37,6 +37,9 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
+
+
+<!-- twitter function script -->
 
 	<script>
 		window.twttr = (function(d, s, id) {
@@ -70,7 +73,8 @@
 			<td>
 				<!-- Place this tag where you want the share button to render. -->
 				<div class="g-plus" data-action="share" data-annotation="bubble"
-					data-href="http://education.topjobs.lk/"></div> <!-- Place this tag after the last share tag. -->
+					data-href="http://education.topjobs.lk/"></div>
+			 <!-- Place this tag after the google+ share tag. -->
 				<script type="text/javascript">
 					(function() {
 						var po = document.createElement('script');
@@ -92,7 +96,8 @@
 			<td><a class="twitter-share-button"
 				href="https://twitter.com/intent/tweet?" data-size="small">
 					Tweet</a></td>
-			<td><script src="//platform.linkedin.com/in.js"
+			<td>
+			<script src="//platform.linkedin.com/in.js"
 					type="text/javascript">
 				lang: en_US
 			</script> <script type="IN/Share"
@@ -103,17 +108,12 @@
 	</table>
 
 
-
-	<script type="text/javascript"
-		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		
-	</script>
 	</div>
 
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="dist/js/jquery.contact-buttons.js"></script>
-	<script src="dist/js/demo.js"></script>
+	<script src="dist/js/share_panale.js"></script>
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push([ '_setAccount', 'UA-36251023-1' ]);
