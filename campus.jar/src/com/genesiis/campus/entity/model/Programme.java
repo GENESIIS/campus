@@ -255,10 +255,10 @@ public class Programme {
 		return expiryDate;
 	}
 	/**
-	 * @param expiryDate the expiryDate to set
+	 * @param date the expiryDate to set
 	 */
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setExpiryDate(java.util.Date date) {
+		this.expiryDate = (Date) date;
 	}
 	/**
 	 * @return the isActive
