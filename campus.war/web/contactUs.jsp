@@ -15,7 +15,7 @@
 </head>
 <body>
 <div align="center" >
-<form method="post"  name="contactUsForm" >
+<form method="post"  name="contactUsForm" action="PublicController" >
 	
 <table>
 	<tr>
