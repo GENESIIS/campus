@@ -38,6 +38,9 @@ public class CourseProviderDAO implements ICrud {
 			int categoryCode = courseProvider.getCourseProviderType();
 			
 			String query = "SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE COURSEPROVIDERTYPE = ?";
+			String courseProviderQuery = "SELECT cp.* FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";
 
 			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query.toString());
