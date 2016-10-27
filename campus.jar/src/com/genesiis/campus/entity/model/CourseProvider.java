@@ -50,8 +50,7 @@ public class CourseProvider {
 	private int userType;
 	private int principal;
 	private int tutor;
-	
-	private int code;
+
 	/**
 	 * @return the code
 	 */
