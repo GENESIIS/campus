@@ -1,5 +1,5 @@
 package com.genesiis.campus.instituteController;
-//20161027 AS C8-inquiry-form-for-course CmdSendCourseInquiry class created.
+//20161027 AS C8-inquiry-form-for-course InstituteController class created.
 import com.genesiis.campus.controller.CampusController;
 import java.io.IOException;
 import javax.servlet.Servlet;
