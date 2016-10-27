@@ -7,13 +7,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<script src="dist/js/campus/campus.instituteInquiry.js"></script>
+<script src="dist/js/campus/jquery.min.js"></script>
+<title>Institute Inquiry</title>
 </head>
 <body>
 	<table>
 	<tr>
 			<td>You are making an inquiry about ICBT</td>
-			<td><label id="institueCode">1</label></td>
+			<td><label id="courseProviderCode">1</label>
+			<label id="studentCode">1</label>
+			
+			</td>
 		</tr>
 	<tr>
 			<td colspan="2"><h2>Institute Inquiry Form</h2></td>
@@ -21,7 +26,7 @@
 		</tr>
 		<tr>
 			<td>Full Name</td>
-			<td><input type="text" name="fullname" id="fullname"/></td>
+			<td><input type="text" name="fullname" id="fullnamee" value=""/></td>
 		</tr>
 		<tr>
 			<td>Email</td>
@@ -50,7 +55,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><button type="button" onclick="makeInquiry()">
+			<td><button type="button" onclick="addInstituteInquiry()">
 					<i class="glyphicon glyphicon-floppy-disk"></i> Save
 				</button></td>
 			<td></td>
