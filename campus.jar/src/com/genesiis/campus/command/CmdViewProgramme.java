@@ -11,6 +11,7 @@ import java.util.Collection;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.IntakeDAO;
+import com.genesiis.campus.entity.ModuleDAO;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.SemesterDAO;
 import com.genesiis.campus.entity.model.Programme;
@@ -39,19 +40,21 @@ public class CmdViewProgramme implements ICommand{
 			 ICrud programmeDAO=new ProgrammeDAO();
 			 ICrud semesterDAO=new SemesterDAO();
 			 ICrud intakeDAO=new IntakeDAO();
+			 ICrud moduleDAO=new ModuleDAO();
+			 
 			int programmeId= Integer.parseInt(helper.getParameter("programmeCode"));
 			
 			programme.setCode(programmeId);
 			
 			Collection<Collection<String>> programmeDAOCollection = programmeDAO.findById(programme);
-			view.setCollection(programmeDAOCollection);
+			//view.setCollection(programmeDAOCollection);
 			
 			Collection<Collection<String>> semesterDAOCollection = semesterDAO.findById(programme);
 		//	view.setCollection(semesterDAOCollection);
 			
 
-//			Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
-//			//view.setCollection(moduleDAOCollection);
+			Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
+			view.setCollection(moduleDAOCollection);
 			
 			Collection<Collection<String>> intakeDAOCollection = intakeDAO.findById(programme);
 			
