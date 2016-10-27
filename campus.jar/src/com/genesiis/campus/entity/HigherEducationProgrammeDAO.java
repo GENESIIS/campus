@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161025 JH c7-list-higher-education-courses data access object class HigherEducationProgrammeDAO.java created
 //20161025 JH c7-list-higher-education-courses implement unimplemented methods
 //20161025 JH c7-list-higher-education-courses findById method modified
+//20161027 JH c7-higher-education-landing-page findById method modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,38 +53,38 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-	
-		
+
 		Programme programme = null;
-		int status = 0;
 		String returnMessage = "";
 		final Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
-		
-		String getAllQuery = "SELECT * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY =? and PROGRAMMESTATUS = ? and EXPIRYDATE >= GETDATE()";
-				
-		try{
-			
-			
+
+		String getAllQuery = "SELECT * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY = ? and PROGRAMMESTATUS = ? and DISPLAYSTARTDATE <= GETDATE()  and EXPIRYDATE >= GETDATE()";
+
+		try {
+
 			programme = (Programme) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(getAllQuery);
-			
 
-			preparedStatement.setInt(1, programme.getCategory());
-			preparedStatement.setInt(2, programme.getProgrammeStatus());
-			
+			int pCode = programme.getCategory();
+
+			// preparedStatement.setInt(1, programme.getCategory());
+			// preparedStatement.setInt(2, programme.getProgrammeStatus());
+			preparedStatement.setInt(1, 1);
+			preparedStatement.setInt(2, 1);
+
 			final ResultSet rs = preparedStatement.executeQuery();
 			
-			while(rs.next()){
+			while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-				
+
 				log.info(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("EMAIL"));
 				singleProgrammeList.add(rs.getString("IMAGE"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-				singleProgrammeList.add(rs.getString("DURATION"));
+				// singleProgrammeList.add(rs.getString("DURATION"));
 				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS"));
 				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 				singleProgrammeList.add(rs.getString("COUNSELORPHONE"));
@@ -98,17 +99,18 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("CRTON"));
 				singleProgrammeList.add(rs.getString("CRTBY"));
 				singleProgrammeList.add(rs.getString("MODON"));
-				singleProgrammeList.add(rs.getString("MODBY"));			
-				
+				singleProgrammeList.add(rs.getString("MODBY"));
+
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
-				programmeCollection.add(singleProgrammeCollection);  
-				
+				programmeCollection.add(singleProgrammeCollection);
+
 			}
-			
-			log.info("size >>>>>>>>>>>." + programmeCollection.size());
-			
-		}catch (SQLException exception) {
-			log.error("findById(Object code) sql exception" + exception.toString());
+
+			log.info("programme size >>>>>>>>>>>." + programmeCollection.size());
+
+		} catch (SQLException exception) {
+			log.error("findById(Object code) sql exception"
+					+ exception.toString());
 			throw exception;
 
 		} catch (Exception exception) {
