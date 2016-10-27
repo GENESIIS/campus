@@ -31,19 +31,20 @@ public class CorporateProgrammeDAO implements ICrud {
 		
 		final Collection<Collection<String>> corporateProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement ps = null;
 
 		try {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
 			
-			String query = "SELECT * FROM [CAMPUS].[PROGRAMME] WHERE CATEGORY = ?";
+			String query = "SELECT * FROM [CAMPUS].[PROGRAMME] WHERE CATEGORY = ? AND PROGRAMMESTATUS = ? AND GETDATE() < EXPIRYDATE";
 
 			conn = ConnectionManager.getConnection();
-			stmt = conn.prepareStatement(query.toString());
-			stmt.setInt(1, categoryCode);
-			final ResultSet rs = stmt.executeQuery();
-
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, categoryCode);
+			ps.setInt(2, 1);
+			ResultSet rs = ps.executeQuery();
+			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
 
 		} catch (ClassCastException cce) {
@@ -56,8 +57,8 @@ public class CorporateProgrammeDAO implements ICrud {
 			Log.info("findById(Object): Exception: " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
+			if (ps != null) {
+				ps.close();
 			}
 			if (conn != null) {
 				conn.close();
