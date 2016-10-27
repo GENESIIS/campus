@@ -10,13 +10,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Dummy Page</title>
+<title>Interim Page</title>
 </head>
 <body>
+This page is expected to temporarily function as the Home page.
 <div align="center" >
 		<form action="PublicController" method="post">
-		<input type="text" name="text1">
-		<button type="submit" name="CCO" value="LCTP">SUBMIT</button>
+			<input type="text" name="category">
+			<button type="submit" name="CCO" value="LCTP">SUBMIT</button>
 		</form>
 </div>
 </body>
