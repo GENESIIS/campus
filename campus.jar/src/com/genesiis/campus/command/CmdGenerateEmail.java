@@ -13,7 +13,7 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.Operation;
 
-import java.sql.Connection;;
+import java.sql.Connection;
 
 import org.apache.log4j.Logger;
 
@@ -44,7 +44,7 @@ public class CmdGenerateEmail implements ICommand {
 		mailBody = helper.getParameter("message");
 		String cco = helper.getCommandCode();
 		String message = "";
-		Collection<Collection<String>> collectionOfEmailCollection = null;
+		Collection<Collection<String>> collectionOfCollectionOfEmails = null;
 		 
 		ICrud genesiis = new SystemConfigDAO();
 		
@@ -53,9 +53,11 @@ public class CmdGenerateEmail implements ICommand {
 			 this.createDatabaseConnection();
 			 //SYSTEMCONFIGCODE for email
 			 String[] sysEmailAdress = {"ENQUIRY_EMAIL_TO","ENQUIRY_EMIL_ADMIN"}; 
-			 collectionOfEmailCollection=genesiis.findById(sysEmailAdress, connection);
-			   // TESTING STRUCTURE----
-			 for( Collection<String> col :collectionOfEmailCollection){
+			 collectionOfCollectionOfEmails=genesiis.findById(sysEmailAdress, connection);
+			 
+			 
+			 // TESTING STRUCTURE----
+			 for( Collection<String> col :collectionOfCollectionOfEmails){
 				   for(String s : col){
 					   log.info("email SEQ ===" +s );  
 				   }
