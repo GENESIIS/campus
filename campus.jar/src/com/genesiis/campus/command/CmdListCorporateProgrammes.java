@@ -1,8 +1,10 @@
 package com.genesiis.campus.command;
 
 //20161026 MM c5-corporate-training-landing-page INIT CmdListCorporateProgrammes.java
-//20161027 MM c5-corporate-training-landing-page INIT Modified execute() method to include 
+//20161027 MM c5-corporate-training-landing-page Modified execute() method to include 
 // 				fetching of CourseProviders
+//20161027 MM c5-corporate-training-landing-page Modified execute() method to re-use 
+//				Programme object to pass argument to findById() method of CourseProviderDAO
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,10 +58,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 			
 			programmeCollection = programmeDao.findById(programme);
 			
-			CourseProvider courseProvider = new CourseProvider();
-			courseProvider.setCourseProviderType(1);
-			
-			courseProviderCollection = courseProviderDao.findById(courseProvider);
+			courseProviderCollection = courseProviderDao.findById(programme);
 			
 			iview.setCollection(programmeCollection);
 			helper.setAttribute("courseProviders", courseProviderCollection);
