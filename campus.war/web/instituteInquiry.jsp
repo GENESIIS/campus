@@ -55,6 +55,10 @@
 			</td>
 		</tr>
 		<tr>
+			<td colspan="2">Re-capcha</td>
+			
+		</tr>
+		<tr>
 			<td><button type="button" onclick="addInstituteInquiry()">
 					<i class="glyphicon glyphicon-floppy-disk"></i> Save
 				</button></td>
