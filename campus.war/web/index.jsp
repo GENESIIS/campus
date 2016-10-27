@@ -1,5 +1,7 @@
 <!-- c11-criteria-based-filter-search : designed a sample UI to implement filter search. -->
 <!-- c11-criteria-based-filter-search : modified the JavaScript code to add addsearchData() method to pass data to the servlet. -->
+<!-- 20161027 PN c11-criteria-based-filter-search : modified the JavaScript code to fix a bug encountered in passing data to the JSon -->
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -66,7 +68,7 @@
 	 <button onclick="addsearchData()">Click me</button> 
 
 	<script type="text/javascript">
-	var SourceUrl = "http://www.google.com/?tracker=blah1";
+	var SourceUrl = "";
 	var queryUrl = "";
 	var landingUrl = "";
 	var finalUrl = SourceUrl;
@@ -147,17 +149,25 @@
 		mySingleField = "&mySingleField=" + MSV;
 
 // 		function MakeUrl() {
-			finalUrl = SourceUrl + queryUrl + landingUrl + result + sercval
-					+ mySingleField;
+// 			finalUrl = SourceUrl + queryUrl + landingUrl + result + sercval
+// 					+ mySingleField;
 // 			alert(finalUrl);
 // 		}
 		
 		// Get data and sent to EmployeeController.java.
 		function addsearchData() {
-
-			var searchData = {
-				"searchData" : finalUrl
-			};
+// 			alert(result);
+// 			alert(queryUrl);
+// 			alert(landingUrl);
+			finalUrl = result + SourceUrl + queryUrl + landingUrl + sercval
+			+ mySingleField;
+// 			alert(finalUrl);
+			
+// 			var searchData = {
+// 				"searchData" : finalUrl
+// 			};
+	
+			var searchData = finalUrl;
 
 			$.ajax({
 				type : "POST",
