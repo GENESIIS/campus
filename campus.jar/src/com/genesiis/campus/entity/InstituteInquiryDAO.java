@@ -38,11 +38,11 @@ public class InstituteInquiryDAO implements ICrud {
 				preparedStatement.setString(5, instituteInquiry.getTelNo());
 				preparedStatement.setString(6, instituteInquiry.getInquiryTitle());
 				preparedStatement.setString(7, instituteInquiry.getInquiryText());
-				preparedStatement.setDate(7, instituteInquiry.getInquiryDate());
-				preparedStatement.setDate(7, instituteInquiry.getInquiryTime());
-				preparedStatement.setInt(7, instituteInquiry.getIsActive());
-				preparedStatement.setString(7, instituteInquiry.getCrtBy());
-				preparedStatement.setString(7, instituteInquiry.getModBy());
+				preparedStatement.setDate(8, instituteInquiry.getInquiryDate());
+				preparedStatement.setDate(9, instituteInquiry.getInquiryTime());
+				preparedStatement.setInt(10, instituteInquiry.getIsActive());
+				preparedStatement.setString(11, instituteInquiry.getCrtBy());
+				preparedStatement.setString(12, instituteInquiry.getModBy());
 				status = preparedStatement.executeUpdate();
 
 			} catch (SQLException exception) {
