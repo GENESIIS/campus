@@ -30,8 +30,8 @@ public class InstituteInquiryDAO implements ICrud {
 		
 
 			String query = "INSERT INTO [CAMPUS].[StudentCourseProviderInquiry] (STUDENTNAME, STUDENTEMAIL, TELEPHONECOUNTRYCODE, "
-					+ "TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, ISACTIVE,CRTON,CRTBY,MODON, MODBY ) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
+					+ "TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, ISACTIVE,STUDENT,COURSEPROVIDER,CRTON,CRTBY,MODON, MODBY ) "
+					+ "VALUES (?,?,?,?,?,?,?,GETDATE(),GETDATE(),?,?,?,GETDATE(),?, GETDATE(), ?)";
 			Connection conn = null;
 			PreparedStatement preparedStatement = null;
 			final InstituteInquiry instituteInquiry = (InstituteInquiry) object;
@@ -47,11 +47,11 @@ public class InstituteInquiryDAO implements ICrud {
 				preparedStatement.setString(5, instituteInquiry.getTelNo());
 				preparedStatement.setString(6, instituteInquiry.getInquiryTitle());
 				preparedStatement.setString(7, instituteInquiry.getInquiryText());
-				preparedStatement.setDate(8, instituteInquiry.getInquiryDate());
-				preparedStatement.setDate(9, instituteInquiry.getInquiryTime());
-				preparedStatement.setInt(10, instituteInquiry.getIsActive());
-				preparedStatement.setString(11, instituteInquiry.getCrtBy());
-				preparedStatement.setString(12, instituteInquiry.getModBy());
+				preparedStatement.setInt(8, instituteInquiry.getIsActive());
+				preparedStatement.setInt(9,instituteInquiry.getStudent());
+				preparedStatement.setInt(10, instituteInquiry.getCourseProvider());
+				preparedStatement.setString(11, "chathuri");
+				preparedStatement.setString(12, "chathuri");
 				status = preparedStatement.executeUpdate();
 
 			} catch (SQLException exception) {
