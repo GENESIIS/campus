@@ -68,10 +68,9 @@ public class HigherEducationProgrammeDAO implements ICrud {
 
 			int pCode = programme.getCategory();
 
-			// preparedStatement.setInt(1, programme.getCategory());
-			// preparedStatement.setInt(2, programme.getProgrammeStatus());
-			preparedStatement.setInt(1, 1);
-			preparedStatement.setInt(2, 1);
+			preparedStatement.setInt(1, programme.getCategory());
+			preparedStatement.setInt(2, programme.getProgrammeStatus());
+
 
 			final ResultSet rs = preparedStatement.executeQuery();
 			
@@ -84,7 +83,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("EMAIL"));
 				singleProgrammeList.add(rs.getString("IMAGE"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-				// singleProgrammeList.add(rs.getString("DURATION"));
+				singleProgrammeList.add(rs.getString("DURATION"));
 				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS"));
 				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 				singleProgrammeList.add(rs.getString("COUNSELORPHONE"));
@@ -105,8 +104,6 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				programmeCollection.add(singleProgrammeCollection);
 
 			}
-
-			log.info("programme size >>>>>>>>>>>." + programmeCollection.size());
 
 		} catch (SQLException exception) {
 			log.error("findById(Object code) sql exception"
