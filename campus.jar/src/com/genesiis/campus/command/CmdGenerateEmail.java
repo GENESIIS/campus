@@ -51,17 +51,17 @@ public class CmdGenerateEmail implements ICommand {
 		 switch(Operation.getOperation(cco)){
 		 case CONTACT_US_PUBLC:
 			 this.createDatabaseConnection();
-			 //SYSTEMCONFIGCODE
+			 //SYSTEMCONFIGCODE for email
 			 String[] sysEmailAdress = {"ENQUIRY_EMAIL_TO","ENQUIRY_EMIL_ADMIN"}; 
 			 collectionOfEmailCollection=genesiis.findById(sysEmailAdress, connection);
-			   
+			   // TESTING STRUCTURE----
 			 for( Collection<String> col :collectionOfEmailCollection){
 				   for(String s : col){
 					   log.info("email SEQ ===" +s );  
 				   }
 			   }
 			 
-			 
+			// TESTING STRUCTURE GINISHES 
 			 break;
 		 default:
 			 
