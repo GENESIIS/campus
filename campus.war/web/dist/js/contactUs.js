@@ -4,22 +4,33 @@
 function validateForm(){
 	isFieldFilled(isempty(document.contactUsForm.firstName.value),"First Name Field");
 	isFieldFilled(isempty(document.contactUsForm.lastName.value),"Last Name Field");
-	//isFieldFilled(isValidEmailFormat(),"Email Field");
+	isFieldFilled(isValidEmailFormat(),"Email Field");
 	isFieldFilled(isValidPhoneNumber(document.contactUsForm.contactNumber.value),"Phone Number Field");	
 	isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field");
 	isFieldFilled(isempty(document.contactUsForm.message.value),"message Field");
-	isFieldFilled(isHumanTest(),"Correctly 10-4");
+	isFieldFilled(isHumanTestPassed(),"Correctly 10-4");
 }
 
+/**
+ * isHumanTestPassed(0 is a primary function that 
+ * matches the entered value against a hard coded 
+ * value.
+ * @returns boolean true if the human test passes
+ * else false
+ */
 
-function isHumanTest(){
-	return (document.contactUsForm.humanTest.value == 6)?false : true;
+function isHumanTestPassed(){	
+	return (document.contactUsForm.humanTest.value == 6)?true : false;
 	
 }
+/**
+ * isFieldFilled() generate a alert if the passing in 
+ * flag is false else the method acts void
+ * @param flag expression that evaluates to a boolean
+ * @param elementName  string to be append to the produced message
+ */
 
-
-function isFieldFilled(flag, elementName){
-	
+function isFieldFilled(flag, elementName){	
 	if(!flag){
 		alert(elementName+ "must be filled out Correctly");
 	}
@@ -30,8 +41,7 @@ function isFieldFilled(flag, elementName){
  * @param fieldValue it is the value of a document element
  * @returns true if has content else false
  */
-function isempty(fieldValue){
-	
+function isempty(fieldValue){	
 	return ((fieldValue == "") ||(fieldValue == null) )?false : true;
 }
 
@@ -41,11 +51,8 @@ function isempty(fieldValue){
  * one then returns true else return false
  */
 function isValidEmailFormat(){	
-	alert("in the isValidEmailFormat()");
 	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
-	alert("emailAddress the pattern isValidEmailFormat()");
-	var pattern = /([\w-\.]+)@(?:[\w]+\.)+)([a-zA-Z]{2,4})/;
-	alert("passing the pattern isValidEmailFormat()");
+	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
 	return isPatternMatch(pattern,emailAddress);
 }
 /**
@@ -56,8 +63,7 @@ function isValidEmailFormat(){
  * @returns {Boolean}
  */
 function isValidPhoneNumber(phoneNumber){
-	alert("in the isValidPhoneNumber()");
-	var phonenumberPattern= /^0\d{9}$/;
+	var phonenumberPattern= /^0\d{9}$/mg;
 	return isPatternMatch(phonenumberPattern,phoneNumber);
 }
 
@@ -66,8 +72,7 @@ function isValidPhoneNumber(phoneNumber){
  * @param source content to act as the source to be matched against the pattern
  * @returns boolean if matches true else false
  */
-function isPatternMatch(regularExpression,source){
-	alert("in the isPatternMatch()");
+function isPatternMatch(regularExpression,source){	
 	return regularExpression.test(source);
 	
 }
