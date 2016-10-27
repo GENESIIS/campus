@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161025 PN c11-criteria-based-filter-search INIT QueryBuildingHelper.java to implement query building helper method. 
+//20161027 PN c11-criteria-based-filter-search modified assignMapData() method and extractFromJason() method. - WIP
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +16,10 @@ import org.apache.log4j.Logger;
  */
 public class QueryBuildingHelper {
 	static Logger log = Logger.getLogger(QueryBuildingHelper.class.getName());
+
 	/**
 	 * To create dynamic query according to the incoming data
-	 * 
+	 * This is only for concatenate 
 	 * @author pabodha
 	 * @param queryMap
 	 * @param mainQuery
@@ -27,14 +29,19 @@ public class QueryBuildingHelper {
 		String query = "";
 		Map<String, String[]> map = queryMap;
 		String var = "";
-		for (String key : map.keySet()) {
-			String[] value = map.get(key);
-			String criteria = key + " IN (";
-			String attributes = String.join(",", value) + ")";
-
-			criteria = criteria.concat(attributes);
-			criteria = criteria.concat(" AND ");
-			var = criteria;
+		int count = 0;
+		if (!map.isEmpty()) {
+			for (String key : map.keySet()) {
+				String[] value = map.get(key);
+				String criteria = key + " IN (";
+				String attributes = String.join(",", value) + ")";
+				count++;
+				criteria = criteria.concat(attributes);
+				if (count != map.size()) {
+					criteria = criteria.concat(" AND ");
+				}
+				var = var + criteria;
+			}
 		}
 		query = mainQuery.concat(var);
 		return query;
@@ -52,11 +59,13 @@ public class QueryBuildingHelper {
 		for (int i = 0; i < criteriaValueSet.length; i++) {
 			String var = criteriaValueSet[i];
 			String[] data = var.split("=");
-			String criteria = data[0].trim();
-			String valueSet = data[1].trim();
+			if (data.length == 2) {
+				String criteria = data[0].trim();
+				String valueSet = data[1].trim();
 
-			String[] valuesToArray = valueSet.split(",");
-			map.put(criteria, valuesToArray);
+				String[] valuesToArray = valueSet.split(",");
+				map.put(criteria, valuesToArray);
+			}
 		}
 		return map;
 	}
@@ -66,7 +75,7 @@ public class QueryBuildingHelper {
 	 * @param data
 	 * @return Object extracted from passed json object.
 	 */
-	public Object extractFromJason(String data) {
+	public String extractFromJason(String data) {
 		Gson gson = new Gson();
 		String queryString = "";
 		try {
