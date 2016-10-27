@@ -20,11 +20,19 @@
             <h1 class="page-topic-t1">| All Courses </h1>
             <!-- All Category -->
             <div class="all-category">
-                <!-- 1st Category - All -->
+                <!-- Category - All -->
+                <div class="filter-item">
+                    <!-- Drop item header -->
+                    <div  class="item-header">
+                        <label>All <span>- 100</span></label>
+                        <a href="javascript:"><input type="checkbox"></a>
+                    </div>
+                </div>
+                <!-- 1st Category - Categories -->
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header">
-                        <label slide-toggle="#dropItem1">All <span>- 100</span></label>
+                        <label slide-toggle="#dropItem1">Categories <span>- 06</span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
                     <!-- Item Drop list -->
@@ -100,7 +108,67 @@
             <!-- End All category -->
         </div>
         <div class="result-panel">
-            Results
+            <!-- Panel Header -->
+            <div class="panel-header clearfix">
+                <div class="filter-path">
+                    <ol class="list-inline">
+                        <li>Courses</li>
+                        <li>/ All</li>
+                    </ol>
+                </div>
+
+                <!-- Search drop down boxes bar -->
+                <div class="search-boxes-bar clearfix">
+                    <div class="institute-col col-md-4 col-lg-4">
+                        <div class="drop-holder">
+                            <input type="text" name="product" list="institueName" placeholder="Institute"/>
+                            <datalist id="institueName">
+                                <option value="ICBT"></option>
+                                <option value="IIT"></option>
+                                <option value="NIBM"></option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="district-col col-md-4 col-lg-4">
+                        <div class="drop-holder">
+                            <input type="text" name="product" list="District" placeholder="District"/>
+                            <datalist id="District">
+                                <option value="Kurunegala"></option>
+                                <option value="Colombo"></option>
+                                <option value="Gampaha"></option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="town-col col-md-4 col-lg-4">
+                        <div class="drop-holder">
+                            <input type="text" name="product" list="Town" placeholder="Town"/>
+                            <datalist id="Town">
+                                <option value="Colombo"></option>
+                                <option value="Kurunegala"></option>
+                                <option value="Kandy"></option>
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Panel Header -->
+            <hr>
+
+            <!-- Search Result List view -->
+            <div class="search-result-view clearfix">
+                <div class="result-box">
+                    <div class="course-name">
+                        <h1>Bsc (Hons) in Information Technology <span class="provider-name"> @ICBT</span></h1>
+                    </div>
+                    <div class="course-info">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                    </div>
+                    <div class="provider-info">
+                        <a href="javascript:"><img src="i/icbt.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
