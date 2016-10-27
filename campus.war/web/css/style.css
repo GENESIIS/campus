@@ -329,7 +329,9 @@ body, html {
               height: 40px;
               background: #4065a4;
               border: 1px solid #748bb1;
-              padding-left: 18px; }
+              padding-left: 18px;
+              width: 100%;
+              color: #fff; }
       .courses-screen .filter-area .result-panel .search-result-view {
         display: block;
         overflow-y: auto; }
