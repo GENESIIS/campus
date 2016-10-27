@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161026 MM c5-corporate-training-landing-page INIT CorporateProgrammeDAO.java
 //20161026 MM c5-corporate-training-landing-page Removed setting of unneeded 
 // 				field data when fetching data in findById()
+//20161028 MM c5-corporate-training-landing-page Corrected query result processing
+// 				code to remove accessing invalid fields
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +77,6 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("NAME"));
 			singleProgramme.add(rs.getString("EMAIL"));
 			singleProgramme.add(rs.getString("IMAGE"));
-			singleProgramme.add(rs.getString("ISACTIVE"));
 			singleProgramme.add(rs.getString("DESCRIPTION"));
 			singleProgramme.add(rs.getString("DURATION"));
 			singleProgramme.add(rs.getString("ENTRYREQUIREMENTS"));
