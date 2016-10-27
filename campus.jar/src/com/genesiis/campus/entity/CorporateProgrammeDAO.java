@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161026 MM c5-corporate-training-landing-page INIT CorporateProgrammeDAO.java
+//20161026 MM c5-corporate-training-landing-page Removed setting of unneeded 
+// 				field data when fetching data in findById()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,10 +87,6 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("CATEGORY"));
 			singleProgramme.add(rs.getString("LEVEL"));
 			singleProgramme.add(rs.getString("CLASSTYPE"));
-			singleProgramme.add(rs.getString("CRTON"));
-			singleProgramme.add(rs.getString("CRTBY"));
-			singleProgramme.add(rs.getString("MODON"));
-			singleProgramme.add(rs.getString("MODBY"));
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}
