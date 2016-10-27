@@ -3,48 +3,67 @@
  */
 
 /*******************************************************************************
- * To Add data 
+ * To Add data
  ******************************************************************************/
 // Get data and sent to InstituteController.java.
 function addInstituteInquiry() {
-	var fullname = $("#fullname").val();
+	alert("hi0");
+	var fullname = $("#fullnamee").val();
+	alert("Fullname: " + fullname);
 	var email = $("#email").val();
+	alert("email: " + email);
+	var countryCode = $("#countryCode").val();
+	alert("Country Code: " + countryCode);
 	var areaCode = $("#areaCode").val();
+	alert("areaCode: " + areaCode);
 	var telephoneNumber = $("#telNum").val();
+	alert("telephone: " + telephoneNumber);
 	var inquiryTitle = $("#inquiryTitle").val();
-	var inquiry= $("#inquiry").val();
-	var instituteCode = $("#instituteCode").val();
-	
-	
+	alert("intuiryTitle : " + inquiryTitle);
+	var inquiry = $("#inquiry").val();
+	alert("inquiy: " + inquiry);
+	var courseProvider = $("#courseProviderCode").text();
+	alert("courseProvider: " + courseProvider);
+	var student = $("#studentCode").text();
+	alert("studentCode: " + student);
+	alert(fullname + " - " + email + " - " + countryCode + " - " + areaCode
+			+ " - " + telephoneNumber + " - " + inquiryTitle + " - " + inquiry
+			+ " - " + courseProvider + " - " + student);
+
 	var jsonData = {
-			
-		"fullname" : fullname,
-		"email" : email,
-		"areaCode" : areaCode,
-		"telephoneNumber" : telephoneNumber,
-		"inquiryTitle" :inquiryTitle,
-		"inquiry" :inquiry,
-		"instituteCode" :instituteCode
+
+		"studentName" : fullname,
+		"studentEmail" : email,
+		"telephoneCountryCode" : countryCode,
+		"telephoneAreaCode" : areaCode,
+		"telNo" : telephoneNumber,
+		"inquiryTitle" : inquiryTitle,
+		"inquiryText" : inquiry,
+		"courseProvider" : courseProvider,
+		"student" : student,
 	};
-	if ((fullname == "") || (email == "")|| (areaCode == "") || (telephoneNumber=="") || (inquiryTitle=="") || (inquiry=="")) {
+	
+	if ((fullname == "") || (email == "") || (areaCode == "")
+			|| (telephoneNumber == "") || (inquiryTitle == "")
+			|| (inquiry == "")) {
 		alert("Please fill the Empty fields.");
-		
+
 	} else {
-		
+		alert("ok");
 		$.ajax({
-			
+
 			type : "POST",
 			url : 'InstituteController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
-				task : "ALT"
+				CCO : "SII"
 			},
 			dataType : "json",
 			success : function(data) {
 				alert(data);
-				if (data == "Inquiry send successfully.") {
-					clearLeaveTypeform();
-				}
+				/*if (data == "Inquiry send successfully.") {
+				
+				}*/
 			},
 			error : function(e) {
 				alert("Error " + e);
