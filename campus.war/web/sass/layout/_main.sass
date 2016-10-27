@@ -1,0 +1,234 @@
+// 20161027 C11
+
+body,html
+  font-family: 'Raleway', sans-serif
+  a
+    text-decoration: none
+    &:hover,
+    &:focus,
+    &.active
+      //all: initial
+      text-decoration: none !important
+
+// Main view screen
+.main-screen
+  display: block
+  position: relative
+  background: #37474f
+
+  // left side main content panel
+  .content-panel
+    display: inline-block
+    position: relative
+    width: 83%
+    background: #fff
+
+    .main-slider
+      display: block
+      position: relative
+      width: 100%
+
+      img
+        width: 100%
+
+    .search-area
+      display: block
+      position: relative
+
+      .main-search-bar
+        display: block
+
+        .bar-holder
+          display: block
+          position: relative
+          top: -42px
+
+          input
+            width: 80%
+            line-height: 64px
+            border: 12px solid rgba(125,125,125,0.5)
+            font-size: 24px
+            color: #918a8a
+            padding-left: 30px
+
+      .filter-boxes
+        display: block
+        padding-bottom: 60px
+
+        .box-holder
+          width: 90%
+
+          ul > li
+            width: 29.5%
+            background: rgba(225, 225, 225, 0.6)
+            padding: 8px
+            margin-top: 30px
+            margin-right: 5.5%
+            transition: all 0.3s
+            &:hover
+              background: #508ef6
+
+            &:nth-child(3n)
+              margin-right: 0
+              float: right
+
+            .category-box
+              background: #fff
+              display: block
+              width: 100%
+              font-family: 'Slabo 27px', serif
+              padding-bottom: 20px
+
+              .category-name
+                display: block
+                padding: 16px
+                a
+                  font-size: 26px
+                  color: #818181
+                  font-family: 'Slabo 27px', serif
+
+              .course-info
+                display: block
+
+                .image
+                  display: inline-block
+                  position: relative
+                  width: 46%
+
+                  img
+                    width: 90%
+
+                .description
+                  display: inline-block
+                  width: 54%
+                  position: relative
+                  font-size: 15px
+                  color: #919191
+                  line-height: 16px
+                  padding-right: 8px
+                  padding-left: 2px
+
+                  a
+                    padding-top: 20px
+                    color: #3a74d6
+                    font-size: 16px
+
+  // right side banner panel
+  .banner-panel
+    width: 17%
+    display: inline-block
+    background: #37474f
+    position: relative
+    height: 100%
+
+
+// All Courses page styling
+
+.courses-screen
+  display: block
+  position: relative
+
+  .inner-header
+    .right-corner
+      display: inline-block
+      float: right
+      width: 30%
+
+      .sort-box
+        display: block
+        line-height: 88px
+
+        input
+          height: 40px
+          background: #4b5b66
+          width: 100%
+          border: none
+          padding-left: 18px
+
+  .filter-area
+    display: block
+    width: 100%
+
+    .category-panel
+      display: inline-block
+      position: relative
+      width: 28%
+      padding-left: 5%
+      padding-top: 38px
+      float: left
+
+      .all-category
+        display: block
+        padding-top: 50px
+
+    .result-panel
+      display: inline-block
+      position: relative
+      width: 72%
+      float: right
+      padding-right: 1%
+
+      .panel-header
+        display: block
+        width: 100%
+
+        .filter-path
+          display: block
+          height: 70px
+          width: 60%
+
+          ol
+            display: block
+            padding-top: 46px
+            font-size: 20px
+
+        .search-boxes-bar
+          display: block
+          background: #2f66c2
+          width: 100%
+
+          .drop-holder
+            line-height: 66px
+
+            input
+              height: 40px
+              background: #4065a4
+              border: 1px solid #748bb1
+              padding-left: 18px
+              width: 100%
+              color: #fff
+
+      .search-result-view
+        display: block
+        overflow-y: auto
+
+        .result-box
+          display: block
+          border-bottom: 5px solid #ededed
+          padding: 20px 10px 40px
+          &:nth-child(even)
+            background: rgba(47, 102, 194, 0.03)
+
+
+          .course-name
+            display: block
+            width: 100%
+
+            a
+              font-size: 25px
+              color: #3a8af7
+              font-family: "Slabo 27px", serif
+              line-height: 45px
+            &:hover
+              text-decoration: underline
+
+          .course-info
+            display: inline-block
+            width: 72%
+            float: left
+            padding-top: 30px
+
+          .provider-info
+            display: inline-block
+            float: right
+            width: 28%
