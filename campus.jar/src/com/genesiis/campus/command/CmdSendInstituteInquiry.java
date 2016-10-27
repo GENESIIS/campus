@@ -31,7 +31,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 			Exception {
 		String message = "Unsuccessfull";
 		String gsonData = helper.getParameter("jsonData");
-		Gson gson = new Gson();
 		InstituteInquiry data = getInstituteInquirydetails(gsonData);
 
 		InstituteInquiryDAO inquiryDAO = new InstituteInquiryDAO();
@@ -41,7 +40,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		}
 
-		helper.setAttribute("result", gson.toJson(message));
+		helper.setAttribute("message", message);
 		return view;
 	}
 
@@ -73,4 +72,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		return instituteInquiry;
 	}
+	
+	
 }
