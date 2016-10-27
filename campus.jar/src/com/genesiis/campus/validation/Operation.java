@@ -1,7 +1,7 @@
 package com.genesiis.campus.validation;
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC to the class
-
+//20161027 AS C8-inquiry-form-for-course add SEND_COURSE_INQUIRY to the class
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -10,7 +10,8 @@ public enum Operation {
 
 
 	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),
-	BAD_OPERATION("BO", "commandNotFound.jsp");
+	BAD_OPERATION("BO", "commandNotFound.jsp"),
+	SEND_COURSE_INQUIRY("SCI", "courseInquiry.jsp");
 			
 	private final String commandString;
 	private final String viewJspUrl;
