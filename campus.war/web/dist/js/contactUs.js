@@ -1,4 +1,5 @@
 // 20161025 DN c10-contacting-us-page created contactUs.jsp 
+//20161027 DN c10-contacting-us-page amended isValidEmailFormat(),isValidPhoneNumber() method
 
 
 function validateForm(){
