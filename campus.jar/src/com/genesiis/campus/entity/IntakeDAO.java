@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161025 CM c13-Display course details INIT IntakeDAO.java
 //20161025 CM c13-Display course details Modified findById() method
+//20161027 CM c13-Display course details Change query according to new DDL
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,7 +64,7 @@ public class IntakeDAO implements ICrud {
 					singleIntakeDetails.add(rs.getString("name"));
 					singleIntakeDetails.add(rs.getString("description"));
 					singleIntakeDetails.add(rs.getString("openingDate"));
-					singleIntakeDetails.add(rs.getString("closeingDate"));
+					singleIntakeDetails.add(rs.getString("closingDate"));
 					singleIntakeDetails.add(rs.getString("commencementDate"));
 					singleIntakeDetails.add(rs.getString("fee"));
 					intakeDetails.add(singleIntakeDetails);
