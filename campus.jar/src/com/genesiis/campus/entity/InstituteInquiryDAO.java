@@ -16,6 +16,15 @@ import com.genesiis.campus.util.ConnectionManager;
 public class InstituteInquiryDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(InstituteInquiryDAO.class.getName());
+	
+	/**
+	 * Save InstituteInquiry  details in Database
+	 * 
+	 * @author Chathuri
+	 * @param object
+	 *            : InstituteInquery object of Object type
+	 * @return int number of success/fail status
+	 */
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		
