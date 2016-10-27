@@ -58,9 +58,9 @@ public class CampusController extends HttpServlet {
 		IView result = null;
 		String cco = "";
 		try {
-			helper = new DataHelper(request);
-			cco = helper.getCommandCode();
-			result = helper.getResultView(cco);
+				helper = new DataHelper(request);
+				cco = helper.getCommandCode();
+				result = helper.getResultView(cco);
 
 		} catch (Exception e) {
 			log.error("process(): ", e);
