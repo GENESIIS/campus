@@ -1,5 +1,11 @@
 package com.genesiis.campus.entity;
 
+//20161025 JH c7-list-higher-education-courses data access object class InstituteDAO.java created
+//20161025 JH c7-list-higher-education-courses implement unimplemented methods
+//20161026 JH c7-higher-education-landing-page InstituteDAO.java renamed as CourseProviderDAO.java
+//20161026 JH c7-higher-education-landing-page findById(Object code) method coding 
+//20161027 JH c7-higher-education-landing-page findById(Object code) method modified
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +17,6 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.ConnectionManager;
-
-
-//20161025 JH c7-list-higher-education-courses data access object class InstituteDAO.java created
-//20161025 JH c7-list-higher-education-courses implement unimplemented methods
-//20161026 JH c7-higher-education-landing-page InstituteDAO.java renamed as CourseProviderDAO.java
-//20161026 JH c7-higher-education-landing-page findById(Object code) method coding 
 
 public class CourseProviderDAO implements ICrud{
 	
@@ -62,7 +62,7 @@ public class CourseProviderDAO implements ICrud{
 		String returnMessage = "";
 		final Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
 		
-		String getAllQuery = "SELECT * FROM [CAMPUS].[COURSEPROVIDER ] WHERE COURSEPROVIDERTYPE =? and [COURSEPROVIDERSTATUS] = ? ";
+		String getAllQuery = "SELECT * FROM [CAMPUS].[COURSEPROVIDER ] WHERE COURSEPROVIDERTYPE =? and COURSEPROVIDERSTATUS = ? ";
 				
 		try{
 			
@@ -84,7 +84,7 @@ public class CourseProviderDAO implements ICrud{
 				singleCourseProviderList.add(rs.getString("CODE"));
 				singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 				singleCourseProviderList.add(rs.getString("NAME"));
-				singleCourseProviderList.add(rs.getString("DURATION"));
+			//	singleCourseProviderList.add(rs.getString("DURATION"));
 				singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
 				singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
 				singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
@@ -114,7 +114,6 @@ public class CourseProviderDAO implements ICrud{
 				singleCourseProviderList.add(rs.getString("ISADMINALLOWED"));
 				singleCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));
 				singleCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
-				singleCourseProviderList.add(rs.getString("USERTYPE"));
 				singleCourseProviderList.add(rs.getString("PRINCIPAL"));
 				singleCourseProviderList.add(rs.getString("TUTOR"));
 				singleCourseProviderList.add(rs.getString("CRTON"));
@@ -127,7 +126,7 @@ public class CourseProviderDAO implements ICrud{
 				
 			}
 			
-			log.info("size >>>>>>>>>>>." + courseProviderCollection.size());
+			log.info(" course provider size >>>>>>>>>>>." + courseProviderCollection.size());
 			
 		}catch (SQLException exception) {
 			log.error("findById(Object code) sql exception" + exception.toString());
