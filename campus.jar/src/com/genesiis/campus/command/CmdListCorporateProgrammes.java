@@ -25,7 +25,7 @@ import com.genesiis.campus.validation.SystemMessage;
 
 public class CmdListCorporateProgrammes implements ICommand {
 	
-	static Logger log = Logger.getLogger(CmdListCorporateProgrammes.class.getName());
+	static Logger Log = Logger.getLogger(CmdListCorporateProgrammes.class.getName());
 
 	final ICrud programmeDao = new CorporateProgrammeDAO();	
 	final ICrud courseProviderDao = new CourseProviderDAO();	
@@ -44,7 +44,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 		int categoryCode = -1;
 		try {
 			if (helper.getParameter("category") == null) {
-				log.error("The provided value for category is null!");
+				Log.error("The provided value for category is null!");
 				msgList.add("The provided value for category is null!");
 				throw new IllegalArgumentException("The provided value for category is null!");
 			} 
@@ -61,13 +61,16 @@ public class CmdListCorporateProgrammes implements ICommand {
 			
 			courseProviderCollection = courseProviderDao.findById(courseProvider);
 			
+			iview.setCollection(programmeCollection);
+			helper.setAttribute("courseProviders", courseProviderCollection);
+			
 		} catch (NumberFormatException nfe) {
-			log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
+			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
 			msgList.add(SystemMessage.ERROR.message());
 			msgList.add(nfe.getMessage());	
 			throw nfe;
 		} catch (IllegalArgumentException iae) {
-			log.info("execute(IDataHelper, IView) : IllegalArgumentException " + iae.toString());
+			Log.info("execute(IDataHelper, IView) : IllegalArgumentException " + iae.toString());
 			msgList.add(SystemMessage.ERROR.message());
 			msgList.add(iae.getMessage());	
 		}  catch (Exception e) {
