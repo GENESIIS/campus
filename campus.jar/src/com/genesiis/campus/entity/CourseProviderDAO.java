@@ -84,7 +84,6 @@ public class CourseProviderDAO implements ICrud{
 				singleCourseProviderList.add(rs.getString("CODE"));
 				singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 				singleCourseProviderList.add(rs.getString("NAME"));
-			//	singleCourseProviderList.add(rs.getString("DURATION"));
 				singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
 				singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
 				singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
@@ -125,9 +124,7 @@ public class CourseProviderDAO implements ICrud{
 				courseProviderCollection.add(singleCourseProviderCollection);  
 				
 			}
-			
-			log.info(" course provider size >>>>>>>>>>>." + courseProviderCollection.size());
-			
+
 		}catch (SQLException exception) {
 			log.error("findById(Object code) sql exception" + exception.toString());
 			throw exception;
