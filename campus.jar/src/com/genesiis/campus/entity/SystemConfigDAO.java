@@ -85,9 +85,9 @@ public class SystemConfigDAO implements ICrud {
 		
 		for (int counter = 0; counter < sysConfigCode.length; counter++) {
 			if (counter < sysConfigCode.length - 1) {
-				queryBuilder.append(sysConfigCode[counter] + ", ");
+				queryBuilder.append("'"+sysConfigCode[counter] +"'"+ ", ");
 			} else {
-				queryBuilder.append(sysConfigCode[counter] + " )");
+				queryBuilder.append("'"+sysConfigCode[counter] + "'"+" );");
 			}
 		}
 		
