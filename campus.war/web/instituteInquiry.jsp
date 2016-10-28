@@ -3,62 +3,70 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="dist/bower-components/jquery/jquery.min.js"></script>
 <script src="dist/js/campus/campus.instituteInquiry.js"></script>
-<script src="dist/js/campus/jquery.min.js"></script>
 <title>Institute Inquiry</title>
 </head>
 <body>
 	<table>
-	<tr>
+		<tr>
 			<td>You are making an inquiry about ICBT</td>
-			<td><label id="courseProviderCode">4</label>
-			<label id="studentCode">1</label>
-			
-			</td>
+			<td><label id="courseProviderCode">4</label> <label
+				id="studentCode">1</label></td>
 		</tr>
-	<tr>
+		<tr>
 			<td colspan="2"><h2>Institute Inquiry Form</h2></td>
-			
+
 		</tr>
-		
 		<tr>
 			<td>Full Name</td>
-			<td><input type="text" name="fullname" id="fullnamee" value=""/></td>
+			<td><span id="fullNametbError" name="fullNametbError"
+				style="color: red; font-weight: normal !important;"></span> <input
+				type="text" name="fullname" id="fullnamee" value="" /></td>
 		</tr>
 		<tr>
 			<td>Email</td>
-			<td><input type="text" name="email" id="email"/></td>
+			<td><span id="emailtbError" name="emailtbError"
+				style="color: red; font-weight: normal !important;"></span> <input
+				type="text" name="email" id="email" /></td>
 		</tr>
 		<tr>
 			<td>Country Code</td>
-			<td><input type="text" name="countryCode" id="countryCode"/></td>
+			<td><span id="countryCodetbError" name="countryCodetbError"
+				style="color: red; font-weight: normal !important;"></span> <input
+				type="text" name="countryCode" id="countryCode" /></td>
 		</tr>
 		<tr>
 			<td>Area Code</td>
-			<td><input type="text" name="areaCode" id="areaCode"/></td>
+			<td><span id="areaCodetbError" name="areaCodetbError"
+				style="color: red; font-weight: normal !important;"></span>
+				 <input type="text" name="areaCode" id="areaCode" /></td>
 		</tr>
 		<tr>
 			<td>Telephone Number</td>
-			<td><input type="text" name="telNum" id="telNum"/></td>
+			<td>
+			<span
+				id="telephoneNumbertbError" name="telephoneNumbertbError"
+				style="color: red; font-weight: normal !important;"></span>
+			<input type="text" name="telNum" id="telNum" /></td>
 		</tr>
 		<tr>
 			<td>Inquiry Title</td>
-			<td><input type="text" name="inquiryTitle" id="inquiryTitle"/></td>
+			<td><input type="text" name="inquiryTitle" id="inquiryTitle" /></td>
 		</tr>
 		<tr>
 			<td>Inquiry</td>
-			<td>
-			<textarea rows="5" cols="20" name="inquiry" id="inquiry"></textarea>
+			<td><textarea rows="5" cols="20" name="inquiry" id="inquiry"></textarea>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">Re-capcha</td>
-			
+
 		</tr>
 		<tr>
 			<td><button type="button" onclick="addInstituteInquiry()">
