@@ -22,7 +22,7 @@ import com.genesiis.campus.util.ConnectionManager;
 public class ProgrammeDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -52,38 +52,23 @@ public class ProgrammeDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 
-			String query = "Select p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,"
-					+ "s.NAME,s.DESCRIPTION,s.YEARNO,s.SEMESTERNO, m.NAME,m.DESCRIPTION,m.INTERNALCODEOFMODULE,m.CREDITVALUE "
-					+ "from CAMPUS.PROGRAMME p inner join CAMPUS.SEMESTER s on s.programme = p.code "
-					+ "inner join CAMPUS.MODULE m on m.semester = s.code where p.CODE=?";
+			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE, c.NAME, c.WEBLINK "
+					+ "from CAMPUS.PROGRAMME p inner join CAMPUS.COURSEPROVIDER c on p.COURSEPROVIDER=c.CODE where p.CODE=?";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
-HashMap<String, Object> hashmap=new HashMap<String, Object>();
-			while (rs.next()) {
-			
+			HashMap<String, Object> hashmap = new HashMap<String, Object>();
+			if (rs.next()) {
+
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
-				singleprogrameDetails.add(rs.getString(1));//Programme name
-				singleprogrameDetails.add(rs.getString(2));//Description
-				singleprogrameDetails.add(rs.getString(3));//Duration
-				singleprogrameDetails.add(rs.getString(4));//Entry requirements
-				singleprogrameDetails.add(rs.getString(5));//Counselor Name
-				singleprogrameDetails.add(rs.getString(6));//counselorPhone
-				singleprogrameDetails.add(rs.getString(7));//Semester Name
-				singleprogrameDetails.add(rs.getString(8));//Description
-				singleprogrameDetails.add(rs.getString(9));//Year No
-				singleprogrameDetails.add(rs.getString(10));//Semester No
-				singleprogrameDetails.add(rs.getString(11));//Module Name
-				singleprogrameDetails.add(rs.getString(12));//Description
-				singleprogrameDetails.add(rs.getString(13));//Internal code of module
-				singleprogrameDetails.add(rs.getString(14));//credit value
-//				singleprogrameDetails.add(rs.getString(15));//Intake name
-//				singleprogrameDetails.add(rs.getString(16));//description
-//				singleprogrameDetails.add(rs.getString(17));//Opening date
-//				singleprogrameDetails.add(rs.getString(18));//Closeing date
-//				singleprogrameDetails.add(rs.getString(19));//Commencement date
-//				singleprogrameDetails.add(rs.getString(20));//Fee
-				
+				singleprogrameDetails.add(rs.getString(1));// Programme name
+				singleprogrameDetails.add(rs.getString(2));// Description
+				singleprogrameDetails.add(rs.getString(3));// Duration
+				singleprogrameDetails.add(rs.getString(4));// Entry requirements
+				singleprogrameDetails.add(rs.getString(5));// Counselor Name
+				singleprogrameDetails.add(rs.getString(6));// counselorPhone
+				singleprogrameDetails.add(rs.getString(7));// Course provider Name
+				singleprogrameDetails.add(rs.getString(8));// Course provider Web link
 				
 				programmeDetails.add(singleprogrameDetails);
 
