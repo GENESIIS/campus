@@ -39,7 +39,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 			message = "Inquiry Send successfylly";
 
 		}
-
 		helper.setAttribute("message", message);
 		return view;
 	}
@@ -72,6 +71,5 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		return instituteInquiry;
 	}
-	
-	
+
 }
