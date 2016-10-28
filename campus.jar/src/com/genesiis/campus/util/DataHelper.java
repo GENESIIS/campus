@@ -58,6 +58,9 @@ public class DataHelper implements IDataHelper {
 		case CONTACT_US_PUBLC:
 			resultPage = o.getPageURL();
 			break;
+		case LIST_ALL_INSTITUTES:
+			resultPage = o.getPageURL();
+			break;
 		case BAD_OPERATION:
 			resultPage = o.getPageURL();
 			break;

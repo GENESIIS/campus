@@ -3,6 +3,7 @@ package com.genesiis.campus.factory;
 //20161026 DN c10-contacting-us-page amended by inserting CONTACT_US_PUBLC entry to the map
 
 import com.genesiis.campus.command.CmdGenerateEmail;
+import com.genesiis.campus.command.CmdListInstitutes;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -10,7 +11,8 @@ public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
 	static {	
-		map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());	
+		map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());
+		map.put(Operation.LIST_ALL_INSTITUTES, new CmdListInstitutes());
 	}
 	@Override
 	public ICommand getCommand(String cco) {
@@ -19,6 +21,9 @@ public class PublicCmdFactory implements ICmdFactory {
 		switch (o) {
 		
 		case CONTACT_US_PUBLC:
+			command = map.get(o);
+			break;
+		case LIST_ALL_INSTITUTES:
 			command = map.get(o);
 			break;
 		default:

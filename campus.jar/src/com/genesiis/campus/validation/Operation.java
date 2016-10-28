@@ -10,6 +10,7 @@ public enum Operation {
 
 
 	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),
+	LIST_ALL_INSTITUTES("LAAI","contactUs.jsp"),
 	BAD_OPERATION("BO", "commandNotFound.jsp");
 			
 	private final String commandString;
