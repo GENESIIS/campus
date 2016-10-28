@@ -1,3 +1,5 @@
+<!-- 20161028 TR c1 setup project structure -->
+
 <!DOCTYPE html>
 <html lang="en" ng-app="CampusApp">
 <head>
@@ -6,8 +8,8 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/style.css" rel="stylesheet">
 
     <!--<link rel="stylesheet" href="css/angular-material.min.css" />-->
     <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
@@ -17,17 +19,17 @@
 <body>
 
 <!-- Header-->
-<header ng-include="'partials/layout/header.html'"></header>
+<header ng-include="'dist/partials/layout/header.html'"></header>
 
 <!-- Main Container  -->
 <div ng-view></div>
 
 <!-- Footer -->
-<footer ng-include="'partials/layout/footer.html'"></footer>
+<footer ng-include="'dist/partials/layout/footer.html'"></footer>
 
 <!-- AngularJS -->
-<script src="bower-components/angular/angular.min.js"></script>
-<script src="bower-components/angular/angular-route.min.js"></script>
+<script src="dist/bower-components/angular/angular.min.js"></script>
+<script src="dist/bower-components/angular/angular-route.min.js"></script>
 <!--<script src="bower-components/angular/angular-scroll.js"></script>-->
 <!--<script src="bower-components/angular/jk-carousel.min.js"></script>-->
 <!--<script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>-->
@@ -37,9 +39,9 @@
 
 
 <!-- jQuery & Other js -->
-<script src="bower-components/jquery/jquery.min.js"></script>
-<script src="bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="js/app.js"></script>
+<script src="dist/bower-components/jquery/jquery.min.js"></script>
+<script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="dist/js/app.js"></script>
 <!--<script src="js/animation.js"></script>-->
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
 

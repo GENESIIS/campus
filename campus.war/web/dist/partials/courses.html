@@ -173,7 +173,7 @@
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
                     </div>
                     <div class="provider-info">
-                        <a href="javascript:"><img src="i/icbt.png" alt="ICBT"></a>
+                        <a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a>
                     </div>
                 </div>
                 <div class="result-box clearfix">
@@ -184,7 +184,7 @@
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
                     </div>
                     <div class="provider-info">
-                        <a href="javascript:"><img src="i/icbt.png" alt="ICBT"></a>
+                        <a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a>
                     </div>
                 </div>
                 <div class="result-box clearfix">
@@ -195,7 +195,7 @@
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
                     </div>
                     <div class="provider-info">
-                        <a href="javascript:"><img src="i/icbt.png" alt="ICBT"></a>
+                        <a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a>
                     </div>
                 </div>
             </div>
