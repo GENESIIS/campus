@@ -16,9 +16,19 @@
 <h1>Corporate Training</h1>
 
 <table>
-<tr>
-	<h2 style="color: blue">Formulating Corporate Strategy</h3>	
-</tr>
+<c:forEach var="programme" items="${programmeCollection}">
+	<tr>
+		<c:forEach var="programmeAttrib" items="${programme}" varStatus="vs">
+			<td>
+				<a hreg="#">
+					<img src="${programmeAttrib}"/>
+				</a>
+			</td>
+		</c:forEach>
+	</tr>
+
+
+</c:forEach>
 <tr>
 <h3>Who should attend?</h3>
 </tr>
