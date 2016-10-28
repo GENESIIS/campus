@@ -7,16 +7,16 @@ angular.module('CampusApp',['ngRoute'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/',{
-                templateUrl : "partials/landing.jsp"
+                templateUrl : "dist/partials/landing.jsp"
             })
             .when('/about',{
-                templateUrl : "partials/about.jsp"
+                templateUrl : "dist/partials/about.jsp"
             })
             .when('/contact',{
-                templateUrl : "partials/contact.jsp"
+                templateUrl : "dist/partials/contact.jsp"
             })
             .when('/courses',{
-                templateUrl : "partials/courses.jsp"
+                templateUrl : "dist/partials/courses.jsp"
             });
     })
 

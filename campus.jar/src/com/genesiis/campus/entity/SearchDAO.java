@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.command.CmdGetSearchData;
 //20161025 PN c11-criteria-based-filter-search INIT the class to implement search DAO methods  
 
 
 public class SearchDAO implements ICrud{
-
+	static Logger log = Logger.getLogger(SearchDAO.class.getName());
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
