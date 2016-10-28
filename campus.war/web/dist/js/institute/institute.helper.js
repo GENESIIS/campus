@@ -5,6 +5,7 @@
  
  
  function sendCourseInquiry() {
+	 alert("lol");
 	var fullName = $("#fullname").val();
 	var email = $("#email").val();
 	var countryCode = $("#countryCode").val();
@@ -22,25 +23,25 @@
 	var inquirytb = isEmptyfield(inquiry);
 
 	if (fullNametb == false) {
-		document.getElementById('fmemployeeidError').innerHTML = "** Invalid Name.";
+		document.getElementById('fullNametbError').innerHTML = "** Invalid Name.";
 	}
 	if (emailtb == false) {
-		document.getElementById('relationshipError').innerHTML = "** Email can not be Empty.";
+		document.getElementById('emailtbError').innerHTML = "** Email can not be Empty.";
 	}
 	if (countryCodetb == false) {
-		document.getElementById('relationbirthdateError').innerHTML = "** Country Code can not be Empty.";
+		document.getElementById('countryCodetbError').innerHTML = "** Country Code can not be Empty.";
 	}
 	if (areaCodetb == false) {
-		document.getElementById('relationnameError').innerHTML = "** Area Code cannot be Empty.";
+		document.getElementById('areaCodetbError').innerHTML = "** Area Code cannot be Empty.";
 	}
 	if (telephoneNumbertb == false) {
-		document.getElementById('relationshipError').innerHTML = "** Telephone can not be Empty.";
+		document.getElementById('telephoneNumbertbError').innerHTML = "** Telephone can not be Empty.";
 	}
 	if (inquiryTitletb == false) {
-		document.getElementById('relationbirthdateError').innerHTML = "** Inquiry Title can not be Empty.";
+		document.getElementById('inquiryTitletbError').innerHTML = "** Inquiry Title can not be Empty.";
 	}
 	if (inquirytb == false) {
-		document.getElementById('relationnameError').innerHTML = "** inquiry cannot be Empty.";
+		document.getElementById('inquirytbError').innerHTML = "** inquiry cannot be Empty.";
 	}
 	
 	if ((employeeIdtb == true) && (relationshiptb == true)
