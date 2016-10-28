@@ -1,6 +1,5 @@
 /**
- * 20161028 PN c11-criteria-based-filter-search INIT the class. This has all the
- * helping methods to populate UI elements from the DB values.
+ * 20161028 PN c11-criteria-based-filter-search INIT the class. This has all the helping methods to populate UI elements from the DB values.
  */
 
 function displayCategories(){
