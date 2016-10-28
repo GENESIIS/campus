@@ -7,7 +7,7 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.CourseProviderProgrammeDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
