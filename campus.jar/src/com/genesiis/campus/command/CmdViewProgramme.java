@@ -50,11 +50,9 @@ public class CmdViewProgramme implements ICommand {
 
 			Collection<Collection<String>> programmeDAOCollection = programmeDAO
 					.findById(programme);
-			// view.setCollection(programmeDAOCollection);
 
 			Collection<Collection<String>> semesterDAOCollection = semesterDAO
 					.findById(programme);
-			// view.setCollection(semesterDAOCollection);
 
 			Collection<Collection<String>> moduleDAOCollection = moduleDAO
 					.findById(programme);
@@ -64,7 +62,7 @@ public class CmdViewProgramme implements ICommand {
 					.findById(programme);
 
 			helper.setAttribute("semesterView", semesterDAOCollection);
-			helper.setAttribute("programmeView", moduleDAOCollection);
+			helper.setAttribute("programmeView", programmeDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
