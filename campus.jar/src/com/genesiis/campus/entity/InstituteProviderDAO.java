@@ -1,11 +1,18 @@
 package com.genesiis.campus.entity;
 //DJ 20161026 c6-list-available-institutes-on-the-view created InstituteProviderDAO.java
+//DJ 20161026 c6-list-available-institutes-on-the-view created findById()
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.entity.model.Institute;
+import com.genesiis.campus.util.ConnectionManager;
 
 public class InstituteProviderDAO implements ICrud{
 	
@@ -28,12 +35,61 @@ public class InstituteProviderDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	/**
+	 * Find Institutes
+	 * @param category code
+	 * @author DJ
+	 * @return Collection 
+	 */
 
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		PreparedStatement  stmt = null;	
+		final Collection<Collection<String>> allInstitutesList = new ArrayList<Collection<String>>();
+		
+		try {
+			conn=ConnectionManager.getConnection();
+			int categoryCode=0;
+			if(code !=null && code!=""){
+				Institute institute = (Institute) code;
+				categoryCode = institute.getCategory();				
+			}			
+			
+			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.UNIQUEPREFIX , PROV.NAME ");
+			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  on  PROV.CODE=PROG.COURSEPROVIDER ");
+			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
+			sb.append("PROG.CATEGORY=CAT.CODE WHERE PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1  AND CAT.CODE=? ");
+			 
+			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, categoryCode);			
+			final ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {				
+				final ArrayList<String> singleInstitute = new ArrayList<String>();
+				singleInstitute.add(rs.getString("CODE"));
+				singleInstitute.add(rs.getString("NAME"));
+				singleInstitute.add(rs.getString("UNIQUEPREFIX"));
+				allInstitutesList.add(singleInstitute);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allInstitutesList;
 	}
 
 	@Override
