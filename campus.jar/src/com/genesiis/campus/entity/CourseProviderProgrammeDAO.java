@@ -2,10 +2,12 @@ package com.genesiis.campus.entity;
 
 //20161027 MM c5-corporate-training-landing-page INIT CourseProviderDAO.java 
 //				and implemented findById()
-//20161028 MM c5-corporate-training-landing-page Modified findByIt() method to use 
+//20161028 MM c5-corporate-training-landing-page Modified findById() method to use 
 // 				Programme object to retrieve argument (categoryCode) to use for search
-//20161028 MM c5-corporate-training-landing-page Modified findByIt() method to correct
+//20161028 MM c5-corporate-training-landing-page Modified findById() method to correct
 //				SQL query so only distinct results are shown
+//20161028 MM c5-corporate-training-landing-page Modified findById() method to incorporate
+//the fetching of courseProviders that have the most popular programmes of the provided category
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,14 +42,26 @@ public class CourseProviderProgrammeDAO implements ICrud {
 		try {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
-
-			String query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
-					+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
-					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";
+			boolean areProvidersWithPopularProgrammes = (programme.getLevel() == 1) ? true : false; 
+			
+			String query = "";
+			
+			if (areProvidersWithPopularProgrammes) {				
+				query = "SELECT p.COURSEPROVIDER , count(*) "
+						+ "FROM [CAMPUS].[PROGRAMME] p "
+						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?) "
+						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER) GROUP BY p.COURSEPROVIDER";
+				
+			} else {
+				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
+						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";			
+			}
 
 			conn = ConnectionManager.getConnection();
-			stmt = conn.prepareStatement(query.toString());
+			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
+			
 			final ResultSet rs = stmt.executeQuery();
 
 			retrieveCourseProvidersFromResultSet(rs, courseProviderList);
