@@ -1,7 +1,5 @@
 package com.genesiis.campus.validation;
 
-//20160811 PN x25-list-employees SystemMessage enum Created
-//20161024 DN c10-contacting-us extracted to campus project
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -13,6 +11,7 @@ public enum SystemMessage {
 	UNKNOWN(""),
 	EMPTYFIELD("Field is Empty."),
 	SUCCESS("Successfull"),
+	INQUIRYSENT("Inquiry sent Successfully"),
 	FAILED_TO_CREATE("Object not created"),
 	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
