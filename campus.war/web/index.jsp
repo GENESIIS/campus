@@ -9,11 +9,16 @@
 <body>
 	<h1>Hello World..!! </h1>
 	<h1>List Institutes </h1>
-	
-	<form action="PublicController" method="POST">
-								<button type="submit" name="CCO" id="CCO" value="LAAI"
-									class="pure-button pure-button-primary">List Higher Education Institutes</button>
-							</form>
-	
+	<form action="PublicController" method="post">
+		<input type="text" name="category">
+		<button type="submit" name="CCO" value="LAAI">SUBMIT</button>
+	</form>
+
+	<!-- <form action="PublicController" method="POST">
+		<button type="submit" name="CCO" id="CCO" value="LAAI"
+			class="pure-button pure-button-primary">List Higher
+			Education Institutes</button>
+	</form> -->
+
 </body>
 </html>
