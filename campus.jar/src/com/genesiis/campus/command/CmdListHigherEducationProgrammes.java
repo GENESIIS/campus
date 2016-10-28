@@ -15,7 +15,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.CourseProviderProgrammeDAO;
 import com.genesiis.campus.entity.HigherEducationProgrammeDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -75,7 +75,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 		} finally {
 			//get course providers
 			
-			CourseProviderDAO courseProviderDAO =  new CourseProviderDAO();
+			CourseProviderProgrammeDAO courseProviderDAO =  new CourseProviderProgrammeDAO();
 	
 			
 			CourseProvider courseProvider = new CourseProvider();
