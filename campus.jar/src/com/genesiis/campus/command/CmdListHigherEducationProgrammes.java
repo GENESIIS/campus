@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -49,21 +50,19 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 		Collection<Collection<String>> programmes = null;
 
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-		
+
 		final String category = helper.getParameter("categoryId");
-		
+
+		programme.setActive(true);
+		programme.setProgrammeStatus(1);
+		programme.setCategory(Integer.parseInt(category));
 
 		try {
 
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-
-
-			programme.setActive(true);
 			programme.setExpiryDate(sqlDate);
-			programme.setCategory(Integer.parseInt(category));
-			programme.setProgrammeStatus(1);
 
 			programmes = higherEducationProgrammeDAO.findById(programme);
 			iview.setCollection(programmes);
@@ -73,17 +72,35 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		} finally {
-			//get course providers
-			
-			CourseProviderProgrammeDAO courseProviderDAO =  new CourseProviderProgrammeDAO();
-	
-			
-			CourseProvider courseProvider = new CourseProvider();
-			courseProvider.setCourseProviderType(Integer.parseInt(category));
-			courseProvider.setCourseProviderStatus(1);
+			// get course providers
 
-			final Collection<Collection<String>> courseProviders  = courseProviderDAO
-					.findById(courseProvider);
+			CourseProviderProgrammeDAO courseProviderDAO = new CourseProviderProgrammeDAO();
+
+			// CourseProvider courseProvider = new CourseProvider();
+			// courseProvider.setCourseProviderType(Integer.parseInt(category));
+			// courseProvider.setCourseProviderStatus(1);
+
+			/**
+			 * current date is back dated by an year when selecting the
+			 * programmes to get programme stat. Only resent statistics are
+			 * considered when selecting the featured institutes.
+			 */
+			
+			Calendar cal = Calendar.getInstance();
+			Date today = cal.getTime();
+			cal.add(Calendar.YEAR, -1); // to get previous year 
+			Date nextYear = cal.getTime();
+
+
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+			log.info("sqldate " + sqlDate);
+			log.info("cal date" + nextYear);
+			
+			programme.setExpiryDate(sqlDate);
+			final Collection<Collection<String>> courseProviders = courseProviderDAO
+					.findById(programme);
 			helper.setAttribute("week", courseProviders);
 		}
 
