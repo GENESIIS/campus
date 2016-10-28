@@ -1,6 +1,7 @@
 <!-- 20161026 CM  c9-make inquiry for institute Created instituteInquiry.jsp -->
 <!-- 20161027 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
-
+<!-- 20161028 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
+<!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,17 +11,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="dist/bower-components/jquery/jquery.min.js"></script>
 <script src="dist/js/campus/campus.instituteInquiry.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <title>Institute Inquiry</title>
 </head>
 <body>
+<form  method="POST" action="InstituteController">
 	<table>
 		<tr>
 			<td>You are making an inquiry about ICBT</td>
-			<td><label id="courseProviderCode">4</label> <label
-				id="studentCode">1</label></td>
+			<td>
+			<input type="hidden" value="4" name="courseProviderCode"> 
+			<input type="hidden" value="1" name="studentCode"> 
 		</tr>
 		<tr>
 			<td colspan="2"><h2>Institute Inquiry Form</h2></td>
+
+		</tr>
+		<tr>
+			<td colspan="2" ><div style="color: red; font-weight: normal !important;"><c:out value="${message }"></c:out></div></td>
 
 		</tr>
 		<tr>
@@ -65,15 +73,19 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2">Re-capcha</td>
-
+			<td></td>
+			<td><div class="g-recaptcha" data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
 		</tr>
 		<tr>
-			<td><button type="button" onclick="addInstituteInquiry()">
+			<td><!-- <button type="button" onclick="addInstituteInquiry()">
 					<i class="glyphicon glyphicon-floppy-disk"></i> Save
-				</button></td>
+				</button> -->
+				<button type="submit" name="CCO" id="CCO" value="SII"
+												class="pure-button pure-button-primary">Send Inquiry</button>
+				</td>
 			<td></td>
 		</tr>
 	</table>
+	</form>
 </body>
 </html>
