@@ -41,6 +41,15 @@ public class ProgrammeDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * Search Programme details and course provider details relevant to the programme
+	 * 
+	 * @author Chathuri
+	 * @param Object
+	 *            :  programme object of Object type
+	 * @return Collection<Collection<String>> of Collection
+	 */
+	
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
