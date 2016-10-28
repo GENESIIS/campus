@@ -21,7 +21,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseProviderDAO implements ICrud {
+public class CourseProviderProgrammeDAO implements ICrud {
 	static Logger Log = Logger.getLogger(CorporateProgrammeDAO.class.getName());
 
 	@Override
