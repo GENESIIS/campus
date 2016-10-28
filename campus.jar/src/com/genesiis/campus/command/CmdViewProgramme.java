@@ -4,7 +4,8 @@ package com.genesiis.campus.command;
 //20161025 CM c13-Display course details Modified execute() method. 
 //20161025 CM c13-Display course details Modified execute() method. Set ProgrammeView attribute.
 //20161026 CM c13-Display course details Modified execute() method. Remove Module attribute.
-//20161026 CM c13-Display course details Modified execute() method. Created  programmeView attribute.
+//20161028 CM c13-Display course details Modified execute() method. Created  programmeView attribute.
+//20161028 CM c13-Display course details Modified execute() method. Created  method comment.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -33,6 +34,13 @@ public class CmdViewProgramme implements ICommand {
 		this.programmeData = programmeData;
 	}
 
+	/**
+	 * @author Chathuri
+	 * @param helepr
+	 *            IDataHelper object of Object type view IView object of object
+	 *            type
+	 * @return View object to servlet
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
