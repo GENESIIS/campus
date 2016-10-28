@@ -37,7 +37,7 @@ public class Validator {
 	/**
 	 * @author CM
 	 * @param value
-	 * @return boolean to validateemail address.
+	 * @return boolean to validatem email address.
 	 * **/
 	public static boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
@@ -49,9 +49,10 @@ public class Validator {
 	}
 
 	/**
+	 * Validate institute inquiry data
 	 * @author CM
 	 * @param value
-	 * @return boolean to validate is given string contains a null value.
+	 * @return String to validate is given strings contains a null value.
 	 * **/
 	public static String validateInquiry(IDataHelper helper)
 			throws ParseException {
