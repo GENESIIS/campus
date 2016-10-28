@@ -35,25 +35,25 @@
 			<td>Full Name</td>
 			<td><span id="fullNametbError" name="fullNametbError"
 				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="fullname" id="fullnamee" value="" /></td>
+				type="text" name="fullname" id="fullnamee" value="" required/></td>
 		</tr>
 		<tr>
 			<td>Email</td>
 			<td><span id="emailtbError" name="emailtbError"
 				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="email" id="email" /></td>
+				type="text" name="email" id="email" required/></td>
 		</tr>
 		<tr>
 			<td>Country Code</td>
 			<td><span id="countryCodetbError" name="countryCodetbError"
 				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="countryCode" id="countryCode" /></td>
+				type="text" name="countryCode" id="countryCode" required/></td>
 		</tr>
 		<tr>
 			<td>Area Code</td>
 			<td><span id="areaCodetbError" name="areaCodetbError"
 				style="color: red; font-weight: normal !important;"></span>
-				 <input type="text" name="areaCode" id="areaCode" /></td>
+				 <input type="text" name="areaCode" id="areaCode" required /></td>
 		</tr>
 		<tr>
 			<td>Telephone Number</td>
@@ -61,15 +61,15 @@
 			<span
 				id="telephoneNumbertbError" name="telephoneNumbertbError"
 				style="color: red; font-weight: normal !important;"></span>
-			<input type="text" name="telNum" id="telNum" /></td>
+			<input type="text" name="telNum" id="telNum" required/></td>
 		</tr>
 		<tr>
 			<td>Inquiry Title</td>
-			<td><input type="text" name="inquiryTitle" id="inquiryTitle" /></td>
+			<td><input type="text" name="inquiryTitle" id="inquiryTitle" required/></td>
 		</tr>
 		<tr>
 			<td>Inquiry</td>
-			<td><textarea rows="5" cols="20" name="inquiry" id="inquiry"></textarea>
+			<td><textarea rows="5" cols="20" name="inquiry" id="inquiry" required></textarea>
 			</td>
 		</tr>
 		<tr>
