@@ -1,5 +1,6 @@
 <!-- 20161024 CM  c13-display course details-cm Created programeDetails.jsp -->
 <!-- 20161024 CM  c13-display course details-cm Add jstl codes to programeDetails.jsp -->
+<!-- 20161024 CM  c13-display course details-cm Add jstl codes to programeDetails.jsp -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -38,7 +39,18 @@
 			</td>
 			<td>
 				<table>
-					<c:forEach var="programme" items="${result.collection}"
+					<c:forEach var="programme" items="${programmeView}"
+						varStatus="loop">
+						<c:set var="ProgrammeName" value="${programme[0] }" />
+						<c:set var="ProgrammeDescription" value="${programme[1]  }" />
+						<c:set var="ProgrammeDuration" value="${programme[2]  }" />
+						<c:set var="entryRequirements" value="${programme[3]  }" />
+						<c:set var="counselorName" value="${programme[4] }" />
+						<c:set var="counselorPhone" value="${programme[5] }" />
+						<c:set var="courseProvider" value="${programme[6] }" />
+						<c:set var="courseProviderWebLink" value="${programme[7]}" />
+					</c:forEach>
+				<%-- 	<c:forEach var="programme" items="${result.collection}"
 						varStatus="loop">
 						<c:forEach items="${programme}" var="item" varStatus="count">
 							<c:choose>
@@ -63,11 +75,21 @@
 								</c:when>
 							</c:choose>
 						</c:forEach>
-					</c:forEach>
+					</c:forEach> --%>
+					
+					<tr>
+						<td>
+							<h3>
+								<c:out value="${ProgrammeName}"></c:out>
+							</h3>
+						</td>
+						<td></td>
+					</tr>
 					<tr>
 						<td>
 							<h2>
-								<c:out value="${ProgrammeName}"></c:out>
+								<c:out value="${courseProvider}"></c:out>
+								
 							</h2>
 						</td>
 						<td></td>
@@ -130,9 +152,8 @@
 
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
-						<c:set var="semesters" value="${semester[0]}" /> 
-							<td><strong><c:out
-										value="${semester[0]}"></c:out></strong></td>
+							<c:set var="semesters" value="${semester[0]}" />
+							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
 							<td></td>
 						</tr>
 						<tr>
@@ -147,7 +168,7 @@
 							<td>
 								<table>
 									<tr>
-										
+
 										<th>Unit</th>
 										<th>Description</th>
 										<th>Unit code</th>
@@ -166,24 +187,24 @@
 														<%--  <c:out value="${item}"></c:out> --%>
 													</c:when>
 												</c:choose>
-												
+
 												<c:if test="${semesters eq semesterInM }">
-												<c:choose>
-													<c:when test="${count.index == 10}">
-														<td><c:out value="${item}"></c:out></td>
-													</c:when>
-													<c:when test="${count.index == 11}">
-														<td><c:out value="${item}"></c:out></td>
-													</c:when>
-													<c:when test="${count.index == 12}">
-														<td><c:out value="${item}"></c:out></td>
-													</c:when>
-													<c:when test="${count.index == 13}">
-														<td><c:out value="${item}"></c:out></td>
-													</c:when>
-												</c:choose>
+													<c:choose>
+														<c:when test="${count.index == 10}">
+															<td><c:out value="${item}"></c:out></td>
+														</c:when>
+														<c:when test="${count.index == 11}">
+															<td><c:out value="${item}"></c:out></td>
+														</c:when>
+														<c:when test="${count.index == 12}">
+															<td><c:out value="${item}"></c:out></td>
+														</c:when>
+														<c:when test="${count.index == 13}">
+															<td><c:out value="${item}"></c:out></td>
+														</c:when>
+													</c:choose>
 												</c:if>
-												
+
 											</c:forEach>
 										<tr>
 									</c:forEach>
