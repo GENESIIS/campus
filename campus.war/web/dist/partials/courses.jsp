@@ -1,6 +1,7 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161027 TR c11 styling all category selections -->
 
+
 <div class="courses-screen clearfix">
     <!-- Page Inner Header -->
     <div class="inner-header center-block">
@@ -41,35 +42,38 @@
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header">
-                        <label slide-toggle="#dropItem1">Categories <span>- 06</span></label>
-                        <a href="javascript:"><input type="checkbox"></a>
+                        <label slide-toggle="#dropItem1" onclick="displayCategories()">Categories <span>- 06</span></label>
+                        <a href="javascript:"><input name="Category" type="checkbox"></a>
                     </div>
+                   
+                    
                     <!-- Item Drop list -->
                     <div id="dropItem1" class="item-container slideable">
+                    <div id ="p" name="p"></div>
                         <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
+                            <a href="javascript:"><input name="Category" type="checkbox"></a>
                             <label>Pre Education</label>
                         </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>School Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Higher Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Corporate Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Vocational Training</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Talent & Skill</label>
-                        </div>
+<!--                         <div class="select-item row-fluid"> -->
+<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
+<!--                             <label>School Education</label> -->
+<!--                         </div> -->
+<!--                         <div class="select-item row-fluid"> -->
+<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
+<!--                             <label>Higher Education</label> -->
+<!--                         </div> -->
+<!--                         <div class="select-item row-fluid"> -->
+<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
+<!--                             <label>Corporate Education</label> -->
+<!--                         </div> -->
+<!--                         <div class="select-item row-fluid"> -->
+<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
+<!--                             <label>Vocational Training</label> -->
+<!--                         </div> -->
+<!--                         <div class="select-item row-fluid"> -->
+<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
+<!--                             <label>Talent & Skill</label> -->
+<!--                         </div> -->
                     </div>
                 </div>
 

@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
+//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 
 import java.io.IOException;
 
@@ -53,6 +54,9 @@ public class DataHelper implements IDataHelper {
 		case GET_SEARCH_DATA:
 			resultPage = o.getPageURL();
 			break;
+		case LIST_CATEGORY_DATA:
+			resultPage = o.getPageURL();
+			break;	
 		default:
 			break;
 		}

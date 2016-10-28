@@ -44,6 +44,6 @@
 <script src="dist/js/app.js"></script>
 <!--<script src="js/animation.js"></script>-->
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
-
+<script src="dist/js/filterSearch/ui-populate-helper.js"></script>
 </body>
 </html>

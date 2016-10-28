@@ -18,6 +18,7 @@ import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 /**
