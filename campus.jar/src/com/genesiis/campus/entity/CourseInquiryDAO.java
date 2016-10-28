@@ -1,25 +1,62 @@
 package com.genesiis.campus.entity;
-////20161027 AS C8-inquiry-form-for-course CourseInquiryDAO.java created 
 
+////20161027 AS C8-inquiry-form-for-course CourseInquiryDAO.java created 
+//20161027 AS C8-inquiry-form-for-course add method modified
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
+import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseInquiryDAO implements ICrud{
+import org.apache.log4j.Logger;
+
+public class CourseInquiryDAO implements ICrud {
+
+	static Logger log = Logger.getLogger(CourseInquiryDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-	
-		String query = "INSERT INTO [campus.STUDENTPROGRAMINQUIRY] ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUMBER, INQUARYTITLE, INQUARY ) VALUES (?,?,?,?,?,?,?,?)";
+
+		String query = "INSERT INTO [campus.STUDENTPROGRAMINQUIRY] ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUMBER, INQUARYTITLE, INQUARY, STUDENT,PROGRAM,CRTON,CRTBY,MODON, MODBY) VALUES (?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
 		Connection conn = null;
 		PreparedStatement ps = null;
 		StudentProgrammeInquiry spi = (StudentProgrammeInquiry) object;
-		int status = 0;
-		
-		return 0;
+		int status = -1;
+
+		try {
+
+			conn = ConnectionManager.getConnection();
+			ps = conn.prepareStatement(query.toString());
+			ps.setString(1, spi.getStudentName());
+			ps.setString(2, spi.getStudentEmail());
+			ps.setString(3, spi.getTelephoneCountryCode());
+			ps.setString(4, spi.getTelephoneAreaCode());
+			ps.setString(5, spi.getTelephone());
+			ps.setString(6, spi.getInquiryTitle());
+			ps.setString(7, spi.getInquiry());
+
+			ps.setInt(9, spi.getStudent());
+			ps.setInt(10, spi.getProgramme());
+			ps.setString(11, "chathuri");
+			ps.setString(12, "chathuri");
+			status = ps.executeUpdate();
+
+		} catch (SQLException exception) {
+			log.error("add(): " + exception.toString());
+			throw exception;
+		} catch (Exception exception) {
+			log.error("add(): " + exception.toString());
+			throw exception;
+		} finally {
+			if (ps != null) {
+				ps.close();
+			}
+			conn.close();
+		}
+
+		return status;
 	}
 
 	@Override
