@@ -11,6 +11,8 @@
 <title>Program Details</title>
 </head>
 <body>
+
+	<!-- Load Programme details and course provider details-->
 	<c:forEach var="programme" items="${programmeView}" varStatus="loop">
 
 		<c:set var="ProgrammeName" value="${programme[0] }" />
@@ -31,8 +33,7 @@
 						<td><img
 							src="http://nces.ed.gov/programs/coe/images/nav/coe_hp_new.png"
 							alt="Programme View" style="width: 304px; height: 228px;">
-
-						</td>
+							${ProgrammeImage}</td>
 					</tr>
 					<tr>
 						<td><a href="#">Rate Us</a></td>
@@ -78,62 +79,22 @@
 						<td><h3>Course Details</h3></td>
 						<td></td>
 					</tr>
-					<%-- 				<tr>
-						<td>
-							<table>
-								<tr>
-									<th>Semester</th>
-									<th>Unit</th>
-									<th>Description</th>
-									<th>Unit code</th>
-									<th>Credit Point</th>
-									
-								</tr>
 
-								<c:forEach var="modules" items="${result.collection}"
-									varStatus="loop">
-									<tr>
-										<c:forEach items="${modules}" var="item" varStatus="count">
-											<c:choose>
-										
-												<c:when test="${count.index == 6}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 10}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 11}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 12}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-												<c:when test="${count.index == 13}">
-													<td><c:out value="${item}"></c:out></td>
-												</c:when>
-											</c:choose>
-										</c:forEach>
-									<tr>
-								</c:forEach>
-
-							</table>
-						</td>
-					</tr> --%>
-
+					<!-- Load Semester details relevant to above programme  -->
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
-							<c:set var="semesters" value="${semester[0]}" />
+							<c:set var="semesters" value="${semester[4]}" />
 							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
 							<td></td>
 						</tr>
-						<tr>
+						<%-- <tr>
 							<td>Year : <c:out value="${semester[1]}"></c:out></td>
 							<td></td>
 						</tr>
 						<tr>
-							<td>Semester: <c:out value="${semester[1]}"></c:out></td>
+							<td>Semester: <c:out value="${semester[2]}"></c:out></td>
 							<td></td>
-						</tr>
+						</tr> --%>
 						<tr>
 							<td>
 								<table>
@@ -145,13 +106,13 @@
 										<th>Credit Point</th>
 
 									</tr>
-
+									<!-- Load module details relevant to programme and semesters  -->
 									<c:forEach var="modules" items="${result.collection}"
 										varStatus="loop">
 										<tr>
 											<c:forEach items="${modules}" var="item" varStatus="count">
 												<c:choose>
-													<c:when test="${count.index == 6}">
+													<c:when test="${count.index ==1}">
 														<%-- <c:if test="${(status.index - 1) eq ${item}"></c:if> --%>
 														<c:set var="semesterInM" value="${item}" />
 														<%--  <c:out value="${item}"></c:out> --%>
@@ -160,16 +121,16 @@
 
 												<c:if test="${semesters eq semesterInM }">
 													<c:choose>
-														<c:when test="${count.index == 10}">
+														<c:when test="${count.index == 2}">
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
-														<c:when test="${count.index == 11}">
+														<c:when test="${count.index == 3}">
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
-														<c:when test="${count.index == 12}">
+														<c:when test="${count.index == 4}">
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
-														<c:when test="${count.index == 13}">
+														<c:when test="${count.index == 5}">
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
 													</c:choose>
@@ -198,7 +159,7 @@
 						<td><h3>Intakes</h3></td>
 						<td></td>
 					</tr>
-
+					<!-- Load Intakes  details relevant to programme   -->
 					<c:forEach var="intake" items="${intakeView}" varStatus="loop">
 						<tr>
 							<td><strong><c:out value="${intake[0]}"></c:out></strong></td>
