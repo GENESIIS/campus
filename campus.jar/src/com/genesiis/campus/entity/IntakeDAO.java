@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161025 CM c13-Display course details INIT IntakeDAO.java
 //20161025 CM c13-Display course details Modified findById() method
 //20161027 CM c13-Display course details Change query according to new DDL
+//20161028 CM c13-Display course details  Created  method comment.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +40,14 @@ public class IntakeDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * Search Intake  details and relevant to the programme
+	 * 
+	 * @author Chathuri
+	 * @param Object
+	 *            :  programme object of Object type
+	 * @return Collection<Collection<String>> of Collection
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -59,8 +68,6 @@ public class IntakeDAO implements ICrud {
 				while (rs.next()) {
 					final ArrayList<String> singleIntakeDetails = new ArrayList<String>();
 
-				// default semester value name as "default"
-					
 					singleIntakeDetails.add(rs.getString("name"));
 					singleIntakeDetails.add(rs.getString("description"));
 					singleIntakeDetails.add(rs.getString("openingDate"));
