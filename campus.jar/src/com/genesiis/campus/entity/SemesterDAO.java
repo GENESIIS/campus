@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161025 CM c13-Display course details INIT SemesterDAO.java
 //20161025 CM c13-Display course details Modified findById() method
+//20161028 CM c13-Display course details Created method comment
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,6 +37,15 @@ public class SemesterDAO implements ICrud{
 		return 0;
 	}
 
+	/**
+	 * Search Semester details and relevant to the programme
+	 * 
+	 * @author Chathuri
+	 * @param Object
+	 *            :  programme object of Object type
+	 * @return Collection<Collection<String>> of Collection
+	 */
+	
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -59,9 +69,8 @@ public class SemesterDAO implements ICrud{
 				singleSemeterDetail.add(rs.getString("yearNo"));
 				singleSemeterDetail.add(rs.getString("semesterNo"));
 				singleSemeterDetail.add(rs.getString("description"));
+				singleSemeterDetail.add(rs.getString("code"));
 				semesterDetails.add(singleSemeterDetail);
-				
-
 				
 			}
 		} catch (Exception exception) {
