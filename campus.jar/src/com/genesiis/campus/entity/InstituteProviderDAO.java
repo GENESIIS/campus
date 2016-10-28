@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 //DJ 20161026 c6-list-available-institutes-on-the-view created InstituteProviderDAO.java
-//DJ 20161026 c6-list-available-institutes-on-the-view created findById()
+//DJ 20161028 c6-list-available-institutes-on-the-view created findById()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
