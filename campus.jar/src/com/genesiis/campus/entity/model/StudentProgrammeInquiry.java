@@ -3,19 +3,19 @@ package com.genesiis.campus.entity.model;
 import java.sql.Date;
 
 //20161027 AS C8-inquiry-form-for-course CmdSendCourseInquiry class created.
-
+//20161027 AS C8-inquiry-form-for-course attributes modification.
 public class StudentProgrammeInquiry {
 
 	private int code;
 	private String studentName;
-	private int studentEmail;
+	private String studentEmail;
 	private String telephoneCountryCode;
 	private String telephoneAreaCode;
 	private String telephone;
 	private String inquiryTitle;
 	private String inquiry;
-	private String student;
-	private String programme;
+	private int student;
+	private int programme;
 	private String crtBy;
 	private Date crtOn;
 	private Date modOn;

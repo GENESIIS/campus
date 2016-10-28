@@ -5,6 +5,7 @@
 <html>
 <head>
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='dist/js/institute/institute.helper.js'></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -20,31 +21,51 @@
 		</tr>
 		<tr>
 			<td>Full Name</td>
-			<td><input type="text" name="fname" id="fullname"/></td>
+			<td><span
+				id="fullNametbError" name="fullNametbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="fname" id="fullname"/></td>
 		</tr>
 		<tr>
 			<td>Email</td>
-			<td><input type="text" name="email" id="email"/></td>
+			<td><span
+				id="emailtbError" name="emailtbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="email" id="email"/></td>
 		</tr>
 		<tr>
 			<td>Country Code</td>
-			<td><input type="text" name="countryCode" id="countryCode"/></td>
+			<td><span
+				id="countryCodetbError" name="countryCodetbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="countryCode" id="countryCode"/></td>
 		</tr>
 		<tr>
 			<td>Area Code</td>
-			<td><input type="text" name="areaCode" id="areaCode"/></td>
+			<td><span
+				id="areaCodetbError" name="areaCodetbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="areaCode" id="areaCode"/></td>
 		</tr>
 		<tr>
 			<td>Telephone Number</td>
-			<td><input type="text" name="telNum" id="telNum"/></td>
+			<td><span
+				id="telephoneNumbertbError" name="telephoneNumbertbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="telNum" id="telNum"/></td>
 		</tr>
 		<tr>
 			<td>Inquiry Title</td>
-			<td><input type="text" name="inquiryTitle" id="inquiryTitle"/></td>
+			<td><span
+				id="inquiryTitletbError" name="inquiryTitletbError"
+				style="color: red; font-weight: normal !important;"></span>
+				<input type="text" name="inquiryTitle" id="inquiryTitle"/></td>
 		</tr>
 		<tr>
 			<td>Inquiry</td>
-			<td>
+			<td><span
+				id="inquirytbError" name="inquirytbError"
+				style="color: red; font-weight: normal !important;"></span>
 			<textarea rows="25" cols="80" name="inquiry" id="inquiry"></textarea>
 			</td>
 		</tr>
@@ -54,7 +75,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><button type="submit" name="" >Submit </button></td>
+			<td><button type="submit" name="" onclick="sendCourseInquiry()">Submit </button></td>
 		</tr>
 	</table>
 </body>
