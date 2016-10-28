@@ -11,6 +11,18 @@
 <title>Program Details</title>
 </head>
 <body>
+	<c:forEach var="programme" items="${programmeView}" varStatus="loop">
+
+		<c:set var="ProgrammeName" value="${programme[0] }" />
+		<c:set var="ProgrammeDescription" value="${programme[1]  }" />
+		<c:set var="ProgrammeDuration" value="${programme[2]  }" />
+		<c:set var="entryRequirements" value="${programme[3]  }" />
+		<c:set var="counselorName" value="${programme[4] }" />
+		<c:set var="counselorPhone" value="${programme[5] }" />
+		<c:set var="courseProviderName" value="${programme[6] }" />
+		<c:set var="courseProviderWebLink" value="${programme[7]}" />
+		<c:set var="ProgrammeImage" value="${programme[8]}" />
+	</c:forEach>
 	<table>
 		<tr>
 			<td>
@@ -39,65 +51,23 @@
 			</td>
 			<td>
 				<table>
-					<c:forEach var="programme" items="${programmeView}"
-						varStatus="loop">
-						<c:set var="ProgrammeName" value="${programme[0] }" />
-						<c:set var="ProgrammeDescription" value="${programme[1]  }" />
-						<c:set var="ProgrammeDuration" value="${programme[2]  }" />
-						<c:set var="entryRequirements" value="${programme[3]  }" />
-						<c:set var="counselorName" value="${programme[4] }" />
-						<c:set var="counselorPhone" value="${programme[5] }" />
-						<c:set var="courseProvider" value="${programme[6] }" />
-						<c:set var="courseProviderWebLink" value="${programme[7]}" />
-					</c:forEach>
-				<%-- 	<c:forEach var="programme" items="${result.collection}"
-						varStatus="loop">
-						<c:forEach items="${programme}" var="item" varStatus="count">
-							<c:choose>
 
-								<c:when test="${count.index == 0}">
-									<c:set var="ProgrammeName" value="${item }" />
-								</c:when>
-								<c:when test="${count.index == 1}">
-									<c:set var="ProgrammeDescription" value="${item }" />
-								</c:when>
-								<c:when test="${count.index == 2}">
-									<c:set var="ProgrammeDuration" value="${item }" />
-								</c:when>
-								<c:when test="${count.index == 3}">
-									<c:set var="entryRequirements" value="${item }" />
-								</c:when>
-								<c:when test="${count.index == 4}">
-									<c:set var="counselorName" value="${item }" />
-								</c:when>
-								<c:when test="${count.index == 5}">
-									<c:set var="counselorPhone" value="${item }" />
-								</c:when>
-							</c:choose>
-						</c:forEach>
-					</c:forEach> --%>
-					
 					<tr>
 						<td>
-							<h3>
-								<c:out value="${ProgrammeName}"></c:out>
-							</h3>
+							<h3>${ProgrammeName}</h3>
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>
-							<h2>
-								<c:out value="${courseProvider}"></c:out>
-								
-							</h2>
+							<h4>
+								<a href="<c:out value="${courseProviderWebLink}"></c:out>">${courseProviderName}</a>
+							</h4>
 						</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td><p>
-								<c:out value="${ProgrammeDescription}"></c:out>
-							</p></td>
+						<td><p>${ProgrammeDescription}</p></td>
 						<td></td>
 					</tr>
 					<tr>
