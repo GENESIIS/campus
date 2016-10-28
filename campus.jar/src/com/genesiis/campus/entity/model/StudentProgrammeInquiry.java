@@ -37,11 +37,11 @@ public class StudentProgrammeInquiry {
 		this.studentName = studentName;
 	}
 
-	public int getStudentEmail() {
+	public String getStudentEmail() {
 		return studentEmail;
 	}
 
-	public void setStudentEmail(int studentEmail) {
+	public void setStudentEmail(String studentEmail) {
 		this.studentEmail = studentEmail;
 	}
 
@@ -85,19 +85,19 @@ public class StudentProgrammeInquiry {
 		this.inquiry = inquiry;
 	}
 
-	public String getStudent() {
+	public int getStudent() {
 		return student;
 	}
 
-	public void setStudent(String student) {
+	public void setStudent(int student) {
 		this.student = student;
 	}
 
-	public String getProgramme() {
+	public int getProgramme() {
 		return programme;
 	}
 
-	public void setProgramme(String programme) {
+	public void setProgramme(int programme) {
 		this.programme = programme;
 	}
 

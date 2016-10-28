@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 //20161027 AS C8-inquiry-form-for-course CmdSendCourseInquiry class created.
 import java.sql.SQLException;
 
+import com.genesiis.campus.entity.CourseInquiryDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.IDataHelper;
@@ -16,12 +17,34 @@ public class CmdSendCourseInquiry implements ICommand{
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		String message = "Unsuccessfull";
+		String gsonData = helper.getParameter("jsonData");
+		StudentProgrammeInquiry data = getInstituteInquirydetails(gsonData);
 
-		//getting the admin relateddata e.g email address
-		// composing the email and sending will be executed
+		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
+		int result = inquiryDAO.add(data);
+		if (result > 0) {
+			message = "Inquiry Send successfylly";
+
+		}
+
+		helper.setAttribute("message", message);
+		return view;
 		
+	
+	}
+
+	/**
+	 * extract data fromm json object and assign to StudentProgrammeInquiry object 
+	 * @author anuradha
+	 * @param gsonData
+	 * @return StudentProgrammeInquiry object 
+	 */
+	
+	private StudentProgrammeInquiry getInstituteInquirydetails(String gsonData) {
+		StudentProgrammeInquiry courseInquiry = (StudentProgrammeInquiry) extractFromJason(gsonData);
 		
-		return null;
+		return courseInquiry;
 	}
 
 	public Object extractFromJason(String gsonData) {
@@ -37,5 +60,7 @@ public class CmdSendCourseInquiry implements ICommand{
 		}
 		return courseInquiry;
 	}
+	
+	
 
 }

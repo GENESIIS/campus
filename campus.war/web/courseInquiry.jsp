@@ -6,6 +6,8 @@
 <head>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script src='dist/js/institute/institute.helper.js'></script>
+<script src="dist/bower-components/jquery/jquery.min.js"></script>
+<script src="dist/bower-components/jquery/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -71,11 +73,11 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><div class="g-recaptcha" data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
+			<td><div class="g-recaptcha" data-sitekey="6LdsagoUAAAAALS1tjjqyHe-7EvIIJF1kaKo-Pmw"></div></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><button type="submit" name="" onclick="sendCourseInquiry()">Submit </button></td>
+			<td><button type="button" name="" onclick="sendCourseInquiry()">Submit </button></td>
 		</tr>
 	</table>
 </body>

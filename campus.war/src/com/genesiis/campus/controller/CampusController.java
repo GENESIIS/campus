@@ -31,7 +31,7 @@ public class CampusController extends HttpServlet {
 
 	static Logger log = Logger.getLogger(CampusController.class.getName());
 	private static final long serialVersionUID = 1L;
-
+	
 	
 	@Override
 	public void init() throws ServletException {
@@ -53,7 +53,7 @@ public class CampusController extends HttpServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		log.info("Test");
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";

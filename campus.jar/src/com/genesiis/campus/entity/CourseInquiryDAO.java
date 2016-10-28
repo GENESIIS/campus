@@ -19,7 +19,7 @@ public class CourseInquiryDAO implements ICrud {
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 
-		String query = "INSERT INTO [campus.STUDENTPROGRAMINQUIRY] ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUMBER, INQUARYTITLE, INQUARY, STUDENT,PROGRAM,CRTON,CRTBY,MODON, MODBY) VALUES (?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
+		String query = "INSERT INTO CAMPUS.STUDENTPROGRAMINQUIRY ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, STUDENT, PROGRAMME, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES( ?, ?, ?, ?, ?, ?, ?, getdate(), getdate(), ?, ?, ?, getdate(), ?, getdate(), ?) ";
 		Connection conn = null;
 		PreparedStatement ps = null;
 		StudentProgrammeInquiry spi = (StudentProgrammeInquiry) object;

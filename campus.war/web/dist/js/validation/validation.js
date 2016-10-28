@@ -23,7 +23,8 @@ function isFieldFilled(flag, elementName){
  * @param fieldValue it is the value of a document element
  * @returns true if has content else false
  */
-function isempty(fieldValue){	
+function isempty( fieldValue){	
+	alert("hi");
 	return ((fieldValue == "") ||(fieldValue == null) )?false : true;
 }
 

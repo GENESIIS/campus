@@ -24,7 +24,7 @@ public class InstituteController extends CampusController{
      * Default constructor. 
      */
     public InstituteController() {
-        // TODO Auto-generated constructor stub
+      super();
     }
 
     public void init() throws ServletException {
@@ -36,18 +36,17 @@ public class InstituteController extends CampusController{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doPost(request, response);
+		log.info("Test");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
+		super.doGet(request, response);
 	}
 	
-	protected void processRequest(HttpServletRequest 
-			  request, HttpServletResponse response)
-			  throws ServletException, java.io.IOException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
 			  super.doPost(request, response);
 	}
 
