@@ -56,9 +56,17 @@ public class CmdListCorporateProgrammes implements ICommand {
 			Programme programme = new Programme();
 			programme.setCategory(categoryCode);
 			
+			// Get programmes that belong to the same category as categoryCode
 			programmeCollection = programmeDao.findById(programme);
-			
+
+			// Get course providers that offer programmes that belong to the same category as categoryCode
+			programme.setLevel(0); // level property is used here to act as a flag
 			courseProviderCollection = courseProviderDao.findById(programme);
+			
+			// Get course providers that offer programmes that belong to the same category as categoryCode 
+			// and when those programmes are the ones with the highest number of views
+			programme.setLevel(1); // level property is used here to act as a flag
+			programmeCollection = programmeDao.findById(programme);			
 			
 			iview.setCollection(programmeCollection);
 			helper.setAttribute("courseProviders", courseProviderCollection);
