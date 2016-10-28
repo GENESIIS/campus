@@ -3,7 +3,10 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.IDataHelper;
+import com.google.gson.Gson;
+
 import org.apache.log4j.Logger;
 
 public class CmdSendCourseInquiry implements ICommand{
@@ -21,5 +24,18 @@ public class CmdSendCourseInquiry implements ICommand{
 		return null;
 	}
 
-	
+	public Object extractFromJason(String gsonData) {
+		Gson gson = new Gson();
+		String message = "";
+		StudentProgrammeInquiry courseInquiry = null;
+		try {
+			courseInquiry = gson.fromJson(gsonData, StudentProgrammeInquiry.class);
+
+		} catch (Exception exception) {
+			log.error("extractFromJason(): " + exception.toString());
+			throw exception;
+		}
+		return courseInquiry;
+	}
+
 }
