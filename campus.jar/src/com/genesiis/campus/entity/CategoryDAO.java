@@ -1,5 +1,7 @@
 package com.genesiis.campus.entity;
 
+//20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve categories existing
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +44,7 @@ public class CategoryDAO implements ICrud{
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		final Collection<Collection<String>> allEmployeeList = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
@@ -54,15 +56,15 @@ public class CategoryDAO implements ICrud{
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleEmployeeList = new ArrayList<String>();
-				singleEmployeeList.add(rs.getString("CODE"));
-				singleEmployeeList.add(rs.getString("NAME"));
-				singleEmployeeList.add(rs.getString("DESCRIPTION"));
-				singleEmployeeList.add(rs.getString("IMAGE"));
-				singleEmployeeList.add(rs.getString("ISACTIVE"));
+				final ArrayList<String> singleCategoryList = new ArrayList<String>();
+				singleCategoryList.add(rs.getString("CODE"));
+				singleCategoryList.add(rs.getString("NAME"));
+				singleCategoryList.add(rs.getString("DESCRIPTION"));
+				singleCategoryList.add(rs.getString("IMAGE"));
+				singleCategoryList.add(rs.getString("ISACTIVE"));
 
-				final Collection<String> singleEmployeeCollection = singleEmployeeList;
-				allEmployeeList.add(singleEmployeeCollection);
+				final Collection<String> singleEmployeeCollection = singleCategoryList;
+				allCategoryList.add(singleEmployeeCollection);
 			}
 
 		} catch (SQLException sqlException) {
@@ -79,7 +81,7 @@ public class CategoryDAO implements ICrud{
 				conn.close();
 			}
 		}
-		return allEmployeeList;
+		return allCategoryList;
 	}
 
 	@Override
