@@ -1,6 +1,9 @@
 package com.genesiis.campus.util.mail;
-//20161027 c10-contacting-us-page GeneralMail.java initial version created
-//20161027 c10-contacting-us-page coded sendEmail() and supportive mutator methods
+
+//20161027 DN c10-contacting-us-page GeneralMail.java initial version created
+//20161027 DN c10-contacting-us-page coded sendEmail() and supportive mutator methods
+//20161028 DN c10-contacting-us-page developed sendEmail(),setSystemPropertiesAndMailEnvironment(),setProperties()
+
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -24,36 +27,31 @@ public class GeneralMail implements IEmail {
     private String mailHost;
     private String subject;
     private String emailBody; 
-    private Properties properties = System.getProperties();
-    private MimeMessage message ;//= new MimeMessage(session);
+    private Properties properties;
+    private Session session ;
+    private MimeMessage message ;
   
     public GeneralMail( ArrayList<String> receivers,String sender,String host,
-    		String mailHost,String subject,String emailBody,MimeMessage message){
+    		String mailHost,String subject,String emailBody){
     	this.receivers = receivers;
     	this.sender = sender;
     	this.host = host;
     	this.mailHost = mailHost;
     	this.subject = subject;
-    	this.emailBody = emailBody;
-    	this.message = message;
+    	this.emailBody = emailBody;    	    	
+    	setSystemPropertiesAndMailEnvironment(mailHost,this.host);
     	
     }
     
     @Override
-	public void sendEmail(MimeMessage message) throws MessagingException {
-		
-	    // Setup mail server
-	    //properties.setProperty("mail.smtp.host", host); ** consider this
-	    // Get the default Session object.
-	    Session session = Session.getDefaultInstance(properties);
+	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
 	    	
 	         addSenderToMail(message,sender); 
 	         addRecipientToMail(message,receivers);
 	         addSubjectToMail(message,subject);
-	         addBodyContentToMail(message,emailBody);	         
-	         dispenceEmail(message);
-	         System.out.println("Sent message successfully....");
+	         addBodyContentToMail(message,emailBody);	
+	         return message;	        
 	         
 	      }catch (MessagingException mex) {
 	    	  log.error("sendEmail(MimeMessage message):MessagingException :" +mex.toString());
@@ -62,7 +60,30 @@ public class GeneralMail implements IEmail {
 
 	}
     
-    /*
+    
+    private void setSystemPropertiesAndMailEnvironment(String mailHost,String host){    	
+    	this.setProperties(mailHost,host);
+    	
+    }
+    
+    
+    private void setProperties(String mailHost,String host) {    	  	
+    	String defaultMailingHost = "mail.smtp.host";
+    	//this.mailHost=(mailHost.equals(null))?defaultMailingHost:mailHost;
+    	if(mailHost.equals(null)){
+    		this.mailHost=defaultMailingHost;
+    	}else{
+    		this.mailHost=mailHost;
+    	}
+    	properties=System.getProperties();
+    	properties.setProperty(this.mailHost, host);
+    	session = Session.getDefaultInstance(properties);
+    	message = new MimeMessage(session);
+    	
+	}
+    
+
+	/*
      * addRecipientToMail() unfolds the list of recipients and
      * add to the message mailing list
      * @param receiversList list of recipient ,MimeMessage message being context
@@ -104,14 +125,7 @@ public class GeneralMail implements IEmail {
 		message.setText(bodyContent);
 	}
 	
-	/*
-     * dispenceEmail() adds the message body to the email 
-     * @param message which is been composed
-     * @Throws MessagingException
-     */
-	private void dispenceEmail(MimeMessage message) throws MessagingException {
-		Transport.send(message);
-	}
+	
 
 	public ArrayList<String> getReceivers() {
 		return receivers;

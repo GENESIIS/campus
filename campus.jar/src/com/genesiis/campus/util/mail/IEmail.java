@@ -15,8 +15,9 @@ public interface IEmail {
 /**
  * sendEmail() sends the message it receives as the parameter
  * @param message javax.mail.internet.MimeMessage
+ * @return TODO
  * @throws MessagingException
  */
-	public void sendEmail(MimeMessage message) throws MessagingException;
+	public MimeMessage setEmailMessage() throws MessagingException;
 	
 }
