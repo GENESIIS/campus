@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.genesiis.campus.util.ConnectionManager;
-
 import org.apache.log4j.Logger;
 
-public class CategoryDAO implements ICrud{
-	static Logger log = Logger.getLogger(CategoryDAO.class.getName());
+import com.genesiis.campus.util.ConnectionManager;
+
+public class DistrictDAO implements ICrud{
+	static Logger log = Logger.getLogger(DistrictDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -35,34 +35,32 @@ public class CategoryDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
+	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[CATEGORY] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleCategoryList = new ArrayList<String>();
-				singleCategoryList.add(rs.getString("CODE"));
-				singleCategoryList.add(rs.getString("NAME"));
-				singleCategoryList.add(rs.getString("DESCRIPTION"));
+				final ArrayList<String> singleDistrictList = new ArrayList<String>();
+				singleDistrictList.add(rs.getString("CODE"));
+				singleDistrictList.add(rs.getString("PROVINCE"));
+				singleDistrictList.add(rs.getString("NAME"));
 
-				final Collection<String> singleCategoryCollection = singleCategoryList;
-				allCategoryList.add(singleCategoryCollection);
+				final Collection<String> singleDistrictCollection = singleDistrictList;
+				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
@@ -78,26 +76,23 @@ public class CategoryDAO implements ICrud{
 				conn.close();
 			}
 		}
-		return allCategoryList;
+		return allDistrictList;
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int update(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
