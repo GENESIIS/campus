@@ -1,27 +1,27 @@
 package com.genesiis.campus.command;
 
-//20161028 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161029 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
 
 import java.sql.SQLException;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.util.IDataHelper;
 
-public class CmdListCategories implements ICommand{
-	static Logger log = Logger.getLogger(CmdListCategories.class.getName());
+import org.apache.log4j.Logger;
 
-	private IView categoryData;
+public class CmdListMajors implements ICommand{
+	static Logger log = Logger.getLogger(CmdListMajors.class.getName());
 
-	public CmdListCategories(IView categoryData) {
-		this.categoryData = categoryData;
+	private IView majorData;
+
+	public CmdListMajors(IView majorData) {
+		this.majorData = majorData;
 	}
 
-	public CmdListCategories() {
+	public CmdListMajors() {
 		
 	}
 
@@ -29,7 +29,7 @@ public class CmdListCategories implements ICommand{
 	 * @author pabodha
 	 * @param helper
 	 * @param iview
-	 * @return iview with selected Category list
+	 * @return iview with selected majors list
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -37,10 +37,10 @@ public class CmdListCategories implements ICommand{
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
 	
 		
-		ICrud categoryDAO = new CategoryDAO();
+		ICrud majorDao = new MajorDAO();
 		try {
-			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
-			iview.setCollection(categoryCollection);
+			Collection<Collection<String>> majorCollection = majorDao.findById(helper.getParameter("categoryCode"));
+			iview.setCollection(majorCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
