@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//         PN c11-criteria-based-filter-search modified sql query inside getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,7 +49,7 @@ public class DistrictDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE CODE NOT IN (-1,31);";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
