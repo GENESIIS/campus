@@ -2,6 +2,7 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
+//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 
 import java.io.IOException;
 
@@ -57,6 +58,18 @@ public class DataHelper implements IDataHelper {
 		case LIST_CATEGORY_DATA:
 			resultPage = o.getPageURL();
 			break;	
+		case LIST_LEVEL_DATA:
+			resultPage = o.getPageURL();
+			break;
+		case LIST_DISTRICT_DATA:
+			resultPage = o.getPageURL();
+			break;
+		case LIST_MAJOR_DATA:
+			resultPage = o.getPageURL();
+			break;
+		case LIST_TOWN_DATA:
+			resultPage = o.getPageURL();
+			break;
 		default:
 			break;
 		}
