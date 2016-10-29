@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//		   PN c11-criteria-based-filter-search implemented findById() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,8 +37,47 @@ public class LevelDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		int majorCode = (Integer) code;
+		final Collection<Collection<String>> allLevelList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT DISTINCT l.CODE,l.NAME,l.DESCRIPTION "
+					+ "FROM [CAMPUS].[LEVEL] l "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.LEVEL "
+					+ "JOIN [CAMPUS].[MAJOR] m ON m.CODE = p.MAJOR "
+					+ "WHERE m.CODE = ? AND m.ISACTIVE = 1;";
+
+			stmt = conn.prepareStatement(query);
+			final ResultSet rs = stmt.executeQuery();
+			stmt.setInt(1, majorCode);
+			
+			while (rs.next()) {
+				final ArrayList<String> singleLevelList = new ArrayList<String>();
+				singleLevelList.add(rs.getString("CODE"));
+				singleLevelList.add(rs.getString("NAME"));
+				singleLevelList.add(rs.getString("DESCRIPTION"));
+
+				final Collection<String> singleLevelCollection = singleLevelList;
+				allLevelList.add(singleLevelCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allLevelList;
 	}
 
 	@Override
