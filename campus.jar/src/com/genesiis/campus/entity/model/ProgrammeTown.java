@@ -4,8 +4,9 @@ import java.sql.Date;
 
 //20161026 PN c11-criteria-based-filter-search: INIT ProgramTown.java class
 //20161028 PN c11-criteria-based-filter-search: added class attributes and data access methods.
+//20161029 PN c11-criteria-based-filter-search: renamed class ProgramTown -> ProgrammeTown
 
-public class ProgramTown {
+public class ProgrammeTown {
 	int code;
 	int IsActive;
 	int program;
