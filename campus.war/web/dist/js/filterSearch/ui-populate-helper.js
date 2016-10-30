@@ -1,116 +1,34 @@
-/**
- * 20161028 PN c11-criteria-based-filter-search INIT the class. This has all the helping methods to populate UI elements from the DB values.
- */
+//20161030 PN this file contains all the functions to load the details for the filter search
 
-function displayCategories(){
-	$.ajax({
-		type : "POST",
-		url : 'PublicController',
-		data : {
-			//jsonData : JSON.stringify(searchData),
-			CCO : "LIST_CATEGORY_DATA"
-		},
-		dataType : "json",
-		success : function(data) {
-				alert(data);
-//				 $("p").append(" <b>Appended text</b>.");
-				 $("p").append('<div class="select-item row-fluid"><a href="javascript:"><input name="Category" type="checkbox"></a><label>School Education</label></div>');
-				 
-				 
-				 
-				 
-				 
-//				if (data == "Details added successfully.") {
-//					clearAddemployeeform();
-//				}
-		},
-		error : function(e) {
-			alert("Error " + e);
-			console.log(e);
-		}
+$(document).ready(function() {
+	$.get('PublicController', {
+		CCO : 'LIST_CATEGORY_DATA'
+	}, function(response) {
+		alert(response);
+		var categories = $("#categoryName");
+		categories.find('option').remove();
+		$.each(response, function(index, value) {	
+			var res = value.toString();
+			var data = res.split(",");
+			alert(data[0]+data[1]);
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(categories)
+		});
 	});
-}
 
-
-function test() {
-	
-//$(document).ready(function() {
-//	$('#sports').change(function(event) {
-		//var sports = $("select#sports").val();
+	$('#categoryName').change(function(event) {
+		var categoryCode = $("categoryName").val();
 		$.get('PublicController', {
-			CCO : "LIST_CATEGORY_DATA"
-		}, function(response) {
-//			var select = $('#Category');
-//			select.find('#dropItem1').remove();
-//			$.each(response, function(index, value) {
+			categoryCode : categoryCode,
+			CCO : 'LIST_MAJOR_DATA'
+		}, function(jsonResponse) {
+			alert(response);
+//			var select = $('#player');
+//			select.find('option').remove();
+//			$.each(jsonResponse, function(index, value) {
 //				$('<option>').val(value).text(value).appendTo(select);
 //			});
-			alert(response);			
-			var table = $('<table></table>');
-            var counter = 0;
-            $(checkboxlistItems).each(function () {
-                table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
-                    type: 'checkbox', name: 'chklistitem', value: this.Value, id: 'chklistitem' + counter
-                })).append(
-                $('<label>').attr({
-                    for: 'chklistitem' + counter++
-                }).text(this.Name))));
-            });
- 
-            $('#dropItem1').append(table);
-			
-			
-//			var table = $('<table></table>');
-//            var counter = 0;
-//            $(checkboxlistItems).each(function () {
-//                table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
-//                    type: 'checkbox', name: 'chklistitem', value: this.Value, id: 'chklistitem' + counter
-//                })).append(
-//                $('<label>').attr({
-//                    for: 'chklistitem' + counter++
-//                }).text(this.Name))));
-//            });
-// 
-//            $('#dvCheckBoxListControl').append(table);
-			
 		});
-//	});
-//});
-}
-
-//function PopulateCheckBoxList() {
-//    $.ajax({
-//        type: "POST",
-//        url: 'PublicController',
-//        contentType: "application/json; charset=utf-8",
-//        data: "{}",
-//        dataType: "json",
-//        success: AjaxSucceeded,
-//        error: AjaxFailed
-//    });
-//}
-//function AjaxSucceeded(result) {
-//    BindCheckBoxList(result);
-//}
-//function AjaxFailed(result) {
-//    alert('Failed to load checkbox list');
-//}
-//function BindCheckBoxList(result) {
-//
-//    var items = JSON.parse(result.d);
-//    CreateCheckBoxList(items);
-//}
-//function CreateCheckBoxList(checkboxlistItems) {
-//    var table = $('<table></table>');
-//    var counter = 0;
-//    $(checkboxlistItems).each(function () {
-//        table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
-//            type: 'checkbox', name: 'chklistitem', value: this.Value, id: 'chklistitem' + counter
-//        })).append(
-//        $('<label>').attr({
-//            for: 'chklistitem' + counter++
-//        }).text(this.Name))));
-//    });
-//
-//    $('#dvCheckBoxListControl').append(table);
-//}
+	});
+});
