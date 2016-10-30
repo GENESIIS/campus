@@ -10,6 +10,8 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.LevelDAO;
 import com.genesiis.campus.util.IDataHelper;
 
+import org.apache.log4j.Logger;
+
 public class CmdListLevels implements ICommand{
 	static Logger log = Logger.getLogger(CmdListLevels.class.getName());
 

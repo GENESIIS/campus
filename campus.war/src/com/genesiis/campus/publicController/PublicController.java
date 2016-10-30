@@ -47,6 +47,7 @@ public class PublicController extends HttpServlet{
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//super.doGet(request, response);
+		this.doPost(request, response);
 	}
 
 	/**
@@ -103,11 +104,9 @@ public class PublicController extends HttpServlet{
         for (Collection<String> view : result.getCollection()) {
         	Object[] category = view.toArray();
         	result1.add(category);
-		}
+        }
 		
-
-		String[] strArr = new String[] {"A", "B", "C", "D"};
-        String json = new Gson().toJson(result1);
+		String json = new Gson().toJson(result1);
         response.setContentType("application/json");
         response.getWriter().write(json);
 		
