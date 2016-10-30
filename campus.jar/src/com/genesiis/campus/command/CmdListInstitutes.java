@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //DJ 20161026 c6-list-available-institutes-on-the-view created CmdListInstitutes.java
 //DJ 20161026 c6-list-available-institutes-on-the-view implementing execute() method
+//DJ 20161030 c6-list-available-institutes-on-the-view identified get all institutes 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,18 +23,24 @@ public class CmdListInstitutes implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
-		final InstituteProviderDAO providerDAO=new InstituteProviderDAO();		
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;		
+		final InstituteProviderDAO providerDAO = new InstituteProviderDAO();
+		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		try {
-			int categoryCode =0;
-			final CourseProvider institute=new CourseProvider();
-			if (UtilityHelper.isNotEmpty( helper.getParameter("category"))) {
-				categoryCode = Integer.parseInt(helper.getParameter("category"));
-				institute.setCategory(categoryCode);
+			int categoryCode = 0;
+			final CourseProvider provider = new CourseProvider();
+			String categoryCodeString = helper.getParameter("category");
+			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
+				if (UtilityHelper.isInteger(categoryCodeString)) {
+					categoryCode = Integer.parseInt(categoryCodeString);
+					provider.setCategory(categoryCode);
+				}
+				provider.setGetAll(false);
+			} else {
+				// Setting the flag for retrieve all the institutes
+				provider.setGetAll(true);
 			}
-			final Collection<Collection<String>> institutes=providerDAO.findById(institute);
-			iview.setCollection(institutes);
-			//helper.setAttribute("courseProviders", institutes);
+			final Collection<Collection<String>> institutes = providerDAO.findById(provider);
+			iview.setCollection(institutes);			
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
