@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //DJ 20161026 c6-list-available-institutes-on-the-view created Institutes.java
+//DJ 20161030 c6-list-available-institutes-on-the-view  identified get all institutes 
 
 public class CourseProvider {
 	
@@ -8,6 +9,8 @@ public class CourseProvider {
 	private int category;
 	private String name;
 	private String uniqueprefix;
+	private boolean isGetAll;
+	private int courseProviderType;
 	
 	public int getCode() {
 		return code;
@@ -34,7 +37,17 @@ public class CourseProvider {
 	public void setUniqueprefix(String uniqueprefix) {
 		this.uniqueprefix = uniqueprefix;
 	}
+	public boolean isGetAll() {
+		return isGetAll;
+	}
+	public void setGetAll(boolean isGetAll) {
+		this.isGetAll = isGetAll;
+	}
+	public int getCourseProviderType() {
+		return courseProviderType;
+	}
+	public void setCourseProviderType(int courseProviderType) {
+		this.courseProviderType = courseProviderType;
+	}
 	
-	
-
 }
