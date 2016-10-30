@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 //DJ 20161026 c6-list-available-institutes-on-the-view created InstituteProviderDAO.java
 //DJ 20161028 c6-list-available-institutes-on-the-view created findById()
+//DJ 20161030 c6-list-available-institutes-on-the-view refactored query to identified get all institutes 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,18 +55,25 @@ public class InstituteProviderDAO implements ICrud{
 		try {
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
+			boolean isGetAll=false;
 			if(UtilityHelper.isNotEmptyObject(code)){
 				CourseProvider cp = (CourseProvider) code;
-				categoryCode = cp.getCategory();				
+				categoryCode = cp.getCategory();
+				isGetAll=cp.isGetAll();
 			}			
 			
 			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE, PROV.UNIQUEPREFIX , PROV.NAME ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  on  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1  AND CAT.CODE=? ");
+			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1 ");			
+			if(!isGetAll){
+				sb.append(" AND CAT.CODE=? ");
+			}
 			 
 			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1, categoryCode);			
+			if(!isGetAll){
+				stmt.setInt(1, categoryCode);	
+			}
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
 				final ArrayList<String> singleInstitute = new ArrayList<String>();
@@ -79,7 +87,6 @@ public class InstituteProviderDAO implements ICrud{
 			log.info("findById() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-
 			log.info("findById() Exception" + e.toString());
 			throw e;
 		} finally {
