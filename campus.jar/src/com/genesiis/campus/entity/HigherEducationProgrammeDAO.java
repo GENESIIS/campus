@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161025 JH c7-list-higher-education-courses implement unimplemented methods
 //20161025 JH c7-list-higher-education-courses findById method modified
 //20161027 JH c7-higher-education-landing-page findById method modified
+//20161030 JH c7-higher-education-landing-page findById method modified : fix sql exception
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,7 +59,9 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		String returnMessage = "";
 		final Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 
-		String getAllQuery = "SELECT * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY = ? and PROGRAMMESTATUS = ? and DISPLAYSTARTDATE <= GETDATE()  and EXPIRYDATE >= GETDATE()";
+		String getAllQuery = "SELECT TOP 20 * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY = ?"
+				+ " and PROGRAMMESTATUS = ? and DISPLAYSTARTDATE <= GETDATE()  and EXPIRYDATE >= GETDATE() "
+				+ "ORDER BY NEWID()";
 
 		try {
 
