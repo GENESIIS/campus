@@ -109,6 +109,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			
 			int type = programme.getLevel();
 			String  level = String.valueOf(type);
+			
 	
 			preparedStatement = conn.prepareStatement(query1);
 
