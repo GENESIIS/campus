@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161027 JH c7-higher-education-landing-page findById(Object code) method modified
 //20161028 JH c7-higher-education-landing-page findById(Object code) query modified 
 //20161028 JH c7-higher-education-landing-page CourseProviderDAO.java renamed as CourseProviderProgrammeDAO.java
+//20161030 JH c7-higher-education-landing-page findById method modified : sql exception fixed
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,11 +67,14 @@ public class CourseProviderProgrammeDAO implements ICrud {
 		String returnMessage = "";
 		final Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
 
+		
 		/**
-		 * getAllQuery used to query the database to retrieve data based on
+		 * query1 used to query the database to retrieve data based on
 		 * several criteria. 1. select programme stat for each programme for
-		 * given category 2. programmes that were expired within a year from the
-		 * current date is considered 3. get only top 5 course providers
+		 * given category 
+		 * 2. programmes that were expired within a year from the
+		 * current date is considered 
+		 * 3. get only top 5 course providers
 		 */
 		// String getAllQuery =
 		// " SELECT TOP 5 p.COURSEPROVIDER , COUNT(*) FROM [CAMPUS].[PROGRAMME] p "
@@ -102,6 +106,10 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 			final Programme programme = (Programme) code;
 			conn = ConnectionManager.getConnection();
+			
+			int type = programme.getLevel();
+			String  level = String.valueOf(type);
+	
 			preparedStatement = conn.prepareStatement(query1);
 
 			preparedStatement.setInt(1, programme.getCategory());
@@ -112,56 +120,56 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			if (rs != null) {
 
 				while (rs.next()) {
+					log.info("comes here");
+					int courseProvider = rs.getInt("COURSEPROVIDER");
 					
-					int courseProvider = rs.getInt("CODE");
-					
-					log.info(rs.getString("CODE"));
+					log.info(courseProvider);
 					preparedStatement2 = conn.prepareStatement(query2);
 					preparedStatement2.setInt(1, courseProvider);
 					
 					final ResultSet rs2 = preparedStatement2.executeQuery();
-					while(rs2.next()){
+					if(rs2.next()){
 						
 						final ArrayList<String> singleCourseProviderList = new ArrayList<String>();
 						
-						 singleCourseProviderList.add(rs.getString("CODE"));
-						 singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
-						 singleCourseProviderList.add(rs.getString("NAME"));
-						 singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
-						 singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
-						 singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
-						 singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
-						 singleCourseProviderList.add(rs.getString("LANDPHONEAREACODE"));
-						 singleCourseProviderList.add(rs.getString("LANDPHONENO"));
-						 singleCourseProviderList.add(rs.getString("LANDPHONE2NO"));
-						 singleCourseProviderList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
-						 singleCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
-						 singleCourseProviderList.add(rs.getString("MOBILEPHONENO"));
-						 singleCourseProviderList.add(rs.getString("HEADERIMAGEPATH"));
-						 singleCourseProviderList.add(rs.getString("LOGOIMAGEPATH"));
-						 singleCourseProviderList.add(rs.getString("SPECIALITY"));
-						 singleCourseProviderList.add(rs.getString("WEBLINK"));
-						 singleCourseProviderList.add(rs.getString("FACEBOOKURL"));
-						 singleCourseProviderList.add(rs.getString("TWITTERURL"));
-						 singleCourseProviderList.add(rs.getString("MYSPACEURL"));
-						 singleCourseProviderList.add(rs.getString("LINKEDINURL"));
-						 singleCourseProviderList.add(rs.getString("INSTAGRAMURL"));
-						 singleCourseProviderList.add(rs.getString("VIBERNUMBER"));
-						 singleCourseProviderList.add(rs.getString("WHATSAPPNUMBER"));
-						 singleCourseProviderList.add(rs.getString("EXPIRATIONDATE"));
-						 singleCourseProviderList.add(rs.getString("STREETNO"));
-						 singleCourseProviderList.add(rs.getString("STREETNAME"));
-						 singleCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
-						 singleCourseProviderList.add(rs.getString("ISTUTORRELATED"));
-						 singleCourseProviderList.add(rs.getString("ISADMINALLOWED"));
-						 singleCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));
-						 singleCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
-						 singleCourseProviderList.add(rs.getString("PRINCIPAL"));
-						 singleCourseProviderList.add(rs.getString("TUTOR"));
-						 singleCourseProviderList.add(rs.getString("CRTON"));
-						 singleCourseProviderList.add(rs.getString("CRTBY"));
-						 singleCourseProviderList.add(rs.getString("MODON"));
-						 singleCourseProviderList.add(rs.getString("MODBY"));
+						 singleCourseProviderList.add(rs2.getString("CODE"));
+						 singleCourseProviderList.add(rs2.getString("UNIQUEPREFIX"));
+						 singleCourseProviderList.add(rs2.getString("NAME"));
+						 singleCourseProviderList.add(rs2.getString("GENERALEMAIL"));
+						 singleCourseProviderList.add(rs2.getString("COURSEINQUIRYEMAIL"));
+						 singleCourseProviderList.add(rs2.getString("LANDPHONECOUNTRYCODE"));
+						 singleCourseProviderList.add(rs2.getString("LANDPHONECOUNTRYCODE"));
+						 singleCourseProviderList.add(rs2.getString("LANDPHONEAREACODE"));
+						 singleCourseProviderList.add(rs2.getString("LANDPHONENO"));
+						 singleCourseProviderList.add(rs2.getString("LANDPHONE2NO"));
+						 singleCourseProviderList.add(rs2.getString("MOBILEPHONECOUNTRYCODE"));
+						 singleCourseProviderList.add(rs2.getString("MOBILEPHONENETWORKCODE"));
+						 singleCourseProviderList.add(rs2.getString("MOBILEPHONENO"));
+						 singleCourseProviderList.add(rs2.getString("HEADERIMAGEPATH"));
+						 singleCourseProviderList.add(rs2.getString("LOGOIMAGEPATH"));
+						 singleCourseProviderList.add(rs2.getString("SPECIALITY"));
+						 singleCourseProviderList.add(rs2.getString("WEBLINK"));
+						 singleCourseProviderList.add(rs2.getString("FACEBOOKURL"));
+						 singleCourseProviderList.add(rs2.getString("TWITTERURL"));
+						 singleCourseProviderList.add(rs2.getString("MYSPACEURL"));
+						 singleCourseProviderList.add(rs2.getString("LINKEDINURL"));
+						 singleCourseProviderList.add(rs2.getString("INSTAGRAMURL"));
+						 singleCourseProviderList.add(rs2.getString("VIBERNUMBER"));
+						 singleCourseProviderList.add(rs2.getString("WHATSAPPNUMBER"));
+						 singleCourseProviderList.add(rs2.getString("EXPIRATIONDATE"));
+						 singleCourseProviderList.add(rs2.getString("STREETNO"));
+						 singleCourseProviderList.add(rs2.getString("STREETNAME"));
+						 singleCourseProviderList.add(rs2.getString("ACCOUNTTYPE"));
+						 singleCourseProviderList.add(rs2.getString("ISTUTORRELATED"));
+						 singleCourseProviderList.add(rs2.getString("ISADMINALLOWED"));
+						 singleCourseProviderList.add(rs2.getString("COURSEPROVIDERSTATUS"));
+						 singleCourseProviderList.add(rs2.getString("COURSEPROVIDERTYPE"));
+						 singleCourseProviderList.add(rs2.getString("PRINCIPAL"));
+						 singleCourseProviderList.add(rs2.getString("TUTOR"));
+						 singleCourseProviderList.add(rs2.getString("CRTON"));
+						 singleCourseProviderList.add(rs2.getString("CRTBY"));
+						 singleCourseProviderList.add(rs2.getString("MODON"));
+						 singleCourseProviderList.add(rs2.getString("MODBY"));
 
 						final Collection<String> singleCourseProviderCollection = singleCourseProviderList;
 						courseProviderCollection
