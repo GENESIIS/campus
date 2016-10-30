@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 
 public class EmailDispenser {
-	static Logger log = Logger.getLogger(GeneralMail.class.getName());
+	static Logger log = Logger.getLogger(EmailDispenser.class.getName());
 	private IEmail email;
 	
 	/**
@@ -50,19 +50,25 @@ public class EmailDispenser {
 	 * @return IEmail an email object
 	 */
 	public IEmail getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(IEmail email) throws IllegalArgumentException {
-		if(!(isEmailNotSet())&(!email.equals(null)) ){
+		log.info("setEmail() BEFORE IFTEST ===email"+email);
+		log.info("setEmail() :email.equals(null)"+email.equals(null));
+		//log.info("setEmail() :isEmailNotSet()"+isEmailNotSet());
+		
+		if(!email.equals(null)){
+			log.info("setEmail() WITHIN THE ISTEST");
 			this.email=email;
 			}else{
-				log.error("setEmail(IEmail email); noll email address has passed in ");
+				log.error("setEmail(IEmail email); null email address has passed in ");
 				throw new IllegalArgumentException();
 			}
 	}
 	
 	public boolean isEmailNotSet(){
+		log.info("isEmailNotSet() :before calling getEmail().equals(null):"+getEmail().equals(null));
 		return (getEmail().equals(null));
 	}
 	

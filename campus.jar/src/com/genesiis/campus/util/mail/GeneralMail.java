@@ -17,6 +17,13 @@ import javax.mail.internet.MimeMessage;
 import com.genesiis.campus.command.CmdGenerateEmail;
 import org.apache.log4j.Logger;
 
+/**
+ * GeneralMail class captures the essence of an email
+ * and binds email related properties such as from, to ,message context , subject
+ * and the system properties related to Mailing protocol. 
+ * @author DN
+ *
+ */
 public class GeneralMail implements IEmail {
 
 	static Logger log = Logger.getLogger(GeneralMail.class.getName());
@@ -31,6 +38,17 @@ public class GeneralMail implements IEmail {
     private Session session ;
     private MimeMessage message ;
   
+    /**
+     * GeneralMail constructor creates the MimeMessage and Session automatically 
+     * with system properties.
+     * @author DN
+     * @param receivers to list of the email ArrayList<String>
+     * @param sender String: email address of  the person who sends the email
+     * @param host String: Mail transferring host or the domain address
+     * @param mailHost String: the system property of mail transfer protocol
+     * @param subject String: subject of the email
+     * @param emailBody String : body content of the email
+     */
     public GeneralMail( ArrayList<String> receivers,String sender,String host,
     		String mailHost,String subject,String emailBody){
     	this.receivers = receivers;
@@ -43,6 +61,12 @@ public class GeneralMail implements IEmail {
     	
     }
     
+    /**
+     * setEmailMessage() setup sender,receiver list,subject,and the message body
+     * @author DN
+     * @return MimeMessage
+     * @throws MessagingException
+     */
     @Override
 	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
@@ -60,13 +84,28 @@ public class GeneralMail implements IEmail {
 
 	}
     
+   
+    /*
+     * setSystemPropertiesAndMailEnvironment sets system properties relates to mailing and creates 
+     * MimeMessage instance 
+     * @author DN 
+     * @param mailHost Mailing protocol name which acts as the system property name
+     * e.g.mail.smtp.host
+     * @param host Mailing host name such as "localhost" etc
+     */    
+	    private void setSystemPropertiesAndMailEnvironment(String mailHost,String host){    	
+	    	this.setProperties(mailHost,host);
+	    	
+	    }
     
-    private void setSystemPropertiesAndMailEnvironment(String mailHost,String host){    	
-    	this.setProperties(mailHost,host);
-    	
-    }
-    
-    
+ /*
+  * setProperties() method sets the system property for mail transfer
+  * protocol.
+  * @author DN
+  * @param mailHost system property for various mail transfer protocol. 
+  * @param host contains the DNS name of a server
+  * if the mailHost is null then the host is set to SMPT
+  */
     private void setProperties(String mailHost,String host) {    	  	
     	String defaultMailingHost = "mail.smtp.host";
     	//this.mailHost=(mailHost.equals(null))?defaultMailingHost:mailHost;
@@ -85,20 +124,25 @@ public class GeneralMail implements IEmail {
 
 	/*
      * addRecipientToMail() unfolds the list of recipients and
-     * add to the message mailing list
+     * add to the message mailing list only if the element is not null.
+     * @author DN
      * @param receiversList list of recipient ,MimeMessage message being context
      */
 	private void addRecipientToMail(MimeMessage message,ArrayList<String> receiversList)
 			throws MessagingException {
 
 		for (String emailAddress : receiversList) {
-			message.addRecipients(Message.RecipientType.TO, emailAddress);
+			if(!emailAddress.equals(null)){
+				message.addRecipients(Message.RecipientType.TO, emailAddress);
+			}
+			
 		}
 		
 	}
 	
 	/*
-     * addSenderToMail() adds sender to the email 
+     * addSenderToMail() adds sender to the email
+     * @author DN 
      * @param message which is been composed, sender senders address
      */
 	 private void addSenderToMail(MimeMessage message,String sender )throws MessagingException{
@@ -107,6 +151,7 @@ public class GeneralMail implements IEmail {
 
 	 /*
      * addSubjectToMail() adds the subject to the message mailing list
+     * @author DN
      * @param message message which is been composed, subject senders address
      * @Throws MessagingException
      */
@@ -118,6 +163,7 @@ public class GeneralMail implements IEmail {
 	
 	/*
      * addBodyContentToMail() adds the message body to the email 
+     * @author DN
      * @param message which is been composed, bodyContent body of the message
      */
 	private void addBodyContentToMail(MimeMessage message, String bodyContent)
