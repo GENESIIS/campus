@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.controller.CampusController;
-
+@WebServlet("/PublicController")
 public class PublicController extends CampusController {
 	
 	static Logger log = Logger.getLogger(PublicController.class.getName());

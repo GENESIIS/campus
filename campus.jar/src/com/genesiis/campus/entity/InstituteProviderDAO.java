@@ -11,8 +11,9 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.Institute;
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.UtilityHelper;
 
 public class InstituteProviderDAO implements ICrud{
 	
@@ -53,15 +54,15 @@ public class InstituteProviderDAO implements ICrud{
 		try {
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
-			if(code !=null && code!=""){
-				Institute institute = (Institute) code;
-				categoryCode = institute.getCategory();				
+			if(UtilityHelper.isNotEmptyObject(code)){
+				CourseProvider cp = (CourseProvider) code;
+				categoryCode = cp.getCategory();				
 			}			
 			
-			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.UNIQUEPREFIX , PROV.NAME ");
+			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE, PROV.UNIQUEPREFIX , PROV.NAME ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  on  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE WHERE PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1  AND CAT.CODE=? ");
+			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1  AND CAT.CODE=? ");
 			 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, categoryCode);			

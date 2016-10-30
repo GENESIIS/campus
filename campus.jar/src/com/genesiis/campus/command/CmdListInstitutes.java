@@ -9,9 +9,10 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteProviderDAO;
-import com.genesiis.campus.entity.model.Institute;
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
@@ -25,8 +26,8 @@ public class CmdListInstitutes implements ICommand  {
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;		
 		try {
 			int categoryCode =0;
-			final Institute institute=new Institute();
-			if (helper.getParameter("category") != null) {
+			final CourseProvider institute=new CourseProvider();
+			if (UtilityHelper.isNotEmpty( helper.getParameter("category"))) {
 				categoryCode = Integer.parseInt(helper.getParameter("category"));
 				institute.setCategory(categoryCode);
 			}
