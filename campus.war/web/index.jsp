@@ -45,5 +45,6 @@
 <!--<script src="js/animation.js"></script>-->
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
 <script src="dist/js/filterSearch/ui-populate-helper.js"></script>
+<script src="dist/js/filterSearch/jquery-1.11.1.js"></script>
 </body>
 </html>

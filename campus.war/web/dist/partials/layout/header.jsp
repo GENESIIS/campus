@@ -20,7 +20,7 @@
                 <!-- Main menu tabs -->
                 <div class="top-menus">
                     <ul class="list-inline">
-                        <li><a href="#/courses">All Courses</a></li>
+                        <li><a id="allCourses" name="allCourses" href="#/courses">All Courses</a></li>
                         <li><a href="javascript:">About Us</a></li>
                         <li><a href="javascript:">Contact Us</a></li>
                         <li><a href="javascript:">News</a></li>
