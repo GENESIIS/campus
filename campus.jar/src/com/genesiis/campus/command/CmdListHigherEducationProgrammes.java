@@ -59,6 +59,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 
 		try {
 
+			
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
@@ -66,20 +67,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 
 			programmes = higherEducationProgrammeDAO.findById(programme);
 			iview.setCollection(programmes);
-
-		} catch (Exception exception) {
-			log.error("execute() : " + exception);
-			systemMessage = SystemMessage.ERROR;
-			throw exception;
-		} finally {
-			// get course providers
-
-			CourseProviderProgrammeDAO courseProviderDAO = new CourseProviderProgrammeDAO();
-
-			// CourseProvider courseProvider = new CourseProvider();
-			// courseProvider.setCourseProviderType(Integer.parseInt(category));
-			// courseProvider.setCourseProviderStatus(1);
-
+			
 			/**
 			 * current date is back dated by an year when selecting the
 			 * programmes to get programme stat. Only resent statistics are
@@ -91,17 +79,29 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 			cal.add(Calendar.YEAR, -1); // to get previous year 
 			Date nextYear = cal.getTime();
 
+			java.sql.Date expiryDate = new java.sql.Date(nextYear.getTime());
 
-			java.util.Date utilDate = new java.util.Date();
-			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			log.info("sqldate " + expiryDate);
 
-			log.info("sqldate " + sqlDate);
-			log.info("cal date" + nextYear);
-			
-			programme.setExpiryDate(sqlDate);
+			CourseProviderProgrammeDAO courseProviderDAO = new CourseProviderProgrammeDAO();
+			programme.setExpiryDate(expiryDate);
 			final Collection<Collection<String>> courseProviders = courseProviderDAO
 					.findById(programme);
-			helper.setAttribute("week", courseProviders);
+			helper.setAttribute("featuredInstitutes", courseProviders);
+
+		} catch (Exception exception) {
+			log.error("execute() : " + exception);
+			systemMessage = SystemMessage.ERROR;
+			throw exception;
+		} finally {
+			// get course providers
+
+
+			// CourseProvider courseProvider = new CourseProvider();
+			// courseProvider.setCourseProviderType(Integer.parseInt(category));
+			// courseProvider.setCourseProviderStatus(1);
+
+	
 		}
 
 		helper.setAttribute("message", systemMessage.message());
