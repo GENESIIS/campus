@@ -3,18 +3,24 @@ package com.genesiis.campus.util.mail;
 //20161027 DN c10-contacting-us-page GeneralMail.java initial version created
 //20161027 DN c10-contacting-us-page coded sendEmail() and supportive mutator methods
 //20161028 DN c10-contacting-us-page developed sendEmail(),setSystemPropertiesAndMailEnvironment(),setProperties()
+//20161031 DN c10-contacting-us-page setEmailMessage(),setProperties() re-factored to set authentication details
+//				add documentation comments.
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.genesiis.campus.command.CmdGenerateEmail;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -62,9 +68,10 @@ public class GeneralMail implements IEmail {
     }
     
     /**
-     * setEmailMessage() setup sender,receiver list,subject,and the message body
+     * setEmailMessage() setup sender,receiver list,subject,and the message bodyand the
+     * date of generating the email
      * @author DN
-     * @return MimeMessage
+     * @return MimeMessage formatted message
      * @throws MessagingException
      */
     @Override
@@ -74,7 +81,8 @@ public class GeneralMail implements IEmail {
 	         addSenderToMail(message,sender); 
 	         addRecipientToMail(message,receivers);
 	         addSubjectToMail(message,subject);
-	         addBodyContentToMail(message,emailBody);	
+	         addBodyContentToMail(message,emailBody);
+	         setSentDateToMail(message);
 	         return message;	        
 	         
 	      }catch (MessagingException mex) {
@@ -116,7 +124,20 @@ public class GeneralMail implements IEmail {
     	}
     	properties=System.getProperties();
     	properties.setProperty(this.mailHost, host);
-    	session = Session.getDefaultInstance(properties);
+    	properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host", "smtp.gmail.com");
+		properties.put("mail.smtp.user", "dushantha@genesiis.com"); // User name
+		properties.put("mail.smtp.password", "Appleapple123"); // password
+		properties.put("mail.smtp.port", "25"); //port number
+		properties.put("mail.smtp.auth", "true");
+		// Get the default Session object.
+				Session session = Session.getDefaultInstance(properties,
+						new Authenticator() {
+							protected PasswordAuthentication getPasswordAuthentication() {
+								return new PasswordAuthentication(
+										"dushantha@genesiis.com", "Appleapple123");
+							}
+						});
     	message = new MimeMessage(session);
     	
 	}
@@ -137,6 +158,17 @@ public class GeneralMail implements IEmail {
 			}
 			
 		}
+		
+	}
+	
+	/*
+	 * setSentDateToMail() binds the sending date to the mail
+	 * @author DN
+	 * @param message MimeMessage
+	 * @throws MessagingException
+	 */
+	private void setSentDateToMail(MimeMessage message)throws MessagingException{
+		message.setSentDate(new Date());
 		
 	}
 	
