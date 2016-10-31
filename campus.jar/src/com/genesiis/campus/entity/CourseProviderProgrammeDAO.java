@@ -57,9 +57,21 @@ public class CourseProviderProgrammeDAO implements ICrud {
 						+ "a JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (cp1.CODE = a.COURSEPROVIDER)";
 				
 			} else {
-				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
-						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
-						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";			
+//				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
+//						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
+//						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";	
+				
+				query = "SELECT cp1.*, t.CODE AS TOWNCODE, "
+						+ "t.NAME AS TOWNNAME FROM ("
+						+ "SELECT TOP 3 NEWID() as dummy, a.COURSEPROVIDER FROM"
+						+ "("
+						+ "SELECT DISTINCT p.COURSEPROVIDER"
+						+ "FROM [CAMPUS].[PROGRAMME] p"
+						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = 3)"
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE)"
+						+ ") a"
+						+ ") b"
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE)";			
 			}
 
 			conn = ConnectionManager.getConnection();
@@ -114,6 +126,8 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			singleCourseProvider.add(rs.getString("WHATSAPPNUMBER"));
 			singleCourseProvider.add(rs.getString("EXPIRATIONDATE"));
 			singleCourseProvider.add(rs.getString("MYSPACEURL"));
+			singleCourseProvider.add(rs.getString("TOWNCODE"));
+			singleCourseProvider.add(rs.getString("TOWNNAME"));
 			final Collection<String> singleCourseProviderCollection = singleCourseProvider;
 			courseProviderList.add(singleCourseProviderCollection);
 		}
