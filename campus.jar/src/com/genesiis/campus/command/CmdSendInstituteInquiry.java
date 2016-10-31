@@ -36,7 +36,6 @@ import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
-import com.google.gson.Gson;
 
 public class CmdSendInstituteInquiry implements ICommand {
 
@@ -72,7 +71,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = "";
-		setEnvironment( helper);
+		
 		try {
 			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
 
@@ -80,18 +79,18 @@ public class CmdSendInstituteInquiry implements ICommand {
 			String validateResult = Validator.validateInquiry(helper);
 
 			if (validateResult.equalsIgnoreCase("True")) {
-
-				fullname = helper.getParameter("fullname");
-				sendersEmail = helper.getParameter("email");
-				countryCode = helper.getParameter("countryCode");
-				areaCode = helper.getParameter("areaCode");
-				telNo = helper.getParameter("telNum");
-				inquiryTitle = helper.getParameter("inquiryTitle");
-				inquiry = helper.getParameter("inquiry");
-				studentCode = Integer.parseInt(helper
-						.getParameter("studentCode"));
-				corseProviderCode = Integer.parseInt(helper
-						.getParameter("courseProviderCode"));
+				setEnvironment( helper);
+//				fullname = helper.getParameter("fullname");
+//				sendersEmail = helper.getParameter("email");
+//				countryCode = helper.getParameter("countryCode");
+//				areaCode = helper.getParameter("areaCode");
+//				telNo = helper.getParameter("telNum");
+//				inquiryTitle = helper.getParameter("inquiryTitle");
+//				inquiry = helper.getParameter("inquiry");
+//				studentCode = Integer.parseInt(helper
+//						.getParameter("studentCode"));
+//				corseProviderCode = Integer.parseInt(helper
+//						.getParameter("courseProviderCode"));
 
 				// InstituteInquiry data = getInstituteInquirydetails(gsonData);
 
@@ -116,16 +115,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 					generalEmail = formatEmailInstance();
 					this.sendMail();
 					message = SystemMessage.INQUIRYSENT.message();
-					// for (Collection<String> collection : courseProviderEmail)
-					// {
-					// for (String emailAddress : collection) {
-					// // message = sendEmail(emailAddress, inquiryTitle,
-					// // inquiry, email);
-					// //
-					// message = SystemMessage.INQUIRYSENT.message();
-					//
-					// }
-					// }
 
 				} else {
 
@@ -164,8 +153,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 		inquiryTitle = helper.getParameter("inquiryTitle");
 		inquiry = helper.getParameter("inquiry");
 		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
-		corseProviderCode = Integer.parseInt(helper
-				.getParameter("courseProviderCode"));
+		corseProviderCode = Integer.parseInt(helper.getParameter("courseProviderCode"));
 		userName = (String) helper.getAttribute("userName");
 		passWord = (String) helper.getAttribute("password");
 		port = (String) helper.getAttribute("port");
@@ -255,10 +243,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 		result.append("Inquiry From : ");
 		result.append(System.getProperty("line.separator"));
 		result.append(sendersEmail);
-//		result.append(System.getProperty("line.separator"));
-//		result.append(sendersphoneNumber);
-//		result.append(System.getProperty("line.separator"));
-//		result.append(sendersEmailAddress);
 		this.inquiry = result.toString();
 
 	}
