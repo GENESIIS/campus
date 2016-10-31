@@ -71,6 +71,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 			
 			iview.setCollection(programmeCollection);
 			helper.setAttribute("courseProviders", courseProviderCollection);
+			helper.setAttribute("courseProvidersWithPopularCourses", courseProvidersWithPopularCourses);
 			
 		} catch (NumberFormatException nfe) {
 			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
