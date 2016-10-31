@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //DJ 20161026 c6-list-available-institutes-on-the-view created InstituteProviderDAO.java
 //DJ 20161028 c6-list-available-institutes-on-the-view created findById()
 //DJ 20161030 c6-list-available-institutes-on-the-view refactored query to identified get all institutes 
+//DJ 20161031 c6-list-available-institutes-on-the-view rename the class name as  CourseProviderDAO.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +17,9 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.UtilityHelper;
 
-public class InstituteProviderDAO implements ICrud{
+public class CourseProviderDAO implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(InstituteProviderDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -132,6 +133,45 @@ public class InstituteProviderDAO implements ICrud{
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException{
+		Connection conn = null;
+		PreparedStatement  stmt = null;	
+		final Collection<Collection<String>> allInstitutesList = new ArrayList<Collection<String>>();
+		
+		try {
+			conn=ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder();
+			
+			
+			stmt = conn.prepareStatement(sb.toString());			
+			stmt.setInt(1, 1);	
+			
+			final ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {				
+				final ArrayList<String> singleInstitute = new ArrayList<String>();
+				/*singleInstitute.add(rs.getString("CODE"));
+				singleInstitute.add(rs.getString("NAME"));
+				singleInstitute.add(rs.getString("UNIQUEPREFIX"));*/
+				allInstitutesList.add(singleInstitute);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("findTopViewedProviders() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findTopViewedProviders() Exception" + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
 		return null;
 	}
 
