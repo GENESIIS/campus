@@ -364,6 +364,19 @@ body, html {
 .contact-us-screen {
   display: block;
   position: relative; }
+  .contact-us-screen .contact-form-holder {
+    display: block;
+    width: 93%;
+    margin-left: auto;
+    margin-right: auto; }
+    .contact-us-screen .contact-form-holder .contact-form {
+      display: block; }
+      .contact-us-screen .contact-form-holder .contact-form .submit-area {
+        display: inline-block;
+        position: relative; }
+      .contact-us-screen .contact-form-holder .contact-form .question-area {
+        display: inline-block;
+        position: relative; }
 
 /* Modules */
 .btn-home {
@@ -395,6 +408,17 @@ body, html {
   position: relative;
   padding-left: 3.8%;
   padding-top: 30px; }
+
+.inner-image-header {
+  display: block;
+  width: 100%;
+  background: #9dc2ff; }
+  .inner-image-header .bg-image {
+    background: url("../i/contactUs/header-bar-contact.png");
+    background-size: cover;
+    height: 225px;
+    width: 100%;
+    opacity: 0.46; }
 
 .filter-item {
   display: block;
