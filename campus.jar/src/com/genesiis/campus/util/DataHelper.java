@@ -183,4 +183,16 @@ public class DataHelper implements IDataHelper {
 
 	}
 
+	/**
+	 * getAttribute method returns the attribute value bound to the
+	 * request instance by attributeName
+	 * @author dushantha DN
+	 * @param attributeName String
+	 * @return Object 
+	 * @since 20161031
+	 */
+	public Object getAttribute(String attributeName){
+		return request.getAttribute(attributeName);
+	}
+
 }
