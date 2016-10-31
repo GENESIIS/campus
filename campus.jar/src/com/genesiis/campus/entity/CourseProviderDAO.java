@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //DJ 20161028 c6-list-available-institutes-on-the-view created findById()
 //DJ 20161030 c6-list-available-institutes-on-the-view refactored query to identified get all institutes 
 //DJ 20161031 c6-list-available-institutes-on-the-view rename the class name as  CourseProviderDAO.java
+//DJ 20161031 c6-list-available-institutes-on-the-view create findTopViewedProviders()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
