@@ -26,4 +26,6 @@ public interface IDataHelper {
 	String getRedirectPage();
 
 	void setRedirectPage(String pageName);
+	
+	public Object getAttribute(String attributeName);
 }
