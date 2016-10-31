@@ -24,7 +24,7 @@ angular.module('CampusApp',['ngRoute'])
     .directive('slideable', function () {
         return {
             restrict:'C',
-            compile: function (element, attr) {
+            compile: function (element, attr) { 
                 // wrap tag
                 var contents = element.html();
                 element.html('<div class="slideable_content" style="margin:0 !important; padding:0 !important" >' + contents + '</div>');

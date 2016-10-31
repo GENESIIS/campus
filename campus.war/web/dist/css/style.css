@@ -75,7 +75,7 @@ textarea:focus, input:focus {
 
 .page-topic-t1 {
   font-family: "Arvo", serif;
-  font-size: 30px;
+  font-size: 34px;
   color: #3a3b3c;
   padding-bottom: 30px; }
 
@@ -361,6 +361,10 @@ body, html {
             float: right;
             width: 28%; }
 
+.contact-us-screen {
+  display: block;
+  position: relative; }
+
 /* Modules */
 .btn-home {
   display: block;
@@ -374,7 +378,9 @@ body, html {
   background: #36474f;
   width: 98%;
   margin-top: 256px;
-  padding: 0 30px; }
+  padding: 0 30px;
+  margin-right: auto;
+  margin-left: auto; }
   .inner-header .main-topic {
     font-family: "Nixie One", cursive;
     display: inline-block;
@@ -383,6 +389,12 @@ body, html {
       font-size: 42px;
       line-height: 88px;
       color: #fff; }
+
+.page-topic {
+  display: block;
+  position: relative;
+  padding-left: 3.8%;
+  padding-top: 30px; }
 
 .filter-item {
   display: block;
