@@ -24,8 +24,8 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.InstituteInquiryDAO;
-import com.genesiis.campus.entity.model.InstituteInquiry;
+import com.genesiis.campus.entity.CourseProviderInquiryDAO;
+import com.genesiis.campus.entity.model.CourseProviderInquiry;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
@@ -49,7 +49,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 		String message = "";
 
 		try {
-			final InstituteInquiry instituteInquiry = new InstituteInquiry();
+			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
 
 			// String gsonData = helper.getParameter("jsonData");
 			String validateResult = Validator.validateInquiry(helper);
@@ -80,7 +80,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 				instituteInquiry.setStudent(studentCode);
 				instituteInquiry.setCourseProvider(corseProviderCode);
 
-				final InstituteInquiryDAO inquiryDAO = new InstituteInquiryDAO();
+				final CourseProviderInquiryDAO inquiryDAO = new CourseProviderInquiryDAO();
 				final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
 				int result = inquiryDAO.add(instituteInquiry);
 				if (result > 0) {
@@ -88,14 +88,11 @@ public class CmdSendInstituteInquiry implements ICommand {
 							.findById(instituteInquiry);
 					for (Collection<String> collection : courseProviderEmail) {
 						for (String emailAddress : collection) {
-							message = sendEmail(emailAddress,inquiryTitle,inquiry, email);
-							if (message.equalsIgnoreCase("ok")) {
-								message = SystemMessage.INQUIRYSENT.message();
+							message = sendEmail(emailAddress, inquiryTitle,
+									inquiry, email);
 
-							} else {
+							message = SystemMessage.INQUIRYSENT.message();
 
-								message = SystemMessage.ERROR.message();
-							}
 						}
 					}
 
@@ -118,15 +115,26 @@ public class CmdSendInstituteInquiry implements ICommand {
 		}
 		return view;
 	}
+	
+	/**
+	 * Method for send inquiry to Course provider/Institute
+	 * @param email
+	 * @param title
+	 * @param emailBody
+	 * @param studentEmail
+	 * @return String
+	 */
 
-	public String sendEmail(String email,String title,String emailBody,String studentEmail) {
+	public String sendEmail(String email, String title, String emailBody,
+			String studentEmail) {
 
 		try {
 			String message = "ok";
 			String to = email;
 
 			// Sender's email ID needs to be mentioned
-			String from = "topjobs.apptest@gmail.com";
+			// String from = "topjobs.apptest@gmail.com";
+			String from = "madushani@genesiis.com";
 
 			// Assuming you are sending email from localhost
 			String host = "localhost";
@@ -140,7 +148,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.host", "smtp.gmail.com");
 			properties.put("mail.smtp.user", from); // User name
-			properties.put("mail.smtp.password", "rainbowsky"); // password
+			properties.put("mail.smtp.password", "brian1993"); // password
 			properties.put("mail.smtp.port", "25");
 			properties.put("mail.smtp.auth", "true");
 
@@ -149,11 +157,9 @@ public class CmdSendInstituteInquiry implements ICommand {
 					new Authenticator() {
 						protected PasswordAuthentication getPasswordAuthentication() {
 							return new PasswordAuthentication(
-									"topjobs.apptest@gmail.com", "rainbowsky");
+									"madushani@genesiis.com", "brian1993");
 						}
 					});
-
-			// Session session = Session.getDefaultInstance(properties);
 
 			// Create a default MimeMessage object.
 			MimeMessage msg = new MimeMessage(session);
@@ -168,7 +174,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 			msg.setSubject(title);
 
 			// Now set the actual message
-			msg.setText(emailBody +"  Inquiry from :"+studentEmail);
+			msg.setText(emailBody + "  Inquiry from :" + studentEmail);
 
 			// Send message
 			Transport.send(msg);
