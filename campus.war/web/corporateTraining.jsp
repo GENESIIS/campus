@@ -64,7 +64,35 @@ Programmes:
 	</c:forEach>
 </table>
 
-Course Providers: 
+Course Providers offering Corporate Training programmes: 
+<table style="border:2px;border-color: black; border-style: solid;">
+
+	<c:forEach var="popularCourseProvider" items="${courseProvidersWithPopularCourses}">
+		<tr>
+			<c:forEach var="courseProviderAttrib" items="${popularCourseProvider}" varStatus="vs">
+				<td>
+				</td>
+				<c:if test="${vs.index == 5}">
+					<td>
+					image
+						<a href="#">
+							<img src="${courseProviderAttrib}"/>
+						</a>
+					</td>
+				</c:if>
+				
+				<c:if test="${vs.index == 6}">		
+					<td>
+					descript: 
+						${courseProviderAttrib}
+					</td>
+				</c:if>
+			</c:forEach>
+		</tr>
+	</c:forEach>
+</table>
+
+Course Providers whose programmes of Corporate Training category has received the most number of views: 
 <table style="border:2px;border-color: black; border-style: solid;">
 
 	<c:forEach var="courseProvider" items="${courseProviders}">
