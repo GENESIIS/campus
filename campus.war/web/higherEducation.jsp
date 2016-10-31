@@ -63,24 +63,30 @@ table {
 
 
 		</tr>
-		<table width="1500px;">
+		<table width="1600px;">
 			<tr>
 				<th width="50px;">Number</th>
 				<th width="150px;">Image</th>
-				<th width="500px;">Institute</th>
-				<th width="500px;">Programme</th>
+				<th width="100px;">Prefix</th>
+				<th width="250px;">Institute</th>
+				<th width="350px;">Programme</th>
+				<th width="500px;">Description</th>
 				<th width="100px;">Location</th>
 				<th width="100px;">Duration</th>
 			</tr>
 			<c:forEach var="programmeList" items="${result.collection}"
 				varStatus="rowCount">
 				<tr>
-					<td><c:out value="${rowCount.index+1}" /></td>
-					<td><c:out value="${programmeList[0] }" /></td>
-					<td><img alt="<c:out value="${programmeList[2] }"/>" src=""></td>
-					<td><c:out value="${programmeList[2] }"></c:out></td>
-					<td><c:out value="${programmeList[2] }"></c:out></td>
-					<td><c:out value="${programmeList[2] }"></c:out></td>
+					<td width="50px;"><c:out value="${rowCount.index+1}" /></td>
+					<td width="150px;" align="center">
+					<a href="#"><img alt="" src="Higher-Education.jpg" width="75px;" height="75px;"></a><c:out value="${programmeList[0] }"></c:out>
+					</td>
+					<td width="100px;" align="center"><c:out value="${programmeList[3] }"></c:out></td>
+					<td width="250px;" align="center"><c:out value="${programmeList[4] }"></c:out></td>
+					<td width="350px;" align="center"><c:out value="${programmeList[5] }"></c:out></td>
+					<td width="500px;" align="center"><c:out value="${programmeList[6] }"></c:out></td>
+					<td width="100px;" align="center"><c:out value="${programmeList[7] }"></c:out></td>
+					<td width="100px;" align="center"><c:out value="${programmeList[8] }"></c:out></td>
 				</tr>
 			</c:forEach>
 		</table>
