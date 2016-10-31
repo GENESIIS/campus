@@ -91,9 +91,6 @@ table {
 			</c:forEach>
 		</table>
 
-		<tr>
-			<td>sjhfuereiu</td>
-		</tr>
 		<tr></tr>
 	</table>
 
