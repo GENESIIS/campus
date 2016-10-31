@@ -12,6 +12,8 @@ public enum SystemMessage {
 	EMPTYFIELD("Field is Empty."),
 	SUCCESS("Successfull"),
 	INQUIRYSENT("Inquiry sent Successfully"),
+	INVALIDECODE("Invalid Country Code."),
+	INVALIDEAREA("Invalid Area Code."),
 	FAILED_TO_CREATE("Object not created"),
 	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
