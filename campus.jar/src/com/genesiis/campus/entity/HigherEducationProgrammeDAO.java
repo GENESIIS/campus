@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161025 JH c7-list-higher-education-courses findById method modified
 //20161027 JH c7-higher-education-landing-page findById method modified
 //20161030 JH c7-higher-education-landing-page findById method modified : fix sql exception
+//20161030 JH c7-higher-education-landing-page findById method modified : select filter 20 programmes randomly
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,9 +60,10 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		String returnMessage = "";
 		final Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 
-		String getAllQuery = "SELECT TOP 20 * FROM [CAMPUS].[PROGRAMME ] WHERE CATEGORY = ?"
-				+ " and PROGRAMMESTATUS = ? and DISPLAYSTARTDATE <= GETDATE()  and EXPIRYDATE >= GETDATE() "
-				+ "ORDER BY NEWID()";
+		String getAllQuery = "SELECT TOP 20 p.CODE, p.NAME, p.EMAIL, cp.NAME AS PROVIDERNAME, p.DESCRIPTION, p.DURATION, cp.LOGOIMAGEPATH, p.COURSEPROVIDER, "
+				+ " t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM [CAMPUS].[PROGRAMME] p JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = 1 AND"
+				+ " p.PROGRAMMESTATUS = 1  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
+				+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
 
 		try {
 
@@ -74,9 +76,8 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			preparedStatement.setInt(1, programme.getCategory());
 			preparedStatement.setInt(2, programme.getProgrammeStatus());
 
-
 			final ResultSet rs = preparedStatement.executeQuery();
-			
+
 			while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
 
