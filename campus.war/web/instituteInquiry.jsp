@@ -12,80 +12,95 @@
 <script src="dist/bower-components/jquery/jquery.min.js"></script>
 <script src="dist/js/campus/campus.instituteInquiry.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<!-- Javascript method for validate form submission. Handle duplicate form submission-->
+<script type="text/javascript">
+	var wasSubmitted = false;
+	function checkBeforeSubmit() {
+		if (!wasSubmitted) {
+			wasSubmitted = true;
+			return wasSubmitted;
+		}
+		return false;
+	}
+</script>
 <title>Institute Inquiry</title>
 </head>
 <body>
-<form  method="POST" action="InstituteController">
-	<table>
-		<tr>
-			<td>You are making an inquiry about ICBT</td>
-			<td>
-			<input type="hidden" value="4" name="courseProviderCode"> 
-			<input type="hidden" value="1" name="studentCode"> 
-		</tr>
-		<tr>
-			<td colspan="2"><h2>Institute Inquiry Form</h2></td>
+	<form method="POST" action="InstituteController"
+		onsubmit="return checkBeforeSubmit()">
+		<table align="center">
+			<tr>
+				<td><input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode">
+					<input type="hidden" value="1" name="studentCode">
+			</tr>
+			<tr>
+				<td colspan="2"><h2>Institute Inquiry Form</h2></td>
 
-		</tr>
-		<tr>
-			<td colspan="2" ><div style="color: red; font-weight: normal !important;"><c:out value="${message }"></c:out></div></td>
+			</tr>
+			<tr>
+				<td colspan="2"><div
+						style="color: red; font-weight: normal !important;">
+						<c:out value="${message }"></c:out>
+					</div></td>
 
-		</tr>
-		<tr>
-			<td>Full Name</td>
-			<td><span id="fullNametbError" name="fullNametbError"
-				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="fullname" id="fullnamee" value="" required/></td>
-		</tr>
-		<tr>
-			<td>Email</td>
-			<td><span id="emailtbError" name="emailtbError"
-				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="email" id="email" required/></td>
-		</tr>
-		<tr>
-			<td>Country Code</td>
-			<td><span id="countryCodetbError" name="countryCodetbError"
-				style="color: red; font-weight: normal !important;"></span> <input
-				type="text" name="countryCode" id="countryCode" required/></td>
-		</tr>
-		<tr>
-			<td>Area Code</td>
-			<td><span id="areaCodetbError" name="areaCodetbError"
-				style="color: red; font-weight: normal !important;"></span>
-				 <input type="text" name="areaCode" id="areaCode" required /></td>
-		</tr>
-		<tr>
-			<td>Telephone Number</td>
-			<td>
-			<span
-				id="telephoneNumbertbError" name="telephoneNumbertbError"
-				style="color: red; font-weight: normal !important;"></span>
-			<input type="text" name="telNum" id="telNum" required/></td>
-		</tr>
-		<tr>
-			<td>Inquiry Title</td>
-			<td><input type="text" name="inquiryTitle" id="inquiryTitle" required/></td>
-		</tr>
-		<tr>
-			<td>Inquiry</td>
-			<td><textarea rows="5" cols="20" name="inquiry" id="inquiry" required></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><div class="g-recaptcha" data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
-		</tr>
-		<tr>
-			<td><!-- <button type="button" onclick="addInstituteInquiry()">
+			</tr>
+			<tr>
+				<td>Full Name</td>
+				<td><span id="fullNametbError" name="fullNametbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="fullname" id="fullnamee" value="" required /></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><span id="emailtbError" name="emailtbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="email" id="email" required /></td>
+			</tr>
+			<tr>
+				<td>Country Code</td>
+				<td><span id="countryCodetbError" name="countryCodetbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="countryCode" id="countryCode" required /></td>
+			</tr>
+			<tr>
+				<td>Area Code</td>
+				<td><span id="areaCodetbError" name="areaCodetbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="areaCode" id="areaCode" required /></td>
+			</tr>
+			<tr>
+				<td>Telephone Number</td>
+				<td><span id="telephoneNumbertbError"
+					name="telephoneNumbertbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="telNum" id="telNum" required /></td>
+			</tr>
+			<tr>
+				<td>Inquiry Title</td>
+				<td><input type="text" name="inquiryTitle" id="inquiryTitle"
+					required /></td>
+			</tr>
+			<tr>
+				<td>Inquiry</td>
+				<td><textarea rows="15" cols="50" name="inquiry" id="inquiry"
+						required></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="g-recaptcha"
+						data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
+			</tr>
+			<tr>
+				<td>
+					<!-- <button type="button" onclick="addInstituteInquiry()">
 					<i class="glyphicon glyphicon-floppy-disk"></i> Save
 				</button> -->
-				<button type="submit" name="CCO" id="CCO" value="SII"
-												class="pure-button pure-button-primary">Send Inquiry</button>
+					<button type="submit" name="CCO" id="CCO" value="SII"
+						class="pure-button pure-button-primary">Send Inquiry</button>
 				</td>
-			<td></td>
-		</tr>
-	</table>
+				<td></td>
+			</tr>
+		</table>
 	</form>
 </body>
 </html>
