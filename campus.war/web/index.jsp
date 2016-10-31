@@ -5,6 +5,7 @@
 <!-- 20161024 AS c12-social-media-share-panale-as project initiated -->
 <!-- 20161025 AS c12-social-media-share-panale-as side share panale and top share panale button and js created -->
 <!-- 20161026 AS c12-social-media-share-panale-as linkedIn getlink function embedded   -->
+<!-- 20161031 AS c12-social-media-share-panale-as panel links and scripts modified      -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -13,19 +14,21 @@
 
 <link href="dist/css/contact-buttons.css" rel="stylesheet"
 	type="text/css" />
-<link href="dist/css/sharepanale.css" rel="stylesheet" type="text/css" />
+<link href="dist/css/sharepanel.css" rel="stylesheet" type="text/css" />
 
 
 <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	href="dist/bower-components/bootstrap/bootstrap.min.css">
 <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	href="dist/bower-components/bootstrap/font-awesome.min.css">
+
+
 </head>
 <body>
 	<h1>Hello World..!!</h1>
 
 	<div id="fb-root"></div>
-<!-- 	facebook function script -->
+	<!-- 	facebook function script -->
 	<script>
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
@@ -39,28 +42,21 @@
 	</script>
 
 
-<!-- twitter function script -->
+	<!-- twitter function script -->
 
-	<script>
-		window.twttr = (function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
-			if (d.getElementById(id))
-				return t;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "https://platform.twitter.com/widgets.js";
-			fjs.parentNode.insertBefore(js, fjs);
 
-			t._e = [];
-			t.ready = function(f) {
-				t._e.push(f);
-			};
-
-			return t;
-		}(document, "script", "twitter-wjs"));
+	<script type='text/javascript'>
+		!function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+					.test(d.location) ? 'http' : 'http';
+			if (!d.getElementById(id)) {
+				js = d.createElement(s);
+				js.id = id;
+				js.src = p + '://static1.twitcount.com/js/twitcount.js';
+				fjs.parentNode.insertBefore(js, fjs);
+			}
+		}(document, 'script', 'twitcount_plugins');
 	</script>
-
-
 
 	<table align="center" style="border: 0px;">
 		<tr>
@@ -71,38 +67,29 @@
 		<tr>
 		<tr>
 			<td>
+				<!-- Place this tag in your head or just before your close body tag. -->
+				<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 				<!-- Place this tag where you want the share button to render. -->
-				<div class="g-plus" data-action="share" data-annotation="bubble"
-					data-href="http://education.topjobs.lk/"></div>
-			 <!-- Place this tag after the google+ share tag. -->
-				<script type="text/javascript">
-					(function() {
-						var po = document.createElement('script');
-						po.type = 'text/javascript';
-						po.async = true;
-						po.src = 'https://apis.google.com/js/platform.js';
-						var s = document.getElementsByTagName('script')[0];
-						s.parentNode.insertBefore(po, s);
-					})();
-				</script>
+				<div class="g-plus" data-action="share" data-annotation="bubble"></div>
 			</td>
-			<td><div class="fb-share-button"
-					data-href="http://education.topjobs.lk/PublicController"
-					data-layout="button_count" data-size="small"
-					data-mobile-iframe="true">
+			<td><div class="fb-share-button" data-layout="button_count"
+					data-size="small" data-mobile-iframe="true">
 					<a class="fb-xfbml-parse-ignore" target="_blank"
 						href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
 				</div></td>
-			<td><a class="twitter-share-button"
-				href="https://twitter.com/intent/tweet?" data-size="small">
-					Tweet</a></td>
 			<td>
-			<script src="//platform.linkedin.com/in.js"
+				 <a href="https://twitter.com/share"
+				class="twitter-share-button" data-count="vertical">Tweet</a>
+
+
+
+			</td>
+			<td><script src="//platform.linkedin.com/in.js"
 					type="text/javascript">
 				lang: en_US
-			</script> <script type="IN/Share"
-					data-url="http://education.topjobs.lk/PublicController"
-					data-counter="right"></script></td>
+			</script> <script
+					type="IN/Share" data-counter="right"></script></td>
 		</tr>
 
 	</table>
@@ -110,10 +97,9 @@
 
 	</div>
 
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="dist/js/jquery.contact-buttons.js"></script>
-	<script src="dist/js/share_panale.js"></script>
+	<script src="dist/js/share_panel.js"></script>
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push([ '_setAccount', 'UA-36251023-1' ]);
