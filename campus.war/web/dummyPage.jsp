@@ -18,6 +18,10 @@ Please Enter category number
 			<input type="text" name="category">
 			<button type="submit" name="CCO" value="LAAI">SUBMIT</button>
 		</form>
+		<form action="PublicController" method="post">
+			<input type="text" name="category">
+			<button type="submit" name="CCO" value="TCPL">TOP CP lIST</button>
+		</form>
 </div>
 </body>
 </html>
