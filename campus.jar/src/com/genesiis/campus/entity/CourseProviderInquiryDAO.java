@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161027 CM c9-make-inquiry-for-institute INIT InstituteInquiryDAO.java
 //20161027 CM c9-make-inquiry-for-institute Modified add() method
+//20161031 CM c9-make-inquiry-for-institute Remaned as CourseProviderInquiryDAO.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +11,12 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.InstituteInquiry;
+import com.genesiis.campus.entity.model.CourseProviderInquiry;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class InstituteInquiryDAO implements ICrud {
+public class CourseProviderInquiryDAO implements ICrud {
 
-	static Logger log = Logger.getLogger(InstituteInquiryDAO.class.getName());
+	static Logger log = Logger.getLogger(CourseProviderInquiryDAO.class.getName());
 	
 	/**
 	 * Save InstituteInquiry  details in Database
@@ -34,7 +35,7 @@ public class InstituteInquiryDAO implements ICrud {
 					+ "VALUES (?,?,?,?,?,?,?,GETDATE(),GETDATE(),?,?,?,GETDATE(),?, GETDATE(), ?)";
 			Connection conn = null;
 			PreparedStatement preparedStatement = null;
-			final InstituteInquiry instituteInquiry = (InstituteInquiry) object;
+			final CourseProviderInquiry instituteInquiry = (CourseProviderInquiry) object;
 			int status = -1;
 
 			try {
