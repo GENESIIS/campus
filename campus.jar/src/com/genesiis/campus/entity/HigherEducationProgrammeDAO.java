@@ -71,8 +71,8 @@ public class HigherEducationProgrammeDAO implements ICrud {
 
 		
 		
-		String getAllQuery = "SELECT a.CODE ,a.DURATION, a.DESCRIPTION,a.LOGOIMAGEPATH, t.NAME, a.PROVIDER, a.CPNAME, a.NAME as PNAME FROM("
-				+ "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDER, cp.NAME as CPNAME "
+		String getAllQuery = "SELECT a.CODE ,a.DURATION, a.DESCRIPTION,a.LOGOIMAGEPATH, t.NAME, a.PROVIDERCODE, a.CPNAME, a.NAME as PNAME, a.UNIQUEPREFIX   FROM("
+				+ "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDERCODE, cp.NAME as CPNAME, cp.UNIQUEPREFIX  "
 				+ "FROM [CAMPUS].[PROGRAMME] p INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON "
 				+ " (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND	p.PROGRAMMESTATUS = ?  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = ? AND GETDATE() < cp.EXPIRATIONDATE)  "
 				+ "ORDER BY NEWID())a JOIN [CAMPUS].[PROGRAMMETOWN] pt on a.CODE= pt.PROGRAMME  LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
@@ -96,13 +96,15 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("LOGOIMAGEPATH"));
+				singleProgrammeList.add(rs.getString("PROVIDERCODE"));
+				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("CPNAME"));
 				singleProgrammeList.add(rs.getString("PNAME"));
-				log.info(rs.getString("PNAME"));
+				log.info(rs.getString("PNAME") +" >>>>>>>> " + rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-				singleProgrammeList.add(rs.getString("DURATION"));
 				singleProgrammeList.add(rs.getString("NAME"));
-				singleProgrammeList.add(rs.getString("PROVIDER"));
+				singleProgrammeList.add(rs.getString("DURATION"));
+
 								
 				
 
