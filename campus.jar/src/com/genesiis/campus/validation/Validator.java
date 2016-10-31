@@ -41,7 +41,7 @@ public class Validator {
 	 * Check the given mail address is valid email or not 
 	 * @author Chathuri
 	 * @param value
-	 * @return boolean to validatem email address.
+	 * @return boolean to validate email address.
 	 * **/
 	public static boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
