@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema: EAP_HOME/docs/schema/jboss-deployment-structure-1_2.xsd -->
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--  false = deployments within the ear are not isolated and can access each other's classes -->
+<!--  eclipse editor flagging an error on the first element.  ignore for the time being -->
+	<sub-deployment name="campus.jar">
+		<dependencies>
+			<module name="org.apache.commons.fileupload" />
+			<module name="org.apache.commons.io" />
+		
+			<module name="com.google.gson" />
+			<module name="org.apache.commons.lang3"/><!-- merged in from release 294 sha 917b431-->
+			<!-- <module name="org.apache.catalina.connector" /> remove until JBAP6 implementation of catalina.connector can be found. this is a JBAS5 implementation--> 
+			<!--add twitter4j-core-2.2.6-SNAPSHOT.jar -->
+		</dependencies>
+	</sub-deployment>
+	<sub-deployment name="campus.war">
+		<dependencies>
+			<module name="org.apache.commons.fileupload" />
+			<module name="org.apache.commons.io" />
+			<module name="org.apache.commons.lang3" />
+		
+			<module name="com.google.gson" />
+		</dependencies>
+	</sub-deployment>
+</jboss-deployment-structure>
