@@ -59,7 +59,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 
 		try {
 
-			
+			//list higher education courses
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
@@ -68,6 +68,8 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 			programmes = higherEducationProgrammeDAO.findById(programme);
 			iview.setCollection(programmes);
 			
+			
+			//list top 5 course providers according to their programme stat rate
 			/**
 			 * current date is back dated by an year when selecting the
 			 * programmes to get programme stat. Only resent statistics are
@@ -77,18 +79,28 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 			Calendar cal = Calendar.getInstance();
 			Date today = cal.getTime();
 			cal.add(Calendar.YEAR, -1); // to get previous year 
-			Date nextYear = cal.getTime();
+			Date lastYear = cal.getTime();
 
-			java.sql.Date expiryDate = new java.sql.Date(nextYear.getTime());
+			java.sql.Date expiryDate = new java.sql.Date(lastYear.getTime());
 
 			log.info("sqldate " + expiryDate);
 
 			CourseProviderProgrammeDAO courseProviderDAO = new CourseProviderProgrammeDAO();
 			programme.setExpiryDate(expiryDate);
+			programme.setLevel(1);//this level=1 is just to identify to get course 
+			//providers with higher program stats
+			final Collection<Collection<String>> featuredCourseProviders = courseProviderDAO
+					.findById(programme);
+			helper.setAttribute("featuredInstitutes", featuredCourseProviders);
+
+			
+			//list 20 course providers randomly
+			programme.setLevel(0);
 			final Collection<Collection<String>> courseProviders = courseProviderDAO
 					.findById(programme);
-			helper.setAttribute("featuredInstitutes", courseProviders);
+			helper.setAttribute("institutes", courseProviders);
 
+			
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
