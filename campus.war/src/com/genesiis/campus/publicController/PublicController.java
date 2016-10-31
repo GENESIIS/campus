@@ -1,13 +1,16 @@
 package com.genesiis.campus.publicController;
-
+//20161031 DN c10-contacting-us-page setSMPTspecificToRequest() implemented
+//20161031 DN c10-contacting-us-page init() implemented
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.controller.CampusController;
@@ -16,6 +19,11 @@ import com.genesiis.campus.controller.CampusController;
 public class PublicController extends CampusController {	
 	static Logger log = Logger.getLogger(PublicController.class.getName());
 	private static final long serialVersionUID = 1L;
+	
+	private String userName;
+	private String password;
+	private String host;
+	private String port;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -25,6 +33,11 @@ public class PublicController extends CampusController {
 	}
 
 	public void init() throws ServletException {
+		ServletContext application = this.getServletContext();
+		this.userName = application.getInitParameter("user");
+		this.password = application.getInitParameter("password");
+		this.host = application.getInitParameter("host");
+		this.port = application.getInitParameter("port");
 
 	}
 	    
@@ -49,7 +62,22 @@ public class PublicController extends CampusController {
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
 			java.io.IOException {
+		setSMPTspecificToRequest(request);
 		super.doPost(request, response);
+	}
+	
+	/*
+	 * setSMPTspecificToRequest() facilitates in binding SMPT
+	 * specific data to request as an attribute e.g. username,host,port number
+	 * and pass word
+	 * @param request
+	 */
+	private void setSMPTspecificToRequest(HttpServletRequest request){
+		request.setAttribute("userName", userName);
+		request.setAttribute("password", password);
+		request.setAttribute("host", host);
+		request.setAttribute("port", port);
+		
 	}
 
 	}
