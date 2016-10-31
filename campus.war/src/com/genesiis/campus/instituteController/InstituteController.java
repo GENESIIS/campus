@@ -1,5 +1,6 @@
 package com.genesiis.campus.instituteController;
 //20161027 AS C8-inquiry-form-for-course InstituteController class created.
+//20161031 AS C8-inquiry-form-for-course modified doget and dopost methods 
 import com.genesiis.campus.controller.CampusController;
 import java.io.IOException;
 import javax.servlet.Servlet;
@@ -43,11 +44,9 @@ public class InstituteController extends CampusController{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doGet(request, response);
+		super.doPost(request, response);
 	}
 	
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-			  super.doPost(request, response);
-	}
+	 
 
 }
