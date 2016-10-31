@@ -7,7 +7,9 @@ package com.genesiis.campus.command;
 //20161031 CM c9-make-inquiry-for-institute Create sendEmail() method for send inquiry
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
@@ -26,7 +28,11 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderInquiryDAO;
 import com.genesiis.campus.entity.model.CourseProviderInquiry;
+import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.mail.EmailDispenser;
+import com.genesiis.campus.util.mail.GeneralMail;
+import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
@@ -35,6 +41,24 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdSendInstituteInquiry.class
 			.getName());
+
+	private String fullname;
+	private Connection connection;
+	private String email;
+	private String countryCode;
+	private String areaCode;
+	private String telNo;
+	private String inquiryTitle;
+	private String inquiry;
+	private int studentCode;
+	private int corseProviderCode;
+	private ArrayList<String> recieversEmailAddreses;
+	private EmailDispenser emailDispenser;
+	private IEmail generalEmail;
+	private String userName;
+	private String port;
+	private String passWord;
+	private String host;
 
 	/**
 	 * @author Chathuri
@@ -47,7 +71,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = "";
-
+		setEnvironment( helper);
 		try {
 			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
 
@@ -56,16 +80,16 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 			if (validateResult.equalsIgnoreCase("True")) {
 
-				String fullname = helper.getParameter("fullname");
-				String email = helper.getParameter("email");
-				String countryCode = helper.getParameter("countryCode");
-				String areaCode = helper.getParameter("areaCode");
-				String telNo = helper.getParameter("telNum");
-				String inquiryTitle = helper.getParameter("inquiryTitle");
-				String inquiry = helper.getParameter("inquiry");
-				int studentCode = Integer.parseInt(helper
+				fullname = helper.getParameter("fullname");
+				email = helper.getParameter("email");
+				countryCode = helper.getParameter("countryCode");
+				areaCode = helper.getParameter("areaCode");
+				telNo = helper.getParameter("telNum");
+				inquiryTitle = helper.getParameter("inquiryTitle");
+				inquiry = helper.getParameter("inquiry");
+				studentCode = Integer.parseInt(helper
 						.getParameter("studentCode"));
-				int corseProviderCode = Integer.parseInt(helper
+				corseProviderCode = Integer.parseInt(helper
 						.getParameter("courseProviderCode"));
 
 				// InstituteInquiry data = getInstituteInquirydetails(gsonData);
@@ -86,15 +110,21 @@ public class CmdSendInstituteInquiry implements ICommand {
 				if (result > 0) {
 					Collection<Collection<String>> courseProviderEmail = courseProviderDAO
 							.findById(instituteInquiry);
-					for (Collection<String> collection : courseProviderEmail) {
-						for (String emailAddress : collection) {
-							message = sendEmail(emailAddress, inquiryTitle,
-									inquiry, email);
 
-							message = SystemMessage.INQUIRYSENT.message();
-
-						}
-					}
+					recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
+					generalEmail = formatEmailInstance();
+					this.sendMail();
+					message = SystemMessage.INQUIRYSENT.message();
+					// for (Collection<String> collection : courseProviderEmail)
+					// {
+					// for (String emailAddress : collection) {
+					// // message = sendEmail(emailAddress, inquiryTitle,
+					// // inquiry, email);
+					// //
+					// message = SystemMessage.INQUIRYSENT.message();
+					//
+					// }
+					// }
 
 				} else {
 
@@ -115,105 +145,118 @@ public class CmdSendInstituteInquiry implements ICommand {
 		}
 		return view;
 	}
-	
-	/**
-	 * Method for send inquiry to Course provider/Institute
-	 * @param email
-	 * @param title
-	 * @param emailBody
-	 * @param studentEmail
-	 * @return String
+
+	/*
+	 * setEnvironment() method initializes all the instance variable
+	 * 
+	 * @author DN
+	 * 
+	 * @param helper IDataHelper
 	 */
+	private void setEnvironment(IDataHelper helper) {
+		// getting the admin related data e.g email address
+		fullname = helper.getParameter("fullname");
+		email = helper.getParameter("email");
+		countryCode = helper.getParameter("countryCode");
+		areaCode = helper.getParameter("areaCode");
+		telNo = helper.getParameter("telNum");
+		inquiryTitle = helper.getParameter("inquiryTitle");
+		inquiry = helper.getParameter("inquiry");
+		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
+		corseProviderCode = Integer.parseInt(helper
+				.getParameter("courseProviderCode"));
+		userName = (String) helper.getAttribute("userName");
+		passWord = (String) helper.getAttribute("password");
+		port = (String) helper.getAttribute("port");
+		host = (String) helper.getAttribute("host");
+	}
 
-	public String sendEmail(String email, String title, String emailBody,
-			String studentEmail) {
-
-		try {
-			String message = "ok";
-			String to = email;
-
-			// Sender's email ID needs to be mentioned
-			// String from = "topjobs.apptest@gmail.com";
-			String from = "madushani@genesiis.com";
-
-			// Assuming you are sending email from localhost
-			String host = "localhost";
-
-			// Get system properties
-			Properties properties = System.getProperties();
-
-			// Setup mail server
-			properties.setProperty("mail.smtp.host", host);
-
-			properties.put("mail.smtp.starttls.enable", "true");
-			properties.put("mail.smtp.host", "smtp.gmail.com");
-			properties.put("mail.smtp.user", from); // User name
-			properties.put("mail.smtp.password", "brian1993"); // password
-			properties.put("mail.smtp.port", "25");
-			properties.put("mail.smtp.auth", "true");
-
-			// Get the default Session object.
-			Session session = Session.getDefaultInstance(properties,
-					new Authenticator() {
-						protected PasswordAuthentication getPasswordAuthentication() {
-							return new PasswordAuthentication(
-									"madushani@genesiis.com", "brian1993");
-						}
-					});
-
-			// Create a default MimeMessage object.
-			MimeMessage msg = new MimeMessage(session);
-
-			// Set From: header field of the header.
-			msg.setFrom(new InternetAddress(from));
-
-			// Set To: header field of the header.
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-			// Set Subject: header field
-			msg.setSubject(title);
-
-			// Now set the actual message
-			msg.setText(emailBody + "  Inquiry from :" + studentEmail);
-
-			// Send message
-			Transport.send(msg);
-			return message;
-		} catch (MessagingException mex) {
-			log.info(mex.toString());
-			return "error";
-
-		}
+	/*
+	 * formatEmailInstance() creates an IEmail with email receiver and sender
+	 * addresses, host ,SMTP host, subject, mailBody bounded
+	 * 
+	 * @author DN
+	 * 
+	 * @return IEmail formatted Email out put
+	 */
+	private IEmail formatEmailInstance() {
+		addContentToOriginalMailBody(inquiry);
+		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
+				email, host, inquiryTitle, inquiry, userName,
+				passWord, port);
+		return generalEmail;
 
 	}
-	// public Object extractFromJason(String gsonData) {
-	// Gson gson = new Gson();
-	// String message = "";
-	// InstituteInquiry instituteInquiry = null;
-	// try {
-	// instituteInquiry = gson.fromJson(gsonData, InstituteInquiry.class);
-	//
-	// } catch (Exception exception) {
-	// log.error("extractFromJason(): " + exception.toString());
-	// throw exception;
-	// }
-	// return instituteInquiry;
-	// }
-	//
-	// /**
-	// * Exctract data from json object and assign it to InstituteInquiry object
-	// *
-	// * @author Chathuri
-	// * @param data
-	// * String type
-	// * @return InstituteInquery object
-	// */
-	// private InstituteInquiry getInstituteInquirydetails(String data) {
-	//
-	// InstituteInquiry instituteInquiry = (InstituteInquiry)
-	// extractFromJason(data);
-	//
-	// return instituteInquiry;
-	// }
 
+	/*
+	 * composeSingleEmailList() adds up all the email structured in Collection
+	 * of Collections to a monolithic Collection<String>
+	 * 
+	 * @author DN
+	 * 
+	 * @param outer accepts Collection<Collection<String>
+	 * 
+	 * @return email list as a mono ArrayList<String>
+	 */
+
+	private ArrayList<String> composeSingleEmailList(
+			Collection<Collection<String>> outer) {
+		ArrayList<String> monoList = new ArrayList<String>();
+		for (Collection<String> emailAddressList : outer) {
+			monoList.addAll(emailAddressList);
+		}
+		return monoList;
+
+	}
+
+	/*
+	 * sendMail() method intended to dispense the email
+	 * 
+	 * @author DN
+	 * 
+	 * @throws MessagingException in any case dispensing email fails
+	 */
+
+	private void sendMail() throws MessagingException {
+		emailDispenser = new EmailDispenser(generalEmail);
+		emailDispenser.emailDispense();
+	}
+
+	/*
+	 * createDatabaseConnection() establishes the database connection with the
+	 * data repository
+	 * 
+	 * @author DN
+	 * 
+	 * @throw SQLException if the connection causes errors.
+	 */
+	private void createDatabaseConnection() throws SQLException {
+		try {
+			connection = ConnectionManager.getConnection();
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
+	}
+
+	/*
+	 * addContentToOriginalMailBody() formats the original details with users
+	 * credentials e.g email, contact number, full name
+	 * 
+	 * @param originalMailBody String the original message that the user send to
+	 * the SMPT mail server
+	 */
+	private void addContentToOriginalMailBody(String originalMailBody) {
+		StringBuilder result = new StringBuilder();
+
+		result.append(originalMailBody);
+		result.append(System.getProperty("line.separator"));
+		result.append(email);
+//		result.append(System.getProperty("line.separator"));
+//		result.append(sendersphoneNumber);
+//		result.append(System.getProperty("line.separator"));
+//		result.append(sendersEmailAddress);
+		this.inquiry = result.toString();
+
+	}
 }
