@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1>Hello World..!! </h1>
-	<a href="instituteInquiry.jsp">Make an Inquiry For Institute</a>
+	<a href="instituteInquiry.jsp?courseProviderCode=4">Make an Inquiry For Institute</a>
 </body>
 </html>
