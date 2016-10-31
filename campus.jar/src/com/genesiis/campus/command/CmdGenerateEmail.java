@@ -4,7 +4,7 @@ package com.genesiis.campus.command;
 //20161028 DN c10-contacting-us-page execute(),formatEmailInstance(),composeSingleEmailList()
 //sendMail(),createDatabaseConnection() created and defined
 //20161031 DN c10-contacting-us-page sendMail() changed, add doc comments and method comments
-//									  addContentToOriginalMailBody() initialised
+//									  addContentToOriginalMailBody() initialized
 
 import java.sql.SQLException;
 import java.util.ArrayList;
