@@ -2,6 +2,8 @@ package com.genesiis.campus.validation;
 
 //20161028 CM c9-make-inquiry-for-institute INIT Validator.java
 //20161028 CM c9-make-inquiry-for-institute Created validateEmail, validateInquiry, isNotEmpty methods
+//20161028 CM c9-make-inquiry-for-institute Created validateInquiry methods
+//20161031 CM c9-make-inquiry-for-institute Modified validateInquiry methods
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -22,7 +24,8 @@ public class Validator {
 	static Logger log = Logger.getLogger(Validator.class.getName());
 
 	/**
-	 * @author CM
+	 * Check the given value is empty or not empty
+	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a null value.
 	 * **/
@@ -35,7 +38,8 @@ public class Validator {
 	}
 
 	/**
-	 * @author CM
+	 * Check the given mail address is valid email or not 
+	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validatem email address.
 	 * **/
@@ -49,8 +53,8 @@ public class Validator {
 	}
 
 	/**
-	 * Validate institute inquiry data
-	 * @author CM
+	 * Validate institute course provider inquiry form data 
+	 * @author Chathuri
 	 * @param value
 	 * @return String to validate is given strings contains a null value.
 	 * **/
@@ -63,14 +67,36 @@ public class Validator {
 				|| isNotEmpty(helper.getParameter("countryCode"))
 				|| isNotEmpty(helper.getParameter("areaCode"))
 				|| isNotEmpty(helper.getParameter("telNum"))
-				|| isNotEmpty(helper.getParameter("inquiryTitle"))
-				|| isNotEmpty(helper.getParameter("inquiry")))) {
+				|| isNotEmpty(helper.getParameter("inquiryTitle")) || isNotEmpty(helper
+					.getParameter("inquiry")))) {
 			message = SystemMessage.EMPTYFIELD.message();
-		}else if(!validateEmail(helper.getParameter("email"))){
-			message=SystemMessage.EMAILERROR.message();
-			
+		} else if (!validateEmail(helper.getParameter("email"))) {
+			message = SystemMessage.EMAILERROR.message();
+
+		} else if (!isInteger(helper.getParameter("countryCode"))) {
+			message = SystemMessage.INVALIDECODE.message();
+		} else if (!isInteger(helper.getParameter("areaCode"))) {
+			message = SystemMessage.INVALIDEAREA.message();
+		} else if (!isInteger(helper.getParameter("telNum"))) {
+			message = SystemMessage.PHONENUMBERERROR.message();
 		}
 		return message;
 	}
 
+	/**
+	 * Check the given number is valid number or not
+	 * @author Chathuri
+	 * @param value
+	 * @return boolean to validate is given string contains a numaric value.
+	 * **/
+	public static boolean isInteger(String value) {
+		try {
+			Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+		return true;
+	}
 }
