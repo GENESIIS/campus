@@ -2,6 +2,7 @@ package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 //20161027 AS C8-inquiry-form-for-course added InstituteController to getFactory method 
+//20161031 AS C8-inquiry-form-for-course modified InstituteCmdFactory to getFactory method
 import com.genesiis.campus.command.CmdGenerateEmail;
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,7 @@ public class FactoryProducer {
 		} else if (choice.equalsIgnoreCase("/PayrollController")) {
 			//return new PayrollCmdFactory();
 		}else if (choice.equalsIgnoreCase("/InstituteController")){
-			
+			return new InstituteCmdFactory();
 		}
 
 		return null;
