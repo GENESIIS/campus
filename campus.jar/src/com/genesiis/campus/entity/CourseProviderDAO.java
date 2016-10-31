@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.InstituteInquiry;
+import com.genesiis.campus.entity.model.CourseProviderInquiry;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class CourseProviderDAO implements ICrud{
@@ -40,7 +40,7 @@ public class CourseProviderDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			InstituteInquiry institute = (InstituteInquiry) code;
+			CourseProviderInquiry institute = (CourseProviderInquiry) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn
 					.prepareStatement("SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE [CAMPUS].[COURSEPROVIDER].CODE = ?");
