@@ -12,11 +12,19 @@
 
 <title>Insert title here</title>
 <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link href="dist/css/jquery.tagit.css" rel="stylesheet" type="text/css">
-<link href="dist/css/tagit.ui-zendesk.css" rel="stylesheet"	type="text/css">
-<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"	type="text/javascript" charset="utf-8"></script>
-<script src="dist/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    <link href="dist/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="dist/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+    <!-- If you want the jQuery UI "flick" theme, you can use this instead, but it's not scoped to just Tag-it like tagit.ui-zendesk is: -->
+    <!--   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"> -->
+
+    <!-- jQuery and jQuery UI are required dependencies. -->
+    <!-- Although we use jQuery 1.4 here, it's tested with the latest too (1.8.3 as of writing this.) -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- The real deal -->
+    <script src="dist/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+
 
 </head>
 <body>

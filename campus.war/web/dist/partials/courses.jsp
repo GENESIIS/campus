@@ -13,9 +13,8 @@
 				<!--<p>Sort by</p> -->
 				<input type="text" name="product" list="sortBy" placeholder="Latest" />
 				<datalist id="sortBy">
-					<option value="Latest"></option>
-					<option value="Latest"></option>
-					<option value="Latest"></option>
+					<option value="1">Starting Soon</option>
+					<option value="2">Newest Courses</option>
 				</datalist>
 			</div>
 		</div>
@@ -113,11 +112,15 @@
 					</div>
 				</div>
 
-				<input name="tags" id="mySingleField" value="Apple, Orange"
-					disabled="true">
-				<!-- only disabled for demonstration purposes -->
-				<ul id="singleFieldTags"></ul>
 
+				<p>
+					Normally this input field will be hidden &mdash; we leave it
+					visible here so you can see how it is manipulated by the widget: <input
+						name="tags" id="mySingleField" value="Apple, Orange"
+						disabled="true">
+					<!-- only disabled for demonstration purposes -->
+				</p>
+				<ul id="singleFieldTags"></ul>
 
 
 			</div>
@@ -236,17 +239,4 @@
 	</div>
 </div>
 
-<script>
-        $(function(){
-            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
-            //-------------------------------
-            // Single field
-            //-------------------------------
-            $('#singleFieldTags').tagit({
-                availableTags: sampleTags,
-                // This will make Tag-it submit a single form value, as a comma-delimited field.
-                singleField: true,
-                singleFieldNode: $('#mySingleField')
-            });
-        });
-    </script>
+
