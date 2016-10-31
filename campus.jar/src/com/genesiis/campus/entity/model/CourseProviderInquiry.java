@@ -3,8 +3,9 @@ package com.genesiis.campus.entity.model;
 import java.sql.Date;
 
 //20161027 CM c9-make-inquiry-for-institute INIT InstituteInquiry.java
+//20161031 CM c9-make-inquiry-for-institute Renamed as CourseProviderInquiry.java
 
-public class InstituteInquiry {
+public class CourseProviderInquiry {
 
 	private int code;
 	private String studentName;
