@@ -42,15 +42,14 @@
 				<div class="filter-item clearfix">
 					<!-- Drop item header -->
 					<div class="item-header">
-						<label slide-toggle="#dropItem1" onclick="displayCategories()">Categories
-							<span>- 06</span>
+						<label slide-toggle="#dropItem1">Categories <span>-
+								06</span>
 						</label> <a href="javascript:"><input name="Category" type="checkbox"></a>
 					</div>
 
 
 					<!-- Item Drop list -->
 					<div id="dropItem1" class="item-container slideable">
-						<div id="p" name="p"></div>
 						<div class="select-item row-fluid">
 							<a href="javascript:"><input name="Category" type="checkbox"></a>
 							<label>Pre Education</label>
@@ -114,6 +113,13 @@
 					</div>
 				</div>
 
+				<input name="tags" id="mySingleField" value="Apple, Orange"
+					disabled="true">
+				<!-- only disabled for demonstration purposes -->
+				<ul id="singleFieldTags"></ul>
+
+
+
 			</div>
 			<!-- End All category -->
 		</div>
@@ -132,8 +138,9 @@
 					<!-- Added By PN -->
 					<div class="category-col col-md-4 col-lg-4">
 						<div class="drop-holder">
-							<input type="text" name="categoryist" list="categoryName"
-								placeholder="Educational Area" />
+							<input type="text" id="categoryist" name="categoryist"
+								list="categoryName" placeholder="Educational Area"
+								oninput='displayMajor()' />
 							<datalist id="categoryName">
 								<option value="ICBT"></option>
 								<option value="IIT"></option>
@@ -141,7 +148,6 @@
 							</datalist>
 						</div>
 					</div>
-
 
 					<div class="institute-col col-md-4 col-lg-4">
 						<div class="drop-holder">
@@ -229,3 +235,18 @@
 		</div>
 	</div>
 </div>
+
+<script>
+        $(function(){
+            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+            //-------------------------------
+            // Single field
+            //-------------------------------
+            $('#singleFieldTags').tagit({
+                availableTags: sampleTags,
+                // This will make Tag-it submit a single form value, as a comma-delimited field.
+                singleField: true,
+                singleFieldNode: $('#mySingleField')
+            });
+        });
+    </script>
