@@ -4,7 +4,9 @@ package com.genesiis.campus.util.mail;
 //20161027 DN c10-contacting-us-page coded sendEmail() and supportive mutator methods
 //20161028 DN c10-contacting-us-page developed sendEmail(),setSystemPropertiesAndMailEnvironment(),setProperties()
 //20161031 DN c10-contacting-us-page setEmailMessage(),setProperties() re-factored to set authentication details
-//				add documentation comments.
+//				add documentation comments
+//			  	Removed GeneralMail() constructor argument 'mailHost'.
+//				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,34 +39,39 @@ public class GeneralMail implements IEmail {
     private ArrayList<String> receivers = null;    
     private String sender;    
     private String host ;
-    private String mailHost;
     private String subject;
     private String emailBody; 
     private Properties properties;
     private Session session ;
     private MimeMessage message ;
+    private String userName;
+    private String port;
+    private String passWord;
+    
   
-    /**
+	/**
      * GeneralMail constructor creates the MimeMessage and Session automatically 
      * with system properties.
      * @author DN
      * @param receivers to list of the email ArrayList<String>
      * @param sender String: email address of  the person who sends the email
      * @param host String: Mail transferring host or the domain address
-     * @param mailHost String: the system property of mail transfer protocol
      * @param subject String: subject of the email
      * @param emailBody String : body content of the email
      */
     public GeneralMail( ArrayList<String> receivers,String sender,String host,
-    		String mailHost,String subject,String emailBody){
+    		String subject,String emailBody,
+    		String userName,String passWord,String port){
     	this.receivers = receivers;
     	this.sender = sender;
-    	this.host = host;
-    	this.mailHost = mailHost;
+    	this.host = host;    	
     	this.subject = subject;
     	this.emailBody = emailBody;    	    	
-    	setSystemPropertiesAndMailEnvironment(mailHost,this.host);
-    	
+    	this.userName = userName;
+    	this.port = port;
+    	this.passWord = passWord;    	
+    
+    	setSystemPropertiesAndMailEnvironment();
     }
     
     /**
@@ -97,38 +104,24 @@ public class GeneralMail implements IEmail {
      * setSystemPropertiesAndMailEnvironment sets system properties relates to mailing and creates 
      * MimeMessage instance 
      * @author DN 
-     * @param mailHost Mailing protocol name which acts as the system property name
-     * e.g.mail.smtp.host
-     * @param host Mailing host name such as "localhost" etc
+     *      
      */    
-	    private void setSystemPropertiesAndMailEnvironment(String mailHost,String host){    	
-	    	this.setProperties(mailHost,host);
-	    	
+	    private void setSystemPropertiesAndMailEnvironment(){		    	
+	    	this.setProperties();
 	    }
     
  /*
   * setProperties() method sets the system property for mail transfer
   * protocol.
-  * @author DN
-  * @param mailHost system property for various mail transfer protocol. 
-  * @param host contains the DNS name of a server
-  * if the mailHost is null then the host is set to SMPT
+  * @author DN  
   */
-    private void setProperties(String mailHost,String host) {    	  	
-    	String defaultMailingHost = "mail.smtp.host";
-    	//this.mailHost=(mailHost.equals(null))?defaultMailingHost:mailHost;
-    	if(mailHost.equals(null)){
-    		this.mailHost=defaultMailingHost;
-    	}else{
-    		this.mailHost=mailHost;
-    	}
-    	properties=System.getProperties();
-    	properties.setProperty(this.mailHost, host);
+	    private void setProperties(){
+    	properties=System.getProperties();    	
     	properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.user", "dushantha@genesiis.com"); // User name
-		properties.put("mail.smtp.password", "Appleapple123"); // password
-		properties.put("mail.smtp.port", "25"); //port number
+		properties.put("mail.smtp.host", this.getHost());
+		properties.put("mail.smtp.user", this.getUserName()); // User name
+		properties.put("mail.smtp.password", this.getPassWord()); // password
+		properties.put("mail.smtp.port", this.getPort()); //port number
 		properties.put("mail.smtp.auth", "true");
 		// Get the default Session object.
 				Session session = Session.getDefaultInstance(properties,
@@ -234,25 +227,33 @@ public class GeneralMail implements IEmail {
 	}
 
 
-
 	public void setHost(String host) {
 		this.host = host;
 	}
 
+	public String getUserName() {
+			return userName;
+		}
 
-
-	public String getMailHost() {
-		return mailHost;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-
-
-	public void setMailHost(String mailHost) {
-		this.mailHost = mailHost;
+	public String getPort() {
+		return port;
 	}
 
+	public void setPort(String port) {
+		this.port = port;
+	}
 
+	public String getPassWord() {
+		return passWord;
+	}
 
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
 	
 
 }
