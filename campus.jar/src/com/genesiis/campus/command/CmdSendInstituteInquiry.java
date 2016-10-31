@@ -4,11 +4,25 @@ package com.genesiis.campus.command;
 //20161027 CM c9-make-inquiry-for-institute Modified execute() method
 //20161027 CM c9-make-inquiry-for-institute Add method comment
 //20161027 CM c9-make-inquiry-for-institute Validate request parameters
+//20161031 CM c9-make-inquiry-for-institute Create sendEmail() method for send inquiry
+//20161031 CM c9-make-inquiry-for-institute Modified execute() method
 
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteInquiryDAO;
 import com.genesiis.campus.entity.model.InstituteInquiry;
@@ -39,6 +53,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 			// String gsonData = helper.getParameter("jsonData");
 			String validateResult = Validator.validateInquiry(helper);
+
 			if (validateResult.equalsIgnoreCase("True")) {
 
 				String fullname = helper.getParameter("fullname");
@@ -65,11 +80,24 @@ public class CmdSendInstituteInquiry implements ICommand {
 				instituteInquiry.setStudent(studentCode);
 				instituteInquiry.setCourseProvider(corseProviderCode);
 
-				InstituteInquiryDAO inquiryDAO = new InstituteInquiryDAO();
-
+				final InstituteInquiryDAO inquiryDAO = new InstituteInquiryDAO();
+				final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
 				int result = inquiryDAO.add(instituteInquiry);
 				if (result > 0) {
-					message = SystemMessage.INQUIRYSENT.message();
+					Collection<Collection<String>> courseProviderEmail = courseProviderDAO
+							.findById(instituteInquiry);
+					for (Collection<String> collection : courseProviderEmail) {
+						for (String emailAddress : collection) {
+							message = sendEmail(emailAddress,inquiryTitle,inquiry, email);
+							if (message.equalsIgnoreCase("ok")) {
+								message = SystemMessage.INQUIRYSENT.message();
+
+							} else {
+
+								message = SystemMessage.ERROR.message();
+							}
+						}
+					}
 
 				} else {
 
@@ -91,6 +119,67 @@ public class CmdSendInstituteInquiry implements ICommand {
 		return view;
 	}
 
+	public String sendEmail(String email,String title,String emailBody,String studentEmail) {
+
+		try {
+			String message = "ok";
+			String to = email;
+
+			// Sender's email ID needs to be mentioned
+			String from = "topjobs.apptest@gmail.com";
+
+			// Assuming you are sending email from localhost
+			String host = "localhost";
+
+			// Get system properties
+			Properties properties = System.getProperties();
+
+			// Setup mail server
+			properties.setProperty("mail.smtp.host", host);
+
+			properties.put("mail.smtp.starttls.enable", "true");
+			properties.put("mail.smtp.host", "smtp.gmail.com");
+			properties.put("mail.smtp.user", from); // User name
+			properties.put("mail.smtp.password", "rainbowsky"); // password
+			properties.put("mail.smtp.port", "25");
+			properties.put("mail.smtp.auth", "true");
+
+			// Get the default Session object.
+			Session session = Session.getDefaultInstance(properties,
+					new Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(
+									"topjobs.apptest@gmail.com", "rainbowsky");
+						}
+					});
+
+			// Session session = Session.getDefaultInstance(properties);
+
+			// Create a default MimeMessage object.
+			MimeMessage msg = new MimeMessage(session);
+
+			// Set From: header field of the header.
+			msg.setFrom(new InternetAddress(from));
+
+			// Set To: header field of the header.
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+			// Set Subject: header field
+			msg.setSubject(title);
+
+			// Now set the actual message
+			msg.setText(emailBody +"  Inquiry from :"+studentEmail);
+
+			// Send message
+			Transport.send(msg);
+			return message;
+		} catch (MessagingException mex) {
+			log.info(mex.toString());
+			return "error";
+
+		}
+
+	}
 	// public Object extractFromJason(String gsonData) {
 	// Gson gson = new Gson();
 	// String message = "";
