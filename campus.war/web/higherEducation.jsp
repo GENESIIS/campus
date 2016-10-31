@@ -33,7 +33,8 @@ table {
 				style="font-size: xx-large;">Higher Education </label></td>
 
 			<!-- featured courses -->
-			<td rowspan="2" height="300px;"><label><b>Featured Institutes</b></label>
+			<td rowspan="2" height="300px;"><label><b>Featured
+						Institutes</b></label>
 				<table width="100%">
 					<tr>
 						<th width="30%"></th>
@@ -78,40 +79,52 @@ table {
 				varStatus="rowCount">
 				<tr>
 					<td width="50px;"><c:out value="${rowCount.index+1}" /></td>
-					<td width="150px;" align="center">
-					<a href="#"><img alt="" src="Higher-Education.jpg" width="75px;" height="75px;"></a><c:out value="${programmeList[0] }"></c:out>
-					</td>
-					<td width="100px;" align="center"><c:out value="${programmeList[3] }"></c:out></td>
-					<td width="250px;" align="center"><c:out value="${programmeList[4] }"></c:out></td>
-					<td width="350px;" align="center"><c:out value="${programmeList[5] }"></c:out></td>
-					<td width="500px;" align="center"><c:out value="${programmeList[6] }"></c:out></td>
-					<td width="100px;" align="center"><c:out value="${programmeList[7] }"></c:out></td>
-					<td width="100px;" align="center"><c:out value="${programmeList[8] }"></c:out></td>
+					<td width="150px;" align="center"><a href="#"><img alt=""
+							src="Higher-Education.jpg" width="75px;" height="75px;"></a> <c:out
+							value="${programmeList[0] }"></c:out></td>
+					<td width="100px;" align="center"><c:out
+							value="${programmeList[3] }"></c:out></td>
+					<td width="250px;" align="center"><c:out
+							value="${programmeList[4] }"></c:out></td>
+					<td width="350px;" align="center"><c:out
+							value="${programmeList[5] }"></c:out></td>
+					<td width="500px;" align="center"><c:out
+							value="${programmeList[6] }"></c:out></td>
+					<td width="100px;" align="center"><c:out
+							value="${programmeList[7] }"></c:out></td>
+					<td width="100px;" align="center"><c:out
+							value="${programmeList[8] }"></c:out></td>
 				</tr>
 			</c:forEach>
 
-		<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
-				<tr >
+			<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+				<tr>
 
-		
+
 					<!-- featured courses -->
-					<td  height="500px;"><label><b>Featured
-								Institutes</b></label>
+					<td height="500px;"><label><b>Featured Institutes</b></label>
 						<table width="500%" style="padding-left: 10 px;">
 							<tr>
 								<th width="30%"></th>
 								<th width="70%"></th>
 							</tr>
-							<tr height="100px;" style="border: 1px solid blue; ">
-								<td style="position: relative;left: 10px;"><img src="${featuredInstitute[15] }" alt="Higher Education"
-									height="75px;" width="75px;"><c:out value="${featuredInstitute[0] }"></c:out></td>
-								<td  style="position: relative;left: 10px;"><h3 style="color:blue; font-stretch: wider;"><c:out value="${featuredInstitute[1] }"></c:out></h3>
-								<h4><c:out value="${featuredInstitute[2] }"></c:out></h4>
-								</td>
+							<tr height="100px;" style="border: 1px solid blue;">
+								<td style="position: relative; left: 10px;"><img
+									src="${featuredInstitute[15] }" alt="Higher Education"
+									height="75px;" width="75px;"> <c:out
+										value="${featuredInstitute[0] }"></c:out></td>
+								<td style="position: relative; left: 10px;"><h3
+										style="color: blue; font-stretch: wider;">
+										<c:out value="${featuredInstitute[1] }"></c:out>
+									</h3>
+									<h4>
+										<c:out value="${featuredInstitute[2] }"></c:out>
+									</h4></td>
 							</tr>
 							<tr height="100px;" style="border: 1px solid blue;">
-								<td colspan="2"  style="position: relative;left: 10px;">
-									<p style="color: gray;"> Institute description : 
+								<td colspan="2" style="position: relative; left: 10px;">
+									<p style="color: gray;">
+										Institute description :
 										<c:out value="${featuredInstitute[3] }"></c:out>
 									</p>
 									<div align="right" style="position: relative; right: 20px;">
@@ -121,16 +134,10 @@ table {
 
 							</tr>
 							<tr height="100px;" style="border: 1px solid blue;">
-							
-							<tr></tr>
-							<tr></tr>
-							<tr></tr>
-							
-							<!-- 	<td colspan="2" align="left"><a href="#">place</a> &nbsp;&nbsp;&nbsp; 
-								<a
-									href="#">major</a>&nbsp;&nbsp;&nbsp; 
-									<a href="#">duration</a></td>  -->
+								<td colspan="2"><a href="#">place</a> &nbsp;&nbsp;&nbsp; <a
+									href="#">major</a>&nbsp;&nbsp;&nbsp; <a href="#">duration</a></td>
 							</tr>
+
 						</table></td>
 
 
