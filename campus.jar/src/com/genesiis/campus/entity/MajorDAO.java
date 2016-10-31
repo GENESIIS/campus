@@ -51,8 +51,8 @@ public class MajorDAO implements ICrud {
 					+ "WHERE c.CODE = ? AND c.ISACTIVE = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
 			stmt.setInt(1, categoryCode);
+			final ResultSet rs = stmt.executeQuery();	
 
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
@@ -64,10 +64,10 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

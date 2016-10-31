@@ -39,7 +39,8 @@ public class CmdListMajors implements ICommand{
 		
 		ICrud majorDao = new MajorDAO();
 		try {
-			Collection<Collection<String>> majorCollection = majorDao.findById(helper.getParameter("categoryCode"));
+			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
+			Collection<Collection<String>> majorCollection = majorDao.findById(categoryCode);
 			iview.setCollection(majorCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
