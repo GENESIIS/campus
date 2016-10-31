@@ -134,18 +134,21 @@ table {
 
 							</tr>
 							<tr height="100px;" style="border: 1px solid blue;">
-								<td colspan="2">
+									<td colspan="2">
 									<table>
 										<tr>
-											<td colspan="2"><a href="#">place</a></td>
+											<td><a href="#">Contact Number</a></td>
+											<td>${featuredInstitute[6] } &nbsp; - &nbsp;${featuredInstitute[7]}</td>
 										</tr>
 
-										<tr colspan="2">
-											<td><a href="#">major</a></td>
-										</tr>
 										<tr>
-											<td  colspan="2"><a href="#">duration</a></td>
+											<td><a href="#">Email</a></td>
+											<td>${featuredInstitute[5]}</td>
 										</tr>
+											<tr>
+											<td><a href="#">Web Site</a></td>
+											<td>${featuredInstitute[16]}</td>
+				
 									</table>
 								</td>
 							</tr>
