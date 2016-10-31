@@ -5,7 +5,7 @@ package com.genesiis.campus.entity;
 //20161025 JH c7-list-higher-education-courses findById method modified
 //20161027 JH c7-higher-education-landing-page findById method modified
 //20161030 JH c7-higher-education-landing-page findById method modified : fix sql exception
-//20161030 JH c7-higher-education-landing-page findById method modified : select filter 20 programmes randomly
+//20161031 JH c7-higher-education-landing-page findById method modified : select filter 20 programmes randomly with towns
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,10 +60,22 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		String returnMessage = "";
 		final Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 
-		String getAllQuery = "SELECT TOP 20 p.CODE, p.NAME, p.EMAIL, cp.NAME AS PROVIDERNAME, p.DESCRIPTION, p.DURATION, cp.LOGOIMAGEPATH, p.COURSEPROVIDER, "
-				+ " t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM [CAMPUS].[PROGRAMME] p JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = 1 AND"
-				+ " p.PROGRAMMESTATUS = 1  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
-				+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
+		// String getAllQuery =
+		// "SELECT TOP 20 p.CODE, p.NAME, p.EMAIL, cp.NAME AS PROVIDERNAME, p.DESCRIPTION, p.DURATION, cp.LOGOIMAGEPATH, p.COURSEPROVIDER, "
+		// +
+		// " t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM [CAMPUS].[PROGRAMME] p JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = 1 AND"
+		// +
+		// " p.PROGRAMMESTATUS = 1  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
+		// +
+		// "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
+
+		
+		
+		String getAllQuery = "SELECT a.CODE ,a.DURATION, a.DESCRIPTION,a.LOGOIMAGEPATH, t.NAME, a.PROVIDER, a.CPNAME, a.NAME as PNAME FROM("
+				+ "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDER, cp.NAME as CPNAME "
+				+ "FROM [CAMPUS].[PROGRAMME] p INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON "
+				+ " (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND	p.PROGRAMMESTATUS = ?  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = ? AND GETDATE() < cp.EXPIRATIONDATE)  "
+				+ "ORDER BY NEWID())a JOIN [CAMPUS].[PROGRAMMETOWN] pt on a.CODE= pt.PROGRAMME  LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
 
 		try {
 
@@ -75,34 +87,24 @@ public class HigherEducationProgrammeDAO implements ICrud {
 
 			preparedStatement.setInt(1, programme.getCategory());
 			preparedStatement.setInt(2, programme.getProgrammeStatus());
+			preparedStatement.setInt(3, 1);
 
 			final ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-
-				log.info(rs.getString("CODE"));
+				
 				singleProgrammeList.add(rs.getString("CODE"));
-				singleProgrammeList.add(rs.getString("NAME"));
-				singleProgrammeList.add(rs.getString("EMAIL"));
-				singleProgrammeList.add(rs.getString("IMAGE"));
+				singleProgrammeList.add(rs.getString("LOGOIMAGEPATH"));
+				singleProgrammeList.add(rs.getString("CPNAME"));
+				singleProgrammeList.add(rs.getString("PNAME"));
+				log.info(rs.getString("PNAME"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
 				singleProgrammeList.add(rs.getString("DURATION"));
-				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS"));
-				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
-				singleProgrammeList.add(rs.getString("COUNSELORPHONE"));
-				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-				singleProgrammeList.add(rs.getString("EXPIRYDATE"));
-				singleProgrammeList.add(rs.getString("PROGRAMMESTATUS"));
-				singleProgrammeList.add(rs.getString("COURSEPROVIDER"));
-				singleProgrammeList.add(rs.getString("MAJOR"));
-				singleProgrammeList.add(rs.getString("CATEGORY"));
-				singleProgrammeList.add(rs.getString("LEVEL"));
-				singleProgrammeList.add(rs.getString("CLASSTYPE"));
-				singleProgrammeList.add(rs.getString("CRTON"));
-				singleProgrammeList.add(rs.getString("CRTBY"));
-				singleProgrammeList.add(rs.getString("MODON"));
-				singleProgrammeList.add(rs.getString("MODBY"));
+				singleProgrammeList.add(rs.getString("NAME"));
+				singleProgrammeList.add(rs.getString("PROVIDER"));
+								
+				
 
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				programmeCollection.add(singleProgrammeCollection);
