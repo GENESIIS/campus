@@ -42,6 +42,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 		String message = "";
 		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 		Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> courseProvidersWithPopularCourses = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
 		try {
@@ -66,7 +67,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 			// Get course providers that offer programmes that belong to the same category as categoryCode 
 			// and when those programmes are the ones with the highest number of views
 			programme.setLevel(1); // level property is used here to act as a flag
-			programmeCollection = programmeDao.findById(programme);			
+			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);			
 			
 			iview.setCollection(programmeCollection);
 			helper.setAttribute("courseProviders", courseProviderCollection);
