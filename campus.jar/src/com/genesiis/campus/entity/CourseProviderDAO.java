@@ -1,5 +1,9 @@
 package com.genesiis.campus.entity;
 
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.javamodified findById() method
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.javamodified findById() method
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +36,14 @@ public class CourseProviderDAO implements ICrud{
 		return 0;
 	}
 
+	/**
+	 * Search Course provider institute inquiry email 
+	 * 
+	 * @author Chathuri
+	 * @param Object
+	 *            :  CourseProviderInquiry object of Object type
+	 * @return Collection<Collection<String>> of Collection
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -40,11 +52,11 @@ public class CourseProviderDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			CourseProviderInquiry institute = (CourseProviderInquiry) code;
+			CourseProviderInquiry courserProviderInquiry = (CourseProviderInquiry) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn
 					.prepareStatement("SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE [CAMPUS].[COURSEPROVIDER].CODE = ?");
-			preparedStatement.setInt(1, institute.getCourseProvider());
+			preparedStatement.setInt(1, courserProviderInquiry.getCourseProvider());
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -65,7 +77,10 @@ public class CourseProviderDAO implements ICrud{
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
+			
 
 		}
 		return InquiryEmail;
