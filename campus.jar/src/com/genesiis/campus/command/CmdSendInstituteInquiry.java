@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161027 CM c9-make-inquiry-for-institute Validate request parameters
 //20161031 CM c9-make-inquiry-for-institute Create sendEmail() method for send inquiry
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
+//20161031 CM c9-make-inquiry-for-institute Modified execute() method
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 	private String fullname;
 	private Connection connection;
-	private String email;
+	private String sendersEmail;
 	private String countryCode;
 	private String areaCode;
 	private String telNo;
@@ -81,7 +82,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 			if (validateResult.equalsIgnoreCase("True")) {
 
 				fullname = helper.getParameter("fullname");
-				email = helper.getParameter("email");
+				sendersEmail = helper.getParameter("email");
 				countryCode = helper.getParameter("countryCode");
 				areaCode = helper.getParameter("areaCode");
 				telNo = helper.getParameter("telNum");
@@ -95,7 +96,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 				// InstituteInquiry data = getInstituteInquirydetails(gsonData);
 
 				instituteInquiry.setStudentName(fullname);
-				instituteInquiry.setStudentEmail(email);
+				instituteInquiry.setStudentEmail(sendersEmail);
 				instituteInquiry.setTelephoneCountryCode(countryCode);
 				instituteInquiry.setTelephoneAreaCode(areaCode);
 				instituteInquiry.setTelNo(telNo);
@@ -156,7 +157,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	private void setEnvironment(IDataHelper helper) {
 		// getting the admin related data e.g email address
 		fullname = helper.getParameter("fullname");
-		email = helper.getParameter("email");
+		sendersEmail = helper.getParameter("email");
 		countryCode = helper.getParameter("countryCode");
 		areaCode = helper.getParameter("areaCode");
 		telNo = helper.getParameter("telNum");
@@ -182,7 +183,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(inquiry);
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				email, host, inquiryTitle, inquiry, userName,
+				sendersEmail, host, inquiryTitle, inquiry, userName,
 				passWord, port);
 		return generalEmail;
 
@@ -251,7 +252,9 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		result.append(originalMailBody);
 		result.append(System.getProperty("line.separator"));
-		result.append(email);
+		result.append("Inquiry From : ");
+		result.append(System.getProperty("line.separator"));
+		result.append(sendersEmail);
 //		result.append(System.getProperty("line.separator"));
 //		result.append(sendersphoneNumber);
 //		result.append(System.getProperty("line.separator"));
