@@ -101,12 +101,12 @@ public class CourseProviderProgrammeDAO implements ICrud {
 				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE and cp.EXPIRATIONDATE >= ?";
 		
 		/**
-		 * query2 used to query the database to retrieve data 
+		 * query2 used to query the database to retrieve data of course providers 
+		 * randomly who are active
 		 */
-		String query2 ="";
-		
-
-		String query3 = "";
+		String query2 = "SELECT   cp.CODE, cp.UNIQUEPREFIX, cp.NAME, cp.LOGOIMAGEPATH, cp.WEBLINK FROM  [CAMPUS].[COURSEPROVIDER] cp INNER JOIN [CAMPUS].[PROGRAMME] p"
+				+ "ON p.COURSEPROVIDER = cp.CODE where  p.CATEGORY = 1 and p.EXPIRYDATE >=getdate()"
+				+ "and  cp.COURSEPROVIDERSTATUS = 1  and cp.EXPIRATIONDATE >= getdate()  ORDER BY NEWID()";
 
 		try {
 
@@ -150,7 +150,6 @@ public class CourseProviderProgrammeDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("DESCRIPTION"));
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
 					singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
-					singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
 					singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
 					singleCourseProviderList.add(rs.getString("LANDPHONEAREACODE"));
 					singleCourseProviderList.add(rs.getString("LANDPHONENO"));
