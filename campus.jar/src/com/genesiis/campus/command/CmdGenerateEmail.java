@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //sendMail(),createDatabaseConnection() created and defined
 //20161031 DN c10-contacting-us-page sendMail() changed, add doc comments and method comments
 //									  addContentToOriginalMailBody() initialized
+//									setEnvironment() method initialiZed.execute() restructured.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.Operation;
 
 import java.sql.Connection;
-
 import java.util.Date;
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -52,6 +53,10 @@ public class CmdGenerateEmail implements ICommand {
 	private Connection connection = null;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
+	private String userName;
+    private String port;
+    private String passWord;
+    private String host;
 
 
 /**
@@ -59,15 +64,9 @@ public class CmdGenerateEmail implements ICommand {
  */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
-			Exception {
-		
-			 //getting the admin related data e.g email address
-			 sendersName = helper.getParameter("firstName")
-			 .concat(" "+ helper.getParameter("lastName"));
-			 sendersEmailAddress = helper.getParameter("emailAddress");
-			 sendersphoneNumber= helper.getParameter("contactNumber");
-			 mailingSubject = helper.getParameter("subject");
-			 mailBody = helper.getParameter("message");
+			Exception {		
+
+			 setEnvironment( helper);
 			 String cco = helper.getCommandCode();
 			 String message = "";
 			 ArrayList<Collection<String>> collectionOfCollectionOfEmails =
@@ -90,9 +89,8 @@ public class CmdGenerateEmail implements ICommand {
 						
 						 break;
 					
-					 }
-					 
-			 log.info("execute(): before callling sendMail() ===");
+					 }					 
+			 
 			this.sendMail();
 
 			return view;
@@ -110,6 +108,25 @@ public class CmdGenerateEmail implements ICommand {
 	}
 	
 	/*
+	 * setEnvironment() method initializes all the instance variable
+	 * @author DN
+	 * @param helper IDataHelper
+	 */	
+	private void setEnvironment(IDataHelper helper){
+		//getting the admin related data e.g email address
+		 sendersName = helper.getParameter("firstName")
+		 .concat(" "+ helper.getParameter("lastName"));
+		 sendersEmailAddress = helper.getParameter("emailAddress");
+		 sendersphoneNumber= helper.getParameter("contactNumber");
+		 mailingSubject = helper.getParameter("subject");
+		 mailBody = helper.getParameter("message");
+		 userName = (String)helper.getAttribute("userName");
+		 passWord = (String)helper.getAttribute("password");
+		 port = (String)helper.getAttribute("port");
+		 host = (String)helper.getAttribute("host");
+	}
+	
+	/*
 	 * formatEmailInstance() creates an IEmail with email receiver and sender addresses,
 	 * host ,SMTP host, subject, mailBody bounded
 	 * @author DN
@@ -118,8 +135,8 @@ public class CmdGenerateEmail implements ICommand {
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(mailBody);
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				sendersEmailAddress, "localhost", "mail.smtp.host",
-				mailingSubject, mailBody);
+				sendersEmailAddress, host,mailingSubject, 
+				mailBody,userName,passWord,port);
 		return generalEmail;
 
 	}
@@ -150,9 +167,7 @@ public class CmdGenerateEmail implements ICommand {
 
 	private void sendMail() throws MessagingException {
 		 emailDispenser = new EmailDispenser(generalEmail);
-		 emailDispenser.emailDispense();
-		 log.info("email send successfully");
-
+		 emailDispenser.emailDispense();		
 	}
 
 
