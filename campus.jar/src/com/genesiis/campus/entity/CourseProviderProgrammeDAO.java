@@ -47,10 +47,14 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			String query = "";
 			
 			if (areProvidersWithPopularProgrammes) {				
-				query = "SELECT p.COURSEPROVIDER , count(*) "
+				query = "SELECT cp1.* FROM ("
+						+ "SELECT TOP 10 p.COURSEPROVIDER , count(*) as COUNT "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
-						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?) "
-						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER) GROUP BY p.COURSEPROVIDER";
+						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?)"
+						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)"
+						+ "GROUP BY p.COURSEPROVIDER ORDER BY COUNT DESC"
+						+ ")"
+						+ "a JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (cp1.CODE = a.COURSEPROVIDER)";
 				
 			} else {
 				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
@@ -68,6 +72,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 		} catch (ClassCastException cce) {
 			Log.info("findById(Object): ClassCastException: " + cce.toString());
+			
 			throw new IllegalArgumentException("The argument passed is not of expected type (CourseProvider)!");
 		} catch (SQLException sqle) {
 			Log.info("findById(Object): SQLException: " + sqle.toString());
