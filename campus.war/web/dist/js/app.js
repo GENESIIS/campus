@@ -13,11 +13,11 @@ angular.module('CampusApp',['ngRoute'])
                 templateUrl : "dist/partials/about.html"
             })
             .when('/contact',{
-                templateUrl : "dist/partials/contact.html"
+                templateUrl : "dist/partials/contact-us.html"
             })
             .when('/courses',{
                 templateUrl : "dist/partials/courses.html"
-            });
+            }); 
     })
 
     // SlideToggle Directive
