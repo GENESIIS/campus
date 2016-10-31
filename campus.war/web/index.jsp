@@ -24,6 +24,10 @@
 <!-- Main Container  -->
 <div ng-view></div>
 
+<!-- 				<select id="player"> -->
+<!-- 					<option>Select Player</option> -->
+<!-- 				</select> -->
+
 <!-- Footer -->
 <footer ng-include="'dist/partials/layout/footer.jsp'"></footer>
 
@@ -38,6 +42,7 @@
 
 
 
+
 <!-- jQuery & Other js -->
 <script src="dist/bower-components/jquery/jquery.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
@@ -45,6 +50,6 @@
 <!--<script src="js/animation.js"></script>-->
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
 <script src="dist/js/filterSearch/ui-populate-helper.js"></script>
-<script src="dist/js/filterSearch/jquery-1.11.1.js"></script>
+<!-- <script src="dist/js/filterSearch/jquery-1.11.1.js"></script> -->
 </body>
 </html>
