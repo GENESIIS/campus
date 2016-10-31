@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 ////20161027 AS C8-inquiry-form-for-course CourseInquiryDAO.java created 
 //20161027 AS C8-inquiry-form-for-course add method modified
+//20161031 AS C8-inquiry-form-for-course add method  query modified
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class CourseInquiryDAO implements ICrud {
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 
-		String query = "INSERT INTO CAMPUS.STUDENTPROGRAMINQUIRY ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, STUDENT, PROGRAMME, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES( ?, ?, ?, ?, ?, ?, ?, getdate(), getdate(), ?, ?, ?, getdate(), ?, getdate(), ?) ";
+		String query = "INSERT INTO CAMPUS.STUDENTPROGRAMINQUIRY ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, STUDENT, PROGRAMME, ISACTIVE, CRTON, CRTBY) VALUES( ?, ?, ?, ?, ?, ?, ?, getdate(), getdate(), '1', '1', '1', getdate(), 'admin') ";
 		Connection conn = null;
 		PreparedStatement ps = null;
 		StudentProgrammeInquiry spi = (StudentProgrammeInquiry) object;
@@ -37,10 +38,10 @@ public class CourseInquiryDAO implements ICrud {
 			ps.setString(6, spi.getInquiryTitle());
 			ps.setString(7, spi.getInquiry());
 
-			ps.setInt(9, spi.getStudent());
-			ps.setInt(10, spi.getProgramme());
-			ps.setString(11, "chathuri");
-			ps.setString(12, "chathuri");
+		//	ps.setInt(10, spi.getStudent());
+		//	ps.setInt(11, spi.getProgramme());
+			// ps.setString(12, "1");
+		//	ps.setString(14, "admin");
 			status = ps.executeUpdate();
 
 		} catch (SQLException exception) {
