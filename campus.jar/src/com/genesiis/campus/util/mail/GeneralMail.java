@@ -127,7 +127,7 @@ public class GeneralMail implements IEmail {
 						new Authenticator() {
 							protected PasswordAuthentication getPasswordAuthentication() {
 								return new PasswordAuthentication(
-										"dushantha@genesiis.com", "Appleapple123");
+									userName, passWord);
 							}
 						});
     	message = new MimeMessage(session);
