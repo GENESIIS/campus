@@ -1,5 +1,6 @@
 package com.genesiis.campus.util.mail;
 //20161027 c10-contacting-us-page EmailDispenser.java initial version created
+//20161031 c10-contacting-us-page add document and method comments
 
 import java.util.Properties;
 
@@ -8,7 +9,12 @@ import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
-
+/**
+ * EmailDispenser class holds the responsibility of delivering the mail
+ * Across recipients
+ * @author DN
+ *
+ */
 
 public class EmailDispenser {
 	static Logger log = Logger.getLogger(EmailDispenser.class.getName());
@@ -37,6 +43,7 @@ public class EmailDispenser {
 	public void emailDispense() throws MessagingException{		
 		try {
 				dispenceEmail(email.setEmailMessage());
+				log.info("Email delevered sussessfully");
 				
 		} catch (MessagingException msgExp) {
 			log.error("emailDispense():MessagingException :"+msgExp.toString());
@@ -47,28 +54,32 @@ public class EmailDispenser {
 	/**
 	 * getEmail() accessor method intends to return an email
 	 * bound with the EmailDis
+	 * @author DN
 	 * @return IEmail an email object
 	 */
 	public IEmail getEmail() {
 		return this.email;
 	}
-
+	
+	/**
+	 * setEmail() method sets the email if the email is originally not set
+	 * @param email IEmail the email needs to be set to.
+	 * @throws IllegalArgumentException
+	 */
 	public void setEmail(IEmail email) throws IllegalArgumentException {
-		log.info("setEmail() BEFORE IFTEST ===email"+email);
-		log.info("setEmail() :email.equals(null)"+email.equals(null));
-		//log.info("setEmail() :isEmailNotSet()"+isEmailNotSet());
-		
-		if(!email.equals(null)){
-			log.info("setEmail() WITHIN THE ISTEST");
-			this.email=email;
+			if(!email.equals(null)){			
+			 this.email=email;
 			}else{
 				log.error("setEmail(IEmail email); null email address has passed in ");
 				throw new IllegalArgumentException();
 			}
 	}
 	
-	public boolean isEmailNotSet(){
-		log.info("isEmailNotSet() :before calling getEmail().equals(null):"+getEmail().equals(null));
+	/**
+	 * isEmailNotSet() checks id the emaik is null or set to a value
+	 * @return
+	 */
+	public boolean isEmailNotSet(){		
 		return (getEmail().equals(null));
 	}
 	
