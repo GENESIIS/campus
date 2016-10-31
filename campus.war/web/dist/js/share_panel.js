@@ -1,6 +1,7 @@
 /*!
  * Contact Buttons Plugin Demo 0.1.0
- * 20161025 AS c12-social-media-share-panale-as side share panale and top share panale button and js created
+ * 20161025 AS c12-social-media-share-panel-as side share panel and top share panel button and js created
+ * 20161025 AS c12-social-media-share-panel-as share_panale name rename to share_panel.js
  */
  
 // Google Fonts
