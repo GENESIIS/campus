@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161026 JH c7-list-higher-education-courses CmdListHigherEducationCourses modified
 //20161026 JH c7-higher-education-landing-page class renamed as CmdListHigherEducationProgrammes.java
 //20161027 JH c7-higher-education-landing-page execute method coding
+//20161027 JH c7-higher-education-landing-page code modifications to list 20 course providers randomly
 
 import java.sql.SQLException;
 import java.text.DateFormat;
