@@ -2,6 +2,7 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
+//20161031 DN c10-contacting-us-page getAttribute() method implemented
 
 import java.io.IOException;
 import java.util.Collection;
@@ -171,8 +172,7 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * getSession() returns User-Agent which is the browser
-	 * 
+	 * getSession() returns User-Agent which is the browser 
 	 * @author PN
 	 * @return String
 	 */
@@ -180,6 +180,18 @@ public class DataHelper implements IDataHelper {
 	public String getHeader(String name) {
 		return request.getHeader(name);
 
+	}
+	
+	/**
+	 * getAttribute method returns the attribute value bound to the
+	 * request instance by attributeName
+	 * @author dushantha DN
+	 * @param attributeName String
+	 * @return Object 
+	 * @since 20161031
+	 */
+	public Object getAttribute(String attributeName){
+		return request.getAttribute(attributeName);
 	}
 
 }
