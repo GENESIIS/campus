@@ -39,12 +39,23 @@ public class CorporateProgrammeDAO implements ICrud {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
 			
-			String query = "SELECT * FROM [CAMPUS].[PROGRAMME] WHERE CATEGORY = ? AND PROGRAMMESTATUS = ? AND GETDATE() < EXPIRYDATE";
+			String query = "SELECT p.*, cp.LOGOIMAGEPATH, ct.NAME AS CLASSTYPENAME, "
+					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp "
+					+ "ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND p.PROGRAMMESTATUS = ? "
+					+ "AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = ? "
+					+ "AND GETDATE() < cp.EXPIRATIONDATE) "
+					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
+					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
+					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, categoryCode);
 			ps.setInt(2, 1);
+			ps.setInt(3, 1);
+			ps.setInt(4, 1);
+			ps.setInt(5, 1);
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
@@ -89,6 +100,10 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("CATEGORY"));
 			singleProgramme.add(rs.getString("LEVEL"));
 			singleProgramme.add(rs.getString("CLASSTYPE"));
+			singleProgramme.add(rs.getString("LOGOIMAGEPATH"));
+			singleProgramme.add(rs.getString("CLASSTYPENAME"));
+			singleProgramme.add(rs.getString("TOWNCODE"));
+			singleProgramme.add(rs.getString("TOWNNAME"));
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}
