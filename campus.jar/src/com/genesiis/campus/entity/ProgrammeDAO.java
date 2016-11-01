@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161025 CM c13-Display course details Modified findById() method
 //20161026 CM c13-Display course details Modified findById() method
 //20161027 CM c13-Display course details Change query according to new DDL
+//20161101 CM c13-Display course details Change findById() sql query 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,14 +43,15 @@ public class ProgrammeDAO implements ICrud {
 	}
 
 	/**
-	 * Search Programme details(Programme, level, major) and course provider details relevant to the programme
+	 * Search Programme details(Programme, level, major) and course provider
+	 * details relevant to the programme
 	 * 
 	 * @author Chathuri
 	 * @param Object
-	 *            :  programme object of Object type
+	 *            : programme object of Object type
 	 * @return Collection<Collection<String>> of Collection
 	 */
-	
+
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -76,11 +78,13 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(4));// Entry requirements
 				singleprogrameDetails.add(rs.getString(5));// Counselor Name
 				singleprogrameDetails.add(rs.getString(6));// counselorPhone
-				singleprogrameDetails.add(rs.getString(7));// Course provider Name
-				singleprogrameDetails.add(rs.getString(8));// Course provider Web link
+				singleprogrameDetails.add(rs.getString(7));// Course provider
+															// Name
+				singleprogrameDetails.add(rs.getString(8));// Course provider
+															// Web link
 				singleprogrameDetails.add(rs.getString(9));// Image
-				singleprogrameDetails.add(rs.getString(10));//Level Name
-				singleprogrameDetails.add(rs.getString(11));//Major Name
+				singleprogrameDetails.add(rs.getString(10));// Level Name
+				singleprogrameDetails.add(rs.getString(11));// Major Name
 				programmeDetails.add(singleprogrameDetails);
 
 			}
@@ -97,6 +101,23 @@ public class ProgrammeDAO implements ICrud {
 			}
 		}
 		return programmeDetails;
+	}
+
+	/**
+	 * Calculate Duration (Year, month)
+	 * 
+	 * @author Chathuri
+	 * @param duration
+	 * @return
+	 */
+	public int calculateDuration(String duration) {
+		try {
+
+			return 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 
 	@Override
