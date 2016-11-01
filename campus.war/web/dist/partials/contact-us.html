@@ -21,11 +21,11 @@
             <div class="submit-area clearfix">
                 <form class="submit-form" action="">
                     <div class="f-name">
-                        <label for="input-firstName">First Name</label><br>
+                        <label for="input-firstName">First Name <span>*</span></label><br>
                         <input type="text" id="input-firstName">
                     </div>
                     <div class="l-name">
-                        <label for="input-lastName">Last Name</label><br>
+                        <label for="input-lastName">Last Name <span>*</span></label><br>
                         <input type="text" id="input-lastName">
                     </div>
                     <div class="tp">
@@ -33,18 +33,24 @@
                         <input type="text" id="input-phoneNumber">
                     </div>
                     <div class="email">
-                        <label for="eMail">Email</label><br>
+                        <label for="eMail">Email <span>*</span></label><br>
                         <input type="text" id="eMail">
                     </div>
                     <div class="email-subject">
-                        <label for="input-eMailSubject">Subject</label><br>
+                        <label for="input-eMailSubject">Subject <span>*</span></label><br>
                         <input type="text" id="input-eMailSubject">
                     </div>
                     <div class="user-message">
-                        <label for="text-userMessage">Message</label><br>
-                        <textarea id="text-userMessage"></textarea>
+                        <label for="text-userMessage">Message <span>*</span></label><br>
+                        <textarea id="text-userMessage" rows="10"></textarea>
+                        <p class="pull-right"><span>*</span> Required fields</p>
                     </div>
-                    <input type="submit" value="Send Message">
+                    <div class="re-captcha">
+                        <a href="javascript:">
+                            <img src="dist/i/contactUs/recaptcha.gif" alt="">
+                        </a>
+                    </div>
+                    <input class="btn-submit" type="submit" value="Send Message">
                 </form>
                 <!-- End Submit form -->
             </div>
@@ -53,8 +59,8 @@
             <!-- Q & A Area -->
             <div class="question-and-info-area clearfix">
                 <div class="question-area">
-                    <div class="heading">
-                        <h1>Frequently asked questions</h1>
+                    <div class="heading clearfix">
+                        <h1 class="page-topic-t2">Frequently asked questions</h1>
                         <p>Plaese be kind enough to read out FAQ before sending us a message </p>
                     </div>
                     <div class="number-of-questions">

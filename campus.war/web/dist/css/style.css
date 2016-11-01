@@ -79,6 +79,12 @@ textarea:focus, input:focus {
   color: #3a3b3c;
   padding-bottom: 30px; }
 
+.page-topic-t2 {
+  color: #18a6f0;
+  font-family: Oswald;
+  font-size: 32px;
+  line-height: 54px; }
+
 /*Font Face */
 /* Layout */
 footer .ft-top {
@@ -383,9 +389,17 @@ body, html {
         float: left;
         padding-right: 28px; }
         .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > label {
-          color: #fff;
+          color: #cccccc;
           font-size: 22px;
-          line-height: 54px; }
+          line-height: 50px;
+          position: relative; }
+          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > label span {
+            font-size: 45px;
+            color: #18a6f0;
+            position: absolute;
+            top: 28px;
+            right: -32px;
+            line-height: 20px; }
         .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > input {
           color: #dff4ff;
           line-height: 54px;
@@ -396,10 +410,54 @@ body, html {
           margin-bottom: 18px;
           padding-left: 18px;
           font-family: "Roboto", sans-serif; }
+        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form p {
+          font-size: 20px;
+          color: #cccccc;
+          line-height: 54px;
+          position: relative; }
+          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form p span {
+            font-size: 45px;
+            color: #18a6f0;
+            position: absolute;
+            top: 28px;
+            left: -24px;
+            line-height: 20px; }
+        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .user-message textarea {
+          width: 100%;
+          background: #506374;
+          border: none;
+          color: #fff;
+          padding: 15px;
+          line-height: 20px;
+          font-weight: 200; }
+        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .re-captcha {
+          padding: 50px 0; }
+          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .re-captcha img {
+            width: 75%; }
       .contact-us-screen .contact-form-holder .contact-form .question-and-info-area {
         display: inline-block;
         position: relative;
-        width: 46%; }
+        width: 46%;
+        padding-left: 30px; }
+        .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area {
+          display: block; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .heading {
+            display: block;
+            padding-bottom: 40px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .heading p {
+              padding-top: 10px;
+              font-size: 22px;
+              color: #cccccc;
+              line-height: 26px; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions {
+            display: block; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .question h3 {
+              font-family: Oswald;
+              font-size: 24px;
+              line-height: 60px;
+              color: #fff; }
+              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .question h3 span {
+                color: #18a6f0; }
 
 /* Modules */
 .btn-home {
@@ -464,5 +522,17 @@ body, html {
         font-size: 20px;
         color: #3a3b3c;
         line-height: 40px; }
+
+.btn-submit {
+  width: 45%;
+  line-height: 70px;
+  background: #3a81f9;
+  border-radius: 10px;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  color: #fff; }
+  .btn-submit:hover {
+    background: #3a7be9; }
 
 /*# sourceMappingURL=style.css.map */

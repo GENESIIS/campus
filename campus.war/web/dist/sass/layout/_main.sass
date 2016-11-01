@@ -266,9 +266,18 @@ body,html
 
         .submit-form
           div > label
-            color: #fff
+            color: #cccccc
             font-size: 22px
-            line-height: 54px
+            line-height: 50px
+            position: relative
+
+            span
+              font-size: 45px
+              color: #18a6f0
+              position: absolute
+              top: 28px
+              right: -32px
+              line-height: 20px
 
           div > input
             color: #dff4ff
@@ -281,8 +290,62 @@ body,html
             padding-left: 18px
             font-family: 'Roboto', sans-serif
 
+          p
+            font-size: 20px
+            color: #cccccc
+            line-height: 54px
+            position: relative
+            span
+              font-size: 45px
+              color: #18a6f0
+              position: absolute
+              top: 28px
+              left: -24px
+              line-height: 20px
+
+          .user-message
+            textarea
+              width: 100%
+              background: #506374
+              border: none
+              color: #fff
+              padding: 15px
+              line-height: 20px
+              font-weight: 200
+
+          .re-captcha
+            padding: 50px 0
+            img
+              width: 75%
 
       .question-and-info-area
         display: inline-block
         position: relative
         width: 46%
+        padding-left: 30px
+
+        .question-area
+          display: block
+
+          .heading
+            display: block
+            padding-bottom: 40px
+            p
+              padding-top: 10px
+              font-size: 22px
+              color: #cccccc
+              line-height: 26px
+
+          .number-of-questions
+            display: block
+
+            .question
+              h3
+                font-family: Oswald
+                font-size: 24px
+                line-height: 60px
+                color: #fff
+                span
+                  //font-size: 60px
+                  color: #18a6f0
+
