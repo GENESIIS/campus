@@ -24,6 +24,11 @@ public class ProgrammeDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
 
+	private int years;
+	private int months;
+	private int weeks;
+	private int days;
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -72,6 +77,7 @@ public class ProgrammeDAO implements ICrud {
 			if (rs.next()) {
 
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
+				calculateYears(rs.getString(3));
 				singleprogrameDetails.add(rs.getString(1));// Programme name
 				singleprogrameDetails.add(rs.getString(2));// Description
 				singleprogrameDetails.add(rs.getString(3));// Duration
@@ -85,6 +91,11 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(9));// Image
 				singleprogrameDetails.add(rs.getString(10));// Level Name
 				singleprogrameDetails.add(rs.getString(11));// Major Name
+				singleprogrameDetails.add(String.valueOf(years));//years
+				singleprogrameDetails.add(String.valueOf(months));//months
+				singleprogrameDetails.add(String.valueOf(weeks));//weeks
+				singleprogrameDetails.add(String.valueOf(days));//days
+				
 				programmeDetails.add(singleprogrameDetails);
 
 			}
@@ -104,20 +115,88 @@ public class ProgrammeDAO implements ICrud {
 	}
 
 	/**
-	 * Calculate Duration (Year, month)
+	 * Calculate number of years in the Duration
 	 * 
 	 * @author Chathuri
 	 * @param duration
-	 * @return
+	 * @return void
 	 */
-	public int calculateDuration(String duration) {
+	public void calculateYears(String duration) {
 		try {
 
-			return 0;
+			float inputAsFloat = Float.parseFloat(duration);
+
+			// the input is an integral day count, with a possible fractional
+			// part representing time as a fraction of one day
+			int totalDays = (int) inputAsFloat;
+
+			// ignores leap years
+			years = (int) totalDays / 365;
+			totalDays %= 365;
+
+			calculateMonth(totalDays);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
+	}
+
+	/**
+	 * Calculate number of months in the Duration
+	 * 
+	 * @author Chathuri
+	 * @param duration
+	 * @return void
+	 */
+	public void calculateMonth(int totalDays) {
+		try {
+
+			// assumes all months have 30 days
+			months = (int) totalDays / 30;
+			totalDays %= 30;
+
+			calculateWeeks(totalDays);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	/**
+	 * Calculate number of weeks in the Duration
+	 * 
+	 * @author Chathuri
+	 * @param duration
+	 * @return void
+	 */
+	public void calculateWeeks(int totalDays) {
+		try {
+			weeks = (int) totalDays / 7;
+			totalDays %= 7;
+			calculateDates(totalDays);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	/**
+	 * Calculate number of days in the Duration
+	 * 
+	 * @author Chathuri
+	 * @param duration
+	 * @return void
+	 */
+	public void calculateDates(int totalDays) {
+		try {
+			days = (int) totalDays;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
