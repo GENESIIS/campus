@@ -1,6 +1,35 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161027 TR c11 styling all category selections -->
+<script type="text/javascript">
+    $("#first-choice").change(function() {
 
+    	var $dropdown = $(this);
+
+    	$.getJSON("data.json", function(data) {
+
+    		var key = $dropdown.val();
+    		var vals = [];
+
+    		switch(key) {
+    			case 'beverages':
+    				vals = data.beverages.split(",");
+    				break;
+    			case 'snacks':
+    				vals = data.snacks.split(",");
+    				break;
+    			case 'base':
+    				vals = ['Please choose from above'];
+    		}
+
+    		var $secondChoice = $("#second-choice");
+    		$secondChoice.empty();
+    		$.each(vals, function(index, value) {
+    			$secondChoice.append('<li><a href="javascript:"><input name="Category" type="checkbox"></a>' + value + '</li>');
+    		});
+
+    	});
+    });
+</script>
 
 <div class="courses-screen clearfix">
 	<!-- Page Inner Header -->
@@ -36,6 +65,26 @@
 							type="checkbox"></a>
 					</div>
 				</div>
+				
+				<!---------------------- Test DropDown ---------------------------------->
+                <div class="filter-item test">
+                    <select id="first-choice">
+                      <option selected value="base">Please Select</option>
+                      <option value="beverages">Beverages</option>
+                      <option value="snacks">Snacks</option>
+                    </select>
+
+                    <br>
+
+                    <ul id="second-choice">
+                      <li>
+                          <a href="javascript:"><input name="Category" type="checkbox"></a>
+                          Please choose from above</li>
+                    </ul>
+                </div>
+
+                <!-- --------------------END Test DropDown ------------------->
+				
 
 				<!-- 1st Category - Categories -->
 				<div class="filter-item clearfix">
