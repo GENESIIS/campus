@@ -77,23 +77,26 @@ table {
 			</tr>
 			<c:forEach var="programmeList" items="${result.collection}"
 				varStatus="rowCount">
-				<tr>
+				<tr style="border: 1px solid blue;">
 					<td width="50px;"><c:out value="${rowCount.index+1}" /></td>
 					<td width="150px;" align="center"><a href="#"><img alt=""
 							src="Higher-Education.jpg" width="75px;" height="75px;"></a> <c:out
-							value="${programmeList[0] }"></c:out></td>
+							value="${programmeList[1] }"></c:out>
+							<input type="hidden" name="instituteCode" value="${programmeList[0] }"/>
+							</td>
 					<td width="100px;" align="center"><c:out
-							value="${programmeList[3] }"></c:out></td>
+							value="${programmeList[2] }"></c:out></td>
 					<td width="250px;" align="center"><c:out
 							value="${programmeList[4] }"></c:out></td>
 					<td width="350px;" align="center"><c:out
 							value="${programmeList[5] }"></c:out></td>
 					<td width="500px;" align="center"><c:out
 							value="${programmeList[6] }"></c:out></td>
+					<td width="100px;" align="center">${programmeList[8] }
+					<br/>${programmeList[9] }<br/>${programmeList[10] }
+					</td>
 					<td width="100px;" align="center"><c:out
 							value="${programmeList[7] }"></c:out></td>
-					<td width="100px;" align="center"><c:out
-							value="${programmeList[8] }"></c:out></td>
 				</tr>
 			</c:forEach>
 
