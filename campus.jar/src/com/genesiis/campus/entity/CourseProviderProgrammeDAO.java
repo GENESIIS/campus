@@ -48,13 +48,17 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			
 			if (areProvidersWithPopularProgrammes) {				
 				query = "SELECT cp1.* FROM ("
-						+ "SELECT TOP 10 p.COURSEPROVIDER , count(*) as COUNT "
+						+ "SELECT TOP ? p.COURSEPROVIDER , count(*) as COUNT "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
 						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?)"
 						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)"
 						+ "GROUP BY p.COURSEPROVIDER ORDER BY COUNT DESC"
 						+ ")"
 						+ "a JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (cp1.CODE = a.COURSEPROVIDER)";
+
+				stmt = conn.prepareStatement(query);
+				stmt.setInt(1, 5);	
+				stmt.setInt(2, categoryCode);	
 				
 			} else {
 //				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
@@ -63,20 +67,23 @@ public class CourseProviderProgrammeDAO implements ICrud {
 				
 				query = "SELECT cp1.*, t.CODE AS TOWNCODE, "
 						+ "t.NAME AS TOWNNAME FROM ("
-						+ "SELECT TOP 3 NEWID() as dummy, a.COURSEPROVIDER FROM"
+						+ "SELECT TOP ? NEWID() as dummy, a.COURSEPROVIDER FROM"
 						+ "("
 						+ "SELECT DISTINCT p.COURSEPROVIDER"
 						+ "FROM [CAMPUS].[PROGRAMME] p"
-						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = 3)"
-						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE)"
+						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?)"
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER AND COURSEPROVIDERSTATUS = ?)"
 						+ ") a"
 						+ ") b"
-						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE)";			
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE)";	
+
+				stmt = conn.prepareStatement(query);
+				stmt.setInt(1, 10);	
+				stmt.setInt(2, categoryCode);		
+				stmt.setInt(3, 1);		
 			}
 
 			conn = ConnectionManager.getConnection();
-			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, categoryCode);
 			
 			final ResultSet rs = stmt.executeQuery();
 
@@ -108,6 +115,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 		while (rs.next()) {
 			final ArrayList<String> singleCourseProvider = new ArrayList<String>();
 			singleCourseProvider.add(rs.getString("CODE"));
+			singleCourseProvider.add(rs.getString("SHORTNAME"));
 			singleCourseProvider.add(rs.getString("NAME"));
 			singleCourseProvider.add(rs.getString("GENERALEMAIL"));
 			singleCourseProvider.add(rs.getString("COURSEINQUIRYEMAIL"));
@@ -124,7 +132,6 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			singleCourseProvider.add(rs.getString("INSTAGRAMURL"));
 			singleCourseProvider.add(rs.getString("VIBERNUMBER"));
 			singleCourseProvider.add(rs.getString("WHATSAPPNUMBER"));
-			singleCourseProvider.add(rs.getString("EXPIRATIONDATE"));
 			singleCourseProvider.add(rs.getString("MYSPACEURL"));
 			singleCourseProvider.add(rs.getString("TOWNCODE"));
 			singleCourseProvider.add(rs.getString("TOWNNAME"));
