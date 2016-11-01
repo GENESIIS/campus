@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20161031 JH c7-higher-education-landing-page findById method modified : rate and retrieve course provider details
 			//using a one query 
 //20161101 JH c7-higher-education-landing-page findById method modified : query2 changed to remove duplicate course provider records
+//20161101 JH c7-higher-education-landing-page CourseProviderDAO.java renamed as CourseProviderHigherEducationProgrammeDAO.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,10 +26,10 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseProviderProgrammeDAO implements ICrud {
+public class CourseProviderHigherEducationProgrammeDAO implements ICrud {
 
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(CourseProviderProgrammeDAO.class.getName());
+			.getLogger(CourseProviderHigherEducationProgrammeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -165,6 +166,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("LANDPHONEAREACODE"));
 					singleCourseProviderList.add(rs.getString("LANDPHONENO"));
 					singleCourseProviderList.add(rs.getString("LANDPHONE2NO"));
+					singleCourseProviderList.add(rs.getString("FAXNO"));
 					singleCourseProviderList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENO"));
