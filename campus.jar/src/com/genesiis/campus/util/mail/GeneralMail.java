@@ -8,9 +8,11 @@ package com.genesiis.campus.util.mail;
 //			  	Removed GeneralMail() constructor argument 'mailHost'.
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -22,6 +24,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.genesiis.campus.command.CmdGenerateEmail;
+import com.genesiis.campus.util.MailServerManager;
 
 import org.apache.log4j.Logger;
 
@@ -48,6 +51,7 @@ public class GeneralMail implements IEmail {
     private String port;
     private String passWord;
     
+    
   
 	/**
      * GeneralMail constructor creates the MimeMessage and Session automatically 
@@ -59,17 +63,17 @@ public class GeneralMail implements IEmail {
      * @param subject String: subject of the email
      * @param emailBody String : body content of the email
      */
-    public GeneralMail( ArrayList<String> receivers,String sender,String host,
-    		String subject,String emailBody,
-    		String userName,String passWord,String port){
+    public GeneralMail( ArrayList<String> receivers,String sender,//String host,
+    		String subject,String emailBody){
+    		//String userName,String passWord,String port){
     	this.receivers = receivers;
     	this.sender = sender;
-    	this.host = host;    	
+    	//this.host = host;    	
     	this.subject = subject;
     	this.emailBody = emailBody;    	    	
-    	this.userName = userName;
-    	this.port = port;
-    	this.passWord = passWord;    	
+    	//this.userName = userName;
+    	//this.port = port;
+    	//this.passWord = passWord;    	
     
     	setSystemPropertiesAndMailEnvironment();
     }
@@ -118,23 +122,45 @@ public class GeneralMail implements IEmail {
 	    private void setProperties(){
     	properties=System.getProperties();    	
     	properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", this.getHost());
-		properties.put("mail.smtp.user", this.getUserName()); // User name
-		properties.put("mail.smtp.password", this.getPassWord()); // password
-		properties.put("mail.smtp.port", this.getPort()); //port number
+		//properties.put("mail.smtp.host","mailtrap.io"); // this.getHost());------------1
+		//properties.setProperty("mail.smtp.user", "dd45281819e61b");
+		//properties.setProperty("mail.smtp.password", "e9cd007f904241");
+		//properties.put("mail.smtp.user", this.getUserName()); // User name
+		//properties.put("mail.smtp.password", this.getPassWord()); // password
+		//properties.put("mail.smtp.port", this.getPort()); //port number
+		//properties.put("mail.smtp.ssl.trust", "mailtrap.io"); //----------------2
 		properties.put("mail.smtp.auth", "true");
-		// Get the default Session object.
-				Session session = Session.getDefaultInstance(properties,
-						new Authenticator() {
-							protected PasswordAuthentication getPasswordAuthentication() {
-								return new PasswordAuthentication(
-										"dushantha@genesiis.com", "Appleapple123");
-							}
-						});
+		try{
+			session = createMailSession();//Session.getInstance(properties);
+			Properties o =session.getProperties();
+			Set<String> s=o.stringPropertyNames();
+			for(String w:s){
+				
+				log.info("property values ====:"+w+":"+o.getProperty(w));
+				
+			}
+		} catch (SQLException sqle) {
+			log.error("setProperties() SQLException:"+sqle.toString());
+			
+		}
+//		// Get the default Session object.
+//				Session session = Session.getDefaultInstance(properties,
+//						new Authenticator() {
+//							protected PasswordAuthentication getPasswordAuthentication() {
+//								return new PasswordAuthentication(
+//										"dd45281819e61b", "e9cd007f904241");
+//							}
+//						});
     	message = new MimeMessage(session);
     	
 	}
+	    
     
+	 private Session createMailSession() throws SQLException{
+		 return MailServerManager.mailSession();
+	 }
+	    
+	    
 
 	/*
      * addRecipientToMail() unfolds the list of recipients and

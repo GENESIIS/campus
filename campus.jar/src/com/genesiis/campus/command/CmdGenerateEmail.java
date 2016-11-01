@@ -120,10 +120,10 @@ public class CmdGenerateEmail implements ICommand {
 		 sendersphoneNumber= helper.getParameter("contactNumber");
 		 mailingSubject = helper.getParameter("subject");
 		 mailBody = helper.getParameter("message");
-		 userName = (String)helper.getAttribute("userName");
-		 passWord = (String)helper.getAttribute("password");
-		 port = (String)helper.getAttribute("port");
-		 host = (String)helper.getAttribute("host");
+//		 userName = (String)helper.getAttribute("userName");
+//		 passWord = (String)helper.getAttribute("password");
+//		 port = (String)helper.getAttribute("port");
+//		 host = (String)helper.getAttribute("host");
 	}
 	
 	/*
@@ -135,8 +135,8 @@ public class CmdGenerateEmail implements ICommand {
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(mailBody);
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				sendersEmailAddress, host,mailingSubject, 
-				mailBody,userName,passWord,port);
+				sendersEmailAddress,// host,
+				mailingSubject,mailBody);//,userName,passWord,port);
 		return generalEmail;
 
 	}
