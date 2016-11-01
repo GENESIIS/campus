@@ -41,6 +41,7 @@ public class CmdListLevels implements ICommand{
 		ICrud levelDAO = new LevelDAO();
 		try {
 			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
+			log.info("categoryCode "+categoryCode);
 			Collection<Collection<String>> levelCollection = levelDAO.findById(categoryCode);
 			iview.setCollection(levelCollection);
 		} catch (SQLException sqle) {

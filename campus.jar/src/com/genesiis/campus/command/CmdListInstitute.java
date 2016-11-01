@@ -1,27 +1,27 @@
 package com.genesiis.campus.command;
 
-//20161029 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161101 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
 
 import java.sql.SQLException;
 import java.util.Collection;
 
-import com.genesiis.campus.entity.ICrud;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.MajorDAO;
-import com.genesiis.campus.util.IDataHelper;
-
 import org.apache.log4j.Logger;
 
-public class CmdListMajors implements ICommand{
-	static Logger log = Logger.getLogger(CmdListMajors.class.getName());
+import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.InstituteDAO;
+import com.genesiis.campus.util.IDataHelper;
 
-	private IView majorData;
+public class CmdListInstitute implements ICommand{
+	static Logger log = Logger.getLogger(CmdListInstitute.class.getName());
 
-	public CmdListMajors(IView majorData) {
-		this.majorData = majorData;
+	private IView districtData;
+
+	public CmdListInstitute(IView districtData) {
+		this.districtData = districtData;
 	}
 
-	public CmdListMajors() {
+	public CmdListInstitute() {
 		
 	}
 
@@ -29,7 +29,7 @@ public class CmdListMajors implements ICommand{
 	 * @author pabodha
 	 * @param helper
 	 * @param iview
-	 * @return iview with selected majors list
+	 * @return iview with selected districts list
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -37,12 +37,12 @@ public class CmdListMajors implements ICommand{
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
 	
 		
-		ICrud majorDao = new MajorDAO();
+		ICrud instituteDAO = new InstituteDAO();
 		try {
 			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
 			log.info("categoryCode "+categoryCode);
-			Collection<Collection<String>> majorCollection = majorDao.findById(categoryCode);
-			iview.setCollection(majorCollection);
+			Collection<Collection<String>> instituteCollection = instituteDAO.findById(categoryCode);
+			iview.setCollection(instituteCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
