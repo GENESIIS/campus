@@ -72,7 +72,7 @@ Course Providers offering Corporate Training programmes:
 			<c:forEach var="courseProviderAttrib" items="${popularCourseProvider}" varStatus="vs">
 				<td>
 				</td>
-				<c:if test="${vs.index == 5}">
+				<c:if test="${vs.index == 6}">
 					<td>
 					image
 						<a href="#">
@@ -81,9 +81,16 @@ Course Providers offering Corporate Training programmes:
 					</td>
 				</c:if>
 				
+				<c:if test="${vs.index == 2}">		
+					<td>
+					name: 
+						${courseProviderAttrib}
+					</td>
+				</c:if>
+				
 				<c:if test="${vs.index == 6}">		
 					<td>
-					descript: 
+					description: 
 						${courseProviderAttrib}
 					</td>
 				</c:if>
@@ -100,7 +107,7 @@ Course Providers whose programmes of Corporate Training category has received th
 			<c:forEach var="courseProviderAttrib" items="${courseProvider}" varStatus="vs">
 				<td>
 				</td>
-				<c:if test="${vs.index == 5}">
+				<c:if test="${vs.index == 6}">
 					<td>
 					image
 						<a href="#">
@@ -109,9 +116,23 @@ Course Providers whose programmes of Corporate Training category has received th
 					</td>
 				</c:if>
 				
+				<c:if test="${vs.index == 1}">
+					<td>
+					short name: 
+						${courseProviderAttrib}
+					</td>
+				</c:if>
+				
+				<c:if test="${vs.index == 2}">
+					<td>
+					name: 
+						${courseProviderAttrib}
+					</td>
+				</c:if>
+				
 				<c:if test="${vs.index == 6}">		
 					<td>
-					descript: 
+					description: 
 						${courseProviderAttrib}
 					</td>
 				</c:if>
