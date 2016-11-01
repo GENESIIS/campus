@@ -57,7 +57,7 @@ public class SemesterDAO implements ICrud{
 			
 			conn = ConnectionManager.getConnection();
 
-			String query = "SELECT * FROM [CAMPUS].[SEMESTER] WHERE PROGRAMME = ?";
+			String query = "SELECT * FROM [CAMPUS].[SEMESTER] WHERE PROGRAMME = ? AND ISACTIVE='1'";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
