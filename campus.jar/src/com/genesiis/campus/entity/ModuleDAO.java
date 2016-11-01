@@ -62,7 +62,7 @@ public class ModuleDAO implements ICrud {
 			String query = "Select "
 					+ "s.NAME,s.CODE, m.NAME,m.DESCRIPTION,m.INTERNALCODEOFMODULE,m.CREDITVALUE "
 					+ "from CAMPUS.PROGRAMME p inner join CAMPUS.SEMESTER s on s.programme = p.code "
-					+ "inner join CAMPUS.MODULE m on m.semester = s.code where p.CODE=?";
+					+ "inner join CAMPUS.MODULE m on m.semester = s.code where p.CODE=? and m.ISACTIVE='1'";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
