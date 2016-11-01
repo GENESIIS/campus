@@ -8,8 +8,9 @@ package com.genesiis.campus.entity;
 //20161028 JH c7-higher-education-landing-page findById(Object code) query modified 
 //20161028 JH c7-higher-education-landing-page CourseProviderDAO.java renamed as CourseProviderProgrammeDAO.java
 //20161030 JH c7-higher-education-landing-page findById method modified : sql exception fixed
-//20161030 JH c7-higher-education-landing-page findById method modified : rate and retrieve course provider details
+//20161031 JH c7-higher-education-landing-page findById method modified : rate and retrieve course provider details
 			//using a one query 
+//20161101 JH c7-higher-education-landing-page findById method modified : query2 changed to remove duplicate course provider records
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,17 +97,17 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 		String query1 = "SELECT  cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ " INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
-				+ " AND p.EXPIRYDATE > getdate() AND PROGRAMMESTATUS = ?"
+				+ " AND p.EXPIRYDATE > getdate() AND p.PROGRAMMESTATUS = ?"
 				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE and cp.EXPIRATIONDATE >= ?";
 		
 		/**
-		 * query2 used to query the database to retrieve data of course providers 
-		 * randomly who are active
+		 * query2 used to query the database to retrieve data of course
+		 * providers randomly who are active
 		 */
-		String query2 = "SELECT   cp.CODE, cp.UNIQUEPREFIX, cp.NAME, cp.LOGOIMAGEPATH, cp.WEBLINK FROM  [CAMPUS].[COURSEPROVIDER] cp INNER JOIN [CAMPUS].[PROGRAMME] p"
-				+ "ON p.COURSEPROVIDER = cp.CODE where  p.CATEGORY = 1 and p.EXPIRYDATE >=getdate()"
-				+ "and  cp.COURSEPROVIDERSTATUS = 1  and cp.EXPIRATIONDATE >= getdate()  ORDER BY NEWID()";
+		String query2 = "SELECT * FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
+				+ " where  p.CATEGORY = ? and p.EXPIRYDATE >= ? AND p.PROGRAMMESTATUS =?  ) as a "
+				+ "  on a.COURSEPROVIDER = cp.CODE and  cp.COURSEPROVIDERSTATUS = 1  and cp.EXPIRATIONDATE >= getdate() ORDER BY NEWID()";
 
 		try {
 
@@ -115,28 +116,37 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 			int type = programme.getLevel();
 			ResultSet rs = null;
-		
-			//get featured course providers
-			if(type ==1 ){
 
+			// get featured course providers
+			if (type == 1) {
+				log.info("before");
 				preparedStatement = conn.prepareStatement(query1);
-
+				log.info("after");
 				preparedStatement.setInt(1, programme.getCategory());
 				preparedStatement.setInt(2, programme.getProgrammeStatus());
 				preparedStatement.setDate(3, programme.getExpiryDate());
-				
+
 				rs = preparedStatement.executeQuery();
-				
-				if(rs == null){
+
+				if (rs == null) {
 					type = 0;
 				}
-			}if(type == 0){//get random course providers
-				
 			}
-			
-			
+			if (type == 0) {// get random course providers
 
-			if (rs != null) {
+				log.info("before");
+				preparedStatement = conn.prepareStatement(query2);
+				log.info("after");
+
+				preparedStatement.setInt(1, programme.getCategory());
+				preparedStatement.setDate(2, programme.getExpiryDate());
+				preparedStatement.setInt(3, programme.getProgrammeStatus());
+
+
+				rs = preparedStatement.executeQuery();
+			}
+
+			if (rs != null && type ==1) {
 
 				while (rs.next()) {
 					log.info("comes here");
@@ -189,6 +199,8 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 				}
 
+			}else if(rs != null && type==0){
+				
 			}
 
 		} catch (SQLException exception) {
