@@ -45,10 +45,11 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			boolean areProvidersWithPopularProgrammes = (programme.getLevel() == 1) ? true : false; 
 			
 			String query = "";
+			conn = ConnectionManager.getConnection();
 			
 			if (areProvidersWithPopularProgrammes) {				
 				query = "SELECT cp1.* FROM ("
-						+ "SELECT TOP ? p.COURSEPROVIDER , count(*) as COUNT "
+						+ "SELECT TOP 5 p.COURSEPROVIDER, count(*) as COUNT "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
 						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?)"
 						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)"
@@ -57,8 +58,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 						+ "a JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (cp1.CODE = a.COURSEPROVIDER)";
 
 				stmt = conn.prepareStatement(query);
-				stmt.setInt(1, 5);	
-				stmt.setInt(2, categoryCode);	
+				stmt.setInt(1, categoryCode);	
 				
 			} else {
 //				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
@@ -66,24 +66,21 @@ public class CourseProviderProgrammeDAO implements ICrud {
 //						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";	
 				
 				query = "SELECT cp1.*, t.CODE AS TOWNCODE, "
-						+ "t.NAME AS TOWNNAME FROM ("
-						+ "SELECT TOP ? NEWID() as dummy, a.COURSEPROVIDER FROM"
+						+ "t.NAME AS TOWNNAME FROM (" 
+						+ "SELECT TOP 10 NEWID() as dummy, a.COURSEPROVIDER FROM "
 						+ "("
-						+ "SELECT DISTINCT p.COURSEPROVIDER"
-						+ "FROM [CAMPUS].[PROGRAMME] p"
-						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?)"
+						+ "SELECT DISTINCT p.COURSEPROVIDER "
+						+ "FROM [CAMPUS].[PROGRAMME] p "
+						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
 						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER AND COURSEPROVIDERSTATUS = ?)"
 						+ ") a"
 						+ ") b"
 						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE)";	
 
 				stmt = conn.prepareStatement(query);
-				stmt.setInt(1, 10);	
-				stmt.setInt(2, categoryCode);		
-				stmt.setInt(3, 1);		
+				stmt.setInt(1, categoryCode);		
+				stmt.setInt(2, 1);		
 			}
-
-			conn = ConnectionManager.getConnection();
 			
 			final ResultSet rs = stmt.executeQuery();
 
