@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161026 CM c13-Display course details Modified execute() method. Remove Module attribute.
 //20161028 CM c13-Display course details Modified execute() method. Created  programmeView attribute.
 //20161028 CM c13-Display course details Modified execute() method. Created  method comment.
+//20161101 CM c13-Display course details Modified execute() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,6 +80,5 @@ public class CmdViewProgramme implements ICommand {
 
 		return view;
 	}
-
 
 }
