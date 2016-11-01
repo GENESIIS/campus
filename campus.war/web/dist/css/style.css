@@ -368,15 +368,23 @@ body, html {
     display: block;
     width: 93%;
     margin-left: auto;
-    margin-right: auto; }
+    margin-right: auto;
+    background: #3d5265;
+    z-index: 99;
+    position: relative;
+    top: -50px; }
     .contact-us-screen .contact-form-holder .contact-form {
-      display: block; }
+      display: block;
+      padding: 50px 70px 100px; }
       .contact-us-screen .contact-form-holder .contact-form .submit-area {
         display: inline-block;
-        position: relative; }
-      .contact-us-screen .contact-form-holder .contact-form .question-area {
+        position: relative;
+        width: 54%;
+        float: left; }
+      .contact-us-screen .contact-form-holder .contact-form .question-and-info-area {
         display: inline-block;
-        position: relative; }
+        position: relative;
+        width: 46%; }
 
 /* Modules */
 .btn-home {
