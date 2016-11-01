@@ -8,7 +8,7 @@ theNewScript.type = "text/javascript";
 theNewScript.src = "/validation/validation.js";
 
 function sendCourseInquiry() {
-	alert("lol");
+	
 	var fullName = $("#fullname").val();
 	var email = $("#email").val();
 	var countryCode = $("#countryCode").val();
@@ -51,11 +51,11 @@ function sendCourseInquiry() {
 	if ((email != null) && (inquiry != null) && (inquiryTitle != null)
 			&& (fullName != null)) {
 		var jsonData = {
-			"fullName" : fullName,
-			"email" : email,
-			"countryCode" : countryCode,
-			"areaCode" : areaCode,
-			"telephoneNumber" : telephoneNumber,
+			"studentName" : fullName,
+			"studentEmail" : email,
+			"telephoneCountryCode" : countryCode,
+			"telephoneAreaCode" : areaCode,
+			"telephone" : telephoneNumber,
 			"inquiryTitle" : inquiryTitle,
 			"inquiry" : inquiry
 

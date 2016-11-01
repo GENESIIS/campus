@@ -26,7 +26,7 @@
 			<td><span
 				id="fullNametbError" name="fullNametbError"
 				style="color: red; font-weight: normal !important;"></span>
-				<input type="text" name="fname" id="fullname"/></td>
+				<input type="text" name="fullname" id="fullname"/></td>
 		</tr>
 		<tr>
 			<td>Email</td>
