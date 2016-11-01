@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161029 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161101 PN c11-criteria-based-filter-search modified execute() method parameter.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -39,7 +40,8 @@ public class CmdListLevels implements ICommand{
 		
 		ICrud levelDAO = new LevelDAO();
 		try {
-			Collection<Collection<String>> levelCollection = levelDAO.findById(helper.getParameter("majorCode"));
+			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
+			Collection<Collection<String>> levelCollection = levelDAO.findById(categoryCode);
 			iview.setCollection(levelCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
