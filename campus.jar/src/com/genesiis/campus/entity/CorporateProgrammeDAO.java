@@ -39,36 +39,38 @@ public class CorporateProgrammeDAO implements ICrud {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
 			
-//			String query = "SELECT p.*, cp.LOGOIMAGEPATH, ct.NAME AS CLASSTYPENAME, "
-//					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM [CAMPUS].[PROGRAMME] p "
-//					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp "
-//					+ "ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND p.PROGRAMMESTATUS = ? "
-//					+ "AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = ? "
-//					+ "AND GETDATE() < cp.EXPIRATIONDATE) "
-//					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
-//					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
+//			String query = "SELECT p.*, cp.LOGOIMAGEPATH, ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, "
+//					+ "t.NAME AS TOWNNAME FROM ("
+//					+ "SELECT TOP 3 NEWID() as dummy, a.CODE FROM ("
+//					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p WHERE p.CATEGORY = 3 "
+//					+ "AND p.PROGRAMMESTATUS = 1 AND GETDATE() < p.EXPIRYDATE) a ORDER BY NEWID()"
+//					+ ") b "
+//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = b.CODE) "
+//					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE "
+//					+ "AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
+//					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = 1) "
+//					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) "
 //					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
 			
-			String query = "SELECT p.*, cp.LOGOIMAGEPATH, ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, "
-					+ "t.NAME AS TOWNNAME FROM ("
-					+ "SELECT TOP 3 NEWID() as dummy, a.CODE FROM ("
-					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p WHERE p.CATEGORY = 3 "
-					+ "AND p.PROGRAMMESTATUS = 1 AND GETDATE() < p.EXPIRYDATE) a ORDER BY NEWID()"
+			String query = "SELECT p.*, cp.SHORTNAME, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
+					+ "ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
+					+ "SELECT TOP 10 NEWID() as dummy, a.CODE FROM ("
+					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p "
+					+ "WHERE p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?) a ORDER BY NEWID()"
 					+ ") b "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = b.CODE) "
-					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE "
-					+ "AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
-					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = 1) "
-					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE) "
+					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
+					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
 					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
+//			ps.setInt(1, 10);
 			ps.setInt(1, categoryCode);
 			ps.setInt(2, 1);
 			ps.setInt(3, 1);
 			ps.setInt(4, 1);
-			ps.setInt(5, 1);
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
@@ -115,6 +117,8 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("CLASSTYPE"));
 			singleProgramme.add(rs.getString("LOGOIMAGEPATH"));
 			singleProgramme.add(rs.getString("CLASSTYPENAME"));
+			singleProgramme.add(rs.getString("SHORTNAME"));
+			singleProgramme.add(rs.getString("COURSEPROVIDERNAME"));
 			singleProgramme.add(rs.getString("TOWNCODE"));
 			singleProgramme.add(rs.getString("TOWNNAME"));
 			final Collection<String> singleProgrammeCollection = singleProgramme;
