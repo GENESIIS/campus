@@ -24,16 +24,22 @@
 		<c:set var="courseProviderName" value="${programme[6] }" />
 		<c:set var="courseProviderWebLink" value="${programme[7]}" />
 		<c:set var="ProgrammeImage" value="${programme[8]}" />
+		<c:set var="ProgrammeLevel" value="${programme[9]}" />
+		<c:set var="ProgrammeMajor" value="${programme[10]}" />
 	</c:forEach>
 	<table>
 		<tr>
 			<td>
 				<table>
 					<tr>
-						<td><img
+						<%-- <td valign="top"><img
 							src="http://nces.ed.gov/programs/coe/images/nav/coe_hp_new.png"
 							alt="Programme View" style="width: 304px; height: 228px;">
-							${ProgrammeImage}</td>
+							${ProgrammeImage}</td> --%>
+						<td valign="top"><img
+							src="${ProgrammeImage}"
+							alt="Programme View" style="width: 304px; height: 228px;">
+							</td>	
 					</tr>
 					<tr>
 						<td><a href="#">Rate Us</a></td>
@@ -56,13 +62,27 @@
 					<tr>
 						<td>
 							<h3>${ProgrammeName}</h3>
+
+						</td>
+						<td></td>
+					<tr>
+						<td>
+							<h4>${ProgrammeLevel}</h4>
+
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Major: ${ProgrammeMajor}</h4>
+
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>
 							<h4>
-								<a href="<c:out value="${courseProviderWebLink}"></c:out>">${courseProviderName}</a>
+								<a href="<c:out value="${courseProviderWebLink}"></c:out>" target="_blank">${courseProviderName}</a>
 							</h4>
 						</td>
 						<td></td>
@@ -71,7 +91,7 @@
 						<td><p>${ProgrammeDescription}</p></td>
 						<td></td>
 					</tr>
-				<%-- 	<tr>
+					<%-- 	<tr>
 						<td>Duration : <c:out value="${ProgrammeDuration}"></c:out></td>
 						<td></td>
 					</tr> --%>
