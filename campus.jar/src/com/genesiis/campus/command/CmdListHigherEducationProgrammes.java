@@ -17,7 +17,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.CourseProviderProgrammeDAO;
+import com.genesiis.campus.entity.CourseProviderHigherEducationProgrammeDAO;
 import com.genesiis.campus.entity.HigherEducationProgrammeDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -86,7 +86,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 
 			log.info("sqldate " + expiryDate);
 
-			CourseProviderProgrammeDAO courseProviderDAO = new CourseProviderProgrammeDAO();
+			CourseProviderHigherEducationProgrammeDAO courseProviderDAO = new CourseProviderHigherEducationProgrammeDAO();
 			programme.setExpiryDate(expiryDate);
 			programme.setLevel(1);//this level=1 is just to identify to get course 
 			//providers with higher program stats
