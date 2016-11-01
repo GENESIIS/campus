@@ -102,8 +102,8 @@ table {
 
 
 					<!-- featured courses -->
-					<td height="500px;"><label><b>Featured Institutes</b></label>
-						<table width="500%" style="padding-left: 10 px;">
+					<td height="400px;"><label><b>Featured Institutes</b></label>
+						<table width="300%" style="padding-left: 10 px;">
 							<tr>
 								<th width="30%"></th>
 								<th width="70%"></th>
@@ -134,21 +134,20 @@ table {
 
 							</tr>
 							<tr height="100px;" style="border: 1px solid blue;">
-									<td colspan="2">
+								<td colspan="2">
 									<table>
 										<tr>
 											<td><a href="#">Contact Number</a></td>
-											<td>${featuredInstitute[6] } &nbsp; - &nbsp;${featuredInstitute[7]}</td>
+											<td>${featuredInstitute[6] }${featuredInstitute[7]}&nbsp;-&nbsp;${featuredInstitute[8]}</td>
 										</tr>
 
 										<tr>
 											<td><a href="#">Email</a></td>
 											<td>${featuredInstitute[5]}</td>
 										</tr>
-											<tr>
+										<tr>
 											<td><a href="#">Web Site</a></td>
-											<td>${featuredInstitute[16]}</td>
-				
+											<td>${featuredInstitute[17]}</td>
 									</table>
 								</td>
 							</tr>
@@ -160,10 +159,51 @@ table {
 				</tr>
 
 			</c:forEach>
+
+			<tr height="200px;">
+				<td colspan="2"><h3 style="color: orange;">Random Course
+						provider list</h3></td>
+			</tr>
+
+			<tr>
+				<table>
+					<tr>
+						<th width="20px;">Number</th>
+						<th width="20px;">Institute code</th>
+						<th width="100px;">Prefix</th>
+						<th width="200px;">Name</th>
+						<th width="200px;">Description</th>
+						<th width="100px;">General Mail</th>
+						<th width="200px;">LandPhone Number</th>
+						<th width="20 0px;">Fax Number</th>
+						<th width="50px;">Logo</th>
+						<th width="100px;">Web Link</th>
+						<th width="50px;">Expiration Date</th>
+
+					</tr>
+					<c:forEach var="institute" items="${institutes}" varStatus="rowNumber">
+						<tr>
+							<td width="20px;"><c:out value="${rowNumber.index+1}" /></td>
+							<td width="50px;"><c:out value="${institute[0] }"></c:out></td>
+							<td width="200px;"><c:out value="${institute[1] }"></c:out></td>
+							<td width="200px;"><c:out value="${institute[2] }"></c:out></td>
+							<td width="200px;"><c:out value="${institute[3] }"></c:out></td>
+							<td width="100px;"><c:out value="${institute[4] }"></c:out></td>
+							<td width="200px;">${institute[6] }${institute[7]}&nbsp;-&nbsp;${institute[8]}</td>
+							<td width="200px;">${institute[6] }${institute[7]}&nbsp;-&nbsp;${institute[10]}</td>
+							<td width="50px;"><c:out value="${institute[15] }"></c:out></td>
+							<td width="50px;"><c:out value="${institute[17] }"></c:out></td>
+							<td width="50px;"><c:out value="${institute[25] }"></c:out></td>
+
+						</tr>
+					</c:forEach>
+				</table>
+			</tr>
+
 		</table>
 
 		<tr></tr>
 	</table>
-
+<br/><br/><br/>
 </body>
 </html>
