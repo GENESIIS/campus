@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20161028 CM c13-Display course details Modified execute() method. Created  method comment.
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.ICrud;
@@ -58,7 +59,6 @@ public class CmdViewProgramme implements ICommand {
 
 			Collection<Collection<String>> programmeDAOCollection = programmeDAO
 					.findById(programme);
-
 			Collection<Collection<String>> semesterDAOCollection = semesterDAO
 					.findById(programme);
 
@@ -79,5 +79,6 @@ public class CmdViewProgramme implements ICommand {
 
 		return view;
 	}
+
 
 }
