@@ -119,24 +119,27 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 			// get featured course providers
 			if (type == 1) {
-				log.info("before");
 				preparedStatement = conn.prepareStatement(query1);
-				log.info("after");
+
 				preparedStatement.setInt(1, programme.getCategory());
 				preparedStatement.setInt(2, programme.getProgrammeStatus());
 				preparedStatement.setDate(3, programme.getExpiryDate());
-
+				
 				rs = preparedStatement.executeQuery();
 
-				if (rs == null) {
+				int row = rs.getRow();
+				/**
+				 * if number of rows of the result set is 0, there are no program stat records 
+				 * for selected category. Therefore course providers with out stat records are 
+				 * retrieved by setting the type = 0 . 
+				 */
+				if (row == 0) {
 					type = 0;
 				}
 			}
 			if (type == 0) {// get random course providers
 
-				log.info("before");
 				preparedStatement = conn.prepareStatement(query2);
-				log.info("after");
 
 				preparedStatement.setInt(1, programme.getCategory());
 				preparedStatement.setDate(2, programme.getExpiryDate());
@@ -146,12 +149,10 @@ public class CourseProviderProgrammeDAO implements ICrud {
 				rs = preparedStatement.executeQuery();
 			}
 
-			if (rs != null && type ==1) {
+			if (rs != null ) {
 
 				while (rs.next()) {
-					log.info("comes here");
-					log.info(rs.getString("UNIQUEPREFIX"));
-					
+
 					final ArrayList<String> singleCourseProviderList = new ArrayList<String>();
 
 					singleCourseProviderList.add(rs.getString("CODE"));
@@ -199,7 +200,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 
 				}
 
-			}else if(rs != null && type==0){
+			}else {
 				
 			}
 
