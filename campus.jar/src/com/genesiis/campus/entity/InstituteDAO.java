@@ -1,7 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20161101 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
-//		   PN c11-criteria-based-filter-search implemented findById() method. 
+//20161101 PN c11-criteria-based-filter-search implemented findById() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
