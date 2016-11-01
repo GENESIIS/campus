@@ -1,5 +1,7 @@
 package com.genesiis.campus.publicController;
 
+//20161101 PN c11-criteria-based-filter-search modified the doPost method with a null validation for IView type object.
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,10 +63,21 @@ public class PublicController extends HttpServlet {
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
+		String json = null;
+
 		try {
 			helper = new DataHelper(request);
 			cco = helper.getCommandCode();
 			result = helper.getResultView(cco);
+
+			List<Object> list = new ArrayList<Object>();
+			if (result != null) {
+				for (Collection<String> view : result.getCollection()) {
+					Object[] category = view.toArray();
+					list.add(category);
+				}
+			}
+			json = new Gson().toJson(list);
 
 		} catch (Exception e) {
 			log.error("process(): ", e);
@@ -74,14 +87,6 @@ public class PublicController extends HttpServlet {
 		// request.getRequestDispatcher(helper.getResultPage(cco)).forward(
 		// request, response);
 
-		List<Object> list = new ArrayList<Object>();
-		for (Collection<String> view : result.getCollection()) {
-			Object[] category = view.toArray();
-			list.add(category);
-		}
-
-		String json = null;
-		json = new Gson().toJson(list);
 		response.setContentType("application/json");
 		response.getWriter().write(json);
 
