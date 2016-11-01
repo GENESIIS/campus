@@ -32,14 +32,9 @@
 			<td>
 				<table>
 					<tr>
-						<%-- <td valign="top"><img
-							src="http://nces.ed.gov/programs/coe/images/nav/coe_hp_new.png"
+						<td valign="top"><img src="${ProgrammeImage}"
 							alt="Programme View" style="width: 304px; height: 228px;">
-							${ProgrammeImage}</td> --%>
-						<td valign="top"><img
-							src="${ProgrammeImage}"
-							alt="Programme View" style="width: 304px; height: 228px;">
-							</td>	
+						</td>
 					</tr>
 					<tr>
 						<td><a href="#">Rate Us</a></td>
@@ -82,7 +77,8 @@
 					<tr>
 						<td>
 							<h4>
-								<a href="<c:out value="${courseProviderWebLink}"></c:out>" target="_blank">${courseProviderName}</a>
+								<a href="<c:out value="${courseProviderWebLink}"></c:out>"
+									target="_blank">${courseProviderName}</a>
 							</h4>
 						</td>
 						<td></td>
@@ -234,6 +230,46 @@
 							</table>
 						</td>
 					</tr>
+
+
+					<tr>
+						<td><h3>Find More</h3></td>
+						<td></td>
+					</tr>
+					<!-- Load Intakes  details relevant to programme   -->
+					<c:forEach var="classType" items="${classTypeView}"
+						varStatus="loop">
+						<tr>
+							<td>Class type: <c:out value="${classType[0]}"></c:out></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><c:out value="${classType[3]}"></c:out></td>
+							<td></td>
+						</tr>
+						<c:if test="${classType[1] eq '0' }">
+
+						</c:if>
+						<c:if test="${classType[1] ne '0' }">
+							<tr>
+								<td>Minimum Count participant: <c:out
+										value="${classType[1]}"></c:out></td>
+								<td></td>
+							</tr>
+						</c:if>
+						<c:if test="${classType[2] eq '0' }">
+
+						</c:if>
+						<c:if test="${classType[2] ne '0' }">
+							<tr>
+								<td>Maximum Count participant: <c:out
+										value="${classType[2]}"></c:out></td>
+								<td></td>
+							</tr>
+						</c:if>
+
+
+					</c:forEach>
 				</table>
 			</td>
 		</tr>
