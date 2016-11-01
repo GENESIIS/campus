@@ -16,7 +16,7 @@ angular.module('CampusApp',['ngRoute'])
                 templateUrl : "dist/partials/contact-us.html"
             })
             .when('/courses',{
-                templateUrl : "dist/partials/courses.html"
+                templateUrl : "dist/partials/courses.html" 
             }); 
     })
 
