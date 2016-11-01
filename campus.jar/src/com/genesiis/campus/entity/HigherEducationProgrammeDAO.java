@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.Validator;
 
 public class HigherEducationProgrammeDAO implements ICrud {
 
@@ -111,6 +112,16 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
 				singleProgrammeList.add(rs.getString("DURATION"));
+				
+				String d = rs.getString("DURATION");
+				int du = Integer.parseInt(d);
+				
+			
+				log.info(du);
+				log.info("years" + du/5);
+			//	duration = duration % 365;
+				
+			//	log.info(duration);
 				
 				while(rs2.next()){
 					singleProgrammeList.add(rs2.getString("NAME"));
