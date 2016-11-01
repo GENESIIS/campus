@@ -43,8 +43,26 @@
 <script src="dist/bower-components/jquery/jquery.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="dist/js/app.js"></script>
+<script src="dist/js/map.js"></script>
 <!--<script src="js/animation.js"></script>-->
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+
+<!-- Google Map -->
+<script async defer src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7755901309197!2d79.85629321530695!3d6.917411095001903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2596c8f0d9dd1%3A0xd40004ef11f25f9c!2sGenesiis+Software+(Pvt)+Ltd!5e0!3m2!1sen!2slk!4v1478002827125"></script>
+<!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7755901309197!2d79.85629321530695!3d6.917411095001903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2596c8f0d9dd1%3A0xd40004ef11f25f9c!2sGenesiis+Software+(Pvt)+Ltd!5e0!3m2!1sen!2slk!4v1478002827125" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+<script>
+    function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
 
 </body>
 </html>

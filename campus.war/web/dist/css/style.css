@@ -71,7 +71,7 @@ textarea:focus, input:focus {
     clear: both; }
 
 .colr-white {
-  color: white; }
+  color: white !important; }
 
 .page-topic-t1 {
   font-family: "Arvo", serif;
@@ -479,7 +479,41 @@ body, html {
                 padding-bottom: 10px; }
         .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area {
           display: block;
-          margin-top: 120px; }
+          margin-top: 120px;
+          padding: 30px;
+          border: 2px solid #506374;
+          border-radius: 10px; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .heading {
+            display: block; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .address {
+            display: block;
+            padding-bottom: 35px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .address p {
+              font-size: 24px;
+              font-family: "Roboto", sans-serif;
+              color: #e2e2e2;
+              font-weight: lighter; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .location {
+            display: block;
+            height: 235px;
+            width: 100%; }
+          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info {
+            display: block;
+            font-size: 24px;
+            font-family: "Roboto", sans-serif;
+            color: #e2e2e2;
+            font-weight: lighter; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .email {
+              display: block;
+              padding-bottom: 35px;
+              color: #e2e2e2;
+              text-decoration: none; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .tp {
+              display: block;
+              padding-bottom: 35px;
+              line-height: 35px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
+              display: block; }
 
 /* Modules */
 .btn-home {
