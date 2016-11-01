@@ -7,11 +7,13 @@ package com.genesiis.campus.command;
 //20161028 CM c13-Display course details Modified execute() method. Created  programmeView attribute.
 //20161028 CM c13-Display course details Modified execute() method. Created  method comment.
 //20161101 CM c13-Display course details Modified execute() method.
+//20161101 CM c13-Display course details Modified execute() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.genesiis.campus.entity.ClassTypeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.IntakeDAO;
@@ -52,7 +54,8 @@ public class CmdViewProgramme implements ICommand {
 			ICrud semesterDAO = new SemesterDAO();
 			ICrud intakeDAO = new IntakeDAO();
 			ICrud moduleDAO = new ModuleDAO();
-
+			ICrud classTypeDAO = new ClassTypeDAO();
+			
 			int programmeId = Integer.parseInt(helper
 					.getParameter("programmeCode"));
 
@@ -70,9 +73,14 @@ public class CmdViewProgramme implements ICommand {
 			Collection<Collection<String>> intakeDAOCollection = intakeDAO
 					.findById(programme);
 
+			Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
+					.findById(programme);
+			
 			helper.setAttribute("semesterView", semesterDAOCollection);
 			helper.setAttribute("programmeView", programmeDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
+			helper.setAttribute("classTypeView", classTypeDAOCollection);
+			
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
 			throw e;
