@@ -71,10 +71,10 @@
 						<td><p>${ProgrammeDescription}</p></td>
 						<td></td>
 					</tr>
-					<tr>
+				<%-- 	<tr>
 						<td>Duration : <c:out value="${ProgrammeDuration}"></c:out></td>
 						<td></td>
-					</tr>
+					</tr> --%>
 					<tr>
 						<td><h3>Course Details</h3></td>
 						<td></td>
