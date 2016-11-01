@@ -26,6 +26,10 @@
 		<c:set var="ProgrammeImage" value="${programme[8]}" />
 		<c:set var="ProgrammeLevel" value="${programme[9]}" />
 		<c:set var="ProgrammeMajor" value="${programme[10]}" />
+		<c:set var="years" value="${programme[11]}" />
+		<c:set var="months" value="${programme[12]}" />
+		<c:set var="weeks" value="${programme[13]}" />
+		<c:set var="days" value="${programme[14]}" />
 	</c:forEach>
 	<table>
 		<tr>
@@ -87,10 +91,20 @@
 						<td><p>${ProgrammeDescription}</p></td>
 						<td></td>
 					</tr>
-					<%-- 	<tr>
-						<td>Duration : <c:out value="${ProgrammeDuration}"></c:out></td>
+					<tr>
+						<td>Duration : <c:if test="${years ne '0' }">
+								<c:out value="${years}"></c:out> Years
+						</c:if> <c:if test="${months ne '0' }">
+								<c:out value="${months}"></c:out> months
+						</c:if> <c:if test="${weeks ne '0' }">
+								<c:out value="${weeks}"></c:out> weeks
+						</c:if> <c:if test="${days ne '0' }">
+								<c:out value="${days}"></c:out> days
+						</c:if>
+
+						</td>
 						<td></td>
-					</tr> --%>
+					</tr>
 					<tr>
 						<td><h3>Course Details</h3></td>
 						<td></td>
