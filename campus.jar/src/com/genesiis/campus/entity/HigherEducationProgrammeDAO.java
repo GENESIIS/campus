@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161027 JH c7-higher-education-landing-page findById method modified
 //20161030 JH c7-higher-education-landing-page findById method modified : fix sql exception
 //20161031 JH c7-higher-education-landing-page findById method modified : select filter 20 programmes randomly with towns
+//20161101 JH c7-higher-education-landing-page query changes to get multiple towns for a program
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,6 +56,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement2 = null;
 
 		Programme programme = null;
 		String returnMessage = "";
@@ -70,13 +72,12 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		// "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
 
 		
-		
-		String getAllQuery = "SELECT a.CODE ,a.DURATION, a.DESCRIPTION,a.LOGOIMAGEPATH, t.NAME, a.PROVIDERCODE, a.CPNAME, a.NAME as PNAME, a.UNIQUEPREFIX   FROM("
-				+ "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDERCODE, cp.NAME as CPNAME, cp.UNIQUEPREFIX  "
+		String getAllQuery = "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDERCODE, cp.NAME as CPNAME, cp.UNIQUEPREFIX  "
 				+ "FROM [CAMPUS].[PROGRAMME] p INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON "
-				+ " (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND	p.PROGRAMMESTATUS = ?  AND GETDATE() < p.EXPIRYDATE AND COURSEPROVIDERSTATUS = ? AND GETDATE() < cp.EXPIRATIONDATE)  "
-				+ "ORDER BY NEWID())a JOIN [CAMPUS].[PROGRAMMETOWN] pt on a.CODE= pt.PROGRAMME  LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
+				+ "(p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND	p.PROGRAMMESTATUS = ?  AND COURSEPROVIDERSTATUS = ? ) ORDER BY NEWID()";
 
+		String getTowns = "SELECT TOP 3 t.NAME FROM [CAMPUS].[TOWN] t INNER JOIN [CAMPUS].[PROGRAMMETOWN] pt on pt.TOWN = t.CODE AND pt.PROGRAMME = ? ";
+		
 		try {
 
 			programme = (Programme) code;
@@ -92,20 +93,28 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			final ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
+				
+				preparedStatement2 = conn.prepareStatement(getTowns);
+				
+				int programCode = Integer.parseInt(rs.getString("CODE"));
+				preparedStatement2.setInt(1, programCode);
+				
+				final ResultSet rs2 = preparedStatement2.executeQuery();
+								
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
 				
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("LOGOIMAGEPATH"));
-				singleProgrammeList.add(rs.getString("PROVIDERCODE"));
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("PROVIDERCODE"));
 				singleProgrammeList.add(rs.getString("CPNAME"));
-				singleProgrammeList.add(rs.getString("PNAME"));
-				log.info(rs.getString("PNAME") +" >>>>>>>> " + rs.getString("NAME"));
-				singleProgrammeList.add(rs.getString("DESCRIPTION"));
 				singleProgrammeList.add(rs.getString("NAME"));
+				singleProgrammeList.add(rs.getString("DESCRIPTION"));
 				singleProgrammeList.add(rs.getString("DURATION"));
-
-								
+				
+				while(rs2.next()){
+					singleProgrammeList.add(rs2.getString("NAME"));
+				}
 				
 
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;

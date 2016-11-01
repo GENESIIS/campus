@@ -2,6 +2,7 @@
 <!-- 20161025 JH c7-higher-education-landing-page initial page design -->
 <!-- 20161036 JH c7-higher-education-landing-page  page renamed as higherEducation.jsp -->
 <!-- 20161031 JH c7-higher-education-landing-page display higher education programmes -->
+<!-- 20161101 JH c7-higher-education-landing-page display multiple town locations -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
