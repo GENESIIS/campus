@@ -1,35 +1,6 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161027 TR c11 styling all category selections -->
-<script type="text/javascript">
-    $("#first-choice").change(function() {
-
-    	var $dropdown = $(this);
-
-    	$.getJSON("data.json", function(data) {
-
-    		var key = $dropdown.val();
-    		var vals = [];
-
-    		switch(key) {
-    			case 'beverages':
-    				vals = data.beverages.split(",");
-    				break;
-    			case 'snacks':
-    				vals = data.snacks.split(",");
-    				break;
-    			case 'base':
-    				vals = ['Please choose from above'];
-    		}
-
-    		var $secondChoice = $("#second-choice");
-    		$secondChoice.empty();
-    		$.each(vals, function(index, value) {
-    			$secondChoice.append('<li><a href="javascript:"><input name="Category" type="checkbox"></a>' + value + '</li>');
-    		});
-
-    	});
-    });
-</script>
+<!-- 20161101 PN c11-criteria-based-filter-search modified UI elements to display DB values on them. -->
 
 <div class="courses-screen clearfix">
 	<!-- Page Inner Header -->
@@ -65,113 +36,37 @@
 							type="checkbox"></a>
 					</div>
 				</div>
-				
-				<!---------------------- Test DropDown ---------------------------------->
-                <div class="filter-item test">
-                    <select id="first-choice">
-                      <option selected value="base">Please Select</option>
-                      <option value="beverages">Beverages</option>
-                      <option value="snacks">Snacks</option>
-                    </select>
 
-                    <br>
-
-                    <ul id="second-choice">
-                      <li>
-                          <a href="javascript:"><input name="Category" type="checkbox"></a>
-                          Please choose from above</li>
-                    </ul>
-                </div>
-
-                <!-- --------------------END Test DropDown ------------------->
-				
-
-				<!-- 1st Category - Categories -->
+				<!-- 2nd Category - Major -->
 				<div class="filter-item clearfix">
 					<!-- Drop item header -->
 					<div class="item-header">
-						<label slide-toggle="#dropItem1">Categories <span>-
-								06</span>
+						<label slide-toggle="#dropItem1">Major <span id="majorCount" name="majorCount"></span>
 						</label> <a href="javascript:"><input name="Category" type="checkbox"></a>
 					</div>
 
-
 					<!-- Item Drop list -->
 					<div id="dropItem1" class="item-container slideable">
-						<div class="select-item row-fluid">
-							<a href="javascript:"><input name="Category" type="checkbox"></a>
-							<label>Pre Education</label>
-						</div>
-						<!--                         <div class="select-item row-fluid"> -->
-						<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
-						<!--                             <label>School Education</label> -->
-						<!--                         </div> -->
-						<!--                         <div class="select-item row-fluid"> -->
-						<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
-						<!--                             <label>Higher Education</label> -->
-						<!--                         </div> -->
-						<!--                         <div class="select-item row-fluid"> -->
-						<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
-						<!--                             <label>Corporate Education</label> -->
-						<!--                         </div> -->
-						<!--                         <div class="select-item row-fluid"> -->
-						<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
-						<!--                             <label>Vocational Training</label> -->
-						<!--                         </div> -->
-						<!--                         <div class="select-item row-fluid"> -->
-						<!--                             <a href="javascript:"><input name="Category" type="checkbox"></a> -->
-						<!--                             <label>Talent & Skill</label> -->
-						<!--                         </div> -->
+						<ul id="select-item1" class="select-item row-fluid">
+							<li>Please choose Educational area</li> 
+						</ul>
 					</div>
 				</div>
 
-				<!-- 2nd Category - Major -->
+<!-- 				2nd Category - Levels -->
 				<div class="filter-item clearfix">
-					<!-- Drop item header -->
+<!-- 					Drop item header -->
 					<div class="item-header">
-						<label slide-toggle="#dropItem2">Major <span>- 02</span></label> <a
-							href="javascript:"><input type="checkbox"></a>
-					</div>
-					<!-- Item Drop list -->
-					<div id="dropItem2" class="item-container slideable">
-						<div class="select-item row-fluid">
-							<a href="javascript:"><input type="checkbox"></a> <label>Engineering</label>
-						</div>
-						<div class="select-item row-fluid">
-							<a href="javascript:"><input type="checkbox"></a> <label>Arts</label>
-						</div>
-					</div>
-				</div>
-
-				<!-- 2nd Category - Major -->
-				<div class="filter-item clearfix">
-					<!-- Drop item header -->
-					<div class="item-header">
-						<label slide-toggle="#dropItem3">Levels <span>- 08</span></label>
+						<label slide-toggle="#dropItem3">Levels <span id="levelCount" name="levelCount"></span></label>
 						<a href="javascript:"><input type="checkbox"></a>
 					</div>
 					<!-- Item Drop list -->
 					<div id="dropItem3" class="item-container slideable">
-						<div class="select-item row-fluid">
-							<a href="javascript:"><input type="checkbox"></a> <label>Degree</label>
-						</div>
-						<div class="select-item row-fluid">
-							<a href="javascript:"><input type="checkbox"></a> <label>PHD</label>
-						</div>
+						<ul id="select-item2" class="select-item row-fluid">
+							<li>Please choose Educational area</li> 
+						</ul>
 					</div>
 				</div>
-
-
-				<p>
-					Normally this input field will be hidden &mdash; we leave it
-					visible here so you can see how it is manipulated by the widget: <input
-						name="tags" id="mySingleField" value="Apple, Orange"
-						disabled="true">
-					<!-- only disabled for demonstration purposes -->
-				</p>
-				<ul id="singleFieldTags"></ul>
-
-
 			</div>
 			<!-- End All category -->
 		</div>
@@ -190,9 +85,9 @@
 					<!-- Added By PN -->
 					<div class="category-col col-md-4 col-lg-4">
 						<div class="drop-holder">
-							<input type="text" id="categoryist" name="categoryist"
-								list="categoryName" placeholder="Educational Area"
-								oninput='displayMajor()' />
+							<input type="text" id="categorylist" name="categorylist"
+								list="categoryName" placeholder="-- Select Educational Area --"
+								oninput='displayDetails()' />
 							<datalist id="categoryName">
 								<option value="ICBT"></option>
 								<option value="IIT"></option>
@@ -203,33 +98,17 @@
 
 					<div class="institute-col col-md-4 col-lg-4">
 						<div class="drop-holder">
-							<input type="text" name="product" list="institueName"
-								placeholder="Institute" />
+							<input type="text" id="instituelist" name="instituelist" list="institueName"
+								placeholder="-- Select Institute --" />
 							<datalist id="institueName">
-								<option value="ICBT"></option>
-								<option value="IIT"></option>
-								<option value="NIBM"></option>
 							</datalist>
 						</div>
 					</div>
 					<div class="district-col col-md-4 col-lg-4">
 						<div class="drop-holder">
-							<input type="text" name="product" list="District"
-								placeholder="District" />
-							<datalist id="District">
-								<option value="Kurunegala"></option>
-								<option value="Colombo"></option>
-								<option value="Gampaha"></option>
-							</datalist>
-						</div>
-					</div>
-					<div class="town-col col-md-4 col-lg-4">
-						<div class="drop-holder">
-							<input type="text" name="product" list="Town" placeholder="Town" />
-							<datalist id="Town">
-								<option value="Colombo"></option>
-								<option value="Kurunegala"></option>
-								<option value="Kandy"></option>
+							<input type="text" name="districtlist" id="districtlist" list="districtName"
+								placeholder="-- Select District --" />
+							<datalist id="districtName">
 							</datalist>
 						</div>
 					</div>
