@@ -372,7 +372,7 @@ body, html {
     background: #3d5265;
     z-index: 99;
     position: relative;
-    top: -50px; }
+    top: -60px; }
     .contact-us-screen .contact-form-holder .contact-form {
       display: block;
       padding: 50px 70px 100px; }
@@ -380,7 +380,22 @@ body, html {
         display: inline-block;
         position: relative;
         width: 54%;
-        float: left; }
+        float: left;
+        padding-right: 28px; }
+        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > label {
+          color: #fff;
+          font-size: 22px;
+          line-height: 54px; }
+        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > input {
+          color: #dff4ff;
+          line-height: 54px;
+          font-size: 22px;
+          border: none;
+          background: #506374;
+          width: 100%;
+          margin-bottom: 18px;
+          padding-left: 18px;
+          font-family: "Roboto", sans-serif; }
       .contact-us-screen .contact-form-holder .contact-form .question-and-info-area {
         display: inline-block;
         position: relative;
