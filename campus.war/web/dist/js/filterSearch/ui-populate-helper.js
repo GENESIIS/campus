@@ -19,8 +19,6 @@ function displayCategory() {
 			$('<option>').val(y).text(x).appendTo(categories);
 		});
 	});
-	
-	displayDistricts();
 }
 
 /**
@@ -49,8 +47,7 @@ function displayMajor() {
 					count++;
 				});
 				$("#majorCount").text(" " +pad(count, 2));
-			});
-			
+			});	
 		}
 			break;
 		}
@@ -142,12 +139,18 @@ function displayDistricts() {
 }
 
 
-function displayDetails() {
+function displayDetailsOnLoad() {
+	displayCategory();
 	displayMajor();
 	displayCourseProvider();
-//	displayLevel();	
+	displayDistricts();	
 }
 
+function displayDetailsOnChange() {
+	displayMajor();
+	displayCourseProvider();
+	displayDistricts();	
+}
 
 /**
  * This method id to format numbers in base 10 format.
@@ -160,18 +163,18 @@ function pad(number, length) {
     return str;
 }
 
-
-
-
+/**
+ * This method is to load programs according to the search criteria.
+ * @returns
+ */
 function addsearchData(){
 	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
 	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
 	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
 
-	var a = 'HEADOFFICETOWN=' + getSelectedData('districtlist', 'districtName');
+	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
 	var searchData = x+y+z;
-//	alert(x+y+z+a);
-	
+
 	$.ajax({
 		type : "POST",
 		url : 'PublicController',
