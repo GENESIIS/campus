@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161029 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161102 PN c11-criteria-based-filter-search modified execute() method by giving validation to 'categoryCode'
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -39,9 +40,19 @@ public class CmdListDistricts implements ICommand{
 	
 		
 		ICrud districtDAO = new DistrictDAO();
+		Collection<Collection<String>> districtCollection = null;
+		String instituteCode = helper.getParameter("instituteCode");
+		
 		try {
-			Collection<Collection<String>> districtCollection = districtDAO.getAll();
-			iview.setCollection(districtCollection);
+			//If:the instituteCode is set
+			if ((instituteCode != null) || ((!instituteCode.isEmpty()))) {
+				districtCollection = districtDAO.findById(Integer.parseInt(instituteCode));
+			
+			//else:the instituteCode is not set at the beginning of the page loading
+			} else {
+				districtCollection = districtDAO.getAll();
+			}
+			iview.setCollection(districtCollection);	
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
