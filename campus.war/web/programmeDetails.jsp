@@ -30,7 +30,6 @@
 		<c:set var="months" value="${programme[12]}" />
 		<c:set var="weeks" value="${programme[13]}" />
 		<c:set var="days" value="${programme[14]}" />
-		<c:set var="days" value="${programme[15]}" />
 	</c:forEach>
 	<table>
 		<tr>
