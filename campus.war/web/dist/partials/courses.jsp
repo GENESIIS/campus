@@ -90,7 +90,7 @@
 						<div class="drop-holder">
 							<input type="text" id="categorylist" name="categorylist"
 								list="categoryName" placeholder="-- Select Educational Area --"
-								oninput='displayDetails()' />
+								oninput='displayDetailsOnChange()' />
 							<datalist id="categoryName">
 								<option value="ICBT"></option>
 								<option value="IIT"></option>
