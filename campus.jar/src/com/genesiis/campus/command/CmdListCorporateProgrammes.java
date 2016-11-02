@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,8 @@ public class CmdListCorporateProgrammes implements ICommand {
 		Collection<Collection<String>> courseProvidersWithPopularCourses = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
+		String contextDeployLogoPath = "/education/provider/logo/";
+		String contextDeployCourseLogoPath = "/course/";
 		try {
 			if (helper.getParameter("category") == null) {
 				Log.error("The provided value for category is null!");
@@ -65,6 +68,8 @@ public class CmdListCorporateProgrammes implements ICommand {
 			Map<String, ArrayList<String>> programmeCodeToTownListMap = 
 					new LinkedHashMap<String, ArrayList<String>>();
 			
+			Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
+			
 			for (Collection<String> prog : programmeCollection) {
 				int count  = 0;
 				ArrayList<String> tempTownList = null;
@@ -77,25 +82,22 @@ public class CmdListCorporateProgrammes implements ICommand {
 							townList = new ArrayList<String>();
 							programmeCodeToTownListMap.put(field, townList);
 						}
-						tempTownList = townList;						
+						tempTownList = townList;
+						
+						Collection<String> programmeRecord = progCodeToProgrammeMap.get(field);
+						if (programmeRecord == null) {
+							programmeRecord = prog;
+							progCodeToProgrammeMap.put(field, prog);
+						}
 					}
 
-					if (count == 0) {
-						code = field;
-						ArrayList<String> townList = programmeCodeToTownListMap.get(field);
-						if (townList == null) {
-							townList = new ArrayList<String>();
-							programmeCodeToTownListMap.put(field, townList);
-						}
-						tempTownList = townList;						
+					if (count == 21) {
+						tempTownList = programmeCodeToTownListMap.get(code);
+						tempTownList.add(field);						
 					}
-					townLis
-							
 					
-  
-				}		
-				
-				programmeCodeToTownMap
+					count++;
+				}
 			}
 
 			// Get course providers that offer programmes that belong to the same category as categoryCode
@@ -108,8 +110,12 @@ public class CmdListCorporateProgrammes implements ICommand {
 			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);			
 			
 			iview.setCollection(programmeCollection);
+			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
+			helper.setAttribute("contextDeployCourseLogoPath", contextDeployCourseLogoPath);
 			helper.setAttribute("courseProviders", courseProviderCollection);
 			helper.setAttribute("courseProvidersWithPopularCourses", courseProvidersWithPopularCourses);
+			helper.setAttribute("programmeColl", progCodeToProgrammeMap.values());
+			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			
 		} catch (NumberFormatException nfe) {
 			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
