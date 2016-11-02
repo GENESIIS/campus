@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20161101 JH c7-higher-education-landing-page query changes to get multiple towns for a program
 //20161102 JH c7-higher-education-landing-page use validator class to get program duration
 //20161102 JH c7-higher-education-landing-page query modified to remove expiration date constraint
+//20161102 JH c7-higher-education-landing-page findById method modified due to ddl changes
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +76,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 		// "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
 
 		
-		String getAllQuery = "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDERCODE, cp.NAME as CPNAME, cp.UNIQUEPREFIX  "
+		String getAllQuery = "SELECT TOP 20 p.CODE , p.DURATION, p.NAME, p.DESCRIPTION, cp.LOGOIMAGEPATH, cp.CODE as PROVIDERCODE, cp.NAME as CPNAME, cp.SHORTNAME   "
 				+ "FROM [CAMPUS].[PROGRAMME] p INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON "
 				+ "(p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND	p.PROGRAMMESTATUS = ?  AND COURSEPROVIDERSTATUS = ? ) ORDER BY NEWID()";
 
@@ -108,7 +109,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("LOGOIMAGEPATH"));
-				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("SHORTNAME"));
 				singleProgrammeList.add(rs.getString("PROVIDERCODE"));
 				singleProgrammeList.add(rs.getString("CPNAME"));
 				singleProgrammeList.add(rs.getString("NAME"));
