@@ -30,6 +30,7 @@
 		<c:set var="months" value="${programme[12]}" />
 		<c:set var="weeks" value="${programme[13]}" />
 		<c:set var="days" value="${programme[14]}" />
+		<c:set var="days" value="${programme[15]}" />
 	</c:forEach>
 	<table>
 		<tr>
@@ -117,14 +118,6 @@
 							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
 							<td></td>
 						</tr>
-						<%-- <tr>
-							<td>Year : <c:out value="${semester[1]}"></c:out></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Semester: <c:out value="${semester[2]}"></c:out></td>
-							<td></td>
-						</tr> --%>
 						<tr>
 							<td>
 								<table>
@@ -134,7 +127,7 @@
 										<th>Description</th>
 										<th>Unit code</th>
 										<th>Credit Point</th>
-
+										<th>Lectured By</th>
 									</tr>
 									<!-- Load module details relevant to programme and semesters  -->
 									<c:forEach var="modules" items="${result.collection}"
@@ -161,6 +154,9 @@
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
 														<c:when test="${count.index == 5}">
+															<td><c:out value="${item}"></c:out></td>
+														</c:when>
+														<c:when test="${count.index == 6}">
 															<td><c:out value="${item}"></c:out></td>
 														</c:when>
 													</c:choose>
