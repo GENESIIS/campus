@@ -37,7 +37,10 @@ table {
 				</td>
 
 			<!-- featured courses -->
-			<td rowspan="2" height="300px;"><label><b>Featured
+		
+			<td rowspan="2" height="300px;">
+				<!-- 
+			<label><b>Featured
 						Institutes</b></label>
 				<table width="100%">
 					<tr>
@@ -63,7 +66,7 @@ table {
 						<td colspan="2"><a href="#">place</a> &nbsp;&nbsp;&nbsp; <a
 							href="#">major</a>&nbsp;&nbsp;&nbsp; <a href="#">duration</a></td>
 					</tr>
-				</table></td>
+				</table> 		--></td>
 
 
 
@@ -84,8 +87,7 @@ table {
 				<tr style="border: 1px solid blue;">
 					<td width="50px;"><c:out value="${rowCount.index+1}" /></td>
 					<td width="150px;" align="center"><a href="#"><img alt=""
-							src="Higher-Education.jpg" width="75px;" height="75px;"></a> <c:out
-							value="${programmeList[1] }"></c:out>
+							src="${programmeList[1] }" width="75px;" height="75px;"></a> 
 							<input type="hidden" name="instituteCode" value="${programmeList[0] }"/>
 							</td>
 					<td width="100px;" align="center"><c:out
@@ -112,7 +114,7 @@ table {
 
 					<!-- featured courses -->
 					<td height="400px;"><label><b>Featured Institutes</b></label>
-						<table width="300%" style="padding-left: 10 px;">
+						<table width="200%" style="padding-left: 10 px;">
 							<tr>
 								<th width="30%"></th>
 								<th width="70%"></th>
