@@ -31,10 +31,7 @@ public class CmdGetSearchData implements ICommand {
 		ICrud programmeDAO = new ProgrammeDAO(); 
 		try {
 			String searchData =  helper.getParameter("searchData");
-			QueryBuildingHelper qbh = new QueryBuildingHelper();
-			String tempquery = qbh.dynamicQuery(qbh.assignMapData(qbh.extractFromJason(searchData)), "");
-			log.info("tempquery "+tempquery);
-			Collection<Collection<String>> categoryCollection = programmeDAO.findById(tempquery);
+			Collection<Collection<String>> categoryCollection = programmeDAO.findById(searchData);
 			view.setCollection(categoryCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
@@ -45,18 +42,4 @@ public class CmdGetSearchData implements ICommand {
 		}
 		return view;
 	}
-
-//	ICrud categoryDAO = new CategoryDAO();
-//	try {
-//		Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
-//		iview.setCollection(categoryCollection);
-//	} catch (SQLException sqle) {
-//		log.info("execute() : sqle" + sqle.toString());
-//		throw sqle;
-//	} catch (Exception e) {
-//		log.info("execute() : e" + e.toString());
-//		throw e;
-//	}
-//	return iview;
-
 }
