@@ -30,8 +30,9 @@
 		onsubmit="return checkBeforeSubmit()">
 		<table align="center">
 			<tr>
-				<td><input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode">
-					<input type="hidden" value="1" name="studentCode">
+				<td><input type="hidden" value="${param.courseProviderCode}"
+					name="courseProviderCode"> <input type="hidden" value="1"
+					name="studentCode">
 			</tr>
 			<tr>
 				<td colspan="2"><h2>Institute Inquiry Form</h2></td>
