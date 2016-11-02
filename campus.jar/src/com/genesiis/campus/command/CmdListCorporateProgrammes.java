@@ -79,6 +79,16 @@ public class CmdListCorporateProgrammes implements ICommand {
 						}
 						tempTownList = townList;						
 					}
+
+					if (count == 0) {
+						code = field;
+						ArrayList<String> townList = programmeCodeToTownListMap.get(field);
+						if (townList == null) {
+							townList = new ArrayList<String>();
+							programmeCodeToTownListMap.put(field, townList);
+						}
+						tempTownList = townList;						
+					}
 					townLis
 							
 					
