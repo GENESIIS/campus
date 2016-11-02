@@ -8,25 +8,4 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   
    <welcome-file>index.jsp</welcome-file>  
   </welcome-file-list>  
-  	 <!-- SMTP settings -->
-    <context-param>
-        <param-name>host</param-name>
-        <param-value>smtp.gmail.com</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>port</param-name>
-        <param-value>25</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>user</param-name>
-        <param-value>dushantha@genesiis.com</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>password</param-name>
-        <param-value>Appleapple123</param-value>
-    </context-param>
-  
 </web-app>
