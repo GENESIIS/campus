@@ -7,6 +7,8 @@ package com.genesiis.campus.util.mail;
 //				add documentation comments
 //			  	Removed GeneralMail() constructor argument 'mailHost'.
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
+//20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
+//				setProperties() method refactor accordingly.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,10 +49,6 @@ public class GeneralMail implements IEmail {
     private Properties properties;
     private Session session ;
     private MimeMessage message ;
-    private String userName;
-    private String port;
-    private String passWord;
-    
     
   
 	/**
@@ -58,22 +56,17 @@ public class GeneralMail implements IEmail {
      * with system properties.
      * @author DN
      * @param receivers to list of the email ArrayList<String>
-     * @param sender String: email address of  the person who sends the email
-     * @param host String: Mail transferring host or the domain address
+     * @param sender String: email address of  the person who sends the email     * 
      * @param subject String: subject of the email
      * @param emailBody String : body content of the email
      */
-    public GeneralMail( ArrayList<String> receivers,String sender,//String host,
+    public GeneralMail( ArrayList<String> receivers,String sender,
     		String subject,String emailBody){
-    		//String userName,String passWord,String port){
+    		
     	this.receivers = receivers;
-    	this.sender = sender;
-    	//this.host = host;    	
+    	this.sender = sender; 	
     	this.subject = subject;
-    	this.emailBody = emailBody;    	    	
-    	//this.userName = userName;
-    	//this.port = port;
-    	//this.passWord = passWord;    	
+    	this.emailBody = emailBody;	
     
     	setSystemPropertiesAndMailEnvironment();
     }
@@ -89,12 +82,12 @@ public class GeneralMail implements IEmail {
 	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
 	    	
-	         addSenderToMail(message,sender); 
-	         addRecipientToMail(message,receivers);
-	         addSubjectToMail(message,subject);
-	         addBodyContentToMail(message,emailBody);
-	         setSentDateToMail(message);
-	         return message;	        
+	         addSenderToMail(this.message,this.sender); 
+	         addRecipientToMail(this.message,this.receivers);
+	         addSubjectToMail(this.message,this.subject);
+	         addBodyContentToMail(this.message,this.emailBody);
+	         setSentDateToMail(this.message);
+	         return this.message;	        
 	         
 	      }catch (MessagingException mex) {
 	    	  log.error("sendEmail(MimeMessage message):MessagingException :" +mex.toString());
@@ -119,48 +112,28 @@ public class GeneralMail implements IEmail {
   * protocol.
   * @author DN  
   */
-	    private void setProperties(){
-    	properties=System.getProperties();    	
-    	properties.put("mail.smtp.starttls.enable", "true");
-		//properties.put("mail.smtp.host","mailtrap.io"); // this.getHost());------------1
-		//properties.setProperty("mail.smtp.user", "dd45281819e61b");
-		//properties.setProperty("mail.smtp.password", "e9cd007f904241");
-		//properties.put("mail.smtp.user", this.getUserName()); // User name
-		//properties.put("mail.smtp.password", this.getPassWord()); // password
-		//properties.put("mail.smtp.port", this.getPort()); //port number
-		//properties.put("mail.smtp.ssl.trust", "mailtrap.io"); //----------------2
-		properties.put("mail.smtp.auth", "true");
-		try{
-			session = createMailSession();//Session.getInstance(properties);
-			Properties o =session.getProperties();
-			Set<String> s=o.stringPropertyNames();
-			for(String w:s){
-				
-				log.info("property values ====:"+w+":"+o.getProperty(w));
-				
-			}
+	private void setProperties() {
+		try {
+			session = createMailSession();
+			properties = session.getProperties();
+			properties.setProperty("mail.smtp.starttls.enable", "true");
 		} catch (SQLException sqle) {
-			log.error("setProperties() SQLException:"+sqle.toString());
-			
+			log.error("setProperties() SQLException:" + sqle.toString());
+
 		}
-//		// Get the default Session object.
-//				Session session = Session.getDefaultInstance(properties,
-//						new Authenticator() {
-//							protected PasswordAuthentication getPasswordAuthentication() {
-//								return new PasswordAuthentication(
-//										"dd45281819e61b", "e9cd007f904241");
-//							}
-//						});
-    	message = new MimeMessage(session);
-    	
+		message = new MimeMessage(session);
 	}
 	    
-    
+    /*
+     * createMailSession() manages to provide the MailSession instance
+     * by accessing MailServerManger
+     * @author DN
+     * @return Session
+     * @throws SQLException
+     */
 	 private Session createMailSession() throws SQLException{
 		 return MailServerManager.mailSession();
-	 }
-	    
-	    
+	 } 
 
 	/*
      * addRecipientToMail() unfolds the list of recipients and
@@ -222,7 +195,7 @@ public class GeneralMail implements IEmail {
 		message.setText(bodyContent);
 	}
 	
-	
+	// getters and setters
 
 	public ArrayList<String> getReceivers() {
 		return receivers;
@@ -257,29 +230,5 @@ public class GeneralMail implements IEmail {
 		this.host = host;
 	}
 
-	public String getUserName() {
-			return userName;
-		}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPort() {
-		return port;
-	}
-
-	public void setPort(String port) {
-		this.port = port;
-	}
-
-	public String getPassWord() {
-		return passWord;
-	}
-
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-	
 
 }
