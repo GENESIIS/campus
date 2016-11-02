@@ -1,5 +1,6 @@
 //20161030 PN this file contains all the functions to load the details for the filter search
 //20161101 PN c11-criteria-based-filter-search implemented displayInstitute(), displayMajor(), displayLevel(), displayDistricts() and pad() method.
+//20161102 PN c11-criteria-based-filter-search implemented getSelectedData(), getValueUsingParentTag() and addsearchData() method.
 
 /**
  * This method id to load category details
@@ -57,9 +58,9 @@ function displayMajor() {
 }
 
 /**
- * This method id to load institute details
+ * This method id to load CourseProvider details
  */
-function displayInstitute() {
+function displayCourseProvider() {
 	var val = document.getElementById("categorylist").value;
 	var opts = document.getElementById('categoryName').childNodes;
 	for (var i = 0; i < opts.length; i++) {
@@ -78,8 +79,6 @@ function displayInstitute() {
 					var x = data[0].toString();
 					var y = data[1].toString();
 					var z = data[2].toString();
-					
-					alert(res);
 					$('<option>').val(z+"-"+y).text(x).appendTo(institueName);
 				});
 			});
@@ -145,9 +144,8 @@ function displayDistricts() {
 
 function displayDetails() {
 	displayMajor();
-	displayInstitute();
-	displayLevel();
-	
+	displayCourseProvider();
+//	displayLevel();	
 }
 
 
@@ -160,4 +158,73 @@ function pad(number, length) {
         str = '0' + str;
     }
     return str;
+}
+
+
+
+
+function addsearchData(){
+	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
+	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
+	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
+
+	var a = 'HEADOFFICETOWN=' + getSelectedData('districtlist', 'districtName');
+	var searchData = x+y+z;
+//	alert(x+y+z+a);
+	
+	$.ajax({
+		type : "POST",
+		url : 'PublicController',
+		data : {
+			jsonData : JSON.stringify(searchData),
+			CCO : "GET_SEARCH_DATA"
+		},
+		dataType : "json",
+		success : function(data) {
+			
+		},
+		error : function(e) {
+			alert("Error " + e);
+			console.log(e);
+		}
+	});
+}
+
+/**
+ * This method is to get selected checkbox values
+ * @param checkboxList
+ * @returns
+ */
+function getValueUsingParentTag(checkboxList){
+	var chkArray = [];
+	
+	/* look for all checkboes that have a parent id called 'checkboxlist' attached to it and check if it was checked */
+	$(checkboxList).each(function() {
+		chkArray.push($(this).val());
+	});
+	
+	/* we join the array separated by the comma */
+	var selected;
+	selected = chkArray.join(',');
+	
+	return selected;
+}
+
+/**
+ * This method is to get selected data from datalist
+ * @param listname
+ * @param elementName
+ * @returns {String}
+ */
+function getSelectedData(listname, elementName) {
+	var selectedValue = "";
+	var val = document.getElementById(listname).value;
+	var opts = document.getElementById(elementName).childNodes;
+	for (var i = 0; i < opts.length; i++) {
+		if (opts[i].value === val) {
+			selectedValue = opts[i].text;
+			break;
+		}
+	}
+	return selectedValue;
 }
