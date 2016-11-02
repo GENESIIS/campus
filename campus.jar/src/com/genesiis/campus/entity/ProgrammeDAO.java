@@ -68,7 +68,7 @@ public class ProgrammeDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 
-			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.WEBLINK,p.IMAGE,l.NAME,m.NAME from CAMPUS.PROGRAMME p"
+			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.WEBLINK,p.IMAGE,l.NAME,m.NAME,p.EMAIL from CAMPUS.PROGRAMME p"
 					+ " inner join CAMPUS.COURSEPROVIDER c on p.COURSEPROVIDER=c.CODE inner join CAMPUS.LEVEL l on p.level=l.code inner join CAMPUS.MAJOR m on m.code=p.major where p.CODE=?";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
@@ -95,6 +95,7 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(String.valueOf(months));//months
 				singleprogrameDetails.add(String.valueOf(weeks));//weeks
 				singleprogrameDetails.add(String.valueOf(days));//days
+				singleprogrameDetails.add(rs.getString(12));
 				
 				programmeDetails.add(singleprogrameDetails);
 
