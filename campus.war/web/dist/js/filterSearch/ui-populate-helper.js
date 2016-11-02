@@ -176,7 +176,7 @@ function addsearchData(){
 		type : "POST",
 		url : 'PublicController',
 		data : {
-			jsonData : JSON.stringify(searchData),
+			searchData : JSON.stringify(searchData),
 			CCO : "GET_SEARCH_DATA"
 		},
 		dataType : "json",
