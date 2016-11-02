@@ -1,6 +1,7 @@
 package com.gensiis.campus.instituteController;
 
 //20161027 CM c9-make-inquiry-for-institute INIT InstituteController.java
+//20161102 CM c9-make-inquiry-for-institute Removed unused variables
 
 import java.io.IOException;
 
@@ -22,11 +23,6 @@ import com.genesiis.campus.controller.CampusController;
 public class InstituteController extends CampusController {
 	static Logger log = Logger.getLogger(InstituteController.class.getName());
 	private static final long serialVersionUID = 1L;
-	private String userName;
-	private String port;
-	private String password;
-	private String host;
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
