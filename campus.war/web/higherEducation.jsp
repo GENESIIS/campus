@@ -185,36 +185,36 @@ table {
 			</tr>
 
 			<tr>
-				<table>
+				<table style="border: 1px solid gray;">
 					<tr>
 						<th width="20px;">Number</th>
 						<th width="50px;">Institute code</th>
-						<th width="100px;">Prefix</th>
+						<th width="200px;">Prefix</th>
 						<th width="200px;">Name</th>
-						<th width="400px;">Description</th>
+						<th width="350px;">Description</th>
 						<th width="150px;">General Mail</th>
 						<th width="200px;">LandPhone Number</th>
 						<th width="200px;">Fax Number</th>
 						<th width="100px;">Web Link</th>
-						<th width="50px;">Expiration Date</th>
+						<th width="100px;">Expiration Date</th>
 
 					</tr>
 					<c:forEach var="institute" items="${institutes}" varStatus="rowNumber">
-						<tr>
-							<td width="20px;"><c:out value="${rowNumber.index+1}" /></td>
-							<td width="50px;"><c:out value="${institute[0] }"></c:out></td>
-							<td width="200px;"><img alt=""
+						<tr style="border: 1px solid gray;">
+							<td style="border: 1px solid gray;" width="20px;"><c:out value="${rowNumber.index+1}" /></td>
+							<td style="border: 1px solid gray;" width="50px;"><c:out value="${institute[0] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="200px;"><img alt=""
 							src="${institute[16] }" width="75px;" height="75px;">
 							&nbsp;
 							<c:out value="${institute[2] }"></c:out></td>
-							<td width="400px;"><p class="limit" style="max-width: 350px;">${institute[3] }</p></td>
-							<td width="100px;"><c:out value="${institute[4] }"></c:out></td>
-							<td width="150px;"><c:out value="${institute[5] }"></c:out></td>
-							<td width="200px;">${institute[7] }${institute[8]}&nbsp;-&nbsp;${institute[9]}</td>
-							<td width="200px;">${institute[7] }${institute[8]}&nbsp;-&nbsp;${institute[11]}</td>
-							<td width="50px;"><c:out value="${institute[15] }"></c:out></td>
-							<td width="100px;"><c:out value="${institute[18] }"></c:out></td>
-							<td width="50px;"><c:out value="${institute[26] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="200px;"><c:out value="${institute[3] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="350px;"><p class="limit" style="max-width: 320px;">${institute[4] }</p></td>
+							<td style="border: 1px solid gray;" width="150px;"><c:out value="${institute[5] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="200px;">${institute[7] }${institute[8]}&nbsp;-&nbsp;${institute[9]}</td>
+							<td style="border: 1px solid gray;" width="200px;">${institute[7] }${institute[8]}&nbsp;-&nbsp;${institute[11]}</td>
+							<td style="border: 1px solid gray;" width="50px;"><c:out value="${institute[15] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="100px;"><c:out value="${institute[18] }"></c:out></td>
+							<td style="border: 1px solid gray;" width="100px;"><c:out value="${institute[26] }"></c:out></td>
 
 						</tr>
 					</c:forEach>
