@@ -34,15 +34,6 @@ public class InstituteController extends CampusController {
 		super();
 	}
 
-	public void init() throws ServletException {
-		ServletContext application = this.getServletContext();
-		this.userName = application.getInitParameter("user");
-		this.password = application.getInitParameter("password");
-		this.host = application.getInitParameter("host");
-		this.port = application.getInitParameter("port");
-
-	}
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -58,21 +49,8 @@ public class InstituteController extends CampusController {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		setSMPTspecificToRequest(request);
 		super.doPost(request, response);
 	}
 
-	/*
-	 * setSMPTspecificToRequest() facilitates in binding SMPT specific data to
-	 * request as an attribute e.g. username,host,port number and pass word
-	 * 
-	 * @param request
-	 */
-	private void setSMPTspecificToRequest(HttpServletRequest request) {
-		request.setAttribute("userName", userName);
-		request.setAttribute("password", password);
-		request.setAttribute("host", host);
-		request.setAttribute("port", port);
 
-	}
 }
