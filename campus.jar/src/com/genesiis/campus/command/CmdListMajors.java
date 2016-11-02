@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161029 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161102 PN c11-criteria-based-filter-search modified execute() method by giving validation to 'categoryCode'
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -12,7 +13,7 @@ import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
-public class CmdListMajors implements ICommand{
+public class CmdListMajors implements ICommand {
 	static Logger log = Logger.getLogger(CmdListMajors.class.getName());
 
 	private IView majorData;
@@ -22,7 +23,7 @@ public class CmdListMajors implements ICommand{
 	}
 
 	public CmdListMajors() {
-		
+
 	}
 
 	/**
@@ -35,14 +36,23 @@ public class CmdListMajors implements ICommand{
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
-	
 		
 		ICrud majorDao = new MajorDAO();
+		String categoryCode = helper.getParameter("categoryCode");
+		Collection<Collection<String>> majorCollection = null;
+
 		try {
-			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
-			log.info("categoryCode "+categoryCode);
-			Collection<Collection<String>> majorCollection = majorDao.findById(categoryCode);
+			
+			//If:the categoryCode is set
+			if ((categoryCode != null) || ((!categoryCode.isEmpty()))) {
+				majorCollection = majorDao.findById(Integer.parseInt(categoryCode));
+			
+			//else:the categoryCode is not set at the beginning of the page loading
+			} else {
+				majorCollection = majorDao.getAll();
+			}
 			iview.setCollection(majorCollection);
+			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
