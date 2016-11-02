@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
 //20161101 CM c9-make-inquiry-for-institute Modified execute() method
+//20161102 CM c9-make-inquiry-for-institute Modified execute() method
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -128,7 +129,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	 * @param helper IDataHelper
 	 */
 	private void setEnvironment(IDataHelper helper) {
-		// getting the admin related data e.g email address
+
 		fullname = helper.getParameter("fullname");
 		sendersEmail = helper.getParameter("email");
 		countryCode = helper.getParameter("countryCode");
@@ -150,7 +151,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	 */
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(inquiry);
-	//	IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
+		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
 		return generalEmail;
 
 	}
