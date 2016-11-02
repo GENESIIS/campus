@@ -1,6 +1,8 @@
 package com.genesiis.campus.publicController;
 //20161031 DN c10-contacting-us-page setSMPTspecificToRequest() implemented
 //20161031 DN c10-contacting-us-page init() implemented
+//20161102 DN c10-contacting-us-page init() implemented and 
+// setSMPTspecificToRequest() removed
 
 import java.io.IOException;
 
@@ -32,12 +34,7 @@ public class PublicController extends CampusController {
 		super();
 	}
 
-	public void init() throws ServletException {
-		ServletContext application = this.getServletContext();
-		this.userName = application.getInitParameter("user");
-		this.password = application.getInitParameter("password");
-		this.host = application.getInitParameter("host");
-		this.port = application.getInitParameter("port");
+	public void init() throws ServletException {		
 
 	}
 	    
@@ -61,24 +58,11 @@ public class PublicController extends CampusController {
 
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
-			java.io.IOException {
-		setSMPTspecificToRequest(request);
+			java.io.IOException {		
 		super.doPost(request, response);
 	}
 	
-	/*
-	 * setSMPTspecificToRequest() facilitates in binding SMPT
-	 * specific data to request as an attribute e.g. username,host,port number
-	 * and pass word
-	 * @param request
-	 */
-	private void setSMPTspecificToRequest(HttpServletRequest request){
-		request.setAttribute("userName", userName);
-		request.setAttribute("password", password);
-		request.setAttribute("host", host);
-		request.setAttribute("port", port);
-		
-	}
+	
 
 	}
 	
