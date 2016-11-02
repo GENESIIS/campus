@@ -34,7 +34,7 @@ public class CmdGetSearchData implements ICommand {
 			QueryBuildingHelper qbh = new QueryBuildingHelper();
 			String tempquery = qbh.dynamicQuery(qbh.assignMapData(qbh.extractFromJason(searchData)), "");
 			log.info("tempquery "+tempquery);
-			Collection<Collection<String>> categoryCollection = programmeDAO.findById(searchData);
+			Collection<Collection<String>> categoryCollection = programmeDAO.findById(tempquery);
 			view.setCollection(categoryCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
