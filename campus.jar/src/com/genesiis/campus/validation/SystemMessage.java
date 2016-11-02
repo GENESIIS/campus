@@ -2,6 +2,8 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20161101 DN c10-contacting-us SystemMessage() modified and added 
+//		FAIL_REQUEST_SUBMISSION,PASS_REQUEST_SUBMISSION.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -33,7 +35,9 @@ public enum SystemMessage {
 	MEDICALHISTORYSUCCESS("success"),
 	MEDICALHISTORYNOID("No Medical History ID obtained."),		
 	MEDICALREPORTDESCRIPTIONNOTVALID("Medical Report Description not valid."),
-	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),
+	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),	
+	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
+	PASS_REQUEST_SUBMISSION("Request successfull submitted! "),
 	MEDICALREPORTNOTVALID("Medical Report not valid");
 
 	
