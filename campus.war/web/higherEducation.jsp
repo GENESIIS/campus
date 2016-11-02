@@ -3,6 +3,7 @@
 <!-- 20161036 JH c7-higher-education-landing-page  page renamed as higherEducation.jsp -->
 <!-- 20161031 JH c7-higher-education-landing-page display higher education programmes -->
 <!-- 20161101 JH c7-higher-education-landing-page display multiple town locations -->
+<!-- 20161102 JH c7-higher-education-landing-page change program duration to display years, months and days -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -27,11 +28,13 @@ table {
 			<th width="20%;"></th>
 		</tr>
 		<tr>
-
+		
 			<!-- higher education header -->
 			<td><img src="Higher-Education.jpg" alt="Higher Education"
 				height="250px;" width="250px;"> <label
-				style="font-size: xx-large;">Higher Education </label></td>
+				style="font-size: xx-large;">Higher Education </label>
+				<label style="color: red; font-size: medium;"><c:if test="${not empty message } "></c:if><c:out value="${message }"></c:out></label>
+				</td>
 
 			<!-- featured courses -->
 			<td rowspan="2" height="300px;"><label><b>Featured
@@ -74,7 +77,7 @@ table {
 				<th width="350px;">Programme</th>
 				<th width="500px;">Description</th>
 				<th width="100px;">Location</th>
-				<th width="100px;">Duration</th>
+				<th width="150px;">Duration</th>
 			</tr>
 			<c:forEach var="programmeList" items="${result.collection}"
 				varStatus="rowCount">
@@ -93,11 +96,13 @@ table {
 							value="${programmeList[5] }"></c:out></td>
 					<td width="500px;" align="center"><c:out
 							value="${programmeList[6] }"></c:out></td>
-					<td width="100px;" align="center">${programmeList[8] }
-					<br/>${programmeList[9] }<br/>${programmeList[10] }
+					<td width="100px;" align="center">${programmeList[10] }
+					<br/>${programmeList[11] }<br/>${programmeList[12] }
 					</td>
-					<td width="100px;" align="center"><c:out
-							value="${programmeList[7] }"></c:out></td>
+					<td width="150px;" align="center">Years : &nbsp;<c:out value="${programmeList[7] }"></c:out><br/>
+							&nbsp;Months :  <c:out value="${programmeList[8] }"></c:out>&nbsp;<br/>
+							&nbsp; Days : <c:out value="${programmeList[7] }"></c:out>
+							</td>
 				</tr>
 			</c:forEach>
 
