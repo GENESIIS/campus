@@ -16,6 +16,8 @@ function sendCourseInquiry() {
 	var telephoneNumber = $("#telNum").val();
 	var inquiryTitle = $("#inquiryTitle").val();
 	var inquiry = $("#inquiry").val();
+	var programmeCode = $("#programmeCode").val();
+	
 //alert("okkk");
 	// isempty("dd");
 //	var fullNametb = isempty(fullName);
@@ -57,8 +59,9 @@ function sendCourseInquiry() {
 			"telephoneAreaCode" : areaCode,
 			"telephone" : telephoneNumber,
 			"inquiryTitle" : inquiryTitle,
-			"inquiry" : inquiry
-
+			"inquiry" : inquiry,
+			"programmeCode" : programmeCode
+			
 		};
 
 		$.ajax({

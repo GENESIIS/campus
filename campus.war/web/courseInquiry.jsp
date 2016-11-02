@@ -69,6 +69,7 @@
 				id="inquirytbError" name="inquirytbError"
 				style="color: red; font-weight: normal !important;"></span>
 			<textarea rows="25" cols="80" name="inquiry" id="inquiry"></textarea>
+			<input type="hidden" value="7" name="programmeCode">
 			</td>
 		</tr>
 		<tr>

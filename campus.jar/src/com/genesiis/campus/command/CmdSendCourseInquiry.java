@@ -34,14 +34,14 @@ public class CmdSendCourseInquiry implements ICommand{
 	private String inquiryTitle;
 	private String inquiry;
 	private int studentCode;
-	private int corseProviderCode;
+	private int programmeCode;
 	private ArrayList<String> recieversEmailAddreses;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
-	private String userName;
-	private String port;
-	private String passWord;
-	private String host;
+//	private String userName;
+//	private String port;
+//	private String passWord;
+//	private String host;
 	
 	
 	@Override
@@ -50,7 +50,7 @@ public class CmdSendCourseInquiry implements ICommand{
 		String message = "Unsuccessfull";
 		String gsonData = helper.getParameter("jsonData");
 		StudentProgrammeInquiry data = getInstituteInquirydetails(gsonData);
-		setEnvironment( helper);
+	//	setEnvironment( helper);
 		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
 		int result = inquiryDAO.add(data);
 		if (result > 0) {
@@ -112,12 +112,12 @@ public class CmdSendCourseInquiry implements ICommand{
 		telNo = helper.getParameter("telNum");
 		inquiryTitle = helper.getParameter("inquiryTitle");
 		inquiry = helper.getParameter("inquiry");
-		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
-		corseProviderCode = Integer.parseInt(helper.getParameter("courseProviderCode"));
-		userName = (String) helper.getAttribute("userName");
-		passWord = (String) helper.getAttribute("password");
-		port = (String) helper.getAttribute("port");
-		host = (String) helper.getAttribute("host");
+//		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
+		programmeCode = Integer.parseInt(helper.getParameter("programmeCode"));
+//		userName = (String) helper.getAttribute("userName");
+//		passWord = (String) helper.getAttribute("password");
+//		port = (String) helper.getAttribute("port");
+//		host = (String) helper.getAttribute("host");
 	}
 
 	/*
@@ -130,9 +130,7 @@ public class CmdSendCourseInquiry implements ICommand{
 	 */
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(inquiry);
-		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				sendersEmail, host, inquiryTitle, inquiry, userName,
-				passWord, port);
+		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
 		return generalEmail;
 
 	}
