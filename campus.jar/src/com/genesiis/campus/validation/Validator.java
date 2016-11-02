@@ -1,5 +1,8 @@
 package com.genesiis.campus.validation;
 
+//20161102 JH c7-higher-education-landing-page Validator.java created
+//20161102 JH c7-higher-education-landing-page getDuration() created
+
 import java.util.ArrayList;
 
 public class Validator {
