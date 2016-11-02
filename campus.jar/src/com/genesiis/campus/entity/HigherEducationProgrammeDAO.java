@@ -7,6 +7,8 @@ package com.genesiis.campus.entity;
 //20161030 JH c7-higher-education-landing-page findById method modified : fix sql exception
 //20161031 JH c7-higher-education-landing-page findById method modified : select filter 20 programmes randomly with towns
 //20161101 JH c7-higher-education-landing-page query changes to get multiple towns for a program
+//20161102 JH c7-higher-education-landing-page use validator class to get program duration
+//20161102 JH c7-higher-education-landing-page query modified to remove expiration date constraint
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,13 +129,8 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(years);
 				singleProgrammeList.add(months);
 				singleProgrammeList.add(days);
-				
-				log.info("years" + years + " months  " +months + " days " + days);
-				
-			log.info("before");
-				
+
 				while(rs2.next()){
-					log.info("after");
 					singleProgrammeList.add(rs2.getString("NAME"));
 				}
 				
@@ -144,7 +141,7 @@ public class HigherEducationProgrammeDAO implements ICrud {
 			}
 
 		} catch (SQLException exception) {
-			log.error("findById(Object code) sql exception"
+			log.error("findById(Object code) sql exception "
 					+ exception.toString());
 			throw exception;
 
