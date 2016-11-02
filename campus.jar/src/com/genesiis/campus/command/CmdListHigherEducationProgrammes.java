@@ -106,16 +106,7 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
-		} finally {
-			// get course providers
-
-
-			// CourseProvider courseProvider = new CourseProvider();
-			// courseProvider.setCourseProviderType(Integer.parseInt(category));
-			// courseProvider.setCourseProviderStatus(1);
-
-	
-		}
+		} 
 
 		helper.setAttribute("message", systemMessage.message());
 
