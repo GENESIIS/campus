@@ -28,7 +28,7 @@
 				<td>Higher Education</td>
 			</tr>
 		</table>
-	<input type="hidden" name="categoryId" id="categoryId" value="1"/>
+	<input type="hidden" name="categoryId" id="categoryId" value="2"/>
 	</form>
 </body>
 </html>
