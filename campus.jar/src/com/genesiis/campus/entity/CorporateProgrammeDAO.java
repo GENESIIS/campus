@@ -52,7 +52,7 @@ public class CorporateProgrammeDAO implements ICrud {
 //					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) "
 //					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
 			
-			String query = "SELECT p.*, cp.SHORTNAME, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
+			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
 					+ "ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
 					+ "SELECT TOP 10 NEWID() as dummy, a.CODE FROM ("
 					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p "
@@ -121,6 +121,7 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("COURSEPROVIDERNAME"));
 			singleProgramme.add(rs.getString("TOWNCODE"));
 			singleProgramme.add(rs.getString("TOWNNAME"));
+			singleProgramme.add(rs.getString("UNIQUEPREFIX"));
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}

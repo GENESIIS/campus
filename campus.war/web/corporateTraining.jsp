@@ -15,135 +15,108 @@
 
 <h1>Corporate Training</h1>
 
-Programmes: 
-<table style="border:2px;border-color: black; border-style: solid;">
+<h2>List of Corporate Programmes:</h2> 
+<table style="border:2px;border-color: brown; border-style: solid;">
 
-	<c:forEach var="programme" items="${result.collection}">
-		<tr style="border:2px;border-color: black; border-style: solid">
-			<c:forEach var="programmeAttrib" items="${programme}" varStatus="vs">
-				<td>
-				</td>
-				<c:if test="${vs.index == 3}"> <%-- email --%>
-					<td>
-					image
-						<a href="#">
-							<img src="${programmeAttrib}"/>
-						</a>
-					</td>
-				</c:if>
+	<c:forEach var="programme" items="${programmeColl}">
+	<c:set var="progCode" value="${programme[0]}"/>
+		<tr>
+			<td>
+			</td>
+			<td width="10%">					
+				<a href="#">
+<%-- 					<img src="${programme[3]}"/> --%>
+					<img src="${contextDeployLogoPath}${programme[22]}&#47;${programme[16]}"/>
+				</a>
+			</td>
 				
-				<c:if test="${vs.index == 1}">		
-					<td>
-					name: 
-						${programmeAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 4}">		
-					<td>
-					description:
-						${programmeAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 5}">		
-					<td>
-					duration:
-						${programmeAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 12}">		
-					<td>
-					major: 
-						${programmeAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 21}">		
-					<td>
-					town: 
-						${programmeAttrib}
-					</td>
-				</c:if>
-			</c:forEach>
+			<td width="30%">					 
+				${programme[1]} </br>
+				at ${programme[19]}
+			</td>
+			
+			<td width="40%">					
+				${programme[4]}
+			</td>
+			
+			<td width="10%">					
+			${programme[5]/365} years, 
+			${(programme[5] % 365) / 30} Months, 
+			${((programme[5] % 365) % 30)} Days				
+			</td>
+			
+			<td width="10%">					
+				${programme[17]}
+			</td>
+			
+			<td>				
+				<c:forEach var="town" items="${programmeCodeToTownListMap[progCode]}">
+					${town} <br>
+				</c:forEach>
+			</td>
 		</tr>
 	</c:forEach>
 </table>
+</br>
+</br>
+</br>
+<h2>Course Providers offering Corporate Training programmes:</h2> 
+<table style="border:2px;border-color: brown; border-style: solid;">
 
-Course Providers offering Corporate Training programmes: 
-<table style="border:2px;border-color: black; border-style: solid;">
-
-	<c:forEach var="popularCourseProvider" items="${courseProvidersWithPopularCourses}">
+	<c:forEach var="courseProv" items="${courseProviders}">
 		<tr>
-			<c:forEach var="courseProviderAttrib" items="${popularCourseProvider}" varStatus="vs">
-				<td>
-				</td>
-				<c:if test="${vs.index == 6}">
-					<td>
-					image
-						<a href="#">
-							<img src="${courseProviderAttrib}"/>
-						</a>
-					</td>
-				</c:if>
+			<td>
+			</td>
+			<td width="10%">
+				<a href="#">
+<%-- 					<img src="${courseProv[6]}"/> --%>
+					<img src="${contextDeployLogoPath}${courseProv[8]}&#47;${courseProv[6]}"/>
+				</a>
+			</td>
+		
+			<td width="10%">
+				${courseProv[1]}
+			</td>
 				
-				<c:if test="${vs.index == 2}">		
-					<td>
-					name: 
-						${courseProviderAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 6}">		
-					<td>
-					description: 
-						${courseProviderAttrib}
-					</td>
-				</c:if>
-			</c:forEach>
+			<td width="30%">
+				${courseProv[2]}
+			</td>
+		
+			<td width="50%">
+				${courseProv[7]}
+			</td>
 		</tr>
 	</c:forEach>
 </table>
+</br>
+</br>
+</br>
 
-Course Providers whose programmes of Corporate Training category has received the most number of views: 
-<table style="border:2px;border-color: black; border-style: solid;">
+<h2>Course Providers whose programmes of Corporate Training category has received the most number of views:</h2> 
+<table style="border:2px;border-color: brown; border-style: solid;">
 
-	<c:forEach var="courseProvider" items="${courseProviders}">
+	<c:forEach var="popularCourseProv" items="${courseProvidersWithPopularCourses}">
 		<tr>
-			<c:forEach var="courseProviderAttrib" items="${courseProvider}" varStatus="vs">
-				<td>
-				</td>
-				<c:if test="${vs.index == 6}">
-					<td>
-					image
-						<a href="#">
-							<img src="${courseProviderAttrib}"/>
-						</a>
-					</td>
-				</c:if>
+			<td>
+			</td>
+			<td width="10%">
+				<a href="#">
+<%-- 					<img src="${popularCourseProv[6]}"/> --%>
+					<img src="${contextDeployLogoPath}${popularCourseProv[8]}&#47;${popularCourseProv[6]}"/>
+				</a>
+			</td>
+		
+			<td width="10%">
+				${popularCourseProv[1]}
+			</td>
 				
-				<c:if test="${vs.index == 1}">
-					<td>
-					short name: 
-						${courseProviderAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 2}">
-					<td>
-					name: 
-						${courseProviderAttrib}
-					</td>
-				</c:if>
-				
-				<c:if test="${vs.index == 6}">		
-					<td>
-					description: 
-						${courseProviderAttrib}
-					</td>
-				</c:if>
-			</c:forEach>
+			<td width="30%">
+				${popularCourseProv[2]}
+			</td>
+		
+			<td width="50%">
+				${popularCourseProv[7]}
+			</td>
 		</tr>
 	</c:forEach>
 </table>
