@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20161031 CM c9-make-inquiry-for-institute Create sendEmail() method for send inquiry
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
+//20161101 CM c9-make-inquiry-for-institute Modified execute() method
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -55,10 +56,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 	private ArrayList<String> recieversEmailAddreses;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
-	private String userName;
-	private String port;
-	private String passWord;
-	private String host;
 
 	/**
 	 * @author Chathuri
@@ -80,18 +77,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 			if (validateResult.equalsIgnoreCase("True")) {
 				setEnvironment( helper);
-//				fullname = helper.getParameter("fullname");
-//				sendersEmail = helper.getParameter("email");
-//				countryCode = helper.getParameter("countryCode");
-//				areaCode = helper.getParameter("areaCode");
-//				telNo = helper.getParameter("telNum");
-//				inquiryTitle = helper.getParameter("inquiryTitle");
-//				inquiry = helper.getParameter("inquiry");
-//				studentCode = Integer.parseInt(helper
-//						.getParameter("studentCode"));
-//				corseProviderCode = Integer.parseInt(helper
-//						.getParameter("courseProviderCode"));
-
 				// InstituteInquiry data = getInstituteInquirydetails(gsonData);
 
 				instituteInquiry.setStudentName(fullname);
@@ -117,7 +102,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 					message = SystemMessage.INQUIRYSENT.message();
 
 				} else {
-
 					message = SystemMessage.ERROR.message();
 				}
 			} else {
@@ -154,10 +138,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 		inquiry = helper.getParameter("inquiry");
 		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
 		corseProviderCode = Integer.parseInt(helper.getParameter("courseProviderCode"));
-		userName = (String) helper.getAttribute("userName");
-		passWord = (String) helper.getAttribute("password");
-		port = (String) helper.getAttribute("port");
-		host = (String) helper.getAttribute("host");
 	}
 
 	/*
@@ -170,9 +150,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 	 */
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(inquiry);
-		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				sendersEmail, host, inquiryTitle, inquiry, userName,
-				passWord, port);
+	//	IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
 		return generalEmail;
 
 	}
