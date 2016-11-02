@@ -84,7 +84,6 @@ public class CmdListHigherEducationProgrammes implements ICommand {
 
 			java.sql.Date expiryDate = new java.sql.Date(lastYear.getTime());
 
-			log.info("sqldate " + expiryDate);
 
 			CourseProviderHigherEducationProgrammeDAO courseProviderDAO = new CourseProviderHigherEducationProgrammeDAO();
 			programme.setExpiryDate(expiryDate);
