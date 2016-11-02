@@ -111,19 +111,29 @@ public class HigherEducationProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("CPNAME"));
 				singleProgrammeList.add(rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-				singleProgrammeList.add(rs.getString("DURATION"));
+			//	singleProgrammeList.add(rs.getString("DURATION"));
 				
 				String d = rs.getString("DURATION");
-				int du = Integer.parseInt(d);
+				Float du = Float.parseFloat(d);
+				int duration = Math.round(du);
 				
-			
-				log.info(du);
-				log.info("years" + du/5);
-			//	duration = duration % 365;
+				Validator validator = new Validator();
+				final ArrayList<String> programDuration = (ArrayList<String>) validator.getDuration(duration);
 				
-			//	log.info(duration);
+				String years = programDuration.get(0);
+				String months = programDuration.get(1);
+				String days = programDuration.get(2);
+				
+				singleProgrammeList.add(years);
+				singleProgrammeList.add(months);
+				singleProgrammeList.add(days);
+				
+				log.info("years" + years + " months  " +months + " days " + days);
+				
+			log.info("before");
 				
 				while(rs2.next()){
+					log.info("after");
 					singleProgrammeList.add(rs2.getString("NAME"));
 				}
 				
