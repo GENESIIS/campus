@@ -47,7 +47,7 @@ public class ProgrammeDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Programme] WHERE [ISACTIVE] = 1 AND "+ tempquery +";";
+			String query = "SELECT * FROM [CAMPUS].[Programme] WHERE [ISACTIVE] = 1 AND "+ searchData +";";
 			log.info(query);
 			
 
