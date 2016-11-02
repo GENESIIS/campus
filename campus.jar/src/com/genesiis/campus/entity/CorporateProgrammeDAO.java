@@ -39,19 +39,6 @@ public class CorporateProgrammeDAO implements ICrud {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
 			
-//			String query = "SELECT p.*, cp.LOGOIMAGEPATH, ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, "
-//					+ "t.NAME AS TOWNNAME FROM ("
-//					+ "SELECT TOP 3 NEWID() as dummy, a.CODE FROM ("
-//					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p WHERE p.CATEGORY = 3 "
-//					+ "AND p.PROGRAMMESTATUS = 1 AND GETDATE() < p.EXPIRYDATE) a ORDER BY NEWID()"
-//					+ ") b "
-//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = b.CODE) "
-//					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE "
-//					+ "AND COURSEPROVIDERSTATUS = 1 AND GETDATE() < cp.EXPIRATIONDATE) "
-//					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = 1) "
-//					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = 1) "
-//					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE)";
-			
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
 					+ "ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
 					+ "SELECT TOP 10 NEWID() as dummy, a.CODE FROM ("
@@ -66,7 +53,6 @@ public class CorporateProgrammeDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-//			ps.setInt(1, 10);
 			ps.setInt(1, categoryCode);
 			ps.setInt(2, 1);
 			ps.setInt(3, 1);

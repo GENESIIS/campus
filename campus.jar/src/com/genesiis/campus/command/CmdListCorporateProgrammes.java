@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CorporateProgrammeDAO;
-import com.genesiis.campus.entity.CourseProviderProgrammeDAO;
+import com.genesiis.campus.entity.CourseProviderCorporateProgrammeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -33,7 +33,7 @@ public class CmdListCorporateProgrammes implements ICommand {
 	static Logger Log = Logger.getLogger(CmdListCorporateProgrammes.class.getName());
 
 	final ICrud programmeDao = new CorporateProgrammeDAO();	
-	final ICrud courseProviderDao = new CourseProviderProgrammeDAO();	
+	final ICrud courseProviderDao = new CourseProviderCorporateProgrammeDAO();	
 		
 	public CmdListCorporateProgrammes() {
 		

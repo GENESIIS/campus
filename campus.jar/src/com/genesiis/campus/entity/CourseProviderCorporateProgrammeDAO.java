@@ -23,7 +23,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseProviderProgrammeDAO implements ICrud {
+public class CourseProviderCorporateProgrammeDAO implements ICrud {
 	static Logger Log = Logger.getLogger(CorporateProgrammeDAO.class.getName());
 
 	@Override
@@ -60,11 +60,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 				stmt = conn.prepareStatement(query);
 				stmt.setInt(1, categoryCode);	
 				
-			} else {
-//				query = "SELECT DISTINCT cp.* FROM [CAMPUS].[PROGRAMME] p "
-//						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
-//						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)";	
-				
+			} else {				
 				query = "SELECT cp1.*, t.CODE AS TOWNCODE, "
 						+ "t.NAME AS TOWNNAME FROM (" 
 						+ "SELECT TOP 10 NEWID() as dummy, a.COURSEPROVIDER FROM "
