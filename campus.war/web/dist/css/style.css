@@ -293,7 +293,7 @@ body, html {
     display: block;
     width: 100%; }
     .courses-screen .filter-area .category-panel {
-      display: inline-block;
+      display: none;
       position: relative;
       width: 28%;
       padding-left: 5%;
@@ -305,9 +305,10 @@ body, html {
     .courses-screen .filter-area .result-panel {
       display: inline-block;
       position: relative;
-      width: 72%;
+      width: 100%;
       float: right;
-      padding-right: 1%; }
+      padding-right: 1%;
+      padding-left: 5%; }
       .courses-screen .filter-area .result-panel .panel-header {
         display: block;
         width: 100%; }
