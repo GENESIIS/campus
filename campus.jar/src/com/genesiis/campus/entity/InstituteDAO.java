@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161101 PN c11-criteria-based-filter-search implemented findById() method. 
+//20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +45,7 @@ public class InstituteDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX, l.DESCRIPTION FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND m.ISACTIVE = 1;";
+			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND m.ISACTIVE = 1;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
@@ -55,8 +56,7 @@ public class InstituteDAO implements ICrud{
 				final ArrayList<String> singleInstituteList = new ArrayList<String>();
 				singleInstituteList.add(rs.getString("CODE"));
 				singleInstituteList.add(rs.getString("NAME"));
-				singleInstituteList.add(rs.getString("UNIQUEPREFIX"));		
-				singleInstituteList.add(rs.getString("DESCRIPTION"));
+				singleInstituteList.add(rs.getString("UNIQUEPREFIX"));
 
 				final Collection<String> singleLevelCollection = singleInstituteList;
 				allInstituteList.add(singleLevelCollection);
