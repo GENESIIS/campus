@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 //20161101 AS C8-inquiry-form-for-course CourseProviderDAO created.
-
+//20161102 AS C8-inquiry-form-for-course findbyID method  query modified
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,8 +54,8 @@ public class CourseProviderDAO implements ICrud{
 			StudentProgrammeInquiry studentProgrammeInquiry = (StudentProgrammeInquiry) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn
-					.prepareStatement("SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  INNER JOIN [CAMPUS].[STUDENTPROGRAMINQUIRY] ON PROGRAMME.CODE = STUDENTPROGRAMINQUIRY.PROGRAMME WHERE STUDENTPROGRAMINQUIRY.CODE =?");
-			preparedStatement.setInt(1, studentProgrammeInquiry.getCode());
+					.prepareStatement("SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  WHERE PROGRAMME.CODE = ?;");
+			preparedStatement.setInt(1, studentProgrammeInquiry.getProgramme());
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -63,7 +63,7 @@ public class CourseProviderDAO implements ICrud{
 				singleEmployeeList.add(rs.getString("COURSEINQUIRYEMAIL"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
 				InquiryEmail.add(singleEmployeeCollection);
-
+				log.info(singleEmployeeList);
 			}
 		} catch (SQLException SQLexception) {
 			log.error("findById(Object code): SQLexception " + SQLexception.toString());
