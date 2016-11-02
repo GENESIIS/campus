@@ -495,8 +495,11 @@ body, html {
               font-weight: lighter; }
           .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .location {
             display: block;
-            height: 235px;
-            width: 100%; }
+            padding-bottom: 50px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .location iframe {
+              border: 0;
+              height: 235px;
+              width: 100%; }
           .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info {
             display: block;
             font-size: 24px;
