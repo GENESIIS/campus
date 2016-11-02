@@ -12,7 +12,8 @@ package com.genesiis.campus.entity;
 			//using a one query 
 //20161101 JH c7-higher-education-landing-page findById method modified : query2 changed to remove duplicate course provider records
 //20161101 JH c7-higher-education-landing-page CourseProviderDAO.java renamed as CourseProviderHigherEducationProgrammeDAO.java
-//20161102 JH c7-higher-education-landing-page findById query modified 
+//20161102 JH c7-higher-education-landing-page findById query modified to remove unwanted attributes
+//20161102 JH c7-higher-education-landing-page findById query modified due to ddl changes
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -141,6 +142,7 @@ public class CourseProviderHigherEducationProgrammeDAO implements ICrud {
 
 					singleCourseProviderList.add(rs.getString("CODE"));
 					singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
+					singleCourseProviderList.add(rs.getString("SHORTNAME"));
 					singleCourseProviderList.add(rs.getString("NAME"));
 					singleCourseProviderList.add(rs.getString("DESCRIPTION"));
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
@@ -165,8 +167,9 @@ public class CourseProviderHigherEducationProgrammeDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("VIBERNUMBER"));
 					singleCourseProviderList.add(rs.getString("WHATSAPPNUMBER"));
 					singleCourseProviderList.add(rs.getString("EXPIRATIONDATE"));
-					singleCourseProviderList.add(rs.getString("STREETNO"));
-					singleCourseProviderList.add(rs.getString("STREETNAME"));
+					singleCourseProviderList.add(rs.getString("ADDRESS1"));
+					singleCourseProviderList.add(rs.getString("ADDRESS2"));
+					singleCourseProviderList.add(rs.getString("ADDRESS3"));
 					singleCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
 					singleCourseProviderList.add(rs.getString("ISTUTORRELATED"));
 					singleCourseProviderList.add(rs.getString("ISADMINALLOWED"));
