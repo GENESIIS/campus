@@ -35,14 +35,23 @@ public class CmdListInstitute implements ICommand{
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
-	
 		
 		ICrud instituteDAO = new InstituteDAO();
+		String categoryCode = helper.getParameter("categoryCode");
+		Collection<Collection<String>> instituteCollection = null;
+		
 		try {
-			int categoryCode =  Integer.parseInt(helper.getParameter("categoryCode"));
-			log.info("categoryCode "+categoryCode);
-			Collection<Collection<String>> instituteCollection = instituteDAO.findById(categoryCode);
-			iview.setCollection(instituteCollection);
+			
+			//If:the categoryCode is set
+			if ((categoryCode != null) || ((!categoryCode.isEmpty()))) {
+				instituteCollection = instituteDAO.findById(Integer.parseInt(categoryCode));
+			
+			//else:the categoryCode is not set at the beginning of the page loading
+			} else {
+				instituteCollection = instituteDAO.getAll();
+			}
+			iview.setCollection(instituteCollection);		
+			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
