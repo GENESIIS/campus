@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161027 AS C8-inquiry-form-for-course add method modified
 //20161031 AS C8-inquiry-form-for-course add method  query modified
 //20161101 AS C8-inquiry-form-for-course add method  query modified
+//20161102 AS C8-inquiry-form-for-course add method  query modified
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -42,7 +43,7 @@ public class CourseInquiryDAO implements ICrud {
 			ps.setString(7, spi.getInquiry());
 
 			// ps.setInt(10, spi.getStudent());
-			// ps.setInt(11, spi.getProgramme());
+		//	 ps.setInt(8, spi.getProgramme());
 			// ps.setString(12, "1");
 			// ps.setString(14, "admin");
 			status = ps.executeUpdate();
@@ -59,7 +60,7 @@ public class CourseInquiryDAO implements ICrud {
 			}
 			conn.close();
 		}
-
+		log.info("successfylly insert data Status = "+status);
 		return status;
 	}
 
