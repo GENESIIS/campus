@@ -6,7 +6,8 @@ package com.genesiis.campus.command;
 //20161031 DN c10-contacting-us-page sendMail() changed, add doc comments and method comments
 //									  addContentToOriginalMailBody() initialized
 //									setEnvironment() method initialiZed.execute() restructured.
-
+//20161031 DN c10-contacting-us-page refactor formatEmailInstance() host,user_name,password fields 
+//									removed
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +23,7 @@ import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.SystemMessage;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -53,10 +55,7 @@ public class CmdGenerateEmail implements ICommand {
 	private Connection connection = null;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
-	private String userName;
-    private String port;
-    private String passWord;
-    private String host;
+	
 
 
 /**
@@ -66,6 +65,7 @@ public class CmdGenerateEmail implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {		
 
+			int status;
 			 setEnvironment( helper);
 			 String cco = helper.getCommandCode();
 			 String message = "";
@@ -91,9 +91,10 @@ public class CmdGenerateEmail implements ICommand {
 					
 					 }					 
 			 
-			this.sendMail();
-
-			return view;
+					 status=this.sendMail();
+					 message = systemMessage(status);
+					 helper.setAttribute("message", message);
+					 
 
 		 } catch (MessagingException msgexp){
 		 log.error("execute():MessagingException "+msgexp.toString());
@@ -105,6 +106,7 @@ public class CmdGenerateEmail implements ICommand {
 			log.error("execute():SQLException" + e.toString());
 			throw e;
 		}
+			 return view;
 	}
 	
 	/*
@@ -120,10 +122,7 @@ public class CmdGenerateEmail implements ICommand {
 		 sendersphoneNumber= helper.getParameter("contactNumber");
 		 mailingSubject = helper.getParameter("subject");
 		 mailBody = helper.getParameter("message");
-//		 userName = (String)helper.getAttribute("userName");
-//		 passWord = (String)helper.getAttribute("password");
-//		 port = (String)helper.getAttribute("port");
-//		 host = (String)helper.getAttribute("host");
+
 	}
 	
 	/*
@@ -135,8 +134,8 @@ public class CmdGenerateEmail implements ICommand {
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(mailBody);
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
-				sendersEmailAddress,// host,
-				mailingSubject,mailBody);//,userName,passWord,port);
+				sendersEmailAddress,
+				mailingSubject,mailBody);
 		return generalEmail;
 
 	}
@@ -162,12 +161,23 @@ public class CmdGenerateEmail implements ICommand {
 	/*
 	 * sendMail() method intended to dispense the email
 	 * @author DN
+	 * @return int -3 fail sending email 3 sent email successfully 
 	 * @throws MessagingException in any case dispensing email fails
 	 */
 
-	private void sendMail() throws MessagingException {
-		 emailDispenser = new EmailDispenser(generalEmail);
-		 emailDispenser.emailDispense();		
+	private int sendMail()  {
+		try{ 
+		emailDispenser = new EmailDispenser(generalEmail);
+		 emailDispenser.emailDispense();
+		 
+		} catch (IllegalArgumentException illearg){
+			log.error("sendMail():IllegalArgumentException "+illearg.toString());
+			//return -3;
+		} catch (MessagingException msexp) {
+			log.error("sendMail():MessagingException "+msexp.toString());
+			return -3;
+		}
+		return 3;
 	}
 
 
@@ -206,6 +216,44 @@ public class CmdGenerateEmail implements ICommand {
 		
 	}
 	
+	/*
+	 * systemMessage() handles the system Messages according to
+	 * the state of the status passed in
+	 * @return String the message
+	 * @param status 1 updated successfully
+	 * @param status 0 record not added to the repository
+	 * @param status 2 record  added to the repository
+	 * 
+	 */
+	private String systemMessage(int status){
+		String message = SystemMessage.UNKNOWN.message();
+		switch(status){
+		case -1:
+			message = SystemMessage.NOTUPDATED.message();
+		case -2:
+			message= SystemMessage.NOTADDED.message();
+		case 0: 
+			message= SystemMessage.ERROR.message();
+			break;
+		case 1:
+			message =SystemMessage.UPDATED.message();
+			break;
+		case 2:
+			message =SystemMessage.ADDED.message();
+			break;
+		case 3:
+			message =SystemMessage.PASS_REQUEST_SUBMISSION.message();
+			break;
+		case -3:
+			message =SystemMessage.FAIL_REQUEST_SUBMISSION.message();
+			break;
+		default:
+			
+			break;			
+		
+		}
+		return message;
+	}
 	
 
 
