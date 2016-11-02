@@ -61,7 +61,7 @@ public class CourseProviderDAO implements ICrud{
 
 			while (rs.next()) {
 				singleEmployeeList = new ArrayList<String>();
-				singleEmployeeList.add(rs.getString("COURSEINQUIRYEMAIL"));
+				singleEmployeeList.add(rs.getString("GENERALEMAIL"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
 				InquiryEmail.add(singleEmployeeCollection);
 
