@@ -30,6 +30,7 @@
 		<c:set var="months" value="${programme[12]}" />
 		<c:set var="weeks" value="${programme[13]}" />
 		<c:set var="days" value="${programme[14]}" />
+		<c:set var="emailAddress" value="${programme[15]}" />
 	</c:forEach>
 	<table>
 		<tr>
@@ -235,7 +236,10 @@
 									<td>Counselor Contact Number</td>
 									<td><c:out value="${counselorPhone}"></c:out></td>
 								</tr>
-
+								<tr>
+									<td>Email</td>
+									<td><c:out value="${emailAddress}"></c:out></td>
+								</tr>
 							</table>
 						</td>
 					</tr>
