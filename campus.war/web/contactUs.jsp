@@ -15,6 +15,10 @@
 </head>
 <body>
 <div align="center" >
+
+	<h3 style="color: red">
+		<c:out value="${requestScope.message}"></c:out>
+	</h3>
 <form method="post"  name="contactUsForm" action="PublicController" >
 	
 <table>
