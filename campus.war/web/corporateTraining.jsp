@@ -19,7 +19,7 @@ Programmes:
 <table style="border:2px;border-color: black; border-style: solid;">
 
 	<c:forEach var="programme" items="${result.collection}">
-		<tr>
+		<tr style="border:2px;border-color: black; border-style: solid">
 			<c:forEach var="programmeAttrib" items="${programme}" varStatus="vs">
 				<td>
 				</td>
@@ -56,6 +56,13 @@ Programmes:
 				<c:if test="${vs.index == 12}">		
 					<td>
 					major: 
+						${programmeAttrib}
+					</td>
+				</c:if>
+				
+				<c:if test="${vs.index == 21}">		
+					<td>
+					town: 
 						${programmeAttrib}
 					</td>
 				</c:if>

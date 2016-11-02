@@ -51,10 +51,10 @@ public class CourseProviderProgrammeDAO implements ICrud {
 				query = "SELECT cp1.* FROM ("
 						+ "SELECT TOP 5 p.COURSEPROVIDER, count(*) as COUNT "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
-						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?)"
-						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER)"
+						+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON (p.CODE = ps.PROGRAMME AND p.CATEGORY = ?) "
+						+ "INNER JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER) "
 						+ "GROUP BY p.COURSEPROVIDER ORDER BY COUNT DESC"
-						+ ")"
+						+ ") "
 						+ "a JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (cp1.CODE = a.COURSEPROVIDER)";
 
 				stmt = conn.prepareStatement(query);
@@ -74,8 +74,9 @@ public class CourseProviderProgrammeDAO implements ICrud {
 						+ "JOIN [CAMPUS].[CATEGORY] c ON (p.CATEGORY = c.CODE AND c.CODE = ?) "
 						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER AND COURSEPROVIDERSTATUS = ?)"
 						+ ") a"
-						+ ") b"
-						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE)";	
+						+ ") b "
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp1 ON (b.COURSEPROVIDER = cp1.CODE) "	
+						+ "JOIN [CAMPUS].[TOWN] t ON (cp1.HEADOFFICETOWN = t.CODE)";	
 
 				stmt = conn.prepareStatement(query);
 				stmt.setInt(1, categoryCode);		
@@ -84,7 +85,7 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			
 			final ResultSet rs = stmt.executeQuery();
 
-			retrieveCourseProvidersFromResultSet(rs, courseProviderList);
+			retrieveCourseProvidersFromResultSet(rs, courseProviderList, areProvidersWithPopularProgrammes);
 
 		} catch (ClassCastException cce) {
 			Log.info("findById(Object): ClassCastException: " + cce.toString());
@@ -107,7 +108,9 @@ public class CourseProviderProgrammeDAO implements ICrud {
 		return courseProviderList;
 	}
 	
-	private void retrieveCourseProvidersFromResultSet(ResultSet rs, Collection<Collection<String>> courseProviderList) throws SQLException {
+	private void retrieveCourseProvidersFromResultSet(ResultSet rs, 
+			Collection<Collection<String>> courseProviderList, 
+			boolean arePopularProgrammes) throws SQLException {
 
 		while (rs.next()) {
 			final ArrayList<String> singleCourseProvider = new ArrayList<String>();
@@ -130,8 +133,10 @@ public class CourseProviderProgrammeDAO implements ICrud {
 			singleCourseProvider.add(rs.getString("VIBERNUMBER"));
 			singleCourseProvider.add(rs.getString("WHATSAPPNUMBER"));
 			singleCourseProvider.add(rs.getString("MYSPACEURL"));
-			singleCourseProvider.add(rs.getString("TOWNCODE"));
-			singleCourseProvider.add(rs.getString("TOWNNAME"));
+			if (!arePopularProgrammes) {
+				singleCourseProvider.add(rs.getString("TOWNCODE"));
+				singleCourseProvider.add(rs.getString("TOWNNAME"));
+			}
 			final Collection<String> singleCourseProviderCollection = singleCourseProvider;
 			courseProviderList.add(singleCourseProviderCollection);
 		}

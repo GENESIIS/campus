@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,6 +61,32 @@ public class CmdListCorporateProgrammes implements ICommand {
 			
 			// Get programmes that belong to the same category as categoryCode
 			programmeCollection = programmeDao.findById(programme);
+			
+			Map<String, ArrayList<String>> programmeCodeToTownListMap = 
+					new LinkedHashMap<String, ArrayList<String>>();
+			
+			for (Collection<String> prog : programmeCollection) {
+				int count  = 0;
+				ArrayList<String> tempTownList = null;
+				String code = null;
+				for (String field : prog) {
+					if (count == 0) {
+						code = field;
+						ArrayList<String> townList = programmeCodeToTownListMap.get(field);
+						if (townList == null) {
+							townList = new ArrayList<String>();
+							programmeCodeToTownListMap.put(field, townList);
+						}
+						tempTownList = townList;						
+					}
+					townLis
+							
+					
+  
+				}		
+				
+				programmeCodeToTownMap
+			}
 
 			// Get course providers that offer programmes that belong to the same category as categoryCode
 			programme.setLevel(0); // level property is used here to act as a flag
