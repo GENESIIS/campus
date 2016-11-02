@@ -1,7 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161101 PN c11-criteria-based-filter-search implemented findById() method. 
-//20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method. 
+//20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method.
+//		   PN c11-criteria-based-filter-search implemented getAll() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,8 +82,42 @@ public class InstituteDAO implements ICrud{
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return null;
+		final Collection<Collection<String>> allInstituteList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] WHERE ISACTIVE = 1;";
+
+			stmt = conn.prepareStatement(query);
+			final ResultSet rs = stmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				final ArrayList<String> singleInstituteList = new ArrayList<String>();
+				singleInstituteList.add(rs.getString("CODE"));
+				singleInstituteList.add(rs.getString("NAME"));
+				singleInstituteList.add(rs.getString("UNIQUEPREFIX"));
+
+				final Collection<String> singleLevelCollection = singleInstituteList;
+				allInstituteList.add(singleLevelCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allInstituteList;
 	}
 
 	@Override

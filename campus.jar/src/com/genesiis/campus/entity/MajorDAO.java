@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
+//20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,7 +89,7 @@ public class MajorDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
