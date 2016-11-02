@@ -56,20 +56,20 @@
 				</div>
 
 				<!-- 				2nd Category - Levels -->
-				<div class="filter-item clearfix">
-					<!-- 					Drop item header -->
-					<div class="item-header">
-						<label slide-toggle="#dropItem3">Levels <span
-							id="levelCount" name="levelCount"></span></label> <a href="javascript:"><input
-							type="checkbox"></a>
-					</div>
-					<!-- Item Drop list -->
-					<div id="dropItem3" class="item-container slideable">
-						<ul id="select-item2" class="select-item row-fluid">
-							<li>Please choose Educational area</li>
-						</ul>
-					</div>
-				</div>
+<!-- 				<div class="filter-item clearfix"> -->
+<!-- 										Drop item header -->
+<!-- 					<div class="item-header"> -->
+<!-- 						<label slide-toggle="#dropItem3">Levels <span -->
+<!-- 							id="levelCount" name="levelCount"></span></label> <a href="javascript:"><input -->
+<!-- 							type="checkbox"></a> -->
+<!-- 					</div> -->
+<!-- 					Item Drop list -->
+<!-- 					<div id="dropItem3" class="item-container slideable"> -->
+<!-- 						<ul id="select-item2" class="select-item row-fluid"> -->
+<!-- 							<li>Please choose Educational area</li> -->
+<!-- 						</ul> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 			<!-- End All category -->
 		</div>
@@ -90,7 +90,7 @@
 						<div class="drop-holder">
 							<input type="text" id="categorylist" name="categorylist"
 								list="categoryName" placeholder="-- Select Educational Area --"
-								oninput='displayTable()' />
+								oninput='displayDetails()' />
 							<datalist id="categoryName">
 								<option value="ICBT"></option>
 								<option value="IIT"></option>
@@ -167,6 +167,8 @@
 			<!-- 			</div> -->
 
 			<div class="">
+			<button onclick="addsearchData()">Click me</button> 
+			
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$('#example').DataTable();
