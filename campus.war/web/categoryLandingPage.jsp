@@ -131,7 +131,7 @@ table {
 								<td style="position: relative; left: 10px;"><img
 									src="${featuredInstitute[16] }" alt="Higher Education"
 									height="75px;" width="75px;"> <c:out
-										value="${featuredInstitute[0] }"></c:out></td>
+										value="${featuredInstitute[16] }"></c:out></td>
 								<td style="position: relative; left: 10px;"><h3
 										style="color: blue; font-stretch: wider;">
 										<c:out value="${featuredInstitute[2] }"></c:out>
