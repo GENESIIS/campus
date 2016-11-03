@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //DJ 20161031 c6-list-available-institutes-on-the-view create findTopViewedProviders()
 //DJ 20161103 c6-list-available-institutes-on-the-view Implemented findTopViewedProviders()
 //DJ 20161103 c6-list-available-institutes-on-the-view adjust the findTopViewedProviders() to support dynamic category code
+//DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -203,6 +204,60 @@ public class CourseProviderDAO implements ICrud{
 			}
 		}
 		return allProviderList;
+	}
+	
+	/**
+	 * Find Top Rated Providers
+	 * @param CourseProvider DTO
+	 * @author DJ
+	 * @return Collection 
+	 */
+
+	public Collection<Collection<String>> findTopRatedProviders(CourseProvider provider) throws SQLException{
+		
+		Connection conn = null;
+		PreparedStatement  stmt = null;	
+		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		
+		try {
+			int categoryCode=0;
+			boolean isGetAll=false;
+			if(UtilityHelper.isNotEmptyObject(provider)){
+				CourseProvider cp = (CourseProvider) provider;
+				categoryCode = cp.getCategory();
+				isGetAll=cp.isGetAll();
+			}	
+			conn=ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder(" ");
+			
+			stmt = conn.prepareStatement(sb.toString());			
+			if(!isGetAll){
+				stmt.setInt(1, categoryCode);	
+			}	
+			
+			final ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {				
+				final ArrayList<String> singleProvider = new ArrayList<String>();
+				singleProvider.add(rs.getString("CODE"));				
+				singleProvider.add(rs.getString("UNIQUEPREFIX"));
+				allProviderList.add(singleProvider);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("findTopRatedProviders() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findTopRatedProviders() Exception" + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allProviderList;		
 	}
 
 }
