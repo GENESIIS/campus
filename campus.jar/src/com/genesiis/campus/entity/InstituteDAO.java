@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161101 PN c11-criteria-based-filter-search implemented findById() method. 
 //20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method.
 //		   PN c11-criteria-based-filter-search implemented getAll() method.
+//20161103 PN c11-criteria-based-filter-search modified SQL query inside getAll() and findById() methods
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +47,7 @@ public class InstituteDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND m.ISACTIVE = 1;";
+			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND l.COURSEPROVIDERSTATUS = 1;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
@@ -88,7 +89,7 @@ public class InstituteDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] WHERE ISACTIVE = 1;";
+			String query = "SELECT DISTINCT CODE,NAME,UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] WHERE COURSEPROVIDERSTATUS = 1;";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
