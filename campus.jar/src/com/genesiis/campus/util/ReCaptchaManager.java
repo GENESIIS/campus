@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161026 CM c9-make-inquiry-for-institute INIT ReCaptchaManager.java
+//20161026 CM c9-make-inquiry-for-institute Created  sentRequestToServe() method
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,6 +17,12 @@ public class ReCaptchaManager {
 
 	static Logger log = Logger.getLogger(ReCaptchaManager.class.getName());
 
+	/**
+	 * Created for send request to google recaptcha server
+	 * @author Chathuri
+	 * @param helper
+	 * @return boolean
+	 */
 	public boolean sentRequestToServer(IDataHelper helper) {
 
 		try {
