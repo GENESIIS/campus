@@ -20,6 +20,9 @@ angular.module('CampusApp',['ngRoute'])
             })
             .when('/institute-inquiry',{
                 templateUrl : "dist/partials/mini-web/inquiry/institute-inquiry-form.html"
+            })
+            .when('/course-inquiry',{
+                templateUrl : "dist/partials/mini-web/inquiry/course-inquiry-form.html"
             });
     })
 
