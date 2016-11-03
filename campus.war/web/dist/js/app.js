@@ -17,7 +17,10 @@ angular.module('CampusApp',['ngRoute'])
             })
             .when('/courses',{
                 templateUrl : "dist/partials/courses.html" 
-            }); 
+            })
+            .when('/institute-inquiry',{
+                templateUrl : "dist/partials/mini-web/inquiry/institute-inquiry-form.html"
+            });
     })
 
     // SlideToggle Directive
