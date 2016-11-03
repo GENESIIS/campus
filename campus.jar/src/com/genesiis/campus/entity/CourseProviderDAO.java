@@ -61,17 +61,20 @@ public class CourseProviderDAO implements ICrud{
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
 			boolean isGetAll=false;
+			final CourseProvider cp=new CourseProvider();
 			if(UtilityHelper.isNotEmptyObject(code)){
-				CourseProvider cp = (CourseProvider) code;
+				cp = (CourseProvider) code;
 				categoryCode = cp.getCategory();
 				isGetAll=cp.isGetAll();
 			}			
 			
 			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE, PROV.UNIQUEPREFIX , PROV.NAME ");
-			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  on  PROV.CODE=PROG.COURSEPROVIDER ");
+			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1  AND PROG.PROGRAMMESTATUS=1  AND CAT.ISACTIVE=1 ");			
-			if(!isGetAll){
+			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
+			// sb.append("AND PROG.PROGRAMMESTATUS=1 ");
+			sb.append("AND CAT.ISACTIVE=1 ");
+			if (!isGetAll) {
 				sb.append(" AND CAT.CODE=? ");
 			}
 			 
@@ -165,10 +168,10 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" SELECT  TOP 1000  PROV.CODE AS PROVIDERCODE,COUNT(*) AS HITCOUNT,PROG.CODE PROGRAMMCODE,PROG.NAME,  PROV.NAME AS PROVIDERNAME, PROV.UNIQUEPREFIX, PROG.CATEGORY");
 			sb.append(" FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE INNER JOIN [CAMPUS].PROGRAMMESTAT PSTAT ON PROG.CODE= PSTAT.PROGRAMME ");
-			sb.append(" WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 " );
-			//sb.append(" AND PROG.PROGRAMMESTATUS=1 ")
+			sb.append(" WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
+			// sb.append(" AND PROG.PROGRAMMESTATUS=1 ")
 			sb.append(" AND CAT.ISACTIVE=1  ");
-			if(!isGetAll){
+			if (!isGetAll) {
 				sb.append(" AND CAT.CODE= ? ");
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROV.CODE,PROV.NAME,PROV.UNIQUEPREFIX, PROG.CATEGORY ");

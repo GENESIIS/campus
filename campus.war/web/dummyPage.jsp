@@ -14,10 +14,10 @@
 <body>
 Please Enter category number
 <div align="center" >
-		<form action="PublicController" method="post">
+	<!-- 	<form action="PublicController" method="post">
 			<input type="text" name="category">
 			<button type="submit" name="CCO" value="LAAI">SUBMIT</button>
-		</form>
+		</form> -->
 		<form action="PublicController" method="post">
 			<input type="text" name="category">
 			<button type="submit" name="CCO" value="TCPL">TOP CP lIST</button>

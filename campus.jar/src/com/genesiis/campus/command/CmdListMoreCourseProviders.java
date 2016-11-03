@@ -17,8 +17,8 @@ import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
-public class CmdListInstitutes implements ICommand  {
-	static Logger log = Logger.getLogger(CmdListInstitutes.class.getName());
+public class CmdListMoreCourseProviders implements ICommand  {
+	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class.getName());
 	
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
@@ -39,8 +39,8 @@ public class CmdListInstitutes implements ICommand  {
 				// Setting the flag for retrieve all the institutes
 				provider.setGetAll(true);
 			}
-			final Collection<Collection<String>> institutes = providerDAO.findById(provider);
-			iview.setCollection(institutes);			
+			final Collection<Collection<String>> courseProviders = providerDAO.findById(provider);
+			iview.setCollection(courseProviders);			
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;

@@ -61,6 +61,15 @@
 		</c:forEach>
 	</table>
 	<br>
-	<div> <a href="viewMoreInstitute.jsp">View More</a></div>
+
+	<form action="PublicController" method="post">
+		<input type="text" name="category">
+		<button type="submit" name="CCO" value="LAAI">View More</button>
+	</form>
+	<!-- <form action="PublicController" method="post">
+		<input type="hidden" id="hdCategory" name="hdCategory"
+			value="hiddenValue"> <input type="submit">
+	</form> -->
+	<!-- <div> <a href="viewMoreInstitute.jsp">View More</a></div> -->
 </body>
 </html>
