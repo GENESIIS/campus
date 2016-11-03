@@ -3,6 +3,7 @@ package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created initial version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 //20161031 DJ c6-list-available-institutes-on-the-view add LIST_TOP_COURSE_PROVIDERS
+//20161103 DJ c6-list-available-institutes-on-the-view add LIST_ALL_COURSE_PROVIDERS
 
 import java.io.IOException;
 import java.util.Collection;
@@ -60,6 +61,9 @@ public class DataHelper implements IDataHelper {
 			resultPage = o.getPageURL();
 			break;
 		case LIST_TOP_COURSE_PROVIDERS:
+			resultPage = o.getPageURL();
+			break;
+		case LIST_ALL_COURSE_PROVIDERS:
 			resultPage = o.getPageURL();
 			break;
 		case BAD_OPERATION:
