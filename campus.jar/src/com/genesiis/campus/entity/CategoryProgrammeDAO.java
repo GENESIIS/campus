@@ -28,10 +28,10 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseProviderHigherEducationProgrammeDAO implements ICrud {
+public class CategoryProgrammeDAO implements ICrud {
 
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(CourseProviderHigherEducationProgrammeDAO.class.getName());
+			.getLogger(CategoryProgrammeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
