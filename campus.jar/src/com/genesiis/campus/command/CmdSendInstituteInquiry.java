@@ -9,7 +9,12 @@ package com.genesiis.campus.command;
 //20161031 CM c9-make-inquiry-for-institute Modified execute() method
 //20161101 CM c9-make-inquiry-for-institute Modified execute() method
 //20161102 CM c9-make-inquiry-for-institute Modified execute() method
+//20161102 CM c9-make-inquiry-for-institute Implement reCAPTCHA.
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,14 +35,17 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderInquiryDAO;
+import com.genesiis.campus.entity.model.CaptchaResponse;
 import com.genesiis.campus.entity.model.CourseProviderInquiry;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
+import com.google.gson.Gson;
 
 public class CmdSendInstituteInquiry implements ICommand {
 
@@ -69,45 +77,58 @@ public class CmdSendInstituteInquiry implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = "";
-		
+
 		try {
 			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
 
-			// String gsonData = helper.getParameter("jsonData");
-			String validateResult = Validator.validateInquiry(helper);
+			final ReCaptchaManager reCaptchaManager=new ReCaptchaManager();
+			boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
 
-			if (validateResult.equalsIgnoreCase("True")) {
-				setEnvironment( helper);
-				// InstituteInquiry data = getInstituteInquirydetails(gsonData);
+			 // Verify whether the input from Human or Robot
+			if (responseIsSuccess) {
+				// Input by Human
+				log.info("I'm Human");
+				// String gsonData = helper.getParameter("jsonData");
+				String validateResult = Validator.validateInquiry(helper);
 
-				instituteInquiry.setStudentName(fullname);
-				instituteInquiry.setStudentEmail(sendersEmail);
-				instituteInquiry.setTelephoneCountryCode(countryCode);
-				instituteInquiry.setTelephoneAreaCode(areaCode);
-				instituteInquiry.setTelNo(telNo);
-				instituteInquiry.setInquiryTitle(inquiryTitle);
-				instituteInquiry.setInquiryText(inquiry);
-				instituteInquiry.setStudent(studentCode);
-				instituteInquiry.setCourseProvider(corseProviderCode);
+				if (validateResult.equalsIgnoreCase("True")) {
+					setEnvironment(helper);
+					// InstituteInquiry data =
+					// getInstituteInquirydetails(gsonData);
 
-				final CourseProviderInquiryDAO inquiryDAO = new CourseProviderInquiryDAO();
-				final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
-				int result = inquiryDAO.add(instituteInquiry);
-				if (result > 0) {
-					Collection<Collection<String>> courseProviderEmail = courseProviderDAO
-							.findById(instituteInquiry);
+					instituteInquiry.setStudentName(fullname);
+					instituteInquiry.setStudentEmail(sendersEmail);
+					instituteInquiry.setTelephoneCountryCode(countryCode);
+					instituteInquiry.setTelephoneAreaCode(areaCode);
+					instituteInquiry.setTelNo(telNo);
+					instituteInquiry.setInquiryTitle(inquiryTitle);
+					instituteInquiry.setInquiryText(inquiry);
+					instituteInquiry.setStudent(studentCode);
+					instituteInquiry.setCourseProvider(corseProviderCode);
 
-					recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
-					generalEmail = formatEmailInstance();
-					this.sendMail();
-					message = SystemMessage.INQUIRYSENT.message();
+					final CourseProviderInquiryDAO inquiryDAO = new CourseProviderInquiryDAO();
+					final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
+					int result = inquiryDAO.add(instituteInquiry);
+					if (result > 0) {
+						Collection<Collection<String>> courseProviderEmail = courseProviderDAO
+								.findById(instituteInquiry);
 
+						recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
+						generalEmail = formatEmailInstance();
+						this.sendMail();
+						message = SystemMessage.INQUIRYSENT.message();
+
+					} else {
+						message = SystemMessage.ERROR.message();
+					}
 				} else {
-					message = SystemMessage.ERROR.message();
+					message = validateResult;
+
 				}
 			} else {
-				message = validateResult;
-
+				// Input by Robot
+				log.info("I'm Robot");
+				message=SystemMessage.RECAPTCHAVERIFICATION.message();
 			}
 
 		} catch (Exception exception) {
@@ -138,7 +159,8 @@ public class CmdSendInstituteInquiry implements ICommand {
 		inquiryTitle = helper.getParameter("inquiryTitle");
 		inquiry = helper.getParameter("inquiry");
 		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
-		corseProviderCode = Integer.parseInt(helper.getParameter("courseProviderCode"));
+		corseProviderCode = Integer.parseInt(helper
+				.getParameter("courseProviderCode"));
 	}
 
 	/*
@@ -151,7 +173,8 @@ public class CmdSendInstituteInquiry implements ICommand {
 	 */
 	private IEmail formatEmailInstance() {
 		addContentToOriginalMailBody(inquiry);
-		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
+		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
+				sendersEmail, inquiryTitle, inquiry);
 		return generalEmail;
 
 	}
