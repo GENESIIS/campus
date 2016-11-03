@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.CategoryDAO;
+import com.genesiis.campus.entity.CategoryProgrammeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Category;
+import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
@@ -42,6 +44,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 			Exception {
 
 		ICrud categoryDAO = new CategoryDAO();
+		ICrud categoryProgrammeDAO = new CategoryProgrammeDAO();
 		Collection<Collection<String>> categoryCollection = null;
 
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
@@ -49,6 +52,13 @@ public class CmdListCategoryLandingPage implements ICommand {
 		Validator validator = new Validator();
 		if (!validator.isEmpty(helper)) {
 			final String categoryId = helper.getParameter("categoryId");
+			
+			
+			final Programme programme = new Programme();
+
+			programme.setActive(true);
+			programme.setProgrammeStatus(1);
+			programme.setCategory(Integer.parseInt(categoryId));
 
 			try {
 				
@@ -59,6 +69,18 @@ public class CmdListCategoryLandingPage implements ICommand {
 				final Collection<Collection<String>> categoryDetails = categoryDAO.findById(category);
 				helper.setAttribute("category", categoryDetails);
 				view.setCollection(categoryDetails);
+				
+				programme.setLevel(1);//this level=1 is just to identify to get course 
+				//providers with higher program stats
+				final Collection<Collection<String>> featuredCourseProviders = categoryProgrammeDAO
+						.findById(programme);
+				helper.setAttribute("featuredInstitutes", featuredCourseProviders);
+
+				//list 20 course providers randomly
+				programme.setLevel(0);
+				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO
+						.findById(programme);
+				helper.setAttribute("institutes", courseProviders);
 
 			} catch (Exception exception) {
 				log.error("execute() : " + exception);
