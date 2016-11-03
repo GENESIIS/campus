@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //			  c11-criteria-based-filter-search implementing execute() method.
 //20161027 PN c11-criteria-based-filter-search modified execute() method for test LuceneAPI and QueryBuildingHelper.java class
 //20161102 PN c11-criteria-based-filter-search modified execute() method get searchdata and pass it to ProgramDAO.
+//20161103 PN c11-criteria-based-filter-search modified execute() method to load getAll() method and findById() method accordingly.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -29,10 +30,23 @@ public class CmdGetSearchData implements ICommand {
 			Exception {
 
 		ICrud programmeDAO = new ProgrammeDAO(); 
+		Collection<Collection<String>> programmeCollection = null;
+		String searchData =  helper.getParameter("searchData");
+		
 		try {
-			String searchData =  helper.getParameter("searchData");
-			Collection<Collection<String>> categoryCollection = programmeDAO.findById(searchData);
-			view.setCollection(categoryCollection);
+			//If:the instituteCode is set
+			if ((searchData != null) && ((!searchData.isEmpty()))) {
+				programmeCollection = programmeDAO.findById(searchData);
+			
+			//else:the instituteCode is not set at the beginning of the page loading
+			} else {
+				programmeCollection = programmeDAO.getAll();
+			}
+			
+			if (programmeCollection != null) {
+				view.setCollection(programmeCollection);
+			}
+
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
