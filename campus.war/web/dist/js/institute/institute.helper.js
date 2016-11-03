@@ -2,6 +2,8 @@
  * //20161027 AS C8-inquiry-form-for-course institute.helper.js created.
  * //20161027 AS C8-inquiry-form-for-course sendCourseInquiry() method data
  * validation and data send as json object.
+ * //20161103 AS C8-inquiry-form-for-course sendCourseInquiry() method data
+ * var included .
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -16,9 +18,10 @@ function sendCourseInquiry() {
 	var telephoneNumber = $("#telNum").val();
 	var inquiryTitle = $("#inquiryTitle").val();
 	var inquiry = $("#inquiry").val();
+	var student = $("#student").val();
 	var programmeCode = $("#programmeCode").val();
 	
-//alert("okkk");
+//alert("okkk"+ fullName+email+countryCode+areaCode+telephoneNumber+inquiry+inquiryTitle+student+programmeCode);
 	// isempty("dd");
 //	var fullNametb = isempty(fullName);
 //	var emailtb = isValidEmailFormat(email);
@@ -60,7 +63,8 @@ function sendCourseInquiry() {
 			"telephone" : telephoneNumber,
 			"inquiryTitle" : inquiryTitle,
 			"inquiry" : inquiry,
-			"programmeCode" : programmeCode
+			"student": student,
+			"programme" : programmeCode
 			
 		};
 
