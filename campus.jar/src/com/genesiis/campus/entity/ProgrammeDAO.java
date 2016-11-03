@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
+//20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,46 +43,65 @@ public class ProgrammeDAO implements ICrud {
 		String searchData = (String) code;
 		log.info("searchData" + searchData);
 
-		final Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		//This method to be changed with the PROGRAMSTATUS once defined it in the DML.
 		try {
 			QueryBuildingHelper qbh = new QueryBuildingHelper();
-			Map<String, String[]> queryMap = qbh.assignMapData(qbh.extractFromJason(searchData));
-			String[] districtCode = queryMap.get("DISTRICT");
-			String subQuery = " AND d.CODE = ? ";
+			Map<String, String[]> queryMap = qbh.assignMapData(qbh
+					.extractFromJason(searchData));
+
+			String[] districtCode = {};
 			String tempquery = "";
-			if (districtCode.length == 0) {
-				tempquery = qbh.dynamicQuery(queryMap, " AND ");
-			} else {
-				tempquery = qbh.dynamicQuery(queryMap, subQuery);
+
+			if (!queryMap.isEmpty()) {
+				districtCode = queryMap.get("DISTRICT");
+				queryMap.remove("DISTRICT");
+				String subQuery = " AND d.CODE = ? ";
+				if ((districtCode == null) || (districtCode.length == 0)) {
+					tempquery = qbh.dynamicQuery(queryMap, " AND ");
+				} else {
+					tempquery = qbh.dynamicQuery(queryMap, subQuery);
+				}
+
+				log.info("tempquery " + tempquery);
+
+				conn = ConnectionManager.getConnection();
+				String query = "SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX]"
+						+ "FROM [CAMPUS].[PROGRAMME] p "
+						+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
+						+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
+						+ "JOIN [CAMPUS].[DISTRICT] d ON d.CODE = t.DISTRICT "
+						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
+						+ "WHERE p.PROGRAMMESTATUS = 1 "
+						+ tempquery + ";";
+				log.info(query);
+
+				stmt = conn.prepareStatement(query);
+				if(districtCode.length != 0){
+					stmt.setInt(1, Integer.parseInt(districtCode[0]));
+				}
+							
+				final ResultSet rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+					singleProgrammeList.add(rs.getString("CODE"));
+					singleProgrammeList.add(rs.getString("NAME"));
+					singleProgrammeList.add(rs.getString("DESCRIPTION"));
+					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+					singleProgrammeList.add(rs.getString("PROVIDER"));
+					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+					singleProgrammeList.add(rs.getString("IMAGE"));
+					
+					final Collection<String> singleProgrammeCollection = singleProgrammeList;
+					allProgrammeList.add(singleProgrammeCollection);
+				}
+			}else{
+				allProgrammeList = getAll();	
 			}
-			log.info("tempquery " + tempquery);
-
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT p.* FROM [CAMPUS].[PROGRAMME] p "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
-					+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
-					+ "JOIN [CAMPUS].[DISTRICT] d ON d.CODE = t.DISTRICT WHERE p.PROGRAMMESTATUS = 1 "
-					+ searchData + ";";
-			log.info(query);
-
-			// stmt = conn.prepareStatement(query);
-			// final ResultSet rs = stmt.executeQuery();
-			//
-			// while (rs.next()) {
-			// final ArrayList<String> singleProgrammeList = new
-			// ArrayList<String>();
-			// singleProgrammeList.add(rs.getString("CODE"));
-			// singleProgrammeList.add(rs.getString("NAME"));
-			// singleProgrammeList.add(rs.getString("DESCRIPTION"));
-			//
-			// final Collection<String> singleProgrammeCollection =
-			// singleProgrammeList;
-			// allProgrammeList.add(singleProgrammeCollection);
-			// }
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
@@ -107,7 +127,10 @@ public class ProgrammeDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT * FROM [CAMPUS].[Programme] WHERE [ISACTIVE] = 1;";
+			String query = " SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX] "
+					+ "FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
+					+ "WHERE p.PROGRAMMESTATUS = 1";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
@@ -117,6 +140,10 @@ public class ProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("NAME"));
 				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+				singleProgrammeList.add(rs.getString("PROVIDER"));
+				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("IMAGE"));
 
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
