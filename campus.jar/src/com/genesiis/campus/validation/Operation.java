@@ -11,9 +11,9 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),
-	//IST_ALL_INSTITUTES("LAAI","viewMoreInstitute.jsp"),
+	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),	
 	LIST_TOP_COURSE_PROVIDERS("TCPL","topCourseProviderList.jsp"),
+	LIST_ALL_COURSE_PROVIDERS("ACPL","viewMoreCourseProviders.jsp"),
 	BAD_OPERATION("BO", "commandNotFound.jsp");
 			
 	private final String commandString;
