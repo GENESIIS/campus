@@ -5,6 +5,8 @@ package com.genesiis.campus.validation;
 
 import java.util.ArrayList;
 
+import com.genesiis.campus.util.IDataHelper;
+
 public class Validator {
 
 	public Object getDuration(int duration){
@@ -20,5 +22,15 @@ public class Validator {
 		programDuration.add(String.valueOf(duration));
 		
 		return programDuration;
+	}
+	
+	public boolean isEmpty(IDataHelper helper){
+		boolean valid = false;
+		if(helper.getParameter("categoryId") == null){
+			valid = true;
+			System.out.print(">>>>>>>>>>null");
+		}
+		
+		return valid;
 	}
 }
