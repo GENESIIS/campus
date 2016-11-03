@@ -1,6 +1,8 @@
 package com.genesiis.campus.command;
+
 //20161027 AS C8-inquiry-form-for-course CmdSendCourseInquiry class created.
 //20161101 AS C8-inquiry-form-for-course email class methods implemented 
+//20161103 AS C8-inquiry-form-for-course email class methods modified and bug fixed 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
-public class CmdSendCourseInquiry implements ICommand{
+public class CmdSendCourseInquiry implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdSendCourseInquiry.class.getName());
 
@@ -38,10 +40,8 @@ public class CmdSendCourseInquiry implements ICommand{
 	private ArrayList<String> recieversEmailAddreses;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
-//	private String userName;
-//	private String port;
-//	private String passWord;
-//	private String host;
+	private StudentProgrammeInquiry data;
+
 	
 	
 	@Override
@@ -49,14 +49,15 @@ public class CmdSendCourseInquiry implements ICommand{
 			Exception {
 		String message = "Unsuccessfull";
 		String gsonData = helper.getParameter("jsonData");
-		StudentProgrammeInquiry data = getInstituteInquirydetails(gsonData);
-	//	setEnvironment( helper);
+		data = getInstituteInquirydetails(gsonData);
 		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
 		int result = inquiryDAO.add(data);
 		if (result > 0) {
-		//	message = "Inquiry Send successfylly";
+			message = "Inquiry Send successfylly";
+
 			final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
-			Collection<Collection<String>> courseProviderEmail = courseProviderDAO.findById(data);
+			Collection<Collection<String>> courseProviderEmail = courseProviderDAO
+					.findById(data);
 			recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
 			generalEmail = formatEmailInstance();
 			this.sendMail();
@@ -64,20 +65,21 @@ public class CmdSendCourseInquiry implements ICommand{
 
 		helper.setAttribute("message", message);
 		return view;
-		
-	
+
 	}
 
 	/**
-	 * extract data fromm json object and assign to StudentProgrammeInquiry object 
+	 * extract data fromm json object and assign to StudentProgrammeInquiry
+	 * object
+	 * 
 	 * @author anuradha
 	 * @param gsonData
-	 * @return StudentProgrammeInquiry object 
+	 * @return StudentProgrammeInquiry object
 	 */
-	
+
 	private StudentProgrammeInquiry getInstituteInquirydetails(String gsonData) {
 		StudentProgrammeInquiry courseInquiry = (StudentProgrammeInquiry) extractFromJason(gsonData);
-		
+
 		return courseInquiry;
 	}
 
@@ -86,38 +88,14 @@ public class CmdSendCourseInquiry implements ICommand{
 		String message = "";
 		StudentProgrammeInquiry courseInquiry = null;
 		try {
-			courseInquiry = gson.fromJson(gsonData, StudentProgrammeInquiry.class);
+			courseInquiry = gson.fromJson(gsonData,
+					StudentProgrammeInquiry.class);
 
 		} catch (Exception exception) {
 			log.error("extractFromJason(): " + exception.toString());
 			throw exception;
 		}
 		return courseInquiry;
-	}
-	
-	
-	/*
-	 * setEnvironment() method initializes all the instance variable
-	 * 
-	 * @author DN
-	 * 
-	 * @param helper IDataHelper
-	 */
-	private void setEnvironment(IDataHelper helper) {
-		// getting the admin related data e.g email address
-		fullname = helper.getParameter("fullname");
-		sendersEmail = helper.getParameter("email");
-		countryCode = helper.getParameter("countryCode");
-		areaCode = helper.getParameter("areaCode");
-		telNo = helper.getParameter("telNum");
-		inquiryTitle = helper.getParameter("inquiryTitle");
-		inquiry = helper.getParameter("inquiry");
-//		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
-		programmeCode = Integer.parseInt(helper.getParameter("programmeCode"));
-//		userName = (String) helper.getAttribute("userName");
-//		passWord = (String) helper.getAttribute("password");
-//		port = (String) helper.getAttribute("port");
-//		host = (String) helper.getAttribute("host");
 	}
 
 	/*
@@ -129,8 +107,12 @@ public class CmdSendCourseInquiry implements ICommand{
 	 * @return IEmail formatted Email out put
 	 */
 	private IEmail formatEmailInstance() {
-		addContentToOriginalMailBody(inquiry);
-		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,sendersEmail, inquiryTitle, inquiry);
+		log.info(data.getInquiry() + data.getInquiryTitle());
+		addContentToOriginalMailBody(data.getInquiry());
+
+		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
+				data.getStudentEmail(), data.getInquiryTitle(),
+				data.getInquiry());
 		return generalEmail;
 
 	}
@@ -204,7 +186,5 @@ public class CmdSendCourseInquiry implements ICommand{
 		this.inquiry = result.toString();
 
 	}
-	
-	
 
 }
