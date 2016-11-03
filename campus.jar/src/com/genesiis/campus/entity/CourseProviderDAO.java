@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //DJ 20161031 c6-list-available-institutes-on-the-view rename the class name as  CourseProviderDAO.java
 //DJ 20161031 c6-list-available-institutes-on-the-view create findTopViewedProviders()
 //DJ 20161103 c6-list-available-institutes-on-the-view Implemented findTopViewedProviders()
+//DJ 20161103 c6-list-available-institutes-on-the-view adjust the findTopViewedProviders() to support dynamic category code
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -151,22 +152,33 @@ public class CourseProviderDAO implements ICrud{
 		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
+			int categoryCode=0;
+			boolean isGetAll=false;
+			if(UtilityHelper.isNotEmptyObject(provider)){
+				CourseProvider cp = (CourseProvider) provider;
+				categoryCode = cp.getCategory();
+				isGetAll=cp.isGetAll();
+			}	
 			conn=ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT  DISTINCT TOP 10 cp.CODE , CP.UNIQUEPREFIX  FROM ( ");
 			sb.append(" SELECT  TOP 1000  PROV.CODE AS PROVIDERCODE,COUNT(*) AS HITCOUNT,PROG.CODE PROGRAMMCODE,PROG.NAME,  PROV.NAME AS PROVIDERNAME, PROV.UNIQUEPREFIX, PROG.CATEGORY");
 			sb.append(" FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE INNER JOIN [CAMPUS].PROGRAMMESTAT PSTAT ON PROG.CODE= PSTAT.PROGRAMME ");
-			sb.append("  WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 " );
+			sb.append(" WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 " );
 			//sb.append(" AND PROG.PROGRAMMESTATUS=1 ")
-			sb.append("  AND CAT.ISACTIVE=1  ");
-			//sb.append(" AND CAT.CODE=3  ");
+			sb.append(" AND CAT.ISACTIVE=1  ");
+			if(!isGetAll){
+				sb.append(" AND CAT.CODE= ? ");
+			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROV.CODE,PROV.NAME,PROV.UNIQUEPREFIX, PROG.CATEGORY ");
-			sb.append("  ORDER BY HITCOUNT desc");
+			sb.append(" ORDER BY HITCOUNT desc");
 			sb.append(" ) NEWTABLE ");
 			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");			
 			
 			stmt = conn.prepareStatement(sb.toString());			
-			//stmt.setInt(1, 1);	
+			if(!isGetAll){
+				stmt.setInt(1, categoryCode);	
+			}	
 			
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
