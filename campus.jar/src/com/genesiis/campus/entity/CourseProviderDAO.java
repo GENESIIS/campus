@@ -61,9 +61,9 @@ public class CourseProviderDAO implements ICrud{
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
 			boolean isGetAll=false;
-			final CourseProvider cp=new CourseProvider();
+			
 			if(UtilityHelper.isNotEmptyObject(code)){
-				cp = (CourseProvider) code;
+				final CourseProvider cp = (CourseProvider) code;
 				categoryCode = cp.getCategory();
 				isGetAll=cp.isGetAll();
 			}			
