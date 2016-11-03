@@ -44,7 +44,7 @@ public class CmdListMajors implements ICommand {
 		try {
 			
 			//If:the categoryCode is set
-			if ((categoryCode != null) || ((!categoryCode.isEmpty()))) {
+			if ((categoryCode != null) && ((!categoryCode.isEmpty()))) {
 				majorCollection = majorDao.findById(Integer.parseInt(categoryCode));
 			
 			//else:the categoryCode is not set at the beginning of the page loading

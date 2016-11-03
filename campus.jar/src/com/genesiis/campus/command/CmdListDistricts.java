@@ -45,14 +45,18 @@ public class CmdListDistricts implements ICommand{
 		
 		try {
 			//If:the instituteCode is set
-			if ((instituteCode != null) || ((!instituteCode.isEmpty()))) {
+			if ((instituteCode != null) && ((!instituteCode.isEmpty()))) {
 				districtCollection = districtDAO.findById(Integer.parseInt(instituteCode));
 			
 			//else:the instituteCode is not set at the beginning of the page loading
 			} else {
 				districtCollection = districtDAO.getAll();
 			}
-			iview.setCollection(districtCollection);	
+			
+			if (districtCollection != null) {
+				iview.setCollection(districtCollection);
+			}
+			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;

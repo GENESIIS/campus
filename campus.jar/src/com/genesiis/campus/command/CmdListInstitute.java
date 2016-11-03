@@ -43,14 +43,17 @@ public class CmdListInstitute implements ICommand{
 		try {
 			
 			//If:the categoryCode is set
-			if ((categoryCode != null) || ((!categoryCode.isEmpty()))) {
+			if ((categoryCode != null) && ((!categoryCode.isEmpty()))) {
 				instituteCollection = instituteDAO.findById(Integer.parseInt(categoryCode));
 			
 			//else:the categoryCode is not set at the beginning of the page loading
 			} else {
 				instituteCollection = instituteDAO.getAll();
 			}
-			iview.setCollection(instituteCollection);		
+
+			if (instituteCollection != null) {
+				iview.setCollection(instituteCollection);
+			}
 			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
