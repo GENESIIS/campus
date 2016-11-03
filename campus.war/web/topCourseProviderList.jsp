@@ -44,7 +44,7 @@
 			<th>CODE</th>
 			<th>NAME</th>			
 		</tr>
-		<c:forEach var="provider" items="${result.collection}">			
+		<c:forEach var="provider" items="${tRCProviders}">			
 			<tr>
 				<c:forEach var="pvAttribute" items="${provider}" varStatus="vs">				
 				<c:if test="${vs.index == 1}">
@@ -60,5 +60,7 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<br>
+	<div> <a href="viewMoreInstitute.jsp">View More</a></div>
 </body>
 </html>

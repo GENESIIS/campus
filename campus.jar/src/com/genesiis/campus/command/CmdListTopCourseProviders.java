@@ -41,7 +41,10 @@ public class CmdListTopCourseProviders implements ICommand   {
 			}			
 			//final Collection<Collection<String>> institutes = providerDAO.findById(provider);			
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
+			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
+			
 			iview.setCollection(topViewedCourseProviders);
+			helper.setAttribute("tRCProviders", topRatedCourseProviders);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
