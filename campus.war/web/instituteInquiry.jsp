@@ -30,8 +30,11 @@
 		onsubmit="return checkBeforeSubmit()">
 		<table align="center">
 			<tr>
-				<td><input type="hidden" value="${param.courseProviderCode}"
-					name="courseProviderCode"> <input type="hidden" value="1"
+				<td><input type="hidden" value="1"
+					name="courseProviderCode"> 
+	<%-- 				<input type="hidden" value="${param.courseProviderCode}"
+					name="courseProviderCode"> --%>
+					<input type="hidden" value="1"
 					name="studentCode">
 			</tr>
 			<tr>
