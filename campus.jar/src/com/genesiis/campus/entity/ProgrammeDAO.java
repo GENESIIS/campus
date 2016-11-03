@@ -80,7 +80,7 @@ public class ProgrammeDAO implements ICrud {
 				log.info(query);
 
 				stmt = conn.prepareStatement(query);
-				if ((districtCode.length != 0) && (districtCode != null)) {
+				if (districtCode != null) {
 					stmt.setInt(1, Integer.parseInt(districtCode[0]));
 				}
 							
