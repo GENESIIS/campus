@@ -2,6 +2,7 @@
 <!-- 20161027 TR c11 styling all category selections -->
 <!-- 20161101 PN c11-criteria-based-filter-search modified UI elements to display DB values on them. -->
 <!-- 20161102 PN c11-criteria-based-filter-search implement data table to display courses. -->
+<!-- 20161103 PN c11-criteria-based-filter-search modified the UI elements by removing unnecessary comments. -->
 
 <div class="courses-screen clearfix">
 	<!-- Page Inner Header -->
@@ -33,8 +34,7 @@
 				<div class="filter-item">
 					<!-- Drop item header -->
 					<div class="item-header">
-						<label>All <span>- 100</span></label> <a href="javascript:"><input
-							type="checkbox"></a>
+						<label>All <span id="courseCount" name="courseCount"></span></label> <a href="javascript:"></a>
 					</div>
 				</div>
 
@@ -44,7 +44,7 @@
 					<div class="item-header">
 						<label slide-toggle="#dropItem1">Major <span
 							id="majorCount" name="majorCount"></span>
-						</label> <a href="javascript:"><input name="Category" type="checkbox"></a>
+						</label> <a href="javascript:"></a>
 					</div>
 
 					<!-- Item Drop list -->
@@ -54,22 +54,16 @@
 						</ul>
 					</div>
 				</div>
-
-				<!-- 				2nd Category - Levels -->
-<!-- 				<div class="filter-item clearfix"> -->
-<!-- 										Drop item header -->
-<!-- 					<div class="item-header"> -->
-<!-- 						<label slide-toggle="#dropItem3">Levels <span -->
-<!-- 							id="levelCount" name="levelCount"></span></label> <a href="javascript:"><input -->
-<!-- 							type="checkbox"></a> -->
-<!-- 					</div> -->
-<!-- 					Item Drop list -->
-<!-- 					<div id="dropItem3" class="item-container slideable"> -->
-<!-- 						<ul id="select-item2" class="select-item row-fluid"> -->
-<!-- 							<li>Please choose Educational area</li> -->
-<!-- 						</ul> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+				
+				<div class="filter-item clearfix">				
+				<!-- Drop item header -->
+					<div class="">
+					</div>
+					<!-- Item Drop list -->
+					<div id="" class="">
+						<button type="button" class="btn btn-primary" onclick="addsearchData()">Apply Search</button> 
+					</div>		
+				</div>
 			</div>
 			<!-- End All category -->
 		</div>
@@ -92,9 +86,6 @@
 								list="categoryName" placeholder="-- Select Educational Area --"
 								oninput='displayDetailsOnChange()' />
 							<datalist id="categoryName">
-								<option value="ICBT"></option>
-								<option value="IIT"></option>
-								<option value="NIBM"></option>
 							</datalist>
 						</div>
 					</div>
@@ -102,7 +93,7 @@
 					<div class="institute-col col-md-4 col-lg-4">
 						<div class="drop-holder">
 							<input type="text" id="instituelist" name="instituelist"
-								list="institueName" placeholder="-- Select Institute --" />
+								list="institueName" placeholder="-- Select Institute --" oninput='displayDistricts()' />
 							<datalist id="institueName">
 							</datalist>
 						</div>
@@ -119,56 +110,7 @@
 			</div>
 			<!-- End Panel Header -->
 			<hr>
-
-			<!-- Search Result List view -->
-			<!-- 			<div class="search-result-view clearfix"> -->
-			<!-- 				<div class="result-box clearfix"> -->
-			<!-- 					<div class="course-name"> -->
-			<!-- 						<a href="javascript:">Bsc (Hons) in Information Technology <span -->
-			<!-- 							class="provider-name"> @ICBT</span></a> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="course-info"> -->
-			<!-- 						<p>Lorem Ipsum is simply dummy text of the printing and -->
-			<!-- 							typesetting industry. Lorem Ipsum has been the industry's -->
-			<!-- 							standard dummy text.</p> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="provider-info"> -->
-			<!-- 						<a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 				<div class="result-box clearfix"> -->
-			<!-- 					<div class="course-name"> -->
-			<!-- 						<a href="javascript:">Bsc (Hons) in Information Technology <span -->
-			<!-- 							class="provider-name"> @ICBT</span></a> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="course-info"> -->
-			<!-- 						<p>Lorem Ipsum is simply dummy text of the printing and -->
-			<!-- 							typesetting industry. Lorem Ipsum has been the industry's -->
-			<!-- 							standard dummy text.</p> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="provider-info"> -->
-			<!-- 						<a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 				<div class="result-box clearfix"> -->
-			<!-- 					<div class="course-name"> -->
-			<!-- 						<a href="javascript:">Bsc (Hons) in Information Technology <span -->
-			<!-- 							class="provider-name"> @ICBT</span></a> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="course-info"> -->
-			<!-- 						<p>Lorem Ipsum is simply dummy text of the printing and -->
-			<!-- 							typesetting industry. Lorem Ipsum has been the industry's -->
-			<!-- 							standard dummy text.</p> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="provider-info"> -->
-			<!-- 						<a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
 			<div class="">
-			<button onclick="addsearchData()">Click me</button> 
-			
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$('#example').DataTable();
@@ -186,57 +128,12 @@
 					</thead>
 					<tbody>
 						<tr>
-							<th>
-								<div class="provider-info">
-									<a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a>
-								</div>
-							</th>
-							<th>
-								<div class="result-box clearfix">
-									<div class="course-name">
-										<a href="javascript:">Bsc (Hons) in Information Technology
-											<span class="provider-name"> @ICBT</span>
-										</a>
-									</div>
-									<div class="course-info">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text.</p>
-									</div>
-
-								</div>
-							</th>
-							<th>2017/01/01</th>
 						</tr>
 						<tr>
-							<th>
-								<div class="provider-info">
-									<a href="javascript:"><img src="dist/i/icbt.png" alt="ICBT"></a>
-								</div>
-							</th>
-							<th>
-								<div class="result-box clearfix">
-									<div class="course-name">
-										<a href="javascript:">Bsc (Hons) in Information Technology
-											<span class="provider-name"> @ICBT</span>
-										</a>
-									</div>
-									<div class="course-info">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text.</p>
-									</div>
-
-								</div>
-							</th>
-							<th>2017/01/01</th>
 						</tr>
 					</tbody>
 				</table>
-
 			</div>
-
-
 		</div>
 	</div>
 </div>
