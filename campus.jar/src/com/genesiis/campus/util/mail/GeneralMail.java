@@ -7,7 +7,7 @@ package com.genesiis.campus.util.mail;
 //				add documentation comments
 //			  	Removed GeneralMail() constructor argument 'mailHost'.
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
-
+//20161103 AS  C8-inquiry-form-for-course email class methods modified and bug fixed 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,16 +41,12 @@ public class GeneralMail implements IEmail {
 
     private ArrayList<String> receivers = null;    
     private String sender;    
-//    private String host ;
     private String subject;
     private String emailBody; 
     private Properties properties;
     private Session session ;
     private MimeMessage message ;
-//    private String userName;
-//    private String port;
-//    private String passWord;
-    
+
   
 	/**
      * GeneralMail constructor creates the MimeMessage and Session automatically 
@@ -69,10 +65,6 @@ public class GeneralMail implements IEmail {
     	//this.host = host;    	
     	this.subject = subject;
     	this.emailBody = emailBody;    	    	
-    	//this.userName = userName;
-    	//this.port = port;
-    	//this.passWord = passWord;    	
-    
     	setSystemPropertiesAndMailEnvironment();
     }
     
@@ -118,35 +110,11 @@ public class GeneralMail implements IEmail {
   * @author DN  
   */
 	    private void setProperties(){
-     // properties=System.getProperties();    	
-     // properties.put("mail.smtp.starttls.enable", "true");
-	//	properties.put("mail.smtp.host", "mailtrap.io"); // this.getHost());
-	//	properties.put("mail.smtp.user", this.getUserName()); // User name
-	//	properties.put("mail.smtp.password", this.getPassWord()); // password
-	//	properties.put("mail.smtp.port", this.getPort()); //port number
-	//	properties.put("mail.smtp.ssl.trust", "mailtrap.io"); //----------------2
-	//	properties.put("mail.smtp.auth", "false");
-	//	Session session = Session.getInstance(properties);
-		// Get the default Session object.
-//				Session session = Session.getDefaultInstance(properties,
-//						new Authenticator() {
-//							protected PasswordAuthentication getPasswordAuthentication() {
-//								return new PasswordAuthentication(
-//										"dushantha@genesiis.com", "Appleapple123");
-//							}
-//						});
- //   	message = new MimeMessage(session);
-    	
+ 	
     	try{
-			session = createMailSession();//Session.getInstance(properties);
-			Properties o =session.getProperties();
-			o.setProperty("mail.smtp.starttls.enable", "true");
-			Set<String> s=o.stringPropertyNames();
-			for(String w:s){
-				
-				log.info("property values ====:"+w+":"+o.getProperty(w));
-				
-			}
+    		session = createMailSession();
+			properties = session.getProperties();
+			properties.setProperty("mail.smtp.starttls.enable", "true");
 			
 			//session = Session.getDefaultInstance(o,null);
 		} catch (SQLException sqle) {
