@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //DJ 20161030 c6-list-available-institutes-on-the-view refactored query to identified get all institutes 
 //DJ 20161031 c6-list-available-institutes-on-the-view rename the class name as  CourseProviderDAO.java
 //DJ 20161031 c6-list-available-institutes-on-the-view create findTopViewedProviders()
+//DJ 20161103 c6-list-available-institutes-on-the-view Implemented findTopViewedProviders()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -136,27 +137,43 @@ public class CourseProviderDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Find Top Viewed Providers
+	 * @param CourseProvider DTO
+	 * @author DJ
+	 * @return Collection 
+	 */
 
 	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException{
 		Connection conn = null;
 		PreparedStatement  stmt = null;	
-		final Collection<Collection<String>> allInstitutesList = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
 			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder();
-			
+			final StringBuilder sb = new StringBuilder("SELECT  DISTINCT TOP 10 cp.CODE , CP.UNIQUEPREFIX  FROM ( ");
+			sb.append(" SELECT  TOP 1000  PROV.CODE AS PROVIDERCODE,COUNT(*) AS HITCOUNT,PROG.CODE PROGRAMMCODE,PROG.NAME,  PROV.NAME AS PROVIDERNAME, PROV.UNIQUEPREFIX, PROG.CATEGORY");
+			sb.append(" FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
+			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE INNER JOIN [CAMPUS].PROGRAMMESTAT PSTAT ON PROG.CODE= PSTAT.PROGRAMME ");
+			sb.append("  WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 " );
+			//sb.append(" AND PROG.PROGRAMMESTATUS=1 ")
+			sb.append("  AND CAT.ISACTIVE=1  ");
+			//sb.append(" AND CAT.CODE=3  ");
+			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROV.CODE,PROV.NAME,PROV.UNIQUEPREFIX, PROG.CATEGORY ");
+			sb.append("  ORDER BY HITCOUNT desc");
+			sb.append(" ) NEWTABLE ");
+			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");			
 			
 			stmt = conn.prepareStatement(sb.toString());			
-			stmt.setInt(1, 1);	
+			//stmt.setInt(1, 1);	
 			
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
-				final ArrayList<String> singleInstitute = new ArrayList<String>();
-				/*singleInstitute.add(rs.getString("CODE"));
-				singleInstitute.add(rs.getString("NAME"));
-				singleInstitute.add(rs.getString("UNIQUEPREFIX"));*/
-				allInstitutesList.add(singleInstitute);
+				final ArrayList<String> singleProvider = new ArrayList<String>();
+				singleProvider.add(rs.getString("CODE"));				
+				singleProvider.add(rs.getString("UNIQUEPREFIX"));
+				allProviderList.add(singleProvider);
 			}
 			
 		} catch (SQLException sqlException) {
@@ -173,7 +190,7 @@ public class CourseProviderDAO implements ICrud{
 				conn.close();
 			}
 		}
-		return null;
+		return allProviderList;
 	}
 
 }
