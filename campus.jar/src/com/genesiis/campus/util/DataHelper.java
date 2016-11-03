@@ -2,7 +2,8 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
-//20161027 CM CM c9-make-inquiry-for-institute add SEND_INSTITUTE_INQUIRY and refactor getResultPage()
+//20161027 CM c9-make-inquiry-for-institute add SEND_INSTITUTE_INQUIRY and refactor getResultPage()
+//20161103 CM c9-make-inquiry-for-institute Implemented getRemoteAddr() method
 
 import java.io.IOException;
 import java.util.Collection;
@@ -32,7 +33,9 @@ public class DataHelper implements IDataHelper {
 	private String redirectPage = "login.jsp";
 
 	public DataHelper(HttpServletRequest request) {
+	
 		this.request = request;
+		
 	}
 
 	/**
@@ -86,6 +89,7 @@ public class DataHelper implements IDataHelper {
 	@Override
 	public String getRedirectPage() {
 		return this.redirectPage;
+		
 	}
 
 	@Override
@@ -193,6 +197,21 @@ public class DataHelper implements IDataHelper {
 	 */
 	public Object getAttribute(String attributeName){
 		return request.getAttribute(attributeName);
+	}
+
+	
+
+	/**
+	 * getRemoteAddr method   Returns the Internet Protocol (IP) address of the client or last proxy that sent the request.
+	 * request instance by attributeName
+	 * @author Chathuri
+	 * @param attributeName String
+	 * @return Object 
+	 * @since 20161103
+	 */
+	@Override
+	public String getRemoteAddr() {
+		return request.getRemoteAddr();
 	}
 
 }
