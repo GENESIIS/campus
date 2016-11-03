@@ -3,6 +3,8 @@ package com.genesiis.campus.util;
 //20161025 PN c11-criteria-based-filter-search INIT QueryBuildingHelper.java to implement query building helper method. 
 //20161027 PN c11-criteria-based-filter-search modified assignMapData() method and extractFromJason() method. - WIP
 //20161102 PN c11-criteria-based-filter-search changed dynamicQuery() methods' string concatenation order.
+//20161103 PN c11-criteria-based-filter-search modified dynamicQuery() methods' string concatenation order.
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +44,8 @@ public class QueryBuildingHelper {
 				}
 				var = var + criteria;
 			}
+			query = mainQuery.concat(var);
 		}
-		query = var.concat(mainQuery);
 		return query;
 	}
 
@@ -67,6 +69,7 @@ public class QueryBuildingHelper {
 				map.put(criteria, valuesToArray);
 			}
 		}
+
 		return map;
 	}
 
