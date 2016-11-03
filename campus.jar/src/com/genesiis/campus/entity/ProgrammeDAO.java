@@ -87,17 +87,17 @@ public class ProgrammeDAO implements ICrud {
 				final ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
-					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-					singleProgrammeList.add(rs.getString("CODE"));
-					singleProgrammeList.add(rs.getString("NAME"));
-					singleProgrammeList.add(rs.getString("DESCRIPTION"));
-					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-					singleProgrammeList.add(rs.getString("PROVIDER"));
-					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-					singleProgrammeList.add(rs.getString("IMAGE"));
-					
-					final Collection<String> singleProgrammeCollection = singleProgrammeList;
-					allProgrammeList.add(singleProgrammeCollection);
+//					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+//					singleProgrammeList.add(rs.getString("CODE"));
+//					singleProgrammeList.add(rs.getString("NAME"));
+//					singleProgrammeList.add(rs.getString("DESCRIPTION"));
+//					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+//					singleProgrammeList.add(rs.getString("PROVIDER"));
+//					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+//					singleProgrammeList.add(rs.getString("IMAGE"));
+//					
+//					final Collection<String> singleProgrammeCollection = singleProgrammeList;
+//					allProgrammeList.add(singleProgrammeCollection);
 				}
 			}else{
 				allProgrammeList = getAll();	
@@ -136,17 +136,17 @@ public class ProgrammeDAO implements ICrud {
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-				singleProgrammeList.add(rs.getString("CODE"));
-				singleProgrammeList.add(rs.getString("NAME"));
-				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-				singleProgrammeList.add(rs.getString("PROVIDER"));
-				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-				singleProgrammeList.add(rs.getString("IMAGE"));
-
-				final Collection<String> singleProgrammeCollection = singleProgrammeList;
-				allProgrammeList.add(singleProgrammeCollection);
+//				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+//				singleProgrammeList.add(rs.getString("CODE"));
+//				singleProgrammeList.add(rs.getString("NAME"));
+//				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+//				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+//				singleProgrammeList.add(rs.getString("PROVIDER"));
+//				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+//				singleProgrammeList.add(rs.getString("IMAGE"));
+//
+//				final Collection<String> singleProgrammeCollection = singleProgrammeList;
+//				allProgrammeList.add(singleProgrammeCollection);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());

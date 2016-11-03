@@ -43,9 +43,9 @@ public class QueryBuildingHelper {
 					criteria = criteria.concat(" AND ");
 				}
 				var = var + criteria;
-			}
-			query = mainQuery.concat(var);
+			}			
 		}
+		query = " AND "+ var.concat(mainQuery);
 		return query;
 	}
 
