@@ -5,11 +5,19 @@ package com.genesiis.campus.entity.model;
 public class CaptchaResponse {
     public boolean success;
 
-    public boolean isSuccess() {
-        return success;
-    }
+	/**
+	 * @return the success
+	 */
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	/**
+	 * @param success the success to set
+	 */
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+    
 }
