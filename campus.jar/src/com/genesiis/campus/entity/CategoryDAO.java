@@ -56,7 +56,7 @@ public class CategoryDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 
-			String query = "SELECT CODE , NAME ,DESCRIPTION ,IMAGE FROM [CAMPUS].[CATEGORY] WHERE ISACTIVE = 1 AND CODE = ?";
+			String query = "SELECT * FROM [CAMPUS].[CATEGORY] WHERE ISACTIVE = 1 AND CODE = ?";
 
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, category.getCode());
