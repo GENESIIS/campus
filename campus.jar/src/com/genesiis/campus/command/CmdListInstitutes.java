@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.InstituteProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
@@ -23,7 +23,7 @@ public class CmdListInstitutes implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
-		final InstituteProviderDAO providerDAO = new InstituteProviderDAO();
+		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		try {
 			int categoryCode = 0;

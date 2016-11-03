@@ -13,7 +13,7 @@ public enum Operation {
 
 	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),
 	//IST_ALL_INSTITUTES("LAAI","viewMoreInstitute.jsp"),
-	LIST_TOP_COURSE_PROVIDERS("TCPL","topCourseProviderList"),
+	LIST_TOP_COURSE_PROVIDERS("TCPL","topCourseProviderList.jsp"),
 	BAD_OPERATION("BO", "commandNotFound.jsp");
 			
 	private final String commandString;

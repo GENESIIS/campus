@@ -12,14 +12,37 @@
 <title>Campus.lk -Institutes</title>
 </head>
 <body>
-<h2>More institute View</h2>
+<h2>Top View</h2>
 
 	<table style="border: 2px; border-color: black; border-style: solid;">
 		<tr>
 			<th></th>
 			<th>CODE</th>
-			<th>NAME</th>
-			<th>AMOUNT</th>
+			<th>NAME</th>			
+		</tr>
+		<c:forEach var="provider" items="${result.collection}">			
+			<tr>
+				<c:forEach var="pvAttribute" items="${provider}" varStatus="vs">				
+				<c:if test="${vs.index == 1}">
+				<td>
+					image
+						<a href="#">
+							<img src="${pvAttribute}"/>
+						</a>
+				</td>
+				</c:if>
+				<td><c:out value="${pvAttribute}" /></td>
+				</c:forEach>
+			</tr>
+		</c:forEach>
+	</table>
+	<h2>Top Rated</h2>
+
+	<table style="border: 2px; border-color: black; border-style: solid;">
+		<tr>
+			<th></th>
+			<th>CODE</th>
+			<th>NAME</th>			
 		</tr>
 		<c:forEach var="provider" items="${result.collection}">			
 			<tr>
