@@ -80,7 +80,7 @@ public class ProgrammeDAO implements ICrud {
 				log.info(query);
 
 				stmt = conn.prepareStatement(query);
-				if(districtCode.length != 0){
+				if ((districtCode.length != 0) && (districtCode != null)) {
 					stmt.setInt(1, Integer.parseInt(districtCode[0]));
 				}
 							
@@ -103,10 +103,10 @@ public class ProgrammeDAO implements ICrud {
 				allProgrammeList = getAll();	
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
