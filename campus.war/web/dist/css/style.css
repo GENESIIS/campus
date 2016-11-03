@@ -518,6 +518,10 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
+.main-category {
+  display: block;
+  position: relative; }
+
 /* Modules */
 .btn-home {
   display: block;
