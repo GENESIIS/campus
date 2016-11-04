@@ -23,8 +23,8 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CourseProviderCorporateProgrammeDAO implements ICrud {
-	static Logger Log = Logger.getLogger(CorporateProgrammeDAO.class.getName());
+public class CourseProviderCategoryProgrammeDAO implements ICrud {
+	static Logger Log = Logger.getLogger(CategoryProgrammeDAO.class.getName());
 
 	@Override
 	public int delete(Object object) throws SQLException, Exception {

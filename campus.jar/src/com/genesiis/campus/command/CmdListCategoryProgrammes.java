@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.CorporateProgrammeDAO;
-import com.genesiis.campus.entity.CourseProviderCorporateProgrammeDAO;
+import com.genesiis.campus.entity.CategoryProgrammeDAO;
+import com.genesiis.campus.entity.CourseProviderCategoryProgrammeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -34,8 +34,8 @@ public class CmdListCategoryProgrammes implements ICommand {
 	
 	static Logger Log = Logger.getLogger(CmdListCategoryProgrammes.class.getName());
 
-	final ICrud programmeDao = new CorporateProgrammeDAO();	
-	final ICrud courseProviderDao = new CourseProviderCorporateProgrammeDAO();	
+	final ICrud programmeDao = new CategoryProgrammeDAO();	
+	final ICrud courseProviderDao = new CourseProviderCategoryProgrammeDAO();	
 		
 	public CmdListCategoryProgrammes() {
 		
@@ -142,14 +142,14 @@ public class CmdListCategoryProgrammes implements ICommand {
 				}
 			}
 
-			// Get course providers that offer programmes that belong to the same category as categoryCode
-			programme.setLevel(0); // level property is used here to act as a flag
-			courseProviderCollection = courseProviderDao.findById(programme);
-			
-			// Get course providers that offer programmes that belong to the same category as categoryCode 
-			// and when those programmes are the ones with the highest number of views
-			programme.setLevel(1); // level property is used here to act as a flag
-			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);			
+//			// Get course providers that offer programmes that belong to the same category as categoryCode
+//			programme.setLevel(0); // level property is used here to act as a flag
+//			courseProviderCollection = courseProviderDao.findById(programme);
+//			
+//			// Get course providers that offer programmes that belong to the same category as categoryCode 
+//			// and when those programmes are the ones with the highest number of views
+//			programme.setLevel(1); // level property is used here to act as a flag
+//			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);			
 			
 			iview.setCollection(programmeListForPage);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);

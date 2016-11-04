@@ -20,8 +20,8 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CorporateProgrammeDAO implements ICrud {
-	static Logger Log = Logger.getLogger(CorporateProgrammeDAO.class.getName());
+public class CategoryProgrammeDAO implements ICrud {
+	static Logger Log = Logger.getLogger(CategoryProgrammeDAO.class.getName());
 
 	@Override
 	public int delete(Object object) throws SQLException, Exception {
