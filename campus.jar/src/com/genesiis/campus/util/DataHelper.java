@@ -1,7 +1,8 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
-//20151027 JH c7-higher-education-landing-page add new switch case 
+//20161027 JH c7-higher-education-landing-page add new switch case 
+//20161104 JH c7-higher-education-landing-page add new switch case 
 
 import java.io.IOException;
 
@@ -57,7 +58,9 @@ public class DataHelper implements IDataHelper {
 		case BAD_OPERATION:
 			resultPage = o.getPageURL();
 			break;
-		
+		case LIST_CATEGORY_LANDING_PAGE:
+			resultPage = o.getPageURL();
+			break;
 		default:
 			break;
 		}
