@@ -18,11 +18,10 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-
-
 public class ModuleDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(ModuleDAO.class.getName());
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -42,11 +41,11 @@ public class ModuleDAO implements ICrud {
 	}
 
 	/**
-	 * Search Module  details and relevant to the programme and the semesters 
+	 * Search Module details and relevant to the programme and the semesters
 	 * 
 	 * @author Chathuri
 	 * @param Object
-	 *            :  programme object of Object type
+	 *            : programme object of Object type
 	 * @return Collection<Collection<String>> of Collection
 	 */
 	@Override
@@ -61,9 +60,9 @@ public class ModuleDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 
 			String query = "Select "
-					+ "s.NAME,s.CODE, m.NAME,m.DESCRIPTION,m.INTERNALCODEOFMODULE,m.CREDITVALUE, m.TUTOREDBY "
+					+ "s.NAME,s.CODE, m.NAME,m.DESCRIPTION,m.INTERNALCODEOFMODULE,m.CREDITVALUE, m.TUTOREDBY,t.FIRSTNAME, t.LASTNAME,m.ISTUTORRELATED "
 					+ "from CAMPUS.PROGRAMME p inner join CAMPUS.SEMESTER s on s.programme = p.code "
-					+ "inner join CAMPUS.MODULE m on m.semester = s.code where p.CODE=? and m.ISACTIVE='1'";
+					+ "inner join CAMPUS.MODULE m on m.semester = s.code inner join CAMPUS.TUTOR t on t.CODE=m.TUTOR where p.CODE=? and m.ISACTIVE='1'";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
@@ -75,10 +74,20 @@ public class ModuleDAO implements ICrud {
 				singleModuleDetails.add(rs.getString(2));// Code
 				singleModuleDetails.add(rs.getString(3));// Module Name
 				singleModuleDetails.add(rs.getString(4));// Description
-				singleModuleDetails.add(rs.getString(5));// Internal code of module
+				singleModuleDetails.add(rs.getString(5));// Internal code of
+															// module
 				singleModuleDetails.add(rs.getString(6));// credit value
-				singleModuleDetails.add(rs.getString(7));// Tutored by
-				
+
+				int isTutorRelated = Integer.parseInt(rs.getString(10));// IsTutorRelated
+				if (isTutorRelated == 1) {
+					singleModuleDetails.add(rs.getString(8) + " "
+							+ rs.getString(9));// Tutored First name + Last Name
+
+				} else {
+
+					singleModuleDetails.add(rs.getString(7));// Tutored by
+				}
+
 				programmeDetails.add(singleModuleDetails);
 
 			}

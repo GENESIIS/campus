@@ -86,8 +86,6 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(6));// counselorPhone
 				singleprogrameDetails.add(rs.getString(7));// Course provider
 															// Name
-				
-				
 				int accountType=Integer.parseInt(rs.getString(13));
 				if(accountType==1){
 					singleprogrameDetails.add(rs.getString(8)+".campus.lk");// Course provider mini Web link
