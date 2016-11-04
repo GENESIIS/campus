@@ -2,6 +2,8 @@ package com.genesiis.campus.command;
 
 //20161103 JH c7-higher-education-landing-page CmdListCategoryLandingPage.java created
 //20161103 JH c7-higher-education-landing-page implement unimplemented methods
+//20161103 JH c7-higher-education-landing-page refactor code
+//20161104 JH c7-higher-education-landing-page code modification 
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -48,7 +50,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 		Collection<Collection<String>> categoryCollection = null;
 
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-
+		log.info("..............>>>>>>");
 		Validator validator = new Validator();
 		if (!validator.isEmpty(helper)) {
 			final String categoryId = helper.getParameter("categoryId");
@@ -67,8 +69,9 @@ public class CmdListCategoryLandingPage implements ICommand {
 				category.setCode(Integer.parseInt(categoryId));
 				
 				final Collection<Collection<String>> categoryDetails = categoryDAO.findById(category);
+			//	view.setCollection(categoryDetails);
 				helper.setAttribute("category", categoryDetails);
-				view.setCollection(categoryDetails);
+				
 				
 				programme.setLevel(1);//this level=1 is just to identify to get course 
 				//providers with higher program stats
