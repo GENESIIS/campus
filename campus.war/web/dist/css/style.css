@@ -569,7 +569,9 @@ body, html {
         display: block;
         position: relative; }
         .main-category .content-holder .course-filter-panel .filter-result-table .course-info {
-          display: block; }
+          display: block;
+          padding-top: 20px;
+          padding-bottom: 20px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name {
             display: inline-block;
             width: 15.2%;
@@ -577,28 +579,49 @@ body, html {
             .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name {
               display: block;
               text-align: center;
-              font-family: "Roboto", sans-serif; }
+              font-family: "Roboto", sans-serif;
+              font-size: 20px;
+              color: #848484;
+              line-height: 30px; }
             .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
               display: block;
               text-align: center; }
               .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
-                width: 75px; }
+                width: 75px;
+                padding-top: 8px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
             display: inline-block;
             position: relative;
             width: 46.8%;
             float: left;
-            text-align: center; }
+            text-align: center;
+            padding-top: 45px;
+            color: #717171;
+            font-size: 18px;
+            font-family: Oswald; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location {
             display: inline-block;
             width: 20.6%;
             float: left;
-            text-align: center; }
+            text-align: center;
+            padding-top: 50px; }
+            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location a {
+              color: #4f7dd9;
+              font-size: 18px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration {
             display: inline-block;
             float: right;
             width: 17.4%;
-            text-align: right; }
+            text-align: right;
+            color: #6b6c6f;
+            font-size: 20px;
+            padding-top: 36px; }
+            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration span {
+              font-size: 18px;
+              color: #a6a8ab;
+              font-family: "Roboto", sans-serif;
+              line-height: 35px;
+              font-weight: lighter; }
 
 /* Modules */
 .btn-home {
