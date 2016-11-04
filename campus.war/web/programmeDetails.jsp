@@ -249,6 +249,16 @@
 						<td><h3>Find More</h3></td>
 						<td></td>
 					</tr>
+
+					<!-- Load Location  details relevant to programme   -->
+					<c:forEach var="location" items="${locationView}" varStatus="loop">
+						<tr>
+							<td><c:out value="${location[0]}"></c:out> - <c:out
+									value="${location[1]}"></c:out></td>
+							<td></td>
+						</tr>
+					</c:forEach>
+
 					<!-- Load Intakes  details relevant to programme   -->
 					<c:forEach var="classType" items="${classTypeView}"
 						varStatus="loop">
@@ -269,14 +279,15 @@
 										value="${classType[1]}"></c:out></td>
 								<td></td>
 							</tr>
-						</c:if>
-						<c:if test="${classType[2] eq '0' }">
+							<c:if test="${classType[2] eq '0' }">
 
+							</c:if>
 						</c:if>
 						<c:if test="${classType[2] ne '0' }">
 							<tr>
 								<td>Maximum Count participant: <c:out
-										value="${classType[2]}"></c:out></td>
+										value="${classType[2]}"></c:out>
+								</td>
 								<td></td>
 							</tr>
 						</c:if>

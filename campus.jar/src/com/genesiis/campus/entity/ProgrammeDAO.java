@@ -68,7 +68,7 @@ public class ProgrammeDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 
-			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.WEBLINK,p.IMAGE,l.NAME,m.NAME,p.EMAIL from CAMPUS.PROGRAMME p"
+			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.UNIQUEPREFIX,p.IMAGE,l.NAME,m.NAME,p.EMAIL,c.ACCOUNTTYPE from CAMPUS.PROGRAMME p"
 					+ " inner join CAMPUS.COURSEPROVIDER c on p.COURSEPROVIDER=c.CODE inner join CAMPUS.LEVEL l on p.level=l.code inner join CAMPUS.MAJOR m on m.code=p.major where p.CODE=?";
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, programme.getCode());
@@ -86,8 +86,15 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(6));// counselorPhone
 				singleprogrameDetails.add(rs.getString(7));// Course provider
 															// Name
-				singleprogrameDetails.add(rs.getString(8));// Course provider
-															// Web link
+				
+				
+				int accountType=Integer.parseInt(rs.getString(13));
+				if(accountType==1){
+					singleprogrameDetails.add(rs.getString(8)+".campus.lk");// Course provider mini Web link
+				}else{
+					singleprogrameDetails.add(rs.getString(8));// Course provider  Web link
+				}
+				
 				singleprogrameDetails.add(rs.getString(9));// Image
 				singleprogrameDetails.add(rs.getString(10));// Level Name
 				singleprogrameDetails.add(rs.getString(11));// Major Name

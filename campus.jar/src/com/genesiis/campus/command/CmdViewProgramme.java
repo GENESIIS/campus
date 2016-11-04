@@ -19,6 +19,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.IntakeDAO;
 import com.genesiis.campus.entity.ModuleDAO;
 import com.genesiis.campus.entity.ProgrammeDAO;
+import com.genesiis.campus.entity.ProgrammeLocationDAO;
 import com.genesiis.campus.entity.SemesterDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
@@ -55,6 +56,7 @@ public class CmdViewProgramme implements ICommand {
 			ICrud intakeDAO = new IntakeDAO();
 			ICrud moduleDAO = new ModuleDAO();
 			ICrud classTypeDAO = new ClassTypeDAO();
+			ICrud locationDAO = new ProgrammeLocationDAO();
 			
 			int programmeId = Integer.parseInt(helper
 					.getParameter("programmeCode"));
@@ -76,10 +78,14 @@ public class CmdViewProgramme implements ICommand {
 			Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
 					.findById(programme);
 			
+			Collection<Collection<String>> locationDAOCollection  = locationDAO
+					.findById(programme);
+			
 			helper.setAttribute("semesterView", semesterDAOCollection);
 			helper.setAttribute("programmeView", programmeDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 			helper.setAttribute("classTypeView", classTypeDAOCollection);
+			helper.setAttribute("locationView", locationDAOCollection);
 			
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
