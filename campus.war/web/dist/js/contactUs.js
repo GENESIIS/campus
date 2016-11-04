@@ -9,7 +9,7 @@ function validateForm(){
 	isFieldFilled(isValidPhoneNumber(document.contactUsForm.contactNumber.value),"Phone Number Field");	
 	isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field");
 	isFieldFilled(isempty(document.contactUsForm.message.value),"message Field");
-	isFieldFilled(isHumanTestPassed(),"Correctly 10-4");
+	//isFieldFilled(isHumanTestPassed(),"Correctly 10-4");
 }
 
 /**
@@ -31,10 +31,11 @@ function isHumanTestPassed(){
  * @param elementName  string to be append to the produced message
  */
 
-function isFieldFilled(flag, elementName){	
+function isFieldFilled(flag, elementName){		
 	if(!flag){
-		alert(elementName+ "must be filled out Correctly");
+		alert(elementName+ "must be filled out Correctly");		
 	}
+	
 }
 
 /**

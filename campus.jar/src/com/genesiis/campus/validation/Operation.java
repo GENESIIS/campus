@@ -9,7 +9,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	CONTACT_US_PUBLC("FBTSA","contactUs.jsp"),
+	CONTACT_US_PUBLC("FBTSA","index.jsp"),//"contactUs1.jsp"),
 	BAD_OPERATION("BO", "commandNotFound.jsp");
 			
 	private final String commandString;

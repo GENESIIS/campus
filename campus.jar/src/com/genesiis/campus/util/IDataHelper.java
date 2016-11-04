@@ -30,4 +30,5 @@ public interface IDataHelper {
 	void setRedirectPage(String pageName);
 	
 	public Object getAttribute(String attributeName);
+	public void SetCovtextAttribute(String attributeName,Object value);
 }

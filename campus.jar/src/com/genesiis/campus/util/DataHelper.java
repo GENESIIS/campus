@@ -193,5 +193,10 @@ public class DataHelper implements IDataHelper {
 	public Object getAttribute(String attributeName){
 		return request.getAttribute(attributeName);
 	}
+	
+	
+	public void SetCovtextAttribute(String attributeName,Object value){
+		 request.getServletContext().setAttribute(attributeName, value);
+	}
 
 }

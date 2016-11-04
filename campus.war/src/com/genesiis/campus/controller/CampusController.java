@@ -67,6 +67,7 @@ public class CampusController extends HttpServlet {
 		}
 
 		request.setAttribute("result", result);
+		log.error("CONTEXTPARAMETER:=====:"+request.getServletContext().getAttribute("pageSelector"));
 		request.getRequestDispatcher(helper.getResultPage(cco)).forward(
 				request, response);
 

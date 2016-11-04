@@ -21,7 +21,7 @@
     <!--<link rel="stylesheet" href="css/angular-material.min.css" />-->
     <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
     <!--<link href="css/jk-carousel.min.css" rel="stylesheet">-->
-	<!--  c:set var="pageSelector" scope="application" value="none"/-->
+	
 </head>
 <body>
 
@@ -30,19 +30,7 @@
 
 <!-- Main Container  -->
 <div ng-view></div>
-<h3><c:out value="Value of the ContextParameter ${applicationScope.pageSelector }"></c:out></h3>
-	<c:choose>
-		<c:when test="${applicationScope.pageSelector == 'Result'}">
-		<h3><c:out value="XYZ in side the cwhen"/></h3>		
 
-
-
-			<%-- <div ng-include="'dist/partials/contactUs1.jsp'"> 
-			</div>--%>
-		<h3><c:out value="passed the import "/></h3>
-		</c:when>
-		
-	</c:choose>
 <!-- Footer -->
 <footer ng-include="'dist/partials/layout/footer.jsp'"></footer>
 
@@ -65,15 +53,5 @@
 <!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
 <script src="dist/js/contactUs.js"></script>
 
-<script type="text/javascript">
-jQuery(document).load(function(){
-	console.log("Entered document load function...");
-	
-	jQuery('.list-inline').append('<li><a id="abc" href="#/result">Result</a></li>');
-	console.log("Created Result link...");
-	jQuery('.list-inline').find('#abc').trigger('click');	
-	console.log("Created document click...");
-});
-</script>
 </body>
 </html>

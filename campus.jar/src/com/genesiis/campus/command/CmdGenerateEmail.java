@@ -91,9 +91,11 @@ public class CmdGenerateEmail implements ICommand {
 					
 					 }					 
 			 
-					 status=this.sendMail();
-					 message = systemMessage(status);
+					 //status=this.sendMail();
+					// message = systemMessage(status);
 					 helper.setAttribute("message", message);
+					 helper.SetCovtextAttribute("pageSelector", "Result");
+					
 					 
 
 		 } catch (MessagingException msgexp){
