@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 // 				field data when fetching data in findById()
 //20161028 MM c5-corporate-training-landing-page Corrected query result processing
 // 				code to remove accessing invalid fields
+//20161104 MM Added code to DAO method to retrieve level and major names for programmes
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +41,8 @@ public class CorporateProgrammeDAO implements ICrud {
 			int categoryCode = programme.getCategory();
 			
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
-					+ "ct.NAME AS CLASSTYPENAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
+					+ "ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
+					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
 					+ "SELECT TOP 10 NEWID() as dummy, a.CODE FROM ("
 					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p "
 					+ "WHERE p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?) a ORDER BY NEWID()"
@@ -48,6 +50,8 @@ public class CorporateProgrammeDAO implements ICrud {
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = b.CODE) "
 					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE) "
 					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = p.MAJOR AND m.ISACTIVE = ?) "
+					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = p.LEVEL AND l.ISACTIVE = ?) "
 					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
 					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY p.CODE";
 
@@ -57,6 +61,7 @@ public class CorporateProgrammeDAO implements ICrud {
 			ps.setInt(2, 1);
 			ps.setInt(3, 1);
 			ps.setInt(4, 1);
+			ps.setInt(5, 1);
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
@@ -108,6 +113,8 @@ public class CorporateProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("TOWNCODE"));
 			singleProgramme.add(rs.getString("TOWNNAME"));
 			singleProgramme.add(rs.getString("UNIQUEPREFIX"));
+			singleProgramme.add(rs.getString("MAJORNAME"));
+			singleProgramme.add(rs.getString("LEVELNAME"));
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}
