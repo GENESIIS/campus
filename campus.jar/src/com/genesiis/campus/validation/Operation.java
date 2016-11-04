@@ -10,8 +10,8 @@ public enum Operation {
 
 
 	BAD_OPERATION("BO", "commandNotFound.jsp"),
-	LIST_CATEGORY_LANDING_PAGE("LCLP", "higherEducation.jsp"),
-	LIST_HIGHER_EDUCATION_PROGRAMMES("LHEP" , "higherEducation.jsp");
+	LIST_CATEGORY_LANDING_PAGE("LCLP", "categoryLandingPage.jsp");
+	//LIST_HIGHER_EDUCATION_PROGRAMMES("LHEP" , "categoryLandingPage.jsp");
 			
 	private final String commandString;
 	private final String viewJspUrl;
