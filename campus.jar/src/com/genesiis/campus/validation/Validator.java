@@ -28,7 +28,6 @@ public class Validator {
 		boolean valid = false;
 		if(helper.getParameter("categoryId") == null){
 			valid = true;
-			System.out.print(">>>>>>>>>>null");
 		}
 		
 		return valid;
