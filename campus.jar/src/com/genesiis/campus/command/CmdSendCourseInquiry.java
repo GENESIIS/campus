@@ -16,6 +16,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
@@ -48,6 +49,8 @@ public class CmdSendCourseInquiry implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = "Unsuccessfull";
+		final ReCaptchaManager reCaptchaManager=new ReCaptchaManager();
+		boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
 		String gsonData = helper.getParameter("jsonData");
 		data = getInstituteInquirydetails(gsonData);
 		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();

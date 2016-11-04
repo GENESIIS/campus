@@ -1,4 +1,7 @@
 <!-- Inquiry Form Screen -->
+
+<%-- <%@ include file="../../../../index.jsp" > --%>
+
 <div class="inquiry-screen clearfix">
     <div class="inner-header">
         <div class="main-topic">
@@ -21,52 +24,53 @@
             <!-- Inquiry form - Filing Area -->
             <div class="submit-area center-block clearfix">
                 <h1 class="page-topic-t2">You are making inquiry about <span class="colr-white">ICBT</span></h1>
-                <form class="submit-form" action="">
+                 <form class="submit-form" action=""> 
                     <!-- First Name -->
                     <div class="f-name">
                         <label for="input-firstName">Full Name <span>*</span></label><br>
-                        <input type="text" id="input-firstName">
+                        <input type="text" name="fullname" id="fullname">
                     </div>
                     <!-- Email -->
                     <div class="email">
                         <label for="eMail">Email <span>*</span></label><br>
-                        <input type="text" id="eMail">
+                        <input type="text" name="email" id="email">
                     </div>
                     <!--Country Code -->
                     <div class="county-code">
                         <label for="input-county-code">Country Code <span>*</span></label><br>
-                        <input type="text" id="input-county-code">
+                        <input type="text" name="countryCode" id="countryCode">
                     </div>
                     <!-- Area Code -->
                     <div class="area-code">
                         <label for="input-area-code">Area Code <span>*</span></label><br>
-                        <input type="text" id="input-area-code">
+                        <input type="text" name="areaCode" id="areaCode">
                     </div>
                     <!-- Telephone -->
                     <div class="tp-number">
                         <label for="input-tp-no">Telephone No <span>*</span></label><br>
-                        <input type="text" id="input-tp-no">
+                        <input type="text" name="telNum" id="telNum">
                     </div>
                     <!-- Enquiry Title -->
                     <div class="inquiry-title">
                         <label for="input-inquiry-title">Inquiry Title <span>*</span></label><br>
-                        <input type="text" id="input-inquiry-title">
+                        <input type="text"name="inquiryTitle" id="inquiryTitle">
                     </div>
                     <!-- Message -->
                     <div class="inquiry-message">
                         <label for="text-userMessage">Message <span>*</span></label><br>
-                        <textarea id="text-userMessage" rows="10"></textarea>
+                        <textarea name="inquiry" id="inquiry" rows="10"></textarea>
                         <p class="pull-right"><span>*</span> Required fields</p>
+                    <input type="hidden" value="1" name="student" id="student">
+					<input type="hidden" value="7" name="programmeCode" id="programmeCode">
+			
                     </div>
                     <!-- ReCaptcha -->
                     <div class="re-captcha">
-                        <a href="javascript:">
-                            <img src="dist/i/contactUs/recaptcha.gif" alt="">
-                        </a>
+                        <div class="g-recaptcha" data-sitekey="6LdsagoUAAAAALS1tjjqyHe-7EvIIJF1kaKo-Pmw"></div>
                     </div>
                     <!-- btn Submit -->
-                    <input class="btn-submit" type="submit" value="Send Message">
-                </form>
+                    <button class="btn-submit" type="button" name="" onclick="sendCourseInquiry()" value="Send Message">Send Message</button>
+                 </form> 
                 <!-- End Submit form -->
             </div>
             <!-- End Inquiry form - Filing Area -->

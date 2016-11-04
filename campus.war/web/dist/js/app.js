@@ -7,22 +7,22 @@ angular.module('CampusApp',['ngRoute'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/',{
-                templateUrl : "dist/partials/landing.html"
+                templateUrl : "dist/partials/landing.jsp"
             })
             .when('/about',{
-                templateUrl : "dist/partials/about.html"
+                templateUrl : "dist/partials/about.jsp"
             })
             .when('/contact',{
-                templateUrl : "dist/partials/contact-us.html"
+                templateUrl : "dist/partials/contact-us.jsp"
             })
             .when('/courses',{
-                templateUrl : "dist/partials/courses.html" 
+                templateUrl : "dist/partials/courses.jsp" 
             })
             .when('/institute-inquiry',{
-                templateUrl : "dist/partials/mini-web/inquiry/institute-inquiry-form.html"
+                templateUrl : "dist/partials/mini-web/inquiry/institute-inquiry-form.jsp"
             })
             .when('/course-inquiry',{
-                templateUrl : "dist/partials/mini-web/inquiry/course-inquiry-form.html"
+                templateUrl : "dist/partials/mini-web/inquiry/course-inquiry-form.jsp"
             });
     })
 
