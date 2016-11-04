@@ -7,7 +7,7 @@ angular.module('CampusApp',['ngRoute'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/',{
-                templateUrl : "dist/partials/landing1.jsp"
+                templateUrl : "dist/partials/landing.html"
             })
             .when('/about',{
                 templateUrl : "dist/partials/about.html"
@@ -17,9 +17,6 @@ angular.module('CampusApp',['ngRoute'])
             })
             .when('/courses',{
                 templateUrl : "dist/partials/courses.html" 
-            })
-            .when('/result',{
-                templateUrl : "dist/partials/Result.jsp"
             }); 
     })
 
