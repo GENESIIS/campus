@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.CategoryDAO;
-import com.genesiis.campus.entity.CategoryProgrammeDAO;
+import com.genesiis.campus.entity.CategoryCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Category;
@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 public class CmdListCategoryLandingPage implements ICommand {
 
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(CmdListCategoryProgramme.class.getName());
+			.getLogger(CmdListCategoryLandingPage.class.getName());
 	private IView landingPageData;
 
 	public CmdListCategoryLandingPage(IView landingPageData) {
@@ -46,16 +46,15 @@ public class CmdListCategoryLandingPage implements ICommand {
 			Exception {
 
 		ICrud categoryDAO = new CategoryDAO();
-		ICrud categoryProgrammeDAO = new CategoryProgrammeDAO();
+		ICrud categoryProgrammeDAO = new CategoryCourseProviderDAO();
 		Collection<Collection<String>> categoryCollection = null;
 
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-		log.info("..............>>>>>>");
+
 		Validator validator = new Validator();
 		if (!validator.isEmpty(helper)) {
 			final String categoryId = helper.getParameter("categoryId");
-			
-			
+
 			final Programme programme = new Programme();
 
 			programme.setActive(true);
@@ -63,26 +62,28 @@ public class CmdListCategoryLandingPage implements ICommand {
 			programme.setCategory(Integer.parseInt(categoryId));
 
 			try {
-				
-				final Category category = new Category();	
-				
+
+				final Category category = new Category();
+
 				category.setCode(Integer.parseInt(categoryId));
-				
-				final Collection<Collection<String>> categoryDetails = categoryDAO.findById(category);
-			//	view.setCollection(categoryDetails);
-				helper.setAttribute("category", categoryDetails);
-				
-				
-				programme.setLevel(1);//this level=1 is just to identify to get course 
-				//providers with higher program stats
+
+				final Collection<Collection<String>> categoryDetails = categoryDAO
+						.findById(category);
+				view.setCollection(categoryDetails);
+
+				programme.setLevel(1);// this level=1 is just to identify to get
+										// course
+				// providers with higher program stats
 				final Collection<Collection<String>> featuredCourseProviders = categoryProgrammeDAO
 						.findById(programme);
-				helper.setAttribute("featuredInstitutes", featuredCourseProviders);
 
-				//list 20 course providers randomly
+				// list 20 course providers randomly
 				programme.setLevel(0);
 				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO
 						.findById(programme);
+
+				helper.setAttribute("featuredInstitutes",
+						featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
 
 			} catch (Exception exception) {
@@ -92,7 +93,6 @@ public class CmdListCategoryLandingPage implements ICommand {
 			}
 
 		}
-
 
 		return view;
 	}
