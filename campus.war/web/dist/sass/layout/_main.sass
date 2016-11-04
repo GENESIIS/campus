@@ -477,19 +477,23 @@ body,html
           display: block
           padding-top: 20px
           padding-bottom: 20px
+          &:nth-child(even)
+            background: rgba(55, 71, 79, 0.07)
 
           .col-name
             display: inline-block
             width: 15.2%
             float: left
+            border-right: 1px solid #e1e1e1
 
             .pro-name
               display: block
               text-align: center
               font-family: 'Roboto', sans-serif
               font-size: 20px
-              color: #848484
+              color: #193949
               line-height: 30px
+              font-weight: 600
 
             .pro-logo
               display: block
@@ -508,6 +512,7 @@ body,html
             color: #717171
             font-size: 18px
             font-family: Oswald
+            border-right: 1px solid #e1e1e1
 
 
           .col-location
@@ -516,6 +521,7 @@ body,html
             float: left
             text-align: center
             padding-top: 50px
+            border-right: 1px solid #e1e1e1
             a
               color: #4f7dd9
               font-size: 18px
@@ -524,7 +530,7 @@ body,html
             display: inline-block
             float: right
             width: 17.4%
-            text-align: right
+            text-align: center
             color: #6b6c6f
             font-size: 20px
             padding-top: 36px
