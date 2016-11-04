@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.IQueryBuilder;
 import com.genesiis.campus.util.QueryBuildingHelper;
 
 public class ProgrammeDAO implements ICrud {
@@ -49,7 +50,7 @@ public class ProgrammeDAO implements ICrud {
 
 		//This method to be changed with the PROGRAMSTATUS once defined it in the DML.
 		try {
-			QueryBuildingHelper qbh = new QueryBuildingHelper();
+			IQueryBuilder qbh = new QueryBuildingHelper();
 			Map<String, String[]> queryMap = qbh.assignMapData(qbh
 					.extractFromJason(searchData));
 
@@ -59,9 +60,11 @@ public class ProgrammeDAO implements ICrud {
 			if (!queryMap.isEmpty()) {
 				districtCode = queryMap.get("DISTRICT");
 				queryMap.remove("DISTRICT");
+								
+				
 				String subQuery = " AND d.CODE = ? ";
 				if ((districtCode == null) || (districtCode.length == 0)) {
-					tempquery = qbh.dynamicQuery(queryMap, " AND ");
+					tempquery = qbh.dynamicQuery(queryMap, "");
 				} else {
 					tempquery = qbh.dynamicQuery(queryMap, subQuery);
 				}
@@ -87,17 +90,17 @@ public class ProgrammeDAO implements ICrud {
 				final ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
-//					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-//					singleProgrammeList.add(rs.getString("CODE"));
-//					singleProgrammeList.add(rs.getString("NAME"));
-//					singleProgrammeList.add(rs.getString("DESCRIPTION"));
-//					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-//					singleProgrammeList.add(rs.getString("PROVIDER"));
-//					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-//					singleProgrammeList.add(rs.getString("IMAGE"));
-//					
-//					final Collection<String> singleProgrammeCollection = singleProgrammeList;
-//					allProgrammeList.add(singleProgrammeCollection);
+					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+					singleProgrammeList.add(rs.getString("CODE"));
+					singleProgrammeList.add(rs.getString("NAME"));
+					singleProgrammeList.add(rs.getString("DESCRIPTION"));
+					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+					singleProgrammeList.add(rs.getString("PROVIDER"));
+					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+					singleProgrammeList.add(rs.getString("IMAGE"));
+					
+					final Collection<String> singleProgrammeCollection = singleProgrammeList;
+					allProgrammeList.add(singleProgrammeCollection);
 				}
 			}else{
 				allProgrammeList = getAll();	
@@ -136,17 +139,17 @@ public class ProgrammeDAO implements ICrud {
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-//				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
-//				singleProgrammeList.add(rs.getString("CODE"));
-//				singleProgrammeList.add(rs.getString("NAME"));
-//				singleProgrammeList.add(rs.getString("DESCRIPTION"));
-//				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-//				singleProgrammeList.add(rs.getString("PROVIDER"));
-//				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-//				singleProgrammeList.add(rs.getString("IMAGE"));
-//
-//				final Collection<String> singleProgrammeCollection = singleProgrammeList;
-//				allProgrammeList.add(singleProgrammeCollection);
+				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+				singleProgrammeList.add(rs.getString("CODE"));
+				singleProgrammeList.add(rs.getString("NAME"));
+				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+				singleProgrammeList.add(rs.getString("PROVIDER"));
+				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("IMAGE"));
+
+				final Collection<String> singleProgrammeCollection = singleProgrammeList;
+				allProgrammeList.add(singleProgrammeCollection);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
