@@ -85,7 +85,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 			boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
 
 			 // Verify whether the input from Human or Robot
-//			if (responseIsSuccess) {
+			if (responseIsSuccess) {
 				// Input by Human
 				log.info("I'm Human");
 				// String gsonData = helper.getParameter("jsonData");
@@ -125,11 +125,11 @@ public class CmdSendInstituteInquiry implements ICommand {
 					message = validateResult;
 
 				}
-//			} else {
-//				// Input by Robot
-//				log.info("I'm Robot");
-//				message=SystemMessage.RECAPTCHAVERIFICATION.message();
-//			}
+			} else {
+				// Input by Robot
+				log.info("I'm Robot");
+				message=SystemMessage.RECAPTCHAVERIFICATION.message();
+			}
 
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
