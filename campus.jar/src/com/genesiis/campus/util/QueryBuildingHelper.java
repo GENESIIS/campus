@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 /**
  * @author pabodha This class is to get help on building dynamic SQL queries.
  */
-public class QueryBuildingHelper {
+public class QueryBuildingHelper implements IQueryBuilder{
 	static Logger log = Logger.getLogger(QueryBuildingHelper.class.getName());
 
 	/**
@@ -27,6 +27,7 @@ public class QueryBuildingHelper {
 	 * @param mainQuery
 	 * @return String finalQuery
 	 */
+	@Override
 	public String dynamicQuery(Map<String, String[]> queryMap, String mainQuery) {
 		String query = "";
 		Map<String, String[]> map = queryMap;
@@ -43,9 +44,12 @@ public class QueryBuildingHelper {
 					criteria = criteria.concat(" AND ");
 				}
 				var = var + criteria;
-			}			
+			}		
+			query = " AND " + var.concat(mainQuery);
+		}else{
+			query = var.concat(mainQuery);
 		}
-		query = " AND "+ var.concat(mainQuery);
+
 		return query;
 	}
 
@@ -54,6 +58,7 @@ public class QueryBuildingHelper {
 	 * @param qString
 	 * @return map with criteria and value array
 	 */
+	@Override
 	public Map<String, String[]> assignMapData(String qString) {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 
@@ -78,6 +83,7 @@ public class QueryBuildingHelper {
 	 * @param data
 	 * @return Object extracted from passed json object.
 	 */
+	@Override
 	public String extractFromJason(String data) {
 		Gson gson = new Gson();
 		String queryString = "";
