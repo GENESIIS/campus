@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161103 JH c7-higher-education-landing-page findById method code modified
+//20161104 JH c7-higher-education-landing-page findById method code modified : remove unwanted loggers
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import com.genesiis.campus.util.ConnectionManager;
 import org.apache.log4j.Logger;
 
 public class CategoryDAO implements ICrud {
-	static Logger log = Logger.getLogger(CategoryDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CategoryDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
