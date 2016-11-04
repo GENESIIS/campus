@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20161101 JH c7-higher-education-landing-page CourseProviderDAO.java renamed as CourseProviderHigherEducationProgrammeDAO.java
 //20161102 JH c7-higher-education-landing-page findById query modified to remove unwanted attributes
 //20161102 JH c7-higher-education-landing-page findById query modified due to ddl changes
+//20161104 JH c7-higher-education-landing-page CourseProviderHigherEducationProgrammeDAO.java renamed as CategoryCourseProviderDAO.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +29,10 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class CategoryProgrammeDAO implements ICrud {
+public class CategoryCourseProviderDAO implements ICrud {
 
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(CategoryProgrammeDAO.class.getName());
+			.getLogger(CategoryCourseProviderDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
