@@ -1,12 +1,14 @@
 package com.genesiis.campus.factory;
 
-import com.genesiis.campus.command.CmdListCorporateProgrammes;
+//20161104 MM c5-corporate-training-landing-page - Modified code to accommodate the name-change of CmdListCategoryProgrammes.java class
+
+import com.genesiis.campus.command.CmdListCategoryProgrammes;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
 public class PublicCmdFactory implements ICmdFactory {
 	static {
-		map.put(Operation.LIST_CORPORATE_TRAINING_PROGRAMMES, new CmdListCorporateProgrammes());
+		map.put(Operation.LIST_CORPORATE_TRAINING_PROGRAMMES, new CmdListCategoryProgrammes());
 	}
 
 	@Override
