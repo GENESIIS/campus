@@ -538,9 +538,12 @@ body, html {
     .main-category .content-holder .course-filter-panel {
       width: 67%;
       display: block;
+      position: relative;
       float: left; }
       .main-category .content-holder .course-filter-panel .filtering-area {
-        display: block; }
+        display: block;
+        border-bottom: 5px solid #ededed;
+        padding-bottom: 15px; }
         .main-category .content-holder .course-filter-panel .filtering-area .top {
           display: block;
           width: 100%;
@@ -562,6 +565,40 @@ body, html {
               font-size: 18px;
               font-weight: 500;
               width: 100%; }
+      .main-category .content-holder .course-filter-panel .filter-result-table {
+        display: block;
+        position: relative; }
+        .main-category .content-holder .course-filter-panel .filter-result-table .course-info {
+          display: block; }
+          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name {
+            display: inline-block;
+            width: 15.2%;
+            float: left; }
+            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name {
+              display: block;
+              text-align: center;
+              font-family: "Roboto", sans-serif; }
+            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
+              display: block;
+              text-align: center; }
+              .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
+                width: 75px; }
+          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
+            display: inline-block;
+            position: relative;
+            width: 46.8%;
+            float: left;
+            text-align: center; }
+          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location {
+            display: inline-block;
+            width: 20.6%;
+            float: left;
+            text-align: center; }
+          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration {
+            display: inline-block;
+            float: right;
+            width: 17.4%;
+            text-align: right; }
 
 /* Modules */
 .btn-home {

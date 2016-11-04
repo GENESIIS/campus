@@ -437,10 +437,13 @@ body,html
     .course-filter-panel
       width: 67%
       display: block
+      position: relative
       float: left
 
       .filtering-area
         display: block
+        border-bottom: 5px solid #ededed
+        padding-bottom: 15px
 
         .top
           display: block
@@ -465,4 +468,46 @@ body,html
               font-size: 18px
               font-weight: 500
               width: 100%
+
+      .filter-result-table
+        display: block
+        position: relative
+
+        .course-info
+          display: block
+
+          .col-name
+            display: inline-block
+            width: 15.2%
+            float: left
+
+            .pro-name
+              display: block
+              text-align: center
+              font-family: 'Roboto', sans-serif
+
+            .pro-logo
+              display: block
+              text-align: center
+              img
+                width: 75px
+
+          .col-description
+            display: inline-block
+            position: relative
+            width: 46.8%
+            float: left
+            text-align: center
+
+          .col-location
+            display: inline-block
+            width: 20.6%
+            float: left
+            text-align: center
+
+          .col-duration
+            display: inline-block
+            float: right
+            width: 17.4%
+            text-align: right
 
