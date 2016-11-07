@@ -8,7 +8,7 @@ import com.genesiis.campus.validation.Operation;
 
 public class PublicCmdFactory implements ICmdFactory {
 	static {
-		map.put(Operation.LIST_CORPORATE_TRAINING_PROGRAMMES, new CmdListCategoryProgrammes());
+		map.put(Operation.LIST_CATEGORY_PROGRAMMES, new CmdListCategoryProgrammes());
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-			case LIST_CORPORATE_TRAINING_PROGRAMMES:
+			case LIST_CATEGORY_PROGRAMMES:
 				command = map.get(o);
 				break;
 			default:

@@ -55,7 +55,7 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		case LIST_CORPORATE_TRAINING_PROGRAMMES:
+		case LIST_CATEGORY_PROGRAMMES:
 			resultPage = o.getPageURL();
 			break;
 		case BAD_OPERATION:

@@ -46,8 +46,8 @@ public class CmdListCategoryProgrammes implements ICommand {
 		
 		String message = "";
 		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
-		Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
-		Collection<Collection<String>> courseProvidersWithPopularCourses = new ArrayList<Collection<String>>();
+//		Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
+//		Collection<Collection<String>> courseProvidersWithPopularCourses = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
 		int pageNum = -1;
@@ -154,8 +154,8 @@ public class CmdListCategoryProgrammes implements ICommand {
 			iview.setCollection(programmeListForPage);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 			helper.setAttribute("contextDeployCourseLogoPath", contextDeployCourseLogoPath);
-			helper.setAttribute("courseProviders", courseProviderCollection);
-			helper.setAttribute("courseProvidersWithPopularCourses", courseProvidersWithPopularCourses);
+//			helper.setAttribute("courseProviders", courseProviderCollection);
+//			helper.setAttribute("courseProvidersWithPopularCourses", courseProvidersWithPopularCourses);
 			helper.setAttribute("pageNum", pageNum);
 			helper.setAttribute("totalNumOfResults", totalNumOfResults);
 			helper.setAttribute("numOfPages", numOfPages);
