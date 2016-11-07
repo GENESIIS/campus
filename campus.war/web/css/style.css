@@ -472,14 +472,12 @@ body, html {
                   font-size: 68px;
                   left: -45px;
                   top: -6px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer {
-              display: block; }
-              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
-                font-size: 18px;
-                line-height: 20px;
-                color: #6da6de;
-                text-align: justify;
-                padding-bottom: 10px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
+              font-size: 18px;
+              line-height: 20px;
+              color: #6da6de;
+              text-align: justify;
+              padding-bottom: 10px; }
         .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area {
           display: block;
           margin-top: 120px;
