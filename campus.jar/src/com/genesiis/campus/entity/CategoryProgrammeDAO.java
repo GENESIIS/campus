@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161028 MM c5-corporate-training-landing-page Corrected query result processing
 // 				code to remove accessing invalid fields
 //20161104 MM Added code to DAO method to retrieve level and major names for programmes
+//20161107 JH c5-corporate-training-landing-page handled sql server exception
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,8 +31,9 @@ public class CategoryProgrammeDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		
+	public Collection<Collection<String>> findById(Object code)
+			throws SQLException, Exception {
+
 		final Collection<Collection<String>> corporateProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -39,7 +41,7 @@ public class CategoryProgrammeDAO implements ICrud {
 		try {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
-			
+
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
 					+ "ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
 					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
@@ -62,13 +64,14 @@ public class CategoryProgrammeDAO implements ICrud {
 			ps.setInt(3, 1);
 			ps.setInt(4, 1);
 			ps.setInt(5, 1);
+			ps.setInt(6, 1);
 			ResultSet rs = ps.executeQuery();
-			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
 
 		} catch (ClassCastException cce) {
 			Log.info("findById(Object): ClassCastException: " + cce.toString());
-			throw new IllegalArgumentException("The argument passed is not of expected type (Programme)!");
+			throw new IllegalArgumentException(
+					"The argument passed is not of expected type (Programme)!");
 		} catch (SQLException sqle) {
 			Log.info("findById(Object): SQLException: " + sqle.toString());
 			throw sqle;
@@ -85,11 +88,13 @@ public class CategoryProgrammeDAO implements ICrud {
 		}
 		return corporateProgrammeList;
 	}
-	
-	private void retrieveProgrammesFromResultSet(ResultSet rs, Collection<Collection<String>> deptList) throws SQLException {
+
+	private void retrieveProgrammesFromResultSet(ResultSet rs,
+			Collection<Collection<String>> deptList) throws SQLException {
 
 		while (rs.next()) {
 			final ArrayList<String> singleProgramme = new ArrayList<String>();
+
 			singleProgramme.add(rs.getString("CODE"));
 			singleProgramme.add(rs.getString("NAME"));
 			singleProgramme.add(rs.getString("EMAIL"));
@@ -121,25 +126,29 @@ public class CategoryProgrammeDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+	public Collection<Collection<String>> getAll() throws SQLException,
+			Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
+	public int add(Object object, Connection conn) throws SQLException,
+			Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException, Exception {
+	public int update(Object object, Connection conn) throws SQLException,
+			Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException, Exception {
+	public int delete(Object object, Connection conn) throws SQLException,
+			Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
