@@ -90,7 +90,7 @@ public class ProgrammeDAO implements ICrud {
 				if(accountType==1){
 					singleprogrameDetails.add(rs.getString(8)+".campus.lk");// Course provider mini Web link
 				}else{
-					singleprogrameDetails.add(rs.getString(8));// Course provider  Web link
+					singleprogrameDetails.add("#");// Course provider  Web link
 				}
 				
 				singleprogrameDetails.add(rs.getString(9));// Image

@@ -82,8 +82,13 @@
 					<tr>
 						<td>
 							<h4>
-								<a href="<c:out value="${courseProviderWebLink}"></c:out>"
-									target="_blank">${courseProviderName}</a>
+								<c:if test="${courseProviderWebLink eq '#' }">
+									${courseProviderName}
+								</c:if>
+								<c:if test="${courseProviderWebLink ne '#' }">
+									<a href="<c:out value="${courseProviderWebLink}"></c:out>"
+										target="_blank">${courseProviderName}</a>
+								</c:if>
 							</h4>
 						</td>
 						<td></td>
