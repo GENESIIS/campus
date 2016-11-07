@@ -38,7 +38,7 @@ public class ProgrammeLocationDAO implements ICrud {
 	}
 
 	/**
-	 * Search Programme location details(Programme, level, major).
+	 * Search Programme location details.
 	 * @author Chathuri
 	 * @param Object
 	 *            : programme object of Object type
