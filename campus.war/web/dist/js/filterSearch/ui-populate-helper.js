@@ -6,21 +6,45 @@
  * This method id to load category details
  */
 function displayCategory() {
+	alert("Inside displayCategory()");
 	$.get('PublicController', {
 		CCO : 'LIST_CATEGORY_DATA'
 	}, function(response) {
-		var categories = $("#categoryName");
-		categories.find('option').remove();
-		var categoryData = response[0];
-		var instituteData = response[1];
-		
-		$.each(response, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(y).text(x).appendTo(categories);
-		});
+		getAjaxData(response);
+	});
+	
+}
+
+
+function getAjaxData(response) {
+	alert("inside function(response)");
+	var categories = $("#categoryName");
+	categories.find('option').remove();
+	var categoryData = response[result];
+	var instituteData = response[instituteCollection];
+	
+//	alert("Inside categoryData loop");
+	$.each(categoryData, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(y).text(x).appendTo(categories);
+//		alert("Printing data...=" + data);
+//		alert("Printing x and y... x=" + x + ", y=" +y);
+	});
+
+
+	alert("Inside instituteData loop");
+	$.each(instituteData, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		var z = data[2].toString();
+		$('<option>').val(z).text(x).appendTo(districtName);
+		alert("Printing data...=" + data);
+		alert("Printing x,y and z... x=" + x + ", y=" +y + ", z=" +z);
 	});
 }
 

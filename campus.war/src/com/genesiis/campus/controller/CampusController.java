@@ -80,6 +80,7 @@ public class CampusController extends HttpServlet {
 			} else if (true) {
 				StringBuilder json = new StringBuilder();
 				Gson gson = new Gson();
+				json.append("{result:");
 				json.append(gson.toJson(result.getCollection()));
 				
 					Enumeration<String> attributeNames = request.getAttributeNames();
@@ -88,9 +89,12 @@ public class CampusController extends HttpServlet {
 						String currentElement = attributeNames.nextElement();
 						Object obj = helper.getAttribute(currentElement);
 						String currentElementInJson = gson.toJson(obj);
-						json.append(", ");
+						json.append(", " + currentElement + ":");
 						json.append(currentElementInJson);
 					}
+
+					json.append("}");
+					
 				response.setContentType("application/json");
 				log.info(json.toString());
 				response.getWriter().write(json.toString());
