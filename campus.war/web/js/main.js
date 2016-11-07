@@ -4,7 +4,7 @@
 
 w3IncludeHTML();
 
-// SlideToogle Controller
+// SlideToggle Controller
 
 $(document).ready(function () {
     $(".flip").click(function () {
