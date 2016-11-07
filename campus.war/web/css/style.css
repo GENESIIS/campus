@@ -684,14 +684,12 @@ body, html {
       cursor: pointer; }
       .filter-item .item-header label span {
         color: #3a8af7; }
-  .filter-item .item-container {
+  .filter-item .item-container .select-item {
     display: block; }
-    .filter-item .item-container .select-item {
-      display: block; }
-      .filter-item .item-container .select-item label {
-        font-size: 20px;
-        color: #3a3b3c;
-        line-height: 40px; }
+    .filter-item .item-container .select-item label {
+      font-size: 20px;
+      color: #3a3b3c;
+      line-height: 40px; }
 
 .btn-submit {
   width: 45%;
@@ -704,5 +702,8 @@ body, html {
   color: #fff; }
   .btn-submit:hover {
     background: #3a7be9; }
+
+.slideable {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
