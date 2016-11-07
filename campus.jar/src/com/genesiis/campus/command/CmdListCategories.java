@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.InstituteDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 public class CmdListCategories implements ICommand{
@@ -38,9 +39,15 @@ public class CmdListCategories implements ICommand{
 	
 		
 		ICrud categoryDAO = new CategoryDAO();
+		ICrud instituteDAO = new InstituteDAO();
 		try {
 			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
 			iview.setCollection(categoryCollection);
+			
+			
+			Collection<Collection<String>> instituteCollection = instituteDAO.getAll();
+			helper.setAttribute("instituteCollection", instituteCollection);
+			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;

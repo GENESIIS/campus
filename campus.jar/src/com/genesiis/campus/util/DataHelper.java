@@ -6,6 +6,7 @@ package com.genesiis.campus.util;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -135,6 +136,11 @@ public class DataHelper implements IDataHelper {
 	@Override
 	public void setAttribute(String Name, Object o) {
 		request.setAttribute(Name, o);
+	}
+	
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
 	}
 
 	/**

@@ -3,6 +3,9 @@ package com.genesiis.campus.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
+
+
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
-
 import com.google.gson.Gson;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -61,19 +67,37 @@ public class CampusController extends HttpServlet {
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
+		helper = new DataHelper(request);
+		cco = helper.getCommandCode();
+		
 		try {
-			helper = new DataHelper(request);
-			cco = helper.getCommandCode();
 			result = helper.getResultView(cco);
-
+			
+			if (false) {
+				request.setAttribute("result", result);
+				request.getRequestDispatcher(helper.getResultPage(cco)).forward(
+						request, response);
+			} else if (true) {
+				StringBuilder json = new StringBuilder();
+				Gson gson = new Gson();
+				json.append(gson.toJson(result.getCollection()));
+				
+					Enumeration<String> attributeNames = request.getAttributeNames();
+					
+					while(attributeNames.hasMoreElements()) {
+						String currentElement = attributeNames.nextElement();
+						Object obj = helper.getAttribute(currentElement);
+						String currentElementInJson = gson.toJson(obj);
+						json.append(", ");
+						json.append(currentElementInJson);
+					}
+				response.setContentType("application/json");
+				log.info(json.toString());
+				response.getWriter().write(json.toString());
+			}
+			
 		} catch (Exception e) {
 			log.error("process(): ", e);
 		}
-
-		request.setAttribute("result", result);
-		request.getRequestDispatcher(helper.getResultPage(cco)).forward(
-				request, response);
-
 	}
-
 }

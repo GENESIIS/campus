@@ -11,6 +11,9 @@ function displayCategory() {
 	}, function(response) {
 		var categories = $("#categoryName");
 		categories.find('option').remove();
+		var categoryData = response[0];
+		var instituteData = response[1];
+		
 		$.each(response, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
@@ -124,11 +127,11 @@ function displayDistricts() {
 
 function displayDetailsOnLoad() {
 	displayCategory();
-	displayCourseProvider();
-	displayMajor();
-	
-	displayDistricts();	
-	addsearchData();
+//	displayCourseProvider();
+//	displayMajor();
+//	
+//	displayDistricts();	
+//	addsearchData();
 }
 
 function displayDetailsOnChange() {

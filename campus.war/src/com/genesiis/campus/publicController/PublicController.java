@@ -27,7 +27,7 @@ import com.google.gson.Gson;
  * Servlet implementation class PublicController
  */
 @WebServlet("/PublicController")
-public class PublicController extends HttpServlet {
+public class PublicController extends CampusController {
 	static Logger log = Logger.getLogger(PublicController.class.getName());
 	private static final long serialVersionUID = 1L;
 
@@ -58,37 +58,37 @@ public class PublicController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// super.doPost(request, response);
+		 super.doPost(request, response);
 
-		IDataHelper helper = null;
-		IView result = null;
-		String cco = "";
-		String json = null;
-
-		try {
-			helper = new DataHelper(request);
-			cco = helper.getCommandCode();
-			result = helper.getResultView(cco);
-
-			List<Object> list = new ArrayList<Object>();
-			if (result != null) {
-				for (Collection<String> view : result.getCollection()) {
-					Object[] category = view.toArray();
-					list.add(category);
-				}
-			}
-			json = new Gson().toJson(list);
-
-		} catch (Exception e) {
-			log.error("process(): ", e);
-		}
-
-		// request.setAttribute("result", result);
-		// request.getRequestDispatcher(helper.getResultPage(cco)).forward(
-		// request, response);
-
-		response.setContentType("application/json");
-		response.getWriter().write(json);
+//		IDataHelper helper = null;
+//		IView result = null;
+//		String cco = "";
+//		String json = null;
+//
+//		try {
+//			helper = new DataHelper(request);
+//			cco = helper.getCommandCode();
+//			result = helper.getResultView(cco);
+//
+//			List<Object> list = new ArrayList<Object>();
+//			if (result != null) {
+//				for (Collection<String> view : result.getCollection()) {
+//					Object[] category = view.toArray();
+//					list.add(category);
+//				}
+//			}
+//			json = new Gson().toJson(list);
+//
+//		} catch (Exception e) {
+//			log.error("process(): ", e);
+//		}
+//
+//		// request.setAttribute("result", result);
+//		// request.getRequestDispatcher(helper.getResultPage(cco)).forward(
+//		// request, response);
+//
+//		response.setContentType("application/json");
+//		response.getWriter().write(json);
 
 	}
 }
