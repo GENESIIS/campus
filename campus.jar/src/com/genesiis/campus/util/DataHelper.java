@@ -181,5 +181,10 @@ public class DataHelper implements IDataHelper {
 		return request.getHeader(name);
 
 	}
+	
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
+	}
 
 }

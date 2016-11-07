@@ -1,5 +1,7 @@
 package com.genesiis.campus.util;
+
 import javax.servlet.http.HttpSession;
+
 import com.genesiis.campus.entity.IView;
 
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
@@ -7,7 +9,7 @@ import com.genesiis.campus.entity.IView;
 public interface IDataHelper {
 	public String getCommandCode();
 
-	public String getResultPage(String cco);	
+	public String getResultPage(String cco);
 
 	public IView getResultView(String cco) throws Exception;
 
@@ -26,4 +28,7 @@ public interface IDataHelper {
 	String getRedirectPage();
 
 	void setRedirectPage(String pageName);
+
+	Object getAttribute(String name);
+
 }
