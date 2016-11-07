@@ -1,4 +1,5 @@
 <!-- 20161024 DN  c10-contacting-us-page test page for -->
+<!-- 20161107 JH c5-corporate-training-landing-page add new input field 'pageNum' -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -17,6 +18,7 @@ This page is expected to temporarily function as the Home page.
 <div align="center" >
 		<form action="PublicController" method="post">
 			<input type="text" name="category">
+			<input type="text" name="pageNum">
 			<button type="submit" name="CCO" value="LCTP">SUBMIT</button>
 		</form>
 </div>
