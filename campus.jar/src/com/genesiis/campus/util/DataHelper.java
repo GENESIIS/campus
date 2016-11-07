@@ -54,27 +54,7 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		case GET_SEARCH_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_CATEGORY_DATA:
-			resultPage = o.getPageURL();
-			break;	
-		case LIST_LEVEL_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_DISTRICT_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_MAJOR_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_TOWN_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_INSTITUTE_DATA:
-			resultPage = o.getPageURL();
-			break;	
+
 		default:
 			break;
 		}
