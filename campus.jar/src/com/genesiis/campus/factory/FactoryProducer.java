@@ -1,5 +1,7 @@
 package com.genesiis.campus.factory;
 
+//20161026 JH c7-higher-education-landing-page change servlet path EmployeeController to PublicController
+
 /**
  * FactoryProducer class bares the responsibility of producing 
  * the Factory  
