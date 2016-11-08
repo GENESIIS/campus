@@ -1,22 +1,9 @@
-<!-- 20161027 TR c11 start styling courses filter result page -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus.lk</title>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!-- 20161025 TR c1 start style header bottom part -->
+<!-- 20161026 TR c1 added courses.html -->
 
-    <!-- Bootstrap & CSS Style-->
-    <link href="../dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
 
-    <!-- W3-Include -->
-    <script src="http://www.w3schools.com/lib/w3data.js"></script>
-
-</head>
-<body>
-
-<!-- Header-->
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
     <div class="top">
         <div class="logo-brand">
@@ -26,19 +13,19 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="../index.html" class="btn-home center-block"></a>
+                <a href="javascript:" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
                 <!-- Main menu tabs -->
                 <div class="top-menus">
                     <ul class="list-inline">
-                        <li><a href="courses.html">All Courses</a></li>
-                        <li><a href="javascript:">About Us</a></li>
-                        <li><a href="contact-us.html">Contact Us</a></li>
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="f-and-q.html">F & Q</a></li>
-                        <li><a href="rss.html">Rss</a></li>
+                        <li><a href="dist/partials/courses.jsp" onclick="displayDetailsOnLoad()">All Courses</a></li>
+                        <li><a href="dist/partials/about-us.jsp">About Us</a></li>
+                        <li><a href="dist/partials/contact-us.jsp">Contact Us</a></li>
+                        <li><a href="dist/partials/news.jsp">News</a></li>
+                        <li><a href="dist/partials/f-and-q.jsp">F & Q</a></li>
+                        <li><a href="dist/partials/rss.jsp">Rss</a></li>
                     </ul>
                 </div>
                 <!-- End Main menu tabs -->
@@ -48,7 +35,7 @@
                     <ul class="list-inline">
                         <li><a href="javascript:">Pre Education</a></li>
                         <li><a href="javascript:">School Education</a></li>
-                        <li><a href="category/higher-education.html">Higher Education</a></li>
+                        <li><a href="dist/partials/category/higher-education.jsp">Higher Education</a></li>
                         <li><a href="javascript:">Corporate Training</a></li>
                         <li><a href="javascript:">Vocational Training</a></li>
                         <li><a href="javascript:">Talent & Skill</a></li>
@@ -71,19 +58,3 @@
         </div>
     </div>
 </header>
-<!-- End Header -->
-
-<!-- Main Container - About-Us -->
-<div> About-Us </div>
-
-<!-- Footer -->
-<footer w3-include-html="layout/footer.html"></footer>
-
-<!-- jQuery & Other js -->
-<script src="../dist/bower-components/jquery/jquery.min.js"></script>
-<script src="../dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="../dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="../dist/js/main.js"></script>
-
-</body>
-</html>

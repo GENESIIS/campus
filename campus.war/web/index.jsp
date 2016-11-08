@@ -11,38 +11,29 @@
     <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/style.css" rel="stylesheet">
 
-<!--     Data Table CSS -->
-<!--     <link href="dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"> -->
-<!--     <link href="dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"> -->
-   
+    <!-- W3-Include -->
+    <script src="dist/bower-components/w3/w3data.js"></script>
     
 </head>
 <body>
 
 <!-- Header-->
-<header ng-include="'dist/partials/layout/header.jsp'"></header>
+<header w3-include-html="dist/partials/layout/header.jsp"></header>
 
-<!-- Main Container  -->
-<div ng-view>
-</div>
+<!-- Main Container - Landing -->
+<div w3-include-html="dist/partials/landing.jsp"></div>
 
 <!-- Footer -->
-<footer ng-include="'dist/partials/layout/footer.jsp'"></footer>
-
-<!-- AngularJS -->
-<script src="dist/bower-components/angular/angular.min.js"></script>
-<script src="dist/bower-components/angular/angular-route.min.js"></script>
+<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
-<script src="dist/bower-components/jquery/jquery.min.js"></script>
+<!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
+<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="dist/js/app.js"></script>
+<script src="dist/js/main.js"></script>
 <script src="dist/js/filterSearch/ui-populate-helper.js"></script>
 
 <!-- Data Table CSS-->
-<script src="dist/bower-components/jquery/jquery.min.js"></script>
-<script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.3.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
