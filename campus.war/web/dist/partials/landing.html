@@ -7,7 +7,7 @@
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
         <div class="main-slider clearfix">
-            <img src="i/slide-1.jpg" alt="">
+            <img src="dist/i/slide-1.jpg" alt="">
         </div>
         <!-- End Main slider -->
         <div class="search-area clearfix">
@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="course-info clearfix">
                                     <div class="image pull-left">
-                                        <img class="center-block" src="i/pre-school.jpg" alt="">
+                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
                                     </div>
                                     <div class="description pull-right">
                                         <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
