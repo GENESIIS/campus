@@ -3,22 +3,10 @@ package com.genesiis.campus.controller;
 // 20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
 // 20161107 DN, JH, DJ, AS, CM, MM public-controller-testing Changed implementation of process()
 // 								to support returning JSON as well as JSP as response
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+// 20161108 DN, JH, DJ, AS, CM, PN, MM public-controller-testing-2 Changed implementation of process()
+//								to test for ResponseType to decide if JSP or JSON response to send
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.View;
-import com.genesiis.campus.factory.FactoryProducer;
-import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
@@ -27,14 +15,19 @@ import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Servlet implementation class CampusController
- * extract from XecoController.java
+ * extract from XenoController.java * 
  * 
- * 
- */
-/**
- * Servlet implementation class PublicController
  */
 @WebServlet("/CampusController")
 public class CampusController extends HttpServlet {

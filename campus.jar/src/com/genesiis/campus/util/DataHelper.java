@@ -1,15 +1,7 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
-//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
-//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
-//20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -19,9 +11,9 @@ import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
 
-import javax.servlet.ServletException;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DataHelper implements IDataHelper {
@@ -59,7 +51,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * getResponseType(String) Returns the response type bound to each Operation
 	 * enum constant.
-
 	 * @return ResponseType Enum constant of type ResponseType indicating what type
 	 * of response to send to the client
 	 * @param String The value sent by the client as CCO 
@@ -69,7 +60,7 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		if (Operation.BAD_OPERATION.equals(o)) {
 			String headerValue = getHeader("x-requested-with");
-			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+			if (headerValue != null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
 				return ResponseType.JSON;
 			} else {
 				return ResponseType.JSP;
