@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CategoryProgrammeDAO;
-import com.genesiis.campus.entity.CourseProviderCategoryProgrammeDAO;
+import com.genesiis.campus.entity.CategoryCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -35,7 +35,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 	static Logger Log = Logger.getLogger(CmdListCategoryProgrammes.class.getName());
 
 	final ICrud programmeDao = new CategoryProgrammeDAO();	
-	final ICrud courseProviderDao = new CourseProviderCategoryProgrammeDAO();	
+	final ICrud courseProviderDao = new CategoryCourseProviderDAO();	
 		
 	public CmdListCategoryProgrammes() {
 		
@@ -140,7 +140,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 			int lastProgItemNeededForPage = numOfProgrammesPerPage * pageNum;
 			int firstProgItemNeededForPage = lastProgItemNeededForPage - (numOfProgrammesPerPage - 1);
 			
-			int count = 0;
+			int count = 1;
 			for (Collection<String> progColl : programmeCollection) {
 				if (count >= firstProgItemNeededForPage && count <= lastProgItemNeededForPage) {
 					programmeListForPage.add(progColl);
