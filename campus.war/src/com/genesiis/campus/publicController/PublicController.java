@@ -43,52 +43,20 @@ public class PublicController extends CampusController {
 	}
 
 	/**
-	 * @see XenoController#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see CampusController#doGet(HttpServletRequest request,
+	 *      HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// super.doGet(request, response);
-		this.doPost(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		super.doGet(request, response);
 	}
 
 	/**
-	 * @see XenoController#doPost(HttpServletRequest request,
+	 * @see CampusController#doPost(HttpServletRequest request,
 	 *      HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		 super.doPost(request, response);
-
-//		IDataHelper helper = null;
-//		IView result = null;
-//		String cco = "";
-//		String json = null;
-//
-//		try {
-//			helper = new DataHelper(request);
-//			cco = helper.getCommandCode();
-//			result = helper.getResultView(cco);
-//
-//			List<Object> list = new ArrayList<Object>();
-//			if (result != null) {
-//				for (Collection<String> view : result.getCollection()) {
-//					Object[] category = view.toArray();
-//					list.add(category);
-//				}
-//			}
-//			json = new Gson().toJson(list);
-//
-//		} catch (Exception e) {
-//			log.error("process(): ", e);
-//		}
-//
-//		// request.setAttribute("result", result);
-//		// request.getRequestDispatcher(helper.getResultPage(cco)).forward(
-//		// request, response);
-//
-//		response.setContentType("application/json");
-//		response.getWriter().write(json);
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		super.doPost(request, response);
 	}
 }

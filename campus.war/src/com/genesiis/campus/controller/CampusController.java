@@ -21,6 +21,8 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ResponseType;
+
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -66,17 +68,18 @@ public class CampusController extends HttpServlet {
 		String cco = "";
 		helper = new DataHelper(request);
 		cco = helper.getCommandCode();
+		ResponseType responseType = helper.getResponseType(cco);
 
 		try {
 			result = helper.getResultView(cco);
 
-			if (false) { // Important: boolean primitive hard-coded for testing purposes. 
+			if (ResponseType.JSP.equals(responseType)) { // Important: boolean primitive hard-coded for testing purposes. 
 				// It is to be changed based on modifications to be done in Operation class 
 				request.setAttribute("result", result);
 				request.getRequestDispatcher(helper.getResultPage(cco))
 						.forward(request, response);
 				
-			} else if (true) { // Important: boolean primitive hard-coded for testing purposes. 
+			} else if (ResponseType.JSON.equals(responseType)) { // Important: boolean primitive hard-coded for testing purposes. 
 				// It is to be changed based on modifications to be done in Operation class
 				StringBuilder json = new StringBuilder();
 				Gson gson = new Gson();
@@ -100,7 +103,7 @@ public class CampusController extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			log.error("process(): ", e);
+			log.error("process(): Exception ", e);
 		}
 	}
 }
