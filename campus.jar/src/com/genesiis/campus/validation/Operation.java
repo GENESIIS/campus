@@ -13,7 +13,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	CONTACT_US_PUBLC("FBTSA",ResponseType.JSP, "index.jsp"),
+	CONTACT_US_PUBLC("FBTSA",ResponseType.JSP, "contactUs.js"),
 	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSP, "index.jsp"),
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),

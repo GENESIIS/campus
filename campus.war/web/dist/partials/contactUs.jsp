@@ -1,3 +1,15 @@
+
+<!-- 20161028 TR c1 setup project structure -->
+<!-- 20161028 TR c1 setup project structure - push to c1 -->
+<!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
+<!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +23,7 @@
 
     <!-- W3-Include -->
     <script src="../bower-components/w3/w3data.js"></script>
+    <script src="../js/contactUs.js"></script>
 
 </head>
 <body>
@@ -24,7 +37,7 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="../../index.html" class="btn-home center-block"></a>
+                <a href="../../index.jsp" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
@@ -93,30 +106,30 @@
         <div class="contact-form clearfix">
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
-                <form class="submit-form" action="">
+                <form class="submit-form" method="post"  name="contactUsForm" action="PublicController" >
                     <div class="f-name">
                         <label for="input-firstName">First Name <span>*</span></label><br>
-                        <input type="text" id="input-firstName">
+                        <input type="text" id="firstName" name="firstName"  required>
                     </div>
                     <div class="l-name">
                         <label for="input-lastName">Last Name <span>*</span></label><br>
-                        <input type="text" id="input-lastName">
+                        <input type="text" id="lastName" name="lastName" required>
                     </div>
                     <div class="tp">
                         <label for="input-phoneNumber">Phone Number</label><br>
-                        <input type="text" id="input-phoneNumber">
+                        <input type="text" id="contactNumber" name="contactNumber" required>
                     </div>
                     <div class="email">
                         <label for="eMail">Email <span>*</span></label><br>
-                        <input type="text" id="eMail">
+                        <input type="text" id="emailAddress" name="emailAddress" required>
                     </div>
                     <div class="email-subject">
                         <label for="input-eMailSubject">Subject <span>*</span></label><br>
-                        <input type="text" id="input-eMailSubject">
+                        <input type="text" id="subject" name="subject" required >
                     </div>
                     <div class="user-message">
                         <label for="text-userMessage">Message <span>*</span></label><br>
-                        <textarea id="text-userMessage" rows="10"></textarea>
+                        <textarea id="message" rows="10" name="message" required></textarea>
                         <p class="pull-right"><span>*</span> Required fields</p>
                     </div>
                     <div class="re-captcha">
@@ -124,7 +137,8 @@
                             <img src="../i/contactUs/recaptcha.gif" alt="">
                         </a>
                     </div>
-                    <input class="btn-submit" type="submit" value="Send Message">
+                    <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" onclick="validateForm()">Submit Query</button>
+					 <!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
                 </form>
                 <!-- End Submit form -->
             </div>
@@ -197,7 +211,7 @@
 <!-- End Container - Contact-Us -->
 
 <!-- Footer -->
-<footer w3-include-html="layout/footer.html"></footer>
+<footer w3-include-html="layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
 <script src="../bower-components/jquery/jquery-3.1.1.min.js"></script>

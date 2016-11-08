@@ -1,12 +1,12 @@
 <!-- 20161028 TR c1 setup project structure -->
 <!-- 20161028 TR c1 setup project structure - push to c1 -->
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
-<!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
+<!-- 20161108 DN c10-contacting-us-page-MP-dn added taglib uris  -->
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,13 +26,13 @@
 <body>
 
 <!-- Header-->
-<header w3-include-html="dist/partials/layout/header.html"></header>
+<header w3-include-html="dist/partials/layout/header.jsp"></header>
 
 <!-- Main Container - Landing -->
 <div w3-include-html="dist/partials/landing.html"></div>
 
 <!-- Footer -->
-<footer w3-include-html="dist/partials/layout/footer.html"></footer>
+<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
