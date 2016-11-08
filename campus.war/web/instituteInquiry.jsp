@@ -2,6 +2,7 @@
 <!-- 20161027 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
 <!-- 20161028 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
 <!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
+<!-- 20161108 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,15 +18,15 @@
 <title>Institute Inquiry</title>
 </head>
 <body>
-	<form method="POST" onsubmit="return (validateInstituteInquiryFileds())" action="InstituteController">
-		
+	<form method="POST"
+		onsubmit="return (validateInstituteInquiryFileds())"
+		action="InstituteController">
+
 		<table align="center">
 			<tr>
-				<td><input type="hidden" value="1"
-					name="courseProviderCode"> 
-	<%-- 				<input type="hidden" value="${param.courseProviderCode}"
-					name="courseProviderCode"> --%>
-					<input type="hidden" value="1"
+				<td><input type="hidden" value="1" name="courseProviderCode">
+					<%-- 				<input type="hidden" value="${param.courseProviderCode}"
+					name="courseProviderCode"> --%> <input type="hidden" value="1"
 					name="studentCode">
 			</tr>
 			<tr>
@@ -43,13 +44,13 @@
 				<td>Full Name</td>
 				<td><span id="fullNametbError" name="fullNametbError"
 					style="color: red; font-weight: normal !important;"></span> <input
-					type="text" name="fullname" id="fullname" value=""  /></td>
+					type="text" name="fullname" id="fullname" value="" required /></td>
 			</tr>
 			<tr>
 				<td>Email</td>
 				<td><span id="emailtbError" name="emailtbError"
 					style="color: red; font-weight: normal !important;"></span> <input
-					type="text" name="email" id="email"  /></td>
+					type="text" name="email" id="email" required /></td>
 			</tr>
 			<tr>
 				<td>Country Code</td>
@@ -65,19 +66,25 @@
 			</tr>
 			<tr>
 				<td>Telephone Number</td>
-				<td><span id="telephoneNumbertbError"
+				<td><span id="telNumtbError"
 					name="telephoneNumbertbError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="telNum" id="telNum" required /></td>
 			</tr>
 			<tr>
 				<td>Inquiry Title</td>
-				<td><input type="text" name="inquiryTitle" id="inquiryTitle"
-					required /></td>
+				<td><span id="inquiryTitletbError"
+					name="inquiryTitletbError"
+					style="color: red; font-weight: normal !important;"></span> <input
+					type="text" name="inquiryTitle" id="inquiryTitle" required /></td>
 			</tr>
 			<tr>
 				<td>Inquiry</td>
-				<td><textarea rows="15" cols="50" name="inquiry" id="inquiry"
+				<td>
+				<span id="inquirytbError"
+					name="inquirytbError"
+					style="color: red; font-weight: normal !important;"></span>
+				<textarea rows="15" cols="50" name="inquiry" id="inquiry"
 						required></textarea></td>
 			</tr>
 			<tr>
