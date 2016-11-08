@@ -526,8 +526,6 @@ body, html {
     background: #fff; }
     .main-category .inner-header .category-image {
       display: inline-block; }
-      .main-category .inner-header .category-image img {
-        height: 120px; }
     .main-category .inner-header .category-name {
       display: inline-block;
       position: relative; }
@@ -589,17 +587,14 @@ body, html {
               font-weight: 600; }
             .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
               display: block;
-              text-align: center;
-              height: 100px; }
+              text-align: center; }
               .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
                 width: 75px;
-                height: 100%;
                 padding-top: 8px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
             display: inline-block;
             position: relative;
             width: 46.8%;
-            height: 130px;
             float: left;
             text-align: center;
             padding-top: 45px;
@@ -610,7 +605,6 @@ body, html {
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location {
             display: inline-block;
             width: 20.6%;
-            height: 130px;
             float: left;
             text-align: center;
             padding-top: 50px;
@@ -632,6 +626,73 @@ body, html {
               font-family: "Roboto", sans-serif;
               line-height: 35px;
               font-weight: lighter; }
+
+.inquiry-screen {
+  display: block;
+  position: relative; }
+  .inquiry-screen .inquiry-form-holder {
+    display: block;
+    width: 93%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #3d5265;
+    z-index: 99;
+    position: relative;
+    top: -60px; }
+    .inquiry-screen .inquiry-form-holder .inquiry-form {
+      display: block;
+      padding: 50px 70px 100px; }
+      .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area {
+        position: relative;
+        width: 60%; }
+        .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form div > label {
+          color: #cccccc;
+          font-size: 22px;
+          line-height: 50px;
+          position: relative; }
+          .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form div > label span {
+            font-size: 45px;
+            color: #18a6f0;
+            position: absolute;
+            top: 28px;
+            right: -32px;
+            line-height: 20px; }
+        .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form div > input {
+          color: #dff4ff;
+          line-height: 54px;
+          font-size: 22px;
+          border: none;
+          background: #506374;
+          width: 100%;
+          margin-bottom: 18px;
+          padding-left: 18px;
+          font-family: "Roboto", sans-serif; }
+        .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form p {
+          font-size: 20px;
+          color: #cccccc;
+          line-height: 54px;
+          position: relative; }
+          .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form p span {
+            font-size: 45px;
+            color: #18a6f0;
+            position: absolute;
+            top: 28px;
+            left: -24px;
+            line-height: 20px; }
+        .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form .inquiry-message {
+          display: block; }
+          .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form .inquiry-message textarea {
+            width: 100%;
+            background: #506374;
+            border: none;
+            color: #fff;
+            padding: 15px;
+            line-height: 20px;
+            font-weight: 200; }
+        .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form .re-captcha {
+          padding: 50px 0; }
+          .inquiry-screen .inquiry-form-holder .inquiry-form .submit-area .submit-form .re-captcha img {
+            width: 75%; }
 
 /* Modules */
 .btn-home {
