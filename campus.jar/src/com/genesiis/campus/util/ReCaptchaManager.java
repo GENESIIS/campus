@@ -28,7 +28,6 @@ public class ReCaptchaManager {
 		try {
 			String gRecaptchaResponse = helper
 					.getParameter("g-recaptcha-response");
-			log.info(gRecaptchaResponse);
 			String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
 
 			// Send get request to Google reCaptcha server with secret key
@@ -45,9 +44,7 @@ public class ReCaptchaManager {
 			while ((line = reader.readLine()) != null) {
 				outputString += line;
 			}
-
-			System.out.println(outputString);
-
+			
 			// Convert response into Object
 			CaptchaResponse captchaResponse = new CaptchaResponse();
 			CaptchaResponse capRes = new Gson().fromJson(outputString,
