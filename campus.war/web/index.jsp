@@ -31,7 +31,6 @@
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="dist/js/main.js"></script>
-<script src="dist/js/filterSearch/ui-populate-helper.js"></script>
 
 <!-- Data Table CSS-->
 <script src="dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
