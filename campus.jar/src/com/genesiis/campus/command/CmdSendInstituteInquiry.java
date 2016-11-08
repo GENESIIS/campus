@@ -11,32 +11,20 @@ package com.genesiis.campus.command;
 //20161102 CM c9-make-inquiry-for-institute Modified execute() method
 //20161102 CM c9-make-inquiry-for-institute Implement reCAPTCHA.
 //20161108 CM c9-make-inquiry-for-institute Removed unused loggers.
+//20161108 CM c9-make-inquiry-for-institute Modified execute() method
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Properties;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
-import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderInquiryDAO;
-import com.genesiis.campus.entity.model.CaptchaResponse;
+import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProviderInquiry;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
@@ -46,7 +34,6 @@ import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
-import com.google.gson.Gson;
 
 public class CmdSendInstituteInquiry implements ICommand {
 
@@ -82,10 +69,11 @@ public class CmdSendInstituteInquiry implements ICommand {
 		try {
 			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
 
-			final ReCaptchaManager reCaptchaManager=new ReCaptchaManager();
-			boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
+			final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
+			boolean responseIsSuccess = reCaptchaManager
+					.sentRequestToServer(helper);
 
-			 // Verify whether the input from Human or Robot
+			// Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
 				// Input by Human
 				// String gsonData = helper.getParameter("jsonData");
@@ -127,12 +115,11 @@ public class CmdSendInstituteInquiry implements ICommand {
 				}
 			} else {
 				// Input by Robot
-				message=SystemMessage.RECAPTCHAVERIFICATION.message();
+				message = SystemMessage.RECAPTCHAVERIFICATION.message();
 			}
 
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
-			message = SystemMessage.ERROR.message();
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
