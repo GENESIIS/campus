@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 //20161101 CM c9-make-inquiry-for-institute Modified execute() method
 //20161102 CM c9-make-inquiry-for-institute Modified execute() method
 //20161102 CM c9-make-inquiry-for-institute Implement reCAPTCHA.
+//20161108 CM c9-make-inquiry-for-institute Removed unused loggers.
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -87,7 +88,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 			 // Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
 				// Input by Human
-				log.info("I'm Human");
 				// String gsonData = helper.getParameter("jsonData");
 				String validateResult = Validator.validateInquiry(helper);
 
@@ -127,7 +127,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 				}
 			} else {
 				// Input by Robot
-				log.info("I'm Not a Robot");
 				message=SystemMessage.RECAPTCHAVERIFICATION.message();
 			}
 
