@@ -42,54 +42,52 @@
 			</tr>
 			<tr>
 				<td>Full Name</td>
-				<td><span id="fullNametbError" name="fullNametbError"
+				<td><span id="fullNameError" name="fullNameError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="fullname" id="fullname" value="" required /></td>
 			</tr>
 			<tr>
 				<td>Email</td>
-				<td><span id="emailtbError" name="emailtbError"
+				<td><span id="emailError" name="emailError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="email" id="email" required /></td>
 			</tr>
 			<tr>
 				<td>Country Code</td>
-				<td><span id="countryCodetbError" name="countryCodetbError"
+				<td><span id="countryCodeError" name="countryCodeError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="countryCode" id="countryCode" required /></td>
 			</tr>
 			<tr>
 				<td>Area Code</td>
-				<td><span id="areaCodetbError" name="areaCodetbError"
+				<td><span id="areaCodeError" name="areaCodeError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="areaCode" id="areaCode" required /></td>
 			</tr>
 			<tr>
 				<td>Telephone Number</td>
-				<td><span id="telNumtbError"
-					name="telephoneNumbertbError"
+				<td><span id="telNumError" name="telNumError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="telNum" id="telNum" required /></td>
 			</tr>
 			<tr>
 				<td>Inquiry Title</td>
-				<td><span id="inquiryTitletbError"
-					name="inquiryTitletbError"
+				<td><span id="inquiryTitleError" name="inquiryTitleError"
 					style="color: red; font-weight: normal !important;"></span> <input
 					type="text" name="inquiryTitle" id="inquiryTitle" required /></td>
 			</tr>
 			<tr>
 				<td>Inquiry</td>
-				<td>
-				<span id="inquirytbError"
-					name="inquirytbError"
-					style="color: red; font-weight: normal !important;"></span>
-				<textarea rows="15" cols="50" name="inquiry" id="inquiry"
-						required></textarea></td>
+				<td><span id="inquiryError" name="inquiryError"
+					style="color: red; font-weight: normal !important;"></span> <textarea
+						rows="15" cols="50" name="inquiry" id="inquiry" required></textarea></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><div class="g-recaptcha"
+				<td>
+				<span id="captchaError" name="captchaError"
+					style="color: red; font-weight: normal !important;"></span>
+				<div class="g-recaptcha"
 						data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
 			</tr>
 			<tr>

@@ -69,7 +69,7 @@ function isPatternMatch(regularExpression, source) {
 
 /**
  * Validate institute inquiry fileds
- *
+ * 
  * @returns {Boolean}
  */
 function validateInstituteInquiryFileds() {
@@ -86,43 +86,43 @@ function validateInstituteInquiryFileds() {
 	var wasSubmitted = false;
 
 	if (!isempty(fullname)) {
-		document.getElementById('fullNametbError').innerHTML = "**Full name cannot be empty.";
+		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
 		return false;
 	} else if (!isempty(email)) {
-		document.getElementById('emailtbError').innerHTML = "**Email cannot be empty.";
+		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		return false;
 	} else if (!isempty(countryCode)) {
-		document.getElementById('emailtbError').innerHTML = "**Country code cannot be empty.";
+		document.getElementById('countryCodeError').innerHTML = "**Country code cannot be empty.";
 		return false;
 	} else if (!isempty(areaCode)) {
-		document.getElementById('countryCodetbError').innerHTML = "**Area code cannot be empty.";
+		document.getElementById('areaCodeError').innerHTML = "**Area code cannot be empty.";
 		return false;
 	} else if (!isempty(telephoneNumber)) {
-		document.getElementById('areaCodetbError').innerHTML = "**telephone number cannot be empty.";
+		document.getElementById('telNumError').innerHTML = "**telephone number cannot be empty.";
 		return false;
 	} else if (!isempty(inquiryTitle)) {
-		document.getElementById('"inquiryTitletbError"').innerHTML = "**Inquiry title cannot be empty.";
+		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
 		return false;
 	} else if (!isempty(inquiry)) {
-		document.getElementById('"inquirytbError"').innerHTML = "**Inquiry cannot be empty.";
+		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
 		return false;
 	} else if (response.length == 0) {
-		alert("You can't leave Captcha Code empty");
+		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
 		return false;
 	} else if (!isValidEmailFormat(email)) {
-		document.getElementById('emailtbError').innerHTML = "**Invalid Email.";
+		document.getElementById('emailError').innerHTML = "**Invalid Email.";
 		return false;
 	} else if (isNaN(countryCode)) {
-		document.getElementById('countryCodetbError').innerHTML = "**Invalid Country code.";
+		document.getElementById('countryCodeError').innerHTML = "**Invalid Country code.";
 		return false;
 	} else if (isNaN(areaCode)) {
-		document.getElementById('areaCodetbError').innerHTML = "**Invalid Area code.";
+		document.getElementById('areaCodeError').innerHTML = "**Invalid Area code.";
 		return false;
 	} else if (isNaN(telephoneNumber)) {
-		document.getElementById('telNumtbError').innerHTML = "**Invalid telephone number.";
+		document.getElementById('telNumError').innerHTML = "**Invalid telephone number.";
 		return false;
 	} else {
-	//	return true;
+		// return true;
 	}
 
 }
