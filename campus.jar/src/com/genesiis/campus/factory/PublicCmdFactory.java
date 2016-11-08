@@ -1,13 +1,7 @@
 package com.genesiis.campus.factory;
 
-//20161107 JH c7-higher-education-landing-page-mp added PublicCmdFactory.java
+//20161108 JH c7-higher-education-landing-page-mp added PublicCmdFactory.java
 
-import com.genesiis.campus.command.CmdGetSearchData;
-import com.genesiis.campus.command.CmdListCategories;
-import com.genesiis.campus.command.CmdListDistricts;
-import com.genesiis.campus.command.CmdListInstitute;
-import com.genesiis.campus.command.CmdListLevels;
-import com.genesiis.campus.command.CmdListMajors;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 

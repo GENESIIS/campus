@@ -4,6 +4,7 @@ package com.genesiis.campus.util;
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
+//20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.ResponseType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +28,7 @@ public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
 
 	private static HttpServletRequest request;
-	
+
 	private String cco = "";
 	private String commandChoice = "";
 	private String redirectPage = "login.jsp";
@@ -50,21 +52,36 @@ public class DataHelper implements IDataHelper {
 	 **/
 	@Override
 	public String getResultPage(String cco) {
-		String resultPage = "login.jsp";
-		Operation o = Operation.BAD_OPERATION;
-		o = Operation.getOperation(cco);
-		switch (o) {
-
-		default:
-			break;
+		Operation o = Operation.getOperation(cco);
+		return o.getPageURL();
+	}
+	
+	/**
+	 * getResponseType(String) Returns the response type bound to each Operation
+	 * enum constant.
+	 * @return ResponseType Enum constant of type ResponseType indicating what type
+	 * of response to send to the client
+	 * @param String The value sent by the client as CCO 
+	 */	
+	@Override
+	public ResponseType getResponseType(String cco) {
+		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
 		}
-		return resultPage;
+		return o.getResponseType();
 	}
 
 	/**
 	 * getParameterValues() returns the set of parameter values thats bound to
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
+	 * 
 	 * @return String array if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -100,8 +117,10 @@ public class DataHelper implements IDataHelper {
 	 * getParameter() returns the parameter value thats bound to the passed
 	 * parameter name if exists. If the seeking parameter name is not existing
 	 * method returns null String
+	 * 
 	 * @return String if the parameter exists else null
-	 * @param String parameter name
+	 * @param String
+	 *            parameter name
 	 */
 	public String getParameter(String paramName) {
 		return request.getParameter(paramName);
@@ -109,15 +128,26 @@ public class DataHelper implements IDataHelper {
 
 	/**
 	 * setAttribute() method sets new Attribute to the HttpRequest
-	 * @param String Name of the request attribute
-	 * @param Object the value of the attribute to be set
+	 * 
+	 * @param String
+	 *            Name of the request attribute
+	 * @param Object
+	 *            the value of the attribute to be set
 	 * @return void
 	 */
 	@Override
 	public void setAttribute(String Name, Object o) {
 		request.setAttribute(Name, o);
 	}
-	
+
+	/**
+	 * getAttribute() method retrieves the value of the attribute that has the
+	 * name specified with the "name" parameter, from HttpServletRequest
+	 * 
+	 * @param String
+	 *            Name of the request attribute
+	 * @return Object The current value of the attribute
+	 */
 	@Override
 	public Object getAttribute(String name) {
 		return request.getAttribute(name);
@@ -127,8 +157,10 @@ public class DataHelper implements IDataHelper {
 	 * getParameterValues() returns the set of parameter values thats bound to
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
+	 * 
 	 * @return String array if the parameter exists else null
-	 * @param String parameter name
+	 * @param String
+	 *            parameter name
 	 */
 	@Override
 	public String[] getParameterValues(String name) {
@@ -137,6 +169,7 @@ public class DataHelper implements IDataHelper {
 
 	/**
 	 * getSession() returns a HttpSession binded with request
+	 * 
 	 * @return HttpSession
 	 */
 	@Override
@@ -146,6 +179,7 @@ public class DataHelper implements IDataHelper {
 
 	/*
 	 * getSession() returns an ip address which the request is coming
+	 * 
 	 * @return String
 	 */
 	@Override
@@ -155,6 +189,7 @@ public class DataHelper implements IDataHelper {
 
 	/**
 	 * getSession() returns User-Agent which is the browser
+	 * 
 	 * @return String
 	 */
 	@Override
