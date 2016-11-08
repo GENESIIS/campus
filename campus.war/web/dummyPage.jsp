@@ -17,7 +17,8 @@ This page is expected to temporarily function as the Home page.
 <div align="center" >
 		<form action="PublicController" method="post">
 			<input type="text" name="category">
-			<button type="submit" name="CCO" value="LCTP">SUBMIT</button>
+			<input type="text" name="pageNum">
+			<button type="submit" name="CCO" value="LCP">SUBMIT</button>
 		</form>
 </div>
 </body>

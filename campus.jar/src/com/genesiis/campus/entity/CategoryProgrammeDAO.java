@@ -62,6 +62,7 @@ public class CategoryProgrammeDAO implements ICrud {
 			ps.setInt(3, 1);
 			ps.setInt(4, 1);
 			ps.setInt(5, 1);
+			ps.setInt(6, 1);
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);

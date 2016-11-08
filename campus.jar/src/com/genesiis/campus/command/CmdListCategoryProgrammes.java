@@ -62,8 +62,13 @@ public class CmdListCategoryProgrammes implements ICommand {
 			} 
 			
 			categoryCode = Integer.parseInt(helper.getParameter("category"));
-			pageNum = Integer.parseInt(helper.getParameter("pageNum"));
-			
+
+			if (helper.getParameter("pageNum") == null) {
+				Log.error("The provided value for pageNum is null!");
+				msgList.add("The provided value for pageNum is null!");
+				throw new IllegalArgumentException("The provided value for pageNum is null!");
+			} 
+			pageNum = Integer.parseInt(helper.getParameter("pageNum"));			
 			
 			Programme programme = new Programme();
 			programme.setCategory(categoryCode);
