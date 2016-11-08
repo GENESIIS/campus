@@ -6,9 +6,6 @@
  * This method id to load category details
  */
 
-require('../../bower-components/jquery/jquery-3.1.1.min.js');
-
-displayCategory();
 function displayCategory() {
 	alert("Inside displayCategory()");
 	$.get('PublicController', {
@@ -19,7 +16,6 @@ function displayCategory() {
 	});
 	
 }
-
 
 function getAjaxData(response) {
 	alert("inside function(response)");
