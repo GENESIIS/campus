@@ -2,6 +2,7 @@ package com.genesiis.campus.factory;
 
 //20161108 JH c7-higher-education-landing-page-mp added PublicCmdFactory.java
 
+import com.genesiis.campus.command.CmdListCategoryLandingPage;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -11,7 +12,7 @@ public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
 	static {	
-	//	map.put(Operation.GET_SEARCH_DATA, new CmdGetSearchData());	
+		map.put(Operation.LIST_CATEGORY_LANDING_PAGE, new CmdListCategoryLandingPage());
 
 	}
 
@@ -20,7 +21,9 @@ public class PublicCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		
+		case LIST_CATEGORY_LANDING_PAGE:
+			command = map.get(o);
+			break;
 
 		default:
 			break;

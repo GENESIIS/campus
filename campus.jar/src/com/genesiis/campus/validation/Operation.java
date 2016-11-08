@@ -1,9 +1,10 @@
 package com.genesiis.campus.validation;
+
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
-//20161026 JH c7-list-higher-education-courses Operation class modified 
+//20161026 JH c7-list-higher-education-courses: added LIST_CATEGORY_LANDING_PAGE attribute 
 
 /**
  * Operation class facilitate in binding the CCO

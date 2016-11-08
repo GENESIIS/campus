@@ -5,11 +5,7 @@ package com.genesiis.campus.util;
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
+//20161108 JH c7-higher-education-landing-page-mp removed unwanted imports
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -19,9 +15,9 @@ import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
 
-import javax.servlet.ServletException;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DataHelper implements IDataHelper {
