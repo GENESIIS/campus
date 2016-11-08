@@ -1,8 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java
-//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.javamodified findById() method
-//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.javamodified findById() method
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java modified findById() method
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
