@@ -3,7 +3,8 @@ package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created initial version
 //20161025 CM c13-Display course details add VIEW_PROGRAMME enum element related entry
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -13,11 +14,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.genesiis.campus.validation.ResponseType;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
@@ -155,6 +152,34 @@ public class DataHelper implements IDataHelper {
 	public String getHeader(String name) {
 		return request.getHeader(name);
 
+	}
+
+	@Override
+	public ResponseType getResponseType(String cco) {
+		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue != null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
+		}
+		return o.getResponseType();
+	}
+
+
+	/**
+	 * getAttribute() method retrieves the value of the attribute that has the
+	 * name specified with the "name" parameter, from HttpServletRequest
+	 * 
+	 * @param String
+	 *            Name of the request attribute
+	 * @return Object The current value of the attribute
+	 */
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
 	}
 
 }

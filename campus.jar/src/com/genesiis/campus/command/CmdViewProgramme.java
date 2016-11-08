@@ -10,8 +10,9 @@ package com.genesiis.campus.command;
 //20161101 CM c13-Display course details Modified execute() method.
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
+
+import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.ClassTypeDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -23,8 +24,6 @@ import com.genesiis.campus.entity.ProgrammeLocationDAO;
 import com.genesiis.campus.entity.SemesterDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
-
-import org.apache.log4j.Logger;
 
 public class CmdViewProgramme implements ICommand {
 
@@ -88,7 +87,7 @@ public class CmdViewProgramme implements ICommand {
 			helper.setAttribute("locationView", locationDAOCollection);
 			
 		} catch (Exception e) {
-			log.info("execute() : e" + e.toString());
+			log.error("execute() : e" + e.toString());
 			throw e;
 		}
 

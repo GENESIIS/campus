@@ -9,7 +9,7 @@
 <body>
 	<form method="Post" action="PublicController">
 		<h1>Hello World..!!</h1>
-		<input type="text" name="programmeCode" />
+		<input type="text" name="programmeCode" required  />
 
 		<button type="submit" name="CCO" id="CCO" value="VPD"
 			class="pure-button pure-button-primary">View Programme Details</button>

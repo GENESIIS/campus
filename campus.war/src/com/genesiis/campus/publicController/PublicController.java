@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.genesiis.campus.controller.CampusController;
-
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.controller.CampusController;
 
 /**
  * Servlet implementation class CompanyController

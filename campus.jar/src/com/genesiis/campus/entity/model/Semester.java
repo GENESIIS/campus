@@ -1,10 +1,10 @@
 package com.genesiis.campus.entity.model;
 
-import java.sql.Date;
-
 //20161024 CM  c13 display course details INIT Semester.java.
 //20161024 CM  c13 display course details Create variables, getters and setters.
 //20161101 CM  c13 display course details Add private modifier to the variables.
+
+import java.sql.Date;
 
 public class Semester {
 

@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdViewProgramme;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 
