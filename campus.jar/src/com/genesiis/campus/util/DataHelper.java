@@ -4,6 +4,7 @@ package com.genesiis.campus.util;
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 //20161027 CM c9-make-inquiry-for-institute add SEND_INSTITUTE_INQUIRY and refactor getResultPage()
 //20161103 CM c9-make-inquiry-for-institute Implemented getRemoteAddr() method
+//20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,6 +17,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.ResponseType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,15 +29,15 @@ public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
 
 	private static HttpServletRequest request;
-	
+
 	private String cco = "";
 	private String commandChoice = "";
 	private String redirectPage = "login.jsp";
 
 	public DataHelper(HttpServletRequest request) {
-	
+
 		this.request = request;
-		
+
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class DataHelper implements IDataHelper {
 	@Override
 	public String getRedirectPage() {
 		return this.redirectPage;
-		
+
 	}
 
 	@Override
@@ -168,6 +170,7 @@ public class DataHelper implements IDataHelper {
 	 * getSession() returns an ip address which the request is coming
 	 * 
 	 * @author PN
+	 * 
 	 * @return String
 	 */
 	@Override
@@ -188,30 +191,53 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * getAttribute method returns the attribute value bound to the
-	 * request instance by attributeName
+	 * getAttribute method returns the attribute value bound to the request
+	 * instance by attributeName
+	 * 
 	 * @author dushantha DN
-	 * @param attributeName String
-	 * @return Object 
+	 * @param attributeName
+	 *            String
+	 * @return Object
 	 * @since 20161031
 	 */
-	public Object getAttribute(String attributeName){
+	public Object getAttribute(String attributeName) {
 		return request.getAttribute(attributeName);
 	}
 
-	
-
 	/**
-	 * getRemoteAddr method   Returns the Internet Protocol (IP) address of the client or last proxy that sent the request.
-	 * request instance by attributeName
+	 * getRemoteAddr method Returns the Internet Protocol (IP) address of the
+	 * client or last proxy that sent the request. request instance by
+	 * attributeName
+	 * 
 	 * @author Chathuri
-	 * @param attributeName String
-	 * @return Object 
+	 * @param attributeName
+	 *            String
+	 * @return Object
 	 * @since 20161103
 	 */
 	@Override
 	public String getRemoteAddr() {
 		return request.getRemoteAddr();
+	}
+
+	/**
+	 * getSession() returns User-Agent which is the browser
+	 * 
+	 * @return String
+	 */
+
+	@Override
+	public ResponseType getResponseType(String cco) {
+		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
+		}
+		return o.getResponseType();
 	}
 
 }

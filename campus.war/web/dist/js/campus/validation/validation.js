@@ -58,3 +58,30 @@ function isPatternMatch(regularExpression,source){
 	return regularExpression.test(source);
 	
 }
+
+
+
+function validateInstituteInquiryFileds(){
+	var fullname = $("#fullname").val();
+	var email = $("#email").val();
+	var countryCode = $("#countryCode").val();
+	var areaCode = $("#areaCode").val();
+	var telephoneNumber = $("#telNum").val();
+	var inquiryTitle = $("#inquiryTitle").val();
+	var inquiry = $("#inquiry").val();
+	var courseProvider = $("#courseProviderCode").val();
+	var student = $("#studentCode").val();
+	var response = grecaptcha.getResponse();
+	var wasSubmitted = false;
+	
+	if(!(isempty(fullname) && isempty(email) && isempty(countryCode) && isempty(areaCode) && isempty(telephoneNumber) && isempty(inquiryTitle) && isempty(inquiry))){
+		alert( "Please fill required data" );
+        return false;
+	}else if(response.length == 0){
+		alert( "You can't leave Captcha Code empty" );
+	}else if (!wasSubmitted) {
+		wasSubmitted = true;
+		return wasSubmitted;
+	}
+	return false;
+}

@@ -10,24 +10,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="dist/bower-components/jquery/jquery.min.js"></script>
-<script src="dist/js/campus/campus.instituteInquiry.js"></script>
+<script src="dist/js/campus/validation/validation.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <!-- Javascript method for validate form submission. Handle duplicate form submission-->
-<script type="text/javascript">
-	var wasSubmitted = false;
-	function checkBeforeSubmit() {
-		if (!wasSubmitted) {
-			wasSubmitted = true;
-			return wasSubmitted;
-		}
-		return false;
-	}
-</script>
+
 <title>Institute Inquiry</title>
 </head>
 <body>
-	<form method="POST" action="InstituteController"
-		onsubmit="return checkBeforeSubmit()">
+	<form method="POST" onsubmit="return (validateInstituteInquiryFileds())" action="InstituteController">
+		
 		<table align="center">
 			<tr>
 				<td><input type="hidden" value="1"
@@ -52,13 +43,13 @@
 				<td>Full Name</td>
 				<td><span id="fullNametbError" name="fullNametbError"
 					style="color: red; font-weight: normal !important;"></span> <input
-					type="text" name="fullname" id="fullnamee" value="" required /></td>
+					type="text" name="fullname" id="fullname" value=""  /></td>
 			</tr>
 			<tr>
 				<td>Email</td>
 				<td><span id="emailtbError" name="emailtbError"
 					style="color: red; font-weight: normal !important;"></span> <input
-					type="text" name="email" id="email" required /></td>
+					type="text" name="email" id="email"  /></td>
 			</tr>
 			<tr>
 				<td>Country Code</td>

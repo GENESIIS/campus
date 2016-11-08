@@ -9,21 +9,27 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	SEND_INSTITUTE_INQUIRY("SII","instituteInquiry.jsp"),
-	BAD_OPERATION("BO", "commandNotFound.jsp");
+	SEND_INSTITUTE_INQUIRY("SII",ResponseType.JSP,"instituteInquiry.jsp"),
+	BAD_OPERATION("BO",ResponseType.INAPPLICABLE, "commandNotFound.jsp");
 			
 	private final String commandString;
+	private final ResponseType responseType;
 	private final String viewJspUrl;
 
 
-	Operation(final String newValue, final String viewJspUrl) {
+	Operation(final String newValue, final ResponseType responseType, final String viewJspUrl) {
 		this.commandString = newValue;
+		this.responseType = responseType;
 		this.viewJspUrl = viewJspUrl;
 
 	}
 
 	public String getCommandString() {
 		return commandString;
+	}
+
+	public ResponseType getResponseType() {
+		return responseType;
 	}
 
 	public String getPageURL() {

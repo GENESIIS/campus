@@ -127,7 +127,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 				}
 			} else {
 				// Input by Robot
-				log.info("I'm Robot");
+				log.info("I'm Not a Robot");
 				message=SystemMessage.RECAPTCHAVERIFICATION.message();
 			}
 
