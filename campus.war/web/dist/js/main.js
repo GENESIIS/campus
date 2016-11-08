@@ -11,4 +11,3 @@ $(document).ready(function () {
         $(this).next('.slideable').slideToggle("slow");
     });
 });
- 
