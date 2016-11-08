@@ -3,8 +3,10 @@ package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created initial version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 //20161031 AS C8-inquiry-form-for-course modified getResultPage method
+//20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -14,6 +16,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.ResponseType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DataHelper implements IDataHelper {
-
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
 
 	private static HttpServletRequest request;
-	
+
 	private String cco = "";
 	private String commandChoice = "";
 	private String redirectPage = "login.jsp";
@@ -35,7 +37,6 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * @author pabodha
 	 * @return String
 	 * @param request
 	 *            This will pass the CCO (Command Class Code) to the servlet
@@ -46,28 +47,33 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * @author pabodha
 	 * @return String This will be use to select jsp page
 	 **/
 	@Override
 	public String getResultPage(String cco) {
-		String resultPage = "login.jsp";
-		Operation o = Operation.BAD_OPERATION;
-		o = Operation.getOperation(cco);
-		switch (o) {
-		case CONTACT_US_PUBLC:
-			resultPage = o.getPageURL();
-			break;
-		case BAD_OPERATION:
-			resultPage = o.getPageURL();
-			break;
-		case SEND_COURSE_INQUIRY:
-			resultPage = o.getPageURL();
-			break;
-		default:
-			break;
+		Operation o = Operation.getOperation(cco);
+		return o.getPageURL();
+	}
+	
+	/**
+	 * getResponseType(String) Returns the response type bound to each Operation
+	 * enum constant.
+	 * @return ResponseType Enum constant of type ResponseType indicating what type
+	 * of response to send to the client
+	 * @param String The value sent by the client as CCO 
+	 */	
+	@Override
+	public ResponseType getResponseType(String cco) {
+		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
 		}
-		return resultPage;
+		return o.getResponseType();
 	}
 
 	/**
@@ -75,7 +81,6 @@ public class DataHelper implements IDataHelper {
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
 	 * 
-	 * @author PN
 	 * @return String array if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -112,7 +117,6 @@ public class DataHelper implements IDataHelper {
 	 * parameter name if exists. If the seeking parameter name is not existing
 	 * method returns null String
 	 * 
-	 * @author DN
 	 * @return String if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -124,7 +128,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * setAttribute() method sets new Attribute to the HttpRequest
 	 * 
-	 * @author DN
 	 * @param String
 	 *            Name of the request attribute
 	 * @param Object
@@ -137,11 +140,23 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
+	 * getAttribute() method retrieves the value of the attribute that has the
+	 * name specified with the "name" parameter, from HttpServletRequest
+	 * 
+	 * @param String
+	 *            Name of the request attribute
+	 * @return Object The current value of the attribute
+	 */
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
+	}
+
+	/**
 	 * getParameterValues() returns the set of parameter values thats bound to
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
 	 * 
-	 * @author PN
 	 * @return String array if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -154,7 +169,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * getSession() returns a HttpSession binded with request
 	 * 
-	 * @author PN
 	 * @return HttpSession
 	 */
 	@Override
@@ -165,7 +179,6 @@ public class DataHelper implements IDataHelper {
 	/*
 	 * getSession() returns an ip address which the request is coming
 	 * 
-	 * @author PN
 	 * @return String
 	 */
 	@Override
@@ -176,7 +189,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * getSession() returns User-Agent which is the browser
 	 * 
-	 * @author PN
 	 * @return String
 	 */
 	@Override
@@ -184,17 +196,11 @@ public class DataHelper implements IDataHelper {
 		return request.getHeader(name);
 
 	}
-	
-	/**
-	 * getAttribute method returns the attribute value bound to the
-	 * request instance by attributeName
-	 * @author dushantha DN
-	 * @param attributeName String
-	 * @return Object 
-	 * @since 20161031
-	 */
-	public Object getAttribute(String attributeName){
-		return request.getAttribute(attributeName);
+
+	@Override
+	public String getRemoteAddr() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

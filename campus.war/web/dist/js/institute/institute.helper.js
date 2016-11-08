@@ -77,14 +77,14 @@ function sendCourseInquiry() {
 				CCO : "SCI"
 			},
 			dataType : "json",
-			success : function(data) {
-				alert(data);
+			success : function(response) {
+				alert(response);
 				// if (data == "Details added successfully.") {
 				//					
 				// }
 			},
 			error : function(e) {
-				alert("Error " + e);
+			//	alert("Error " + e);
 				console.log(e);
 			}
 		});

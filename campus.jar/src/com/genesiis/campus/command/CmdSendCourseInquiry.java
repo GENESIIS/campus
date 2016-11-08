@@ -64,6 +64,7 @@ public class CmdSendCourseInquiry implements ICommand {
 			recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
 			generalEmail = formatEmailInstance();
 			this.sendMail();
+			
 		}
 
 		helper.setAttribute("message", message);

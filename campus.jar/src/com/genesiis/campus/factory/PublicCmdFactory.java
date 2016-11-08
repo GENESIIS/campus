@@ -10,7 +10,7 @@ public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
 	static {	
-		map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());	
+	//	map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());	
 	}
 	@Override
 	public ICommand getCommand(String cco) {
@@ -18,9 +18,9 @@ public class PublicCmdFactory implements ICmdFactory {
 		o = Operation.getOperation(cco);
 		switch (o) {
 		
-		case CONTACT_US_PUBLC:
-			command = map.get(o);
-			break;
+//		case CONTACT_US_PUBLC:
+//			command = map.get(o);
+//			break;
 		default:
 			break;
 		}
