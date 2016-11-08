@@ -76,13 +76,10 @@ public class CmdSendInstituteInquiry implements ICommand {
 			// Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
 				// Input by Human
-				// String gsonData = helper.getParameter("jsonData");
 				String validateResult = Validator.validateInquiry(helper);
 
 				if (validateResult.equalsIgnoreCase("True")) {
 					setEnvironment(helper);
-					// InstituteInquiry data =
-					// getInstituteInquirydetails(gsonData);
 
 					instituteInquiry.setStudentName(fullname);
 					instituteInquiry.setStudentEmail(sendersEmail);
