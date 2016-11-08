@@ -15,6 +15,7 @@
 
     <!-- W3-Include -->
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script type="text/javascript" src="../bower-components/jquery/jquery.min.js"></script>
 	<script src="../js/filterSearch/ui-populate-helper.js"></script>
 </head>
 <body>
@@ -383,4 +384,4 @@
 <script src="../js/main.js"></script>
 
 </body>
-</html>
+</html>"
