@@ -526,6 +526,8 @@ body, html {
     background: #fff; }
     .main-category .inner-header .category-image {
       display: inline-block; }
+      .main-category .inner-header .category-image img {
+        height: 120px; }
     .main-category .inner-header .category-name {
       display: inline-block;
       position: relative; }
@@ -587,9 +589,11 @@ body, html {
               font-weight: 600; }
             .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
               display: block;
-              text-align: center; }
+              text-align: center;
+              height: 100px; }
               .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
                 width: 75px;
+                height: 100%;
                 padding-top: 8px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
             display: inline-block;
