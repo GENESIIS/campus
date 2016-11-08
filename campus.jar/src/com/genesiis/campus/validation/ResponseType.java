@@ -1,6 +1,5 @@
-/**
- * 
- */
+// 20161108 DN, JH, DJ, AS, CM, MM, PN Initialised enum
+
 package com.genesiis.campus.validation;
 
 /**
@@ -9,5 +8,7 @@ package com.genesiis.campus.validation;
  */
 public enum ResponseType {
 	JSP, 
-	JSON;
+	JSON, 
+	INAPPLICABLE;
+	
 }

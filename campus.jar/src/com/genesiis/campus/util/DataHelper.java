@@ -52,35 +52,8 @@ public class DataHelper implements IDataHelper {
 	 **/
 	@Override
 	public String getResultPage(String cco) {
-		String resultPage = "login.jsp";
-		Operation o = Operation.BAD_OPERATION;
-		o = Operation.getOperation(cco);
-		switch (o) {
-		case GET_SEARCH_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_CATEGORY_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_LEVEL_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_DISTRICT_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_MAJOR_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_TOWN_DATA:
-			resultPage = o.getPageURL();
-			break;
-		case LIST_INSTITUTE_DATA:
-			resultPage = o.getPageURL();
-			break;
-		default:
-			break;
-		}
-		return resultPage;
+		Operation o = Operation.getOperation(cco);
+		return o.getPageURL();
 	}
 	
 	/**
@@ -94,6 +67,14 @@ public class DataHelper implements IDataHelper {
 	@Override
 	public ResponseType getResponseType(String cco) {
 		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
+		}
 		return o.getResponseType();
 	}
 

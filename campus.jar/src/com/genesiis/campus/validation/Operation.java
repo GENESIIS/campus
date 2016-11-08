@@ -11,7 +11,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSP, "index.jsp"),
-	BAD_OPERATION("BO", ResponseType.JSP, "commandNotFound.jsp"),
+	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
 	LIST_LEVEL_DATA("LIST_LEVEL_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSP, "index.jsp"),
@@ -52,5 +52,4 @@ public enum Operation {
 		}
 		return BAD_OPERATION;
 	}
-
 }

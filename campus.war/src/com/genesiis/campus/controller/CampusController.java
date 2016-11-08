@@ -65,7 +65,7 @@ public class CampusController extends HttpServlet {
 
 		IDataHelper helper = null;
 		IView result = null;
-		String cco = "";
+		String cco = "abc";
 		helper = new DataHelper(request);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
@@ -73,31 +73,36 @@ public class CampusController extends HttpServlet {
 		try {
 			result = helper.getResultView(cco);
 
-			if (ResponseType.JSP.equals(responseType)) { // Important: boolean primitive hard-coded for testing purposes. 
-				// It is to be changed based on modifications to be done in Operation class 
+			if (ResponseType.JSP.equals(responseType)) {  
+	
 				request.setAttribute("result", result);
 				request.getRequestDispatcher(helper.getResultPage(cco))
 						.forward(request, response);
 				
-			} else if (ResponseType.JSON.equals(responseType)) { // Important: boolean primitive hard-coded for testing purposes. 
-				// It is to be changed based on modifications to be done in Operation class
+			} else if (ResponseType.JSON.equals(responseType)) {  
+				
 				StringBuilder json = new StringBuilder();
 				Gson gson = new Gson();
 				json.append("{result:");
-				json.append(gson.toJson(result.getCollection()));
-
-				Enumeration<String> attributeNames = request
-						.getAttributeNames();
-
-				while (attributeNames.hasMoreElements()) {
-					String currentAttributeName = attributeNames.nextElement();
-					Object object = helper.getAttribute(currentAttributeName);
-					String objectInJSON = gson.toJson(object);
-					json.append(", " + currentAttributeName + ":" + objectInJSON);
+				if (result.getCollection() != null) {
+					
+					json.append(gson.toJson(result.getCollection()));
+	
+					Enumeration<String> attributeNames = request
+							.getAttributeNames();
+	
+					while (attributeNames.hasMoreElements()) {
+						String currentAttributeName = attributeNames.nextElement();
+						Object object = helper.getAttribute(currentAttributeName);
+						String objectInJSON = gson.toJson(object);
+						json.append(", " + currentAttributeName + ":" + objectInJSON);
+					}
+				} else {
+					json.append("NO-DATA");
 				}
-
+				
 				json.append("}");
-
+				
 				response.setContentType("application/json");
 				response.getWriter().write(json.toString());
 			}
