@@ -2,7 +2,11 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
+//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
+//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 //20161031 DN c10-contacting-us-page getAttribute() method implemented
+//20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
+//20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
 
 import java.io.IOException;
 import java.util.Collection;
@@ -15,6 +19,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.ResponseType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,25 +52,33 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * @author pabodha
 	 * @return String This will be use to select jsp page
 	 **/
 	@Override
 	public String getResultPage(String cco) {
-		String resultPage = "login.jsp";
-		Operation o = Operation.BAD_OPERATION;
-		o = Operation.getOperation(cco);
-		switch (o) {
-		case CONTACT_US_PUBLC:
-			resultPage = o.getPageURL();
-			break;
-		case BAD_OPERATION:
-			resultPage = o.getPageURL();
-			break;
-		default:
-			break;
+		Operation o = Operation.getOperation(cco);
+		return o.getPageURL();
+	}
+	
+	/**
+	 * getResponseType(String) Returns the response type bound to each Operation
+	 * enum constant.
+	 * @return ResponseType Enum constant of type ResponseType indicating what type
+	 * of response to send to the client
+	 * @param String The value sent by the client as CCO 
+	 */	
+	@Override
+	public ResponseType getResponseType(String cco) {
+		Operation o = Operation.getOperation(cco);
+		if (Operation.BAD_OPERATION.equals(o)) {
+			String headerValue = getHeader("x-requested-with");
+			if (headerValue !=null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+				return ResponseType.JSON;
+			} else {
+				return ResponseType.JSP;
+			}
 		}
-		return resultPage;
+		return o.getResponseType();
 	}
 
 	/**
@@ -195,7 +208,7 @@ public class DataHelper implements IDataHelper {
 	}
 	
 	
-	public void SetCovtextAttribute(String attributeName,Object value){
+	public void setContextAttribute(String attributeName,Object value){
 		 request.getServletContext().setAttribute(attributeName, value);
 	}
 
