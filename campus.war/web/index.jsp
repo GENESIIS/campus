@@ -11,7 +11,7 @@
 	<h1>Hello World..!!</h1>
 
 	<form action="PublicController" method="POST">
-		<button type="submit" name="CCO" id="CCO" value="LCLP"
+		<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE"
 			class="pure-button pure-button-primary">Higher Education</button>
 		<table>
 			<tr>
