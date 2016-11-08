@@ -10,7 +10,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LIST_CATEGORY_PROGRAMMES("LCP", ResponseType.JSON, "corporateTraining.jsp");
+	LIST_CATEGORY_PROGRAMMES("LCP", ResponseType.JSON, "corporateTraining.jsp"),
+	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "categoryLandingPage.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
