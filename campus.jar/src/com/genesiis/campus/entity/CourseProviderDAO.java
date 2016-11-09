@@ -35,7 +35,7 @@ public class CourseProviderDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	/**
 	 * Search Course provider institute inquiry email 
 	 * 
@@ -62,6 +62,7 @@ public class CourseProviderDAO implements ICrud{
 			while (rs.next()) {
 				singleEmployeeList = new ArrayList<String>();
 				singleEmployeeList.add(rs.getString("GENERALEMAIL"));
+				singleEmployeeList.add(rs.getString("NAME"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
 				InquiryEmail.add(singleEmployeeCollection);
 
