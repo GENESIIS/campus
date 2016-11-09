@@ -62,10 +62,10 @@ public class ReCaptchaManager {
 				result = false;
 			}
 		} catch (IOException ioException) {
-			log.error("sentRequestToServer() :" + ioException);
+			log.error("sendRequestToServer() :" + ioException);
 			throw ioException;
 		} catch (Exception exception) {
-			log.error("sentRequestToServer() :" + exception);
+			log.error("sendRequestToServer() :" + exception);
 			throw exception;
 		} finally {
 			if (conn != null) {
