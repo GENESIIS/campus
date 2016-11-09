@@ -2,7 +2,8 @@ package com.genesiis.campus.command;
 
 //DJ 20161026 c6-list-available-institutes-on-the-view created CmdListTopCourseProviders.java
 //DJ 20161103 c6-list-available-institutes-on-the-view Implemented execute()
-//DJ 20161103 c6-list-available-institutes-on-the-view adjust the implementation to support dynamic category code  
+//DJ 20161103 c6-list-available-institutes-on-the-view adjust the implementation to support dynamic category code 
+//DJ 20161109 c6-list-available-institutes-on-the-view add topRatedCourseProviders implementation
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -41,10 +42,10 @@ public class CmdListTopCourseProviders implements ICommand   {
 			}			
 			//final Collection<Collection<String>> institutes = providerDAO.findById(provider);			
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
-			//final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
+			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
 			
 			iview.setCollection(topViewedCourseProviders);
-			//helper.setAttribute("tRCProviders", topRatedCourseProviders);
+			helper.setAttribute("tRCProviders", topRatedCourseProviders);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
