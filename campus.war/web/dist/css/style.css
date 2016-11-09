@@ -1009,6 +1009,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	padding: 8px;
 	float: left;
 	width: 26%;
+	height: 100px;
 }
 
 .main-category .content-holder .sliding-info-panel .info-slider-holder .institute-info .inst-logo img
