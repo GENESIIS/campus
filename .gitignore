@@ -35,4 +35,7 @@ build.properties
 .orig
 
 #ignore the .gitignore files
-#.gitignore
+.gitignore
+
+#ignore the .idea workspace directory
+.idea/
