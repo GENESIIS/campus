@@ -7,6 +7,8 @@ package com.genesiis.campus.entity;
 //DJ 20161103 c6-list-available-institutes-on-the-view Implemented findTopViewedProviders()
 //DJ 20161103 c6-list-available-institutes-on-the-view adjust the findTopViewedProviders() to support dynamic category code
 //DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
+//DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -183,7 +185,7 @@ public class CourseProviderDAO implements ICrud{
 			if(!isGetAll){
 				stmt.setInt(1, categoryCode);	
 			}	
-			
+			log.debug("SQL : " + sb.toString());
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
 				final ArrayList<String> singleProvider = new ArrayList<String>();
@@ -231,7 +233,14 @@ public class CourseProviderDAO implements ICrud{
 				isGetAll=cp.isGetAll();
 			}	
 			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(" ");
+			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 AVG(ISNULL(NEWTABLE.PROGAVERAGE,0)) AS CPAVERAGE , PROVIDER.CODE AS CPCODE ,PROVIDER.SHORTNAME AS CPSHORTNAME FROM ( ");
+			sb.append(" SELECT AVG(ISNULL(RAT.RATINGVALUE,0)) AS PROGAVERAGE ,PROG.CODE AS PROGRAMMECODE, PROG.COURSEPROVIDER AS CPCODE ");
+			sb.append(" FROM  [CAMPUS].RATING RAT INNER JOIN [CAMPUS].PROGRAMME PROG  ON  RAT.PROGRAMME=PROG.CODE");
+			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE=1 ");
+			// sb.append(" --AND CAT.CODE=2");
+			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
+			sb.append(" LEFT JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
+			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.SHORTNAME  ORDER BY CPAVERAGE DESC");		
 			
 			stmt = conn.prepareStatement(sb.toString());			
 			if(!isGetAll){

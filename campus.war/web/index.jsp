@@ -9,8 +9,10 @@
 <body>
 	<h1>Hello World..!! </h1>
 	<h1>List Institutes </h1>
-	<a href="dummyPage.jsp">Click Here to Proceed</a>
-	
-
+	<!-- <a href="dummyPage.jsp">Click Here to Proceed</a> -->
+	<form action="PublicController" method="post">
+		<input type="text" name="category">
+		<button type="submit" name="CCO" value="TCPL">TOP CP lIST</button>
+	</form>
 </body>
 </html>
