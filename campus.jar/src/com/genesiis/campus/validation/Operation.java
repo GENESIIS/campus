@@ -4,7 +4,7 @@ package com.genesiis.campus.validation;
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
-
+//20161109 DN c10-contacting-us-MP change the path of ContactUs.jsp page
 
 /**
  * Operation class facilitate in binding the CCO
@@ -13,7 +13,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 
-	CONTACT_US_PUBLC("FBTSA",ResponseType.JSP, "contactUs.js"),
+	CONTACT_US_PUBLC("FBTSA",ResponseType.JSP, "dist/partials/contactUs.jsp"),
 	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSP, "index.jsp"),
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
