@@ -114,23 +114,30 @@
 								<a href="javascript:">Left</a> <a href="javascript:">Right</a>
 							</div>
 						</div>
-						<div class="institute-info clearfix">
-							<div class="inst-logo">
-								<img src="../../i/sliit-logo.png" alt="Institute Logo">
-							</div>
-							<div class="inst-name">
-								<h1 class="short-name">SLIIT</h1>
-								<h2 class="full-name">Sri Lanka Institute of Information
-									Technology</h2>
-							</div>
-						</div>
-						<div class="institute-description clearfix">
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's
-								standard dummy text.</p>
-							<div class="btn-more clearfix">
-								<a href="javascript:">Show More</a>
-							</div>
+						<div id="featured-panel">
+							<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+
+								<div class="institute-info clearfix">
+									<div class="inst-logo">
+										<img src="${featuredInstitute[16] }" alt="Institute Logo">
+									</div>
+									<div class="inst-name">
+										<h1 class="short-name"><c:out value="${featuredInstitute[2] }"></c:out></h1>
+										<h2 class="full-name"><c:out value="${featuredInstitute[3] }"></c:out></h2>
+									</div>
+								</div>
+
+								<div class="institute-description clearfix">
+									<p>Lorem Ipsum is simply dummy text of the printing and
+										typesetting industry. Lorem Ipsum has been the industry's
+										standard dummy text.</p>
+									<div class="btn-more clearfix">
+										<a href="javascript:">Show More</a>
+									</div>
+								</div>
+								
+							</c:forEach>
+
 						</div>
 					</div>
 				</div>

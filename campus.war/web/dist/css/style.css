@@ -1028,7 +1028,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 .main-category .content-holder .sliding-info-panel .info-slider-holder .institute-description
 	{
 	height: 290px;
-	background: url("/dist/i/higher-education/higher-edu.png");
+	background: url("/dist/i/higher-education/slider-bg-1.jpg");
 	background-position: center;
 	text-align: center;
 }
