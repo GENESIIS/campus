@@ -175,7 +175,7 @@
 						<!-- btn Submit -->
 						<button class="btn-submit" type="submit" name="CCO" id="CCO"
 							value="SII" class="pure-button pure-button-primary">Send
-							Message</button>
+							Inquiry</button>
 
 					</form>
 					<!-- End Submit form -->
