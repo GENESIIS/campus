@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //DJ 20161103 c6-list-available-institutes-on-the-view adjust the findTopViewedProviders() to support dynamic category code
 //DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
 //DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
+//DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
 
 
 import java.sql.Connection;
@@ -166,7 +167,7 @@ public class CourseProviderDAO implements ICrud{
 				isGetAll=cp.isGetAll();
 			}	
 			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT  DISTINCT TOP 10 cp.CODE , CP.UNIQUEPREFIX  FROM ( ");
+			/*final StringBuilder sb = new StringBuilder("SELECT  DISTINCT TOP 10 cp.CODE , CP.UNIQUEPREFIX  FROM ( ");
 			sb.append(" SELECT  TOP 1000  PROV.CODE AS PROVIDERCODE,COUNT(*) AS HITCOUNT,PROG.CODE PROGRAMMCODE,PROG.NAME,  PROV.NAME AS PROVIDERNAME, PROV.UNIQUEPREFIX, PROG.CATEGORY");
 			sb.append(" FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE INNER JOIN [CAMPUS].PROGRAMMESTAT PSTAT ON PROG.CODE= PSTAT.PROGRAMME ");
@@ -179,7 +180,19 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROV.CODE,PROV.NAME,PROV.UNIQUEPREFIX, PROG.CATEGORY ");
 			sb.append(" ORDER BY HITCOUNT desc");
 			sb.append(" ) NEWTABLE ");
-			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");			
+			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");	*/
+			
+			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.SHORTNAME AS CPSHORTNAME   FROM (");
+			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
+			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
+			sb.append(" LEFT OUTER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
+			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");
+			if (!isGetAll) {
+				sb.append(" AND CAT.CODE= ? ");
+			}
+			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
+			sb.append(" LEFT OUTER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
+			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.SHORTNAME ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
 			if(!isGetAll){
@@ -237,11 +250,13 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" SELECT AVG(ISNULL(RAT.RATINGVALUE,0)) AS PROGAVERAGE ,PROG.CODE AS PROGRAMMECODE, PROG.COURSEPROVIDER AS CPCODE ");
 			sb.append(" FROM  [CAMPUS].RATING RAT INNER JOIN [CAMPUS].PROGRAMME PROG  ON  RAT.PROGRAMME=PROG.CODE");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE=1 ");
-			// sb.append(" --AND CAT.CODE=2");
+			if (!isGetAll) {
+				sb.append(" AND CAT.CODE=?");
+			}
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
 			sb.append(" LEFT JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
-			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.SHORTNAME  ORDER BY CPAVERAGE DESC");		
-			
+			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.SHORTNAME  ORDER BY CPAVERAGE DESC");
+
 			stmt = conn.prepareStatement(sb.toString());			
 			if(!isGetAll){
 				stmt.setInt(1, categoryCode);	
@@ -250,8 +265,8 @@ public class CourseProviderDAO implements ICrud{
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
 				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(rs.getString("CODE"));				
-				singleProvider.add(rs.getString("UNIQUEPREFIX"));
+				singleProvider.add(rs.getString("CPCODE"));				
+				singleProvider.add(rs.getString("CPSHORTNAME"));
 				allProviderList.add(singleProvider);
 			}
 			
