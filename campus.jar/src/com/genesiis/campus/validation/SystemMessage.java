@@ -38,6 +38,7 @@ public enum SystemMessage {
 	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),	
 	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
 	PASS_REQUEST_SUBMISSION("Request successfull submitted! "),
+	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
 	MEDICALREPORTNOTVALID("Medical Report not valid");
 
 	
