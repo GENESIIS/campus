@@ -3,11 +3,14 @@ package com.genesiis.campus.controller;
 // 20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
 // 20161107 DN, JH, DJ, AS, CM, MM public-controller-testing Changed implementation of process()
 // 								to support returning JSON as well as JSP as response
+// 20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +25,6 @@ import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
-
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -60,53 +62,48 @@ public class CampusController extends HttpServlet {
 		process(request, response);
 	}
 
+
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
 		helper = new DataHelper(request);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
-
 		try {
 			result = helper.getResultView(cco);
+			Gson gson = new Gson();
 
-			if (ResponseType.JSP.equals(responseType)) {  
-	
+			if (ResponseType.JSP.equals(responseType)) {
+
 				request.setAttribute("result", result);
 				request.getRequestDispatcher(helper.getResultPage(cco))
 						.forward(request, response);
-				
-			} else if (ResponseType.JSON.equals(responseType)) {  
-				
-				StringBuilder json = new StringBuilder();
-				Gson gson = new Gson();
-				json.append("{result:");
+
+			} else if (ResponseType.JSON.equals(responseType)) {
+				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
 				if (result.getCollection() != null) {
-					
-					json.append(gson.toJson(result.getCollection()));
-	
+					objectMap.put("result", result.getCollection());
+
 					Enumeration<String> attributeNames = request
 							.getAttributeNames();
-	
+
 					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames.nextElement();
-						Object object = helper.getAttribute(currentAttributeName);
-						String objectInJSON = gson.toJson(object);
-						json.append(", " + currentAttributeName + ":" + objectInJSON);
+						String currentAttributeName = attributeNames
+								.nextElement();
+						Object object = helper
+								.getAttribute(currentAttributeName);
+						objectMap.put(currentAttributeName, object);
 					}
 				} else {
-					json.append("NO-DATA");
+					objectMap.put("result", "NO-DATA");
 				}
-				
-				json.append("}");
-				
-				response.setContentType("application/json");
-				response.getWriter().write(json.toString());
-			}
 
+				response.setContentType("application/json");
+				response.getWriter().write(gson.toJson(objectMap));
+			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
