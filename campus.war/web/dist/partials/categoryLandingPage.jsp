@@ -201,6 +201,7 @@
 <script src="../../dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="../../dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="../../dist/js/main.js"></script>
+<script src="../../dist/js/categoryLandingPage/categoryLandingPage.js"></script>
 
 </body>
 </html>
