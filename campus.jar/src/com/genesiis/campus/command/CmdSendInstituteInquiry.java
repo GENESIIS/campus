@@ -12,9 +12,9 @@ package com.genesiis.campus.command;
 //20161102 CM c9-make-inquiry-for-institute Implement reCAPTCHA.
 //20161108 CM c9-make-inquiry-for-institute Removed unused loggers.
 //20161108 CM c9-make-inquiry-for-institute Modified execute() method
-//20161108 CM c9-make-inquiry-for-institute Removed createDatabaseConnection() method
+//20161109 CM c9-make-inquiry-for-institute Removed createDatabaseConnection() method
+//20161108 CM c9-make-inquiry-for-institute Modified composeSingleEmailList() method
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +27,6 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.CourseProviderInquiryDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProviderInquiry;
-import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
@@ -177,7 +176,9 @@ public class CmdSendInstituteInquiry implements ICommand {
 			Collection<Collection<String>> outer) {
 		ArrayList<String> monoList = new ArrayList<String>();
 		for (Collection<String> emailAddressList : outer) {
-			monoList.addAll(emailAddressList);
+		Object ar[]=emailAddressList.toArray();
+		String emailAddr=(String) ar[0];
+			monoList.add(emailAddr);
 		}
 		return monoList;
 
