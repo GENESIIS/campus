@@ -71,7 +71,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 			final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
 			boolean responseIsSuccess = reCaptchaManager
-					.sentRequestToServer(helper);
+					.sendRequestToServer(helper);
 
 			// Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
