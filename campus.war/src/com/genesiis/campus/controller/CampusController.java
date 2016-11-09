@@ -5,18 +5,22 @@ package com.genesiis.campus.controller;
 // 								to support returning JSON as well as JSP as response
 // 20161108 DN, JH, DJ, AS, CM, PN, MM public-controller-testing-2 Changed implementation of process()
 //								to test for ResponseType to decide if JSP or JSON response to send
+// 20161109 PN, MM public-controller-testing-2 Changed implementation of process() so that when composing 
+// 								JSON content a Java Map is utilised so the returned JSON is in proper format.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
-
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,7 +69,8 @@ public class CampusController extends HttpServlet {
 
 		try {
 			result = helper.getResultView(cco);
-
+			Gson gson = new Gson();
+			
 			if (ResponseType.JSP.equals(responseType)) {  
 	
 				request.setAttribute("result", result);
@@ -73,13 +78,11 @@ public class CampusController extends HttpServlet {
 						.forward(request, response);
 				
 			} else if (ResponseType.JSON.equals(responseType)) {  
+
+				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 				
-				StringBuilder json = new StringBuilder();
-				Gson gson = new Gson();
-				json.append("{result:");
-				if (result.getCollection() != null) {
-					
-					json.append(gson.toJson(result.getCollection()));
+				if (result.getCollection() != null) {					
+					objectMap.put("result", result.getCollection());
 	
 					Enumeration<String> attributeNames = request
 							.getAttributeNames();
@@ -87,17 +90,14 @@ public class CampusController extends HttpServlet {
 					while (attributeNames.hasMoreElements()) {
 						String currentAttributeName = attributeNames.nextElement();
 						Object object = helper.getAttribute(currentAttributeName);
-						String objectInJSON = gson.toJson(object);
-						json.append(", " + currentAttributeName + ":" + objectInJSON);
+						objectMap.put(currentAttributeName, object);
 					}
 				} else {
-					json.append("NO-DATA");
+					objectMap.put("result", "NO-DATA");
 				}
 				
-				json.append("}");
-				
+				response.getWriter().write(gson.toJson(objectMap));
 				response.setContentType("application/json");
-				response.getWriter().write(json.toString());
 			}
 
 		} catch (Exception e) {
