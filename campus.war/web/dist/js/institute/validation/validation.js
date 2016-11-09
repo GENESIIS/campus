@@ -73,15 +73,13 @@ function isPatternMatch(regularExpression, source) {
  * @returns {Boolean}
  */
 function validateInstituteInquiryFileds() {
-	var fullname = $("#fullname").val();
-	var email = $("#email").val();
-	var countryCode = $("#countryCode").val();
-	var areaCode = $("#areaCode").val();
-	var telephoneNumber = $("#telNum").val();
-	var inquiryTitle = $("#inquiryTitle").val();
-	var inquiry = $("#inquiry").val();
-	var courseProvider = $("#courseProviderCode").val();
-	var student = $("#studentCode").val();
+	var fullname = $("#input-firstName").val();
+	var email = $("#eMail").val();
+	var countryCode = $("#input-county-code").val();
+	var areaCode = $("#input-area-code").val();
+	var telephoneNumber = $("#input-tp-no").val();
+	var inquiryTitle = $("#input-inquiry-title").val();
+	var inquiry = $("#text-userMessage").val();
 	var response = grecaptcha.getResponse();
 	var wasSubmitted = false;
 

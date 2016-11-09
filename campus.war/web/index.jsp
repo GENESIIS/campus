@@ -1,11 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-
-<!-- 20161028 TR c1 setup project structure -->
-<!-- 20161028 TR c1 setup project structure - push to c1 -->
-
 <!DOCTYPE html>
-<html lang="en" ng-app="CampusApp">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,42 +9,26 @@
     <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/style.css" rel="stylesheet">
 
-    <!--<link rel="stylesheet" href="css/angular-material.min.css" />-->
-    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
-    <!--<link href="css/jk-carousel.min.css" rel="stylesheet">-->
+    <!-- W3-Include -->
+    <script src="dist/bower-components/w3/w3data.js"></script>
 
 </head>
 <body>
 
 <!-- Header-->
-<header ng-include="'dist/partials/layout/header.html'"></header>
+<header w3-include-html="dist/partials/layout/header.jsp"></header>
 
-<!-- Main Container  -->
-<div ng-view></div>
+<!-- Main Container - Landing -->
+<div w3-include-html="dist/partials/landing.html"></div>
 
 <!-- Footer -->
-<footer ng-include="'dist/partials/layout/footer.html'"></footer>
-
-<!-- AngularJS -->
-<script src="dist/bower-components/angular/angular.min.js"></script>
-<script src="dist/bower-components/angular/angular-route.min.js"></script>
-<!--<script src="bower-components/angular/angular-scroll.js"></script>-->
-<!--<script src="bower-components/angular/jk-carousel.min.js"></script>-->
-<!--<script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>-->
-<!--<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>-->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>-->
-
-
+<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
-<script src="dist/bower-components/jquery/jquery.min.js"></script>
+<!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
+<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="dist/js/app.js"></script>
-<!--<script src="js/animation.js"></script>-->
-<!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
-
-
-
+<script src="dist/js/main.js"></script>
 
 </body>
 </html>
