@@ -71,7 +71,7 @@ public class CourseProviderDAO implements ICrud{
 				isGetAll=cp.isGetAll();
 			}			
 			
-			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE, PROV.UNIQUEPREFIX , PROV.NAME ");
+			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.SHORTNAME AS CPSHORTNAME  ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
 			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
@@ -88,9 +88,8 @@ public class CourseProviderDAO implements ICrud{
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
 				final ArrayList<String> singleInstitute = new ArrayList<String>();
-				singleInstitute.add(rs.getString("CODE"));
-				singleInstitute.add(rs.getString("NAME"));
-				singleInstitute.add(rs.getString("UNIQUEPREFIX"));
+				singleInstitute.add(rs.getString("CPCODE"));
+				singleInstitute.add(rs.getString("SHORTNAME"));				
 				allInstitutesList.add(singleInstitute);
 			}
 			
@@ -182,7 +181,7 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" ) NEWTABLE ");
 			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");	*/
 			
-			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.SHORTNAME AS CPSHORTNAME   FROM (");
+			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH   FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
 			sb.append(" LEFT OUTER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
@@ -192,7 +191,7 @@ public class CourseProviderDAO implements ICrud{
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
 			sb.append(" LEFT OUTER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
-			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.SHORTNAME ORDER BY TOTAL DESC ");
+			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX, PROVIDER.LOGOIMAGEPATH ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
 			if(!isGetAll){
@@ -202,8 +201,9 @@ public class CourseProviderDAO implements ICrud{
 			final ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {				
 				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(rs.getString("CODE"));				
+				singleProvider.add(rs.getString("CPCODE"));				
 				singleProvider.add(rs.getString("UNIQUEPREFIX"));
+				singleProvider.add(rs.getString("LOGOPATH"));
 				allProviderList.add(singleProvider);
 			}
 			

@@ -25,7 +25,8 @@ public class CmdListTopCourseProviders implements ICommand   {
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;				
+		SystemMessage systemMessage = SystemMessage.UNKNOWN;	
+		String contextDeployLogoPath = "/education/provider/logo/";
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
@@ -46,6 +47,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			
 			iview.setCollection(topViewedCourseProviders);
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
+			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;

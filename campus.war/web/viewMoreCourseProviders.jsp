@@ -18,8 +18,7 @@
 		<tr>
 			<th></th>
 			<th>CODE</th>
-			<th>NAME</th>
-			<th>AMOUNT</th>
+			<th>NAME</th>			
 		</tr>
 		<c:forEach var="provider" items="${result.collection}">			
 			<tr>
