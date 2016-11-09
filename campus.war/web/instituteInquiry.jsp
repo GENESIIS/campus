@@ -84,10 +84,9 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td>
-				<span id="captchaError" name="captchaError"
+				<td><span id="captchaError" name="captchaError"
 					style="color: red; font-weight: normal !important;"></span>
-				<div class="g-recaptcha"
+					<div class="g-recaptcha"
 						data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
 			</tr>
 			<tr>
