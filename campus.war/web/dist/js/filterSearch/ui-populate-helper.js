@@ -2,50 +2,72 @@
 //20161101 PN c11-criteria-based-filter-search implemented displayInstitute(), displayMajor(), displayLevel(), displayDistricts() and pad() method.
 //20161102 PN c11-criteria-based-filter-search implemented getSelectedData(), getValueUsingParentTag() and addsearchData() method.
 //20161102 PN c11-criteria-based-filter-search modified addsearchData() method to load data dynamically.
+//20161109 PN c11-criteria-based-filter-search modified getAjaxData() and addsearchData() method to load data dynamically.
+
 /**
  * This method id to load category details
  */
 
-function displayCategory() {
-	alert("Inside displayCategory()");
-	$.get('PublicController', {
-		CCO : 'LIST_CATEGORY_DATA'
-	}, function(response) {
-		alert("response "+ response);
-		getAjaxData(response);
-	});
-	
-}
+$(document).ready(function() {
+		$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'LIST_CATEGORY_DATA'
+			},
+			dataType : "json",
+			success : function(response) {
+				getAjaxData(response);
+			},
+			error : function(response) {
+				alert("Error: "+response);
+			}
+		});
+});
 
-function getAjaxData(response) {
-	alert("inside function(response)");
-	var categories = $("#categoryName");
+function getAjaxData(response) {	
+ 	var categories = $("#categoryName");
 	categories.find('option').remove();
-	var categoryData = response[result];
-	var instituteData = response[instituteCollection];
-	
-//	alert("Inside categoryData loop");
-	$.each(categoryData, function(index, value) {
+	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(y).text(x).appendTo(categories);
-//		alert("Printing data...=" + data);
-//		alert("Printing x and y... x=" + x + ", y=" +y);
 	});
-
-
-	alert("Inside instituteData loop");
-	$.each(instituteData, function(index, value) {
+	
+	var count = 0 ;
+	var secondChoice = $("#select-item1");
+	secondChoice.find('li').remove();
+	$.each(response.majorCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		secondChoice.append('<li><a href="javascript:"><input name="major" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+		count++;
+	});
+	$("#majorCount").text(" " +pad(count, 2));
+	
+	var districtName = $("#districtName");
+	districtName.find('option').remove();
+	$.each(response.districtCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
 		var z = data[2].toString();
 		$('<option>').val(z).text(x).appendTo(districtName);
-		alert("Printing data...=" + data);
-		alert("Printing x,y and z... x=" + x + ", y=" +y + ", z=" +z);
+	});
+
+	var institueName = $("#institueName");
+	institueName.find('option').remove();
+	$.each(response.instituteCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		var z = data[2].toString();
+		$('<option>').val(z+"-"+y).text(x).appendTo(institueName);
 	});
 }
 
@@ -55,14 +77,14 @@ function getAjaxData(response) {
 function displayMajor() {
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
-	$.get('PublicController', {
+	$.get('../../PublicController', {
 		categoryCode : categoryCode,
 		CCO : 'LIST_MAJOR_DATA'
 	}, function(response) {
 		var count = 0 ;
 		var secondChoice = $("#select-item1");
 		secondChoice.find('li').remove();
-		$.each(response, function(index, value) {
+		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
@@ -81,13 +103,13 @@ function displayMajor() {
 function displayCourseProvider() {
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
-	$.get('PublicController', {
+	$.get('../../PublicController', {
 		categoryCode : categoryCode,
 		CCO : 'LIST_INSTITUTE_DATA'
 	}, function(response) {
 		var institueName = $("#institueName");
 		institueName.find('option').remove();
-		$.each(response, function(index, value) {
+		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
@@ -106,14 +128,14 @@ function displayCourseProvider() {
 function displayLevel() {
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
-	$.get('PublicController', {
+	$.get('../../PublicController', {
 		categoryCode : categoryCode,
 		CCO : 'LIST_LEVEL_DATA'
 	}, function(response) {
 		var count = 0 ;
 		var secondChoice = $("#select-item2");
 		secondChoice.find('li').remove();
-		$.each(response, function(index, value) {
+		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
@@ -132,13 +154,13 @@ function displayLevel() {
 function displayDistricts() {
 	var instituteCode = getSelectedData('instituelist', 'institueName');
 	
-	$.get('PublicController', {
+	$.get('../../PublicController', {
 		instituteCode : instituteCode,
 		CCO : 'LIST_DISTRICT_DATA'
 	}, function(response) {
 		var districtName = $("#districtName");
 		districtName.find('option').remove();
-		$.each(response, function(index, value) {
+		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
@@ -188,14 +210,14 @@ function addsearchData(){
 	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
 	var searchData = x+y+z+a;
 
-	$.get('PublicController', {
+	$.get('../../PublicController', {
 		searchData : JSON.stringify(searchData),
 		CCO : "GET_SEARCH_DATA"
 	}, function(response) {
 		var count = 0 ;
 		var dataTable = $("#example");
 		dataTable.find('tr:gt(0)').remove();
-		$.each(response, function(index, value) {
+		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			dataTable.append('<tr>' +
@@ -227,6 +249,27 @@ function addsearchData(){
 	});
 	
 }
+
+
+$(document).ready(function() {
+    var t = $('#example').DataTable();
+    var counter = 1;
+ 
+    $('#addRow').on( 'click', function () {
+        t.row.add( [
+            counter +'.1',
+            counter +'.2',
+            counter +'.3',
+            counter +'.4',
+            counter +'.5'
+        ] ).draw( false );
+ 
+        counter++;
+    } );
+ 
+    // Automatically add a first row of data
+    $('#addRow').click();
+} );
 
 /**
  * This method is to get selected checkbox values
