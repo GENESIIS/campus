@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //									setEnvironment() method initialiZed.execute() restructured.
 //20161031 DN c10-contacting-us-page refactor formatEmailInstance() host,user_name,password fields 
 //									removed
+//20161109 DN c10-contacting-us-page-MP execute() changed to include RecaptureManager codes
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
@@ -74,7 +76,12 @@ public class CmdGenerateEmail implements ICommand {
 			
 			 ICrud genesiis = new SystemConfigDAO();
 			 try{
-					 switch(Operation.getOperation(cco)){
+				 	final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
+					boolean isResponseSuccess = reCaptchaManager.sendRequestToServer(helper);
+				 
+					// Verify whether the input from Human or Robot
+				 	if (isResponseSuccess) {
+				 		switch(Operation.getOperation(cco)){
 						 case CONTACT_US_PUBLC:
 							 this.createDatabaseConnection();
 						
@@ -91,22 +98,26 @@ public class CmdGenerateEmail implements ICommand {
 					
 					 }					 
 			 
-//					 status=this.sendMail();
-//					 message = systemMessage(status);
-					 helper.setAttribute("message", message);
-					 helper.setContextAttribute("pageSelector", "contactUs");
-					
+					 status=this.sendMail();
+					 message = systemMessage(status);
 					 
-
+					// helper.setContextAttribute("pageSelector", "contactUs");
+				 		
+				 } else {
+					// Input by Robot
+						message = SystemMessage.RECAPTCHAVERIFICATION.message();
+				 	}
 		 } catch (MessagingException msgexp){
-		 log.error("execute():MessagingException "+msgexp.toString());
-		 throw msgexp;
+			 log.error("execute():MessagingException "+msgexp.toString());
+			 throw msgexp;
 		 } catch (SQLException sqle) {
-		 log.error("execute():SQLException"+ sqle.toString());
-		 throw sqle;
+			 log.error("execute():SQLException"+ sqle.toString());
+			 throw sqle;
 		} catch (Exception e) {
 			log.error("execute():SQLException" + e.toString());
 			throw e;
+		} finally {
+			helper.setAttribute("message", message);
 		}
 			 return view;
 	}
