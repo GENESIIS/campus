@@ -38,4 +38,5 @@ public interface IDataHelper {
 	void setRedirectPage(String pageName);	
 	
 	public void setContextAttribute(String attributeName,Object value);
+
 }
