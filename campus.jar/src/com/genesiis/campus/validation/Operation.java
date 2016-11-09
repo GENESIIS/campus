@@ -11,6 +11,7 @@ public enum Operation {
 
 
 	SEND_INSTITUTE_INQUIRY("SII",ResponseType.JSP,"dist/partials/mini-web/inquiry/institute-inquiry.jsp"),
+	VIEW_INSTITUTE_INQUIRY_DETAILS("VIID",ResponseType.JSP,"dist/partials/mini-web/inquiry/institute-inquiry.jsp"),
 	BAD_OPERATION("BO",ResponseType.INAPPLICABLE, "commandNotFound.jsp");
 			
 	private final String commandString;
