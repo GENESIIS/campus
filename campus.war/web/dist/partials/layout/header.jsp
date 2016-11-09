@@ -3,7 +3,8 @@
 <!-- 20161109 JH c7 renamed to header.jsp -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<header class="header col-lg-12 col-md-12 col-sm-12 clearfix" >
+
+<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 	<div class="top">
 		<div class="logo-brand">
 			<h1 class="logo-txt">Campus.lk</h1>
@@ -32,20 +33,21 @@
 				<!-- Course Category tabs -->
 				<div class="bottom-menus">
 					<ul class="list-inline">
-						<form action="PublicController" method="POST">
-					
-						</form>
-
-					<!-- 	<li><a href="javascript:">School Education</a></li>
-						<li><input type="hidden" name="categoryId" id="categoryId"
-							value="2" /> <a
-							href="dist/partials/category/higher-education.html">Higher
-								Education</a></li>
+						<li><a href="javascript:">School Education</a></li>
+						<li>
+							<form action="PublicController" method="POST">
+								<button type="submit" name="CCO" id="CCO"
+									value="LIST_CATEGORY_LANDING_PAGE"
+									class="pure-button pure-button-primary" class="btn btn-link">Higher
+									Education</button>
+								<input type="hidden" name="categoryId" id="categoryId" value="2" />
+							</form>
+						</li>
 						<li><a href="javascript:">Corporate Training</a></li>
 						<li><a href="javascript:">Vocational Training</a></li>
 						<li><a href="javascript:">Talent & Skill</a></li>
-						
-						-->
+
+
 					</ul>
 				</div>
 				<!-- End Course Category tabs -->
