@@ -12,6 +12,7 @@ package com.genesiis.campus.command;
 //20161102 CM c9-make-inquiry-for-institute Implement reCAPTCHA.
 //20161108 CM c9-make-inquiry-for-institute Removed unused loggers.
 //20161108 CM c9-make-inquiry-for-institute Modified execute() method
+//20161108 CM c9-make-inquiry-for-institute Removed createDatabaseConnection() method
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +42,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 			.getName());
 
 	private String fullname;
-	private Connection connection;
 	private String sendersEmail;
 	private String countryCode;
 	private String areaCode;
@@ -196,22 +196,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 		emailDispenser.emailDispense();
 	}
 
-	/*
-	 * createDatabaseConnection() establishes the database connection with the
-	 * data repository
-	 * 
-	 * @author DN
-	 * 
-	 * @throw SQLException if the connection causes errors.
-	 */
-	private void createDatabaseConnection() throws SQLException {
-		try {
-			connection = ConnectionManager.getConnection();
-		} catch (SQLException sqle) {
-			log.error("add():SQLException :" + sqle.toString());
-			throw sqle;
-		}
-	}
 
 	/*
 	 * addContentToOriginalMailBody() formats the original details with users
