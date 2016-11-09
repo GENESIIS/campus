@@ -45,8 +45,10 @@
 		</div>
 		<!-- end inner header -->
 
+
 		<!-- Page content -->
-		<div class="content-holder center-block">
+		<div class="content-holder center-block clearfix">
+			<!-- course filter panel : left side -->
 			<div class="course-filter-panel">
 				<div class="filtering-area">
 					<div class="top"></div>
@@ -68,41 +70,98 @@
 					</div>
 				</div>
 
-				<!-- featured courses -->
-				<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
-					<li class="course-info clearfix">
-						<div class="col-name">
-							<h1 class="pro-name">${featuredInstitute[2] }</h1>
-							<div class="pro-logo">
-								<img src="${featuredInstitute[16] }" alt="" width="75px;" height="75px;">
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+
+						<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">SLIIT</h1>
+									<div class="pro-logo">
+										<img src="/dist/i/sliit-logo.png" alt="">
+									</div>
+								</div>
+								<div class="col-description">
+									<p>Lorem Ipsum is simply dummy text of the printing</p>
+								</div>
+								<div class="col-location">
+									<a href="javascript:">Malabe</a>
+								</div>
+								<div class="col-duration">
+									<label>Degree<br> <Span>4 Years</Span></label>
+								</div>
+							</li>
+							<!-- end -->
+
+						</c:forEach>
+					</ul>
+				</div>
+				<!-- End filter result table -->
+
+			</div>
+			<!-- End left panel -->
+
+			<!-- slider & banner panel : right side -->
+			<div class="sliding-info-panel">
+				<div class="info-slider-holder">
+					<div class="featured-institute clearfix">
+						<div class="slider-heading clearfix">
+							<div class="topic">
+								<h2>Featured Institutes</h2>
+							</div>
+							<div class="move-btn">
+								<a href="javascript:">Left</a> <a href="javascript:">Right</a>
 							</div>
 						</div>
-						<div class="col-description">
-							<p>${featuredInstitute[4] }</p>
+						<div class="institute-info clearfix">
+							<div class="inst-logo">
+								<img src="../../i/sliit-logo.png" alt="Institute Logo">
+							</div>
+							<div class="inst-name">
+								<h1 class="short-name">SLIIT</h1>
+								<h2 class="full-name">Sri Lanka Institute of Information
+									Technology</h2>
+							</div>
 						</div>
-						<div class="col-location">
-							<div></div>
-							<div></div>
-							<div></div>
+						<div class="institute-description clearfix">
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's
+								standard dummy text.</p>
+							<div class="btn-more clearfix">
+								<a href="javascript:">Show More</a>
+							</div>
 						</div>
-						<div class="col-duration">
-							<label>Degree<br> <Span>4 Years</Span></label>
+					</div>
+				</div>
+				<!-- Eng featured institute info slider -->
+				<div class="most-viewed-panel clearfix">
+					<h1>| Most Viewed</h1>
+					<div class="banner-holder">
+						<div class="banner clearfix">
+							<div class="logo-image">
+								<img src="../../i/icbt.png" alt="Logo">
+							</div>
+							<div class="description">
+								<h1>
+									ICBT <span>@ Colombo</span>
+								</h1>
+								<p>Lorem Ipsum is simply dummy text of the printing and
+									typesetting</p>
+							</div>
 						</div>
-					</li>
-				</c:forEach>
-
-
-				</ul>
+						<!-- End Banner -->
+					</div>
+					<!-- Banner holder -->
+				</div>
+				<!-- End Most Viewed Panel -->
 			</div>
-			<!-- End filter result table -->
-
+			<!-- End right panel -->
 		</div>
-
-
-	</div>
-	<!-- End page content  -->
+		<!-- End page content  -->
 	</div>
 	<!-- End Main Container -->
+
 
 	<!-- Footer -->
 	<footer>
