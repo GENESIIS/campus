@@ -108,9 +108,9 @@
 			<div class="inquiry-form clearfix">
 				<!-- Inquiry form - Filing Area -->
 				<div class="submit-area center-block clearfix">
-					<h1 class="page-topic-t2">
+				<!-- 	<h1 class="page-topic-t2">
 						You are making inquiry about <span class="colr-white">ICBT</span>
-					</h1>
+					</h1> -->
 					<form class="submit-form" method="POST"
 						onsubmit="return (validateInstituteInquiryFileds())"
 						action="../../../../InstituteController">
