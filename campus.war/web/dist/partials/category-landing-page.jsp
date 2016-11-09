@@ -16,7 +16,15 @@
 
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
-
+<style type="text/css">
+.limit {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 400px;
+	max-height: 30px;
+}
+</style>
 </head>
 <body>
 
@@ -122,20 +130,24 @@
 										<img src="${featuredInstitute[16] }" alt="Institute Logo">
 									</div>
 									<div class="inst-name">
-										<h1 class="short-name"><c:out value="${featuredInstitute[2] }"></c:out></h1>
-										<h2 class="full-name"><c:out value="${featuredInstitute[3] }"></c:out></h2>
+										<h1 class="short-name">
+											<c:out value="${featuredInstitute[2] }"></c:out>
+										</h1>
+										<h2 class="full-name">
+											<c:out value="${featuredInstitute[3] }"></c:out>
+										</h2>
 									</div>
 								</div>
 
 								<div class="institute-description clearfix">
-									<p>Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry. Lorem Ipsum has been the industry's
-										standard dummy text.</p>
+									<p class="limit">
+										<c:out value="${featuredInstitute[4] }"></c:out>
+									</p>
 									<div class="btn-more clearfix">
 										<a href="javascript:">Show More</a>
 									</div>
 								</div>
-								
+
 							</c:forEach>
 
 						</div>
@@ -180,6 +192,7 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
+	<script src="/dist/js/category/ui-populate-helper.js"></script>
 
 </body>
 </html>
