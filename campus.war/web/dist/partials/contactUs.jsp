@@ -3,13 +3,11 @@
 <!-- 20161028 TR c1 setup project structure - push to c1 -->
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
+<!-- 20161109 DN c10-contacting-us-page-MP added the java_script to the page onsubmit fom function refactor recapture inserted  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +16,13 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
 
     <!-- W3-Include -->
-    <script src="../bower-components/w3/w3data.js"></script>
-    <script src="../js/contactUs.js"></script>
+    <script src="/dist/bower-components/w3/w3data.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/dist/js/contactUs.js"></script>
 
 </head>
 <body>
@@ -106,38 +105,39 @@
         <div class="contact-form clearfix">
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
-                <form class="submit-form" method="post"  name="contactUsForm" action="PublicController" >
+                <form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
                     <div class="f-name">
-                        <label for="input-firstName">First Name <span>*</span></label><br>
-                        <input type="text" id="firstName" name="firstName"  required>
+                        <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
+                        <input type="text" id="firstName" name="firstName"  >
                     </div>
                     <div class="l-name">
-                        <label for="input-lastName">Last Name <span>*</span></label><br>
-                        <input type="text" id="lastName" name="lastName" required>
+                        <label for="input-lastName">Last Name <span>*</span></label><br><label id="lastNameError" style="color:#FFFF00;"></label><br>
+                        <input type="text" id="lastName" name="lastName" >
                     </div>
                     <div class="tp">
-                        <label for="input-phoneNumber">Phone Number</label><br>
-                        <input type="text" id="contactNumber" name="contactNumber" required>
+                        <label for="input-phoneNumber">Phone Number</label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
+                        <input type="text" id="contactNumber" name="contactNumber" >
                     </div>
                     <div class="email">
-                        <label for="eMail">Email <span>*</span></label><br>
-                        <input type="text" id="emailAddress" name="emailAddress" required>
+                        <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
+                        <input type="text" id="emailAddress" name="emailAddress" >
                     </div>
                     <div class="email-subject">
-                        <label for="input-eMailSubject">Subject <span>*</span></label><br>
-                        <input type="text" id="subject" name="subject" required >
+                        <label for="input-eMailSubject">Subject <span>*</span></label><br><label id="subjectError" style="color:#FFFF00;"></label><br>
+                        <input type="text" id="subject" name="subject" >
                     </div>
                     <div class="user-message">
-                        <label for="text-userMessage">Message <span>*</span></label><br>
-                        <textarea id="message" rows="10" name="message" required></textarea>
+                        <label for="text-userMessage">Message <span>*</span></label><br><label id="userMessageError" style="color:#FFFF00;"></label><br>
+                        <textarea id="message" rows="10" name="message" ></textarea>
                         <p class="pull-right"><span>*</span> Required fields</p>
                     </div>
-                    <div class="re-captcha">
-                        <a href="javascript:">
-                            <img src="../i/contactUs/recaptcha.gif" alt="">
-                        </a>
-                    </div>
-                    <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" onclick="validateForm()">Submit Query</button>
+                    <!-- ReCaptcha -->
+						<div class="re-captcha">
+                    <div class="g-recaptcha"
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
+						<br><label id="captureError" style="color:#FFFF00;"></label>
+					</div>	
+                    <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" >Submit Query</button>
 					 <!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
                 </form>
                 <!-- End Submit form -->
@@ -189,7 +189,7 @@
                         <h1 class="page-topic-t1 colr-white">Information</h1>
                     </div>
                     <div class="address">
-                        <p>Genesiis Software (pvt) Ltd. <br>Park Street <br>Colombo 07 <br>Sri Lanka.</p>
+                        <p>Genesiis Software (pvt) Ltd. <br>Park Street <br>Colombo 07 <br>Sri Lanka.</p>
                     </div>
 
                     <div class="location" id="map">
