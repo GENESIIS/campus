@@ -37,7 +37,7 @@ public class CourseProviderDAO implements ICrud{
 	}
 	
 	/**
-	 * Search Course provider institute inquiry email 
+	 * Search Course provider details 
 	 * 
 	 * @author Chathuri
 	 * @param Object
@@ -63,6 +63,7 @@ public class CourseProviderDAO implements ICrud{
 				singleEmployeeList = new ArrayList<String>();
 				singleEmployeeList.add(rs.getString("GENERALEMAIL"));
 				singleEmployeeList.add(rs.getString("NAME"));
+				singleEmployeeList.add(rs.getString("CODE"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
 				InquiryEmail.add(singleEmployeeCollection);
 
