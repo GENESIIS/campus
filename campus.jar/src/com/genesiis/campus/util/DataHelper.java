@@ -57,20 +57,8 @@ public class DataHelper implements IDataHelper {
 	 **/
 	@Override
 	public String getResultPage(String cco) {
-		String resultPage = "login.jsp";
-		Operation o = Operation.BAD_OPERATION;
-		o = Operation.getOperation(cco);
-		switch (o) {
-		case SEND_INSTITUTE_INQUIRY:
-			resultPage = o.getPageURL();
-			break;
-		case BAD_OPERATION:
-			resultPage = o.getPageURL();
-			break;
-		default:
-			break;
-		}
-		return resultPage;
+		Operation o = Operation.getOperation(cco);
+		return o.getPageURL();
 	}
 
 	/**
