@@ -79,7 +79,10 @@ public class CmdListCategoryProgrammes implements ICommand {
 			Map<String, ArrayList<String>> programmeCodeToTownListMap = 
 					new LinkedHashMap<String, ArrayList<String>>();
 			
-			Map<String, String> levelOrMajorCodeToLevelOrMajorNameMap = new LinkedHashMap<String, String>();
+			Map<String, List<List<String>>> levelOrMajorCodeToLevelOrMajorDetailsMap = new LinkedHashMap<String, List<List<String>>>();
+			List<String> tempLevelOrMajorDetailsList = null;
+//			List<List<String>> levelOrMajorDetailsList = new ArrayList<List<String>>();
+//			List<String> tempLevelOrMajorList = new ArrayList<String>();
 			
 			Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
 			int indexOfMajorOrLevelCode = categoryCode == 3 ? 12 : 14; // Value 3 here (for "Corporate Training category) must not be hard-coded, 
@@ -120,11 +123,15 @@ public class CmdListCategoryProgrammes implements ICommand {
 					}
 
 					if (count == indexOfMajorOrLevelName) {
-						String majorName = levelOrMajorCodeToLevelOrMajorNameMap.get(majorOrLevelCode);
-						if (majorName == null) {
-							majorName = field;
-							levelOrMajorCodeToLevelOrMajorNameMap.put(majorOrLevelCode, majorName);
-						}			
+						List<List<String>> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
+						if (levelOrMajorList == null) {
+							levelOrMajorList = new ArrayList<List<String>>();
+							levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
+						}
+						tempLevelOrMajorDetailsList = new ArrayList<String>();
+						tempLevelOrMajorDetailsList.add(majorOrLevelCode);
+						tempLevelOrMajorDetailsList.add(field);
+						levelOrMajorList.add(tempLevelOrMajorDetailsList);
 					}	
 					
 					count++;
@@ -154,7 +161,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 //			// Get course providers that offer programmes that belong to the same category as categoryCode 
 //			// and when those programmes are the ones with the highest number of views
 //			programme.setLevel(1); // level property is used here to act as a flag
-//			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);			
+//			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);
 			
 			iview.setCollection(programmeListForPage);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
@@ -166,7 +173,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 			helper.setAttribute("numOfPages", numOfPages);
 			helper.setAttribute("pageNum", pageNum);
 			helper.setAttribute("programmeColl", programmeListForPage);
-			helper.setAttribute("levelOrMajorNameCollection", levelOrMajorCodeToLevelOrMajorNameMap.values());
+			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap);
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			
 		} catch (NumberFormatException nfe) {
