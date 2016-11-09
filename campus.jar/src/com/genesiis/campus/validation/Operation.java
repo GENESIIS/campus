@@ -2,6 +2,8 @@ package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161108 DN, JH, DJ, AS, CM, PN, MM Added field responseType to enum.
+//20161109 MM c5-corporate-training-landing-page-MP - Changed value for 
+//				commandString of LIST_CATEGORY_PROGRAMMES enum
 
 /**
 * Operation class facilitate in binding the CCO
@@ -10,8 +12,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LIST_CATEGORY_PROGRAMMES("LCP", ResponseType.JSON, "corporateTraining.jsp"),
-	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "dist/partials/category/categoryLandingPage.jsp");
+	LIST_CATEGORY_PROGRAMMES("LIST_CATEGORY_PROGRAMMES", ResponseType.JSON, ""),
+	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/categoryLandingPage.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;

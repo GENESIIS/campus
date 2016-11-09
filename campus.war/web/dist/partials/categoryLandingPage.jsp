@@ -10,8 +10,8 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../dist/css/style.css" rel="stylesheet">
 
     <!-- W3-Include -->
     <script src="../../../dist/bower-components/w3/w3data.js"></script>
@@ -81,7 +81,7 @@
     <!-- page inner header -->
     <div class="inner-header">
         <div class="category-image">
-            <img src="../../i/higher-education/higher-edu.png" alt="">
+            <img src="../../dist/i/higher-education/higher-edu.png" alt="">
         </div>
         <div class="category-name">
             <h1>| Higher Education</h1>
@@ -119,7 +119,7 @@
                         <div class="col-name">
                             <h1 class="pro-name">SLIIT</h1>
                             <div class="pro-logo">
-                                <img src="../../i/sliit-logo.png" alt="">
+                                <img src="../../dist/i/sliit-logo.png" alt="">
                             </div>
                         </div>
                         <div class="col-description">
@@ -138,7 +138,7 @@
                         <div class="col-name">
                             <h1 class="pro-name">SLIIT</h1>
                             <div class="pro-logo">
-                                <img src="../../i/sliit-logo.png" alt="">
+                                <img src="../../dist/i/sliit-logo.png" alt="">
                             </div>
                         </div>
                         <div class="col-description">
@@ -157,7 +157,7 @@
                         <div class="col-name">
                             <h1 class="pro-name">SLIIT</h1>
                             <div class="pro-logo">
-                                <img src="../../i/sliit-logo.png" alt="">
+                                <img src="../../dist/i/sliit-logo.png" alt="">
                             </div>
                         </div>
                         <div class="col-description">
@@ -185,13 +185,22 @@
 <!-- End Main Container -->
 
 <!-- Footer -->
-<footer w3-include-html="layout/footer.html"></footer>
+<!-- <footer w3-include-html="layout/footer.html"></footer>  -->
+
+<footer>
+    <div class="ft-top">
+
+    </div>
+    <div class="ft-bottom text-center">
+        <label for="Copyright">Copyright © Campus.lk</label>
+    </div>
+</footer>
 
 <!-- jQuery & Other js -->
-<script src="../../bower-components/jquery/jquery.min.js"></script>
-<script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="../../bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="../../js/main.js"></script>
+<script src="../../dist/bower-components/jquery/jquery.min.js"></script>
+<script src="../../dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="../../dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="../../dist/js/main.js"></script>
 
 </body>
 </html>
