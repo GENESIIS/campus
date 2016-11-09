@@ -1,3 +1,8 @@
+<!-- 20161026 CM  c9-make inquiry for institute Created instituteInquiry.jsp -->
+<!-- 20161027 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
+<!-- 20161028 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
+<!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
+<!-- 20161108 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -16,7 +21,7 @@
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<script src="dist/js/institute/validation/validation.js"></script>
+<script src="/dist/js/institute/validation/validation.js"></script>
 </head>
 <body>
 
@@ -41,7 +46,9 @@
 						<li><a href="../../about-us.html">About Us</a></li>
 						<li><a href="../../contact-us.html">Contact Us</a></li>
 						<li><a href="javascript:">News</a></li>
-						<li><a href="../../f-and-q.html">F & Q</a></li>
+						<li><a
+							href="dist/partials/mini-web/inquiry/institute-inquiry.jsp">F
+								& Q</a></li>
 						<li><a href="../../rss.html">Rss</a></li>
 					</ul>
 				</div>
@@ -104,46 +111,55 @@
 					<h1 class="page-topic-t2">
 						You are making inquiry about <span class="colr-white">ICBT</span>
 					</h1>
-					<form class="submit-form" method="POST" onsubmit="return (validateInstituteInquiryFileds())" action="../../../../InstituteController">
+					<form class="submit-form" method="POST"
+						onsubmit="return (validateInstituteInquiryFileds())"
+						action="../../../../InstituteController">
 						<input type="hidden" value="1" name="courseProviderCode">
-					<%-- <input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode"> --%>
-					 <input type="hidden" value="1" name="studentCode">
+						<%-- <input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode"> --%>
+						<input type="hidden" value="1" name="studentCode">
 						<div class="f-name">
 							<label for="message"><c:out value="${message }"></c:out></label><br>
 						</div>
 						<!-- First Name -->
 						<div class="f-name">
-							<label for="input-firstName">Full Name <span>*</span></label><br>
-							<input type="text" name="fullname" id="input-firstName">
+							<label for="input-firstName">Full Name <span>*</span>
+							</label> <label id="fullNameError"></label><br> <input type="text"
+								name="fullname" id="input-firstName">
 						</div>
 						<!-- Email -->
 						<div class="email">
-							<label for="eMail">Email <span>*</span></label><br> <input
-								type="text" name="email" id="eMail">
+							<label for="eMail">Email <span>*</span></label><label
+								id="emailError"></label><br> <input type="text"
+								name="email" id="eMail">
 						</div>
 						<!--Country Code -->
 						<div class="county-code">
-							<label for="input-county-code">Country Code <span>*</span></label><br>
-							<input type="text" name="countryCode" id="input-county-code">
+							<label for="input-county-code">Country Code <span>*</span></label><label
+								id="countryCodeError"></label><br> <input type="text"
+								name="countryCode" id="input-county-code">
 						</div>
 						<!-- Area Code -->
 						<div class="area-code">
-							<label for="input-area-code">Area Code <span>*</span></label><br>
-							<input type="text" name="areaCode" id="input-area-code">
+							<label for="input-area-code">Area Code <span>*</span></label><label
+								id="areaCodeError"></label><br> <input type="text"
+								name="areaCode" id="input-area-code">
 						</div>
 						<!-- Telephone -->
 						<div class="tp-number">
-							<label for="input-tp-no">Telephone No <span>*</span></label><br>
-							<input type="text" name="telNum" id="input-tp-no">
+							<label for="input-tp-no">Telephone No <span>*</span></label><label
+								id="telNumError"></label><br> <input type="text"
+								name="telNum" id="input-tp-no">
 						</div>
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
-							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><br>
-							<input type="text" name="inquiryTitle" id="input-inquiry-title">
+							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><label
+								id="inquiryTitleError"></label><br> <input type="text"
+								name="inquiryTitle" id="input-inquiry-title">
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
-							<label for="text-userMessage">Message <span>*</span></label><br>
+							<label for="text-userMessage">Message <span>*</span></label><label
+								id="inquiryError"></label><br>
 							<textarea name="inquiry" id="text-userMessage" rows="10"></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
@@ -151,13 +167,16 @@
 						</div>
 						<!-- ReCaptcha -->
 						<div class="re-captcha">
+							<span id="captchaError"
+								style="color: red; font-weight: normal !important;"></span>
 							<div class="g-recaptcha"
 								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
 						</div>
 						<!-- btn Submit -->
-						<button  class="btn-submit" type="submit" name="CCO" id="CCO" value="SII"
-						class="pure-button pure-button-primary">Send Message</button>
-				
+						<button class="btn-submit" type="submit" name="CCO" id="CCO"
+							value="SII" class="pure-button pure-button-primary">Send
+							Message</button>
+
 					</form>
 					<!-- End Submit form -->
 				</div>
