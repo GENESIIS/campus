@@ -44,7 +44,6 @@ public class CmdListCategoryLandingPage implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-
 		ICrud categoryDAO = new CategoryDAO();
 		ICrud categoryProgrammeDAO = new CategoryCourseProviderDAO();
 		Collection<Collection<String>> categoryCollection = null;

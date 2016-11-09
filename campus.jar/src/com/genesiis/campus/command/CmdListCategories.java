@@ -39,6 +39,7 @@ public class CmdListCategories implements ICommand{
 		
 		ICrud categoryDAO = new CategoryDAO();
 		try {
+			log.info(">>>>>>>>>>>>");
 			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
 			iview.setCollection(categoryCollection);
 		} catch (SQLException sqle) {

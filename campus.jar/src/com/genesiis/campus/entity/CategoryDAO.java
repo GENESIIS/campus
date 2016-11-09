@@ -68,7 +68,7 @@ public class CategoryDAO implements ICrud {
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
-
+				
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));
@@ -108,6 +108,7 @@ public class CategoryDAO implements ICrud {
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
+				log.info(rs.getString("CODE") + "     dsfdsf " + rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));

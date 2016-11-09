@@ -16,7 +16,7 @@
     <script src="dist/bower-components/w3/w3data.js"></script>
 
 </head>
-<body onload="displayCategory()">
+<body>
 
 <!-- Header-->
 <header> <jsp:include page="dist/partials/layout/header.jsp"></jsp:include> </header>
@@ -28,7 +28,6 @@
 <footer w3-include-html="dist/partials/layout/footer.html"></footer>
 
 <!-- jQuery & Other js -->
-<script src="dist/js/header/ui-populate-helper.js"></script>
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>

@@ -14,3 +14,13 @@ function displayCategory() {
 	
 	});
 }
+
+function getCategory(){
+	$.get('PublicController', {
+		CCO : 'LIST_LEVEL_DATA'
+	}, function(response) {
+		var result = $("#categoryName");
+	
+	
+	});
+}

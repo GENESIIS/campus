@@ -27,6 +27,9 @@ public class PublicCmdFactory implements ICmdFactory {
 		case LIST_CATEGORY_LANDING_PAGE:
 			command = map.get(o);
 			break;
+		case LIST_CATEGORY_DATA:
+			command = map.get(o);
+			break;
 
 		default:
 			break;

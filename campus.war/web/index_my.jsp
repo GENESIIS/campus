@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <!-- Bootstrap & CSS Style-->
+    <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
