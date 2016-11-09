@@ -59,6 +59,7 @@ public class CampusController extends HttpServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";

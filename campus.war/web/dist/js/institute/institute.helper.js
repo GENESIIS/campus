@@ -10,7 +10,7 @@ theNewScript.type = "text/javascript";
 theNewScript.src = "/validation/validation.js";
 
 function sendCourseInquiry() {
-	
+	alert("hiii");
 	var fullName = $("#fullname").val();
 	var email = $("#email").val();
 	var countryCode = $("#countryCode").val();
@@ -20,7 +20,7 @@ function sendCourseInquiry() {
 	var inquiry = $("#inquiry").val();
 	var student = $("#student").val();
 	var programmeCode = $("#programmeCode").val();
-	
+	alert(fullName+email+countryCode+areaCode+telephoneNumber+inquiryTitle+inquiry+student+programmeCode);
 //alert("okkk"+ fullName+email+countryCode+areaCode+telephoneNumber+inquiry+inquiryTitle+student+programmeCode);
 	// isempty("dd");
 //	var fullNametb = isempty(fullName);
@@ -55,6 +55,7 @@ function sendCourseInquiry() {
 
 	if ((email != null) && (inquiry != null) && (inquiryTitle != null)
 			&& (fullName != null)) {
+	
 		var jsonData = {
 			"studentName" : fullName,
 			"studentEmail" : email,
@@ -67,11 +68,11 @@ function sendCourseInquiry() {
 			"programme" : programmeCode
 			
 		};
-
+		alert("jjjj");
 		$.ajax({
 			
 			type : "POST",
-			url : 'InstituteController',
+			url : '../../../../InstituteController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
 				CCO : "SCI"

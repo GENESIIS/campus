@@ -51,6 +51,9 @@ public class CmdSendCourseInquiry implements ICommand {
 		String message = "Unsuccessfull";
 		final ReCaptchaManager reCaptchaManager=new ReCaptchaManager();
 		boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
+		// Verify whether the input from Human or Robot
+					if (responseIsSuccess) {
+						
 		String gsonData = helper.getParameter("jsonData");
 		data = getInstituteInquirydetails(gsonData);
 		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
@@ -66,7 +69,7 @@ public class CmdSendCourseInquiry implements ICommand {
 			this.sendMail();
 			
 		}
-
+					}
 		helper.setAttribute("message", message);
 		return view;
 

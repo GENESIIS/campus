@@ -75,7 +75,8 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><div class="g-recaptcha" data-sitekey="6LdsagoUAAAAALS1tjjqyHe-7EvIIJF1kaKo-Pmw"></div></td>
+			<td> <div class="g-recaptcha"
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div></td>
 		</tr>
 		<tr>
 			<td></td>
