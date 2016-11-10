@@ -14,7 +14,6 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
@@ -126,7 +125,8 @@
 
 								<div class="institute-info clearfix">
 									<div class="inst-logo">
-										<img src="${featuredInstitute[16] }" alt="Institute Logo" style="width:100px; height: 75px; ">
+										<img src="${featuredInstitute[16] }" alt="Institute Logo"
+											style="width: 100px; height: 75px;">
 									</div>
 									<div class="inst-name">
 										<h1 class="short-name" class="mySlides">${featuredInstitute[2] }
@@ -143,7 +143,10 @@
 										<c:out value="${featuredInstitute[4]}"></c:out>
 									</p>
 									<div class="btn-more clearfix">
-										<a href="javascript:">Show More</a>
+										<!-- 	<a href="javascript:">Show More</a>  -->
+										<button type="submit" name="CCO" id="CCO"
+											value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+											More</button>
 									</div>
 								</div>
 
@@ -155,22 +158,27 @@
 				<!-- Eng featured institute info slider -->
 				<div class="most-viewed-panel clearfix">
 					<h1>| Most Viewed</h1>
-					<div class="banner-holder">
-						<div class="banner clearfix">
-							<div class="logo-image">
-								<img src="/dist/i/icbt.png" alt="Logo">
+
+					<c:forEach var="institute" items="${institutes}">
+						<div class="banner-holder">
+							<div class="banner clearfix">
+								<div class="logo-image">
+									<img src="${institute[16] }" alt="Logo">
+								</div>
+								<div class="description">
+									<h1>
+										<c:out value="${institute[2] }"></c:out>
+										<span>@ <c:out value="${institute[31] }"></c:out></span>
+									</h1>
+									<p>
+										<c:out value="${institute[3] }"></c:out>
+									</p>
+								</div>
 							</div>
-							<div class="description">
-								<h1>
-									ICBT <span>@ Colombo</span>
-								</h1>
-								<p>Lorem Ipsum is simply dummy text of the printing and
-									typesetting</p>
-							</div>
+							<!-- End Banner -->
 						</div>
-						<!-- End Banner -->
-					</div>
-					<!-- Banner holder -->
+						<!-- Banner holder -->
+					</c:forEach>
 				</div>
 				<!-- End Most Viewed Panel -->
 			</div>
