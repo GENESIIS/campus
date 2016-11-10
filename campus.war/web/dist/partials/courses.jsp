@@ -37,6 +37,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$.fn.dataTableExt.sErrMode = 'throw';
 	var table = $('#example').DataTable( {
         fixedHeader: {
             header: true,
@@ -148,7 +149,7 @@ $(document).ready(function() {
 					<div class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-							<label class="flip">Levels <span id="majorCount"
+							<label class="flip">Major <span id="majorCount"
 								name="majorCount"></span></label> <a href="javascript:"><input
 								type="checkbox"></a>
 						</div>
