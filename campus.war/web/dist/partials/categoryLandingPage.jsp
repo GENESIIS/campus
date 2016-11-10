@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-<!-- 20161027 TR c11 start styling courses filter result page -->
+<%-- 20161027 TR c11 start styling courses filter result page --%>
+<%-- 20161110 MM c5-corporate-training-landing-page-MP - Put-in pagination container --%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -173,6 +175,12 @@
                     <!-- end -->
 
                 </ul>
+                <div class="paginator-div text-center">
+                	<nav aria-label="">
+                		<ul class="pagination pagination-lg">
+				  		</ul>
+					</nav>                	
+                </div>
             </div>
             <!-- End filter result table -->
 
