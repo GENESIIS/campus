@@ -82,7 +82,7 @@
 
 	<form action="PublicController" method="post">
 		<input type="text" name="category">
-		<button type="submit" name="CCO" value="ACPL">View More</button>
+		<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">View More</button>
 	</form>
 	<!-- <form action="PublicController" method="post">
 		<input type="hidden" id="hdCategory" name="hdCategory"
