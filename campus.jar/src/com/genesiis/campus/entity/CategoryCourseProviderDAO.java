@@ -85,7 +85,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * 3. get only top 5 course providers with their details
 		 */
 
-		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,150) as CASTED, cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
 				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?";
@@ -94,7 +94,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * query2 used to query the database to retrieve data of course
 		 * providers randomly who are active
 		 */
-		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,150) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
+		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
 				+ " where  p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?  ) as a "
 				+ " on a.COURSEPROVIDER = cp.CODE and  cp.COURSEPROVIDERSTATUS = ?   ORDER BY NEWID()";
 
