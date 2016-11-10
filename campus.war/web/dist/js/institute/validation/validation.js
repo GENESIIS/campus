@@ -38,9 +38,9 @@ function isempty(fieldValue) {
  *          else return false
  */
 function isValidEmailFormat(email) {
-	var emailAddress = email;
+	/*var emailAddress = email;
 	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
-	return isPatternMatch(pattern, emailAddress);
+	return isPatternMatch(pattern, emailAddress);*/
 }
 /**
  * 
@@ -86,10 +86,10 @@ function validateInstituteInquiryFileds() {
 	if (!isempty(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
 		return false;
-	} else if (!isempty(email)) {
+	}/* else if (!isempty(email)) {
 		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		return false;
-	} else if (!isempty(countryCode)) {
+	}*/ else if (!isempty(countryCode)) {
 		document.getElementById('countryCodeError').innerHTML = "**Country code cannot be empty.";
 		return false;
 	} else if (!isempty(areaCode)) {
@@ -107,10 +107,10 @@ function validateInstituteInquiryFileds() {
 	} else if (response.length == 0) {
 		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
 		return false;
-	} else if (!isValidEmailFormat(email)) {
+	} /*else if (!isValidEmailFormat(email)) {
 		document.getElementById('emailError').innerHTML = "**Invalid Email.";
 		return false;
-	} else if (isNaN(countryCode)) {
+	} */else if (isNaN(countryCode)) {
 		document.getElementById('countryCodeError').innerHTML = "**Invalid Country code.";
 		return false;
 	} else if (isNaN(areaCode)) {
