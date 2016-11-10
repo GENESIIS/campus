@@ -3,6 +3,7 @@
 <!-- 20161028 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
 <!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
 <!-- 20161108 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -124,25 +125,25 @@
 						<div class="f-name">
 							<label for="input-firstName">Full Name <span>*</span>
 							</label> <label id="fullNameError"></label><br> <input type="text"
-								name="fullname" id="input-firstName">
+								name="fullname" id="input-firstName" required>
 						</div>
 						<!-- Email -->
 						<div class="email">
 							<label for="eMail">Email <span>*</span></label><label
 								id="emailError"></label><br> <input type="text"
-								name="email" id="eMail">
+								name="email" id="eMail" required>
 						</div>
 						<!--Country Code -->
 						<div class="county-code">
 							<label for="input-county-code">Country Code <span>*</span></label><label
 								id="countryCodeError"></label><br> <input type="text"
-								name="countryCode" id="input-county-code">
+								name="countryCode" id="input-county-code" required>
 						</div>
 						<!-- Area Code -->
 						<div class="area-code">
 							<label for="input-area-code">Area Code <span>*</span></label><label
 								id="areaCodeError"></label><br> <input type="text"
-								name="areaCode" id="input-area-code">
+								name="areaCode" id="input-area-code" required>
 						</div>
 						<!-- Telephone -->
 						<div class="tp-number">
@@ -154,13 +155,13 @@
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><label
 								id="inquiryTitleError"></label><br> <input type="text"
-								name="inquiryTitle" id="input-inquiry-title">
+								name="inquiryTitle" id="input-inquiry-title" required>
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
 							<label for="text-userMessage">Message <span>*</span></label><label
 								id="inquiryError"></label><br>
-							<textarea name="inquiry" id="text-userMessage" rows="10"></textarea>
+							<textarea name="inquiry" id="text-userMessage" rows="10" required></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
 							</p>
