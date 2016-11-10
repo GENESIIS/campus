@@ -69,7 +69,7 @@ public class CourseProviderDAO implements ICrud{
 				categoryCode = cp.getCategory();
 				}			
 			//categorystatus=1 and courseproviderstatus=1 ; this can be change in future.
-			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.SHORTNAME AS CPSHORTNAME  ");
+			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
 			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
