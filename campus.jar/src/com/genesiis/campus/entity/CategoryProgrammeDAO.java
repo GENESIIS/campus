@@ -91,31 +91,31 @@ public class CategoryProgrammeDAO implements ICrud {
 
 		while (rs.next()) {
 			final ArrayList<String> singleProgramme = new ArrayList<String>();
-			singleProgramme.add(rs.getString("CODE"));
-			singleProgramme.add(rs.getString("NAME"));
-			singleProgramme.add(rs.getString("EMAIL"));
-			singleProgramme.add(rs.getString("IMAGE"));
-			singleProgramme.add(rs.getString("DESCRIPTION"));
-			singleProgramme.add(rs.getString("DURATION"));
-			singleProgramme.add(rs.getString("ENTRYREQUIREMENTS"));
-			singleProgramme.add(rs.getString("COUNSELORNAME"));
-			singleProgramme.add(rs.getString("COUNSELORPHONE"));
-			singleProgramme.add(rs.getString("DISPLAYSTARTDATE"));
-			singleProgramme.add(rs.getString("PROGRAMMESTATUS"));
-			singleProgramme.add(rs.getString("COURSEPROVIDER"));
-			singleProgramme.add(rs.getString("MAJOR"));
-			singleProgramme.add(rs.getString("CATEGORY"));
-			singleProgramme.add(rs.getString("LEVEL"));
-			singleProgramme.add(rs.getString("CLASSTYPE"));
-			singleProgramme.add(rs.getString("LOGOIMAGEPATH"));
-			singleProgramme.add(rs.getString("CLASSTYPENAME"));
-			singleProgramme.add(rs.getString("SHORTNAME"));
-			singleProgramme.add(rs.getString("COURSEPROVIDERNAME"));
-			singleProgramme.add(rs.getString("TOWNCODE"));
-			singleProgramme.add(rs.getString("TOWNNAME"));
-			singleProgramme.add(rs.getString("UNIQUEPREFIX"));
-			singleProgramme.add(rs.getString("MAJORNAME"));
-			singleProgramme.add(rs.getString("LEVELNAME"));
+			singleProgramme.add(rs.getString("CODE")); //0
+			singleProgramme.add(rs.getString("NAME")); //1
+			singleProgramme.add(rs.getString("EMAIL")); //2
+			singleProgramme.add(rs.getString("IMAGE")); //3
+			singleProgramme.add(rs.getString("DESCRIPTION")); //4
+			singleProgramme.add(rs.getString("DURATION")); //5
+			singleProgramme.add(rs.getString("ENTRYREQUIREMENTS")); //6
+			singleProgramme.add(rs.getString("COUNSELORNAME")); //7
+			singleProgramme.add(rs.getString("COUNSELORPHONE")); //8
+			singleProgramme.add(rs.getString("DISPLAYSTARTDATE")); //9
+			singleProgramme.add(rs.getString("PROGRAMMESTATUS")); //10
+			singleProgramme.add(rs.getString("COURSEPROVIDER")); //11
+			singleProgramme.add(rs.getString("MAJOR")); //12
+			singleProgramme.add(rs.getString("CATEGORY")); //13
+			singleProgramme.add(rs.getString("LEVEL")); //14
+			singleProgramme.add(rs.getString("CLASSTYPE")); //15
+			singleProgramme.add(rs.getString("LOGOIMAGEPATH")); //16
+			singleProgramme.add(rs.getString("CLASSTYPENAME")); //17
+			singleProgramme.add(rs.getString("SHORTNAME")); //18
+			singleProgramme.add(rs.getString("COURSEPROVIDERNAME")); //19
+			singleProgramme.add(rs.getString("TOWNCODE")); //20
+			singleProgramme.add(rs.getString("TOWNNAME")); //21
+			singleProgramme.add(rs.getString("UNIQUEPREFIX")); //22
+			singleProgramme.add(rs.getString("MAJORNAME")); //23
+			singleProgramme.add(rs.getString("LEVELNAME")); //24
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}

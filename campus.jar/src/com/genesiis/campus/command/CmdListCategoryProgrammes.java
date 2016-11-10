@@ -9,6 +9,8 @@ package com.genesiis.campus.command;
 //				majors based on the category of the programme requested
 //20161109 MM c5-corporate-training-landing-page Changed organisation of major/level list
 //				data to be in a List<List<String>>
+//20161110 MM c5-corporate-training-landing-page Modified code in the looping structure in 
+// 				order to better structure the town list sent for each programme
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,8 +50,6 @@ public class CmdListCategoryProgrammes implements ICommand {
 		
 		String message = "";
 		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
-//		Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
-//		Collection<Collection<String>> courseProvidersWithPopularCourses = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
 		int pageNum = -1;
@@ -78,13 +78,11 @@ public class CmdListCategoryProgrammes implements ICommand {
 			// Get programmes that belong to the same category as categoryCode
 			programmeCollection = programmeDao.findById(programme);
 			
-			Map<String, ArrayList<String>> programmeCodeToTownListMap = 
-					new LinkedHashMap<String, ArrayList<String>>();
+			Map<String, ArrayList<List<String>>> programmeCodeToTownListMap = 
+					new LinkedHashMap<String, ArrayList<List<String>>>();
 			
-			Map<String, List<List<String>>> levelOrMajorCodeToLevelOrMajorDetailsMap = new LinkedHashMap<String, List<List<String>>>();
+			Map<String, List<String>> levelOrMajorCodeToLevelOrMajorDetailsMap = new LinkedHashMap<String, List<String>>();
 			List<String> tempLevelOrMajorDetailsList = null;
-//			List<List<String>> levelOrMajorDetailsList = new ArrayList<List<String>>();
-//			List<String> tempLevelOrMajorList = new ArrayList<String>();
 			
 			Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
 			int indexOfMajorOrLevelCode = categoryCode == 3 ? 12 : 14; // Value 3 here (for "Corporate Training category) must not be hard-coded, 
@@ -95,18 +93,13 @@ public class CmdListCategoryProgrammes implements ICommand {
 
 			for (Collection<String> prog : programmeCollection) {
 				int count  = 0;
-				ArrayList<String> tempTownList = null;
-				String code = null;
+				ArrayList<String> tempSingleTownDetailsList = null;
+				String programmeCode = null;
+				String townCode = null;
 				String majorOrLevelCode = null;
 				for (String field : prog) {
 					if (count == 0) {
-						code = field;
-						ArrayList<String> townList = programmeCodeToTownListMap.get(field);
-						if (townList == null) {
-							townList = new ArrayList<String>();
-							programmeCodeToTownListMap.put(field, townList);
-						}
-						tempTownList = townList;
+						programmeCode = field;						
 						
 						Collection<String> programmeRecord = progCodeToProgrammeMap.get(field);
 						if (programmeRecord == null) {
@@ -115,9 +108,38 @@ public class CmdListCategoryProgrammes implements ICommand {
 						}
 					}
 
+					if (count == 20) {
+						townCode = field;						
+					}
+
 					if (count == 21) {
-						tempTownList = programmeCodeToTownListMap.get(code);
-						tempTownList.add(field);						
+						String currentTownName = field;
+						if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
+							ArrayList<List<String>> townList = programmeCodeToTownListMap.get(programmeCode);
+							if (townList == null) {
+								townList = new ArrayList<List<String>>();
+								programmeCodeToTownListMap.put(programmeCode, townList);
+							}
+							if (townList.size() != 0) {
+								boolean isTownAlreadyAdded = false; 
+								for (List<String> singleTownDetailsList : townList) {
+									if (singleTownDetailsList.get(0).equals(townCode)) {
+										isTownAlreadyAdded = true;
+									}
+								}
+								if (!isTownAlreadyAdded) {
+									tempSingleTownDetailsList = new ArrayList<String>();
+									tempSingleTownDetailsList.add(townCode);
+									tempSingleTownDetailsList.add(currentTownName);
+									townList.add(tempSingleTownDetailsList);
+								}
+							} else {
+								tempSingleTownDetailsList = new ArrayList<String>();
+								tempSingleTownDetailsList.add(townCode);
+								tempSingleTownDetailsList.add(currentTownName);
+								townList.add(tempSingleTownDetailsList);
+							}							
+						}					
 					}
 
 					if (count == indexOfMajorOrLevelCode) {
@@ -125,15 +147,16 @@ public class CmdListCategoryProgrammes implements ICommand {
 					}
 
 					if (count == indexOfMajorOrLevelName) {
-						List<List<String>> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
+						List<String> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
 						if (levelOrMajorList == null) {
-							levelOrMajorList = new ArrayList<List<String>>();
+							levelOrMajorList = new ArrayList<String>();
 							levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
 						}
-						tempLevelOrMajorDetailsList = new ArrayList<String>();
-						tempLevelOrMajorDetailsList.add(majorOrLevelCode);
-						tempLevelOrMajorDetailsList.add(field);
-						levelOrMajorList.add(tempLevelOrMajorDetailsList);
+						
+						if (levelOrMajorList.size() == 0) {
+							levelOrMajorList.add(majorOrLevelCode);
+							levelOrMajorList.add(field);
+						}
 					}	
 					
 					count++;
@@ -155,26 +178,14 @@ public class CmdListCategoryProgrammes implements ICommand {
 					programmeListForPage.add(progColl);
 				}
 			}
-
-//			// Get course providers that offer programmes that belong to the same category as categoryCode
-//			programme.setLevel(0); // level property is used here to act as a flag
-//			courseProviderCollection = courseProviderDao.findById(programme);
-//			
-//			// Get course providers that offer programmes that belong to the same category as categoryCode 
-//			// and when those programmes are the ones with the highest number of views
-//			programme.setLevel(1); // level property is used here to act as a flag
-//			courseProvidersWithPopularCourses = courseProviderDao.findById(programme);
 			
 			iview.setCollection(programmeListForPage);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 			helper.setAttribute("contextDeployCourseLogoPath", contextDeployCourseLogoPath);
-//			helper.setAttribute("courseProviders", courseProviderCollection);
-//			helper.setAttribute("courseProvidersWithPopularCourses", courseProvidersWithPopularCourses);
 			helper.setAttribute("pageNum", pageNum);
 			helper.setAttribute("totalNumOfResults", totalNumOfResults);
 			helper.setAttribute("numOfPages", numOfPages);
 			helper.setAttribute("pageNum", pageNum);
-			helper.setAttribute("programmeColl", programmeListForPage);
 			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			
