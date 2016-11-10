@@ -1,5 +1,6 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161109 JH c7-higher-education-landing-page-MP display featured course providers -->
+<!-- 20161110 JH c7-higher-education-landing-page-MP add banner panel to the landing page -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -18,11 +19,8 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <style type="text/css">
 .limit {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 400px;
-	max-height: 30px;
+    overflow: hidden; 
+    white-space: nowrap; 
 }
 </style>
 </head>
@@ -159,7 +157,7 @@
 					<div class="banner-holder">
 						<div class="banner clearfix">
 							<div class="logo-image">
-								<img src="../../i/icbt.png" alt="Logo">
+								<img src="/dist/i/icbt.png" alt="Logo">
 							</div>
 							<div class="description">
 								<h1>
