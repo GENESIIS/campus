@@ -15,6 +15,7 @@ package com.genesiis.campus.entity;
 //20161102 JH c7-higher-education-landing-page findById query modified to remove unwanted attributes
 //20161102 JH c7-higher-education-landing-page findById query modified due to ddl changes
 //20161104 JH c7-higher-education-landing-page CourseProviderHigherEducationProgrammeDAO.java renamed as CategoryCourseProviderDAO.java
+//20161110 JH c7-higher-education-landing-page findById method modified : cast course provider description
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,7 +85,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * 3. get only top 5 course providers with their details
 		 */
 
-		String query1 = "	SELECT  cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,150) as CASTED, cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
 				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?";
@@ -93,7 +94,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * query2 used to query the database to retrieve data of course
 		 * providers randomly who are active
 		 */
-		String query2 = "SELECT TOP 10 * FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
+		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,150) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
 				+ " where  p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?  ) as a "
 				+ " on a.COURSEPROVIDER = cp.CODE and  cp.COURSEPROVIDERSTATUS = ?   ORDER BY NEWID()";
 
@@ -140,12 +141,24 @@ public class CategoryCourseProviderDAO implements ICrud {
 				while (rs.next()) {
 
 					final ArrayList<String> singleCourseProviderList = new ArrayList<String>();
+					
+					/**
+					 * here the description and the casted description length
+					 * are compared to add an indicator '....' to the end of the
+					 * course provider description to show that the description
+					 * in casted to display /shorten to display only limited
+					 * text
+					 */
+					String castedDescription = rs.getString("CASTED");
+					if (rs.getString("DESCRIPTION").length() > castedDescription.length()) {
+						castedDescription = castedDescription + "...";
+					}
 
 					singleCourseProviderList.add(rs.getString("CODE"));
 					singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 					singleCourseProviderList.add(rs.getString("SHORTNAME"));
 					singleCourseProviderList.add(rs.getString("NAME"));
-					singleCourseProviderList.add(rs.getString("DESCRIPTION"));
+					singleCourseProviderList.add(castedDescription);
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
 					singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
 					singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
