@@ -176,8 +176,8 @@ public class CmdSendInstituteInquiry implements ICommand {
 			Collection<Collection<String>> outer) {
 		ArrayList<String> monoList = new ArrayList<String>();
 		for (Collection<String> emailAddressList : outer) {
-		Object ar[]=emailAddressList.toArray();
-		String emailAddr=(String) ar[0];
+			Object ar[] = emailAddressList.toArray();
+			String emailAddr = (String) ar[0];
 			monoList.add(emailAddr);
 		}
 		return monoList;
@@ -196,7 +196,6 @@ public class CmdSendInstituteInquiry implements ICommand {
 		emailDispenser = new EmailDispenser(generalEmail);
 		emailDispenser.emailDispense();
 	}
-
 
 	/*
 	 * addContentToOriginalMailBody() formats the original details with users
