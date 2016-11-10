@@ -2,7 +2,6 @@ package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 
-import com.genesiis.campus.command.CmdGenerateEmail;
 import org.apache.log4j.Logger;
 
 
