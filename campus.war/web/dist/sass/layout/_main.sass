@@ -415,6 +415,7 @@ body,html
               display: block
 
 // All Course Providers
+
 .top-providers-screen
   display: block
   position: relative
@@ -428,11 +429,56 @@ body,html
     z-index: 99
     position: relative
     top: -60px
+    font-family: "Signika", sans-serif
 
     .top-rated-list
       display: block
-      padding: 25px 40px
+      padding: 0 40px 35px 40px
 
+      .list-header
+        display: block
+        border-bottom: 1px solid #5eb0f6
+
+      .top-rated
+        display: block
+        h1
+          line-height: 70px
+          font-size: 30px
+          color: #374f77
+
+        .providers-grid
+          width: 94%
+
+          .item-holder
+            display: block
+            border: 5px solid #cde2f4
+            width: 100%
+            margin-top: 30px
+            &:hover
+              .provider-name
+                display: block
+
+            .provider-logo
+              padding: 20px 50px
+              position: relative
+              img
+                height: 90px
+
+            .provider-name
+              padding-top: 10px
+              padding-bottom: 10px
+              background: rgba(10, 64, 222, 0.52)
+              display: none
+              transition: all 0.3s
+              position: absolute
+              overflow: hidden
+              bottom: 5px
+              width: 86.5%
+              z-index: 99
+
+              h2
+                font-size: 30px
+                color: #fff
 
 // ------------------ Main categories --------------------------------
 .main-category
