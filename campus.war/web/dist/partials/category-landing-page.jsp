@@ -19,8 +19,8 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <style type="text/css">
 .limit {
-    overflow: hidden; 
-    white-space: nowrap; 
+	display: block;
+	height: 200px;
 }
 </style>
 </head>
@@ -138,14 +138,13 @@
 								</div>
 
 								<div class="institute-description clearfix">
-									<p class="limit">
-										<c:out value="${featuredInstitute[4] }"></c:out>
+									<p id="institute-description">
+										<c:out value="${featuredInstitute[4]}"></c:out>
 									</p>
 									<div class="btn-more clearfix">
 										<a href="javascript:">Show More</a>
 									</div>
 								</div>
-
 							</c:forEach>
 
 						</div>
