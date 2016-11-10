@@ -36,18 +36,18 @@ function getAjaxData(response) {
 		$('<option>').val(y).text(x).appendTo(categories);
 	});
 	
-	var count = 0 ;
+	var major = 0 ;
 	var secondChoice = $("#select-item1");
 	secondChoice.find('li').remove();
-	$.each(response.majorCollection, function(index, value) {
+	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
 		secondChoice.append('<li><a href="javascript:"><input name="major" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
-		count++;
+		major++;
 	});
-	$("#majorCount").text(" " +pad(count, 2));
+	$("#majorCount").text(" " +pad(major, 2));
 	
 	var districtName = $("#districtName");
 	districtName.find('option').remove();
@@ -82,7 +82,7 @@ function displayMajor() {
 		categoryCode : categoryCode,
 		CCO : 'LIST_MAJOR_DATA'
 	}, function(response) {
-		var count = 0 ;
+		var major = 0 ;
 		var secondChoice = $("#select-item1");
 		secondChoice.find('li').remove();
 		$.each(response.result, function(index, value) {
@@ -91,9 +91,9 @@ function displayMajor() {
 			var x = data[0].toString();
 			var y = data[1].toString();
 			secondChoice.append('<li><a href="javascript:"><input name="major" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
-			count++;
+			major++;
 		});
-		$("#majorCount").text(" " +pad(count, 2));
+		$("#majorCount").text(" " +pad(major, 2));
 	});	
 	
 }
@@ -133,7 +133,7 @@ function displayLevel() {
 		categoryCode : categoryCode,
 		CCO : 'LIST_LEVEL_DATA'
 	}, function(response) {
-		var count = 0 ;
+		var levelCount = 0 ;
 		var secondChoice = $("#select-item2");
 		secondChoice.find('li').remove();
 		$.each(response.result, function(index, value) {
@@ -142,9 +142,9 @@ function displayLevel() {
 			var x = data[0].toString();
 			var y = data[1].toString();
 			secondChoice.append('<li><a href="javascript:"><input name="level" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
-			count++;
+			levelCount++;
 		});
-		$("#levelCount").text(" " +pad(count, 2));
+		$("#levelCount").text(" " +pad(levelCount, 2));
 	});
 
 }
@@ -196,8 +196,7 @@ function pad(number, length) {
 
 
 $(document).ready(function() {
-    var t = $('#example').DataTable();
-    var counter = 0;
+    var t = $('#example').DataTable();   
  
     $('#addRow').on( 'click', function () {
     	
@@ -216,6 +215,7 @@ $(document).ready(function() {
 			},
 			dataType : "json",
 			success : function(response) {
+				var counter = 0;
 				t.clear().draw();
 				$.each(response.result, function(index, value) {
 					var res = value.toString();
