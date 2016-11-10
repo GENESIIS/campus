@@ -2,7 +2,8 @@ package com.genesiis.campus.command;
 
 //DJ 20161026 c6-list-available-institutes-on-the-view created CmdListInstitutes.java
 //DJ 20161026 c6-list-available-institutes-on-the-view implementing execute() method
-//DJ 20161030 c6-list-available-institutes-on-the-view identified get all institutes 
+//DJ 20161030 c6-list-available-institutes-on-the-view identified get all institutes
+//DJ 20161110 c6-list-available-institutes-on-the-view identified get all and category wise course providers
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
-public class CmdListMoreCourseProviders implements ICommand  {
-	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class.getName());
-	
+public class CmdListMoreCourseProviders implements ICommand {
+	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class
+			.getName());
+
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
@@ -33,14 +35,15 @@ public class CmdListMoreCourseProviders implements ICommand  {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
 					provider.setCategory(categoryCode);
-				}
-				provider.setGetAll(false);
-			} else {
-				// Setting the flag for retrieve all the institutes
-				provider.setGetAll(true);
+				}				
 			}
-			final Collection<Collection<String>> courseProviders = providerDAO.findById(provider);
-			iview.setCollection(courseProviders);			
+			if (categoryCode > 0) {
+				final Collection<Collection<String>> categoryWiseCourseProviders = providerDAO.findById(provider);
+				iview.setCollection(categoryWiseCourseProviders);
+			} else {
+				final Collection<Collection<String>> allCourseProviders = providerDAO.getAll();
+				iview.setCollection(allCourseProviders);
+			}
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
