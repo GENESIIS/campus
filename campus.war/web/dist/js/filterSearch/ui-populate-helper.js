@@ -3,6 +3,7 @@
 //20161102 PN c11-criteria-based-filter-search implemented getSelectedData(), getValueUsingParentTag() and addsearchData() method.
 //20161102 PN c11-criteria-based-filter-search modified addsearchData() method to load data dynamically.
 //20161109 PN c11-criteria-based-filter-search modified getAjaxData() and addsearchData() method to load data dynamically.
+//20161110 PN c11-criteria-based-filter-search modified jQuery method to display searched data on dataTable 
 
 /**
  * This method id to load category details
@@ -174,11 +175,6 @@ function displayDistricts() {
 
 function displayDetailsOnLoad() {
 	displayCategory();
-//	displayCourseProvider();
-//	displayMajor();
-//	
-//	displayDistricts();	
-//	addsearchData();
 }
 
 function displayDetailsOnChange() {
@@ -198,73 +194,61 @@ function pad(number, length) {
     return str;
 }
 
-/**
- * This method is to load programs according to the search criteria.
- * @returns
- */
-function addsearchData(){
-	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
-	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
-	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
-
-	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
-	var searchData = x+y+z+a;
-
-	$.get('../../PublicController', {
-		searchData : JSON.stringify(searchData),
-		CCO : "GET_SEARCH_DATA"
-	}, function(response) {
-		var count = 0 ;
-		var dataTable = $("#example");
-		dataTable.find('tr:gt(0)').remove();
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			dataTable.append('<tr>' +
-					'<th>' +
-					'<div class="provider-info">' +
-						'<a href="javascript:">' +
-						'<img src="dist/i/'+ data[6].toString().trim() +'" alt="'+ data[4].toString() +'" width="200" height="100">' +
-						'</a>' +
-					'</div>' +
-				'</th>' +
-				'<th>' +
-					'<div class="result-box clearfix">' +
-						'<div class="course-name">' +
-							'<a href="javascript:">' + data[1].toString() +
-							'<span class="provider-name">' + " @"+ data[5].toString() +
-							'</span>' +
-							'</a>' +
-						'</div>' +
-						'<div class="course-info">' +
-							'<p>'+ data[2].toString() + '</p>' +
-						'</div>' +
-					'</div>' +
-				'</th>' +
-				'<th>' + data[3].toString() + '</th>' +
-			'</tr>');
-			count++;
-		});
-		$("#courseCount").text(" " +pad(count, 2));
-	});
-	
-}
-
 
 $(document).ready(function() {
     var t = $('#example').DataTable();
-    var counter = 1;
+    var counter = 0;
  
     $('#addRow').on( 'click', function () {
-        t.row.add( [
-            counter +'.1',
-            counter +'.2',
-            counter +'.3',
-            counter +'.4',
-            counter +'.5'
-        ] ).draw( false );
- 
-        counter++;
+    	
+    	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
+    	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
+    	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
+
+    	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
+    	var searchData = x+y+z+a;
+
+    	$.ajax({
+			url : '../../PublicController',
+			data : {
+				searchData : JSON.stringify(searchData),
+				CCO : 'GET_SEARCH_DATA'
+			},
+			dataType : "json",
+			success : function(response) {
+				t.clear().draw();
+				$.each(response.result, function(index, value) {
+					var res = value.toString();
+					var data = res.split(",");
+					counter++;
+					
+					t.row.add( [
+					            '<div class="provider-info">' +
+									'<a href="javascript:">' +
+										'<img src="../../dist/i/'+ data[6].toString().trim() +'" alt="'+ data[4].toString() +'" width="200" height="100">' +
+									'</a>' +
+								'</div>',
+								'<div class="result-box clearfix">' +
+									'<div class="course-name">' +
+										'<a href="javascript:">' + data[1].toString() +
+											'<span class="provider-name">' + " @"+ data[5].toString() +
+											'</span>' +
+										'</a>' +
+									'</div>' +
+									'<div class="course-info">' +
+										'<p>'+ data[2].toString() + '</p>' +
+									'</div>' +
+								'</div>',
+								data[3].toString()
+					        ] ).draw( false );
+
+				});
+				$("#courseCount").text(" " +pad(counter, 2));
+			},
+			error : function(response) {
+				alert("Error: "+response);
+			}
+		});
     } );
  
     // Automatically add a first row of data
