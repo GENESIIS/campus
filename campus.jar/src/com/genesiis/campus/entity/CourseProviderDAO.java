@@ -114,7 +114,7 @@ public class CourseProviderDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=1 ");
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=1 ");
 
 			stmt = conn.prepareStatement(sb.toString());
 			allProviderList=getCourseProviderResultSet(stmt);

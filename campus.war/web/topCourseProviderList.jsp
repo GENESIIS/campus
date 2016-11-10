@@ -12,7 +12,7 @@
 <title>Campus.lk -Institutes</title>
 </head>
 <body>
-<h2>Top View</h2>
+<h2>Top Viewed Course Providers</h2>
 
 	<table
 		style="border: 2px; border-color: black; border-style: solid; width: 100%">
@@ -48,7 +48,7 @@
 		</tr>
 	</table>
 
-	<h2>Top Rated</h2>
+	<h2>Top Rated Course Providers</h2>
 
 	<table
 		style="border: 2px; border-color: black; border-style: solid; width: 100%">

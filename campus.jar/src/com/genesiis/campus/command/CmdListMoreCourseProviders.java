@@ -27,6 +27,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
+		String contextDeployLogoPath = "education/provider/logo/";
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
@@ -44,6 +45,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 				final Collection<Collection<String>> allCourseProviders = providerDAO.getAll();
 				iview.setCollection(allCourseProviders);
 			}
+			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
 			systemMessage = SystemMessage.ERROR;
