@@ -47,7 +47,8 @@ public class CourseProviderDAO implements ICrud{
 	}
 	
 	/**
-	 * Find Institutes
+	 * Get category wise course providers
+	 * which only have programmes
 	 * @param category code
 	 * @author DJ
 	 * @return Collection 
@@ -58,40 +59,26 @@ public class CourseProviderDAO implements ICrud{
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement  stmt = null;	
-		final Collection<Collection<String>> allInstitutesList = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
-			boolean isGetAll=false;
-			
 			if(UtilityHelper.isNotEmptyObject(code)){
 				final CourseProvider cp = (CourseProvider) code;
 				categoryCode = cp.getCategory();
-				isGetAll=cp.isGetAll();
-			}			
-			
+				}			
+			//categorystatus=1 and courseproviderstatus=1 ; this can be change in future.
 			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.SHORTNAME AS CPSHORTNAME  ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
 			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
 			// sb.append("AND PROG.PROGRAMMESTATUS=1 ");
-			sb.append("AND CAT.ISACTIVE=1 ");
-			if (!isGetAll) {
-				sb.append(" AND CAT.CODE=? ");
-			}
+			sb.append("AND CAT.ISACTIVE=1 AND CAT.CODE=?");			
 			 
-			stmt = conn.prepareStatement(sb.toString());
-			if(!isGetAll){
-				stmt.setInt(1, categoryCode);	
-			}
-			final ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {				
-				final ArrayList<String> singleInstitute = new ArrayList<String>();
-				singleInstitute.add(rs.getString("CPCODE"));
-				singleInstitute.add(rs.getString("SHORTNAME"));				
-				allInstitutesList.add(singleInstitute);
-			}
+			stmt = conn.prepareStatement(sb.toString());			
+			stmt.setInt(1, categoryCode);	
+			allProviderList=getCourseProviderResultSet(stmt);
 			
 		} catch (SQLException sqlException) {
 			log.info("findById() sqlException" + sqlException.toString());
@@ -107,14 +94,46 @@ public class CourseProviderDAO implements ICrud{
 				conn.close();
 			}
 		}
-		return allInstitutesList;
+		return allProviderList;
 	}
+	
+	/**
+	 * Get all types of active course providers
+	 * @param 
+	 * @author DJ
+	 * @return Collection 
+	 */
 
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=1 ");
+
+			stmt = conn.prepareStatement(sb.toString());
+			allProviderList=getCourseProviderResultSet(stmt);
+
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allProviderList;
 	}
 
 	@Override
@@ -155,7 +174,7 @@ public class CourseProviderDAO implements ICrud{
 	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException{
 		Connection conn = null;
 		PreparedStatement  stmt = null;	
-		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		 Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
 			int categoryCode=0;
@@ -165,22 +184,7 @@ public class CourseProviderDAO implements ICrud{
 				categoryCode = cp.getCategory();
 				isGetAll=cp.isGetAll();
 			}	
-			conn=ConnectionManager.getConnection();
-			/*final StringBuilder sb = new StringBuilder("SELECT  DISTINCT TOP 10 cp.CODE , CP.UNIQUEPREFIX  FROM ( ");
-			sb.append(" SELECT  TOP 1000  PROV.CODE AS PROVIDERCODE,COUNT(*) AS HITCOUNT,PROG.CODE PROGRAMMCODE,PROG.NAME,  PROV.NAME AS PROVIDERNAME, PROV.UNIQUEPREFIX, PROG.CATEGORY");
-			sb.append(" FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
-			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE INNER JOIN [CAMPUS].PROGRAMMESTAT PSTAT ON PROG.CODE= PSTAT.PROGRAMME ");
-			sb.append(" WHERE PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
-			// sb.append(" AND PROG.PROGRAMMESTATUS=1 ")
-			sb.append(" AND CAT.ISACTIVE=1  ");
-			if (!isGetAll) {
-				sb.append(" AND CAT.CODE= ? ");
-			}
-			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROV.CODE,PROV.NAME,PROV.UNIQUEPREFIX, PROG.CATEGORY ");
-			sb.append(" ORDER BY HITCOUNT desc");
-			sb.append(" ) NEWTABLE ");
-			sb.append(" JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = NEWTABLE.PROVIDERCODE) ");	*/
-			
+			conn=ConnectionManager.getConnection();	
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH   FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
@@ -198,14 +202,7 @@ public class CourseProviderDAO implements ICrud{
 				stmt.setInt(1, categoryCode);	
 			}	
 			log.debug("SQL : " + sb.toString());
-			final ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {				
-				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(rs.getString("CPCODE"));				
-				singleProvider.add(rs.getString("UNIQUEPREFIX"));
-				singleProvider.add(rs.getString("LOGOPATH"));
-				allProviderList.add(singleProvider);
-			}
+			allProviderList=getCourseProviderResultSet(stmt);
 			
 		} catch (SQLException sqlException) {
 			log.info("findTopViewedProviders() sqlException" + sqlException.toString());
@@ -223,6 +220,26 @@ public class CourseProviderDAO implements ICrud{
 		}
 		return allProviderList;
 	}
+
+	/**
+	 * @param stmt
+	 * @author DJ
+	 * @return Collection
+	 * @throws SQLException
+	 */
+	private Collection<Collection<String>> getCourseProviderResultSet(PreparedStatement stmt)
+			throws SQLException {
+		final Collection<Collection<String>> allProviderList=new ArrayList<Collection<String>>();
+		final ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {				
+			final ArrayList<String> singleProvider = new ArrayList<String>();
+			singleProvider.add(rs.getString("CPCODE"));				
+			singleProvider.add(rs.getString("UNIQUEPREFIX"));
+			singleProvider.add(rs.getString("LOGOPATH"));
+			allProviderList.add(singleProvider);
+		}
+		return allProviderList;		
+	}
 	
 	/**
 	 * Find Top Rated Providers
@@ -235,7 +252,7 @@ public class CourseProviderDAO implements ICrud{
 		
 		Connection conn = null;
 		PreparedStatement  stmt = null;	
-		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
 			int categoryCode=0;
@@ -261,14 +278,7 @@ public class CourseProviderDAO implements ICrud{
 			if(!isGetAll){
 				stmt.setInt(1, categoryCode);	
 			}	
-			
-			final ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {				
-				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(rs.getString("CPCODE"));				
-				singleProvider.add(rs.getString("CPSHORTNAME"));
-				allProviderList.add(singleProvider);
-			}
+			allProviderList=getCourseProviderResultSet(stmt);
 			
 		} catch (SQLException sqlException) {
 			log.info("findTopRatedProviders() sqlException" + sqlException.toString());
