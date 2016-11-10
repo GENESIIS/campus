@@ -16,6 +16,7 @@ package com.genesiis.campus.entity;
 //20161102 JH c7-higher-education-landing-page findById query modified due to ddl changes
 //20161104 JH c7-higher-education-landing-page CourseProviderHigherEducationProgrammeDAO.java renamed as CategoryCourseProviderDAO.java
 //20161110 JH c7-higher-education-landing-page findById method modified : cast course provider description
+//20161110 JH c7-higher-education-landing-page findById method modified : get course provider head office
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -185,6 +186,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("ADDRESS2"));
 					singleCourseProviderList.add(rs.getString("ADDRESS3"));
 					singleCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
+					singleCourseProviderList.add(rs.getString("HEADOFFICETOWN"));
 					singleCourseProviderList.add(rs.getString("ISTUTORRELATED"));
 					singleCourseProviderList.add(rs.getString("ISADMINALLOWED"));
 					singleCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));
