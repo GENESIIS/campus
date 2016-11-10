@@ -116,11 +116,11 @@
 								<h2>Featured Institutes</h2>
 							</div>
 							<div class="move-btn">
-								<a href="javascript:">Left</a> <a href="javascript:">Right</a>
+								<a onclick="plusDivs(-1)">Left</a> <a onclick="plusDivs(1)">Right</a>
 							</div>
 						</div>
 
-						<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+						<c:forEach var="featuredInstitute" items="${featuredInstitutes}" varStatus="count">
 							<div id="featured-panel" class="mySlides">
 
 								<div class="institute-info clearfix">
@@ -196,6 +196,26 @@
 	<script>
 		var myIndex = 0;
 		carousel();
+		showDivs(slideIndex);
+
+		function plusDivs(n) {
+			showDivs(slideIndex += n);
+		}
+		function showDivs(n) {
+			var i;
+			var x = document.getElementsByClassName("mySlides");
+			if (n > x.length) {
+				slideIndex = 1
+			}
+			if (n < 1) {
+				slideIndex = x.length
+			}
+			for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+			}
+			x[myIndex - 1].style.display = "block";
+			setTimeout(carousel, 5000); // Change image every 2 seconds
+		}
 
 		function carousel() {
 			var i;
