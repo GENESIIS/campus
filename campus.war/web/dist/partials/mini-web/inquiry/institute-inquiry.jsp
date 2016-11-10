@@ -167,7 +167,7 @@
 							</p>
 						</div>
 						<!-- ReCaptcha -->
-						<div class="re-captcha">
+						<div class="re-captcha" id="re-captcha">
 							<span id="captchaError"
 								style="color: red; font-weight: normal !important;"></span>
 							<div class="g-recaptcha"
