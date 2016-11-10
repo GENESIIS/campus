@@ -12,7 +12,7 @@
 	<!-- <a href="dummyPage.jsp">Click Here to Proceed</a> -->
 	<form action="PublicController" method="post">
 		<input type="text" name="category">
-		<button type="submit" name="CCO" value="TCPL">TOP CP lIST</button>
+		<button type="submit" name="CCO" value="LIST_TOP_COURSE_PROVIDERS">TOP CP lIST</button>
 	</form>
 </body>
 </html>
