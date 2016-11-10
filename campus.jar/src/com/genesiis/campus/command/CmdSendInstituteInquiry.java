@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
 //20161108 CM c9-make-inquiry-for-institute Modified execute() method
 //20161109 CM c9-make-inquiry-for-institute Removed createDatabaseConnection() method
 //20161108 CM c9-make-inquiry-for-institute Modified composeSingleEmailList() method
+//20161110 CM c9-make-inquiry-for-institute Modified execute() method
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 			// Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
 				// Input by Human
-				String validateResult = Validator.validateInquiry(helper);
+				String validateResult = Validator.validateInstituteInquiry(helper);
 
 				if (validateResult.equalsIgnoreCase("True")) {
 					setEnvironment(helper);
@@ -89,6 +90,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 					instituteInquiry.setInquiryText(inquiry);
 					instituteInquiry.setStudent(studentCode);
 					instituteInquiry.setCourseProvider(corseProviderCode);
+					instituteInquiry.setIsActive(1);
 
 					final CourseProviderInquiryDAO inquiryDAO = new CourseProviderInquiryDAO();
 					final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
