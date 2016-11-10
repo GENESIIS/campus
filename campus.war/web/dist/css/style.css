@@ -520,6 +520,22 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
+.top-providers-screen {
+  display: block;
+  position: relative; }
+  .top-providers-screen .provider-list-holder {
+    display: block;
+    width: 93%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f7fcfe;
+    z-index: 99;
+    position: relative;
+    top: -60px; }
+    .top-providers-screen .provider-list-holder .top-rated-list {
+      display: block;
+      padding: 25px 40px; }
+
 .main-category {
   display: block;
   position: relative; }
