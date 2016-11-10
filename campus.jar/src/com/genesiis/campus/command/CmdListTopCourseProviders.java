@@ -26,7 +26,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;	
-		String contextDeployLogoPath = "/education/provider/logo/";
+		String contextDeployLogoPath = "education/provider/logo/";
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
