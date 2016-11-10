@@ -2,15 +2,18 @@ package com.genesiis.campus.util;
 
 //20161026 CM c9-make-inquiry-for-institute INIT ReCaptchaManager.java
 //20161026 CM c9-make-inquiry-for-institute Created  sentRequestToServe() method
+//20161109 CM c9-make-inquiry-for-institute Modified  sentRequestToServe() method
+//20161109 CM c9-make-inquiry-for-institute close HttpConnection and BufferReader.
+//20161109 CM c9-make-inquiry-for-institute Renamed  sentRequestToServe() method as sendRequestToServer
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.CaptchaResponse;
 import com.google.gson.Gson;
 
 public class ReCaptchaManager {
@@ -19,16 +22,18 @@ public class ReCaptchaManager {
 
 	/**
 	 * Created for send request to google recaptcha server
+	 * 
 	 * @author Chathuri
 	 * @param helper
 	 * @return boolean
 	 */
-	public boolean sentRequestToServer(IDataHelper helper) {
-
+	public boolean sendRequestToServer(IDataHelper helper) throws IOException,Exception {
+		HttpURLConnection conn = null;
+		BufferedReader reader = null;
+		boolean result = false;
 		try {
 			String gRecaptchaResponse = helper
 					.getParameter("g-recaptcha-response");
-			log.info(gRecaptchaResponse);
 			String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
 
 			// Send get request to Google reCaptcha server with secret key
@@ -37,31 +42,39 @@ public class ReCaptchaManager {
 							+ secretParameter + "&response="
 							+ gRecaptchaResponse + "&remoteip="
 							+ helper.getRemoteAddr());
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			String line, outputString = "";
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
+			reader = new BufferedReader(new InputStreamReader(
 					conn.getInputStream()));
 			while ((line = reader.readLine()) != null) {
 				outputString += line;
 			}
-
-			System.out.println(outputString);
 
 			// Convert response into Object
 			CaptchaResponse captchaResponse = new CaptchaResponse();
 			CaptchaResponse capRes = new Gson().fromJson(outputString,
 					CaptchaResponse.class);
 			if (capRes.isSuccess()) {
-				return true;
+				result = true;
 			} else {
-				return false;
+				result = false;
 			}
-
+		} catch (IOException ioException) {
+			log.error("sendRequestToServer() :" + ioException);
+			throw ioException;
 		} catch (Exception exception) {
-			log.info("sentRequestToServer() :" + exception);
-			return false;
+			log.error("sendRequestToServer() :" + exception);
+			throw exception;
+		} finally {
+			if (conn != null) {
+				conn.disconnect();
+			}
+			if (reader != null) {
+				reader.close();
+			}
 		}
+		return result;
 
 	}
 }

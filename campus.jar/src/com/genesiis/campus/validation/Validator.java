@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
@@ -25,6 +26,7 @@ public class Validator {
 
 	/**
 	 * Check the given value is empty or not empty
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a null value.
@@ -38,7 +40,8 @@ public class Validator {
 	}
 
 	/**
-	 * Check the given mail address is valid email or not 
+	 * Check the given mail address is valid email or not
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate email address.
@@ -54,6 +57,7 @@ public class Validator {
 
 	/**
 	 * Validate institute course provider inquiry form data 
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return String to validate is given strings contains a null value.
@@ -84,7 +88,40 @@ public class Validator {
 	}
 
 	/**
+	 * Validate institute course program inquiry form data and course inquiry
+	 * 
+	 * @author anuradha
+	 * @param value
+	 * @return String to validate is given strings contains a null value.
+	 * **/
+	
+	public static  String validateCourseInquiry(StudentProgrammeInquiry data)throws ParseException{
+		String message = "True";
+		
+		if(!(isNotEmpty(data.getStudentName()) 
+				|| isNotEmpty(data.getStudentEmail())
+				|| isNotEmpty(data.getTelephoneCountryCode())
+				|| isNotEmpty(data.getTelephoneAreaCode())
+				|| isNotEmpty(data.getTelephone())
+				|| isNotEmpty(data.getInquiryTitle())
+				|| isNotEmpty(data.getInquiry()))){
+			message = SystemMessage.EMPTYFIELD.message();
+		}else if (!validateEmail(data.getStudentEmail())) {
+			message = SystemMessage.EMAILERROR.message();
+		}else if (!isInteger(data.getTelephoneCountryCode())){
+			message = SystemMessage.INVALIDECODE.message();
+		} else if (!isInteger(data.getTelephoneAreaCode())) {
+			message = SystemMessage.INVALIDEAREA.message();
+		} else if (!isInteger(data.getTelephone())) {
+			message = SystemMessage.PHONENUMBERERROR.message();
+		}
+		log.info(message);
+		return message;
+	}
+
+	/**
 	 * Check the given number is valid number or not
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a numaric value.

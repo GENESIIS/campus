@@ -1,6 +1,7 @@
-package com.genesiis.campus.entity.model;
+package com.genesiis.campus.util;
 
-//20161026 CM c9-make-inquiry-for-institute INIT CmdSendInstituteInquiry.java
+//20161110 AS c8-make-inquiry-for-course INIT CaptchaResponse.java
+//20161110 AS,DN,CM c8-make-inquiry-for-course  CaptchaResponse.java move to util package
 
 public class CaptchaResponse {
     public boolean success;

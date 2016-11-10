@@ -20,6 +20,7 @@ import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
+import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -39,38 +40,47 @@ public class CmdSendCourseInquiry implements ICommand {
 	private int studentCode;
 	private int programmeCode;
 	private ArrayList<String> recieversEmailAddreses;
+	private Collection<Collection<String>> messageIview;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
 	private StudentProgrammeInquiry data;
 
-	
-	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = "Unsuccessfull";
-		final ReCaptchaManager reCaptchaManager=new ReCaptchaManager();
-		boolean responseIsSuccess=reCaptchaManager.sentRequestToServer(helper);
+		final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
+		boolean responseIsSuccess = reCaptchaManager.sendRequestToServer(helper);
 		// Verify whether the input from Human or Robot
-					if (responseIsSuccess) {
-						
-		String gsonData = helper.getParameter("jsonData");
-		data = getInstituteInquirydetails(gsonData);
-		CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
-		int result = inquiryDAO.add(data);
-		if (result > 0) {
-			message = "Inquiry Send successfylly";
-
-			final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
-			Collection<Collection<String>> courseProviderEmail = courseProviderDAO
-					.findById(data);
-			recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
-			generalEmail = formatEmailInstance();
-			this.sendMail();
+		 if (responseIsSuccess) {
+		// Input by Human
+		
+			String gsonData = helper.getParameter("jsonData");
+			data = getInstituteInquirydetails(gsonData);
 			
+			String validateResult = Validator.validateCourseInquiry(data);
+			log.info(validateResult);
+			if (validateResult.equalsIgnoreCase("True")) {
+				log.info("valide data");
+			
+			CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
+			int result = inquiryDAO.add(data);
+			if (result > 0) {
+				message = "Inquiry Send successfylly";
+
+				final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
+				Collection<Collection<String>> courseProviderEmail = courseProviderDAO
+						.findById(data);
+				recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
+				generalEmail = formatEmailInstance();
+				this.sendMail();
+				//messageIview = Collection<Collection<message>>;
+				view.setCollection(courseProviderEmail);
+			}
+			 }
 		}
-					}
 		helper.setAttribute("message", message);
+		
 		return view;
 
 	}

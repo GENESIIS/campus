@@ -105,39 +105,48 @@
 						You are making inquiry about <span class="colr-white">ICBT</span>
 					</h1>
 					<form class="submit-form" action="">
+					<div class="f-name">
+					<label id="messsage"></label></div>
 						<!-- First Name -->
 						<div class="f-name">
-							<label for="input-firstName">Full Name <span>*</span></label><br>
-							<input type="text" name="fullname" id="fullname">
+							<label for="input-firstName">Full Name <span>*</span></label> <label
+								id="fullNametbError"></label> <br> <input type="text"
+								name="fullname" id="fullname">
 						</div>
 						<!-- Email -->
 						<div class="email">
-							<label for="eMail">Email <span>*</span></label><br> <input
-								type="text" name="email" id="email">
+							<label for="eMail">Email <span>*</span></label> <label
+								id="emailtbError"></label><br> <input type="text" name="email"
+								id="email">
 						</div>
 						<!--Country Code -->
 						<div class="county-code">
-							<label for="input-county-code">Country Code <span>*</span></label><br>
-							<input type="text" name="countryCode" id="countryCode">
+							<label for="input-county-code">Country Code <span>*</span></label>
+							<label id="countryCodetbError"></label> <br><input type="text"
+								name="countryCode" id="countryCode">
 						</div>
 						<!-- Area Code -->
 						<div class="area-code">
-							<label for="input-area-code">Area Code <span>*</span></label><br>
-							<input type="text" name="areaCode" id="areaCode">
+							<label for="input-area-code">Area Code <span>*</span></label>
+							<label id="areaCodetbError"></label> <br><input type="text"
+								name="areaCode" id="areaCode">
 						</div>
 						<!-- Telephone -->
 						<div class="tp-number">
-							<label for="input-tp-no">Telephone No <span>*</span></label><br>
-							<input type="text" name="telNum" id="telNum">
+							<label for="input-tp-no">Telephone No <span>*</span></label>
+							<label id="telephoneNumbertbError"></label><br> <input type="text"
+								name="telNum" id="telNum">
 						</div>
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
-							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><br>
-							<input type="text" name="inquiryTitle" id="inquiryTitle">
+							<label for="input-inquiry-title">Inquiry Title <span>*</span></label>
+							<label id="inquiryTitletbError"></label><br> <input type="text"
+								name="inquiryTitle" id="inquiryTitle">
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
-							<label for="text-userMessage">Message <span>*</span></label><br>
+							<label for="text-userMessage">Message <span>*</span></label>
+							<label id="inquirytbError"></label><br>
 							<textarea name="inquiry" id="inquiry" rows="10"></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
@@ -148,14 +157,16 @@
 						</div>
 						<!-- ReCaptcha -->
 						<div class="re-captcha">
-                    <div class="g-recaptcha"
+							<div class="g-recaptcha"
 								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
-						
-					</div>
+
+						</div>
 						<!-- btn Submit -->
-<!-- 						<input class="btn-submit" type="button" -->
-<!-- 							onclick="sendCourseInquiry()" value="Send Message"> -->
-						 <button class="btn-submit" type="button" name="" onclick="sendCourseInquiry()" value="Send Message">Send Message</button>
+						<!-- 						<input class="btn-submit" type="button" -->
+						<!-- 							onclick="sendCourseInquiry()" value="Send Message"> -->
+						<button class="btn-submit" type="button" name=""
+							onclick="sendCourseInquiry()" value="Send Message">Send
+							Message</button>
 					</form>
 					<!-- End Submit form -->
 				</div>
