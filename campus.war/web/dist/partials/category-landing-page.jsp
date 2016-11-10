@@ -14,13 +14,13 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
-<style type="text/css">
-.limit {
-	display: block;
-	height: 200px;
+<style>
+.mySlides {
+	display: none;
 }
 </style>
 </head>
@@ -120,16 +120,17 @@
 								<a href="javascript:">Left</a> <a href="javascript:">Right</a>
 							</div>
 						</div>
-						<div id="featured-panel">
-							<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+
+						<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
+							<div id="featured-panel" class="mySlides">
 
 								<div class="institute-info clearfix">
 									<div class="inst-logo">
-										<img src="${featuredInstitute[16] }" alt="Institute Logo">
+										<img src="${featuredInstitute[16] }" alt="Institute Logo" style="width:100px; height: 75px; ">
 									</div>
 									<div class="inst-name">
-										<h1 class="short-name">
-											<c:out value="${featuredInstitute[2] }"></c:out>
+										<h1 class="short-name" class="mySlides">${featuredInstitute[2] }
+											<!-- 	<c:out value="${featuredInstitute[2] }"></c:out>  -->
 										</h1>
 										<h2 class="full-name">
 											<c:out value="${featuredInstitute[3] }"></c:out>
@@ -145,9 +146,10 @@
 										<a href="javascript:">Show More</a>
 									</div>
 								</div>
-							</c:forEach>
 
-						</div>
+							</div>
+						</c:forEach>
+
 					</div>
 				</div>
 				<!-- Eng featured institute info slider -->
@@ -183,13 +185,30 @@
 	<footer>
 		<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
+	<script>
+		var myIndex = 0;
+		carousel();
 
+		function carousel() {
+			var i;
+			var x = document.getElementsByClassName("mySlides");
+			for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+			}
+			myIndex++;
+			if (myIndex > x.length) {
+				myIndex = 1
+			}
+			x[myIndex - 1].style.display = "block";
+			setTimeout(carousel, 5000); // Change image every 2 seconds
+		}
+	</script>
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-	<script src="/dist/js/category/ui-populate-helper.js"></script>
+
 
 </body>
 </html>
