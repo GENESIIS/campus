@@ -5,14 +5,7 @@ package com.genesiis.campus.validation;
 //20161028 CM c9-make-inquiry-for-institute Created validateInquiry methods
 //20161031 CM c9-make-inquiry-for-institute Modified validateInquiry methods
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +38,7 @@ public class Validator {
 	 * **/
 	public static boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
-				"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+				"([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
