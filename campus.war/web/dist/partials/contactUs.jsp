@@ -105,6 +105,7 @@
         <div class="contact-form clearfix">
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
+<%--             <label id="" style="color:#F39C12;" o>${requestScope.message}</label> --%>
                 <form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
                     <div class="f-name">
                         <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
@@ -131,10 +132,11 @@
                         <textarea id="message" rows="10" name="message" ></textarea>
                         <p class="pull-right"><span>*</span> Required fields</p>
                     </div>
-                    <!-- ReCaptcha -->
-						<div class="re-captcha">
-                    <div class="g-recaptcha"
-								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
+<!--                     ReCaptcha -->
+					<div class="re-captcha">
+                    	<div class="g-recaptcha"
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c">
+						</div>
 						<br><label id="captureError" style="color:#FFFF00;"></label>
 					</div>	
                     <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" >Submit Query</button>
@@ -211,7 +213,15 @@
 <!-- End Container - Contact-Us -->
 
 <!-- Footer -->
-<footer w3-include-html="layout/footer.jsp"></footer>
+<!-- <footer w3-include-html="layout/footer.jsp"></footer> -->
+<footer>
+    <div class="ft-top">
+
+    </div>
+    <div class="ft-bottom text-center">
+        <label for="Copyright">Copyright © Campus.lk</label>
+    </div>
+</footer>
 
 <!-- jQuery & Other js -->
 <script src="../bower-components/jquery/jquery-3.1.1.min.js"></script>

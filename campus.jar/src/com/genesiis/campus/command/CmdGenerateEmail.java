@@ -24,8 +24,10 @@ import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
+import com.genesiis.campus.validation.ContactUsValidation;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.Validatory;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -41,6 +43,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.io.IOException;
 import java.lang.System;
 
 import org.apache.log4j.Logger;
@@ -76,9 +79,11 @@ public class CmdGenerateEmail implements ICommand {
 			
 			 ICrud genesiis = new SystemConfigDAO();
 			 try{
+				 	validateFrontEndUserProvidedInformation(helper);
 				 	final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
-					boolean isResponseSuccess = reCaptchaManager.sendRequestToServer(helper);
-				 
+				 	boolean isResponseSuccess= reCaptchaManager.sendRequestToServer(helper);
+				 	//boolean isResponseSuccess =isReCaptureResponseSuccess(helper);
+				 	
 					// Verify whether the input from Human or Robot
 				 	if (isResponseSuccess) {
 				 		switch(Operation.getOperation(cco)){
@@ -88,8 +93,8 @@ public class CmdGenerateEmail implements ICommand {
 							 String[] sysEmailAdress = {"ENQUIRY_EMAIL_TO","ENQUIRY_EMIL_ADMIN"};
 							 collectionOfCollectionOfEmails=(ArrayList<Collection<String>>)genesiis.findById(sysEmailAdress,
 						 connection);
-						 recieversEmailAddreses= composeSingleEmailList(collectionOfCollectionOfEmails);
-						 generalEmail = formatEmailInstance();
+							 recieversEmailAddreses= composeSingleEmailList(collectionOfCollectionOfEmails);
+							 generalEmail = formatEmailInstance();
 						
 						 break;
 						 default:
@@ -113,13 +118,26 @@ public class CmdGenerateEmail implements ICommand {
 		 } catch (SQLException sqle) {
 			 log.error("execute():SQLException"+ sqle.toString());
 			 throw sqle;
+		} catch (ContactUsValidation.FailedValidationException e){
+			log.error("execute():FailedValidationException"+e.toString());
+			message = e.toString();			
+		}catch (IOException ioExpe) {
+			log.error("execute():IOException" + ioExpe.toString());
+			throw ioExpe;
 		} catch (Exception e) {
-			log.error("execute():SQLException" + e.toString());
+			log.error("execute():Exception" + e.toString());
 			throw e;
 		} finally {
 			helper.setAttribute("message", message);
 		}
 			 return view;
+	}
+	
+	
+	private boolean isReCaptureResponseSuccess(IDataHelper helper) throws IOException,Exception{
+		final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
+		return reCaptchaManager.sendRequestToServer(helper);
+		
 	}
 	
 	/*
@@ -136,6 +154,18 @@ public class CmdGenerateEmail implements ICommand {
 		 mailingSubject = helper.getParameter("subject");
 		 mailBody = helper.getParameter("message");
 
+	}
+	
+	private void validateFrontEndUserProvidedInformation(IDataHelper helper) throws Exception{
+		Validatory val = new ContactUsValidation();
+		
+			val.isNotEmpty(helper.getParameter("firstName"));
+			val.isNotEmpty(helper.getParameter("lastName"));
+			val.validateEmail("sendersEmailAddress");
+			val.isValidPhoneNumber("sendersphoneNumber");
+			val.isNotEmpty("mailingSubject");
+			val.isNotEmpty("mailBody");
+		
 	}
 	
 	/*

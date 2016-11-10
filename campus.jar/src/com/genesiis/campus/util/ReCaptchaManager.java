@@ -14,7 +14,6 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.CaptchaResponse;
 import com.google.gson.Gson;
 
 public class ReCaptchaManager {

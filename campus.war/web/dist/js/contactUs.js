@@ -5,6 +5,14 @@
 
 function validateForm(){
 
+//	isFieldFilled(isempty(document.contactUsForm.firstName.value),"First Name Field","firstNameError");
+//	isFieldFilled(isempty(document.contactUsForm.lastName.value),"Last Name Field","lastNameError");
+//	isFieldFilled(isValidEmailFormat(),"Email Field","emailError");
+//	isFieldFilled(isValidPhoneNumber(document.contactUsForm.contactNumber.value),"Phone Number Field","phoneNumberError");
+//	isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field","subjectError");
+//	isFieldFilled(isempty(document.contactUsForm.message.value),"message Field","userMessageError");
+//	isFieldFilled(isHumanTestPassed(),"I'm Not A Robot","captureError");
+	
 	 if(!(isFieldFilled(isempty(document.contactUsForm.firstName.value),"First Name Field","firstNameError"))){
 		return false;
 	}else if (!(isFieldFilled(isempty(document.contactUsForm.lastName.value),"Last Name Field","lastNameError"))) {
