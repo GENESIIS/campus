@@ -1,4 +1,4 @@
-package com.genesiis.campus.entity.model;
+package com.genesiis.campus.util;
 
 //20161026 CM c9-make-inquiry-for-institute INIT CaptchaResponse.java
 
