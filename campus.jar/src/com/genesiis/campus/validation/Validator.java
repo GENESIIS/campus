@@ -2,8 +2,9 @@ package com.genesiis.campus.validation;
 
 //20161028 CM c9-make-inquiry-for-institute INIT Validator.java
 //20161028 CM c9-make-inquiry-for-institute Created validateEmail, validateInquiry, isNotEmpty methods
-//20161028 CM c9-make-inquiry-for-institute Created validateInquiry methods
-//20161031 CM c9-make-inquiry-for-institute Modified validateInquiry methods
+//20161028 CM c9-make-inquiry-for-institute Created validateInquiry() methods
+//20161031 CM c9-make-inquiry-for-institute Modified validateInquiry() methods
+//20161031 CM c9-make-inquiry-for-institute Renamed validateInquiry() methods as validateInstituteInquiry() method
 
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -51,7 +52,7 @@ public class Validator {
 	 * @param value
 	 * @return String to validate is given strings contains a null value.
 	 * **/
-	public static String validateInquiry(IDataHelper helper)
+	public static String validateInstituteInquiry(IDataHelper helper)
 			throws ParseException {
 		String message = "True";
 
