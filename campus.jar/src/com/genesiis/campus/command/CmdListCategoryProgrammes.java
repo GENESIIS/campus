@@ -7,6 +7,8 @@ package com.genesiis.campus.command;
 //				Programme object to pass argument to findById() method of CourseProviderDAO
 //20161104 MM c5-corporate-training-landing-page Added code to support sending of levels or 
 //				majors based on the category of the programme requested
+//20161109 MM c5-corporate-training-landing-page Changed organisation of major/level list
+//				data to be in a List<List<String>>
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -173,7 +175,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 			helper.setAttribute("numOfPages", numOfPages);
 			helper.setAttribute("pageNum", pageNum);
 			helper.setAttribute("programmeColl", programmeListForPage);
-			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap);
+			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			
 		} catch (NumberFormatException nfe) {

@@ -1,6 +1,7 @@
 /**
  * 20161109 MM c5-corporate-training-landing-page-MP Initialised file with getProgrammeData()
  * 20161109 MM c5-corporate-training-landing-page-MP Added code in (document).ready() function
+ * 20161110 MM c5-corporate-training-landing-page-MP Added code to display programme data retrieved
  */
 
 //alert("entered script");
@@ -26,7 +27,6 @@ function getProgrammeData() {
 			if (response !== undefined && response !== null) {
 				
 				//Construct the Level/Major menu on top of programme displaying area
-
 				var levelOrMajorHtmlFragment = '';
 				var levelOrMajorCollection = response.levelOrMajorCollection;
 				
@@ -38,7 +38,40 @@ function getProgrammeData() {
 				}
 				
 				var levelOrMajorListElement = $('.filtering-area').find('ul.list-inline');
-				levelOrMajorListElement.html(levelOrMajorHtmlFragment);				
+				levelOrMajorListElement.html(levelOrMajorHtmlFragment);		
+				
+
+				//Construct the Programme listing 
+				var programmesHtmlFragment = '';
+				var programmeCollection = response.levelOrMajorCollection;
+				
+				if (programmeCollection !== undefined && levelOrMajorCollection !== null) {
+					$.each(programmeCollection, function(index, val) {
+						programmesHtmlFragment =+ '<li><a href="javascript:">'+ val[0] + ', '+ val[1] +'</a></li>';
+						
+						programmesHtmlFragment =+ '<li class="course-info clearfix">';
+						programmesHtmlFragment =+ '<div class="col-name">';
+						programmesHtmlFragment =+ '<h1 class="pro-name">' + val[18] + '</h1>';
+						programmesHtmlFragment =+ '<div class="pro-logo">';
+						programmesHtmlFragment =+ '<img src="../../dist/i/sliit-logo.png" alt="">';
+						programmesHtmlFragment =+ '</div>';
+						programmesHtmlFragment =+ '</div>';
+						programmesHtmlFragment =+ '<div class="col-description">';
+						programmesHtmlFragment =+ '<p>' + val[4] + '</p>';
+						programmesHtmlFragment =+ '</div>';
+						programmesHtmlFragment =+ '<div class="col-location">';
+						programmesHtmlFragment =+ '<a href="javascript:">' + val[21] + '</a>';
+						programmesHtmlFragment =+ '</div>';
+						programmesHtmlFragment =+ '<div class="col-duration">';
+						// Major/Level, entry requirements
+						programmesHtmlFragment =+ '<label>' + val[23] + '<br><span>' + val[24] + '</span></label>';
+						programmesHtmlFragment =+ '</div>';
+						programmesHtmlFragment =+ '</li>';						
+					});					
+				}
+				
+				var programmeListElement = $('.filter-result-table').find('ul.result-row');
+				programmeListElement.html(levelOrMajorHtmlFragment);	
 			}			
 			
 			$.each(response, function(index, val) {
