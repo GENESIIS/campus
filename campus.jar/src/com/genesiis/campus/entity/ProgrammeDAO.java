@@ -42,7 +42,7 @@ public class ProgrammeDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		String searchData = (String) code;
-		log.info("searchData" + searchData);
+		log.info("searchData: " + searchData);
 
 		Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
@@ -80,7 +80,7 @@ public class ProgrammeDAO implements ICrud {
 						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
 						+ "WHERE p.PROGRAMMESTATUS = 1 "
 						+ tempquery + ";";
-				log.info(query);
+				log.info("query "+query);
 
 				stmt = conn.prepareStatement(query);
 				if (districtCode != null) {
