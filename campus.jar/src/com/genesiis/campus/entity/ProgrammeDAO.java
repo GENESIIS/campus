@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161026 CM c13-Display course details Modified findById() method
 //20161027 CM c13-Display course details Change query according to new DDL
 //20161101 CM c13-Display course details Change findById() sql query 
+//20161110 CM c13-Display-course-details Formatted code 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

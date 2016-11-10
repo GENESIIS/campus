@@ -1,9 +1,9 @@
 package com.genesiis.campus.entity;
 
-//20161027 CM c13-Display course details INIT ModuleDAO.java
-//20161027 CM c13-Display course details Modified findById() method.
-//20161028 CM c13-Display course details Modified execute() method. Created  method comment.
-//20161102 CM c13-Display course details Modified execute() method. 
+//20161027 CM c13-Display-course-details INIT ModuleDAO.java
+//20161027 CM c13-Display-course-details Modified findById() method.
+//20161028 CM c13-Display-course-details Modified execute() method. Created  method comment.
+//20161102 CM c13-Display-course-details Modified execute() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
