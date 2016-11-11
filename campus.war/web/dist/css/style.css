@@ -533,33 +533,37 @@ body, html {
     position: relative;
     top: -60px;
     font-family: "Signika", sans-serif; }
-    .top-providers-screen .provider-list-holder .top-rated-list {
+    .top-providers-screen .provider-list-holder .top-list {
       display: block;
       padding: 0 40px 35px 40px; }
-      .top-providers-screen .provider-list-holder .top-rated-list .list-header {
+      .top-providers-screen .provider-list-holder .top-list .list-header {
         display: block;
         border-bottom: 1px solid #5eb0f6; }
-      .top-providers-screen .provider-list-holder .top-rated-list .top-rated {
+      .top-providers-screen .provider-list-holder .top-list .top-rated {
         display: block; }
-        .top-providers-screen .provider-list-holder .top-rated-list .top-rated h1 {
-          line-height: 70px;
+        .top-providers-screen .provider-list-holder .top-list .top-rated h1 {
           font-size: 30px;
-          color: #374f77; }
-        .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid {
-          width: 94%; }
-          .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder {
+          color: #374f77;
+          padding-top: 45px; }
+        .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid {
+          width: 94%;
+          padding-bottom: 40px; }
+          .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid ul > li {
+            padding-left: 30px;
+            padding-right: 30px; }
+          .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder {
             display: block;
             border: 5px solid #cde2f4;
             width: 100%;
-            margin-top: 30px; }
-            .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder:hover .provider-name {
+            margin-top: 45px; }
+            .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder:hover .provider-name {
               display: block; }
-            .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder .provider-logo {
+            .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder .provider-logo {
               padding: 20px 50px;
               position: relative; }
-              .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder .provider-logo img {
+              .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder .provider-logo img {
                 height: 90px; }
-            .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder .provider-name {
+            .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder .provider-name {
               padding-top: 10px;
               padding-bottom: 10px;
               background: rgba(10, 64, 222, 0.52);
@@ -568,11 +572,15 @@ body, html {
               position: absolute;
               overflow: hidden;
               bottom: 5px;
-              width: 86.5%;
+              width: 82.5%;
               z-index: 99; }
-              .top-providers-screen .provider-list-holder .top-rated-list .top-rated .providers-grid .item-holder .provider-name h2 {
+              .top-providers-screen .provider-list-holder .top-list .top-rated .providers-grid .item-holder .provider-name h2 {
                 font-size: 30px;
                 color: #fff; }
+        .top-providers-screen .provider-list-holder .top-list .top-rated.top-viewed {
+          border-bottom: 1px solid #5eb0f6; }
+          .top-providers-screen .provider-list-holder .top-list .top-rated.top-viewed .providers-grid {
+            padding-bottom: 70px; }
 
 .main-category {
   display: block;

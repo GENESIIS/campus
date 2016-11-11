@@ -431,7 +431,7 @@ body,html
     top: -60px
     font-family: "Signika", sans-serif
 
-    .top-rated-list
+    .top-list
       display: block
       padding: 0 40px 35px 40px
 
@@ -442,18 +442,24 @@ body,html
       .top-rated
         display: block
         h1
-          line-height: 70px
+          //line-height: 70px
           font-size: 30px
           color: #374f77
+          padding-top: 45px
 
         .providers-grid
           width: 94%
+          padding-bottom: 40px
+
+          ul > li
+            padding-left: 30px
+            padding-right: 30px
 
           .item-holder
             display: block
             border: 5px solid #cde2f4
             width: 100%
-            margin-top: 30px
+            margin-top: 45px
             &:hover
               .provider-name
                 display: block
@@ -473,12 +479,18 @@ body,html
               position: absolute
               overflow: hidden
               bottom: 5px
-              width: 86.5%
+              width: 82.5%
               z-index: 99
 
               h2
                 font-size: 30px
                 color: #fff
+
+        &.top-viewed
+          border-bottom: 1px solid #5eb0f6
+          .providers-grid
+            padding-bottom: 70px
+
 
 // ------------------ Main categories --------------------------------
 .main-category
