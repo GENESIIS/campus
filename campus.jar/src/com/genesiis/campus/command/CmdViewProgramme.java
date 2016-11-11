@@ -60,45 +60,47 @@ public class CmdViewProgramme implements ICommand {
 			ICrud classTypeDAO = new ClassTypeDAO();
 			ICrud locationDAO = new ProgrammeLocationDAO();
 			ICrud programmeRatingDAO = new ProgrammeRatingDAO();
-			int programmeId = Integer.parseInt(helper
-					.getParameter("programmeCode"));
 
-			programme.setCode(programmeId);
+			if (helper.getParameter("programmeCode") != null) {
+				int programmeId = Integer.parseInt(helper
+						.getParameter("programmeCode"));
 
-			Collection<Collection<String>> programmeDAOCollection = programmeDAO
-					.findById(programme);
-			Collection<Collection<String>> semesterDAOCollection = semesterDAO
-					.findById(programme);
+				programme.setCode(programmeId);
 
-			Collection<Collection<String>> moduleDAOCollection = moduleDAO
-					.findById(programme);
-			view.setCollection(moduleDAOCollection);
+				Collection<Collection<String>> programmeDAOCollection = programmeDAO
+						.findById(programme);
+				Collection<Collection<String>> semesterDAOCollection = semesterDAO
+						.findById(programme);
 
-			Collection<Collection<String>> intakeDAOCollection = intakeDAO
-					.findById(programme);
+				Collection<Collection<String>> moduleDAOCollection = moduleDAO
+						.findById(programme);
+				view.setCollection(moduleDAOCollection);
 
-			Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
-					.findById(programme);
+				Collection<Collection<String>> intakeDAOCollection = intakeDAO
+						.findById(programme);
 
-			Collection<Collection<String>> locationDAOCollection = locationDAO
-					.findById(programme);
+				Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
+						.findById(programme);
 
-			Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO
-					.findById(programme);
+				Collection<Collection<String>> locationDAOCollection = locationDAO
+						.findById(programme);
 
-			double ratings = calculateRating(programmeRatingCollection);
+				Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO
+						.findById(programme);
 
-			helper.setAttribute("semesterView", semesterDAOCollection);
-			helper.setAttribute("programmeView", programmeDAOCollection);
-			helper.setAttribute("intakeView", intakeDAOCollection);
-			helper.setAttribute("classTypeView", classTypeDAOCollection);
-			helper.setAttribute("locationView", locationDAOCollection);
-			if (ratings == 0.0) {
-				helper.setAttribute("ratings","");
-			} else {
-				helper.setAttribute("ratings", ratings);
+				double ratings = calculateRating(programmeRatingCollection);
+
+				helper.setAttribute("semesterView", semesterDAOCollection);
+				helper.setAttribute("programmeView", programmeDAOCollection);
+				helper.setAttribute("intakeView", intakeDAOCollection);
+				helper.setAttribute("classTypeView", classTypeDAOCollection);
+				helper.setAttribute("locationView", locationDAOCollection);
+				// if (ratings == 0.0) {
+				// helper.setAttribute("ratings","");
+				// } else {
+				// helper.setAttribute("ratings", ratings);
+				// }
 			}
-
 		} catch (Exception e) {
 			log.error("execute() : e" + e.toString());
 			throw e;
@@ -142,7 +144,6 @@ public class CmdViewProgramme implements ICommand {
 			totalRating = rate / allRateCount;
 			DecimalFormat df = new DecimalFormat("#.##");
 			totalRating = Double.valueOf(df.format(totalRating));
-			// totalRating=Math.round(totalRating);
 		} catch (Exception e) {
 			log.error("calculateRating() : e" + e.toString());
 		}
