@@ -4,25 +4,34 @@
  * 20161110 MM c5-corporate-training-landing-page-MP Added code to display programme data retrieved
  * 20161110 MM c5-corporate-training-landing-page-MP Modified code to properly display the town list for each programme 
  * 20161110 MM c5-corporate-training-landing-page-MP Implemented pagination controls for the programme list
+ * 2016111 MM c5-corporate-training-landing-page-MP Re-factored code in getProgrammeData() into several methods 
+ * 2016111 MM c5-corporate-training-landing-page-MP Modified code in constructProgrammeListing() so that specific list of 
+ *													programmes applicable for the currently clicked paginator button is selected
+ *													and used for construction of programme list 
  */
 
 //alert("entered script");
+
+// IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
 window.programmeCollectionFetched = null;
+window.programmeCollectionNarrowedDown = null;
 window.levelOrMajorCollectionFetched = null;
 window.programmeCodeToTownListMapFetched = null;
-window.numOfPagesFetched = null;
-window.pageNumFetched = null;
+window.numOfResultsPerPageFetched = null;
 window.contextDeployCourseLogoPathFetched = null;
 window.contextDeployLogoPathFetched = null;
 
 $(document).ready(function() {
-	getProgrammeData(1);
+	getProgrammeData();
 	constructLevelOrMajorMenu();
-	constructProgrammeListing();
+	constructProgrammeListing(1);
 	constructPaginator();
+	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
+	paginatorListElement.first().addClass('active');
+	
 });
 
-function getProgrammeData(pageNum) {
+function getProgrammeData() {
 	var categoryId = $('#categoryId').val(); // This element is expected to be present in the JSP
 	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
 	categoryId = 3; // Hard-coded for the moment
@@ -31,8 +40,7 @@ function getProgrammeData(pageNum) {
 		method : 'POST',
 		data : {
 			CCO : 'LIST_CATEGORY_PROGRAMMES',
-			category : categoryId,
-			pageNum : pageNum
+			category : categoryId
 		},
 		dataType : "json",
 		async : false,
@@ -43,10 +51,11 @@ function getProgrammeData(pageNum) {
 				window.programmeCollectionFetched = response.result;
 				window.levelOrMajorCollectionFetched = response.levelOrMajorCollection;
 				window.programmeCodeToTownListMapFetched = response.programmeCodeToTownListMap;
-				window.numOfPagesFetched = response.numOfPages;
-				window.pageNumFetched = response.pageNum;	
+				window.numOfResultsPerPageFetched = response.numOfResultsPerPage;
 				window.contextDeployCourseLogoPathFetched = response.contextDeployCourseLogoPath;
-				window.contextDeployLogoPathFetched = response.contextDeployLogoPath;			
+				window.contextDeployLogoPathFetched = response.contextDeployLogoPath;		
+				
+				window.programmeCollectionNarrowedDown = response.result;
 			}			
 		},
 		error : function(response) {
@@ -78,17 +87,24 @@ function constructLevelOrMajorMenu(){
 	});
 }
 
-function constructProgrammeListing() {
+function constructProgrammeListing(pageNum) {
 
-	var programmeCollection = window.programmeCollectionFetched;
+	var programmeCollection = window.programmeCollectionNarrowedDown;
 	var programmeCodeToTownListMap = window.programmeCodeToTownListMapFetched;
 	var contextDeployLogoPath = window.contextDeployLogoPathFetched;
+	
+	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
+	
+	var lastProgItemNeededForPage = numOfResultsPerPage * pageNum;
+	var firstProgItemNeededForPage = lastProgItemNeededForPage - (numOfResultsPerPage - 1);
+	
+	var programmeCollectionForCurrentPage = programmeCollection.slice(firstProgItemNeededForPage, lastProgItemNeededForPage + 1);	
 	
 	//Construct the Programme listing 
 	var programmesHtmlFragment = '';
 	
-	if (programmeCollection !== undefined && programmeCollection !== null) {
-		$.each(programmeCollection, function(index, val) {						
+	if (programmeCollectionForCurrentPage !== undefined && programmeCollectionForCurrentPage !== null) {
+		$.each(programmeCollectionForCurrentPage, function(index, val) {						
 			programmesHtmlFragment += '<li class="course-info clearfix">';
 			programmesHtmlFragment += '<div class="col-name">';
 			programmesHtmlFragment += '<a href=""><h1 class="pro-name">' + val[18] + '</h1></a>';
@@ -126,13 +142,20 @@ function constructProgrammeListing() {
 
 function constructPaginator() {
 
-	// Construct the paginator
-	var numOfPages = parseInt(window.numOfPagesFetched);
-//	numOfPages = 2;
-	var pageNumReceived = parseInt(window.pageNumFetched);
+	// Validate these fields to see if they are in the required format
+	var programmeCollection = window.programmeCollectionNarrowedDown;
+	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
-	if ((numOfPages !== undefined && numOfPages !== null) && 
-			(pageNumReceived !== undefined && pageNumReceived !== null)) {
+	var totalNumOfResults = programmeCollection.lenth;
+	var numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
+			(totalNumOfResults / numOfResultsPerPage) + 1 : totalNumOfResults / numOfResultsPerPage;	
+	
+	// Validate the following 
+//	var numOfPages = parseInt(window.numOfPagesFetched); // need to access number of pages fetched
+	var pageNumReceived = parseInt(window.pageNumFetched); // need to access page num fetched
+
+	// Construct the paginator
+	if (numOfPages !== undefined && numOfPages !== null) {
 		
 		var paginationHtml = '';
 		paginationHtml += '<li class="disabled paginator-button paginator-button-previous">\
@@ -146,9 +169,9 @@ function constructPaginator() {
 		for (var i = 1; i <= numOfPages; i++) {
 			paginationHtml += '<li class="paginator-button';
 			
-			if (i === pageNumReceived) {
-				paginationHtml += ' active';
-			}
+//			if (i === pageNumReceived) {
+//				paginationHtml += ' active';
+//			}
 			
 			paginationHtml += '" data-page-number="'+ i +'">\
 			      <a href="#">\
@@ -171,7 +194,9 @@ function constructPaginator() {
 	
 	paginatorListElement.find('li.paginator-button').on('click', function() {
 		var pageNumClicked = $(this).attr('data-page-number');
-		getProgrammeData(pageNumClicked);
+		constructProgrammeListing(pageNumClicked);
+		$(this).siblings('li.paginator-button').removeClass('active');
+		$(this).addClass('active');
 	});
 }
 
