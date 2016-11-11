@@ -8,6 +8,9 @@
  * 2016111 MM c5-corporate-training-landing-page-MP Modified code in constructProgrammeListing() so that specific list of 
  *													programmes applicable for the currently clicked paginator button is selected
  *													and used for construction of programme list 
+ * 2016111 MM c5-corporate-training-landing-page-MP Modified code to highlight currently selected element in paginator (while 
+ * 													handling issue related to the same) 
+ *
  */
 
 //alert("entered script");
@@ -21,13 +24,15 @@ window.numOfResultsPerPageFetched = null;
 window.contextDeployCourseLogoPathFetched = null;
 window.contextDeployLogoPathFetched = null;
 
+
 $(document).ready(function() {
 	getProgrammeData();
 	constructLevelOrMajorMenu();
 	constructProgrammeListing(1);
 	constructPaginator();
 	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
-	paginatorListElement.first().addClass('active');
+	var firstButton = paginatorListElement.children().get(1); // <-- Buggy code!!!
+	paginatorListElement.addClass('myClass yourClass');
 	
 });
 
@@ -45,7 +50,7 @@ function getProgrammeData() {
 		dataType : "json",
 		async : false,
 		success : function(response) {
-			alert("Ajax Success");
+//			alert("Ajax Success");
 			
 			if (response !== undefined && response !== null) {
 				window.programmeCollectionFetched = response.result;
@@ -146,13 +151,9 @@ function constructPaginator() {
 	var programmeCollection = window.programmeCollectionNarrowedDown;
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
-	var totalNumOfResults = programmeCollection.lenth;
+	var totalNumOfResults = programmeCollection.length;
 	var numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
-			(totalNumOfResults / numOfResultsPerPage) + 1 : totalNumOfResults / numOfResultsPerPage;	
-	
-	// Validate the following 
-//	var numOfPages = parseInt(window.numOfPagesFetched); // need to access number of pages fetched
-	var pageNumReceived = parseInt(window.pageNumFetched); // need to access page num fetched
+			parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
 
 	// Construct the paginator
 	if (numOfPages !== undefined && numOfPages !== null) {
@@ -168,10 +169,6 @@ function constructPaginator() {
 		
 		for (var i = 1; i <= numOfPages; i++) {
 			paginationHtml += '<li class="paginator-button';
-			
-//			if (i === pageNumReceived) {
-//				paginationHtml += ' active';
-//			}
 			
 			paginationHtml += '" data-page-number="'+ i +'">\
 			      <a href="#">\

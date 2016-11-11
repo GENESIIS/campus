@@ -3,6 +3,7 @@
 
 <%-- 20161027 TR c11 start styling courses filter result page --%>
 <%-- 20161110 MM c5-corporate-training-landing-page-MP - Put-in pagination container --%>
+<%-- 20161111 MM c5-corporate-training-landing-page-MP - Changed imported file to have absolute paths --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,11 +13,11 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../../dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../dist/css/style.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
 
     <!-- W3-Include -->
-    <script src="../../../dist/bower-components/w3/w3data.js"></script>
+    <script src="/dist/bower-components/w3/w3data.js"></script>
 
 </head>
 <body>
@@ -83,7 +84,7 @@
     <!-- page inner header -->
     <div class="inner-header">
         <div class="category-image">
-            <img src="../../dist/i/higher-education/higher-edu.png" alt="">
+            <img src="/dist/i/higher-education/higher-edu.png" alt="">
         </div>
         <div class="category-name">
             <h1>| Higher Education</h1>
@@ -140,7 +141,7 @@
                         <div class="col-name">
                             <h1 class="pro-name">SLIIT</h1>
                             <div class="pro-logo">
-                                <img src="../../dist/i/sliit-logo.png" alt="">
+                                <img src="/dist/i/sliit-logo.png" alt="">
                             </div>
                         </div>
                         <div class="col-description">
@@ -159,7 +160,7 @@
                         <div class="col-name">
                             <h1 class="pro-name">SLIIT</h1>
                             <div class="pro-logo">
-                                <img src="../../dist/i/sliit-logo.png" alt="">
+                                <img src="/dist/i/sliit-logo.png" alt="">
                             </div>
                         </div>
                         <div class="col-description">
@@ -205,11 +206,11 @@
 </footer>
 
 <!-- jQuery & Other js -->
-<script src="../../dist/bower-components/jquery/jquery.min.js"></script>
-<script src="../../dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="../../dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="../../dist/js/main.js"></script>
-<script src="../../dist/js/categoryLandingPage/categoryLandingPage.js"></script>
+<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+<script src="/dist/js/categoryLandingPage/categoryLandingPage.js"></script>
 
 </body>
 </html>
