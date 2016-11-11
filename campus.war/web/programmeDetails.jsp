@@ -9,9 +9,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Program Details</title>
+
+<style type="text/css">
+span.stars,span.stars span {
+	display: block;
+	background: url(http://www.ulmanen.fi/stuff/stars.png) 0 -16px repeat-x;
+	width: 80px;
+	height: 16px;
+}
+
+span.stars span {
+	background-position: 0 0;
+}
+</style>
+
+<!-- <script type="text/javascript">
+This is script for implemet star rating system
+	$(function() {
+		$('span.stars').stars();
+	});
+	$.fn.stars = function() {
+		return $(this).each(function() {
+			// Get the value
+			var val = parseFloat($(this).html());
+			// Make sure that the value is in 0 - 5 range, multiply to get width
+			var size = Math.max(0, (Math.min(5, val))) * 16;
+			// Create stars holder
+			var $span = $('<span />').width(size);
+			// Replace the numerical value with stars
+			$(this).html($span);
+		});
+
+	};
+</script> -->
 </head>
 <body>
-
 	<!-- Load Programme details and course provider details-->
 	<c:forEach var="programme" items="${programmeView}" varStatus="loop">
 
@@ -32,7 +64,10 @@
 		<c:set var="days" value="${programme[14]}" />
 		<c:set var="emailAddress" value="${programme[15]}" />
 	</c:forEach>
+
+
 	<table>
+
 		<tr>
 			<td>
 				<table>
@@ -41,6 +76,10 @@
 							alt="Programme View" style="width: 304px; height: 228px;">
 						</td>
 					</tr>
+					<%-- <tr>
+						<td><span class="stars">${ratings}</span> ${ratings} Out Of 5 Star Ratings</td>
+
+					</tr> --%>
 					<tr>
 						<td><a href="#">Rate Us</a></td>
 					</tr>
