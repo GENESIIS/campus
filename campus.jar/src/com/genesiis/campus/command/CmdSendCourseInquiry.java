@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.mail.MessagingException;
 
@@ -40,7 +41,8 @@ public class CmdSendCourseInquiry implements ICommand {
 	private int studentCode;
 	private int programmeCode;
 	private ArrayList<String> recieversEmailAddreses;
-	private Collection<Collection<String>> messageIview;
+	private Collection<String> messageIview = null;
+	private Collection<Collection<String>> messageCollection;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
 	private StudentProgrammeInquiry data;
@@ -74,13 +76,29 @@ public class CmdSendCourseInquiry implements ICommand {
 				recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
 				generalEmail = formatEmailInstance();
 				this.sendMail();
-				//messageIview = Collection<Collection<message>>;
-				view.setCollection(courseProviderEmail);
+			
+//				view.setCollection(courseProviderEmail);
 			}
-			 }
+			log.info(message);
+			
+			ArrayList<String> singleMessageList = new ArrayList<String>();
+			singleMessageList.add(message);
+		//	messageIview = new Collections<String>;
+			messageIview = (Collection<String>)singleMessageList;
+		//	messageCollection = new mes
+			messageCollection.add(messageIview);
+			
+			for(Collection<String> col:messageCollection){
+				for(String str: col){
+					log.info(" within the for inner loop=====: "+str);
+				}
+				
+			}
+			
+			}
 		}
-		helper.setAttribute("message", message);
-		
+	
+		 view.setCollection(messageCollection);
 		return view;
 
 	}

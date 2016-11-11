@@ -19,6 +19,8 @@ function sendCourseInquiry() {
 	var inquiry = $("#inquiry").val();
 	var student = $("#student").val();
 	var programmeCode = $("#programmeCode").val();
+	var recapture = $("#g-recaptcha-response").val();
+	
 	alert(fullName + email + countryCode + areaCode + telephoneNumber
 			+ inquiryTitle + inquiry + student + programmeCode);
 	alert("okkk" + fullName + email + countryCode + areaCode + telephoneNumber
@@ -33,25 +35,25 @@ function sendCourseInquiry() {
 	var inquirytb = isempty(inquiry);
 
 	if (fullNametb == false) {
-		document.getElementById('fullNametbError').innerHTML = "** Invalid Name.";
+		document.getElementById('fullNametbError').innerHTML = "  ** Invalid Name.";
 		return false;
 	}  if (emailtb == false) {
-		document.getElementById('emailtbError').innerHTML = "** Email can not be Empty.";
+		document.getElementById('emailtbError').innerHTML = "   ** Email can not be Empty.";
 		return false;
 	}  if (countryCodetb == false) {
-		document.getElementById('countryCodetbError').innerHTML = "** Country  Code can not be Empty.";
+		document.getElementById('countryCodetbError').innerHTML = "  ** Country  Code can not be Empty.";
 		return false;
 	}  if (areaCodetb == false) {
-		document.getElementById('areaCodetbError').innerHTML = "** Area Code  cannot be Empty.";
+		document.getElementById('areaCodetbError').innerHTML = "  ** Area Code  cannot be Empty.";
 		return false;
 	}  if (telephoneNumbertb == false) {
-		document.getElementById('telephoneNumbertbError').innerHTML = "**  Telephone can not be Empty.";
+		document.getElementById('telephoneNumbertbError').innerHTML = "  **  Telephone can not be Empty.";
 		return false;
 	}  if (inquiryTitletb == false) {
-		document.getElementById('inquiryTitletbError').innerHTML = "** Inquiry  Title can not be Empty.";
+		document.getElementById('inquiryTitletbError').innerHTML = "  ** Inquiry  Title can not be Empty.";
 		return false;
 	}  if (inquirytb == false) {
-		document.getElementById('inquirytbError').innerHTML = "** inquiry cannot  be Empty.";
+		document.getElementById('inquirytbError').innerHTML = "  ** inquiry cannot  be Empty.";
 		return false;
 	}
 
@@ -76,14 +78,16 @@ function sendCourseInquiry() {
 			url : '../../../../InstituteController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
-				CCO : "SCI"
+				CCO : "SCI",
+				recapture: recapture
 			},
 			dataType : "json",
 			success : function(response) {
 				alert(response.result);
-				if (response == "Inquiry Send successfylly") {
+				document.getElementById('messsage').innerHTML = response.result;
+				//if (response == "Inquiry Send successfylly") {
 					resetInquiryLabels();
-				}
+				//}
 			},
 			error : function(e) {
 				 alert("Error " + e);

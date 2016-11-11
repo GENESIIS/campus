@@ -27,13 +27,33 @@ public class ReCaptchaManager {
 	 * @param helper
 	 * @return boolean
 	 */
-	public boolean sendRequestToServer(IDataHelper helper) throws IOException,Exception {
+	public boolean sendRequestToServer(IDataHelper helper) throws IOException,
+			Exception {
 		HttpURLConnection conn = null;
 		BufferedReader reader = null;
 		boolean result = false;
+		String gRecaptchaResponse = null;
 		try {
-			String gRecaptchaResponse = helper
-					.getParameter("g-recaptcha-response");
+			// String gRecaptchaResponse = helper
+			// .getParameter("recapture");
+			// if(gRecaptchaResponse.equals(null)){
+			// gRecaptchaResponse = helper
+			// .getParameter("grecaptcharesponse");
+			//
+			// }
+
+			if (helper.getParameter("recapture") == null
+					|| helper.getParameter("g-recaptcha-response") == null) {
+			
+
+				if (helper.getParameter("recapture") != null) {
+					gRecaptchaResponse = helper.getParameter("recapture");
+				} else if (helper.getParameter("g-recaptcha-response") != null) {
+					gRecaptchaResponse = helper.getParameter("recapture");
+				}
+					log.info(gRecaptchaResponse);
+			
+
 			String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
 
 			// Send get request to Google reCaptcha server with secret key
@@ -60,6 +80,9 @@ public class ReCaptchaManager {
 			} else {
 				result = false;
 			}
+			
+			
+		}
 		} catch (IOException ioException) {
 			log.error("sendRequestToServer() :" + ioException);
 			throw ioException;
