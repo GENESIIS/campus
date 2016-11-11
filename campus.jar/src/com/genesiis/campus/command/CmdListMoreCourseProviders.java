@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -45,6 +46,13 @@ public class CmdListMoreCourseProviders implements ICommand {
 				final Collection<Collection<String>> allCourseProviders = providerDAO.getAll();
 				iview.setCollection(allCourseProviders);
 			}
+			//List Category data for the drop down
+			final CategoryDAO categoryDAO=new CategoryDAO();
+			final Collection<Collection<String>> categoryList=new CategoryDAO().getAll();
+			//List Course provider types for the drop down
+			//List location for the drop down
+			//List Majors for the drop down
+			//List Levels for the drop down 
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
