@@ -4,6 +4,7 @@
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
 <!-- 20161109 DN c10-contacting-us-page-MP added the java_script to the page onsubmit fom function refactor recapture inserted  -->
+<!-- 20161111 DN c10-contacting-us-page-MP added clearField(elementId) method-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -45,7 +46,7 @@
                     <ul class="list-inline">
                         <li><a href="courses.html">All Courses</a></li>
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="javascript:">Contact Us</a></li>
+                        <li><a href="dist/partials/contactUs.jsp">Contact Us</a></li>
                         <li><a href="news.html">News</a></li>
                         <li><a href="f-and-q.html">F & Q</a></li>
                         <li><a href="rss.html">Rss</a></li>
@@ -105,31 +106,31 @@
         <div class="contact-form clearfix">
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
-<%--             <label id="" style="color:#F39C12;" o>${requestScope.message}</label> --%>
+            <label id="" style="color:#F39C12;" >${requestScope.message}</label>
                 <form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
                     <div class="f-name">
                         <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="firstName" name="firstName"  >
+                        <input type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')">
                     </div>
                     <div class="l-name">
                         <label for="input-lastName">Last Name <span>*</span></label><br><label id="lastNameError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="lastName" name="lastName" >
+                        <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
                     </div>
                     <div class="tp">
                         <label for="input-phoneNumber">Phone Number</label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="contactNumber" name="contactNumber" >
+                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" >
                     </div>
                     <div class="email">
                         <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="emailAddress" name="emailAddress" >
+                        <input type="text" id="emailAddress" name="emailAddress" onclick="clearField('emailError')" >
                     </div>
                     <div class="email-subject">
                         <label for="input-eMailSubject">Subject <span>*</span></label><br><label id="subjectError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="subject" name="subject" >
+                        <input type="text" id="subject" name="subject" onclick="clearField('subjectError')">
                     </div>
                     <div class="user-message">
                         <label for="text-userMessage">Message <span>*</span></label><br><label id="userMessageError" style="color:#FFFF00;"></label><br>
-                        <textarea id="message" rows="10" name="message" ></textarea>
+                        <textarea id="message" rows="10" name="message" onclick="clearField('userMessageError')" ></textarea>
                         <p class="pull-right"><span>*</span> Required fields</p>
                     </div>
 <!--                     ReCaptcha -->
