@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20161111 CM c13-Display course details Created calculateRating() method.
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
@@ -85,20 +86,19 @@ public class CmdViewProgramme implements ICommand {
 			Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO
 					.findById(programme);
 
-			double ratings=calculateRating(programmeRatingCollection);
-			
-			
+			double ratings = calculateRating(programmeRatingCollection);
+
 			helper.setAttribute("semesterView", semesterDAOCollection);
 			helper.setAttribute("programmeView", programmeDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 			helper.setAttribute("classTypeView", classTypeDAOCollection);
 			helper.setAttribute("locationView", locationDAOCollection);
-			if(ratings==0.0){
-				helper.setAttribute("ratings", "No Ratings");
-			}else{
-				helper.setAttribute("ratings", ratings+" /5");
+			if (ratings == 0.0) {
+				helper.setAttribute("ratings","");
+			} else {
+				helper.setAttribute("ratings", ratings);
 			}
-		
+
 		} catch (Exception e) {
 			log.error("execute() : e" + e.toString());
 			throw e;
@@ -109,39 +109,43 @@ public class CmdViewProgramme implements ICommand {
 
 	/**
 	 * Calculate programme ratings
+	 * 
 	 * @author Chathuri
 	 * @param programmeRatingCollection
-	 * @return
+	 * @return double value of total ratings
 	 */
-	public double calculateRating(Collection<Collection<String>> programmeRatingCollection) {
-		double ratingValue=0;
-		double ratingCount=0;
-		double allRateCount=0;
-		double singleRate=0;
-		double rate=0;
-		double totalRating=0;
+	public double calculateRating(
+			Collection<Collection<String>> programmeRatingCollection) {
+		double ratingValue = 0;
+		double ratingCount = 0;
+		double allRateCount = 0;
+		double singleRate = 0;
+		double rate = 0;
+		double totalRating = 0;
 		try {
-				
-				for (Collection<String> programmeRating : programmeRatingCollection) {
-					Object ar[] = programmeRating.toArray();
-					String ratingValueSt = (String) ar[0];
-					String ratingCountSt = (String) ar[1];
-					
-					ratingValue=Double.parseDouble(ratingValueSt);
-					ratingCount=Double.parseDouble(ratingCountSt);
-					
-					singleRate=ratingValue*ratingCount;
-					
-					rate+=singleRate;
-					
-					allRateCount+=ratingCount;
-					
-				}
-				totalRating=rate/allRateCount;
-				
-			} catch (Exception e) {
-				log.error("calculateRating() : e" + e.toString());
+
+			for (Collection<String> programmeRating : programmeRatingCollection) {
+				Object ar[] = programmeRating.toArray();
+				String ratingValueSt = (String) ar[0];
+				String ratingCountSt = (String) ar[1];
+
+				ratingValue = Double.parseDouble(ratingValueSt);
+				ratingCount = Double.parseDouble(ratingCountSt);
+
+				singleRate = ratingValue * ratingCount;
+
+				rate += singleRate;
+
+				allRateCount += ratingCount;
+
 			}
-			return totalRating;
+			totalRating = rate / allRateCount;
+			DecimalFormat df = new DecimalFormat("#.##");
+			totalRating = Double.valueOf(df.format(totalRating));
+			// totalRating=Math.round(totalRating);
+		} catch (Exception e) {
+			log.error("calculateRating() : e" + e.toString());
+		}
+		return totalRating;
 	}
 }
