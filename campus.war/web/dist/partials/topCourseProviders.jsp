@@ -2,6 +2,8 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +13,8 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
 
     <!-- W3-Include -->
     <script src="../bower-components/w3/w3data.js"></script>
@@ -37,7 +39,7 @@
                 <div class="top-menus">
                     <ul class="list-inline">
                         <li><a href="courses.html">All Courses</a></li>
-                        <li><a href="course-providers.html">Course Providers</a></li>
+                        <li><a href="../topCourseProviders.jsp">Course Providers</a></li>
                         <li><a href="about-us.html">About Us</a></li>
                         <li><a href="javascript:">Contact Us</a></li>
                         <li><a href="news.html">News</a></li>
@@ -103,156 +105,71 @@
                 </div>
             </div>
             <!-- End list header -->
-            <div class="top-rated clearfix">
-                <h1>Top Rated</h1>
-                <div class="providers-grid center-block clearfix">
-                    <ul class="list-inline clearfix">
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                    </ul>
-                </div>
-                <!-- End provider -->
-            </div>
-            <!-- End top rated list -->
 
-            <div class="top-rated top-viewed clearfix">
-                <h1>Top Viewed</h1>
-                <div class="providers-grid center-block clearfix">
-                    <ul class="list-inline">
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                        <li class="col-md-3 col-lg-3 col-sm-4">
-                            <div class="item-holder">
-                                <a href="javascript:">
-                                    <div class="provider-logo text-center">
-                                        <img src="../i/sliit-logo.png" alt="">
-                                    </div>
-                                    <div class="provider-name text-center">
-                                        <h2>SLIIT</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <!-- End Provider block -->
-                    </ul>
-                </div>
-                <!-- End provider -->
-            </div>
-            <!-- End top viewed list -->
-            <div class="btn-show-all pull-right">
+
+				<div class="top-rated clearfix">
+					<h1>Top Rated</h1>
+					<div class="providers-grid center-block clearfix">
+						<ul class="list-inline clearfix">
+							<c:forEach var="provider" items="${result.collection}">
+								<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
+										var="pvAttribute" items="${provider}" varStatus="count">
+										<c:if test="${count.index == 1}">
+											<c:set var="prefix" value="${pvAttribute}" />
+										</c:if>
+										<c:if test="${count.index == 2}">
+											<div class="item-holder">
+												<div class="provider-logo text-center">
+													<c:set var="slash" value="/" />
+													<img
+														src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
+												</div>
+												<div class="provider-name text-center">
+													<h2>
+														<c:out value="${prefix}" />
+													</h2>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach></li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+				<!-- End top rated list -->
+
+				<div class="top-rated top-viewed clearfix">
+					<h1>Top Viewed</h1>
+					<div class="providers-grid center-block clearfix">
+						<ul class="list-inline clearfix">
+							<c:forEach var="provider" items="${tRCProviders}">
+								<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
+										var="pvAttribute" items="${provider}" varStatus="count">
+										<c:if test="${count.index == 1}">
+											<c:set var="prefix" value="${pvAttribute}" />
+										</c:if>
+										<c:if test="${count.index == 2}">
+											<div class="item-holder">
+												<div class="provider-logo text-center">
+													<c:set var="slash" value="/" />
+													<img
+														src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
+												</div>
+												<div class="provider-name text-center">
+													<h2>
+														<c:out value="${prefix}" />
+													</h2>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach></li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+				<!-- End top viewed list -->
+
+				<div class="btn-show-all pull-right">
                 <a href="javascript:">Show All >></a>
             </div>
         </div>
