@@ -17,6 +17,7 @@ package com.genesiis.campus.entity;
 //20161104 JH c7-higher-education-landing-page CourseProviderHigherEducationProgrammeDAO.java renamed as CategoryCourseProviderDAO.java
 //20161110 JH c7-higher-education-landing-page findById method modified : cast course provider description
 //20161110 JH c7-higher-education-landing-page findById method modified : get course provider head office
+//20161111 JH c7-higher-education-landing-page findById method modified : get 10 featured providers
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,7 +87,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * 3. get only top 5 course providers with their details
 		 */
 
-		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
 				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?";
@@ -115,18 +116,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 				rs = preparedStatement.executeQuery();
 
-				int row = rs.getRow();
-				/**
-				 * if number of rows of the result set is 0, there are no
-				 * program stat records for selected category. Therefore course
-				 * providers with out stat records are retrieved by setting the
-				 * type = 0 .
-				 */
-				if (row == 0) {
-					type = 0;
-				}
-			}
-			if (type == 0) {// get random course providers
+			}else if (type == 0) {// get random course providers
 
 				preparedStatement = conn.prepareStatement(query2);
 
@@ -138,7 +128,6 @@ public class CategoryCourseProviderDAO implements ICrud {
 			}
 
 			if (rs != null) {
-
 				while (rs.next()) {
 
 					final ArrayList<String> singleCourseProviderList = new ArrayList<String>();
@@ -158,6 +147,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("CODE"));
 					singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 					singleCourseProviderList.add(rs.getString("SHORTNAME"));
+					log.info(">>>>>>>>>>>>>>>>>>>>>>>>>" + rs.getString("SHORTNAME"));
 					singleCourseProviderList.add(rs.getString("NAME"));
 					singleCourseProviderList.add(castedDescription);
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
@@ -204,9 +194,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 				}
 
-			} else {
-
-			}
+			} 
 
 		} catch (SQLException exception) {
 			log.error("findById(Object code) sql exception"
