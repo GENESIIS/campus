@@ -10,7 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Program Details</title>
 
-<style type="text/css">
+<!-- <style type="text/css">
+Style for run 5 star rating system
 span.stars,span.stars span {
 	display: block;
 	background: url(http://www.ulmanen.fi/stuff/stars.png) 0 -16px repeat-x;
@@ -21,9 +22,9 @@ span.stars,span.stars span {
 span.stars span {
 	background-position: 0 0;
 }
-</style>
+</style> 
 
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
 This is script for implemet star rating system
 	$(function() {
 		$('span.stars').stars();
