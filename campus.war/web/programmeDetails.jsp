@@ -256,7 +256,7 @@ This is script for implemet star rating system
 										<td><c:out value="${intake[4]}"></c:out></td>
 									</tr>
 									<tr>
-										<td>Fee</td>
+										<td>Course Fee(Rs)</td>
 										<td><c:out value="${intake[5]}"></c:out></td>
 									</tr>
 								</table>
