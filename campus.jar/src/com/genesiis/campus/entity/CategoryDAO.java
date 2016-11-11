@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20161111 PN c1-campus-landing-page modified getAll() method to get image name from the DB.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,8 +60,9 @@ public class CategoryDAO implements ICrud{
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
-				singleCategoryList.add(rs.getString("DESCRIPTION"));
-
+				singleCategoryList.add(rs.getString("DESCRIPTION").replaceAll(",", "##"));
+				singleCategoryList.add(rs.getString("IMAGE"));
+				
 				final Collection<String> singleCategoryCollection = singleCategoryList;
 				allCategoryList.add(singleCategoryCollection);
 			}
