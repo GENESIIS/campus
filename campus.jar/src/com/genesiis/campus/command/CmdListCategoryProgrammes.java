@@ -7,10 +7,12 @@ package com.genesiis.campus.command;
 //				Programme object to pass argument to findById() method of CourseProviderDAO
 //20161104 MM c5-corporate-training-landing-page Added code to support sending of levels or 
 //				majors based on the category of the programme requested
-//20161109 MM c5-corporate-training-landing-page Changed organisation of major/level list
+//20161109 MM c5-corporate-training-landing-page-MP Changed organisation of major/level list
 //				data to be in a List<List<String>>
-//20161110 MM c5-corporate-training-landing-page Modified code in the looping structure in 
+//20161110 MM c5-corporate-training-landing-page-MP Modified code in the looping structure in 
 // 				order to better structure the town list sent for each programme
+//20161111 MM c5-corporate-training-landing-page-MP Modified code to remove tasks of paging 
+//				the fetched result set. This is now the job of front-end code.  
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
 		int pageNum = -1;
-		int numOfProgrammesPerPage = 20;
+		int numOfResultsPerPage = 20; // This value will be needed to be eventually fetched from DB
 		String contextDeployLogoPath = "/education/provider/logo/";
 		String contextDeployCourseLogoPath = "/course/";
 		try {
@@ -63,14 +65,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 				throw new IllegalArgumentException("The provided value for category is null!");
 			} 
 			
-			categoryCode = Integer.parseInt(helper.getParameter("category"));
-
-			if (helper.getParameter("pageNum") == null) {
-				Log.error("The provided value for pageNum is null!");
-				msgList.add("The provided value for pageNum is null!");
-				throw new IllegalArgumentException("The provided value for pageNum is null!");
-			} 
-			pageNum = Integer.parseInt(helper.getParameter("pageNum"));			
+			categoryCode = Integer.parseInt(helper.getParameter("category"));		
 			
 			Programme programme = new Programme();
 			programme.setCategory(categoryCode);
@@ -164,28 +159,11 @@ public class CmdListCategoryProgrammes implements ICommand {
 			}
 			
 			programmeCollection = progCodeToProgrammeMap.values();
-			int totalNumOfResults = programmeCollection.size();
-			int numOfPages = (totalNumOfResults % numOfProgrammesPerPage > 0) ? 
-					(totalNumOfResults / numOfProgrammesPerPage) + 1 : totalNumOfResults / numOfProgrammesPerPage;
-			List<Collection<String>> programmeListForPage = new ArrayList<Collection<String>>();
-
-			int lastProgItemNeededForPage = numOfProgrammesPerPage * pageNum;
-			int firstProgItemNeededForPage = lastProgItemNeededForPage - (numOfProgrammesPerPage - 1);
 			
-			int count = 1;
-			for (Collection<String> progColl : programmeCollection) {
-				if (count >= firstProgItemNeededForPage && count <= lastProgItemNeededForPage) {
-					programmeListForPage.add(progColl);
-				}
-			}
-			
-			iview.setCollection(programmeListForPage);
+			iview.setCollection(programmeCollection);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 			helper.setAttribute("contextDeployCourseLogoPath", contextDeployCourseLogoPath);
-			helper.setAttribute("pageNum", pageNum);
-			helper.setAttribute("totalNumOfResults", totalNumOfResults);
-			helper.setAttribute("numOfPages", numOfPages);
-			helper.setAttribute("pageNum", pageNum);
+			helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
 			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			
