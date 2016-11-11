@@ -120,7 +120,8 @@
 							</div>
 						</div>
 
-						<c:forEach var="featuredInstitute" items="${featuredInstitutes}" varStatus="count">
+						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
+							varStatus="count">
 							<div id="featured-panel" class="mySlides">
 
 								<div class="institute-info clearfix">
