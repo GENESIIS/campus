@@ -39,7 +39,7 @@ public class ClassTypeDAO implements ICrud {
 	}
 
 	/**
-	 * Search class type details and relevant to the programme
+	 * Search class type details and relevant to the programme.
 	 * 
 	 * @author Chathuri
 	 * @param Object
@@ -66,7 +66,7 @@ public class ClassTypeDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleClassTypeDetails = new ArrayList<String>();
 
-				singleClassTypeDetails.add(rs.getString("name"));
+				singleClassTypeDetails.add(rs.getString("NAME"));
 				singleClassTypeDetails.add(rs.getString("MINPARTICIPANTS"));
 				singleClassTypeDetails.add(rs.getString("MAXPARTICIPANTS"));
 				singleClassTypeDetails.add(rs.getString("DESCRIPTION"));
