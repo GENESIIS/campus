@@ -5,6 +5,7 @@
 <!-- 20161025 TR c1 main menu bar - done -->
 <!-- 20161025 TR c1 main search bar - done -->
 <!-- 20161025 TR c1 start styling category search area -->
+<!-- 20161111 PN c1-campus-landing-page modified the UI to load categories from the DB values dynamically. -->
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
@@ -22,114 +23,11 @@
 
             <div class="filter-boxes clearfix">
                 <div class="box-holder center-block">
-                    <ul class="list-inline">
-                        <!-- Pre Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Pre Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                    <ul class="list-inline" name="mainCategoryList" id="mainCategoryList">
+                    
 
-                        <!-- School Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">School Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Higher Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Higher Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Corporate Training -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Corporate Training</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Vocational Training -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Vocational Training</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Talent & Skill -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Talent & Skill</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        
+                        
                     </ul>
                 </div>
 

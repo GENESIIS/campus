@@ -13,6 +13,8 @@
 
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
+    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 
 </head>
 <body>
