@@ -160,9 +160,8 @@ This is script for implemet star rating system
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
 							<c:set var="semesters" value="${semester[4]}" />
-							<td><strong><c:out value="${semester[0]}"></c:out></strong><br/>
-							<c:out value="${semester[3]}"></c:out>
-							</td>
+							<td><strong><c:out value="${semester[0]}"></c:out></strong><br />
+								<c:out value="${semester[3]}"></c:out></td>
 							<td></td>
 						</tr>
 						<tr>
@@ -287,6 +286,19 @@ This is script for implemet star rating system
 									<td>Email</td>
 									<td><c:out value="${emailAddress}"></c:out></td>
 								</tr>
+								<tr>
+									<td>Progamme Locations</td>
+
+								</tr>
+								<!-- Load Location  details relevant to programme   -->
+								<c:forEach var="location" items="${locationView}"
+									varStatus="loop">
+									<tr>
+										<td><c:out value="${location[0]}"></c:out> - <c:out
+												value="${location[1]}"></c:out></td>
+										<td></td>
+									</tr>
+								</c:forEach>
 							</table>
 						</td>
 					</tr>
@@ -297,16 +309,7 @@ This is script for implemet star rating system
 						<td></td>
 					</tr>
 
-					<!-- Load Location  details relevant to programme   -->
-					<c:forEach var="location" items="${locationView}" varStatus="loop">
-						<tr>
-							<td><c:out value="${location[0]}"></c:out> - <c:out
-									value="${location[1]}"></c:out></td>
-							<td></td>
-						</tr>
-					</c:forEach>
-
-					<!-- Load Intakes  details relevant to programme   -->
+					<!-- Load class type  details relevant to programme   -->
 					<c:forEach var="classType" items="${classTypeView}"
 						varStatus="loop">
 						<tr>
