@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20161028 CM c13-Display course details Modified execute() method. Created  method comment.
 //20161101 CM c13-Display course details Modified execute() method.
 //20161101 CM c13-Display course details Modified execute() method.
+//20161111 CM c13-Display course details Created calculateRating() method.
 
 import java.sql.SQLException;
 import java.util.Collection;
