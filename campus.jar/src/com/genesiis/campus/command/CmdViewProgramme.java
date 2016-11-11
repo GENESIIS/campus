@@ -21,6 +21,7 @@ import com.genesiis.campus.entity.IntakeDAO;
 import com.genesiis.campus.entity.ModuleDAO;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.ProgrammeLocationDAO;
+import com.genesiis.campus.entity.ProgrammeRatingDAO;
 import com.genesiis.campus.entity.SemesterDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
@@ -56,7 +57,7 @@ public class CmdViewProgramme implements ICommand {
 			ICrud moduleDAO = new ModuleDAO();
 			ICrud classTypeDAO = new ClassTypeDAO();
 			ICrud locationDAO = new ProgrammeLocationDAO();
-			
+			ICrud programmeRatingDAO = new ProgrammeRatingDAO();
 			int programmeId = Integer.parseInt(helper
 					.getParameter("programmeCode"));
 
@@ -76,16 +77,27 @@ public class CmdViewProgramme implements ICommand {
 
 			Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
 					.findById(programme);
-			
-			Collection<Collection<String>> locationDAOCollection  = locationDAO
+
+			Collection<Collection<String>> locationDAOCollection = locationDAO
 					.findById(programme);
+
+			Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO
+					.findById(programme);
+
+			double ratings=calculateRating(programmeRatingCollection);
+			
 			
 			helper.setAttribute("semesterView", semesterDAOCollection);
 			helper.setAttribute("programmeView", programmeDAOCollection);
 			helper.setAttribute("intakeView", intakeDAOCollection);
 			helper.setAttribute("classTypeView", classTypeDAOCollection);
 			helper.setAttribute("locationView", locationDAOCollection);
-			
+			if(ratings==0.0){
+				helper.setAttribute("ratings", "No Ratings");
+			}else{
+				helper.setAttribute("ratings", ratings+" /5");
+			}
+		
 		} catch (Exception e) {
 			log.error("execute() : e" + e.toString());
 			throw e;
@@ -94,4 +106,41 @@ public class CmdViewProgramme implements ICommand {
 		return view;
 	}
 
+	/**
+	 * Calculate programme ratings
+	 * @author Chathuri
+	 * @param programmeRatingCollection
+	 * @return
+	 */
+	public double calculateRating(Collection<Collection<String>> programmeRatingCollection) {
+		double ratingValue=0;
+		double ratingCount=0;
+		double allRateCount=0;
+		double singleRate=0;
+		double rate=0;
+		double totalRating=0;
+		try {
+				
+				for (Collection<String> programmeRating : programmeRatingCollection) {
+					Object ar[] = programmeRating.toArray();
+					String ratingValueSt = (String) ar[0];
+					String ratingCountSt = (String) ar[1];
+					
+					ratingValue=Double.parseDouble(ratingValueSt);
+					ratingCount=Double.parseDouble(ratingCountSt);
+					
+					singleRate=ratingValue*ratingCount;
+					
+					rate+=singleRate;
+					
+					allRateCount+=ratingCount;
+					
+				}
+				totalRating=rate/allRateCount;
+				
+			} catch (Exception e) {
+				log.error("calculateRating() : e" + e.toString());
+			}
+			return totalRating;
+	}
 }
