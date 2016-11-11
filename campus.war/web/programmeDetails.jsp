@@ -17,7 +17,7 @@ span.stars,span.stars span {
 	background: url(http://www.ulmanen.fi/stuff/stars.png) 0 -16px repeat-x;
 	width: 80px;
 	height: 16px;
-}
+}-
 
 span.stars span {
 	background-position: 0 0;
@@ -160,7 +160,9 @@ This is script for implemet star rating system
 					<c:forEach var="semester" items="${semesterView}" varStatus="loop">
 						<tr>
 							<c:set var="semesters" value="${semester[4]}" />
-							<td><strong><c:out value="${semester[0]}"></c:out></strong></td>
+							<td><strong><c:out value="${semester[0]}"></c:out></strong><br/>
+							<c:out value="${semester[3]}"></c:out>
+							</td>
 							<td></td>
 						</tr>
 						<tr>
