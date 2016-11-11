@@ -9,6 +9,8 @@ package com.genesiis.campus.command;
 //20161031 DN c10-contacting-us-page refactor formatEmailInstance() host,user_name,password fields 
 //									removed
 //20161109 DN c10-contacting-us-page-MP execute() changed to include RecaptureManager codes
+//20161111 DN c10-contacting-us-page-MP execute() refactor to include SRP-Single Responsibility Principle. created isReCaptureResponseSuccess()
+//						validateFrontEndUserProvidedInformation(),modified sendMail() and systemMessage()
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +26,7 @@ import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
-import com.genesiis.campus.validation.ContactUsValidation;
+import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
@@ -64,7 +66,14 @@ public class CmdGenerateEmail implements ICommand {
 
 
 /**
- * execute() method generates list of email(s)
+ * execute() method in CmdGenerateEmail generates list of email(s) according to the command class
+ * chosen by the ICommand factory class. 
+ * @author DN
+ * @param helper IDataHelper
+ * @param view IView
+ * @return IView
+ * @throws SQLException
+ * @throws Exception
  */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
@@ -80,9 +89,7 @@ public class CmdGenerateEmail implements ICommand {
 			 ICrud genesiis = new SystemConfigDAO();
 			 try{
 				 	validateFrontEndUserProvidedInformation(helper);
-				 	final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
-				 	boolean isResponseSuccess= reCaptchaManager.sendRequestToServer(helper);
-				 	//boolean isResponseSuccess =isReCaptureResponseSuccess(helper);
+				 	boolean isResponseSuccess =isReCaptureResponseSuccess(helper);
 				 	
 					// Verify whether the input from Human or Robot
 				 	if (isResponseSuccess) {
@@ -95,37 +102,32 @@ public class CmdGenerateEmail implements ICommand {
 						 connection);
 							 recieversEmailAddreses= composeSingleEmailList(collectionOfCollectionOfEmails);
 							 generalEmail = formatEmailInstance();
-						
 						 break;
-						 default:
-						
+						default:						
 						 break;
 					
-					 }					 
-			 
+					 }
 					 status=this.sendMail();
 					 message = systemMessage(status);
-					 
-					// helper.setContextAttribute("pageSelector", "contactUs");
-				 		
 				 } else {
 					// Input by Robot
 						message = SystemMessage.RECAPTCHAVERIFICATION.message();
-				 	}
+				 }
 		 } catch (MessagingException msgexp){
 			 log.error("execute():MessagingException "+msgexp.toString());
 			 throw msgexp;
 		 } catch (SQLException sqle) {
-			 log.error("execute():SQLException"+ sqle.toString());
+			 log.error("execute():SQLException "+ sqle.toString());
 			 throw sqle;
-		} catch (ContactUsValidation.FailedValidationException e){
-			log.error("execute():FailedValidationException"+e.toString());
-			message = e.toString();			
+		} catch (PrevalentValidation.FailedValidationException e){
+			log.error("execute():FailedValidationException "+e.toString());
+			message = e.toString();		
+			message = message.substring(message.lastIndexOf(":") + 1);
 		}catch (IOException ioExpe) {
-			log.error("execute():IOException" + ioExpe.toString());
+			log.error("execute():IOException " + ioExpe.toString());
 			throw ioExpe;
 		} catch (Exception e) {
-			log.error("execute():Exception" + e.toString());
+			log.error("execute():Exception " + e.toString());
 			throw e;
 		} finally {
 			helper.setAttribute("message", message);
@@ -133,7 +135,14 @@ public class CmdGenerateEmail implements ICommand {
 			 return view;
 	}
 	
-	
+	/*
+	 * isReCaptureResponseSuccess() decides if the google image recapturing
+	 * @author DN
+	 * @param helper IDataHelper
+	 * @return true; boolean, if the capturing is success else false
+	 * @throws IOException
+	 * @throws Exception
+	 */
 	private boolean isReCaptureResponseSuccess(IDataHelper helper) throws IOException,Exception{
 		final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
 		return reCaptchaManager.sendRequestToServer(helper);
@@ -156,15 +165,23 @@ public class CmdGenerateEmail implements ICommand {
 
 	}
 	
+	/*
+	 * validateFrontEndUserProvidedInformation() method validates
+	 * if the values entered from the user interface is confirm to the
+	 * correct values.
+	 *  @author DN 
+	 * @param helper IDataHelper
+	 * @throws Exception 
+	 */
 	private void validateFrontEndUserProvidedInformation(IDataHelper helper) throws Exception{
-		Validatory val = new ContactUsValidation();
+		Validatory val = new PrevalentValidation();
 		
 			val.isNotEmpty(helper.getParameter("firstName"));
-			val.isNotEmpty(helper.getParameter("lastName"));
-			val.validateEmail("sendersEmailAddress");
-			val.isValidPhoneNumber("sendersphoneNumber");
-			val.isNotEmpty("mailingSubject");
-			val.isNotEmpty("mailBody");
+			val.isNotEmpty(helper.getParameter("lastName"));			
+			val.isValidPhoneNumber(sendersphoneNumber);
+			val.validateEmail(sendersEmailAddress);
+			val.isNotEmpty(mailingSubject);
+			val.isNotEmpty(mailBody);
 		
 	}
 	
@@ -198,7 +215,6 @@ public class CmdGenerateEmail implements ICommand {
 			monoList.addAll(emailAddressList);
 		}
 		return monoList;
-
 	}
 
 	/*
@@ -209,18 +225,22 @@ public class CmdGenerateEmail implements ICommand {
 	 */
 
 	private int sendMail()  {
+		
+		int MAIL_SENT_STATUS=3;
 		try{ 
-		emailDispenser = new EmailDispenser(generalEmail);
-		 emailDispenser.emailDispense();
+			emailDispenser = new EmailDispenser(generalEmail);
+			emailDispenser.emailDispense();
 		 
 		} catch (IllegalArgumentException illearg){
 			log.error("sendMail():IllegalArgumentException "+illearg.toString());
-			//return -3;
+			 MAIL_SENT_STATUS= -3;
 		} catch (MessagingException msexp) {
 			log.error("sendMail():MessagingException "+msexp.toString());
-			return -3;
+		 MAIL_SENT_STATUS= -3;
+		} finally{
+			return MAIL_SENT_STATUS;
 		}
-		return 3;
+		
 	}
 
 
@@ -263,37 +283,21 @@ public class CmdGenerateEmail implements ICommand {
 	 * systemMessage() handles the system Messages according to
 	 * the state of the status passed in
 	 * @return String the message
-	 * @param status 1 updated successfully
-	 * @param status 0 record not added to the repository
-	 * @param status 2 record  added to the repository
+	 * @param status 3 request submitted successfully.
+	 * @param status -3 request submition fails.
 	 * 
 	 */
 	private String systemMessage(int status){
 		String message = SystemMessage.UNKNOWN.message();
-		switch(status){
-		case -1:
-			message = SystemMessage.NOTUPDATED.message();
-		case -2:
-			message= SystemMessage.NOTADDED.message();
-		case 0: 
-			message= SystemMessage.ERROR.message();
-			break;
-		case 1:
-			message =SystemMessage.UPDATED.message();
-			break;
-		case 2:
-			message =SystemMessage.ADDED.message();
-			break;
+		switch(status){		
 		case 3:
 			message =SystemMessage.PASS_REQUEST_SUBMISSION.message();
 			break;
 		case -3:
 			message =SystemMessage.FAIL_REQUEST_SUBMISSION.message();
 			break;
-		default:
-			
-			break;			
-		
+		default:			
+			break;
 		}
 		return message;
 	}
