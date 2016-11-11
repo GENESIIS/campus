@@ -115,15 +115,15 @@
 							<div class="topic">
 								<h2>Featured Institutes</h2>
 							</div>
-							<div class="move-btn">
-								<a onclick="plusDivs(-1)">Left</a> <a onclick="plusDivs(1)">Right</a>
-							</div>
+						
 						</div>
 
 						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
 							varStatus="count">
 							<div id="featured-panel" class="mySlides">
-
+								<div class="move-btn">
+									<a onclick="carousel(${count.index-1})">Left</a> <a onclick="carousel(${count.index + 1})"">Right</a>
+								</div>
 								<div class="institute-info clearfix">
 									<div class="inst-logo">
 										<img src="${featuredInstitute[16] }" alt="Institute Logo"
@@ -196,29 +196,12 @@
 	</footer>
 	<script>
 		var myIndex = 0;
-		carousel();
-		showDivs(slideIndex);
+		carousel(myIndex);
+		//showDivs(slideIndex);
 
-		function plusDivs(n) {
-			showDivs(slideIndex += n);
-		}
-		function showDivs(n) {
-			var i;
-			var x = document.getElementsByClassName("mySlides");
-			if (n > x.length) {
-				slideIndex = 1
-			}
-			if (n < 1) {
-				slideIndex = x.length
-			}
-			for (i = 0; i < x.length; i++) {
-				x[i].style.display = "none";
-			}
-			x[myIndex - 1].style.display = "block";
-			setTimeout(carousel, 5000); // Change image every 2 seconds
-		}
 
-		function carousel() {
+
+		function carousel(myIndex) {
 			var i;
 			var x = document.getElementsByClassName("mySlides");
 			for (i = 0; i < x.length; i++) {
@@ -229,7 +212,7 @@
 				myIndex = 1
 			}
 			x[myIndex - 1].style.display = "block";
-			setTimeout(carousel, 5000); // Change image every 2 seconds
+			setTimeout(carousel, 5000); // Change image every 5 seconds
 		}
 	</script>
 	<!-- jQuery & Other js -->
