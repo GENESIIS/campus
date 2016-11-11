@@ -1,6 +1,7 @@
 // 20161025 DN c10-contacting-us-page created contactUs.jsp 
 //20161027 DN c10-contacting-us-page amended isValidEmailFormat(),isValidPhoneNumber() method
 //20161109 DN c10-contacting-us-page-MP validateForm() refactor the method
+//20161109 DN c10-contacting-us-page-MP refactor clearField() the method
 
 
 function validateForm(){
@@ -65,7 +66,7 @@ function isFieldFilled(flag, elementName, errorLabelId){
  * @param fieldValue it is the value of a document element
  * @returns true if has content else false
  */
-function isempty(fieldValue){	
+function isempty(fieldValue){		
 	return ((fieldValue == "") ||(fieldValue == null) )?false : true;
 }
 
@@ -99,4 +100,13 @@ function isValidPhoneNumber(phoneNumber){
 function isPatternMatch(regularExpression,source){	
 	return regularExpression.test(source);
 	
+}
+
+/**
+ * @param clearField 
+ * @param elementId the id of the HTML element
+ */
+
+function clearField(elementId){	
+	 $(document).find('#' + elementId).text('');
 }

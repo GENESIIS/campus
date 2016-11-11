@@ -1,6 +1,6 @@
 package com.genesiis.campus.validation;
 
-//20161111 DN c10-contacting-us-MP created the Validatory.java class
+//20161111 DN c10-contacting-us-MP created the Validatory.java interface
 
 /**
  * Validatory interface provides the necessary contracts 
