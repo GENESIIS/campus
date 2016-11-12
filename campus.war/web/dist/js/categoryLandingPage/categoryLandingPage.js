@@ -10,6 +10,9 @@
  *													and used for construction of programme list 
  * 2016111 MM c5-corporate-training-landing-page-MP Modified code to highlight currently selected element in paginator (while 
  * 													handling issue related to the same) 
+ * 2016111 MM c5-corporate-training-landing-page-MP Modified code to enable and disable previous 
+ * 													and next buttons in the  paginator controls 
+ * 													according to the selected button
  *
  */
 
@@ -24,15 +27,15 @@ window.numOfResultsPerPageFetched = null;
 window.contextDeployCourseLogoPathFetched = null;
 window.contextDeployLogoPathFetched = null;
 
-
 $(document).ready(function() {
 	getProgrammeData();
 	constructLevelOrMajorMenu();
-	constructProgrammeListing(1);
-	constructPaginator();
+	var pageNum = 1;
+	constructProgrammeListing(pageNum);
+	var paginatorDetails = constructPaginator();
 	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
-	var firstButton = paginatorListElement.children().get(1); // <-- Buggy code!!!
-	paginatorListElement.addClass('myClass yourClass');
+	paginatorListElement.children().eq(1).addClass('active');
+	enableDisablePrevNextButtons(pageNum, paginatorDetails.numOfPages);
 	
 });
 
@@ -100,10 +103,10 @@ function constructProgrammeListing(pageNum) {
 	
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
-	var lastProgItemNeededForPage = numOfResultsPerPage * pageNum;
-	var firstProgItemNeededForPage = lastProgItemNeededForPage - (numOfResultsPerPage - 1);
+	var indexIndicatorOfLastProg = numOfResultsPerPage * pageNum;
+	var indexOfFirstProgNeeded = indexIndicatorOfLastProg - numOfResultsPerPage;
 	
-	var programmeCollectionForCurrentPage = programmeCollection.slice(firstProgItemNeededForPage, lastProgItemNeededForPage + 1);	
+	var programmeCollectionForCurrentPage = programmeCollection.slice(indexOfFirstProgNeeded, indexIndicatorOfLastProg);	
 	
 	//Construct the Programme listing 
 	var programmesHtmlFragment = '';
@@ -153,14 +156,17 @@ function constructPaginator() {
 	
 	var totalNumOfResults = programmeCollection.length;
 	var numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
-			parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
-
+			parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : 
+				parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
+	
+	var paginatorULElement = $('div.paginator-div > nav > ul.pagination');
+	
 	// Construct the paginator
 	if (numOfPages !== undefined && numOfPages !== null) {
 		
 		var paginationHtml = '';
-		paginationHtml += '<li class="disabled paginator-button paginator-button-previous">\
-		      <a href="#">\
+		paginationHtml += '<li class="paginator-button paginator-button-previous">\
+		      <a>\
 		      <span>\
 		        <span aria-hidden="true">&laquo;</span>\
 		      </span>\
@@ -171,30 +177,65 @@ function constructPaginator() {
 			paginationHtml += '<li class="paginator-button';
 			
 			paginationHtml += '" data-page-number="'+ i +'">\
-			      <a href="#">\
+			      <a>\
 			      <span>' + i + '</span>\
 			      </a>\
 			    </li>';
 		}
 
-		paginationHtml +='<li class="paginator-button-next">\
-		      <a href="#">\
+		paginationHtml +='<li class="paginator-button paginator-button-next">\
+		      <a>\
 		      <span>\
 		        <span aria-hidden="true">&raquo;</span>\
 		      </span>\
 		      </a>\
 		    </li>';
-		
-		var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
-		paginatorListElement.html(paginationHtml);					
+
+		paginatorULElement.html(paginationHtml);					
 	}
 	
-	paginatorListElement.find('li.paginator-button').on('click', function() {
-		var pageNumClicked = $(this).attr('data-page-number');
-		constructProgrammeListing(pageNumClicked);
-		$(this).siblings('li.paginator-button').removeClass('active');
-		$(this).addClass('active');
+	paginatorULElement.find('li.paginator-button').on('click', function() {
+		if (!$(this).hasClass('disabled')) {
+		
+			var paginatorButtonToActivate = null;
+			var pageNumClicked = null;			
+			if ($(this).hasClass('paginator-button-previous')) {								
+				paginatorButtonToActivate = $(this).siblings('.active').prev('.paginator-button');		
+			} else if ($(this).hasClass('paginator-button-next')) {		
+				paginatorButtonToActivate = $(this).siblings('.active').next('.paginator-button');					
+			} else {	
+				paginatorButtonToActivate = $(this);		
+			}
+			pageNumClicked = paginatorButtonToActivate.attr('data-page-number');
+			constructProgrammeListing(pageNumClicked);
+			paginatorButtonToActivate.siblings('li.paginator-button').removeClass('active');
+			paginatorButtonToActivate.addClass('active');
+			enableDisablePrevNextButtons(pageNumClicked, numOfPages);
+		}
 	});
+	
+	return {'totalNumOfResults': totalNumOfResults, 'numOfPages': numOfPages};
+}
+
+function enableDisablePrevNextButtons(pageNumClicked, numOfPages) {
+	var currentPageNum = parseInt(pageNumClicked);
+	var paginatorButtons = $('div.paginator-div > nav > ul.pagination > li.paginator-button');
+	
+	var prevButton = paginatorButtons.filter('.paginator-button-previous');
+	if (currentPageNum == 1) {
+		prevButton.addClass('disabled');
+	} else {
+		prevButton.removeClass('disabled');
+	}
+	
+	var nextButton = paginatorButtons.filter('.paginator-button-next');
+	if (currentPageNum == numOfPages) {
+		nextButton.addClass('disabled');
+	} else {
+		nextButton.removeClass('disabled');
+	}
+	
+	paginatorButtons.not('.disabled').css('cursor', 'pointer');
 }
 
 function filterProgrammesOnLevelOrMajor(levelOrMajorCode) {
