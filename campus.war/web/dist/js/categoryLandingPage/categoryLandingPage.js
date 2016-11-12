@@ -13,12 +13,20 @@
  * 2016111 MM c5-corporate-training-landing-page-MP Modified code to enable and disable previous 
  * 													and next buttons in the  paginator controls 
  * 													according to the selected button
+ * 2016112 MM c5-corporate-training-landing-page-MP Modified code to expect a filterType field in the JSON sent from server
+ * 													which is used to identify what type of items are displayed in filtering 
+ * 													menu (Majors for CorporateTraining category and Levels for others)
+ * 2016112 MM c5-corporate-training-landing-page-MP Added "filtering" code so that when a major/level item from the menu
+ * 													is clicked, the programme list and paginator buttons are re-created for 
+ * 													based on that particular major/level 
+ * 													
  *
  */
 
 //alert("entered script");
 
 // IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
+window.categoryCode = $('#categoryCode').val(); // This element is expected to be present in the JSP
 window.programmeCollectionFetched = null;
 window.programmeCollectionNarrowedDown = null;
 window.levelOrMajorCollectionFetched = null;
@@ -26,29 +34,25 @@ window.programmeCodeToTownListMapFetched = null;
 window.numOfResultsPerPageFetched = null;
 window.contextDeployCourseLogoPathFetched = null;
 window.contextDeployLogoPathFetched = null;
+window.filterType = null;
 
 $(document).ready(function() {
 	getProgrammeData();
 	constructLevelOrMajorMenu();
-	var pageNum = 1;
-	constructProgrammeListing(pageNum);
-	var paginatorDetails = constructPaginator();
-	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
-	paginatorListElement.children().eq(1).addClass('active');
-	enableDisablePrevNextButtons(pageNum, paginatorDetails.numOfPages);
+	createProgrammeListingAndPaginator();
 	
 });
 
 function getProgrammeData() {
-	var categoryId = $('#categoryId').val(); // This element is expected to be present in the JSP
 	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
-	categoryId = 3; // Hard-coded for the moment
+	var categoryIdentifierString = $('#categoryIdentifierString').val(); // This element is expected to be present in the JSP
 	$.ajax({
 		url : '/PublicController',
 		method : 'POST',
 		data : {
-			CCO : 'LIST_CATEGORY_PROGRAMMES',
-			category : categoryId
+			'CCO' : 'LIST_CATEGORY_PROGRAMMES',
+			'category' : window.categoryCode,
+			'categoryIdentifierString' : categoryIdentifierString
 		},
 		dataType : "json",
 		async : false,
@@ -61,7 +65,8 @@ function getProgrammeData() {
 				window.programmeCodeToTownListMapFetched = response.programmeCodeToTownListMap;
 				window.numOfResultsPerPageFetched = response.numOfResultsPerPage;
 				window.contextDeployCourseLogoPathFetched = response.contextDeployCourseLogoPath;
-				window.contextDeployLogoPathFetched = response.contextDeployLogoPath;		
+				window.contextDeployLogoPathFetched = response.contextDeployLogoPath;
+				window.filterType = response.filterType;	
 				
 				window.programmeCollectionNarrowedDown = response.result;
 			}			
@@ -86,13 +91,21 @@ function constructLevelOrMajorMenu(){
 		});					
 	}
 	
-	var levelOrMajorListElement = $('.filtering-area').find('ul.list-inline');
+	var levelOrMajorListElement = $('div.course-filter-panel > div.filtering-area').find('ul.list-inline');
 	levelOrMajorListElement.html(levelOrMajorHtmlFragment);	
 	
 	levelOrMajorListElement.find('li.major-or-level-menu-item').on('click', function() {
-		var codeOfLevelOrMajorClicked = $(this).attr('data-level-or-major-code');
-		filterProgrammesOnLevelOrMajor(codeOfLevelOrMajorClicked);
+		filterProgrammesOnLevelOrMajor($(this));
 	});
+}
+
+function createProgrammeListingAndPaginator() {
+	var pageNum = 1;
+	constructProgrammeListing(pageNum);
+	var paginatorDetails = constructPaginator();
+	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
+	paginatorListElement.children().eq(1).addClass('active');
+	enableDisablePrevNextButtons(pageNum, paginatorDetails.numOfPages);
 }
 
 function constructProgrammeListing(pageNum) {
@@ -143,7 +156,7 @@ function constructProgrammeListing(pageNum) {
 		});					
 	}
 	
-	var programmeListElement = $('.filter-result-table').find('ul.result-row');
+	var programmeListElement = $('div.filter-result-table').find('ul.result-row');
 	programmeListElement.html(programmesHtmlFragment);	
 	
 }
@@ -238,6 +251,25 @@ function enableDisablePrevNextButtons(pageNumClicked, numOfPages) {
 	paginatorButtons.not('.disabled').css('cursor', 'pointer');
 }
 
-function filterProgrammesOnLevelOrMajor(levelOrMajorCode) {
-	alert("Level or Major clicked! Code = " + levelOrMajorCode);
+function filterProgrammesOnLevelOrMajor(levelOrMajorElement) {
+	if (levelOrMajorElement.hasClass('major-or-level-menu-item-all')) {
+		window.programmeCollectionNarrowedDown = JSON.parse(JSON.stringify(window.programmeCollectionFetched));
+	} else {
+		var levelOrMajorCode = levelOrMajorElement.attr('data-level-or-major-code');
+		var programmeCollection = window.programmeCollectionFetched;
+		var programmeCollectionNarrowedDown = [];
+		var elementIndex = window.filterType == 'Major' ? 12 : 13;
+		var currentProgramme = null;
+		
+		for (var i = 0; i < programmeCollection.length; i++) {
+			currentProgramme = programmeCollection[i];
+			if (currentProgramme[elementIndex] === levelOrMajorCode) {
+				programmeCollectionNarrowedDown.push(JSON.parse(JSON.stringify(currentProgramme)));
+			}
+		}
+		
+		window.programmeCollectionNarrowedDown = programmeCollectionNarrowedDown;		
+	}
+	
+	createProgrammeListingAndPaginator();
 }
