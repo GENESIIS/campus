@@ -4,6 +4,7 @@
 <%-- 20161027 TR c11 start styling courses filter result page --%>
 <%-- 20161110 MM c5-corporate-training-landing-page-MP - Put-in pagination container --%>
 <%-- 20161111 MM c5-corporate-training-landing-page-MP - Changed imported file to have absolute paths --%>
+<%-- 20161111 MM c5-corporate-training-landing-page-MP - Added hidden fields with names: categoryCode and categoryIdentifierString --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -99,18 +100,6 @@
                 <div class="top"></div>
                 <div class="bottom clearfix">
                     <ul class="list-inline">
-                        <li><a href="javascript:">All</a></li>
-                        <li><a href="javascript:">Cetificate</a></li>
-                        <li><a href="javascript:">Degree</a></li>
-                        <li><a href="javascript:">Diploma</a></li>
-                        <li><a href="javascript:">HND</a></li>
-                        <li><a href="javascript:">MBA</a></li>
-                        <li><a href="javascript:">Languages</a></li>
-                        <li><a href="javascript:">MSc</a></li>
-                        <li><a href="javascript:">Foreign</a></li>
-                        <li><a href="javascript:">Short Courses </a></li>
-                        <li><a href="javascript:">Work Shops </a></li>
-                        <li><a href="javascript:">Other</a></li>
                     </ul>
                 </div>
             </div>
@@ -118,63 +107,6 @@
             <!-- Filter result table -->
             <div class="filter-result-table">
                 <ul class="result-row">
-                    <li class="course-info clearfix">
-                        <div class="col-name">
-                            <h1 class="pro-name">SLIIT</h1>
-                            <div class="pro-logo">
-                                <img src="../../dist/i/sliit-logo.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-description">
-                            <p>Lorem Ipsum is simply dummy text of the printing</p>
-                        </div>
-                        <div class="col-location">
-                            <a href="javascript:">Malabe</a>
-                        </div>
-                        <div class="col-duration">
-                            <label>Degree<br><Span>4 Years</Span></label>
-                        </div>
-                    </li>
-                    <!-- end -->
-
-                    <li class="course-info clearfix">
-                        <div class="col-name">
-                            <h1 class="pro-name">SLIIT</h1>
-                            <div class="pro-logo">
-                                <img src="/dist/i/sliit-logo.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-description">
-                            <p>Lorem Ipsum is simply dummy text of the printing</p>
-                        </div>
-                        <div class="col-location">
-                            <a href="javascript:">Malabe</a>
-                        </div>
-                        <div class="col-duration">
-                            <label>Degree<br><Span>4 Years</Span></label>
-                        </div>
-                    </li>
-                    <!-- end-->
-
-                    <li class="course-info clearfix">
-                        <div class="col-name">
-                            <h1 class="pro-name">SLIIT</h1>
-                            <div class="pro-logo">
-                                <img src="/dist/i/sliit-logo.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-description">
-                            <p>Lorem Ipsum is simply dummy text of the printing</p>
-                        </div>
-                        <div class="col-location">
-                            <a href="javascript:">Malabe</a>
-                        </div>
-                        <div class="col-duration">
-                            <label>Degree<br><Span>4 Years</Span></label>
-                        </div>
-                    </li>
-                    <!-- end -->
-
                 </ul>
                 <div class="paginator-div text-center">
                 	<nav aria-label="">
@@ -187,7 +119,12 @@
 
         </div>
 
-
+<%-- Values in the following hidden fields are hard-coded for the moment. At integration, they are to be dynamically 
+	assigned. 
+	IMPORTANT: The value for categoryIdentifierString must correspond to categoryCode as present in the DB 
+--%>
+		<input type="hidden" name="categoryCode" id="categoryCode" value="3"/>
+		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="CORPORATE_TRAINING"/>
     </div>
     <!-- End page content  -->
 </div>
@@ -201,7 +138,7 @@
 
     </div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright Â© Campus.lk</label>
+        <label for="Copyright">Copyright © Campus.lk</label>
     </div>
 </footer>
 
