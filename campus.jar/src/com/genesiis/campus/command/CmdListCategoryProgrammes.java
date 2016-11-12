@@ -13,6 +13,9 @@ package com.genesiis.campus.command;
 // 				order to better structure the town list sent for each programme
 //20161111 MM c5-corporate-training-landing-page-MP Modified code to remove tasks of paging 
 //				the fetched result set. This is now the job of front-end code.  
+//20161112 MM c5-corporate-training-landing-page-MP Modified code to expect a parameter named 
+//				categoryIdentifierString from the client and to determine whether majors or 
+//				levels to send (as filtering type) based on that parameter
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,8 +57,9 @@ public class CmdListCategoryProgrammes implements ICommand {
 		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
+		String categoryIdentifierString = "";
 		int pageNum = -1;
-		int numOfResultsPerPage = 20; // This value will be needed to be eventually fetched from DB
+		int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
 		String contextDeployLogoPath = "/education/provider/logo/";
 		String contextDeployCourseLogoPath = "/course/";
 		try {
@@ -63,9 +67,16 @@ public class CmdListCategoryProgrammes implements ICommand {
 				Log.error("The provided value for category is null!");
 				msgList.add("The provided value for category is null!");
 				throw new IllegalArgumentException("The provided value for category is null!");
-			} 
+			} 			
 			
-			categoryCode = Integer.parseInt(helper.getParameter("category"));		
+			categoryCode = Integer.parseInt(helper.getParameter("category"));			
+			categoryIdentifierString = helper.getParameter("categoryIdentifierString");	
+			
+			if (categoryIdentifierString == null) {
+				Log.error("The provided value for categoryIdentifierString is null!");
+				msgList.add("The provided value for categoryIdentifierString is null!");
+				throw new IllegalArgumentException("The provided value for categoryIdentifierString is null!");
+			} 	
 			
 			Programme programme = new Programme();
 			programme.setCategory(categoryCode);
@@ -80,11 +91,24 @@ public class CmdListCategoryProgrammes implements ICommand {
 			List<String> tempLevelOrMajorDetailsList = null;
 			
 			Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
-			int indexOfMajorOrLevelCode = categoryCode == 3 ? 12 : 14; // Value 3 here (for "Corporate Training category) must not be hard-coded, 
-			// but there should be a mechanism to identify if a category returned from DB is of type "Corporate Training"
 			
-			int indexOfMajorOrLevelName = categoryCode == 3 ? 23 : 24; // Value 3 here (for "Corporate Training category) must not be hard-coded, 
-			// but there should be a mechanism to identify if a category returned from DB is of type "Corporate Training"
+			int indexOfMajorOrLevelCode = -1; 
+			int indexOfMajorOrLevelName = -1;
+			String filterType = "";
+			
+			if (categoryIdentifierString.equals("CORPORATE_TRAINING")) { // This check must be done via an enum 
+				// (whose name may be Category and constants may be SCHOOL_EDUCTION, HIGHER_EDUCATION, 
+				// CORPORATE_TRAINING etc.). An enum needs to be introduced for this, which necessitates adding 
+				// of a field in the Category table in the DB as well, This field will need to be used to record 
+				// the name of the enum constant (CORPORATE_TRAINING etc.) that corresponds to the particular Category record.
+				indexOfMajorOrLevelCode = 12;
+				indexOfMajorOrLevelName = 23;
+				filterType = "Major";
+			} else {
+				indexOfMajorOrLevelCode = 14;
+				indexOfMajorOrLevelName = 24;
+				filterType = "Level";
+			}
 
 			for (Collection<String> prog : programmeCollection) {
 				int count  = 0;
@@ -166,6 +190,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 			helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
 			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
+			helper.setAttribute("filterType", filterType);
 			
 		} catch (NumberFormatException nfe) {
 			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
