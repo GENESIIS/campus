@@ -4,7 +4,7 @@
 <%-- 20161027 TR c11 start styling courses filter result page --%>
 <%-- 20161110 MM c5-corporate-training-landing-page-MP - Put-in pagination container --%>
 <%-- 20161111 MM c5-corporate-training-landing-page-MP - Changed imported file to have absolute paths --%>
-<%-- 20161111 MM c5-corporate-training-landing-page-MP - Added hidden fields with names: categoryCode and categoryIdentifierString --%>
+<%-- 20161111 MM c5-corporate-training-landing-page-MP - Added hidden inputs with names: categoryCode and categoryIdentifierString --%>
 
 <!DOCTYPE html>
 <html lang="en">
