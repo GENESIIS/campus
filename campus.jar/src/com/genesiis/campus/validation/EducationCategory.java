@@ -10,11 +10,11 @@ package com.genesiis.campus.validation;
 * CATEGORYIDENTIFIERSTRING in the CATEGORY table for the specific 
 * record in that table that corresponds to this enum. 
 * 
-* This is to be used when certain things need to happen based on a 
-* certain category type in the code. For example, for Corporate Training
+* This is to be used when certain actions must be taken in the code 
+* based on a specific category type. For example, for Corporate Training
 * category type, the list of Majors must be shown as filters whereas 
-* for other category types (such as School Education, Higher Education 
-* etc.) its the list of Levels that should be shown. 
+* for other types (such as School Education, Higher Education 
+* etc.) it is the list of Levels that should be shown. 
 * 
 * Without this enum, identifying the particular record in CATEGORY table 
 * that corresponds to the conceptual Corporate Training type is impossible 
@@ -27,7 +27,7 @@ package com.genesiis.campus.validation;
 * This enum is expected to provide the link between a conceptual category 
 * type and the record in the CATEGORY table that corresponds to that type 
 * by having the "name" of the particular enum constant (that each 
-* represents a conceptual category type) stored against that record, 
+* represents a conceptual category type) stored as part of that record, 
 * as the value for the column named CATEGORYIDENTIFIERSTRING.  
 * 
 * IMPORTANT: This design requires that the following 
