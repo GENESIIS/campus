@@ -7,6 +7,9 @@ package com.genesiis.campus.controller;
 //								to test for ResponseType to decide if JSP or JSON response to send
 // 20161109 PN, MM public-controller-testing-2 Changed implementation of process() so that when composing 
 // 								JSON content a Java Map is utilised so the returned JSON is in proper format.
+// 20161114 MM public-controller-testing-2 Changed implementation of process() so that even when 
+//								view.getCollection() returns null, the rest of the Objects set as 
+//								attributes to DataHelper are included in the JSON object created
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
@@ -81,19 +84,18 @@ public class CampusController extends HttpServlet {
 
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 				
-				if (result.getCollection() != null) {					
+				if (result != null && result.getCollection() != null) {					
 					objectMap.put("result", result.getCollection());
-	
-					Enumeration<String> attributeNames = request
-							.getAttributeNames();
-	
-					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames.nextElement();
-						Object object = helper.getAttribute(currentAttributeName);
-						objectMap.put(currentAttributeName, object);
-					}
 				} else {
 					objectMap.put("result", "NO-DATA");
+				}
+				
+				Enumeration<String> attributeNames = request.getAttributeNames();
+
+				while (attributeNames.hasMoreElements()) {
+					String currentAttributeName = attributeNames.nextElement();
+					Object object = helper.getAttribute(currentAttributeName);
+					objectMap.put(currentAttributeName, object);
 				}
 				
 				response.getWriter().write(gson.toJson(objectMap));
