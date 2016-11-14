@@ -19,7 +19,9 @@
  * 2016112 MM c5-corporate-training-landing-page-MP Added "filtering" code so that when a major/level item from the menu
  * 													is clicked, the programme list and paginator buttons are re-created for 
  * 													based on that particular major/level 
- * 													
+ * 2016114 MM c5-corporate-training-landing-page-MP Removed reference to a property that is no longer included in the JSON 
+ * 													object sent from server. Changed name of a different property to match
+ * 													changes at server side code.  													
  *
  */
 
@@ -32,8 +34,7 @@ window.programmeCollectionNarrowedDown = null;
 window.levelOrMajorCollectionFetched = null;
 window.programmeCodeToTownListMapFetched = null;
 window.numOfResultsPerPageFetched = null;
-window.contextDeployCourseLogoPathFetched = null;
-window.contextDeployLogoPathFetched = null;
+window.courseProviderLogoPathFetched = null;
 window.filterType = null;
 
 $(document).ready(function() {
@@ -64,8 +65,7 @@ function getProgrammeData() {
 				window.levelOrMajorCollectionFetched = response.levelOrMajorCollection;
 				window.programmeCodeToTownListMapFetched = response.programmeCodeToTownListMap;
 				window.numOfResultsPerPageFetched = response.numOfResultsPerPage;
-				window.contextDeployCourseLogoPathFetched = response.contextDeployCourseLogoPath;
-				window.contextDeployLogoPathFetched = response.contextDeployLogoPath;
+				window.courseProviderLogoPathFetched = response.courseProviderLogoPath;
 				window.filterType = response.filterType;	
 				
 				window.programmeCollectionNarrowedDown = response.result;
@@ -112,7 +112,7 @@ function constructProgrammeListing(pageNum) {
 
 	var programmeCollection = window.programmeCollectionNarrowedDown;
 	var programmeCodeToTownListMap = window.programmeCodeToTownListMapFetched;
-	var contextDeployLogoPath = window.contextDeployLogoPathFetched;
+	var courseProviderLogoPath = window.courseProviderLogoPathFetched;
 	
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
@@ -131,7 +131,7 @@ function constructProgrammeListing(pageNum) {
 			programmesHtmlFragment += '<a href=""><h1 class="pro-name">' + val[18] + '</h1></a>';
 			programmesHtmlFragment += '<div class="pro-logo">';
 			
-			var logoImgPath = contextDeployLogoPath + val[22] + "/" + val[16];
+			var logoImgPath = courseProviderLogoPath + val[22] + "/" + val[16];
 			
 			programmesHtmlFragment += '<a href=""><img src=' + logoImgPath + ' alt="' + val[18] + ' logo"></a>';
 			programmesHtmlFragment += '</div>';
@@ -258,7 +258,7 @@ function filterProgrammesOnLevelOrMajor(levelOrMajorElement) {
 		var levelOrMajorCode = levelOrMajorElement.attr('data-level-or-major-code');
 		var programmeCollection = window.programmeCollectionFetched;
 		var programmeCollectionNarrowedDown = [];
-		var elementIndex = window.filterType == 'Major' ? 12 : 13;
+		var elementIndex = window.filterType == 'Major' ? 12 : 14;
 		var currentProgramme = null;
 		
 		for (var i = 0; i < programmeCollection.length; i++) {

@@ -119,12 +119,13 @@
 
         </div>
 
-<%-- Values in the following hidden fields are hard-coded for the moment. At integration, they are to be dynamically 
-	assigned. 
+<%-- Values in the following hidden fields are hard-coded for the moment. 
+	For both of them, the values must be fetched from the DB and assigned.
 	IMPORTANT: The value for categoryIdentifierString must correspond to categoryCode as present in the DB 
 --%>
 		<input type="hidden" name="categoryCode" id="categoryCode" value="3"/>
 		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="CORPORATE_TRAINING"/>
+<!-- 		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="HIGHER_EDUCATION"/> -->
     </div>
     <!-- End page content  -->
 </div>
