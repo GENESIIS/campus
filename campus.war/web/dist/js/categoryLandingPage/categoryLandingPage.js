@@ -22,6 +22,8 @@
  * 2016114 MM c5-corporate-training-landing-page-MP Removed reference to a property that is no longer included in the JSON 
  * 													object sent from server. Changed name of a different property to match
  * 													changes at server side code.  													
+ * 2016115 MM c5-corporate-training-landing-page-MP Modified code to change filter elements to checkboxes and implemented
+ * 													feature of allowing selection of multiple filter check-boxes 													
  *
  */
 
@@ -85,17 +87,41 @@ function constructLevelOrMajorMenu(){
 	var levelOrMajorHtmlFragment = '';
 	
 	if (levelOrMajorCollection !== undefined && levelOrMajorCollection !== null) {
-		levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item major-or-level-menu-item-all"><a href="javascript:">All</a></li>';
+		levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item major-or-level-menu-item-all">\
+			<input class="major-or-level-checkbox major-or-level-checkbox-all" type="checkbox" checked/>All</li>';
 		$.each(levelOrMajorCollection, function(index, val) {
-			levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item" data-level-or-major-code="' + val[0] + '"><a href="javascript:">'+ val[1] +'</a></li>';
+			levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item" data-level-or-major-code="' + val[0] + '">\
+			<input class="major-or-level-checkbox"  data-level-or-major-code="' + val[0] + '" type="checkbox">'+ val[1] +'</li>';
 		});					
 	}
 	
 	var levelOrMajorListElement = $('div.course-filter-panel > div.filtering-area').find('ul.list-inline');
 	levelOrMajorListElement.html(levelOrMajorHtmlFragment);	
 	
-	levelOrMajorListElement.find('li.major-or-level-menu-item').on('click', function() {
-		filterProgrammesOnLevelOrMajor($(this));
+	levelOrMajorListElement.find('input.major-or-level-checkbox').on('click', function() {
+		var checkedInputs = null;
+		if ($(this).hasClass('major-or-level-checkbox-all')) {
+			if ($(this).is(':checked')) {
+				$(this).parents('ul.list-inline').find('input.major-or-level-checkbox').not($(this)).prop('checked', false);
+				checkedInputs = $(this).parents('ul.list-inline').find('input[type="checkbox"]:checked');
+				filterProgrammesOnLevelOrMajor(checkedInputs);
+			} else {
+				$(this).prop('checked', true);
+			}
+		} else {
+			if ($(this).is(':checked')) {
+				$(this).parents('ul.list-inline').find('input.major-or-level-checkbox-all').prop('checked', false);
+				checkedInputs = $(this).parents('ul.list-inline').find('input[type="checkbox"]:checked');
+				filterProgrammesOnLevelOrMajor(checkedInputs);
+			} else {
+				checkedInputs = $(this).parents('ul.list-inline').find('input[type="checkbox"]:checked');
+				if (checkedInputs.length > 0) {
+					filterProgrammesOnLevelOrMajor(checkedInputs);
+				} else {
+					$(this).prop('checked', true);
+				}
+			}
+		}
 	});
 }
 
@@ -251,11 +277,19 @@ function enableDisablePrevNextButtons(pageNumClicked, numOfPages) {
 	paginatorButtons.not('.disabled').css('cursor', 'pointer');
 }
 
-function filterProgrammesOnLevelOrMajor(levelOrMajorElement) {
-	if (levelOrMajorElement.hasClass('major-or-level-menu-item-all')) {
+function filterProgrammesOnLevelOrMajor(levelOrMajorCheckboxList) {
+	// What if the parameterList is empty or null...
+	var levelOrMajorElementAllCheckbox = levelOrMajorCheckboxList.filter('input.major-or-level-checkbox-all');
+	if (levelOrMajorElementAllCheckbox.length > 0) {
 		window.programmeCollectionNarrowedDown = JSON.parse(JSON.stringify(window.programmeCollectionFetched));
 	} else {
-		var levelOrMajorCode = levelOrMajorElement.attr('data-level-or-major-code');
+		var levelOrMajorCodeArray = [];
+		var levelOrMajorCode = null;
+		$.each(levelOrMajorCheckboxList, function(index, levelOrMajorCheckbox) {
+			levelOrMajorCode = $(levelOrMajorCheckbox).attr('data-level-or-major-code');
+			// What if the code is null/empty/non-parseable
+			levelOrMajorCodeArray.push(parseInt(levelOrMajorCode));
+		});
 		var programmeCollection = window.programmeCollectionFetched;
 		var programmeCollectionNarrowedDown = [];
 		var elementIndex = window.filterType == 'Major' ? 12 : 14;
@@ -263,8 +297,14 @@ function filterProgrammesOnLevelOrMajor(levelOrMajorElement) {
 		
 		for (var i = 0; i < programmeCollection.length; i++) {
 			currentProgramme = programmeCollection[i];
-			if (currentProgramme[elementIndex] === levelOrMajorCode) {
-				programmeCollectionNarrowedDown.push(JSON.parse(JSON.stringify(currentProgramme)));
+			var currentLevelOrMajorCode = null;
+			for (var j = 0; j < levelOrMajorCodeArray.length; j++) {
+				currentLevelOrMajorCode = levelOrMajorCodeArray[j];
+				// What if following is undefined, null, empty or non-parseable?
+				if (parseInt(currentProgramme[elementIndex]) === currentLevelOrMajorCode) {
+					programmeCollectionNarrowedDown.push(JSON.parse(JSON.stringify(currentProgramme)));
+					break;
+				}
 			}
 		}
 		
