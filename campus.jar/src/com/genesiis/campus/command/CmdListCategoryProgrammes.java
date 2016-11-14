@@ -16,6 +16,10 @@ package com.genesiis.campus.command;
 //20161112 MM c5-corporate-training-landing-page-MP Modified code to expect a parameter named 
 //				categoryIdentifierString from the client and to determine whether majors or 
 //				levels to send (as filtering type) based on that parameter
+//20161114 MM c5-corporate-training-landing-page-MP Modified code to use EducationCateogry 
+// 				enum to decide whether to show Levels or Majors as filters, and to use 
+// 				SystemConfig enum and SystemConfigDAO to fetch courseProviderLogoPath from 
+// 				SystemConfig table
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,12 +35,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CategoryProgrammeDAO;
-import com.genesiis.campus.entity.CategoryCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.EducationCategory;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 
 public class CmdListCategoryProgrammes implements ICommand {
@@ -44,7 +49,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 	static Logger Log = Logger.getLogger(CmdListCategoryProgrammes.class.getName());
 
 	final ICrud programmeDao = new CategoryProgrammeDAO();	
-	final ICrud courseProviderDao = new CategoryCourseProviderDAO();	
+	final ICrud systemConfigDao = new SystemConfigDAO();	
 		
 	public CmdListCategoryProgrammes() {
 		
@@ -55,13 +60,14 @@ public class CmdListCategoryProgrammes implements ICommand {
 		
 		String message = "";
 		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
 		int categoryCode = -1;
 		String categoryIdentifierString = "";
 		int pageNum = -1;
 		int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
-		String contextDeployLogoPath = "/education/provider/logo/";
-		String contextDeployCourseLogoPath = "/course/";
+		String courseProviderLogoPath = "";
+		
 		try {
 			if (helper.getParameter("category") == null) {
 				Log.error("The provided value for category is null!");
@@ -78,11 +84,22 @@ public class CmdListCategoryProgrammes implements ICommand {
 				throw new IllegalArgumentException("The provided value for categoryIdentifierString is null!");
 			} 	
 			
+			EducationCategory category = null;		
+			try {
+				category = EducationCategory.valueOf(categoryIdentifierString);
+			} catch (IllegalArgumentException iae) {
+				// If the categoryIdentifierString does not represent the name of an existing EducationCategory constant 
+				// there will be an IllegalArgumentException.	
+				Log.error("The provided value for categoryIdentifierString is invalid!");
+				msgList.add("The provided value for categoryIdentifierString is invalid!");
+				throw new IllegalArgumentException("The provided value for categoryIdentifierString is invalid!");
+			}
+			
 			Programme programme = new Programme();
 			programme.setCategory(categoryCode);
 			
 			// Get programmes that belong to the same category as categoryCode
-			programmeCollection = programmeDao.findById(programme);
+			programmeCollection = programmeDao.findById(programme);	
 			
 			Map<String, ArrayList<List<String>>> programmeCodeToTownListMap = 
 					new LinkedHashMap<String, ArrayList<List<String>>>();
@@ -96,15 +113,15 @@ public class CmdListCategoryProgrammes implements ICommand {
 			int indexOfMajorOrLevelName = -1;
 			String filterType = "";
 			
-			if (categoryIdentifierString.equals("CORPORATE_TRAINING")) { // This check must be done via an enum 
-				// (whose name may be Category and constants may be SCHOOL_EDUCTION, HIGHER_EDUCATION, 
-				// CORPORATE_TRAINING etc.). An enum needs to be introduced for this, which necessitates adding 
-				// of a field in the Category table in the DB as well, This field will need to be used to record 
-				// the name of the enum constant (CORPORATE_TRAINING etc.) that corresponds to the particular Category record.
+			// This exemplifies the use and purpose of EducationCategory. 
+			// Certain things must happen only if the category is CORPORATE_TRAINING
+			if (EducationCategory.CORPORATE_TRAINING.equals(category)) {
+				// Consider Major data
 				indexOfMajorOrLevelCode = 12;
 				indexOfMajorOrLevelName = 23;
 				filterType = "Major";
 			} else {
+				// Consider Level data
 				indexOfMajorOrLevelCode = 14;
 				indexOfMajorOrLevelName = 24;
 				filterType = "Level";
@@ -182,11 +199,26 @@ public class CmdListCategoryProgrammes implements ICommand {
 				}
 			}
 			
-			programmeCollection = progCodeToProgrammeMap.values();
+			programmeCollection = progCodeToProgrammeMap.values();			
+			
+			// Get course provider logo path from SystemConfig table
+			systemConfigRecord = systemConfigDao.findById(SystemConfig.PROVIDER_LOGO_PATH.name());
+			
+			outer:
+			for (Collection<String> record : systemConfigRecord) {
+				int count = 0;
+				inner:
+				for (String field : record) {
+					if (count == 2) {
+						courseProviderLogoPath = field;
+						break outer;
+					}
+					count++;
+				}
+			}
 			
 			iview.setCollection(programmeCollection);
-			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
-			helper.setAttribute("contextDeployCourseLogoPath", contextDeployCourseLogoPath);
+			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 			helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
 			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
