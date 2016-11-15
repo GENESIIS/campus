@@ -11,10 +11,14 @@
 <title>Campus.lk</title>
 
 <!-- Bootstrap & CSS Style-->
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-<link href="/dist/css/style.css" rel="stylesheet">
 
+<link href="/dist/css/style.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="/dist/bower-components/bootstrap/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <style>
@@ -109,52 +113,102 @@
 
 			<!-- slider & banner panel : right side -->
 			<div class="sliding-info-panel">
-				<div class="info-slider-holder">
-					<div class="featured-institute clearfix">
-						<div class="slider-heading clearfix">
-							<div class="topic">
-								<h2>Featured Institutes</h2>
-							</div>
-						
-						</div>
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+						<li data-target="#myCarousel" data-slide-to="3"></li>
+						<li data-target="#myCarousel" data-slide-to="4"></li>
+						<li data-target="#myCarousel" data-slide-to="5"></li>
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
 
 						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
-							varStatus="count">
-							<div id="featured-panel" class="mySlides">
-								<div class="move-btn">
-									<a onclick="carousel(${count.index-1})">Left</a> <a onclick="carousel(${count.index + 1})"">Right</a>
-								</div>
-								<div class="institute-info clearfix">
-									<div class="inst-logo">
-										<img src="${featuredInstitute[16] }" alt="Institute Logo"
-											style="width: 100px; height: 75px;">
+							varStatus="loopCount">
+							<c:choose>
+								<c:when test="${loopCount.index == 1 }">
+									<div class="item active">
+										<div class="row">
+											<div>
+												<img src="${featuredInstitute[16] }" alt="Institute Logo"
+													style="width: 100px; height: 75px;">
+											</div>
+											
+											<div class="inst-name">
+												<h1 class="short-name">
+													<c:out value="${featuredInstitute[2] }"></c:out>
+												</h1>
+												<h2 class="full-name">
+													<c:out value="${featuredInstitute[3] }"></c:out>
+												</h2>
+											</div>
+										</div>
+										<div class="institute-description clearfix">
+											<p>
+												<c:out value="${featuredInstitute[4]}"></c:out>
+											</p>
+											<div class="btn-more clearfix">
+												<!-- 	<a href="javascript:">Show More</a>  -->
+												<button type="submit" name="CCO" id="CCO"
+													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+													More</button>
+											</div>
+										</div>
 									</div>
-									<div class="inst-name">
-										<h1 class="short-name" class="mySlides">${featuredInstitute[2] }
-											<!-- 	<c:out value="${featuredInstitute[2] }"></c:out>  -->
-										</h1>
-										<h2 class="full-name">
-											<c:out value="${featuredInstitute[3] }"></c:out>
-										</h2>
-									</div>
-								</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
 
-								<div class="institute-description clearfix">
-									<p id="institute-description">
-										<c:out value="${featuredInstitute[4]}"></c:out>
-									</p>
-									<div class="btn-more clearfix">
-										<!-- 	<a href="javascript:">Show More</a>  -->
-										<button type="submit" name="CCO" id="CCO"
-											value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
-											More</button>
-									</div>
-								</div>
+						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
+							varStatus="loopCount">
+							<c:choose>
+								<c:when test="${loopCount.index != 1 }">
 
-							</div>
+									<div class="item ">
+										<div>
+											<img src="${featuredInstitute[16] }" alt="Institute Logo"
+												style="width: 100px; height: 75px;">
+										</div>
+										<div class="inst-name">
+											<h1 class="short-name">
+												<c:out value="${featuredInstitute[2] }"></c:out>
+											</h1>
+											<h2 class="full-name">
+												<c:out value="${featuredInstitute[3] }"></c:out>
+											</h2>
+										</div>
+										<div class="institute-description clearfix">
+											<p>
+												<c:out value="${featuredInstitute[4]}"></c:out>
+											</p>
+											<div class="btn-more clearfix">
+												<!-- 	<a href="javascript:">Show More</a>  -->
+												<button type="submit" name="CCO" id="CCO"
+													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+													More</button>
+											</div>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
 						</c:forEach>
 
 					</div>
+					    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+
 				</div>
 				<!-- Eng featured institute info slider -->
 				<div class="most-viewed-panel clearfix">
@@ -169,7 +223,8 @@
 								<div class="description">
 									<h1>
 										<c:out value="${institute[2] }"></c:out>
-										<span>@ <c:out value="${institute[27] }${institute[28] }${institute[29] }"></c:out></span>
+										<span>@ <c:out
+												value="${institute[27] }${institute[28] }${institute[29] }"></c:out></span>
 									</h1>
 									<p>
 										<c:out value="${institute[3] }"></c:out>
@@ -194,27 +249,7 @@
 	<footer>
 		<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
-	<script>
-		var myIndex = 0;
-		carousel(myIndex);
-		//showDivs(slideIndex);
 
-
-
-		function carousel(myIndex) {
-			var i;
-			var x = document.getElementsByClassName("mySlides");
-			for (i = 0; i < x.length; i++) {
-				x[i].style.display = "none";
-			}
-			myIndex++;
-			if (myIndex > x.length) {
-				myIndex = 1
-			}
-			x[myIndex - 1].style.display = "block";
-			setTimeout(carousel, 5000); // Change image every 5 seconds
-		}
-	</script>
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
