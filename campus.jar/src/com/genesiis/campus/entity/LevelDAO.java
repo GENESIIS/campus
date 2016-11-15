@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161101 PN c11-criteria-based-filter-search modified getAll() method SQL query.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ import com.genesiis.campus.util.ConnectionManager;
 
 public class LevelDAO implements ICrud {
 	static Logger log = Logger.getLogger(LevelDAO.class.getName());
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -36,6 +37,13 @@ public class LevelDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code
+	 *            - category code
+	 * @return Collection<Collection<String>>: contains all the available levels
+	 *         in DB, according to the given category code.
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		int categoryCode = (Integer) code;
@@ -50,8 +58,7 @@ public class LevelDAO implements ICrud {
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
 			final ResultSet rs = stmt.executeQuery();
-			
-			
+
 			while (rs.next()) {
 				final ArrayList<String> singleLevelList = new ArrayList<String>();
 				singleLevelList.add(rs.getString("CODE"));
@@ -62,10 +69,10 @@ public class LevelDAO implements ICrud {
 				allLevelList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -78,6 +85,11 @@ public class LevelDAO implements ICrud {
 		return allLevelList;
 	}
 
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available levels
+	 *         in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allLevelList = new ArrayList<Collection<String>>();
@@ -101,10 +113,10 @@ public class LevelDAO implements ICrud {
 				allLevelList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

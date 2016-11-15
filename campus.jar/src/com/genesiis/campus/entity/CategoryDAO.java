@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161111 PN c1-campus-landing-page modified getAll() method to get image name from the DB.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,6 +43,11 @@ public class CategoryDAO implements ICrud{
 		return null;
 	}
 
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         categories in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
@@ -67,10 +73,10 @@ public class CategoryDAO implements ICrud{
 				allCategoryList.add(singleCategoryCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

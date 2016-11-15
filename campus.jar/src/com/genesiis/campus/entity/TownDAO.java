@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,10 @@ public class TownDAO implements ICrud{
 		return null;
 	}
 
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available towns in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
@@ -63,10 +68,10 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

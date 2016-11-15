@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method.
 //		   PN c11-criteria-based-filter-search implemented getAll() method.
 //20161103 PN c11-criteria-based-filter-search modified SQL query inside getAll() and findById() methods
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +38,12 @@ public class InstituteDAO implements ICrud{
 		return 0;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code - criteria code
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         institutes in DB, according to the given category code.
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -64,10 +71,10 @@ public class InstituteDAO implements ICrud{
 				allInstituteList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -80,6 +87,12 @@ public class InstituteDAO implements ICrud{
 		return allInstituteList;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code - criteria code
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         institutes in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
@@ -105,10 +118,10 @@ public class InstituteDAO implements ICrud{
 				allInstituteList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

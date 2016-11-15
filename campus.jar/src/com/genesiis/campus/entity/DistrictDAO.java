@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //         PN c11-criteria-based-filter-search modified sql query inside getAll() method. 
 //20161102 PN c11-criteria-based-filter-search getAll() method implemented.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +16,9 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 
-public class DistrictDAO implements ICrud{
+public class DistrictDAO implements ICrud {
 	static Logger log = Logger.getLogger(DistrictDAO.class.getName());
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -36,6 +37,13 @@ public class DistrictDAO implements ICrud{
 		return 0;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code
+	 *            - course provider code.
+	 * @return Collection<Collection<String>>: contains all the districts, that
+	 *         the given course provider exist in.
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		int instituteCode = (Integer) code;
@@ -48,8 +56,7 @@ public class DistrictDAO implements ICrud{
 			String query = "SELECT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
 					+ "JOIN [CAMPUS].[TOWN] t ON d.CODE = t.DISTRICT "
 					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON t.CODE = pt.TOWN "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON pt.PROGRAMME = p.CODE "
-					+ "WHERE p.COURSEPROVIDER = ?;";
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON pt.PROGRAMME = p.CODE " + "WHERE p.COURSEPROVIDER = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, instituteCode);
@@ -65,10 +72,10 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -81,6 +88,13 @@ public class DistrictDAO implements ICrud{
 		return allDistrictList;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code
+	 *            - course provider code.
+	 * @return Collection<Collection<String>>: contains all the districts,
+	 *         available in the DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
@@ -104,10 +118,10 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

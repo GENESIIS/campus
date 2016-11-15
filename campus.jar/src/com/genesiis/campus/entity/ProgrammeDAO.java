@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
 //20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,10 +40,15 @@ public class ProgrammeDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code - String with searched criteria values.
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         programs in DB, according to the given criteria.
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		String searchData = (String) code;
-		log.info("searchData" + searchData);
 
 		Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
@@ -69,8 +75,6 @@ public class ProgrammeDAO implements ICrud {
 					tempquery = qbh.dynamicQuery(queryMap, subQuery);
 				}
 
-				log.info("tempquery " + tempquery);
-
 				conn = ConnectionManager.getConnection();
 				String query = "SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX]"
 						+ "FROM [CAMPUS].[PROGRAMME] p "
@@ -80,7 +84,6 @@ public class ProgrammeDAO implements ICrud {
 						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
 						+ "WHERE p.PROGRAMMESTATUS = 1 "
 						+ tempquery + ";";
-				log.info(query);
 
 				stmt = conn.prepareStatement(query);
 				if (districtCode != null) {
@@ -106,10 +109,10 @@ public class ProgrammeDAO implements ICrud {
 				allProgrammeList = getAll();	
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLE " + sqlException.toString());
+			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): E " + e.toString());
+			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -122,6 +125,11 @@ public class ProgrammeDAO implements ICrud {
 		return allProgrammeList;
 	}
 
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         programs in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
@@ -152,10 +160,10 @@ public class ProgrammeDAO implements ICrud {
 				allProgrammeList.add(singleProgrammeCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

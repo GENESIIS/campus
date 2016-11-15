@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,6 +37,12 @@ public class MajorDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * @author pabodha
+	 * @param code - category code
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         majors in DB, according to the given category code.
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		int categoryCode = (Integer) code;
@@ -65,10 +72,10 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLE " + sqlException.toString());
+			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): E " + e.toString());
+			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -81,6 +88,11 @@ public class MajorDAO implements ICrud {
 		return allMajorList;
 	}
 
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         majors in DB.
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allMajorList = new ArrayList<Collection<String>>();
@@ -104,10 +116,10 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
