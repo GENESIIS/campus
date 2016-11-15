@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161103 JH c7-higher-education-landing-page findById method code modified
 //20161104 JH c7-higher-education-landing-page findById method code modified : remove unwanted loggers
 //20161115 JH c7-higher-education-landing-page findById method code modified : set enum class values
+//20161115 JH c7-higher-education-landing-page getAll() method : added method comments
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -113,6 +114,11 @@ public class CategoryDAO implements ICrud {
 		return allCategoryList;
 	}
 
+	/**
+	 * getAll method used to get details of all categories.
+	 * @author PN
+	 * @return collection of String
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
@@ -129,7 +135,6 @@ public class CategoryDAO implements ICrud {
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
-				log.info(rs.getString("CODE") + "     dsfdsf " + rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));
