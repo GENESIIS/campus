@@ -1,8 +1,9 @@
 package com.genesiis.campus.entity;
 
-//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java
-//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java modified findById() method
-//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java modified findById() method
+//20161031 CM c9-make-inquiry-for-institute INIT CourseProviderDAO.java.
+//20161031 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method.
+//20161031 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method.
+//20161115 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method(Code Review Modifications).
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,8 +55,9 @@ public class CourseProviderDAO implements ICrud{
 		try {
 			CourseProviderInquiry courserProviderInquiry = (CourseProviderInquiry) code;
 			conn = ConnectionManager.getConnection();
+			String query="SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE [CAMPUS].[COURSEPROVIDER].CODE = ?";
 			preparedStatement = conn
-					.prepareStatement("SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE [CAMPUS].[COURSEPROVIDER].CODE = ?");
+					.prepareStatement(query);
 			preparedStatement.setInt(1, courserProviderInquiry.getCourseProvider());
 			ResultSet rs = preparedStatement.executeQuery();
 
