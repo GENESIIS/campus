@@ -98,6 +98,7 @@
         <div class="course-filter-panel">
             <div class="filtering-area">
                 <div class="top"></div>
+                <div id="message-container" class="alert alert-danger text-center" role="alert"></div>
                 <div class="bottom clearfix">
                     <ul class="list-inline">
                     </ul>
@@ -119,13 +120,12 @@
 
         </div>
 
-<%-- Values in the following hidden fields are hard-coded for the moment. 
-	For both of them, the values must be fetched from the DB and assigned.
+<%-- 
+	For both of the following hidden fields, the values must be fetched from the DB and assigned.
 	IMPORTANT: The value for categoryIdentifierString must correspond to categoryCode as present in the DB 
 --%>
-		<input type="hidden" name="categoryCode" id="categoryCode" value="3"/>
-		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="CORPORATE_TRAINING"/>
-<!-- 		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="HIGHER_EDUCATION"/> -->
+		<input type="hidden" name="categoryCode" id="categoryCode" value="${categoryCode}"/>
+		<input type="hidden" name="categoryIdentifierString" id="categoryIdentifierString" value="${categoryIdentifierString}"/>
     </div>
     <!-- End page content  -->
 </div>
