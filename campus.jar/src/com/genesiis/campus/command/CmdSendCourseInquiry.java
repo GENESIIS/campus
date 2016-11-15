@@ -52,53 +52,45 @@ public class CmdSendCourseInquiry implements ICommand {
 			Exception {
 		String message = "Unsuccessfull";
 		final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
-		boolean responseIsSuccess = reCaptchaManager.sendRequestToServer(helper);
+		boolean responseIsSuccess = reCaptchaManager
+				.sendRequestToServer(helper);
 		// Verify whether the input from Human or Robot
-		 if (responseIsSuccess) {
-		// Input by Human
-		
+		if (responseIsSuccess) {
+			// Input by Human
+
 			String gsonData = helper.getParameter("jsonData");
 			data = getInstituteInquirydetails(gsonData);
-			
-			String validateResult = Validator.validateCourseInquiry(data);
-			log.info(validateResult);
-			if (validateResult.equalsIgnoreCase("True")) {
-				log.info("valide data");
-			
-			CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
-			int result = inquiryDAO.add(data);
-			if (result > 0) {
-				message = "Inquiry Send successfylly";
 
-				final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
-				Collection<Collection<String>> courseProviderEmail = courseProviderDAO
-						.findById(data);
-				recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
-				generalEmail = formatEmailInstance();
-				this.sendMail();
-			
-//				view.setCollection(courseProviderEmail);
-			}
-			log.info(message);
-			
-			ArrayList<String> singleMessageList = new ArrayList<String>();
-			singleMessageList.add(message);
-		//	messageIview = new Collections<String>;
-			messageIview = (Collection<String>)singleMessageList;
-		//	messageCollection = new mes
-			messageCollection.add(messageIview);
-			
-			for(Collection<String> col:messageCollection){
-				for(String str: col){
-					log.info(" within the for inner loop=====: "+str);
+			String validateResult = Validator.validateCourseInquiry(data);
+
+			if (validateResult.equalsIgnoreCase("True")) {
+
+				CourseInquiryDAO inquiryDAO = new CourseInquiryDAO();
+				int result = inquiryDAO.add(data);
+				if (result > 0) {
+					message = "Inquiry Send successfylly";
+
+					final CourseProviderDAO courseProviderDAO = new CourseProviderDAO();
+					Collection<Collection<String>> courseProviderEmail = courseProviderDAO
+							.findById(data);
+					recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
+					generalEmail = formatEmailInstance();
+					this.sendMail();
+
 				}
+
+				ArrayList<String> singleMessageList = new ArrayList<String>();
+				singleMessageList.add(message);
 				
-			}
-			
+				messageIview = (Collection<String>) singleMessageList;
+				messageCollection = new ArrayList<Collection<String>>();
+				messageCollection.add(messageIview);
+
 			}
 		}
-	
-		 view.setCollection(messageCollection);
+		helper.setAttribute("message", message);
+
+		view.setCollection(messageCollection);
 		return view;
 
 	}
