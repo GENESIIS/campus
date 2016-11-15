@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161103 JH c7-higher-education-landing-page implement unimplemented methods
 //20161103 JH c7-higher-education-landing-page refactor code
 //20161104 JH c7-higher-education-landing-page code modification 
+//20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -51,7 +52,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 
 		Validator validator = new Validator();
-		if (!validator.isEmpty(helper)) {
+		if (!validator.isEmpty( helper.getParameter("categoryId"))) {
 			final String categoryId = helper.getParameter("categoryId");
 
 			final Programme programme = new Programme();
