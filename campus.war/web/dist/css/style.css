@@ -861,8 +861,17 @@ body, html {
         padding-top: 5px;
         padding-bottom: 10px;
         line-height: 24px; }
-    .course-view .details-view-panel .course-info .info-table .info-section .section-content {
-      padding: 15px 60px 35px; }
+    .course-view .details-view-panel .course-info .info-table .info-section {
+      display: block;
+      margin-bottom: 35px; }
+      .course-view .details-view-panel .course-info .info-table .info-section .section-content {
+        padding: 15px 60px 35px; }
+        .course-view .details-view-panel .course-info .info-table .info-section .section-content ul {
+          list-style-type: disc; }
+          .course-view .details-view-panel .course-info .info-table .info-section .section-content ul li {
+            padding: 10px 5px;
+            font-size: 18px;
+            color: #838383; }
 
 /* Modules */
 .btn-submit {
