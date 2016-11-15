@@ -2,7 +2,8 @@
  * 
  * //20161027 AS C8-inquiry-form-for-course validation.js  created.
  * //20161108 CM  c9-make-inquiry-for-institute added validateInstituteInquiryFileds() function
- *  //20161108 CM c9-make-inquiry-for-institute Modified validateInstituteInquiryFileds() function
+ * //20161108 CM c9-make-inquiry-for-institute Modified validateInstituteInquiryFileds() function
+ * //20161115 CM c9-make-inquiry-for-institute added clearField(elementId) function
  */
 
 /**
@@ -144,4 +145,15 @@ function validateInstituteInquiryFileds() {
 		flag = false;
 	}
 	return (flag);
+}
+
+
+/**
+ * @param clearField 
+ * @param elementId the id of the HTML element
+ */
+
+function clearField(elementId){	
+	 $(document).find('#' + elementId).text('');
+	 $(document).find('#message').text('');
 }
