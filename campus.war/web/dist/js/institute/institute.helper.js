@@ -9,7 +9,7 @@ theNewScript.type = "text/javascript";
 theNewScript.src = "/validation/validation.js";
 
 function sendCourseInquiry() {
-	alert("hiii");
+	
 	var fullName = $("#fullname").val();
 	var email = $("#email").val();
 	var countryCode = $("#countryCode").val();
@@ -21,11 +21,7 @@ function sendCourseInquiry() {
 	var programmeCode = $("#programmeCode").val();
 	var recapture = $("#g-recaptcha-response").val();
 	
-	alert(fullName + email + countryCode + areaCode + telephoneNumber
-			+ inquiryTitle + inquiry + student + programmeCode);
-	alert("okkk" + fullName + email + countryCode + areaCode + telephoneNumber
-			+ inquiry + inquiryTitle + student + programmeCode);
-
+	
 	var fullNametb = isempty(fullName);
 	var emailtb = isValidEmailFormat(email);
 	var countryCodetb = isempty(countryCode);
@@ -83,7 +79,7 @@ function sendCourseInquiry() {
 			},
 			dataType : "json",
 			success : function(response) {
-				alert(response.result);
+				//alert(response.result);
 				document.getElementById('messsage').innerHTML = response.result;
 				//if (response == "Inquiry Send successfylly") {
 					resetInquiryLabels();
@@ -121,7 +117,7 @@ function isFieldFilled(flag, elementName) {
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	// alert("hi");
+
 	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
 }
 
