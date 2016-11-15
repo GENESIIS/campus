@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 public class InstituteController extends CampusController{
 
 	static Logger log = Logger.getLogger(InstituteController.class.getName());
+	private static final long serialVersionUID = 1L;
     /**
      * Default constructor. 
      */
@@ -37,7 +38,7 @@ public class InstituteController extends CampusController{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doPost(request, response);
-		log.info("Test");
+		
 	}
 
 	/**
