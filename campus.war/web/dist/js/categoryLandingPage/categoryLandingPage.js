@@ -38,14 +38,24 @@ window.programmeCodeToTownListMapFetched = null;
 window.numOfResultsPerPageFetched = null;
 window.courseProviderLogoPathFetched = null;
 window.filterType = null;
+window.messages = null;
 
 $(document).ready(function() {
+	$('#message-container').hide();
 	getProgrammeData();
-	constructLevelOrMajorMenu();
-	createProgrammeListingAndPaginator();
-	
 });
 
+function showMessages(messages) {
+	var messagesHtml = '';
+	if (messages != undefined && messages != null && messages.length > 0) {
+		for (var i = 0; i < messages.length; i++) {
+			messagesHtml += '<span>' + messages[i] + '</span></br>';
+		}
+		$('#message-container').html(messagesHtml).show();
+	} else {
+		$('#message-container').hide();
+	}
+}
 function getProgrammeData() {
 	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
 	var categoryIdentifierString = $('#categoryIdentifierString').val(); // This element is expected to be present in the JSP
@@ -71,10 +81,18 @@ function getProgrammeData() {
 				window.filterType = response.filterType;	
 				
 				window.programmeCollectionNarrowedDown = response.result;
+				window.messages = response.messages;
+				
+				constructLevelOrMajorMenu();
+				createProgrammeListingAndPaginator();
+				showMessages(window.messages);
 			}			
 		},
 		error : function(response) {
-			alert("Ajax Error");
+			var messageList = [];
+			messageList.push("There was an error retrieving data to display from the server.");
+			messageList.push("Please check that you are connected to the Internet and that you are sending the correct data.");
+			showMessages(messageList);
 		}
 	});
 }
