@@ -3,6 +3,7 @@
 <!-- 20161028 CM  c9-make inquiry for institute Edited instituteInquiry.jsp -->
 <!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
 <!-- 20161108 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
+<!-- 20161115 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -95,7 +96,7 @@
 			</div>
 		</div>
 		<div class="page-topic">
-			<h2 class="page-topic-t1">| Course Inquiry Form</h2>
+			<h2 class="page-topic-t1">| Institute Inquiry Form</h2>
 		</div>
 
 		<!-- image header -->
@@ -119,49 +120,49 @@
 						<%-- <input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode"> --%>
 						<input type="hidden" value="1" name="studentCode">
 						<div class="f-name">
-							<label for="message"><c:out value="${message }"></c:out></label><br>
+							<label for="message" id="message"><c:out value="${message }"></c:out></label><br>
 						</div>
 						<!-- First Name -->
 						<div class="f-name">
 							<label for="input-firstName">Full Name <span>*</span>
 							</label> <label id="fullNameError"></label><br> <input type="text"
-								name="fullname" id="input-firstName" required>
+								name="fullname" id="input-firstName" onclick="clearField('fullNameError')" required>
 						</div>
 						<!-- Email -->
 						<div class="email">
 							<label for="eMail">Email <span>*</span></label><label
 								id="emailError"></label><br> <input type="text"
-								name="email" id="eMail" required>
+								name="email" id="eMail" onclick="clearField('emailError')" required>
 						</div>
 						<!--Country Code -->
 						<div class="county-code">
 							<label for="input-county-code">Country Code <span>*</span></label><label
 								id="countryCodeError"></label><br> <input type="text"
-								name="countryCode" id="input-county-code" required>
+								name="countryCode" id="input-county-code" onclick="clearField('countryCodeError')" required>
 						</div>
 						<!-- Area Code -->
 						<div class="area-code">
 							<label for="input-area-code">Area Code <span>*</span></label><label
 								id="areaCodeError"></label><br> <input type="text"
-								name="areaCode" id="input-area-code" required>
+								name="areaCode" id="input-area-code" onclick="clearField('areaCodeError')" required>
 						</div>
 						<!-- Telephone -->
 						<div class="tp-number">
 							<label for="input-tp-no">Telephone No <span>*</span></label><label
 								id="telNumError"></label><br> <input type="text"
-								name="telNum" id="input-tp-no">
+								name="telNum" id="input-tp-no" onclick="clearField('telNumError')" required> 
 						</div>
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><label
 								id="inquiryTitleError"></label><br> <input type="text"
-								name="inquiryTitle" id="input-inquiry-title" required>
+								name="inquiryTitle" id="input-inquiry-title" onclick="clearField('inquiryTitleError')" required>
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
 							<label for="text-userMessage">Message <span>*</span></label><label
 								id="inquiryError"></label><br>
-							<textarea name="inquiry" id="text-userMessage" rows="10" required></textarea>
+							<textarea name="inquiry" id="text-userMessage" rows="10" onclick="clearField('inquiryError')"  required></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
 							</p>
@@ -171,7 +172,7 @@
 							<span id="captchaError"
 								style="color: red; font-weight: normal !important;"></span>
 							<div class="g-recaptcha"
-								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c" ></div>
 						</div>
 						<!-- btn Submit -->
 						<button class="btn-submit" type="submit" name="CCO" id="CCO"
