@@ -85,6 +85,20 @@ public class CmdListCategoryLandingPage implements ICommand {
 				helper.setAttribute("featuredInstitutes",
 						featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
+				
+				String categoryIdentifierString = "";
+				
+				// The mapping of categoryCode to categoryIdentifierString is hard-coded as below.
+				// But this is to be done by some mechanism that is to be agreed upon.
+				switch (Integer.parseInt(categoryId)) {
+					case 1: categoryIdentifierString = "PRE_EDUCATION"; break;
+					case 2: categoryIdentifierString = "SCHOOL_EDUCATION"; break;
+					case 3: categoryIdentifierString = "HIGHER_EDUCATION"; break;
+					case 4: categoryIdentifierString = "CORPORATE_TRAINING"; break;
+				}
+				helper.setAttribute("categoryCode", categoryId);
+				helper.setAttribute("categoryIdentifierString", categoryIdentifierString);
+				
 
 			} catch (Exception exception) {
 				log.error("execute() : " + exception);

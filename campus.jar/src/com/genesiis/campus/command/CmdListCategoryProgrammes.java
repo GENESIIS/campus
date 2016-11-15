@@ -20,6 +20,8 @@ package com.genesiis.campus.command;
 // 				enum to decide whether to show Levels or Majors as filters, and to use 
 // 				SystemConfig enum and SystemConfigDAO to fetch courseProviderLogoPath from 
 // 				SystemConfig table
+//20161115 MM c5-corporate-training-landing-page-MP Added further validation code in execute() 
+//				method and set a message list to be sent to be shown to user
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,8 +76,21 @@ public class CmdListCategoryProgrammes implements ICommand {
 				msgList.add("The provided value for category is null!");
 				throw new IllegalArgumentException("The provided value for category is null!");
 			} 			
+
+			if (helper.getParameter("category").isEmpty()) {
+				Log.error("The provided value for category is empty!");
+				msgList.add("The provided value for category is empty!");
+				throw new IllegalArgumentException("The provided value for category is empty!");
+			} 	
 			
-			categoryCode = Integer.parseInt(helper.getParameter("category"));			
+			try {
+				categoryCode = Integer.parseInt(helper.getParameter("category"));
+			} catch (NumberFormatException nfe){
+				Log.error("The provided value for categoryCode cannot be parsed into a number!");
+				msgList.add("The provided value for categoryCode cannot be parsed into a number!");
+				throw new IllegalArgumentException("The provided value for categoryCode is invalid!");
+			}
+			
 			categoryIdentifierString = helper.getParameter("categoryIdentifierString");	
 			
 			if (categoryIdentifierString == null) {
@@ -216,14 +231,12 @@ public class CmdListCategoryProgrammes implements ICommand {
 					count++;
 				}
 			}
-			
 			iview.setCollection(programmeCollection);
 			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 			helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
 			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 			helper.setAttribute("filterType", filterType);
-			
 		} catch (NumberFormatException nfe) {
 			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
 			msgList.add(SystemMessage.ERROR.message());
@@ -236,8 +249,10 @@ public class CmdListCategoryProgrammes implements ICommand {
 		}  catch (Exception e) {
 			Log.info("execute(IDataHelper, IView) : Exception " + e.toString());
 			msgList.add(SystemMessage.ERROR.message());
-			msgList.add("Unknown error occured while fetching records to display");
+			msgList.add("Unknown error occured while preparing records to display");
 			throw e;
+		} finally {
+			helper.setAttribute("messages", msgList);
 		}
 		
 		return  iview;
