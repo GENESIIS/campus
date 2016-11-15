@@ -115,16 +115,6 @@
 			<div class="sliding-info-panel">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-						<li data-target="#myCarousel" data-slide-to="3"></li>
-						<li data-target="#myCarousel" data-slide-to="4"></li>
-						<li data-target="#myCarousel" data-slide-to="5"></li>
-					</ol>
-
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 
@@ -133,12 +123,11 @@
 							<c:choose>
 								<c:when test="${loopCount.index == 1 }">
 									<div class="item active">
-										<div class="row">
-											<div>
+										<div class="institute-info clearfix">
+											<div class="inst-logo">
 												<img src="${featuredInstitute[16] }" alt="Institute Logo"
 													style="width: 100px; height: 75px;">
 											</div>
-											
 											<div class="inst-name">
 												<h1 class="short-name">
 													<c:out value="${featuredInstitute[2] }"></c:out>
@@ -199,15 +188,10 @@
 						</c:forEach>
 
 					</div>
-					    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+					<!-- Left and right controls -->
+					<a href="#myCarousel" role="button" data-slide="prev"> Previous
+					</a> <a href="#myCarousel" role="button" data-slide="next">
+						Next </a>
 
 				</div>
 				<!-- Eng featured institute info slider -->
