@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161103 JH c7-higher-education-landing-page findById method code modified
 //20161104 JH c7-higher-education-landing-page findById method code modified : remove unwanted loggers
+//20161115 JH c7-higher-education-landing-page findById method code modified : set enum class values
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
