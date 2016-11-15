@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161101 CM c13-Display course details INIT ClassTypeDAO.java
 //20161101 CM c13-Display course details Modified findById() method.
 //20161110 CM c13-Display-course-details Formatted code 
+//20161115 CM c13-Display-course-details Change logger class name.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import com.genesiis.campus.util.ConnectionManager;
 
 public class ClassTypeDAO implements ICrud {
 
-	static Logger log = Logger.getLogger(ModuleDAO.class.getName());
+	static Logger log = Logger.getLogger(ClassTypeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -59,7 +60,7 @@ public class ClassTypeDAO implements ICrud {
 
 			String query = "SELECT c.NAME, c.MINPARTICIPANTS,c.MAXPARTICIPANTS,c.DESCRIPTION FROM CAMPUS.PROGRAMME p"
 					+ " inner join CAMPUS.CLASSTYPE c on p.CLASSTYPE=c.CODE WHERE p.CODE = ? AND ISACTIVE='1'";
-			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
 
