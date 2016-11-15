@@ -9,12 +9,15 @@ package com.genesiis.campus.entity;
 //DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
 //DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
 //DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
+//DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
+
 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -22,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.UtilityHelper;
 
 public class CourseProviderDAO implements ICrud{
@@ -59,6 +63,7 @@ public class CourseProviderDAO implements ICrud{
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement  stmt = null;	
+		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
@@ -77,8 +82,9 @@ public class CourseProviderDAO implements ICrud{
 			sb.append("AND CAT.ISACTIVE=1 AND CAT.CODE=?");			
 			 
 			stmt = conn.prepareStatement(sb.toString());			
-			stmt.setInt(1, categoryCode);	
-			allProviderList=getCourseProviderResultSet(stmt);
+			stmt.setInt(1, categoryCode);
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 			
 		} catch (SQLException sqlException) {
 			log.info("findById() sqlException" + sqlException.toString());
@@ -87,12 +93,7 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findById() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return allProviderList;
 	}
@@ -110,6 +111,7 @@ public class CourseProviderDAO implements ICrud{
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 
 		try {
@@ -117,7 +119,8 @@ public class CourseProviderDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=1 ");
 
 			stmt = conn.prepareStatement(sb.toString());
-			allProviderList=getCourseProviderResultSet(stmt);
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 
 		} catch (SQLException sqlException) {
 			log.info("findById() sqlException" + sqlException.toString());
@@ -126,12 +129,7 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findById() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return allProviderList;
 	}
@@ -173,7 +171,8 @@ public class CourseProviderDAO implements ICrud{
 
 	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException{
 		Connection conn = null;
-		PreparedStatement  stmt = null;	
+		PreparedStatement  stmt = null;
+		ResultSet resultSet =null;
 		 Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
@@ -202,7 +201,8 @@ public class CourseProviderDAO implements ICrud{
 				stmt.setInt(1, categoryCode);	
 			}	
 			log.debug("SQL : " + sb.toString());
-			allProviderList=getCourseProviderResultSet(stmt);
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 			
 		} catch (SQLException sqlException) {
 			log.info("findTopViewedProviders() sqlException" + sqlException.toString());
@@ -211,34 +211,9 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findTopViewedProviders() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return allProviderList;
-	}
-
-	/**
-	 * @param stmt
-	 * @author DJ
-	 * @return Collection
-	 * @throws SQLException
-	 */
-	private Collection<Collection<String>> getCourseProviderResultSet(PreparedStatement stmt)
-			throws SQLException {
-		final Collection<Collection<String>> allProviderList=new ArrayList<Collection<String>>();
-		final ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {				
-			final ArrayList<String> singleProvider = new ArrayList<String>();
-			singleProvider.add(rs.getString("CPCODE"));				
-			singleProvider.add(rs.getString("UNIQUEPREFIX"));
-			singleProvider.add(rs.getString("LOGOPATH"));
-			allProviderList.add(singleProvider);
-		}
-		return allProviderList;		
 	}
 	
 	/**
@@ -251,7 +226,8 @@ public class CourseProviderDAO implements ICrud{
 	public Collection<Collection<String>> findTopRatedProviders(CourseProvider provider) throws SQLException{
 		
 		Connection conn = null;
-		PreparedStatement  stmt = null;	
+		PreparedStatement  stmt = null;
+		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
@@ -277,8 +253,10 @@ public class CourseProviderDAO implements ICrud{
 			stmt = conn.prepareStatement(sb.toString());			
 			if(!isGetAll){
 				stmt.setInt(1, categoryCode);	
-			}	
-			allProviderList=getCourseProviderResultSet(stmt);
+			}
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);
+			//allProviderList=getCourseProviderResultSet(stmt);
 			
 		} catch (SQLException sqlException) {
 			log.info("findTopRatedProviders() sqlException" + sqlException.toString());
@@ -287,14 +265,30 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findTopRatedProviders() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return allProviderList;		
 	}
+	
+	/**
+	 * @param rs
+	 * @param allProviderList
+	 * @author DJ
+	 * @return Collection
+	 * @throws SQLException
+	 */
+	public  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException {
+		while (rs.next()) {				
+			final ArrayList<String> singleProvider = new ArrayList<String>();
+			singleProvider.add(rs.getString("CPCODE"));				
+			singleProvider.add(rs.getString("UNIQUEPREFIX"));
+			singleProvider.add(rs.getString("LOGOPATH"));
+			allProviderList.add(singleProvider);
+		}
+		return allProviderList;
+		
+	}
+	
+	
 
 }
