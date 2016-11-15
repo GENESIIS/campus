@@ -50,11 +50,12 @@ public class CourseProviderDAO implements ICrud{
 		ArrayList<String> singleEmployeeList = null;
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
+		String query = "SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  WHERE PROGRAMME.CODE = ?";
 		try {
 			StudentProgrammeInquiry studentProgrammeInquiry = (StudentProgrammeInquiry) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn
-					.prepareStatement("SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  WHERE PROGRAMME.CODE = ?;");
+					.prepareStatement(query);
 			preparedStatement.setInt(1, studentProgrammeInquiry.getProgramme());
 			ResultSet rs = preparedStatement.executeQuery();
 

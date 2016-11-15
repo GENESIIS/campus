@@ -21,6 +21,7 @@ import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
@@ -86,7 +87,13 @@ public class CmdSendCourseInquiry implements ICommand {
 				messageCollection = new ArrayList<Collection<String>>();
 				messageCollection.add(messageIview);
 
+			} else {
+				message = validateResult;
+
 			}
+		} else {
+			
+			message = SystemMessage.RECAPTCHAVERIFICATION.message();
 		}
 		helper.setAttribute("message", message);
 
