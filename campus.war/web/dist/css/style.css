@@ -862,8 +862,7 @@ body, html {
         padding-bottom: 10px;
         line-height: 24px; }
     .course-view .details-view-panel .course-info .info-table .info-section .section-content {
-      padding-top: 15px;
-      padding-bottom: 35px; }
+      padding: 15px 60px 35px; }
 
 /* Modules */
 .btn-submit {
@@ -979,11 +978,32 @@ body, html {
   display: block;
   position: relative;
   border-bottom: 3px solid #7da7d9;
-  padding-bottom: 8px; }
+  padding-bottom: 8px;
+  padding-top: 8px; }
   .sub-row a {
     font-family: "Roboto", sans-serif;
     font-size: 20px;
     color: #595e6b;
     line-height: 30px; }
+
+.sub-row-content {
+  position: relative; }
+  .sub-row-content .row-main-description {
+    color: #62707c;
+    font-size: 15px;
+    line-height: 50px; }
+  .sub-row-content table {
+    width: 100%; }
+    .sub-row-content table tr > th {
+      padding: 10px;
+      text-align: center;
+      background: #ebebeb;
+      color: #505468;
+      font-size: 18px; }
+    .sub-row-content table tr > td {
+      padding: 15px 5px;
+      font-size: 18px;
+      color: #838383;
+      text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
