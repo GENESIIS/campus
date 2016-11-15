@@ -126,7 +126,7 @@ footer .ft-bottom label {
 	color: #d6d6d6;
 }
 
-.header {
+header .header{
 	top: 0;
 	left: 0;
 	padding: 0;
@@ -1011,7 +1011,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	padding: 10px 0;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-info .inst-logo
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info .inst-logo
 	{
 	display: inline-block;
 	padding: 8px;
@@ -1024,7 +1024,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	width: 100px;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-info .inst-name
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info .inst-name
 	{
 	display: inline-block;
 	float: left;
@@ -1033,17 +1033,17 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	padding-left: 20px;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-description
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description
 	{
 	height: 290px;
-	background: url("../i/higher-education/slider-bg-1.jpg");
+	background: url("/dist/i/higher-education/slider-bg-1.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 	text-align: center;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-description p
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description p
 	{
 	display: block;
 	height: 100%;
@@ -1058,7 +1058,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	text-align: justify;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-description .btn-more
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description .btn-more
 	{
 	position: relative;
 	display: block;
