@@ -824,18 +824,24 @@ body, html {
     display: inline-block;
     position: relative;
     width: 23%;
-    float: left; }
+    float: left;
+    padding: 60px 20px; }
+    .course-view .rating-box .category-image {
+      text-align: center; }
+      .course-view .rating-box .category-image img {
+        width: 175px; }
   .course-view .details-view-panel {
     display: inline-block;
     position: relative;
     width: 77%;
-    float: right; }
+    float: right;
+    padding-right: 90px; }
     .course-view .details-view-panel .course-info .info-header {
       padding-top: 60px;
       padding-bottom: 60px; }
       .course-view .details-view-panel .course-info .info-header .course-name a {
         font-family: "Slabo 27px", serif;
-        font-size: 48px;
+        font-size: 46px;
         line-height: 60px;
         color: #3a8af7; }
       .course-view .details-view-panel .course-info .info-header .degree-level {
@@ -872,6 +878,11 @@ body, html {
             padding: 10px 5px;
             font-size: 18px;
             color: #838383; }
+        .course-view .details-view-panel .course-info .info-table .info-section .section-content h2 {
+          font-size: 20px;
+          color: #595e6b;
+          font-family: "Roboto", sans-serif;
+          line-height: 40px; }
 
 /* Modules */
 .btn-submit {
