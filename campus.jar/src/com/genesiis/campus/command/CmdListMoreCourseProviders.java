@@ -11,6 +11,8 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.CourseProviderTypeDAO;
+import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
@@ -47,10 +49,17 @@ public class CmdListMoreCourseProviders implements ICommand {
 				iview.setCollection(allCourseProviders);
 			}
 			//List Category data for the drop down
-			final CategoryDAO categoryDAO=new CategoryDAO();
+			//final CategoryDAO categoryDAO=new CategoryDAO();
 			final Collection<Collection<String>> categoryList=new CategoryDAO().getAll();
+			
 			//List Course provider types for the drop down
+			//final CourseProviderTypeDAO providerTypeDAO=new CourseProviderTypeDAO();
+			final Collection<Collection<String>> cpTypeList=new CourseProviderTypeDAO().getAll();
+			
 			//List location for the drop down
+			final Collection<Collection<String>> districtList=new DistrictDAO().getAll();
+			
+			
 			//List Majors for the drop down
 			//List Levels for the drop down 
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
