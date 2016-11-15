@@ -147,7 +147,6 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("CODE"));
 					singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 					singleCourseProviderList.add(rs.getString("SHORTNAME"));
-					log.info(">>>>>>>>>>>>>>>>>>>>>>>>>" + rs.getString("SHORTNAME"));
 					singleCourseProviderList.add(rs.getString("NAME"));
 					singleCourseProviderList.add(castedDescription);
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));

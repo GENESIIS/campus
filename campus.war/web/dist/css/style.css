@@ -1007,11 +1007,14 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	display: inline-block;
 	float: right;
 }
-
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-info
+/**
+* added height field  
+*/
+.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info
 	{
 	display: block;
 	padding: 10px 0;
+	height: 150px;
 }
 
 .main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info .inst-logo
