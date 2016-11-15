@@ -1,7 +1,8 @@
 //20161111 PN c1-campus-landing-page implemented a method to display categories on landing page.
+//20161115 PN c1-campus-landing-page added functional comments into the methods.
 
 /**
- * 
+ * This ajax call is to load categories on landing page loading.
  */
 $(document).ready(function() {
 		$.ajax({
@@ -19,7 +20,11 @@ $(document).ready(function() {
 		});
 });
 
-
+/**
+ * This method is to display available main categories within the Landing page.
+ * @param response
+ * @returns
+ */
 function displayCategories(response){
 	var count = 0 ;
 	var mainCategoryList = $("#mainCategoryList");
