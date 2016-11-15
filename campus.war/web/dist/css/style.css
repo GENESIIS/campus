@@ -820,16 +820,22 @@ body, html {
 .course-view {
   display: block;
   position: relative; }
-  .course-view .rating-box {
+  .course-view .left-panel {
     display: inline-block;
     position: relative;
     width: 23%;
     float: left;
     padding: 60px 20px; }
-    .course-view .rating-box .category-image {
+    .course-view .left-panel .category-image {
       text-align: center; }
-      .course-view .rating-box .category-image img {
+      .course-view .left-panel .category-image img {
         width: 175px; }
+    .course-view .left-panel .rating-box {
+      border: 1px solid #cccccc;
+      border-radius: 11px;
+      padding: 15px; }
+      .course-view .left-panel .rating-box div > a {
+        line-height: 40px; }
   .course-view .details-view-panel {
     display: inline-block;
     position: relative;
