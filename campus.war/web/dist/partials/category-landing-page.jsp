@@ -1,6 +1,7 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161109 JH c7-higher-education-landing-page-MP display featured course providers -->
 <!-- 20161110 JH c7-higher-education-landing-page-MP add banner panel to the landing page -->
+<!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -13,24 +14,22 @@
 <!-- Bootstrap & CSS Style-->
 
 <link href="/dist/css/style.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="/dist/bower-components/bootstrap/bootstrap.min.css">
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
-<style>
-.mySlides {
-	display: none;
-}
+<style type="text/css">
+
 </style>
 </head>
 <body>
 
-	<!-- Header-->
-	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
+	<!-- include Header-->
+	<header class="header">
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 	</header>
 	<!-- End Header -->
@@ -157,19 +156,21 @@
 							varStatus="loopCount">
 							<c:choose>
 								<c:when test="${loopCount.index != 1 }">
-
 									<div class="item ">
-										<div>
-											<img src="${featuredInstitute[16] }" alt="Institute Logo"
-												style="width: 100px; height: 75px;">
-										</div>
-										<div class="inst-name">
-											<h1 class="short-name">
-												<c:out value="${featuredInstitute[2] }"></c:out>
-											</h1>
-											<h2 class="full-name">
-												<c:out value="${featuredInstitute[3] }"></c:out>
-											</h2>
+										<div class="institute-info clearfix">
+											<div class="inst-logo">
+												<img src="${featuredInstitute[16] }" alt="Institute Logo"
+													style="width: 100px; height: 75px;">
+											</div>
+
+											<div class="inst-name">
+												<h1 class="short-name">
+													<c:out value="${featuredInstitute[2] }"></c:out>
+												</h1>
+												<h2 class="full-name">
+													<c:out value="${featuredInstitute[3] }"></c:out>
+												</h2>
+											</div>
 										</div>
 										<div class="institute-description clearfix">
 											<p>
@@ -189,9 +190,9 @@
 
 					</div>
 					<!-- Left and right controls -->
-					<a href="#myCarousel" role="button" data-slide="prev"> Previous
-					</a> <a href="#myCarousel" role="button" data-slide="next">
-						Next </a>
+					<a href="#myCarousel" role="button" data-slide="prev" class="pull-left">
+					 Previous </a>
+					 <a href="#myCarousel" role="button" data-slide="next" class="pull-right"> Next </a>
 
 				</div>
 				<!-- Eng featured institute info slider -->
