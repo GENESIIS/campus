@@ -23,7 +23,6 @@
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <style type="text/css">
-
 </style>
 </head>
 <body>
@@ -37,6 +36,11 @@
 	<!-- Main Container - Higher-Education -->
 	<div class="main-category clearfix">
 
+		<!-- get category data -->
+		<c:set var="code" value=""/>
+		<c:set var="categoryIdentifier" value=""/>
+
+
 		<!-- page inner header -->
 		<div class="inner-header">
 			<c:forEach items="${result.collection}" var="category">
@@ -49,11 +53,16 @@
 						<c:out value="${category[1] }" />
 					</h1>
 				</div>
+				<c:set var="code" value="${category[0] }"></c:set>
+				<c:set var="categoryIdentifier" value="${category[8] }"></c:set>
 			</c:forEach>
 		</div>
 		<!-- end inner header -->
 
-
+		<input type="hidden" name="categoryCode" id="categoryCode"
+			value="${code}" /> <input type="hidden"
+			name="categoryIdentifierString" id="categoryIdentifierString"
+			value="${categoryIdentifier}" />
 		<!-- Page content -->
 		<div class="content-holder center-block clearfix">
 			<!-- course filter panel : left side -->
@@ -114,6 +123,7 @@
 			<div class="sliding-info-panel">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
+					<c:set var="provider" value=""/>
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 
@@ -145,6 +155,7 @@
 												<button type="submit" name="CCO" id="CCO"
 													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
 													More</button>
+												<c:set var="provider" value="${featuredInstitute[0]}"/>
 											</div>
 										</div>
 									</div>
@@ -177,10 +188,10 @@
 												<c:out value="${featuredInstitute[4]}"></c:out>
 											</p>
 											<div class="btn-more clearfix">
-												<!-- 	<a href="javascript:">Show More</a>  -->
 												<button type="submit" name="CCO" id="CCO"
 													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
 													More</button>
+												<c:set var="provider" value="${featuredInstitute[0]}"/>
 											</div>
 										</div>
 									</div>
@@ -190,9 +201,9 @@
 
 					</div>
 					<!-- Left and right controls -->
-					<a href="#myCarousel" role="button" data-slide="prev" class="pull-left">
-					 Previous </a>
-					 <a href="#myCarousel" role="button" data-slide="next" class="pull-right"> Next </a>
+					<a href="#myCarousel" role="button" data-slide="prev"
+						class="pull-left"> Previous </a> <a href="#myCarousel"
+						role="button" data-slide="next" class="pull-right"> Next </a>
 
 				</div>
 				<!-- Eng featured institute info slider -->
