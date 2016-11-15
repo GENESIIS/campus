@@ -65,45 +65,46 @@ public class CampusController extends HttpServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
 		helper = new DataHelper(request);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
+
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
-
-			if (ResponseType.JSP.equals(responseType)) {
-
+			
+			if (ResponseType.JSP.equals(responseType)) {  
+	
 				request.setAttribute("result", result);
 				request.getRequestDispatcher(helper.getResultPage(cco))
 						.forward(request, response);
+				
+			} else if (ResponseType.JSON.equals(responseType)) {  
 
-			} else if (ResponseType.JSON.equals(responseType)) {
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-
-				if (result.getCollection() != null) {
+				
+				if (result != null && result.getCollection() != null) {					
 					objectMap.put("result", result.getCollection());
-
-					Enumeration<String> attributeNames = request
-							.getAttributeNames();
-
-					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames
-								.nextElement();
-						Object object = helper
-								.getAttribute(currentAttributeName);
-						objectMap.put(currentAttributeName, object);
-					}
 				} else {
 					objectMap.put("result", "NO-DATA");
 				}
+				
+				Enumeration<String> attributeNames = request.getAttributeNames();
 
-				response.setContentType("application/json");
+				while (attributeNames.hasMoreElements()) {
+					String currentAttributeName = attributeNames.nextElement();
+					Object object = helper.getAttribute(currentAttributeName);
+					objectMap.put(currentAttributeName, object);
+				}
+				
 				response.getWriter().write(gson.toJson(objectMap));
+				response.setContentType("application/json");
 			}
+
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
