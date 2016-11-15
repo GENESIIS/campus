@@ -81,19 +81,18 @@ public class CampusController extends HttpServlet {
 
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 				
-				if (result.getCollection() != null) {					
+				if (result != null && result.getCollection() != null) {					
 					objectMap.put("result", result.getCollection());
-	
-					Enumeration<String> attributeNames = request
-							.getAttributeNames();
-	
-					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames.nextElement();
-						Object object = helper.getAttribute(currentAttributeName);
-						objectMap.put(currentAttributeName, object);
-					}
 				} else {
 					objectMap.put("result", "NO-DATA");
+				}
+				
+				Enumeration<String> attributeNames = request.getAttributeNames();
+
+				while (attributeNames.hasMoreElements()) {
+					String currentAttributeName = attributeNames.nextElement();
+					Object object = helper.getAttribute(currentAttributeName);
+					objectMap.put(currentAttributeName, object);
 				}
 				
 				response.getWriter().write(gson.toJson(objectMap));
