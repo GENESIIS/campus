@@ -112,12 +112,12 @@
 				</div>
 				<!-- End list header -->
 
-				<c:if test='${not empty result.collection}'>
+				<c:if test='${not empty tRCProviders}'>
 					<div class="top-rated clearfix">
 						<h1>Top Rated</h1>
 						<div class="providers-grid center-block clearfix">
 							<ul class="list-inline clearfix">
-								<c:forEach var="provider" items="${result.collection}">
+								<c:forEach var="provider" items="${tRCProviders}">
 									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
 											var="pvAttribute" items="${provider}" varStatus="count">
 											<c:if test="${count.index == 1}">
@@ -144,12 +144,12 @@
 					</div>
 				</c:if>
 				<!-- End top rated list -->
-				<c:if test='${not empty tRCProviders}'>
+				<c:if test='${not empty  result.collection}'>
 					<div class="top-rated top-viewed clearfix">
 						<h1>Top Viewed</h1>
 						<div class="providers-grid center-block clearfix">
 							<ul class="list-inline clearfix">
-								<c:forEach var="provider" items="${tRCProviders}">
+								<c:forEach var="provider" items="${result.collection}">
 									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
 											var="pvAttribute" items="${provider}" varStatus="count">
 											<c:if test="${count.index == 1}">

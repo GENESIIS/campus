@@ -21,7 +21,14 @@ import org.apache.log4j.Logger;
 public class CmdListMoreCourseProviders implements ICommand {
 	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class
 			.getName());
-
+	
+	/**
+	 * @author DJ
+	 * @param helper
+	 * @param view
+	 * @return All course provides course providers
+	 * @throws Exception
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
