@@ -34,15 +34,12 @@ public class CourseInquiryDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
 			ps.setString(1, spi.getStudentName());
-			log.info(spi.getStudentName());
 			ps.setString(2, spi.getStudentEmail());
-			log.info(spi.getStudentEmail());
 			ps.setString(3, spi.getTelephoneCountryCode());
 			ps.setString(4, spi.getTelephoneAreaCode());
 			ps.setString(5, spi.getTelephone());
 			ps.setString(6, spi.getInquiryTitle());
 			ps.setString(7, spi.getInquiry());
-			log.info(spi.getStudent());
 			ps.setInt(8, spi.getStudent());
 			ps.setInt(9, spi.getProgramme());
 			
@@ -60,7 +57,7 @@ public class CourseInquiryDAO implements ICrud {
 			}
 			conn.close();
 		}
-		log.info("successfylly insert data Status = " + status);
+		
 		return status;
 	}
 
