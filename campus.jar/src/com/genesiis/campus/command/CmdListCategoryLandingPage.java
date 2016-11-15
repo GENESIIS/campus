@@ -4,7 +4,7 @@ package com.genesiis.campus.command;
 //20161103 JH c7-higher-education-landing-page implement unimplemented methods
 //20161103 JH c7-higher-education-landing-page refactor code
 //20161104 JH c7-higher-education-landing-page code modification 
-//20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter
+//20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter , add method comments
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -36,6 +36,8 @@ public class CmdListCategoryLandingPage implements ICommand {
 	}
 
 	/**
+	 * execute method used to retrieve data related to a single category
+	 * landing page. 
 	 * @author JH
 	 * @param helper
 	 * @param view
