@@ -57,6 +57,31 @@ public class CmdListCategoryProgrammes implements ICommand {
 		
 	}
 
+	/**
+	 * @author Miyuru
+	 * 
+	 * Returns the Programme collection, and attaches a Level/Major collection and other 
+	 * related details based on that Programme collection to the  IDataHelper parameter 
+	 * upon receiving a client request with a value indicating a categoryCode that the 
+	 * Programmes must fall into.
+	 * 
+	 * @param An IDataHelper typed object wrapping a HttpServletRequest containing client 
+	 * parameters.
+	 * 
+	 * @param An IView typed object wrapping a Collection intended to be assigned the 
+	 * Programme data pay-load
+	 * 
+	 * @return An IView containing the collection of Programmes that match the categoryCode that is
+	 *  sent by the client as a request parameter. The method, in addition to this, also sets several 
+	 *  attributes to the HttpServletRequest that is wrapped inside the IDataHelper typed object that 
+	 *  is passed here, such as a map that has Town details of Programmes mapped against the 
+	 *  the related code of the related Programme, the "filter" type to be used to further separate 
+	 *  this Programme collection (Such as Majors or Levels) etc. If the provided value for categoryCode
+	 *  represents the category record that matches the name of EducationCategory.CORPORATE_TRAINING 
+	 *  constant, it is the Major that is used as the filter type and the list of unique Majors of the 
+	 *  Programme collection will be set as an attribute, else, it is the Level that is considered.
+	 * 
+	 */
 	@Override 
 	public IView execute(IDataHelper helper, IView iview) throws Exception {
 		
