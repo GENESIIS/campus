@@ -69,6 +69,25 @@ public class CategoryDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
 				
+				
+				/**
+				 * this section of the code used to get the enum value of the category, 
+				 * which is used to identify the category. The enum value is stored in the
+				 * database in future. But to support the current code following switch case is used
+				 * to generate the enum value for the category.
+				 */
+				int categoryId = Integer.parseInt(rs.getString("CODE"));
+				String categoryIdentifierString = null;
+				switch(categoryId){
+				case 1: categoryIdentifierString = "PRE_EDUCATION"; break;
+				case 2: categoryIdentifierString = "SCHOOL_EDUCATION"; break;
+				case 3: categoryIdentifierString = "HIGHER_EDUCATION"; break;
+				case 4: categoryIdentifierString = "CORPORATE_TRAINING"; break;
+				case 5: categoryIdentifierString = "VOCATIONAL_TRAINING"; break;
+				case 6: categoryIdentifierString = "TALENT_AND_SKILL"; break;
+				default: categoryIdentifierString = "DEFAULT_CATEGORY"; break;
+				}
+								
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));
@@ -77,6 +96,7 @@ public class CategoryDAO implements ICrud {
 				singleCategoryList.add(rs.getString("CRTBY"));
 				singleCategoryList.add(rs.getString("MODON"));
 				singleCategoryList.add(rs.getString("MODBY"));
+				singleCategoryList.add(categoryIdentifierString);
 
 				final Collection<String> singleCategoryCollection = singleCategoryList;
 				allCategoryList.add(singleCategoryCollection);
