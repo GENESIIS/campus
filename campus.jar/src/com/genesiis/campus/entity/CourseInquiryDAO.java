@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161101 AS C8-inquiry-form-for-course add method  query modified
 //20161102 AS C8-inquiry-form-for-course add method  query modified
 //20161103 AS C8-inquiry-form-for-course add method  query modified
+//20161115 AS C8-inquiry-form-for-course removed query.toString()
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class CourseInquiryDAO implements ICrud {
 		try {
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query.toString());
+			ps = conn.prepareStatement(query);
 			ps.setString(1, spi.getStudentName());
 			ps.setString(2, spi.getStudentEmail());
 			ps.setString(3, spi.getTelephoneCountryCode());
