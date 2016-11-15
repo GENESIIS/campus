@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161027 CM c9-make-inquiry-for-institute INIT InstituteInquiryDAO.java
 //20161027 CM c9-make-inquiry-for-institute Modified add() method
 //20161031 CM c9-make-inquiry-for-institute Renamed as CourseProviderInquiryDAO.java
+//20161115 CM c9-make-inquiry-for-institute Modified add() method(Code Review Modifications).
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +41,7 @@ public class CourseProviderInquiryDAO implements ICrud {
 
 			try {
 				conn = ConnectionManager.getConnection();
-				preparedStatement = conn.prepareStatement(query.toString());
+				preparedStatement = conn.prepareStatement(query);
 				preparedStatement.setString(1, instituteInquiry.getStudentName());
 				preparedStatement.setString(2, instituteInquiry.getStudentEmail());
 				preparedStatement.setString(3, instituteInquiry.getTelephoneCountryCode());
