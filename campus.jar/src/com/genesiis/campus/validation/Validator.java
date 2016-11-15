@@ -2,10 +2,9 @@ package com.genesiis.campus.validation;
 
 //20161102 JH c7-higher-education-landing-page Validator.java created
 //20161102 JH c7-higher-education-landing-page getDuration() created
+//20161115 JH c7-higher-education-landing-page isEmpty()method modified to support any string validation
 
 import java.util.ArrayList;
-
-import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 
@@ -24,9 +23,9 @@ public class Validator {
 		return programDuration;
 	}
 
-	public boolean isEmpty(IDataHelper helper) {
+	public boolean isEmpty(String parameter) {
 		boolean valid = false;
-		if (helper.getParameter("categoryId") == null) {
+		if (parameter == null) {
 			valid = true;
 		}
 
