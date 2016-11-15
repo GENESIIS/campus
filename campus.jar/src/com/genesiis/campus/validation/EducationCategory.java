@@ -1,6 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161114 MM c5-corporate-training-landing-page-MP Initialised file
+//20161115 MM c5-corporate-training-landing-page-MP Added PRE_EDUCATION constant
 
 /**
 * EducationCategory enum is for the purpose of making the connection between 
@@ -37,6 +38,7 @@ package com.genesiis.campus.validation;
 
 public enum EducationCategory {
 	
+	PRE_EDUCATION,
 	SCHOOL_EDUCATION,
 	HIGHER_EDUCATION,
 	CORPORATE_TRAINING;
