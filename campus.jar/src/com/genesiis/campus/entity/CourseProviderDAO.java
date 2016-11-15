@@ -63,7 +63,7 @@ public class CourseProviderDAO implements ICrud{
 				singleEmployeeList.add(rs.getString("COURSEINQUIRYEMAIL"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
 				InquiryEmail.add(singleEmployeeCollection);
-				log.info(singleEmployeeList);
+				
 			}
 		} catch (SQLException SQLexception) {
 			log.error("findById(Object code): SQLexception " + SQLexception.toString());
