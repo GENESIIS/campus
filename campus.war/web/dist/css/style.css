@@ -817,6 +817,51 @@ body, html {
                 font-size: 15px;
                 line-height: 20px; }
 
+.course-view {
+  display: block;
+  position: relative; }
+  .course-view .rating-box {
+    display: inline-block;
+    position: relative;
+    width: 23%;
+    float: left; }
+  .course-view .details-view-panel {
+    display: inline-block;
+    position: relative;
+    width: 77%;
+    float: right; }
+    .course-view .details-view-panel .course-info .info-header {
+      padding-top: 60px;
+      padding-bottom: 60px; }
+      .course-view .details-view-panel .course-info .info-header .course-name a {
+        font-family: "Slabo 27px", serif;
+        font-size: 48px;
+        line-height: 60px;
+        color: #3a8af7; }
+      .course-view .details-view-panel .course-info .info-header .degree-level {
+        font-family: "Slabo 27px", serif;
+        font-size: 24px;
+        color: #62666c; }
+        .course-view .details-view-panel .course-info .info-header .degree-level span {
+          font-size: 16px;
+          color: #a2b5cf; }
+      .course-view .details-view-panel .course-info .info-header .degree-type {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        color: #919dad;
+        line-height: 24px; }
+      .course-view .details-view-panel .course-info .info-header .degree-provider a {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        color: #4d83ca;
+        line-height: 24px; }
+      .course-view .details-view-panel .course-info .info-header .degree-description {
+        font-size: 20px;
+        color: #919dad;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        line-height: 24px; }
+
 /* Modules */
 .btn-submit {
   width: 45%;
