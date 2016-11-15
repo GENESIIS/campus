@@ -31,7 +31,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
-			String categoryCodeString = helper.getParameter("category");
+			String categoryCodeString = helper.getParameter("categoryCode");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
