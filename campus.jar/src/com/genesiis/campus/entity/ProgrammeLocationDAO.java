@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161104 CM c13-Display course details INIT ProgrammeLocationDAO.java
 //20161104 CM c13-Display course details Modified findById() method
+//20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,7 +58,7 @@ public class ProgrammeLocationDAO implements ICrud {
 
 			String query = "SELECT p.NAME, t.NAME , d.NAME FROM CAMPUS.PROGRAMME p inner join CAMPUS .PROGRAMMETOWN g "
 					+ "on p.CODE=g.PROGRAMME inner join CAMPUS.TOWN t on t.CODE=g.town inner join CAMPUS.DISTRICT d on t.DISTRICT=d.CODE where p.CODE=? and g.ISACTIVE=1";
-			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
 

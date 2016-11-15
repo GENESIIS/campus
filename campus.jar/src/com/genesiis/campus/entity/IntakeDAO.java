@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161027 CM c13-Display course details Change query according to new DDL
 //20161028 CM c13-Display course details  Created  method comment.
 //20161110 CM c13-Display-course-details Formatted code 
+//20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,7 +62,7 @@ public class IntakeDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 
 			String query = "SELECT * FROM [CAMPUS].[INTAKE] WHERE PROGRAMME = ? AND ISACTIVE='1'";
-			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
 
