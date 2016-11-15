@@ -17,6 +17,7 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='../../../../dist/js/institute/validation/validation.js'></script>
 <script src='/dist/js/institute/institute.helper.js'></script>
 </head>
 <body>
