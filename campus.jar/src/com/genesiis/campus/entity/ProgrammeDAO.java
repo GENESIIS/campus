@@ -6,6 +6,9 @@ package com.genesiis.campus.entity;
 //20161027 CM c13-Display course details Change query according to new DDL
 //20161101 CM c13-Display course details Change findById() sql query 
 //20161110 CM c13-Display-course-details Formatted code 
+//20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161115 CM c13-Display-course-details Removed unused variable
+//20161115 CM c13-Display-course-details Removed duration calculation methods and moved to validator class
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +22,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.Validator;
 
 public class ProgrammeDAO implements ICrud {
 
@@ -65,19 +69,20 @@ public class ProgrammeDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		try {
 			final Programme programme = (Programme) code;
-
+			final Validator validator=new Validator();
+			
 			conn = ConnectionManager.getConnection();
 
 			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.UNIQUEPREFIX,p.IMAGE,l.NAME,m.NAME,p.EMAIL,c.ACCOUNTTYPE from CAMPUS.PROGRAMME p"
 					+ " inner join CAMPUS.COURSEPROVIDER c on p.COURSEPROVIDER=c.CODE inner join CAMPUS.LEVEL l on p.level=l.code inner join CAMPUS.MAJOR m on m.code=p.major where p.CODE=?";
-			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
-			HashMap<String, Object> hashmap = new HashMap<String, Object>();
 			if (rs.next()) {
 
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
-				calculateYears(rs.getString(3));
+			//	calculateYears(rs.getString(3));
+				
 				singleprogrameDetails.add(rs.getString(1));// Programme name
 				singleprogrameDetails.add(rs.getString(2));// Description
 				singleprogrameDetails.add(rs.getString(3));// Duration
@@ -86,22 +91,33 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(6));// counselorPhone
 				singleprogrameDetails.add(rs.getString(7));// Course provider
 															// Name
-				int accountType=Integer.parseInt(rs.getString(13));
-				if(accountType==1){
-					singleprogrameDetails.add(rs.getString(8)+".campus.lk");// Course provider mini Web link
-				}else{
-					singleprogrameDetails.add("#");// Course provider  Web link
+				int accountType = Integer.parseInt(rs.getString(13));
+				if (accountType == 1) {
+					singleprogrameDetails.add(rs.getString(8) + ".campus.lk");// Course
+																				// provider
+																				// mini
+																				// Web
+																				// link
+				} else {
+					singleprogrameDetails.add("#");// Course provider Web link
 				}
-				
+
 				singleprogrameDetails.add(rs.getString(9));// Image
 				singleprogrameDetails.add(rs.getString(10));// Level Name
 				singleprogrameDetails.add(rs.getString(11));// Major Name
-				singleprogrameDetails.add(String.valueOf(years));//years
-				singleprogrameDetails.add(String.valueOf(months));//months
-				singleprogrameDetails.add(String.valueOf(weeks));//weeks
-				singleprogrameDetails.add(String.valueOf(days));//days
-				singleprogrameDetails.add(rs.getString(12));
 				
+				//Get years/Months/weeks/dates count
+				years=validator.calculateYears(rs.getString(3));
+				months=validator.calculateMonths();
+				weeks=validator.calculateWeeks();
+				days=validator.calculateDates();
+				
+				singleprogrameDetails.add(String.valueOf(years));// years
+				singleprogrameDetails.add(String.valueOf(months));// months
+				singleprogrameDetails.add(String.valueOf(weeks));// weeks
+				singleprogrameDetails.add(String.valueOf(days));// days
+				singleprogrameDetails.add(rs.getString(12));
+
 				programmeDetails.add(singleprogrameDetails);
 
 			}
@@ -120,91 +136,7 @@ public class ProgrammeDAO implements ICrud {
 		return programmeDetails;
 	}
 
-	/**
-	 * Calculate number of years in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return void
-	 */
-	public void calculateYears(String duration) {
-		try {
-
-			float inputAsFloat = Float.parseFloat(duration);
-
-			// the input is an integral day count, with a possible fractional
-			// part representing time as a fraction of one day
-			int totalDays = (int) inputAsFloat;
-
-			// ignores leap years
-			years = (int) totalDays / 365;
-			totalDays %= 365;
-
-			calculateMonth(totalDays);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-	}
-
-	/**
-	 * Calculate number of months in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return void
-	 */
-	public void calculateMonth(int totalDays) {
-		try {
-
-			// assumes all months have 30 days
-			months = (int) totalDays / 30;
-			totalDays %= 30;
-
-			calculateWeeks(totalDays);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-	}
-
-	/**
-	 * Calculate number of weeks in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return void
-	 */
-	public void calculateWeeks(int totalDays) {
-		try {
-			weeks = (int) totalDays / 7;
-			totalDays %= 7;
-			calculateDates(totalDays);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-	}
-
-	/**
-	 * Calculate number of days in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return void
-	 */
-	public void calculateDates(int totalDays) {
-		try {
-			days = (int) totalDays;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
+	
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
