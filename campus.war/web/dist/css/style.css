@@ -849,7 +849,7 @@ body, html {
         font-family: "Roboto", sans-serif;
         font-size: 18px;
         color: #919dad;
-        line-height: 24px; }
+        line-height: 35px; }
       .course-view .details-view-panel .course-info .info-header .degree-provider a {
         font-family: "Roboto", sans-serif;
         font-size: 16px;
@@ -861,6 +861,9 @@ body, html {
         padding-top: 5px;
         padding-bottom: 10px;
         line-height: 24px; }
+    .course-view .details-view-panel .course-info .info-table .info-section .section-content {
+      padding-top: 15px;
+      padding-bottom: 35px; }
 
 /* Modules */
 .btn-submit {
@@ -960,5 +963,27 @@ body, html {
 
 .slideable {
   display: none; }
+
+.section-header {
+  display: block;
+  width: 100%;
+  background: #7da7d9;
+  padding-left: 25px; }
+  .section-header a {
+    font-size: 25px;
+    font-family: "Slabo 27px", serif;
+    color: #fff;
+    line-height: 45px; }
+
+.sub-row {
+  display: block;
+  position: relative;
+  border-bottom: 3px solid #7da7d9;
+  padding-bottom: 8px; }
+  .sub-row a {
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    color: #595e6b;
+    line-height: 30px; }
 
 /*# sourceMappingURL=style.css.map */
