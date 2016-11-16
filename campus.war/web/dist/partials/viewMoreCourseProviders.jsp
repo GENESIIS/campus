@@ -41,9 +41,25 @@ article {
 </head>
 <body>
 	<h2>More Course Providers View</h2>
+	<h2>More Course Providers View2</h2>
 	<div class="container">
 
 		<header>
+			<select id="selectedCat" name="selectedCat">
+			   <option value="0">--Category--</option>
+				<c:forEach var="catOuterTypes" items="${categoryList}">
+					<c:forEach var="catTypes" items="${catOuterTypes}"
+						varStatus="count">
+						<c:if test="${count.index == 0}">
+							<c:set var="catCode" value="${catTypes}" />
+						</c:if>
+						<c:if test="${count.index == 1}">
+							<c:set var="catName" value="${catTypes}" />
+						</c:if>
+					</c:forEach>
+					<option value="${catCode}">${catName}</option>
+				</c:forEach>
+			</select>
 			<select>
 				<option value="1">--Category--</option>
 				<option value="2">Higher Education</option>

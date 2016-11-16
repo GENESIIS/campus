@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+
 public class LevelDAO  implements ICrud{
 	static org.apache.log4j.Logger log = Logger.getLogger(LevelDAO.class.getName());
 
