@@ -87,7 +87,7 @@ public class CmdGenerateEmail implements ICommand {
 			
 			 ICrud genesiis = new SystemConfigDAO();
 			 try{
-				 	validateFrontEndUserProvidedInformation(helper);
+				 	//validateFrontEndUserProvidedInformation(helper);
 				 	boolean isResponseSuccess =isReCaptureResponseSuccess(helper);
 				 	
 					// Verify whether the input from Human or Robot
