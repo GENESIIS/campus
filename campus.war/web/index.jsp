@@ -6,13 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
-	<h1>Hello World..!! </h1>
-	<h1>List Institutes </h1>
+<body>	
+	<h1>LIST COURSE PROVIDER </h1>
+	<h4>* Please enter category code for each category wise course provider list</h4>
 	<!-- <a href="dummyPage.jsp">Click Here to Proceed</a> -->
 	<form action="PublicController" method="post">
 		<input type="text" name="category">
-		<button type="submit" name="CCO" value="LIST_TOP_COURSE_PROVIDERS">TOP CP lIST</button>
+		<button type="submit" name="CCO" value="LIST_TOP_COURSE_PROVIDERS">TOP CP  LIST</button>
 	</form>
 	<form action="PublicController" method="post">
 		<input type="text" name="category">

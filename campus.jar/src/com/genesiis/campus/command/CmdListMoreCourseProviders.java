@@ -26,7 +26,14 @@ import org.apache.log4j.Logger;
 public class CmdListMoreCourseProviders implements ICommand {
 	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class
 			.getName());
-
+	
+	/**
+	 * @author DJ
+	 * @param helper
+	 * @param view
+	 * @return All course provides course providers
+	 * @throws Exception
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
@@ -36,7 +43,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
-			String categoryCodeString = helper.getParameter("category");
+			String categoryCodeString = helper.getParameter("categoryCode");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
