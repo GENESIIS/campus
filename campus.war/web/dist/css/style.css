@@ -825,7 +825,7 @@ body, html {
     position: relative;
     width: 23%;
     float: left;
-    padding: 60px 20px; }
+    padding: 60px 35px; }
     .course-view .left-panel .category-image {
       text-align: center;
       padding-bottom: 60px; }
@@ -835,38 +835,48 @@ body, html {
       border: 1px solid #cccccc;
       border-radius: 11px;
       padding: 15px; }
-      .course-view .left-panel .rating-box div {
-        padding: 25px 0; }
-        .course-view .left-panel .rating-box div a {
+      .course-view .left-panel .rating-box .option-link {
+        padding: 25px 0 25px 10px; }
+        .course-view .left-panel .rating-box .option-link a {
           line-height: 50px;
           color: #7a8696;
           font-family: "Slabo 27px", serif;
-          font-size: 30px;
+          font-size: 26px;
           padding-left: 15px; }
-        .course-view .left-panel .rating-box div i {
+        .course-view .left-panel .rating-box .option-link i {
           display: block;
           height: 50px;
           width: 50px;
           float: left;
           background-size: cover !important; }
-        .course-view .left-panel .rating-box div .ico-rate-us {
-          background: url("../i/social-media/fb.png"); }
+        .course-view .left-panel .rating-box .option-link .ico-rate-us {
+          background: url("../i/thumbup.png"); }
+        .course-view .left-panel .rating-box .option-link .ico-inquire {
+          background: url("../i/chat.png"); }
+        .course-view .left-panel .rating-box .option-link .ico-apply {
+          background: url("../i/edit.png"); }
       .course-view .left-panel .rating-box .social-media-links {
-        display: block; }
-        .course-view .left-panel .rating-box .social-media-links div {
-          display: block; }
-          .course-view .left-panel .rating-box .social-media-links div a {
+        display: block;
+        padding-top: 25px;
+        padding-bottom: 10px; }
+        .course-view .left-panel .rating-box .social-media-links .s-icon {
+          display: block;
+          padding-left: 5px;
+          padding-right: 5px; }
+          .course-view .left-panel .rating-box .social-media-links .s-icon a {
             display: block;
             width: 50px;
             height: 50px;
-            background-size: cover !important; }
-          .course-view .left-panel .rating-box .social-media-links div .ico-fb {
+            background-size: cover !important;
+            margin-left: auto;
+            margin-right: auto; }
+          .course-view .left-panel .rating-box .social-media-links .s-icon .ico-fb {
             background: url("../i/social-media/fb.png"); }
-          .course-view .left-panel .rating-box .social-media-links div .ico-google {
+          .course-view .left-panel .rating-box .social-media-links .s-icon .ico-google {
             background: url("../i/social-media/g+.png"); }
-          .course-view .left-panel .rating-box .social-media-links div .ico-linkedin {
+          .course-view .left-panel .rating-box .social-media-links .s-icon .ico-linkedin {
             background: url("../i/social-media/in.png"); }
-          .course-view .left-panel .rating-box .social-media-links div .ico-twitter {
+          .course-view .left-panel .rating-box .social-media-links .s-icon .ico-twitter {
             background: url("../i/social-media/twtr.png"); }
   .course-view .details-view-panel {
     display: inline-block;
