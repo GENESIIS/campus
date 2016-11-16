@@ -3,6 +3,8 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161027 TR c11 styling all category selections -->
 <!-- c11-criteria-based-filter-search modified UI to display Dynamic data -->
+<!-- 20161116 PN c11-criteria-based-filter-search added a name and id to checkbox near "All" -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,7 +143,7 @@ $(document).ready(function() {
 						<!-- Drop item header -->
 						<div class="item-header">
 							<label>All <span id="courseCount" name="courseCount"></span></label>
-							<a href="javascript:"><input type="checkbox"></a>
+							<a href="javascript:"><input id="selectAll" id="selectAll" type="checkbox"></a>
 						</div>
 					</div>
 
@@ -150,8 +152,7 @@ $(document).ready(function() {
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label class="flip">Major <span id="majorCount"
-								name="majorCount"></span></label> <a href="javascript:"><input
-								type="checkbox"></a>
+								name="majorCount"></span></label> <a href="javascript:"></a>
 						</div>
 
 						<!-- Item Drop list -->
