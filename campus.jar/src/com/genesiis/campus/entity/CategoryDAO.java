@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161104 JH c7-higher-education-landing-page findById method code modified : remove unwanted loggers
 //20161115 JH c7-higher-education-landing-page findById method code modified : set enum class values
 //20161115 JH c7-higher-education-landing-page getAll() method : added method comments
+//20161116 JH c7-higher-education-landing-page getAll() method : code review mx modifications
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -109,6 +110,13 @@ public class CategoryDAO implements ICrud {
 			throw sqlException;
 		} catch (Exception exception) {
 			log.error("findById() : Exception " + exception.toString());
+		}finally{
+			if(preparedStatement != null){
+				preparedStatement.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 
 		return allCategoryList;
