@@ -32,4 +32,9 @@ public class Validator {
 
 		return valid;
 	}
+	
+	public static boolean isInteger(String numString) {
+		// Implementation
+		return false;
+	}
 }
