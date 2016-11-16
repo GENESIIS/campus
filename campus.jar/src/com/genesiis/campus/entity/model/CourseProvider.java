@@ -1,3 +1,5 @@
+//20161026 MM c5-corporate-training-landing-page Created class in this branch
+
 package com.genesiis.campus.entity.model;
 
 public class CourseProvider {
