@@ -827,15 +827,47 @@ body, html {
     float: left;
     padding: 60px 20px; }
     .course-view .left-panel .category-image {
-      text-align: center; }
+      text-align: center;
+      padding-bottom: 60px; }
       .course-view .left-panel .category-image img {
         width: 175px; }
     .course-view .left-panel .rating-box {
       border: 1px solid #cccccc;
       border-radius: 11px;
       padding: 15px; }
-      .course-view .left-panel .rating-box div > a {
-        line-height: 40px; }
+      .course-view .left-panel .rating-box div {
+        padding: 25px 0; }
+        .course-view .left-panel .rating-box div a {
+          line-height: 50px;
+          color: #7a8696;
+          font-family: "Slabo 27px", serif;
+          font-size: 30px;
+          padding-left: 15px; }
+        .course-view .left-panel .rating-box div i {
+          display: block;
+          height: 50px;
+          width: 50px;
+          float: left;
+          background-size: cover !important; }
+        .course-view .left-panel .rating-box div .ico-rate-us {
+          background: url("../i/social-media/fb.png"); }
+      .course-view .left-panel .rating-box .social-media-links {
+        display: block; }
+        .course-view .left-panel .rating-box .social-media-links div {
+          display: block; }
+          .course-view .left-panel .rating-box .social-media-links div a {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background-size: cover !important; }
+          .course-view .left-panel .rating-box .social-media-links div .ico-fb {
+            background: url("../i/social-media/fb.png"); }
+          .course-view .left-panel .rating-box .social-media-links div .ico-google {
+            background: url("../i/social-media/g+.png"); }
+          .course-view .left-panel .rating-box .social-media-links div .ico-linkedin {
+            background: url("../i/social-media/in.png"); }
+          .course-view .left-panel .rating-box .social-media-links div .ico-twitter {
+            background: url("../i/social-media/twtr.png"); }
   .course-view .details-view-panel {
     display: inline-block;
     position: relative;
@@ -844,7 +876,7 @@ body, html {
     padding-right: 90px; }
     .course-view .details-view-panel .course-info .info-header {
       padding-top: 60px;
-      padding-bottom: 60px; }
+      padding-bottom: 50px; }
       .course-view .details-view-panel .course-info .info-header .course-name a {
         font-family: "Slabo 27px", serif;
         font-size: 46px;
