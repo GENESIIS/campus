@@ -14,8 +14,6 @@ import com.genesiis.campus.command.CmdListMajors;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
-import org.apache.log4j.Logger;
-
 public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
