@@ -5,6 +5,7 @@
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
 <!-- 20161109 DN c10-contacting-us-page-MP added the java_script to the page onsubmit fom function refactor recapture inserted  -->
 <!-- 20161111 DN c10-contacting-us-page-MP added clearField(elementId) method-->
+<!--20161116 DN c10-contacting-us-page-MP included validation.js file to view -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -23,6 +24,7 @@
     <!-- W3-Include -->
     <script src="/dist/bower-components/w3/w3data.js"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/dist/js/institute/validation/validation.js"></script>
     <script src="/dist/js/contactUs.js"></script>
 
 </head>
