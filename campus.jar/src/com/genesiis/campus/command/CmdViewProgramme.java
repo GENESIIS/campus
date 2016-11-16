@@ -117,7 +117,7 @@ public class CmdViewProgramme implements ICommand {
 	 * @return double value of total ratings
 	 */
 	public double calculateRating(
-			Collection<Collection<String>> programmeRatingCollection) {
+			Collection<Collection<String>> programmeRatingCollection) throws Exception {
 		double ratingValue = 0;
 		double ratingCount = 0;
 		double allRateCount = 0;
@@ -146,6 +146,7 @@ public class CmdViewProgramme implements ICommand {
 			totalRating = Double.valueOf(df.format(totalRating));
 		} catch (Exception e) {
 			log.error("calculateRating() : e" + e.toString());
+			throw e;
 		}
 		return totalRating;
 	}
