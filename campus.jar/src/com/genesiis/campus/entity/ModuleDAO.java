@@ -87,8 +87,8 @@ public class ModuleDAO implements ICrud {
 
 					singleModuleDetails.add(rs.getString(7));// Tutored by
 				}
-
-				programmeDetails.add(singleModuleDetails);
+				final Collection<String> singleModuleCollection = singleModuleDetails;
+				programmeDetails.add(singleModuleCollection);
 
 			}
 		} catch (Exception exception) {

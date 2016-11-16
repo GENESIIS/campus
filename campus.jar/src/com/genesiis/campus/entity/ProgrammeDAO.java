@@ -82,7 +82,6 @@ public class ProgrammeDAO implements ICrud {
 			if (rs.next()) {
 
 				final ArrayList<String> singleprogrameDetails = new ArrayList<String>();
-			//	calculateYears(rs.getString(3));
 				
 				singleprogrameDetails.add(rs.getString(1));// Programme name
 				singleprogrameDetails.add(rs.getString(2));// Description
@@ -107,7 +106,7 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(rs.getString(10));// Level Name
 				singleprogrameDetails.add(rs.getString(11));// Major Name
 				
-				//Get years/Months/weeks/dates count
+				//Calculate years/Months/weeks/dates count
 				years=validator.calculateYears(rs.getString(3));
 				months=validator.calculateMonths();
 				weeks=validator.calculateWeeks();
