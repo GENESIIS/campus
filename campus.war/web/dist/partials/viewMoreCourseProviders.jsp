@@ -40,8 +40,7 @@ article {
 </style>
 </head>
 <body>
-	<h2>More Course Providers View</h2>
-	<h2>More Course Providers View2</h2>
+	<h2>More Course Providers View</h2>	
 	<div class="container">
 
 		<header>
@@ -60,7 +59,7 @@ article {
 					<option value="${catCode}">${catName}</option>
 				</c:forEach>
 			</select>
-			<select>
+			<!-- <select>
 				<option value="1">--Category--</option>
 				<option value="2">Higher Education</option>
 				<option value="3">School Education</option>
@@ -71,14 +70,14 @@ article {
 				<option value="2">University</option>
 				<option value="3">Private Institute</option>
 				<option value="4">Individual Tutor</option>
-			</select>
+			</select> -->
 			<select>
 			  <option value="1">--District--</option>
 				<option value="2">University</option>
 				<option value="3">Private Institute</option>
 				<option value="4">Individual Tutor</option>
 			</select>
-			<select>
+			<!-- <select>
 			  <option value="1">--Major--</option>
 				<option value="2">University</option>
 				<option value="3">Private Institute</option>
@@ -89,12 +88,42 @@ article {
 				<option value="2">University</option>
 				<option value="3">Private Institute</option>
 				<option value="4">Individual Tutor</option>
-			</select>
+			</select> -->
 		</header>
 
 		<section>
 			<h4>All Course Providers</h4>
 			<table>
+				<tr>
+					<td><label>All <span id="courseCount"
+							name="courseCount"></span></label> <a href="javascript:"><input
+							type="checkbox"></a></td>
+				</tr>
+				<tr>
+					<td><label class="flip">Category <span id=""
+							name=""></span></label> <a href="javascript:"><input
+							type="checkbox"></a></td>
+
+				</tr>
+				<tr>
+					<td><label class="flip">Course Provider Type <span id=""
+							name=""></span></label> <a href="javascript:"><input
+							type="checkbox"></a></td>
+
+				</tr>
+				
+				<tr>
+					<td><label class="flip">Major <span id="majorCount"
+							name="majorCount"></span></label> <a href="javascript:"><input
+							type="checkbox"></a></td>
+
+				</tr>
+				<tr>
+					<td><label class="flip">Levels <span id=""
+							name=""></span></label> <a href="javascript:"><input
+							type="checkbox"></a></td>
+
+				</tr>
 				<tr>
 					<td>
 						<!-- <form action="PublicController" method="post">
