@@ -25,7 +25,7 @@ public enum SystemMessage {
 	NOTUPDATED("Problem when updating data."), 	
 	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 
 	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
-	PASS_REQUEST_SUBMISSION("Request successfull submitted! "),
+	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	private String message;
