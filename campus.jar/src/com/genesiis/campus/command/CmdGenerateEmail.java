@@ -33,7 +33,6 @@ import com.genesiis.campus.validation.Validatory;
 
 import java.sql.Connection;
 import java.util.Date;
-import java.util.Properties;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
