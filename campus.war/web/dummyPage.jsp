@@ -15,17 +15,7 @@
 <body>
 This page is expected to temporarily function as the Home page.
 
-<h3 align="center">To trigger JSON request for Programme details:</h3>
-<div align="center" >
-		<form action="PublicController" method="POST">
-			<input type="text" name="category">
-			<input type="text" name="pageNum">
-			<button type="submit" name="CCO" value="LCP">SUBMIT</button>
-		</form>
-</div>
-<br><br><br>
-
-<h3 align="center">To load JSP containing CourseProvider details:</h3>
+<h3 align="center">To load CategoryLandingPage:</h3>
 <div align="center" >
 	<form action="PublicController" method="POST">
 		<table>
@@ -35,20 +25,24 @@ This page is expected to temporarily function as the Home page.
 			</tr>
 			<tr>
 				<td>1</td>
-				<td>School</td>
+				<td>Pre-education</td>
 			</tr>
 			<tr>
 				<td>2</td>
-				<td>Higher Education</td>
+				<td>School Education</td>
 			</tr>
 			<tr>
 				<td>3</td>
+				<td>Higher Education</td>
+			</tr>
+			<tr>
+				<td>4</td>
 				<td>Corporate Training</td>
 			</tr>
 		</table>
 		<input type="text" name="categoryId" id="categoryId"/>
 		<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE"
-			class="pure-button pure-button-primary">Higher Education</button>
+			class="pure-button pure-button-primary">Submit</button>
 	</form>
 </div>
 </body>
