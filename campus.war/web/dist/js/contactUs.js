@@ -2,18 +2,16 @@
 //20161027 DN c10-contacting-us-page amended isValidEmailFormat(),isValidPhoneNumber() method
 //20161109 DN c10-contacting-us-page-MP validateForm() refactor the method
 //20161109 DN c10-contacting-us-page-MP refactor clearField() the method
+//20161116 DN c10-contacting-us-page-MP methods are exported to /dist/js/institute/validation/validation.js
 
+var theNewScript = document.createElement("script");
+theNewScript.type = "text/javascript";
+theNewScript.src = "../../dist/js/institute/validation/validation.js";
 
 function validateForm(){
 
-//	isFieldFilled(isempty(document.contactUsForm.firstName.value),"First Name Field","firstNameError");
-//	isFieldFilled(isempty(document.contactUsForm.lastName.value),"Last Name Field","lastNameError");
-//	isFieldFilled(isValidEmailFormat(),"Email Field","emailError");
-//	isFieldFilled(isValidPhoneNumber(document.contactUsForm.contactNumber.value),"Phone Number Field","phoneNumberError");
-//	isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field","subjectError");
-//	isFieldFilled(isempty(document.contactUsForm.message.value),"message Field","userMessageError");
-//	isFieldFilled(isHumanTestPassed(),"I'm Not A Robot","captureError");
-	
+
+
 	 if(!(isFieldFilled(isempty(document.contactUsForm.firstName.value),"First Name Field","firstNameError"))){
 		return false;
 	}else if (!(isFieldFilled(isempty(document.contactUsForm.lastName.value),"Last Name Field","lastNameError"))) {
@@ -48,29 +46,6 @@ function isHumanTestPassed(){
 	
 }
 /**
- * isFieldFilled() generate a alert if the passing in 
- * flag is false else the method acts void
- * @param flag expression that evaluates to a boolean
- * @param elementName  string to be append to the produced message
- */
-
-function isFieldFilled(flag, elementName, errorLabelId){		
-	if(!flag){	
-		document.getElementById(errorLabelId).innerHTML = elementName + " Must Be filled Out Correctly!";		
-	}
-	return flag;
-}
-
-/**
- * 
- * @param fieldValue it is the value of a document element
- * @returns true if has content else false
- */
-function isempty(fieldValue){		
-	return ((fieldValue == "") ||(fieldValue == null) )?false : true;
-}
-
-/**
  * isValidEmailFormat method validate a email address
  * @returns boolean if testing email address is a valid
  * one then returns true else return false
@@ -80,33 +55,4 @@ function isValidEmailFormat(){
 	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
 	return isPatternMatch(pattern,emailAddress);
 }
-/**
- * 
- * @param phoneNumber it's the value of phone number field
- * phone number should be 10 character long.amd start from 0
- * method does not test for starting sequence of the phone number
- * @returns {Boolean}
- */
-function isValidPhoneNumber(phoneNumber){
-	var phonenumberPattern= /^0\d{9}$/mg;
-	return isPatternMatch(phonenumberPattern,phoneNumber);
-}
 
-/**
- * @param regularExpression pattern
- * @param source content to act as the source to be matched against the pattern
- * @returns boolean if matches true else false
- */
-function isPatternMatch(regularExpression,source){	
-	return regularExpression.test(source);
-	
-}
-
-/**
- * @param clearField 
- * @param elementId the id of the HTML element
- */
-
-function clearField(elementId){	
-	 $(document).find('#' + elementId).text('');
-}
