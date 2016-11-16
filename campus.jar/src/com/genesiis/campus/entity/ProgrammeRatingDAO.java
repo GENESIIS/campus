@@ -38,7 +38,13 @@ public class ProgrammeRatingDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**
+	 * Get Programme rating details.
+	 * @author Chathuri
+	 * @param Object
+	 *            : programme object of Object type
+	 * @return Collection<Collection<String>> of Collection
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
