@@ -18,7 +18,7 @@
 </head>
 <body>
 	<!-- Header-->
-	<header w3-include-html="dist/partials/layout/header.html"></header>
+	<header w3-include-html="dist/partials/layout/header.jsp"></header>
 <!-- add Programme Id here for test course preview -->
 	<form method="Post" action="PublicController">
 		<input type="text" name="programmeCode" required />
