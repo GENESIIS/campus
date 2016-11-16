@@ -4,26 +4,86 @@
 //20161102 PN c11-criteria-based-filter-search modified addsearchData() method to load data dynamically.
 //20161109 PN c11-criteria-based-filter-search modified getAjaxData() and addsearchData() method to load data dynamically.
 //20161110 PN c11-criteria-based-filter-search modified jQuery method to display searched data on dataTable 
+//20161116 PN c11-criteria-based-filter-search adding reset functionality via check-box -WIP
 
 /**
  * This method id to load category details
  */
 
 $(document).ready(function() {
-		$.ajax({
-			url : '../../PublicController',
-			data : {
-				CCO : 'LIST_CATEGORY_DATA'
-			},
-			dataType : "json",
-			success : function(response) {
-				getAjaxData(response);
-			},
-			error : function(response) {
-				alert("Error: "+response);
-			}
-		});
+	$('#selectAll').attr('checked', false); // Unchecks it
+	displayDetails();
+	
+	$('#selectAll').change(function() {
+        if ($(this).prop('checked')) {
+            displayDetails();
+            var t = $('#example').DataTable();   
+        	$.ajax({
+    			url : '../../PublicController',
+    			data : {
+    				searchData : JSON.stringify(""),
+    				CCO : 'GET_SEARCH_DATA'
+    			},
+    			dataType : "json",
+    			success : function(response) {
+    				var counter = 0;
+    				t.clear().draw();
+    				$.each(response.result, function(index, value) {
+    					var res = value.toString();
+    					var data = res.split(",");
+    					counter++;
+    					
+    					t.row.add( [
+    					            '<div class="provider-info">' +
+    									'<a href="javascript:">' +
+    										'<img src="../../dist/i/'+ data[6].toString().trim() +'" alt="'+ data[4].toString() +'" width="200" height="100">' +
+    									'</a>' +
+    								'</div>',
+    								'<div class="result-box clearfix">' +
+    									'<div class="course-name">' +
+    										'<a href="javascript:">' + data[1].toString() +
+    											'<span class="provider-name">' + " @"+ data[5].toString() +
+    											'</span>' +
+    										'</a>' +
+    									'</div>' +
+    									'<div class="course-info">' +
+    										'<p>'+ data[2].toString() + '</p>' +
+    									'</div>' +
+    								'</div>',
+    								data[3].toString()
+    					        ] ).draw( false );
+
+    				});
+    				$("#courseCount").text(" " +pad(counter, 2));
+    			},
+    			error : function(response) {
+    				alert("Error: "+response);
+    			}
+    		});
+      
+        }
+        else {
+            
+        }
+    });
 });
+
+function displayDetails() {
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			CCO : 'LIST_CATEGORY_DATA'
+		},
+		dataType : "json",
+		success : function(response) {
+			alert(response);
+			getAjaxData(response);
+		},
+		error : function(response) {
+			alert("Error: "+response);
+		}
+	});
+}
 
 function getAjaxData(response) {	
  	var categories = $("#categoryName");
@@ -76,6 +136,7 @@ function getAjaxData(response) {
  * This method id to load major details
  */
 function displayMajor() {
+	$('#selectAll').attr('checked', false); // Unchecks it
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
 	$.get('../../PublicController', {
@@ -102,6 +163,7 @@ function displayMajor() {
  * This method id to load CourseProvider details
  */
 function displayCourseProvider() {
+	$('#selectAll').attr('checked', false); // Unchecks it
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
 	$.get('../../PublicController', {
@@ -127,6 +189,7 @@ function displayCourseProvider() {
  * This method id to load level details
  */
 function displayLevel() {
+	$('#selectAll').attr('checked', false); // Unchecks it
 	var categoryCode = getSelectedData('categorylist', 'categoryName');
 	
 	$.get('../../PublicController', {
@@ -153,6 +216,7 @@ function displayLevel() {
  * This method id to load district details
  */
 function displayDistricts() {
+	$('#selectAll').attr('checked', false); // Unchecks it
 	var instituteCode = getSelectedData('instituelist', 'institueName');
 	
 	$.get('../../PublicController', {
@@ -196,6 +260,7 @@ function pad(number, length) {
 
 
 $(document).ready(function() {
+	$('#selectAll').attr('checked', false); // Unchecks it
     var t = $('#example').DataTable();   
  
     $('#addRow').on( 'click', function () {
