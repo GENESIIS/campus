@@ -21,12 +21,7 @@ import com.genesiis.campus.controller.CampusController;
 public class PublicController extends CampusController {
 	static Logger log = Logger.getLogger(PublicController.class.getName());
 	private static final long serialVersionUID = 1L;
-
-	private String userName;
-	private String password;
-	private String host;
-	private String port;
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
