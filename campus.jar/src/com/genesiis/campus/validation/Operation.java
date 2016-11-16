@@ -14,7 +14,7 @@ public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
 	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
-	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp");
+	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSON," ");
 			
 	private final String commandString;
 	private final ResponseType responseType;

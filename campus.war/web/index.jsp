@@ -18,5 +18,6 @@
 		<input type="text" name="category">
 		<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">View More</button>
 	</form>
+	<a href="dist/partials/viewMoreCourseProviders.jsp" > link </a>
 </body>
 </html>

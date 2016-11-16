@@ -38,6 +38,52 @@ article {
 	overflow: hidden;
 }
 </style>
+<!-- Bootstrap & CSS Style-->
+<link href="../bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+
+<!-- W3-Include -->
+<script src="http://www.w3schools.com/lib/w3data.js"></script>
+<script type="text/javascript"
+	src="../bower-components/jquery/jquery.min.js"></script>
+<!-- <script src="../js/filterSearch/ui-populate-helper.js"></script> -->
+
+<!--     Data Table CSS -->
+<!-- <link href="../datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+<!-- jQuery & Other js -->
+<script src="../bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	alert(" test*****************");
+	$.ajax({url : '../../PublicController',
+		data : {
+			CCO : 'LIST_ALL_COURSE_PROVIDERS'
+		},
+		dataType : "json",
+		success : function(response) {
+			alert(" success*****************");
+			getAjaxData(response);
+		}
+	});
+});
+
+ function getAjaxData(response) {	 
+	
+	alert(" getAjaxData*****************");
+	var categories = $("#categoryName");
+} 
+
+
+
+</script>
 </head>
 <body>
 	<h2>More Course Providers View</h2>	
@@ -59,6 +105,21 @@ article {
 					<option value="${catCode}">${catName}</option>
 				</c:forEach>
 			</select>
+				<select id="selectedCat" name="selectedCat">
+			   <option value="0">--District--</option>
+				<c:forEach var="districtOuterList" items="${districtList}">
+					<c:forEach var="districtInnerList" items="${districtOuterList}"
+						varStatus="count">
+						<c:if test="${count.index == 0}">
+							<c:set var="catCode" value="${districtInnerList}" />
+						</c:if>
+						<c:if test="${count.index == 1}">
+							<c:set var="catName" value="${districtInnerList}" />
+						</c:if>
+					</c:forEach>
+					<option value="${catCode}">${catName}</option>
+				</c:forEach>
+			</select>
 			<!-- <select>
 				<option value="1">--Category--</option>
 				<option value="2">Higher Education</option>
@@ -71,12 +132,12 @@ article {
 				<option value="3">Private Institute</option>
 				<option value="4">Individual Tutor</option>
 			</select> -->
-			<select>
+			<!-- <select>
 			  <option value="1">--District--</option>
 				<option value="2">University</option>
 				<option value="3">Private Institute</option>
 				<option value="4">Individual Tutor</option>
-			</select>
+			</select> -->
 			<!-- <select>
 			  <option value="1">--Major--</option>
 				<option value="2">University</option>
