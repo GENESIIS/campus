@@ -60,12 +60,12 @@ public class CmdListCategoryLandingPage implements ICommand {
 
 			final Programme programme = new Programme();
 
-			programme.setActive(true);
-			programme.setProgrammeStatus(1);
-			programme.setCategory(Integer.parseInt(categoryId));
-
 			try {
-
+				
+				programme.setActive(true);
+				programme.setProgrammeStatus(1);
+				programme.setCategory(Integer.parseInt(categoryId));
+				
 				final Category category = new Category();
 
 				category.setCode(Integer.parseInt(categoryId));
