@@ -2,6 +2,7 @@
 <!-- 20161109 JH c7-higher-education-landing-page-MP display featured course providers -->
 <!-- 20161110 JH c7-higher-education-landing-page-MP add banner panel to the landing page -->
 <!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
+<!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -20,12 +21,15 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- custom javascript -->
+<script src="/dist/js/header/ui-populate-helper.js"></script>
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <style type="text/css">
 </style>
 </head>
-<body>
+<body onload="getCategoryData()">
 
 	<!-- include Header-->
 	<header class="header">
@@ -37,8 +41,8 @@
 	<div class="main-category clearfix">
 
 		<!-- get category data -->
-		<c:set var="code" value=""/>
-		<c:set var="categoryIdentifier" value=""/>
+		<c:set var="code" value="" />
+		<c:set var="categoryIdentifier" value="" />
 
 
 		<!-- page inner header -->
@@ -123,7 +127,7 @@
 			<div class="sliding-info-panel">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-					<c:set var="provider" value=""/>
+					<c:set var="provider" value="" />
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 
@@ -155,7 +159,7 @@
 												<button type="submit" name="CCO" id="CCO"
 													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
 													More</button>
-												<c:set var="provider" value="${featuredInstitute[0]}"/>
+												<c:set var="provider" value="${featuredInstitute[0]}" />
 											</div>
 										</div>
 									</div>
@@ -191,7 +195,7 @@
 												<button type="submit" name="CCO" id="CCO"
 													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
 													More</button>
-												<c:set var="provider" value="${featuredInstitute[0]}"/>
+												<c:set var="provider" value="${featuredInstitute[0]}" />
 											</div>
 										</div>
 									</div>
