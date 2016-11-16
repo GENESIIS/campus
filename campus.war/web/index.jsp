@@ -19,20 +19,12 @@
 <body>
 	<!-- Header-->
 	<header w3-include-html="dist/partials/layout/header.jsp"></header>
-<!-- add Programme Id here for test course preview -->
-	<form method="Post" action="PublicController">
-		<input type="text" name="programmeCode" required />
 
-		<button type="submit" name="CCO" id="CCO" value="VPD"
-			class="pure-button pure-button-primary">View Programme
-			Details</button>
-
-	</form>
 	<!-- Main Container - Landing -->
 	<div w3-include-html="dist/partials/landing.html"></div>
 
 	<!-- Footer -->
-	<footer w3-include-html="dist/partials/layout/footer.html"></footer>
+	<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
 
 	<!-- jQuery & Other js -->
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
