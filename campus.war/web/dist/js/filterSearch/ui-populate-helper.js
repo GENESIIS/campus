@@ -76,7 +76,6 @@ function displayDetails() {
 		},
 		dataType : "json",
 		success : function(response) {
-			alert(response);
 			getAjaxData(response);
 		},
 		error : function(response) {
