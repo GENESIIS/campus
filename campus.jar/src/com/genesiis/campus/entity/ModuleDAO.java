@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161028 CM c13-Display-course-details Modified execute() method. Created  method comment.
 //20161102 CM c13-Display-course-details Modified execute() method. 
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,7 +67,6 @@ public class ModuleDAO implements ICrud {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, programme.getCode());
 			ResultSet rs = preparedStatement.executeQuery();
-			HashMap<String, Object> hashmap = new HashMap<String, Object>();
 			while (rs.next()) {
 
 				final ArrayList<String> singleModuleDetails = new ArrayList<String>();

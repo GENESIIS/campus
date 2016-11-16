@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161028 CM c13-Display course details  Created  method comment.
 //20161110 CM c13-Display-course-details Formatted code 
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +76,9 @@ public class IntakeDAO implements ICrud {
 				singleIntakeDetails.add(rs.getString("closingDate"));
 				singleIntakeDetails.add(rs.getString("commencementDate"));
 				singleIntakeDetails.add(rs.getString("fee"));
-				intakeDetails.add(singleIntakeDetails);
+				
+				final Collection<String> singleIntakeCollection = singleIntakeDetails;
+				intakeDetails.add(singleIntakeCollection);
 
 			}
 		} catch (Exception exception) {

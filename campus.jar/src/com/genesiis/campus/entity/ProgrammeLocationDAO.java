@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161104 CM c13-Display course details INIT ProgrammeLocationDAO.java
 //20161104 CM c13-Display course details Modified findById() method
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,7 +68,10 @@ public class ProgrammeLocationDAO implements ICrud {
 
 				singleLocationDetails.add(rs.getString(2));
 				singleLocationDetails.add(rs.getString(3));
-				locationDetails.add(singleLocationDetails);
+				
+				final Collection<String> singleoLocationCollection = singleLocationDetails;
+				
+				locationDetails.add(singleoLocationCollection);
 				
 			}
 		} catch (Exception exception) {

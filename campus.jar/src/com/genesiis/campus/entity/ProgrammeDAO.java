@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
 //20161115 CM c13-Display-course-details Removed unused variable
 //20161115 CM c13-Display-course-details Removed duration calculation methods and moved to validator class
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -118,7 +119,9 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(String.valueOf(days));// days
 				singleprogrameDetails.add(rs.getString(12));
 
-				programmeDetails.add(singleprogrameDetails);
+				final Collection<String> singleProgrammeCollection = singleprogrameDetails;
+				
+				programmeDetails.add(singleProgrammeCollection);
 
 			}
 		} catch (Exception exception) {

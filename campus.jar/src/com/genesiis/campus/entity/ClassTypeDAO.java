@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161101 CM c13-Display course details Modified findById() method.
 //20161110 CM c13-Display-course-details Formatted code 
 //20161115 CM c13-Display-course-details Change logger class name.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,7 +72,9 @@ public class ClassTypeDAO implements ICrud {
 				singleClassTypeDetails.add(rs.getString("MINPARTICIPANTS"));
 				singleClassTypeDetails.add(rs.getString("MAXPARTICIPANTS"));
 				singleClassTypeDetails.add(rs.getString("DESCRIPTION"));
-				classTypeDetails.add(singleClassTypeDetails);
+				
+				final Collection<String> singleClassTypeCollection = singleClassTypeDetails;
+				classTypeDetails.add(singleClassTypeCollection);
 
 			}
 		} catch (Exception exception) {

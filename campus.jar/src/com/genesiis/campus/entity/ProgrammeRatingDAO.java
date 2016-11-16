@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161111 CM c13-Display-course-details INIT ProgrammeRatingDAO.java
 //20161111 CM c13-Display-course-details Modified findById().
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,7 +60,10 @@ public class ProgrammeRatingDAO implements ICrud {
 
 				singleProgrammrRating.add(rs.getString("RATINGVALUE"));//rating value
 				singleProgrammrRating.add(rs.getString(2));//rating count
-				programmeRating.add(singleProgrammrRating);
+				
+				final Collection<String> singleoProgrammeRatingCollection = singleProgrammrRating;
+				
+				programmeRating.add(singleoProgrammeRatingCollection);
 
 			}
 		} catch (Exception exception) {

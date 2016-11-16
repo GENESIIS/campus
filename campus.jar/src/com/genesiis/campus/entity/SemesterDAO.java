@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161025 CM c13-Display course details Modified findById() method
 //20161028 CM c13-Display course details Created method comment
 //20161115 CM c13-Display-course-details Removed toString() method calling in string query variable.
+//20161116 CM c13-Display-course-details Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,7 +72,10 @@ public class SemesterDAO implements ICrud{
 				singleSemeterDetail.add(rs.getString("semesterNo"));
 				singleSemeterDetail.add(rs.getString("description"));
 				singleSemeterDetail.add(rs.getString("code"));
-				semesterDetails.add(singleSemeterDetail);
+				
+				final Collection<String> singleSemesterCollection = singleSemeterDetail;
+				
+				semesterDetails.add(singleSemesterCollection);
 				
 			}
 		} catch (Exception exception) {
