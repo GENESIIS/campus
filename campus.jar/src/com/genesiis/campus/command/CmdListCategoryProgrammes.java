@@ -22,6 +22,8 @@ package com.genesiis.campus.command;
 // 				SystemConfig table
 //20161115 MM c5-corporate-training-landing-page-MP Added further validation code in execute() 
 //				method and set a message list to be sent to be shown to user
+//20161116 MM c5-corporate-training-landing-page-MP Made modifications to change exception throwsing
+//				when invalid parameters are encountered
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.EducationCategory;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.Validator;
 
 public class CmdListCategoryProgrammes implements ICommand {
 	
@@ -94,36 +97,53 @@ public class CmdListCategoryProgrammes implements ICommand {
 		int pageNum = -1;
 		int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
 		String courseProviderLogoPath = "";
+		String categoryStr = "";
 		
 		try {
-			if (helper.getParameter("category") == null) {
-				Log.error("The provided value for category is null!");
-				msgList.add("The provided value for category is null!");
-				throw new IllegalArgumentException("The provided value for category is null!");
-			} 			
-
-			if (helper.getParameter("category").isEmpty()) {
-				Log.error("The provided value for category is empty!");
-				msgList.add("The provided value for category is empty!");
-				throw new IllegalArgumentException("The provided value for category is empty!");
-			} 	
 			
-			try {
-				categoryCode = Integer.parseInt(helper.getParameter("category"));
-			} catch (NumberFormatException nfe){
-				Log.error("The provided value for categoryCode cannot be parsed into a number!");
-				msgList.add("The provided value for categoryCode cannot be parsed into a number!");
-				throw new IllegalArgumentException("The provided value for categoryCode is invalid!");
+			if (helper.getParameter("category") != null && !helper.getParameter("category").isEmpty()) {
+				categoryStr = helper.getParameter("category");
+				if (Validator.isInteger(categoryStr)) {
+					
+					categoryIdentifierString = helper.getParameter("categoryIdentifierString");
+					
+					if (categoryIdentifierString != null && !categoryIdentifierString.isEmpty()) {
+						
+						
+					}
+					
+				}			
+				
 			}
-			
-			categoryIdentifierString = helper.getParameter("categoryIdentifierString");	
-			
-			if (categoryIdentifierString == null) {
-				Log.error("The provided value for categoryIdentifierString is null!");
-				msgList.add("The provided value for categoryIdentifierString is null!");
-				throw new IllegalArgumentException("The provided value for categoryIdentifierString is null!");
-			} 	
-			
+//			
+//			if (helper.getParameter("category") == null) {
+//				Log.error("The provided value for category is null!");
+//				msgList.add("The provided value for category is null!");
+//				throw new IllegalArgumentException("The provided value for category is null!");
+//			} 			
+//
+//			if (helper.getParameter("category").isEmpty()) {
+//				Log.error("The provided value for category is empty!");
+//				msgList.add("The provided value for category is empty!");
+//				throw new IllegalArgumentException("The provided value for category is empty!");
+//			} 	
+//			
+//			try {
+//				categoryCode = Integer.parseInt(helper.getParameter("category"));
+//			} catch (NumberFormatException nfe){
+//				Log.error("The provided value for categoryCode cannot be parsed into a number!");
+//				msgList.add("The provided value for categoryCode cannot be parsed into a number!");
+//				throw new IllegalArgumentException("The provided value for categoryCode is invalid!");
+//			}
+//			
+//			categoryIdentifierString = helper.getParameter("categoryIdentifierString");	
+//			
+//			if (categoryIdentifierString == null) {
+//				Log.error("The provided value for categoryIdentifierString is null!");
+//				msgList.add("The provided value for categoryIdentifierString is null!");
+//				throw new IllegalArgumentException("The provided value for categoryIdentifierString is null!");
+//			} 	
+//			
 			EducationCategory category = null;		
 			try {
 				category = EducationCategory.valueOf(categoryIdentifierString);
