@@ -18,6 +18,7 @@ package com.genesiis.campus.entity;
 //20161110 JH c7-higher-education-landing-page findById method modified : cast course provider description
 //20161110 JH c7-higher-education-landing-page findById method modified : get course provider head office
 //20161111 JH c7-higher-education-landing-page findById method modified : get 10 featured providers
+//20161116 JH c7-higher-education-landing-page findById method modified : code review mx modifications
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,10 +72,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		PreparedStatement preparedStatement2 = null;
 
-		int status = 0;
-		String returnMessage = "";
 		final Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
 
 		/**
