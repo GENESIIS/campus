@@ -22,8 +22,10 @@ package com.genesiis.campus.command;
 // 				SystemConfig table
 //20161115 MM c5-corporate-training-landing-page-MP Added further validation code in execute() 
 //				method and set a message list to be sent to be shown to user
-//20161116 MM c5-corporate-training-landing-page-MP Made modifications to change exception throwsing
-//				when invalid parameters are encountered
+//20161116 MM c5-corporate-training-landing-page-MP Made modifications to change exception 
+//				throwing when invalid parameters are encountered
+//20161116 MM c5-corporate-training-landing-page-MP Overhauled execute() method implementation 
+// 				to change validation and exception handling mechanism
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -88,213 +90,185 @@ public class CmdListCategoryProgrammes implements ICommand {
 	@Override 
 	public IView execute(IDataHelper helper, IView iview) throws Exception {
 		
-		String message = "";
-		Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
-		Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
 		List<String> msgList = new ArrayList<String>();
-		int categoryCode = -1;
-		String categoryIdentifierString = "";
-		int pageNum = -1;
-		int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
-		String courseProviderLogoPath = "";
-		String categoryStr = "";
 		
 		try {
-			
-			if (helper.getParameter("category") != null && !helper.getParameter("category").isEmpty()) {
-				categoryStr = helper.getParameter("category");
-				if (Validator.isInteger(categoryStr)) {
+			String categoryStr = helper.getParameter("category");
+			if (categoryStr != null && !categoryStr.isEmpty()) {
+				if (Validator.isNumber(categoryStr)) {
 					
-					categoryIdentifierString = helper.getParameter("categoryIdentifierString");
+					int categoryCode = Integer.parseInt(categoryStr);
 					
+					String categoryIdentifierString = helper.getParameter("categoryIdentifierString");		
 					if (categoryIdentifierString != null && !categoryIdentifierString.isEmpty()) {
-						
-						
-					}
 					
-				}			
-				
-			}
-//			
-//			if (helper.getParameter("category") == null) {
-//				Log.error("The provided value for category is null!");
-//				msgList.add("The provided value for category is null!");
-//				throw new IllegalArgumentException("The provided value for category is null!");
-//			} 			
-//
-//			if (helper.getParameter("category").isEmpty()) {
-//				Log.error("The provided value for category is empty!");
-//				msgList.add("The provided value for category is empty!");
-//				throw new IllegalArgumentException("The provided value for category is empty!");
-//			} 	
-//			
-//			try {
-//				categoryCode = Integer.parseInt(helper.getParameter("category"));
-//			} catch (NumberFormatException nfe){
-//				Log.error("The provided value for categoryCode cannot be parsed into a number!");
-//				msgList.add("The provided value for categoryCode cannot be parsed into a number!");
-//				throw new IllegalArgumentException("The provided value for categoryCode is invalid!");
-//			}
-//			
-//			categoryIdentifierString = helper.getParameter("categoryIdentifierString");	
-//			
-//			if (categoryIdentifierString == null) {
-//				Log.error("The provided value for categoryIdentifierString is null!");
-//				msgList.add("The provided value for categoryIdentifierString is null!");
-//				throw new IllegalArgumentException("The provided value for categoryIdentifierString is null!");
-//			} 	
-//			
-			EducationCategory category = null;		
-			try {
-				category = EducationCategory.valueOf(categoryIdentifierString);
-			} catch (IllegalArgumentException iae) {
-				// If the categoryIdentifierString does not represent the name of an existing EducationCategory constant 
-				// there will be an IllegalArgumentException.	
-				Log.error("The provided value for categoryIdentifierString is invalid!");
-				msgList.add("The provided value for categoryIdentifierString is invalid!");
-				throw new IllegalArgumentException("The provided value for categoryIdentifierString is invalid!");
-			}
-			
-			Programme programme = new Programme();
-			programme.setCategory(categoryCode);
-			
-			// Get programmes that belong to the same category as categoryCode
-			programmeCollection = programmeDao.findById(programme);	
-			
-			Map<String, ArrayList<List<String>>> programmeCodeToTownListMap = 
-					new LinkedHashMap<String, ArrayList<List<String>>>();
-			
-			Map<String, List<String>> levelOrMajorCodeToLevelOrMajorDetailsMap = new LinkedHashMap<String, List<String>>();
-			List<String> tempLevelOrMajorDetailsList = null;
-			
-			Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
-			
-			int indexOfMajorOrLevelCode = -1; 
-			int indexOfMajorOrLevelName = -1;
-			String filterType = "";
-			
-			// This exemplifies the use and purpose of EducationCategory. 
-			// Certain things must happen only if the category is CORPORATE_TRAINING
-			if (EducationCategory.CORPORATE_TRAINING.equals(category)) {
-				// Consider Major data
-				indexOfMajorOrLevelCode = 12;
-				indexOfMajorOrLevelName = 23;
-				filterType = "Major";
-			} else {
-				// Consider Level data
-				indexOfMajorOrLevelCode = 14;
-				indexOfMajorOrLevelName = 24;
-				filterType = "Level";
-			}
-
-			for (Collection<String> prog : programmeCollection) {
-				int count  = 0;
-				ArrayList<String> tempSingleTownDetailsList = null;
-				String programmeCode = null;
-				String townCode = null;
-				String majorOrLevelCode = null;
-				for (String field : prog) {
-					if (count == 0) {
-						programmeCode = field;						
-						
-						Collection<String> programmeRecord = progCodeToProgrammeMap.get(field);
-						if (programmeRecord == null) {
-							programmeRecord = prog;
-							progCodeToProgrammeMap.put(field, prog);
-						}
-					}
-
-					if (count == 20) {
-						townCode = field;						
-					}
-
-					if (count == 21) {
-						String currentTownName = field;
-						if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
-							ArrayList<List<String>> townList = programmeCodeToTownListMap.get(programmeCode);
-							if (townList == null) {
-								townList = new ArrayList<List<String>>();
-								programmeCodeToTownListMap.put(programmeCode, townList);
+						boolean isValidCategoryString = false;
+						EducationCategory educationCategory = null;
+						for (EducationCategory categoryConstant : EducationCategory.values()) {
+							if (categoryConstant.name().equals(categoryIdentifierString)) {
+								isValidCategoryString = true;
+								educationCategory = EducationCategory.valueOf(categoryIdentifierString);
+								break;
 							}
-							if (townList.size() != 0) {
-								boolean isTownAlreadyAdded = false; 
-								for (List<String> singleTownDetailsList : townList) {
-									if (singleTownDetailsList.get(0).equals(townCode)) {
-										isTownAlreadyAdded = true;
-									}
-								}
-								if (!isTownAlreadyAdded) {
-									tempSingleTownDetailsList = new ArrayList<String>();
-									tempSingleTownDetailsList.add(townCode);
-									tempSingleTownDetailsList.add(currentTownName);
-									townList.add(tempSingleTownDetailsList);
-								}
-							} else {
-								tempSingleTownDetailsList = new ArrayList<String>();
-								tempSingleTownDetailsList.add(townCode);
-								tempSingleTownDetailsList.add(currentTownName);
-								townList.add(tempSingleTownDetailsList);
-							}							
-						}					
-					}
-
-					if (count == indexOfMajorOrLevelCode) {
-						majorOrLevelCode = field;					
-					}
-
-					if (count == indexOfMajorOrLevelName) {
-						List<String> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
-						if (levelOrMajorList == null) {
-							levelOrMajorList = new ArrayList<String>();
-							levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
 						}
 						
-						if (levelOrMajorList.size() == 0) {
-							levelOrMajorList.add(majorOrLevelCode);
-							levelOrMajorList.add(field);
-						}
-					}	
-					
-					count++;
-				}
-			}
+						if (isValidCategoryString) {							
+
+							Programme programme = new Programme();
+							programme.setCategory(categoryCode);
+							
+							// Get programmes that belong to the same category as categoryCode
+							Collection<Collection<String>> programmeCollection = new ArrayList<Collection<String>>();
+							programmeCollection = programmeDao.findById(programme);	
+							
+							Map<String, ArrayList<List<String>>> programmeCodeToTownListMap = 
+									new LinkedHashMap<String, ArrayList<List<String>>>();
+							
+							Map<String, List<String>> levelOrMajorCodeToLevelOrMajorDetailsMap = new LinkedHashMap<String, List<String>>();
+							List<String> tempLevelOrMajorDetailsList = null;
+							
+							Map<String, Collection<String>> progCodeToProgrammeMap = new LinkedHashMap<String, Collection<String>>();
+							
+							int indexOfMajorOrLevelCode = -1; 
+							int indexOfMajorOrLevelName = -1;
+							String filterType = "";
+							
+							// This exemplifies the use and purpose of EducationCategory. 
+							// Certain things must happen only if the category is CORPORATE_TRAINING
+							if (EducationCategory.CORPORATE_TRAINING.equals(educationCategory)) {
+								// Consider Major data
+								indexOfMajorOrLevelCode = 12;
+								indexOfMajorOrLevelName = 23;
+								filterType = "Major";
+							} else {
+								// Consider Level data
+								indexOfMajorOrLevelCode = 14;
+								indexOfMajorOrLevelName = 24;
+								filterType = "Level";
+							}
+
+							for (Collection<String> prog : programmeCollection) {
+								int count  = 0;
+								ArrayList<String> tempSingleTownDetailsList = null;
+								String programmeCode = null;
+								String townCode = null;
+								String majorOrLevelCode = null;
+								for (String field : prog) {
+									if (count == 0) {
+										programmeCode = field;						
+										
+										Collection<String> programmeRecord = progCodeToProgrammeMap.get(field);
+										if (programmeRecord == null) {
+											programmeRecord = prog;
+											progCodeToProgrammeMap.put(field, prog);
+										}
+									}
+
+									if (count == 20) {
+										townCode = field;						
+									}
+
+									if (count == 21) {
+										String currentTownName = field;
+										if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
+											ArrayList<List<String>> townList = programmeCodeToTownListMap.get(programmeCode);
+											if (townList == null) {
+												townList = new ArrayList<List<String>>();
+												programmeCodeToTownListMap.put(programmeCode, townList);
+											}
+											if (townList.size() != 0) {
+												boolean isTownAlreadyAdded = false; 
+												for (List<String> singleTownDetailsList : townList) {
+													if (singleTownDetailsList.get(0).equals(townCode)) {
+														isTownAlreadyAdded = true;
+													}
+												}
+												if (!isTownAlreadyAdded) {
+													tempSingleTownDetailsList = new ArrayList<String>();
+													tempSingleTownDetailsList.add(townCode);
+													tempSingleTownDetailsList.add(currentTownName);
+													townList.add(tempSingleTownDetailsList);
+												}
+											} else {
+												tempSingleTownDetailsList = new ArrayList<String>();
+												tempSingleTownDetailsList.add(townCode);
+												tempSingleTownDetailsList.add(currentTownName);
+												townList.add(tempSingleTownDetailsList);
+											}							
+										}					
+									}
+
+									if (count == indexOfMajorOrLevelCode) {
+										majorOrLevelCode = field;					
+									}
+
+									if (count == indexOfMajorOrLevelName) {
+										List<String> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
+										if (levelOrMajorList == null) {
+											levelOrMajorList = new ArrayList<String>();
+											levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
+										}
+										
+										if (levelOrMajorList.size() == 0) {
+											levelOrMajorList.add(majorOrLevelCode);
+											levelOrMajorList.add(field);
+										}
+									}	
+									
+									count++;
+								}
+							} // end of for (Collection<String> prog : programmeCollection)
+							
+							programmeCollection = progCodeToProgrammeMap.values();			
+							
+							// Get course provider logo path from SystemConfig table
+							Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
+							systemConfigRecord = systemConfigDao.findById(SystemConfig.PROVIDER_LOGO_PATH.name());
+
+							String courseProviderLogoPath = "";
+							outer:
+							for (Collection<String> record : systemConfigRecord) {
+								int count = 0;
+								inner:
+								for (String field : record) {
+									if (count == 2) {
+										courseProviderLogoPath = field;
+										break outer;
+									}
+									count++;
+								}
+							}
+
+							int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
+							
+							iview.setCollection(programmeCollection);
+							helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
+							helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
+							helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
+							helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
+							helper.setAttribute("filterType", filterType);
+							
+						} else {
+							msgList.add("The provided value for categoryIdentifierString is not valid!");
+						}// end of if (isValidCategoryString)
+					} else {
+						msgList.add("Either no or empty value has been provided for categoryIdentifierString parameter!");						
+					}// end of if (categoryIdentifierString != null && !categoryIdentifierString.isEmpty())					
+				} else {
+					msgList.add("The value provided for category is invalid!");
+				}// end of if (Validator.isNumber(categoryStr))	
+			} else {
+				msgList.add("No or empty value has been provided for category parameter!");
+			}// end of if (categoryStr != null && !categoryStr.isEmpty())		
 			
-			programmeCollection = progCodeToProgrammeMap.values();			
-			
-			// Get course provider logo path from SystemConfig table
-			systemConfigRecord = systemConfigDao.findById(SystemConfig.PROVIDER_LOGO_PATH.name());
-			
-			outer:
-			for (Collection<String> record : systemConfigRecord) {
-				int count = 0;
-				inner:
-				for (String field : record) {
-					if (count == 2) {
-						courseProviderLogoPath = field;
-						break outer;
-					}
-					count++;
-				}
-			}
-			iview.setCollection(programmeCollection);
-			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
-			helper.setAttribute("numOfResultsPerPage", numOfResultsPerPage);
-			helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
-			helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
-			helper.setAttribute("filterType", filterType);
 		} catch (NumberFormatException nfe) {
 			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
-			msgList.add(SystemMessage.ERROR.message());
-			msgList.add(nfe.getMessage());	
 			throw nfe;
 		} catch (IllegalArgumentException iae) {
 			Log.info("execute(IDataHelper, IView) : IllegalArgumentException " + iae.toString());
-			msgList.add(SystemMessage.ERROR.message());
-			msgList.add(iae.getMessage());	
+			throw iae;
 		}  catch (Exception e) {
 			Log.info("execute(IDataHelper, IView) : Exception " + e.toString());
-			msgList.add(SystemMessage.ERROR.message());
-			msgList.add("Unknown error occured while preparing records to display");
 			throw e;
 		} finally {
 			helper.setAttribute("messages", msgList);
