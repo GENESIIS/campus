@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20161103 JH c7-higher-education-landing-page refactor code
 //20161104 JH c7-higher-education-landing-page code modification 
 //20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter , add method comments
+//20161116 JH c7-higher-education-landing-page code review mx modifications 
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -89,7 +90,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 				helper.setAttribute("institutes", courseProviders);
 
 			} catch (Exception exception) {
-				log.error("execute() : " + exception);
+				log.error("execute() : " + exception.toString());
 				systemMessage = SystemMessage.ERROR;
 				throw exception;
 			}
