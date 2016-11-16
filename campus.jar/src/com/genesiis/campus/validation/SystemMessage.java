@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161024 DN c10-contacting-us extracted to campus project
 //20161101 DN c10-contacting-us SystemMessage() modified and added 
 //		FAIL_REQUEST_SUBMISSION,PASS_REQUEST_SUBMISSION.
+//20161116 DN DN c10-contacting-us-page-MP removed unnecessary enum values.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -15,32 +16,17 @@ public enum SystemMessage {
 	UNKNOWN(""),
 	EMPTYFIELD("Field is Empty."),
 	SUCCESS("Successfull"),
-	FAILED_TO_CREATE("Object not created"),
-	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
 	MOBILENUMBERERROR("Invalid Mobile Number."),
 	EMAILERROR("Invalid Email."),
 	INVALIDDATE("Invalid DateFormat."),
 	EMPTYVALUES("Empty data Fields."),
-	INVALIDBIRTDAY("Invalid Birthdate."),
-	INVALIDENDDATE("Invalid End date."),
-	INVALIDAMOUNT("Invalid Amount."),
 	NOTADDED("Problem when inserting data."), 	
 	NOTUPDATED("Problem when updating data."), 	
-	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 	
-	MEDICALHISTORYEMPLOYEEID("Medical History Employee id not valid."),
-	MEDICALHISTORYAILMENT("Medical History Ailment not valid."),
-	MEDICALHISTORYDESCRIPTION("Medical History Description not valid"),
-	MEDICALHISTORYPASS("pass"),
-	MEDICALHISTORYSUCCESS("success"),
-	MEDICALHISTORYNOID("No Medical History ID obtained."),		
-	MEDICALREPORTDESCRIPTIONNOTVALID("Medical Report Description not valid."),
-	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),	
+	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 
 	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
 	PASS_REQUEST_SUBMISSION("Request successfull submitted! "),
-	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
-	MEDICALREPORTNOTVALID("Medical Report not valid");
-
+	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	private String message;
 
