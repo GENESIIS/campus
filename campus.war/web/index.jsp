@@ -2,10 +2,10 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- 20161024 AS c12-social-media-share-panale-as project initiated -->
-<!-- 20161025 AS c12-social-media-share-panale-as side share panale and top share panale button and js created -->
-<!-- 20161026 AS c12-social-media-share-panale-as linkedIn getlink function embedded   -->
-<!-- 20161031 AS c12-social-media-share-panale-as panel links and scripts modified      -->
+<!-- 20161024 AS c12-social-media-share-panel-as project initiated -->
+<!-- 20161025 AS c12-social-media-share-panel-as side share panel and top share panel button and js created -->
+<!-- 20161026 AS c12-social-media-share-panel-as linkedIn getlink function embedded   -->
+<!-- 20161031 AS c12-social-media-share-panel-as panel links and scripts modified      -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
