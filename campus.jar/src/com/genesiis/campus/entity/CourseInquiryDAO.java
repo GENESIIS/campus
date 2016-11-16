@@ -20,7 +20,16 @@ import org.apache.log4j.Logger;
 public class CourseInquiryDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(CourseInquiryDAO.class.getName());
-
+	
+	/**
+	 * Insert Course provider course inquiry 
+	 * 
+	 * @author anuradha
+	 * @param Object
+	 *            :  CourseInquiry jsom extract object of data insert to db
+	 * @return int status 
+	 */
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 

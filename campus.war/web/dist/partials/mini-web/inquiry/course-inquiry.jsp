@@ -112,43 +112,43 @@
 						<div class="f-name">
 							<label for="input-firstName">Full Name <span>*</span></label> <label
 								id="fullNametbError"></label> <br> <input type="text"
-								name="fullname" id="fullname">
+								name="fullname" id="fullname" onclick="clearField('fullNametbError')">
 						</div>
 						<!-- Email -->
 						<div class="email">
 							<label for="eMail">Email <span>*</span></label> <label
 								id="emailtbError"></label><br> <input type="text" name="email"
-								id="email">
+								id="email" onclick="clearField('emailtbError')">
 						</div>
 						<!--Country Code -->
 						<div class="county-code">
 							<label for="input-county-code">Country Code <span>*</span></label>
 							<label id="countryCodetbError"></label> <br><input type="text"
-								name="countryCode" id="countryCode">
+								name="countryCode" id="countryCode" onclick="clearField('countryCodetbError')">
 						</div>
 						<!-- Area Code -->
 						<div class="area-code">
 							<label for="input-area-code">Area Code <span>*</span></label>
 							<label id="areaCodetbError"></label> <br><input type="text"
-								name="areaCode" id="areaCode">
+								name="areaCode" id="areaCode" onclick="clearField('areaCodetbError')">
 						</div>
 						<!-- Telephone -->
 						<div class="tp-number">
 							<label for="input-tp-no">Telephone No <span>*</span></label>
 							<label id="telephoneNumbertbError"></label><br> <input type="text"
-								name="telNum" id="telNum">
+								name="telNum" id="telNum" onclick="clearField('telephoneNumbertbError')">
 						</div>
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label>
 							<label id="inquiryTitletbError"></label><br> <input type="text"
-								name="inquiryTitle" id="inquiryTitle">
+								name="inquiryTitle" id="inquiryTitle" onclick="clearField('inquiryTitletbError')">
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
 							<label for="text-userMessage">Message <span>*</span></label>
 							<label id="inquirytbError"></label><br>
-							<textarea name="inquiry" id="inquiry" rows="10"></textarea>
+							<textarea name="inquiry" id="inquiry" rows="10" onclick="clearField('inquirytbError')"></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
 							</p>

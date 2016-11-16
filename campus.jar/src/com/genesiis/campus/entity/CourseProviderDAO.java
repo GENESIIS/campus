@@ -38,7 +38,7 @@ public class CourseProviderDAO implements ICrud{
 	/**
 	 * Search Course provider institute inquiry email 
 	 * 
-	 * @author Chathuri
+	 * @author anuradha
 	 * @param Object
 	 *            :  CourseProviderInquiry object of Object type
 	 * @return Collection<Collection<String>> of Collection

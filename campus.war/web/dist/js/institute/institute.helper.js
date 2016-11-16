@@ -32,22 +32,22 @@ function sendCourseInquiry() {
 
 	if (fullNametb == false) {
 		document.getElementById('fullNametbError').innerHTML = "  ** Invalid Name.";
-		return false;
+		flag = false;
 	}  if (emailtb == false) {
 		document.getElementById('emailtbError').innerHTML = "   ** Email can not be Empty.";
-		return false;
+		flag = false;
 	}  if (countryCodetb == false) {
 		document.getElementById('countryCodetbError').innerHTML = "  ** Country  Code can not be Empty.";
-		return false;
+		flag = false;
 	}  if (areaCodetb == false) {
 		document.getElementById('areaCodetbError').innerHTML = "  ** Area Code  cannot be Empty.";
-		return false;
+		flag = false;
 	}  if (telephoneNumbertb == false) {
 		document.getElementById('telephoneNumbertbError').innerHTML = "  **  Telephone can not be Empty.";
-		return false;
+		flag = false;
 	}  if (inquiryTitletb == false) {
 		document.getElementById('inquiryTitletbError').innerHTML = "  ** Inquiry  Title can not be Empty.";
-		return false;
+		flag = false;
 	}  if (inquirytb == false) {
 		document.getElementById('inquirytbError').innerHTML = "  ** inquiry cannot  be Empty.";
 		return false;

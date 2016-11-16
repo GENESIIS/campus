@@ -67,3 +67,14 @@ function isPatternMatch(regularExpression, source) {
 	return regularExpression.test(source);
 
 }
+
+
+
+/**
+ * @param clearField 
+ * @param elementId the id of the HTML element
+ */
+function clearField(elementId){	
+	 $(document).find('#' + elementId).text('');
+}
+
