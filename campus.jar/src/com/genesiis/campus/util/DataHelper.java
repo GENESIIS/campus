@@ -7,6 +7,8 @@ package com.genesiis.campus.util;
 //20161031 DN c10-contacting-us-page getAttribute() method implemented
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
+// 			due to code review comment by CM
 
 import java.io.IOException;
 import java.util.Collection;
@@ -198,7 +200,7 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * getAttribute method returns the attribute value bound to the
 	 * request instance by attributeName
-	 * @author dushantha DN
+	 * @author  DN
 	 * @param attributeName String
 	 * @return Object 
 	 * @since 20161031
@@ -207,9 +209,4 @@ public class DataHelper implements IDataHelper {
 		return request.getAttribute(attributeName);
 	}
 	
-	
-	public void setContextAttribute(String attributeName,Object value){
-		 request.getServletContext().setAttribute(attributeName, value);
-	}
-
 }
