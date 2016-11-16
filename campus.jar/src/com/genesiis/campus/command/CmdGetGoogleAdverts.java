@@ -1,4 +1,5 @@
 //20161003 MM c2-integrate-google-banners GetGoogleAdverts.java created
+//20161116 MM c2-integrate-google-banners Renamed to CmdGetGoogleAdverts.java
 
 package com.genesiis.campus.command;
 
@@ -7,7 +8,7 @@ import com.genesiis.campus.util.IDataHelper;
 
 import java.sql.SQLException;
 
-public class GetGoogleAdverts implements ICommand {
+public class CmdGetGoogleAdverts implements ICommand {
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
