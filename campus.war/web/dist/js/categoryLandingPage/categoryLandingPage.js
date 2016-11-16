@@ -24,6 +24,7 @@
  * 													changes at server side code.  													
  * 2016115 MM c5-corporate-training-landing-page-MP Modified code to change filter elements to checkboxes and implemented
  * 													feature of allowing selection of multiple filter check-boxes 													
+ * 2016116 MM c5-corporate-training-landing-page-MP Changed style of displayed error messages.													
  *
  */
 
@@ -48,6 +49,7 @@ $(document).ready(function() {
 function showMessages(messages) {
 	var messagesHtml = '';
 	if (messages != undefined && messages != null && messages.length > 0) {
+		messagesHtml += '<span style="font-weight: 700">ERROR: </span>';
 		for (var i = 0; i < messages.length; i++) {
 			messagesHtml += '<span>' + messages[i] + '</span></br>';
 		}
