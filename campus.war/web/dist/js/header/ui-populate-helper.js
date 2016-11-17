@@ -1,5 +1,6 @@
 //20161109 JH c7-higher-education-landing-page-MP ui-populate-helper.js created
-//20161116 JH c7-higher-education-lanidng-page-MP change displayCategory() me
+//20161116 JH c7-higher-education-landing-page-MP change displayCategory() method
+//20161117 JH c7-higher-education-landing-page-MP displayCategories() method created
 
 /**
  * This method is to load category details
@@ -20,10 +21,22 @@ function getCategoryData() {
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				window.programmeCollection = response.result;
+				window.categoryCollection = response.result;
 
-				alert(programmeCollection);
+				alert(categoryCollection);
+				displayCategories();
 			}
 		},
 	});
+}
+
+function displayCategories() {
+	var categoryCollectionList = window.categoryCollection;
+	var singleCategoryCollection = '';
+
+	if (categoryCollectionList !== undefined & categoryCollectionList !== null) {
+		$.each(categoryCollectionList, function(index, value) {
+			alert(value);
+		});
+	}
 }
