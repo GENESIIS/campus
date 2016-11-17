@@ -223,7 +223,7 @@ body, html {
           position: relative;
           top: -42px;
           width: 80%;
-          background: rgba(125, 125, 125, 0.4);
+          background: rgba(125, 125, 125, 0.5);
           padding: 15px; }
           .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
             width: 100%;
