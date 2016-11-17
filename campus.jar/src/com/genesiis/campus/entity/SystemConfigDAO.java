@@ -10,8 +10,6 @@ import java.sql.SQLTimeoutException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.genesiis.campus.command.CmdGenerateEmail;
-
 import org.apache.log4j.Logger;
 
 public class SystemConfigDAO implements ICrud {

@@ -14,21 +14,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.genesiis.campus.command.CmdGenerateEmail;
-import com.genesiis.campus.util.MailServerManager;
-
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.util.MailServerManager;
 
 /**
  * GeneralMail class captures the essence of an email

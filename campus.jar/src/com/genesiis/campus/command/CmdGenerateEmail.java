@@ -13,32 +13,29 @@ package com.genesiis.campus.command;
 //						validateFrontEndUserProvidedInformation(),modified sendMail() and systemMessage()
 //20161111 DN c10-contacting-us-page-MP-dn removed unnecessary imports as per code review.
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+
+import javax.mail.MessagingException;
+
+import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
-import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ReCaptchaManager;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
-import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
-
-import java.sql.Connection;
-import javax.mail.MessagingException;
-import java.io.IOException;
-
-
-import org.apache.log4j.Logger;
 
 public class CmdGenerateEmail implements ICommand {
 
