@@ -125,91 +125,95 @@
 
 			<!-- slider & banner panel : right side -->
 			<div class="sliding-info-panel">
-				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<c:if test="${not empty featuredInstitutes}">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-					<c:set var="provider" value="" />
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox">
+						<c:set var="provider" value="" />
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
 
-						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
-							varStatus="loopCount">
-							<c:choose>
-								<c:when test="${loopCount.index == 1 }">
-									<div class="item active">
-										<div class="institute-info clearfix">
-											<div class="inst-logo">
-												<img src="${featuredInstitute[16] }" alt="Institute Logo"
-													style="width: 100px; height: 75px;">
+							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
+								varStatus="loopCount">
+								<c:choose>
+									<c:when test="${loopCount.index == 1 }">
+										<div class="item active">
+											<div class="institute-info clearfix">
+												<div class="inst-logo">
+													<img src="${featuredInstitute[16] }" alt="Institute Logo"
+														style="width: 100px; height: 75px;">
+												</div>
+												<div class="inst-name">
+													<h1 class="short-name">
+														<c:out value="${featuredInstitute[2] }"></c:out>
+													</h1>
+													<h2 class="full-name">
+														<c:out value="${featuredInstitute[3] }"></c:out>
+													</h2>
+												</div>
 											</div>
-											<div class="inst-name">
-												<h1 class="short-name">
-													<c:out value="${featuredInstitute[2] }"></c:out>
-												</h1>
-												<h2 class="full-name">
-													<c:out value="${featuredInstitute[3] }"></c:out>
-												</h2>
+											<div class="institute-description clearfix">
+												<p>
+													<c:out value="${featuredInstitute[4]}"></c:out>
+												</p>
+												<div class="btn-more clearfix">
+													<!-- 	<a href="javascript:">Show More</a>  -->
+													<button type="submit" name="CCO" id="CCO"
+														value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+														More</button>
+													<c:set var="provider" value="${featuredInstitute[0]}" />
+												</div>
 											</div>
 										</div>
-										<div class="institute-description clearfix">
-											<p>
-												<c:out value="${featuredInstitute[4]}"></c:out>
-											</p>
-											<div class="btn-more clearfix">
-												<!-- 	<a href="javascript:">Show More</a>  -->
-												<button type="submit" name="CCO" id="CCO"
-													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
-													More</button>
-												<c:set var="provider" value="${featuredInstitute[0]}" />
-											</div>
-										</div>
-									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+									</c:when>
+								</c:choose>
+							</c:forEach>
 
-						<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
-							varStatus="loopCount">
-							<c:choose>
-								<c:when test="${loopCount.index != 1 }">
-									<div class="item ">
-										<div class="institute-info clearfix">
-											<div class="inst-logo">
-												<img src="${featuredInstitute[16] }" alt="Institute Logo"
-													style="width: 100px; height: 75px;">
-											</div>
+							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
+								varStatus="loopCount">
+								<c:choose>
+									<c:when test="${loopCount.index != 1 }">
+										<div class="item ">
+											<div class="institute-info clearfix">
+												<div class="inst-logo">
+													<img src="${featuredInstitute[16] }" alt="Institute Logo"
+														style="width: 100px; height: 75px;">
+												</div>
 
-											<div class="inst-name">
-												<h1 class="short-name">
-													<c:out value="${featuredInstitute[2] }"></c:out>
-												</h1>
-												<h2 class="full-name">
-													<c:out value="${featuredInstitute[3] }"></c:out>
-												</h2>
+												<div class="inst-name">
+													<h1 class="short-name">
+														<c:out value="${featuredInstitute[2] }"></c:out>
+													</h1>
+													<h2 class="full-name">
+														<c:out value="${featuredInstitute[3] }"></c:out>
+													</h2>
+												</div>
+											</div>
+											<div class="institute-description clearfix">
+												<p>
+													<c:out value="${featuredInstitute[4]}"></c:out>
+												</p>
+												<div class="btn-more clearfix">
+													<button type="submit" name="CCO" id="CCO"
+														value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+														More</button>
+													<c:set var="provider" value="${featuredInstitute[0]}" />
+												</div>
 											</div>
 										</div>
-										<div class="institute-description clearfix">
-											<p>
-												<c:out value="${featuredInstitute[4]}"></c:out>
-											</p>
-											<div class="btn-more clearfix">
-												<button type="submit" name="CCO" id="CCO"
-													value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
-													More</button>
-												<c:set var="provider" value="${featuredInstitute[0]}" />
-											</div>
-										</div>
-									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+
+						</div>
+						<!-- Left and right controls -->
+
+						<a href="#myCarousel" role="button" data-slide="prev"
+							class="pull-left"> Previous </a> <a href="#myCarousel"
+							role="button" data-slide="next" class="pull-right"> Next </a>
+
 
 					</div>
-					<!-- Left and right controls -->
-					<a href="#myCarousel" role="button" data-slide="prev"
-						class="pull-left"> Previous </a> <a href="#myCarousel"
-						role="button" data-slide="next" class="pull-right"> Next </a>
-
-				</div>
+				</c:if>
 				<!-- Eng featured institute info slider -->
 				<div class="most-viewed-panel clearfix">
 					<h1>| Most Viewed</h1>
