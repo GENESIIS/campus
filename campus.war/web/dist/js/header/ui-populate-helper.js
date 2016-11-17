@@ -23,8 +23,8 @@ function getCategoryData() {
 			if (response !== undefined && response !== null) {
 				window.categoryCollection = response.result;
 
-				alert(categoryCollection);
-			displayCategories();
+				// alert(categoryCollection);
+				displayCategories();
 			}
 		},
 	});
@@ -34,18 +34,23 @@ function displayCategories() {
 	var categoryCollectionList = window.categoryCollection;
 	var singleCategoryElement = '';
 
+	singleCategoryElement += '<ul class="list-inline" >';
 	if (categoryCollectionList !== undefined & categoryCollectionList !== null) {
-		$.each(categoryCollectionList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			alert(value);
-
-			singleCategoryElement += '<li>' + value[1] + '</li>';
-		});
+		$
+				.each(
+						categoryCollectionList,
+						function(index, value) {
+							singleCategoryElement += '<li><form action="PublicController" method="POST">';
+							singleCategoryElement += '<button type="submit" name="CCO" id="CCO" class="btn btn-info navbar-btn" value="LIST_CATEGORY_LANDING_PAGE">'
+									+ value[1] + '</button>';
+							singleCategoryElement += '<input type="hidden" name="categoryId" id="categoryId" value="'
+									+ value[0] + '" />';
+							singleCategoryElement += '</form></li>';
+							// singleCategoryElement += '<li>' + value[1] +
+							// '</li>';
+						});
 	}
-
+	singleCategoryElement += '</ul>';
 	var categoryNames = $("#category-list");
 	categoryNames.html(singleCategoryElement);
 

@@ -1,4 +1,5 @@
 <!-- 20161109 JH index.jsp created  -->
+<!-- 20161117 JH code modified to include footer and landing pages -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
@@ -27,10 +28,14 @@
 	</header>
 
 	<!-- Main Container - Landing -->
-	<div w3-include-html="dist/partials/landing.html"></div>
+	<div>
+		<jsp:include page="dist/partials/landing.jsp"></jsp:include>
+	</div>
 
 	<!-- Footer -->
-	<footer w3-include-html="dist/partials/layout/footer.html"></footer>
+	<footer>
+		<jsp:include page="dist/partials/layout/footer.jsp"></jsp:include>
+	</footer>
 
 	<!-- jQuery & Other js -->
 	<!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
