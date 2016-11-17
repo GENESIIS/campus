@@ -11,6 +11,8 @@ package com.genesiis.campus.command;
 //20161109 DN c10-contacting-us-page-MP execute() changed to include RecaptureManager codes
 //20161111 DN c10-contacting-us-page-MP execute() refactor to include SRP-Single Responsibility Principle. created isReCaptureResponseSuccess()
 //						validateFrontEndUserProvidedInformation(),modified sendMail() and systemMessage()
+//20161111 DN c10-contacting-us-page-MP-dn removed unnecessary imports as per code review.
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,20 +34,9 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
 
 import java.sql.Connection;
-import java.util.Date;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import java.io.IOException;
-import java.lang.System;
+
 
 import org.apache.log4j.Logger;
 
