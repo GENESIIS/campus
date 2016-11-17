@@ -184,7 +184,27 @@ footer .ft-bottom {
       .header .bottom .menu-bar .keyword-search {
         display: inline-block;
         width: 17%;
-        height: 100%; }
+        height: 100%;
+        padding: 15px 15px 15px 0; }
+        .header .bottom .menu-bar .keyword-search .search-bar {
+          border-bottom: 2px solid #fff;
+          padding: 5px; }
+          .header .bottom .menu-bar .keyword-search .search-bar input {
+            border: none;
+            background: #2f66c1;
+            color: #fff;
+            height: 18px;
+            float: left;
+            width: 90%; }
+          .header .bottom .menu-bar .keyword-search .search-bar a {
+            display: inline-block;
+            height: 18px;
+            width: 18px;
+            background: url("../i/ico-search.png"); }
+        .header .bottom .menu-bar .keyword-search .login-link {
+          float: right; }
+          .header .bottom .menu-bar .keyword-search .login-link a {
+            line-height: 50px; }
 
 body, html {
   font-family: "Raleway", sans-serif; }
