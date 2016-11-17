@@ -11,8 +11,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.Operation;
 
-public class GoogleAdvertDAO implements ICrud {
+import org.apache.log4j.Logger;
+
+public class BannerAndAdvertDAO implements ICrud {
+	
+	static Logger Log = Logger.getLogger(BannerAndAdvertDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -35,22 +40,23 @@ public class GoogleAdvertDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		
-		final Collection<Collection<String>> corporateProgrammeList = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> bannerList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		try {
-			Banner programme = (Banner) code;
-			int bannerCode = programme.getCode();
+			String pageUrl = (String) code;
 			
-			String query = "SELECT * FROM BANNER WHERE TYPE = 'BANNER' AND CODE = ?";
+			String query = "SELECT b.* FROM PAGE JOIN PAGESLOT ps ON (p.CODE = ps.PAGE AND p.NAME = ?) "
+					+ "JOIN BANNER b ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ?)";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, bannerCode);
+			ps.setString(1, pageUrl);
+			ps.setInt(1, 1);
 			ResultSet rs = ps.executeQuery();
 			
-			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
+			retrieveBannerList(rs, bannerList);
 
 		} catch (ClassCastException cce) {
 			Log.info("findById(Object): ClassCastException: " + cce.toString());
@@ -69,25 +75,26 @@ public class GoogleAdvertDAO implements ICrud {
 				conn.close();
 			}
 		}
-		return corporateProgrammeList;
+		return bannerList;
 	}
 	
-	private void retrieveProgrammesFromResultSet(ResultSet rs, Collection<Collection<String>> deptList) throws SQLException {
+	private void retrieveBannerList(ResultSet rs, Collection<Collection<String>> bannerCollection) throws SQLException {
 
 		while (rs.next()) {
-			final ArrayList<String> singleProgramme = new ArrayList<String>();
-			singleProgramme.add(rs.getString("CODE")); //0
-			singleProgramme.add(rs.getString("EXPIRATIONDATE")); //1
-			singleProgramme.add(rs.getString("PAGE")); //2
-			singleProgramme.add(rs.getString("TYPE")); //3
-			singleProgramme.add(rs.getString("DISPLAYDURATION")); //4
-			singleProgramme.add(rs.getString("LINKTYPE")); //5
-			singleProgramme.add(rs.getString("URL")); //6
-			singleProgramme.add(rs.getString("BANNERSTATUS")); //7
-			singleProgramme.add(rs.getString("ISACTIVE")); //8
-			singleProgramme.add(rs.getString("ADVERTISER")); //9
-			final Collection<String> singleProgrammeCollection = singleProgramme;
-			deptList.add(singleProgrammeCollection);
+			final ArrayList<String> singleBanner = new ArrayList<String>();
+			singleBanner.add(rs.getString("CODE")); //0
+			singleBanner.add(rs.getString("EXPIRATIONDATE")); //1
+			singleBanner.add(rs.getString("PAGE")); //2
+			singleBanner.add(rs.getString("TYPE")); //3
+			singleBanner.add(rs.getString("DISPLAYDURATION")); //4
+			singleBanner.add(rs.getString("LINKTYPE")); //5
+			singleBanner.add(rs.getString("URL")); //6
+			singleBanner.add(rs.getString("BANNERSTATUS")); //7
+			singleBanner.add(rs.getString("ISACTIVE")); //8
+			singleBanner.add(rs.getString("ADVERTISER")); //9
+			singleBanner.add(rs.getString("IMAGEPATH")); //10
+			final Collection<String> singleBannerCollection = singleBanner;
+			bannerCollection.add(singleBannerCollection);
 		}
 	}
 
@@ -115,5 +122,4 @@ public class GoogleAdvertDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

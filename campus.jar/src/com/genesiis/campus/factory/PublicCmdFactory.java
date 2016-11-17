@@ -1,14 +1,15 @@
 //20161116 MM c2-integrate-google-banners Added map element with key LIST_GOOGLE_ADVERTS enum
+//20161116 MM c2-integrate-google-banners Changed map element with key LIST_GOOGLE_ADVERTS to LOAD_BANNER_PAGE
 
 package com.genesiis.campus.factory;
 
-import com.genesiis.campus.command.CmdGetGoogleAdverts;
+import com.genesiis.campus.command.CmdLoadBannerPage;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
 public class PublicCmdFactory implements ICmdFactory {
 	static {
-		map.put(Operation.LIST_GOOGLE_ADVERTS, new CmdGetGoogleAdverts());
+		map.put(Operation.LOAD_BANNER_PAGE, new CmdLoadBannerPage());
 	}
 
 	@Override
@@ -17,7 +18,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-			case LIST_GOOGLE_ADVERTS:
+			case LOAD_BANNER_PAGE:
 				command = map.get(o);
 				break;
 			default:
