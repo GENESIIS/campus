@@ -23,7 +23,6 @@ function getCategoryData() {
 			if (response !== undefined && response !== null) {
 				window.categoryCollection = response.result;
 
-				// alert(categoryCollection);
 				displayCategories();
 			}
 		},
@@ -46,8 +45,7 @@ function displayCategories() {
 							singleCategoryElement += '<input type="hidden" name="categoryId" id="categoryId" value="'
 									+ value[0] + '" />';
 							singleCategoryElement += '</form></li>';
-							// singleCategoryElement += '<li>' + value[1] +
-							// '</li>';
+
 						});
 	}
 	singleCategoryElement += '</ul>';
