@@ -34,6 +34,7 @@
 				<!-- Course Category tabs -->
 				<div class="bottom-menus">
 					<ul class="list-inline">
+						<!-- 
 						<li><a href="javascript:">Pre Education</a></li>
 						<li><a href="javascript:">School Education</a></li>
 						<li>
@@ -47,7 +48,7 @@
 						<li><a href="javascript:">Vocational Training</a></li>
 						<li><a href="javascript:">Talent & Skill</a></li>
 
-
+-->
 					</ul>
 				</div>
 				<!-- End Course Category tabs -->
