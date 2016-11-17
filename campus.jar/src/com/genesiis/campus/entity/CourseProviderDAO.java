@@ -302,8 +302,8 @@ public class CourseProviderDAO implements ICrud{
 	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException{		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
-		//ResultSet resultSet =null;
-		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
+		ResultSet resultSet =null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
 		try {
 			int categoryCode=0;
 			boolean isGetAll=false;
@@ -317,8 +317,7 @@ public class CourseProviderDAO implements ICrud{
 			}
 			
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(
-					" SELECT  DISTINCT PROVIDER.CODE, PROVIDER.SHORTNAME,PROVIDER.LOGOIMAGEPATH, PROVIDER.COURSEPROVIDERSTATUS FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
+			final StringBuilder sb = new StringBuilder(" SELECT  DISTINCT PROVIDER.CODE AS CPCODE , PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX ,PROVIDER.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDERTOWN CPTOWN ON PROVIDER.CODE=CPTOWN.COURSEPROVIDER");
 			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = CPTOWN.TOWN ");
@@ -341,7 +340,8 @@ public class CourseProviderDAO implements ICrud{
 				sb.append(" AND DISTRICT.CODE=? ");
 			}
 
-			stmt = conn.prepareStatement(sb.toString());		
+			stmt = conn.prepareStatement(sb.toString());	
+			
 			
 			if (searchDTO.getCategory() > 0) {
 				stmt.setInt(1, searchDTO.getCategory());				
@@ -358,7 +358,9 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getDistrict() > 0) {
 				stmt.setInt(5, searchDTO.getDistrict());			
 			}
-			ResultSet resultSet = stmt.executeQuery();		
+			
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);		
 			
 			
 		} catch (SQLException sqlException) {
@@ -368,7 +370,7 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findFilterdCourseProviders() Exception" + e.toString());
 			throw e;
 		} finally {
-			//DaoHelper.cleanup(conn, stmt, resultSet);
+			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		
 		return allProviderList;

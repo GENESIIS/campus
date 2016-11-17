@@ -75,10 +75,18 @@ $(document).ready(function(){
 	});
 });
 
- function getAjaxData(response) {	 
+ function getAjaxData(response) {
 	
 	alert(" getAjaxData*****************");
 	var categories = $("#categoryName");
+	
+	$.each(response.categoryList, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(categories);
+	});
 } 
 
 
@@ -161,8 +169,8 @@ $(document).ready(function(){
 							type="checkbox"></a></td>
 				</tr>
 				<tr>
-					<td><label class="flip">Category <span id=""
-							name=""></span></label> <a href="javascript:"><input
+					<td><label class="flip">Category <span id="categoryName"
+							name="categoryName"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 
 				</tr>
