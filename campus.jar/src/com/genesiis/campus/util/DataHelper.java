@@ -8,6 +8,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
+import com.genesiis.campus.validation.BannerData;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
 
@@ -97,6 +98,7 @@ public class DataHelper implements IDataHelper {
 			final ICommand iCommand = factory.getCommand(cco);
 			if (iCommand != null) {
 				result = iCommand.execute(this, result);
+				BannerData.setBannerDetails(this, getResultPage(cco));
 			}
 		} catch (Exception e) {
 			logger.info("getResultView() : " + e.toString());

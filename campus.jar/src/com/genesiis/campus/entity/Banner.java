@@ -6,14 +6,15 @@ import java.util.Date;
 
 public class Banner {
 	int code;
+	String image;
 	Date expirationDate;
-	String page;
 	String type;
 	double displayDuration;
 	String linkType;
 	String url;
 	int bannerStatus;
 	boolean isActive;
+	int pageSlot;
 	
 	public int getCode() {
 		return code;
@@ -21,17 +22,17 @@ public class Banner {
 	public void setCode(int code) {
 		this.code = code;
 	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
-	}
-	public String getPage() {
-		return page;
-	}
-	public void setPage(String page) {
-		this.page = page;
 	}
 	public String getType() {
 		return type;
@@ -68,6 +69,12 @@ public class Banner {
 	}
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+	public int getPageSlot() {
+		return pageSlot;
+	}
+	public void setPageSlot(int pageSlot) {
+		this.pageSlot = pageSlot;
 	}
 	
 }

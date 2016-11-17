@@ -47,7 +47,9 @@ public class BannerAndAdvertDAO implements ICrud {
 		try {
 			String pageUrl = (String) code;
 			
-			String query = "SELECT b.* FROM PAGE JOIN PAGESLOT ps ON (p.CODE = ps.PAGE AND p.NAME = ?) "
+			String query = "SELECT b.*, ps.CODE AS PAGESLOTCODE, ps.NAME AS PAGESLOTNAME "
+					+ "FROM PAGE "
+					+ "JOIN PAGESLOT ps ON (p.CODE = ps.PAGE AND p.NAME = ?) "
 					+ "JOIN BANNER b ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ?)";
 
 			conn = ConnectionManager.getConnection();
@@ -82,9 +84,11 @@ public class BannerAndAdvertDAO implements ICrud {
 
 		while (rs.next()) {
 			final ArrayList<String> singleBanner = new ArrayList<String>();
-			singleBanner.add(rs.getString("CODE")); //0
-			singleBanner.add(rs.getString("EXPIRATIONDATE")); //1
-			singleBanner.add(rs.getString("PAGE")); //2
+			singleBanner.add(rs.getString("PAGESLOTCODE")); //0
+			singleBanner.add(rs.getString("PAGESLOTNAME")); //1
+			singleBanner.add(rs.getString("CODE")); //2
+			singleBanner.add(rs.getString("EXPIRATIONDATE")); //3
+			singleBanner.add(rs.getString("PAGE")); //4
 			singleBanner.add(rs.getString("TYPE")); //3
 			singleBanner.add(rs.getString("DISPLAYDURATION")); //4
 			singleBanner.add(rs.getString("LINKTYPE")); //5

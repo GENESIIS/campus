@@ -22,10 +22,8 @@ public class CmdLoadBannerPage implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		
-		Map<String, Collection<Collection <String>>> slotToBannerContentMap = BannerData.getBannerData(Operation.LOAD_BANNER_PAGE);
+		BannerData.setBannerDetails(helper, Operation.LOAD_BANNER_PAGE.name());
 		
-		helper.setAttribute("bannerContent", slotToBannerContentMap);
-		view.setCollection(new ArrayList<Collection<String>>());
 		return view;
 	}
 }
