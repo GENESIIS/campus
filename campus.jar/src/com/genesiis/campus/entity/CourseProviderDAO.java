@@ -298,14 +298,25 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException{
-		
+	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException{		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
-		ResultSet resultSet =null;
-		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
-		
+		//ResultSet resultSet =null;
+		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
 		try {
+			
+			conn=ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT  DISTINCT PROVIDER.CODE, PROVIDER.SHORTNAME,PROVIDER.LOGOIMAGEPATH, PROVIDER.COURSEPROVIDERSTATUS FROM [CAMPUS].COURSEPROVIDER PROVIDER");
+			sb.append("INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
+			sb.append("AND PROVIDER.COURSEPROVIDERTYPE=2");
+			sb.append("AND PROVIDER.COURSEPROVIDERSTATUS=1");
+			sb.append("AND PROG.CATEGORY=2 ");
+			sb.append("AND PROG.LEVEL=9");
+			sb.append("AND PROG.MAJOR=3");		
+					 
+			
+			stmt=conn.prepareStatement(sb.toString());
+			ResultSet resultSet =stmt.executeQuery();
 			
 			
 			
@@ -316,7 +327,7 @@ public class CourseProviderDAO implements ICrud{
 			log.info("findFilterdCourseProviders() Exception" + e.toString());
 			throw e;
 		} finally {
-			DaoHelper.cleanup(conn, stmt, resultSet);
+			//DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		
 	}

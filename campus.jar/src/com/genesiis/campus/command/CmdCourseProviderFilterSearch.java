@@ -15,12 +15,12 @@ import org.apache.log4j.Logger;
 
 public class CmdCourseProviderFilterSearch implements ICommand  {
 	
-	static Logger log = Logger.getLogger(CmdListMoreCourseProviders.class.getName());
+	static Logger log = Logger.getLogger(CmdCourseProviderFilterSearch.class.getName());
 	/**
 	 * @author DJ
 	 * @param helper
 	 * @param view
-	 * @return course provider filter search
+	 * @return course provider filter search result collection
 	 * @throws Exception
 	 */
 	@Override
