@@ -19,6 +19,7 @@ package com.genesiis.campus.entity;
 //20161110 JH c7-higher-education-landing-page findById method modified : get course provider head office
 //20161111 JH c7-higher-education-landing-page findById method modified : get 10 featured providers
 //20161116 JH c7-higher-education-landing-page findById method modified : code review mx modifications
+//20161117 JH c7-higher-education-landing-page removed logger prefix
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +36,7 @@ import com.genesiis.campus.util.ConnectionManager;
 
 public class CategoryCourseProviderDAO implements ICrud {
 
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CategoryCourseProviderDAO.class.getName());
 
 	@Override

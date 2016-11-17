@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161115 JH c7-higher-education-landing-page findById method code modified : set enum class values
 //20161115 JH c7-higher-education-landing-page getAll() method : added method comments
 //20161116 JH c7-higher-education-landing-page getAll() method : code review mx modifications
+//20161117 JH c7-higher-education-landing-page removed logger prefix
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import com.genesiis.campus.util.ConnectionManager;
 import org.apache.log4j.Logger;
 
 public class CategoryDAO implements ICrud {
-	static org.apache.log4j.Logger log = Logger.getLogger(CategoryDAO.class
+	static Logger log = Logger.getLogger(CategoryDAO.class
 			.getName());
 
 	@Override
