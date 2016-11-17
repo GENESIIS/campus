@@ -31,34 +31,47 @@ public class ReCaptchaManager {
 		HttpURLConnection conn = null;
 		BufferedReader reader = null;
 		boolean result = false;
+		String gRecaptchaResponse = null;
 		try {
-			String gRecaptchaResponse = helper
-					.getParameter("g-recaptcha-response");
-			String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
 
-			// Send get request to Google reCaptcha server with secret key
-			URL url = new URL(
-					"https://www.google.com/recaptcha/api/siteverify?secret="
-							+ secretParameter + "&response="
-							+ gRecaptchaResponse + "&remoteip="
-							+ helper.getRemoteAddress());
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			String line, outputString = "";
-			reader = new BufferedReader(new InputStreamReader(
-					conn.getInputStream()));
-			while ((line = reader.readLine()) != null) {
-				outputString += line;
-			}
+			if (helper.getParameter("recapture") == null
+					|| helper.getParameter("g-recaptcha-response") == null) {
 
-			// Convert response into Object
-			CaptchaResponse captchaResponse = new CaptchaResponse();
-			CaptchaResponse capRes = new Gson().fromJson(outputString,
-					CaptchaResponse.class);
-			if (capRes.isSuccess()) {
-				result = true;
-			} else {
-				result = false;
+				if (helper.getParameter("recapture") != null) {
+					gRecaptchaResponse = helper.getParameter("recapture");
+				} else if (helper.getParameter("g-recaptcha-response") != null) {
+					gRecaptchaResponse = helper
+							.getParameter("g-recaptcha-response");
+				}
+
+				// String gRecaptchaResponse = helper
+				// .getParameter("g-recaptcha-response");
+				String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
+
+				// Send get request to Google reCaptcha server with secret key
+				URL url = new URL(
+						"https://www.google.com/recaptcha/api/siteverify?secret="
+								+ secretParameter + "&response="
+								+ gRecaptchaResponse + "&remoteip="
+								+ helper.getRemoteAddress());
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("GET");
+				String line, outputString = "";
+				reader = new BufferedReader(new InputStreamReader(
+						conn.getInputStream()));
+				while ((line = reader.readLine()) != null) {
+					outputString += line;
+				}
+
+				// Convert response into Object
+				CaptchaResponse captchaResponse = new CaptchaResponse();
+				CaptchaResponse capRes = new Gson().fromJson(outputString,
+						CaptchaResponse.class);
+				if (capRes.isSuccess()) {
+					result = true;
+				} else {
+					result = false;
+				}
 			}
 		} catch (IOException ioException) {
 			log.error("sendRequestToServer() :" + ioException);
