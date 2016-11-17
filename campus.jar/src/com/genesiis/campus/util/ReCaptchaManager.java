@@ -35,8 +35,6 @@ public class ReCaptchaManager {
 		boolean result = false;
 		String gRecaptchaResponse = null;
 		try {
-			// String gRecaptchaResponse = helper
-			// .getParameter("g-recaptcha-response");
 
 			if (helper.getParameter("recapture") == null
 					|| helper.getParameter("g-recaptcha-response") == null) {
