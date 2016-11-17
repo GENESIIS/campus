@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161028 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
+//20161117 JH c7-higher-education-landing-page-MP code modifications : mx code review 
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -39,7 +40,6 @@ public class CmdListCategories implements ICommand{
 		
 		ICrud categoryDAO = new CategoryDAO();
 		try {
-			log.info(">>>>>>>>>>>>");
 			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
 			iview.setCollection(categoryCollection);
 		} catch (SQLException sqle) {
