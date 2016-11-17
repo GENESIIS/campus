@@ -9,6 +9,7 @@ public class CourseProviderSearchDTO {
 	private int major;
 	private int courserProviderType;
 	private int district;	
+	private boolean isGetAll;
 	
 	public int getCourseProviderCode() {
 		return courseProviderCode;
@@ -46,5 +47,12 @@ public class CourseProviderSearchDTO {
 	public void setDistrict(int district) {
 		this.district = district;
 	}
+	public boolean isGetAll() {
+		return isGetAll;
+	}
+	public void setGetAll(boolean isGetAll) {
+		this.isGetAll = isGetAll;
+	}
+	
 
 }
