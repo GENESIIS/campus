@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161104 JH c7-higher-education-landing-page code modification 
 //20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter , add method comments
 //20161116 JH c7-higher-education-landing-page code review mx modifications 
+//20161117 JH c7-higher-education-landing-page code review mx modifications 
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 
 public class CmdListCategoryLandingPage implements ICommand {
 
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CmdListCategoryLandingPage.class.getName());
 	private IView landingPageData;
 
