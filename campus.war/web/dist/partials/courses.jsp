@@ -4,7 +4,7 @@
 <!-- 20161027 TR c11 styling all category selections -->
 <!-- c11-criteria-based-filter-search modified UI to display Dynamic data -->
 <!-- 20161116 PN c11-criteria-based-filter-search added a name and id to checkbox near "All" -->
-
+<!-- 20161116 AS c11-criteria-based-filter-search added a name and id to checkbox near "All" fixed -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,7 +143,7 @@ $(document).ready(function() {
 						<!-- Drop item header -->
 						<div class="item-header">
 							<label>All <span id="courseCount" name="courseCount"></span></label>
-							<a href="javascript:"><input id="selectAll" id="selectAll" type="checkbox"></a>
+							<a href="javascript:"><input id="selectAll" id="selectAll" type="checkbox" ></a>
 						</div>
 					</div>
 
