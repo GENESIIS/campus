@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
 //DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
 //DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
+//DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
 
 
 
@@ -24,6 +25,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -289,6 +291,34 @@ public class CourseProviderDAO implements ICrud{
 		
 	}
 	
-	
+	/**
+	 * Find filter search course providers
+	 * @param CourseProviderSearchDTO 
+	 * @author DJ
+	 * @return Collection 
+	 */
+
+	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException{
+		
+		Connection conn = null;
+		PreparedStatement  stmt = null;
+		ResultSet resultSet =null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		
+		try {
+			
+			
+			
+		} catch (SQLException sqlException) {
+			log.info("findFilterdCourseProviders() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findFilterdCourseProviders() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		
+	}
 
 }
