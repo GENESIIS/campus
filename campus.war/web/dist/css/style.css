@@ -210,7 +210,8 @@ body, html {
         width: 100%; }
     .main-screen .content-panel .search-area {
       display: block;
-      position: relative; }
+      position: relative;
+      z-index: 10; }
       .main-screen .content-panel .search-area .main-search-bar {
         display: block; }
         .main-screen .content-panel .search-area .main-search-bar .bar-holder {

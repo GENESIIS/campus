@@ -1,12 +1,7 @@
 /*! ResponsiveSlides.js v1.55
- * http://responsiveslides.com
- * http://viljamis.com
  *
- * Copyright (c) 2011-2012 @viljamis
  * Available under the MIT license
  */
-
-/*jslint browser: true, sloppy: true, vars: true, plusplus: true, indent: 2 */
 
 (function ($, window, i) {
   $.fn.responsiveSlides = function (options) {
@@ -14,8 +9,8 @@
     // Default settings
     var settings = $.extend({
       "auto": true,             // Boolean: Animate automatically, true or false
-      "speed": 500,             // Integer: Speed of the transition, in milliseconds
-      "timeout": 4000,          // Integer: Time between slide transitions, in milliseconds
+      "speed": 1500,             // Integer: Speed of the transition, in milliseconds
+      "timeout": 3000,          // Integer: Time between slide transitions, in milliseconds
       "pager": false,           // Boolean: Show pager, true or false
       "nav": false,             // Boolean: Show navigation, true or false
       "random": false,          // Boolean: Randomize the order of the slides, true or false
