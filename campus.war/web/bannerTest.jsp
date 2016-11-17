@@ -11,12 +11,24 @@
 </head>
 <body>
 	<div id="banner_slot_1"> 
+	is banner slot 1 empty? ${empty BANNER_SLOT_1}
+		<c:forEach var="banner" items="${BANNER_SLOT_1}">
+			${banner}
+		</c:forEach>
 		${BANNER_SLOT_1}
 	</div>
 	<div id="banner_slot_2">  
+	is banner slot 2 empty? ${empty BANNER_SLOT_2}
+		<c:forEach var="banner" items="${BANNER_SLOT_2}">
+			${banner}
+		</c:forEach>
 		${BANNER_SLOT_2}
 	</div>
 	<div id="banner_slot_3">  
+	is banner slot 3 empty? ${empty BANNER_SLOT_3}
+		<c:forEach var="banner" items="${BANNER_SLOT_3}">
+			${banner}
+		</c:forEach>
 		${BANNER_SLOT_3}
 	</div>
 </body>

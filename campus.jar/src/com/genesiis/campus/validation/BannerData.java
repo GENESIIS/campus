@@ -61,12 +61,15 @@ public class BannerData {
 							
 							if (bannerRecordList == null) {
 								bannerRecordList = new ArrayList<Collection<String>>();
+								pageSlotCodeToBannerRecordsMap.put(pageSlotCodeStr, bannerRecordList);
 								pageSlotCodeToNameMap.put(pageSlotCodeStr, pageSlotName);
 							} 
 							
 							bannerRecordList.add(record);
 							break;
 						}
+						
+						count++;
 					}
 				}
 				

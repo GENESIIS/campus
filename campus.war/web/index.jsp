@@ -9,8 +9,8 @@
 <body>
 	<h1><a href="#">Click to go to page with banners</a></h1>
 	
-	<form action="PublicController" method="post">
-		<button type="submit" name="CCO" value="">CLICK TO GO TO BANNER TEST PAGE</button>
+	<form action="PublicController" method="POST">
+		<button type="submit" name="CCO" value="LOAD_BANNER_PAGE">CLICK TO GO TO BANNER TEST PAGE</button>
 	</form>
 </body>
 </html>

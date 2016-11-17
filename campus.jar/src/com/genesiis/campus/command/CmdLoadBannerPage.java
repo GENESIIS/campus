@@ -22,7 +22,7 @@ public class CmdLoadBannerPage implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		
-		BannerData.setBannerDetails(helper, Operation.LOAD_BANNER_PAGE.name());
+		BannerData.setBannerDetails(helper, helper.getResultPage(helper.getCommandCode()));
 		
 		return view;
 	}
