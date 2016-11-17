@@ -6,7 +6,7 @@
  * This method is to load category details
  */
 
-window.programmeCollection = null;
+window.categoryCollection = null;
 
 function getCategoryData() {
 
@@ -24,7 +24,7 @@ function getCategoryData() {
 				window.categoryCollection = response.result;
 
 				alert(categoryCollection);
-				displayCategories();
+			displayCategories();
 			}
 		},
 	});
@@ -32,11 +32,21 @@ function getCategoryData() {
 
 function displayCategories() {
 	var categoryCollectionList = window.categoryCollection;
-	var singleCategoryCollection = '';
+	var singleCategoryElement = '';
 
 	if (categoryCollectionList !== undefined & categoryCollectionList !== null) {
 		$.each(categoryCollectionList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
 			alert(value);
+
+			singleCategoryElement += '<li>' + value[1] + '</li>';
 		});
 	}
+
+	var categoryNames = $("#category-list");
+	categoryNames.html(singleCategoryElement);
+
 }
