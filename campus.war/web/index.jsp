@@ -1,7 +1,7 @@
 <!-- 20161028 TR c1 setup project structure -->
 <!-- 20161028 TR c1 setup project structure - push to c1 -->
 <!-- 20161103 DN c10-contacting-us-page added the java_script to the page  -->
-<!-- 20161108 DN c10-contacting-us-page-MP-dn added taglib uris  -->
+<!-- 20161108 DN c10-contacting-us-page-MP-dn added taglib urls  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
