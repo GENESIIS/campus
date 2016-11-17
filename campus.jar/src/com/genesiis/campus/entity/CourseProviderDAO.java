@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
 //DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
 //DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
+//DJ 20161117 c17-provider-criteria-based-filter-search Implement findFilterdCourseProviders() method
 
 
 
@@ -304,20 +305,60 @@ public class CourseProviderDAO implements ICrud{
 		//ResultSet resultSet =null;
 		final Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
 		try {
+			int categoryCode=0;
+			boolean isGetAll=false;
+			CourseProviderSearchDTO searchDTO =null;
+			//TODO: Should set filter values
+			if(UtilityHelper.isNotEmptyObject(providerSearchDTO)){
+				searchDTO = (CourseProviderSearchDTO) providerSearchDTO;
+				categoryCode = searchDTO.getCategory();				
+			}else{
+				return allProviderList;
+			}
 			
-			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT  DISTINCT PROVIDER.CODE, PROVIDER.SHORTNAME,PROVIDER.LOGOIMAGEPATH, PROVIDER.COURSEPROVIDERSTATUS FROM [CAMPUS].COURSEPROVIDER PROVIDER");
-			sb.append("INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
-			sb.append("AND PROVIDER.COURSEPROVIDERTYPE=2");
-			sb.append("AND PROVIDER.COURSEPROVIDERSTATUS=1");
-			sb.append("AND PROG.CATEGORY=2 ");
-			sb.append("AND PROG.LEVEL=9");
-			sb.append("AND PROG.MAJOR=3");		
-					 
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder(
+					" SELECT  DISTINCT PROVIDER.CODE, PROVIDER.SHORTNAME,PROVIDER.LOGOIMAGEPATH, PROVIDER.COURSEPROVIDERSTATUS FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
+			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
+			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDERTOWN CPTOWN ON PROVIDER.CODE=CPTOWN.COURSEPROVIDER");
+			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = CPTOWN.TOWN ");
+			sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT");
+			sb.append(" AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
 			
-			stmt=conn.prepareStatement(sb.toString());
-			ResultSet resultSet =stmt.executeQuery();
+			if (searchDTO.getCategory() > 0) {
+				sb.append(" AND PROG.CATEGORY=?");
+			}
+			if (searchDTO.getCourserProviderType() > 0) {
+				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
+			}
+			if (searchDTO.getLevel() > 0) {
+				sb.append(" AND PROG.LEVEL=?");
+			}
+			if (searchDTO.getMajor() > 0) {
+				sb.append(" AND PROG.MAJOR=?");
+			}
+			if (searchDTO.getDistrict() > 0) {
+				sb.append(" AND DISTRICT.CODE=? ");
+			}
+
+			stmt = conn.prepareStatement(sb.toString());		
 			
+			if (searchDTO.getCategory() > 0) {
+				stmt.setInt(1, searchDTO.getCategory());				
+			}
+			if (searchDTO.getCourserProviderType() > 0) {
+				stmt.setInt(2, searchDTO.getCourserProviderType());				
+			}
+			if (searchDTO.getLevel() > 0) {
+				stmt.setInt(3, searchDTO.getLevel());				
+			}
+			if (searchDTO.getMajor() > 0) {
+				stmt.setInt(4, searchDTO.getMajor());				
+			}
+			if (searchDTO.getDistrict() > 0) {
+				stmt.setInt(5, searchDTO.getDistrict());			
+			}
+			ResultSet resultSet = stmt.executeQuery();		
 			
 			
 		} catch (SQLException sqlException) {
@@ -329,6 +370,8 @@ public class CourseProviderDAO implements ICrud{
 		} finally {
 			//DaoHelper.cleanup(conn, stmt, resultSet);
 		}
+		
+		return allProviderList;
 		
 	}
 
