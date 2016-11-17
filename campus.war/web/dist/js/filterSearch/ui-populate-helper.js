@@ -5,7 +5,7 @@
 //20161109 PN c11-criteria-based-filter-search modified getAjaxData() and addsearchData() method to load data dynamically.
 //20161110 PN c11-criteria-based-filter-search modified jQuery method to display searched data on dataTable 
 //20161116 PN c11-criteria-based-filter-search adding reset functionality via check-box -WIP
-
+//20161117 AS c11-criteria-based-filter-search adding reset functionality via check-box fixed
 /**
  * This method id to load category details
  */
@@ -16,6 +16,14 @@ $(document).ready(function() {
 	
 	$('#selectAll').change(function() {
         if ($(this).prop('checked')) {
+        	
+        	//field clear by elementId the id of the HTML elements
+       
+        	$(document).find('#categorylist').val('');
+        	$(document).find('#instituelist').val('');
+        	$(document).find('#districtlist').val('');
+        		
+        	
             displayDetails();
             var t = $('#example').DataTable();   
         	$.ajax({
@@ -361,3 +369,5 @@ function getSelectedData(listname, elementName) {
 	}
 	return selectedValue;
 }
+
+
