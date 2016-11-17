@@ -1,9 +1,9 @@
 package com.genesiis.campus.entity.model;
 
-import java.sql.Date;
-
 //20161026 JH c7-higher-education-landing-page CourseProvider.java entity class created
 //20161026 JH c7-higher-education-landing-page create getters and setters
+
+import java.sql.Date;
 
 public class CourseProvider {
 
