@@ -3,6 +3,7 @@
 
 package com.genesiis.campus.factory;
 
+import com.genesiis.campus.command.CmdAddBannerStat;
 import com.genesiis.campus.command.CmdLoadBannerPage;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -10,6 +11,7 @@ import com.genesiis.campus.validation.Operation;
 public class PublicCmdFactory implements ICmdFactory {
 	static {
 		map.put(Operation.LOAD_BANNER_PAGE, new CmdLoadBannerPage());
+		map.put(Operation.ADD_BANNER_STAT, new CmdAddBannerStat());
 	}
 
 	@Override
@@ -19,6 +21,9 @@ public class PublicCmdFactory implements ICmdFactory {
 		o = Operation.getOperation(cco);
 		switch (o) {
 			case LOAD_BANNER_PAGE:
+				command = map.get(o);
+				break;
+			case ADD_BANNER_STAT:
 				command = map.get(o);
 				break;
 			default:
