@@ -1,5 +1,6 @@
 <!-- 20161109 JH index.jsp created  -->
 <!-- 20161117 JH code modified to include footer and landing pages -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
