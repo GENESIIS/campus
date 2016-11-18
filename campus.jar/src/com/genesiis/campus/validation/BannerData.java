@@ -1,7 +1,9 @@
-//20161116 MM c2-integrate-google-banners INIT class
-//20161117 MM c2-integrate-google-banners Implemented getBannerData() method
-//20161117 MM c2-integrate-google-banners Modified getBannerData() method to fetch and 
+//20161116 MM c2-integrate-google-banners-MP INIT class
+//20161117 MM c2-integrate-google-banners-MP Implemented getBannerData() method
+//20161117 MM c2-integrate-google-banners-MP Modified getBannerData() method to fetch and 
 //				dynamically assign bannerData collections to attributes
+//20161117 MM c2-integrate-google-banners-MP Modified getBannerData() method to use use the 
+// 				SystemConfig enum to get the banner path
 
 package com.genesiis.campus.validation;
 
@@ -35,28 +37,14 @@ public class BannerData {
 		
 		if (pageName != null && !pageName.isEmpty()){
 			BannerAndAdvertDAO bannerAndAdvertDao = new BannerAndAdvertDAO();
-			SystemConfigDAO systemConfigDao = new SystemConfigDAO();
 			
 			try {
 				Collection<Collection <String>> bannerCollection = bannerAndAdvertDao.findById(pageName);
 				
 				// Get banner logo path from SystemConfig table
 				Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
-				systemConfigRecord = systemConfigDao.findById(SystemConfig.BANNER_PATH.name());
 
-				String bannerPath = "";
-				outer:
-				for (Collection<String> record : systemConfigRecord) {
-					int count = 0;
-					inner:
-					for (String field : record) {
-						if (count == 2) {
-							bannerPath = field;
-							break outer;
-						}
-						count++;
-					}
-				}				
+				String bannerPath = SystemConfig.BANNER_PATH.getValue1();			
 				
 				Map<String, List<Collection<String>>> pageSlotCodeToBannerRecordsMap = new LinkedHashMap<String, List<Collection<String>>>();
 				Map<String, String> pageSlotCodeToNameMap = new LinkedHashMap<String, String>();
