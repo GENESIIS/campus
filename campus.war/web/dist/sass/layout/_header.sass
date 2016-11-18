@@ -72,7 +72,7 @@
           li > a
             color: #fff
             &:hover
-              color: #85d0fd
+              color: #001d8c
 
         .bottom-menus
           display: block
@@ -80,18 +80,19 @@
           height: 50%
           font-size: 18px
           color: #fff
-          padding: 15px 20px 0 20px
 
           li
             padding-right: 16px
             padding-left: 16px
-          &:nth-child(2)
-            padding-left: 0
+            line-height: 50px
 
-          li > a
-            color: #fff
-            &:hover
-              color: #85d0fd
+            button
+              display: block
+              background: #2f66c1
+              border: none
+              padding: 0
+              &:hover
+                color: #e5f327
 
 
       .keyword-search
@@ -117,10 +118,16 @@
             height: 18px
             width: 18px
             background: url("../i/ico-search.png")
-            //background-position: 15px -5px
+
 
         .login-link
           float: right
           a
             line-height: 50px
+            color: #fff
+            text-decoration: none
+            transition: all 0.3s
+            &:hover
+              text-decoration: underline !important
+
 
