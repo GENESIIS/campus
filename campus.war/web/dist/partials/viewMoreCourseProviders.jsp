@@ -31,15 +31,13 @@ article {
 	overflow: hidden;
 }
 
-article {
+section {
 	margin-left: 170px;
 	border-left: 1px solid gray;
 	padding: 1em;
 	overflow: hidden;
 }
-table {
- border: 1px solid black;
-}
+
 </style>
 <!-- Bootstrap & CSS Style-->
 <link href="../bower-components/bootstrap/bootstrap.min.css"
@@ -79,6 +77,37 @@ $(document).ready(function(){
 
 	function getAjaxData(response) {
 		
+	/* 	var providers = $("#providers");
+		$.each(response.result, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(providers);
+		}); */
+		
+		 var t = $('#example').DataTable();
+		
+		$.each(response.result, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			t.row.add(y).draw( false );
+			
+		});
+		
+		
+		
+		var providers = $("#providers");
+		$.each(response.result, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(providers);
+		});
+		
 		var categories = $("#categoryName");
 		$.each(response.categoryList, function(index, value) {
 			var res = value.toString();
@@ -112,7 +141,8 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(districtList);
+			var z = data[2].toString();
+			$('<option>').val(y).text(z).appendTo(districtList);
 		});
 		
 		var levelList = $("#levelList");
@@ -132,52 +162,28 @@ $(document).ready(function(){
 	<div class="container">
 
 		<header>
-			<select id="selectedCat" name="selectedCat">
-			   <option value="0">--Category--</option>
-				<c:forEach var="catOuterTypes" items="${categoryList}">
-					<c:forEach var="catTypes" items="${catOuterTypes}"
-						varStatus="count">
-						<c:if test="${count.index == 0}">
-							<c:set var="catCode" value="${catTypes}" />
-						</c:if>
-						<c:if test="${count.index == 1}">
-							<c:set var="catName" value="${catTypes}" />
-						</c:if>
-					</c:forEach>
-					<option value="${catCode}">${catName}</option>
-				</c:forEach>
-			</select>
-				<select id="selectedCat" name="selectedCat">
-			   <option value="0">--District--</option>
-				<c:forEach var="districtOuterList" items="${districtList}">
-					<c:forEach var="districtInnerList" items="${districtOuterList}"
-						varStatus="count">
-						<c:if test="${count.index == 0}">
-							<c:set var="catCode" value="${districtInnerList}" />
-						</c:if>
-						<c:if test="${count.index == 1}">
-							<c:set var="catName" value="${districtInnerList}" />
-						</c:if>
-					</c:forEach>
-					<option value="${catCode}">${catName}</option>
-				</c:forEach>
-			</select>		
+			<div class="drop-holder">
+				<input type="text" name="districtlist" id="districtlist"
+					list="districtList" placeholder="-- Select District --" />
+				<datalist id="districtList">
+				</datalist>
+			</div>
 		</header>
 
 		<section>
 			<h4>All Course Providers</h4>
 			<table>
 				<tr>
-					<td><label>All <span id="courseCount"
-							name="courseCount"></span></label> <a href="javascript:"><input
+					<td><label>All <span id="courseCount" name="courseCount"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 				</tr>
-				<br/>
 				<tr>
-					<td><label class="flip">Category <span id="categoryName"
-							name="categoryName"></span></label> <a href="javascript:"><input
-							type="checkbox"></a></td>
-
+				</tr>
+				<tr>
+					<td><label class="flip">Category <span id="categoryName" name="categoryName"></span></label>
+					 <a href="javascript:"><input type="checkbox"></a></td>
+				</tr>
+				<tr>
 				</tr>
 				<tr>
 					<td><label class="flip">Course Provider Type <span id="courseProviderType"
@@ -213,10 +219,10 @@ $(document).ready(function(){
 			</table>
 		</section>
 
-		<article>
-			<table
-				style="border: 2px; border-color: black; border-style: solid; width: 100%">
-				<tr>
+		<article id="example" >	
+		
+			<table	style="border: 2px; border-color: black; border-style: solid; width: 100%">
+				<%-- <tr>
 					<c:forEach var="provider" items="${result.collection}">
 						<td
 							style="border: 2px; border-color: blue; border-style: solid; width: 10%">
@@ -231,7 +237,7 @@ $(document).ready(function(){
 									</c:when>
 									<c:otherwise>
 										<c:set var="slash" value="/" />
-										<%-- <td><c:out value="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" /></td> --%>
+										<td><c:out value="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" /></td>
 										<img height="42" width="42"
 											src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
 									</c:otherwise>
@@ -241,7 +247,13 @@ $(document).ready(function(){
 						<td></td>
 						<br>
 					</c:forEach>
-				</tr>
+				</tr> --%>
+				<!-- <tr>
+				<td>
+				<label>Listed Providers<span id="providers" name="providers"></span></label>
+				</td>
+				
+				</tr> -->
 			</table>
 		</article>
 		<footer>Copyright © Genesiis.com</footer>
