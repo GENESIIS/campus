@@ -88,15 +88,14 @@ public class BannerAndAdvertDAO implements ICrud {
 			singleBanner.add(rs.getString("PAGESLOTNAME")); //1
 			singleBanner.add(rs.getString("CODE")); //2
 			singleBanner.add(rs.getString("EXPIRATIONDATE")); //3
-//			singleBanner.add(rs.getString("PAGE")); //4
-			singleBanner.add(rs.getString("TYPE")); //3
-			singleBanner.add(rs.getString("DISPLAYDURATION")); //4
-			singleBanner.add(rs.getString("LINKTYPE")); //5
-			singleBanner.add(rs.getString("URL")); //6
-			singleBanner.add(rs.getString("BANNERSTATUS")); //7
-			singleBanner.add(rs.getString("ISACTIVE")); //8
-			singleBanner.add(rs.getString("ADVERTISER")); //9
-			singleBanner.add(rs.getString("IMAGEPATH")); //10
+			singleBanner.add(rs.getString("TYPE")); //4
+			singleBanner.add(rs.getString("DISPLAYDURATION")); //5
+			singleBanner.add(rs.getString("LINKTYPE")); //6
+			singleBanner.add(rs.getString("URL")); //7
+			singleBanner.add(rs.getString("BANNERSTATUS")); //8
+			singleBanner.add(rs.getString("ISACTIVE")); //9
+			singleBanner.add(rs.getString("ADVERTISER")); //10
+			singleBanner.add(rs.getString("IMAGEPATH")); //11
 			final Collection<String> singleBannerCollection = singleBanner;
 			bannerCollection.add(singleBannerCollection);
 		}

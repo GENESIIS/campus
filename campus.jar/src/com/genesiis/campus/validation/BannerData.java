@@ -6,6 +6,7 @@
 package com.genesiis.campus.validation;
 
 import com.genesiis.campus.entity.BannerAndAdvertDAO;
+import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 import java.sql.SQLException;
@@ -34,11 +35,29 @@ public class BannerData {
 		
 		if (pageName != null && !pageName.isEmpty()){
 			BannerAndAdvertDAO bannerAndAdvertDao = new BannerAndAdvertDAO();
+			SystemConfigDAO systemConfigDao = new SystemConfigDAO();
 			
 			try {
 				Collection<Collection <String>> bannerCollection = bannerAndAdvertDao.findById(pageName);
 				
-//				Map<String, Collection<Collection<String>>> pageSlotCodeToBannerRecordsMap = new LinkedHashMap<String, Collection<Collection<String>>>();
+				// Get banner logo path from SystemConfig table
+				Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
+				systemConfigRecord = systemConfigDao.findById(SystemConfig.BANNER_PATH.name());
+
+				String bannerPath = "";
+				outer:
+				for (Collection<String> record : systemConfigRecord) {
+					int count = 0;
+					inner:
+					for (String field : record) {
+						if (count == 2) {
+							bannerPath = field;
+							break outer;
+						}
+						count++;
+					}
+				}				
+				
 				Map<String, List<Collection<String>>> pageSlotCodeToBannerRecordsMap = new LinkedHashMap<String, List<Collection<String>>>();
 				Map<String, String> pageSlotCodeToNameMap = new LinkedHashMap<String, String>();
 				List<Collection<String>> listOfRecords = new ArrayList<Collection<String>>();						
@@ -78,6 +97,7 @@ public class BannerData {
 				for (String pageSlotCode : pageSlotCodeSet) {
 					helper.setAttribute(pageSlotCodeToNameMap.get(pageSlotCode), pageSlotCodeToBannerRecordsMap.get(pageSlotCode));
 				}	
+				helper.setAttribute("bannerPath", bannerPath);
 				
 			} catch (SQLException sqle) {
 				Log.info("getBannerData(Operation): SQLException: " + sqle.toString());
