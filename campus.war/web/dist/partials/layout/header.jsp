@@ -3,6 +3,7 @@
 <!-- 20161109 JH c7 renamed to header.jsp -->
 <!-- 20161110 JH c7 css styles changes -->
 <!-- 20161117 JH c7 load header categories from json object -->
+<!-- 20161118 JH c7 header page css style changes -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -40,7 +41,7 @@
 			<div class="keyword-search pull-right">
 				<div class="search-bar">
 					<input type="text" placeholder="Keyword Search"> <a
-						href="javascript:" class="colr-white">Enter</a>
+						href="javascript:" class="colr-white"></a>
 				</div>
 				<!-- End Keyword Search -->
 				<div class="login-link">
