@@ -43,6 +43,15 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				}				
 			}
 			
+			String courseCountString = helper.getParameter("courseCount");
+			if (UtilityHelper.isNotEmpty(courseCountString)) {
+				if (UtilityHelper.isInteger(courseCountString) && Integer.parseInt(courseCountString)>0) {					
+					providerSearchDTO.setGetAll(true);
+				}				
+			}
+			
+			
+			
 			//TODO:set filter values
 			//isgetAll == true--> set all the param to 0
 			/*providerSearchDTO.setCourserProviderType(courserProviderType);

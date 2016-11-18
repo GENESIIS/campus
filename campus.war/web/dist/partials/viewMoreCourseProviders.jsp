@@ -40,8 +40,7 @@ section {
 
 </style>
 <!-- Bootstrap & CSS Style-->
-<link href="../bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<link href="../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 
 <!-- W3-Include -->
@@ -49,10 +48,11 @@ section {
 <script type="text/javascript"
 	src="../bower-components/jquery/jquery.min.js"></script>
 <!-- <script src="../js/filterSearch/ui-populate-helper.js"></script> -->
+<script src="../js/filterSearch/ui-provider-populate.js"></script>
 
 <!--     Data Table CSS -->
-<!-- <link href="../datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="../datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+<link href="../datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"> 
 <!-- jQuery & Other js -->
 <script src="../bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.3.js" type="text/javascript" charset="utf-8"></script>
@@ -61,110 +61,6 @@ section {
 <script src="../datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/main.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	alert(" test*****************");
-	$.ajax({url : '../../PublicController',
-		data : {
-			CCO : 'LIST_ALL_COURSE_PROVIDERS'
-		},
-		dataType : "json",
-		success : function(response) {			
-			getAjaxData(response);
-		}
-	});
-});
-
-	function getAjaxData(response) {
-		
-	/* 	var providers = $("#providers");
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(providers);
-		}); */
-				
-		
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			var z = data[2].toString();
-			var logo="education/provider/logo/"+ y+ "/" + z;
-			var row = $('<tr>');
-			
-			    row.append($('<td>').html(x));
-			    row.append($('<td>').html(y));
-			    row.append($('<td>').html(logo));
-			    row.append($('<td>').html('<img height="42" width="42" src="'+logo +' " />'));
-			    
-			    
-			   /*  <img height="42" width="42"
-					src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}"/> */
-			
-			$('#ptable').append(row);
-		});		
-		
-		
-		var providers = $("#providers");
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(providers);
-		});
-		
-		var categories = $("#categoryName");
-		$.each(response.categoryList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(categories);
-		});
-
-		var courseProviderType = $("#courseProviderType");
-		$.each(response.cpTypeList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(courseProviderType);
-		});
-
-		var majorList = $("#majorList");
-		$.each(response.majorList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(majorList);
-		});		
-		
-		var levelList = $("#levelList");
-		$.each(response.levelList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(levelList);
-		});
-		var districtList = $("#districtList");
-		$.each(response.districtList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			var z = data[2].toString();
-			$('<option>').val(y).text(z).appendTo(districtList);
-		});
-
-	}
-</script>
 </head>
 <body>
 	<h2>More Course Providers View</h2>	
