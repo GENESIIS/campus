@@ -85,18 +85,28 @@ $(document).ready(function(){
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(providers);
 		}); */
-		
-		 var t = $('#example').DataTable();
+				
 		
 		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			t.row.add(y).draw( false );
+			var z = data[2].toString();
+			var logo="education/provider/logo/"+ y+ "/" + z;
+			var row = $('<tr>');
 			
-		});
-		
+			    row.append($('<td>').html(x));
+			    row.append($('<td>').html(y));
+			    row.append($('<td>').html(logo));
+			    row.append($('<td>').html('<img height="42" width="42" src="'+logo +' " />'));
+			    
+			    
+			   /*  <img height="42" width="42"
+					src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}"/> */
+			
+			$('#ptable').append(row);
+		});		
 		
 		
 		var providers = $("#providers");
@@ -133,17 +143,7 @@ $(document).ready(function(){
 			var x = data[0].toString();
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(majorList);
-		});
-
-		var districtList = $("#districtList");
-		$.each(response.districtList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			var z = data[2].toString();
-			$('<option>').val(y).text(z).appendTo(districtList);
-		});
+		});		
 		
 		var levelList = $("#levelList");
 		$.each(response.levelList, function(index, value) {
@@ -152,6 +152,15 @@ $(document).ready(function(){
 			var x = data[0].toString();
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(levelList);
+		});
+		var districtList = $("#districtList");
+		$.each(response.districtList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			var z = data[2].toString();
+			$('<option>').val(y).text(z).appendTo(districtList);
 		});
 
 	}
@@ -219,10 +228,13 @@ $(document).ready(function(){
 			</table>
 		</section>
 
-		<article id="example" >	
+		<article >	
+		<label>Listed Providers</label>
+		<!-- <label>Listed Providers<span id="providers" name="providers"></span></label> -->		
+		<table id="ptable" style="border: 2px; border-color: black; border-style: solid; width: 100%"></table>
 		
-			<table	style="border: 2px; border-color: black; border-style: solid; width: 100%">
-				<%-- <tr>
+			<%--<table style="border: 2px; border-color: black; border-style: solid; width: 100%">
+				 <tr>
 					<c:forEach var="provider" items="${result.collection}">
 						<td
 							style="border: 2px; border-color: blue; border-style: solid; width: 10%">
@@ -253,8 +265,8 @@ $(document).ready(function(){
 				<label>Listed Providers<span id="providers" name="providers"></span></label>
 				</td>
 				
-				</tr> -->
-			</table>
+				</tr>
+			</table> -->
 		</article>
 		<footer>Copyright © Genesiis.com</footer>
 	</div>
