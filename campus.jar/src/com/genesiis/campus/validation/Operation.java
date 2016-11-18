@@ -12,7 +12,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LOAD_BANNER_PAGE("LOAD_BANNER_PAGE", ResponseType.JSP, "bannerTest.jsp");
+	LOAD_BANNER_PAGE("LOAD_BANNER_PAGE", ResponseType.JSP, "bannerTest.jsp"),
+	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
