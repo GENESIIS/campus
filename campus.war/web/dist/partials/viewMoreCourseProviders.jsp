@@ -37,6 +37,9 @@ article {
 	padding: 1em;
 	overflow: hidden;
 }
+table {
+ border: 1px solid black;
+}
 </style>
 <!-- Bootstrap & CSS Style-->
 <link href="../bower-components/bootstrap/bootstrap.min.css"
@@ -68,29 +71,60 @@ $(document).ready(function(){
 			CCO : 'LIST_ALL_COURSE_PROVIDERS'
 		},
 		dataType : "json",
-		success : function(response) {
-			alert(" success*****************");
+		success : function(response) {			
 			getAjaxData(response);
 		}
 	});
 });
 
- function getAjaxData(response) {
-	
-	alert(" getAjaxData*****************");
-	var categories = $("#categoryName");
-	
-	$.each(response.categoryList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(x).text(y).appendTo(categories);
-	});
-} 
+	function getAjaxData(response) {
+		
+		var categories = $("#categoryName");
+		$.each(response.categoryList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(categories);
+		});
 
+		var courseProviderType = $("#courseProviderType");
+		$.each(response.cpTypeList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(courseProviderType);
+		});
 
+		var majorList = $("#majorList");
+		$.each(response.majorList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(majorList);
+		});
 
+		var districtList = $("#districtList");
+		$.each(response.districtList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(districtList);
+		});
+		
+		var levelList = $("#levelList");
+		$.each(response.levelList, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			$('<option>').val(x).text(y).appendTo(levelList);
+		});
+
+	}
 </script>
 </head>
 <body>
@@ -127,37 +161,7 @@ $(document).ready(function(){
 					</c:forEach>
 					<option value="${catCode}">${catName}</option>
 				</c:forEach>
-			</select>
-			<!-- <select>
-				<option value="1">--Category--</option>
-				<option value="2">Higher Education</option>
-				<option value="3">School Education</option>
-				<option value="4">Corporate Training</option>
-			</select> 
-			<select>
-			  <option value="1">--Course Provider Type--</option>
-				<option value="2">University</option>
-				<option value="3">Private Institute</option>
-				<option value="4">Individual Tutor</option>
-			</select> -->
-			<!-- <select>
-			  <option value="1">--District--</option>
-				<option value="2">University</option>
-				<option value="3">Private Institute</option>
-				<option value="4">Individual Tutor</option>
-			</select> -->
-			<!-- <select>
-			  <option value="1">--Major--</option>
-				<option value="2">University</option>
-				<option value="3">Private Institute</option>
-				<option value="4">Individual Tutor</option>
-			</select>
-			<select>
-			  <option value="1">--Level--</option>
-				<option value="2">University</option>
-				<option value="3">Private Institute</option>
-				<option value="4">Individual Tutor</option>
-			</select> -->
+			</select>		
 		</header>
 
 		<section>
@@ -168,6 +172,7 @@ $(document).ready(function(){
 							name="courseCount"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 				</tr>
+				<br/>
 				<tr>
 					<td><label class="flip">Category <span id="categoryName"
 							name="categoryName"></span></label> <a href="javascript:"><input
@@ -175,21 +180,21 @@ $(document).ready(function(){
 
 				</tr>
 				<tr>
-					<td><label class="flip">Course Provider Type <span id=""
-							name=""></span></label> <a href="javascript:"><input
+					<td><label class="flip">Course Provider Type <span id="courseProviderType"
+							name="courseProviderType"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 
 				</tr>
 				
 				<tr>
-					<td><label class="flip">Major <span id="majorCount"
-							name="majorCount"></span></label> <a href="javascript:"><input
+					<td><label class="flip">Major <span id="majorList"
+							name="majorList"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 
 				</tr>
 				<tr>
-					<td><label class="flip">Levels <span id=""
-							name=""></span></label> <a href="javascript:"><input
+					<td><label class="flip">Levels <span id="levelList"
+							name="levelList"></span></label> <a href="javascript:"><input
 							type="checkbox"></a></td>
 
 				</tr>
