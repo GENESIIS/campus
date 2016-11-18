@@ -1,3 +1,5 @@
+#20161118 PN C27-user-image-upload :INIT campus_student.war and campus_student.jar projects to handle 'student' module.
+
 ## RENAME THIS FILE TO BUILD.PROPERTIES.  CUSTOMISE BUILD.PROPERTIES TO SUIT YOU.
 		
 # these are the names of the JEE modules 
@@ -5,12 +7,16 @@
 campus.ear.name=campus.ear
 campus.war.name=campus.war
 campus.jar.name=campus.jar
+campus_student.war.name=campus_student.war
+campus_student.jar.name=campus_student.jar
 
 # these are the names module dirnames where source code is kept (relative to where this file is)
 
 campus.ear.dir=${basedir}/${campus.ear.name}
 campus.jar.dir=${basedir}/${campus.jar.name}
 campus.war.dir=${basedir}/${campus.war.name}
+campus_student.jar.dir=${basedir}/${campus_student.jar.name}
+campus_student.war.dir=${basedir}/${campus_student.war.name}
 
 # directories for building
 
