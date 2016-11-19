@@ -1,7 +1,8 @@
 //20161118 DJ c17-provider-criteria-based-filter-search Load the details for the provider filter search
 
 
-$(document).ready(function(){	
+$(document).ready(function(){
+	alert("Test....");
 	$.ajax({url : '../../PublicController',
 		data : {
 			CCO : 'LIST_ALL_COURSE_PROVIDERS'
@@ -44,7 +45,20 @@ $(document).ready(function(){
 					src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}"/> */
 			
 			$('#ptable').append(row);
-		});		
+		});	
+		
+		var html="";
+		$.each(response.result, function(index, value) {			
+			var res=value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			var z = data[2].toString();
+			html+='<div>'+x+':'+y+'</div>';
+			$("#provider-name").append(html);
+			
+		});
+		
 		
 		
 		var providers = $("#providers");
