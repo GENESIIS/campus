@@ -235,7 +235,7 @@
                 <!-- Search drop down boxes bar -->
                 <div class="search-boxes-bar clearfix">
 
-                    <div class="district-col col-md-4 col-lg-4  pull-right">
+                   <!--  <div class="district-col col-md-4 col-lg-4  pull-right">
                         <div class="drop-holder">
                             <input type="text" name="product" list="District" placeholder="District"/>
                             <datalist id="District">
@@ -244,7 +244,15 @@
                                 <option value="Gampaha"></option>
                             </datalist>
                         </div>
-                    </div>
+                    </div> -->
+                    
+                    <div class="district-col col-md-4 col-lg-4 pull-right">
+							<div class="drop-holder">
+								<input type="text" name="districtName" id="districtName" list="districtList" placeholder="-- Select District --" />
+								<datalist id="districtList">
+								</datalist>
+							</div>
+						</div>
                     <!-- End find district drop down -->
                 </div>
             </div>
@@ -255,7 +263,7 @@
             <div class="search-result-view clearfix">
                 <div class="result-box clearfix">
                     <div class="provider-name">
-                        <a href="javascript:">Bsc (Hons) in Information Technology <span class="provider-loc"> @Colombo</span></a>
+                        <!-- <a href="javascript:">Bsc (Hons) in Information Technology <span class="provider-loc"> @Colombo</span></a> -->
                     </div>
                     <div class="p-info">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
