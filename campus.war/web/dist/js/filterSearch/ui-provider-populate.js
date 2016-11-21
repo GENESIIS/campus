@@ -78,6 +78,22 @@ $(document).ready(function(){
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(categories);
 		});
+		
+		
+		var major = 0 ;
+		var secondChoice = $("#select-item1");
+		secondChoice.find('li').remove();
+		$.each(response.categoryList, function(index, value) {
+			alert("secondChoice--");
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			secondChoice.append('<li><a href="javascript:"><input name="category" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			/*major++;*/
+		});
+		/*$("#majorCount").text(" " +pad(major, 2));*/
+		
 
 		var courseProviderType = $("#courseProviderType");
 		$.each(response.cpTypeList, function(index, value) {
@@ -95,7 +111,8 @@ $(document).ready(function(){
 			var x = data[0].toString();
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(majorList);
-		});		
+		});	
+		
 		
 		var levelList = $("#levelList");
 		$.each(response.levelList, function(index, value) {
