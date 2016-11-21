@@ -3,7 +3,6 @@ package com.genesiis.campus.validation;
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 
-import com.genesiis.campus.entity.ClassTypeDAO;
 
 import org.apache.log4j.Logger;
 

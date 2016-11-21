@@ -1,9 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
-//20161025 CM c13-Display-course-details added a new attribute to the enum
-//20161108 DN, JH, DJ, AS, CM, PN, MM Added field responseType to enum.
-//20161116 CM c13-Display-course-details Modified VIEW_PROGRAMME viewJSpUrl value.
+//20161121 CM c36-add-tutor-information added a new attribute to the enum
 
 /**
  * Operation class facilitate in binding the CCO
@@ -12,7 +10,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE,"commandNotFound.jsp"),
-	VIEW_PROGRAMME("VPD", ResponseType.JSP,"/dist/partials/courses/course-details.jsp");
+	ADD_TUTOR_PROFILE_DETAILS("ATPD", ResponseType.JSP,"addTutorDetails.jsp");
 	
 	private final String commandString;
 	private final ResponseType responseType;
