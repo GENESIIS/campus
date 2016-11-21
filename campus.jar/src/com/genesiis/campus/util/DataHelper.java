@@ -225,7 +225,7 @@ public class DataHelper implements IDataHelper {
 	 */
 	@Override
 	public ArrayList<FileItem> getFiles() {
-		ArrayList<FileItem> files;
+		ArrayList<FileItem> files=null;
 
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
