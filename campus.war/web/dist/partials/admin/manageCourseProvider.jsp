@@ -27,6 +27,10 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 <style type="text/css">
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info
+	{
+	display: block;
+}
 
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
 	{
@@ -36,22 +40,25 @@
 	border-right: 1px solid #e1e1e1;
 }
 
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: #193949;
-	font-weight: 600;
-}
-
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description
 	{
 	display: inline-block;
+	position: relative;
 	width: 50%;
+	height: 130px;
 	float: left;
+	text-align: center;
+	padding-top: 25px;
+	color: #717171;
+	font-size: 18px;
+	font-family: Oswald;
 	border-right: 1px solid #e1e1e1;
+}
+.main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
+	{
+	width: 16.66%;
+	text-align: center;
+	float: left;
 }
 </style>
 
@@ -85,47 +92,58 @@
 
 				<!-- Filter result table -->
 				<div class="filter-result-table">
-				<h3>Basic Info</h3>
-					<div class="course-info">
-						<div class="col-name">
-							<h1 class="pro-name">Course Provider Name:</h1>
-						</div>
-						<div class="col-description">
-							<input class="pro-name" type="text" name="providerName" id="providerName" required />
-						</div>
-					</div>
-					<div class="course-info">
-						<div class="col-name">
-							<h1 class="pro-name">Short Name:</h1>
-						</div>
-						<div class="col-description">
-							<input type="text" name="shortName" id="shortName" required />
-						</div>
-					</div>
-					<div class="course-info clearfix">
-						<div class="col-name">
-							<h1 class="pro-name">About Me:</h1>
-						</div>
-						<div class="col-description">
-							<textarea rows="30" cols="50" name="aboutMe" id="aboutMe"></textarea>
-						</div>
-					</div>
-					<div class="course-info clearfix">
-						<div class="col-name">
-							<h1 class="pro-name">Special Features:</h1>
-						</div>
-						<div class="col-description">
-								<textarea rows="30" cols="50" name="specialFeatures" id="specialFeatures"></textarea>
-						</div>
-					</div>
-					<div class="course-info clearfix">
-						<div class="col-name">
-							<h1 class="pro-name">Course Provider Name:</h1>
-						</div>
-						<div class="col-description">
-							<input type="text" name="providerName" id="providerName" required />
-						</div>
-					</div>
+					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Course Provider Name:</h1>
+							</div>
+							<div class="col-description">
+								<input class="pro-name" type="text" name="providerName"
+									id="providerName" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Short Name:</h1>
+							</div>
+							<div class="col-description">
+								<input type="text" name="shortName" id="shortName" required />
+							</div>
+						</li>
+						<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+					<h1 class="pro-name">About Me:</h1>
+							</div>
+							<div class="col-description">
+								<textarea rows="10" cols="10" name="aboutMe" id="aboutMe"></textarea>
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Short Name:</h1>
+							</div>
+							<div class="col-description">
+								<input type="text" name="shortName" id="shortName" required />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Short Name:</h1>
+							</div>
+							<div class="col-description">
+								<input type="text" name="shortName" id="shortName" required />
+							</div>
+						</li>
+						<!-- end -->
+
+					</ul>
 				</div>
 				<!-- End filter result table -->
 
