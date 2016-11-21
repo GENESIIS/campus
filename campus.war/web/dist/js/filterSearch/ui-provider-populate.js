@@ -183,5 +183,42 @@ $(document).ready(function(){
 			var z = data[2].toString();
 			$('<option>').val(y).text(z).appendTo(districtList);
 		});
+		
+		
+		 $('#addRow').on( 'click', function () {
+			 
+			 alert("addRow click"); 
+			 var searchData=0;
+			 
+			 $.ajax({
+					url : '../../PublicController',
+					data : {
+						searchData : JSON.stringify(searchData),
+						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
+					},
+					dataType : "json",
+					success : function(response) {
+						 alert("success add click");
+					},
+			        error: function () {
+			            alert("error");
+			        }
+			 });
+			 
+			 
+		 });
 
 	}
+	
+	/*$('#addRow').keyup(function(){
+		
+		alert("addRow");
+		var searchField = $('#search').val();
+		
+	});*/
+	
+	
+
+
+
+
