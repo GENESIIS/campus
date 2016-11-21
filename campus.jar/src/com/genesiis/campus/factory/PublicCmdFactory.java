@@ -3,7 +3,7 @@ package com.genesiis.campus.factory;
 //20161026 DN c10-contacting-us-page amended by inserting CONTACT_US_PUBLC entry to the map
 //20161031 DJ c6-list-available-institutes-on-the-view amended by inserting LIST_TOP_COURSE_PROVIDERS entry to the map
 //20161103 DJ c6-list-available-institutes-on-the-view amended by inserting LIST_ALL_COURSE_PROVIDERS entry to the map
-//20161121 DJ c6-list-available-institutes-on-the-view amended by inserting LIST_FILTER_SEARCH_COURSE_PROVIDERS entry to the map
+//20161121 DJ c17-provider-criteria-based-filter-search by inserting LIST_FILTER_SEARCH_COURSE_PROVIDERS entry to the map
 
 
 import com.genesiis.campus.command.CmdCourseProviderFilterSearch;
