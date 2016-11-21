@@ -17,8 +17,14 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 
+	<!-- jQuery & Other js -->
+	<script src="/dist//bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist//bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist//js/main.js"></script>
 <!-- W3-Include -->
-<script src="../bower-components/w3/w3data.js"></script>
+<script src="/dist//bower-components/w3/w3data.js"></script>
+
+
 
 </head>
 <body>
@@ -103,12 +109,9 @@
 			<div class="top-list clearfix">
 				<div class="list-header clearfix">
 					<div class="btn-show-all pull-right">
-						<form action="PublicController" method="post">
-							<input type="hidden" name="categoryCode" value="${categoryCode}" />
-							<button type="submit" name="CCO"
-								value="LIST_ALL_COURSE_PROVIDERS">Show ALL</button>
-						</form>
-					</div>
+					<input type="hidden" name="categoryCode" value="${categoryCode}" />
+					<a href="dist/partials/viewMoreCourseProviders.jsp"> View More </a>
+				</div>
 				</div>
 				<!-- End list header -->
 
@@ -177,12 +180,16 @@
 				</c:if>
 				<!-- End top viewed list -->
 
-				<div class="btn-show-all pull-right">
+				<%-- <div class="btn-show-all pull-right">
 					<form action="PublicController" method="post">
 						<input type="hidden" name="categoryCode" value="${categoryCode}" />
 						<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">Show
 							ALL</button>
 					</form>
+				</div> --%>
+				<div class="btn-show-all pull-right">
+				<input type="hidden" name="categoryCode" value="${categoryCode}" />
+					<a href="dist/partials/viewMoreCourseProviders.jsp"> View More </a>
 				</div>
 			</div>
 			<!-- End top-rated-list -->
@@ -193,11 +200,5 @@
 
 	<!-- Footer -->
 	<footer w3-include-html="layout/footer.html"></footer>
-
-	<!-- jQuery & Other js -->
-	<script src="../bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="../bower-components/bootstrap/bootstrap.min.js"></script>
-	<script src="../js/main.js"></script>
-
 </body>
 </html>

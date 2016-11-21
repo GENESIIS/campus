@@ -2,6 +2,9 @@
 
 
 $(document).ready(function(){
+	
+	 var div_id = $('#current_div').val(); 
+	 
 	alert("Test....");
 	$.ajax({url : '../../PublicController',
 		data : {
@@ -49,16 +52,15 @@ $(document).ready(function(){
 			$('#ptable').append(row);
 		});	
 		
-		var html="";
+		var providerChoice = $("#providerList");
 		$.each(response.result, function(index, value) {			
 			var res=value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
 			var z = data[2].toString();
-			html+='<div>'+x+':'+y+'</div>';
-			$("#provider-name").append(html);
-			
+			var logo="../../education/provider/logo/"+ y+ "/" + z;
+			providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+logo +' " /> </a> </li>');
 		});
 		
 		

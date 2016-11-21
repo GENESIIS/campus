@@ -14,10 +14,10 @@
 		<input type="text" name="category">
 		<button type="submit" name="CCO" value="LIST_TOP_COURSE_PROVIDERS">TOP CP  LIST</button>
 	</form>
-	<form action="PublicController" method="post">
+	<!-- <form action="PublicController" method="post">
 		<input type="text" name="category">
 		<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">View More</button>
-	</form>
+	</form> -->
 	<a href="dist/partials/viewMoreCourseProviders.jsp" > link </a>
 </body>
 </html>

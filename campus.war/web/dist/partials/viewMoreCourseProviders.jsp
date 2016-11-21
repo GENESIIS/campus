@@ -13,11 +13,11 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 
 <!-- jQuery & Other js -->
-<script src="../bower-components/bootstrap/bootstrap-3.3.7.min.js" charset="utf-8"></script>
-<script src="../bower-components/jquery/jquery-3.1.1.min.js" charset="utf-8"></script>
-<script src="../js/main.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js" charset="utf-8"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js" charset="utf-8"></script>
+<script src="/dist/js/main.js"></script>
 
-<script src="../js/filterSearch/ui-provider-populate.js"></script>
+<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
 
 <!-- W3-Include -->
 <script src="../bower-components/w3/w3data.js"></script>
@@ -82,6 +82,7 @@
 <!-- End Header -->
 
 <!-- Main Container - All-Courses -->
+<div id="current_div" value="${categoryCode}"></div>
 
 <div class="courses-screen clearfix">
     <!-- Page Inner Header -->
@@ -217,10 +218,20 @@
             <hr>
 
             <!-- Search Result List view -->
+				<div class="search-result-view clearfix">
+					<div class="result-box clearfix">
+						<ul id="providerList" class="list-inline clearfix">
+
+						</ul>
+					</div>
+				</div>
+
+				<!--  
+            
             <div class="search-result-view clearfix">
                 <div class="result-box clearfix">
                     <div class="provider-name">
-                        <!-- <a href="javascript:">Bsc (Hons) in Information Technology <span class="provider-loc"> @Colombo</span></a> -->
+                        <a href="javascript:">Bsc (Hons) in Information Technology <span class="provider-loc"> @Colombo</span></a>
                     </div>
                     <div class="p-info">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
@@ -251,7 +262,7 @@
                         <a href="javascript:"><img src="../../i/icbt.png" alt="ICBT"></a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
