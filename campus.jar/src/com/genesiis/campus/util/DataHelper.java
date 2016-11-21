@@ -5,10 +5,18 @@ package com.genesiis.campus.util;
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161121 PN c27-upload-user-image: implemented getParameterMap() and getFiles() methods.
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.ICommand;
@@ -55,15 +63,16 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		return o.getPageURL();
 	}
-	
+
 	/**
 	 * getResponseType(String) Returns the response type bound to each Operation
 	 * enum constant.
-
-	 * @return ResponseType Enum constant of type ResponseType indicating what type
-	 * of response to send to the client
-	 * @param String The value sent by the client as CCO 
-	 */	
+	 * 
+	 * @return ResponseType Enum constant of type ResponseType indicating what
+	 *         type of response to send to the client
+	 * @param String
+	 *            The value sent by the client as CCO
+	 */
 	@Override
 	public ResponseType getResponseType(String cco) {
 		Operation o = Operation.getOperation(cco);
@@ -197,6 +206,56 @@ public class DataHelper implements IDataHelper {
 	public String getHeader(String name) {
 		return request.getHeader(name);
 
+	}
+	
+	/**
+	 * getParameterMap() -  method is to get an array of parameter map
+	 * @return Map<String, String[]> 
+	 * @author pabodha
+	 */
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return request.getParameterMap();
+	}
+
+	/**
+	 * getFiles() -  method is to get files inside a specific folder in disk.
+	 * @return ArrayList<FileItem> - contains list of images
+	 * @author pabodha
+	 */
+	@Override
+	public ArrayList<FileItem> getFiles() {
+		ArrayList<FileItem> files;
+
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+
+		try {
+
+			if (request != null && request.getContentType() != null) {
+				files = new ArrayList<FileItem>();
+				@SuppressWarnings("unchecked")
+				List<Object> list = upload.parseRequest(request);
+
+				if (list != null) {
+
+					for (Object fileItem : list) {
+
+						FileItem item = (FileItem) fileItem;
+						if (!(item.isFormField()))
+							files.add(item);
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return files;
 	}
 
 }
