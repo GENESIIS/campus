@@ -13,14 +13,14 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 
 <!-- jQuery & Other js -->
-<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js" charset="utf-8"></script>
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js" charset="utf-8"></script>
+<script src="../bower-components/bootstrap/bootstrap-3.3.7.min.js" charset="utf-8"></script>
+<script src="../bower-components/jquery/jquery-3.1.1.min.js" charset="utf-8"></script>
 <script src="../js/main.js"></script>
 
 <script src="../js/filterSearch/ui-provider-populate.js"></script>
 
 <!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
+<script src="../bower-components/w3/w3data.js"></script>
 
 </head>
 <body>
@@ -123,16 +123,23 @@
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Categories <span id="categoryName" name="categoryName">- 06</span></label>
+                        <label>Categories <span>- 06</span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
-                    <!-- Item Drop list -->
-                    <div class="item-container slideable">
+                    <!-- Item Drop list -->  
+                   <!-- id="categoryName" name="categoryName"  -->                  
+                    <div id="dropItem1" class="item-container slideable">
+							<ul id="select-item1" class="select-item row-fluid">
+								
+							</ul>
+					</div>
+                    
+                   <!-- <div class="item-container slideable">
                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <span id="categoryName" name="categoryName"></span>
                         </div>
-                    <!--     <div class="select-item row-fluid">
+                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>School Education</label>
                         </div>
@@ -151,31 +158,31 @@
                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>Talent & Skill</label>
-                        </div> -->
-                    </div>
+                        </div>
+                    </div> -->
                 </div>
 
                 <!-- 2nd Category - Course provider type  -->
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Provider Type<span  id="courseProviderType"	name="courseProviderType">- 03</span></label>
+                        <label>Provider Type<span >- 03</span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
                     <!-- Item Drop list -->
                     <div class="item-container slideable">
                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
-                            <label>Campus</label>
+                            <label><span  id="courseProviderType"	name="courseProviderType"></span></label>
                         </div>
-                        <div class="select-item row-fluid">
+                       <!--  <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>Institute</label>
                         </div>
                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>Tutor</label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -183,11 +190,10 @@
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Major <span id="majorList" name="majorList">- 02</span></label>
+                        <label>Major <span>- 02</span></label>
                         <a href="javascript:"><input type="checkbox"></a>
-                    </div>
-                    <!-- Item Drop list -->
-                    <div class="item-container slideable">
+                    </div>                    
+                <!--     <div class="item-container slideable">
                         <div class="select-item row-fluid">
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>Engineering</label>
@@ -196,7 +202,7 @@
                             <a href="javascript:"><input type="checkbox"></a>
                             <label>Arts</label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- 2nd Category - Levels -->
@@ -305,9 +311,7 @@
 <footer w3-include-html="../layout/footer.html"></footer>
 
 <!-- jQuery & Other js -->
-<script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-<script src="../../js/main.js"></script>
+
 
 </body>
 </html>
