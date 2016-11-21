@@ -114,8 +114,8 @@
                 <div class="filter-item">
                     <!-- Drop item header -->
                     <div  class="item-header">
-                        <label>All <span>- 100</span></label>
-                        <a href="javascript:"><input type="checkbox"></a>
+                        <label>All <span id="totalCount" name="totalCount" ></span></label>
+                        <a href="javascript:"><input type="checkbox" name="allSelect"></a>
                     </div>
                 </div>
 
@@ -123,106 +123,57 @@
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Categories <span>- 06</span></label>
+                        <label>Categories <span id="catCount" name="catCount"></span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
                     <!-- Item Drop list -->  
                    <!-- id="categoryName" name="categoryName"  -->                  
                     <div id="dropItem1" class="item-container slideable">
-							<ul id="select-item1" class="select-item row-fluid">
-								
+							<ul id="select-item1" class="select-item row-fluid">								
 							</ul>
-					</div>
-                    
-                   <!-- <div class="item-container slideable">
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <span id="categoryName" name="categoryName"></span>
-                        </div>
-                         <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>School Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Higher Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Corporate Education</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Vocational Training</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Talent & Skill</label>
-                        </div>
-                    </div> -->
+					</div>                   
                 </div>
 
                 <!-- 2nd Category - Course provider type  -->
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Provider Type<span >- 03</span></label>
+                        <label>Provider Type<span id="cpTypeCount" name="cpTypeCount" ></span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
                     <!-- Item Drop list -->
-                    <div class="item-container slideable">
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label><span  id="courseProviderType"	name="courseProviderType"></span></label>
-                        </div>
-                       <!--  <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Institute</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Tutor</label>
-                        </div> -->
-                    </div>
+                     <div id="dropItem1" class="item-container slideable">
+							<ul id="select-cpType" class="select-item row-fluid">								
+							</ul>
+					</div>
                 </div>
 
                 <!-- 2nd Category - Major -->
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label>Major <span>- 02</span></label>
+                        <label>Major <span id="majorCount" name="majorCount"></span></label>
                         <a href="javascript:"><input type="checkbox"></a>
-                    </div>                    
-                <!--     <div class="item-container slideable">
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Engineering</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Arts</label>
-                        </div>
-                    </div> -->
+                    </div>
+                    <!-- Item Drop list -->
+                     <div id="dropItem1" class="item-container slideable">
+							<ul id="select-major" class="select-item row-fluid">								
+							</ul>
+					</div>
                 </div>
 
                 <!-- 2nd Category - Levels -->
                 <div class="filter-item clearfix">
                     <!-- Drop item header -->
                     <div  class="item-header flip">
-                        <label class="flip">Levels <span id="levelList"	name="levelList">- 08</span></label>
+                        <label class="flip">Levels <span id="levelCount"	name="levelCount"></span></label>
                         <a href="javascript:"><input type="checkbox"></a>
                     </div>
                     <!-- Item Drop list -->
-                    <div class="item-container slideable">
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>Degree</label>
-                        </div>
-                        <div class="select-item row-fluid">
-                            <a href="javascript:"><input type="checkbox"></a>
-                            <label>PHD</label>
-                        </div>
-                    </div>
+                   <div id="dropItem1" class="item-container slideable">
+							<ul id="select-level" class="select-item row-fluid">								
+							</ul>
+					</div>
                 </div>
 
             </div>
