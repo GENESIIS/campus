@@ -23,7 +23,26 @@
 	<script src="/dist//js/main.js"></script>
 <!-- W3-Include -->
 <script src="/dist//bower-components/w3/w3data.js"></script>
+<script type="text/javascript">
 
+function secondFunction(){
+	var name="Dumani";
+	alert("javascript:secondFunction()");
+	 $.ajax({  
+		 
+         type:"POST",      
+         url: "dist/partials/viewMoreCourseProviders.jsp",  
+         data:"name=" +name,           
+         success: function(success) {
+        	 alert('success'); 
+         },
+         error : function(){ 
+             alert('Error'); 
+         },
+     });
+}
+
+</script>
 
 
 </head>
@@ -109,8 +128,8 @@
 			<div class="top-list clearfix">
 				<div class="list-header clearfix">
 					<div class="btn-show-all pull-right">
-					<input type="hidden" name="categoryCode" value="${categoryCode}" />
-					<a href="dist/partials/viewMoreCourseProviders.jsp"> View More </a>
+					<%-- <input type="hidden" name="categoryCode" value="${categoryCode}" /> --%>
+					<a href="dist/partials/viewMoreCourseProviders.jsp?categoryCode=${categoryCode}"> View More </a>
 				</div>
 				</div>
 				<!-- End list header -->

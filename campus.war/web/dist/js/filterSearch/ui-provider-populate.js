@@ -1,19 +1,24 @@
 //20161118 DJ c17-provider-criteria-based-filter-search Load the details for the provider filter search
 
 
-$(document).ready(function(){
+$(document).ready(function(){	
+	 
+	 var catCode= $("#catCode").val();
 	
-	 var div_id = $('#current_div').val(); 
 	 
 	alert("Test....");
 	$.ajax({url : '../../PublicController',
 		data : {
-			CCO : 'LIST_ALL_COURSE_PROVIDERS'
+			CCO : 'LIST_ALL_COURSE_PROVIDERS',
+			categoryCode:catCode
 		},
 		dataType : "json",
 		success : function(response) {			
 			getAjaxData(response);
-		}
+		},
+        error: function () {
+            alert("error");
+        }
 	});
 });
 

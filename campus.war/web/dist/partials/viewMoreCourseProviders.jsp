@@ -1,5 +1,7 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!-- 20161027 TR c11 styling all category selections -->
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,8 +84,12 @@
 <!-- End Header -->
 
 <!-- Main Container - All-Courses -->
-<div id="current_div" value="${categoryCode}"></div>
+<div id="current_div" >
 
+
+</div>
+<div> <input type="hidden" id="catCode" value="${param.categoryCode}" />
+</div>
 <div class="courses-screen clearfix">
     <!-- Page Inner Header -->
     <div class="inner-header center-block">
