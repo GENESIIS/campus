@@ -41,12 +41,12 @@ public class CmdAddTutorProfile implements ICommand {
 			String gender = helper.getParameter("gender");
 			String email = helper.getParameter("email");
 			// String imagepath=helper.getParameter("imagepath");
-			String landPhoneCoutnryCode = helper
-					.getParameter("landphoneCountryCode");
-			String landPhoneAreaCode = helper.getParameter("landphoneAreaCode");
+//			String landPhoneCoutnryCode = helper
+//					.getParameter("landphoneCountryCode");
+//			String landPhoneAreaCode = helper.getParameter("landphoneAreaCode");
 			String landPhoneNumber = helper.getParameter("landNumber");
-			String mobileCountryCode = helper.getParameter("mobileCountryCode");
-			String mobileNetworkCode = helper.getParameter("mobileAreaCode");
+//			String mobileCountryCode = helper.getParameter("mobileCountryCode");
+//			String mobileNetworkCode = helper.getParameter("mobileAreaCode");
 			String mobileNumber = helper.getParameter("mobileNumber");
 			String abouMe = helper.getParameter("aboutMe");
 			String experience = helper.getParameter("experience");
@@ -56,7 +56,7 @@ public class CmdAddTutorProfile implements ICommand {
 			String myspace = helper.getParameter("myspace");
 			String linkedIn = helper.getParameter("linkedin");
 			String instagram = helper.getParameter("instagram");
-			String viber = helper.getParameter("viber");
+ 			String viber = helper.getParameter("viber");
 			String whatsapp = helper.getParameter("whatsapp");
 			String adreess1 = helper.getParameter("address1");
 			String adreess2 = helper.getParameter("address2");
@@ -70,11 +70,11 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setLastName(lastName);
 			tutor.setGender(gender);
 			tutor.setEmail(email);
-			tutor.setLandCountryCode(landPhoneCoutnryCode);
-			tutor.setLandAreaCode(landPhoneAreaCode);
+//			tutor.setLandCountryCode(landPhoneCoutnryCode);
+//			tutor.setLandAreaCode(landPhoneAreaCode);
 			tutor.setLandNumber(landPhoneNumber);
-			tutor.setMobileCountryCode(mobileCountryCode);
-			tutor.setMobileNetworkCode(mobileNetworkCode);
+//			tutor.setMobileCountryCode(mobileCountryCode);
+//			tutor.setMobileNetworkCode(mobileNetworkCode);
 			tutor.setMobileNumber(mobileNumber);
 			tutor.setDescription(abouMe);
 			tutor.setExperience(experience);
