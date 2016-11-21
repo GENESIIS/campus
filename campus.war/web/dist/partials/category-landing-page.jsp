@@ -3,6 +3,7 @@
 <!-- 20161110 JH c7-higher-education-landing-page-MP add banner panel to the landing page -->
 <!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
 <!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
+<!-- 20161121 JH c7-higher-education-landing-page-MP removed unwanted style tags -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -15,20 +16,16 @@
 <!-- Bootstrap & CSS Style-->
 
 <link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- custom javascript -->
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
-<style type="text/css">
-</style>
 </head>
+
 <body onload="getCategoryData()">
 
 	<!-- include Header-->
