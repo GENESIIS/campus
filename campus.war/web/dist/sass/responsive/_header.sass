@@ -3,7 +3,7 @@
 
 // Desktop and laptop screen
 
-@media only screen and (max-width : 1224px)
+@media only screen and (max-width : 991px)
   header
   .header
     .top
@@ -12,8 +12,13 @@
         //font-weight: 600
 
     .bottom
-      .bottom-menus
-        font-size: 15px !important
+      .menu-bar
+        .menu-tabs
+          width: calc(90% - 115px) !important
+          .bottom-menus
+            font-size: 12px !important
+        .keyword-search
+          display: none !important
 
 
 // iPad - portrait
@@ -24,8 +29,14 @@
       height: 100px !important
       
 
-
-
+// main portrait and
+//@media only screen and (min-device-width : 480px) and (max-device-width : 768px)
+@media only screen and (max-device-width : 768px)
+  header .header .bottom .menu-bar .menu-tabs
+    .top-menus
+      display: none !important
+    .bottom-menus
+      display: none !important
 
 
 // main  screen

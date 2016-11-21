@@ -669,14 +669,23 @@ body, html {
               font-weight: lighter; }
 
 /* Responsive */
-@media only screen and (max-width: 1224px) {
+@media only screen and (max-width: 991px) {
   .header .top .logo-txt {
     font-size: 25px !important; }
-  .header .bottom .bottom-menus {
-    font-size: 15px !important; } }
+  .header .bottom .menu-bar .menu-tabs {
+    width: calc(90% - 115px) !important; }
+    .header .bottom .menu-bar .menu-tabs .bottom-menus {
+      font-size: 12px !important; }
+  .header .bottom .menu-bar .keyword-search {
+    display: none !important; } }
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .header .top {
     height: 100px !important; } }
+@media only screen and (max-device-width: 768px) {
+  header .header .bottom .menu-bar .menu-tabs .top-menus {
+    display: none !important; }
+  header .header .bottom .menu-bar .menu-tabs .bottom-menus {
+    display: none !important; } }
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .main-screen .content-panel {
     width: 100% !important; }
