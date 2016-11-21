@@ -24,7 +24,8 @@
 </body>
 <script>
 	$("#input-repl-1").fileinput({
-						uploadUrl : "/file-upload-batch/2",
+						uploadUrl : "/PublicController",
+						CCO :"ABC",
 						autoReplace : true,
 						maxFileSize : 2800,
 						overwriteInitial : true,
@@ -40,7 +41,12 @@
 							actionDelete : '',
 							actionUpload : ''
 						}, // disable thumbnail deletion
-						allowedFileExtensions : [ "jpg", "png" ]
+						allowedFileExtensions : [ "jpg", "png" ],
+						uploadAsync: false,
+						uploadExtraData: function (previewId, index) {
+				            var info = {"tags": "somestuff"};
+				            return info;
+				        }
 	});
 </script>
 </html>
