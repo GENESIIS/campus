@@ -198,17 +198,8 @@ function secondFunction(){
 					</div>
 				</c:if>
 				<!-- End top viewed list -->
-
-				<%-- <div class="btn-show-all pull-right">
-					<form action="PublicController" method="post">
-						<input type="hidden" name="categoryCode" value="${categoryCode}" />
-						<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">Show
-							ALL</button>
-					</form>
-				</div> --%>
-				<div class="btn-show-all pull-right">
-				<input type="hidden" name="categoryCode" value="${categoryCode}" />
-					<a href="dist/partials/viewMoreCourseProviders.jsp"> View More </a>
+				<div class="btn-show-all pull-right">				
+					<a href="dist/partials/viewMoreCourseProviders.jsp?categoryCode=${categoryCode}"> View More </a>
 				</div>
 			</div>
 			<!-- End top-rated-list -->
