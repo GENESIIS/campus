@@ -59,6 +59,9 @@ function isValidEmailFormat(email) {
 	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
 	return isPatternMatch(pattern, emailAddress);
 }
+
+
+
 /**
  * 
  * @param phoneNumber
@@ -90,4 +93,15 @@ function isPatternMatch(regularExpression, source) {
 
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
+}
+
+/**
+ * isValidEmailFormat method validate a email address
+ * @returns boolean if testing email address is a valid
+ * one then returns true else return false
+ */
+function isValidEmailFormat(){	
+	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
+	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
+	return isPatternMatch(pattern,emailAddress);
 }
