@@ -1,8 +1,8 @@
 package com.genesiis.campus.entity.model;
 
-import java.sql.Date;
-
 //20161121 CM c36-add-tutor-information INIT Tutor.java
+
+import java.sql.Date;
 
 public class Tutor {
  
