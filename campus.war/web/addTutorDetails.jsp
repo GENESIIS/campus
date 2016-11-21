@@ -16,15 +16,15 @@
 	</tr>
 		<tr>
 			<td>First Name</td>
-			<td><input type="text" name="fname" id="first-name"/></td>
+			<td><input type="text" name="firstname" id="first-name"/></td>
 		</tr>
 		<tr>
 			<td>Middle Name</td>
-			<td><input type="text" name="mname" id="middle-name"/></td>
+			<td><input type="text" name="middlename" id="middle-name"/></td>
 		</tr>
 		<tr>
 			<td>Last Name</td>
-			<td><input type="text" name="lname" id="last-name"/></td>
+			<td><input type="text" name="lastname" id="last-name"/></td>
 		</tr>
 		<tr>
 			<td>Gender</td>
@@ -49,11 +49,7 @@
 		</tr>
 		<tr>
 			<td>Home</td>
-			<td><input type="text" name="homeNumber" /></td>
-		</tr>
-		<tr>
-			<td>Office</td>
-			<td><input type="text" name="offcieNumber" /></td>
+			<td><input type="text" name="landNumber" /></td>
 		</tr>
 		<tr>
 			<td>Address 1</td>
