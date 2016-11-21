@@ -1,0 +1,38 @@
+// 20161121 TR c1 resolve responsive errors - common header
+
+
+// Desktop and laptop screen
+
+@media only screen and (max-width : 1224px)
+  header
+  .header
+    .top
+      .logo-txt
+        font-size: 25px !important
+        //font-weight: 600
+
+    .bottom
+      .bottom-menus
+        font-size: 15px !important
+
+
+// iPad - portrait
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
+  header
+  .header
+    .top
+      height: 100px !important
+      
+
+
+
+
+
+// main  screen
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
+  .main-screen
+    .content-panel
+      width: 100% !important
+
+    .banner-panel
+      display: none !important
