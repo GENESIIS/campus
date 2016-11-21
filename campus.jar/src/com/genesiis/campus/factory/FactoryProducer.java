@@ -21,6 +21,8 @@ public class FactoryProducer {
 		if (choice.equalsIgnoreCase("/PublicController")) {
 			return new PublicCmdFactory();
 
+		}else if(choice.equalsIgnoreCase("/TutorController")){
+			return new TutorCmdFactory();
 		}
 
 		return null;
