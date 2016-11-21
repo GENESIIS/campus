@@ -3,7 +3,7 @@
 //20161109 DN c10-contacting-us-page-MP validateForm() refactor the method
 //20161109 DN c10-contacting-us-page-MP refactor clearField() the method
 //20161116 DN c10-contacting-us-page-MP methods are exported to /dist/js/institute/validation/validation.js
-
+//20161116 isValidEmailFormat() shifted to /dist/js/institute/validation/validation.js
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
 theNewScript.src = "../../dist/js/institute/validation/validation.js";
@@ -42,17 +42,6 @@ function validateForm(){
 function isHumanTestPassed(){	
 	var response = grecaptcha.getResponse();
 	return(response.length!=0)?true:false;
-	
-	
 }
-/**
- * isValidEmailFormat method validate a email address
- * @returns boolean if testing email address is a valid
- * one then returns true else return false
- */
-function isValidEmailFormat(){	
-	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
-	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
-	return isPatternMatch(pattern,emailAddress);
-}
+
 
