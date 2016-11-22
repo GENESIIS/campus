@@ -4,27 +4,29 @@
  * 20161110 MM c5-corporate-training-landing-page-MP Added code to display programme data retrieved
  * 20161110 MM c5-corporate-training-landing-page-MP Modified code to properly display the town list for each programme 
  * 20161110 MM c5-corporate-training-landing-page-MP Implemented pagination controls for the programme list
- * 2016111 MM c5-corporate-training-landing-page-MP Re-factored code in getProgrammeData() into several methods 
- * 2016111 MM c5-corporate-training-landing-page-MP Modified code in constructProgrammeListing() so that specific list of 
+ * 20161111 MM c5-corporate-training-landing-page-MP Re-factored code in getProgrammeData() into several methods 
+ * 20161111 MM c5-corporate-training-landing-page-MP Modified code in constructProgrammeListing() so that specific list of 
  *													programmes applicable for the currently clicked paginator button is selected
  *													and used for construction of programme list 
- * 2016111 MM c5-corporate-training-landing-page-MP Modified code to highlight currently selected element in paginator (while 
+ * 20161111 MM c5-corporate-training-landing-page-MP Modified code to highlight currently selected element in paginator (while 
  * 													handling issue related to the same) 
- * 2016111 MM c5-corporate-training-landing-page-MP Modified code to enable and disable previous 
+ * 20161111 MM c5-corporate-training-landing-page-MP Modified code to enable and disable previous 
  * 													and next buttons in the  paginator controls 
  * 													according to the selected button
- * 2016112 MM c5-corporate-training-landing-page-MP Modified code to expect a filterType field in the JSON sent from server
+ * 20161112 MM c5-corporate-training-landing-page-MP Modified code to expect a filterType field in the JSON sent from server
  * 													which is used to identify what type of items are displayed in filtering 
  * 													menu (Majors for CorporateTraining category and Levels for others)
- * 2016112 MM c5-corporate-training-landing-page-MP Added "filtering" code so that when a major/level item from the menu
+ * 20161112 MM c5-corporate-training-landing-page-MP Added "filtering" code so that when a major/level item from the menu
  * 													is clicked, the programme list and paginator buttons are re-created for 
  * 													based on that particular major/level 
- * 2016114 MM c5-corporate-training-landing-page-MP Removed reference to a property that is no longer included in the JSON 
+ * 20161114 MM c5-corporate-training-landing-page-MP Removed reference to a property that is no longer included in the JSON 
  * 													object sent from server. Changed name of a different property to match
  * 													changes at server side code.  													
- * 2016115 MM c5-corporate-training-landing-page-MP Modified code to change filter elements to checkboxes and implemented
+ * 20161115 MM c5-corporate-training-landing-page-MP Modified code to change filter elements to checkboxes and implemented
  * 													feature of allowing selection of multiple filter check-boxes 													
- * 2016116 MM c5-corporate-training-landing-page-MP Changed style of displayed error messages.													
+ * 20161116 MM c5-corporate-training-landing-page-MP Changed style of displayed error messages.													
+ * 20161122 MM c5-corporate-training-landing-page-MP Modified code to prevent filtering menu from being shown when there are 
+ * 													no returned programme records and to show a message when to the user then 													
  *
  */
 
@@ -85,9 +87,16 @@ function getProgrammeData() {
 				window.programmeCollectionNarrowedDown = response.result;
 				window.messages = response.messages;
 				
-				constructLevelOrMajorMenu();
-				createProgrammeListingAndPaginator();
-				showMessages(window.messages);
+				if (window.programmeCollectionFetched !== undefined && window.programmeCollectionFetched !== null && window.programmeCollectionFetched.length > 0) {
+					constructLevelOrMajorMenu();
+					createProgrammeListingAndPaginator();
+					showMessages(window.messages);
+				} else {
+					var messages = [];
+					messages.push("It seems that no programmes are available for this category at the moment.");
+					messages.push("Please check back soon...");
+					showMessages(messages);
+				}
 			}			
 		},
 		error : function(response) {
@@ -106,7 +115,7 @@ function constructLevelOrMajorMenu(){
 	//Construct the Level/Major menu on top of programme displaying area
 	var levelOrMajorHtmlFragment = '';
 	
-	if (levelOrMajorCollection !== undefined && levelOrMajorCollection !== null) {
+	if (levelOrMajorCollection !== undefined && levelOrMajorCollection !== null && levelOrMajorCollection.length > 0) {
 		levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item major-or-level-menu-item-all">\
 			<input class="major-or-level-checkbox major-or-level-checkbox-all" type="checkbox" checked/>All</li>';
 		$.each(levelOrMajorCollection, function(index, val) {
@@ -170,16 +179,16 @@ function constructProgrammeListing(pageNum) {
 	//Construct the Programme listing 
 	var programmesHtmlFragment = '';
 	
-	if (programmeCollectionForCurrentPage !== undefined && programmeCollectionForCurrentPage !== null) {
+	if (programmeCollectionForCurrentPage !== undefined && programmeCollectionForCurrentPage !== null && programmeCollectionForCurrentPage.length > 0) {
 		$.each(programmeCollectionForCurrentPage, function(index, val) {						
 			programmesHtmlFragment += '<li class="course-info clearfix">';
 			programmesHtmlFragment += '<div class="col-name">';
 			programmesHtmlFragment += '<a href=""><h1 class="pro-name">' + val[18] + '</h1></a>';
 			programmesHtmlFragment += '<div class="pro-logo">';
 			
-			var logoImgPath = courseProviderLogoPath + val[22] + "/" + val[16];
+			var logoImgPath = courseProviderLogoPath + '\\' + val[22] + '\\' + val[16];
 			
-			programmesHtmlFragment += '<a href=""><img src=' + logoImgPath + ' alt="' + val[18] + ' logo"></a>';
+			programmesHtmlFragment += '<a href=""><img src="' + logoImgPath + '" alt="' + val[18] + ' logo"></a>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '<div class="col-description">';
@@ -214,43 +223,47 @@ function constructPaginator() {
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
 	var totalNumOfResults = programmeCollection.length;
-	var numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
-			parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : 
-				parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
+	var numOfPages = 0;
 	
-	var paginatorULElement = $('div.paginator-div > nav > ul.pagination');
-	
-	// Construct the paginator
-	if (numOfPages !== undefined && numOfPages !== null) {
+	if (totalNumOfResults > 0) {
+		numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
+				parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : 
+					parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
 		
-		var paginationHtml = '';
-		paginationHtml += '<li class="paginator-button paginator-button-previous">\
-		      <a>\
-		      <span>\
-		        <span aria-hidden="true">&laquo;</span>\
-		      </span>\
-		      </a>\
-		    </li>';
+		var paginatorULElement = $('div.paginator-div > nav > ul.pagination');
 		
-		for (var i = 1; i <= numOfPages; i++) {
-			paginationHtml += '<li class="paginator-button';
+		// Construct the paginator
+		if (numOfPages !== undefined && numOfPages !== null) {
 			
-			paginationHtml += '" data-page-number="'+ i +'">\
+			var paginationHtml = '';
+			paginationHtml += '<li class="paginator-button paginator-button-previous">\
 			      <a>\
-			      <span>' + i + '</span>\
+			      <span>\
+			        <span aria-hidden="true">&laquo;</span>\
+			      </span>\
 			      </a>\
 			    </li>';
-		}
+			
+			for (var i = 1; i <= numOfPages; i++) {
+				paginationHtml += '<li class="paginator-button';
+				
+				paginationHtml += '" data-page-number="'+ i +'">\
+				      <a>\
+				      <span>' + i + '</span>\
+				      </a>\
+				    </li>';
+			}
 
-		paginationHtml +='<li class="paginator-button paginator-button-next">\
-		      <a>\
-		      <span>\
-		        <span aria-hidden="true">&raquo;</span>\
-		      </span>\
-		      </a>\
-		    </li>';
+			paginationHtml +='<li class="paginator-button paginator-button-next">\
+			      <a>\
+			      <span>\
+			        <span aria-hidden="true">&raquo;</span>\
+			      </span>\
+			      </a>\
+			    </li>';
 
-		paginatorULElement.html(paginationHtml);					
+			paginatorULElement.html(paginationHtml);					
+		}		
 	}
 	
 	paginatorULElement.find('li.paginator-button').on('click', function() {
