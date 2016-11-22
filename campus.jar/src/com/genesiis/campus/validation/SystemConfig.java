@@ -1,6 +1,8 @@
 package com.genesiis.campus.validation;
 
 //20161113 MM c5-corporate-training-landing-page-MP Initialised file
+//20161118 MM c5-corporate-training-landing-page-MP Added fields value1, 
+//				value2 and value3 to match fields in SystemConfig table
 
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
@@ -20,10 +22,33 @@ package com.genesiis.campus.validation;
 *
 */
 public enum SystemConfig {
-	PROVIDER_LOGO_PATH,
-	BANNER_PATH,
-	BANNER_LINKED_IMAGE_PATH,
-	COURSE_IMAGE_PATH,
-	STUDENT_PROFILE_IMAGE_PATH,
-	TUTOR_PROFILE_IMAGE_PATH;
+	
+	PROVIDER_LOGO_PATH("education\\provider\\logo", "", ""),
+	BANNER_PATH("education\\banner", "", ""),
+	BANNER_LINKED_IMAGE_PATH("","",""),
+	COURSE_IMAGE_PATH("","",""),
+	STUDENT_PROFILE_IMAGE_PATH("","",""),
+	TUTOR_PROFILE_IMAGE_PATH("","","");
+	
+	private String value1;
+	private String value2;
+	private String value3;
+	
+	SystemConfig(String value1, String value2, String value3) {
+		this.value1 = value1;
+		this.value2 = value2;
+		this.value3 = value3;
+	}
+
+	public String getValue1() {
+		return value1;
+	}
+
+	public String getValue2() {
+		return value2;
+	}
+
+	public String getValue3() {
+		return value3;
+	}
 }
