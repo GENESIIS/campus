@@ -12,6 +12,8 @@ package com.genesiis.campus.command;
 //20161111 DN c10-contacting-us-page-MP execute() refactor to include SRP-Single Responsibility Principle. created isReCaptureResponseSuccess()
 //						validateFrontEndUserProvidedInformation(),modified sendMail() and systemMessage()
 //20161111 DN c10-contacting-us-page-MP-dn removed unnecessary imports as per code review.
+//20161122 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() created and refactor execute() to include view manipulation
+// in a case when validation fails
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -75,7 +77,7 @@ public class CmdGenerateEmail implements ICommand {
 			
 			 ICrud genesiis = new SystemConfigDAO();
 			 try{
-				 	//validateFrontEndUserProvidedInformation(helper);
+				 	validateFrontEndUserProvidedInformation(helper);
 				 	boolean isResponseSuccess =isReCaptureResponseSuccess(helper);
 				 	
 					// Verify whether the input from Human or Robot
@@ -89,6 +91,7 @@ public class CmdGenerateEmail implements ICommand {
 						 connection);
 							 recieversEmailAddreses= composeSingleEmailList(collectionOfCollectionOfEmails);
 							 generalEmail = formatEmailInstance();
+							 setViewDataIfReCaptureFails(helper,view);
 						 break;
 						default:						
 						 break;
@@ -98,7 +101,8 @@ public class CmdGenerateEmail implements ICommand {
 					 message = systemMessage(status);
 				 } else {
 					// Input by Robot
-						message = SystemMessage.RECAPTCHAVERIFICATION.message();
+					 setViewDataIfReCaptureFails(helper,view);
+					 message = SystemMessage.RECAPTCHAVERIFICATION.message();
 				 }
 		 } catch (MessagingException msgexp){
 			 log.error("execute():MessagingException "+msgexp.toString());
@@ -120,6 +124,24 @@ public class CmdGenerateEmail implements ICommand {
 			helper.setAttribute("message", message);
 		}
 			 return view;
+	}
+	
+	/*
+	 * 
+	 * @param helper
+	 * @param view
+	 */
+	private void setViewDataIfReCaptureFails(IDataHelper helper, IView view){
+		Collection<Collection<String>> outerCollectionWrapper = new ArrayList<Collection<String>>();
+		Collection<String> innerCollection =  new ArrayList<String>();
+		innerCollection.add(helper.getParameter("firstName"));
+		innerCollection.add(helper.getParameter("lastName"));
+		innerCollection.add(sendersEmailAddress);
+		innerCollection.add(sendersphoneNumber);
+		innerCollection.add(mailingSubject);
+		innerCollection.add(mailBody);
+		outerCollectionWrapper.add(innerCollection);
+		view.setCollection(outerCollectionWrapper);
 	}
 	
 	/*
