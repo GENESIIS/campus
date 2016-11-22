@@ -223,4 +223,70 @@ public class FileUtility {
 	public String getNewName() {
 		return this.renamedTo;
 	}
+	
+	/**
+	 * This function renames the file associated with the instance into one
+	 * 
+	 * @return the path to the renamed image.
+	 * @throws Exception
+	 **/
+	public String renameIntoOne(int StudentCode) throws Exception {
+		String savePath = "";
+		try {			
+			this.uploaded = false;
+			File uploadLocation = new File(this.uploadPath);
+
+			if (!uploadLocation.isDirectory())
+				uploadLocation.mkdirs();
+
+			FileUtils.cleanDirectory(uploadLocation); 
+			
+			String fileName = this.item.getName();
+
+			/**
+			 * check whether the / exists at the end of the upload path
+			 **/
+			if (this.uploadPath.length() - 1 == this.uploadPath.lastIndexOf("/"))
+				this.file = new File(this.uploadPath + fileName);
+			else
+				this.file = new File(this.uploadPath + "/" + fileName);
+
+			/**
+			 * write the file to the file system
+			 **/
+			if (this.file.exists())
+				this.file = new File(this.uploadPath + "/(copy)" + fileName);
+
+			this.item.write(this.file);
+			this.uploaded = true;
+			
+			
+			File folder = new File(this.getFile().getParent());
+			File[] paths = folder.listFiles();
+			String newfileName = "";
+			String ext = "";
+			
+			
+			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
+
+			newfileName = Integer.toString(StudentCode) + "." + ext;
+
+			savePath = folder.getAbsoluteFile() + "/" + newfileName;
+			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
+
+			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + newfileName));
+			FileUtils.forceDelete(this.file);
+
+			this.renamedTo = newfileName;
+			
+
+		} catch (Exception e) {
+			log.error(this + ".uploadFile, " + e.toString());
+			this.uploaded = false;
+			throw new Exception(e);
+		}
+
+		return savePath;
+	}
+	
 }
