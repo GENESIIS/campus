@@ -134,7 +134,7 @@
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Categories <span id="catCount" name="catCount"></span></label>
-							<a href="javascript:"><input type="checkbox"></a>
+							<a href="javascript:"><input id="categoryAll"  type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
 						<!-- id="categoryName" name="categoryName"  -->
@@ -149,8 +149,8 @@
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Provider Type<span id="cpTypeCount"
-								name="cpTypeCount"></span></label> <a href="javascript:"><input
-								type="checkbox"></a>
+								name="cpTypeCount"></span></label> 
+								<a href="javascript:"><input id="cpTypeAll" type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
@@ -164,7 +164,7 @@
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Major <span id="majorCount" name="majorCount"></span></label>
-							<a href="javascript:"><input type="checkbox"></a>
+							<a href="javascript:"><input id="majorAll" type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
@@ -178,8 +178,8 @@
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label class="flip">Levels <span id="levelCount"
-								name="levelCount"></span></label> <a href="javascript:"><input
-								type="checkbox"></a>
+								name="levelCount"></span></label> 
+								<a href="javascript:"><input id="levelAll"	type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
@@ -192,7 +192,7 @@
 						<div class=""></div>
 						<!-- Item Drop list -->
 						<div id="" class="">
-							<button type="button" id="addRow" name="addRow"
+							<button type="button" id="addSearchData" name="addSearchData"
 								class="btn btn-primary" onclick="">Apply Search</button>								
 								<!-- <input type="search" name="search" id="search" placeholder="name or info" /> -->
 						</div>

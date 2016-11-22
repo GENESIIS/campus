@@ -34,28 +34,6 @@ $(document).ready(function(){
 			var y = data[1].toString();
 			$('<option>').val(x).text(y).appendTo(providers);
 		}); */
-				
-		
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			var z = data[2].toString();
-			var logo="../../education/provider/logo/"+ y+ "/" + z;
-			var row = $('<tr>');
-			
-			    row.append($('<td>').html(x));
-			    row.append($('<td>').html(y));
-			    row.append($('<td>').html(logo));
-			    row.append($('<td>').html('<img height="42" width="42" src="'+logo +' " />'));
-			    
-			    
-			   /*  <img height="42" width="42"
-					src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}"/> */
-			
-			$('#ptable').append(row);
-		});	
 		
 		var providerChoice = $("#providerList");
 		$.each(response.result, function(index, value) {			
@@ -97,21 +75,11 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="category" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input id="category'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			catCount++;
 		});
 		totalCount+=catCount;
 		$("#catCount").text(" " +catCount);
-		
-
-		/*var courseProviderType = $("#courseProviderType");
-		$.each(response.cpTypeList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(courseProviderType);
-		});*/
 		
 		var cpTypeCount = 0 ;
 		var secondChoice = $("#select-cpType");
@@ -127,14 +95,6 @@ $(document).ready(function(){
 		totalCount+=cpTypeCount;
 		$("#cpTypeCount").text(" " +cpTypeCount);
 
-		/*var majorList = $("#majorList");
-		$.each(response.majorList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(majorList);
-		});	*/
 		var majorCount = 0 ;
 		var secondChoice = $("#select-major");
 		//secondChoice.find('li').remove();
@@ -149,15 +109,7 @@ $(document).ready(function(){
 		totalCount+=majorCount;
 		$("#majorCount").text(" " +majorCount);
 		
-	/*	var levelList = $("#levelList");
-		$.each(response.levelList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			$('<option>').val(x).text(y).appendTo(levelList);
-		});
-		*/
+
 		var levelCount = 0 ;
 		var secondChoice = $("#select-level");
 		//secondChoice.find('li').remove();
@@ -185,9 +137,21 @@ $(document).ready(function(){
 		});
 		
 		
-		 $('#addRow').on( 'click', function () {
+		 $('#addSearchData').on( 'click', function (event) {
+			
+			 alert("addSearchData click");
+			 $( this ).val();			 
+			 var selectAll = $('#selectAll').is(':checked');
+			 var categoryAll = $('#categoryAll').is(':checked');
+			 var cpTypeAll = $('#cpTypeAll').is(':checked');
+			 var majorAll = $('#majorAll').is(':checked');
+			 var levelAll = $('#levelAll').is(':checked');
+			 var category1 = $('#category1').is(':checked');
+			 var category2 = $('#category2').is(':checked');
 			 
-			 alert("addRow click"); 
+			 
+			 
+			 
 			 var searchData=0;
 			 
 			 $.ajax({
