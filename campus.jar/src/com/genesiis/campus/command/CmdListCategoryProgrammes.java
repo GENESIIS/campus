@@ -26,6 +26,9 @@ package com.genesiis.campus.command;
 //				throwing when invalid parameters are encountered
 //20161116 MM c5-corporate-training-landing-page-MP Overhauled execute() method implementation 
 // 				to change validation and exception handling mechanism
+//20161116 MM c5-corporate-training-landing-page-MP Changed the way course provider logo path 
+// 				is fetched; was via querying SystemConfig table; now via SystemConfig enum
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -221,23 +224,8 @@ public class CmdListCategoryProgrammes implements ICommand {
 							
 							programmeCollection = progCodeToProgrammeMap.values();			
 							
-							// Get course provider logo path from SystemConfig table
-							Collection<Collection<String>> systemConfigRecord = new ArrayList<Collection<String>>();
-							systemConfigRecord = systemConfigDao.findById(SystemConfig.PROVIDER_LOGO_PATH.name());
-
-							String courseProviderLogoPath = "";
-							outer:
-							for (Collection<String> record : systemConfigRecord) {
-								int count = 0;
-								inner:
-								for (String field : record) {
-									if (count == 2) {
-										courseProviderLogoPath = field;
-										break outer;
-									}
-									count++;
-								}
-							}
+							// Get course provider logo path from SystemConfig enum
+							String courseProviderLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 
 							int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
 							
