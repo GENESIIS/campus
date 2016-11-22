@@ -9,7 +9,8 @@ package com.genesiis.campus.entity;
 //DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
 //DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
 //DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
-//DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
+//DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause
+//DJ 20161122 c6-list-available-institutes-on-the-view mx-fixes findTopViewedProviders()/findTopRatedProviders method 
 
 
 
@@ -187,13 +188,13 @@ public class CourseProviderDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH   FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
-			sb.append(" LEFT OUTER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
+			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");
 			if (!isGetAll) {
 				sb.append(" AND CAT.CODE= ? ");
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
-			sb.append(" LEFT OUTER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
+			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
 			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX, PROVIDER.LOGOIMAGEPATH ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
@@ -247,7 +248,7 @@ public class CourseProviderDAO implements ICrud{
 				sb.append(" AND CAT.CODE=?");
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
-			sb.append(" LEFT JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
+			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
 			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH ORDER BY CPAVERAGE DESC");
 
 			stmt = conn.prepareStatement(sb.toString());			
