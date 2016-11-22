@@ -34,7 +34,7 @@ public class Tutor {
 	private String imagePath;
 	private String username;
 	private String password;
-	private int town;
+	private String town;
 	private int usertype;
 	private int isActive;
 	private int isApproved;
@@ -381,13 +381,13 @@ public class Tutor {
 	/**
 	 * @return the town
 	 */
-	public int getTown() {
+	public String getTown() {
 		return town;
 	}
 	/**
 	 * @param town the town to set
 	 */
-	public void setTown(int town) {
+	public void setTown(String town) {
 		this.town = town;
 	}
 	/**
