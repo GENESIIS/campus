@@ -2,7 +2,7 @@ package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161121 CM c36-add-tutor-information added a new attribute to the enum
-
+//20161122 CM c36-add-tutor-information added a new attribute to the enum
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -10,6 +10,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE,"commandNotFound.jsp"),
+	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
 	ADD_TUTOR_PROFILE_DETAILS("ATPD", ResponseType.JSP,"addTutorDetails.jsp");
 	
 	private final String commandString;
