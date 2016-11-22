@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161030 DJ c6-list-available-institutes-on-the-view add LIST_ALL_INSTITUTES
 //20161030 DJ c6-list-available-institutes-on-the-view add LIST_TOP_COURSE_PROVIDERS
 //20161110 DJ c6-list-available-institutes-on-the-view INT-Adjust the implementation to newly changed framework
+//20161122 DJ c6-list-available-institutes-on-the-view mx-fixes add path dist/partials/viewMoreCourseProviders.jsp
 
 /**
  * Operation class facilitate in binding the CCO
@@ -13,7 +14,7 @@ public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
 	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
-	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"viewMoreCourseProviders.jsp");
+	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
