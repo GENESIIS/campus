@@ -30,6 +30,8 @@
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
 	{
 	display: block;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
@@ -39,21 +41,17 @@
 	float: left;
 	border-right: 1px solid #e1e1e1;
 }
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
 	{
-	display: inline-block;
-	position: relative;
-	width: 50%;
-	height: 130px;
-	float: left;
+	display: block;
 	text-align: center;
-	padding-top: 25px;
-	color: #717171;
-	font-size: 18px;
-	font-family: Oswald;
-	border-right: 1px solid #e1e1e1;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: #193949;
+	line-height: 0px;
+	font-weight: 600;
 }
+
 .main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
 	{
 	width: 16.66%;
@@ -89,7 +87,7 @@
 
 			<!-- course filter panel : left side -->
 			<div class="course-filter-panel">
-
+				<h3>Basic Info</h3>
 				<!-- Filter result table -->
 				<div class="filter-result-table">
 					<ul class="result-row">
@@ -97,7 +95,7 @@
 							<div class="col-name">
 								<h1 class="pro-name">Course Provider Name:</h1>
 							</div>
-							<div class="col-description">
+							<div class="col-name">
 								<input class="pro-name" type="text" name="providerName"
 									id="providerName" required size="50px;" />
 							</div>
@@ -108,47 +106,95 @@
 							<div class="col-name">
 								<h1 class="pro-name">Short Name:</h1>
 							</div>
-							<div class="col-description">
-								<input type="text" name="shortName" id="shortName" required />
+							<div class="col-name">
+								<input class="pro-name" type="text" name="shortName"
+									id="shortName" size="50px;" required />
 							</div>
 						</li>
 						<!-- end -->
 						<li class="course-info clearfix">
 							<div class="col-name">
-					<h1 class="pro-name">About Me:</h1>
+								<h1 class="pro-name">About Me:</h1>
 							</div>
-							<div class="col-description">
-								<textarea rows="10" cols="10" name="aboutMe" id="aboutMe"></textarea>
+							<div class="col-name">
+								<textarea rows="15" cols="50" name="aboutMe" id="aboutMe"
+									required></textarea>
 							</div>
 						</li>
 						<!-- end -->
 
 						<li class="course-info clearfix">
 							<div class="col-name">
-								<h1 class="pro-name">Short Name:</h1>
+								<h1 class="pro-name">Special Features :</h1>
 							</div>
-							<div class="col-description">
-								<input type="text" name="shortName" id="shortName" required />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix">
 							<div class="col-name">
-								<h1 class="pro-name">Short Name:</h1>
-							</div>
-							<div class="col-description">
-								<input type="text" name="shortName" id="shortName" required />
+								<textarea rows="15" cols="50" name="specialFeatures"
+									id="specialFeatures" required></textarea>
 							</div>
 						</li>
 						<!-- end -->
-
 					</ul>
 				</div>
 				<!-- End filter result table -->
 
 			</div>
 			<!-- End left panel -->
+
+			<!-- course filter panel : left side -->
+			<div class="course-filter-panel">
+				<h3>Basic Info</h3>
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Course Provider Name:</h1>
+							</div>
+							<div class="col-name">
+								<input class="pro-name" type="text" name="providerName"
+									id="providerName" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Short Name:</h1>
+							</div>
+							<div class="col-name">
+								<input class="pro-name" type="text" name="shortName"
+									id="shortName" size="50px;" required />
+							</div>
+						</li>
+						<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">About Me:</h1>
+							</div>
+							<div class="col-name">
+								<textarea rows="15" cols="50" name="aboutMe" id="aboutMe"
+									required></textarea>
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Special Features :</h1>
+							</div>
+							<div class="col-name">
+								<textarea rows="15" cols="50" name="specialFeatures"
+									id="specialFeatures" required></textarea>
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
+				</div>
+				<!-- End filter result table -->
+
+			</div>
+			<!-- End left panel -->
+
 		</div>
 		<!-- End page content  -->
 	</div>
