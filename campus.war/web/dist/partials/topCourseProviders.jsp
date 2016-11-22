@@ -17,8 +17,13 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
 <!-- W3-Include -->
-<script src="../bower-components/w3/w3data.js"></script>
+<script src="/dist/bower-components/w3/w3data.js"></script>
 
 </head>
 <body>
@@ -193,11 +198,5 @@
 
 	<!-- Footer -->
 	<footer w3-include-html="layout/footer.html"></footer>
-
-	<!-- jQuery & Other js -->
-	<script src="../bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="../bower-components/bootstrap/bootstrap.min.js"></script>
-	<script src="../js/main.js"></script>
-
 </body>
 </html>
