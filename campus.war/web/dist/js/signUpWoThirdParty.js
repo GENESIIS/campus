@@ -10,39 +10,80 @@ theNewScript.src = "../../dist/js/jsonDataExchanger.js";
 
 
 //Global variables for signUpWoThirdParty.js file declared
-var firstName = $('#firstName').val();
-var lastName= jQuery('#lastName').text();
-var gender = jQuery('input:radio[anme="gender"]:checked').val();
-var emailAdress = jQuery('#emailAddress').text();
-var contactNumber = jQuery('#contactNumber').text();
-var pathway = jQuery('#pathway option:selected').text();
-var userName = jQuery('#username').text();
-var passWord = jQuery('#psw').text();
-var confirmPw = jQuery('#confrmpsw').text();
-var showPassWordChkBxVal = jQuery('#showpasscheckbox').val();
-var isPolicyConvirm = jQuery('#policyConfirm').val();
+var firstName = jQuery('#firstName').val();
+//alert("firstName :"+firstName+" :");
+//alert("jQuery('#firstName').text() :"+jQuery('#firstName').text()+" :");
+//var lastName= jQuery('#lastName').text();
+//var gender = jQuery('input:radio[anme="gender"]:checked').val();
+//var emailAdress = jQuery('#emailAddress').text();
+//var contactNumber = jQuery('#contactNumber').text();
+//var pathway = jQuery('#pathway option:selected').text();
+//var userName = jQuery('#username').text();
+//var passWord = jQuery('#psw').text();
+//var confirmPw = jQuery('#confrmpsw').text();
+//var showPassWordChkBxVal = jQuery('#showpasscheckbox').val();
+//var isPolicyConvirm = jQuery('#policyConfirm').val();
 
 
-function sendSignUpCredentialsToBckEnd(){
-	alert("Transfer");
-	//get the page specific data and set the values
-	
-	//form validation prior to call the jason, ajax data transform
-	
-	// create the jason data object
-	var jsonDataObject = createJasonObject();
-	//call the ajax call to transe=fer the jason data
-	jsonDataExchange(jsonDataObject,httpMethod,transferPageUrl,"SIWOTP","json");
+function sendSignUpCredentialsToBckEnd() {
+	alert("Transfer");	
+	var postaSessation = false;
+	if (validateSignUpWoThirdPartyPageEmbedData()) {
+		var jsonDataObject = createJasonObject();
+		jsonDataExchange(
+				jsonDataObject,
+				"post",
+				"com/genesiis/campus/studentController/StudentController",
+				"SIWOTP",
+				"json");
+	} else {
+		return postaSessation;
+
+	}
 }
 
 
 function validateSignUpWoThirdPartyPageEmbedData(){
-	alert("Validation");
-	if(!(isFieldFilled(isempty(firstName),"First Name Field","firstNameLabel"))){
-		alert("inside loop");
-		return false;
-	}
-	
+	var validationPass = true;
+	alert("#firstName "+ document.getElementById("firstName").value);
+	alert("#firstName jq "+ $('#firstName').val());
+	firstName = $('#firstName').val();
+	if(!(isFieldFilled(isempty(firstName),"First Name Field","firstNameLabel"))){	
+		alert("firstname fail"+!validationPass);
+		return !validationPass;
+	} 
+//	else if (!(isFieldFilled(isempty(lastName),"Last Name Field","lastNameLabel"))) {
+//		alert("last name fail");
+//		return !validationPass;
+//	} else if(!(isFieldFilled(isempty(gender),"gender Field","genderLabel"))){
+//		alert("gender fail");
+//		return !validationPass;
+//	} else if (!isFieldFilled(isValidEmailFormat(),"Email Field","emilAddressLabel")) {
+//		alert("email fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(contactNumber),"Phone Number Field","contactNumberLabel"))){
+//		alert("phone number fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(pathway),"Pathway Field","pathwayLabel"))) {
+//		alert("pathway fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(userName),"User Name Field","usernameError"))) {
+//		alert("userName fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(passWordError),"Password Field","passWordError"))) {
+//		alert("password fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(confirmPw),"Confirm Password Field","confPassWordError"))){
+//		alert("Confirm Password fail");
+//		return !validationPass;
+//	} else if (!(isFieldFilled(isValidPhoneNumber(isPolicyConvirm),"policy Check box","policyConfirmError"))) {
+//		alert("policy fail");
+//		return !validationPass;
+//	} 
+		else{
+		alert("EVERYTHING PASS");
+		return validationPass;
+	}	
 }
 
 

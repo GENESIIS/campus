@@ -80,20 +80,22 @@
       <td>
         <span >
         <h2 >Create a Username and Password</h2>
-        User name:<br>
+        User name:<br><label id="usernameError" ></label>
       	<input type="text" name="username" id="userName"><br>
-     	 User password:<br>
+      	
+     	 User password:<br><label id="passWordError" ></label>
       	<input type="password" name="psw" id="passWord">
       	<br>
-     	 Confirm password:<br>
+     	 Confirm password:<br><label id="confPassWordError" ></label>
       	<input type="password" name="confrmpsw" id="confrmpsw">
       	</span> 
         <input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString()" />
         <span>Show Password</span><br><br><br>
+        <label id="policyConfirmError" ></label>
         <input type="checkbox" id="policyConfirm"  />
-        <span>I have read privecy policy and accept<br> the terms and the conditions </span><br><br>
+        <span>I have read privercy policy and accept<br> the terms and the conditions </span><br><br>
 
-     <button  type="submit" name="CCO" id="CCO" value="FBTSA" onclick=" validateSignUpWoThirdPartyPageEmbedData();sendSignUpCredentialsToBckEnd();" >Create Account</button>
+     <button  type="button"  onclick="validateSignUpWoThirdPartyPageEmbedData()" >Create Account</button>
 
       </td>
       <td>
