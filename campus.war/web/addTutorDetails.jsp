@@ -11,7 +11,7 @@
 <script src="/dist/js/validator.js"></script>
 </head>
 <body>
-	<form action="TutorController" method="post" onsubmit="return (validateTutorFileds())">
+	<form action="TutorController" method="post">
 		<table align="center">
 			<tr>
 				<td>
@@ -32,9 +32,9 @@
 			</tr>
 			<tr>
 				<td>Gender </td>
-				<td><input type="radio" name="gender" value="male"
+				<td><input type="radio" name="gender" value="1"
 					id="radioMale" checked> Male<br> <input type="radio"
-					name="gender" value="female" id="radioFemale"> Female<br></td>
+					name="gender" value="2" id="radioFemale"> Female<br></td>
 			</tr>
 			<tr>
 				<td>Experience  <span id="experienceError"></span></td>
@@ -71,7 +71,7 @@
 			<tr>
 				<td>Town</td>
 				<td>
-				<select id="townDetails">
+				<select name="townDetails" id="townDetails">
 				<option>
 				
 				</option>
@@ -123,11 +123,11 @@
 			</tr>
 			<tr>
 				<td>Password <span id="passwordError"></span></td>
-				<td><input type="text" name="password" id="password" maxlength="20"/></td>
+				<td><input type="password" name="password" id="password" maxlength="20"/></td>
 			</tr>
 			<tr>
 				<td>Confirm Password <span id="confirmPasswordError"></span></td>
-				<td><input type="text" name="confirmPassword" id="confirmPassword" maxlength="20"/></td>
+				<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="20"/></td>
 			</tr>
 			<tr>
 				<td>
