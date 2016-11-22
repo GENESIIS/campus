@@ -55,7 +55,7 @@
                 </div>
                 <!-- End Keyword Search -->
                 <div class="login-link">
-                    <a href="javascript:" class="colr-white">Login</a>
+                    <a href="dist/partials/login.jsp" class="colr-white">Login</a>
 
                 </div>
             </div>
