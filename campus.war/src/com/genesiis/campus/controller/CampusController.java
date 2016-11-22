@@ -72,8 +72,7 @@ public class CampusController extends HttpServlet {
 		helper = new DataHelper(request);
 		cco = "UUP";//helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
-		log.info(helper.getParameter("info"));
-		
+
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
