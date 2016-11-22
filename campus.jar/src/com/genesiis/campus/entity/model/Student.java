@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
+//20161122 MM c25-student-login-create-dashboard-MP-mm Added additional fields and setters and getters
 
 public class Student {
 	int code;
