@@ -1,4 +1,5 @@
-<!-- 20161121 PN INIT fileUpload.jsp class for test bootstrap image upload. -->
+<!-- 20161121 PN c27-upload-user-image: INIT fileUpload.jsp class for test bootstrap image upload. -->
+<!-- 20161122 PN c27-upload-user-image: modified Ajax call to pass values to the serlvlet and catch response coming from the servlet. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -19,13 +20,15 @@
 			<hr>
 			<input id="input-repl-1" type="file" class="file-loading"
 				accept="image/*"> <br>
+
 		</div>
 	</div>
 </body>
-<script>
+<script type="text/javascript">
+	var userid = "XXX";
+	var username = "YYY";
 	$("#input-repl-1").fileinput({
 						uploadUrl : "/PublicController",
-						CCO :"ABC",
 						autoReplace : true,
 						maxFileSize : 2800,
 						overwriteInitial : true,
@@ -43,10 +46,25 @@
 						}, // disable thumbnail deletion
 						allowedFileExtensions : [ "jpg", "png" ],
 						uploadAsync: false,
-						uploadExtraData: function (previewId, index) {
-				            var info = {"tags": "somestuff"};
-				            return info;
-				        }
+						uploadExtraData: function() {
+					           return {
+					               userid: $("#userid").val(),
+					               username: $("#username").val()
+					           };
+					    }
+	});
+	 // CATCH RESPONSE
+	$('#input-id').on('filebatchuploaderror', function(event, data, previewId, index) {
+	var form = data.form, files = data.files, extra = data.extra, 
+	    response = data.response, reader = data.reader;
+
+	});
+
+
+	$('#input-id').on('filebatchuploadsuccess', function(event, data, previewId, index) {
+	   var form = data.form, files = data.files, extra = data.extra, 
+	    response = data.response, reader = data.reader;
+	    alert (extra.bdInteli + " " +  response.uploaded);
 	});
 </script>
 </html>
