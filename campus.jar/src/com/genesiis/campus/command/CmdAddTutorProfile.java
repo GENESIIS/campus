@@ -61,8 +61,8 @@ public class CmdAddTutorProfile implements ICommand {
 			String adreess1 = helper.getParameter("address1");
 			String adreess2 = helper.getParameter("address2");
 			String adreess3 = helper.getParameter("address3");
-			int town = Integer.parseInt(helper.getParameter("townDetails"));
-
+			String town=helper.getParameter("townDetails");
+		
 			tutor.setUsername(username);
 			tutor.setPassword(password);
 			tutor.setFirstName(firstName);
@@ -70,11 +70,11 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setLastName(lastName);
 			tutor.setGender(gender);
 			tutor.setEmail(email);
-//			tutor.setLandCountryCode(landPhoneCoutnryCode);
-//			tutor.setLandAreaCode(landPhoneAreaCode);
+			tutor.setLandCountryCode("0");
+			tutor.setLandAreaCode("0");
 			tutor.setLandNumber(landPhoneNumber);
-//			tutor.setMobileCountryCode(mobileCountryCode);
-//			tutor.setMobileNetworkCode(mobileNetworkCode);
+			tutor.setMobileCountryCode("0");
+			tutor.setMobileNetworkCode("0");
 			tutor.setMobileNumber(mobileNumber);
 			tutor.setDescription(abouMe);
 			tutor.setExperience(experience);
@@ -89,8 +89,11 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setAddressLine1(adreess1);
 			tutor.setAddressLine2(adreess2);
 			tutor.setAddressLine3(adreess3);
+			tutor.setImagePath("-");
 			tutor.setTown(town);
-
+			tutor.setUsertype(1);
+			
+			
 			int result = tutorDAO.add(tutor);
 			if (result > 0) {
 				message = SystemMessage.ADDED.message();
@@ -108,4 +111,6 @@ public class CmdAddTutorProfile implements ICommand {
 		return view;
 	}
 
+	
+	
 }
