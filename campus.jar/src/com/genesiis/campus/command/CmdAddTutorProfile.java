@@ -61,7 +61,7 @@ public class CmdAddTutorProfile implements ICommand {
 			String adreess1 = helper.getParameter("address1");
 			String adreess2 = helper.getParameter("address2");
 			String adreess3 = helper.getParameter("address3");
-			int town = Integer.parseInt(helper.getParameter("town"));
+			int town = Integer.parseInt(helper.getParameter("townDetails"));
 
 			tutor.setUsername(username);
 			tutor.setPassword(password);
