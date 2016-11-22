@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
+//20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 

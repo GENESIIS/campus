@@ -4,6 +4,8 @@ package com.genesiis.campus.validation;
 //20161108 DN, JH, DJ, AS, CM, PN, MM Added field responseType to enum.
 //20161109 MM c5-corporate-training-landing-page-MP - Changed value for 
 //				commandString of LIST_CATEGORY_PROGRAMMES enum
+//20161122 MM c25-student-login-create-dashboard-MP - Modified code to add constant 
+//				for LIST_STUDENT_DASHBOARD
 
 /**
 * Operation class facilitate in binding the CCO
@@ -12,13 +14,11 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LIST_CATEGORY_PROGRAMMES("LIST_CATEGORY_PROGRAMMES", ResponseType.JSON, ""),
-	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/categoryLandingPage.jsp");
-			
+	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "studentDashboard.jsp");			
+	
 	private final String commandString;
 	private final ResponseType responseType;
 	private final String viewJspUrl;
-
 
 	Operation(final String newValue, final ResponseType responseType, 
 			final String viewJspUrl) {

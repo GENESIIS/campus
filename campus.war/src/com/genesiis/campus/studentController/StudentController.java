@@ -1,6 +1,6 @@
-package com.genesiis.campus.publicController;
+package com.genesiis.campus.studentController;
 
-//20161024 DN c10-contacting-us-page created the initial version of the Public Controller
+//20161122 MM c5-corporate-training-landing-page - INIT - Initialised file
 
 import com.genesiis.campus.controller.CampusController;
 
@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class PublicController
  */
-@WebServlet("/PublicController")
-public class PublicController extends CampusController {
-	static Logger log = Logger.getLogger(PublicController.class.getName());
+@WebServlet("/StudentController")
+public class StudentController extends CampusController {
+	static Logger log = Logger.getLogger(StudentController.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PublicController() {
+	public StudentController() {
 		super();
 	}
 

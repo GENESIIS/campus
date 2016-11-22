@@ -7,7 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Hello World..!! </h1>
-	<a href="dummyLoginPage.jsp">Click Here to Proceed</a>
+<h1>This is the dummy Log-in page for Student.</h1>
+
+<form action="StudentController" method="POST">
+	<input type="text" name="student">
+	<button type="submit" name="CCO" value="LIST_STUDENT_DASHBOARD">SUBMIT</button>
+</form>
+
 </body>
 </html>
