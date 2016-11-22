@@ -37,7 +37,7 @@
 		<div class="bottom">
 			<div class="menu-bar">
 				<div class="home pull-left">
-					<a href="../../index.html" class="btn-home center-block"></a>
+					<a href="/index.jsp" class="btn-home center-block"></a>
 				</div>
 				<!-- End home button -->
 				<div class="menu-tabs clearfix">
@@ -45,7 +45,7 @@
 					<div class="top-menus">
 						<ul class="list-inline">
 							<li><a href="courses.html">All Courses</a></li>
-							<li><a href="../topCourseProviders.jsp">Course Providers</a></li>
+							<li><a href="/dist/partials/topCourseProviders.jsp">Course Providers</a></li>
 							<li><a href="about-us.html">About Us</a></li>
 							<li><a href="javascript:">Contact Us</a></li>
 							<li><a href="news.html">News</a></li>
@@ -60,7 +60,7 @@
 						<ul class="list-inline">
 							<li><a href="javascript:">Pre Education</a></li>
 							<li><a href="javascript:">School Education</a></li>
-							<li><a href="category/higher-education.html">Higher
+							<li><a href="/dist/partials/category/higher-education.jsp">Higher
 									Education</a></li>
 							<li><a href="javascript:">Corporate Training</a></li>
 							<li><a href="javascript:">Vocational Training</a></li>
@@ -197,6 +197,6 @@
 	<!-- End Container - Top Providers list -->
 
 	<!-- Footer -->
-	<footer w3-include-html="layout/footer.html"></footer>
+	<footer w3-include-html="layout/footer.jsp"></footer>
 </body>
 </html>
