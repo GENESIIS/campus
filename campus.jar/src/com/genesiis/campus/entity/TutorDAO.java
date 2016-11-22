@@ -33,7 +33,7 @@ public class TutorDAO implements ICrud {
 				+ ",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,"
 				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
 				+ ",CRTON,CRTBY,MODON, MODBY ) "
-				+ "VALUES (?,?,?,?,?,?,?,GETDATE(),GETDATE(),?,?,?,GETDATE(),?, GETDATE(), ?)";
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		final Tutor tutor = (Tutor) object;
@@ -71,7 +71,7 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(27, tutor.getAddressLine1());
 			preparedStatement.setString(28, tutor.getAddressLine2());
 			preparedStatement.setString(29, tutor.getAddressLine3());
-			preparedStatement.setInt(30, tutor.getTown());
+			preparedStatement.setString(30, tutor.getTown());
 			preparedStatement.setInt(31, tutor.getUsertype());
 			preparedStatement.setString(32, "chathuri");
 			preparedStatement.setString(33, "chathuri");
