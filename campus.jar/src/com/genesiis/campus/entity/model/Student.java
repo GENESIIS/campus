@@ -1,5 +1,7 @@
 package com.genesiis.campus.entity.model;
 
+//20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
+
 public class Student {
 	int code;
 	String username;
