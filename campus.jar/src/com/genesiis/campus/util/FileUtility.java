@@ -3,6 +3,8 @@ package com.genesiis.campus.util;
 //20161121 PN c27-upload-user-image: INIT class to manage uploaded file details.
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -239,7 +241,7 @@ public class FileUtility {
 			if (!uploadLocation.isDirectory())
 				uploadLocation.mkdirs();
 
-			FileUtils.cleanDirectory(uploadLocation); 
+			//FileUtils.cleanDirectory(uploadLocation); 
 			
 			String fileName = this.item.getName();
 
@@ -262,24 +264,27 @@ public class FileUtility {
 			
 			
 			File folder = new File(this.getFile().getParent());
-			File[] paths = folder.listFiles();
 			String newfileName = "";
 			String ext = "";
+			
 			
 			
 			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
 
 			newfileName = Integer.toString(StudentCode) + "." + ext;
-
+			
+			
 			savePath = folder.getAbsoluteFile() + "/" + newfileName;
 			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
 
+			if((new File(folder.getAbsoluteFile() + "/" + newfileName).exists())){
+				FileUtils.forceDelete(new File(folder.getAbsoluteFile() + "/" + newfileName));
+			}
+			
 			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + newfileName));
 			FileUtils.forceDelete(this.file);
 
 			this.renamedTo = newfileName;
-			
-
 		} catch (Exception e) {
 			log.error(this + ".uploadFile, " + e.toString());
 			this.uploaded = false;
