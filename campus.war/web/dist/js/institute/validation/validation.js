@@ -5,6 +5,8 @@
  *20161109 DN c10-contacting-us-page-MP refactor clearField() the method
  *20161116 DN c10-contacting-us-page-MP changed the method isFieldFilled() to write content to inner HTML
  *20161116 DN c10-contacting-us-page-MP included clearField() method 
+ *20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+* cater more phone number styles
  */ 
  
 
@@ -63,12 +65,16 @@ function isValidEmailFormat(email) {
  * 
  * @param phoneNumber
  *            it's the value of phone number field phone number should be 10
- *            character long.amd start from 0 method does not test for starting
+ *            character long.This test will pass the format
+ *            +94xxxxxxxxx
+ *            +674xxxxxxxxx
+ *            0xxxxxxxxx
+ *            xxxxxxxxx
  *            sequence of the phone number
  * @returns {Boolean}
  */
 function isValidPhoneNumber(phoneNumber) {
-	var phonenumberPattern = /^0\d{9}$/mg;
+	var phonenumberPattern = /^(\+\d{2,3}|0)?\d{9}$/mg;
 	return isPatternMatch(phonenumberPattern, phoneNumber);
 }
 
