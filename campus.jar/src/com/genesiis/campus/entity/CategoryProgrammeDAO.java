@@ -5,7 +5,8 @@ package com.genesiis.campus.entity;
 // 				field data when fetching data in findById()
 //20161028 MM c5-corporate-training-landing-page Corrected query result processing
 // 				code to remove accessing invalid fields
-//20161104 MM Added code to DAO method to retrieve level and major names for programmes
+//20161104 MM c5-corporate-training-landing-page Added code to DAO method to retrieve level and major names for programmes
+//20161104 MM c5-corporate-training-landing-page-MP Changed query in findById() to remove TOP clause
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,19 +42,16 @@ public class CategoryProgrammeDAO implements ICrud {
 			int categoryCode = programme.getCategory();
 			
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
-					+ "ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
-					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
-					+ "SELECT TOP 10 NEWID() as dummy, a.CODE FROM ("
-					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p "
-					+ "WHERE p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?) a ORDER BY NEWID()"
-					+ ") b "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = b.CODE) "
+					+ "ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
+					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p WHERE p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?"
+					+ ") a "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = a.CODE) "
 					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE) "
 					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
 					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = p.MAJOR AND m.ISACTIVE = ?) "
 					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = p.LEVEL AND l.ISACTIVE = ?) "
 					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
-					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY p.CODE";
+					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
