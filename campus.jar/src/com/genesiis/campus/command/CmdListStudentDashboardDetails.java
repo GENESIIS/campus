@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161121 MM c25-student-login-create-dashboard-MP INIT CmdListStudentDashboardDetails.java
 //20161121 MM c25-student-login-create-dashboard-MP Implemented execute() method
+//20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -9,6 +10,8 @@ import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
