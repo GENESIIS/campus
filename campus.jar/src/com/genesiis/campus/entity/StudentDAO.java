@@ -27,8 +27,38 @@ public class StudentDAO implements ICrud {
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Student student = (Student) object;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int isUpdated = 0;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query ="UPDATE [CAMPUS].[STUDENT] SET [IMAGEPATH] = ? , [MODON] = ?, [MODBY] = ? WHERE CODE = ?";
+
+			stmt = conn.prepareStatement(query);
+			
+			stmt.setString(1, student.getImagePath());
+			stmt.setDate(2, student.getModOn());
+			stmt.setString(4, student.getModBy());
+			stmt.setInt(2, student.getCode());
+			stmt.executeUpdate();
+			isUpdated = 1;
+		} catch (SQLException sqlException) {
+			Log.info("update(Object object): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			Log.info("update(Object object): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return isUpdated;
 	}
 
 	@Override
