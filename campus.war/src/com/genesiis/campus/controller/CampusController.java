@@ -70,9 +70,10 @@ public class CampusController extends HttpServlet {
 		IView result = null;
 		String cco = "";
 		helper = new DataHelper(request);
-		cco = helper.getCommandCode();
+		cco = "UUP";//helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
-
+		log.info(helper.getParameter("info"));
+		
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
