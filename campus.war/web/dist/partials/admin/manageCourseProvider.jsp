@@ -41,6 +41,7 @@
 	float: left;
 	border-right: 1px solid #e1e1e1;
 }
+
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
 	{
 	display: block;
@@ -51,6 +52,29 @@
 	line-height: 0px;
 	font-weight: 600;
 }
+
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .input
+	{
+	display: block;
+	text-align: center;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: gray;
+	line-height: 0px;
+	font-style: italic;
+	font-weight: 100;
+}
+
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .textarea
+	{
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: gray;
+	font-style: italic;
+	font-weight: 100;
+}
+
+
 
 .main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
 	{
@@ -96,7 +120,7 @@
 								<h1 class="pro-name">Course Provider Name:</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="providerName"
+								<input class="input" type="text" name="providerName"
 									id="providerName" required size="50px;" />
 							</div>
 						</li>
@@ -107,7 +131,7 @@
 								<h1 class="pro-name">Short Name:</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="shortName"
+								<input class="input" type="text" name="shortName"
 									id="shortName" size="50px;" required />
 							</div>
 						</li>
@@ -117,7 +141,7 @@
 								<h1 class="pro-name">About Me:</h1>
 							</div>
 							<div class="col-name">
-								<textarea rows="10" cols="90" name="aboutMe" id="aboutMe"
+								<textarea class="textarea" rows="8" cols="90" name="aboutMe" id="aboutMe"
 									required></textarea>
 							</div>
 						</li>
@@ -128,7 +152,7 @@
 								<h1 class="pro-name">Special Features :</h1>
 							</div>
 							<div class="col-name">
-								<textarea rows="7" cols="90" name="specialFeatures"
+								<textarea class="textarea" rows="5" cols="90" name="specialFeatures"
 									id="specialFeatures" required></textarea>
 							</div>
 						</li>
@@ -151,14 +175,14 @@
 								<h1 class="pro-name">General Email :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="generalEmail"
+								<input class="input" type="text" name="generalEmail"
 									id="generalEmail" required size="25px;" />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Course Inquiry Email :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="inquiryMail"
+								<input class="input" type="text" name="inquiryMail"
 									id="inquiryMail" size="25px;" required />
 							</div>
 						</li>
@@ -169,14 +193,14 @@
 								<h1 class="pro-name">Land Number 1 :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="land1" id="land1"
+								<input class="input" type="text" name="land1" id="land1"
 									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Land Number 2 :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="land2" id="land2"
+								<input class="input" type="text" name="land2" id="land2"
 									size="25px;" required />
 							</div>
 						</li>
@@ -187,14 +211,14 @@
 								<h1 class="pro-name">Mobile Number :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="mobile" id="mobile"
+								<input class="input" type="text" name="mobile" id="mobile"
 									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Fax Number :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="fax" id="fax"
+								<input class="input" type="text" name="fax" id="fax"
 									size="25px;" required />
 							</div>
 						</li>
@@ -208,8 +232,8 @@
 								<h1 class="pro-name">Address Line 1 :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="address1"
-									id="address1" size="50px;" required />
+								<input class="input" type="text" name="address1" id="address1"
+									size="50px;" required />
 							</div>
 						</li>
 						<!-- end -->
@@ -219,8 +243,8 @@
 								<h1 class="pro-name">Address Line 2 :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="address2"
-									id="address2" size="50px;" required />
+								<input class="input" type="text" name="address2" id="address2"
+									size="50px;" required />
 							</div>
 						</li>
 						<!-- end -->
@@ -230,8 +254,8 @@
 								<h1 class="pro-name">Address Line 3 :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="address3"
-									id="address3" size="50px;" required />
+								<input class="input" type="text" name="address3" id="address3"
+									size="50px;" required />
 						</li>
 						<!-- end -->
 
@@ -240,7 +264,7 @@
 								<h1 class="pro-name">Country :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="country" id="country"
+								<input class="input" type="text" name="country" id="country"
 									size="50px;" required />
 							</div>
 						</li>
@@ -251,7 +275,7 @@
 								<h1 class="pro-name">Town :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="town" id="town"
+								<input class="input" type="text" name="town" id="town"
 									size="50px;" required />
 							</div>
 						</li>
@@ -262,15 +286,15 @@
 								<h1 class="pro-name">Web Link :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="webLink" id="webLink"
+								<input class="input" type="text" name="webLink" id="webLink"
 									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Facebook URL :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="facebook"
-									id="facebook" size="25px;" required />
+								<input class="input" type="text" name="facebook" id="facebook"
+									size="25px;" required />
 							</div>
 						</li>
 						<!-- end -->
@@ -280,14 +304,14 @@
 								<h1 class="pro-name">LinkedIn URL :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="linkdedIn"
-									id="linkdedIn" size="25px;" required />
+								<input class="input" type="text" name="linkdedIn" id="linkdedIn"
+									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Twitter URL :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="twitter" id="twitter"
+								<input class="input" type="text" name="twitter" id="twitter"
 									size="25px;" required />
 							</div>
 						</li>
@@ -299,14 +323,14 @@
 								<h1 class="pro-name">Instagram URL :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="instagram"
-									id="instagram" size="25px;" required />
+								<input class="input" type="text" name="instagram" id="instagram"
+									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">MySpace URL :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="mySpace" id="mySpace"
+								<input class="input" type="text" name="mySpace" id="mySpace"
 									size="25px;" required />
 							</div>
 						</li>
@@ -317,14 +341,14 @@
 								<h1 class="pro-name">WhatsApp Number :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="whatsapp" id="whatsapp"
+								<input class="input" type="text" name="whatsapp" id="whatsapp"
 									whatsapp"" size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Viber Number :</h1>
 							</div>
 							<div class="col-name">
-								<input class="pro-name" type="text" name="viber" id="viber"
+								<input class="input" type="text" name="viber" id="viber"
 									size="25px;" required />
 							</div>
 						</li>
@@ -332,10 +356,10 @@
 					</ul>
 				</div>
 				<!-- End filter result table -->
-				<br/><br/>
+				<br /> <br />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
-					<h3 style="color: aqua;">Admin Info</h3>
+					<h3 style="color: navy;">Admin Info</h3>
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
@@ -344,7 +368,7 @@
 									<h1 class="pro-name">Expiration Date :</h1>
 								</div>
 								<div class="col-name">
-									<input class="pro-name" type="text" name="expirationDate"
+									<input class="textarea" type="Date" name="expirationDate"
 										id="expirationDate" required size="50px;" />
 								</div>
 							</li>
@@ -355,29 +379,164 @@
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
 								<div class="col-name">
-									<input class="pro-name" type="text" name="providerType"
+									<input class="input" type="text" name="providerType"
 										id="providerType" size="50px;" required />
 								</div>
 							</li>
 							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">About Me:</h1>
+									<h1 class="pro-name">
+										<input type="radio" name="radioButtonType"
+											id="radioButtonType" value="featured" /> Course Provider
+									</h1>
 								</div>
 								<div class="col-name">
-									<textarea rows="10" cols="90" name="aboutMe" id="aboutMe"
-										required></textarea>
+									<h1 class="pro-name">
+										<input type="radio" name="radioButtonType"
+											id="radioButtonType" value="one-off" /> One-Off Provider
+									</h1>
 								</div>
 							</li>
 							<!-- end -->
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Special Features :</h1>
+									<h1 class="pro-name">Status :</h1>
+								</div>
+								<div class="col-name" style="width: 50%;">
+									<h1 class="pro-name">
+										<input type="radio" name="radioButtonStatus"
+											id="radioButtonStatus" value="active" /> Active &nbsp; <input
+											type="radio" name="radioButtonStatus" id="radioButtonStatus"
+											value="inactive" /> InActive &nbsp; <input type="radio"
+											name="radioButtonStatus" id="radioButtonStatus"
+											value="pending" /> Pending
+									</h1>
+								</div>
+							</li>
+							<!-- end -->
+						</ul>
+					</div>
+					<!-- End filter result table -->
+
+				</div>
+				<!-- End left panel -->
+
+				<!-- course filter panel : left side -->
+				<div class="course-filter-panel">
+					<h3>Account Info</h3>
+					<!-- Filter result table -->
+					<div class="filter-result-table">
+						<ul class="result-row">
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Email:</h1>
 								</div>
 								<div class="col-name">
-									<textarea rows="7" cols="90" name="specialFeatures"
-										id="specialFeatures" required></textarea>
+									<input class="input" type="email" name="providerEmail"
+										id="providerEmail" required size="50px;" />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Username :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="providerUsername"
+										id="providerUsername" required size="50px;" />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Password :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="password" name="providerPassword"
+										id="providerPassword" size="50px;" required />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Confirm Password :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="password" name="cProviderPassword"
+										id="cProviderPassword" size="50px;" required />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Description :</h1>
+								</div>
+								<div class="col-name">
+									<textarea class="textarea" rows="5" cols="90"
+										name="accountDescription" id="accountDescription" required></textarea>
+								</div>
+							</li>
+							<!-- end -->
+						</ul>
+					</div>
+					<!-- End filter result table -->
+
+				</div>
+				<!-- End left panel -->
+
+
+				<!-- course filter panel : left side -->
+				<div class="course-filter-panel">
+					<h3>Course Provider Images</h3>
+					<!-- Filter result table -->
+					<div class="filter-result-table">
+						<ul class="result-row">
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Logo image (Small) :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="file" name="imageSmall"
+										id="imageSmall"  size="50px;" />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Logo image (Large) :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="file" name="imageLarge"
+										id="imageLarge"  size="50px;" />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Header Image :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="file" name="imageHeader"
+										id="imageHeader" size="50px;"  />
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Common Image :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="file" name="imageCommon"
+										id="imageCommon" size="50px;"  />
 								</div>
 							</li>
 							<!-- end -->
