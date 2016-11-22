@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20161122 CM c36-add-tutor-information Modified getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,7 +48,7 @@ public class TownDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[Town]";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
@@ -57,7 +57,6 @@ public class TownDAO implements ICrud{
 				final ArrayList<String> singleTownList = new ArrayList<String>();
 				singleTownList.add(rs.getString("CODE"));
 				singleTownList.add(rs.getString("NAME"));
-				singleTownList.add(rs.getString("DESCRIPTION"));
 
 				final Collection<String> singleTownCollection = singleTownList;
 				allTownList.add(singleTownCollection);
