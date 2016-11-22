@@ -31,13 +31,14 @@ function isValidEmailFormat(email) {
 
 /**
  * Validate URL
+ * 
  * @author Chathuri
  * @param str
  */
 function ValidURL(str) {
 	var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 	return regex.test(str);
-	
+
 }
 
 function validateTutorFileds() {
@@ -73,13 +74,23 @@ function validateTutorFileds() {
 		document.getElementById('firstName').focus();
 		flag = false;
 	}
-	if (firstname.length>10) {
-		document.getElementById('firstNameError').innerHTML = "**Exceed max length.";
+	if (firstname.length > 20) {
+		document.getElementById('firstNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('firstName').focus();
+		flag = false;
+	}
+	if (middlename.length > 20) {
+		document.getElementById('middleNameError').innerHTML = "**Max length exceeded.";
+		document.getElementById('middleName').focus();
 		flag = false;
 	}
 	if (!isempty(lastname)) {
 		document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
+		document.getElementById('lastName').focus();
+		flag = false;
+	}
+	if (lastname.length > 20) {
+		document.getElementById('lastNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('lastName').focus();
 		flag = false;
 	}
@@ -88,8 +99,18 @@ function validateTutorFileds() {
 		document.getElementById('mobileNumber').focus();
 		flag = false;
 	}
+	if (mobileNumber.length > 10) {
+		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
+		document.getElementById('mobileNumber').focus();
+		flag = false;
+	}
 	if (!isempty(landNumber)) {
 		document.getElementById('landError').innerHTML = "**Landphone number cannot be empty.";
+		document.getElementById('landNumber').focus();
+		flag = false;
+	}
+	if (landNumber.length > 10) {
+		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
 	}
@@ -113,9 +134,19 @@ function validateTutorFileds() {
 		document.getElementById('username').focus();
 		flag = false;
 	}
+	if (username.length > 10) {
+		document.getElementById('usernameError').innerHTML = "**Max length exceeded.";
+		document.getElementById('username').focus();
+		flag = false;
+	}
 	if (!isempty(password)) {
 		document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
 		document.getElementById('password').focus();
+		flag = false;
+	}
+	if (password.length > 10) {
+		document.getElementById('usernameError').innerHTML = "**Max length exceeded.";
+		document.getElementById('username').focus();
 		flag = false;
 	}
 	if (!isempty(confirmPassword)) {
@@ -153,7 +184,11 @@ function validateTutorFileds() {
 		document.getElementById('myspace').focus();
 		flag = false;
 	}
-	
-	
+	if (password != confirmPassword) {
+		document.getElementById('confirmPasswordError').innerHTML = "**Password didn't match";
+		document.getElementById('confirmPassword').focus();
+		flag = false;
+	}
+
 	return (flag);
 }
