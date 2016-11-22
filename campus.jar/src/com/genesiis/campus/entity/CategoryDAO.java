@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161115 JH c7-higher-education-landing-page getAll() method : added method comments
 //20161116 JH c7-higher-education-landing-page getAll() method : code review mx modifications
 //20161117 JH c7-higher-education-landing-page removed logger prefix
+//20161122 JH c7-higher-education-landing-page removed switch case to find categoryString and load it from the database
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,25 +73,6 @@ public class CategoryDAO implements ICrud {
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
-				
-				
-				/**
-				 * this section of the code used to get the enum value of the category, 
-				 * which is used to identify the category. The enum value is stored in the
-				 * database in future. But to support the current code following switch case is used
-				 * to generate the enum value for the category.
-				 */
-				int categoryId = Integer.parseInt(rs.getString("CODE"));
-				String categoryIdentifierString = null;
-				switch(categoryId){
-				case 1: categoryIdentifierString = "PRE_EDUCATION"; break;
-				case 2: categoryIdentifierString = "SCHOOL_EDUCATION"; break;
-				case 3: categoryIdentifierString = "HIGHER_EDUCATION"; break;
-				case 4: categoryIdentifierString = "CORPORATE_TRAINING"; break;
-				case 5: categoryIdentifierString = "VOCATIONAL_TRAINING"; break;
-				case 6: categoryIdentifierString = "TALENT_AND_SKILL"; break;
-				default: categoryIdentifierString = "DEFAULT_CATEGORY"; break;
-				}
 								
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
@@ -100,7 +82,7 @@ public class CategoryDAO implements ICrud {
 				singleCategoryList.add(rs.getString("CRTBY"));
 				singleCategoryList.add(rs.getString("MODON"));
 				singleCategoryList.add(rs.getString("MODBY"));
-				singleCategoryList.add(categoryIdentifierString);
+				singleCategoryList.add(rs.getString("CATEGORYSTRING"));
 
 				final Collection<String> singleCategoryCollection = singleCategoryList;
 				allCategoryList.add(singleCategoryCollection);
