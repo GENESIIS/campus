@@ -10,7 +10,9 @@ import java.util.Map;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.SystemConfigDAO;
+import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
@@ -53,18 +55,17 @@ public class CmdUploadProfileImg implements ICommand {
 			for (FileItem item : files) {
 
 				fu.setFileItem(item);
-				boolean uploaded = fu.upload();
-				String filePath = fu.rename();
+				String filePath = fu.renameIntoOne(StudentCode);
 
-				if (uploaded) {
+//				if (uploaded) {
 					JsonObject response = new JsonObject();
 					response.addProperty("path", war + "/" + filePath);
 					response.addProperty("name", fu.getNewName());
 					response.addProperty("size", item.getSize());
 					list.add(response);
-				}
+//				}
 
-			}
+			}	
 
 		} catch (Exception e) {
 			e.printStackTrace();
