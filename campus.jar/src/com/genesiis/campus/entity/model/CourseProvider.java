@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20161026 JH c7-higher-education-landing-page CourseProvider.java entity class created
 //20161026 JH c7-higher-education-landing-page create getters and setters
+//20161122 JH c39-add-course-provider remove unused attributes and added new attributes
 
 import java.sql.Date;
 
@@ -9,6 +10,7 @@ public class CourseProvider {
 
 	private int code;
 	private String uniquePrefix;
+	private String shortName;
 	private String name;
 	private String description;
 	private String generalEmail;
@@ -32,8 +34,9 @@ public class CourseProvider {
 	private String instagramURL;
 	private String viberNumber;
 	private String whatsappNumber;
-	private String streetNo;
-	private String streetName;
+	private String address1;
+	private String address2;
+	private String address3;
 	private String crtBy;
 	private String modBy;
 
@@ -45,9 +48,9 @@ public class CourseProvider {
 	private boolean isAdminAllowed;
 
 	private int accountType;
+	private int headOffice;
 	private int courseProviderStatus;
 	private int courseProviderType;
-	private int userType;
 	private int principal;
 	private int tutor;
 
@@ -79,6 +82,21 @@ public class CourseProvider {
 	 */
 	public void setUniquePrefix(String uniquePrefix) {
 		this.uniquePrefix = uniquePrefix;
+	}
+
+	/**
+	 * @return the shortName
+	 */
+	public String getShortName() {
+		return shortName;
+	}
+
+	/**
+	 * @param shortName
+	 *            the shortName to set
+	 */
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
 	}
 
 	/**
@@ -427,33 +445,48 @@ public class CourseProvider {
 	}
 
 	/**
-	 * @return the streetNo
+	 * @return the address1
 	 */
-	public String getStreetNo() {
-		return streetNo;
+	public String getAddress1() {
+		return address1;
 	}
 
 	/**
-	 * @param streetNo
-	 *            the streetNo to set
+	 * @param address1
+	 *            the address1 to set
 	 */
-	public void setStreetNo(String streetNo) {
-		this.streetNo = streetNo;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
 	}
 
 	/**
-	 * @return the streetName
+	 * @return the address2
 	 */
-	public String getStreetName() {
-		return streetName;
+	public String getAddress2() {
+		return address2;
 	}
 
 	/**
-	 * @param streetName
-	 *            the streetName to set
+	 * @param address2
+	 *            the address2 to set
 	 */
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	/**
+	 * @return the address3
+	 */
+	public String getAddress3() {
+		return address3;
+	}
+
+	/**
+	 * @param address3
+	 *            the address3 to set
+	 */
+	public void setAddress3(String address3) {
+		this.address3 = address3;
 	}
 
 	/**
@@ -610,15 +643,15 @@ public class CourseProvider {
 	 * @return the userType
 	 */
 	public int getUserType() {
-		return userType;
+		return headOffice;
 	}
 
 	/**
 	 * @param userType
 	 *            the userType to set
 	 */
-	public void setUserType(int userType) {
-		this.userType = userType;
+	public void setUserType(int headOffice) {
+		this.headOffice = headOffice;
 	}
 
 	/**
