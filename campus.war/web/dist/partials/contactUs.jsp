@@ -6,6 +6,7 @@
 <!-- 20161109 DN c10-contacting-us-page-MP added the java_script to the page onsubmit fom function refactor recapture inserted  -->
 <!-- 20161111 DN c10-contacting-us-page-MP added clearField(elementId) method-->
 <!--20161116 DN c10-contacting-us-page-MP included validation.js file to view -->
+<!--20161122 DN c10-contacting-us-page-MP included mailto and jstl code to fill the fields -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -48,7 +49,7 @@
                     <ul class="list-inline">
                         <li><a href="courses.html">All Courses</a></li>
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="dist/partials/contactUs.jsp">Contact Us</a></li>
+                        <li><a href="/dist/partials/contactUs.jsp">Contact Us</a></li>
                         <li><a href="news.html">News</a></li>
                         <li><a href="f-and-q.html">F & Q</a></li>
                         <li><a href="rss.html">Rss</a></li>
@@ -109,42 +110,68 @@
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
             <label id="" style="color:#F39C12;" >${requestScope.message}</label>
-                <form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
-                    <div class="f-name">
-                        <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')">
-                    </div>
-                    <div class="l-name">
-                        <label for="input-lastName">Last Name <span>*</span></label><br><label id="lastNameError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
-                    </div>
-                    <div class="tp">
-                        <label for="input-phoneNumber">Phone Number</label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" >
-                    </div>
-                    <div class="email">
-                        <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="emailAddress" name="emailAddress" onclick="clearField('emailError')" >
-                    </div>
-                    <div class="email-subject">
-                        <label for="input-eMailSubject">Subject <span>*</span></label><br><label id="subjectError" style="color:#FFFF00;"></label><br>
-                        <input type="text" id="subject" name="subject" onclick="clearField('subjectError')">
-                    </div>
-                    <div class="user-message">
-                        <label for="text-userMessage">Message <span>*</span></label><br><label id="userMessageError" style="color:#FFFF00;"></label><br>
-                        <textarea id="message" rows="10" name="message" onclick="clearField('userMessageError')" ></textarea>
-                        <p class="pull-right"><span>*</span> Required fields</p>
-                    </div>
-<!--                     ReCaptcha -->
-					<div class="re-captcha">
-                    	<div class="g-recaptcha"
-								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c">
-						</div>
-						<br><label id="captureError" style="color:#FFFF00;"></label>
-					</div>	
-                    <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" >Submit Query</button>
-					 <!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
-                </form>
+            <c:forEach var="contactListValues" items="${result.collection}">
+                <c:forEach var="individualElement" items="${contactListValues}" varStatus="loop" >
+                	<c:choose>
+		                 <c:when test="${loop.index eq 0}">
+		                 	<c:set var="fistName" value="${individualElement}" /> 
+		                 </c:when>
+		                 <c:when test="${loop.index eq 1}">
+		                 	<c:set var="lastName" value="${individualElement}" />
+		                 </c:when>
+		                  <c:when test="${loop.index eq 2}">
+		                  	<c:set var="emailNumber" value="${individualElement}" />
+		                  </c:when>
+		                  <c:when test="${loop.index eq 3}">
+		                  	<c:set var="phoneNumber" value="${individualElement}" />
+		                  </c:when>
+		                  <c:when test="${loop.index eq 4}">
+		                  	<c:set var="subjectText" value="${individualElement}" />
+		                  </c:when>
+			              <c:when test="${loop.index eq 5}">
+			              	<c:set var="messageText" value="${individualElement}" />
+			              </c:when>
+		            </c:choose>
+              	</c:forEach>
+			</c:forEach> 
+                	<form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
+		                     
+		                    	<div class="f-name">		                    	
+			                        <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
+			                        <input type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')" value="${fistName}">
+			                    </div>
+			                    <div class="l-name">
+			                        <label for="input-lastName">Last Name <span>*</span></label><br><label id="lastNameError" style="color:#FFFF00;"></label><br>
+			                        <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" value="${lastName}" >
+			                    </div>
+			                    <div class="tp">
+			                        <label for="input-phoneNumber">Phone Number<span>*</span></label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
+			                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" value="${phoneNumber}" >
+			                    </div>
+			                    <div class="email">
+			                        <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
+			                        <input type="text" id="emailAddress" name="emailAddress" onclick="clearField('emailError')" value="${emailNumber}">
+			                    </div>
+			                    <div class="email-subject">
+			                        <label for="input-eMailSubject">Subject <span>*</span></label><br><label id="subjectError" style="color:#FFFF00;"></label><br>
+			                        <input type="text" id="subject" name="subject" onclick="clearField('subjectError')" value="${subjectText}">
+			                    </div>
+			                    <div class="user-message">
+			                        <label for="text-userMessage">Message <span>*</span></label><br><label id="userMessageError" style="color:#FFFF00;"></label><br>
+			                        <textarea id="message" rows="10" name="message" onclick="clearField('userMessageError')" >${messageText}</textarea>
+			                        <p class="pull-right"><span>*</span> Required fields</p>
+			                    </div>
+						<!--ReCaptcha -->
+								<div class="re-captcha">
+			                    	<div class="g-recaptcha"
+											data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c">
+									</div>
+									<br><label id="captureError" style="color:#FFFF00;"></label>
+								</div>	
+			                   <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" >Submit Query</button>
+								<!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
+                		</form>
+                 	
                 <!-- End Submit form -->
             </div>
             <!-- End Contact Us form - Filing Area -->
@@ -202,7 +229,7 @@
                     </div>
 
                     <div class="contact-info">
-                        <a class="email" href="javascript:">info@genesiis.com</a>
+                        <a class="email" href="mailto:info@genesiis.com?subject=Mail%20from%20campuslk%20contact%20us%20page" target="_top">info@genesiis.com</a>
                         <p class="tp">+94 11 7765 600<br>+94 11 2385 872</p>
                         <p class="fax">+94 11 2329 868</p>
                     </div>
@@ -227,9 +254,9 @@
 </footer>
 
 <!-- jQuery & Other js -->
-<script src="../bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="../bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="../js/main.js"></script>
-
+	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/js/main.js"></script>
 </body>
 </html>
