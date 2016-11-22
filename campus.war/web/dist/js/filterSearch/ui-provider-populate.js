@@ -89,7 +89,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="cpType" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input name="cpType'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			cpTypeCount++;
 		});
 		totalCount+=cpTypeCount;
@@ -103,7 +103,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="major" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input name="major'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			majorCount++;
 		});
 		totalCount+=majorCount;
@@ -118,7 +118,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="level" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input name="level'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			levelCount++;
 		});
 		totalCount+=levelCount;
@@ -146,18 +146,36 @@ $(document).ready(function(){
 			 var cpTypeAll = $('#cpTypeAll').is(':checked');
 			 var majorAll = $('#majorAll').is(':checked');
 			 var levelAll = $('#levelAll').is(':checked');
-			 var category1 = $('#category1').is(':checked');
-			 var category2 = $('#category2').is(':checked');
 			 
-			 
+			 alert("totalCount"+ totalCount);
+			 for(var x=1;x<=catCount;x++){
+				 var category = $('#category'+x+'').is(':checked');
+				 alert("category" + category);
+				 
+			 }
+			 var catMap={ };
+			 var category2 = $('#category2').is(':checked');		 
 			 
 			 
 			 var searchData=0;
 			 
+			 if(selectAll==true){
+				 catMap={'searchData':selectAll};				
+				 alert("selectAll "); 
+			 }else {
+				 catMap={'categoryAll':categoryAll,
+						 'cpTypeAll':cpTypeAll,
+						 'majorAll':majorAll,
+						 'levelAll':levelAll					 
+						 
+				 };
+			 }
+			 
+			 
 			 $.ajax({
 					url : '../../PublicController',
 					data : {
-						searchData : JSON.stringify(searchData),
+						searchData : JSON.stringify(catMap),
 						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 					},
 					dataType : "json",
