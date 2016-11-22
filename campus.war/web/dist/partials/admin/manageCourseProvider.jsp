@@ -342,7 +342,7 @@
 							</div>
 							<div class="col-name">
 								<input class="input" type="text" name="whatsapp" id="whatsapp"
-									whatsapp"" size="25px;" required />
+									size="25px;" required />
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">Viber Number :</h1>
@@ -356,139 +356,143 @@
 					</ul>
 				</div>
 				<!-- End filter result table -->
-				<br /> <br />
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3 style="color: navy;">Admin Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Expiration Date :</h1>
-								</div>
-								<div class="col-name">
-									<input class="textarea" type="Date" name="expirationDate"
-										id="expirationDate" required size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
+			</div>
+			<!-- End left panel -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Type :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerType"
-										id="providerType" size="50px;" required />
-								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="radioButtonType"
-											id="radioButtonType" value="featured" /> Course Provider
-									</h1>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="radioButtonType"
-											id="radioButtonType" value="one-off" /> One-Off Provider
-									</h1>
-								</div>
-							</li>
-							<!-- end -->
+			<br /> <br />
+			<!-- course filter panel : left side -->
+			<div class="course-filter-panel">
+				<h3 style="color: navy;">Admin Info</h3>
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Expiration Date :</h1>
+							</div>
+							<div class="col-name">
+								<input class="textarea" type="Date" name="expirationDate"
+									id="expirationDate" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Status :</h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name">
-										<input type="radio" name="radioButtonStatus"
-											id="radioButtonStatus" value="active" /> Active &nbsp; <input
-											type="radio" name="radioButtonStatus" id="radioButtonStatus"
-											value="inactive" /> InActive &nbsp; <input type="radio"
-											name="radioButtonStatus" id="radioButtonStatus"
-											value="pending" /> Pending
-									</h1>
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End filter result table -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Course Provider Type :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="text" name="providerType"
+									id="providerType" size="50px;" required />
+							</div>
+						</li>
+						<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">
+									<input type="radio" name="radioButtonType" id="radioButtonType"
+										value="featured" /> Course Provider
+								</h1>
+							</div>
+							<div class="col-name">
+								<h1 class="pro-name">
+									<input type="radio" name="radioButtonType" id="radioButtonType"
+										value="one-off" /> One-Off Provider
+								</h1>
+							</div>
+						</li>
+						<!-- end -->
 
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Status :</h1>
+							</div>
+							<div class="col-name" style="width: 50%;">
+								<h1 class="pro-name">
+									<input type="radio" name="radioButtonStatus"
+										id="radioButtonStatus" value="active" /> Active &nbsp; <input
+										type="radio" name="radioButtonStatus" id="radioButtonStatus"
+										value="inactive" /> InActive &nbsp; <input type="radio"
+										name="radioButtonStatus" id="radioButtonStatus"
+										value="pending" /> Pending
+								</h1>
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
 				</div>
-				<!-- End left panel -->
+				<!-- End filter result table -->
+			</div>
+			<!-- End left panel -->
+			<br />
+			<button id="viewNext" style="float: right; position:relative; right: 600px;" class="btn btn-lg btn-info" >Next</button>
+			<br />
+			<!-- course filter panel : left side -->
+			<div class="course-filter-panel">
+				<h3 style="color: maroon;">Account Info</h3>
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Email:</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="email" name="providerEmail"
+									id="providerEmail" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Account Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Email:</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="email" name="providerEmail"
-										id="providerEmail" required size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Username :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="text" name="providerUsername"
+									id="providerUsername" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Username :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" required size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Password :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="password" name="providerPassword"
+									id="providerPassword" size="50px;" required />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Password :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;" required />
-								</div>
-							</li>
-							<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Confirm Password :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="password" name="cProviderPassword"
+									id="cProviderPassword" size="50px;" required />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Confirm Password :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;" required />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Description :</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="5" cols="90"
-										name="accountDescription" id="accountDescription" required></textarea>
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End filter result table -->
-
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Description :</h1>
+							</div>
+							<div class="col-name">
+								<textarea class="textarea" rows="5" cols="90"
+									name="accountDescription" id="accountDescription" required></textarea>
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
 				</div>
-				<!-- End left panel -->
+				<!-- End filter result table -->
+
+			</div>
+			<!-- End left panel -->
 
 
 				<!-- course filter panel : left side -->
@@ -503,7 +507,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="file" name="imageSmall"
-										id="imageSmall"  size="50px;" />
+										id="imageSmall"  size="50px;" required />
 								</div>
 							</li>
 							<!-- end -->
@@ -546,9 +550,6 @@
 
 				</div>
 				<!-- End left panel -->
-
-			</div>
-			<!-- End left panel -->
 
 		</div>
 		<!-- End page content  -->
