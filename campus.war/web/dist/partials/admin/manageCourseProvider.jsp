@@ -1,4 +1,5 @@
 <!-- 20161121 JH c39-add-course-provider-jh manageCourseProvider.jsp created -->
+<!-- 20161122 JH c39-add-course-provider-jh sample UI page to add course provider details wip -->
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
