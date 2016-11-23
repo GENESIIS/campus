@@ -53,7 +53,7 @@ public class CountryDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2]";
+			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2]";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();

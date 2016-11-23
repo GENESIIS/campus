@@ -5,7 +5,9 @@ package com.genesiis.campus.entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
@@ -110,8 +112,41 @@ public class TutorDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		Tutor tutor = (Tutor) code;
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, tutor.getUsername());
+			final ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleTownList = new ArrayList<String>();
+				singleTownList.add(rs.getString("USERNAME"));
+
+				final Collection<String> singleTownCollection = singleTownList;
+				allTownList.add(singleTownCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allTownList;
+
 	}
 
 	@Override

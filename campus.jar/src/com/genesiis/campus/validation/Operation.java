@@ -11,6 +11,8 @@ public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE,"commandNotFound.jsp"),
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
+	LIST_COUNTRY_DATA("LIST_COUNTRY_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
+	CHECK_USERNAME("CHECK_USERNAME", ResponseType.JSON, "addTutorDetails.jsp"),
 	ADD_TUTOR_PROFILE_DETAILS("ATPD", ResponseType.JSP,"addTutorDetails.jsp");
 	
 	private final String commandString;

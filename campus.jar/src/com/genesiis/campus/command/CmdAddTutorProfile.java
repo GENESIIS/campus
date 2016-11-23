@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
@@ -31,6 +32,7 @@ public class CmdAddTutorProfile implements ICommand {
 	private String gender;
 	private String experience;
 	private String description;
+	private String countryCode;
 	private String mobileCountryCode;
 	private String mobileNetworkCode;
 	private String mobileNumber;
@@ -64,8 +66,10 @@ public class CmdAddTutorProfile implements ICommand {
 		try {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
+
 			message = validateTutorFields(helper);
 			if (message.equalsIgnoreCase("True")) {
+
 				setVariables(helper);
 				// username = helper.getParameter("username");
 				// password = helper.getParameter("password");
@@ -102,10 +106,10 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setLastName(lastName);
 				tutor.setGender(gender);
 				tutor.setEmail(email);
-				tutor.setLandCountryCode("0");
+				tutor.setLandCountryCode(landCountryCode);
 				tutor.setLandAreaCode("0");
 				tutor.setLandNumber(landNumber);
-				tutor.setMobileCountryCode("0");
+				tutor.setMobileCountryCode(mobileCountryCode);
 				tutor.setMobileNetworkCode("0");
 				tutor.setMobileNumber(mobileNumber);
 				tutor.setDescription(description);
@@ -125,13 +129,14 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setTown(town);
 				tutor.setUsertype(1);
 
-				int result = tutorDAO.add(tutor);
-				if (result > 0) {
-					message = SystemMessage.ADDED.message();
+					int result = tutorDAO.add(tutor);
+					if (result > 0) {
+						message = SystemMessage.ADDED.message();
 
-				} else {
-					message = SystemMessage.ERROR.message();
-				}
+					} else {
+						message = SystemMessage.ERROR.message();
+					}
+				
 			}
 		} catch (Exception exception) {
 			log.error("execute() : " + exception);
@@ -152,10 +157,6 @@ public class CmdAddTutorProfile implements ICommand {
 					|| (Validator.isNotEmpty(helper.getParameter("lastname")))
 					|| (Validator.isNotEmpty(helper.getParameter("email")))
 					|| (Validator.isNotEmpty(helper
-							.getParameter("mobileCountryCode")))
-					|| (Validator.isNotEmpty(helper
-							.getParameter("mobileNetworkCode")))
-					|| (Validator.isNotEmpty(helper
 							.getParameter("mobileNumber"))) || (Validator
 						.isNotEmpty(helper.getParameter("addressLine1"))))) {
 				message = SystemMessage.EMPTYFIELD.message();
@@ -175,19 +176,12 @@ public class CmdAddTutorProfile implements ICommand {
 			firstName = helper.getParameter("firstname");
 			lastName = helper.getParameter("lastname");
 			gender = helper.getParameter("gender");
-
 			email = helper.getParameter("email");
-
-			landCountryCode = helper.getParameter("landCountryCode");
-			landAreaCode = helper.getParameter("landphoneAreaCode");
-			landNumber = helper.getParameter("landAreaCode");
-
-			mobileCountryCode = helper.getParameter("mobileCountryCode");
-			mobileNetworkCode = helper.getParameter("mobileNetworkCode");
+			landCountryCode = helper.getParameter("countryDetails");
+			landNumber = helper.getParameter("landNumber");
+			mobileCountryCode = helper.getParameter("countryDetails");
 			mobileNumber = helper.getParameter("mobileNumber");
-
 			addressLine1 = helper.getParameter("address1");
-
 			town = helper.getParameter("townDetails");
 			String a = helper.getParameter("aboutMe");
 			if (helper.getParameter("middlename").equals("")) {
@@ -268,7 +262,7 @@ public class CmdAddTutorProfile implements ICommand {
 				addressLine3 = helper.getParameter("address3");
 			}
 		} catch (Exception e) {
-			log.error("validateTutorFields" + e);
+			log.error("validateTutorFields()" + e);
 			throw e;
 		}
 	}

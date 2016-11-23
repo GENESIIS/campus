@@ -12,8 +12,13 @@
 </head>
 <body>
 <!-- 	onsubmit="return (validateTutorFileds())" -->
-	<form action="TutorController" method="post">
+	<form action="TutorController" method="post" onsubmit="return (validateTutorFileds())">
 		<table align="center">
+		<tr>
+				<td>
+					<h2>${message}</h2>
+				</td>
+			</tr>
 			<tr>
 				<td>
 					<h2>Basic Info</h2>
@@ -68,35 +73,27 @@
 			</tr>
 			<tr>
 				<td>Mobile</td>
-				<td>Country Code<span id="mobCoutryCodeError"></span> <input
-					type="text" name="mobileCountryCode" id="mobileCountryCode"
-					maxlength="4" /> Network Code<span id="mobileNetworkCodeError"></span>
-					<input type="text" name="mobileNetworkCode" id="mobileNetworkCode"
-					maxlength="3" /> Phone Number <span id="mobileError"></span><input
-					type="text" name="mobileNumber" id="mobileNumber" maxlength="7" />
+				<td><span id="mobileError"></span><input
+					type="text" name="mobileNumber" id="mobileNumber" maxlength="11" />
 				</td>
 			</tr>
 			<tr>
 				<td>Home <span id="landError"></span></td>
-				<td>Country Code<span id="landCoutryCodeError"></span> <input
-					type="text" name="landCountryCode" id="landCountryCode"
-					maxlength="4" /> Area Code<span id="landAreaCodeError"></span><input
-					type="text" name="landAreaCode" id="landAreaCode" maxlength="3" />
-					Phone Number<span id="landError"></span><input type="text"
-					name="landNumber" id="landNumber" maxlength="7" /></td>
+				<td><input type="text"
+					name="landNumber" id="landNumber" maxlength="11" /></td>
 			</tr>
 			<tr>
-				<td>Address 1 <span id="address1Error"></span></td>
+				<td>Address Line 1 <span id="address1Error"></span></td>
 				<td><input type="text" name="address1" id="address1"
 					maxlength="30" /></td>
 			</tr>
 			<tr>
-				<td>Address 2 <span id="address2Error"></span></td>
+				<td>Address line 2 <span id="address2Error"></span></td>
 				<td><input type="text" name="address2" id="address2"
 					maxlength="30" /></td>
 			</tr>
 			<tr>
-				<td>Address 3 <span id="address3Error"></span></td>
+				<td>Address line 3 <span id="address3Error"></span></td>
 				<td><input type="text" name="address3" id="address3"
 					maxlength="30" /></td>
 			</tr>

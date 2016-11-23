@@ -3,13 +3,30 @@
  */
 $(document).ready(function() {
 
-	displayDetails();
-	
+	displayTownDetails();
+	displayCountryDetails();
+
 });
 
+function displayCountryDetails() {
+	
+	$.ajax({
+		url : 'TutorController',
+		data : {
+			CCO : 'LIST_COUNTRY_DATA'
+		},
+		dataType : "json",
+		success : function(response) {
+			getCountryData(response);
+		},
+		error : function(response) {
+			alert("Error: " + response);
+		}
+	});
+}
 
-function displayDetails() {
-	alert("hii");
+function displayTownDetails() {
+	
 	$.ajax({
 		url : 'TutorController',
 		data : {
@@ -17,15 +34,15 @@ function displayDetails() {
 		},
 		dataType : "json",
 		success : function(response) {
-			getAjaxData(response);
+			getTownData(response);
 		},
 		error : function(response) {
-			alert("Error: "+response);
+			alert("Error: " + response);
 		}
 	});
 }
 
-function getAjaxData(response) {	
+function getTownData(response) {
 	var categories = $("#townDetails");
 	categories.find('option').remove();
 	$.each(response.result, function(index, value) {
@@ -36,3 +53,16 @@ function getAjaxData(response) {
 		$('<option>').val(x).text(y).appendTo(categories);
 	});
 }
+function getCountryData(response) {
+	var categories = $("#countryDetails");
+	categories.find('option').remove();
+	$.each(response.result, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(categories);
+	});
+}
+
+
