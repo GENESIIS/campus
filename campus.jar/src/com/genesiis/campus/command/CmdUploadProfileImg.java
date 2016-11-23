@@ -101,12 +101,10 @@ public class CmdUploadProfileImg implements ICommand {
 			collection.add(singleCollection);
 			view.setCollection(collection);
 
-		} catch (SQLException sqle) {
-			log.info("execute() : sqle" + sqle.toString());
-			throw sqle;
 		} catch (Exception e) {
-			log.info("execute() : e" + e.toString());
-			throw e;
+			//logging the exception and throw, gives a 'SyntaxError: Unexpected end of JSON input'.
+			//So that StackTrace has printed in here.
+			e.printStackTrace();
 		}
 
 		return view;
