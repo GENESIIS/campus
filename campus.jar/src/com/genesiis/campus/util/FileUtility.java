@@ -2,7 +2,10 @@ package com.genesiis.campus.util;
 
 //20161121 PN c27-upload-user-image: INIT class to manage uploaded file details.
 //20161121 PN c27-upload-user-image: implemented isFileExists() method.
+//20161124 PN c27-upload-user-image: implemented isValidImageFileType() method.
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -26,12 +29,12 @@ public class FileUtility {
 	private boolean uploaded;
 	private String renamedTo;
 	private String imageName;
+	private int fileSize;
 
 	/**
 	 * constructor
 	 * 
-	 * @param item
-	 *            :FileItem
+	 * @param item:FileItem
 	 **/
 	public FileUtility(FileItem item) {
 		this.item = item;
@@ -40,8 +43,7 @@ public class FileUtility {
 	/**
 	 * constructor
 	 * 
-	 * @param file
-	 *            :File
+	 * @param file:File
 	 **/
 	public FileUtility(File file) {
 		this.file = file;
@@ -50,10 +52,8 @@ public class FileUtility {
 	/**
 	 * constructor
 	 * 
-	 * @param item
-	 *            :FileItem
-	 * @param uploadPath
-	 *            :String
+	 * @param item:FileItem
+	 * @param uploadPath:String
 	 **/
 	public FileUtility(FileItem item, String uploadPath) {
 		this(item);
@@ -61,12 +61,11 @@ public class FileUtility {
 
 	}
 
+	/**
+	 * Default constructor
+	 */
 	public FileUtility() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public String getImageName() {
-		return this.imageName;
 	}
 
 	/**
@@ -107,8 +106,8 @@ public class FileUtility {
 			this.renamedTo = fileName;
 
 		} catch (Exception e) {
-			this.log.error(this + "rename" + e.toString());
-			throw new Exception(e);
+			log.error(this + "rename" + e.toString());
+			throw e;
 		}
 
 		return savePath;
@@ -119,7 +118,6 @@ public class FileUtility {
 	 * does not exist, it creates all parent and child folders.
 	 * 
 	 * @return boolean file uploaded or not
-	 * @author LE
 	 * @throws Exception
 	 **/
 	public boolean upload() throws Exception {
@@ -153,16 +151,14 @@ public class FileUtility {
 		} catch (Exception e) {
 			log.error(this + ".uploadFile, " + e.toString());
 			this.uploaded = false;
-			throw new Exception(e);
+			throw e;
 		}
-
 		return this.uploaded;
 	}
 
 	/**
 	 * @return the absolute path of the file associated with the instance:
 	 *         String
-	 * @author LE
 	 **/
 	public String getUploadedFilePath() {
 		return this.file.getAbsolutePath();
@@ -172,7 +168,6 @@ public class FileUtility {
 	 * return this file associated with the instance
 	 * 
 	 * @return File
-	 * @author LE
 	 **/
 	public File getFile() {
 		return this.file;
@@ -181,20 +176,31 @@ public class FileUtility {
 	/**
 	 * set file
 	 * 
-	 * @param file
-	 *            :File
-	 * @author LE
+	 * @param file:File
 	 **/
 	public void setFile(File file) {
 		this.file = file;
 	}
 
 	/**
+	 * @return uploaded file name
+	 */
+	public String getImageName() {
+		return this.imageName;
+	}
+
+	/**
+	 * @return uploaded file name
+	 */
+	public int getFileSize() {
+		return this.fileSize;
+	}
+
+	/**
 	 * parse all possible values in the list and sort them and retrieve the
 	 * highest value
 	 * 
-	 * @param list
-	 *            :ArrayList:String
+	 * @param list:ArrayList:String
 	 * @return the highest value
 	 **/
 	private String getTopOfSequence(ArrayList<String> list) {
@@ -232,7 +238,7 @@ public class FileUtility {
 	public String getNewName() {
 		return this.renamedTo;
 	}
-	
+
 	/**
 	 * This function renames the file associated with the instance into one
 	 * 
@@ -241,15 +247,15 @@ public class FileUtility {
 	 **/
 	public String renameIntoOne(int StudentCode) throws Exception {
 		String savePath = "";
-		try {			
+		try {
 			this.uploaded = false;
 			File uploadLocation = new File(this.uploadPath);
 
 			if (!uploadLocation.isDirectory())
 				uploadLocation.mkdirs();
 
-			//FileUtils.cleanDirectory(uploadLocation); 
-			
+			// FileUtils.cleanDirectory(uploadLocation);
+
 			String fileName = this.item.getName();
 
 			/**
@@ -268,52 +274,67 @@ public class FileUtility {
 
 			this.item.write(this.file);
 			this.uploaded = true;
-			
-			
+
 			File folder = new File(this.getFile().getParent());
 			String newfileName = "";
 			String ext = "";
-						
+
 			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
-			//rename the file using student code
+			// rename the file using student code
 			newfileName = Integer.toString(StudentCode) + "." + ext;
-			
-			//create a copy of file
+
+			// create a copy of file
 			savePath = folder.getAbsoluteFile() + "/" + newfileName;
 			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
-
-			if((new File(folder.getAbsoluteFile() + "/" + newfileName).exists())){
-				FileUtils.forceDelete(new File(folder.getAbsoluteFile() + "/" + newfileName));
+	
+			//Delete all the files has same name as studentCode
+			File[] listOfFiles = new File(folder.getAbsoluteFile() + "/").listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				// Check if the content inside folder is a file (not a directory)
+				if (listOfFiles[i].isFile()) {
+					String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
+					if (Integer.toString(StudentCode).equals(fileNameWithOutExt)) {
+						FileUtils.forceDelete(new File(folder.getAbsoluteFile() + "/" + listOfFiles[i].getName()));
+					}
+				}
 			}
-			//save the created copy of file
+		
+			// save the created copy of file
 			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + newfileName));
-			//delete the original file
+			// delete the original file
 			FileUtils.forceDelete(this.file);
 
 			this.renamedTo = newfileName;
-		} catch (Exception e) {
-			log.error(this + ".uploadFile, " + e.toString());
+		} catch (FileNotFoundException fne) {
+			//Comes when C:\\Users\\username\\AppData\\Local\\Temp\\ is not found. It is specific to the user's computer
+			log.error("renameIntoOne():  IGNORE THIS: " + fne.toString());
 			this.uploaded = false;
-			throw new Exception(e);
-		}
+			throw fne;
+		} catch (Exception e) {
+			log.error("renameIntoOne(): " + e.toString());
+			this.uploaded = false;
+			throw e;
+		} 
 
 		return savePath;
 	}
-	
+
 	/**
 	 * 
-	 * @param dir - images stored file
-	 * @param name - file name of the image
-	 * @param studentCode 
+	 * @param dir
+	 *            - images stored file
+	 * @param name
+	 *            - file name of the image
+	 * @param studentCode
 	 * @return true if the file exists
 	 */
-	public boolean isFileExists(String path, String studentCode){
+	public boolean isFileExists(String path, String studentCode) {
 		boolean isFileExists = false;
-		//Get List of files inside given folder
+		// Get List of files inside given folder
 		File[] listOfFiles = new File(path).listFiles();
-	
+
 		for (int i = 0; i < listOfFiles.length; i++) {
-			//Check if the content inside folder is a file (not a directory)
+			// Check if the content inside folder is a file (not a directory)
 			if (listOfFiles[i].isFile()) {
 				String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
 				if (studentCode.equals(fileNameWithOutExt)) {
@@ -326,4 +347,34 @@ public class FileUtility {
 		return isFileExists;
 	}
 	
+	/**
+	 * This method check if the uploaded file has correct extensions.
+	 * @param fileName
+	 * @param extensions - array of valid extensions
+	 * @return true if valid
+	 */
+	public boolean isValidImageFileType(String fileName, String extensions[]) {
+		// Valid file extensions
+		String validExtensions[] = extensions;
+		try {
+
+			String ext = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+			for (String validExtension : validExtensions) {
+				if (ext.equalsIgnoreCase(validExtension))
+					return true;
+			}
+		} catch (NullPointerException npe) {
+			log.error("isValidcvfiletype(): " + fileName + npe.toString());
+			throw npe;
+		} catch (StringIndexOutOfBoundsException siobe) {
+			log.error("isValidcvfiletype(): " + fileName + siobe.toString());
+			throw siobe;
+		} catch (Exception e) {
+			log.error("isValidcvfiletype(): " + fileName + e.toString());
+			throw e;
+		}
+
+		return false;
+	}
+
 }
