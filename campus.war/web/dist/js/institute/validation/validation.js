@@ -7,6 +7,8 @@
  *20161116 DN c10-contacting-us-page-MP included clearField() method 
  *20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
 * cater more phone number styles
+* 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+*cater more phone number styles with spaces in between.
  */ 
  
 
@@ -75,7 +77,7 @@ function isValidEmailFormat(email) {
  */
 function isValidPhoneNumber(phoneNumber) {
 	var phonenumberPattern = /^(\+\d{2,3}|0)?\d{9}$/mg;
-	return isPatternMatch(phonenumberPattern, phoneNumber);
+	return isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
 }
 
 /**
