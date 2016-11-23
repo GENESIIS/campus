@@ -7,7 +7,7 @@ theNewScript.src = "/dist/js/institute/validation/validation.js";
 
 function studentLogin(){
 	
-	var username = $('#email').val();
+	var username = $("#email").val();
 	var pass = $("#password").val();
 	
 	var usernametb = isempty(username);
@@ -29,10 +29,10 @@ function studentLogin(){
 		};
 		$.ajax({
 			type : "POST",
-			url : '/com/genesiis/campus/loginController/LoginController.java',
+			url : '../../LoginController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
-				CCO : "LOG"
+				CCO : "SLOG"
 				
 			},
 			dataType : "json",
