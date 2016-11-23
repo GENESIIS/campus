@@ -139,7 +139,7 @@ $(document).ready(function(){
 		
 		 $('#addSearchData').on( 'click', function (event) {
 			
-			 alert("addSearchData click");
+			// alert("addSearchData click");
 			 $( this ).val();			 
 			 var selectAll = $('#selectAll').is(':checked');
 			 var categoryAll = $('#categoryAll').is(':checked');
@@ -147,23 +147,24 @@ $(document).ready(function(){
 			 var majorAll = $('#majorAll').is(':checked');
 			 var levelAll = $('#levelAll').is(':checked');
 			 
-			 alert("totalCount"+ totalCount);
+			 //alert("totalCount"+ totalCount);
+			 var catMap=0;
 			 for(var x=1;x<=catCount;x++){
-				 var category = $('#category'+x+'').is(':checked');
+				 var category = $('#category'+x).is(':checked');
+				
 				 alert("category" + category);
 				 
 			 }
-			 var catMap={ };
 			 var category2 = $('#category2').is(':checked');		 
 			 
-			 
-			 var searchData=0;
+			 var mainAreasMap=0;
+			 var selectAllMap=0;
 			 
 			 if(selectAll==true){
-				 catMap={'searchData':selectAll};				
+				 selectAllMap={'searchData':selectAll};				
 				 alert("selectAll "); 
 			 }else {
-				 catMap={'categoryAll':categoryAll,
+				 mainAreasMap={'categoryAll':categoryAll,
 						 'cpTypeAll':cpTypeAll,
 						 'majorAll':majorAll,
 						 'levelAll':levelAll					 
@@ -175,7 +176,8 @@ $(document).ready(function(){
 			 $.ajax({
 					url : '../../PublicController',
 					data : {
-						searchData : JSON.stringify(catMap),
+						selectAllMap: selectAllMap,
+						mainAreasMap :mainAreasMap,
 						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 					},
 					dataType : "json",

@@ -5,6 +5,8 @@ package com.genesiis.campus.util;
 //20161031 DJ c6-list-available-institutes-on-the-view add LIST_TOP_COURSE_PROVIDERS
 //20161103 DJ c6-list-available-institutes-on-the-view add LIST_ALL_COURSE_PROVIDERS
 
+import java.util.Map;
+
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -190,6 +192,11 @@ public class DataHelper implements IDataHelper {
 	public String getHeader(String name) {
 		return request.getHeader(name);
 
+	}
+	
+	
+	public Map getParameterMap() {
+		return request.getParameterMap();
 	}
 
 }

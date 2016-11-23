@@ -3,7 +3,9 @@ package com.genesiis.campus.command;
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement execute() method
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -32,6 +34,16 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
+			
+			Map<String, String[]> bandInfo = helper.getParameterMap();
+			//bandInfo.get("CCO")
+			//bandInfo.get("searchData")
+			
+			 String selectAllMap=Arrays.asList(bandInfo.get("selectAllMap")).get(0);
+			 String mainAreasMap=Arrays.asList(bandInfo.get("mainAreasMap")).get(0);
+
+
+			
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			int categoryCode = 0;
 			//Set input filter values to providerSearchDTO			

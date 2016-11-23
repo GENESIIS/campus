@@ -1,4 +1,6 @@
 package com.genesiis.campus.util;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import com.genesiis.campus.entity.IView;
@@ -32,4 +34,7 @@ public interface IDataHelper {
 	String getRedirectPage();
 
 	void setRedirectPage(String pageName);
+
+	public Map<String, String[]> getParameterMap();
+	
 }
