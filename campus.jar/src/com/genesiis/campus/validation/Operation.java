@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC to the class
 //20161027 AS C8-inquiry-form-for-course add SEND_COURSE_INQUIRY to the class
+//20161123 AS C19-student-login-without-using-third-party-application-test-as add STUDENT_LOGIN to the class
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -16,6 +17,7 @@ public enum Operation {
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"),
+	STUDENT_LOGIN("SLOG", ResponseType.JSON, ""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
 			
 	private final String commandString;
