@@ -228,9 +228,9 @@
 
 						<div class="district-col col-md-4 col-lg-4 pull-right">
 							<div class="drop-holder">
-								<input type="text" name="districtName" id="districtName"
-									list="districtList" placeholder="-- Select District --" />
-								<datalist id="districtList">
+								<input type="text" name="districtlist" id="districtlist"
+									list="districtName" placeholder="-- Select District --" />
+								<datalist id="districtName">
 								</datalist>
 							</div>
 						</div>

@@ -123,14 +123,14 @@ $(document).ready(function(){
 		
 		$("#totalCount").text(" " +totalCount);
 		
-		var districtList = $("#districtList");
+		var districtName = $("#districtName");
 		$.each(response.districtList, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
 			var z = data[2].toString();
-			$('<option>').val(y).text(z).appendTo(districtList);
+			$('<option>').val(y).text(z).appendTo(districtName);
 		});
 		
 		
@@ -143,6 +143,8 @@ $(document).ready(function(){
 			 var cpTypeAll = $('#cpTypeAll').is(':checked');
 			 var majorAll = $('#majorAll').is(':checked');
 			 var levelAll = $('#levelAll').is(':checked');
+			 
+			 var districtCode=$('#districtlist').val();
 			 
 			 //alert("totalCount"+ totalCount);
 			 var catCode=0;
@@ -202,7 +204,8 @@ $(document).ready(function(){
 			 $.ajax({
 					url : '../../PublicController',
 					data : {
-						catCode: catCode,						
+						catCode: catCode,
+						districtCode:districtCode,
 						mainAreasMap :mainAreasMap,
 						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 					},

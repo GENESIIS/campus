@@ -43,10 +43,16 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				String[] majorAll = bandInfo.get("mainAreasMap[majorAll]");
 				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
 				String[] catCode = bandInfo.get("catCode");
+				String[] districtCode = bandInfo.get("districtCode");
+				
 
 				if (catCode != null && catCode.length > 0) {					
 					int categoryCode = Integer.parseInt(catCode[0]);
 					providerSearchDTO.setCategory(categoryCode);
+				}
+				if (districtCode != null && districtCode.length > 0) {					
+					int district = Integer.parseInt(districtCode[0]);
+					providerSearchDTO.setDistrict(district);
 				}
 			
 				
