@@ -155,6 +155,7 @@ $(document).ready(function(){
 				 }				
 				 //var category2 = $('#category2').is(':checked');
 			 }
+			 
 			 	
 			 
 			 //Course Provider Type checks			 
@@ -162,7 +163,10 @@ $(document).ready(function(){
 			 for(var x=1;x<=cpTypeCount;x++){
 				 var cpType = $('#cpType'+x).is(':checked');
 				 if(cpType){
-					 
+					 var test='cpType'+x;
+					 cpTypeMap={test:x
+							 
+					 };
 				 }
 			 }
 			 
@@ -171,7 +175,7 @@ $(document).ready(function(){
 			 for(var x=1;x<=majorCount;x++){
 				 var major = $('#major'+x).is(':checked');
 				 if(major){
-					 
+					 majorMap=majorMap+x; 
 				 }
 			 }
 			 
@@ -180,7 +184,7 @@ $(document).ready(function(){
 			 for(var x=1;x<=levelCount;x++){
 				 var level = $('#level'+x).is(':checked');
 				 if(level){
-					 
+					 levelMap=levelMap+x;
 				 }
 			 }
 			
@@ -207,6 +211,7 @@ $(document).ready(function(){
 						catCode: catCode,
 						districtCode:districtCode,
 						mainAreasMap :mainAreasMap,
+						cpTypeMap:cpTypeMap,
 						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 					},
 					dataType : "json",

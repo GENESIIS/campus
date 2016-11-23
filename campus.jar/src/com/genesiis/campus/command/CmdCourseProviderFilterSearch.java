@@ -3,8 +3,10 @@ package com.genesiis.campus.command;
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement execute() method
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
@@ -44,6 +46,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
 				String[] catCode = bandInfo.get("catCode");
 				String[] districtCode = bandInfo.get("districtCode");
+				String[] cpTypeMap = bandInfo.get("cpTypeMap");
 				
 
 				if (catCode != null && catCode.length > 0) {					
@@ -70,6 +73,13 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 					if(levelAll[0].equalsIgnoreCase("true")){						
 						providerSearchDTO.setGetAllMajors(true);
 					}
+				}
+				if (cpTypeMap != null && cpTypeMap.length > 0) {
+					final List<Integer> cpList=new ArrayList<Integer>();
+					if(cpTypeMap[0].equalsIgnoreCase("true")){						
+						cpList.add(Integer.parseInt(cpTypeMap[0]));
+					}					
+					providerSearchDTO.setCpTypeList(cpList);
 				}
 			}
 			 
