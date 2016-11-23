@@ -3,11 +3,16 @@ package com.genesiis.campus.validation;
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
 //20161122 PN c27-upload-user-image: added new attributes to the Enum
+//20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
-	DELETED("Details deleted successfully."), 
+	DELETED("Details deleted successfully."),
+	FILEADDED("File added successfully."), 
+	FILEUPDATED("File updated successfully."), 
+	FILEDELETED("File deleted successfully."),
+	FILEUPLOADED("File uploaded successfully."),
 	IDFOUND("ID found."), 
 	IDNOTFOUND("ID not found."), 
 	ERROR("Unsuccessful."), 	
@@ -78,8 +83,8 @@ public enum SystemMessage {
 	EMPTY_SEARCH_RESULT("EMPTY_SEARCH_RESULT"),
 	NOT_KEYED_IN("Please key in a value"),
 	LENGTH_EXCEEDED("Please try a shorter length of characters"),
-	INVALID_FILE_TYPE("Upload a file with a valid file type"),
-	FILE_SIZE_EXCEEDED("Upload a smaller file please"),
+	INVALID_FILE_TYPE("Uploaded file type is invalid. Please upload a file with valid file type."),
+	FILE_SIZE_EXCEEDED("Uploaded file is too Large. Please upload a smaller file."),
 	IS_NOT_NUMERIC("Enter in a numeric value please"),
 	INVALID_DURATION_FORMAT("Enter in a duration with format: 4y 3m 2d"),	
 	/**
