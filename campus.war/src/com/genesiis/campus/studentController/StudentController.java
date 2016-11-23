@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.controller.CampusController;
-import com.genesiis.campus.publicController.PublicController;
+
 
 /**
  * Servlet implementation class StudentController
@@ -22,7 +22,7 @@ import com.genesiis.campus.publicController.PublicController;
 @WebServlet("/StudentController")
 public class StudentController extends CampusController {
 	private static final long serialVersionUID = 1L;
-	static final Logger log = Logger.getLogger(PublicController.class.getName());
+	static final Logger log = Logger.getLogger(CampusController.class.getName());
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -52,6 +52,7 @@ public class StudentController extends CampusController {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		log.info("Landed on the StudentController====");
 		super.doPost(request, response);
 	}
 
