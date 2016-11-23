@@ -86,7 +86,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="cpType'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input id="cpType'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			cpTypeCount++;
 		});
 		totalCount+=cpTypeCount;
@@ -100,7 +100,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="major'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input id="major'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			majorCount++;
 		});
 		totalCount+=majorCount;
@@ -115,7 +115,7 @@ $(document).ready(function(){
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
-			secondChoice.append('<li><a href="javascript:"><input name="level'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
+			secondChoice.append('<li><a href="javascript:"><input id="level'+x+'" type="checkbox" value="'+ x +'"></a>' + y + '</li>');
 			levelCount++;
 		});
 		totalCount+=levelCount;
@@ -150,8 +150,7 @@ $(document).ready(function(){
 				 var category = $('#category'+x).is(':checked');
 				 if(category){
 					 catCode=x; 
-				 }
-				
+				 }				
 				 //var category2 = $('#category2').is(':checked');
 			 }
 			 	
@@ -159,7 +158,28 @@ $(document).ready(function(){
 			 //Course Provider Type checks			 
 			 var cpTypeMap=0;
 			 for(var x=1;x<=cpTypeCount;x++){
-				 var cpType = $('#cpTypeCount'+x).is(':checked');				 
+				 var cpType = $('#cpType'+x).is(':checked');
+				 if(cpType){
+					 
+				 }
+			 }
+			 
+			 //Major checks			 
+			 var majorMap=0;
+			 for(var x=1;x<=majorCount;x++){
+				 var major = $('#major'+x).is(':checked');
+				 if(major){
+					 
+				 }
+			 }
+			 
+			 //Level checks			 
+			 var levelMap=0;
+			 for(var x=1;x<=levelCount;x++){
+				 var level = $('#level'+x).is(':checked');
+				 if(level){
+					 
+				 }
 			 }
 			
 			 			 

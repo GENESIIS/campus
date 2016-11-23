@@ -44,24 +44,32 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
 				String[] catCode = bandInfo.get("catCode");
 
+				if (catCode != null && catCode.length > 0) {					
+					int categoryCode = Integer.parseInt(catCode[0]);
+					providerSearchDTO.setCategory(categoryCode);
+				}
+			
+				
 				if (cpTypeAll != null && cpTypeAll.length > 0) {
-					if(cpTypeAll[0].equalsIgnoreCase("true")){
-						
-						
+					if(cpTypeAll[0].equalsIgnoreCase("true")){						
+						providerSearchDTO.setGetAllCPTypes(true);
+					}
+				}
+				if (majorAll != null && majorAll.length > 0) {
+					if(majorAll[0].equalsIgnoreCase("true")){						
+						providerSearchDTO.setGetAllMajors(true);
+					}
+				}
+				if (levelAll != null && levelAll.length > 0) {
+					if(levelAll[0].equalsIgnoreCase("true")){						
+						providerSearchDTO.setGetAllMajors(true);
 					}
 				}
 			}
 			 
 			//Arrays.asList(bandInfo.get("mainAreasMap[cpTypeAll]"));
-			
-			 
-			 
-			 //String[] mainAreasMap=Arrays.asList(bandInfo.get("mainAreasMap")).get(0);
-
-
-			
-			
-			int categoryCode = 0;
+		
+		/*	int categoryCode = 0;
 			//Set input filter values to providerSearchDTO			
 			String categoryCodeString = helper.getParameter("categoryCode");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
@@ -76,17 +84,8 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				if (UtilityHelper.isInteger(courseCountString) && Integer.parseInt(courseCountString)>0) {					
 					providerSearchDTO.setGetAll(true);
 				}				
-			}
-			
-			
-			
-			//TODO:set filter values
-			//isgetAll == true--> set all the param to 0
-			/*providerSearchDTO.setCourserProviderType(courserProviderType);
-			providerSearchDTO.setMajor(major);
-			providerSearchDTO.setLevel(level);
-			providerSearchDTO.setDistrict(district);*/
-			
+			}*/
+						
 			
 			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.findFilterdCourseProviders(providerSearchDTO);
 			iView.setCollection(courseProviderSearchResults);
