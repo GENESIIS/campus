@@ -12,7 +12,6 @@ import com.genesiis.campus.command.CmdListDistricts;
 import com.genesiis.campus.command.CmdListInstitute;
 import com.genesiis.campus.command.CmdListLevels;
 import com.genesiis.campus.command.CmdListMajors;
-import com.genesiis.campus.command.CmdUploadProfileImg;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -26,7 +25,6 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_LEVEL_DATA, new CmdListLevels());	
 		map.put(Operation.LIST_MAJOR_DATA, new CmdListMajors());	
 		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());
-		map.put(Operation.UPLOAD_USER_PROFILE, new CmdUploadProfileImg());	
 	}
 
 	@Override
@@ -54,9 +52,6 @@ public class PublicCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case LIST_INSTITUTE_DATA:
-			command = map.get(o);
-			break;
-		case UPLOAD_USER_PROFILE:
 			command = map.get(o);
 			break;
 		default:
