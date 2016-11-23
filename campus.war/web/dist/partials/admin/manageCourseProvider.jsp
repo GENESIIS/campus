@@ -1,6 +1,6 @@
-<!-- 20161121 JH c39-add-course-provider-jh manageCourseProvider.jsp created -->
-<!-- 20161122 JH c39-add-course-provider-jh sample UI page to add course provider details wip -->
-
+<!-- 20161121 JH c39-add-course-provider manageCourseProvider.jsp created -->
+<!-- 20161122 JH c39-add-course-provider sample UI page to add course provider details wip -->
+<!-- 20161123 JH c39-add-course-provider UI code modified -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -391,13 +391,13 @@
 						<li class="course-info clearfix">
 							<div class="col-name">
 								<h1 class="pro-name">
-									<input type="radio" name="radioButtonType" id="radioButtonType"
+									<input type="radio" name="featured-oneoff" id="featured-oneoff"
 										value="featured" /> Course Provider
 								</h1>
 							</div>
 							<div class="col-name">
 								<h1 class="pro-name">
-									<input type="radio" name="radioButtonType" id="radioButtonType"
+									<input type="radio" name="featured-oneoff" id="featured-oneoff"
 										value="one-off" /> One-Off Provider
 								</h1>
 							</div>
@@ -410,11 +410,11 @@
 							</div>
 							<div class="col-name" style="width: 50%;">
 								<h1 class="pro-name">
-									<input type="radio" name="radioButtonStatus"
-										id="radioButtonStatus" value="active" /> Active &nbsp; <input
-										type="radio" name="radioButtonStatus" id="radioButtonStatus"
+									<input type="radio" name="providerStatus"
+										id="providerStatus" value="active" /> Active &nbsp; <input
+										type="radio" name="providerStatus" id="providerStatus"
 										value="inactive" /> InActive &nbsp; <input type="radio"
-										name="radioButtonStatus" id="radioButtonStatus"
+										name="providerStatus" id="providerStatus"
 										value="pending" /> Pending
 								</h1>
 							</div>
@@ -434,6 +434,17 @@
 				<!-- Filter result table -->
 				<div class="filter-result-table">
 					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Name:</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="email" name="providerName"
+									id="providerName" required size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
 						<li class="course-info clearfix">
 							<div class="col-name">
 								<h1 class="pro-name">Email:</h1>
@@ -497,60 +508,62 @@
 
 
 				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Course Provider Images</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Logo image (Small) :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageSmall"
-										id="imageSmall"  size="50px;" required />
-								</div>
-							</li>
-							<!-- end -->
+			<div class="course-filter-panel">
+				<h3>Course Provider Images</h3>
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Small) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageSmall"
+									id="imageSmall" size="50px;" required />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Logo image (Large) :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageLarge"
-										id="imageLarge"  size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Large) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageLarge"
+									id="imageLarge" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Header Image :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageHeader"
-										id="imageHeader" size="50px;"  />
-								</div>
-							</li>
-							<!-- end -->
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Header Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageHeader"
+									id="imageHeader" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Common Image :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageCommon"
-										id="imageCommon" size="50px;"  />
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End filter result table -->
-
+						<li class="course-info clearfix">
+							<div class="col-name">
+								<h1 class="pro-name">Common Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageCommon"
+									id="imageCommon" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
 				</div>
-				<!-- End left panel -->
+				<!-- End filter result table -->
+				<button id="viewNext"
+					style="float: right; position: relative; right: 600px;"
+					class="btn btn-lg btn-success">Save</button>
+			</div>
+			<!-- End left panel -->
 
 		</div>
 		<!-- End page content  -->
