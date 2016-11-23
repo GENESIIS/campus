@@ -1,6 +1,8 @@
 //20161103 MM c2-integrate-google-banners GoogleAdvertDAO.java created
 //20161116 MM c2-integrate-google-banners Implemented findById() method
 //20161123 MM c2-integrate-google-banners Added JavaDoc comment
+//20161123 MM c2-integrate-google-banners Changed query in findById() so that even  
+// 				pageSlots that do not have banners stored for them are fetched. 
 
 package com.genesiis.campus.entity;
 
@@ -49,7 +51,7 @@ public class BannerAndAdvertDAO implements ICrud {
 	 *            is used to check if there are currently any Banners set for
 	 *            that page via PAGESLOT table.
 	 * 
-	 * @return Collection<Collection<String>> A Collection of String Collection
+	 * @return Collection<Collection<String>> A Collection of String Collections
 	 *         where each element in the outer Collection represents a single
 	 *         result row as returned in query results. Each element in the
 	 *         inner String collection represents a field in a single
@@ -68,13 +70,14 @@ public class BannerAndAdvertDAO implements ICrud {
 
 			StringBuilder query = new StringBuilder("SELECT b.*, ps.CODE AS PAGESLOTCODE, ps.NAME AS PAGESLOTNAME ");
 			query.append("FROM [campus].[PAGE] p ");
-			query.append("JOIN [campus].[PAGESLOT] ps ON (p.CODE = ps.PAGE AND p.NAME = ?) ");
-			query.append("JOIN [campus].[BANNER] b ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ?)");
+			query.append("JOIN [campus].[PAGESLOT] ps ON (p.CODE = ps.PAGE AND p.NAME = ? AND ps.ISACTIVE = ?) ");
+			query.append("LEFT JOIN [campus].[BANNER] b ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ?)");
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
 			ps.setString(1, pageUrl);
 			ps.setInt(2, 1);
+			ps.setInt(3, 1);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveBannerList(rs, bannerList);
