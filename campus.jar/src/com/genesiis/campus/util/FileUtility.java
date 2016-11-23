@@ -1,12 +1,14 @@
 package com.genesiis.campus.util;
 
 //20161121 PN c27-upload-user-image: INIT class to manage uploaded file details.
-
+//20161121 PN c27-upload-user-image: implemented isFileExists() method.
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -23,6 +25,7 @@ public class FileUtility {
 	private String uploadPath;
 	private boolean uploaded;
 	private String renamedTo;
+	private String imageName;
 
 	/**
 	 * constructor
@@ -60,6 +63,10 @@ public class FileUtility {
 
 	public FileUtility() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getImageName() {
+		return this.imageName;
 	}
 
 	/**
@@ -266,22 +273,21 @@ public class FileUtility {
 			File folder = new File(this.getFile().getParent());
 			String newfileName = "";
 			String ext = "";
-			
-			
-			
+						
 			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
-
+			//rename the file using student code
 			newfileName = Integer.toString(StudentCode) + "." + ext;
 			
-			
+			//create a copy of file
 			savePath = folder.getAbsoluteFile() + "/" + newfileName;
 			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
 
 			if((new File(folder.getAbsoluteFile() + "/" + newfileName).exists())){
 				FileUtils.forceDelete(new File(folder.getAbsoluteFile() + "/" + newfileName));
 			}
-			
+			//save the created copy of file
 			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + newfileName));
+			//delete the original file
 			FileUtils.forceDelete(this.file);
 
 			this.renamedTo = newfileName;
@@ -292,6 +298,32 @@ public class FileUtility {
 		}
 
 		return savePath;
+	}
+	
+	/**
+	 * 
+	 * @param dir - images stored file
+	 * @param name - file name of the image
+	 * @param studentCode 
+	 * @return true if the file exists
+	 */
+	public boolean isFileExists(String path, String studentCode){
+		boolean isFileExists = false;
+		//Get List of files inside given folder
+		File[] listOfFiles = new File(path).listFiles();
+	
+		for (int i = 0; i < listOfFiles.length; i++) {
+			//Check if the content inside folder is a file (not a directory)
+			if (listOfFiles[i].isFile()) {
+				String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
+				if (studentCode.equals(fileNameWithOutExt)) {
+					this.imageName = listOfFiles[i].getName();
+					return true;
+				}
+			}
+		}
+
+		return isFileExists;
 	}
 	
 }
