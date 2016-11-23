@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.validation.ResponseType;
@@ -45,5 +46,5 @@ public interface IDataHelper {
 
 	public Map<String, String[]> getParameterMap();
 
-	public ArrayList<FileItem> getFiles();
+	public ArrayList<FileItem> getFiles() throws FileUploadException;
 }

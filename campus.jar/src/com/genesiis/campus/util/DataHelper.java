@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
@@ -209,10 +210,11 @@ public class DataHelper implements IDataHelper {
 		return request.getHeader(name);
 
 	}
-	
+
 	/**
-	 * getParameterMap() -  method is to get an array of parameter map
-	 * @return Map<String, String[]> 
+	 * getParameterMap() - method is to get an array of parameter map
+	 * 
+	 * @return Map<String, String[]>
 	 * @author pabodha
 	 */
 	@Override
@@ -221,19 +223,20 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * getFiles() -  method is to get files inside a specific folder in disk.
+	 * getFiles() - method is to get files inside a specific folder in disk.
+	 * 
 	 * @return ArrayList<FileItem> - contains list of images
 	 * @author pabodha
 	 */
 	@Override
-	public ArrayList<FileItem> getFiles() {
-		ArrayList<FileItem> files=null;
+	public ArrayList<FileItem> getFiles() throws FileUploadException{
+		ArrayList<FileItem> files = null;
 
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-	
+
 		try {
-	
+
 			if (request != null && request.getContentType() != null) {
 				files = new ArrayList<FileItem>();
 				@SuppressWarnings("unchecked")
@@ -253,7 +256,8 @@ public class DataHelper implements IDataHelper {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("getFiles(): " + e);
+			throw e;
 		}
 
 		return files;
