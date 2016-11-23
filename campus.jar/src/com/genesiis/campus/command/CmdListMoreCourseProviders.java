@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //DJ 20161026 c6-list-available-institutes-on-the-view implementing execute() method
 //DJ 20161030 c6-list-available-institutes-on-the-view identified get all institutes
 //DJ 20161110 c6-list-available-institutes-on-the-view identified get all and category wise course providers
+//DJ 20161123 c6-list-available-institutes-on-the-view add SystemConfig.PROVIDER_LOGO_PATH
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -34,7 +36,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-		String contextDeployLogoPath = "education/provider/logo/";
+		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
