@@ -1,6 +1,6 @@
 package com.genesiis.campus.factory;
 
-//20161123 PN c11-criteria-based-filter-search INIT StudentCmdFactory.java
+//20161123 PN c27-upload-user-image: INIT StudentCmdFactory.java
 
 import com.genesiis.campus.command.CmdGetProfileImg;
 import com.genesiis.campus.command.CmdUploadProfileImg;
