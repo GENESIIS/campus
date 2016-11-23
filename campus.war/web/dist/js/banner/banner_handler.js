@@ -13,6 +13,7 @@
  * 20161120 MM c2-integrate-google-banners-MP Fixed issue with event.target and $(this) 
  * 				returning the wrong url when sending trying to open the URL that tha banner
  * 				has been set to to open in the DB
+ * 20161120 MM c2-integrate-google-banners-MP Added warning on incompatibility with JQuery 3.1.1
  *  
  */
 
@@ -26,6 +27,12 @@
   })(function(f){return function(c,t){var a=[].slice.call(arguments,2);return f(function(){c instanceof Function?c.apply(this,a):eval(c)},t)}});
   @end
 @*/
+
+
+/* WARNING: JQUERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR 
+ * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
+ * */
+
 
 // Banner-rotation code 
 var bannerSlotWrappers = $('.rotating-item-wrapper');
