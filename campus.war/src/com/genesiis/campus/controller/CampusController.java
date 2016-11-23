@@ -70,7 +70,7 @@ public class CampusController extends HttpServlet {
 		IView result = null;
 		String cco = "";
 		helper = new DataHelper(request);
-		cco = "UUP";//helper.getCommandCode();
+		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
 
 		try {

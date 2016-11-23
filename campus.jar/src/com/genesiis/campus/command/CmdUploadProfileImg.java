@@ -66,7 +66,7 @@ public class CmdUploadProfileImg implements ICommand {
 //				}
 
 			}	
-
+			helper.setAttribute("proPicName", utility.renameIntoOne(StudentCode));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

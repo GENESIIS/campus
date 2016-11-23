@@ -44,7 +44,7 @@
  
 <!-- the fileinput plugin initialization -->
 <script>
-var profileImage = "";
+var profileImage = "education/student/Male.jpg";
 
 $(document).ready(function(){
     if(profileImage==""){
@@ -91,7 +91,7 @@ var form = data.form, files = data.files, extra = data.extra,
 
 
 $('#userImg').on('filebatchuploadsuccess', function(event, data, previewId, index) {
-   alert(data);
+   alert(datapro.PicName);
 });
 
 </script>
