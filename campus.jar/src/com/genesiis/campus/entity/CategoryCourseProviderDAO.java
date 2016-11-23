@@ -81,9 +81,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * criteria. 
 		 * 1. select programme stat for each programme for given
 		 * category 
-		 * 2. programmes that were expired within a year from the
-		 * current date is considered 
-		 * 3. get only top 5 course providers with their details
+		 * 2. get only top 10 course providers with their details
 		 */
 
 		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
