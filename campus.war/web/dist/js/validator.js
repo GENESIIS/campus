@@ -49,7 +49,11 @@ function validateTutorFileds() {
 	var female = $("#radioFemale").val();
 	var experience = $("#experience").val();
 	var aboutMe = $("#aboutMe").val();
+	var mobileCoutryCode = $("#mobileCountryCode").val();
+	var mobileNetworkCode = $("#mobileNetworkCode").val();
 	var mobileNumber = $("#mobileNumber").val();
+	var landCountryCode = $("#landCountryCode").val();
+	var landAreaCode = $("#landAreaCode").val();
 	var landNumber = $("#landNumber").val();
 	var address1 = $("#address1").val();
 	var address2 = $("#address2").val();
@@ -99,7 +103,17 @@ function validateTutorFileds() {
 		document.getElementById('mobileNumber').focus();
 		flag = false;
 	}
-	if (mobileNumber.length > 10) {
+	if (!isempty(mobileCoutryCode)) {
+		document.getElementById('mobCoutryCodeError').innerHTML = "**Country code cannot be empty.";
+		document.getElementById('mobileCountryCode').focus();
+		flag = false;
+	}
+	if (!isempty(mobileNetworkCode)) {
+		document.getElementById('mobileNetworkCodeError').innerHTML = "**Network code cannot be empty.";
+		document.getElementById('mobileNetworkCode').focus();
+		flag = false;
+	}
+	if (mobileNumber.length > 7) {
 		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileNumber').focus();
 		flag = false;
@@ -109,7 +123,17 @@ function validateTutorFileds() {
 		document.getElementById('landNumber').focus();
 		flag = false;
 	}
-	if (landNumber.length > 10) {
+	if (!isempty(landCountryCode)) {
+		document.getElementById('landCoutryCodeError').innerHTML = "**Country code cannot be empty.";
+		document.getElementById('landCountryCode').focus();
+		flag = false;
+	}
+	if (!isempty(landAreaCode)) {
+		document.getElementById('landAreaCodeError').innerHTML = "**Area code cannot be empty.";
+		document.getElementById('landAreaCode').focus();
+		flag = false;
+	}
+	if (landNumber.length > 7) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -154,41 +178,82 @@ function validateTutorFileds() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-	if (!ValidURL(weblink)) {
-		document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
-		document.getElementById('weblink').focus();
-		flag = false;
+	if (isempty(weblink)) {
+		if (!ValidURL(weblink)) {
+			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
+			document.getElementById('weblink').focus();
+			flag = false;
+		}
 	}
-	if (!ValidURL(facebook)) {
-		document.getElementById('facebookError').innerHTML = "**Please Enter correct Facebook link";
-		document.getElementById('facebook').focus();
-		flag = false;
+	if (isempty(facebook)) {
+		if (!ValidURL(facebook)) {
+			document.getElementById('facebookError').innerHTML = "**Please Enter correct Facebook link";
+			document.getElementById('facebook').focus();
+			flag = false;
+		}
 	}
-	if (!ValidURL(linkedin)) {
-		document.getElementById('linkedInError').innerHTML = "**Please Enter correct LinkedIn link";
-		document.getElementById('linkedin').focus();
-		flag = false;
+	if (isempty(linkedin)) {
+		if (!ValidURL(linkedin)) {
+			document.getElementById('linkedInError').innerHTML = "**Please Enter correct LinkedIn link";
+			document.getElementById('linkedin').focus();
+			flag = false;
+		}
 	}
-	if (!ValidURL(twitter)) {
-		document.getElementById('twitterError').innerHTML = "**Please Enter correct Twitter link";
-		document.getElementById('twitter').focus();
-		flag = false;
+	if (isempty(twitter)) {
+		if (!ValidURL(twitter)) {
+			document.getElementById('twitterError').innerHTML = "**Please Enter correct Twitter link";
+			document.getElementById('twitter').focus();
+			flag = false;
+		}
 	}
-	if (!ValidURL(instagram)) {
-		document.getElementById('instagramError').innerHTML = "**Please Enter correct Instagram link";
-		document.getElementById('instagram').focus();
-		flag = false;
+	if (isempty(instagram)) {
+		if (!ValidURL(instagram)) {
+			document.getElementById('instagramError').innerHTML = "**Please Enter correct Instagram link";
+			document.getElementById('instagram').focus();
+			flag = false;
+		}
 	}
-	if (!ValidURL(myspace)) {
-		document.getElementById('mySpaceError').innerHTML = "**Please Enter correct Myspace link";
-		document.getElementById('myspace').focus();
-		flag = false;
+	if (isempty(myspace)) {
+		if (!ValidURL(myspace)) {
+			document.getElementById('mySpaceError').innerHTML = "**Please Enter correct Myspace link";
+			document.getElementById('myspace').focus();
+			flag = false;
+		}
 	}
 	if (password != confirmPassword) {
 		document.getElementById('confirmPasswordError').innerHTML = "**Password didn't match";
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-
+	if (isNaN(mobileCoutryCode)) {
+		document.getElementById('mobCoutryCodeError').innerHTML = "**Invalid Country code.";
+		document.getElementById('mobileCoutryCode').focus();
+		flag = false;
+	}
+	if (isNaN(mobileNetworkCode)) {
+		document.getElementById('mobileNetworkCodeError').innerHTML = "**Invalid Network code.";
+		document.getElementById('mobileNetworkCode').focus();
+		flag = false;
+	}
+	if (isNaN(mobileNumber)) {
+		document.getElementById('mobileError').innerHTML = "**Invalid Phone number";
+		document.getElementById('mobileNumber').focus();
+		flag = false;
+	}
+	if (isNaN(landCountryCode)) {
+		document.getElementById('landCoutryCodeError').innerHTML = "**Invalid Country code.";
+		document.getElementById('landCountryCode').focus();
+		flag = false;
+	}
+	if (isNaN(landAreaCode)) {
+		document.getElementById('landAreaCodeError').innerHTML = "**Invalid Network code.";
+		document.getElementById('landAreaCode').focus();
+		flag = false;
+	}
+	if (isNaN(landNumber)) {
+		document.getElementById('landError').innerHTML = "**Invalid Phone number";
+		document.getElementById('landNumber').focus();
+		flag = false;
+	}
 	return (flag);
 }
