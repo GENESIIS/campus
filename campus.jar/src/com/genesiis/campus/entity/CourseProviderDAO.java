@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
 //DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement findFilterdCourseProviders() method
+//DJ 20161123 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-add course provider type list to the query
 
 
 
@@ -329,6 +330,15 @@ public class CourseProviderDAO implements ICrud{
 			}
 			if (searchDTO.getCourserProviderType() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
+			}
+			if (searchDTO.getCpTypeList()!=null && searchDTO.getCpTypeList().size()>0) {
+				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE in ( ");
+				for(int x=0;x<searchDTO.getCpTypeList().size();x++){
+					searchDTO.getCpTypeList().get(x);
+					sb.append(searchDTO.getCpTypeList().get(x));
+					sb.append(",");
+				}
+				sb.append(" ) ");
 			}
 			if (searchDTO.getLevel() > 0) {
 				sb.append(" AND PROG.LEVEL=?");
