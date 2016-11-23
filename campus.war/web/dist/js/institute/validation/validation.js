@@ -63,17 +63,21 @@ function isValidEmailFormat(email) {
 
 
 /**
- * 
  * @param phoneNumber
  *            it's the value of phone number field phone number should be 10
- *            character long.amd start from 0 method does not test for starting
+ *            character long.This test will pass the format
+ *            +94xxxxxxxxx
+ *            +674xxxxxxxxx
+ *            0xxxxxxxxx
+ *            xxxxxxxxx
  *            sequence of the phone number
  * @returns {Boolean}
  */
 function isValidPhoneNumber(phoneNumber) {
-	var phonenumberPattern = /^0\d{9}$/mg;
-	return isPatternMatch(phonenumberPattern, phoneNumber);
+	var phonenumberPattern = /^(\+\d{2,3}|0)?\d{9}$/mg;
+	return isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
 }
+
 
 /**
  * @param regularExpression
@@ -100,7 +104,7 @@ function clearField(elementId){
  * @returns boolean if testing email address is a valid
  * one then returns true else return false
  */
-function isValidEmailFormat(){	
+function validEmailFormat(){	
 	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
 	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
 	return isPatternMatch(pattern,emailAddress);
