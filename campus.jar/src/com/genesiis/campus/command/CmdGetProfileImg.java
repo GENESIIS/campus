@@ -1,8 +1,10 @@
 package com.genesiis.campus.command;
 
 //20161123 PN c27-upload-user-image: INIT CmdGetProfileImg.java class and implemented execute() method.
+//20161124 PN c27-upload-user-image: added a collection to execute() method to set it into IView.
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.ICrud;
@@ -38,10 +40,16 @@ public class CmdGetProfileImg implements ICommand {
 				proPicName = "education/student/Male.jpg";
 			}
 		}
-		helper.setAttribute("proPicName", proPicName);
+		final ArrayList<String> propicDetails = new ArrayList<String>();
+		propicDetails.add(proPicName);
+		
+		final Collection<String> singleCollection = propicDetails;
+		Collection<Collection<String>> collection = new ArrayList<Collection<String>>();;
+		collection.add(singleCollection);
+		view.setCollection(collection);
 		
 		
-		return null;
+		return view;
 	}
 
 }
