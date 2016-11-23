@@ -6,6 +6,7 @@ package com.genesiis.campus.util;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
 //20161121 PN c27-upload-user-image: implemented getParameterMap() and getFiles() methods.
+//20161123 PN c27-upload-user-image: modified getFiles() method.
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
@@ -229,9 +231,9 @@ public class DataHelper implements IDataHelper {
 
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-
+	
 		try {
-
+	
 			if (request != null && request.getContentType() != null) {
 				files = new ArrayList<FileItem>();
 				@SuppressWarnings("unchecked")
@@ -250,7 +252,6 @@ public class DataHelper implements IDataHelper {
 				}
 
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
