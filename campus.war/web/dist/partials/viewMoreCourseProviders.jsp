@@ -120,21 +120,21 @@
 				<div class="all-category">
 
 					<!-- Category - All -->
-					<div class="filter-item">
-						<!-- Drop item header -->
+					<!-- <div class="filter-item">
+						Drop item header
 						<div class="item-header">
 							<label>All <span id="totalCount" name="totalCount"></span></label>
-							<!-- <a href="javascript:"><input type="checkbox" name="allSelect" ></a> -->
+							<a href="javascript:"><input type="checkbox" name="allSelect" ></a>
 							<a href="javascript:"><input id="selectAll" id="selectAll" type="checkbox" ></a>
 						</div>
-					</div>
+					</div> -->
 
 					<!-- 1st Category - Categories -->
 					<div class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Categories <span id="catCount" name="catCount"></span></label>
-							<a href="javascript:"><input id="categoryAll"  type="checkbox"></a>
+							<!-- <a href="javascript:"><input id="categoryAll"  type="checkbox"></a> -->
 						</div>
 						<!-- Item Drop list -->
 						<!-- id="categoryName" name="categoryName"  -->

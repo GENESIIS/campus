@@ -34,17 +34,33 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
-			
-			Map<String, String[]> bandInfo = helper.getParameterMap();
-			//bandInfo.get("CCO")
-			//bandInfo.get("searchData")
-			
-			 String selectAllMap=Arrays.asList(bandInfo.get("selectAllMap")).get(0);
-			 String mainAreasMap=Arrays.asList(bandInfo.get("mainAreasMap")).get(0);
-
-
-			
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
+			Map<String, String[]> bandInfo = helper.getParameterMap();
+			if (!bandInfo.isEmpty()) {
+
+				// String[] selectAllMap=bandInfo.get("selectAllMap");
+				String[] cpTypeAll = bandInfo.get("mainAreasMap[cpTypeAll]");
+				String[] majorAll = bandInfo.get("mainAreasMap[majorAll]");
+				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
+				String[] catCode = bandInfo.get("catCode");
+
+				if (cpTypeAll != null && cpTypeAll.length > 0) {
+					if(cpTypeAll[0].equalsIgnoreCase("true")){
+						
+						
+					}
+				}
+			}
+			 
+			//Arrays.asList(bandInfo.get("mainAreasMap[cpTypeAll]"));
+			
+			 
+			 
+			 //String[] mainAreasMap=Arrays.asList(bandInfo.get("mainAreasMap")).get(0);
+
+
+			
+			
 			int categoryCode = 0;
 			//Set input filter values to providerSearchDTO			
 			String categoryCodeString = helper.getParameter("categoryCode");

@@ -3,10 +3,7 @@
 
 $(document).ready(function(){	
 	 
-	 var catCode= $("#catCode").val();
-	
-	 
-	alert("Test....");
+	 var catCode= $("#catCode").val();	
 	$.ajax({url : '../../PublicController',
 		data : {
 			CCO : 'LIST_ALL_COURSE_PROVIDERS',
@@ -148,35 +145,44 @@ $(document).ready(function(){
 			 var levelAll = $('#levelAll').is(':checked');
 			 
 			 //alert("totalCount"+ totalCount);
-			 var catMap=0;
+			 var catCode=0;
 			 for(var x=1;x<=catCount;x++){
 				 var category = $('#category'+x).is(':checked');
+				 if(category){
+					 catCode=x; 
+				 }
 				
-				 alert("category" + category);
-				 
+				 //var category2 = $('#category2').is(':checked');
 			 }
-			 var category2 = $('#category2').is(':checked');		 
+			 	
+			 
+			 //Course Provider Type checks			 
+			 var cpTypeMap=0;
+			 for(var x=1;x<=cpTypeCount;x++){
+				 var cpType = $('#cpTypeCount'+x).is(':checked');				 
+			 }
+			
+			 			 
 			 
 			 var mainAreasMap=0;
-			 var selectAllMap=0;
-			 
-			 if(selectAll==true){
-				 selectAllMap={'searchData':selectAll};				
-				 alert("selectAll "); 
-			 }else {
-				 mainAreasMap={'categoryAll':categoryAll,
+			// var selectAllMap=0;			 
+			// if(selectAll==true){
+				// selectAllMap={'searchData':selectAll};				
+				 //alert("selectAll "); 
+			// }else {
+				 mainAreasMap={
 						 'cpTypeAll':cpTypeAll,
 						 'majorAll':majorAll,
 						 'levelAll':levelAll					 
 						 
 				 };
-			 }
+			// }
 			 
 			 
 			 $.ajax({
 					url : '../../PublicController',
 					data : {
-						selectAllMap: selectAllMap,
+						catCode: catCode,						
 						mainAreasMap :mainAreasMap,
 						CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 					},

@@ -195,7 +195,7 @@ public class DataHelper implements IDataHelper {
 	}
 	
 	
-	public Map getParameterMap() {
+	public Map<String, String[]> getParameterMap() {
 		return request.getParameterMap();
 	}
 
