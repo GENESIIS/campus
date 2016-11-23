@@ -9,11 +9,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -50,6 +52,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		final CourseProvider courseProvider = new CourseProvider();
+		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		
 		try{
 		//	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -77,8 +80,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 //			courseProvider.setMobilePhoneCountryCode(helper.getParameter(""));
 //			courseProvider.setMobilePhoneNetworkCode(helper.getParameter(""));
 //			courseProvider.setMobilePhoneNumber(helper.getParameter(""));
-			courseProvider.setHeaderImagePath(helper.getParameter(""));
-			courseProvider.setLogoImagePath(helper.getParameter(""));
+//			courseProvider.setHeaderImagePath(helper.getParameter(""));
+//			courseProvider.setLogoImagePath(helper.getParameter(""));
 			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
 			courseProvider.setWeblink(helper.getParameter("webLink"));
 			courseProvider.setFacebookURL(helper.getParameter("facebook"));
@@ -91,16 +94,22 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setAddress1(helper.getParameter("address1"));
 			courseProvider.setAddress2(helper.getParameter("address2"));
 			courseProvider.setAddress3(helper.getParameter("address3"));
-			//courseProvider.setExpirationDate(helper.getParameter(""));
-		//	courseProvider.setTutorRelated(helper.getParameter(""));
+//			courseProvider.setExpirationDate(helper.getParameter(""));
+//			courseProvider.setTutorRelated(helper.getParameter(""));
 			courseProvider.setCourseProviderType(Integer.parseInt(helper.getParameter("providerType")));
 			courseProvider.setCourseProviderStatus(Integer.parseInt(helper.getParameter("providerStatus")));
-			courseProvider.setName(helper.getParameter(""));
-			courseProvider.setName(helper.getParameter(""));
-			courseProvider.setName(helper.getParameter(""));
+			courseProviderAccount.setName(helper.getParameter("providerName"));
+			courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+			courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
+			courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
+			courseProviderAccount.setName(helper.getParameter("accountDescription"));		
 			
+			HashMap map = new HashMap();
+			map.put("provider", courseProvider);
+			map.put("account", courseProviderAccount);
 			
-			int status = CourseProviderDAO.add(courseProvider);
+			int status = CourseProviderDAO.add(map);
+
 			
 			
 			
