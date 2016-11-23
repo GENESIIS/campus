@@ -56,7 +56,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() :Exception  " + exception);
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}
