@@ -31,7 +31,7 @@ public class CmdUploadProfileImg implements ICommand {
 		logger.info("executing...");
 		JsonArray list = new JsonArray();
 		Gson gson = new Gson();
-		FileUtility fu = new FileUtility();
+		FileUtility utility = new FileUtility();
 		ArrayList<FileItem> files = new ArrayList<FileItem>();
 		
 		int StudentCode = 1; //This needs to be assign from the session.
@@ -50,17 +50,17 @@ public class CmdUploadProfileImg implements ICommand {
 			
 			String uploadPathuploadPath = uploadPath;
 			String war = uploadPath;
-			fu.setUploadPath(uploadPath + "/"+Integer.toString(StudentCode)+"/");
+			utility.setUploadPath(uploadPath + "/"+Integer.toString(StudentCode)+"/");
 
 			for (FileItem item : files) {
 
-				fu.setFileItem(item);
-				String filePath = fu.renameIntoOne(StudentCode);
+				utility.setFileItem(item);
+				String filePath = utility.renameIntoOne(StudentCode);
 
 //				if (uploaded) {
 					JsonObject response = new JsonObject();
 					response.addProperty("path", war + "/" + filePath);
-					response.addProperty("name", fu.getNewName());
+					response.addProperty("name", utility.getNewName());
 					response.addProperty("size", item.getSize());
 					list.add(response);
 //				}
