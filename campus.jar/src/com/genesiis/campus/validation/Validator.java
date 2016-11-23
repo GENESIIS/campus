@@ -17,6 +17,20 @@ public class Validator {
 	 * @param duration
 	 * @return void
 	 */
+	
+	/**
+	 * Check the given value is empty or not empty
+	 * @author Chathuri
+	 * @param value
+	 * @return boolean to validate is given string contains a null value.
+	 * **/
+	public static boolean isNotEmpty(String text) {
+		boolean status = false;
+		if ((text != null) && (text.isEmpty() == false)) {
+			status = true;
+		}
+		return status;
+	}
 	int totalDays = 0;
 
 	public int calculateYears(String duration) throws ArithmeticException,
