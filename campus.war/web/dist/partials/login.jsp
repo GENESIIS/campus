@@ -58,7 +58,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><button class="btn btn-primary btn-block" type="button" name="CCO" id="CCO" value="LOG" onclick="studentLogin()">Sign in</button></td>
+					<td><button class="btn btn-primary btn-block" type="button" name="CCO" id="CCO" value="SLOG" onclick="studentLogin()">Sign in</button></td>
 					<td></td>
 
 					<td><i class="fa fa-twitter"></i> Google+</a></td>
