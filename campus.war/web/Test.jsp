@@ -1,5 +1,6 @@
 <!-- 20161121 PN c27-upload-user-image: INIT fileUpload.jsp class for test bootstrap image upload. -->
 <!-- 20161122 PN c27-upload-user-image: modified Ajax call to pass values to the serlvlet and catch response coming from the servlet. -->
+<!-- 20161124 PN c27-upload-user-image: modified Ajax call to display validation messages comes from the servlet. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -27,23 +28,23 @@
     display: table-cell;
     max-width: 220px;
 }
-.kv-avatar-hide {
-    display: none;
-}
 </style>
  
 <!-- the avatar markup -->
-<div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>
+<div id="kv-avatar-errors-1" class="center-block" style="width:400px;display:none"></div>
+<div id="kv-error-1" class="center-block" style="width:400px;display:none"></div>
+<div id="kv-success-1" class="alert alert-success fade in" style="width:400px;display:none"></div>
+
 <form class="text-center" action="/PublicController" method="post" enctype="multipart/form-data">
     <div class="kv-avatar center-block" style="width:200px">
-        <input id="avatar-1" name="avatar-1" type="file" class="file-loading">
+        <input id="avatar-1" name="avatar-1" type="file" class="file-loading" accept="image/*">
     </div>
     <!-- include other inputs if needed and include a form submit (save) button -->
 </form>
 <!-- your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission -->
  
 <!-- the fileinput plugin initialization -->
-<script>
+<script  type="text/javascript">
 var profileImage = "education/student/Male.jpg";
 
 $(document).ready(function(){
@@ -80,18 +81,31 @@ $("#avatar-1").fileinput({
     defaultPreviewContent: '<img src="'+profileImage+'" alt="ProfilePicture.jpg" style="width:160px">',
     layoutTemplates: {main2: '{preview}{browse}'},
     allowedFileExtensions: ["jpg", "png", "gif"]
-});
+}).on('filebatchpreupload', function(event, data, id, index) {
+	alert(data.response);
+    $('#kv-success-1').html('<h4>'+data.proPicName+'</h4><ul></ul>').hide();
+}).on('fileuploaded', function(event, data, id, index) {
+	var formdata = data.form, files = data.files, 
+    extradata = data.extra, responsedata = data.response;
 
-// CATCH RESPONSE
-$('#userImg').on('filebatchuploaderror', function(event, data, previewId, index) {
-var form = data.form, files = data.files, extra = data.extra, 
-    response = data.response, reader = data.reader;
-	alert("HI");
-});
-
-
-$('#userImg').on('filebatchuploadsuccess', function(event, data, previewId, index) {
-   alert(datapro.PicName);
+	var propicDetails = responsedata.result;
+	
+	var res = propicDetails.toString();
+	var data = res.split(",");
+	
+	var imgname = data[0].toString();
+	var success = data[1].toString();
+	var error = data[2].toString();
+	
+	if(data[1] != ""){
+		$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
+   		$('#kv-success-1').fadeIn('slow');
+	}
+	if(data[2] != ""){
+    	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
+       	$('#kv-error-1').fadeIn('slow');
+	}
+	defaultPreviewContent: '<img src="'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
 });
 
 </script>
