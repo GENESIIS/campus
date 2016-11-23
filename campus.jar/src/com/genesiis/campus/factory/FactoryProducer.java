@@ -1,5 +1,7 @@
 package com.genesiis.campus.factory;
 
+//20161123 JH c39-add-course-provider added conditions for AdminController servlet
+
 /**
  * FactoryProducer class bares the responsibility of producing 
  * the Factory  
@@ -17,8 +19,8 @@ public class FactoryProducer {
 		if (choice.equalsIgnoreCase("/PublicController")) {
 			return new PublicCmdFactory();
 
-		} else if (choice.equalsIgnoreCase("/PayrollController")) {
-			//return new PayrollCmdFactory();
+		} else if (choice.equalsIgnoreCase("/AdminController")) {
+			return new AdminCmdFactory();
 		}
 
 		return null;
