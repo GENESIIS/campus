@@ -6,6 +6,9 @@
 // 				SystemConfig enum to get the banner path
 //20161123 MM c2-integrate-google-banners-MP Removed redundant code of creating 
 //				an ArrayList object, and added JavaDoc comment
+//20161123 MM c2-integrate-google-banners-MP Changed implementation of setBannerDetails() 
+//				so that when there are no banner records for a pageSlot, Google advert code
+//				assigned to the relevant request attribute to be sent to JSP
 
 package com.genesiis.campus.validation;
 
@@ -52,6 +55,16 @@ public class BannerData {
 			throws Exception {
 
 		Map<String, Collection<Collection<String>>> slotNameToContentMap = new LinkedHashMap<String, Collection<Collection<String>>>();
+		String googleAdvertCode = "<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>"
+				+ "<!-- topjobs_responsive -->"
+				+ "<ins class=\"adsbygoogle\""
+				+ "style=\"display:block\""
+				+ "data-ad-client=\"ca-pub-1285561228927367\""
+				+ "data-ad-slot=\"7928574691\""
+				+ "data-ad-format=\"auto\"></ins>"
+				+ "<script>"
+				+ "(adsbygoogle = window.adsbygoogle || []).push({});"
+				+ "</script>";
 
 		String[] pagUrlSections = pageName.split("/");
 		if (pagUrlSections != null && pagUrlSections.length > 0) {
@@ -70,7 +83,6 @@ public class BannerData {
 
 				Map<String, List<Collection<String>>> pageSlotCodeToBannerRecordsMap = new LinkedHashMap<String, List<Collection<String>>>();
 				Map<String, String> pageSlotCodeToNameMap = new LinkedHashMap<String, String>();
-				List<Collection<String>> listOfRecords = new ArrayList<Collection<String>>();
 
 				for (Collection<String> record : bannerCollection) {
 					int count = 0;
@@ -109,10 +121,44 @@ public class BannerData {
 				Set<String> pageSlotCodeSet = pageSlotCodeToBannerRecordsMap
 						.keySet();
 
-				for (String pageSlotCode : pageSlotCodeSet) {
-					helper.setAttribute(
-							pageSlotCodeToNameMap.get(pageSlotCode),
-							pageSlotCodeToBannerRecordsMap.get(pageSlotCode));
+
+				List<Collection<String>> listOfRecords = null;
+				
+				for (String pageSlotCode : pageSlotCodeSet) {					
+					
+					listOfRecords = pageSlotCodeToBannerRecordsMap.get(pageSlotCode);
+					
+					boolean areBannerRecordsAvaialbleForTheSlot = true;
+					
+					outer:
+					for (Collection<String> singleRecord : listOfRecords) {
+						int count = 0;
+						for (String field : singleRecord) {
+							if (count == 2 || // banner code
+									count == 11 || // imagepath
+									count == 5 || // displayduration
+									count == 7) { // url
+								
+								if (field == null) {
+									areBannerRecordsAvaialbleForTheSlot = false;
+									break outer;
+								}
+							}
+							count++;
+						}
+					}
+					
+					if (areBannerRecordsAvaialbleForTheSlot) { 
+						// banners are available; assign banner records to the attribute whose name is the slot name					
+						helper.setAttribute(
+								pageSlotCodeToNameMap.get(pageSlotCode),
+								pageSlotCodeToBannerRecordsMap.get(pageSlotCode));
+					} else {	
+						// banners are not available; assign google banner advert code to the attribute whose name is the slot name							
+						helper.setAttribute(
+								pageSlotCodeToNameMap.get(pageSlotCode),
+								googleAdvertCode);
+					}
 				}
 				helper.setAttribute("bannerPath", bannerPath);
 

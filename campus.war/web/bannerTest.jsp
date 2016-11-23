@@ -34,7 +34,7 @@
 </head>
 <body>
 	<div class="rotating-item-wrapper"> 
-		<c:forEach var="banner" items="${BANNER_SLOT_1}" varStatus="vs">
+		<c:forEach var="banner" items="${SLOT_BANNER_TEST_1}" varStatus="vs">
 			<a href="${banner[7]}" target="_blank">
 				<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
 			</a>
@@ -49,13 +49,13 @@
 		</c:forEach>		
 	</div>
 	<div class="rotating-item-wrapper"> 
-		<c:forEach var="banner" items="${BANNER_SLOT_3}" varStatus="vs">
+		<c:forEach var="banner" items="${SLOT_BANNER_TEST_3}" varStatus="vs">
 			<a href="${banner[7]}" target="_blank">
 				<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
 			</a>
 		</c:forEach>		
 	</div>
-<!-- WARNING: JQERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
+<!-- WARNING: JQUERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
 <script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <!-- <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script> -->
 <script src="/dist/js/banner/banner_handler.js"></script>
