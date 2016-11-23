@@ -1,3 +1,6 @@
+<!-- <!-- 20161119 DN C18-student-signup-without-using-third-party-application-dn  created the page SignUpWoThirdParty.jsp -->
+<!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn /dist/js/jsonDataExchanger.js included to the page -->
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -61,18 +64,18 @@
       <td>
 		<label><h2>Or SignUp Via</h2></label>
          
-          <div>
-            <img src="fbIcon.png" alt="faceBookIcon" >
-          </div>
-           <div>
-            <img src="googleplus.png" alt="googlePlusIcon" >
-          </div>
-          <div>
-            <img src="twitter_icon.png" alt="twitterIcon" >
-          </div>
-           <div>
-            <img src="linkedin_icon.png" alt="linkedInIcon" >
-          </div>
+<!--           <div> -->
+<!--             <img src="fbIcon.png" alt="faceBookIcon" > -->
+<!--           </div> -->
+<!--            <div> -->
+<!--             <img src="googleplus.png" alt="googlePlusIcon" > -->
+<!--           </div> -->
+<!--           <div> -->
+<!--             <img src="twitter_icon.png" alt="twitterIcon" > -->
+<!--           </div> -->
+<!--            <div> -->
+<!--             <img src="linkedin_icon.png" alt="linkedInIcon" > -->
+<!--           </div> -->
         
       </td>
     </tr>
@@ -89,13 +92,13 @@
      	 Confirm password:<br><label id="confPassWordError" ></label>
       	<input type="password" name="confrmpsw" id="confrmpsw">
       	</span> 
-        <input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString()" />
+        <input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')" />
         <span>Show Password</span><br><br><br>
         <label id="policyConfirmError" ></label>
         <input type="checkbox" id="policyConfirm"  />
         <span>I have read privercy policy and accept<br> the terms and the conditions </span><br><br>
 
-     <button  type="button"  onclick="validateSignUpWoThirdPartyPageEmbedData()" >Create Account</button>
+     <button  type="button"  onclick=" return (sendSignUpCredentialsToBckEnd())" >Create Account</button>
 
       </td>
       <td>
@@ -111,6 +114,7 @@
 <script src="../bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="../js/main.js"></script>
 <script src="/dist/js/institute/validation/validation.js"></script>
+<script src="/dist/js/jsonDataExchanger.js"></script>
 <script src="/dist/js/signUpWoThirdParty.js"></script>
 </body>
 </html>
