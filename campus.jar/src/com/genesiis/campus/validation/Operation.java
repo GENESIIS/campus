@@ -21,7 +21,8 @@ public enum Operation {
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSON, "index.jsp"),
-	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp");
+	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
+	GET_USER_PROFILE("GUP", ResponseType.JSON, "index.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
