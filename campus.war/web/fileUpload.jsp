@@ -15,36 +15,60 @@
 <script	src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js" type="text/javascript"></script>
 </head>
 <body>
-	<div class="row">
-		<div class="kv-main col-sm-4">
-			<hr>
-			<input id="input-repl-1" type="file" class="file-loading"
-				accept="image/*"> <br>
+<!-- some CSS styling changes and overrides -->
+<style>
+.kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    max-width: 220px;
+}
+</style>
+<!-- 	<div class="row"> -->
+<!-- 		<div class="kv-main col-sm-4"> -->
+<!-- 			<input id="userImg" type="file" class="file-loading" -->
+<!-- 				accept="image/*"> <br> -->
+<!-- 		</div> -->
+		
+<!-- 	</div> -->
+<!-- 	<div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>		 -->
 
-		</div>
-	</div>
+<!-- the avatar markup -->
+<div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>
+<form class="text-center" action="/PublicController" method="post" enctype="multipart/form-data">
+    <div class="kv-avatar center-block" style="width:200px">
+        <input id="userImg" name="userImg" type="file" class="file-loading">
+    </div>
+    <!-- include other inputs if needed and include a form submit (save) button -->
+</form>
+
 </body>
 <script type="text/javascript">
 	var userid = "XXX";
 	var username = "YYY";
-	$("#input-repl-1").fileinput({
-						uploadUrl : "/PublicController",
+	$("#userImg").fileinput({
+						uploadUrl : "/PublicController?CCO=&quot;text&quot;",
+						maxFileSize: 1500,
 						autoReplace : true,
-						maxFileSize : 2800,
 						overwriteInitial : true,
 						showUploadedThumbs : false,
 						maxFileCount : 1,
-						initialPreview : [
-								"<img style='height:160px' src='dist/css/img/icon-user-default.png'>", ],
-						initialCaption : 'ProfilePicture.jpg',
-						initialPreviewShowDelete : true,
+						defaultPreviewContent : [
+								"<img style='height:160px' src='education/student/1/1.jpg'>", ],
+						defaultCaption : 'ProfilePicture.jpg',
+						defaultPreviewShowDelete : true,
 						showClose : false,
 						showRemove : false,
 						layoutTemplates : {
 							actionDelete : '',
 							actionUpload : ''
 						}, // disable thumbnail deletion
-						allowedFileExtensions : [ "jpg", "png" ],
+						allowedFileExtensions : ["jpg", "png", "gif"],
 						uploadAsync: false,
 						uploadExtraData: function() {
 					           return {
@@ -54,17 +78,45 @@
 					    }
 	});
 	 // CATCH RESPONSE
-	$('#input-id').on('filebatchuploaderror', function(event, data, previewId, index) {
+	$('#userImg').on('filebatchuploaderror', function(event, data, previewId, index) {
 	var form = data.form, files = data.files, extra = data.extra, 
 	    response = data.response, reader = data.reader;
-
+		alert("HI");
 	});
 
 
-	$('#input-id').on('filebatchuploadsuccess', function(event, data, previewId, index) {
-	   var form = data.form, files = data.files, extra = data.extra, 
-	    response = data.response, reader = data.reader;
-	    alert (extra.bdInteli + " " +  response.uploaded);
+	$('#userImg').on('filebatchuploadsuccess', function(event, data, previewId, index) {
+	   alert("HI Pabodha");
 	});
+	
+	
+	
+	function displayDetails() {
+		alert("Start");
+		$.ajax({
+			url : '/PublicController',
+			data : {
+				CCO : 'UUP'
+			},
+			dataType : "json",
+			success : function(response) {
+				alert(response);
+			},
+			error : function(response) {
+				alert("Error: "+response);
+			}
+		});
+		alert("End");
+	}
+	
+    function onErrorImg() {
+    	var element = document.getElementById("userImgErr");
+    	if (element.firstChild) {
+    	    // It has at least one
+    	}else{
+    		alert("Error Now");
+    	}
+	}
+	
 </script>
 </html>
