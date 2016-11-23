@@ -73,13 +73,14 @@ public class PrevalentValidation implements Validatory {
 	
 	@Override
 	public boolean isValidPhoneNumber(String number) throws Exception {
-			boolean validPhoneNumber = false;
-			Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^0\\d{9}$");
-			Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(number);
-			validPhoneNumber= matcher.find();
-			throwCustomError(validPhoneNumber," Phone number Validation Failed!");
+		boolean validPhoneNumber = false;
+			if((number==null) | (number=="")){
+				Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(\\+\\d{2,3}|0)?\\d{9}$");
+				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(number.replaceAll("\\s+",""));
+				validPhoneNumber= matcher.find();
+				throwCustomError(validPhoneNumber," Phone number Validation Failed!");
+			}
 			return validPhoneNumber;
-		
 	}
 	
 	/*
