@@ -15,7 +15,7 @@
 <h2>More Course Providers View</h2>
 
 	<table
-		style="border: 2px; border-color: black; border-style: solid; width: 100%">		
+		style="border: 2px; border-color: black; border-style: solid; width: 100%">
 		<tr>
 			<c:forEach var="provider" items="${result.collection}">
 				<td
@@ -23,16 +23,17 @@
 					<c:forEach var="pvAttribute" items="${provider}" varStatus="count">
 						<c:choose>
 							<c:when test="${count.index == 0}">
+								<c:set var="folder" value="${pvAttribute}" />
+								<c:set var="format" value=".png" />
+								<c:set var="image" value="${pvAttribute}${format}" />
 							</c:when>
 							<c:when test="${count.index == 1}">
 								<c:set var="prefix" value="${pvAttribute}" />
-								<c:out value="${pvAttribute}" />
 							</c:when>
 							<c:otherwise>
 								<c:set var="slash" value="/" />
-								<%-- <td><c:out value="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" /></td> --%>
 								<img height="42" width="42"
-									src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
+									src="${contextDeployLogoPath}${slash}${folder}${slash}${image}" />
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>

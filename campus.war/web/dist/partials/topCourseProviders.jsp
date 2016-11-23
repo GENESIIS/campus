@@ -45,7 +45,8 @@
 					<div class="top-menus">
 						<ul class="list-inline">
 							<li><a href="courses.html">All Courses</a></li>
-							<li><a href="/dist/partials/topCourseProviders.jsp">Course Providers</a></li>
+							<li><a href="/dist/partials/topCourseProviders.jsp">Course
+									Providers</a></li>
 							<li><a href="about-us.html">About Us</a></li>
 							<li><a href="javascript:">Contact Us</a></li>
 							<li><a href="news.html">News</a></li>
@@ -125,6 +126,11 @@
 								<c:forEach var="provider" items="${tRCProviders}">
 									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
 											var="pvAttribute" items="${provider}" varStatus="count">
+											<c:if test="${count.index == 0}">
+												<c:set var="folder" value="${pvAttribute}" />
+												<c:set var="format" value=".png" />
+												<c:set var="image" value="${pvAttribute}${format}" />
+											</c:if>
 											<c:if test="${count.index == 1}">
 												<c:set var="prefix" value="${pvAttribute}" />
 											</c:if>
@@ -133,7 +139,7 @@
 													<div class="provider-logo text-center">
 														<c:set var="slash" value="/" />
 														<img
-															src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
+															src="${contextDeployLogoPath}${slash}${folder}${slash}${image}" />
 													</div>
 													<div class="provider-name text-center">
 														<h2>
@@ -157,6 +163,11 @@
 								<c:forEach var="provider" items="${result.collection}">
 									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
 											var="pvAttribute" items="${provider}" varStatus="count">
+											<c:if test="${count.index == 0}">
+												<c:set var="folder" value="${pvAttribute}" />
+												<c:set var="format" value=".png" />
+												<c:set var="image" value="${pvAttribute}${format}" />
+											</c:if>
 											<c:if test="${count.index == 1}">
 												<c:set var="prefix" value="${pvAttribute}" />
 											</c:if>
@@ -165,7 +176,7 @@
 													<div class="provider-logo text-center">
 														<c:set var="slash" value="/" />
 														<img
-															src="${contextDeployLogoPath}${prefix}${slash}${pvAttribute}" />
+															src="${contextDeployLogoPath}${slash}${folder}${slash}${image}" />
 													</div>
 													<div class="provider-name text-center">
 														<h2>
