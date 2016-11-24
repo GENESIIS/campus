@@ -5,6 +5,7 @@
 <!-- c11-criteria-based-filter-search modified UI to display Dynamic data -->
 <!-- 20161116 PN c11-criteria-based-filter-search added a name and id to checkbox near "All" -->
 <!-- 20161116 AS c11-criteria-based-filter-search added a name and id to checkbox near "All" fixed -->
+<!-- 20161124 PN c11-criteria-based-filter-search modified bootstrap-3.3.7.min.js imports. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
 <link href="../datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
 <!-- jQuery & Other js -->
-<script src="../bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.3.js" type="text/javascript" charset="utf-8"></script>
 <script src="../datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
