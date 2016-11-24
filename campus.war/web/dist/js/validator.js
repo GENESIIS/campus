@@ -122,16 +122,18 @@ function validateTutorFileds() {
 		document.getElementById('address1').focus();
 		flag = false;
 	}
-//	if (!isempty(address2)) {
-//		document.getElementById('confirmPasswordError').innerHTML = "**Please confirm ypur password";
-//		document.getElementById('confirmPassword').focus();
-//		flag = false;
-//	}
-//	if (!isempty(address3)) {
-//		document.getElementById('confirmPasswordError').innerHTML = "**Please confirm ypur password";
-//		document.getElementById('confirmPassword').focus();
-//		flag = false;
-//	}
+	// if (!isempty(address2)) {
+	// document.getElementById('confirmPasswordError').innerHTML = "**Please
+	// confirm ypur password";
+	// document.getElementById('confirmPassword').focus();
+	// flag = false;
+	// }
+	// if (!isempty(address3)) {
+	// document.getElementById('confirmPasswordError').innerHTML = "**Please
+	// confirm ypur password";
+	// document.getElementById('confirmPassword').focus();
+	// flag = false;
+	// }
 	if (!isempty(username)) {
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
@@ -218,7 +220,7 @@ function validateTutorFileds() {
 	}
 
 	var usernameExist = ValidateUsername(username);
-	if (usernameExist.message == false) {
+	if (usernameExist.message == '0') {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag == false;
@@ -246,6 +248,11 @@ function ValidateUsername(username) {
 			resp = response;
 		}
 	});
-	
+
 	return resp;
+}
+
+function clearField(elementId) {
+	$(document).find('#' + elementId).text('');
+	$(document).find('#message').text('');
 }

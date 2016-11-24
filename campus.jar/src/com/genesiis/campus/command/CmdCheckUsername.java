@@ -18,7 +18,7 @@ public class CmdCheckUsername implements ICommand {
 			Exception {
 		final TutorDAO tutorDAO = new TutorDAO();
 		final Tutor tutor = new Tutor();
-		boolean message = false;
+		String message = "";
 		try {
 			tutor.setUsername(helper.getParameter("USERNAME"));
 			
@@ -27,9 +27,9 @@ public class CmdCheckUsername implements ICommand {
 					.findById(tutor);
 			
 			if (tutorCollection.isEmpty()) {
-				message = true;
+				message = "1";
 			} else {
-				message = false;
+				message = "0";
 			}
 			view.setCollection(tutorCollection);
 		} catch (Exception exception) {

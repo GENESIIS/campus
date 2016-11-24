@@ -16,7 +16,7 @@
 		<table align="center">
 		<tr>
 				<td>
-					<h2>${message}</h2>
+					<h2 id="message">${message}</h2>
 				</td>
 			</tr>
 			<tr>
@@ -27,32 +27,32 @@
 			<tr>
 				<td>First Name <span id="firstNameError"></span></td>
 				<td><input type="text" name="firstname" id="firstName"
-					maxlength="20" /></td>
+					maxlength="20" onclick="clearField('firstNameError')"/></td>
 			</tr>
 			<tr>
 				<td>Middle Name <span id="middleNameError"></span></td>
 				<td><input type="text" name="middlename" id="middleName"
-					maxlength="20" /></td>
+					maxlength="20"  onclick="clearField('middleNameError')"/></td>
 			</tr>
 			<tr>
 				<td>Last Name <span id="lastNameError"></span></td>
 				<td><input type="text" name="lastname" id="lastName"
-					maxlength="20" /></td>
+					maxlength="20" onclick="clearField('lastNameError')"/></td>
 			</tr>
 			<tr>
 				<td>Gender</td>
 				<td><input type="radio" name="gender" value="1" id="radioMale"
 					checked> Male<br> <input type="radio" name="gender"
-					value="2" id="radioFemale"> Female<br></td>
+					value="2" id="radioFemale" > Female<br></td>
 			</tr>
 			<tr>
 				<td>Experience <span id="experienceError"></span></td>
 				<td><textarea rows="10" cols="26" name="experience"
-						id="experience"></textarea></td>
+						id="experience" onclick="clearField('experienceError')"></textarea></td>
 			</tr>
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
-				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"></textarea></td>
+				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')"></textarea></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>
@@ -60,7 +60,7 @@
 			<tr>
 				<td>Country</td>
 				<td>
-				<select name="countryDetails" id="countryDetails" onchange="">
+				<select name="countryDetails" id="countryDetails">
 						<option></option>
 				</select>
 				</td>
@@ -74,18 +74,18 @@
 			<tr>
 				<td>Mobile</td>
 				<td><span id="mobileError"></span><input
-					type="text" name="mobileNumber" id="mobileNumber" maxlength="11" />
+					type="text" name="mobileNumber" id="mobileNumber" maxlength="11" onclick="clearField('mobileError')" />
 				</td>
 			</tr>
 			<tr>
 				<td>Home <span id="landError"></span></td>
 				<td><input type="text"
-					name="landNumber" id="landNumber" maxlength="11" /></td>
+					name="landNumber" id="landNumber" maxlength="11" onclick="clearField('landError')"/></td>
 			</tr>
 			<tr>
 				<td>Address Line 1 <span id="address1Error"></span></td>
 				<td><input type="text" name="address1" id="address1"
-					maxlength="30" /></td>
+					maxlength="30" onclick="clearField('address1Error')"/></td>
 			</tr>
 			<tr>
 				<td>Address line 2 <span id="address2Error"></span></td>
@@ -123,7 +123,7 @@
 				<td><input type="text" name="myspace" id="myspace" /></td>
 			</tr>
 			<tr>
-				<td>whatsApp <span id="whatsappError"></span></td>
+				<td>WhatsApp <span id="whatsappError"></span></td>
 				<td><input type="text" name="whatsapp" id="whatsapp"
 					maxlength="10" /></td>
 			</tr>
@@ -136,22 +136,22 @@
 			</tr>
 			<tr>
 				<td>Email <span id="emailError"></span></td>
-				<td><input type="text" name="email" id="email" /></td>
+				<td><input type="text" name="email" id="email"  onclick="clearField('emailError')"/></td>
 			</tr>
 			<tr>
 				<td>Username <span id="usernameError"></span></td>
 				<td><input type="text" name="username" id="username"
-					maxlength="10" /></td>
+					maxlength="10" onclick="clearField('usernameError')" /></td>
 			</tr>
 			<tr>
 				<td>Password <span id="passwordError"></span></td>
 				<td><input type="password" name="password" id="password"
-					maxlength="20" /></td>
+					maxlength="20" onclick="clearField('passwordError')"/></td>
 			</tr>
 			<tr>
 				<td>Confirm Password <span id="confirmPasswordError"></span></td>
 				<td><input type="password" name="confirmPassword"
-					id="confirmPassword" maxlength="20" /></td>
+					id="confirmPassword" maxlength="20" onclick="clearField('confirmPasswordError')"/></td>
 			</tr>
 
 			<tr>
