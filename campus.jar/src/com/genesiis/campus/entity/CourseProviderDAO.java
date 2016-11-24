@@ -13,9 +13,11 @@ package com.genesiis.campus.entity;
 //DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement findFilterdCourseProviders() method
 //DJ 20161123 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-add course provider type list to the query
+//DJ 20161124 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-reform the query to support  multiples in clauses  
 
 
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -331,26 +333,56 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCourserProviderType() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
 			}
-			if (searchDTO.getCpTypeList()!=null && searchDTO.getCpTypeList().size()>0) {
+			if (searchDTO.getCpTypeList() != null && searchDTO.getCpTypeList().size() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE in ( ");
-				for(int x=0;x<searchDTO.getCpTypeList().size();x++){
-					searchDTO.getCpTypeList().get(x);
-					sb.append(searchDTO.getCpTypeList().get(x));
-					sb.append(",");
+				boolean doneOne = false;
+				for(Integer code: searchDTO.getCpTypeList()){
+					if(doneOne){
+			            sb.append(", ");
+			        }
+					sb.append(code);
+					doneOne = true;
 				}
 				sb.append(" ) ");
 			}
-			if (searchDTO.getLevel() > 0) {
+			if (!searchDTO.getLevelList().isEmpty() ) {
+				sb.append(" AND PROG.LEVEL in ( ");
+				boolean doneOne = false;
+				for(Integer code: searchDTO.getLevelList()){
+					if(doneOne){
+			            sb.append(", ");
+			        }
+					sb.append(code);
+					doneOne = true;
+				}
+				sb.append(" ) ");
+			}
+			if (!searchDTO.getMajorList().isEmpty() ) {
+				sb.append(" AND PROG.MAJOR in ( ");
+				boolean doneOne = false;
+				for(Integer code: searchDTO.getMajorList()){
+					if(doneOne){
+						sb.append(", ");
+					}
+					sb.append(code);
+					doneOne = true;
+				}
+				sb.append(" ) ");
+			}
+			
+			/*if (searchDTO.getLevel() > 0) {
 				sb.append(" AND PROG.LEVEL=?");
-			}
-			if (searchDTO.getMajor() > 0) {
+			}*/
+			/*if (searchDTO.getMajor() > 0) {
 				sb.append(" AND PROG.MAJOR=?");
-			}
+			}*/
 			if (searchDTO.getDistrict() > 0) {
 				sb.append(" AND DISTRICT.CODE=? ");
 			}
 
-			stmt = conn.prepareStatement(sb.toString());	
+			stmt = conn.prepareStatement(sb.toString());
+			
+			
 			
 			
 			if (searchDTO.getCategory() > 0) {
@@ -359,11 +391,12 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCourserProviderType() > 0) {
 				stmt.setInt(2, searchDTO.getCourserProviderType());				
 			}
+		
 			if (searchDTO.getLevel() > 0) {
 				stmt.setInt(3, searchDTO.getLevel());				
 			}
 			if (searchDTO.getMajor() > 0) {
-				stmt.setInt(4, searchDTO.getMajor());				
+						
 			}
 			if (searchDTO.getDistrict() > 0) {
 				stmt.setInt(5, searchDTO.getDistrict());			
