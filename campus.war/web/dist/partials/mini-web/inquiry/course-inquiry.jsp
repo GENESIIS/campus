@@ -121,23 +121,27 @@
 								id="email" onclick="clearField('emailtbError')">
 						</div>
 						<!--Country Code -->
-						<div class="county-code">
-							<label for="input-county-code">Country Code <span>*</span></label>
-							<label id="countryCodetbError"></label> <br><input type="text"
-								name="countryCode" id="countryCode" onclick="clearField('countryCodetbError')">
-						</div>
-						<!-- Area Code -->
-						<div class="area-code">
-							<label for="input-area-code">Area Code <span>*</span></label>
-							<label id="areaCodetbError"></label> <br><input type="text"
-								name="areaCode" id="areaCode" onclick="clearField('areaCodetbError')">
-						</div>
-						<!-- Telephone -->
-						<div class="tp-number">
-							<label for="input-tp-no">Telephone No <span>*</span></label>
-							<label id="telephoneNumbertbError"></label><br> <input type="text"
-								name="telNum" id="telNum" onclick="clearField('telephoneNumbertbError')">
-						</div>
+<!-- 						<div class="county-code"> -->
+<!-- 							<label for="input-county-code">Country Code <span>*</span></label> -->
+<!-- 							<label id="countryCodetbError"></label> <br><input type="text" -->
+<!-- 								name="countryCode" id="countryCode" onclick="clearField('countryCodetbError')"> -->
+<!-- 						</div> -->
+<!-- 						Area Code -->
+<!-- 						<div class="area-code"> -->
+<!-- 							<label for="input-area-code">Area Code <span>*</span></label> -->
+<!-- 							<label id="areaCodetbError"></label> <br><input type="text" -->
+<!-- 								name="areaCode" id="areaCode" onclick="clearField('areaCodetbError')"> -->
+<!-- 						</div> -->
+<!-- 						Telephone -->
+<!-- 						<div class="tp-number"> -->
+<!-- 							<label for="input-tp-no">Telephone No <span>*</span></label> -->
+<!-- 							<label id="telephoneNumbertbError"></label><br> <input type="text" -->
+<!-- 								name="telNum" id="telNum" onclick="clearField('telephoneNumbertbError')"> -->
+<!-- 						</div> -->
+						<input type="hidden" value="94" name="countryCode" id="countryCode">
+							<input type="hidden" value="011" name="areaCode" id="areaCode">
+							<input type="hidden" value="0779952998" name="telNum" id="telNum">
+							
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label>
@@ -153,13 +157,14 @@
 								<span>*</span> Required fields
 							</p>
 							<input type="hidden" value="1" name="student" id="student">
-							<input type="hidden" value="7" name="programmeCode"
+							<input type="hidden" value="1" name="programmeCode"
 								id="programmeCode">
 						</div>
 						<!-- ReCaptcha -->
-						<div class="re-captcha">
+						<div class="re-captcha" >
+						<label id="captchaError"></label><br>
 							<div class="g-recaptcha"
-								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c" onclick="clearField('captchaError')"></div>
 
 						</div>
 						<!-- btn Submit -->

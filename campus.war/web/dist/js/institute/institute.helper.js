@@ -24,9 +24,10 @@ function sendCourseInquiry() {
 	
 	var fullNametb = isempty(fullName);
 	var emailtb = isValidEmailFormat(email);
-	var countryCodetb = isempty(countryCode);
-	var areaCodetb = isempty(areaCode);
-	var telephoneNumbertb = isValidPhoneNumber(telephoneNumber);
+	var emailtb1 = isempty(email);
+//	var countryCodetb = isempty(countryCode);
+//	var areaCodetb = isempty(areaCode);
+//	var telephoneNumbertb = isValidPhoneNumber(telephoneNumber);
 	var inquiryTitletb = isempty(inquiryTitle);
 	var inquirytb = isempty(inquiry);
 
@@ -34,22 +35,28 @@ function sendCourseInquiry() {
 		document.getElementById('fullNametbError').innerHTML = "  ** Invalid Name.";
 		flag = false;
 	}  if (emailtb == false) {
-		document.getElementById('emailtbError').innerHTML = "   ** Email can not be Empty.";
+		document.getElementById('emailtbError').innerHTML = "   **Please enter valid Email Address.";
 		flag = false;
-	}  if (countryCodetb == false) {
-		document.getElementById('countryCodetbError').innerHTML = "  ** Country  Code can not be Empty.";
+	} if(emailtb1 == false){
+		document.getElementById('emailtbError').innerHTML = "   ** Email Address  cannot be Empty.";
 		flag = false;
-	}  if (areaCodetb == false) {
-		document.getElementById('areaCodetbError').innerHTML = "  ** Area Code  cannot be Empty.";
-		flag = false;
-	}  if (telephoneNumbertb == false) {
-		document.getElementById('telephoneNumbertbError').innerHTML = "  **  Telephone can not be Empty.";
-		flag = false;
+//	}  if (countryCodetb == false) {
+//		document.getElementById('countryCodetbError').innerHTML = "  ** Country  Code can not be Empty.";
+//		flag = false;
+//	}  if (areaCodetb == false) {
+//		document.getElementById('areaCodetbError').innerHTML = "  ** Area Code  cannot be Empty.";
+//		flag = false;
+//	}  if (telephoneNumbertb == false) {
+//		document.getElementById('telephoneNumbertbError').innerHTML = "  **  Telephone can not be Empty.";
+//		flag = false;
 	}  if (inquiryTitletb == false) {
 		document.getElementById('inquiryTitletbError').innerHTML = "  ** Inquiry  Title can not be Empty.";
 		flag = false;
 	}  if (inquirytb == false) {
 		document.getElementById('inquirytbError').innerHTML = "  ** inquiry cannot  be Empty.";
+		return false;
+	}  if(recapture.length == 0){
+		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
 		return false;
 	}
 
@@ -79,11 +86,11 @@ function sendCourseInquiry() {
 			},
 			dataType : "json",
 			success : function(response) {
-				//alert(response.result);
+				
 				document.getElementById('messsage').innerHTML = response.result;
-				//if (response == "Inquiry Send successfylly") {
+				
 					resetInquiryLabels();
-				//}
+				
 			},
 			error : function(e) {
 				 alert("Error " + e);
@@ -100,17 +107,17 @@ function resetInquiryLabels() {
 
 	$("#fullname").val("");
 	$("#email").val("");
-	$("#countryCode").val("");
-	$("#areaCode").val("");
-	$("#telNum").val("");
+//	$("#countryCode").val("");
+//	$("#areaCode").val("");
+//	$("#telNum").val("");
 	$("#inquiryTitle").val("");
 	$("#inquiry").val("");
 	
 	$("#fullNametbError").text("");
 	$("#emailtbError").text("");
-	$("#countryCodetbError").text("");
-	$("#areaCodetbError").text("");
-	$("#telephoneNumbertbError").text("");
+//	$("#countryCodetbError").text("");
+//	$("#areaCodetbError").text("");
+//	$("#telephoneNumbertbError").text("");
 	$("#inquiryTitletbError").text("");
 	$("#inquirytbError").text("");
 

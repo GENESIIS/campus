@@ -51,7 +51,9 @@ public class CmdSendCourseInquiry implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		int status;
 		String message = "Unsuccessfull";
+		try {
 		final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
 		boolean responseIsSuccess = reCaptchaManager
 				.sendRequestToServer(helper);
@@ -76,8 +78,8 @@ public class CmdSendCourseInquiry implements ICommand {
 							.findById(data);
 					recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
 					generalEmail = formatEmailInstance();
-					this.sendMail();
-
+					status= this.sendMail();
+					message = systemMessage(status);
 				}
 
 				ArrayList<String> singleMessageList = new ArrayList<String>();
@@ -95,7 +97,14 @@ public class CmdSendCourseInquiry implements ICommand {
 			
 			message = SystemMessage.RECAPTCHAVERIFICATION.message();
 		}
-		helper.setAttribute("message", message);
+		
+		} catch (Exception exception) {
+			log.error("execute() : " + exception);
+			throw exception;
+		} finally {
+			helper.setAttribute("message", message);
+
+		}
 
 		view.setCollection(messageCollection);
 		return view;
@@ -180,9 +189,21 @@ public class CmdSendCourseInquiry implements ICommand {
 	 * @throws MessagingException in any case dispensing email fails
 	 */
 
-	private void sendMail() throws MessagingException {
-		emailDispenser = new EmailDispenser(generalEmail);
-		emailDispenser.emailDispense();
+	private int sendMail()  {
+		int MAIL_SENT_STATUS=3;
+		try{ 
+			emailDispenser = new EmailDispenser(generalEmail);
+			emailDispenser.emailDispense();
+		 
+		} catch (IllegalArgumentException illearg){
+			log.error("sendMail():IllegalArgumentException "+illearg.toString());
+			 MAIL_SENT_STATUS= -3;
+		} catch (MessagingException msexp) {
+			log.error("sendMail():MessagingException "+msexp.toString());
+		 MAIL_SENT_STATUS= -3;
+		} finally{
+			return MAIL_SENT_STATUS;
+		}
 	}
 
 	/*
@@ -221,4 +242,27 @@ public class CmdSendCourseInquiry implements ICommand {
 
 	}
 
+	
+	/*
+	 * systemMessage() handles the system Messages according to
+	 * the state of the status passed in
+	 * @return String the message
+	 * @param status 3 request submitted successfully.
+	 * @param status -3 request submition fails.
+	 * 
+	 */
+	private String systemMessage(int status){
+		String message = SystemMessage.UNKNOWN.message();
+		switch(status){		
+		case 3:
+			message =SystemMessage.PASS_REQUEST_SUBMISSION.message();
+			break;
+		case -3:
+			message =SystemMessage.FAIL_REQUEST_SUBMISSION.message();
+			break;
+		default:			
+			break;
+		}
+		return message;
+	}
 }

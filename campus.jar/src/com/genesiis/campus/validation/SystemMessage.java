@@ -10,14 +10,22 @@ public enum SystemMessage {
 	ERROR("Unsuccessful."), 	
 	EMPTYFIELD("Field is Empty."),
 	SUCCESS("Successfull"),
-	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
+	UNKNOWN(""),
 	INQUIRYSENT("Inquiry sent Successfully"),
 	INVALIDECODE("Invalid Country Code."),
 	INVALIDEAREA("Invalid Area Code."),
 	FAILED_TO_CREATE("Object not created"),
 	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
-	EMAILERROR("Invalid Email.");
+	EMAILERROR("Invalid Email."),
+	INVALIDDATE("Invalid DateFormat."),
+	EMPTYVALUES("Empty data Fields."),
+	NOTADDED("Problem when inserting data."), 	
+	NOTUPDATED("Problem when updating data."), 	
+	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 
+	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
+	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
+	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 
 	
 	private String message;
