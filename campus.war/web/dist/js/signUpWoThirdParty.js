@@ -45,6 +45,7 @@ function sendSignUpCredentialsToBckEnd() {
 function validateSignUpWoThirdPartyPageEmbedData(){
 	var validationPass = true;
 	
+	
 	if(!(isFieldFilled(isempty($('#firstName').val()),"First Name Field","firstNameLabel"))){
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#lastName').val()),"Last Name Field","lastNameLabel"))) {
@@ -82,14 +83,14 @@ function createJasonObject(){
 			"firstName" :$('#firstName').val(),
 			"lastName"  :$('#lastName').val(),
 			"gender"	: $('input[type=radio][name=gender]:checked').val(),
-			"emailAdress":$('#emailAddress').val(),
-			"contactNumber":$('#contactNumber').val(),
+			"email"		:$('#emailAddress').val(),
+			"mobilePhoneNo":$('#contactNumber').val(),
 			"pathway"	:$('#pathway').val(),
 			"userName"	:$('#userName').val(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
-			"showPassWordChkBxVal":$('#showpasscheckbox').is(':checked'),
-			"isPolicyConvirm"	:$('#policyConfirm').val()
+			//"showPassWordChkBxVal":$('#showpasscheckbox').is(':checked'),
+			"isPolicyConfirm"	:$('#policyConfirm').val()
 	};
 	return jsonData;
 }

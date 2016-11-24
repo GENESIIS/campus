@@ -36,8 +36,8 @@
          <br>
         <div>
          <label for="input-gender" id ="genderLabel">Gender</label> <br>
-         <input type="radio" name="gender" value="Male" checked> Male<br>
-        <input type="radio" name="gender" value="Female"> Female<br>
+         <input type="radio" name="gender" value="1" checked> Male<br>
+        <input type="radio" name="gender" value="0"> Female<br>
         </div>
          <br>
          <div>

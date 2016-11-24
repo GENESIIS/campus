@@ -11,9 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 //import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
+
 
 import org.apache.log4j.Logger;
 
@@ -166,8 +168,46 @@ public class StudentDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		Student student = (Student)object;
+		String  userName = student.getUsername();
+		ResultSet res = null;
+		int status=0;
+		res = UserNameExist(conn,userName);
+		if(res.next()){
+			return null;
+		} else {
+			//add updateion to the student Table
+		}
+		
 		return null;
-	}
+}
 
+	
+	
+	/*
+	 * method UserNameExist() checks if the if there an record exist for the given
+	 * username
+	 * returns returns ResultSet object which is empty if there is no any records else 
+	 * having values that is returned from the data base
+	 * @param con Connection data base connection
+	 * @param String userName
+	 * 
+	 */
+	private ResultSet UserNameExist( Connection con, String userName) throws SQLException {
+		String userName1 = ((userName==null)||(userName==""))?null:userName;
+		StringBuilder sb = new StringBuilder("SELECT [USERNAME],[ISACTIVE] FROM [CAMPUS].[STUDENT] ");		
+		sb.append(" WHERE [USERNAME]  = ? ;");
+		final String checkActive = sb.toString();
+		ResultSet res= null;
+		PreparedStatement prs = con.prepareStatement(checkActive);
+		prs.setString(1, userName1); 		
+		boolean resStatus = false;
+		return prs.executeQuery();
+
+	}
+	
+	
+	
+	
+	
 }
