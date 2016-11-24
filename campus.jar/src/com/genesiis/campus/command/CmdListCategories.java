@@ -36,18 +36,17 @@ public class CmdListCategories implements ICommand{
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
-	
-		
+
 		ICrud categoryDAO = new CategoryDAO();
 		ICrud instituteDAO = new InstituteDAO();
+		
 		try {
 			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
 			iview.setCollection(categoryCollection);
 			
-			
+			//instituteCollection used in c11. But both issues are using the same class. 
 			Collection<Collection<String>> instituteCollection = instituteDAO.getAll();
 			helper.setAttribute("instituteCollection", instituteCollection);
-			
 		} catch (SQLException sqle) {
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
