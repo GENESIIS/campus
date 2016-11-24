@@ -705,6 +705,14 @@ body, html {
             font-size: 24px;
             color: #2b57a0;
             font-weight: 600; }
+      .stud-dashboard .prf-page-container .left-side .short-info-holder {
+        display: block;
+        margin-top: 20px;
+        border-radius: 10px;
+        background: #fff;
+        padding: 12px; }
+        .stud-dashboard .prf-page-container .left-side .short-info-holder table {
+          width: 100%; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
