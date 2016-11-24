@@ -3,6 +3,7 @@
 //20161109 DN c10-contacting-us-page-MP validateForm() refactor the method
 //20161109 DN c10-contacting-us-page-MP refactor clearField() the method
 //20161116 DN c10-contacting-us-page-MP methods are exported to /dist/js/institute/validation/validation.js
+//20161124 DN c10-contacting-us-page-MP isValidEmailFormat() renamed to validEmailFormat() and moved to /dist/js/institute/validation/validation.js
 
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -18,7 +19,7 @@ function validateForm(){
 		return false
 	} else if(!(isFieldFilled(isValidPhoneNumber(document.contactUsForm.contactNumber.value),"Phone Number Field","phoneNumberError"))){
 		return false;
-	} else if(!isFieldFilled(isValidEmailFormat(),"Email Field","emailError")) {
+	} else if(!isFieldFilled(validEmailFormat(),"Email Field","emailError")) {
 		return false;
 	} else if (!isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field","subjectError")){
 		return false;
@@ -45,14 +46,5 @@ function isHumanTestPassed(){
 	
 	
 }
-/**
- * isValidEmailFormat method validate a email address
- * @returns boolean if testing email address is a valid
- * one then returns true else return false
- */
-function isValidEmailFormat(){	
-	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
-	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
-	return isPatternMatch(pattern,emailAddress);
-}
+
 
