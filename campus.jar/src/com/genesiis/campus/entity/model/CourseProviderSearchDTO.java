@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 //DJ 20161117 c17-provider-criteria-based-filter-search created CourseProviderSearchDTO.java
 //DJ 20161123 c17-provider-criteria-based-filter-search add isGetAllCPTypes,isGetAllMajors,isGetAllLevels,cpTypeList attributes
+//DJ 20161124 c17-provider-criteria-based-filter-search add majorList,levelList attributes
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class CourseProviderSearchDTO {
 	private boolean isGetAllMajors;
 	private boolean isGetAllLevels;
 	private List<Integer> cpTypeList;
+	private List<Integer> majorList;
+	private List<Integer> levelList;
 	
 	public int getCourseProviderCode() {
 		return courseProviderCode;
@@ -86,5 +89,16 @@ public class CourseProviderSearchDTO {
 	public void setCpTypeList(List<Integer> cpTypeList) {
 		this.cpTypeList = cpTypeList;
 	}
-
+	public List<Integer> getMajorList() {
+		return majorList;
+	}
+	public void setMajorList(List<Integer> majorList) {
+		this.majorList = majorList;
+	}
+	public List<Integer> getLevelList() {
+		return levelList;
+	}
+	public void setLevelList(List<Integer> levelList) {
+		this.levelList = levelList;
+	}
 }
