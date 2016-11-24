@@ -13,7 +13,8 @@ package com.genesiis.campus.entity;
 //DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement findFilterdCourseProviders() method
 //DJ 20161123 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-add course provider type list to the query
-//DJ 20161124 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-reform the query to support  multiples in clauses  
+//DJ 20161124 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-reform the query to support  multiples in clauses
+//DJ 20161124 c17-provider-criteria-based-filter-search Implemented getCategoryWiseTypes() method
 
 
 
@@ -25,10 +26,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -402,6 +405,38 @@ public class CourseProviderDAO implements ICrud{
 		
 		return allProviderList;
 		
+	}
+
+	/**
+	 * Find category wise course provider types, majors,levels
+	 * @param Integer 
+	 * @author DJ
+	 * @return CourseProviderResultDTO 
+	 */
+	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode) throws SQLException{
+		Connection conn = null;
+		PreparedStatement  stmt = null;
+		ResultSet resultSet =null;		
+		final List<CourseProviderResultDTO> dtos=new ArrayList<CourseProviderResultDTO>();
+		try {
+			conn=ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT CP.COURSEPROVIDERTYPE, PROG.MAJOR,PROG.LEVEL,PROG.CATEGORY FROM [CAMPUS].COURSEPROVIDER CP ");
+			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON CP.CODE=PROG.COURSEPROVIDER WHERE PROG.CATEGORY=? "); 
+			
+            stmt = conn.prepareStatement(sb.toString());
+            stmt.setInt(1, categoryCode);
+            resultSet= stmt.executeQuery();
+            
+		} catch (SQLException sqlException) {
+			log.info("getCategoryWiseTypes() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getCategoryWiseTypes() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}		
+		return dtos;
 	}
 
 }

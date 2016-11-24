@@ -3,12 +3,16 @@ package com.genesiis.campus.command;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.LevelDAO;
 import com.genesiis.campus.entity.MajorDAO;
+import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 
@@ -30,6 +34,21 @@ public class CmdListCategoryTypes implements ICommand  {
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
+		
+		//List categorywise types		
+		//CourseProviderResultDTO dto=new CourseProviderResultDTO(); 
+		int catCode=0;
+		final List <CourseProviderResultDTO> categoryTypes=new CourseProviderDAO().getCategoryWiseTypes(catCode);
+		
+		final Set<Integer> cpTypeSet=new HashSet<>();
+		final Set<Integer> majorSet=new HashSet<>();
+		final Set<Integer> levelSet=new HashSet<>();
+		
+		for(CourseProviderResultDTO dto:categoryTypes){
+			cpTypeSet.add(dto.getCourserProviderType());
+			majorSet.add(dto.getMajor());
+			levelSet.add(dto.getLevel());
+		}
 		
 		//List course provider types for the drop down
 		final Collection<Collection<String>> cpTypeList=new CourseProviderTypeDAO().findById("code");
