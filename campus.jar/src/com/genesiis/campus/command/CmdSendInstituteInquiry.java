@@ -68,7 +68,7 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		try {
 			final CourseProviderInquiry instituteInquiry = new CourseProviderInquiry();
-
+			int status;
 			final ReCaptchaManager reCaptchaManager = new ReCaptchaManager();
 			boolean responseIsSuccess = reCaptchaManager
 					.sendRequestToServer(helper);
@@ -76,7 +76,8 @@ public class CmdSendInstituteInquiry implements ICommand {
 			// Verify whether the input from Human or Robot
 			if (responseIsSuccess) {
 				// Input by Human
-				String validateResult = Validator.validateInstituteInquiry(helper);
+				String validateResult = Validator
+						.validateInstituteInquiry(helper);
 
 				if (validateResult.equalsIgnoreCase("True")) {
 					setEnvironment(helper);
@@ -101,8 +102,8 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 						recieversEmailAddreses = composeSingleEmailList(courseProviderEmail);
 						generalEmail = formatEmailInstance();
-						this.sendMail();
-						message = SystemMessage.INQUIRYSENT.message();
+						status = this.sendMail();
+						message = systemMessage(status);
 
 					} else {
 						message = SystemMessage.ERROR.message();
@@ -137,12 +138,12 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		fullname = helper.getParameter("fullname");
 		sendersEmail = helper.getParameter("email");
-//		countryCode = helper.getParameter("countryCode");
-//		areaCode = helper.getParameter("areaCode");
-//		telNo = helper.getParameter("telNum");
+		// countryCode = helper.getParameter("countryCode");
+		// areaCode = helper.getParameter("areaCode");
+		// telNo = helper.getParameter("telNum");
 		countryCode = "0094";
 		areaCode = "31";
-		telNo ="2245458";
+		telNo = "2245458";
 		inquiryTitle = helper.getParameter("inquiryTitle");
 		inquiry = helper.getParameter("inquiry");
 		studentCode = Integer.parseInt(helper.getParameter("studentCode"));
@@ -197,9 +198,23 @@ public class CmdSendInstituteInquiry implements ICommand {
 	 * @throws MessagingException in any case dispensing email fails
 	 */
 
-	private void sendMail() throws MessagingException {
-		emailDispenser = new EmailDispenser(generalEmail);
-		emailDispenser.emailDispense();
+	private int sendMail() throws MessagingException {
+		int MAIL_SENT_STATUS = 3;
+		try {
+			emailDispenser = new EmailDispenser(generalEmail);
+			emailDispenser.emailDispense();
+
+		} catch (IllegalArgumentException illearg) {
+			log.error("sendMail():IllegalArgumentException "
+					+ illearg.toString());
+			MAIL_SENT_STATUS = -3;
+		} catch (MessagingException msexp) {
+			log.error("sendMail():MessagingException " + msexp.toString());
+			MAIL_SENT_STATUS = -3;
+		} finally {
+			return MAIL_SENT_STATUS;
+		}
+
 	}
 
 	/*
@@ -219,5 +234,30 @@ public class CmdSendInstituteInquiry implements ICommand {
 		result.append(sendersEmail);
 		this.inquiry = result.toString();
 
+	}
+
+	/*
+	 * systemMessage() handles the system Messages according to the state of the
+	 * status passed in
+	 * 
+	 * @return String the message
+	 * 
+	 * @param status 3 request submitted successfully.
+	 * 
+	 * @param status -3 request submition fails.
+	 */
+	private String systemMessage(int status) {
+		String message = SystemMessage.ERROR.message();
+		switch (status) {
+		case 3:
+			message = SystemMessage.PASS_REQUEST_SUBMISSION.message();
+			break;
+		case -3:
+			message = SystemMessage.FAIL_REQUEST_SUBMISSION.message();
+			break;
+		default:
+			break;
+		}
+		return message;
 	}
 }
