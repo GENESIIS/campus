@@ -22,12 +22,18 @@
 </head>
 <body>
 
-<!-- Button trigger modal -->
+<!-- Button trigger Personal Details modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
-  Launch demo modal
+  Personal Details
 </button>
 
-<!-- Modal -->
+<!-- Button trigger School Education modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
+  School Education
+</button>
+
+
+<!-- School Education -->
 <div class="modal fade" id="studentSchoolEducationModal" tabindex="-1" role="dialog" aria-labelledby="studentSchoolEducation" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -74,6 +80,28 @@
 			Description
 			<textarea rows="5" cols="10" name="sseDescription" id="sseDescription"></textarea>
 			
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Personal Details Modal -->
+<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="studentPersonalDetails">Personal Details</h4>
+      </div>
+      <div class="modal-body">
+			...WIP..
 	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
