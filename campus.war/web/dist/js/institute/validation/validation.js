@@ -5,7 +5,13 @@
  *20161109 DN c10-contacting-us-page-MP refactor clearField() the method
  *20161116 DN c10-contacting-us-page-MP changed the method isFieldFilled() to write content to inner HTML
  *20161116 DN c10-contacting-us-page-MP included clearField() method 
+ *20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+ * cater more phone number styles
+ * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+ *cater more phone number styles with spaces in between.
+ *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  */ 
+
  
 
 /**
@@ -60,24 +66,26 @@ function isValidEmailFormat(email) {
 	return isPatternMatch(pattern, emailAddress);
 }
 
-
-
 /**
- * @param phoneNumber
- *            it's the value of phone number field phone number should be 10
- *            character long.This test will pass the format
- *            +94xxxxxxxxx
- *            +674xxxxxxxxx
- *            0xxxxxxxxx
- *            xxxxxxxxx
- *            sequence of the phone number
- * @returns {Boolean}
+ * isValidPhoneNumber validates if the phone numbers are in correct format
+ * +94(9-digit number) eg. +94123456789,+94 123 456 789,
+ * 0094(9-digit number)e.g 0094123456789 0094 123 456 789 
+ * 777453052 (without the leading zero including spaces within the number
+ * 0777453052 (with leading  zero and 9 digit number)
+ * <b> if the State rule changes in a such a way that <i>the number of digits </i>for local telephone number to be changed<b>
+ * then validation fails
+ * @author dushantha DN
+ * @param numberToValidate Telephone number to be validated
+ * @return boolean if passes true else false
  */
 function isValidPhoneNumber(phoneNumber) {
-	var phonenumberPattern = /^(\+\d{2,3}|0)?\d{9}$/mg;
-	return isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
+	var isValidPhoneNumber = false;
+	if((phoneNumber!=null) | (phoneNumber!="")){
+		var phonenumberPattern = /^(00\d{2}|\+\d{2}|0)?\d{9}$/mg;
+		isValidPhoneNumber = isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
+	}
+	return isValidPhoneNumber;
 }
-
 
 /**
  * @param regularExpression
@@ -98,6 +106,7 @@ function isPatternMatch(regularExpression, source) {
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
 }
+
 
 /**
  * isValidEmailFormat method validate a email address

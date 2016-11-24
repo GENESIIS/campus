@@ -1,6 +1,11 @@
 package com.genesiis.campus.validation;
 
 //20161111 DN c10-contacting-us-page-MP ContactUsValidation.java is created
+//20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+// cater more phone number styles
+//20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
+//cater more phone number styles with spaces in between.
+//20161124 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,12 +76,24 @@ public class PrevalentValidation implements Validatory {
 		}
 	}
 	
+	/**
+	 * isValidPhoneNumber validates if the phone numbers are in correct format
+	 * +94(9-digit number) eg. +94123456789,+94 123 456 789,
+	 * 0094(9-digit number)e.g 0094123456789 0094 123 456 789 
+	 * 777453052 (without the leading zero including spaces within the number
+	 * 0777453052 (with leading  zero and 9 digit number)
+	 * <b> if the State rule changes in a such a way that <i>the number of digits </i>for local telephone number to be changed<b>
+	 * then validation fails
+	 * @author dushantha DN
+	 * @param numberToValidate Telephone number to be validated
+	 * @return boolean if passes true else false
+	 */
 	@Override
-	public boolean isValidPhoneNumber(String number) throws Exception {
+	public boolean isValidPhoneNumber(String numberToValidate) throws Exception {
 		boolean validPhoneNumber = false;
-			if((number==null) | (number=="")){
-				Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(\\+\\d{2,3}|0)?\\d{9}$");
-				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(number.replaceAll("\\s+",""));
+			if((numberToValidate!=null) | (numberToValidate!="")){
+				Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(00\\d{2}|\\+\\d{2}|0)?\\d{9}$");
+				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(numberToValidate.replaceAll("\\s+",""));
 				validPhoneNumber= matcher.find();
 				throwCustomError(validPhoneNumber," Phone number Validation Failed!");
 			}

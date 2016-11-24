@@ -2,10 +2,13 @@ package com.genesiis.campus.util.security;
 
 //20162223 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,11 +23,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class TripleDesEncryptor implements Encryptable{
 	private String passWord ;
-	private String key;
 	
-	public TripleDesEncryptor(String passWord,String key){
+	
+	public TripleDesEncryptor(String passWord){
 		this.passWord = passWord;
-		this.key = key;
+	
 	}
 	
 	/**
@@ -35,9 +38,9 @@ public class TripleDesEncryptor implements Encryptable{
 	 */
 	@Override
 	public byte[] encrypt() throws Exception {
-		
+		try{
 		 	final MessageDigest md = MessageDigest.getInstance("SHA");
-	        final byte[] digestOfPassword = md.digest(key.getBytes("utf-8"));// this will produce 20byte length byte[]
+	        final byte[] digestOfPassword = md.digest("HG58YZ3CR9".getBytes("utf-8"));// this will produce 20byte length byte[]
 	        final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24); // first key and the last key is the same for the 24 bits
 	        for (int j = 0, k = 16; j < 8;) {
 	            keyBytes[k++] = keyBytes[j++];
@@ -52,10 +55,21 @@ public class TripleDesEncryptor implements Encryptable{
 	        final byte[] cipherText = cipher.doFinal(plainTextBytes);
 
 	        return cipherText;
+	 }
+    	catch (java.security.InvalidAlgorithmParameterException e) { System.out.println("Invalid Algorithm"); }
+	    catch (javax.crypto.NoSuchPaddingException e) { System.out.println("No Such Padding"); }
+	    catch (java.security.NoSuchAlgorithmException e) { System.out.println("No Such Algorithm"); }
+	    catch (java.security.InvalidKeyException e) { System.out.println("Invalid Key"); }
+	    catch (BadPaddingException e) { System.out.println("Invalid Key");}
+	    catch (IllegalBlockSizeException e) { System.out.println("Invalid Key");}
+	    catch (UnsupportedEncodingException e) { System.out.println("Invalid Key");}
+	
+	    return null;
 	}
 
 	/**
-	 * Deycrypt the value sendd in as a byte[] to a String
+	 * Deycrypt the value sendd in as a byte[] to a String, the same key value 
+	 * should be used to obtain the decrypted password
 	 * @author dushantha DN
 	 * @param byte[] message decryptable value
 	 * @return String decrypted value
@@ -63,7 +77,7 @@ public class TripleDesEncryptor implements Encryptable{
 	@Override
 	public String decrypt(byte[] message) throws Exception {
 		 	final MessageDigest md = MessageDigest.getInstance("SHA");
-	        final byte[] digestOfPassword = md.digest(key
+	        final byte[] digestOfPassword = md.digest("HG58YZ3CR9"
 	                .getBytes("utf-8"));
 	        final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
 	        for (int j = 0, k = 16; j < 8;) {
@@ -79,5 +93,15 @@ public class TripleDesEncryptor implements Encryptable{
 
 	        return new String(plainText, "UTF-8");
 	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+
+
 
 }
