@@ -139,7 +139,7 @@
 						<!-- Item Drop list -->
 						<!-- id="categoryName" name="categoryName"  -->
 						<div id="dropItem1" class="item-container slideable">
-							<ul id="select-item1" class="select-item row-fluid">
+							<ul id="select-category" class="select-item row-fluid">
 							</ul>
 						</div>
 					</div>
