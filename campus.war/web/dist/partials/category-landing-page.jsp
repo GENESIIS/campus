@@ -3,6 +3,7 @@
 <!-- 20161110 JH c7-higher-education-landing-page-MP add banner panel to the landing page -->
 <!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
 <!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
+<!-- 20161124 JH c7-higher-education-landing-page-MP QA improvements: display featured institutes when only one is available -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -135,7 +136,7 @@
 							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
 								varStatus="loopCount">
 								<c:choose>
-									<c:when test="${loopCount.index == 1 }">
+									<c:when test="${loopCount.index == 0 }">
 										<div class="item active">
 											<div class="institute-info clearfix">
 												<div class="inst-logo">
@@ -171,7 +172,7 @@
 							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
 								varStatus="loopCount">
 								<c:choose>
-									<c:when test="${loopCount.index != 1 }">
+									<c:when test="${loopCount.index != 0 }">
 										<div class="item ">
 											<div class="institute-info clearfix">
 												<div class="inst-logo">
