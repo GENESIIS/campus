@@ -86,12 +86,21 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * current date is considered 
 		 * 3. get only top 10 course providers with their details
 		 */
+		/*
+		 * String query1 =
+		 * "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+		 * +
+		 * "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
+		 * + "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) " +
+		 * "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?"
+		 * ;
+		 */
 
-		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
-				+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
-				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
-				+ "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?";
-
+		String query1 = "SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+				+ " INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ? "
+				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? "
+				+ " GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
+				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE ";
 		/**
 		 * query2 used to query the database to retrieve data of course
 		 * providers randomly who are active
