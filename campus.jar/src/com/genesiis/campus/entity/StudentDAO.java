@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
+//20161123 MM c25-student-login-create-dashboard-MP-mm Modified query and the code used to extract data from query
+//				to get data related to ProfessionalExperience, SchoolEducation, SchoolGrade, HigherEducation and Award
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,7 +53,15 @@ public class StudentDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-			String query = "SELECT * FROM [CAMPUS].[STUDENT] WHERE CODE = ?";
+			// TODO convert this to a StringBuidler
+			String query = "SELECT s.*, pe.CODE AS EXPERIENCECODE, se.CODE AS SCHOOLEDUCATIONCODE, "
+					+ "sg.CODE AS SCHOOLGRADECODE, he.CODE AS HIGHEREDUCATIONCODE, a.CODE AS AWARDCODE "
+					+ "FROM [CAMPUS].[STUDENT] s "
+					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND s.CODE = ?) "
+					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT) "
+					+ "JOIN [CAMPUS].[SCHOOLGRADE] sg ON (sg.CODE = se.SCHOOLGRADE) "
+					+ "JOIN [CAMPUS].[HIGHEREDUCATION] he ON (s.CODE = he.STUDENT) "
+					+ "JOIN [CAMPUS].[AWARD] a ON (a.CODE = he.AWARD) ";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
@@ -130,6 +140,11 @@ public class StudentDAO implements ICrud {
 			singleStudent.add(rs.getString("CRTBY")); // 24
 			singleStudent.add(rs.getString("MODON")); // 24
 			singleStudent.add(rs.getString("MODBY")); // 24
+			singleStudent.add(rs.getString("EXPERIENCECODE")); // 24
+			singleStudent.add(rs.getString("SCHOOLEDUCATIONCODE")); // 24
+			singleStudent.add(rs.getString("SCHOOLGRADECODE")); // 24
+			singleStudent.add(rs.getString("HIGHEREDUCATIONCODE")); // 24
+			singleStudent.add(rs.getString("AWARDCODE")); // 24
 			final Collection<String> singleStudentCollection = singleStudent;
 			studentList.add(singleStudentCollection);
 		}
