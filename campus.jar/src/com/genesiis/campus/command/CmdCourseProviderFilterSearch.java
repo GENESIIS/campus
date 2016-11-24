@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 //DJ 20161117 c17-provider-criteria-based-filter-search created CmdCourseProviderFilterSearch.java
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement execute() method
+//DJ 20161124 c17-provider-criteria-based-filter-search retrieved input select values to command class
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,16 +45,22 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				String[] cpTypeAll = bandInfo.get("mainAreasMap[cpTypeAll]");
 				String[] majorAll = bandInfo.get("mainAreasMap[majorAll]");
 				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
-				String[] catCode = bandInfo.get("catCode");
+				String[] catCodeArray = bandInfo.get("categoryCodes[]");
 				String[] districtCode = bandInfo.get("districtCode");
-				String[] cpTypeMap = bandInfo.get("cpTypeMap");
+				String[] cpTypeAyrray =bandInfo.get("cpTypeCodes[]");
+				String[] majorAyrray =bandInfo.get("majorCodes[]");
+				String[] levelAyrray =bandInfo.get("levelCodes[]");
 				
 
-				if (catCode != null && catCode.length > 0) {					
-					int categoryCode = Integer.parseInt(catCode[0]);
-					providerSearchDTO.setCategory(categoryCode);
+				if (catCodeArray != null && catCodeArray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : catCodeArray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					//Assume one category can be selected at once from gui
+					providerSearchDTO.setCategory(codeList.get(0));
 				}
-				if (districtCode != null && districtCode.length > 0) {					
+				if (districtCode != null && districtCode.length > 0 && !districtCode[0].isEmpty()) {					
 					int district = Integer.parseInt(districtCode[0]);
 					providerSearchDTO.setDistrict(district);
 				}
@@ -74,12 +81,27 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 						providerSearchDTO.setGetAllMajors(true);
 					}
 				}
-				if (cpTypeMap != null && cpTypeMap.length > 0) {
-					final List<Integer> cpList=new ArrayList<Integer>();
-					if(cpTypeMap[0].equalsIgnoreCase("true")){						
-						cpList.add(Integer.parseInt(cpTypeMap[0]));
-					}					
-					providerSearchDTO.setCpTypeList(cpList);
+				
+				if (cpTypeAyrray != null && cpTypeAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : cpTypeAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setCpTypeList(codeList);
+				}
+				if (majorAyrray != null && majorAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : majorAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setMajorList(codeList);
+				}
+				if (levelAyrray != null && levelAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : levelAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setLevelList(codeList);
 				}
 			}
 			 
