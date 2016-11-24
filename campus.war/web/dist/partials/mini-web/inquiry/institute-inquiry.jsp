@@ -110,7 +110,7 @@
 			<div class="inquiry-form clearfix">
 				<!-- Inquiry form - Filing Area -->
 				<div class="submit-area center-block clearfix">
-				<!-- 	<h1 class="page-topic-t2">
+					<!-- 	<h1 class="page-topic-t2">
 						You are making inquiry about <span class="colr-white">ICBT</span>
 					</h1> -->
 					<form class="submit-form" method="POST"
@@ -120,34 +120,37 @@
 						<%-- <input type="hidden" value="${param.courseProviderCode}" name="courseProviderCode"> --%>
 						<input type="hidden" value="1" name="studentCode">
 						<div class="f-name">
-							<label for="message" id="message"><c:out value="${message }"></c:out></label><br>
+							<label for="message" id="message"><c:out
+									value="${message }"></c:out></label><br>
 						</div>
 						<!-- First Name -->
 						<div class="f-name">
 							<label for="input-firstName">Full Name <span>*</span>
 							</label> <label id="fullNameError"></label><br> <input type="text"
-								name="fullname" id="input-firstName" onclick="clearField('fullNameError')" maxlength="250" required>
+								name="fullname" id="input-firstName"
+								onclick="clearField('fullNameError')" maxlength="250" required>
 						</div>
 						<!-- Email -->
 						<div class="email">
 							<label for="eMail">Email <span>*</span></label><label
 								id="emailError"></label><br> <input type="text"
-								name="email" id="eMail" onclick="clearField('emailError')" maxlength="100" required>
+								name="email" id="eMail" onclick="clearField('emailError')"
+								maxlength="100" required>
 						</div>
 						<!--Country Code -->
-					<!-- 	<div class="county-code">
+						<!-- 	<div class="county-code">
 							<label for="input-county-code">Country Code <span>*</span></label><label
 								id="countryCodeError"></label><br> <input type="text"
 								name="countryCode" id="input-county-code" onclick="clearField('countryCodeError')" maxlength="4" required>
 						</div> -->
 						<!-- Area Code -->
-					<!-- 	<div class="area-code">
+						<!-- 	<div class="area-code">
 							<label for="input-area-code">Area Code <span>*</span></label><label
 								id="areaCodeError"></label><br> <input type="text"
 								name="areaCode" id="input-area-code" onclick="clearField('areaCodeError')" maxlength="4" required>
 						</div> -->
 						<!-- Telephone -->
-				<!-- 		<div class="tp-number">
+						<!-- 		<div class="tp-number">
 							<label for="input-tp-no">Telephone No <span>*</span></label><label
 								id="telNumError"></label><br> <input type="text"
 								name="telNum" id="input-tp-no" onclick="clearField('telNumError')" maxlength="11" required> 
@@ -156,13 +159,15 @@
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><label
 								id="inquiryTitleError"></label><br> <input type="text"
-								name="inquiryTitle" id="input-inquiry-title" onclick="clearField('inquiryTitleError')" required>
+								name="inquiryTitle" id="input-inquiry-title"
+								onclick="clearField('inquiryTitleError')" required>
 						</div>
 						<!-- Message -->
 						<div class="inquiry-message">
 							<label for="text-userMessage">Message <span>*</span></label><label
 								id="inquiryError"></label><br>
-							<textarea name="inquiry" id="text-userMessage" rows="10" onclick="clearField('inquiryError')"  required></textarea>
+							<textarea name="inquiry" id="text-userMessage" rows="10"
+								onclick="clearField('inquiryError')" required></textarea>
 							<p class="pull-right">
 								<span>*</span> Required fields
 							</p>
@@ -172,12 +177,12 @@
 							<span id="captchaError"
 								style="color: red; font-weight: normal !important;"></span>
 							<div class="g-recaptcha"
-								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c" ></div>
+								data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c"></div>
 						</div>
 						<!-- btn Submit -->
 						<button class="btn-submit" type="submit" name="CCO" id="CCO"
-							value="SII" class="pure-button pure-button-primary" onclick="clearMessageField()">Send
-							Inquiry</button>
+							value="SII" class="pure-button pure-button-primary"
+							onclick="clearMessageField()">Send Inquiry</button>
 
 					</form>
 					<!-- End Submit form -->
