@@ -14,6 +14,8 @@
  * 				returning the wrong url when sending trying to open the URL that tha banner
  * 				has been set to to open in the DB
  * 20161120 MM c2-integrate-google-banners-MP Added warning on incompatibility with JQuery 3.1.1
+ * 20161124 MM c2-integrate-google-banners-MP Added code so that the caller page is loaded dynamically
+ * 				from data attributes of image tags that are displaying banners
  *  
  */
 
@@ -35,7 +37,7 @@
 
 
 // Banner-rotation code 
-var bannerSlotWrappers = $('.rotating-item-wrapper');
+var bannerSlotWrappers = $('.banner-wrapper');
 var bannerSlotTimers = [];
 
 bannerSlotWrappers.each(function(index){
@@ -66,7 +68,7 @@ $.each(bannerSlotTimers, function(index, value) {
 // Binding event handler to elements
 $('.banner').on('click', function(e) {
 	e.preventDefault();
-	var url = $($(this).parents('.rotating-item-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
+	var url = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
 	sendBannerStatisticsUpdateRequest($(this));
 	window.open(url, '_blank');
 }); 
@@ -77,6 +79,7 @@ function sendBannerStatisticsUpdateRequest(banner) {
 	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
 	
 	var bannerCode = banner.attr('data-banner-code');
+	var callerPage = banner.attr('data-caller-page');
 	
 	$.ajax({
 		url : '/PublicController',
@@ -84,7 +87,7 @@ function sendBannerStatisticsUpdateRequest(banner) {
 		data : {
 			'CCO' : 'ADD_BANNER_STAT',
 			'banner' : bannerCode,
-			'callerPage' : 'bannerStatus.jsp'
+			'callerPage' : callerPage
 		},
 		dataType : "json",
 		async : false,
