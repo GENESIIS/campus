@@ -39,7 +39,7 @@ function displayCategories(response){
                 '</div>'+
                 '<div class="course-info clearfix">'+
                     '<div class="image pull-left">'+
-                        '<img class="center-block" src="../../dist/i/landingPage/'+data[3].toString()+'" alt="">'+
+                        '<img class="center-block" src="../../education/general/category/'+data[3].toString()+'" alt="">'+
                     '</div>'+
                     '<div class="description pull-right">'+
                         '<p class="text-justify">'+data[2].toString().replace(/##/g , ",")+'</p>'+
