@@ -25,20 +25,14 @@ function getAjaxData(response) {
 	var totalCount = 0;
 
 	var providerChoice = $("#providerList");
-	$
-			.each(
-					response.result,
-					function(index, value) {
+	$.each(response.result,	function(index, value) {
 						var res = value.toString();
 						var data = res.split(",");
 						var x = data[0].toString();
 						var y = data[1].toString();
 						var z = data[2].toString();
-						var logo = "../../education/provider/logo/" + y + "/"
-								+ z;
-						providerChoice
-								.append('<li><a href="javascript:"><img height="100" width="100" src="'
-										+ logo + ' " /> </a> </li>');
+						var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
+						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 					});
 
 	var providers = $("#providers");
@@ -186,12 +180,36 @@ function getAjaxData(response) {
 			dataType : "json",
 			success : function(response) {
 				alert("success add click");
+				populateAjaxResponse(response);
 			},
 			error : function() {
 				alert("error");
 			}
 		});
 
-	});
+	});	
 
 }
+
+function populateAjaxResponse(response) {	
+	alert("populateAjaxResponse");
+	
+	var totalCount = 0;
+	var providerChoice = $("#providerList");
+	providerChoice.find('li').remove();
+	$.each(response.result,	function(index, value) {
+	var res = value.toString();
+	var data = res.split(",");
+	var x = data[0].toString();
+	var y = data[1].toString();
+	var z = data[2].toString();
+	var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
+	providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
+	});
+	
+}
+
+
+
+
+

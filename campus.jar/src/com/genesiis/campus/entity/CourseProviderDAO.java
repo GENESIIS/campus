@@ -193,13 +193,13 @@ public class CourseProviderDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH   FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
-			sb.append(" LEFT OUTER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
+			sb.append(" INNER OUTER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");
 			if (!isGetAll) {
 				sb.append(" AND CAT.CODE= ? ");
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
-			sb.append(" LEFT OUTER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
+			sb.append(" INNER OUTER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
 			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX, PROVIDER.LOGOIMAGEPATH ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
@@ -253,7 +253,7 @@ public class CourseProviderDAO implements ICrud{
 				sb.append(" AND CAT.CODE=?");
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
-			sb.append(" LEFT JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
+			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
 			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH ORDER BY CPAVERAGE DESC");
 
 			stmt = conn.prepareStatement(sb.toString());			
@@ -333,7 +333,7 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCourserProviderType() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
 			}
-			if (searchDTO.getCpTypeList() != null && searchDTO.getCpTypeList().size() > 0) {
+			if (searchDTO.getCpTypeList() != null && !searchDTO.getCpTypeList().isEmpty()) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE in ( ");
 				boolean doneOne = false;
 				for(Integer code: searchDTO.getCpTypeList()){
@@ -345,7 +345,7 @@ public class CourseProviderDAO implements ICrud{
 				}
 				sb.append(" ) ");
 			}
-			if (!searchDTO.getLevelList().isEmpty() ) {
+			if (searchDTO.getLevelList()!=null && !searchDTO.getLevelList().isEmpty() ) {
 				sb.append(" AND PROG.LEVEL in ( ");
 				boolean doneOne = false;
 				for(Integer code: searchDTO.getLevelList()){
@@ -357,7 +357,7 @@ public class CourseProviderDAO implements ICrud{
 				}
 				sb.append(" ) ");
 			}
-			if (!searchDTO.getMajorList().isEmpty() ) {
+			if (searchDTO.getMajorList()!=null && !searchDTO.getMajorList().isEmpty() ) {
 				sb.append(" AND PROG.MAJOR in ( ");
 				boolean doneOne = false;
 				for(Integer code: searchDTO.getMajorList()){
@@ -368,21 +368,12 @@ public class CourseProviderDAO implements ICrud{
 					doneOne = true;
 				}
 				sb.append(" ) ");
-			}
-			
-			/*if (searchDTO.getLevel() > 0) {
-				sb.append(" AND PROG.LEVEL=?");
-			}*/
-			/*if (searchDTO.getMajor() > 0) {
-				sb.append(" AND PROG.MAJOR=?");
-			}*/
+			}			
 			if (searchDTO.getDistrict() > 0) {
 				sb.append(" AND DISTRICT.CODE=? ");
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
-			
-			
 			
 			
 			if (searchDTO.getCategory() > 0) {
@@ -391,15 +382,8 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCourserProviderType() > 0) {
 				stmt.setInt(2, searchDTO.getCourserProviderType());				
 			}
-		
-			if (searchDTO.getLevel() > 0) {
-				stmt.setInt(3, searchDTO.getLevel());				
-			}
-			if (searchDTO.getMajor() > 0) {
-						
-			}
 			if (searchDTO.getDistrict() > 0) {
-				stmt.setInt(5, searchDTO.getDistrict());			
+				stmt.setInt(3, searchDTO.getDistrict());			
 			}
 			
 			resultSet= stmt.executeQuery();

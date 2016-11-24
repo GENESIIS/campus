@@ -38,18 +38,18 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		
 		try {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
-			Map<String, String[]> bandInfo = helper.getParameterMap();
-			if (!bandInfo.isEmpty()) {
+			Map<String, String[]> searchParamCollection = helper.getParameterMap();
+			if (searchParamCollection!=null && !searchParamCollection.isEmpty()) {
 
 				// String[] selectAllMap=bandInfo.get("selectAllMap");
-				String[] cpTypeAll = bandInfo.get("mainAreasMap[cpTypeAll]");
-				String[] majorAll = bandInfo.get("mainAreasMap[majorAll]");
-				String[] levelAll = bandInfo.get("mainAreasMap[levelAll]");
-				String[] catCodeArray = bandInfo.get("categoryCodes[]");
-				String[] districtCode = bandInfo.get("districtCode");
-				String[] cpTypeAyrray =bandInfo.get("cpTypeCodes[]");
-				String[] majorAyrray =bandInfo.get("majorCodes[]");
-				String[] levelAyrray =bandInfo.get("levelCodes[]");
+				String[] cpTypeAll = searchParamCollection.get("mainAreasMap[cpTypeAll]");
+				String[] majorAll = searchParamCollection.get("mainAreasMap[majorAll]");
+				String[] levelAll = searchParamCollection.get("mainAreasMap[levelAll]");
+				String[] catCodeArray = searchParamCollection.get("categoryCodes[]");
+				String[] districtCode = searchParamCollection.get("districtCode");
+				String[] cpTypeAyrray =searchParamCollection.get("cpTypeCodes[]");
+				String[] majorAyrray =searchParamCollection.get("majorCodes[]");
+				String[] levelAyrray =searchParamCollection.get("levelCodes[]");
 				
 
 				if (catCodeArray != null && catCodeArray.length > 0) {
@@ -103,33 +103,13 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 					}
 					providerSearchDTO.setLevelList(codeList);
 				}
-			}
-			 
-			//Arrays.asList(bandInfo.get("mainAreasMap[cpTypeAll]"));
-		
-		/*	int categoryCode = 0;
-			//Set input filter values to providerSearchDTO			
-			String categoryCodeString = helper.getParameter("categoryCode");
-			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
-				if (UtilityHelper.isInteger(categoryCodeString)) {
-					categoryCode = Integer.parseInt(categoryCodeString);
-					providerSearchDTO.setCategory(categoryCode);
-				}				
-			}
-			
-			String courseCountString = helper.getParameter("courseCount");
-			if (UtilityHelper.isNotEmpty(courseCountString)) {
-				if (UtilityHelper.isInteger(courseCountString) && Integer.parseInt(courseCountString)>0) {					
-					providerSearchDTO.setGetAll(true);
-				}				
-			}*/
-						
-			
-			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.findFilterdCourseProviders(providerSearchDTO);
-			iView.setCollection(courseProviderSearchResults);
+				
+				final Collection<Collection<String>> courseProviderSearchResults = providerDAO.findFilterdCourseProviders(providerSearchDTO);
+				iView.setCollection(courseProviderSearchResults);
+			}			
 			
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() : Exception " + exception);
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}		
