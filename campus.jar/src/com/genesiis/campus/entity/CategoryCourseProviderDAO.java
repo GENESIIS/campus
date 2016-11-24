@@ -34,6 +34,8 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryCourseProviderDAO implements ICrud {
 
@@ -82,24 +84,14 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * criteria. 
 		 * 1. select programme stat for each programme for given
 		 * category 
-		 * 2. programmes that were expired within a year from the
-		 * current date is considered 
+		 * 2. Only featured course providers are selected for stat
 		 * 3. get only top 10 course providers with their details
-		 */
-		/*
-		 * String query1 =
-		 * "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
-		 * +
-		 * "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
-		 * + "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) " +
-		 * "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?"
-		 * ;
 		 */
 
 		String query1 = "SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ " INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ? "
-				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? "
-				+ " GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
+				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >getDate() "
+				+ " AND cp.ACCOUNTTYPE = ? GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE ";
 		/**
 		 * query2 used to query the database to retrieve data of course
@@ -112,6 +104,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		try {
 
 			final Programme programme = (Programme) code;
+			
 			conn = ConnectionManager.getConnection();
 
 			int type = programme.getLevel();
@@ -121,7 +114,8 @@ public class CategoryCourseProviderDAO implements ICrud {
 			if (type == 1) {
 				preparedStatement = conn.prepareStatement(query1);
 				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, programme.getProgrammeStatus());
+				preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+				preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 
 				rs = preparedStatement.executeQuery();
 
