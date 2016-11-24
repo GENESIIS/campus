@@ -6,6 +6,8 @@
 //20161110 PN c11-criteria-based-filter-search modified jQuery method to display searched data on dataTable 
 //20161116 PN c11-criteria-based-filter-search adding reset functionality via check-box -WIP
 //20161117 AS c11-criteria-based-filter-search adding reset functionality via check-box fixed
+//20161124 PN c11-criteria-based-filter-search implemented getNumFilteredRows() method for display course count on search results.
+
 /**
  * This method id to load category details
  */
@@ -25,7 +27,9 @@ $(document).ready(function() {
         		
         	
             displayDetails();
-            var t = $('#example').DataTable();   
+            var t = $('#example').DataTable(); 
+            
+
         	$.ajax({
     			url : '../../PublicController',
     			data : {
@@ -43,8 +47,8 @@ $(document).ready(function() {
     					
     					t.row.add( [
     					            '<div class="provider-info">' +
-    									'<a href="javascript:">' +
-    										'<img src="../../dist/i/'+ data[6].toString().trim() +'" alt="'+ data[4].toString() +'" width="200" height="100">' +
+    									'<input type="text" name="cpid" hidden value="'+ data[0].toString().trim() +'"><a href="javascript:">' +
+    										'<img src="../../education/provider/logo/'+ data[7].toString().trim() +'/'+data[7].toString().trim()+'_small.png" alt="'+ data[4].toString() +'" width="200" height="100">' +
     									'</a>' +
     								'</div>',
     								'<div class="result-box clearfix">' +
@@ -269,6 +273,21 @@ function pad(number, length) {
 $(document).ready(function() {
 	$('#selectAll').attr('checked', false); // Unchecks it
     var t = $('#example').DataTable();   
+    
+
+    function getNumFilteredRows(){
+    	   var info = t.page.info();
+    	   return info.recordsDisplay;
+    }
+    
+    $('#example')
+        .on( 'order.dt',  function () { 
+        	var courses = getNumFilteredRows(); 
+        	$("#courseCount").text(" " +pad(courses, 2));
+        } ).on( 'search.dt', function () { 
+        	var courses = getNumFilteredRows(); 
+        	$("#courseCount").text(" " +pad(courses, 2));
+        } ).DataTable();
  
     $('#addRow').on( 'click', function () {
     	
@@ -297,7 +316,7 @@ $(document).ready(function() {
 					t.row.add( [
 					            '<div class="provider-info">' +
 									'<a href="javascript:">' +
-										'<img src="../../dist/i/'+ data[6].toString().trim() +'" alt="'+ data[4].toString() +'" width="200" height="100">' +
+										'<img src="../../education/provider/logo/'+ data[7].toString().trim() +'/'+data[7].toString().trim()+'_small.png" alt="'+ data[4].toString() +'" width="200" height="100">' +
 									'</a>' +
 								'</div>',
 								'<div class="result-box clearfix">' +
