@@ -52,7 +52,7 @@ function getAjaxData(response) {
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick()" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
 		catCount++;
 	});
 	totalCount += catCount;
@@ -112,6 +112,14 @@ function getAjaxData(response) {
 		$('<option>').val(y).text(z).appendTo(districtName);
 	});
 
+	
+	
+	$('#categoryClass').on('click', function(event) {
+		alert("categoryClass " );
+	});
+	
+	
+	
 	$('#addSearchData').on('click', function(event) {
 		$(this).val();
 		var selectAll = $('#selectAll').is(':checked');
@@ -206,6 +214,29 @@ function populateAjaxResponse(response) {
 	var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
 	providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 	});
+	
+}
+
+function categoryClick(){
+	alert("categoryClick");
+	alert(this.value);
+	var catCode=this.value();
+	
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			categoryCode:catCode,
+			CCO : 'LIST_FILTER_SEARCH_CATEGORY_TYPES'
+		},
+		dataType : "json",
+		success : function(response) {
+			alert("success category click ");			
+		},
+		error : function() {
+			alert("error");
+		}
+	});
+	
 	
 }
 

@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 public class CategoryDAO  implements ICrud{
 	
@@ -52,13 +53,14 @@ public class CategoryDAO  implements ICrud{
 			Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
+		ResultSet rs=null;
 		final Collection<Collection<String>> allCategoryList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
 			String sql="SELECT CAT.CODE AS CATEGORYCODE , CAT.NAME AS CATEGORYNAME FROM [CAMPUS].CATEGORY CAT WHERE CAT.ISACTIVE=1 ";
 			
 			stmt=conn.prepareStatement(sql.toString());
-			final ResultSet rs=stmt.executeQuery();
+			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
 				final ArrayList<String> singleCategory = new ArrayList<String>();
@@ -73,12 +75,7 @@ public class CategoryDAO  implements ICrud{
 			log.info("getAll() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
 		return allCategoryList;
