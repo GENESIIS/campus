@@ -20,6 +20,7 @@ package com.genesiis.campus.entity;
 //20161111 JH c7-higher-education-landing-page findById method modified : get 10 featured providers
 //20161116 JH c7-higher-education-landing-page findById method modified : code review mx modifications
 //20161117 JH c7-higher-education-landing-page removed logger prefix
+//20161124 JH c7-higher-education-landing-page QA code modifications
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,7 +84,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * category 
 		 * 2. programmes that were expired within a year from the
 		 * current date is considered 
-		 * 3. get only top 5 course providers with their details
+		 * 3. get only top 10 course providers with their details
 		 */
 
 		String query1 = "	SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
