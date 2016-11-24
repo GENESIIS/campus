@@ -146,7 +146,7 @@
 			                    </div>
 			                    <div class="tp">
 			                        <label for="input-phoneNumber">Phone Number<span>*</span></label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
-			                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" value="${phoneNumber}" >
+			                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" value="${phoneNumber}" placeholder="+94123445678|123456789|0777123456 formats are only accepted">
 			                    </div>
 			                    <div class="email">
 			                        <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
