@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161109 PN c11-criteria-based-filter-search changed ResponseType.JSP into ResponseType.JSON. 
 //20161121 PN c27-upload-user-image: added UPLOAD_USER_PROFILE attribute to operation Enum.
+//20161124 PN c26-add-student-details: added GET_SCHOOLEDUCATION_DATA, GET_SCHOOLEDUCATION_DATA, UPDATE_SCHOOLEDUCATION_DATA attributes
 
 /**
  * Operation class facilitate in binding the CCO
@@ -22,8 +23,11 @@ public enum Operation {
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSON, "index.jsp"),
 	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
-	GET_USER_PROFILE("GUP", ResponseType.JSON, "index.jsp");
-			
+	GET_USER_PROFILE("GUP", ResponseType.JSON, "index.jsp"),
+	GET_SCHOOLEDUCATION_DATA("GSD", ResponseType.JSON, "index.jsp"),
+	ADD_SCHOOLEDUCATION_DATA("ASD", ResponseType.JSON, "index.jsp"),
+	UPDATE_SCHOOLEDUCATION_DATA("USD", ResponseType.JSON, "index.jsp");
+	
 	private final String commandString;
 	private final ResponseType responseType;
 	private final String viewJspUrl;
