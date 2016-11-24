@@ -31,7 +31,7 @@
 <!-- jQuery & Other js -->
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
 
 </body>
