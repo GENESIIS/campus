@@ -28,7 +28,7 @@
 </button>
 
 <!-- Button trigger School Education modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
   School Education
 </button>
 
