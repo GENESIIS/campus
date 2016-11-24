@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
 //20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
+//20161124 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query by selecting CP code.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,7 +73,7 @@ public class ProgrammeDAO implements ICrud {
 				log.info("tempquery " + tempquery);
 
 				conn = ConnectionManager.getConnection();
-				String query = "SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX]"
+				String query = "SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE]"
 						+ "FROM [CAMPUS].[PROGRAMME] p "
 						+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
 						+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
@@ -98,7 +99,7 @@ public class ProgrammeDAO implements ICrud {
 					singleProgrammeList.add(rs.getString("PROVIDER"));
 					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 					singleProgrammeList.add(rs.getString("IMAGE"));
-					
+					singleProgrammeList.add(rs.getString("CPCODE"));
 					final Collection<String> singleProgrammeCollection = singleProgrammeList;
 					allProgrammeList.add(singleProgrammeCollection);
 				}
@@ -130,7 +131,7 @@ public class ProgrammeDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = " SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX] "
+			String query = " SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX] , cp.[CODE] as [CPCODE]"
 					+ "FROM [CAMPUS].[PROGRAMME] p "
 					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
 					+ "WHERE p.PROGRAMMESTATUS = 1";
@@ -147,7 +148,7 @@ public class ProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("PROVIDER"));
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("IMAGE"));
-
+				singleProgrammeList.add(rs.getString("CPCODE"));
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
 			}
