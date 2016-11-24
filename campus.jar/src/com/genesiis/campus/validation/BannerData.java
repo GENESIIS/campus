@@ -9,6 +9,10 @@
 //20161123 MM c2-integrate-google-banners-MP Changed implementation of setBannerDetails() 
 //				so that when there are no banner records for a pageSlot, Google advert code
 //				assigned to the relevant request attribute to be sent to JSP
+//20161124 MM c2-integrate-google-banners-MP Made the operation more automated by adding 
+//				code to set the currently loaded JSP as an attribute named "callerPage" 
+//				to be used by the Ajax call in the front-end when sending the banner-stat-update 
+//				request
 
 package com.genesiis.campus.validation;
 
@@ -161,6 +165,7 @@ public class BannerData {
 					}
 				}
 				helper.setAttribute("bannerPath", bannerPath);
+				helper.setAttribute("callerPage", pageName);
 
 			} catch (SQLException sqle) {
 				Log.info("getBannerData(Operation): SQLException: "
