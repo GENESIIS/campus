@@ -137,9 +137,12 @@ public class CmdSendInstituteInquiry implements ICommand {
 
 		fullname = helper.getParameter("fullname");
 		sendersEmail = helper.getParameter("email");
-		countryCode = helper.getParameter("countryCode");
-		areaCode = helper.getParameter("areaCode");
-		telNo = helper.getParameter("telNum");
+//		countryCode = helper.getParameter("countryCode");
+//		areaCode = helper.getParameter("areaCode");
+//		telNo = helper.getParameter("telNum");
+		countryCode = "0094";
+		areaCode = "31";
+		telNo ="2245458";
 		inquiryTitle = helper.getParameter("inquiryTitle");
 		inquiry = helper.getParameter("inquiry");
 		studentCode = Integer.parseInt(helper.getParameter("studentCode"));

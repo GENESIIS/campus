@@ -40,7 +40,7 @@ function isempty(fieldValue) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
+	var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	return isPatternMatch(pattern, emailAddress);
 }
 /**
@@ -67,6 +67,14 @@ function isPatternMatch(regularExpression, source) {
 	return regularExpression.test(source);
 
 }
+function isValidCharactor(name) {
+	var charactorset = name;
+	var pattern = /^(\w+\s?)*\s*$/;
+	//pattern.test(charactorset);
+	charactorset.replace(/\s+$/, '');
+	return isPatternMatch(pattern, charactorset);
+}
+}
 
 /**
  * Validate institute inquiry fields
@@ -76,18 +84,25 @@ function isPatternMatch(regularExpression, source) {
 function validateInstituteInquiryFileds() {
 	var fullname = $("#input-firstName").val();
 	var email = $("#eMail").val();
-	var countryCode = $("#input-county-code").val();
-	var areaCode = $("#input-area-code").val();
-	var telephoneNumber = $("#input-tp-no").val();
+	// var countryCode = $("#input-county-code").val();
+	// var areaCode = $("#input-area-code").val();
+	// var telephoneNumber = $("#input-tp-no").val();
 	var inquiryTitle = $("#input-inquiry-title").val();
 	var inquiry = $("#text-userMessage").val();
 	var response = grecaptcha.getResponse();
+
 	var flag = true;
 
 	if (!isempty(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
 		document.getElementById('input-firstName').focus();
 		flag = false;
+	}
+	if (!isValidCharactor(fullname)) {
+		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
+		document.getElementById('input-firstName').focus();
+		flag = false;
+
 	}
 	if (!isValidEmailFormat(email)) {
 		document.getElementById('emailError').innerHTML = "**Invalid Email.";
@@ -99,61 +114,42 @@ function validateInstituteInquiryFileds() {
 		document.getElementById('eMail').focus();
 		flag = false;
 	}
-	if (isNaN(countryCode)) {
-		document.getElementById('countryCodeError').innerHTML = "**Invalid Country code.";
-		document.getElementById('input-county-code').focus();
+
+	if (!isValidCharactor(inquiryTitle)) {
+		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
+		document.getElementById('input-inquiry-title').focus();
 		flag = false;
-	}
-	if (!isempty(countryCode)) {
-		document.getElementById('countryCodeError').innerHTML = "**Country code cannot be empty.";
-		document.getElementById('input-county-code').focus();
-		flag = false;
-	}
-	if (isNaN(areaCode)) {
-		document.getElementById('areaCodeError').innerHTML = "**Invalid Area code.";
-		document.getElementById('input-area-code').focus();
-		flag = false;
-	}
-	if (!isempty(areaCode)) {
-		document.getElementById('areaCodeError').innerHTML = "**Area code cannot be empty.";
-		document.getElementById('input-area-code').focus();
-		flag = false;
-	}
-	if (!isempty(telephoneNumber)) {
-		document.getElementById('telNumError').innerHTML = "**telephone number cannot be empty.";
-		document.getElementById('input-tp-no').focus();
-		flag = false;
-	}
-	if (isNaN(telephoneNumber)) {
-		document.getElementById('telNumError').innerHTML = "**Invalid telephone number.";
-		document.getElementById('input-tp-no').focus();
-		flag = false;
+
 	}
 	if (!isempty(inquiryTitle)) {
 		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
-		document.getElementById('input-tp-no').focus();
+		document.getElementById('input-inquiry-title').focus();
 		flag = false;
 	}
+
 	if (!isempty(inquiry)) {
 		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
-		document.getElementById('input-tp-no').focus();
+		document.getElementById('text-userMessage').focus();
 		flag = false;
 	}
 	if (response.length == 0) {
 		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
-		document.getElementById('input-tp-no').focus();
+		document.getElementById('captchaError').focus();
 		flag = false;
 	}
 	return (flag);
 }
 
-
+function clearMessageField() {
+	$(document).find('#message').text('');
+}
 /**
- * @param clearField 
- * @param elementId the id of the HTML element
+ * @param clearField
+ * @param elementId
+ *            the id of the HTML element
  */
 
-function clearField(elementId){	
-	 $(document).find('#' + elementId).text('');
-	 $(document).find('#message').text('');
+function clearField(elementId) {
+	$(document).find('#' + elementId).text('');
+	$(document).find('#message').text('');
 }

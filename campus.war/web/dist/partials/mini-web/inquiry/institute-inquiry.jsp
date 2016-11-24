@@ -126,32 +126,32 @@
 						<div class="f-name">
 							<label for="input-firstName">Full Name <span>*</span>
 							</label> <label id="fullNameError"></label><br> <input type="text"
-								name="fullname" id="input-firstName" onclick="clearField('fullNameError')" required>
+								name="fullname" id="input-firstName" onclick="clearField('fullNameError')" maxlength="250" required>
 						</div>
 						<!-- Email -->
 						<div class="email">
 							<label for="eMail">Email <span>*</span></label><label
 								id="emailError"></label><br> <input type="text"
-								name="email" id="eMail" onclick="clearField('emailError')" required>
+								name="email" id="eMail" onclick="clearField('emailError')" maxlength="100" required>
 						</div>
 						<!--Country Code -->
-						<div class="county-code">
+					<!-- 	<div class="county-code">
 							<label for="input-county-code">Country Code <span>*</span></label><label
 								id="countryCodeError"></label><br> <input type="text"
-								name="countryCode" id="input-county-code" onclick="clearField('countryCodeError')" required>
-						</div>
+								name="countryCode" id="input-county-code" onclick="clearField('countryCodeError')" maxlength="4" required>
+						</div> -->
 						<!-- Area Code -->
-						<div class="area-code">
+					<!-- 	<div class="area-code">
 							<label for="input-area-code">Area Code <span>*</span></label><label
 								id="areaCodeError"></label><br> <input type="text"
-								name="areaCode" id="input-area-code" onclick="clearField('areaCodeError')" required>
-						</div>
+								name="areaCode" id="input-area-code" onclick="clearField('areaCodeError')" maxlength="4" required>
+						</div> -->
 						<!-- Telephone -->
-						<div class="tp-number">
+				<!-- 		<div class="tp-number">
 							<label for="input-tp-no">Telephone No <span>*</span></label><label
 								id="telNumError"></label><br> <input type="text"
-								name="telNum" id="input-tp-no" onclick="clearField('telNumError')" required> 
-						</div>
+								name="telNum" id="input-tp-no" onclick="clearField('telNumError')" maxlength="11" required> 
+						</div> -->
 						<!-- Enquiry Title -->
 						<div class="inquiry-title">
 							<label for="input-inquiry-title">Inquiry Title <span>*</span></label><label
@@ -176,7 +176,7 @@
 						</div>
 						<!-- btn Submit -->
 						<button class="btn-submit" type="submit" name="CCO" id="CCO"
-							value="SII" class="pure-button pure-button-primary">Send
+							value="SII" class="pure-button pure-button-primary" onclick="clearMessageField()">Send
 							Inquiry</button>
 
 					</form>

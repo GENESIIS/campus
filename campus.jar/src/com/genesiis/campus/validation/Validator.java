@@ -19,6 +19,7 @@ public class Validator {
 
 	/**
 	 * Check the given value is empty or not empty
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a null value.
@@ -32,7 +33,8 @@ public class Validator {
 	}
 
 	/**
-	 * Check the given mail address is valid email or not 
+	 * Check the given mail address is valid email or not
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate email address.
@@ -47,7 +49,8 @@ public class Validator {
 	}
 
 	/**
-	 * Validate institute course provider inquiry form data 
+	 * Validate institute course provider inquiry form data
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return String to validate is given strings contains a null value.
@@ -58,27 +61,25 @@ public class Validator {
 
 		if (!(isNotEmpty(helper.getParameter("fullname"))
 				|| isNotEmpty(helper.getParameter("email"))
-				|| isNotEmpty(helper.getParameter("countryCode"))
-				|| isNotEmpty(helper.getParameter("areaCode"))
-				|| isNotEmpty(helper.getParameter("telNum"))
 				|| isNotEmpty(helper.getParameter("inquiryTitle")) || isNotEmpty(helper
 					.getParameter("inquiry")))) {
 			message = SystemMessage.EMPTYFIELD.message();
 		} else if (!validateEmail(helper.getParameter("email"))) {
 			message = SystemMessage.EMAILERROR.message();
-
-		} else if (!isInteger(helper.getParameter("countryCode"))) {
-			message = SystemMessage.INVALIDECODE.message();
-		} else if (!isInteger(helper.getParameter("areaCode"))) {
-			message = SystemMessage.INVALIDEAREA.message();
-		} else if (!isInteger(helper.getParameter("telNum"))) {
-			message = SystemMessage.PHONENUMBERERROR.message();
 		}
+		// } else if (!isInteger(helper.getParameter("countryCode"))) {
+		// message = SystemMessage.INVALIDECODE.message();
+		// } else if (!isInteger(helper.getParameter("areaCode"))) {
+		// message = SystemMessage.INVALIDEAREA.message();
+		// } else if (!isInteger(helper.getParameter("telNum"))) {
+		// message = SystemMessage.PHONENUMBERERROR.message();
+		// }
 		return message;
 	}
 
 	/**
 	 * Check the given number is valid number or not
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a numaric value.
