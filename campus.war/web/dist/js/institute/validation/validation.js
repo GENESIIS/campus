@@ -29,7 +29,7 @@ function isFieldFilled(flag, elementName) {
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == '') || (fieldValue == null)) ? false : true;
 }
 
 /**
@@ -69,11 +69,17 @@ function isPatternMatch(regularExpression, source) {
 }
 function isValidCharactor(name) {
 	var charactorset = name;
+	var a = /^\s+$/.test(name);
 	var pattern = /^(\w+\s?)*\s*$/;
-	//pattern.test(charactorset);
-	charactorset.replace(/\s+$/, '');
+	// pattern.test(charactorset);
+	// charactorset.replace(/\s+$/, '');
 	return isPatternMatch(pattern, charactorset);
 }
+
+function isAvailableSpace(name) {
+	var result = /^\s+$/.test(name);
+
+	return result;
 }
 
 /**
@@ -93,16 +99,28 @@ function validateInstituteInquiryFileds() {
 
 	var flag = true;
 
-	if (!isempty(fullname)) {
-		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
-		document.getElementById('input-firstName').focus();
-		flag = false;
-	}
 	if (!isValidCharactor(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
 		document.getElementById('input-firstName').focus();
 		flag = false;
 
+	}
+	if (fullname.length > 250) {
+		document.getElementById('fullNameError').innerHTML = "**Invalid Name.";
+		document.getElementById('input-firstName').focus();
+		flag = false;
+
+	}
+	if (isAvailableSpace(fullname)) {
+		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
+		document.getElementById('input-firstName').focus();
+		flag = false;
+
+	}
+	if (!isempty(fullname)) {
+		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
+		document.getElementById('input-firstName').focus();
+		flag = false;
 	}
 	if (!isValidEmailFormat(email)) {
 		document.getElementById('emailError').innerHTML = "**Invalid Email.";
@@ -121,6 +139,18 @@ function validateInstituteInquiryFileds() {
 		flag = false;
 
 	}
+	if (inquiryTitle.length > 70) {
+		document.getElementById('inquiryTitleError').innerHTML = "**Title charactor limit exceeded.";
+		document.getElementById('input-inquiry-title').focus();
+		flag = false;
+
+	}
+	if (isAvailableSpace(inquiryTitle)) {
+		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
+		document.getElementById('input-inquiry-title').focus();
+		flag = false;
+
+	}
 	if (!isempty(inquiryTitle)) {
 		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
 		document.getElementById('input-inquiry-title').focus();
@@ -131,6 +161,12 @@ function validateInstituteInquiryFileds() {
 		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
 		document.getElementById('text-userMessage').focus();
 		flag = false;
+	}
+	if (isAvailableSpace(inquiry)) {
+		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
+		document.getElementById('text-userMessage').focus();
+		flag = false;
+
 	}
 	if (response.length == 0) {
 		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
