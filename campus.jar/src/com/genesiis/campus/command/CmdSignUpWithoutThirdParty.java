@@ -1,5 +1,6 @@
 package com.genesiis.campus.command;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 
@@ -9,14 +10,14 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.StudentDAO;
+import com.genesiis.campus.entity.SigningUpStudentDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.PrevalentValidation;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
-import com.genesiis.campus.util.security.Encryptable;
-import com.genesiis.campus.util.security.TripleDesEncryptor;
-import com.genesiis.campus.util.ConnectionManager;
+
+
 
 import java.sql.Connection;
 
@@ -28,29 +29,23 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 
 	static Logger log = Logger.getLogger(CmdSignUpWithoutThirdParty.class.getName());
 	private RowStudentForJason partialStudent;
-	private Encryptable passwordEncryptor;
-	private Connection conn ;
+	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		
-		//accept all the data from the front end back end data validation
-		// send the password and username to back end and  validate if they exist
-		//else return and give error
-		// if passes then write to the data base
+	
 		
 		String message = "";
+		Collection<Collection<String>> studentSignUps = new ArrayList<Collection<String>>();
 		String gsonData = helper.getParameter("jsonData");
 		partialStudent = (RowStudentForJason)extractDumyObjectFrom(gsonData);
-		ICrud studentDao = new StudentDAO();
-		Collection<Collection<String>> userNames = new ArrayList<Collection<String>>();
+		ICrud studentDao = new SigningUpStudentDAO();
 		
+		int status = 0;
 		try{
 			validateFrontEndUserProvidedInformation(partialStudent);
-			passwordEncryptor = new TripleDesEncryptor(partialStudent.getPassWord()); ////CHECK FOR CORRECT PASS WORD ENCRYPTION PRIOR TO SENF TO DATA BASE
-			conn =  ConnectionManager.getConnection();
-			userNames	= studentDao.findById(induceRowStudentForJasonToStudent(), conn);
-			
+			status	= studentDao.add(convertRowStudentForJasonToStudent());
+			message = systemMessage(status);
 			
 		} catch(SQLException sqle){
 			log.error("execute():SQLException "+sqle.toString());
@@ -60,24 +55,35 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			log.error("execute():FailedValidationException "+e.toString());
 			message = e.toString();		
 			message = message.substring(message.lastIndexOf(":") + 1);
+		}catch (IOException ioExpe) {
+			log.error("execute():IOException " + ioExpe.toString());
+			throw ioExpe;
+		} catch (Exception e) {
+			log.error("execute():Exception " + e.toString());
+			throw e;
 		} finally {
-			
+			helper.setAttribute("message", message);
 		}
 		
-		
+		// have to code how to return for JASON data.
 		return null;
 	}
 	
-	private Student induceRowStudentForJasonToStudent(){
-		Student std = new Student();
-		std.setPassword(partialStudent.getPassWord());
-		std.setUsername(partialStudent.getUserName());
-		std.setEmail(partialStudent.getEmail());
-		std.setGender(Integer.parseInt(partialStudent.getGender()));
-		std.setFirstName(partialStudent.getFirstName());
-		std.setLastName(partialStudent.getLastName());
-		std.setMobilePhoneNo(partialStudent.getMobilePhoneNo());
-		return null;
+
+	
+
+	
+	
+	private Student convertRowStudentForJasonToStudent(){
+		Student indusedStudent = new Student();
+		indusedStudent.setPassword(partialStudent.getPassWord());
+		indusedStudent.setUsername(partialStudent.getUserName());
+		indusedStudent.setEmail(partialStudent.getEmail());
+		indusedStudent.setGender(Integer.parseInt(partialStudent.getGender()));
+		indusedStudent.setFirstName(partialStudent.getFirstName());
+		indusedStudent.setLastName(partialStudent.getLastName());
+		indusedStudent.setMobilePhoneNo(partialStudent.getMobilePhoneNo());
+		return indusedStudent;
 	}
 	
 	
@@ -226,8 +232,35 @@ public Object extractDumyObjectFrom(String gsonData) {
 		public void setIsPolicyConfirm(boolean isPolicyConfirm) {
 			this.isPolicyConfirm = isPolicyConfirm;
 		}
-		
-	
-	
 	}
+	
+	/*
+	 * systemMessage() handles the system Messages according to
+	 * the state of the status passed in
+	 * @return String the message
+	 * @param status 3 request submitted successfully.
+	 * @param status -3 request submition fails.
+	 * 
+	 */
+	private String systemMessage(int status){
+		String message = SystemMessage.UNKNOWN.message();
+		switch(status){		
+		case 1:
+			message =SystemMessage.ACCOUNT_CREATED.message();
+			break;
+		case -1:
+			message =SystemMessage.USER_NAME_EXISTS.message();
+			break;
+		case -2:
+			message =SystemMessage.ACCOUNT_NOT_CREATED.message();
+			break;
+		default:			
+			break;
+		}
+		return message;
+	}
+	
+	
+	
+	
 }

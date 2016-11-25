@@ -11,5 +11,7 @@ public interface Encryptable {
 
 	byte[] encrypt() throws Exception;
 	String decrypt(byte[] message) throws Exception ;
+	String encryptSensitiveDataToString() throws Exception;
+	String decryptSensitiveDataToString(String encryptedStringTobeDecrypted) throws Exception;
 	
 }

@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,19 +13,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+
+
+
 //import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 
+
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 import org.apache.log4j.Logger;
 
-public class StudentDAO implements ICrud {
-
-	static Logger Log = Logger.getLogger(StudentDAO.class.getName());
+public class SigningUpStudentDAO implements ICrud {
+	
+	static Logger Log = Logger.getLogger(SigningUpStudentDAO.class.getName());
 
 	@Override
-	public int add(Object object) throws SQLException, Exception {
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -145,17 +153,37 @@ public class StudentDAO implements ICrud {
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException,
+	public int add(Object object) throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return 0;
+			Connection conn = null;
+			final ArrayList<String> singleStudent = new ArrayList<String>();
+			Student student = (Student)object;
+			String  userName = student.getUsername();
+			ResultSet res = null;
+			int status=0;
+			try{
+				conn =ConnectionManager.getConnection();
+				res = UserNameExist(conn,userName);
+				if(res.next()){
+					status= -1;
+				} else {
+					status = addSignInDataWOThirdPartyAppToRepository(conn,student);
+				}
+			}catch (SQLException sqle){
+				Log.error("findById(Object objecConnection conn) :SQLException "+sqle.toString());  
+				throw sqle;
+			} catch(Exception e){
+				Log.error("findById(Object objecConnection conn) :Exception "+e.toString());
+				throw e;
+			} finally{
+				if(conn != null) conn.close();
+			}
+			return status;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(Object object, Connection conn) throws SQLException,Exception {
+			return 0;
 	}
 
 	@Override
@@ -168,46 +196,103 @@ public class StudentDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
-		Student student = (Student)object;
-		String  userName = student.getUsername();
-		ResultSet res = null;
-		int status=0;
-		res = UserNameExist(conn,userName);
-		if(res.next()){
-			return null;
-		} else {
-			//add updateion to the student Table
-		}
 		
-		return null;
+		 return null;
+		
 }
-
-	
+/*
+ * Method use connection and adds the sign in information
+ * to the repository table:Student
+ * @param conn Connection to the data base
+ * @return int:integer containing the status of the update if success returns >0
+ * else = value.
+ * @throws SQLException
+ * @throws Exception
+ */
+	private int addSignInDataWOThirdPartyAppToRepository(Connection conn,Student student)throws SQLException,Exception{
+		int status = 0;
+		PreparedStatement prepstmt =null;
+		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[STUDENT]");
+		queryBuilder.append(" ([USERNAME],[PASSWORD],[FIRSTNAME],[LASTNAME]],[GENDER],[EMAIL], ");
+		queryBuilder.append(" [MOBILEPHONENO],[CRTON],[CRTBY],[MODON],[MODBY]); ");
+		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),? )");
+		try{
+				prepstmt =conn.prepareStatement(queryBuilder.toString());		
+				Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword());
+				prepstmt.setString(1, student.getUsername());
+				prepstmt.setString(2, passwordEncryptor.encryptSensitiveDataToString()); 
+				prepstmt.setString(3, student.getFirstName());
+				prepstmt.setString(4, student.getLastName());
+				prepstmt.setInt(5, student.getGender());
+				prepstmt.setString(6,student.getEmail());
+				prepstmt.setString(7,student.getMobilePhoneNo());
+				prepstmt.setString(9,student.getUsername());
+				prepstmt.setString(11,student.getUsername()); // this has to change once the Login session is implemented
+				status = (prepstmt.executeUpdate()==1)?1:-2;
+			
+		} catch(SQLException sqle) {
+			Log.error("addSignInDataWOThirdPartyAppToRepository(): SQLException"+ sqle.toString());
+			throw sqle;
+		} catch(Exception exp) {
+			Log.error("addSignInDataWOThirdPartyAppToRepository(): Exception"+exp.toString());
+			throw exp;
+		} finally{
+			if(prepstmt!=null) prepstmt.close();
+		}
+		return status;
+	}
 	
 	/*
 	 * method UserNameExist() checks if the if there an record exist for the given
 	 * username
-	 * returns returns ResultSet object which is empty if there is no any records else 
+	 * @returns returns ResultSet object which is empty if there is no any records else return null
 	 * having values that is returned from the data base
 	 * @param con Connection data base connection
 	 * @param String userName
 	 * 
 	 */
-	private ResultSet UserNameExist( Connection con, String userName) throws SQLException {
+	private ResultSet UserNameExist( Connection con,String userName) throws SQLException {
 		String userName1 = ((userName==null)||(userName==""))?null:userName;
 		StringBuilder sb = new StringBuilder("SELECT [USERNAME],[ISACTIVE] FROM [CAMPUS].[STUDENT] ");		
 		sb.append(" WHERE [USERNAME]  = ? ;");
 		final String checkActive = sb.toString();
-		ResultSet res= null;
-		PreparedStatement prs = con.prepareStatement(checkActive);
-		prs.setString(1, userName1); 		
-		boolean resStatus = false;
-		return prs.executeQuery();
-
+		PreparedStatement prs = null;
+		ResultSet res = null;
+		try{
+			prs = con.prepareStatement(checkActive);
+			prs.setString(1, userName1); 		
+			boolean resStatus = false;
+			res= prs.executeQuery();
+			
+		} catch (SQLException sqle) {			
+			Log.error("");
+			throw sqle;
+		} catch(Exception exp) {
+			Log.error("");
+			throw exp;
+		} finally {
+			if(prs!=null) prs.close();
+		}
+		return res;
 	}
 	
 	
-	
-	
+//	private String  encryptSensitiveDataToString(String sensitiveData){	
+//		String encrypetedStringFormat = "";
+//		Encryptable passwordEncryptor = new TripleDesEncryptor(sensitiveData); 
+//		encrypetedStringFormat = new String(passwordEncryptor.encrypt());
+//		return encrypetedStringFormat;
+//	
+//	}
+//	
+//	
+//	private String  decryptSensitiveDataToString(String encryptedString){	
+//		String byteArradecrypetedToStringFormat = "";
+//		byte[] encryptedByteArray = encryptedString.getBytes(Charset.forName("UTF-8"));
+//		Encryptable passwordEncryptor = new TripleDesEncryptor();
+//		byteArradecrypetedToStringFormat= passwordEncryptor.decrypt(encryptedByteArray);
+//		return byteArradecrypetedToStringFormat;
+//	
+//	}
 	
 }

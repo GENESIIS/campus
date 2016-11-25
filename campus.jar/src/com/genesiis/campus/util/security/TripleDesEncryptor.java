@@ -3,6 +3,7 @@ package com.genesiis.campus.util.security;
 //20162223 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -13,6 +14,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.command.CmdGenerateEmail;
 /**
  * TripleDesEncryptor provides Triple Data Encryption Algorithm (TDEA or Triple DEA),
  *  It is a symmetric-key block cipher, which applies 
@@ -22,14 +26,17 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class TripleDesEncryptor implements Encryptable{
+	static Logger log = Logger.getLogger(TripleDesEncryptor.class.getName());
 	private String passWord ;
-	
-	
+
 	public TripleDesEncryptor(String passWord){
 		this.passWord = passWord;
 	
 	}
+	public TripleDesEncryptor(){
+		
 	
+	}
 	/**
 	 * encrypt the key value bound to the TripleDesEncryptor
 	 * instance	itself
@@ -102,6 +109,45 @@ public class TripleDesEncryptor implements Encryptable{
 		this.passWord = passWord;
 	}
 
-
+	
+	public String  encryptSensitiveDataToString() throws Exception{	
+		String encrypetedStringFormat = "";		
+		try {
+				if (getPassWord()!=null|getPassWord()!="") {
+				encrypetedStringFormat = new String(encrypt());
+			}
+		} catch (Exception exp) {
+			log.error("encryptSensitiveDataToString(): Exception "+exp.toString());
+			throw exp;
+		}
+		return encrypetedStringFormat;
+	
+	}
+	
+	public String  decryptSensitiveDataToString(String encryptedStringTobeDecrypted) throws Exception{	
+		String byteArradecrypetedToStringFormat = "";
+		byte[] encryptedByteArray = encryptedStringTobeDecrypted.getBytes(Charset.forName("UTF-8"));
+		try {
+			byteArradecrypetedToStringFormat= decrypt(encryptedByteArray);
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+		return byteArradecrypetedToStringFormat;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
