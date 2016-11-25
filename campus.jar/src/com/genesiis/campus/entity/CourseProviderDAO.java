@@ -416,16 +416,23 @@ public class CourseProviderDAO implements ICrud{
 	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode) throws SQLException{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
-		ResultSet resultSet =null;		
+		ResultSet rs =null;		
 		final List<CourseProviderResultDTO> dtos=new ArrayList<CourseProviderResultDTO>();
 		try {
 			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT CP.COURSEPROVIDERTYPE, PROG.MAJOR,PROG.LEVEL,PROG.CATEGORY FROM [CAMPUS].COURSEPROVIDER CP ");
+			final StringBuilder sb = new StringBuilder("SELECT CP.COURSEPROVIDERTYPE AS COURSEPROVIDERTYPE, PROG.MAJOR AS MAJOR,PROG.LEVEL AS LEVEL ,PROG.CATEGORY FROM [CAMPUS].COURSEPROVIDER CP ");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON CP.CODE=PROG.COURSEPROVIDER WHERE PROG.CATEGORY=? "); 
 			
             stmt = conn.prepareStatement(sb.toString());
             stmt.setInt(1, categoryCode);
-            resultSet= stmt.executeQuery();
+            rs= stmt.executeQuery();
+            while (rs.next()) {				
+    			final CourseProviderResultDTO reusltDTO = new CourseProviderResultDTO();
+    			reusltDTO.setCourserProviderType(rs.getInt("COURSEPROVIDERTYPE"));
+    			reusltDTO.setMajor(rs.getInt("MAJOR"));				
+    			reusltDTO.setLevel(rs.getInt("LEVEL"));    			
+    			dtos.add(reusltDTO);
+    		}    		
             
 		} catch (SQLException sqlException) {
 			log.info("getCategoryWiseTypes() sqlException" + sqlException.toString());
@@ -434,7 +441,7 @@ public class CourseProviderDAO implements ICrud{
 			log.info("getCategoryWiseTypes() Exception" + e.toString());
 			throw e;
 		} finally {
-			DaoHelper.cleanup(conn, stmt, resultSet);
+			DaoHelper.cleanup(conn, stmt, rs);
 		}		
 		return dtos;
 	}
