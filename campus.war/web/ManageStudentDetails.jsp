@@ -44,19 +44,21 @@
         <h4 class="modal-title" id="studentSchoolEducation">School Education</h4>
       </div>
       <div class="modal-body">
-			Qualification 
+			Grade 
 			<select id="sseQualification" name = "sseQualification">
-				<option value="">--Select One--</option>
+				<option value="-1">--Select One--</option>
 			</select>
 			<br/>
-			Scheme
-			<select id="sseScheme" name = "sseScheme">
+			Subject Stream
+			<select id="sseStream" name = "sseStream">
 				<option value="">--Select One--</option>
 			</select>
 			<br/>
 			Result
 			<select id="sseResult" name = "sseResult">
 				<option value="">--Select One--</option>
+				<option value="1">Pass</option>
+				<option value="0">Fail</option>
 			</select>
 			<br/>
 			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" ><br>
