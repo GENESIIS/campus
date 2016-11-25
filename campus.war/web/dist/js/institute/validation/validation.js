@@ -118,3 +118,34 @@ function validEmailFormat(){
 	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
 	return isPatternMatch(pattern,emailAddress);
 }
+
+/**
+ * This method is to set dropdown value to default value.
+ * @param selectElement
+ * @returns
+ */
+function resetSelectElement(selectElement) {
+	var options = selectElement.options;
+
+	// Look for a default selected option
+	for (var i = 0, iLen = options.length; i < iLen; i++) {
+
+		if (options[i].defaultSelected) {
+			selectElement.selectedIndex = i;
+			return;
+		}
+	}
+
+	// If no option is the default, select first or none as appropriate
+	selectElement.selectedIndex = 0; // or -1 for no option selected
+}
+
+/**
+ * This method is to set dropdown value to default value.
+ * @param selectElement
+ * @returns
+ */
+function resetSelectElement(selectElement) {
+	selecElement.selectedIndex = 0; // first option is selected, or
+	// -1 for no option selected
+}
