@@ -19,6 +19,7 @@
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
+<script src="dist/js/student/student-details-handler.js"></script>
 </head>
 <body>
 
