@@ -66,38 +66,11 @@ public class CmdAddTutorProfile implements ICommand {
 		try {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
-
-			message = validateTutorFields(helper);
+			final Validator validator=new Validator();
+			message = validator.validateTutorFields(helper);
 			if (message.equalsIgnoreCase("True")) {
 
 				setVariables(helper);
-				// username = helper.getParameter("username");
-				// password = helper.getParameter("password");
-				// firstName = helper.getParameter("firstname");
-				// middleName = helper.getParameter("middlename");
-				// lastName = helper.getParameter("lastname");
-				// gender = helper.getParameter("gender");
-				// email = helper.getParameter("email");
-				// String imagepath=helper.getParameter("imagepath");
-				// landCountryCode = helper.getParameter("landCountryCode");
-				// landAreaCode = helper.getParameter("landphoneAreaCode");
-				// landNumber = helper.getParameter("landAreaCode");
-				// mobileCountryCode = helper.getParameter("mobileCountryCode");
-				// mobileNetworkCode = helper.getParameter("mobileNetworkCode");
-				// mobileNumber = helper.getParameter("mobileNumber");
-				// description = helper.getParameter("aboutMe");
-				// experience = helper.getParameter("experience");
-				// webLink = helper.getParameter("weblink");
-				// facebook = helper.getParameter("facebook");
-				// twitter = helper.getParameter("twitter");
-				// MySpace = helper.getParameter("myspace");
-				// linkedIn = helper.getParameter("linkedin");
-				// instagram = helper.getParameter("instagram");
-				// viber = helper.getParameter("viber");
-				// whatsApp = helper.getParameter("whatsapp");
-				// addressLine1 = helper.getParameter("address1");
-				// addressLine2 = helper.getParameter("address2");
-				// addressLine3 = helper.getParameter("address3");
 
 				tutor.setUsername(username);
 				tutor.setPassword(password);
@@ -148,27 +121,15 @@ public class CmdAddTutorProfile implements ICommand {
 		return view;
 	}
 
-	public String validateTutorFields(IDataHelper helper) throws Exception {
-		final Validator v = new Validator();
-		try {
-			if (!(Validator.isNotEmpty(helper.getParameter("username"))
-					|| (Validator.isNotEmpty(helper.getParameter("password")))
-					|| (Validator.isNotEmpty(helper.getParameter("firstname")))
-					|| (Validator.isNotEmpty(helper.getParameter("lastname")))
-					|| (Validator.isNotEmpty(helper.getParameter("email")))
-					|| (Validator.isNotEmpty(helper
-							.getParameter("mobileNumber"))) || (Validator
-						.isNotEmpty(helper.getParameter("addressLine1"))))) {
-				message = SystemMessage.EMPTYFIELD.message();
-			}
+	
 
-		} catch (Exception e) {
-			log.error("validateTutorFields" + e);
-			throw e;
-		}
-		return message;
-	}
-
+	/*
+	 * setEnvironment() method initializes all the instance variable
+	 * 
+	 * @author CM
+	 * 
+	 * @param helper IDataHelper
+	 */
 	public void setVariables(IDataHelper helper) {
 		try {
 			username = helper.getParameter("username");
@@ -205,7 +166,7 @@ public class CmdAddTutorProfile implements ICommand {
 			if (helper.getParameter("weblink").equals("")) {
 				webLink = "-";
 			} else {
-				webLink = helper.getParameter("webLink");
+				webLink = helper.getParameter("weblink");
 			}
 
 			if (helper.getParameter("facebook").equals("")) {
@@ -262,7 +223,7 @@ public class CmdAddTutorProfile implements ICommand {
 				addressLine3 = helper.getParameter("address3");
 			}
 		} catch (Exception e) {
-			log.error("validateTutorFields()" + e);
+			log.error("setVariables()" + e);
 			throw e;
 		}
 	}
