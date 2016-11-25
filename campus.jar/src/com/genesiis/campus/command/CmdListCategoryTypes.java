@@ -50,34 +50,33 @@ public class CmdListCategoryTypes implements ICommand {
 		}
 		if (categoryCode > 0) {
 
-			final List<CourseProviderResultDTO> categoryTypes = new CourseProviderDAO()
-					.getCategoryWiseTypes(categoryCode);
+			final List<CourseProviderResultDTO> categoryTypes = new CourseProviderDAO().getCategoryWiseTypes(categoryCode);
 
-			final Set<Integer> cpTypeSet = new HashSet<>();
-			final Set<Integer> majorSet = new HashSet<>();
-			final Set<Integer> levelSet = new HashSet<>();
+			final Set<Integer> cpTypeCodeSet = new HashSet<>();
+			final Set<Integer> majorCodeSet = new HashSet<>();
+			final Set<Integer> levelCodeSet = new HashSet<>();
 
 			for (CourseProviderResultDTO dto : categoryTypes) {
-				cpTypeSet.add(dto.getCourserProviderType());
-				majorSet.add(dto.getMajor());
-				levelSet.add(dto.getLevel());
+				cpTypeCodeSet.add(dto.getCourserProviderType());
+				majorCodeSet.add(dto.getMajor());
+				levelCodeSet.add(dto.getLevel());
 			}
 
 			// List course provider types for the drop down
-			if (cpTypeSet != null && !cpTypeSet.isEmpty()) {
-				final Collection<Collection<String>> cpTypeList = new CourseProviderTypeDAO().findByCPTypes(cpTypeSet);
+			if (cpTypeCodeSet != null && !cpTypeCodeSet.isEmpty()) {
+				final Collection<Collection<String>> cpTypeList = new CourseProviderTypeDAO().findCPTypesByCodes(cpTypeCodeSet);
 				helper.setAttribute("cpTypeList", cpTypeList);
 			}
 
 			// List Majors for the drop down
-			if (majorSet != null && !majorSet.isEmpty()) {
-				final Collection<Collection<String>> majorList = new MajorDAO().findById(majorSet);
+			if (majorCodeSet != null && !majorCodeSet.isEmpty()) {
+				final Collection<Collection<String>> majorList = new MajorDAO().findMajorsByMajorCodes(majorCodeSet);
 				helper.setAttribute("majorList", majorList);
 			}
 
 			// List Levels for the drop down
-			if (levelSet != null && !levelSet.isEmpty()) {
-				final Collection<Collection<String>> levelList = new LevelDAO().findById(levelSet);
+			if (levelCodeSet != null && !levelCodeSet.isEmpty()) {
+				final Collection<Collection<String>> levelList = new LevelDAO().findLevelsByLevelCodes(levelCodeSet);
 				helper.setAttribute("levelList", levelList);
 			}
 

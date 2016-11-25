@@ -2,7 +2,7 @@ package com.genesiis.campus.entity;
 
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created CourseProviderTypeDAO.java
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
-//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findByCPTypes() method
+//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findCPTypesByCodes() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,7 +123,7 @@ public class CourseProviderTypeDAO implements ICrud{
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findByCPTypes(Set<Integer> cpTypeSet) throws SQLException{
+	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -133,7 +133,7 @@ public class CourseProviderTypeDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
 			sb.append("	WHERE CPTYPE.ISACTIVE=1 AND CPTYPE.CODE IN (");
 			boolean doneOne = false;
-			for (Integer code : cpTypeSet) {
+			for (Integer code : cpTypeCodeSet) {
 				if (doneOne) {
 					sb.append(", ");
 				}
