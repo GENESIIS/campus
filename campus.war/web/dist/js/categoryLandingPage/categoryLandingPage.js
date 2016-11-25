@@ -27,6 +27,9 @@
  * 20161116 MM c5-corporate-training-landing-page-MP Changed style of displayed error messages.													
  * 20161122 MM c5-corporate-training-landing-page-MP Modified code to prevent filtering menu from being shown when there are 
  * 													no returned programme records and to show a message when to the user then 													
+ * 20161125 MM c5-corporate-training-landing-page-MP Modified code related to error-message displaying to make it more 
+ *													loosely-coupled with the rest of the code. Now allows dynamic backgrounds
+ *													according to severity of the message to be diplayed.													
  *
  */
 
@@ -42,23 +45,33 @@ window.numOfResultsPerPageFetched = null;
 window.courseProviderLogoPathFetched = null;
 window.filterType = null;
 window.messages = null;
+window.messageType = {INFO: 'INFO', ERROR: 'ERROR'}
 
 $(document).ready(function() {
 	$('#message-container').hide();
 	getProgrammeData();
 });
 
-function showMessages(messages) {
-	var messagesHtml = '';
+function showMessages(messages, msgType) {
+	
+	var msgStyleClass = '';
+	
+	if (msgType === 'INFO') {
+		msgStyleClass = 'alert-info';
+	} else if (msgType === 'ERROR') {
+		msgStyleClass = 'alert-danger';
+	}
+	
+	$('#message-container').remove();
+	var messagesHtml = '<div id="message-container" class="alert text-center ' + msgStyleClass + '" role="alert">';
 	if (messages != undefined && messages != null && messages.length > 0) {
-		messagesHtml += '<span style="font-weight: 700">ERROR: </span>';
+		messagesHtml += '<span style="font-weight: 700">' + msgType + ': </span>';
 		for (var i = 0; i < messages.length; i++) {
 			messagesHtml += '<span>' + messages[i] + '</span></br>';
 		}
-		$('#message-container').html(messagesHtml).show();
-	} else {
-		$('#message-container').hide();
-	}
+		messagesHtml += '</div>';
+		$('div.course-filter-panel > div.filtering-area > div.top').after(messagesHtml);
+	}	
 }
 function getProgrammeData() {
 	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
@@ -90,12 +103,12 @@ function getProgrammeData() {
 				if (window.programmeCollectionFetched !== undefined && window.programmeCollectionFetched !== null && window.programmeCollectionFetched.length > 0) {
 					constructLevelOrMajorMenu();
 					createProgrammeListingAndPaginator();
-					showMessages(window.messages);
+					showMessages(window.messages, window.messageType.ERROR);
 				} else {
 					var messages = [];
 					messages.push("It seems that no programmes are available for this category at the moment.");
 					messages.push("Please check back soon...");
-					showMessages(messages);
+					showMessages(messages, window.messageType.INFO);
 				}
 			}			
 		},
@@ -103,7 +116,7 @@ function getProgrammeData() {
 			var messageList = [];
 			messageList.push("There was an error retrieving data to display from the server.");
 			messageList.push("Please check that you are connected to the Internet and that you are sending the correct data.");
-			showMessages(messageList);
+			showMessages(messageList, window.messageType.ERROR);
 		}
 	});
 }
@@ -170,11 +183,20 @@ function constructProgrammeListing(pageNum) {
 	var courseProviderLogoPath = window.courseProviderLogoPathFetched;
 	
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
+
+	var indexIndicatorOfLastProg = null;
+	var indexOfFirstProgNeeded = null;
 	
-	var indexIndicatorOfLastProg = numOfResultsPerPage * pageNum;
-	var indexOfFirstProgNeeded = indexIndicatorOfLastProg - numOfResultsPerPage;
+	if (numOfResultsPerPage != undefined && numOfResultsPerPage != null && $.isNumeric(numOfResultsPerPage)) {
+		indexIndicatorOfLastProg = numOfResultsPerPage * pageNum;
+		indexOfFirstProgNeeded = indexIndicatorOfLastProg - numOfResultsPerPage;
+	}
 	
-	var programmeCollectionForCurrentPage = programmeCollection.slice(indexOfFirstProgNeeded, indexIndicatorOfLastProg);	
+	var programmeCollectionForCurrentPage = null;
+	
+	if (programmeCollection !== undefined && programmeCollection !== null && programmeCollection.length > 0) {
+		programmeCollectionForCurrentPage = programmeCollection.slice(indexOfFirstProgNeeded, indexIndicatorOfLastProg);
+	}	
 	
 	//Construct the Programme listing 
 	var programmesHtmlFragment = '';
@@ -222,15 +244,19 @@ function constructPaginator() {
 	var programmeCollection = window.programmeCollectionNarrowedDown;
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	
-	var totalNumOfResults = programmeCollection.length;
+	var paginatorULElement = $('div.paginator-div > nav > ul.pagination');
+	
+	var totalNumOfResults = 0;
 	var numOfPages = 0;
+	
+	if (programmeCollection.constructor === Array) {
+		totalNumOfResults = programmeCollection.length;
+	}
 	
 	if (totalNumOfResults > 0) {
 		numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
 				parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : 
 					parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
-		
-		var paginatorULElement = $('div.paginator-div > nav > ul.pagination');
 		
 		// Construct the paginator
 		if (numOfPages !== undefined && numOfPages !== null) {
