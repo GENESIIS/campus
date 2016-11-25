@@ -88,6 +88,12 @@ textarea:focus, input:focus {
   font-size: 32px;
   line-height: 54px; }
 
+.pad-l-0 {
+  padding-left: 0 !important; }
+
+.pad-r-0 {
+  padding-right: 0 !important; }
+
 /*Font Face */
 /* Layout */
 footer .ft-top {
@@ -767,6 +773,22 @@ body, html {
             .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-at {
               color: #37474f; }
             .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-time {
+              color: #7a7a7a;
+              font-size: 13px;
+              font-family: "Raleway", sans-serif;
+              font-style: italic; }
+        .stud-dashboard .prf-page-container .right-side .widgets-e .w-education {
+          padding: 16px 20px; }
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li {
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+            color: #6a9cf1;
+            line-height: 20px;
+            padding-top: 30px;
+            padding-left: 35px; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-at {
+              color: #37474f; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-time {
               color: #7a7a7a;
               font-size: 13px;
               font-family: "Raleway", sans-serif;
