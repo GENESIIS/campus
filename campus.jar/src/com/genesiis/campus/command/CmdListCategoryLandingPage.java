@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20161115 JH c7-higher-education-landing-page change validation method for categoryId parameter , add method comments
 //20161116 JH c7-higher-education-landing-page code review mx modifications 
 //20161117 JH c7-higher-education-landing-page code review mx modifications 
+//20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -18,6 +19,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 
@@ -86,6 +88,11 @@ public class CmdListCategoryLandingPage implements ICommand {
 				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO
 						.findById(programme);
 
+				
+				final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
+				log.info(contextDeployCategoryLogoPath);
+				helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
+				
 				helper.setAttribute("featuredInstitutes",
 						featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
