@@ -62,50 +62,6 @@ function getAjaxData(response) {
 	$("#majorDiv").hide();
 	$("#levelDiv").hide();
 
-/*	var cpTypeCount = 0;
-	var secondChoice = $("#select-cpType");
-	secondChoice.find('li').remove();
-	$.each(	response.cpTypeList,function(index, value) {
-	var res = value.toString();
-	var data = res.split(",");
-	var x = data[0].toString();
-	var y = data[1].toString();
-	secondChoice.append('<li><a href="javascript:"><input class="cpTypeClass" id="cpType'+ x + '" type="checkbox" value="'	+ x	+ '"></a>' + y + '</li>');
-	cpTypeCount++;
-	});
-	totalCount += cpTypeCount;
-	$("#cpTypeCount").text(" " + cpTypeCount);*/
-
-/*	var majorCount = 0;
-	var secondChoice = $("#select-major");
-	secondChoice.find('li').remove();
-	$.each(response.majorList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="majorClass" id="major' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
-		majorCount++;
-	});
-	totalCount += majorCount;
-	$("#majorCount").text(" " + majorCount);
-
-	var levelCount = 0;
-	var secondChoice = $("#select-level");
-	secondChoice.find('li').remove();
-	$.each(response.levelList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="levelClass" id="level' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
-		levelCount++;
-	});
-	totalCount += levelCount;
-	$("#levelCount").text(" " + levelCount);
-
-	$("#totalCount").text(" " + totalCount);*/
-
 	var districtName = $("#districtName");
 	$.each(response.districtList, function(index, value) {
 		var res = value.toString();
@@ -158,17 +114,11 @@ function getAjaxData(response) {
 			levelCodes.push(code);
 		}
 
-		var mainAreasMap = 0;
-		// var selectAllMap=0;			 
-		// if(selectAll==true){
-		// selectAllMap={'searchData':selectAll};				
-		//alert("selectAll "); 
-		// }else {
+		var mainAreasMap = 0;	
 		mainAreasMap = {
 			'cpTypeAll' : cpTypeAll,
 			'majorAll' : majorAll,
 			'levelAll' : levelAll
-
 		};		
 
 		$.ajax({
@@ -196,10 +146,8 @@ function getAjaxData(response) {
 
 }
 
-function populateAjaxResponse(response) {	
-	alert("populateAjaxResponse");
+function populateAjaxResponse(response) {
 	
-	var totalCount = 0;
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
 	$.each(response.result,	function(index, value) {
@@ -246,10 +194,11 @@ function categoryClick(){
 }
 
 function populateCategoryWiseTypes(response){
-	alert("populateCategoryWiseTypes ");
+	
 	$("#cpTypeDiv").show();
 	$("#majorDiv").show();
 	$("#levelDiv").show();
+	
 	var cpTypeCount = 0;
 	var secondChoice = $("#select-cpType");
 	secondChoice.find('li').remove();
