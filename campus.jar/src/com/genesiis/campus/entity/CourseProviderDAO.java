@@ -265,8 +265,7 @@ public class CourseProviderDAO implements ICrud{
 				stmt.setInt(1, categoryCode);	
 			}
 			resultSet= stmt.executeQuery();
-			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);
-			//allProviderList=getCourseProviderResultSet(stmt);
+			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);		
 			
 		} catch (SQLException sqlException) {
 			log.info("findTopRatedProviders() sqlException" + sqlException.toString());
@@ -334,9 +333,9 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCategory() > 0) {
 				sb.append(" AND PROG.CATEGORY=?");
 			}
-			if (searchDTO.getCourserProviderType() > 0) {
+		/*	if (searchDTO.getCourserProviderType() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
-			}
+			}*/
 			if (searchDTO.getCpTypeList() != null && !searchDTO.getCpTypeList().isEmpty()) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE in ( ");
 				boolean doneOne = false;
@@ -383,11 +382,11 @@ public class CourseProviderDAO implements ICrud{
 			if (searchDTO.getCategory() > 0) {
 				stmt.setInt(1, searchDTO.getCategory());				
 			}
-			if (searchDTO.getCourserProviderType() > 0) {
+			/*if (searchDTO.getCourserProviderType() > 0) {
 				stmt.setInt(2, searchDTO.getCourserProviderType());				
-			}
+			}*/
 			if (searchDTO.getDistrict() > 0) {
-				stmt.setInt(3, searchDTO.getDistrict());			
+				stmt.setInt(2, searchDTO.getDistrict());			
 			}
 			
 			resultSet= stmt.executeQuery();

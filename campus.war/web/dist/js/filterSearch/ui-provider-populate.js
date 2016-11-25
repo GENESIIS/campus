@@ -35,14 +35,14 @@ function getAjaxData(response) {
 						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 					});
 
-	var providers = $("#providers");
+/*	var providers = $("#providers");
 	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(x).text(y).appendTo(providers);
-	});
+	});*/
 
 	var catCount = 0;
 	var secondChoice = $("#select-category");
@@ -133,8 +133,7 @@ function getAjaxData(response) {
 				CCO : 'LIST_FILTER_SEARCH_COURSE_PROVIDERS'
 			},
 			dataType : "json",
-			success : function(response) {
-				alert("success add click");
+			success : function(response) {				
 				populateAjaxResponse(response);
 			},
 			error : function() {

@@ -57,13 +57,14 @@ public class LevelDAO  implements ICrud{
 			Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
+		ResultSet rs=null;
 		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
 			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=1 ";
 			
 			stmt=conn.prepareStatement(sql.toString());
-			final ResultSet rs=stmt.executeQuery();
+			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
 				final ArrayList<String> singleLevel = new ArrayList<String>();
@@ -78,12 +79,7 @@ public class LevelDAO  implements ICrud{
 			log.info("getAll() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
 		return allLevelList;

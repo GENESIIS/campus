@@ -55,13 +55,14 @@ public class MajorDAO implements ICrud{
 			Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
+		ResultSet rs=null;
 		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
@@ -79,12 +80,7 @@ public class MajorDAO implements ICrud{
 			log.info("getAll() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
 		return allMajorList;

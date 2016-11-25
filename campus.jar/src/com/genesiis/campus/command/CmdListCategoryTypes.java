@@ -39,8 +39,7 @@ public class CmdListCategoryTypes implements ICommand {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 
-		// List categorywise types
-		// CourseProviderResultDTO dto=new CourseProviderResultDTO();
+		// List categorywise types		
 		int categoryCode = 0;
 		String categoryCodeString = helper.getParameter("categoryCode");
 		if (UtilityHelper.isNotEmpty(categoryCodeString)) {

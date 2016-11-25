@@ -58,13 +58,14 @@ public class CourseProviderTypeDAO implements ICrud{
 			Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
+		ResultSet rs=null;
 		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
 			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=1 ";
 			
 			stmt=conn.prepareStatement(sql.toString());
-			final ResultSet rs=stmt.executeQuery();
+			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
 				final ArrayList<String> singleCPType = new ArrayList<String>();
@@ -79,12 +80,7 @@ public class CourseProviderTypeDAO implements ICrud{
 			log.info("getAll() Exception" + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
 		return allCourseProviderTypeList;
