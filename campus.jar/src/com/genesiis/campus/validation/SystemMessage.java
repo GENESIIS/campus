@@ -7,6 +7,7 @@ public enum SystemMessage {
 	ADDED("Details added successfully."), 
 	USERNAME_EXIST("Username already exists."), 
 	ERROR("Unsuccessful."),
+	EMAILERROR("Invalid Email Address."),
 	EMPTYFIELD("Please fill required data");
 
 	

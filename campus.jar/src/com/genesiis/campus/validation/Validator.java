@@ -3,8 +3,12 @@ package com.genesiis.campus.validation;
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 
@@ -17,9 +21,10 @@ public class Validator {
 	 * @param duration
 	 * @return void
 	 */
-	
+
 	/**
 	 * Check the given value is empty or not empty
+	 * 
 	 * @author Chathuri
 	 * @param value
 	 * @return boolean to validate is given string contains a null value.
@@ -31,6 +36,7 @@ public class Validator {
 		}
 		return status;
 	}
+
 	int totalDays = 0;
 
 	public int calculateYears(String duration) throws ArithmeticException,
@@ -133,5 +139,54 @@ public class Validator {
 			throw e;
 		}
 		return days;
+	}
+	
+	/**
+	 * Check the given mail address is valid email or not
+	 * 
+	 * @author Chathuri
+	 * @param value
+	 * @return boolean to validate email address.
+	 * **/
+	public static boolean validateEmail(String email) {
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
+				"([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+				Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+		return matcher.find();
+
+	}
+
+	/**
+	 * Validate Tutor fields before values go to database.
+	 * 
+	 * @author Chathuri
+	 * @param helper
+	 * @return
+	 * @throws Exception
+	 */
+	public String validateTutorFields(IDataHelper helper) throws Exception {
+		
+		String message = "True";
+
+		try {
+			if (!(Validator.isNotEmpty(helper.getParameter("username"))
+					|| (Validator.isNotEmpty(helper.getParameter("password")))
+					|| (Validator.isNotEmpty(helper.getParameter("firstname")))
+					|| (Validator.isNotEmpty(helper.getParameter("lastname")))
+					|| (Validator.isNotEmpty(helper.getParameter("email")))
+					|| (Validator.isNotEmpty(helper
+							.getParameter("mobileNumber"))) || (Validator
+						.isNotEmpty(helper.getParameter("addressLine1"))))) {
+				message = SystemMessage.EMPTYFIELD.message();
+			} else if (!validateEmail(helper.getParameter("email"))) {
+				message = SystemMessage.EMAILERROR.message();
+			}
+
+		} catch (Exception e) {
+			log.error("validateTutorFields" + e);
+			throw e;
+		}
+		return message;
 	}
 }
