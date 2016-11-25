@@ -46,6 +46,9 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			validateFrontEndUserProvidedInformation(partialStudent);
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
 			message = systemMessage(status);
+			Collection<String> signUpdate = new ArrayList<String>();
+			signUpdate.add(null);
+			studentSignUps.add(signUpdate);
 			
 		} catch(SQLException sqle){
 			log.error("execute():SQLException "+sqle.toString());
