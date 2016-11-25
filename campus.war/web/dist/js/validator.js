@@ -67,9 +67,20 @@ function validateTutorFileds() {
 	var username = $("#username").val();
 	var password = $("#password").val();
 	var confirmPassword = $("#confirmPassword" + "").val();
+	var country = $("#countryDetails :selected").text();
+	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-
+	if (country == "DEFAULT") {
+		document.getElementById('countryError').innerHTML = "**Please select country.";
+		document.getElementById('countryDetails').focus();
+		flag = false;
+	}
+	if (town == "DEFAULT" || town == "I Can't find my location") {
+		document.getElementById('townError').innerHTML = "**Please select Town.";
+		document.getElementById('townDetails').focus();
+		flag = false;
+	}
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
@@ -122,18 +133,6 @@ function validateTutorFileds() {
 		document.getElementById('address1').focus();
 		flag = false;
 	}
-	// if (!isempty(address2)) {
-	// document.getElementById('confirmPasswordError').innerHTML = "**Please
-	// confirm ypur password";
-	// document.getElementById('confirmPassword').focus();
-	// flag = false;
-	// }
-	// if (!isempty(address3)) {
-	// document.getElementById('confirmPasswordError').innerHTML = "**Please
-	// confirm ypur password";
-	// document.getElementById('confirmPassword').focus();
-	// flag = false;
-	// }
 	if (!isempty(username)) {
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
@@ -230,7 +229,6 @@ function validateTutorFileds() {
 
 function ValidateUsername(username) {
 	var resp = null;
-	alert("hii");
 	alert(username);
 	$.ajax({
 		url : 'TutorController',

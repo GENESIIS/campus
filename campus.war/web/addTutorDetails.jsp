@@ -59,7 +59,7 @@
 			</tr>
 			<tr>
 				<td>Country</td>
-				<td>
+				<td><span id="countryError"></span>
 				<select name="countryDetails" id="countryDetails">
 						<option></option>
 				</select>
@@ -67,7 +67,9 @@
 			</tr>
 			<tr>
 				<td>Town</td>
-				<td><select name="townDetails" id="townDetails">
+				<td>
+				<span id="townError"></span>
+				<select name="townDetails" id="townDetails">
 						<option></option>
 				</select></td>
 			</tr>
