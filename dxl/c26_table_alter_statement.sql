@@ -64,5 +64,55 @@ ADD MEDIUM INT NOT NULL
 
 ALTER TABLE [CAMPUS].[HIGHERDUCATION] ADD CONSTRAINT FK_HIGHERDUCATION_MEDIUM FOREIGN KEY (MEDIUM) REFERENCES [CAMPUS].[MEDIUM](CODE);
 
+---------------------------------------------------------------
+-----DML [CAMPUS].[MEDIUM] table---------
+---------------------------------------------------------------
 
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('English'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Arabic'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Sinhala'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Russian'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('French'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Tamil'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Dutch'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Spanish'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Japanese'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('German'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Hindi'), ((1)), (getdate()), (''), (getdate()), (''));
+
+INSERT INTO "dev-3".CAMPUS.MEDIUM
+(DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY)
+VALUES(('Other'), ((1)), (getdate()), (''), (getdate()), (''));
 
