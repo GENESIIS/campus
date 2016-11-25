@@ -7,6 +7,9 @@
 <%-- 20161111 MM c5-corporate-training-landing-page-MP - Added hidden inputs with names: categoryCode and categoryIdentifierString --%>
 <%-- 20161125 MM c5-corporate-training-landing-page-MP - Removed the message container div that was put to hold messages, so there will 
 														be minimal conflicts when integrating with c7 --%>
+<%-- 20161125 MM c5-corporate-training-landing-page-MP - Added a div element with class 'programme-results-stat-info-div' just above 
+														the pagination container to act as the container of a message that displays 
+														what part of the result set is currently being displayed --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,6 +113,8 @@
             <div class="filter-result-table">
                 <ul class="result-row">
                 </ul>
+                <div class="programme-results-stat-info-div text-center">
+                </div>
                 <div class="paginator-div text-center">
                 	<nav aria-label="">
                 		<ul class="pagination pagination-lg">
