@@ -219,8 +219,14 @@ function populateAjaxResponse(response) {
 
 function categoryClick(){
 	alert("categoryClick");
-	alert(this.value);
-	var catCode=this.value();
+	var catCode=0;
+	var categorySelection = $('#select-category').find('.categoryClass:checked');	
+	for (var i = 0; i < categorySelection.length; i++) {
+		var code = categorySelection[i].value;
+		if(code>0){
+			catCode=code;	
+		}		
+	}
 	
 	$.ajax({
 		url : '../../PublicController',
