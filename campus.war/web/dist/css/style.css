@@ -5,6 +5,7 @@
  *
  * 20161115 JH c7-higher-education-landing-page-MP change styles for slider panel to support carousel
  * 20161118 JH c7-higher-education-landing-page-MP style changes for common header
+ * 20161125 JH c7-higher-education-landing-page-MP style changes due to UI changes
  */
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 
@@ -1044,17 +1045,26 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	display: inline-block;
 	float: right;
 }
+
 /**
-* added height field  
+* + height field 
+* + .carousel .carousel-inner .item
+* issue c7
+* JH 
 */
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-info
 	{
 	display: block;
 	padding: 10px 0;
 	height: 150px;
 }
 
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info .inst-logo
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-info .inst-logo
 	{
 	display: inline-block;
 	padding: 8px;
@@ -1062,12 +1072,22 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	width: 26%;
 }
 
-.main-category .content-holder .sliding-info-panel .info-slider-holder .institute-info .inst-logo img
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-info .inst-logo img
 	{
 	width: 100px;
 }
 
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-info .inst-name
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-info .inst-name
 	{
 	display: inline-block;
 	float: left;
@@ -1076,7 +1096,12 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	padding-left: 20px;
 }
 
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-description
 	{
 	height: 290px;
 	background: url("/dist/i/higher-education/slider-bg-1.jpg");
@@ -1086,7 +1111,12 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	text-align: center;
 }
 
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description p
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-description p
 	{
 	display: block;
 	height: 100%;
@@ -1101,7 +1131,12 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	text-align: justify;
 }
 
-.main-category .content-holder .sliding-info-panel .carousel .carousel-inner .item .institute-description .btn-more
+/**
+* + .carousel .carousel-inner .item
+* c7
+* JH
+*/
+.main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-description .btn-more
 	{
 	position: relative;
 	display: block;
