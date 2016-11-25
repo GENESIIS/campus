@@ -3,9 +3,8 @@
  */
 $(document).ready(function() {
 
-	displayTownDetails();
 	displayCountryDetails();
-
+	displayTownDetails();
 });
 
 function displayCountryDetails() {
