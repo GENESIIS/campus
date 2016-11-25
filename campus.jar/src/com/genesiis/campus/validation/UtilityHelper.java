@@ -29,7 +29,7 @@ public class UtilityHelper {
 	 * **/
 	public static boolean isNotEmptyObject(Object ob) {
 		boolean status = false;
-		if ((ob != null) && (ob != " ")) {
+		if ((ob != null)) {
 			status = true;
 		}
 		return status;
@@ -45,9 +45,7 @@ public class UtilityHelper {
 			Integer.parseInt(string);
 		} catch (NumberFormatException e) {
 			return false;
-		} catch (NullPointerException e) {
-			return false;
-		}
+		} 
 		return true;
 	}
 

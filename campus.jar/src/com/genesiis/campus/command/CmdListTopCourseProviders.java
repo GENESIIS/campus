@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //DJ 20161103 c6-list-available-institutes-on-the-view Implemented execute()
 //DJ 20161103 c6-list-available-institutes-on-the-view adjust the implementation to support dynamic category code 
 //DJ 20161109 c6-list-available-institutes-on-the-view add topRatedCourseProviders implementation
+//DJ 20161123 c6-list-available-institutes-on-the-view add SystemConfig.PROVIDER_LOGO_PATH
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -12,6 +13,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -32,8 +34,9 @@ public class CmdListTopCourseProviders implements ICommand   {
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
 		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;	
-		String contextDeployLogoPath = "education/provider/logo/";
+		SystemMessage systemMessage = SystemMessage.UNKNOWN;				
+		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
+		
 		try {
 			int categoryCode = 0;
 			final CourseProvider provider = new CourseProvider();
@@ -56,7 +59,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() :Exception  " + exception);
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}

@@ -9,7 +9,8 @@ package com.genesiis.campus.entity;
 //DJ 20161103 c6-list-available-institutes-on-the-view create findTopRatedProviders()
 //DJ 20161109 c6-list-available-institutes-on-the-view Implemented findTopRatedProviders() query
 //DJ 20161109 c6-list-available-institutes-on-the-view refactored query in  findTopViewedProviders() method
-//DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause 
+//DJ 20161115 c6-list-available-institutes-on-the-view refactored getCourseProviderResultSet() method and finally clause
+//DJ 20161122 c6-list-available-institutes-on-the-view mx-fixes findTopViewedProviders()/findTopRatedProviders method 
 //DJ 20161117 c17-provider-criteria-based-filter-search Initiate findFilterdCourseProviders() method
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement findFilterdCourseProviders() method
 //DJ 20161123 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-add course provider type list to the query
