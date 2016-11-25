@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created MajorDAO.java
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
+//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findMajorsByMajorCodes() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 public class MajorDAO implements ICrud{
 	static org.apache.log4j.Logger log = Logger.getLogger(MajorDAO.class.getName());
 
@@ -114,5 +117,54 @@ public class MajorDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Get all major list details by major code set
+	 * @param majorCodeSet
+	 * @author DJ
+	 * @return Collection 
+	 */
+
+	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException {
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb =new StringBuilder(" SELECT MAJOR.[CODE] AS MAJORCODE,MAJOR.[NAME] AS MAJORNAME FROM [CAMPUS].[MAJOR] MAJOR ");
+			sb.append(" WHERE MAJOR.ISACTIVE = 1 AND MAJOR.CODE IN( " );
+			boolean doneOne = false;
+			for (Integer code : majorCodeSet) {
+				if (doneOne) {
+					sb.append(", ");
+				}
+				sb.append(code);
+				doneOne = true;
+			}
+			sb.append(")" );
+
+			stmt = conn.prepareStatement(sb.toString());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleMajorList = new ArrayList<String>();
+				singleMajorList.add(rs.getString("MAJORCODE"));
+				singleMajorList.add(rs.getString("MAJORNAME"));
+				final Collection<String> singleMajorCollection = singleMajorList;
+				allMajorList.add(singleMajorCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.info("findMajorsByMajorCodes() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findMajorsByMajorCodes() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allMajorList;
+	}	
 
 }
