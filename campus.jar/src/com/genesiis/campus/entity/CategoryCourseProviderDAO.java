@@ -21,6 +21,7 @@ package com.genesiis.campus.entity;
 //20161116 JH c7-higher-education-landing-page findById method modified : code review mx modifications
 //20161117 JH c7-higher-education-landing-page removed logger prefix
 //20161124 JH c7-higher-education-landing-page QA code modifications
+//20161125 JH c7-higher-education-landing-page QA modifications: query changes to select only featured course providers
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,9 +94,14 @@ public class CategoryCourseProviderDAO implements ICrud {
 				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >= getDate() "
 				+ " AND cp.ACCOUNTTYPE = ? GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE ";
+		
 		/**
 		 * query2 used to query the database to retrieve data of featured course
-		 * providers randomly who are active
+		 * providers randomly who are active Here program table is used to
+		 * select course providers that have belongs to the given category.
+		 *  		Eg:There is no way to identify the course provider category only by
+		 * 			selecting the course provider table. Because a one course provider
+		 * 			can publish programs in different categories
 		 */
 		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN"
 				+ "( SELECT DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p where  p.CATEGORY = ?  ) as a "
@@ -113,23 +119,17 @@ public class CategoryCourseProviderDAO implements ICrud {
 			// get featured course providers
 			if (type == 1) {
 				preparedStatement = conn.prepareStatement(query1);
-				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
-				preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-
-				rs = preparedStatement.executeQuery();
 
 			}else if (type == 0) {// get random course providers
 
 				preparedStatement = conn.prepareStatement(query2);
 
-				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
-				preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-
-				rs = preparedStatement.executeQuery();
 			}
+			preparedStatement.setInt(1, programme.getCategory());
+			preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 
+			rs = preparedStatement.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
 
