@@ -10,6 +10,7 @@
  * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
+ *20161125 PN (c26-add-student-details: implemented isNumber(evt) method.
  */ 
 
  
@@ -148,4 +149,18 @@ function resetSelectElement(selectElement) {
 function resetSelectElement(selectElement) {
 	selecElement.selectedIndex = 0; // first option is selected, or
 	// -1 for no option selected
+}
+
+/**
+ * This method allows to type numbers only on text field
+ * @param evt
+ * @returns
+ */
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
 }
