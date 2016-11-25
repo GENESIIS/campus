@@ -5,6 +5,8 @@
 <%-- 20161110 MM c5-corporate-training-landing-page-MP - Put-in pagination container --%>
 <%-- 20161111 MM c5-corporate-training-landing-page-MP - Changed imported file to have absolute paths --%>
 <%-- 20161111 MM c5-corporate-training-landing-page-MP - Added hidden inputs with names: categoryCode and categoryIdentifierString --%>
+<%-- 20161125 MM c5-corporate-training-landing-page-MP - Removed the message container div that was put to hold messages, so there will 
+														be minimal conflicts when integrating with c7 --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +100,6 @@
         <div class="course-filter-panel">
             <div class="filtering-area">
                 <div class="top"></div>
-                <div id="message-container" class="alert alert-danger text-center" role="alert"></div>
                 <div class="bottom clearfix">
                     <ul class="list-inline">
                     </ul>
