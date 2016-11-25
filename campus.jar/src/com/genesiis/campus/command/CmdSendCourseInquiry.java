@@ -31,16 +31,10 @@ public class CmdSendCourseInquiry implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdSendCourseInquiry.class.getName());
 
-	private String fullname;
+
 	private Connection connection;
 	private String sendersEmail;
-	private String countryCode;
-	private String areaCode;
-	private String telNo;
-	private String inquiryTitle;
 	private String inquiry;
-	private int studentCode;
-	private int programmeCode;
 	private ArrayList<String> recieversEmailAddreses;
 	private Collection<String> messageIview = null;
 	private Collection<Collection<String>> messageCollection;
@@ -150,7 +144,7 @@ public class CmdSendCourseInquiry implements ICommand {
 	 * @return IEmail formatted Email out put
 	 */
 	private IEmail formatEmailInstance() {
-		log.info(data.getInquiry() + data.getInquiryTitle());
+		
 		addContentToOriginalMailBody(data.getInquiry());
 
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,

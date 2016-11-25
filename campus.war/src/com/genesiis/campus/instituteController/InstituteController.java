@@ -1,19 +1,16 @@
 package com.genesiis.campus.instituteController;
 //20161027 AS C8-inquiry-form-for-course InstituteController class created.
 //20161031 AS C8-inquiry-form-for-course modified doget and dopost methods 
-import com.genesiis.campus.controller.CampusController;
 import java.io.IOException;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import com.genesiis.campus.controller.CampusController;
 /**
  * Servlet implementation class InstituteController
  */

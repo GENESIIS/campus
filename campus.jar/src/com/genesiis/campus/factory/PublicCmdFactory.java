@@ -2,7 +2,7 @@ package com.genesiis.campus.factory;
 
 //20161026 DN c10-contacting-us-page amended by inserting CONTACT_US_PUBLC entry to the map
 
-import com.genesiis.campus.command.CmdGenerateEmail;
+
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 

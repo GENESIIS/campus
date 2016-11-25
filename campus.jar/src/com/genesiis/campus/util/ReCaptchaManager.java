@@ -5,7 +5,7 @@ package com.genesiis.campus.util;
 //20161109 CM c9-make-inquiry-for-institute Modified  sentRequestToServe() method
 //20161109 CM c9-make-inquiry-for-institute close HttpConnection and BufferReader.
 //20161109 CM c9-make-inquiry-for-institute Renamed  sentRequestToServe() method as sendRequestToServer
-
+//20161125 AS c8-make-inquiry-for-course removed unwanted loggers 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,26 +34,18 @@ public class ReCaptchaManager {
 		boolean result = false;
 		String gRecaptchaResponse = null;
 		try {
-			// String gRecaptchaResponse = helper
-			// .getParameter("recapture");
-			// if(gRecaptchaResponse.equals(null)){
-			// gRecaptchaResponse = helper
-			// .getParameter("grecaptcharesponse");
-			//
-			// }
+			
 
 			if (helper.getParameter("recapture") == null
 					|| helper.getParameter("g-recaptcha-response") == null) {
-			
 
 				if (helper.getParameter("recapture") != null) {
 					gRecaptchaResponse = helper.getParameter("recapture");
 				} else if (helper.getParameter("g-recaptcha-response") != null) {
-					gRecaptchaResponse = helper.getParameter("recapture");
+					gRecaptchaResponse = helper.getParameter("g-recaptcha-response");
 				}
-					log.info(gRecaptchaResponse);
+					
 			
-
 			String secretParameter = "6LfDaQoUAAAAAAA-CQEmfkChxk5Ns8OFh6LlKxUW";
 
 			// Send get request to Google reCaptcha server with secret key

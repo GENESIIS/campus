@@ -23,7 +23,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.genesiis.campus.command.CmdGenerateEmail;
 import com.genesiis.campus.util.MailServerManager;
 
 import org.apache.log4j.Logger;

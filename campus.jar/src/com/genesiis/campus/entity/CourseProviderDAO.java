@@ -47,7 +47,7 @@ public class CourseProviderDAO implements ICrud{
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
 		final Collection<Collection<String>> InquiryEmail = new ArrayList<Collection<String>>();
-		ArrayList<String> singleEmployeeList = null;
+		ArrayList<String> employeeList = null;
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  WHERE PROGRAMME.CODE = ?";
@@ -60,10 +60,10 @@ public class CourseProviderDAO implements ICrud{
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				singleEmployeeList = new ArrayList<String>();
-				singleEmployeeList.add(rs.getString("COURSEINQUIRYEMAIL"));
-				final Collection<String> singleEmployeeCollection = singleEmployeeList;
-				InquiryEmail.add(singleEmployeeCollection);
+				employeeList = new ArrayList<String>();
+				employeeList.add(rs.getString("COURSEINQUIRYEMAIL"));
+				final Collection<String> employeeCollection = employeeList;
+				InquiryEmail.add(employeeCollection);
 				
 			}
 		} catch (SQLException SQLexception) {

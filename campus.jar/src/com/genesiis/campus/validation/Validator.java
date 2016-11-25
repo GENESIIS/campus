@@ -115,7 +115,7 @@ public class Validator {
 		} else if (!isInteger(data.getTelephone())) {
 			message = SystemMessage.PHONENUMBERERROR.message();
 		}
-		log.info(message);
+		
 		return message;
 	}
 
