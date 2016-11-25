@@ -19,18 +19,19 @@
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
-<script src="dist/js/student/student-details-handler.js"></script>
+<script src="dist/js/institute/validation/validation.js"></script>
+<script src="dist/js/student/student-helper.js"></script>
 </head>
 <body>
 
 <!-- Button trigger Personal Details modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
-  Personal Details
+  School Details
 </button>
 
 <!-- Button trigger School Education modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
-  School Education
+  Personal Education
 </button>
 
 
@@ -46,45 +47,46 @@
       </div>
       <div class="modal-body">
 			Grade 
-			<select id="sseQualification" name = "sseQualification">
+			<select id="sseQualification" name = "sseQualification" required>
 				<option value="-1">--Select One--</option>
 			</select>
 			<br/>
 			Subject Stream
-			<select id="sseStream" name = "sseStream">
+			<select id="sseStream" name = "sseStream" required>
 				<option value="">--Select One--</option>
 			</select>
 			<br/>
 			Result
-			<select id="sseResult" name = "sseResult">
+			<select id="sseResult" name = "sseResult" required>
 				<option value="">--Select One--</option>
 				<option value="1">Pass</option>
 				<option value="0">Fail</option>
 			</select>
 			<br/>
-			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" ><br>
+			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" required onkeypress="return isNumber(event)"><br>
 			
-			School <input type="text" name="sseSchool" id="sseSchool"><br>
+			School <input type="text" name="sseSchool" id="sseSchool" required><br>
 			
-			Achieved on <input type="text" name="sseAchievedon" id="sseAchievedon"><br>
+			Achieved on <input type="date" name="sseAchievedon" id="sseAchievedon" required><br>
 			
 			Medium
-			<select name="sseMedium" id="sseMedium">
+			<select name="sseMedium" id="sseMedium" required>
 				<option value="">--Select One--</option>
 			</select>
 			<br/>
 			
 			Country
-			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --" />
+			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --" required/>
 			 	<datalist name="sseCountryList" id="sseCountryList">
 			 	</datalist> 
 			<br/>
 			
 			Description
-			<textarea rows="5" cols="10" name="sseDescription" id="sseDescription"></textarea>
+			<textarea rows="5" cols="40" name="sseDescription" id="sseDescription"></textarea>
 			
 	  </div>
-      <div class="modal-footer">
+      <div class="modal-footer">    
+      	<button type="button" class="btn btn-secondary" onclick="clearSchoolEducationForm()">Clear</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
@@ -108,7 +110,7 @@
 	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
       </div>
     </div>
   </div>
