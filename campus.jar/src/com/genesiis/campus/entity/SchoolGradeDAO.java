@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
+//			  c26-add-student-details: changed getAll() method SQL query.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,11 +47,11 @@ public class SchoolGradeDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Grade] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[LEVEL],[TITLE] FROM [CAMPUS].[SCHOOLGRADE] WHERE [LEVEL] = 17 AND [ISACTIVE]=1;";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
-
+			
 			while (rs.next()) {
 				final ArrayList<String> singleGradeList = new ArrayList<String>();
 				singleGradeList.add(rs.getString("CODE"));
