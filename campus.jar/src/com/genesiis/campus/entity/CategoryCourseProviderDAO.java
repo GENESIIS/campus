@@ -99,9 +99,9 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * query2 used to query the database to retrieve data of featured course
 		 * providers randomly who are active Here program table is used to
 		 * select course providers that have belongs to the given category.
-		 *  		Eg:There is no way to identify the course provider category only by
-		 * 			selecting the course provider table. Because a one course provider
-		 * 			can publish programs in different categories
+		 *  Eg:There is no way to identify the course provider category only by
+		 * selecting the course provider table. Because a one course provider
+		 * can publish programs in different categories
 		 */
 		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN"
 				+ "( SELECT DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p where  p.CATEGORY = ?  ) as a "
