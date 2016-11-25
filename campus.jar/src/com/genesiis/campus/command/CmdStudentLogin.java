@@ -15,7 +15,7 @@ public class CmdStudentLogin implements ICommand{
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		log.info(helper);
+		log.info("testing 1233455678");
 
 		return null;
 	}
