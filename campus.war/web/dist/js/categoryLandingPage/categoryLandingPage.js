@@ -30,6 +30,15 @@
  * 20161125 MM c5-corporate-training-landing-page-MP Modified code related to error-message displaying to make it more 
  *													loosely-coupled with the rest of the code. Now allows dynamic backgrounds
  *													according to severity of the message to be diplayed.													
+ * 20161125 MM c5-corporate-training-landing-page-MP Fixed issue of a paginator button being created at the end of the paginator
+ * 													when the fraction part of numOfResults/numOfResultsPerPage is > 0.5 													
+ * 20161125 MM c5-corporate-training-landing-page-MP Re-factored code vis-a-vis enableDisablePrevNextButtons() function and added 
+ * 													other functions changeDisplayedResultsStatInfo() and 
+ * 													adjustPaginatorOnChangeOfDisplayedResults() to display a message as to what 
+ * 													part of the result set is currently displayed, upon clicking of a paginator 
+ * 													button
+ * 												 	
+ * 																										
  *
  */
 
@@ -169,11 +178,11 @@ function constructLevelOrMajorMenu(){
 
 function createProgrammeListingAndPaginator() {
 	var pageNum = 1;
-	constructProgrammeListing(pageNum);
-	var paginatorDetails = constructPaginator();
+	var currentlyDisplayedProgInfo = constructProgrammeListing(pageNum);
+	var programmeResultStats = constructPaginator();
 	var paginatorListElement = $('div.paginator-div > nav > ul.pagination');
 	paginatorListElement.children().eq(1).addClass('active');
-	enableDisablePrevNextButtons(pageNum, paginatorDetails.numOfPages);
+	adjustPaginatorOnChangeOfDisplayedResults(currentlyDisplayedProgInfo, programmeResultStats, pageNum);
 }
 
 function constructProgrammeListing(pageNum) {
@@ -236,6 +245,7 @@ function constructProgrammeListing(pageNum) {
 	var programmeListElement = $('div.filter-result-table').find('ul.result-row');
 	programmeListElement.html(programmesHtmlFragment);	
 	
+	return {'firstProgramme': indexOfFirstProgNeeded + 1, 'lastProgramme': indexIndicatorOfLastProg};
 }
 
 function constructPaginator() {
@@ -292,6 +302,8 @@ function constructPaginator() {
 		}		
 	}
 	
+	var programmeResultStats = {'totalNumOfResults': totalNumOfResults, 'numOfPages': numOfPages};
+	
 	paginatorULElement.find('li.paginator-button').on('click', function() {
 		if (!$(this).hasClass('disabled')) {
 		
@@ -305,14 +317,37 @@ function constructPaginator() {
 				paginatorButtonToActivate = $(this);		
 			}
 			pageNumClicked = paginatorButtonToActivate.attr('data-page-number');
-			constructProgrammeListing(pageNumClicked);
+			var currentlyDisplayedProgInfo = constructProgrammeListing(pageNumClicked);
 			paginatorButtonToActivate.siblings('li.paginator-button').removeClass('active');
 			paginatorButtonToActivate.addClass('active');
-			enableDisablePrevNextButtons(pageNumClicked, numOfPages);
+			adjustPaginatorOnChangeOfDisplayedResults(currentlyDisplayedProgInfo, programmeResultStats, pageNumClicked);
 		}
 	});
 	
-	return {'totalNumOfResults': totalNumOfResults, 'numOfPages': numOfPages};
+	return programmeResultStats;
+}
+
+function adjustPaginatorOnChangeOfDisplayedResults (currentlyDisplayedProgInfo, programmeResultStats, pageNumClicked) {
+	changeDisplayedResultsStatInfo(currentlyDisplayedProgInfo, programmeResultStats.totalNumOfResults);
+	enableDisablePrevNextButtons(pageNumClicked, programmeResultStats.numOfPages);
+}
+
+function changeDisplayedResultsStatInfo (currentlyDisplayedProgInfo, totalNumOfResults) {	
+	var firstProgramme = currentlyDisplayedProgInfo.firstProgramme;
+	var lastProgramme = currentlyDisplayedProgInfo.lastProgramme > totalNumOfResults ? 
+			totalNumOfResults : currentlyDisplayedProgInfo.lastProgramme;
+	
+    var resultsStatInfoHtml = '<div class="panel panel-default" style="margin-top: 30px">\
+    	<div class="panel-body">\
+    	Displaying \
+    	<span class="label label-default">' + 
+    firstProgramme + ' - ' + lastProgramme + '</span>\
+    out of <span class="label label-default">' + totalNumOfResults + 
+    '</span> programmes\
+	  </div>\
+	</div>';	
+    
+    $('.programme-results-stat-info-div').html(resultsStatInfoHtml);
 }
 
 function enableDisablePrevNextButtons(pageNumClicked, numOfPages) {
