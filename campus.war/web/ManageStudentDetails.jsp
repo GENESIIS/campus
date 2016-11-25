@@ -74,9 +74,9 @@
 			<br/>
 			
 			Country
-			<select name="sseCountry" id="sseCountry">
-				<option value="">--Select One--</option>
-			</select>
+			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --" />
+			 	<datalist name="sseCountryList" id="sseCountryList">
+			 	</datalist> 
 			<br/>
 			
 			Description
