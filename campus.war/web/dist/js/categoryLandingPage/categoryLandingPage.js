@@ -255,8 +255,8 @@ function constructPaginator() {
 	
 	if (totalNumOfResults > 0) {
 		numOfPages = (totalNumOfResults % numOfResultsPerPage > 0) ? 
-				parseInt(((totalNumOfResults / numOfResultsPerPage) + 1).toFixed(0)) : 
-					parseInt((totalNumOfResults / numOfResultsPerPage).toFixed(0));
+				parseInt((totalNumOfResults / numOfResultsPerPage) + 1) : 
+					parseInt(totalNumOfResults / numOfResultsPerPage);
 		
 		// Construct the paginator
 		if (numOfPages !== undefined && numOfPages !== null) {
