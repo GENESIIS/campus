@@ -1,5 +1,8 @@
 package com.genesiis.campus.command;
 
+//20161125 CM c36-add-tutor-information INIT CmdCheckUsername.java
+//20161125 CM c36-add-tutor-information Modified execute()method. 
+
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -13,6 +16,13 @@ import com.genesiis.campus.util.IDataHelper;
 public class CmdCheckUsername implements ICommand {
 	static Logger log = Logger.getLogger(CmdCheckUsername.class.getName());
 
+	/**
+	 * @author Chathuri
+	 * @param helepr
+	 *            IDataHelper object of Object type view IView object of object
+	 *            type
+	 * @return View object to servlet
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
