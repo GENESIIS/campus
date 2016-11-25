@@ -90,16 +90,16 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 		String query1 = "SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
 				+ " INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ? "
-				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >getDate() "
+				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >= getDate() "
 				+ " AND cp.ACCOUNTTYPE = ? GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
 				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE ";
 		/**
-		 * query2 used to query the database to retrieve data of course
+		 * query2 used to query the database to retrieve data of featured course
 		 * providers randomly who are active
 		 */
-		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
-				+ " where  p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?  ) as a "
-				+ " on a.COURSEPROVIDER = cp.CODE and  cp.COURSEPROVIDERSTATUS = ?   ORDER BY NEWID()";
+		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN"
+				+ "( SELECT DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p where  p.CATEGORY = ?  ) as a "
+				+ " on a.COURSEPROVIDER = cp.CODE AND  cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >= getDate() AND cp.ACCOUNTTYPE = ? ORDER BY NEWID()";
 
 		try {
 
@@ -124,8 +124,8 @@ public class CategoryCourseProviderDAO implements ICrud {
 				preparedStatement = conn.prepareStatement(query2);
 
 				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, programme.getProgrammeStatus());
-				preparedStatement.setInt(3, programme.getProgrammeStatus());
+				preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+				preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 
 				rs = preparedStatement.executeQuery();
 			}
