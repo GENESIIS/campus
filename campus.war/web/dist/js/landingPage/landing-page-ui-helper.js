@@ -1,5 +1,6 @@
 //20161111 PN c1-campus-landing-page implemented a method to display categories on landing page.
 //20161115 PN c1-campus-landing-page added functional comments into the methods.
+//20161115 PN c1-campus-landing-page: modified the category image path.
 
 /**
  * This ajax call is to load categories on landing page loading.
@@ -39,7 +40,7 @@ function displayCategories(response){
                 '</div>'+
                 '<div class="course-info clearfix">'+
                     '<div class="image pull-left">'+
-                        '<img class="center-block" src="../../education/general/category/'+data[3].toString()+'" alt="">'+
+                        '<img class="center-block" src="../../education/general/category/image/'+data[3].toString()+'" alt="">'+
                     '</div>'+
                     '<div class="description pull-right">'+
                         '<p class="text-justify">'+data[2].toString().replace(/##/g , ",")+'</p>'+
