@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20161116 JH c7-higher-education-landing-page getAll() method : code review mx modifications
 //20161117 JH c7-higher-education-landing-page removed logger prefix
 //20161122 JH c7-higher-education-landing-page removed switch case to find categoryString and load it from the database
+//20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.SystemConfig;
 
 import org.apache.log4j.Logger;
 
@@ -77,7 +79,7 @@ public class CategoryDAO implements ICrud {
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));
-				singleCategoryList.add(rs.getString("IMAGE"));
+				singleCategoryList.add( rs.getString("CODE")+ ".png");
 				singleCategoryList.add(rs.getString("CRTON"));
 				singleCategoryList.add(rs.getString("CRTBY"));
 				singleCategoryList.add(rs.getString("MODON"));
