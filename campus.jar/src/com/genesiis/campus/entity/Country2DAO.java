@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
+//			  c26-add-student-details: getAll() method SQL query modified.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class Country2DAO implements ICrud{
-
+	static Logger log = Logger.getLogger(Country2DAO.class.getName());
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -44,7 +46,7 @@ public class Country2DAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[Country2] WHERE [CODE] NOT IN (-1);";
+			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1);";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
