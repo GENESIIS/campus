@@ -145,7 +145,7 @@
 					</div>
 
 					<!-- 2nd Category - Course provider type  -->
-					<div class="filter-item clearfix">
+					<div id="cpTypeDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Provider Type<span id="cpTypeCount"
@@ -160,7 +160,7 @@
 					</div>
 
 					<!-- 2nd Category - Major -->
-					<div class="filter-item clearfix">
+					<div id="majorDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label>Major <span id="majorCount" name="majorCount"></span></label>
@@ -174,7 +174,7 @@
 					</div>
 
 					<!-- 2nd Category - Levels -->
-					<div class="filter-item clearfix">
+					<div id="levelDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
 							<label class="flip">Levels <span id="levelCount"

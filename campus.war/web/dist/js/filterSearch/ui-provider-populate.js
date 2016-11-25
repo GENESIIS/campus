@@ -57,8 +57,12 @@ function getAjaxData(response) {
 	});
 	totalCount += catCount;
 	$("#catCount").text(" " + catCount);
+	
+	$("#cpTypeDiv").hide();
+	$("#majorDiv").hide();
+	$("#levelDiv").hide();
 
-	var cpTypeCount = 0;
+/*	var cpTypeCount = 0;
 	var secondChoice = $("#select-cpType");
 	secondChoice.find('li').remove();
 	$.each(	response.cpTypeList,function(index, value) {
@@ -70,9 +74,9 @@ function getAjaxData(response) {
 	cpTypeCount++;
 	});
 	totalCount += cpTypeCount;
-	$("#cpTypeCount").text(" " + cpTypeCount);
+	$("#cpTypeCount").text(" " + cpTypeCount);*/
 
-	var majorCount = 0;
+/*	var majorCount = 0;
 	var secondChoice = $("#select-major");
 	secondChoice.find('li').remove();
 	$.each(response.majorList, function(index, value) {
@@ -100,7 +104,7 @@ function getAjaxData(response) {
 	totalCount += levelCount;
 	$("#levelCount").text(" " + levelCount);
 
-	$("#totalCount").text(" " + totalCount);
+	$("#totalCount").text(" " + totalCount);*/
 
 	var districtName = $("#districtName");
 	$.each(response.districtList, function(index, value) {
@@ -110,14 +114,7 @@ function getAjaxData(response) {
 		var y = data[1].toString();
 		var z = data[2].toString();
 		$('<option>').val(y).text(z).appendTo(districtName);
-	});
-
-	
-	
-	$('#categoryClass').on('click', function(event) {
-		alert("categoryClass " );
-	});
-	
+	});	
 	
 	
 	$('#addSearchData').on('click', function(event) {
@@ -218,7 +215,7 @@ function populateAjaxResponse(response) {
 }
 
 function categoryClick(){
-	alert("categoryClick");
+	
 	var catCode=0;
 	var categorySelection = $('#select-category').find('.categoryClass:checked');	
 	for (var i = 0; i < categorySelection.length; i++) {
@@ -227,6 +224,10 @@ function categoryClick(){
 			catCode=code;	
 		}		
 	}
+	// $('#select-category').prop('disabled', true\false);
+	
+	//$('#select-category').find('.categoryClass').length
+	
 	
 	$.ajax({
 		url : '../../PublicController',
@@ -235,15 +236,56 @@ function categoryClick(){
 			CCO : 'LIST_FILTER_SEARCH_CATEGORY_TYPES'
 		},
 		dataType : "json",
-		success : function(response) {
-			alert("success category click ");			
+		success : function(response) {			
+			populateCategoryWiseTypes(response);
 		},
 		error : function() {
 			alert("error");
 		}
 	});
+}
+
+function populateCategoryWiseTypes(response){
+	alert("populateCategoryWiseTypes ");
+	$("#cpTypeDiv").show();
+	$("#majorDiv").show();
+	$("#levelDiv").show();
+	var cpTypeCount = 0;
+	var secondChoice = $("#select-cpType");
+	secondChoice.find('li').remove();
+	$.each(	response.cpTypeList,function(index, value) {
+	var res = value.toString();
+	var data = res.split(",");
+	var x = data[0].toString();
+	var y = data[1].toString();
+	secondChoice.append('<li><a href="javascript:"><input class="cpTypeClass" id="cpType'+ x + '" type="checkbox" value="'	+ x	+ '"></a>' + y + '</li>');
+	cpTypeCount++;
+	});	
 	
 	
+	var majorCount = 0;
+	var secondChoice = $("#select-major");
+	secondChoice.find('li').remove();
+	$.each(response.majorList, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		secondChoice.append('<li><a href="javascript:"><input class="majorClass" id="major' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		majorCount++;
+	});
+	
+	var levelCount = 0;
+	var secondChoice = $("#select-level");
+	secondChoice.find('li').remove();
+	$.each(response.levelList, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		secondChoice.append('<li><a href="javascript:"><input class="levelClass" id="level' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		levelCount++;
+	});
 }
 
 
