@@ -90,7 +90,6 @@ public class CmdListCategoryLandingPage implements ICommand {
 
 				
 				final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
-				log.info(contextDeployCategoryLogoPath);
 				helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
 				
 				helper.setAttribute("featuredInstitutes",
