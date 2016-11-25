@@ -734,15 +734,24 @@ body, html {
                 line-height: 20px; }
     .stud-dashboard .prf-page-container .right-side {
       display: block; }
-      .stud-dashboard .prf-page-container .right-side .about-me-holder {
+      .stud-dashboard .prf-page-container .right-side .w-about-me {
         background: #fff;
         border-radius: 10px;
         padding: 14px 20px; }
-        .stud-dashboard .prf-page-container .right-side .about-me-holder .widget-content .tbl-wgt-about tr .td-name {
-          font-size: 16px;
-          color: #37474f;
-          font-family: "Roboto", sans-serif;
-          font-weight: 500; }
+        .stud-dashboard .prf-page-container .right-side .w-about-me .widget-content {
+          padding-bottom: 20px; }
+          .stud-dashboard .prf-page-container .right-side .w-about-me .widget-content .tbl-wgt-about tr td {
+            padding-top: 25px; }
+          .stud-dashboard .prf-page-container .right-side .w-about-me .widget-content .tbl-wgt-about tr .td-name {
+            font-size: 16px;
+            color: #37474f;
+            font-family: "Roboto", sans-serif;
+            font-weight: 500; }
+          .stud-dashboard .prf-page-container .right-side .w-about-me .widget-content .tbl-wgt-about tr .td-value {
+            font-family: "Muli", sans-serif;
+            font-size: 16px;
+            color: #6f787c;
+            padding-left: 30px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
@@ -856,17 +865,20 @@ body, html {
 .slideable {
   display: none; }
 
-.widget-header label {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  color: #37474f;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding-left: 15px;
-  line-height: 35px; }
-.widget-header button {
-  float: right;
-  border: none;
-  background: #fff; }
+.widget {
+  background: #fff;
+  border-radius: 10px; }
+  .widget .widget-header label {
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    color: #37474f;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding-left: 15px;
+    line-height: 35px; }
+  .widget .widget-header button {
+    float: right;
+    border: none;
+    background: #fff; }
 
 /*# sourceMappingURL=style.css.map */
