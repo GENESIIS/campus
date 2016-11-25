@@ -4,6 +4,7 @@
 <!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
 <!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
 <!-- 20161124 JH c7-higher-education-landing-page-MP QA improvements: display featured institutes when only one is available -->
+<!-- 20161125 JH c7-higher-education-lanidng-page-MP change slider UI design -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -126,98 +127,108 @@
 
 			<!-- slider & banner panel : right side -->
 			<div class="sliding-info-panel">
-				<c:if test="${not empty featuredInstitutes}">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-						<c:set var="provider" value="" />
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner" role="listbox">
-
-							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
-								varStatus="loopCount">
-								<c:choose>
-									<c:when test="${loopCount.index == 0 }">
-										<div class="item active">
-											<div class="institute-info clearfix">
-												<div class="inst-logo">
-													<img src="${featuredInstitute[16] }" alt="Institute Logo"
-														style="width: 100px; height: 75px;">
-												</div>
-												<div class="inst-name">
-													<h1 class="short-name">
-														<c:out value="${featuredInstitute[2] }"></c:out>
-													</h1>
-													<h2 class="full-name">
-														<c:out value="${featuredInstitute[3] }"></c:out>
-													</h2>
-												</div>
-											</div>
-											<div class="institute-description clearfix">
-												<p>
-													<c:out value="${featuredInstitute[4]}"></c:out>
-												</p>
-												<div class="btn-more clearfix">
-													<!-- 	<a href="javascript:">Show More</a>  -->
-													<button type="submit" name="CCO" id="CCO"
-														value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
-														More</button>
-													<c:set var="provider" value="${featuredInstitute[0]}" />
-												</div>
-											</div>
-										</div>
-									</c:when>
-								</c:choose>
-							</c:forEach>
-
-							<c:forEach var="featuredInstitute" items="${featuredInstitutes}"
-								varStatus="loopCount">
-								<c:choose>
-									<c:when test="${loopCount.index != 0 }">
-										<div class="item ">
-											<div class="institute-info clearfix">
-												<div class="inst-logo">
-													<img src="${featuredInstitute[16] }" alt="Institute Logo"
-														style="width: 100px; height: 75px;">
-												</div>
-
-												<div class="inst-name">
-													<h1 class="short-name">
-														<c:out value="${featuredInstitute[2] }"></c:out>
-													</h1>
-													<h2 class="full-name">
-														<c:out value="${featuredInstitute[3] }"></c:out>
-													</h2>
-												</div>
-											</div>
-											<div class="institute-description clearfix">
-												<p>
-													<c:out value="${featuredInstitute[4]}"></c:out>
-												</p>
-												<div class="btn-more clearfix">
-													<button type="submit" name="CCO" id="CCO"
-														value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
-														More</button>
-													<c:set var="provider" value="${featuredInstitute[0]}" />
-												</div>
-											</div>
-										</div>
-									</c:when>
-								</c:choose>
-							</c:forEach>
-
+				<div class="info-slider-holder">
+					<div class="featured-institute clearfix">
+						<div class="slider-heading clearfix">
+							<div class="topic">
+								<h2>Most Viewed Institutes</h2>
+							</div>
 						</div>
-						<!-- Left and right controls -->
+						<c:if test="${not empty featuredInstitutes}">
+							<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-						<a href="#myCarousel" role="button" data-slide="prev"
-							class="pull-left"> Previous </a> <a href="#myCarousel"
-							role="button" data-slide="next" class="pull-right"> Next </a>
+								<c:set var="provider" value="" />
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" role="listbox">
+
+									<c:forEach var="featuredInstitute"
+										items="${featuredInstitutes}" varStatus="loopCount">
+										<c:choose>
+											<c:when test="${loopCount.index == 0 }">
+												<div class="item active">
+													<div class="institute-info clearfix">
+														<div class="inst-logo">
+															<img src="${featuredInstitute[16] }" alt="Institute Logo"
+																style="width: 100px; height: 75px;">
+														</div>
+														<div class="inst-name">
+															<h1 class="short-name">
+																<c:out value="${featuredInstitute[2] }"></c:out>
+															</h1>
+															<h2 class="full-name">
+																<c:out value="${featuredInstitute[3] }"></c:out>
+															</h2>
+														</div>
+													</div>
+													<div class="institute-description clearfix">
+														<p>
+															<c:out value="${featuredInstitute[4]}"></c:out>
+														</p>
+														<div class="btn-more clearfix">
+															<!-- 	<a href="javascript:">Show More</a>  -->
+															<button type="submit" name="CCO" id="CCO"
+																value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+																More</button>
+															<c:set var="provider" value="${featuredInstitute[0]}" />
+														</div>
+													</div>
+												</div>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+
+									<c:forEach var="featuredInstitute"
+										items="${featuredInstitutes}" varStatus="loopCount">
+										<c:choose>
+											<c:when test="${loopCount.index != 0 }">
+												<div class="item ">
+													<div class="institute-info clearfix">
+														<div class="inst-logo">
+															<img src="${featuredInstitute[16] }" alt="Institute Logo"
+																style="width: 100px; height: 75px;">
+														</div>
+
+														<div class="inst-name">
+															<h1 class="short-name">
+																<c:out value="${featuredInstitute[2] }"></c:out>
+															</h1>
+															<h2 class="full-name">
+																<c:out value="${featuredInstitute[3] }"></c:out>
+															</h2>
+														</div>
+													</div>
+													<div class="institute-description clearfix">
+														<p>
+															<c:out value="${featuredInstitute[4]}"></c:out>
+														</p>
+														<div class="btn-more clearfix">
+															<button type="submit" name="CCO" id="CCO"
+																value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+																More</button>
+															<c:set var="provider" value="${featuredInstitute[0]}" />
+														</div>
+													</div>
+												</div>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+
+								</div>
+								<!-- Left and right controls -->
+
+								<a href="#myCarousel" role="button" data-slide="prev"
+									class="pull-left"> Previous </a> <a href="#myCarousel"
+									role="button" data-slide="next" class="pull-right"> Next </a>
 
 
+							</div>
+						</c:if>
 					</div>
-				</c:if>
-				<!-- Eng featured institute info slider -->
+				</div>
+				<!-- End featured institute info slider -->
+
 				<div class="most-viewed-panel clearfix">
-					<h1>| Most Viewed</h1>
+					<h1>| Featured Institutes</h1>
 
 					<c:forEach var="institute" items="${institutes}">
 						<div class="banner-holder">
