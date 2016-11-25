@@ -188,8 +188,13 @@ function validateTutorFileds() {
 		document.getElementById('username').focus();
 		flag = false;
 	}
-	if (username.length > 20) {
+	if (username.length > 40) {
 		document.getElementById('usernameError').innerHTML = "**Max length exceeded.";
+		document.getElementById('username').focus();
+		flag = false;
+	}
+	if (username.length < 6) {
+		document.getElementById('usernameError').innerHTML = "**Poor Username.";
 		document.getElementById('username').focus();
 		flag = false;
 	}
@@ -268,7 +273,6 @@ function validateTutorFileds() {
 
 function ValidateUsername(username) {
 	var resp = null;
-	alert(username);
 	$.ajax({
 		url : 'TutorController',
 		method : 'POST',
