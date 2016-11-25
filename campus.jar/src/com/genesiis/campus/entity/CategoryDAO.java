@@ -79,6 +79,10 @@ public class CategoryDAO implements ICrud {
 				singleCategoryList.add(rs.getString("CODE"));
 				singleCategoryList.add(rs.getString("NAME"));
 				singleCategoryList.add(rs.getString("DESCRIPTION"));
+				/**
+				 * here a '.png' is added to the image string assuming that all categories will
+				 * have the logo in png form.
+				 */
 				singleCategoryList.add( rs.getString("CODE")+ ".png");
 				singleCategoryList.add(rs.getString("CRTON"));
 				singleCategoryList.add(rs.getString("CRTBY"));
