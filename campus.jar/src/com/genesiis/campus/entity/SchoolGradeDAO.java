@@ -12,7 +12,7 @@ import com.genesiis.campus.util.ConnectionManager;
 import org.apache.log4j.Logger;
 
 public class SchoolGradeDAO implements ICrud{
-	static Logger log = Logger.getLogger(GradeDAO.class.getName());
+	static Logger log = Logger.getLogger(SchoolGradeDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
