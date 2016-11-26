@@ -249,7 +249,7 @@
 									<h1>
 										<c:out value="${institute[2] }"></c:out>
 										<span>@ <c:out
-												value="${institute[27] }${institute[28] }${institute[29] }"></c:out></span>
+												value="${institute[26] }${institute[27] }${institute[28] }"></c:out></span>
 									</h1>
 									<p>
 										<c:out value="${institute[3] }"></c:out>
