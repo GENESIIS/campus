@@ -5,7 +5,8 @@
 <!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
 <!-- 20161124 JH c7-higher-education-landing-page-MP QA improvements: display featured institutes when only one is available -->
 <!-- 20161125 JH c7-higher-education-lanidng-page-MP change slider UI design -->
-<!-- 20161125 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum -->
+<!-- 20161125 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum wip -->
+<!-- 20161126 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -53,6 +54,8 @@
 			<c:forEach items="${result.collection}" var="category">
 				<div class="category-image">
 				<c:set var="slash" value="/" />
+				<c:set var="smallLogo" value="_small.jpg" />
+				<c:set var="commonLogo" value="_common.jpg" />
 					<img src="${categoryLogoPath }${slash}${category[3] } " alt="">
 				</div>
 				<div class="category-name">
@@ -150,8 +153,9 @@
 												<div class="item active">
 													<div class="institute-info clearfix">
 														<div class="inst-logo">
-															<img src="${featuredInstitute[16] }" alt="Institute Logo"
-																style="width: 100px; height: 75px;">
+															<img
+																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
+																alt="Institute Logo" style="width: 100px; height: 75px;">
 														</div>
 														<div class="inst-name">
 															<h1 class="short-name">
@@ -186,8 +190,9 @@
 												<div class="item ">
 													<div class="institute-info clearfix">
 														<div class="inst-logo">
-															<img src="${featuredInstitute[16] }" alt="Institute Logo"
-																style="width: 100px; height: 75px;">
+															<img
+																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
+																alt="Institute Logo" style="width: 100px; height: 75px;">
 														</div>
 
 														<div class="inst-name">
@@ -236,7 +241,9 @@
 						<div class="banner-holder">
 							<div class="banner clearfix">
 								<div class="logo-image">
-									<img src="${institute[16] }" alt="Logo">
+									<img
+										src="${providerLogoPath}${slash }${institute[0] }${slash}${institute[0] }${smallLogo}"
+										alt="Logo">
 								</div>
 								<div class="description">
 									<h1>
