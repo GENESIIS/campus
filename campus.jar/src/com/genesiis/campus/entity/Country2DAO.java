@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
 //			  c26-add-student-details: getAll() method SQL query modified.
+//20161126 PN c26-add-student-details: findById() method implemented.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,8 +35,42 @@ public class Country2DAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		int countryCode = (int) code;
+		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1) AND [CODE] = ?;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, countryCode);
+			final ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleCountryList = new ArrayList<String>();
+				singleCountryList.add(rs.getString("CODE"));
+				singleCountryList.add(rs.getString("NAME"));
+
+				final Collection<String> singleCountryCollection = singleCountryList;
+				allCountryList.add(singleCountryCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allCountryList;
 	}
 
 	@Override
