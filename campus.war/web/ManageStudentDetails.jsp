@@ -1,4 +1,5 @@
 <!-- 20161124 PN c26-add-student-details: INIT jsp page for manage user details input forms. -->
+<!-- 20161126 PN c26-add-student-details: design error span and alert box. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -21,6 +22,11 @@
 <script src="dist/js/main.js"></script>
 <script src="dist/js/institute/validation/validation.js"></script>
 <script src="dist/js/student/student-helper.js"></script>
+<style type="text/css">
+.alert{
+    display: none;
+}
+</style>
 </head>
 <body>
 
@@ -40,55 +46,59 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
         <h4 class="modal-title" id="studentSchoolEducation">School Education</h4>
       </div>
       <div class="modal-body">
-			Grade 
-			<select id="sseQualification" name = "sseQualification" required>
-				<option value="-1">--Select One--</option>
-			</select>
+      <div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div>
+			Grade  
+			<select id="sseQualification" name = "sseQualification" onchange="clearField('sseQualificationError')">
+				<option value="">--Select One--</option>
+			</select> <span id="sseQualificationError" name="sseQualificationError" style="color:red"></span>
 			<br/>
 			Subject Stream
-			<select id="sseStream" name = "sseStream" required>
+			<select id="sseStream" name = "sseStream" onchange="clearField('sseStreamError')">
 				<option value="">--Select One--</option>
-			</select>
+			</select> <span id="sseStreamError" name="sseStreamError" style="color:red"></span>
 			<br/>
 			Result
-			<select id="sseResult" name = "sseResult" required>
+			<select id="sseResult" name = "sseResult" onchange="clearField('sseResultError')">
 				<option value="">--Select One--</option>
 				<option value="1">Pass</option>
 				<option value="0">Fail</option>
-			</select>
+			</select> <span id="sseResultError" name="sseResultError" style="color:red"></span>
 			<br/>
-			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" required onkeypress="return isNumber(event)"><br>
+			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')">
+			<span id="sseIndexNoError" name="sseIndexNoError" style="color:red"></span><br>
 			
-			School <input type="text" name="sseSchool" id="sseSchool" required><br>
+			School <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')">
+			<span id="sseSchoolError" name="sseSchoolError" style="color:red"></span><br>
 			
-			Achieved on <input type="date" name="sseAchievedon" id="sseAchievedon" required><br>
+			Achieved on <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')">
+			<span id="sseAchievedonError" name="sseAchievedonError" style="color:red"></span><br>
 			
 			Medium
-			<select name="sseMedium" id="sseMedium" required>
+			<select name="sseMedium" id="sseMedium" onchange="clearField('sseMediumError')">
 				<option value="">--Select One--</option>
-			</select>
+			</select><span name="sseMediumError" id="sseMediumError" style="color:red"></span>
 			<br/>
 			
 			Country
-			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --" required/>
+			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --"/>
 			 	<datalist name="sseCountryList" id="sseCountryList">
-			 	</datalist> 
+			 	</datalist>
 			<br/>
 			
 			Description
-			<textarea rows="5" cols="40" name="sseDescription" id="sseDescription"></textarea>
+			<textarea rows="5" cols="40" name="sseDescription" id="sseDescription" ></textarea>
 			
 	  </div>
       <div class="modal-footer">    
       	<button type="button" class="btn btn-secondary" onclick="clearSchoolEducationForm()">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearSchoolEducationForm()">Close</button>
+        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
       </div>
     </div>
   </div>
