@@ -11,6 +11,7 @@
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161125 PN (c26-add-student-details: implemented isNumber(evt) method.
+ *20161126 PN c26-add-student-details: implemented isDropdownSelected(), isemptyDropdown() and getSelectedData() method.
  */ 
 
  
@@ -79,14 +80,14 @@ function isValidEmailFormat(email) {
  * @param numberToValidate Telephone number to be validated
  * @return boolean if passes true else false
  */
-function isValidPhoneNumber(phoneNumber) {
-	var isValidPhoneNumber = false;
-	if((phoneNumber!=null) | (phoneNumber!="")){
-		var phonenumberPattern = /^(00\d{2}|\+\d{2}|0)?\d{9}$/mg;
-		isValidPhoneNumber = isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
-	}
-	return isValidPhoneNumber;
-}
+//function isValidPhoneNumber(phoneNumber) {
+//	var isValidPhoneNumber = false;
+//	if((phoneNumber!=null) | (phoneNumber!="")){
+//		var phonenumberPattern = /^(00\d{2}|\+\d{2}|0)?\d{9}$/mg;
+//		isValidPhoneNumber = isPatternMatch(phonenumberPattern, phoneNumber.replace(/\s+/g, ""));
+//	}
+//	return isValidPhoneNumber;
+//}
 
 /**
  * @param regularExpression
@@ -126,27 +127,6 @@ function validEmailFormat(){
  * @returns
  */
 function resetSelectElement(selectElement) {
-	var options = selectElement.options;
-
-	// Look for a default selected option
-	for (var i = 0, iLen = options.length; i < iLen; i++) {
-
-		if (options[i].defaultSelected) {
-			selectElement.selectedIndex = i;
-			return;
-		}
-	}
-
-	// If no option is the default, select first or none as appropriate
-	selectElement.selectedIndex = 0; // or -1 for no option selected
-}
-
-/**
- * This method is to set dropdown value to default value.
- * @param selectElement
- * @returns
- */
-function resetSelectElement(selectElement) {
 	selecElement.selectedIndex = 0; // first option is selected, or
 	// -1 for no option selected
 }
@@ -164,3 +144,73 @@ function isNumber(evt) {
     }
     return true;
 }
+
+/**
+ * This method is to get selected checkbox values
+ * @param checkboxList
+ * @returns
+ */
+function getValueUsingParentTag(checkboxList){
+	var chkArray = [];
+	
+	/* look for all checkboes that have a parent id called 'checkboxlist' attached to it and check if it was checked */
+	$(checkboxList).each(function() {
+		chkArray.push($(this).val());
+	});
+	
+	/* we join the array separated by the comma */
+	var selected;
+	selected = chkArray.join(',');
+	
+	return selected;
+}
+
+/**
+ * This method is to get selected data from datalist
+ * @param listname
+ * @param elementName
+ * @returns {String}
+ */
+function getSelectedData(listname, elementName) {
+	var selectedValue = "";
+	var val = document.getElementById(listname);
+
+	if (val != null) {
+		var data = val.value;
+		var opts = document.getElementById(elementName).childNodes;
+		for (var i = 0; i < opts.length; i++) {
+			if (opts[i].value === data) {
+				selectedValue = opts[i].text;
+				break;
+			}
+		}
+	}
+	return selectedValue;
+}
+
+/**
+ * 
+ * @param fieldValue
+ *            it is the value of a document element
+ * @returns true if has content else false
+ */
+function isemptyDropdown(fieldValue) {
+
+	return $('#'+fieldValue+'').val() === '' ? false : true;
+}
+
+/**
+ * isFieldFilled() generate a alert if the passing in 
+ * flag is false else the method acts void
+ * @param flag expression that evaluates to a boolean
+ * @param elementName  string to be append to the produced message
+ */
+
+function isDropdownSelected(flag, elementName, errorLabelId){		
+	if(!flag){	
+		document.getElementById(errorLabelId).innerHTML = elementName + " Can not be Empty.!";		
+	}
+	return flag;
+}
+
+
