@@ -22,6 +22,7 @@ package com.genesiis.campus.entity;
 //20161117 JH c7-higher-education-landing-page removed logger prefix
 //20161124 JH c7-higher-education-landing-page QA code modifications
 //20161125 JH c7-higher-education-landing-page QA modifications: query changes to select only featured course providers
+//20161126 JH c7-higher-education-landing-page QA modifications: removed retrieving logo image path details from the database
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -163,7 +164,6 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENO"));
 					singleCourseProviderList.add(rs.getString("HEADERIMAGEPATH"));
-					singleCourseProviderList.add(rs.getString("LOGOIMAGEPATH"));
 					singleCourseProviderList.add(rs.getString("SPECIALITY"));
 					singleCourseProviderList.add(rs.getString("WEBLINK"));
 					singleCourseProviderList.add(rs.getString("FACEBOOKURL"));
