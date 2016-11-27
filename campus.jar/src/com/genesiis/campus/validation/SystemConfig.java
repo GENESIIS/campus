@@ -3,6 +3,8 @@ package com.genesiis.campus.validation;
 //20161113 MM c5-corporate-training-landing-page-MP Initialised file
 //20161118 MM c5-corporate-training-landing-page-MP Added fields value1, 
 //				value2 and value3 to match fields in SystemConfig table
+//20161127 MM c5-corporate-training-landing-page-MP Made value1, value2, 
+//				value3 final.
 
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
@@ -30,9 +32,9 @@ public enum SystemConfig {
 	STUDENT_PROFILE_IMAGE_PATH("","",""),
 	TUTOR_PROFILE_IMAGE_PATH("","","");
 	
-	private String value1;
-	private String value2;
-	private String value3;
+	private final String value1;
+	private final String value2;
+	private final String value3;
 	
 	SystemConfig(String value1, String value2, String value3) {
 		this.value1 = value1;
