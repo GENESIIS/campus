@@ -72,11 +72,22 @@ function getAjaxData(response) {
 		$('<option>').val(y).text(z).appendTo(districtName);
 	});	
 	
+	/*$('#districtlist').on('click', function(event) {
+		alert(" drop-holder");
+		
+	});*/
+	
+	/*$('#districtlist').change( function()){});*/
+	
+	/*$('#districtlist').change( function(event) {
+		//alert(" drop-holder");
+		 var selectvalue = $(this).val();
+		 var list=$('#districtName');		 
+		
+	});*/
 	
 	$('#addSearchData').on('click', function(event) {
 		$(this).val();
-		var selectAll = $('#selectAll').is(':checked');
-		var categoryAll = $('#categoryAll').is(':checked');
 		var cpTypeAll = $('#cpTypeAll').is(':checked');
 		var majorAll = $('#majorAll').is(':checked');
 		var levelAll = $('#levelAll').is(':checked');

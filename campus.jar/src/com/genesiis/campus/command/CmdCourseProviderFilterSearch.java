@@ -38,72 +38,10 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		
 		try {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
-			Map<String, String[]> searchParamCollection = helper.getParameterMap();
-			if (searchParamCollection!=null && !searchParamCollection.isEmpty()) {
-
-				// String[] selectAllMap=bandInfo.get("selectAllMap");
-				String[] cpTypeAll = searchParamCollection.get("mainAreasMap[cpTypeAll]");
-				String[] majorAll = searchParamCollection.get("mainAreasMap[majorAll]");
-				String[] levelAll = searchParamCollection.get("mainAreasMap[levelAll]");
-				String[] catCodeArray = searchParamCollection.get("categoryCodes[]");
-				String[] districtCode = searchParamCollection.get("districtCode");
-				String[] cpTypeAyrray =searchParamCollection.get("cpTypeCodes[]");
-				String[] majorAyrray =searchParamCollection.get("majorCodes[]");
-				String[] levelAyrray =searchParamCollection.get("levelCodes[]");
-				
-
-				if (catCodeArray != null && catCodeArray.length > 0) {
-					final List<Integer> codeList = new ArrayList<Integer>();
-					for (String code : catCodeArray) {
-						codeList.add(Integer.parseInt(code));
-					}
-					//Assume one category can be selected at once from gui
-					providerSearchDTO.setCategory(codeList.get(0));
-				}
-				if (districtCode != null && districtCode.length > 0 && !districtCode[0].isEmpty()) {					
-					int district = Integer.parseInt(districtCode[0]);
-					providerSearchDTO.setDistrict(district);
-				}
+			final Map<String, String[]> searchParamCollection = helper.getParameterMap();			
 			
-				
-				if (cpTypeAll != null && cpTypeAll.length > 0) {
-					if(cpTypeAll[0].equalsIgnoreCase("true")){						
-						providerSearchDTO.setGetAllCPTypes(true);
-					}
-				}
-				if (majorAll != null && majorAll.length > 0) {
-					if(majorAll[0].equalsIgnoreCase("true")){						
-						providerSearchDTO.setGetAllMajors(true);
-					}
-				}
-				if (levelAll != null && levelAll.length > 0) {
-					if(levelAll[0].equalsIgnoreCase("true")){						
-						providerSearchDTO.setGetAllMajors(true);
-					}
-				}
-				
-				if (cpTypeAyrray != null && cpTypeAyrray.length > 0) {
-					final List<Integer> codeList = new ArrayList<Integer>();
-					for (String code : cpTypeAyrray) {
-						codeList.add(Integer.parseInt(code));
-					}
-					providerSearchDTO.setCpTypeList(codeList);
-				}
-				if (majorAyrray != null && majorAyrray.length > 0) {
-					final List<Integer> codeList = new ArrayList<Integer>();
-					for (String code : majorAyrray) {
-						codeList.add(Integer.parseInt(code));
-					}
-					providerSearchDTO.setMajorList(codeList);
-				}
-				if (levelAyrray != null && levelAyrray.length > 0) {
-					final List<Integer> codeList = new ArrayList<Integer>();
-					for (String code : levelAyrray) {
-						codeList.add(Integer.parseInt(code));
-					}
-					providerSearchDTO.setLevelList(codeList);
-				}
-				
+			if (searchParamCollection!=null && !searchParamCollection.isEmpty()) {
+				populateFilterSearch(providerSearchDTO,searchParamCollection);
 				final Collection<Collection<String>> courseProviderSearchResults = providerDAO.findFilterdCourseProviders(providerSearchDTO);
 				iView.setCollection(courseProviderSearchResults);
 			}			
@@ -116,5 +54,77 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		
 		return iView;
 	}
+	
+	/**
+	 * @author DJ
+	 * @param helper.getParameterMap()
+	 * @param providerSearchDTO
+	 * @return Populating filter search parameter collection 
+	 */	
+	private void populateFilterSearch(final CourseProviderSearchDTO providerSearchDTO,final Map<String, String[]> searchParamCollection) {
+				
+		String[] cpTypeAll = searchParamCollection.get("mainAreasMap[cpTypeAll]");
+		String[] majorAll = searchParamCollection.get("mainAreasMap[majorAll]");
+		String[] levelAll = searchParamCollection.get("mainAreasMap[levelAll]");
+		String[] catCodeArray = searchParamCollection.get("categoryCodes[]");
+		String[] districtCode = searchParamCollection.get("districtCode");
+		String[] cpTypeAyrray =searchParamCollection.get("cpTypeCodes[]");
+		String[] majorAyrray =searchParamCollection.get("majorCodes[]");
+		String[] levelAyrray =searchParamCollection.get("levelCodes[]");
+		
 
+		if (catCodeArray != null && catCodeArray.length > 0) {
+			final List<Integer> codeList = new ArrayList<Integer>();
+			for (String code : catCodeArray) {
+				codeList.add(Integer.parseInt(code));
+			}
+			//Assume one category can be selected at once from gui
+			providerSearchDTO.setCategory(codeList.get(0));
+		}
+		if (districtCode != null && districtCode.length > 0 && !districtCode[0].isEmpty()) {					
+			int district = Integer.parseInt(districtCode[0]);
+			providerSearchDTO.setDistrict(district);
+		}
+	
+		
+		if (cpTypeAll != null && cpTypeAll.length > 0) {
+			if(cpTypeAll[0].equalsIgnoreCase("true")){						
+				providerSearchDTO.setGetAllCPTypes(true);
+			}else{
+				if (cpTypeAyrray != null && cpTypeAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : cpTypeAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setCpTypeList(codeList);
+				}
+			}
+		}
+		if (majorAll != null && majorAll.length > 0) {
+			if(majorAll[0].equalsIgnoreCase("true")){						
+				providerSearchDTO.setGetAllMajors(true);
+			}else{
+				if (majorAyrray != null && majorAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : majorAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setMajorList(codeList);
+				}						
+			}
+		}
+		if (levelAll != null && levelAll.length > 0) {
+			if(levelAll[0].equalsIgnoreCase("true")){						
+				providerSearchDTO.setGetAllMajors(true);
+			}else{
+				if (levelAyrray != null && levelAyrray.length > 0) {
+					final List<Integer> codeList = new ArrayList<Integer>();
+					for (String code : levelAyrray) {
+						codeList.add(Integer.parseInt(code));
+					}
+					providerSearchDTO.setLevelList(codeList);
+				}						
+			}
+		}
+	}
 }
