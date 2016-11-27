@@ -42,6 +42,9 @@
  * 													for code of that course provider's record in the DB table. Also changed code 
  * 													to consider that image names have the format "{courseProviderCode}_small.jpg", 
  * 													and to load default course provider image when courseProvider is one-off.
+ * 20161127 MM c5-corporate-training-landing-page-MP Modified code in changeDisplayedResultsStatInfo() to make the message about
+ * 													the currently displayed result set suit special scenarios such as last 
+ * 													page displaying only 1 programme and total result set containing only 1 item.
  */
 
 // IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
@@ -354,13 +357,37 @@ function changeDisplayedResultsStatInfo (currentlyDisplayedProgInfo, totalNumOfR
     var resultsStatInfoHtml = '<div class="panel panel-default" style="margin-top: 30px">\
     	<div class="panel-body">\
     	Displaying \
-    	<span class="label label-default">' + 
-    firstProgramme + ' - ' + lastProgramme + '</span>\
-    out of <span class="label label-default">' + totalNumOfResults + 
-    '</span> programmes\
-	  </div>\
-	</div>';	
+    	<span class="label label-default">'; 
     
+    if (firstProgramme === lastProgramme) {
+    	var firstProgrammeNumStr = firstProgramme.toString();
+    	var firstProgNumLength = firstProgrammeNumStr.length;
+    	var lastDigit = firstProgrammeNumStr.charAt(firstProgNumLength - 1);
+    	var digitToSuffixMap = {
+    			'0': 'th',
+    	    	'1': 'st',
+    	    	'2': 'nd',
+    	    	'3': 'rd',
+    	    	'4': 'th',
+    	    	'5': 'th',
+    	    	'6': 'th',
+    	    	'7': 'th',
+    	    	'8': 'th',
+    	    	'9': 'th',
+    	    	};
+    	resultsStatInfoHtml += firstProgramme + '<sup style="vertical-align: bottom; font-size: 0.8em">' + 
+    	digitToSuffixMap[lastDigit] + '</sup>';
+    	
+    } else {
+    	resultsStatInfoHtml += firstProgramme + ' - ' + lastProgramme;
+    }
+    
+    resultsStatInfoHtml += '</span> out of\
+    	<span class="label label-default">' + totalNumOfResults + '</span> programme';
+    if (totalNumOfResults > 1) {
+    	resultsStatInfoHtml += 's';
+    }
+    resultsStatInfoHtml += '</div></div>';	
     $('.programme-results-stat-info-div').html(resultsStatInfoHtml);
 }
 
