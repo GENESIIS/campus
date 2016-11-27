@@ -14,6 +14,8 @@ package com.genesiis.campus.entity;
 //				sub-query and added EXPIRYDATE related condition to fetch non-expired programmes
 //20161127 MM c5-corporate-training-landing-page-MP Modified code to retrieve AccountType of 
 //				courseProvider and use AccountType enum to set the proper constant name to result list
+//20161127 MM c5-corporate-training-landing-page-MP Modified code to use ApplicationStatus enum 
+//				to set arguments to status related parameters, and to consider DISPLAYSTARTDATE in query
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,6 +31,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryProgrammeDAO implements ICrud {
 	static Logger Log = Logger.getLogger(CategoryProgrammeDAO.class.getName());
@@ -51,33 +54,37 @@ public class CategoryProgrammeDAO implements ICrud {
 			int categoryCode = programme.getCategory();
 			
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -1);
 			cal.set(Calendar.HOUR_OF_DAY, 0);
 			cal.set(Calendar.MINUTE, 0);
 			cal.set(Calendar.SECOND, 0);
 			cal.set(Calendar.MILLISECOND, 0);
+			java.sql.Date today = new java.sql.Date(cal.getTimeInMillis());
+
+			cal.add(Calendar.DATE, -1);
 			java.sql.Date yesterday = new java.sql.Date(cal.getTimeInMillis());
 			
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, "
 					+ "cp.ACCOUNTTYPE, ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
 					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME "
 					+ "FROM [CAMPUS].[PROGRAMME] p JOIN [CAMPUS].[COURSEPROVIDER] cp "
-					+ "ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND p.PROGRAMMESTATUS = ? AND p.EXPIRYDATE > ?) "
-					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = p.MAJOR AND m.ISACTIVE = ?) "
-					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = p.LEVEL AND l.ISACTIVE = ?) "
-					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) "
+					+ "ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND p.PROGRAMMESTATUS = ? AND " //1, 2, 
+					+ "p.DISPLAYSTARTDATE <= ? AND p.EXPIRYDATE > ?) " //3, 4
+					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) " //5
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = p.MAJOR AND m.ISACTIVE = ?) " //6
+					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = p.LEVEL AND l.ISACTIVE = ?) " //7
+					+ "LEFT JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME AND pt.ISACTIVE = ?) " //8
 					+ "LEFT JOIN [CAMPUS].[TOWN] t ON (pt.TOWN = t.CODE) ORDER BY NEWID()";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, categoryCode);
-			ps.setInt(2, 1); // TODO get from application status enum
-			ps.setDate(3, yesterday);
-			ps.setInt(4, 1);
-			ps.setInt(5, 1);
-			ps.setInt(6, 1);
-			ps.setInt(7, 1);
+			ps.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setDate(3, today);
+			ps.setDate(4, today);
+			ps.setInt(5, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(6, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(8, ApplicationStatus.ACTIVE.getStatusValue());
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
