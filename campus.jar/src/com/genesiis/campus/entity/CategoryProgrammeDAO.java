@@ -16,6 +16,7 @@ package com.genesiis.campus.entity;
 //				courseProvider and use AccountType enum to set the proper constant name to result list
 //20161127 MM c5-corporate-training-landing-page-MP Modified code to use ApplicationStatus enum 
 //				to set arguments to status related parameters, and to consider DISPLAYSTARTDATE in query
+//20161127 MM c5-corporate-training-landing-page-MP Removed unused java.sql.Date object.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,9 +60,6 @@ public class CategoryProgrammeDAO implements ICrud {
 			cal.set(Calendar.SECOND, 0);
 			cal.set(Calendar.MILLISECOND, 0);
 			java.sql.Date today = new java.sql.Date(cal.getTimeInMillis());
-
-			cal.add(Calendar.DATE, -1);
-			java.sql.Date yesterday = new java.sql.Date(cal.getTimeInMillis());
 			
 			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, "
 					+ "cp.ACCOUNTTYPE, ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
