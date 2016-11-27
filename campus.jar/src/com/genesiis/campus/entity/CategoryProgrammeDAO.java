@@ -5,8 +5,15 @@ package com.genesiis.campus.entity;
 // 				field data when fetching data in findById()
 //20161028 MM c5-corporate-training-landing-page Corrected query result processing
 // 				code to remove accessing invalid fields
-//20161104 MM c5-corporate-training-landing-page Added code to DAO method to retrieve level and major names for programmes
+//20161104 MM c5-corporate-training-landing-page Added code to DAO method to retrieve level and 
+//				major names for programmes
 //20161104 MM c5-corporate-training-landing-page-MP Changed query in findById() to remove TOP clause
+//20161126 MM c5-corporate-training-landing-page-MP Changed query and column-data-extraction-code 
+//				to omit logoImagePath, since courseProvider image details are now not taken from DB
+//20161126 MM c5-corporate-training-landing-page-MP Restructured query to remove the now unnecessary 
+//				sub-query and added EXPIRYDATE related condition to fetch non-expired programmes
+//20161127 MM c5-corporate-training-landing-page-MP Modified code to retrieve AccountType of 
+//				courseProvider and use AccountType enum to set the proper constant name to result list
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +21,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
 
 public class CategoryProgrammeDAO implements ICrud {
 	static Logger Log = Logger.getLogger(CategoryProgrammeDAO.class.getName());
@@ -41,12 +50,19 @@ public class CategoryProgrammeDAO implements ICrud {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
 			
-			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, cp.LOGOIMAGEPATH, "
-					+ "ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, t.CODE AS TOWNCODE, t.NAME AS TOWNNAME FROM ("
-					+ "SELECT p.CODE FROM [CAMPUS].[PROGRAMME] p WHERE p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?"
-					+ ") a "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = a.CODE) "
-					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (p.COURSEPROVIDER = cp.CODE) "
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -1);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			java.sql.Date yesterday = new java.sql.Date(cal.getTimeInMillis());
+			
+			String query = "SELECT p.*, cp.SHORTNAME, cp.UNIQUEPREFIX, cp.NAME AS COURSEPROVIDERNAME, "
+					+ "cp.ACCOUNTTYPE, ct.NAME AS CLASSTYPENAME, m.NAME AS MAJORNAME, l.NAME AS LEVELNAME, "
+					+ "t.CODE AS TOWNCODE, t.NAME AS TOWNNAME "
+					+ "FROM [CAMPUS].[PROGRAMME] p JOIN [CAMPUS].[COURSEPROVIDER] cp "
+					+ "ON (p.COURSEPROVIDER = cp.CODE AND p.CATEGORY = ? AND p.PROGRAMMESTATUS = ? AND p.EXPIRYDATE > ?) "
 					+ "JOIN [CAMPUS].[CLASSTYPE] ct ON (ct.CODE = p.CLASSTYPE AND ct.ISACTIVE = ?) "
 					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = p.MAJOR AND m.ISACTIVE = ?) "
 					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = p.LEVEL AND l.ISACTIVE = ?) "
@@ -56,11 +72,12 @@ public class CategoryProgrammeDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, categoryCode);
-			ps.setInt(2, 1);
-			ps.setInt(3, 1);
+			ps.setInt(2, 1); // TODO get from application status enum
+			ps.setDate(3, yesterday);
 			ps.setInt(4, 1);
 			ps.setInt(5, 1);
 			ps.setInt(6, 1);
+			ps.setInt(7, 1);
 			ResultSet rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
@@ -87,6 +104,8 @@ public class CategoryProgrammeDAO implements ICrud {
 	
 	private void retrieveProgrammesFromResultSet(ResultSet rs, Collection<Collection<String>> deptList) throws SQLException {
 
+		int accountTypeValue = -1;
+		AccountType accountType = null;
 		while (rs.next()) {
 			final ArrayList<String> singleProgramme = new ArrayList<String>();
 			singleProgramme.add(rs.getString("CODE")); //0
@@ -105,15 +124,24 @@ public class CategoryProgrammeDAO implements ICrud {
 			singleProgramme.add(rs.getString("CATEGORY")); //13
 			singleProgramme.add(rs.getString("LEVEL")); //14
 			singleProgramme.add(rs.getString("CLASSTYPE")); //15
-			singleProgramme.add(rs.getString("LOGOIMAGEPATH")); //16
-			singleProgramme.add(rs.getString("CLASSTYPENAME")); //17
-			singleProgramme.add(rs.getString("SHORTNAME")); //18
-			singleProgramme.add(rs.getString("COURSEPROVIDERNAME")); //19
-			singleProgramme.add(rs.getString("TOWNCODE")); //20
-			singleProgramme.add(rs.getString("TOWNNAME")); //21
-			singleProgramme.add(rs.getString("UNIQUEPREFIX")); //22
-			singleProgramme.add(rs.getString("MAJORNAME")); //23
-			singleProgramme.add(rs.getString("LEVELNAME")); //24
+			singleProgramme.add(rs.getString("CLASSTYPENAME")); //16
+			singleProgramme.add(rs.getString("SHORTNAME")); //17
+			singleProgramme.add(rs.getString("COURSEPROVIDERNAME")); //18
+			singleProgramme.add(rs.getString("TOWNCODE")); //19
+			singleProgramme.add(rs.getString("TOWNNAME")); //20
+			singleProgramme.add(rs.getString("UNIQUEPREFIX")); //21
+			singleProgramme.add(rs.getString("MAJORNAME")); //22
+			singleProgramme.add(rs.getString("LEVELNAME")); //23
+			
+			accountTypeValue = rs.getInt("ACCOUNTTYPE");
+			accountType = AccountType.getAccountTypeByTypeValue(accountTypeValue);
+
+			String accountTypeStr = "";
+			if (accountType != null) {
+				accountTypeStr = accountType.name();
+			}
+			singleProgramme.add(accountTypeStr); //24
+			
 			final Collection<String> singleProgrammeCollection = singleProgramme;
 			deptList.add(singleProgrammeCollection);
 		}
