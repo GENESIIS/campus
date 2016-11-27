@@ -30,12 +30,19 @@ package com.genesiis.campus.command;
 // 				is fetched; was via querying SystemConfig table; now via SystemConfig enum
 //20161124 MM c5-corporate-training-landing-page-MP Added detailed comment about the use of 
 // 				EducationCategory.CORPORATE_TRAINING enum constant as requested in Code Review
+//20161126 MM c5-corporate-training-landing-page-MP Modified code that accesses the programme-
+//				data collection returned from the DAO class to suit the omission of 
+//				logoImagePath column there from the extracted column values. Also made other 
+//				code that accesses specific indexes of the result-set more maintainable. Added
+//				code to send default-course-provider details to front-end so the default-
+//				provider image may be shown when accountType of a provider is one-off.
 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,6 +58,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.EducationCategory;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
@@ -136,8 +144,11 @@ public class CmdListCategoryProgrammes implements ICommand {
 							
 							int indexOfMajorOrLevelCode = -1; 
 							int indexOfMajorOrLevelName = -1;
-							String filterType = "";
-							
+							int indexOfProgrammeCode = 0;
+							int indexOfTownCode = 19;
+							int indexOfTownName = 20;
+							int indexOfAccountType = 24;
+							String filterType = "";							
 						
 							// EducationCategory enum contains constants that map to records in the Category table. 
 							// E.g. CORPORATE_TRAINING constant of type EducationCategory has a related record in 
@@ -150,13 +161,13 @@ public class CmdListCategoryProgrammes implements ICommand {
 							if (EducationCategory.CORPORATE_TRAINING.equals(educationCategory)) {
 								// If is CORPORATE_TRAINING consider Major data
 								indexOfMajorOrLevelCode = 12; // in the result set, MAJOR (code) will be at index 12 
-								indexOfMajorOrLevelName = 23; // in the result set, MAJORNAME will be at index 23
+								indexOfMajorOrLevelName = 22; // in the result set, MAJORNAME will be at index 23
 								filterType = "Major";
 							} else {
 								// else, consider Level data
 								// Consider Level data
 								indexOfMajorOrLevelCode = 14; // in the result set, LEVEL (code) will be at index 14 
-								indexOfMajorOrLevelName = 24; // in the result set, LEVELNAME will be at index 24
+								indexOfMajorOrLevelName = 23; // in the result set, LEVELNAME will be at index 24
 								filterType = "Level";
 							}
 
@@ -167,7 +178,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 								String townCode = null;
 								String majorOrLevelCode = null;
 								for (String field : prog) {
-									if (count == 0) {
+									if (count == indexOfProgrammeCode) {
 										programmeCode = field;						
 										
 										Collection<String> programmeRecord = progCodeToProgrammeMap.get(field);
@@ -177,11 +188,11 @@ public class CmdListCategoryProgrammes implements ICommand {
 										}
 									}
 
-									if (count == 20) {
+									if (count == indexOfTownCode) {
 										townCode = field;						
 									}
 
-									if (count == 21) {
+									if (count == indexOfTownName) {
 										String currentTownName = field;
 										if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
 											ArrayList<List<String>> townList = programmeCodeToTownListMap.get(programmeCode);
@@ -238,6 +249,10 @@ public class CmdListCategoryProgrammes implements ICommand {
 							String courseProviderLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 
 							int numOfResultsPerPage = 20; // This value will need to be eventually fetched from DB
+							int defaultCourseProviderRecordCode = -1; // Hard-coded
+							Map<String, String> oneOffProviderDetails = new HashMap<String, String>();
+							oneOffProviderDetails.put("name", AccountType.ONE_OFF_COURSE_PROVIDER.name());
+							oneOffProviderDetails.put("code", String.valueOf(defaultCourseProviderRecordCode));
 							
 							iview.setCollection(programmeCollection);
 							helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
@@ -245,6 +260,7 @@ public class CmdListCategoryProgrammes implements ICommand {
 							helper.setAttribute("levelOrMajorCollection", levelOrMajorCodeToLevelOrMajorDetailsMap.values());
 							helper.setAttribute("programmeCodeToTownListMap", programmeCodeToTownListMap);
 							helper.setAttribute("filterType", filterType);
+							helper.setAttribute("oneOffProviderDetails", oneOffProviderDetails);
 							
 						} else {
 							msgList.add("The provided value for categoryIdentifierString is not valid!");
