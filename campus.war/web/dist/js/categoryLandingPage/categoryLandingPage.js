@@ -37,12 +37,12 @@
  * 													adjustPaginatorOnChangeOfDisplayedResults() to display a message as to what 
  * 													part of the result set is currently displayed, upon clicking of a paginator 
  * 													button
- * 												 	
- * 																										
- *
+ * 20161126 MM c5-corporate-training-landing-page-MP Modified code in constructProgrammeListing() function so that course provider
+ * 													images are now considered to be in a directory named with the same value as 
+ * 													for code of that course provider's record in the DB table. Also changed code 
+ * 													to consider that image names have the format "{courseProviderCode}_small.jpg", 
+ * 													and to load default course provider image when courseProvider is one-off.
  */
-
-//alert("entered script");
 
 // IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
 window.categoryCode = $('#categoryCode').val(); // This element is expected to be present in the JSP
@@ -54,7 +54,8 @@ window.numOfResultsPerPageFetched = null;
 window.courseProviderLogoPathFetched = null;
 window.filterType = null;
 window.messages = null;
-window.messageType = {INFO: 'INFO', ERROR: 'ERROR'}
+window.messageType = {INFO: 'INFO', ERROR: 'ERROR'};
+window.oneOffProviderDetails = null;
 
 $(document).ready(function() {
 	$('#message-container').hide();
@@ -105,9 +106,10 @@ function getProgrammeData() {
 				window.numOfResultsPerPageFetched = response.numOfResultsPerPage;
 				window.courseProviderLogoPathFetched = response.courseProviderLogoPath;
 				window.filterType = response.filterType;	
+				window.messages = response.messages;
+				window.oneOffProviderDetails = response.oneOffProviderDetails;
 				
 				window.programmeCollectionNarrowedDown = response.result;
-				window.messages = response.messages;
 				
 				if (window.programmeCollectionFetched !== undefined && window.programmeCollectionFetched !== null && window.programmeCollectionFetched.length > 0) {
 					constructLevelOrMajorMenu();
@@ -189,9 +191,10 @@ function constructProgrammeListing(pageNum) {
 
 	var programmeCollection = window.programmeCollectionNarrowedDown;
 	var programmeCodeToTownListMap = window.programmeCodeToTownListMapFetched;
-	var courseProviderLogoPath = window.courseProviderLogoPathFetched;
-	
+	var courseProviderLogoPath = window.courseProviderLogoPathFetched;	
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
+	var oneOffProviderDetails = window.oneOffProviderDetails;
+	var logoTypeAndExtension = "_small.jpg";
 
 	var indexIndicatorOfLastProg = null;
 	var indexOfFirstProgNeeded = null;
@@ -209,17 +212,28 @@ function constructProgrammeListing(pageNum) {
 	
 	//Construct the Programme listing 
 	var programmesHtmlFragment = '';
+	var programmeCode = null;
+	var courseProviderCode = null;
+	var imgAlterTextShortName = null;
 	
 	if (programmeCollectionForCurrentPage !== undefined && programmeCollectionForCurrentPage !== null && programmeCollectionForCurrentPage.length > 0) {
-		$.each(programmeCollectionForCurrentPage, function(index, val) {						
+		$.each(programmeCollectionForCurrentPage, function(index, val) {
+			programmeCode = val[0];			
 			programmesHtmlFragment += '<li class="course-info clearfix">';
 			programmesHtmlFragment += '<div class="col-name">';
-			programmesHtmlFragment += '<a href=""><h1 class="pro-name">' + val[18] + '</h1></a>';
+			programmesHtmlFragment += '<a href=""><h1 class="pro-name">' + val[17] + '</h1></a>';
 			programmesHtmlFragment += '<div class="pro-logo">';
 			
-			var logoImgPath = courseProviderLogoPath + '\\' + val[22] + '\\' + val[16];
+			if (val[24] === oneOffProviderDetails.name) {		
+				courseProviderCode = oneOffProviderDetails.code;
+				imgAlterTextShortName = "Default Provider"
+			} else {				
+				courseProviderCode = val[11];	
+				imgAlterTextShortName = val[17];
+			}			
+			var logoImgPath = courseProviderLogoPath + '\\' + courseProviderCode + '\\' + courseProviderCode + logoTypeAndExtension;
 			
-			programmesHtmlFragment += '<a href=""><img src="' + logoImgPath + '" alt="' + val[18] + ' logo"></a>';
+			programmesHtmlFragment += '<a href=""><img src="' + logoImgPath + '" alt="' + imgAlterTextShortName + ' logo"></a>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '<div class="col-description">';
@@ -227,7 +241,7 @@ function constructProgrammeListing(pageNum) {
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '<div class="col-location">';
 			
-			var townListForCurrentProgramme = programmeCodeToTownListMap[val[0]];
+			var townListForCurrentProgramme = programmeCodeToTownListMap[programmeCode];
 			
 			$.each(townListForCurrentProgramme, function(i, currentTown) {
 				programmesHtmlFragment += '<a href="javascript:">' + currentTown[1] + '</a></br>';
@@ -236,7 +250,7 @@ function constructProgrammeListing(pageNum) {
 			programmesHtmlFragment += '</div>';
 			// Printing major/Level, entry requirements
 			programmesHtmlFragment += '<div class="col-duration">';
-			programmesHtmlFragment += '<label>' + val[23] + '<br><span>' + val[24] + '</span></label>';
+			programmesHtmlFragment += '<label>' + val[22] + '<br><span>' + val[23] + '</span></label>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '</li>';
 		});					
@@ -381,7 +395,7 @@ function filterProgrammesOnLevelOrMajor(levelOrMajorCheckboxList) {
 		var levelOrMajorCode = null;
 		$.each(levelOrMajorCheckboxList, function(index, levelOrMajorCheckbox) {
 			levelOrMajorCode = $(levelOrMajorCheckbox).attr('data-level-or-major-code');
-			// What if the code is null/empty/non-parseable
+			// What if the code is null/empty/non-parsable
 			levelOrMajorCodeArray.push(parseInt(levelOrMajorCode));
 		});
 		var programmeCollection = window.programmeCollectionFetched;
@@ -394,7 +408,7 @@ function filterProgrammesOnLevelOrMajor(levelOrMajorCheckboxList) {
 			var currentLevelOrMajorCode = null;
 			for (var j = 0; j < levelOrMajorCodeArray.length; j++) {
 				currentLevelOrMajorCode = levelOrMajorCodeArray[j];
-				// What if following is undefined, null, empty or non-parseable?
+				// What if following is undefined, null, empty or non-parsable?
 				if (parseInt(currentProgramme[elementIndex]) === currentLevelOrMajorCode) {
 					programmeCollectionNarrowedDown.push(JSON.parse(JSON.stringify(currentProgramme)));
 					break;
