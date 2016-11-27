@@ -10,6 +10,8 @@
 <%-- 20161125 MM c5-corporate-training-landing-page-MP - Added a div element with class 'programme-results-stat-info-div' just above 
 														the pagination container to act as the container of a message that displays 
 														what part of the result set is currently being displayed --%>
+<%-- 20161126 MM c5-corporate-training-landing-page-MP - Modified code in <body> to remove header and footer code from this file and 
+														instead used <jsp:include...> to include them --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,59 +31,7 @@
 <body>
 
 <!-- Header-->
-<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-    <div class="top">
-        <div class="logo-brand">
-            <h1 class="logo-txt">Campus.lk</h1>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="menu-bar">
-            <div class="home pull-left">
-                <a href="../../../index.html" class="btn-home center-block"></a>
-            </div>
-            <!-- End home button -->
-            <div class="menu-tabs clearfix">
-                <!-- Main menu tabs -->
-                <div class="top-menus">
-                    <ul class="list-inline">
-                        <li><a href="../courses.html">All Courses</a></li>
-                        <li><a href="../about-us.html">About Us</a></li>
-                        <li><a href="../contact-us.html">Contact Us</a></li>
-                        <li><a href="../news.html">News</a></li>
-                        <li><a href="../f-and-q.html">F & Q</a></li>
-                        <li><a href="../rss.html">Rss</a></li>
-                    </ul>
-                </div>
-                <!-- End Main menu tabs -->
-
-                <!-- Course Category tabs -->
-                <div class="bottom-menus">
-                    <ul class="list-inline">
-                        <li><a href="javascript:">Pre Education</a></li>
-                        <li><a href="javascript:">School Education</a></li>
-                        <li><a href="javascript:">Higher Education</a></li>
-                        <li><a href="javascript:">Corporate Training</a></li>
-                        <li><a href="javascript:">Vocational Training</a></li>
-                        <li><a href="javascript:">Talent & Skill</a></li>
-                    </ul>
-                </div>
-                <!-- End Course Category tabs -->
-            </div>
-            <div class="keyword-search pull-right">
-                <div class="search-bar">
-                    <input type="text" placeholder="Keyword Search">
-                    <a href="javascript:" class="colr-white">Enter</a>
-                </div>
-                <!-- End Keyword Search -->
-                <div class="login-link">
-                    <a href="javascript:" class="colr-white">Login</a>
-                </div>
-            </div>
-            <!-- End keyword search -->
-        </div>
-    </div>
-</header>
+<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 <!-- End Header -->
 
 <!-- Main Container - Higher-Education -->
@@ -138,16 +88,8 @@
 <!-- End Main Container -->
 
 <!-- Footer -->
-<!-- <footer w3-include-html="layout/footer.html"></footer>  -->
-
-<footer>
-    <div class="ft-top">
-
-    </div>
-    <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright © Campus.lk</label>
-    </div>
-</footer>
+<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
+<!-- End Footer -->
 
 <!-- jQuery & Other js -->
 <script src="/dist/bower-components/jquery/jquery.min.js"></script>
