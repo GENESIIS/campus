@@ -227,7 +227,7 @@ function addProfessionalExpForm() {
 	var jsonData = {
 	};
 }
-
+}
 
 /**
  * All the required functions for Professional Education. 

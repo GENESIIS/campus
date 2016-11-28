@@ -162,6 +162,7 @@ $('#frm-example').on('submit', function(e){
              .attr('name', 'id[]')
              .val(rowId)
       );
+      table.row('.selected').remove().draw( false );
    });
 
    // FOR DEMONSTRATION ONLY     
@@ -181,8 +182,7 @@ $('#frm-example').on('submit', function(e){
 
 </script>
 
-<h3><a href="http://www.gyrocode.com/articles/jquery-datatables-checkboxes/">jQuery DataTables  Row selection using checkboxes</a></h3>
-<a href="http://www.gyrocode.com/articles/jquery-datatables-checkboxes/">See full article on Gyrocode.com</a>
+
 <hr><br>
     
 <form id="frm-example" action="/path/to/your/script" method="POST">

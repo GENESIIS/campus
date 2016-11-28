@@ -1,5 +1,6 @@
 <!-- 20161124 PN c26-add-student-details: INIT jsp page for manage user details input forms. -->
 <!-- 20161126 PN c26-add-student-details: design error span and alert box. -->
+<!-- 20161128 PN c26-add-student-details: design Professional Experience pop up form. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -11,6 +12,12 @@
     <!-- Bootstrap & CSS Style-->
     <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/style.css" rel="stylesheet">
+    
+    	<!--     Data Table CSS -->
+    <link href="dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+    <link href="dist/datatable/dataTables.checkboxes.css" rel="stylesheet" type="text/css">
 
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
@@ -22,6 +29,17 @@
 <script src="dist/js/main.js"></script>
 <script src="dist/js/institute/validation/validation.js"></script>
 <script src="dist/js/student/student-helper.js"></script>
+
+<script src="dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script src="dist/datatable/dataTables.checkboxes.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/datatable/dataTables.checkboxes.min.js" type="text/javascript" charset="utf-8"></script>
+
+
 <style type="text/css">
 .alert{
     display: none;
@@ -36,8 +54,8 @@
 </button>
 
 <!-- Button trigger School Education modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
-  Personal Education
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentProfessionalDetailsModal">
+  Professional Experience
 </button>
 
 
@@ -105,24 +123,88 @@
 </div>
 
 
-<!-- Personal Details Modal -->
-<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- Professional Details Modal -->
+<div class="modal fade" id="studentProfessionalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="studentPersonalDetails">Personal Details</h4>
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+        <h4 class="modal-title" id="studentProfessionalDetails">Professional Experience</h4>
       </div>
-      <div class="modal-body">
-			...WIP..
-	  </div>
+      <div class="modal-body">			
+			<div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div>
+			Industry of the Organization  
+			<select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
+				<option value="">--Select One--</option>
+			</select> <span id="industryoftheOrganizationError" name="industryoftheOrganizationError" style="color:red"></span>
+			<br/>
+			
+			Organization <input type="text" name="organization" id="organization" onclick="clearField('organizationError')">
+			<span id="organizationError" name="organizationError" style="color:red"></span><br>
+			
+			Job Category  
+			<select id="jobCategory" name = "jobCategory" onchange="clearField('jobCategoryError')">
+				<option value="">--Select One--</option>
+			</select> <span id="jobCategoryError" name="jobCategoryError" style="color:red"></span>
+			<br/>
+			
+			Designation <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
+			<span id="designationError" name="designationError" style="color:red"></span><br>
+			
+			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')">
+			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
+			
+			Achieved on <input type="date" name="achievedOn" id="achievedOn" onclick="clearField('achievedOnError')">
+			<span id="achievedOnError" name="achievedOnError" style="color:red"></span><br>
+			
+			Description
+			<textarea rows="5" cols="40" name="jobDescription" id="jobDescription" ></textarea>
+			<br/><br/>
+					<form id="frm-example" action="/path/to/your/script" method="POST">
+
+						<table id="example"
+							class="table table-striped table-bordered dt-responsive nowrap"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th><input name="select_all" value="1" type="checkbox"></th>
+									<th><b>Industry</b></th>
+									<th><b>Organization</b></th>
+									<th><b>Category</b></th>
+									<th><b>Designation.</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th><b>Industry</b></th>
+									<th><b>Organization</b></th>
+									<th><b>Category</b></th>
+									<th><b>Designation.</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+								</tr>
+							</tfoot>
+				
+						</table>
+						<hr>
+						<p>
+							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+						</p>
+						<pre id="example-console"></pre>
+					</form>
+					<br />
+	  </div>					
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
+        <button type="button" class="btn btn-secondary" onclick="clearProfessionalExpForm()">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="addProfessionalExpForm()">Save changes</button>
       </div>
-    </div>
+   </div>
   </div>
 </div>
 
