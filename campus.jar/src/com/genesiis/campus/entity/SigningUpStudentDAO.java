@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
+//20161128 DN C18-student-signup-without-using-third-party-application-dn userNameExisyt() -->userNameAndEmailExist()
+//		add(),addSignInDataWOThirdPartyAppToRepository():changed to use trim() and bug fixed in code
 
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -12,17 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
-
-
-
-//import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
-import com.genesiis.campus.util.security.TripleDesEncryptor;
-
-
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 import org.apache.log4j.Logger;
@@ -158,16 +152,18 @@ public class SigningUpStudentDAO implements ICrud {
 			Connection conn = null;
 			final ArrayList<String> singleStudent = new ArrayList<String>();
 			Student student = (Student)object;
-			String  userName = student.getUsername();
+			String  userName = student.getUsername().trim();
+			String email = student.getEmail().trim();
+			PreparedStatement prepstmt =null;
 			ResultSet res = null;
 			int status=0;
 			try{
 				conn =ConnectionManager.getConnection();
-				res = UserNameExist(conn,userName);
+				res = userNameAndEmailExist(conn,prepstmt,userName,email);
 				if(res.next()){
-					status= -1;
+					status= -1; // a record exists
 				} else {
-					status = addSignInDataWOThirdPartyAppToRepository(conn,student);
+					status = addSignInDataWOThirdPartyAppToRepository(conn,prepstmt,student);
 				}
 			}catch (SQLException sqle){
 				Log.error("findById(Object objecConnection conn) :SQLException "+sqle.toString());  
@@ -176,6 +172,7 @@ public class SigningUpStudentDAO implements ICrud {
 				Log.error("findById(Object objecConnection conn) :Exception "+e.toString());
 				throw e;
 			} finally{
+				if(prepstmt!=null)prepstmt.close();
 				if(conn != null) conn.close();
 			}
 			return status;
@@ -200,6 +197,7 @@ public class SigningUpStudentDAO implements ICrud {
 		 return null;
 		
 }
+	
 /*
  * Method use connection and adds the sign in information
  * to the repository table:Student
@@ -209,14 +207,14 @@ public class SigningUpStudentDAO implements ICrud {
  * @throws SQLException
  * @throws Exception
  */
-	private int addSignInDataWOThirdPartyAppToRepository(Connection conn,Student student)throws SQLException,Exception{
+	private int addSignInDataWOThirdPartyAppToRepository(Connection conn,PreparedStatement prepstmt,Student student)throws SQLException,Exception{
 		int status = 0;
-		PreparedStatement prepstmt =null;
 		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[STUDENT]");
-		queryBuilder.append(" ([USERNAME],[PASSWORD],[FIRSTNAME],[LASTNAME]],[GENDER],[EMAIL], ");
-		queryBuilder.append(" [MOBILEPHONENO],[CRTON],[CRTBY],[MODON],[MODBY]); ");
-		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),? )");
+		queryBuilder.append(" ([USERNAME],[PASSWORD],[FIRSTNAME],[LASTNAME],[GENDER],[EMAIL],");
+		queryBuilder.append(" [MOBILEPHONENO],[TOWN],[CRTON],[CRTBY],[MODON],[MODBY]) ");
+		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),? );");
 		try{
+				Log.info("Adding user Account datails to the repository");
 				prepstmt =conn.prepareStatement(queryBuilder.toString());		
 				Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword());
 				prepstmt.setString(1, student.getUsername());
@@ -225,10 +223,12 @@ public class SigningUpStudentDAO implements ICrud {
 				prepstmt.setString(4, student.getLastName());
 				prepstmt.setInt(5, student.getGender());
 				prepstmt.setString(6,student.getEmail());
-				prepstmt.setString(7,student.getMobilePhoneNo());
+				prepstmt.setString(7,student.getMobilePhoneNo());//correct
+				prepstmt.setLong(8,-1); //Default town code is set when a new account is created
 				prepstmt.setString(9,student.getUsername());
-				prepstmt.setString(11,student.getUsername()); // this has to change once the Login session is implemented
-				status = (prepstmt.executeUpdate()==1)?1:-2;
+				prepstmt.setString(10,student.getUsername()); // this has to change once the Login session is implemented
+				status = (prepstmt.executeUpdate()==1)?1:-2; //if execution succeeded set to 1 else to -2
+				
 			
 		} catch(SQLException sqle) {
 			Log.error("addSignInDataWOThirdPartyAppToRepository(): SQLException"+ sqle.toString());
@@ -236,63 +236,45 @@ public class SigningUpStudentDAO implements ICrud {
 		} catch(Exception exp) {
 			Log.error("addSignInDataWOThirdPartyAppToRepository(): Exception"+exp.toString());
 			throw exp;
-		} finally{
-			if(prepstmt!=null) prepstmt.close();
 		}
 		return status;
 	}
 	
 	/*
 	 * method UserNameExist() checks if the if there an record exist for the given
-	 * username
+	 * username and the email address. since both
 	 * @returns returns ResultSet object which is empty if there is no any records else return null
 	 * having values that is returned from the data base
 	 * @param con Connection data base connection
 	 * @param String userName
+	 * @param String email
 	 * 
 	 */
-	private ResultSet UserNameExist( Connection con,String userName) throws SQLException {
+	private ResultSet userNameAndEmailExist( Connection con,PreparedStatement prs,String userName,String email) throws SQLException {
 		String userName1 = ((userName==null)||(userName==""))?null:userName;
-		StringBuilder sb = new StringBuilder("SELECT [USERNAME],[ISACTIVE] FROM [CAMPUS].[STUDENT] ");		
-		sb.append(" WHERE [USERNAME]  = ? ;");
+		String emailAddress = ((email==null)||(email==""))?null:email;
+		StringBuilder sb = new StringBuilder("SELECT [USERNAME],[ISACTIVE],[EMAIL] FROM [CAMPUS].[STUDENT] ");		
+		sb.append(" WHERE [USERNAME]  = ? OR [EMAIL]= ?  ;");
 		final String checkActive = sb.toString();
-		PreparedStatement prs = null;
 		ResultSet res = null;
 		try{
+			Log.info("Checking if User name and Email is Already Taken");
 			prs = con.prepareStatement(checkActive);
-			prs.setString(1, userName1); 		
+			prs.setString(1, userName1);
+			prs.setString(2,emailAddress);
 			boolean resStatus = false;
 			res= prs.executeQuery();
 			
 		} catch (SQLException sqle) {			
-			Log.error("");
+			Log.error("userNameAndEmailExist(): SQLException"+ sqle.toString());
 			throw sqle;
 		} catch(Exception exp) {
-			Log.error("");
+			Log.error("userNameAndEmailExist(): Exception"+ exp.toString());
 			throw exp;
-		} finally {
-			if(prs!=null) prs.close();
-		}
+		} 
 		return res;
 	}
 	
-	
-//	private String  encryptSensitiveDataToString(String sensitiveData){	
-//		String encrypetedStringFormat = "";
-//		Encryptable passwordEncryptor = new TripleDesEncryptor(sensitiveData); 
-//		encrypetedStringFormat = new String(passwordEncryptor.encrypt());
-//		return encrypetedStringFormat;
-//	
-//	}
-//	
-//	
-//	private String  decryptSensitiveDataToString(String encryptedString){	
-//		String byteArradecrypetedToStringFormat = "";
-//		byte[] encryptedByteArray = encryptedString.getBytes(Charset.forName("UTF-8"));
-//		Encryptable passwordEncryptor = new TripleDesEncryptor();
-//		byteArradecrypetedToStringFormat= passwordEncryptor.decrypt(encryptedByteArray);
-//		return byteArradecrypetedToStringFormat;
-//	
-//	}
+
 	
 }
