@@ -61,7 +61,7 @@ public class CmdSendCourseInquiry implements ICommand {
 
 			String gsonData = helper.getParameter("jsonData");
 			data = getInstituteInquirydetails(gsonData);
-
+			log.info("testing Data ................ : " + data);
 			String validateResult = Validator.validateCourseInquiry(data);
 
 			if (validateResult.equalsIgnoreCase("True")) {
