@@ -15,8 +15,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.log4j.Logger;
-
-import com.genesiis.campus.command.CmdGenerateEmail;
 /**
  * TripleDesEncryptor provides Triple Data Encryption Algorithm (TDEA or Triple DEA),
  *  It is a symmetric-key block cipher, which applies 
