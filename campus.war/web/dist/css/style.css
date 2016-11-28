@@ -6,6 +6,7 @@
  * 20161115 JH c7-higher-education-landing-page-MP change styles for slider panel to support carousel
  * 20161118 JH c7-higher-education-landing-page-MP style changes for common header
  * 20161125 JH c7-higher-education-landing-page-MP style changes due to UI changes
+ * 20161128 JH c7-higher-education-landing-page-MP removed static loading of course provider slider common image and load image dynamically
  */
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 
@@ -1098,13 +1099,14 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 
 /**
 * + .carousel .carousel-inner .item
+* - removed background image style
 * c7
 * JH
 */
 .main-category .content-holder .sliding-info-panel .info-slider-holder .featured-institute .carousel .carousel-inner .item .institute-description
 	{
 	height: 290px;
-	background: url("/dist/i/higher-education/slider-bg-1.jpg");
+	/*background: url("/dist/i/higher-education/slider-bg-1.jpg"); */
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
