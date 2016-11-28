@@ -3,6 +3,9 @@
 //20161123 MM c2-integrate-google-banners Added JavaDoc comment
 //20161123 MM c2-integrate-google-banners Changed query in findById() so that even  
 // 				pageSlots that do not have banners stored for them are fetched. 
+//20161128 MM c2-integrate-google-banners Renamed class to BannerDAO, incorporated
+//				ISACTIVE of PAGE table and EXPIRATIONDATE of BANNER table in query.
+//				Also modified code to use ApplicationStatus enum.
 
 package com.genesiis.campus.entity;
 
@@ -11,16 +14,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
 
 import org.apache.log4j.Logger;
 
-public class BannerAndAdvertDAO implements ICrud {
+public class BannerDAO implements ICrud {
 
-	static Logger Log = Logger.getLogger(BannerAndAdvertDAO.class.getName());
+	static Logger Log = Logger.getLogger(BannerDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -66,18 +71,29 @@ public class BannerAndAdvertDAO implements ICrud {
 		PreparedStatement ps = null;
 
 		try {
-			String pageUrl = (String) code;
-
+			String pageName = (String) code;
+			
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			java.sql.Date today = new java.sql.Date(cal.getTimeInMillis());
+			
 			StringBuilder query = new StringBuilder("SELECT b.*, ps.CODE AS PAGESLOTCODE, ps.NAME AS PAGESLOTNAME ");
 			query.append("FROM [campus].[PAGE] p ");
-			query.append("JOIN [campus].[PAGESLOT] ps ON (p.CODE = ps.PAGE AND p.NAME = ? AND ps.ISACTIVE = ?) ");
-			query.append("LEFT JOIN [campus].[BANNER] b ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ?)");
+			query.append("JOIN [campus].[PAGESLOT] ps ");
+			query.append("ON (p.CODE = ps.PAGE AND p.NAME = ? AND p.ISACTIVE = ? AND ps.ISACTIVE = ?) ");// 1, 2, 3
+			query.append("LEFT JOIN [campus].[BANNER] b ");
+			query.append("ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ? AND b.EXPIRATIONDATE > ?)");// 4, 5
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
-			ps.setString(1, pageUrl);
-			ps.setInt(2, 1);
-			ps.setInt(3, 1);
+			ps.setString(1, pageName);
+			ps.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(3, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(4, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setDate(5, today);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveBannerList(rs, bannerList);
