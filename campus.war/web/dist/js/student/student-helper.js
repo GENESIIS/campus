@@ -5,6 +5,7 @@
  * 20161126 PN c26-add-student-details: implemented validateForm() and modified code in addEducationDetails() method.
  * 20161128 PN c26-add-student-details: implemented addProfessionalExpForm() method, validateProfessionalExpForm() method and clearProfessionalExpForm() method.
  * 			PN c26-add-student-details: professional details form dropdown details populate using db values.
+ *			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
  */
 
 $(document).ready(function() {
@@ -215,7 +216,7 @@ function clearProfessionalExpForm() {
 	$('#organization').val("");
 	$('#designation').val("");
 	$('#commencedOn').val("");
-	$('#achievedOn').val("");
+	$('#completionOn').val("");
 	$('#jobDescription').val("");
 }
 
@@ -223,13 +224,13 @@ function validateProfessionalExpForm(){
 	isDropdownSelected(isemptyDropdown(("organization")),"Organization","organizationError");
 	isDropdownSelected(isemptyDropdown(("designation")),"Designation","designationError");
 	isDropdownSelected(isemptyDropdown(("commencedOn")),"Commenced on date","commencedOnError");
-	isDropdownSelected(isemptyDropdown(("achievedOn")),"Achieved on date","achievedOnError");
+	isDropdownSelected(isemptyDropdown(("completionOn")),"Completion on date","completionOnError");
 	
 	isDropdownSelected(isemptyDropdown('industryoftheOrganization'),"Industry of the Organization","industryoftheOrganizationError");
 	isDropdownSelected(isemptyDropdown('jobCategory'),"Job Category","jobCategoryError");
 
 	if(($('#organizationError').text() != '')||($('#designationError').text() != '')||($('#commencedOnError').text() != '')||
-	($('#achievedOnError').text() != '')||($('#industryoftheOrganizationError').text() != '')||($('#jobCategoryError').text() != '')){
+	($('#completionOnError').text() != '')||($('#industryoftheOrganizationError').text() != '')||($('#jobCategoryError').text() != '')){
 		return false;
 	}else{
 		return true;
@@ -239,16 +240,50 @@ function validateProfessionalExpForm(){
 //Get data and sent to CmdAddSchoolEducationData.java.
 function addProfessionalExpForm() {
 	if(validateProfessionalExpForm()){
-		$('#industryoftheOrganization').val();
-		$('#jobCategory').val();
-		$('#organization').val();
-		$('#designation').val();
-		$('#commencedOn').val();
-		$('#achievedOn').val();
-		$('#jobDescription').val();
+		var industry = $('#industryoftheOrganization').val();
+		var jobCategoty = $('#jobCategory').val();
+		var organization = $('#organization').val();
+		var designation = $('#designation').val();
+		var commencedOn = $('#commencedOn').val();
+		var completionOn = $('#completionOn').val();
+		var description = $('#jobDescription').val();
 
 	var jsonData = {
+			"industry" : industry,
+			"jobCategoty" : jobCategoty,
+			"organization" : organization,
+			"designation" : designation,
+			"commencedOn" : commencedOn,
+			"completionOn" : completionOn,
+			"description" : description
 	};
+	
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			jsonData : JSON.stringify(jsonData),
+			CCO : "APE"
+		},
+		dataType : "json",
+		success : function(data) {			
+			if(data.pesaveChangesStatus){	
+					if(data.pesaveChangesStatus === "Unsuccessful."){
+						$("#pesaveChangesStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+					}else if(data.pesaveChangesStatus === "Invalid Information"){
+						$("#pesaveChangesStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+					}
+				clearSchoolEducationForm();	
+				$("#pesaveChangesStatus").addClass("alert alert-success").text(data.pesaveChangesStatus).show();
+			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+			$("#pesaveChangesStatus").addClass("alert alert-warning").text(e).show();
+		}
+	});
+	
+	
 }
 }
 
@@ -308,7 +343,7 @@ var table = $('#example').DataTable({
  'rowCallback': function(row, data, dataIndex){
     // Get row ID
     var rowId = data[0];
-    alert("data"+data);
+    //alert("data"+data);
     // If row ID is in the list of selected row IDs
     if($.inArray(rowId, rows_selected) !== -1){
        $(row).find('input[type="checkbox"]').prop('checked', true);
@@ -351,6 +386,54 @@ $('#example tbody').on('click', 'input[type="checkbox"]', function(e){
  // Prevent click event from propagating to parent
  e.stopPropagation();
 });
+
+
+/* Formatting function for row details - modify as you need */
+/*function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Full name:</td>'+
+            '<td>'+d.name+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extension number:</td>'+
+            '<td>'+d.extn+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extra info:</td>'+
+            '<td>And any further details here (images etc)...</td>'+
+        '</tr>'+
+    '</table>';
+}
+
+//Array to track the ids of the details displayed rows
+var detailRows = [];
+
+$('#example tbody').on( 'click', 'tr table.details-control', function () {
+    var tr = $(this).closest('tr');
+    var row = table.row( tr );
+    var idx = $.inArray( tr.attr('id'), detailRows );
+
+    if ( row.child.isShown() ) {
+        tr.removeClass( 'details' );
+        row.child.hide();
+
+        // Remove from the 'open' array
+        detailRows.splice( idx, 1 );
+    }
+    else {
+        tr.addClass( 'details' );
+        row.child( format( row.data() ) ).show();
+
+        // Add to the 'open' array
+        if ( idx === -1 ) {
+            detailRows.push( tr.attr('id') );
+        }
+    }
+} );
+*/
+
 
 //Handle click on table cells with checkboxes
 $('#example').on('click', 'tbody td, thead th:first-child', function(e){
