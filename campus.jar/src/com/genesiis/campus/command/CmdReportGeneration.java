@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -29,7 +30,8 @@ public class CmdReportGeneration  implements ICommand{
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
-			
+			final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();
+			iView.setCollection(providerList);
 			
 		}catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
