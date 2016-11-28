@@ -24,8 +24,10 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		},
 		dataType : dataCategory,
 		success : function(response) {
-			//alert(response.result);
-			document.getElementById('messsage').innerHTML = response.result;
+			var reresult=response.result; 
+			alert("resule response "+reresult);
+			jQuery('<label id="displayLabel" style="color:#F39C12;" ></label>').html(reresult).appendTo('#containerBody');
+			//document.getElementById('messsage').innerHTML = response.result;
 		},
 		error : function(e) {
 			 alert("Error " + e);
