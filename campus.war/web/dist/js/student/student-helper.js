@@ -301,7 +301,6 @@ var table = $('#example').DataTable({
     'width':'1%',
     'className': 'dt-body-center',
     'render': function (data, type, full, meta){
-    	alert(data);
         return '<input type="checkbox">';
     }
  }],
