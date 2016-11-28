@@ -39,6 +39,14 @@ public class Validator {
 
 	int totalDays = 0;
 
+	
+	/**
+	 * Returns the given time duration in years
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * 
+	 * @return Returns the given time duration in years
+	 */
 	public int calculateYears(String duration) throws ArithmeticException,
 			Exception {
 		int years = 0;
