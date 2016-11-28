@@ -10,6 +10,7 @@
  * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
+ *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  */ 
 
  
@@ -45,13 +46,17 @@ function isFieldFilled(flag, elementName, errorLabelId){
 
 /**
  * 
- * @param fieldValue
- *            it is the value of a document element
+ * @param fieldValue it is the value of a document element
+ * method avoid if a string with spaces are passed in
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
 
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+}
+
+function ignoreWhiteSpace(){
+	
 }
 
 /**
