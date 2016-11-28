@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
@@ -43,6 +44,16 @@ public class CmdReportGeneration  implements ICommand{
 				//List courses by course Providers
 				//param:cpcode,date range
 				final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(providerCode);
+				
+				//todo:Test Data
+				final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
+				final ArrayList<String> singleCPType = new ArrayList<String>();
+				singleCPType.add("CPTYPECODE");				
+				singleCPType.add("CPTYPENAME");				
+				allCourseProviderTypeList.add(singleCPType);
+				
+				helper.setAttribute("resultSet", allCourseProviderTypeList);
+				
 				
 			}
 			final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();

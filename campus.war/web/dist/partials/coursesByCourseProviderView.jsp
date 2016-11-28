@@ -26,29 +26,50 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 
 <script type="text/javascript">
-function loadReportList(event){
-	alert(event);
-	
-	var cpCode = $("#cpCode").val();
-	$.ajax({
-		url : '../../PublicController',
-		data : {
-			CCO : 'REPORT_COURSES_BY_COURSE_PROVIDER',
-			providerCode : cpCode
-		},
-		dataType : "json",
-		success : function(response) {
-			alert("success");
-		},
-		error : function() {
-			alert("error");
-		}
-	});
-	
-	
-	
-}
 
+	function loadReportList(event) {
+		alert(event);
+
+		var cpCode = $("#cpCode").val();
+		$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'REPORT_COURSES_BY_COURSE_PROVIDER',
+				providerCode : cpCode
+			},
+			dataType : "json",
+			success : function(response) {
+				alert("success");
+				loadTable();
+
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+
+
+	function loadTable() {
+			$.each(response.resultSet, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+			
+			var r = new Array(), j = -1;
+			for (var key = 0, size = data.length; key < size; key++) {
+				r[++j] = '<tr><td>';
+				r[++j] = data[key][0];
+				r[++j] = '</td><td class="whatever1">';
+				r[++j] = data[key][1];
+				r[++j] = '</td><td class="whatever2">';
+				r[++j] = data[key][2];
+				r[++j] = '</td></tr>';
+			}
+			});
+			$('#dataTable').html(r.join(''));
+
+		}
+
+	}
 </script>
 
 </head>
@@ -189,6 +210,10 @@ function loadReportList(event){
 						</div>
 					</div>
 				</c:if>
+				<div class="search-result-view clearfix">
+					<div class="table-view">
+					<table id="#dataTable"></table></div>
+				</div>
 				<!-- End top viewed list -->
 				<div class="btn-show-all pull-right">
 					<a
