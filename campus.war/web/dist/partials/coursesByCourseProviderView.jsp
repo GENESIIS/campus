@@ -25,6 +25,32 @@
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 
+<script type="text/javascript">
+function loadReportList(event){
+	alert(event);
+	
+	var cpCode = $("#cpCode").val();
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			CCO : 'REPORT_COURSES_BY_COURSE_PROVIDER',
+			providerCode : cpCode
+		},
+		dataType : "json",
+		success : function(response) {
+			alert("success");
+		},
+		error : function() {
+			alert("error");
+		}
+	});
+	
+	
+	
+}
+
+</script>
+
 </head>
 <body>
 
@@ -108,15 +134,23 @@
 		<div class="provider-list-holder clearfix">
 			<div class="top-list clearfix">
 				<div class="search clearfix">
-					<form action="PublicController" method="post">
+					<!-- <form action="PublicController" method="post"> -->
 						<select name="providers">
 							<option value="1">Course provider1</option>
 							<option value="2">Course provider2</option>
 							<option value="3">Course provider3</option>
 						</select> <input type="date" name="search">
-						<button type="submit" name="CCO"
-							value="REPORT_COURSES_BY_COURSE_PROVIDER">Search</button>
-					</form>
+						 <select name='role'>
+							<option value="${selected}" selected>${selected}</option>
+							<c:forEach items="${result.collection}" var="role">
+								<c:if test="${role != selected}">
+									<option value="${role}">${role}</option>
+								</c:if>
+							</c:forEach>
+						</select>
+						<button type="submit" name="CCO" value="REPORT_COURSES_BY_COURSE_PROVIDER">Search</button>
+						<button type="submit" onclick="loadReportList(this)">Search List</button>
+					<!-- </form> -->
 				</div>
 				<!-- End list header -->
 				<c:if test='${not empty  result.collection}'>
