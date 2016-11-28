@@ -32,6 +32,7 @@ public class CourseProviderDAO implements ICrud{
 	
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement2 = null;
 		int status = 0;
 		
 		try{
@@ -47,7 +48,10 @@ public class CourseProviderDAO implements ICrud{
 			
 			conn = ConnectionManager.getConnection();
 			
-			String query = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
+			/**
+			 * provider query used to insert data into course provider table. 
+			 */
+			String provider = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
 			+" COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE ,LANDPHONENO ,LANDPHONE2NO ,"
 			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, HEADERIMAGEPATH,"
 			+" LOGOIMAGEPATH, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
@@ -58,9 +62,16 @@ public class CourseProviderDAO implements ICrud{
             +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
             +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, ?, ?, getDate(), ?, getDate(),? )";
 			
+			/**
+			 * account query used to insert data into course provider account
+			 * table. Takes course provider code generated in 'provider' query
+			 * as an input to this query.
+			 */
 			
-			String query2 ="";
-			preparedStatement = conn.prepareStatement(query);
+			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
+					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+
+			preparedStatement = conn.prepareStatement(provider);
 			
 			preparedStatement.setString(1, courseProvider.getUniquePrefix());
 			preparedStatement.setString(2, courseProvider.getShortName());
@@ -99,11 +110,29 @@ public class CourseProviderDAO implements ICrud{
 			preparedStatement.setInt(35, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(36, courseProvider.getPrincipal());
 			preparedStatement.setInt(37, courseProvider.getTutor());
-			preparedStatement.setString(38, "admin");
-			preparedStatement.setString(39, "admin");
+			preparedStatement.setString(38, courseProvider.getCrtBy());
+			preparedStatement.setString(39, courseProvider.getModBy());
+			
+			
+			preparedStatement2.setString(1, courseProviderAccount.getName());
+			preparedStatement2.setString(2, courseProviderAccount.getUsername());
+			preparedStatement2.setString(3, courseProviderAccount.getPassword());
+			preparedStatement2.setString(4, courseProviderAccount.getDescription());
+			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
+			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
+			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
+			preparedStatement2.setString(8, courseProvider.getCrtBy());
+			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
+			
 			
 			
 			status = preparedStatement.executeUpdate();
+			
+			if(status == 1){
+				preparedStatement2 = conn.prepareStatement(account);
+				
+				preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
+			}
 			
 			
 		}catch(SQLException sqlException){
