@@ -76,6 +76,33 @@ textarea:focus, input:focus {
 .colr-white {
   color: white !important; }
 
+.bg-green {
+  background-color: #5db95d; }
+
+.bg-blue {
+  background-color: #3ca3c1; }
+
+.bg-orange {
+  background-color: #f89e1c; }
+
+.bg-red {
+  background-color: #d54a45; }
+
+.w-25 {
+  width: 25%; }
+
+.w-50 {
+  width: 50%; }
+
+.w-70 {
+  width: 75%; }
+
+.w-90 {
+  width: 90%; }
+
+.w-100 {
+  width: 100%; }
+
 .page-topic-t1 {
   font-family: "Arvo", serif;
   font-size: 34px;
@@ -739,7 +766,9 @@ body, html {
                 font-size: 15px;
                 line-height: 20px; }
     .stud-dashboard .prf-page-container .right-side {
-      display: block; }
+      display: block;
+      padding-bottom: 30px;
+      padding-left: 30px; }
       .stud-dashboard .prf-page-container .right-side .w-about-me {
         background: #fff;
         border-radius: 10px;
@@ -760,24 +789,24 @@ body, html {
             padding-left: 30px; }
       .stud-dashboard .prf-page-container .right-side .widgets-e {
         display: block; }
-        .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity {
+        .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills {
           padding: 16px 20px;
           margin-top: 22px; }
-          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li {
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-education li {
             font-family: "Roboto", sans-serif;
             font-size: 16px;
             color: #6a9cf1;
             line-height: 20px;
             padding-top: 30px;
             padding-left: 35px; }
-            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li .drop-at {
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-experience li .drop-at, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-education li .drop-at {
               color: #37474f; }
-            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li .drop-time {
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-experience li .drop-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-education li .drop-time {
               color: #7a7a7a;
               font-size: 13px;
               font-family: "Raleway", sans-serif;
               font-style: italic; }
-          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-activity li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-activity li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-activity li {
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-activity li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-activity li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-activity li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-activity li {
             color: #686e77;
             font-family: "Roboto", sans-serif;
             font-size: 16px;
@@ -785,11 +814,22 @@ body, html {
             padding-top: 30px;
             padding-left: 35px;
             font-style: italic; }
-            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-activity li .act-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-activity li .act-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-activity li .act-time {
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-activity li .act-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-activity li .act-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-activity li .act-time, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-activity li .act-time {
               color: #7a7a7a;
               font-size: 13px;
               font-family: "Raleway", sans-serif;
               font-style: normal; }
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-skills li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-skills li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-skills li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-skills li {
+            color: #37474f;
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+            padding-top: 20px;
+            padding-left: 35px; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-skills li .progress, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-skills li .progress, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-skills li .progress, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-skills li .progress {
+              height: 14px;
+              margin-top: 10px;
+              margin-bottom: 15px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
@@ -918,5 +958,13 @@ body, html {
     float: right;
     border: none;
     background: #fff; }
+  .widget .widget-footer {
+    border-top: 1px solid #ebebeb;
+    padding-top: 12px;
+    margin-top: 15px;
+    text-align: center; }
+    .widget .widget-footer a {
+      font-family: "Muli", sans-serif;
+      color: #93a1b1; }
 
 /*# sourceMappingURL=style.css.map */
