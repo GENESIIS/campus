@@ -15,9 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
-
+import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -56,7 +55,7 @@ public class Validator {
 	}
 
 	/**
-	 * Validate institute course provider inquiry form data 
+	 * Validate institute course provider inquiry form data
 	 * 
 	 * @author Chathuri
 	 * @param value
@@ -94,26 +93,52 @@ public class Validator {
 	 * @param value
 	 * @return String to validate is given strings contains a null value.
 	 * **/
-	
-	public static  String validateCourseInquiry(StudentProgrammeInquiry data)throws ParseException{
+
+	public static String validateCourseInquiry(StudentProgrammeInquiry data)
+			throws ParseException {
 		String message = "True";
-		
-		if(!(isNotEmpty(data.getStudentName()) 
+
+		if (!(isNotEmpty(data.getStudentName())
 				|| isNotEmpty(data.getStudentEmail())
 				|| isNotEmpty(data.getTelephoneCountryCode())
 				|| isNotEmpty(data.getTelephoneAreaCode())
 				|| isNotEmpty(data.getTelephone())
-				|| isNotEmpty(data.getInquiryTitle())
-				|| isNotEmpty(data.getInquiry()))){
+				|| isNotEmpty(data.getInquiryTitle()) || isNotEmpty(data
+					.getInquiry()))) {
 			message = SystemMessage.EMPTYFIELD.message();
-		}else if (!validateEmail(data.getStudentEmail())) {
+		} else if (!validateEmail(data.getStudentEmail())) {
 			message = SystemMessage.EMAILERROR.message();
-		}else if (!isInteger(data.getTelephoneCountryCode())){
+		} else if (!isInteger(data.getTelephoneCountryCode())) {
 			message = SystemMessage.INVALIDECODE.message();
 		} else if (!isInteger(data.getTelephoneAreaCode())) {
 			message = SystemMessage.INVALIDEAREA.message();
 		} else if (!isInteger(data.getTelephone())) {
 			message = SystemMessage.PHONENUMBERERROR.message();
+		}
+	
+		return message;
+	}
+
+	/**
+	 *  validate student login data
+	 * @author anuradha
+	 * @param data 
+	 * @return String to validate is given strings contains a null value (message)
+	 * @throws ParseException
+	 * 
+	 */
+	
+	
+	public static String validateLogin(Student data) throws ParseException {
+		String message = "True";
+		log.info(message +""+ data);
+		if (!(isNotEmpty(data.getUsername()) 
+				|| isNotEmpty(data.getEmail()) 
+				|| isNotEmpty(data.getPassword()))) {
+			message = SystemMessage.EMPTYFIELD.message();
+			log.info(message);
+		} else if (!validateEmail(data.getEmail())){
+			message = SystemMessage.EMAILERROR.message();
 		}
 		log.info(message);
 		return message;
