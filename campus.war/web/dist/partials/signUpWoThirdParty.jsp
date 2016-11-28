@@ -14,7 +14,7 @@
 
 <title>SignUp Without Third Party</title>
 </head>
-<body>
+<body id="containerBody">
 <div align ="center">
 <form >
     <table>
@@ -24,6 +24,7 @@
         <h2>Sign Up </h2>
         <h3>Give Us Your Basic Detail </h3>
       </span>
+      
         <div>
          <label for="input-firstName" id="firstNameLabel">First Name <span>*</span></label>
          <input type="text" id="firstName" name="firstName" >
@@ -98,7 +99,7 @@
         <input type="checkbox" id="policyConfirm"  />
         <span>I have read privercy policy and accept<br> the terms and the conditions </span><br><br>
 
-     <button  type="button"  onclick=" return (sendSignUpCredentialsToBckEnd())" >Create Account</button>
+     <button  type="button"  onclick=" return (sendSignUpCredentialsToBckEnd())"  >Create Account</button>
 
       </td>
       <td>
