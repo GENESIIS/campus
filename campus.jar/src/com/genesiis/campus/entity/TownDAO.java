@@ -40,6 +40,14 @@ public class TownDAO implements ICrud{
 		return null;
 	}
 
+	
+	/**
+	 * Returns all the town details in Database
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * 
+	 * @return Returns all the town details from a collection of collection
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();

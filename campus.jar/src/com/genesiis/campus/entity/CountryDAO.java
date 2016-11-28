@@ -18,12 +18,13 @@ public class CountryDAO implements ICrud{
 
 	static Logger log = Logger.getLogger(CountryDAO.class.getName());
 
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
@@ -31,11 +32,13 @@ public class CountryDAO implements ICrud{
 		return 0;
 	}
 
+
 	@Override
 	public int delete(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	public Collection<Collection<String>> findById(Object code)
@@ -44,6 +47,13 @@ public class CountryDAO implements ICrud{
 		return null;
 	}
 
+	/**
+	 * Returns all the country details in Database
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * 
+	 * @return Returns all the country details from a collection of collection
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
@@ -67,10 +77,10 @@ public class CountryDAO implements ICrud{
 				allCountryList.add(singleCountryCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("getAll(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("getAll(): Exception " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -83,6 +93,7 @@ public class CountryDAO implements ICrud{
 		return allCountryList;
 	}
 
+
 	@Override
 	public int add(Object object, Connection conn) throws SQLException,
 			Exception {
@@ -90,12 +101,14 @@ public class CountryDAO implements ICrud{
 		return 0;
 	}
 
+
 	@Override
 	public int update(Object object, Connection conn) throws SQLException,
 			Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException,

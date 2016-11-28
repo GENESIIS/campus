@@ -78,7 +78,7 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setMiddleName(middleName);
 				tutor.setLastName(lastName);
 				tutor.setGender(gender);
-				tutor.setEmail(email);
+				tutor.setEmailAddress(email);
 				tutor.setLandCountryCode(landCountryCode);
 				tutor.setLandAreaCode("0");
 				tutor.setLandNumber(landNumber);
@@ -88,13 +88,13 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setDescription(description);
 				tutor.setExperience(experience);
 				tutor.setWebLink(webLink);
-				tutor.setFacebook(facebook);
-				tutor.setTwitter(twitter);
-				tutor.setMySpace(MySpace);
-				tutor.setLinkedIn(linkedIn);
-				tutor.setInstagram(instagram);
-				tutor.setViber(viber);
-				tutor.setWhatsApp(whatsApp);
+				tutor.setFacebookLink(facebook);
+				tutor.setTwitterNumber(twitter);
+				tutor.setMySpaceId(MySpace);
+				tutor.setLinkedInLink(linkedIn);
+				tutor.setInstagramId(instagram);
+				tutor.setViberNumber(viber);
+				tutor.setWhatsAppId(whatsApp);
 				tutor.setAddressLine1(addressLine1);
 				tutor.setAddressLine2(addressLine2);
 				tutor.setAddressLine3(addressLine3);
@@ -112,7 +112,7 @@ public class CmdAddTutorProfile implements ICommand {
 				
 			}
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
@@ -223,7 +223,7 @@ public class CmdAddTutorProfile implements ICommand {
 				addressLine3 = helper.getParameter("address3");
 			}
 		} catch (Exception e) {
-			log.error("setVariables()" + e);
+			log.error("setVariables() : Exception" + e.toString());
 			throw e;
 		}
 	}

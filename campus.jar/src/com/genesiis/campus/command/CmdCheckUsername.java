@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161125 CM c36-add-tutor-information Modified execute()method. 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
@@ -29,12 +30,19 @@ public class CmdCheckUsername implements ICommand {
 		final TutorDAO tutorDAO = new TutorDAO();
 		final Tutor tutor = new Tutor();
 		String message = "";
+		String usernm = null;
+		Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
+		
 		try {
-			tutor.setUsername(helper.getParameter("USERNAME"));
+			usernm = helper.getParameter("USERNAME");
+			
+			if (usernm != null){
+				
+					tutor.setUsername(usernm);
+					tutorCollection = tutorDAO.findById(tutor);
+			}
 			
 			
-			Collection<Collection<String>> tutorCollection = tutorDAO
-					.findById(tutor);
 			
 			if (tutorCollection.isEmpty()) {
 				message = "1";
@@ -43,7 +51,7 @@ public class CmdCheckUsername implements ICommand {
 			}
 			view.setCollection(tutorCollection);
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() : Exception " + exception.toString());
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);

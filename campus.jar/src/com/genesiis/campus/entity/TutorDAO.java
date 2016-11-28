@@ -14,6 +14,8 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class TutorDAO implements ICrud {
 
@@ -38,10 +40,10 @@ public class TutorDAO implements ICrud {
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		final Tutor tutor = (Tutor) object;
-		int status = -1;
-
-		try {
+		
+		int status = -1;		
+		try {			
+			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, tutor.getUsername());
@@ -50,7 +52,7 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
-			preparedStatement.setString(7, tutor.getEmail());
+			preparedStatement.setString(7, tutor.getEmailAddress());
 			preparedStatement.setString(8, tutor.getImagePath());
 			preparedStatement.setString(9, tutor.getLandCountryCode());
 			preparedStatement.setString(10, tutor.getLandAreaCode());
@@ -61,14 +63,14 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(15, tutor.getDescription());
 			preparedStatement.setString(16, tutor.getExperience());
 			preparedStatement.setString(17, tutor.getWebLink());
-			preparedStatement.setString(18, tutor.getFacebook());
-			preparedStatement.setString(19, tutor.getTwitter());
-			preparedStatement.setString(20, tutor.getMySpace());
-			preparedStatement.setString(21, tutor.getLinkedIn());
-			preparedStatement.setString(22, tutor.getInstagram());
+			preparedStatement.setString(18, tutor.getFacebookLink());
+			preparedStatement.setString(19, tutor.getTwitterNumber());
+			preparedStatement.setString(20, tutor.getMySpaceId()); 
+			preparedStatement.setString(21, tutor.getLinkedInLink());
+			preparedStatement.setString(22, tutor.getInstagramId());
 			preparedStatement.setString(23, tutor.getViber());
-			preparedStatement.setString(24, tutor.getWhatsApp());
-			preparedStatement.setInt(25, tutor.getIsActive());
+			preparedStatement.setString(24, tutor.getWhatsAppId());
+			preparedStatement.setInt(25, ApplicationStatus.ACTIVE.getStatusValue());
 			preparedStatement.setInt(26, tutor.getIsApproved());
 			preparedStatement.setString(27, tutor.getAddressLine1());
 			preparedStatement.setString(28, tutor.getAddressLine2());
@@ -79,11 +81,14 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(33, "chathuri");
 			status = preparedStatement.executeUpdate();
 
+		} catch (ClassCastException cce) {
+			log.error("add(): ClassCastException " + cce.toString());
+			throw cce;
 		} catch (SQLException exception) {
-			log.error("add(): " + exception.toString());
+			log.error("add(): SQLException " + exception.toString());
 			throw exception;
 		} catch (Exception exception) {
-			log.error("add(): " + exception.toString());
+			log.error("add(): Exception " + exception.toString());
 			throw exception;
 		} finally {
 			if (preparedStatement != null) {
@@ -109,14 +114,23 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 
+
+	/**
+	 * Returns the username in Database
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * 
+	 * @return Returns the username from a collection of collection
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		Tutor tutor = (Tutor) code;
+		
 		try {
+			Tutor tutor = (Tutor) code; 
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
 
@@ -131,11 +145,14 @@ public class TutorDAO implements ICrud {
 				final Collection<String> singleTownCollection = singleTownList;
 				allTownList.add(singleTownCollection);
 			}
+		} catch (ClassCastException cce) {
+			log.error("add(): ClassCastException " + cce.toString());
+			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("getAll(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("getAll(): Exception " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

@@ -23,14 +23,14 @@ public class Tutor {
 	private String addressLine2;
 	private String addressLine3;
 	private String webLink;
-	private String facebook;
-	private String linkedIn;
-	private String twitter;
-	private String instagram;
-	private String MySpace;
-	private String whatsApp;
-	private String viber; 
-	private String email;
+	private String facebookLink;
+	private String linkedInLink;
+	private String twitterNumber;
+	private String instagramId;
+	private String mySpaceId;
+	private String whatsAppId;
+	private String viberNumber; 
+	private String emailAddress;
 	private String imagePath;
 	private String username;
 	private String password;
@@ -246,100 +246,100 @@ public class Tutor {
 		this.webLink = webLink;
 	}
 	/**
-	 * @return the facebook
+	 * @return the facebookLink
 	 */
-	public String getFacebook() {
-		return facebook;
+	public String getFacebookLink() {
+		return facebookLink;
 	}
 	/**
-	 * @param facebook the facebook to set
+	 * @param facebookLink the facebookLink to set
 	 */
-	public void setFacebook(String facebook) {
-		this.facebook = facebook;
+	public void setFacebookLink(String facebookLink) {
+		this.facebookLink = facebookLink;
 	}
 	/**
-	 * @return the linkedIn
+	 * @return the linkedInLink
 	 */
-	public String getLinkedIn() {
-		return linkedIn;
+	public String getLinkedInLink() {
+		return linkedInLink;
 	}
 	/**
-	 * @param linkedIn the linkedIn to set
+	 * @param linkedInLink the linkedInLink to set
 	 */
-	public void setLinkedIn(String linkedIn) {
-		this.linkedIn = linkedIn;
+	public void setLinkedInLink(String linkedInLink) {
+		this.linkedInLink = linkedInLink;
 	}
 	/**
-	 * @return the twitter
+	 * @return the twitterNumber
 	 */
-	public String getTwitter() {
-		return twitter;
+	public String getTwitterNumber() {
+		return twitterNumber;
 	}
 	/**
-	 * @param twitter the twitter to set
+	 * @param twitterNumber the twitterNumber to set
 	 */
-	public void setTwitter(String twitter) {
-		this.twitter = twitter;
+	public void setTwitterNumber(String twitterNumber) {
+		this.twitterNumber = twitterNumber;
 	}
 	/**
-	 * @return the instagram
+	 * @return the instagramId
 	 */
-	public String getInstagram() {
-		return instagram;
+	public String getInstagramId() {
+		return instagramId;
 	}
 	/**
-	 * @param instagram the instagram to set
+	 * @param instagramId the instagramId to set
 	 */
-	public void setInstagram(String instagram) {
-		this.instagram = instagram;
+	public void setInstagramId(String instagramId) {
+		this.instagramId = instagramId;
 	}
 	/**
-	 * @return the mySpace
+	 * @return the mySpaceId
 	 */
-	public String getMySpace() {
-		return MySpace;
+	public String getMySpaceId() {
+		return mySpaceId;
 	}
 	/**
-	 * @param mySpace the mySpace to set
+	 * @param mySpaceId the mySpaceId to set
 	 */
-	public void setMySpace(String mySpace) {
-		MySpace = mySpace;
+	public void setMySpaceId(String mySpaceId) {
+		mySpaceId = mySpaceId;
 	}
 	/**
-	 * @return the whatsApp
+	 * @return the whatsAppId
 	 */
-	public String getWhatsApp() {
-		return whatsApp;
+	public String getWhatsAppId() {
+		return whatsAppId;
 	}
 	/**
-	 * @param whatsApp the whatsApp to set
+	 * @param whatsAppId the whatsAppId to set
 	 */
-	public void setWhatsApp(String whatsApp) {
-		this.whatsApp = whatsApp;
+	public void setWhatsAppId(String whatsAppId) {
+		this.whatsAppId = whatsAppId;
 	}
 	/**
-	 * @return the viber
+	 * @return the viberNumber
 	 */
 	public String getViber() {
-		return viber;
+		return viberNumber;
 	}
 	/**
-	 * @param viber the viber to set
+	 * @param viberNumber the viberNumber to set
 	 */
-	public void setViber(String viber) {
-		this.viber = viber;
+	public void setViberNumber(String viberNumberVal) {
+		this.viberNumber = viberNumberVal;
 	}
 	/**
-	 * @return the email
+	 * @return the emailAddress
 	 */
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 	/**
-	 * @param email the email to set
+	 * @param emailAddress the emailAddress to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 	
 	/**

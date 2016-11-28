@@ -26,10 +26,8 @@ public class CmdLoadTownDetails implements ICommand {
 			view.setCollection(townCollection);
 			
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() : Exception " + exception.toString());
 			throw exception;
-		} finally {
-
 		}
 		return view;
 	}
