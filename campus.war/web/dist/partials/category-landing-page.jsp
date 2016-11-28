@@ -22,10 +22,6 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- custom javascript -->
 <script src="/dist/js/header/ui-populate-helper.js"></script>
@@ -281,7 +277,7 @@
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 
 
