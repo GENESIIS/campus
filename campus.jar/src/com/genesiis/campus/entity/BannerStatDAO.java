@@ -1,6 +1,7 @@
 //20161118 MM c2-integrate-google-banners INIT - Initialised file
-//20161118 MM c2-integrate-google-banners INIT - Implemented add(Object) method
-//20161123 MM c2-integrate-google-banners INIT - Added JavaDoc comment
+//20161118 MM c2-integrate-google-banners Implemented add(Object) method
+//20161123 MM c2-integrate-google-banners Added JavaDoc comment
+//20161128 MM c2-integrate-google-banners Corrected argument sent to Logger.getLogger()
 
 package com.genesiis.campus.entity;
 
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
 
 public class BannerStatDAO implements ICrud {
 
-	static Logger Log = Logger.getLogger(BannerAndAdvertDAO.class.getName());
+	static Logger Log = Logger.getLogger(BannerStatDAO.class.getName());
 
 	/**
 	 * Inserts a single record into the BANNERSTAT table in the DB with the code
