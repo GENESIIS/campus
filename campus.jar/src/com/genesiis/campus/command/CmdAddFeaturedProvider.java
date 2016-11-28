@@ -96,8 +96,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setAddress3(helper.getParameter("address3"));
 //			courseProvider.setExpirationDate(helper.getParameter(""));
 //			courseProvider.setTutorRelated(helper.getParameter(""));
-			courseProvider.setCourseProviderType(Integer.parseInt(helper.getParameter("providerType")));
-			courseProvider.setCourseProviderStatus(Integer.parseInt(helper.getParameter("providerStatus")));
+//			courseProvider.setCourseProviderType(Integer.parseInt(helper.getParameter("providerType")));
+//			courseProvider.setCourseProviderStatus(Integer.parseInt(helper.getParameter("providerStatus")));
 			courseProviderAccount.setName(helper.getParameter("providerName"));
 			courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 			courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
