@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.model;
 //20161026 JH c7-higher-education-landing-page CourseProvider.java entity class created
 //20161026 JH c7-higher-education-landing-page create getters and setters
 //20161122 JH c39-add-course-provider remove unused attributes and added new attributes
+//20161128 JH c39-add-course-provider change userType getters and setters to headOffice
 
 import java.sql.Date;
 
@@ -640,17 +641,17 @@ public class CourseProvider {
 	}
 
 	/**
-	 * @return the userType
+	 * @return the headOffice
 	 */
-	public int getUserType() {
+	public int getHeadOffice() {
 		return headOffice;
 	}
 
 	/**
-	 * @param userType
+	 * @param headOffice
 	 *            the userType to set
 	 */
-	public void setUserType(int headOffice) {
+	public void setHeadOffice(int headOffice) {
 		this.headOffice = headOffice;
 	}
 
