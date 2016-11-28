@@ -130,9 +130,10 @@ java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 //			preparedStatement2.setString(8, courseProvider.getCrtBy());
 //			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
 //			
+			status = preparedStatement.executeUpdate();
+			log.info(".........." + status);
 			
-			
-			ResultSet rs = preparedStatement.executeQuery();
+			ResultSet rs = preparedStatement.getGeneratedKeys();
 			
 			if(rs.next()){
 				generatedKey = rs.getInt(1);
