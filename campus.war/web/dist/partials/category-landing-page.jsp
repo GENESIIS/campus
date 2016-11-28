@@ -129,14 +129,15 @@
 
 			<!-- slider & banner panel : right side -->
 			<div class="sliding-info-panel">
-				<div class="info-slider-holder">
-					<div class="featured-institute clearfix">
-						<div class="slider-heading clearfix">
-							<div class="topic">
-								<h2>Most Viewed Institutes</h2>
+				<c:if test="${not empty featuredInstitutes}">
+					<div class="info-slider-holder">
+						<div class="featured-institute clearfix">
+							<div class="slider-heading clearfix">
+								<div class="topic">
+									<h2>Most Viewed Institutes</h2>
+								</div>
 							</div>
-						</div>
-						<c:if test="${not empty featuredInstitutes}">
+
 							<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
 								<c:set var="provider" value="" />
@@ -164,7 +165,7 @@
 														</div>
 													</div>
 													<div class="institute-description clearfix"
-													 style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
+														style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
 															<c:out value="${featuredInstitute[4]}"></c:out>
 														</p>
@@ -203,7 +204,7 @@
 														</div>
 													</div>
 													<div class="institute-description clearfix"
-													 style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
+														style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
 															<c:out value="${featuredInstitute[4]}"></c:out>
 														</p>
@@ -228,39 +229,43 @@
 
 
 							</div>
-						</c:if>
-					</div>
-				</div>
-				<!-- End featured institute info slider -->
 
-				<div class="most-viewed-panel clearfix">
-					<h1>| Featured Institutes</h1>
-
-					<c:forEach var="institute" items="${institutes}">
-						<div class="banner-holder">
-							<div class="banner clearfix">
-								<div class="logo-image">
-									<img
-										src="${providerLogoPath}${slash }${institute[0] }${slash}${institute[0] }${smallLogo}"
-										alt="Logo">
-								</div>
-								<div class="description">
-									<h1>
-										<c:out value="${institute[2] }"></c:out>
-										<span>@ <c:out
-												value="${institute[26] }${institute[27] }${institute[28] }"></c:out></span>
-									</h1>
-									<p>
-										<c:out value="${institute[3] }"></c:out>
-									</p>
-								</div>
-							</div>
-							<!-- End Banner -->
 						</div>
-						<!-- Banner holder -->
-					</c:forEach>
-				</div>
-				<!-- End Most Viewed Panel -->
+					</div>
+					<!-- End featured institute info slider -->
+				</c:if>
+
+
+				<c:if test="not empty ${institutes }">
+					<div class="most-viewed-panel clearfix">
+						<h1>| Featured Institutes</h1>
+
+						<c:forEach var="institute" items="${institutes}">
+							<div class="banner-holder">
+								<div class="banner clearfix">
+									<div class="logo-image">
+										<img
+											src="${providerLogoPath}${slash }${institute[0] }${slash}${institute[0] }${smallLogo}"
+											alt="Logo">
+									</div>
+									<div class="description">
+										<h1>
+											<c:out value="${institute[2] }"></c:out>
+											<span>@ <c:out
+													value="${institute[26] }${institute[27] }${institute[28] }"></c:out></span>
+										</h1>
+										<p>
+											<c:out value="${institute[3] }"></c:out>
+										</p>
+									</div>
+								</div>
+								<!-- End Banner -->
+							</div>
+							<!-- Banner holder -->
+						</c:forEach>
+					</div>
+					<!-- End Most Viewed Panel -->
+				</c:if>
 			</div>
 			<!-- End right panel -->
 		</div>
