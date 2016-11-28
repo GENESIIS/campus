@@ -46,10 +46,10 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			validateFrontEndUserProvidedInformation(partialStudent);
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
 			message = systemMessage(status);
-			Collection<String> signUpdate = new ArrayList<String>();
-			signUpdate.add(null);
-			studentSignUps.add(signUpdate);
-			
+			Collection<String> signUpdata = new ArrayList<String>();
+			signUpdata.add(null);
+			studentSignUps.add(signUpdata);
+			view.setCollection(studentSignUps); 
 		} catch(SQLException sqle){
 			log.error("execute():SQLException "+sqle.toString());
 			throw sqle;
@@ -58,6 +58,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			log.error("execute():FailedValidationException "+e.toString());
 			message = e.toString();		
 			message = message.substring(message.lastIndexOf(":") + 1);
+			setFrontEndViewingDataIfValidationFails(view);
 		}catch (IOException ioExpe) {
 			log.error("execute():IOException " + ioExpe.toString());
 			throw ioExpe;
@@ -74,7 +75,11 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 	
 
 	
-
+/*
+ * convertRowStudentForJasonToStudent produces the Student
+ * from the Row data obtained from the client side
+ * @return Student object
+ */
 	
 	
 	private Student convertRowStudentForJasonToStudent(){
@@ -89,8 +94,11 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		return indusedStudent;
 	}
 	
-	
-	private void setFrontEndViewingDataIfValidationFails(){
+	/*
+	 * this method manages to set the front end displaying data to the IView object
+	 * if the validation fails.
+	 */
+	private void setFrontEndViewingDataIfValidationFails(IView view){
 		Collection<Collection<String>> outerCollectionWrapper = new ArrayList<Collection<String>>();
 		Collection<String> innerCollection =  new ArrayList<String>();
 		innerCollection.add(partialStudent.getFirstName());
@@ -103,8 +111,8 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		innerCollection.add(partialStudent.getPassWord());
 		innerCollection.add(partialStudent.getConfirmPw());
 		innerCollection.add(String.valueOf(partialStudent.getIsPolicyConfirm()));
-		outerCollectionWrapper.add(innerCollection);
-		
+		outerCollectionWrapper.add(innerCollection); // now the collection is set with the initial set.
+		view.setCollection(outerCollectionWrapper);
 	}
 
 	/*
@@ -133,7 +141,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 	
 	
 	
-/**
+/*
  * extractDumyObjectFrom helps extract the json data to a
  * row object with the same field name similar to the fields json data 
  * contains
@@ -156,7 +164,7 @@ public Object extractDumyObjectFrom(String gsonData) {
 	return rowStudentObj;
 }
 
-/**
+/*
  * RowStudentForJason  class maps the JSON data to raw Student object
  * till induce the brought in data from client side to proper  business model object
  * e.g. Student, 
