@@ -7,6 +7,8 @@ package com.genesiis.campus.entity;
 //				to get data related to ProfessionalExperience, SchoolEducation, SchoolGrade, HigherEducation and Award
 //20161124 MM c25-student-login-create-dashboard-MP-mm Modified query to select additional fields from PROFESSIONALEXPERIECNE,
 //				SCHOOLEDUCATION, SCHOOLGRADE and HIGHEREDUCATION tables.
+//20161128 MM c25-student-login-create-dashboard-MP-mm Modified query to join with additiona tables SKILL AND LEVEL and select 
+//				and extract more column values
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,18 +58,23 @@ public class StudentDAO implements ICrud {
 			int studentCode = student.getCode();
 
 			// TODO convert this to a StringBuidler
-			String query = "SELECT s.*, pe.CODE AS EXPERIENCECODE, pe.DESIGNATION, pe.ORGANIZATION, "
-					+ "pe.EXPERIENCECOMMENCEDON, pe.EXPERIENCECOMPLETIONON, "
+			String query = "SELECT s.*, "
+					+ "pe.CODE AS EXPERIENCECODE, pe.DESIGNATION, pe.ORGANIZATION, "
+					+ "pe.COMMENCEDON AS EXPERIENCECOMMENCEDON, pe.COMPLETIONON AS EXPERIENCECOMPLETIONON, "
 					+ "se.CODE AS SCHOOLEDUCATIONCODE, se.SCHOOL, se.ACHIEVEDON, "
-					+ "sg.CODE AS SCHOOLGRADECODE, sg.TITLE, he.CODE AS HIGHEREDUCATIONCODE, "
-					+ "he.INSTITUTE AS HIGHEREDUCATIONINSTITUTE, he.AFFINSTITUTE, he.LEVEL "
-					+ "AS HIGHEREDUCATIONLEVELCODE, he.AWARD AS HIGHEREDUCATIONAWARDCODE, "
+					+ "se.SCHOOLGRADE, sg.TITLE, sg.LEVEL AS SCHOOLGRADELEVEL, " 
+					+ "l.NAME AS LEVELNAME "
+					+ "he.CODE AS HIGHEREDUCATIONCODE, he.INSTITUTE AS HIGHEREDUCATIONINSTITUTE, he.AFFINSTITUTE, "
+					+ "he.LEVEL AS HIGHEREDUCATIONLEVELCODE, he.AWARD AS HIGHEREDUCATIONAWARDCODE, "
 					+ "he.MAJOR AS HIGHEREDUCATIONMAJORCODE, he.COMMENCEDON AS HIGHEREDUCATIONCOMMENCEDON, "
-					+ "he.COMPLETIONON AS HIGHEREDUCATIONCOMPLETIONON, a.CODE AS AWARDCODE FROM "
-					+ "[CAMPUS].[STUDENT] s JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe "
-					+ "ON (s.CODE = pe.STUDENT AND s.CODE = ?) "
+					+ "he.COMPLETIONON AS HIGHEREDUCATIONCOMPLETIONON, "
+					+ "a.SHORTTITLE, a.LONGTITLE "
+					+ "ss.CODE AS STUDENTSKILLCODE, ss.RATING, ss.SKILL AS SKILLCODE, sk.NAME AS SKILLNAME, "
+					+ "FROM [CAMPUS].[STUDENT] s "
+					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND s.CODE = ?) "
 					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT) "
 					+ "JOIN [CAMPUS].[SCHOOLGRADE] sg ON (sg.CODE = se.SCHOOLGRADE) "
+					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = sg.LEVEL) "
 					+ "JOIN [CAMPUS].[HIGHEREDUCATION] he ON (s.CODE = he.STUDENT) "
 					+ "JOIN [CAMPUS].[AWARD] a ON (a.CODE = he.AWARD) ";
 
@@ -171,6 +178,14 @@ public class StudentDAO implements ICrud {
 			singleStudent.add(rs.getString("HIGHEREDUCATIONMAJORCODE")); // 24
 			singleStudent.add(rs.getString("HIGHEREDUCATIONCOMMENCEDON")); // 24
 			singleStudent.add(rs.getString("HIGHEREDUCATIONCOMPLETIONON")); // 24
+			singleStudent.add(rs.getString("SCHOOLGRADELEVEL")); // 24
+			singleStudent.add(rs.getString("LEVELNAME")); // 24
+			singleStudent.add(rs.getString("SHORTTITLE")); // 24
+			singleStudent.add(rs.getString("LONGTITLE")); // 24
+			singleStudent.add(rs.getString("STUDENTSKILLCODE")); // 24
+			singleStudent.add(rs.getString("RATING")); // 24
+			singleStudent.add(rs.getString("SKILLCODE")); // 24
+			singleStudent.add(rs.getString("SKILLNAME")); // 24
 			final Collection<String> singleStudentCollection = singleStudent;
 			studentList.add(singleStudentCollection);
 		}
