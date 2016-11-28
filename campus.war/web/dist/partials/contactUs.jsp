@@ -7,6 +7,7 @@
 <!-- 20161111 DN c10-contacting-us-page-MP added clearField(elementId) method-->
 <!--20161116 DN c10-contacting-us-page-MP included validation.js file to view -->
 <!--20161122 DN c10-contacting-us-page-MP included mailto and jstl code to fill the fields -->
+<!--20161128 DN c10-contacting-us-page-MP  clearField('warningLabel') added to submit button and message displaying label has been given an id='warningLabel'  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -109,7 +110,7 @@
         <div class="contact-form clearfix">
             <!-- Contact Us form - Filing Area -->
             <div class="submit-area clearfix">
-            <label id="" style="color:#F39C12;" >${requestScope.message}</label>
+            <label id="warningLabel" style="color:#F39C12;" >${requestScope.message}</label>
             <c:forEach var="contactListValues" items="${result.collection}">
                 <c:forEach var="individualElement" items="${contactListValues}" varStatus="loop" >
                 	<c:choose>
@@ -168,7 +169,7 @@
 									</div>
 									<br><label id="captureError" style="color:#FFFF00;"></label>
 								</div>	
-			                   <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" >Submit Query</button>
+			                   <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" onclick="clearField('warningLabel');">Submit Query</button>
 								<!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
                 		</form>
                  	
