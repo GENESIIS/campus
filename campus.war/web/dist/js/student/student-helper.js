@@ -4,6 +4,7 @@
  * implemented addEducationDetails(), clearSchoolEducationForm() methods.
  * 20161126 PN c26-add-student-details: implemented validateForm() and modified code in addEducationDetails() method.
  * 20161128 PN c26-add-student-details: implemented addProfessionalExpForm() method, validateProfessionalExpForm() method and clearProfessionalExpForm() method.
+ * 			PN c26-add-student-details: professional details form dropdown details populate using db values.
  */
 
 $(document).ready(function() {
@@ -76,9 +77,31 @@ function getStudentData(response) {
 		$('<option>').val(x).text(y).appendTo(sseMedium);
 	});
 	
+	// Set Industry of the Organization
+ 	var industryoftheOrganization = $("#industryoftheOrganization");
+ 	industryoftheOrganization.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(industryoftheOrganization);
+	$.each(response.majorCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(industryoftheOrganization);
+	});
+	
+	// Set Job Category
+ 	var jobCategory = $("#jobCategory");
+ 	jobCategory.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(jobCategory);
+	$.each(response.majorCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(jobCategory);
+	});
+	
 	if(response.result) {
-        alert("I'm Here");
-        alert("response.result "+response.result)
         $.each(response.result, function(index, value) {
         	var res = value.toString();
     		var data = res.split(",");
@@ -278,6 +301,7 @@ var table = $('#example').DataTable({
     'width':'1%',
     'className': 'dt-body-center',
     'render': function (data, type, full, meta){
+    	alert(data);
         return '<input type="checkbox">';
     }
  }],
@@ -285,7 +309,7 @@ var table = $('#example').DataTable({
  'rowCallback': function(row, data, dataIndex){
     // Get row ID
     var rowId = data[0];
-
+    alert("data"+data);
     // If row ID is in the list of selected row IDs
     if($.inArray(rowId, rows_selected) !== -1){
        $(row).find('input[type="checkbox"]').prop('checked', true);
