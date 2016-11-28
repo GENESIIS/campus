@@ -48,14 +48,15 @@
 		<c:set var="code" value="" />
 		<c:set var="categoryIdentifier" value="" />
 
+		<c:set var="slash" value="/" />
+		<c:set var="smallLogo" value="_small.jpg" />
+		<c:set var="commonLogo" value="_common.jpg" />
 
 		<!-- page inner header -->
 		<div class="inner-header">
 			<c:forEach items="${result.collection}" var="category">
 				<div class="category-image">
-				<c:set var="slash" value="/" />
-				<c:set var="smallLogo" value="_small.jpg" />
-				<c:set var="commonLogo" value="_common.jpg" />
+
 					<img src="${categoryLogoPath }${slash}${category[3] } " alt="">
 				</div>
 				<div class="category-name">
