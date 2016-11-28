@@ -4,6 +4,8 @@
 //20161109 DN c10-contacting-us-page-MP refactor clearField() the method
 //20161116 DN c10-contacting-us-page-MP methods are exported to /dist/js/institute/validation/validation.js
 //20161124 DN c10-contacting-us-page-MP isValidEmailFormat() renamed to validEmailFormat() and moved to /dist/js/institute/validation/validation.js
+//20161128 DN c10-contacting-us-page-MP isValidEmailFormat()  validateForm() "message" changed to "Message" as advised by QA comments
+
 
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -23,7 +25,7 @@ function validateForm(){
 		return false;
 	} else if (!isFieldFilled(isempty(document.contactUsForm.subject.value),"Subject Field","subjectError")){
 		return false;
-	}else if (!isFieldFilled(isempty(document.contactUsForm.message.value),"message Field","userMessageError")) {
+	}else if (!isFieldFilled(isempty(document.contactUsForm.message.value),"Message Field","userMessageError")) {
 		return false;
 	}else if (!isFieldFilled(isHumanTestPassed(),"I'm Not A Robot","captureError")) {
 		
