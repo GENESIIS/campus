@@ -89,7 +89,6 @@ function createJasonObject(){
 			"userName"	:$('#userName').val(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
-			//"showPassWordChkBxVal":$('#showpasscheckbox').is(':checked'),
 			"isPolicyConfirm"	:$('#policyConfirm').val()
 	};
 	return jsonData;
