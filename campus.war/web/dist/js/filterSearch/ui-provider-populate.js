@@ -12,7 +12,7 @@ $(document).ready(function() {
 		},
 		dataType : "json",
 		success : function(response) {
-			getAjaxData(response);
+			getAjaxData(catCode,response);
 		},
 		error : function() {
 			alert("error");
@@ -20,7 +20,7 @@ $(document).ready(function() {
 	});
 });
 
-function getAjaxData(response) {
+function getAjaxData(catCode,response) {
 
 	var totalCount = 0;
 
@@ -35,14 +35,7 @@ function getAjaxData(response) {
 						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 					});
 
-/*	var providers = $("#providers");
-	$.each(response.result, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(x).text(y).appendTo(providers);
-	});*/
+
 
 	var catCount = 0;
 	var secondChoice = $("#select-category");
@@ -52,7 +45,11 @@ function getAjaxData(response) {
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick()" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		if(x==catCode){
+		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '" checked="checked"></a>' + y + '</li>');
+		}else{
+		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		}
 		catCount++;
 	});
 	totalCount += catCount;
@@ -74,18 +71,8 @@ function getAjaxData(response) {
 		
 		htmlstr += '<option val="' + data[1] + '">' + data[2] + '</option>';
 		
-	});	
-	
+	});		
 	$('#districtName').html(htmlstr);
-/*	$('#example-select').html(htmlstr);*/
-	
-	
-
-	/*
-	var select = document.getElementById("example-select");
-	for(index in response.districtList) {
-	    select.options[select.options.length] = new Option(response.districtList[index][2], response.districtList[index][1]);
-	}*/
 
 	
 	$('#addSearchData').on('click', function(event) {
@@ -185,20 +172,18 @@ function populateAjaxResponse(response) {
 	
 }
 
-function categoryClick(){
+function categoryClick(event){
 	
 	var catCode=0;
 	var categorySelection = $('#select-category').find('.categoryClass:checked');	
 	for (var i = 0; i < categorySelection.length; i++) {
 		var code = categorySelection[i].value;
-		if(code>0){
-			catCode=code;	
-		}		
+		if(code==event.value){
+			catCode=code;
+		}else{
+			categorySelection[i].checked=false;			
+		}				
 	}
-	// $('#select-category').prop('disabled', true\false);
-	
-	//$('#select-category').find('.categoryClass').length
-	
 	
 	$.ajax({
 		url : '../../PublicController',
