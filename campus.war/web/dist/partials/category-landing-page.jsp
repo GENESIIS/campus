@@ -7,6 +7,7 @@
 <!-- 20161125 JH c7-higher-education-lanidng-page-MP change slider UI design -->
 <!-- 20161125 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum wip -->
 <!-- 20161126 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum -->
+<!-- 20161128 JH c7-higher-education-landing-page-MP QA improvement: load course provider common image using system config  -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -30,9 +31,8 @@
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
-<style type="text/css">
-</style>
 </head>
+
 <body onload="getCategoryData()">
 
 	<!-- include Header-->
@@ -166,7 +166,8 @@
 															</h2>
 														</div>
 													</div>
-													<div class="institute-description clearfix">
+													<div class="institute-description clearfix"
+													 style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
 															<c:out value="${featuredInstitute[4]}"></c:out>
 														</p>
@@ -204,7 +205,8 @@
 															</h2>
 														</div>
 													</div>
-													<div class="institute-description clearfix">
+													<div class="institute-description clearfix"
+													 style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
 															<c:out value="${featuredInstitute[4]}"></c:out>
 														</p>
