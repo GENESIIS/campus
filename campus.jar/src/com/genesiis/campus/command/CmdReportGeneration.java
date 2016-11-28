@@ -7,8 +7,10 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
@@ -30,6 +32,19 @@ public class CmdReportGeneration  implements ICommand{
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
+			String providerCodeString = helper.getParameter("providerCode");
+			int providerCode=0; 
+			if (UtilityHelper.isNotEmpty(providerCodeString)) {
+				if (UtilityHelper.isInteger(providerCodeString)) {
+					providerCode = Integer.parseInt(providerCodeString);
+				}
+			}
+			if(providerCode>0){
+				//List courses by course Providers
+				//param:cpcode,date range
+				final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(providerCode);
+				
+			}
 			final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();
 			iView.setCollection(providerList);
 			
