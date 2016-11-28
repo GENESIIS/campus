@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
 //cater more phone number styles with spaces in between.
 //20161124 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
+//20161128 DN isValidPhoneNumber(),validateEmail() and isNotEmpty() methods changed to use trim() on passing parameter.
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +25,7 @@ public class PrevalentValidation implements Validatory {
 	@Override
 	public boolean isNotEmpty(String text) throws Exception{
 		boolean status = false;
-		if ((text != null) & (text.isEmpty() == false)) {
+		if ((text != null) & (text.trim().isEmpty() == false)) {
 			status = true;
 		}
 		throwCustomError(status," Text Field Validation(s) Failed!");
@@ -36,7 +37,7 @@ public class PrevalentValidation implements Validatory {
 		boolean validEmail = false;
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
 				"^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email.trim());
 		validEmail = matcher.find();
 		throwCustomError(validEmail," Email Validation Failed!");
 		return validEmail;
@@ -83,7 +84,7 @@ public class PrevalentValidation implements Validatory {
 	 * 777453052 (without the leading zero including spaces within the number
 	 * 0777453052 (with leading  zero and 9 digit number)
 	 * <b> if the State rule changes in a such a way that <i>the number of digits </i>for local telephone number to be changed<b>
-	 * then validation fails
+	 * then validation fails.
 	 * @author dushantha DN
 	 * @param numberToValidate Telephone number to be validated
 	 * @return boolean if passes true else false
@@ -91,7 +92,7 @@ public class PrevalentValidation implements Validatory {
 	@Override
 	public boolean isValidPhoneNumber(String numberToValidate) throws Exception {
 		boolean validPhoneNumber = false;
-			if((numberToValidate!=null) | (numberToValidate!="")){
+			if((numberToValidate!=null) | (numberToValidate.trim()!="")){
 				Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(00\\d{2}|\\+\\d{2}|0)?\\d{9}$");
 				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(numberToValidate.replaceAll("\\s+",""));
 				validPhoneNumber= matcher.find();
