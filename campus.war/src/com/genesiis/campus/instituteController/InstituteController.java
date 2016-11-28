@@ -1,8 +1,10 @@
 package com.genesiis.campus.instituteController;
 //20161027 AS C8-inquiry-form-for-course InstituteController class created.
 //20161031 AS C8-inquiry-form-for-course modified doget and dopost methods 
+//20161128 PN C8-inquiry-form-for-course changed the logger class imports.
+
 import java.io.IOException;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
