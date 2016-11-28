@@ -156,8 +156,8 @@
 			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')">
 			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
 			
-			Achieved on <input type="date" name="achievedOn" id="achievedOn" onclick="clearField('achievedOnError')">
-			<span id="achievedOnError" name="achievedOnError" style="color:red"></span><br>
+			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')">
+			<span id="completionOnError" name="completionOnError" style="color:red"></span><br>
 			
 			Description
 			<textarea rows="5" cols="40" name="jobDescription" id="jobDescription" ></textarea>
@@ -188,8 +188,7 @@
 									<th><b>Duration</b></th>
 									<th><b>Description</b></th>
 								</tr>
-							</tfoot>
-				
+							</tfoot>			
 						</table>
 						<hr>
 						<p>
