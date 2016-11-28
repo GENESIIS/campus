@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20161123 JH c39-add-course-provider CourseProviderAccount.java class created
 //20161123 JH c39-add-course-provider entity class coding : create getters and setters
+//20161128 JH c39-add-course-provider change data type int into boolean for isActive 
 
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class CourseProviderAccount {
 	private String crtBy;
 	private String mobBy;
 	
-	private int isActive;
+	private boolean isActive;
 	private int courseProvider;
 	private int userType;
 	
@@ -118,16 +119,17 @@ public class CourseProviderAccount {
 	public void setMobBy(String mobBy) {
 		this.mobBy = mobBy;
 	}
+
 	/**
 	 * @return the isActive
 	 */
-	public int getIsActive() {
+	public boolean isActive() {
 		return isActive;
 	}
 	/**
 	 * @param isActive the isActive to set
 	 */
-	public void setIsActive(int isActive) {
+	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 	/**
