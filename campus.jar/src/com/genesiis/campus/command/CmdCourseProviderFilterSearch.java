@@ -79,7 +79,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				codeList.add(Integer.parseInt(code));
 			}
 			//Assume one category can be selected at once from gui
-			providerSearchDTO.setCategory(codeList.get(0));
+			providerSearchDTO.setCategoryList(codeList);
 		}
 		if (districtCode != null && districtCode.length > 0 && !districtCode[0].isEmpty()) {					
 			int district = Integer.parseInt(districtCode[0]);
@@ -88,9 +88,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 	
 		
 		if (cpTypeAll != null && cpTypeAll.length > 0) {
-			if(cpTypeAll[0].equalsIgnoreCase("true")){						
-				providerSearchDTO.setGetAllCPTypes(true);
-			}else{
+			if(!cpTypeAll[0].equalsIgnoreCase("true")){						
 				if (cpTypeAyrray != null && cpTypeAyrray.length > 0) {
 					final List<Integer> codeList = new ArrayList<Integer>();
 					for (String code : cpTypeAyrray) {
@@ -101,29 +99,26 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 			}
 		}
 		if (majorAll != null && majorAll.length > 0) {
-			if(majorAll[0].equalsIgnoreCase("true")){						
-				providerSearchDTO.setGetAllMajors(true);
-			}else{
+			if(!majorAll[0].equalsIgnoreCase("true")){						
 				if (majorAyrray != null && majorAyrray.length > 0) {
 					final List<Integer> codeList = new ArrayList<Integer>();
 					for (String code : majorAyrray) {
 						codeList.add(Integer.parseInt(code));
 					}
 					providerSearchDTO.setMajorList(codeList);
-				}						
-			}
+				}	
+			}		
+			
 		}
 		if (levelAll != null && levelAll.length > 0) {
-			if(levelAll[0].equalsIgnoreCase("true")){						
-				providerSearchDTO.setGetAllMajors(true);
-			}else{
+			if(!levelAll[0].equalsIgnoreCase("true")){						
 				if (levelAyrray != null && levelAyrray.length > 0) {
 					final List<Integer> codeList = new ArrayList<Integer>();
 					for (String code : levelAyrray) {
 						codeList.add(Integer.parseInt(code));
 					}
 					providerSearchDTO.setLevelList(codeList);
-				}						
+				}
 			}
 		}
 	}

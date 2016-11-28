@@ -14,11 +14,8 @@ public class CourseProviderSearchDTO {
 	private int level;
 	private int major;
 	private int courserProviderType;
-	private int district;	
-	private boolean isGetAll;
-	private boolean isGetAllCPTypes;
-	private boolean isGetAllMajors;
-	private boolean isGetAllLevels;
+	private int district;
+	private List<Integer> categoryList;
 	private List<Integer> cpTypeList;
 	private List<Integer> majorList;
 	private List<Integer> levelList;
@@ -59,29 +56,12 @@ public class CourseProviderSearchDTO {
 	public void setDistrict(int district) {
 		this.district = district;
 	}
-	public boolean isGetAll() {
-		return isGetAll;
+	
+	public List<Integer> getCategoryList() {
+		return categoryList;
 	}
-	public void setGetAll(boolean isGetAll) {
-		this.isGetAll = isGetAll;
-	}
-	public boolean isGetAllCPTypes() {
-		return isGetAllCPTypes;
-	}
-	public void setGetAllCPTypes(boolean isGetAllCPTypes) {
-		this.isGetAllCPTypes = isGetAllCPTypes;
-	}
-	public boolean isGetAllMajors() {
-		return isGetAllMajors;
-	}
-	public void setGetAllMajors(boolean isGetAllMajors) {
-		this.isGetAllMajors = isGetAllMajors;
-	}
-	public boolean isGetAllLevels() {
-		return isGetAllLevels;
-	}
-	public void setGetAllLevels(boolean isGetAllLevels) {
-		this.isGetAllLevels = isGetAllLevels;
+	public void setCategoryList(List<Integer> categoryList) {
+		this.categoryList = categoryList;
 	}
 	public List<Integer> getCpTypeList() {
 		return cpTypeList;

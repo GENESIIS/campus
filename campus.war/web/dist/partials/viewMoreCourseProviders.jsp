@@ -228,11 +228,17 @@
 
 						<div class="district-col col-md-4 col-lg-4 pull-right">
 							<div class="drop-holder">
-								<input type="text" name="districtlist" id="districtlist"
-									list="districtName" placeholder="-- Select District --" />
+								<input type="text" name="districtlist" id="districtlist" list="districtName" placeholder="-- Select District --" />
 								<datalist id="districtName">
 								</datalist>
 							</div>
+						<!-- 	<div class="drop-holder">
+								<select id="example-select"></select>
+							</div> -->
+
+							<!-- 	<div class="drop-holder">
+								<select id="example-select"></select>
+							</div> -->
 						</div>
 						<!-- End find district drop down -->
 					</div>

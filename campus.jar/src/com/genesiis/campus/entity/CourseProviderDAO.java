@@ -330,8 +330,20 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT");
 			sb.append(" AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
 			
-			if (searchDTO.getCategory() > 0) {
+			/*if (searchDTO.getCategory() > 0) {
 				sb.append(" AND PROG.CATEGORY=?");
+			}*/
+			if (searchDTO.getCategoryList() != null && !searchDTO.getCategoryList().isEmpty()) {
+				sb.append(" AND PROG.CATEGORY in ( ");
+				boolean doneOne = false;
+				for(Integer code: searchDTO.getCategoryList()){
+					if(doneOne){
+			            sb.append(", ");
+			        }
+					sb.append(code);
+					doneOne = true;
+				}
+				sb.append(" ) ");
 			}
 		/*	if (searchDTO.getCourserProviderType() > 0) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE=? ");
@@ -372,21 +384,21 @@ public class CourseProviderDAO implements ICrud{
 				}
 				sb.append(" ) ");
 			}			
-			if (searchDTO.getDistrict() > 0) {
+			if (searchDTO.getDistrict() >= 0) {
 				sb.append(" AND DISTRICT.CODE=? ");
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
 			
 			
-			if (searchDTO.getCategory() > 0) {
+			/*if (searchDTO.getCategory() >= 0) {
 				stmt.setInt(1, searchDTO.getCategory());				
-			}
+			}*/
 			/*if (searchDTO.getCourserProviderType() > 0) {
 				stmt.setInt(2, searchDTO.getCourserProviderType());				
 			}*/
-			if (searchDTO.getDistrict() > 0) {
-				stmt.setInt(2, searchDTO.getDistrict());			
+			if (searchDTO.getDistrict() >= 0) {
+				stmt.setInt(1, searchDTO.getDistrict());			
 			}
 			
 			resultSet= stmt.executeQuery();

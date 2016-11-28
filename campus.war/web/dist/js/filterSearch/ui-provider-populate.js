@@ -62,36 +62,49 @@ function getAjaxData(response) {
 	$("#majorDiv").hide();
 	$("#levelDiv").hide();
 
-	var districtName = $("#districtName");
+
+	var htmlstr="";
 	$.each(response.districtList, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
 		var z = data[2].toString();
-		$('<option>').val(y).text(z).appendTo(districtName);
+		/*$('<option>').val(y).text(z).appendTo(districtName);*/
+		
+		htmlstr += '<option val="' + data[1] + '">' + data[2] + '</option>';
+		
 	});	
 	
-	/*$('#districtlist').on('click', function(event) {
-		alert(" drop-holder");
-		
-	});*/
+	$('#districtName').html(htmlstr);
+/*	$('#example-select').html(htmlstr);*/
 	
-	/*$('#districtlist').change( function()){});*/
 	
-	/*$('#districtlist').change( function(event) {
-		//alert(" drop-holder");
-		 var selectvalue = $(this).val();
-		 var list=$('#districtName');		 
-		
-	});*/
+
+	/*
+	var select = document.getElementById("example-select");
+	for(index in response.districtList) {
+	    select.options[select.options.length] = new Option(response.districtList[index][2], response.districtList[index][1]);
+	}*/
+
 	
 	$('#addSearchData').on('click', function(event) {
 		$(this).val();
 		var cpTypeAll = $('#cpTypeAll').is(':checked');
 		var majorAll = $('#majorAll').is(':checked');
 		var levelAll = $('#levelAll').is(':checked');
-		var districtCode = $('#districtlist').val();
+		var districtName = $('#districtlist').val();
+		var districtCode=0;
+		
+		
+		var option=$('#districtName').find('option');
+		for(var i=0; i<option.length;i++){
+			$('#districtName').find('option')[i].outerHTML;
+			if(option[i].text ==districtName){				
+				districtCode=option[i].attributes[0].value;
+				break;
+			}
+		}		
 		
 		//Category checks	
 		var categorySelection = $('#select-category').find('.categoryClass:checked');
