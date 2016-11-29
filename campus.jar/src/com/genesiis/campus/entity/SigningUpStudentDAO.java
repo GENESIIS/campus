@@ -211,8 +211,8 @@ public class SigningUpStudentDAO implements ICrud {
 		int status = 0;
 		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[STUDENT]");
 		queryBuilder.append(" ([USERNAME],[PASSWORD],[FIRSTNAME],[LASTNAME],[GENDER],[EMAIL],");
-		queryBuilder.append(" [MOBILEPHONENO],[TOWN],[CRTON],[CRTBY],[MODON],[MODBY]) ");
-		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),? );");
+		queryBuilder.append(" [MOBILEPHONENO],[TOWN],[CRTON],[CRTBY],[MODON],[MODBY],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE]) ");
+		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),?,?,? );");
 		try{
 				Log.info("Adding user Account datails to the repository");
 				prepstmt =conn.prepareStatement(queryBuilder.toString());		
@@ -227,6 +227,9 @@ public class SigningUpStudentDAO implements ICrud {
 				prepstmt.setLong(8,-1); //Default town code is set when a new account is created
 				prepstmt.setString(9,student.getUsername());
 				prepstmt.setString(10,student.getUsername()); // this has to change once the Login session is implemented
+				prepstmt.setString(11,student.getMobilePhoneCountryCode());
+				prepstmt.setString(12,student.getMobilePhoneNetworkCode());
+				
 				status = (prepstmt.executeUpdate()==1)?1:-2; //if execution succeeded set to 1 else to -2
 				
 			

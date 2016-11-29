@@ -24,14 +24,14 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		},
 		dataType : dataCategory,
 		success : function(response) {
-			var reresult=response.result; 
-			alert("resule response "+reresult);
-			jQuery('<label id="displayLabel" style="color:#F39C12;" ></label>').html(reresult).appendTo('#containerBody');
-			//document.getElementById('messsage').innerHTML = response.result;
+			jQuery('#displayLabel').html("<h2>"+response['message']+"</h2>");
+			
 		},
 		error : function(e) {
 			 alert("Error " + e);
-			console.log(e);
+			 console.log(e);
+			 throw e; // throwing error to upper level 
+			
 		}
 	});	
 }

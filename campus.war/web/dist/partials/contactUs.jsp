@@ -119,7 +119,7 @@
                         <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
                     </div>
                     <div class="tp">
-                        <label for="input-phoneNumber">Phone Number</label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
+                        <label for="input-phoneNumber">Phone Number<span>*</span></label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
                         <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" >
                     </div>
                     <div class="email">

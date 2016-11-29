@@ -14,7 +14,7 @@
 
 <title>SignUp Without Third Party</title>
 </head>
-<body id="containerBody">
+<body id="containerBody" bgcolor="#97EAF4">
 <div align ="center">
 <form >
     <table>
@@ -24,35 +24,35 @@
         <h2>Sign Up </h2>
         <h3>Give Us Your Basic Detail </h3>
       </span>
-      
+      		<label id="displayLabel" style="color:#F39C12;" ></label>
         <div>
-         <label for="input-firstName" id="firstNameLabel">First Name <span>*</span></label>
-         <input type="text" id="firstName" name="firstName" >
+         <label for="input-firstName" id="firstNameLabel">First Name <span>*</span></label><label id="firstNameError" style="color:#FFFF00;"></label><br>
+         <input type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')">
         </div>
         <br>
         <div>
-         <label for="input-lastName" id="lastNameLabel">Last Name <span>*</span></label>
-         <input type="text" id="lastName" name="lastName" >
+         <label for="input-lastName" id="lastNameLabel">Last Name <span>*</span></label><label id="lastNameError" style="color:#FFFF00;"></label><br>
+         <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
         </div>
          <br>
         <div>
-         <label for="input-gender" id ="genderLabel">Gender</label> <br>
+         <label for="input-gender" id ="genderLabel">Gender</label> <br><label id="genderError" style="color:#FFFF00;"></label><br>
          <input type="radio" name="gender" value="1" checked> Male<br>
         <input type="radio" name="gender" value="0"> Female<br>
         </div>
          <br>
          <div>
-         <label for="eMail" id="emilAddressLabel">Email <span>*</span></label>
-         <input type="text" id="emailAddress" name="emailAddress" >
+         <label for="eMail" id="emilAddressLabel">Email <span>*</span></label><label id="emailError" style="color:#FFFF00;"></label><br>
+         <input type="text" id="emailAddress" name="emailAddress"  onclick="clearField('emailError')">
          </div>
          <br>
         <div>
-        <label for="input-phoneNumber" id="contactNumberLabel">Phone Number</label>
-        <input type="text" id="contactNumber" name="contactNumber" >
+        <label for="input-phoneNumber" id="contactNumberLabel">Mobile Number<span>*</span></label><label id="phoneError" style="color:#FFFF00;"></label><br>
+        <input type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" placeholder="+94123445678|0094123456789|0777123456 formats are only accepted" >
         </div>
         <br>
         <div>
-         <label for="input-pathway" id="pathwayLabel">Are you engaged with</label>
+         <label for="input-pathway" id="pathwayLabel">What Are You Engaged With</label><label id="pathwayError" style="color:#FFFF00;"></label><br>
          <select id="pathway">
 	          <option value="school" id="pathway0">School Education</option>
 	          <option value="graduate" id="pathway1">Graduate</option>
@@ -84,22 +84,22 @@
       <td>
         <span >
         <h2 >Create a Username and Password</h2>
-        User name:<br><label id="usernameError" ></label>
-      	<input type="text" name="username" id="userName"><br>
+        User name:<span>*</span><br><label id="usernameLabel" ></label><label id="usernameError" style="color:#FFFF00;"></label><br>
+      	<input type="text" name="username" id="userName" onclick="clearField('usernameError')"><br><br>
       	
-     	 User password:<br><label id="passWordError" ></label>
-      	<input type="password" name="psw" id="passWord">
+     	 User password:<span>*</span><br><label id="passWordLabel" ></label><label id="passWordError" style="color:#FFFF00;"></label><br>
+      	<input type="password" name="psw" id="passWord" onclick="clearField('passWordError')"><br>
       	<br>
-     	 Confirm password:<br><label id="confPassWordError" ></label>
-      	<input type="password" name="confrmpsw" id="confrmpsw">
+     	 Confirm password:<span>*</span><br><label id="confPassWordLabel" ></label><label id="confPassWordError" style="color:#FFFF00;" ></label><br>
+      	<input type="password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')">
       	</span> 
         <input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')" />
         <span>Show Password</span><br><br><br>
-        <label id="policyConfirmError" ></label>
+        <label id="policyConfirmLabel" ></label><label id="policyConfirmError" style="color:#FFFF00;" ></label><br>
         <input type="checkbox" id="policyConfirm"  />
         <span>I have read privercy policy and accept<br> the terms and the conditions </span><br><br>
 
-     <button  type="button"  onclick=" return (sendSignUpCredentialsToBckEnd())"  >Create Account</button>
+     <button  type="button"  onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button>
 
       </td>
       <td>

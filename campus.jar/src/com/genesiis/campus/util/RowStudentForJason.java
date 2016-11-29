@@ -1,18 +1,44 @@
 package com.genesiis.campus.util;
+//20161129 DN C18-student-signup-without-using-third-party-application-test-dn created RowStudentForJason.java utility class
 
+/*
+ * RowStudentForJason  class maps the JSON data to raw Student object
+ * till induce the brought in data from client side to proper  business model object
+ * e.g. Student, 
+ * @author dushantha DN
+ *
+ */
 public class RowStudentForJason{
 	String firstName ;
 	String lastName  ;
 	String gender	;
 	String email;
 	String mobilePhoneNo;
+	String mobileCountryCode;
+	String mobileNetworkCode;
 	String pathway	;
 	String userName	;
 	String passWord	;
 	String confirmPw;
 	boolean isPolicyConfirm	;
-
-
+	
+	
+	
+	public String getMobileCountryCode() {
+		return mobileCountryCode;
+	}
+	public void setMobileCountryCode(String mobileCountryCode) {
+		this.mobileCountryCode = mobileCountryCode;
+	}
+	public String getMobileNetworkCode() {
+		return mobileNetworkCode;
+	}
+	public void setMobileNetworkCode(String mobileNetworkCode) {
+		this.mobileNetworkCode = mobileNetworkCode;
+	}
+	public void setPolicyConfirm(boolean isPolicyConfirm) {
+		this.isPolicyConfirm = isPolicyConfirm;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

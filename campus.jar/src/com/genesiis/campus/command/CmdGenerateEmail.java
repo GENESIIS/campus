@@ -124,6 +124,7 @@ public class CmdGenerateEmail implements ICommand {
 			log.error("execute():Exception " + e.toString());
 			throw e;
 		} finally {
+			if(!connection.isClosed())connection.close();
 			helper.setAttribute("message", message);
 		}
 			 return view;

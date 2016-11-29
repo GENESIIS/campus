@@ -70,12 +70,9 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		} finally {
 			helper.setAttribute("message", message);
 		}
-		
-		
 		return view;
 	}
 	
-
 	
 /*
  * convertRowStudentForJasonToStudent produces the Student
@@ -93,6 +90,8 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		indusedStudent.setFirstName(partialStudent.getFirstName());
 		indusedStudent.setLastName(partialStudent.getLastName());
 		indusedStudent.setMobilePhoneNo(partialStudent.getMobilePhoneNo());
+		indusedStudent.setMobilePhoneCountryCode(partialStudent.getMobileCountryCode());
+		indusedStudent.setMobilePhoneNetworkCode(partialStudent.getMobileNetworkCode());
 		return indusedStudent;
 	}
 	

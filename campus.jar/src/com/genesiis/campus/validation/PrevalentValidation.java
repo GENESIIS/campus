@@ -92,10 +92,19 @@ public class PrevalentValidation implements Validatory {
 	@Override
 	public boolean isValidPhoneNumber(String numberToValidate) throws Exception {
 		boolean validPhoneNumber = false;
+		String spacelessString = numberToValidate.replaceAll("\\s+","");
 			if((numberToValidate!=null) | (numberToValidate.trim()!="")){
 				Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(00\\d{2}|\\+\\d{2}|0)?\\d{9}$");
-				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(numberToValidate.replaceAll("\\s+",""));
-				validPhoneNumber= matcher.find();
+				//Pattern VALID_EMAIL_ADDRESS_REGEX_LESS = Pattern.compile("^\\d{7}$");
+				Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(spacelessString);
+				//Matcher matcherLess = VALID_EMAIL_ADDRESS_REGEX_LESS.matcher(spacelessString);
+				validPhoneNumber= (matcher.find());
+				
+				if(!validPhoneNumber){
+					Pattern VALID_EMAIL_ADDRESS_REGEX_LESS = Pattern.compile("^\\d{7}$");
+					Matcher matcherLess = VALID_EMAIL_ADDRESS_REGEX_LESS.matcher(spacelessString);
+					validPhoneNumber= (matcherLess.find());
+				}
 				throwCustomError(validPhoneNumber," Phone number Validation Failed!");
 			}
 			return validPhoneNumber;
