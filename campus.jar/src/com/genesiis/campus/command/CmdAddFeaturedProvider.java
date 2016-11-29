@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 //20161122 JH c39-add-course-provider CmdAddFeaturedProvider.java command class created
 //20161122 JH c39-add-course-provider implemented ICommand class
 //20161123 JH c39-add-course-provider execute method coding : retrieve request parameters
-//20161129 JH c39-add-course-provider code refactor due to course provider DAO class rename
+//20161129 JH c39-add-course-provider code refactor due to course provider DAO class rename, handle user messages
 
 import java.sql.SQLException;
 import java.text.DateFormat;
