@@ -52,11 +52,7 @@ public class CmdAddOneOffProvider implements ICommand {
 		try {
 			Date date = new Date();
 			log.info(">>>>>>>>>>>" + date.toString());
-			String land1 = helper.getParameter("land1");
-			String land2 = helper.getParameter("land2");
-			String mobile = helper.getParameter("mobile");
-			String fax = helper.getParameter("fax");
-			String country = helper.getParameter("country");
+
 			String town = helper.getParameter("town");
 			String expireDate = helper.getParameter("expirationDate");
 			String provider = helper.getParameter("featured-oneoff");
@@ -65,20 +61,16 @@ public class CmdAddOneOffProvider implements ICommand {
 			courseProvider.setName(helper.getParameter("providerName"));
 			courseProvider.setDescription(helper.getParameter("aboutMe"));
 			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
-			courseProvider.setCourseInquiryEmail(helper
-					.getParameter("inquiryMail"));
-			// courseProvider.setLandPhoneCountryCode(helper.getParameter(""));
-			// courseProvider.setLandPhoneAreaCode(helper.getParameter(""));
-			// courseProvider.setLandPhoneNo(helper.getParameter(""));
-			// courseProvider.setLandPhpneNo2(helper.getParameter(""));
-			// courseProvider.setFaxNo(helper.getParameter(""));
-			// courseProvider.setMobilePhoneCountryCode(helper.getParameter(""));
-			// courseProvider.setMobilePhoneNetworkCode(helper.getParameter(""));
-			// courseProvider.setMobilePhoneNumber(helper.getParameter(""));
-			// courseProvider.setHeaderImagePath(helper.getParameter(""));
-			// courseProvider.setLogoImagePath(helper.getParameter(""));
-			courseProvider
-					.setSpeciality(helper.getParameter("specialFeatures"));
+			courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
+			courseProvider.setLandPhoneCountryCode(helper.getParameter("country"));
+			courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
+			courseProvider.setLandPhoneNo(helper.getParameter("land1"));
+			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
+			courseProvider.setFaxNo(helper.getParameter("fax"));
+			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
+			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
+			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
+			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
 			courseProvider.setWeblink(helper.getParameter("webLink"));
 			courseProvider.setFacebookURL(helper.getParameter("facebook"));
 			courseProvider.setTwitterURL(helper.getParameter("twitter"));
