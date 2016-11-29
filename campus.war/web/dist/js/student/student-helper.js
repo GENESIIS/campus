@@ -6,6 +6,7 @@
  * 20161128 PN c26-add-student-details: implemented addProfessionalExpForm() method, validateProfessionalExpForm() method and clearProfessionalExpForm() method.
  * 			PN c26-add-student-details: professional details form dropdown details populate using db values.
  *			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
+ * 20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
  */
 
 $(document).ready(function() {
@@ -185,6 +186,7 @@ function clearSchoolEducationForm() {
 	$('#sseAchievedon').val("");
 	$('#sseCountry').val("");
 	$('#sseDescription').val("");
+	$("#saveChangesStatus").hide();
 }
 
 function validateForm(){
@@ -218,6 +220,7 @@ function clearProfessionalExpForm() {
 	$('#commencedOn').val("");
 	$('#completionOn').val("");
 	$('#jobDescription').val("");
+	$("#pesaveChangesStatus").hide();
 }
 
 function validateProfessionalExpForm(){
@@ -273,7 +276,7 @@ function addProfessionalExpForm() {
 					}else if(data.pesaveChangesStatus === "Invalid Information"){
 						$("#pesaveChangesStatus").addClass("alert alert-danger").text("Invalid Information.").show();
 					}
-				clearSchoolEducationForm();	
+				clearProfessionalExpForm();	
 				$("#pesaveChangesStatus").addClass("alert alert-success").text(data.pesaveChangesStatus).show();
 			}
 		},
