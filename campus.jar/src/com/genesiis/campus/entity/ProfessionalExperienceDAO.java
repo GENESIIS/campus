@@ -1,16 +1,20 @@
 package com.genesiis.campus.entity;
 //20161128 PN c26-add-student-details: INIT ProfessionalExperienceDAO.java class.
 //		   PN c26-add-student-details: implemented add() method.
+//20161129 PN c26-add-student-details: modified SQL query inside add() method.
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import com.genesiis.campus.command.CmdAddProfessionalExpDetails;
+import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class ProfessionalExperienceDAO implements ICrud{
-
+	static Logger log = Logger.getLogger(ProfessionalExperienceDAO.class.getName());
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		ProfessionalExperience data = (ProfessionalExperience) object;
@@ -20,7 +24,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
 				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
-";
+
 		int result = -1;
 
 		try {
