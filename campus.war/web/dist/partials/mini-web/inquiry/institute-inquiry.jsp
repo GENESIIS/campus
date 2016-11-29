@@ -196,7 +196,7 @@
 	<!-- End main container -->
 
 	<!-- Footer -->
-	<footer w3-include-html="layout/footer.jsp"></footer>
+	<footer w3-include-html="dist/partials/mini-web/inquiry/institute-inquiry.jsp"></footer>
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>

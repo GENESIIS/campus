@@ -29,7 +29,7 @@ function isFieldFilled(flag, elementName) {
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == '') || (fieldValue == null)) ? false : true;
+	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
 }
 
 /**
@@ -102,78 +102,83 @@ function validateInstituteInquiryFileds() {
 	if (!isValidCharactor(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
 		document.getElementById('input-firstName').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (fullname.length > 250) {
+	} else if (fullname.length > 250) {
 		document.getElementById('fullNameError').innerHTML = "**Invalid Name.";
 		document.getElementById('input-firstName').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (isAvailableSpace(fullname)) {
+	} else if (isAvailableSpace(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
 		document.getElementById('input-firstName').focus();
-		flag = false;
-
-	}
-	if (!isempty(fullname)) {
+		//flag = false;
+		return !flag;
+	} else if (!isempty(fullname)) {
 		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
 		document.getElementById('input-firstName').focus();
-		flag = false;
-	}
-	if (!isValidEmailFormat(email)) {
+		//flag = false;
+		return !flag;
+	} else if (!isValidEmailFormat(email)) {
 		document.getElementById('emailError').innerHTML = "**Invalid Email.";
 		document.getElementById('eMail').focus();
-		flag = false;
-	}
-	if (!isempty(email)) {
+		//flag = false;
+		return !flag;
+	} else if (!isempty(email)) {
 		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		document.getElementById('eMail').focus();
-		flag = false;
-	}
+		//flag = false;
+		return !flag;
+	} else
 
 	if (!isValidCharactor(inquiryTitle)) {
 		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
 		document.getElementById('input-inquiry-title').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (inquiryTitle.length > 70) {
+	} else if (inquiryTitle.length > 70) {
 		document.getElementById('inquiryTitleError').innerHTML = "**Title charactor limit exceeded.";
 		document.getElementById('input-inquiry-title').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (isAvailableSpace(inquiryTitle)) {
+	} else if (isAvailableSpace(inquiryTitle)) {
 		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
 		document.getElementById('input-inquiry-title').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (!isempty(inquiryTitle)) {
+	} else if (!isempty(inquiryTitle)) {
 		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
 		document.getElementById('input-inquiry-title').focus();
-		flag = false;
-	}
+		//flag = false;
+		return !flag;
+	} else
 
 	if (!isempty(inquiry)) {
 		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
 		document.getElementById('text-userMessage').focus();
-		flag = false;
-	}
-	if (isAvailableSpace(inquiry)) {
+		//flag = false;
+		return !flag;
+	} else if (isAvailableSpace(inquiry)) {
 		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
 		document.getElementById('text-userMessage').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
 
-	}
-	if (response.length == 0) {
+	} else if (response.length == 0) {
 		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
 		document.getElementById('captchaError').focus();
-		flag = false;
+		//flag = false;
+		return !flag;
+	} else {
+		return (flag);
+		
 	}
-	return (flag);
+	
 }
 
 function clearMessageField() {
