@@ -90,7 +90,7 @@
 		</c:choose>
 	</c:if>		
 	</div>
-<!-- WARNING: JQUERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
+<!-- WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
 <script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <!-- <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script> -->
 <script src="/dist/js/banner/banner_handler.js"></script>

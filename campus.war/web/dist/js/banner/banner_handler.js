@@ -11,11 +11,14 @@
  *				only a single slot, but all slots for only exactly the specified time in the 
  *				DB for each of those banners with an array of functions and setTimeout() JS function
  * 20161120 MM c2-integrate-google-banners-MP Fixed issue with event.target and $(this) 
- * 				returning the wrong url when sending trying to open the URL that tha banner
+ * 				returning the wrong url when sending trying to open the URL that the banner
  * 				has been set to to open in the DB
  * 20161120 MM c2-integrate-google-banners-MP Added warning on incompatibility with JQuery 3.1.1
  * 20161124 MM c2-integrate-google-banners-MP Added code so that the caller page is loaded dynamically
  * 				from data attributes of image tags that are displaying banners
+ * 20161129 MM c2-integrate-google-banners-MP Modified code to get the anchor tag of the next banner
+ * 				via the parent div tag, instead of the siblings() method, to rectify issue of a 
+ * 				banner disappearing when it is the only one loaded for a slot
  *  
  */
 
@@ -31,7 +34,7 @@
 @*/
 
 
-/* WARNING: JQUERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR 
+/* WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR 
  * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
  * */
 
@@ -51,7 +54,7 @@ bannerSlotWrappers.each(function(index){
 			var anchor = activeBanner.parent().next();
 			var nextBanner = null;
 			if (anchor.length == 0) {
-				nextBanner = activeBanner.parent().siblings().first().children('img');
+				nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
 			} else {
 				nextBanner = anchor.children('img');
 			}
