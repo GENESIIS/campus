@@ -8,7 +8,7 @@
 <!-- 20161125 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum wip -->
 <!-- 20161126 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum -->
 <!-- 20161128 JH c7-higher-education-landing-page-MP QA improvement: load course provider common image using system config  -->
-<!-- 20161129 JH c7-higher-education-lanidng-page-MP QA improvement: remove header and footer tags -->
+<!-- 20161129 JH c7-higher-education-lanidng-page-MP QA improvement: remove header and footer tags, move script tags to the bottom of the code -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -24,10 +24,6 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 
-<!-- custom javascript -->
-<script src="/dist/js/header/ui-populate-helper.js"></script>
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 
 <body onload="getCategoryData()">
@@ -281,6 +277,12 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
+
+	<!-- custom javascript -->
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
+	
+	<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
 
 
 </body>
