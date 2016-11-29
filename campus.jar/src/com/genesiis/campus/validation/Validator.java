@@ -131,8 +131,17 @@ public class Validator {
 	
 	public static String validateLogin(Student data) throws ParseException {
 		String message = "True";
+		
+		
+		if(!validateEmail(data.getUserKey())){
+			
+			
+		}
+		
+		
+		
 		log.info(message +""+ data);
-		if (!(isNotEmpty(data.getUsername()) 
+		if (!(isNotEmpty(data.getUserKey()) 
 				|| isNotEmpty(data.getEmail()) 
 				|| isNotEmpty(data.getPassword()))) {
 			message = SystemMessage.EMPTYFIELD.message();

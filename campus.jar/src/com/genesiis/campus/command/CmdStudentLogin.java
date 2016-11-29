@@ -33,7 +33,7 @@ public class CmdStudentLogin implements ICommand {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
-		log.info("testing Data ................ : " + data);
+		log.info("testing Data ................ : EMAIL " + data.getEmail() +"  Password  : "+data.getPassword());
 
 		String validateResult = Validator.validateLogin(data);
 		log.info(validateResult);

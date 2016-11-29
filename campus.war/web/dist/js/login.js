@@ -24,7 +24,7 @@ function studentLogin(){
 	if((username != null) && (pass != null)){
 		
 		var jsonData = {
-				"username" : username,
+				"username" : userKey,
 				"password" : pass
 		};
 		$.ajax({

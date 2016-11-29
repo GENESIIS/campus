@@ -2,10 +2,11 @@ package com.genesiis.campus.entity.model;
 
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added additional fields and setters and getters
-
+//20161129 AS C19-student-login-without-using-third-party-application-test-as added userKey attribute. 
 public class Student {
 	int code;
 	String username;
+	String userKey;
 	String password;
 	String indexNo;
 	String firstName;
@@ -54,6 +55,12 @@ public class Student {
 	public String getUsername() {
 		return username;
 	}
+	public String getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	} 
 	public String getPassword() {
 		return password;
 	}
