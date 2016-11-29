@@ -122,7 +122,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setString(38, "djfkdj");
 			preparedStatement.setString(39, "djfkdj");
 			
-			
+			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, "Mr. Perera");
 			preparedStatement2.setString(2, "Perera");
 			preparedStatement2.setString(3, "123");
@@ -141,7 +141,6 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			if(rs.next()){
 				generatedKey = rs.getInt(1);
 				status = 1;
-				preparedStatement2 = conn.prepareStatement(account);
 				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
 				preparedStatement2.setInt(6, generatedKey);
 				
@@ -162,6 +161,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			throw exception;
 		}finally{
 			if(conn != null){
+				conn.setAutoCommit(true);
 				conn.close();
 			}
 			if(preparedStatement != null){
