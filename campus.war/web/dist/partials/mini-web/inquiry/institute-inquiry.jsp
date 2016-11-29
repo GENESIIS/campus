@@ -197,7 +197,7 @@
 
 	<!-- Footer -->
 <!-- 	<footer w3-include-html="dist/partials/mini-web/inquiry/institute-inquiry.jsp"></footer> -->
-
+	<%@include file="/dist/partials/layout/footer.jsp" %>
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
