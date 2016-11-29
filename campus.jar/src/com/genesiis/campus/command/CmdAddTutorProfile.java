@@ -10,9 +10,11 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
 
 public class CmdAddTutorProfile implements ICommand {
@@ -100,7 +102,10 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setAddressLine3(addressLine3);
 				tutor.setImagePath("-");
 				tutor.setTown(town);
-				tutor.setUsertype(1);
+				
+				UserTypeDAO typeOfUser = new UserTypeDAO();
+
+				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
 
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {

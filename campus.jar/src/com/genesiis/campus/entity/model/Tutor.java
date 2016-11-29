@@ -302,8 +302,8 @@ public class Tutor {
 	/**
 	 * @param mySpaceId the mySpaceId to set
 	 */
-	public void setMySpaceId(String mySpaceId) {
-		mySpaceId = mySpaceId;
+	public void setMySpaceId(String mySpaceIdVal) {
+		mySpaceId = mySpaceIdVal;
 	}
 	/**
 	 * @return the whatsAppId
