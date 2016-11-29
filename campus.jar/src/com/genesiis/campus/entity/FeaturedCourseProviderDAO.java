@@ -123,15 +123,15 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setString(39, "djfkdj");
 			
 			
-			preparedStatement2.setString(1, courseProviderAccount.getName());
-			preparedStatement2.setString(2, courseProviderAccount.getUsername());
-			preparedStatement2.setString(3, courseProviderAccount.getPassword());
-			preparedStatement2.setString(4, courseProviderAccount.getDescription());
-			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
+			preparedStatement2.setString(1, "Mr. Perera");
+			preparedStatement2.setString(2, "Perera");
+			preparedStatement2.setString(3, "123");
+			preparedStatement2.setString(4, "user description");
+			preparedStatement2.setBoolean(5, true);
 			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
-			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
-			preparedStatement2.setString(8, courseProvider.getCrtBy());
-			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
+			preparedStatement2.setInt(7, 1);
+			preparedStatement2.setString(8, "admin");
+			preparedStatement2.setString(9, "admin");
 			
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
