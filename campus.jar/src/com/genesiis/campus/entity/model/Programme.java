@@ -3,6 +3,10 @@ package com.genesiis.campus.entity.model;
 //20161024 CM  c13 display course details INIT Prgramme.java.
 //20161024 CM  c13 display course details Create variables, getters and setters.
 //20161101 CM  c13 display course details Add private modifier to the variables.
+//20161026 PN c11-criteria-based-filter-search: INIT Program.java class
+//20161024 CM  c13 display course details INIT Prgramme.java.
+//20161024 CM  c13 display course details Create variables, getters and setters.
+
 
 import java.sql.Date;
 
@@ -31,6 +35,8 @@ public class Programme {
 	private int town;
 	
 
+	
+	
 	/**
 	 * @return the code
 	 */
@@ -54,8 +60,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -69,8 +74,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param email
-	 *            the email to set
+	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -84,8 +88,8 @@ public class Programme {
 	}
 
 	/**
-	 * @param image
-	 *            the image to set
+	 * @param image the image to set
+
 	 */
 	public void setImage(String image) {
 		this.image = image;
@@ -98,9 +102,9 @@ public class Programme {
 		return description;
 	}
 
+
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -114,8 +118,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param duration
-	 *            the duration to set
+	 * @param duration the duration to set
 	 */
 	public void setDuration(String duration) {
 		this.duration = duration;
@@ -129,8 +132,8 @@ public class Programme {
 	}
 
 	/**
-	 * @param entryRequiremtns
-	 *            the entryRequiremtns to set
+	 * @param entryRequiremtns the entryRequiremtns to set
+>>>>>>> origin/c1-campus-landing-page-MP-pn
 	 */
 	public void setEntryRequiremtns(String entryRequiremtns) {
 		this.entryRequiremtns = entryRequiremtns;
@@ -144,8 +147,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param counselerName
-	 *            the counselerName to set
+	 * @param counselerName the counselerName to set
 	 */
 	public void setCounselerName(String counselerName) {
 		this.counselerName = counselerName;
@@ -159,8 +161,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param counselerPhone
-	 *            the counselerPhone to set
+	 * @param counselerPhone the counselerPhone to set
 	 */
 	public void setCounselerPhone(String counselerPhone) {
 		this.counselerPhone = counselerPhone;
@@ -174,8 +175,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param displayDatrtDate
-	 *            the displayDatrtDate to set
+	 * @param displayDatrtDate the displayDatrtDate to set
 	 */
 	public void setDisplayDatrtDate(Date displayDatrtDate) {
 		this.displayDatrtDate = displayDatrtDate;
@@ -188,9 +188,9 @@ public class Programme {
 		return expirationDate;
 	}
 
+
 	/**
-	 * @param expirationDate
-	 *            the expirationDate to set
+	 * @param expirationDate the expirationDate to set
 	 */
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
@@ -204,8 +204,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param programmeStatus
-	 *            the programmeStatus to set
+	 * @param programmeStatus the programmeStatus to set
 	 */
 	public void setProgrammeStatus(int programmeStatus) {
 		this.programmeStatus = programmeStatus;
@@ -271,6 +270,7 @@ public class Programme {
 		this.modBy = modBy;
 	}
 
+
 	/**
 	 * @return the courseProvider
 	 */
@@ -279,8 +279,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param courseProvider
-	 *            the courseProvider to set
+	 * @param courseProvider the courseProvider to set
 	 */
 	public void setCourseProvider(int courseProvider) {
 		this.courseProvider = courseProvider;
@@ -294,8 +293,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param major
-	 *            the major to set
+	 * @param major the major to set
 	 */
 	public void setMajor(int major) {
 		this.major = major;
@@ -309,8 +307,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param category
-	 *            the category to set
+	 * @param category the category to set
 	 */
 	public void setCategory(int category) {
 		this.category = category;
@@ -324,8 +321,7 @@ public class Programme {
 	}
 
 	/**
-	 * @param level
-	 *            the level to set
+	 * @param level the level to set
 	 */
 	public void setLevel(int level) {
 		this.level = level;
@@ -338,12 +334,11 @@ public class Programme {
 		return town;
 	}
 
+
 	/**
-	 * @param town
-	 *            the town to set
+	 * @param town the town to set
 	 */
 	public void setTown(int town) {
 		this.town = town;
 	}
-
 }

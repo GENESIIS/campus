@@ -10,6 +10,10 @@ package com.genesiis.campus.entity;
 //20161115 CM c13-Display-course-details Removed unused variable
 //20161115 CM c13-Display-course-details Removed duration calculation methods and moved to validator class
 //20161116 CM c13-Display-course-details Modified findById() method
+//20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
+//20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
+//20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +28,9 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.Validator;
+import com.genesiis.campus.util.IQueryBuilder;
+import com.genesiis.campus.util.QueryBuildingHelper;
+import java.util.Map;
 
 public class ProgrammeDAO implements ICrud {
 
@@ -63,8 +70,7 @@ public class ProgrammeDAO implements ICrud {
 	 */
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object code)	throws SQLException, Exception {
 		final Collection<Collection<String>> programmeDetails = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -131,40 +137,77 @@ public class ProgrammeDAO implements ICrud {
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			if (conn != null) {
-				conn.close();
-			}
 		}
 		return programmeDetails;
 	}
 
-	
+
+	/**
+	 * @author pabodha
+	 * @return Collection<Collection<String>>: contains all the available
+	 *         programs in DB.
+	 */
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+		final Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = " SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX] "
+					+ "FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
+					+ "WHERE p.PROGRAMMESTATUS = 1";
+
+			stmt = conn.prepareStatement(query);
+			final ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+				singleProgrammeList.add(rs.getString("CODE"));
+				singleProgrammeList.add(rs.getString("NAME"));
+				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+				singleProgrammeList.add(rs.getString("PROVIDER"));
+				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("IMAGE"));
+
+				final Collection<String> singleProgrammeCollection = singleProgrammeList;
+				allProgrammeList.add(singleProgrammeCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.error("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allProgrammeList;
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int update(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
