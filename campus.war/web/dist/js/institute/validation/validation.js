@@ -51,7 +51,7 @@ function isFieldFilled(flag, elementName, errorLabelId){
  */
 function isempty(fieldValue) {
 
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
 }
 
 /**

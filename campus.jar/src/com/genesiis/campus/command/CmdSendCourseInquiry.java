@@ -149,7 +149,7 @@ public class CmdSendCourseInquiry implements ICommand {
 
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
 				data.getStudentEmail(), data.getInquiryTitle(),
-				data.getInquiry());
+				inquiry);
 		return generalEmail;
 
 	}
@@ -200,22 +200,6 @@ public class CmdSendCourseInquiry implements ICommand {
 		}
 	}
 
-	/*
-	 * createDatabaseConnection() establishes the database connection with the
-	 * data repository
-	 * 
-	 * @author DN
-	 * 
-	 * @throw SQLException if the connection causes errors.
-	 */
-	private void createDatabaseConnection() throws SQLException {
-		try {
-			connection = ConnectionManager.getConnection();
-		} catch (SQLException sqle) {
-			log.error("add():SQLException :" + sqle.toString());
-			throw sqle;
-		}
-	}
 
 	/*
 	 * addContentToOriginalMailBody() formats the original details with users
@@ -229,9 +213,9 @@ public class CmdSendCourseInquiry implements ICommand {
 
 		result.append(originalMailBody);
 		result.append(System.getProperty("line.separator"));
-		result.append("Inquiry From : ");
+		result.append("Inquiry From : "+data.getStudentEmail());
 		result.append(System.getProperty("line.separator"));
-		result.append(sendersEmail);
+		result.append(data.getStudentName());
 		this.inquiry = result.toString();
 
 	}
