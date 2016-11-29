@@ -13,10 +13,14 @@
 //				code to set the currently loaded JSP as an attribute named "callerPage" 
 //				to be used by the Ajax call in the front-end when sending the banner-stat-update 
 //				request
+//20161128 MM c2-integrate-google-banners-MP Modified code to suit the renaming of 
+//				BannerAndAdvertDAO to BannerDAO. Disabled the execution of code that 
+//				checks and assigns Google advert script code to be loaded into a banner slot
+//				when no banners are present there. 
 
 package com.genesiis.campus.validation;
 
-import com.genesiis.campus.entity.BannerAndAdvertDAO;
+import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -57,18 +61,19 @@ public class BannerData {
 
 	public static void setBannerDetails(IDataHelper helper, String pageName)
 			throws Exception {
-
-		Map<String, Collection<Collection<String>>> slotNameToContentMap = new LinkedHashMap<String, Collection<Collection<String>>>();
-		String googleAdvertCode = "<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>"
-				+ "<!-- topjobs_responsive -->"
-				+ "<ins class=\"adsbygoogle\""
-				+ "style=\"display:block\""
-				+ "data-ad-client=\"ca-pub-1285561228927367\""
-				+ "data-ad-slot=\"7928574691\""
-				+ "data-ad-format=\"auto\"></ins>"
-				+ "<script>"
-				+ "(adsbygoogle = window.adsbygoogle || []).push({});"
-				+ "</script>";
+		
+//		DO NOT REMOVE THE SET OF COMMENTED LINES BELOW! THEY SPECIY AND ASSIGN THE GOOGLE BANNER CODE.
+//		COMMENTED-OUT TO CURRENTLY DISABLE THE FUNCTIONALITY	
+//		String googleAdvertCode = "<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>"
+//				+ "<!-- topjobs_responsive -->"
+//				+ "<ins class=\"adsbygoogle\""
+//				+ "style=\"display:block\""
+//				+ "data-ad-client=\"ca-pub-1285561228927367\""
+//				+ "data-ad-slot=\"7928574691\""
+//				+ "data-ad-format=\"auto\"></ins>"
+//				+ "<script>"
+//				+ "(adsbygoogle = window.adsbygoogle || []).push({});"
+//				+ "</script>";
 
 		String[] pagUrlSections = pageName.split("/");
 		if (pagUrlSections != null && pagUrlSections.length > 0) {
@@ -76,10 +81,10 @@ public class BannerData {
 		}
 
 		if (pageName != null && !pageName.isEmpty()) {
-			BannerAndAdvertDAO bannerAndAdvertDao = new BannerAndAdvertDAO();
+			BannerDAO bannerDao = new BannerDAO();
 
 			try {
-				Collection<Collection<String>> bannerCollection = bannerAndAdvertDao
+				Collection<Collection<String>> bannerCollection = bannerDao
 						.findById(pageName);
 
 				// Get banner logo path from SystemConfig enum
@@ -132,7 +137,7 @@ public class BannerData {
 					
 					listOfRecords = pageSlotCodeToBannerRecordsMap.get(pageSlotCode);
 					
-					boolean areBannerRecordsAvaialbleForTheSlot = true;
+					boolean areBannerRecordsAvailableForTheSlot = true;
 					
 					outer:
 					for (Collection<String> singleRecord : listOfRecords) {
@@ -144,7 +149,7 @@ public class BannerData {
 									count == 7) { // url
 								
 								if (field == null) {
-									areBannerRecordsAvaialbleForTheSlot = false;
+									areBannerRecordsAvailableForTheSlot = false;
 									break outer;
 								}
 							}
@@ -152,17 +157,20 @@ public class BannerData {
 						}
 					}
 					
-					if (areBannerRecordsAvaialbleForTheSlot) { 
+					if (areBannerRecordsAvailableForTheSlot) { 
 						// banners are available; assign banner records to the attribute whose name is the slot name					
 						helper.setAttribute(
 								pageSlotCodeToNameMap.get(pageSlotCode),
 								pageSlotCodeToBannerRecordsMap.get(pageSlotCode));
-					} else {	
-						// banners are not available; assign google banner advert code to the attribute whose name is the slot name							
-						helper.setAttribute(
-								pageSlotCodeToNameMap.get(pageSlotCode),
-								googleAdvertCode);
-					}
+					} 
+//	DO NOT REMOVE THE SET OF COMMENTED LINES BELOW! THEY HANDLE THE ASSIGNMENT OF GOOGLE ADVERT CODE WHEN NO BANNRS ARE PRESENT.
+//	COMMENTED-OUT TO CURRENTLY DISABLE THE FUNCTIONALITY					
+//					else {	
+//						// banners are not available; assign google banner advert code to the attribute whose name is the slot name							
+//						helper.setAttribute(
+//								pageSlotCodeToNameMap.get(pageSlotCode),
+//								googleAdvertCode);
+//					}
 				}
 				helper.setAttribute("bannerPath", bannerPath);
 				helper.setAttribute("callerPage", pageName);
