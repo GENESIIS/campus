@@ -13,7 +13,7 @@ package com.genesiis.campus.validation;
 public enum Operation {	
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
-	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
+	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp");
 			
 	private final String commandString;
