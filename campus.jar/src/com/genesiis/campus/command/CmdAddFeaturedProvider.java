@@ -66,6 +66,10 @@ public class CmdAddFeaturedProvider implements ICommand{
 			String expireDate = helper.getParameter("expirationDate");
 			String provider = helper.getParameter("featured-oneoff");
 
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-mm-yyyy");
+			date = sdf1.parse(expireDate);
+			java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());  
+			
 			courseProvider.setShortName(helper.getParameter("shortName"));
 			courseProvider.setName(helper.getParameter("providerName"));
 			courseProvider.setDescription(helper.getParameter("aboutMe"));
@@ -93,7 +97,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setAddress1(helper.getParameter("address1"));
 			courseProvider.setAddress2(helper.getParameter("address2"));
 			courseProvider.setAddress3(helper.getParameter("address3"));
-//			courseProvider.setExpirationDate(helper.getParameter(""));
+			courseProvider.setExpirationDate(sqlStartDate);
 //			courseProvider.setTutorRelated(helper.getParameter(""));
 //			courseProvider.setCourseProviderType(Integer.parseInt(helper.getParameter("providerType")));
 //			courseProvider.setCourseProviderStatus(Integer.parseInt(helper.getParameter("providerStatus")));
