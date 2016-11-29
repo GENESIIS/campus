@@ -1,8 +1,10 @@
 package com.genesiis.campus.entity;
 
 //20161122 JH c39-add-course-provider CourseProviderDAO created
-//20161123 JH c39-add-course-provider add method code modified
-//20161128 JH c39-add-course-provider add method code modified
+//20161123 JH c39-add-course-provider add method coding wip
+//20161128 JH c39-add-course-provider add method coding wip
+//20161129 JH c39-add-course-provider add method coding wip
+//20161129 JH c39-add-course-provider CourseProviderDAO class renamed as FeaturedCourseProviderDAO
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +21,9 @@ import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 
-public class CourseProviderDAO implements ICrud{
+public class FeaturedCourseProviderDAO implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(FeaturedCourseProviderDAO.class.getName());
 
 	/**
 	 * add method used to create a new featured course provider record. 
@@ -75,10 +77,11 @@ public class CourseProviderDAO implements ICrud{
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
 					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
-			preparedStatement = conn.prepareStatement(provider);
-			
+			preparedStatement = conn.prepareStatement(provider,
+					PreparedStatement.RETURN_GENERATED_KEYS);
+
 			Date d1 = new Date();
-java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+			java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 			preparedStatement.setString(1, "djfkdj");
 			preparedStatement.setString(2, "djfkdj");
 			preparedStatement.setString(3, "djfkdj");
@@ -120,16 +123,16 @@ java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 			preparedStatement.setString(39, "djfkdj");
 			
 			
-//			preparedStatement2.setString(1, courseProviderAccount.getName());
-//			preparedStatement2.setString(2, courseProviderAccount.getUsername());
-//			preparedStatement2.setString(3, courseProviderAccount.getPassword());
-//			preparedStatement2.setString(4, courseProviderAccount.getDescription());
-//			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
-//			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
-//			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
-//			preparedStatement2.setString(8, courseProvider.getCrtBy());
-//			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
-//			
+			preparedStatement2.setString(1, courseProviderAccount.getName());
+			preparedStatement2.setString(2, courseProviderAccount.getUsername());
+			preparedStatement2.setString(3, courseProviderAccount.getPassword());
+			preparedStatement2.setString(4, courseProviderAccount.getDescription());
+			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
+			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
+			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
+			preparedStatement2.setString(8, courseProvider.getCrtBy());
+			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
+			
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
 			
@@ -141,9 +144,12 @@ java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 				preparedStatement2 = conn.prepareStatement(account);
 				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
 				preparedStatement2.setInt(6, generatedKey);
+				
+			status = preparedStatement2.executeUpdate();
 			}
 			
 			conn.commit();
+			
 			
 		}catch(SQLException sqlException){
 			log.error("add method SQL Exception " + sqlException.toString());
@@ -165,7 +171,7 @@ java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 				preparedStatement2.close();
 			}
 		}
-		return status;
+		return generatedKey;
 	}
 
 	@Override
