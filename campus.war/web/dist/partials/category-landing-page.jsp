@@ -8,6 +8,7 @@
 <!-- 20161125 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum wip -->
 <!-- 20161126 JH c7-higher-education-lanidng-page-MP QA improvement: load images using system config enum -->
 <!-- 20161128 JH c7-higher-education-landing-page-MP QA improvement: load course provider common image using system config  -->
+<!-- 20161129 JH c7-higher-education-lanidng-page-MP QA improvement: remove header and footer tags -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -32,9 +33,7 @@
 <body onload="getCategoryData()">
 
 	<!-- include Header-->
-	<header class="header">
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
-	</header>
 	<!-- End Header -->
 
 	<!-- Main Container - Higher-Education -->
@@ -236,7 +235,7 @@
 				</c:if>
 
 
-				<c:if test="not empty ${institutes }">
+				<c:if test="${not empty institutes }">
 					<div class="most-viewed-panel clearfix">
 						<h1>| Featured Institutes</h1>
 
@@ -275,9 +274,7 @@
 
 
 	<!-- Footer -->
-	<footer>
 		<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
-	</footer>
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
