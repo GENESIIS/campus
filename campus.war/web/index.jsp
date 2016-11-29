@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -7,24 +9,26 @@
 <title>Campus.lk</title>
 
 <!-- Bootstrap & CSS Style-->
-<link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
 <link href="dist/css/style.css" rel="stylesheet">
 
 <!-- W3-Include -->
-    <script src="dist/bower-components/w3/w3data.js"></script>
-    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
+<script src="dist/bower-components/w3/w3data.js"></script>
+<script type="text/javascript"
+	src="dist/bower-components/jquery/jquery.min.js"></script>
+<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 
 </head>
 <body>
 	<!-- Header-->
-	<header w3-include-html="dist/partials/layout/header.jsp"></header>
+	<header> <jsp:include page="/dist/partials/layout/header.jsp" /></header>
 
 	<!-- Main Container - Landing -->
-	<div w3-include-html="dist/partials/landing.jsp"></div>
+	<div><jsp:include page="/dist/partials/landing.jsp" /></div>
 
 	<!-- Footer -->
-	<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
+	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
 
 	<!-- jQuery & Other js -->
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>

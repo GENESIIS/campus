@@ -21,6 +21,7 @@
                 <div class="top-menus">
                     <ul class="list-inline">
                         <li><a href="dist/partials/courses.jsp">All Courses</a></li>
+                        <li><a href="dist/partials/topCourseProviders.jsp">All Course Provider</a></li>
                         <li><a href="dist/partials/about-us.jsp">About Us</a></li>
                         <li><a href="dist/partials/contact-us.jsp">Contact Us</a></li>
                         <li><a href="dist/partials/news.jsp">News</a></li>

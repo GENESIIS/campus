@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!-- 20161027 TR c11 start styling courses filter result page -->
 <!DOCTYPE html>
 <html lang="en">

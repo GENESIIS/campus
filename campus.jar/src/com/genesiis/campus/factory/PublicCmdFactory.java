@@ -6,6 +6,8 @@ package com.genesiis.campus.factory;
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
+//20161031 DJ c6-list-available-institutes-on-the-view amended by inserting LIST_TOP_COURSE_PROVIDERS entry to the map
+//20161103 DJ c6-list-available-institutes-on-the-view amended by inserting LIST_ALL_COURSE_PROVIDERS entry to the map
 
 import com.genesiis.campus.command.CmdViewProgramme;
 import com.genesiis.campus.command.ICommand;
@@ -16,6 +18,8 @@ import com.genesiis.campus.command.CmdListDistricts;
 import com.genesiis.campus.command.CmdListInstitute;
 import com.genesiis.campus.command.CmdListLevels;
 import com.genesiis.campus.command.CmdListMajors;
+import com.genesiis.campus.command.CmdListMoreCourseProviders;
+import com.genesiis.campus.command.CmdListTopCourseProviders;
 
 import org.apache.log4j.Logger;
 
@@ -30,6 +34,8 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_MAJOR_DATA, new CmdListMajors());	
 		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());	
 		map.put(Operation.VIEW_PROGRAMME, new CmdViewProgramme());
+		map.put(Operation.LIST_TOP_COURSE_PROVIDERS, new CmdListTopCourseProviders());
+		map.put(Operation.LIST_ALL_COURSE_PROVIDERS, new CmdListMoreCourseProviders());	
 	}
 
 	@Override
@@ -60,6 +66,12 @@ public class PublicCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case VIEW_PROGRAMME:
+			command = map.get(o);
+			break;
+		case LIST_TOP_COURSE_PROVIDERS:
+			command = map.get(o);
+			break;
+		case LIST_ALL_COURSE_PROVIDERS:
 			command = map.get(o);
 			break;
 		default:

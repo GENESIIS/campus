@@ -6,6 +6,10 @@ package com.genesiis.campus.validation;
 //20161025 CM c13-Display-course-details added a new attribute to the enum
 //20161108 DN, JH, DJ, AS, CM, PN, MM Added field responseType to enum.
 //20161116 CM c13-Display-course-details Modified VIEW_PROGRAMME viewJSpUrl value.
+//20161030 DJ c6-list-available-institutes-on-the-view add LIST_ALL_INSTITUTES
+//20161030 DJ c6-list-available-institutes-on-the-view add LIST_TOP_COURSE_PROVIDERS
+//20161110 DJ c6-list-available-institutes-on-the-view INT-Adjust the implementation to newly changed framework
+//20161122 DJ c6-list-available-institutes-on-the-view mx-fixes add path dist/partials/viewMoreCourseProviders.jsp
 
 /**
  * Operation class facilitate in binding the CCO
@@ -16,6 +20,8 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE,"commandNotFound.jsp"),
 	VIEW_PROGRAMME("VPD", ResponseType.JSP,"/dist/partials/courses/course-details.jsp"),
 	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSON, "index.jsp"),
+	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
+	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp"),
 	LIST_CATEGORY_DATA("LCD", ResponseType.JSON, "index.jsp"),
 	LIST_LEVEL_DATA("LIST_LEVEL_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "index.jsp"),
@@ -27,8 +33,7 @@ public enum Operation {
 	private final ResponseType responseType;
 	private final String viewJspUrl;
 
-    Operation(final String newValue, final ResponseType responseType, final String viewJspUrl) {
-
+    Operation(final String newValue, final ResponseType responseType, final String viewJspUrl) {	
 		this.commandString = newValue;
 		this.responseType = responseType;
 		this.viewJspUrl = viewJspUrl;
@@ -55,5 +60,4 @@ public enum Operation {
 		}
 		return BAD_OPERATION;
 	}
-
 }

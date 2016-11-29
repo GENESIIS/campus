@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 // 20161024 DN c10-contacting-us-page created the initial version of ICrud.java
+//20161026 Dn c10-contacting-us-page Collection<Collection<String>> findById(Object object, Connection conn) created
 
 import java.sql.Connection;
 import java.sql.SQLException;
