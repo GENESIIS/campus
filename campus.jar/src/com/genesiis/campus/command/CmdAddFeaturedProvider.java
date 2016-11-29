@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161122 JH c39-add-course-provider CmdAddFeaturedProvider.java command class created
 //20161122 JH c39-add-course-provider implemented ICommand class
 //20161123 JH c39-add-course-provider execute method coding : retrieve request parameters
+//20161129 JH c39-add-course-provider code refactor due to course provider DAO class rename
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -46,7 +47,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		ICrud CourseProviderDAO = new CourseProviderDAO();
+		ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
 	//	Collection<Collection<String>> categoryCollection = null;
 		
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
