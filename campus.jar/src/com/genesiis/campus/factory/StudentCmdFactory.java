@@ -1,9 +1,11 @@
 package com.genesiis.campus.factory;
 
+import com.genesiis.campus.command.CmdAddProfessionalExpDetails;
 import com.genesiis.campus.command.CmdAddSchoolEducationData;
 
 //20161123 PN c27-upload-user-image: INIT StudentCmdFactory.java
 //20161124 PN c26-add-student-details: added GET_SCHOOLEDUCATION_DATA, GET_SCHOOLEDUCATION_DATA, UPDATE_SCHOOLEDUCATION_DATA attributes
+//20161129 PN c26-add-student-details: added ADD_PROFESSIONAL_EXP, UPDATE_PROFESSIONAL_EXP and DELETE_PROFESSIONAL_EXP attributes.
 
 import com.genesiis.campus.command.CmdGetProfileImg;
 import com.genesiis.campus.command.CmdGetSchoolEducationData;
@@ -19,7 +21,9 @@ public class StudentCmdFactory implements ICmdFactory{
 		map.put(Operation.GET_USER_PROFILE, new CmdGetProfileImg());
 		map.put(Operation.GET_SCHOOLEDUCATION_DATA, new CmdGetSchoolEducationData());
 		map.put(Operation.UPDATE_SCHOOLEDUCATION_DATA, new CmdUpdateSchoolEducationData());
-		map.put(Operation.ADD_SCHOOLEDUCATION_DATA, new CmdAddSchoolEducationData());
+		map.put(Operation.ADD_PROFESSIONAL_EXP, new CmdAddProfessionalExpDetails());
+		map.put(Operation.UPDATE_PROFESSIONAL_EXP, new CmdAddSchoolEducationData());
+		map.put(Operation.DELETE_PROFESSIONAL_EXP, new CmdAddSchoolEducationData()); 
 	}
 
 	@Override
@@ -40,6 +44,15 @@ public class StudentCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case ADD_SCHOOLEDUCATION_DATA:
+			command = map.get(o);
+			break;
+		case ADD_PROFESSIONAL_EXP:
+			command = map.get(o);
+			break;
+		case UPDATE_PROFESSIONAL_EXP:
+			command = map.get(o);
+			break;
+		case DELETE_PROFESSIONAL_EXP:
 			command = map.get(o);
 			break;
 		default:
