@@ -23,7 +23,7 @@ import com.genesiis.campus.util.IDataHelper;
 import org.apache.log4j.Logger;
 
 public class CmdAddFeaturedProvider implements ICommand{
-	static org.apache.log4j.Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());
+	static Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());
 	
 	private IView courseProviderData;
 

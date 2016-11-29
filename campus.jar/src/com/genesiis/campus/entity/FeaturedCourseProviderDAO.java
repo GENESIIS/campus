@@ -23,7 +23,7 @@ import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 
 public class FeaturedCourseProviderDAO implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(FeaturedCourseProviderDAO.class.getName());
+	static Logger log = Logger.getLogger(FeaturedCourseProviderDAO.class.getName());
 
 	/**
 	 * add method used to create a new featured course provider record. 
