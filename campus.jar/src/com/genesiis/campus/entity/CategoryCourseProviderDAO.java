@@ -23,6 +23,7 @@ package com.genesiis.campus.entity;
 //20161124 JH c7-higher-education-landing-page QA code modifications
 //20161125 JH c7-higher-education-landing-page QA modifications: query changes to select only featured course providers
 //20161126 JH c7-higher-education-landing-page QA modifications: removed retrieving logo image path details from the database
+//20161129 JH c7-higher-education-landing-page QA modifications: findById method modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -199,18 +200,20 @@ public class CategoryCourseProviderDAO implements ICrud {
 			} 
 
 		} catch (SQLException exception) {
-			log.error("findById(Object code) sql exception"
+			log.error("findById(Object code) SQL Exception"
 					+ exception.toString());
 			throw exception;
 
 		} catch (Exception exception) {
-			log.error("findById(Object code) " + exception.toString());
+			log.error("findById(Object code) Exception" + exception.toString());
 			throw exception;
 		} finally {
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			conn.close();
+			if(conn != null){
+				conn.close();		
+			}
 
 		}
 		return courseProviderCollection;
