@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* Base */
 /* http://meyerweb.com/eric/tools/css/reset/
  * v2.0 | 20110126
@@ -736,11 +735,7 @@ body, html {
           .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-image button {
             position: relative;
             bottom: 0;
-            width: 100%;
-            height: 50px;
-            border: none;
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff; }
+            width: 100%; }
         .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-name {
           font-family: "Roboto", sans-serif;
           text-align: center; }
@@ -952,35 +947,13 @@ body, html {
   font-weight: 500; }
 
 .btn-image-change {
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px transparent;
-  cursor: pointer;
-  background: #e1e1e1;
-  text-decoration: none;
-  color: #666;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-.btn-image-change:before, .btn-image-change:after {
-  content: "";
-  position: absolute;
-  right: 1em;
-  padding: 0 1px;
-  font-family: FontAwesome; }
-
-.btn-image-change:after {
-  opacity: 0;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards; }
-
-.btn-image-change:hover:after, .btn-image-change:focus:after, .btn-image-change:active:after {
-  -webkit-animation-name: hvr-icon-float-away;
-  animation-name: hvr-icon-float-away;
-  -webkit-animation-timing-function: ease-out;
-  animation-timing-function: ease-out; }
+  height: 50px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  transition: all 0.5s; }
+  .btn-image-change:hover {
+    background: rgba(0, 0, 0, 0.4); }
 
 .slideable {
   display: none; }

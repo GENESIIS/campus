@@ -72,7 +72,7 @@
         color: #3a3b3c
         line-height: 40px
 
-// Buttons
+// ********** Buttons ****************
 .btn-submit
   width: 45%
   line-height: 70px
@@ -86,6 +86,7 @@
   &:hover
     background: #3a7be9
 
+// btn - Follow
 .btn-follow
   background: #5d8ee1
   border: none
@@ -96,75 +97,17 @@
   font-size: 16px
   font-weight: 500
 
+// btn - Image Change
 .btn-image-change
-  transform: perspective(1px) translateZ(0)
-  box-shadow: 0 0 1px transparent
-  cursor: pointer
-  background: #e1e1e1
-  text-decoration: none
-  color: #666
-  -webkit-tap-highlight-color: rgba(0,0,0,0)
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+  height: 50px
+  border: none
+  background: rgba(0, 0, 0, 0.2)
+  color: #fff
+  transition: all 0.5s
+  &:hover
+    background: rgba(0, 0, 0, 0.4)
 
-  //&:before, &:after
-  //  content: "\f055"
-  //  position: absolute
-  //  right: 1em
-  //  padding: 0 1px
-  //  font-family: FontAwesome
-  //
-  //&:after
-  //  opacity: 0
-  //  -webkit-animation-duration: 0.5s
-  //  animation-duration: 0.5s
-  //  -webkit-animation-fill-mode: forwards
-  //  animation-fill-mode: forwards
-
-.btn-image-change:before, .btn-image-change:after
-  content: "\f055"
-  position: absolute
-  right: 1em
-  padding: 0 1px
-  font-family: FontAwesome
-
-.btn-image-change:after
-  opacity: 0
-  -webkit-animation-duration: 0.5s
-  animation-duration: 0.5s
-  -webkit-animation-fill-mode: forwards
-  animation-fill-mode: forwards
-
-.btn-image-change:hover:after, .btn-image-change:focus:after, .btn-image-change:active:after
-  -webkit-animation-name: hvr-icon-float-away
-  animation-name: hvr-icon-float-away
-  -webkit-animation-timing-function: ease-out
-  animation-timing-function: ease-out
-
-
-  //.btn-image-change:before, .btn-image-change:after {
-  //  content: "\f055";
-  //  position: absolute;
-  //  right: 1em;
-  //  padding: 0 1px;
-  //  font-family: FontAwesome;
-  //}
-  //.btn-image-change:after {
-  //  opacity: 0;
-  //  -webkit-animation-duration: 0.5s;
-  //  animation-duration: 0.5s;
-  //  -webkit-animation-fill-mode: forwards;
-  //  animation-fill-mode: forwards;
-  //}
-  //.btn-image-change:hover:after, .btn-image-change:focus:after, .btn-image-change:active:after {
-  //  -webkit-animation-name: hvr-icon-float-away;
-  //  animation-name: hvr-icon-float-away;
-  //  -webkit-animation-timing-function: ease-out;
-  //  animation-timing-function: ease-out;
-  //}
-
-
-// Slide toggle controller style
+// ************* Slide toggle controller style **************
 .slideable
   display: none
 
