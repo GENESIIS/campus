@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20161031 CM c9-make-inquiry-for-institute Modified validateInquiry() methods
 //20161031 CM c9-make-inquiry-for-institute Renamed validateInquiry() methods as validateInstituteInquiry() method
 //20161126 PN c26-add-student-details: copied Validator.java class from c9 branch and implemented validateSchoolEduData(SchoolEducation education) method. 
+//20161126 PN c26-add-student-details: implemented validaProfExpData(ProfessionalExperience data) method.
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -92,18 +94,35 @@ public class Validator {
 	 * This method is to validate SchoolEducation form of a student.
 	 * 
 	 * @author pabodha
-	 * @param education
+	 * @param education : object of SchoolEducation
 	 * @return Map<String, Boolean>
 	 */
 	public static Map<String, Boolean> validateSchoolEduData(SchoolEducation education) {
 		Map<String, Boolean> errors = new HashMap<>();
-		errors.put("IndexNO", isNotEmpty(education.getIndexNo()));
-		errors.put("School name", isNotEmpty(education.getSchoolName()));
-		errors.put("Achived on date", isNotEmpty(String.valueOf(education.getAchievedOn())));
-		errors.put("Qualification", isNotEmpty(Integer.toString(education.getSchoolGrade())));
-		errors.put("Stream", isNotEmpty(Integer.toString(education.getMajor())));
-		errors.put("Result", isNotEmpty(Integer.toString(education.getResult())));
-		errors.put("Medium", isNotEmpty(Integer.toString(education.getMedium())));
+		errors.put("Organization", isNotEmpty(education.getIndexNo()));
+		errors.put("Designation", isNotEmpty(education.getSchoolName()));
+		errors.put("Commenced on date", isNotEmpty(String.valueOf(education.getAchievedOn())));
+		errors.put("Completion on date", isNotEmpty(Integer.toString(education.getSchoolGrade())));
+		errors.put("Industry of the Organization", isNotEmpty(Integer.toString(education.getMajor())));
+		errors.put("Job Category", isNotEmpty(Integer.toString(education.getResult())));
+		return errors;
+	}
+
+	/**
+	 * This method is to validate ProfessionalExperience form of a student.
+	 * 
+	 * @author pabodha
+	 * @param data : object of ProfessionalExperience
+	 * @return Map<String, Boolean>
+	 */
+	public static Map<String, Boolean> validaProfExpData(ProfessionalExperience data) {
+		Map<String, Boolean> errors = new HashMap<>();
+		errors.put("Organization", isNotEmpty(data.getOrganization()));
+		errors.put("Designation", isNotEmpty(data.getDesignation()));
+		errors.put("Commenced on date", isNotEmpty(String.valueOf(data.getCommencedOn())));
+		errors.put("Completion on date", isNotEmpty(String.valueOf(data.getCompletionOn())));
+		errors.put("Industry of the Organization", isNotEmpty(data.getOrganization()));
+		errors.put("Job Category", isNotEmpty(Integer.toString(data.getJobCategoty())));
 		return errors;
 	}
 }
