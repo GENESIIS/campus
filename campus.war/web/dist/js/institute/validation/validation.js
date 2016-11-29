@@ -12,6 +12,7 @@
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161125 PN (c26-add-student-details: implemented isNumber(evt) method.
  *20161126 PN c26-add-student-details: implemented isDropdownSelected(), isemptyDropdown() and getSelectedData() method.
+ *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range
  */ 
 
  
@@ -213,4 +214,35 @@ function isDropdownSelected(flag, elementName, errorLabelId){
 	return flag;
 }
 
+// checkDateRange - Checks to ensure that the values entered are dates and
+// are of a valid range. By this, the dates must be no more than the
+// built-in number of days appart.
+function checkDateRange(start, end, startDateErrLabelId, endDateErrLabelId) {
+	// Parse the entries
+	
+	
+	var startDate = Date.parse(document.getElementById(start).value);
+	var endDate = Date.parse(document.getElementById(end).value);
+	// Make sure they are valid
+	if (isNaN(startDate)) {
+		document.getElementById(startDateErrLabelId).innerHTML = "The commenced date provided is not valid, please enter a valid date.";
+		return false;
+	}
+	if (isNaN(endDate)) {
+		document.getElementById(endDateErrLabelId).innerHTML = "The completed date provided is not valid, please enter a valid date.";
+		return false;
+	}
+	// Check the date range, 86400000 is the number of milliseconds in one day
+	var difference = (endDate - startDate) / (86400000 * 7);
+	if (difference < 0) {
+		//alert("The start date must come before the end date.");
+		document.getElementById(startDateErrLabelId).innerHTML = "The commenced date must come before the completed date.";
+		return false;
+	}
+//	if (difference <= 1) {
+//		alert("The range must be at least seven days apart.");
+//		return false;
+//	}
+	return true;
+}
 
