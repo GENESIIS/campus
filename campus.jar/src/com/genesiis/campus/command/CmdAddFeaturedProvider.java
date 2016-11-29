@@ -48,17 +48,15 @@ public class CmdAddFeaturedProvider implements ICommand{
 			Exception {
 
 		ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
-	//	Collection<Collection<String>> categoryCollection = null;
-		
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-		
+
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
-		
-		try{
-		//	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+		String systemMessage = null;
+
+		try {
 			Date date = new Date();
-			log.info(">>>>>>>>>>>" +date.toString());
+			log.info(">>>>>>>>>>>" + date.toString());
 			String land1 = helper.getParameter("land1");
 			String land2 = helper.getParameter("land2");
 			String mobile = helper.getParameter("mobile");
@@ -108,20 +106,27 @@ public class CmdAddFeaturedProvider implements ICommand{
 			HashMap map = new HashMap();
 			map.put("provider", courseProvider);
 			map.put("account", courseProviderAccount);
-			
+
 			int status = CourseProviderDAO.add(map);
 
-			
-			
-			
-		}catch(Exception exception){
+			if (status == 1) {
+				systemMessage = SystemMessage.ADDED.message();
+			} else if (status == 0) {
+				systemMessage = SystemMessage.NOTADDED.message();
+			}
+		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
-			systemMessage = SystemMessage.ERROR;
+			systemMessage = SystemMessage.ERROR.message();
+
 			throw exception;
+		} finally {
+			if (systemMessage != null) {
+				helper.setAttribute("userMessage", systemMessage);
+			}
 		}
 		
 		
-		return null;
+		return view;
 	}
 
 }
