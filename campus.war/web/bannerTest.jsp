@@ -6,6 +6,8 @@
 <%-- 20161124 MM c2-integrate-google-banners Modified code so that when they are no banners for 
 				a banner slot, Google advert code is displayed there. Also added value of the 
 				caller page request attribute to be attached to a data attribute of image HTML tag --%>
+<%-- 20161128 MM c2-integrate-google-banners Modified code to check if the attribute containing 
+				banner/advert data is empty before accessing it --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -37,50 +39,56 @@
 
 </head>
 <body>
+
+	<div class="banner-wrapper"> 
+	<c:if test="${not empty SLOT_BANNER_TEST_1}">
+		<c:choose>
+			<c:when test="${fn:startsWith(SLOT_BANNER_TEST_1, '<script')}"> 
+				${SLOT_BANNER_TEST_1}
+			</c:when>
+			<c:otherwise>			
+				<c:forEach var="banner" items="${SLOT_BANNER_TEST_1}" varStatus="vs">
+					<a href="${banner[7]}" target="_blank">
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+					</a>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</c:if>		
+	</div>	
 	
 	<div class="banner-wrapper"> 
-	<c:choose>
-		<c:when test="${fn:startsWith(SLOT_BANNER_TEST_1, '<script')}"> 
-			${SLOT_BANNER_TEST_1}
-		</c:when>
-		<c:otherwise>			
-			<c:forEach var="banner" items="${SLOT_BANNER_TEST_1}" varStatus="vs">
-				<a href="${banner[7]}" target="_blank">
-					<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
-				</a>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>		
+	<c:if test="${not empty SLOT_BANNER_TEST_2}">
+		<c:choose>
+			<c:when test="${fn:startsWith(SLOT_BANNER_TEST_2, '<script')}"> 
+				${SLOT_BANNER_TEST_2}
+			</c:when>
+			<c:otherwise>			
+				<c:forEach var="banner" items="${SLOT_BANNER_TEST_2}" varStatus="vs">
+					<a href="${banner[7]}" target="_blank">
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+					</a>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</c:if>		
 	</div>
 	
 	<div class="banner-wrapper"> 
-	<c:choose>
-		<c:when test="${fn:startsWith(SLOT_BANNER_TEST_2, '<script')}"> 
-			${SLOT_BANNER_TEST_2}
-		</c:when>
-		<c:otherwise>			
-			<c:forEach var="banner" items="${SLOT_BANNER_TEST_2}" varStatus="vs">
-				<a href="${banner[7]}" target="_blank">
-					<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
-				</a>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>		
-	</div>
-	
-	<div class="banner-wrapper"> 
-	<c:choose>
-		<c:when test="${fn:startsWith(SLOT_BANNER_TEST_3, '<script')}"> 
-			${SLOT_BANNER_TEST_3}
-		</c:when>
-		<c:otherwise>			
-			<c:forEach var="banner" items="${SLOT_BANNER_TEST_3}" varStatus="vs">
-				<a href="${banner[7]}" target="_blank">
-					<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
-				</a>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>		
+	<c:if test="${not empty SLOT_BANNER_TEST_3}">
+		<c:choose>
+			<c:when test="${fn:startsWith(SLOT_BANNER_TEST_3, '<script')}"> 
+				${SLOT_BANNER_TEST_3}
+			</c:when>
+			<c:otherwise>			
+				<c:forEach var="banner" items="${SLOT_BANNER_TEST_3}" varStatus="vs">
+					<a href="${banner[7]}" target="_blank">
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+					</a>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</c:if>		
 	</div>
 <!-- WARNING: JQUERY 3.1.1 BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
 <script src="/dist/bower-components/jquery/jquery.min.js"></script>
