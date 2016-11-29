@@ -192,17 +192,17 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
+									<h1 class="pro-name">Land Phone Area Code :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="areaCode" id="areaCode"
+										size="25px;"   />
+								</div>
+								<div class="col-name">
 									<h1 class="pro-name">Land Number 1 :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
-										size="25px;"   />
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Land Number 2 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="land2" id="land2"
 										size="25px;"   />
 								</div>
 							</li>
@@ -210,19 +210,38 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Mobile Number :</h1>
+									<h1 class="pro-name">Land Number 2 :</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="mobile" id="mobile"
-										size="25px;"   />
+									<input class="input" type="text" name="land2" id="land2"
+										size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Fax Number :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="fax" id="fax"
-										size="25px;"   />
+										size="25px;" />
 								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Mobile Phone Network Code :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="networkCode"
+										id="networkCode" size="25px;" />
+								</div>
+								<div class="col-name">
+									<h1 class="pro-name">Mobile Number :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="mobile" id="mobile"
+										size="25px;" />
+								</div>
+
 							</li>
 							<!-- end -->
 
