@@ -1,6 +1,7 @@
 <!-- 20161124 PN c26-add-student-details: INIT jsp page for manage user details input forms. -->
 <!-- 20161126 PN c26-add-student-details: design error span and alert box. -->
 <!-- 20161128 PN c26-add-student-details: design Professional Experience pop up form. -->
+<!-- 20161129 PN c26-add-student-details: added onchange event for date range validations. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -156,7 +157,7 @@
 			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')">
 			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
 			
-			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')">
+			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
 			<span id="completionOnError" name="completionOnError" style="color:red"></span><br>
 			
 			Description
@@ -200,7 +201,7 @@
 	  </div>					
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="clearProfessionalExpForm()">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearProfessionalExpForm()">Close</button>
         <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="addProfessionalExpForm()">Save changes</button>
       </div>
    </div>
