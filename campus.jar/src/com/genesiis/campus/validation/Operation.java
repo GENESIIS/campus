@@ -7,6 +7,7 @@ package com.genesiis.campus.validation;
 //20161026 JH c7-list-higher-education-courses: added LIST_CATEGORY_LANDING_PAGE attribute 
 //20161116 JH c7-higher-education-landing-page: removed unwanted enums
 //20161122 JH c39-add-course-provider : added ADD_FEATURED_COURSE_PROVIDER
+//20161129 JH c39-add-course-provider : modify response url for ADD_FEATURED_COURSE_PROVIDER	
 
 /**
  * Operation class facilitate in binding the CCO
@@ -17,7 +18,7 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
-	ADD_FEATURED_COURSE_PROVIDER("ADD_FEATURED_COURSE_PROVIDER",  ResponseType.JSP, "/dist/particals/admin/manageCourseProvider.jsp" );
+	ADD_FEATURED_COURSE_PROVIDER("ADD_FEATURED_COURSE_PROVIDER",  ResponseType.JSP, "/dist/partials/admin/manageCourseProvider.jsp" );
 			
 	private final String commandString;
 	private final ResponseType responseType;
