@@ -1,3 +1,7 @@
+/**
+ * DJ 20161123 c6-list-available-institutes-on-the-view  Load top rated /top view course providers
+ */
+
 $(document).ready(function() {
 		
 	$.ajax({
