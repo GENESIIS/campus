@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20161117 JH c7-higher-education-landing-page removed logger prefix
 //20161122 JH c7-higher-education-landing-page removed switch case to find categoryString and load it from the database
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
+//20161129 JH c7-higher-education-landing-page-MP QA modifications: findById method finally block modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,11 +61,11 @@ public class CategoryDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 
-		Category category = (Category) code;
-
 		try {
 
 			conn = ConnectionManager.getConnection();
+			
+			Category category = (Category) code;
 
 			String query = "SELECT * FROM [CAMPUS].[CATEGORY] WHERE ISACTIVE = 1 AND CODE = ?";
 
