@@ -119,40 +119,7 @@ public class Validator {
 		return message;
 	}
 
-	/**
-	 *  validate student login data
-	 * @author anuradha
-	 * @param data 
-	 * @return String to validate is given strings contains a null value (message)
-	 * @throws ParseException
-	 * 
-	 */
 	
-	
-	public static String validateLogin(Student data) throws ParseException {
-		String message = "True";
-		
-		
-		if(!validateEmail(data.getUserKey())){
-			
-			
-		}
-		
-		
-		
-		log.info(message +""+ data);
-		if (!(isNotEmpty(data.getUserKey()) 
-				|| isNotEmpty(data.getEmail()) 
-				|| isNotEmpty(data.getPassword()))) {
-			message = SystemMessage.EMPTYFIELD.message();
-			log.info(message);
-		} else if (!validateEmail(data.getEmail())){
-			message = SystemMessage.EMAILERROR.message();
-		}
-		log.info(message);
-		return message;
-	}
-
 	/**
 	 * Check the given number is valid number or not
 	 * 

@@ -8,10 +8,10 @@ theNewScript.src = "/dist/js/institute/validation/validation.js";
 function studentLogin(){
 	
 	var username = $("#email").val();
-	var pass = $("#password").val();
+	var password = $("#password").val();
 	
 	var usernametb = isempty(username);
-	var passtb = isempty(pass);
+	var passtb = isempty(password);
 	
 	if (usernametb == false) {
 		document.getElementById('fullNametbError').innerHTML = "  ** Email can not be Empty.";
@@ -21,11 +21,11 @@ function studentLogin(){
 		flag = false;
 	}
 	
-	if((username != null) && (pass != null)){
-		
+	if((username != null) && (password != null)){
+		alert(username +"-----"+password)
 		var jsonData = {
-				"username" : userKey,
-				"password" : pass
+				"userKey" : username,
+				"password" : password
 		};
 		$.ajax({
 			type : "POST",

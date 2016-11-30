@@ -11,6 +11,9 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 public class StudentLoginDAO implements ICrud {
 
@@ -35,16 +38,30 @@ public class StudentLoginDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
+	public Collection<Collection<String>> findById(Object data)
 			throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
+		String stringPassword = null;
+		String encryptPassword = null;
+		String encryptedPasswordDb = null;
+		String decryptedPassword = null;
+		
 		PreparedStatement preparedStatement = null;
 		String message = "Sorry, you are not a registered user! Please sign up first";
-		final Student student = (Student) code;
+		final Student student = (Student) data;
+		
+		String query = "";
 		try {
 		log.info(student.getEmail() + ""+ student.getPassword());
-
+		Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword());	
+		encryptPassword = passwordEncryptor.encryptSensitiveDataToString();
+		log.info(encryptPassword);
+		conn = ConnectionManager.getConnection();
+		preparedStatement = conn.prepareStatement(query);
+		//preparedStatement.setString(1, student.getUserName());
+					
+					
 		} catch (Exception exception) {
 			log.error("findById(Object code):  exception"
 					+ exception.toString());

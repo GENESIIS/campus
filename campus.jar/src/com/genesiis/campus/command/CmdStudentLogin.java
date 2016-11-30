@@ -11,6 +11,7 @@ import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
@@ -33,21 +34,27 @@ public class CmdStudentLogin implements ICommand {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
-		log.info("testing Data ................ : EMAIL " + data.getEmail() +"  Password  : "+data.getPassword());
+		log.info("testing Data ................ : EMAIL " + data.getUserKey() +"  Password  : "+data.getPassword());
 
-		String validateResult = Validator.validateLogin(data);
-		log.info(validateResult);
-		if (validateResult.equalsIgnoreCase("True")) {
-			log.info(validateResult);
+	//	String validateResult = LoginValidator.validateLogin(data);
+	//	log.info(validateResult);
+		
+		
+	//	if (validateResult.equalsIgnoreCase("True")) {
+		//	log.info(validateResult);
+			data = LoginValidator.dataSeparator(data);
+			log.info("Student user key: " +data.getUserKey());
+			log.info("Student Assigen Email : " +data.getEmail());
+			log.info("Student username : " +data.getUsername());
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
 			 	dataCollection = loginDAO.findById(data);
-		}
+	//	}
 
 		return view;
 	}
 
 	/**
-	 * extract data fromm json object and assign to StudentProgrammeInquiry
+	 * extract data from json object and assign to StudentProgrammeInquiry
 	 * object
 	 * 
 	 * @author anuradha
