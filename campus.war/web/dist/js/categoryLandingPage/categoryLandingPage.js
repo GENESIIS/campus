@@ -45,6 +45,8 @@
  * 20161127 MM c5-corporate-training-landing-page-MP Modified code in changeDisplayedResultsStatInfo() to make the message about
  * 													the currently displayed result set suit special scenarios such as last 
  * 													page displaying only 1 programme and total result set containing only 1 item.
+ * 20161130 MM c5-corporate-training-landing-page-MP Modified code to handle an issue related to filtering area getting distorted
+ * 													upon having filtering items that have names that are longer than around 25 chars
  */
 
 // IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
@@ -141,13 +143,21 @@ function constructLevelOrMajorMenu(){
 	
 	//Construct the Level/Major menu on top of programme displaying area
 	var levelOrMajorHtmlFragment = '';
-	
+	var levelOrMajorName = '';
+	var levelOrMajorNameAdjusted = '';
+	var elipsis = '...';
+	var lengthOfFilterItemText = 20;
 	if (levelOrMajorCollection !== undefined && levelOrMajorCollection !== null && levelOrMajorCollection.length > 0) {
-		levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item major-or-level-menu-item-all">\
+		levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item major-or-level-menu-item-all" title="All Programmes">\
 			<input class="major-or-level-checkbox major-or-level-checkbox-all" type="checkbox" checked/>All</li>';
 		$.each(levelOrMajorCollection, function(index, val) {
-			levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item" data-level-or-major-code="' + val[0] + '">\
-			<input class="major-or-level-checkbox"  data-level-or-major-code="' + val[0] + '" type="checkbox">'+ val[1] +'</li>';
+			levelOrMajorName = levelOrMajorNameAdjusted = val[1];
+			
+			if (levelOrMajorNameAdjusted.length > lengthOfFilterItemText) {
+				levelOrMajorNameAdjusted = levelOrMajorNameAdjusted.substring(0, lengthOfFilterItemText + 1) + elipsis;
+			}
+			levelOrMajorHtmlFragment += '<li class="major-or-level-menu-item" data-level-or-major-code="' + val[0] + '" title="' + levelOrMajorName + '">\
+			<input class="major-or-level-checkbox"  data-level-or-major-code="' + val[0] + '" type="checkbox">'+ levelOrMajorNameAdjusted +'</li>';
 		});					
 	}
 	
