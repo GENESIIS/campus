@@ -3,6 +3,7 @@
 <!-- 20161114 TR c25 start styling user profile page container  -->
 <!-- 20161114 TR c25 page header - done  -->
 <!-- 20161114 TR c25 profile-image-box - done  -->
+<!-- 20161130 PN c27-upload-user-image: added user input handling javascript code to the UI. - WIP. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +28,29 @@
     <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     <script src="../../js/main.js"></script>
     <script src="../../js/image-slides.js"></script>
+
+
+<!-- Krajee JQuery Plugins - Kartik -->
+<!-- 	<link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="../../css/imageUpload/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<!-- 	<script	src="../../bower-components/jquery/jquery-3.1.1.min.js"></script> -->
+	<script src="../../js/imageUpload/fileinput.js" type="text/javascript"></script>
+<!-- 	<script	src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js" type="text/javascript"></script> -->
+
+<!-- some CSS styling changes and overrides -->
+<style>
+.kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    max-width: 220px;
+}
+</style>
 </head>
 
 <body>
@@ -52,7 +76,7 @@
                         <li><a href="">All Courses</a></li>
                         <li><a href="">About Us</a></li>
                         <li><a href="">Contact Us</a></li>
-                        <li><a href="dist/partials/student/student-dashboard.html">News</a></li>
+                        <li><a href="dist/partials/student/student-dashboard.jsp">News</a></li>
                         <li><a href="">F & Q</a></li>
                         <li><a href="">Rss</a></li>
                     </ul>
@@ -124,9 +148,9 @@
             <div class="left-side col-md-3 col-lg-3 col-sm-12 clearfix">
                 <div class="prf-pic-holder">
                     <div class="prf-image">
-                        <img src="../../i/student/prf-pic.jpg" alt="Profile-Picture">
-                        <button class="btn-image-change hvr-icon-float-away">Change Image</button>
-                    </div>
+                        <img id="profImage" src="../../../education/student/1/1.jpg" alt="Profile-Picture">
+                        <button class="btn-image-change hvr-icon-float-away" data-toggle="modal" data-target="#userImageModal">Change Image</button>
+						</div>
                     <!-- End profile image -->
 
                     <div class="prf-name">
@@ -350,7 +374,116 @@
         <!-- End page container -->
     </div>
 </div>
+
 <!-- End Dashboard  -->
+
+
+<!-- Image Upload Model -->
+<!-- Modal -->
+	<div class="modal fade" id="userImageModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload Image</h4>
+				</div>
+				<div class="modal-body">
+					<!-- the avatar markup -->
+					<div id="kv-avatar-errors-1" class="center-block"
+						style="width: 400px; display: none"></div>
+					<div id="kv-error-1" class="center-block"
+						style="width: 400px; display: none"></div>
+					<div id="kv-success-1" class="alert alert-success fade in"
+						style="width: 400px; display: none"></div>
+
+					<form class="text-center" action="/PublicController" method="post" enctype="multipart/form-data">
+						<div class="kv-avatar center-block" style="width: 200px">
+							<input id="avatar-1" name="avatar-1" type="file" class="file-loading" accept="image/*">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+<!-- Modal -->
+
+
+<!-- the fileinput plugin initialization -->
+<script  type="text/javascript">
+var profileImage = "../../../education/student/1/1.jpg";
+
+// $(document).ready(function(){
+//     if(profileImage==""){
+//     	$.ajax({
+// 			url: "../StudentController",
+// 			data : {
+// 				CCO : 'GUP'
+// 			},
+// 			dataType : "json",
+// 			success: function(response){
+// 				profileImage=response.proPicName;
+//         	}});
+//     }
+// });
+
+$("#avatar-1").fileinput({
+	uploadUrl : "../../../StudentController?CCO=UUP",
+    overwriteInitial: true,
+    autoReplace : true,
+    maxFileSize: 1500,
+    showUploadedThumbs : false,
+    showClose: false,
+    showCaption: false,
+    browseLabel: '',
+    removeLabel: '',
+    browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+    removeTitle: 'Cancel or reset changes',
+    elErrorContainer: '#kv-avatar-errors-1',
+    msgErrorClass: 'alert alert-block alert-danger',
+    defaultPreviewContent: '<img src="'+profileImage+'" alt="ProfilePicture.jpg" style="width:160px">',
+    layoutTemplates: {main2: '{preview}{browse}'},
+    allowedFileExtensions: ["jpg", "png", "gif"]
+}).on('filebatchpreupload', function(event, data, id, index) {
+	alert(data.response);
+    $('#kv-success-1').html('<h4>'+data.proPicName+'</h4><ul></ul>').hide();
+}).on('fileuploaded', function(event, data, id, index) {
+	var formdata = data.form, files = data.files, 
+    extradata = data.extra, responsedata = data.response;
+
+	var propicDetails = responsedata.result;
+	
+	var res = propicDetails.toString();
+	var data = res.split(",");
+	alert(data);
+	var imgname = data[0].toString();
+	var success = data[1].toString();
+	var error = data[2].toString();
+	
+	if(data[1] != ""){
+		$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
+   		$('#kv-success-1').fadeIn('slow');
+   		$('#profImage').attr("");
+   		$('#profImage').attr("src","../../../education/"+data[0]);
+	}
+	if(data[2] != ""){
+    	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
+       	$('#kv-error-1').fadeIn('slow');
+	}
+	defaultPreviewContent: '<img src=../../../education/"'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
+});
+</script>
+
+<!-- End of Model -->
+
+
+
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.html"></footer>-->
