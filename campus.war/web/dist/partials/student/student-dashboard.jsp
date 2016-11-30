@@ -4,7 +4,9 @@
 <!-- 20161114 TR c25 page header - done  -->
 <!-- 20161114 TR c25 profile-image-box - done  -->
 <!-- 20161130 PN c27-upload-user-image: added user input handling javascript code to the UI. - WIP. -->
+<!-- 		  PN c27-upload-user-image: added JSTL code block to get existing user profile image details taken from the servlet. -->
 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,29 +15,26 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../bower-components/bootstrap/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/image-slides.css" rel="stylesheet">
-    <link href="../../css/button-effect.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="/dist/css/style.css" rel="stylesheet">
+    <link href="/dist/css/image-slides.css" rel="stylesheet">
+    <link href="/dist/css/button-effect.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
     <!-- W3-Include -->
     <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
     <!-- jQuery & Other js -->
-    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/main.js"></script>
-    <script src="../../js/image-slides.js"></script>
+    <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    <script src="/dist/js/main.js"></script>
+    <script src="/dist/js/image-slides.js"></script>
 
 
 <!-- Krajee JQuery Plugins - Kartik -->
-<!-- 	<link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet"> -->
-	<link href="../../css/imageUpload/fileinput.css" media="all" rel="stylesheet" type="text/css" />
-<!-- 	<script	src="../../bower-components/jquery/jquery-3.1.1.min.js"></script> -->
-	<script src="../../js/imageUpload/fileinput.js" type="text/javascript"></script>
-<!-- 	<script	src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js" type="text/javascript"></script> -->
+<link href="/dist/css/imageUpload/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="/dist/js/imageUpload/fileinput.js" type="text/javascript"></script>
 
 <!-- some CSS styling changes and overrides -->
 <style>
@@ -137,6 +136,11 @@
 </header>
 <!--< End header -->
 
+<!-- C27: Existing user profile image details taken from the servlet. -->
+<c:forEach var="imgDetails" items="${result.collection}" varStatus="loop">
+		<c:set var="proPicPath" value="${imgDetails[0] }" />
+</c:forEach>
+
 <div class="dashboard">
     <div class="stud-dashboard clearfix">
        <div class="prf-page-header col-md-12 col-lg-12 col-sm-12">
@@ -148,13 +152,14 @@
             <div class="left-side col-md-3 col-lg-3 col-sm-12 clearfix">
                 <div class="prf-pic-holder">
                     <div class="prf-image">
-                        <img id="profImage" src="../../../education/student/1/1.jpg" alt="Profile-Picture">
+                    	<c:set var="absProPicPath" value="" />
+                        <img id="profImage" src="../../../<c:out value="${proPicPath}" />" alt="Profile-Picture">
                         <button class="btn-image-change hvr-icon-float-away" data-toggle="modal" data-target="#userImageModal">Change Image</button>
 						</div>
                     <!-- End profile image -->
 
                     <div class="prf-name">
-                        <h2>Kalana Perera</h2>
+                        <h2>Stephan Amell</h2>
                     </div>
                     <!-- End profile name -->
                     <div class="follow-me">
@@ -416,7 +421,7 @@
 
 <!-- the fileinput plugin initialization -->
 <script  type="text/javascript">
-var profileImage = "../../../education/student/1/1.jpg";
+//var profileImage = "../../../education/student/1/1.jpg";
 
 // $(document).ready(function(){
 //     if(profileImage==""){
@@ -447,7 +452,7 @@ $("#avatar-1").fileinput({
     removeTitle: 'Cancel or reset changes',
     elErrorContainer: '#kv-avatar-errors-1',
     msgErrorClass: 'alert alert-block alert-danger',
-    defaultPreviewContent: '<img src="'+profileImage+'" alt="ProfilePicture.jpg" style="width:160px">',
+    defaultPreviewContent: '<img src="'+'${proPicPath}'+'" alt="ProfilePicture.jpg" style="width:160px">',
     layoutTemplates: {main2: '{preview}{browse}'},
     allowedFileExtensions: ["jpg", "png", "gif"]
 }).on('filebatchpreupload', function(event, data, id, index) {
@@ -461,22 +466,23 @@ $("#avatar-1").fileinput({
 	
 	var res = propicDetails.toString();
 	var data = res.split(",");
-	alert(data);
 	var imgname = data[0].toString();
 	var success = data[1].toString();
 	var error = data[2].toString();
 	
 	if(data[1] != ""){
 		$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
-   		$('#kv-success-1').fadeIn('slow');
+		$('#kv-success-1').fadeIn();
    		$('#profImage').attr("");
    		$('#profImage').attr("src","../../../education/"+data[0]);
+   		
+   		location.reload(true);
+   		defaultPreviewContent: '<img src=../../../education/"'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
 	}
 	if(data[2] != ""){
     	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
-       	$('#kv-error-1').fadeIn('slow');
 	}
-	defaultPreviewContent: '<img src=../../../education/"'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
+	
 });
 </script>
 
@@ -492,7 +498,7 @@ $("#avatar-1").fileinput({
 
     </div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright Â© Campus.lk</label>
+        <label for="Copyright">Copyright © Campus.lk</label>
     </div>
 </footer>
 
