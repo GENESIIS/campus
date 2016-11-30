@@ -22,7 +22,7 @@
 <body>
 	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 	<div class="top">
-		<div class="logo-brand">
+		<div class="logo-brand"> 
 			<h1 class="logo-txt">Campus.lk</h1>
 		</div>
 	</div>
@@ -95,14 +95,17 @@
 		<c:set var="weeks" value="${programme[13]}" />
 		<c:set var="days" value="${programme[14]}" />
 		<c:set var="emailAddress" value="${programme[15]}" />
+		<c:set var="imagePath" value="${programme[16]}" />
 	</c:forEach>
 	<div class="course-view  clearfix">
 
+	<c:set var="image_extension" value=".jpg" />
+	
 		<!-- Start Page content -->
 		<!-- Rating box and image : left side -->
 		<div class="left-panel">
 			<div class="category-image">
-				<img src="${ProgrammeImage}" alt="Programme View"
+				<img src="${imagePath}${image_extension}" alt="Programme View"
 					style="width: 304px; height: 228px;">
 			</div>
 			<div class="rating-box">
@@ -319,12 +322,20 @@
 	<!-- End Main Container -->
 
 	<!-- Footer -->
-	<footer w3-include-html="layout/footer.jsp"></footer>
+	<!-- <footer w3-include-html="/dist/partials/layout/footer.jsp"></footer> --> 
+	<footer>
+    <div class="ft-top">
+
+    </div>
+    <div class="ft-bottom text-center">
+        <label for="Copyright">Copyright © Campus.lk</label>
+    </div>
+	</footer>
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 </body>
 </html>

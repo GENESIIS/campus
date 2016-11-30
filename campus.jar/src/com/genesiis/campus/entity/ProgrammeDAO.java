@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20161115 CM c13-Display-course-details Removed unused variable
 //20161115 CM c13-Display-course-details Removed duration calculation methods and moved to validator class
 //20161116 CM c13-Display-course-details Modified findById() method
+//20161130 CW c13-display-course-details-MP-cw Modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,6 +24,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.Validator;
 
 public class ProgrammeDAO implements ICrud {
@@ -117,6 +119,10 @@ public class ProgrammeDAO implements ICrud {
 				singleprogrameDetails.add(String.valueOf(weeks));// weeks
 				singleprogrameDetails.add(String.valueOf(days));// days
 				singleprogrameDetails.add(rs.getString(12));
+				
+				Integer programCode = programme.getCode();
+				
+				singleprogrameDetails.add(SystemConfig.COURSE_IMAGE_PATH.getValue1() +   programCode.toString() + '/' + programCode.toString() );
 
 				final Collection<String> singleProgrammeCollection = singleprogrameDetails;
 				

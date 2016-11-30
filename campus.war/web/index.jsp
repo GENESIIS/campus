@@ -13,22 +13,22 @@
 <link href="dist/css/style.css" rel="stylesheet">
 
 <!-- W3-Include -->
-<script src="dist/bower-components/w3/w3data.js"></script>
+ <script src="dist/bower-components/w3/w3data.js"></script>
 
 </head>
 <body>
 	<!-- Header-->
-	<header w3-include-html="dist/partials/layout/header.jsp"></header>
+ 	<header w3-include-html="dist/partials/layout/header.jsp"></header> 
 
 	<!-- Main Container - Landing -->
-	<div w3-include-html="dist/partials/landing.html"></div>
+	<div w3-include-html="dist/partials/landing.html"></div> 
 
 	<!-- Footer -->
-	<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
+	<footer w3-include-html="dist/partials/layout/footer.jsp"></footer> 
 
 	<!-- jQuery & Other js -->
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="dist/js/main.js"></script>
 </body>
 </html>

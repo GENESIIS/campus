@@ -41,8 +41,8 @@
 								Education</a></li>
 						<li>
 							<!-- add Programme Id here for test course preview -->
-							<form method="Post" action="PublicController">
-								<input type="hidden" name="programmeCode" value="1" />
+							<form method="Post" action="/PublicController">
+								<input type="hidden" name="programmeCode" value="8" />
 								<button type="submit" name="CCO" id="CCO" value="VPD"
 									class="btn btn-info navbar-btn">View Programme Details</button>
 

@@ -141,9 +141,12 @@ public class CmdViewProgramme implements ICommand {
 				allRateCount += ratingCount;
 
 			}
-			totalRating = rate / allRateCount;
-			DecimalFormat df = new DecimalFormat("#.##");
-			totalRating = Double.valueOf(df.format(totalRating));
+			
+			if (allRateCount > 0){
+				totalRating = rate / allRateCount;
+				DecimalFormat df = new DecimalFormat("#.##");
+				totalRating = Double.valueOf(df.format(totalRating));
+			}
 		} catch (Exception e) {
 			log.error("calculateRating() : e" + e.toString());
 			throw e;
