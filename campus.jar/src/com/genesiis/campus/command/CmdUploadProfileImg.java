@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161122 PN c27-upload-user-image: modified execute() method to create the folder using studentCode to store image.
 //20161124 PN c27-upload-user-image: modified execute() method. - modified exception handling, data setting into the IView
 //									 errorMessage handling over validations, 
+//20161130 PN c27-upload-user-image: modified filePath variable values.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
 
 public class CmdUploadProfileImg implements ICommand {
-	Logger log = Logger.getLogger(this.getClass());
+	static Logger log = Logger.getLogger(CmdUploadProfileImg.class.getName());
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
@@ -65,7 +66,7 @@ public class CmdUploadProfileImg implements ICommand {
 			uploadSizeLimit = Long.parseLong(uploadSize);
 			uploadSizeLimit = uploadSizeLimit * 1024 * 1024;
 
-			// Here it's only one file is coming to the servlet. Here It
+			// Here it's only one file is coming from the Uploader. But it has 
 			// assigned to a ArrayList<FileItem> because of the reuseability of
 			// helper.getFiles() method.
 			files = (ArrayList<FileItem>) helper.getFiles();
@@ -73,6 +74,8 @@ public class CmdUploadProfileImg implements ICommand {
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(StudentCode) + "/");
 
+			//To store image file path
+			String filePath = "";
 			for (FileItem item : files) {
 				utility.setFileItem(item);
 				JsonObject response = new JsonObject();
@@ -83,7 +86,7 @@ public class CmdUploadProfileImg implements ICommand {
 						|| !utility.isValidImageFileType(item.getName(), validExtensions)) {
 					fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
 				}else{
-					String filePath = utility.renameIntoOne(StudentCode);
+					filePath = utility.renameIntoOne(StudentCode);
 					response.addProperty("path", war + "/" + filePath);
 					response.addProperty("name", utility.getNewName());
 					fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
@@ -92,7 +95,7 @@ public class CmdUploadProfileImg implements ICommand {
 				list.add(response);
 			}
 			final ArrayList<String> propicDetails = new ArrayList<String>();
-			propicDetails.add(war + "/" + utility.renameIntoOne(StudentCode));
+			propicDetails.add(filePath);
 			propicDetails.add(fileUploadSuccess);
 			propicDetails.add(fileUploadError);
 			
@@ -104,7 +107,9 @@ public class CmdUploadProfileImg implements ICommand {
 		} catch (Exception e) {
 			//logging the exception and throw, gives a 'SyntaxError: Unexpected end of JSON input'.
 			//So that StackTrace has printed in here.
-			e.printStackTrace();
+			log.info("execute() : e" + e.toString());
+			throw e;
+//			e.printStackTrace();
 		}
 
 		return view;
