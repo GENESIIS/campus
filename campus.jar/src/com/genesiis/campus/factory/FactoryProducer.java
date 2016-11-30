@@ -1,5 +1,7 @@
 package com.genesiis.campus.factory;
 
+//20161130 PN c27-upload-user-image: removed return value for choice - "/PublicController".
+
 /**
  * FactoryProducer class bares the responsibility of producing 
  * the Factory  
@@ -15,12 +17,10 @@ public class FactoryProducer {
 	 */
 	public static ICmdFactory getFactory(String choice) {
 		if (choice.equalsIgnoreCase("/PublicController")) {
-			return new PublicCmdFactory();
-
+			
 		} else if (choice.equalsIgnoreCase("/StudentController")) {
 			return new StudentCmdFactory();
 		}
-
 		return null;
 	}
 }
