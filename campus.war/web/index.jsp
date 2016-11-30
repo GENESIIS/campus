@@ -1,3 +1,5 @@
+<!-- 20161130 PN c27-upload-user-image: added a button to load student profile page. -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -43,9 +45,14 @@
                         <li><a href="">All Courses</a></li>
                         <li><a href="">About Us</a></li>
                         <li><a href="">Contact Us</a></li>
-                        <li><a href="dist/partials/student/student-dashboard.html">News</a></li>
+                        <li><a href="">News</a></li>
                         <li><a href="">F & Q</a></li>
                         <li><a href="">Rss</a></li>
+                        <li>
+                            <form action="/StudentController" method="post" >
+                                <button type="submit" name="CCO" id="CCO" class="" value="GUP">Student</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Main menu tabs -->
