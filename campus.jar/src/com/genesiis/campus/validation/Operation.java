@@ -19,8 +19,8 @@ public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE,"commandNotFound.jsp"),
 	VIEW_PROGRAMME("VPD", ResponseType.JSP,"/dist/partials/courses/course-details.jsp"),
-	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
+	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSON, "index.jsp"),	
+	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp"),
 	LIST_CATEGORY_DATA("LCD", ResponseType.JSON, "index.jsp"),
 	LIST_LEVEL_DATA("LIST_LEVEL_DATA", ResponseType.JSON, "index.jsp"),
