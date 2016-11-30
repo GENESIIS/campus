@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161129 JH c39-add-course-provider CmdAddOneOffProvider.java entity class created
 //20161129 JH c39-add-course-provider execute method coding wip
+//20161130 JH c39-add-course-provider execute method coding wip
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -106,7 +107,7 @@ public class CmdAddOneOffProvider implements ICommand {
 			}
 		}
 
-		return null;
+		return view;
 	}
 
 }
