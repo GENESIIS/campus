@@ -15,10 +15,15 @@ package com.genesiis.campus.validation;
 public enum Operation {	
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
-	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
+<<<<<<< HEAD
+	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/topCourseProviders.jsp"),
 	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_FILTER_SEARCH_COURSE_PROVIDERS("LIST_FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_FILTER_SEARCH_CATEGORY_TYPES("LIST_FILTER_SEARCH_CATEGORY_TYPES",ResponseType.JSON," ");
+=======
+	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
+	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSP,"dist/partials/viewMoreCourseProviders.jsp");
+>>>>>>> origin/c6-list-available-institutes-on-the-view-MP-dj
 			
 	private final String commandString;
 	private final ResponseType responseType;

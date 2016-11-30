@@ -16,77 +16,10 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
-
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="/dist/js/main.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
-
 </head>
 <body>
-
-	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-		<div class="top">
-			<div class="logo-brand">
-				<h1 class="logo-txt">Campus.lk</h1>
-			</div>
-		</div>
-		<div class="bottom">
-			<div class="menu-bar">
-				<div class="home pull-left">
-					<a href="/index.jsp" class="btn-home center-block"></a>
-				</div>
-				<!-- End home button -->
-				<div class="menu-tabs clearfix">
-					<!-- Main menu tabs -->
-					<div class="top-menus">
-						<ul class="list-inline">
-							<li><a href="courses.html">All Courses</a></li>
-							<li><a href="/dist/partials/topCourseProviders.jsp">Course
-									Providers</a></li>
-							<li><a href="about-us.html">About Us</a></li>
-							<li><a href="javascript:">Contact Us</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="f-and-q.html">F & Q</a></li>
-							<li><a href="rss.html">Rss</a></li>
-						</ul>
-					</div>
-					<!-- End Main menu tabs -->
-
-					<!-- Course Category tabs -->
-					<div class="bottom-menus">
-						<ul class="list-inline">
-							<li><a href="javascript:">Pre Education</a></li>
-							<li><a href="javascript:">School Education</a></li>
-							<li><a href="/dist/partials/category/higher-education.jsp">Higher
-									Education</a></li>
-							<li><a href="javascript:">Corporate Training</a></li>
-							<li><a href="javascript:">Vocational Training</a></li>
-							<li><a href="javascript:">Talent & Skill</a></li>
-						</ul>
-					</div>
-					<!-- End Course Category tabs -->
-				</div>
-				<div class="keyword-search pull-right">
-					<div class="search-bar">
-						<input type="text" placeholder="Keyword Search"> <a
-							href="javascript:" class="colr-white">Enter</a>
-					</div>
-					<!-- End Keyword Search -->
-					<div class="login-link">
-						<a href="javascript:" class="colr-white">Login</a>
-
-					</div>
-				</div>
-				<!-- End keyword search -->
-			</div>
-		</div>
-	</header>
-	<!-- End Header -->
-
+	<header>
+		<jsp:include page="/dist/partials/layout/header.jsp" /></header>
 	<!-- Main Container - Contact-US -->
 	<div class="top-providers-screen clearfix">
 		<div class="inner-header">
@@ -109,87 +42,39 @@
 			<div class="top-list clearfix">
 				<div class="list-header clearfix">
 					<div class="btn-show-all pull-right">
-						<a href="dist/partials/viewMoreCourseProviders.jsp?categoryCode=${categoryCode}"> View More </a>				
+						<%-- <form action="PublicController" method="post">
+							<input type="hidden" name="categoryCode" value="${categoryCode}" />
+							<button type="submit" name="CCO"
+								value="LIST_ALL_COURSE_PROVIDERS">Show ALL</button>
+						</form> --%>
+						<a href="/dist/partials/viewMoreCourseProviders.jsp">Show ALL</a>
 					</div>
 				</div>
 				<!-- End list header -->
 
-				<c:if test='${not empty tRCProviders}'>
-					<div class="top-rated clearfix">
-						<h1>Top Rated</h1>
-						<div class="providers-grid center-block clearfix">
-							<ul class="list-inline clearfix">
-								<c:forEach var="provider" items="${tRCProviders}">
-									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
-											var="pvAttribute" items="${provider}" varStatus="count">
-											<c:if test="${count.index == 0}">
-												<c:set var="folder" value="${pvAttribute}" />
-												<c:set var="format" value=".png" />
-												<c:set var="image" value="${pvAttribute}${format}" />
-											</c:if>
-											<c:if test="${count.index == 1}">
-												<c:set var="prefix" value="${pvAttribute}" />
-											</c:if>
-											<c:if test="${count.index == 2}">
-												<div class="item-holder">
-													<div class="provider-logo text-center">
-														<c:set var="slash" value="/" />
-														<img
-															src="${contextDeployLogoPath}${slash}${folder}${slash}${image}" />
-													</div>
-													<div class="provider-name text-center">
-														<h2>
-															<c:out value="${prefix}" />
-														</h2>
-													</div>
-												</div>
-											</c:if>
-										</c:forEach></li>
-								</c:forEach>
-							</ul>
-						</div>
+				<div class="top-rated clearfix">
+					<h1 id="toprate">Top Rated</h1>
+					<div class="providers-grid center-block clearfix">
+						<ul id="tRCProviders" class="list-inline clearfix">
+
+						</ul>
 					</div>
-				</c:if>
-				<!-- End top rated list -->
-				<c:if test='${not empty  result.collection}'>
-					<div class="top-rated top-viewed clearfix">
-						<h1>Top Viewed</h1>
-						<div class="providers-grid center-block clearfix">
-							<ul class="list-inline clearfix">
-								<c:forEach var="provider" items="${result.collection}">
-									<li class="col-md-3 col-lg-3 col-sm-4"><c:forEach
-											var="pvAttribute" items="${provider}" varStatus="count">
-											<c:if test="${count.index == 0}">
-												<c:set var="folder" value="${pvAttribute}" />
-												<c:set var="format" value=".png" />
-												<c:set var="image" value="${pvAttribute}${format}" />
-											</c:if>
-											<c:if test="${count.index == 1}">
-												<c:set var="prefix" value="${pvAttribute}" />
-											</c:if>
-											<c:if test="${count.index == 2}">
-												<div class="item-holder">
-													<div class="provider-logo text-center">
-														<c:set var="slash" value="/" />
-														<img
-															src="${contextDeployLogoPath}${slash}${folder}${slash}${image}" />
-													</div>
-													<div class="provider-name text-center">
-														<h2>
-															<c:out value="${prefix}" />
-														</h2>
-													</div>
-												</div>
-											</c:if>
-										</c:forEach></li>
-								</c:forEach>
-							</ul>
-						</div>
+				</div>
+				<div class="top-rated clearfix">
+					<h1 id="topview">Top Viewed</h1>
+					<div class="providers-grid center-block clearfix">
+						<ul id="tVCProviders" class="list-inline clearfix">
+
+						</ul>
 					</div>
-				</c:if>
-				<!-- End top viewed list -->
-				<div class="btn-show-all pull-right">				
-					<a href="dist/partials/viewMoreCourseProviders.jsp?categoryCode=${categoryCode}"> View More </a>
+				</div>
+				<div class="btn-show-all pull-right">
+					<%-- <form action="PublicController" method="post">
+						<input type="hidden" name="categoryCode" value="${categoryCode}" />
+						<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">Show
+							ALL</button>
+					</form> --%>
+					<a href="/dist/partials/viewMoreCourseProviders.jsp">Show ALL</a>
 				</div>
 			</div>
 			<!-- End top-rated-list -->
@@ -198,7 +83,16 @@
 	</div>
 	<!-- End Container - Top Providers list -->
 
+	<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+	<script src="/dist/js/topCourseProvider-helper.js"></script>
+
+	<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
 	<!-- Footer -->
-	<footer w3-include-html="layout/footer.jsp"></footer>
+	<footer>
+		<jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
 </body>
 </html>
