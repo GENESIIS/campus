@@ -9,7 +9,8 @@ package com.genesiis.campus.command;
 //20161117 JH c7-higher-education-landing-page code review mx modifications 
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum wip
 //20161126 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
-//20161130 JH c7-higher-education-landing-page-MP QA modifications: error log statement modified
+//20161130 JH c7-higher-education-landing-page-MP code review modifications: error log statement modified, added documentation comments,
+//												  removed unwanted statements
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -66,9 +67,6 @@ public class CmdListCategoryLandingPage implements ICommand {
 			final Programme programme = new Programme();
 
 			try {
-				
-				programme.setActive(true);
-				programme.setProgrammeStatus(1);
 				programme.setCategory(Integer.parseInt(categoryId));
 				
 				final Category category = new Category();
@@ -78,14 +76,23 @@ public class CmdListCategoryLandingPage implements ICommand {
 				final Collection<Collection<String>> categoryDetails = categoryDAO
 						.findById(category);
 				view.setCollection(categoryDetails);
-
-				programme.setLevel(1);// this level=1 is just to identify to get
-										// course
-				// providers with higher program stats
+				
+				/**
+				 * Here the attribute level in program is used to identify which
+				 * query should be executed between two queries in CategoryCourseProvderDAO.
+				 * There is no relationship between the program level and the selection 
+				 * criteria. 
+				 * 
+				 * When level = 1, queries the database for course providers with 
+				 * highest program stat.
+				 * 
+				 * When level =0, queries the database for random course providers
+				 * who may or may not have program stat
+				 */
+				programme.setLevel(1);
 				final Collection<Collection<String>> featuredCourseProviders = categoryProgrammeDAO
 						.findById(programme);
 
-				// list 20 course providers randomly
 				programme.setLevel(0);
 				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO
 						.findById(programme);
