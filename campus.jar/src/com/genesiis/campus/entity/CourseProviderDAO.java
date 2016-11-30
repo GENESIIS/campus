@@ -36,6 +36,7 @@ import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
 
 public class CourseProviderDAO implements ICrud{
@@ -87,12 +88,15 @@ public class CourseProviderDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=1 ");
+			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");
 			// sb.append("AND PROG.PROGRAMMESTATUS=1 ");
-			sb.append("AND CAT.ISACTIVE=1 AND CAT.CODE=?");			
+			sb.append("AND CAT.ISACTIVE=? AND CAT.CODE=?");			
 			 
-			stmt = conn.prepareStatement(sb.toString());			
-			stmt.setInt(1, categoryCode);
+			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			stmt.setInt(3, categoryCode);
+			
 			resultSet= stmt.executeQuery();
 			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 			
@@ -126,9 +130,10 @@ public class CourseProviderDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=1 ");
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX, PROV.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS=? ");
 
 			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());			
 			resultSet= stmt.executeQuery();
 			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 

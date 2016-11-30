@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 public class MajorDAO implements ICrud{
 	static org.apache.log4j.Logger log = Logger.getLogger(MajorDAO.class.getName());
 
@@ -59,9 +60,10 @@ public class MajorDAO implements ICrud{
 		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -129,7 +131,7 @@ public class MajorDAO implements ICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb =new StringBuilder(" SELECT MAJOR.[CODE] AS MAJORCODE,MAJOR.[NAME] AS MAJORNAME FROM [CAMPUS].[MAJOR] MAJOR ");
-			sb.append(" WHERE MAJOR.ISACTIVE = 1 AND MAJOR.CODE IN( " );
+			sb.append(" WHERE MAJOR.ISACTIVE = ? AND MAJOR.CODE IN( " );
 			boolean doneOne = false;
 			for (Integer code : majorCodeSet) {
 				if (doneOne) {
@@ -141,6 +143,7 @@ public class MajorDAO implements ICrud{
 			sb.append(")" );
 
 			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

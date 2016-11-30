@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CourseProviderTypeDAO implements ICrud{
 	
@@ -62,9 +63,10 @@ public class CourseProviderTypeDAO implements ICrud{
 		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=1 ";
+			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
 			
 			stmt=conn.prepareStatement(sql.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
@@ -127,7 +129,7 @@ public class CourseProviderTypeDAO implements ICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
-			sb.append("	WHERE CPTYPE.ISACTIVE=1 AND CPTYPE.CODE IN (");
+			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
 			boolean doneOne = false;
 			for (Integer code : cpTypeCodeSet) {
 				if (doneOne) {
@@ -139,6 +141,7 @@ public class CourseProviderTypeDAO implements ICrud{
 			sb.append(" ) ");
 
 			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

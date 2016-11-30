@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 
 public class LevelDAO  implements ICrud{
@@ -61,9 +62,10 @@ public class LevelDAO  implements ICrud{
 		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=1 ";
+			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=? ";
 			
 			stmt=conn.prepareStatement(sql.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
@@ -127,7 +129,7 @@ public class LevelDAO  implements ICrud{
 		try {
 			conn=ConnectionManager.getConnection();			
 			final StringBuilder sb =new StringBuilder("SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL  ");
-			sb.append(" WHERE LEVEL.ISACTIVE=1 AND LEVEL.CODE IN (");
+			sb.append(" WHERE LEVEL.ISACTIVE=? AND LEVEL.CODE IN (");
 			boolean doneOne = false;
 			for (Integer code : levelCodeSet) {
 				if (doneOne) {
@@ -138,6 +140,7 @@ public class LevelDAO  implements ICrud{
 			}
 			sb.append(")" );
 			stmt=conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 		    rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
