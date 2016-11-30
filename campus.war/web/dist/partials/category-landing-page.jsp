@@ -57,7 +57,7 @@
 					</h1>
 				</div>
 				<c:set var="code" value="${category[0] }"></c:set>
-				<c:set var="categoryIdentifier" value="${category[8] }"></c:set>
+				<c:set var="categoryIdentifier" value="${category[4] }"></c:set>
 			</c:forEach>
 		</div>
 		<!-- end inner header -->
