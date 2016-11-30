@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20161122 JH c7-higher-education-landing-page removed switch case to find categoryString and load it from the database
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 //20161129 JH c7-higher-education-landing-page-MP QA modifications: findById method finally block modified
+//20161130 JH c7-higher-education-landing-page-MP code review modifications: findById, getAll methods modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,10 +86,6 @@ public class CategoryDAO implements ICrud {
 				 * have the logo in png form.
 				 */
 				singleCategoryList.add( rs.getString("CODE")+ ".png");
-				singleCategoryList.add(rs.getString("CRTON"));
-				singleCategoryList.add(rs.getString("CRTBY"));
-				singleCategoryList.add(rs.getString("MODON"));
-				singleCategoryList.add(rs.getString("MODBY"));
 				singleCategoryList.add(rs.getString("CATEGORYSTRING"));
 
 				final Collection<String> singleCategoryCollection = singleCategoryList;
@@ -141,11 +138,13 @@ public class CategoryDAO implements ICrud {
 				allCategoryList.add(singleCategoryCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("getAll(): SQL Exception " + sqlException.toString());
 			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
-			throw e;
+			
+		} catch (Exception exception) {
+			log.info("getAll(): Execption " + exception.toString());
+			throw exception;
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
