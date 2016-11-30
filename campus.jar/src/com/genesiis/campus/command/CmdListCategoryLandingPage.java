@@ -101,7 +101,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 				helper.setAttribute("institutes", courseProviders);
 
 			} catch (Exception exception) {
-				log.error("execute() : " + exception.toString());
+				log.error("execute() Exception : " + exception.toString());
 				systemMessage = SystemMessage.ERROR;
 				throw exception;
 			}
