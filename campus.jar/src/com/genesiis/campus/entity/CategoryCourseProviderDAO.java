@@ -24,6 +24,7 @@ package com.genesiis.campus.entity;
 //20161125 JH c7-higher-education-landing-page QA modifications: query changes to select only featured course providers
 //20161126 JH c7-higher-education-landing-page QA modifications: removed retrieving logo image path details from the database
 //20161129 JH c7-higher-education-landing-page QA modifications: findById method modified
+//20161130 JH c7-higher-education-landing-page-MP code review modifications: removed unwanted statements
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -186,10 +187,6 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
 					singleCourseProviderList.add(rs.getString("PRINCIPAL"));
 					singleCourseProviderList.add(rs.getString("TUTOR"));
-					singleCourseProviderList.add(rs.getString("CRTON"));
-					singleCourseProviderList.add(rs.getString("CRTBY"));
-					singleCourseProviderList.add(rs.getString("MODON"));
-					singleCourseProviderList.add(rs.getString("MODBY"));
 
 					final Collection<String> singleCourseProviderCollection = singleCourseProviderList;
 					courseProviderCollection
