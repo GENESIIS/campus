@@ -179,7 +179,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException{
+	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
@@ -233,7 +233,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findTopRatedProviders(CourseProvider provider) throws SQLException{
+	public Collection<Collection<String>> findTopRatedProviders(CourseProvider provider) throws SQLException,Exception{
 		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
@@ -286,7 +286,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection
 	 * @throws SQLException
 	 */
-	public  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException {
+	public  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
 			singleProvider.add(rs.getString("CPCODE"));				
@@ -305,7 +305,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException{		
+	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException,Exception{		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
@@ -409,7 +409,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @author DJ
 	 * @return CourseProviderResultDTO 
 	 */
-	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode) throws SQLException{
+	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet rs =null;		

@@ -121,7 +121,7 @@ public class MajorDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException {
+	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException,Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;

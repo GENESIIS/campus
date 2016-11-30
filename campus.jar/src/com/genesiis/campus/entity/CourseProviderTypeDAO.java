@@ -119,7 +119,7 @@ public class CourseProviderTypeDAO implements ICrud{
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException{
+	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

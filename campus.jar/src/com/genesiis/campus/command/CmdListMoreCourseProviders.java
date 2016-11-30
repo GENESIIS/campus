@@ -33,7 +33,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 	 * @author DJ
 	 * @param helper
 	 * @param view
-	 * @return All course provides course providers
+	 * @return List course provides.Identify the categorycode and retrieve appropriate course providers.
 	 * @throws Exception
 	 */
 	@Override
@@ -63,23 +63,9 @@ public class CmdListMoreCourseProviders implements ICommand {
 			final Collection<Collection<String>> categoryList=new CategoryDAO().getAll();
 			helper.setAttribute("categoryList", categoryList);
 			
-			/*//List Course provider types for the drop down
-			//final CourseProviderTypeDAO providerTypeDAO=new CourseProviderTypeDAO();
-			final Collection<Collection<String>> cpTypeList=new CourseProviderTypeDAO().getAll();
-			helper.setAttribute("cpTypeList", cpTypeList);*/
-			
 			//List location for the drop down
 			final Collection<Collection<String>> districtList=new DistrictDAO().getAll();
-			helper.setAttribute("districtList", districtList);
-			
-			
-			/*//List Majors for the drop down
-			final Collection<Collection<String>> majorList=new MajorDAO().getAll();
-			helper.setAttribute("majorList", majorList);
-			
-			//List Levels for the drop down			
-			final Collection<Collection<String>> levelList=new LevelDAO().getAll();
-			helper.setAttribute("levelList", levelList);*/
+			helper.setAttribute("districtList", districtList);			
 			
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {

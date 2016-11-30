@@ -119,7 +119,7 @@ public class LevelDAO  implements ICrud{
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)  throws SQLException{
+	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)  throws SQLException,Exception{
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
