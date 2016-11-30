@@ -5,16 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Tutor Profile</title>
-<script type="text/javascript"
-	src="\dist\bower-components\jquery\jquery.min.js"></script>
-<script src="/dist/js/tutor-helper.js"></script>
-<script src="/dist/js/validator.js"></script>
 </head>
 <body>
-<!-- 	onsubmit="return (validateTutorFileds())" -->
-	<form action="TutorController" method="post" onsubmit="return (validateTutorFileds())">
+	<!-- 	onsubmit="return (validateTutorFileds())" -->
+	<form action="TutorController" method="post"
+		onsubmit="return (validateTutorFileds())">
 		<table align="center">
-		<tr>
+			<tr>
 				<td>
 					<h2 id="message">${message}</h2>
 				</td>
@@ -27,23 +24,23 @@
 			<tr>
 				<td>First Name <span id="firstNameError"></span></td>
 				<td><input type="text" name="firstname" id="firstName"
-					maxlength="20" onclick="clearField('firstNameError')"/></td>
+					maxlength="20" onclick="clearField('firstNameError')" /></td>
 			</tr>
 			<tr>
 				<td>Middle Name <span id="middleNameError"></span></td>
 				<td><input type="text" name="middlename" id="middleName"
-					maxlength="20"  onclick="clearField('middleNameError')"/></td>
+					maxlength="20" onclick="clearField('middleNameError')" /></td>
 			</tr>
 			<tr>
 				<td>Last Name <span id="lastNameError"></span></td>
 				<td><input type="text" name="lastname" id="lastName"
-					maxlength="20" onclick="clearField('lastNameError')"/></td>
+					maxlength="20" onclick="clearField('lastNameError')" /></td>
 			</tr>
 			<tr>
 				<td>Gender</td>
 				<td><input type="radio" name="gender" value="1" id="radioMale"
 					checked> Male<br> <input type="radio" name="gender"
-					value="2" id="radioFemale" > Female<br></td>
+					value="2" id="radioFemale"> Female<br></td>
 			</tr>
 			<tr>
 				<td>Experience <span id="experienceError"></span></td>
@@ -52,42 +49,41 @@
 			</tr>
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
-				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')"></textarea></td>
+				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
+						onclick="clearField('aboutMeError')"></textarea></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>
 			</tr>
 			<tr>
 				<td>Country</td>
-				<td><span id="countryError"></span>
-				<select name="countryDetails" id="countryDetails">
+				<td><span id="countryError"></span> <select
+					name="countryDetails" id="countryDetails">
 						<option></option>
-				</select>
-				</td>
+				</select></td>
 			</tr>
 			<tr>
 				<td>Town</td>
-				<td>
-				<span id="townError"></span>
-				<select name="townDetails" id="townDetails">
+				<td><span id="townError"></span> <select name="townDetails"
+					id="townDetails">
 						<option></option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>Mobile</td>
-				<td><span id="mobileError"></span><input
-					type="text" name="mobileNumber" id="mobileNumber" maxlength="11" onclick="clearField('mobileError')" />
-				</td>
+				<td><span id="mobileError"></span><input type="text"
+					name="mobileNumber" id="mobileNumber" maxlength="11"
+					onclick="clearField('mobileError')" /></td>
 			</tr>
 			<tr>
 				<td>Home <span id="landError"></span></td>
-				<td><input type="text"
-					name="landNumber" id="landNumber" maxlength="11" onclick="clearField('landError')"/></td>
+				<td><input type="text" name="landNumber" id="landNumber"
+					maxlength="11" onclick="clearField('landError')" /></td>
 			</tr>
 			<tr>
 				<td>Address Line 1 <span id="address1Error"></span></td>
 				<td><input type="text" name="address1" id="address1"
-					maxlength="30" onclick="clearField('address1Error')"/></td>
+					maxlength="30" onclick="clearField('address1Error')" /></td>
 			</tr>
 			<tr>
 				<td>Address line 2 <span id="address2Error"></span></td>
@@ -99,7 +95,7 @@
 				<td><input type="text" name="address3" id="address3"
 					maxlength="30" /></td>
 			</tr>
-			
+
 			<tr>
 				<td>Web link <span id="weblinkError"></span></td>
 				<td><input type="text" name="weblink" id="weblink" /></td>
@@ -138,7 +134,8 @@
 			</tr>
 			<tr>
 				<td>Email <span id="emailError"></span></td>
-				<td><input type="text" name="email" id="email"  onclick="clearField('emailError')"/></td>
+				<td><input type="text" name="email" id="email"
+					onclick="clearField('emailError')" /></td>
 			</tr>
 			<tr>
 				<td>Username <span id="usernameError"></span></td>
@@ -148,12 +145,13 @@
 			<tr>
 				<td>Password <span id="passwordError"></span></td>
 				<td><input type="password" name="password" id="password"
-					maxlength="20" onclick="clearField('passwordError')"/></td>
+					maxlength="20" onclick="clearField('passwordError')" /></td>
 			</tr>
 			<tr>
 				<td>Confirm Password <span id="confirmPasswordError"></span></td>
 				<td><input type="password" name="confirmPassword"
-					id="confirmPassword" maxlength="20" onclick="clearField('confirmPasswordError')"/></td>
+					id="confirmPassword" maxlength="20"
+					onclick="clearField('confirmPasswordError')" /></td>
 			</tr>
 
 			<tr>
@@ -165,5 +163,12 @@
 		</table>
 
 	</form>
+	
+	
+	<script type="text/javascript"
+		src="\dist\bower-components\jquery\jquery.min.js"></script>
+	<script src="/dist/js/tutor-helper.js"></script>
+	<script src="/dist/js/validator.js"></script>
+	
 </body>
 </html>

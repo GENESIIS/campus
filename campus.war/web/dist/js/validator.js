@@ -274,7 +274,7 @@ function validateTutorFileds() {
 function ValidateUsername(username) {
 	var resp = null;
 	$.ajax({
-		url : 'TutorController',
+		url : '/TutorController',
 		method : 'POST',
 		async : false,
 		data : {

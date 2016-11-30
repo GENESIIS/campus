@@ -10,7 +10,7 @@ $(document).ready(function() {
 function displayCountryDetails() {
 	
 	$.ajax({
-		url : 'TutorController',
+		url : '/TutorController',
 		data : {
 			CCO : 'LIST_COUNTRY_DATA'
 		},
@@ -27,7 +27,7 @@ function displayCountryDetails() {
 function displayTownDetails() {
 	
 	$.ajax({
-		url : 'TutorController',
+		url : '/TutorController',
 		data : {
 			CCO : 'LIST_TOWN_DATA'
 		},
