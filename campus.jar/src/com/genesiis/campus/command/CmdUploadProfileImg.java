@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20161124 PN c27-upload-user-image: modified execute() method. - modified exception handling, data setting into the IView
 //									 errorMessage handling over validations, 
 //20161130 PN c27-upload-user-image: modified filePath variable values.
+//		   PN c27-upload-user-image: added more code comments to the execute() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class CmdUploadProfileImg implements ICommand {
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+		//Variable declaration.
 		JsonArray list = new JsonArray();
 		Gson gson = new Gson();
 		FileUtility utility = new FileUtility();
@@ -39,6 +41,7 @@ public class CmdUploadProfileImg implements ICommand {
 		ICrud sysconfigDAO = new SystemConfigDAO();
 		String fileUploadError = "";
 		String fileUploadSuccess = "";
+		
 		// This needs to be assign from the session.
 		int StudentCode = 1;
 
@@ -46,7 +49,7 @@ public class CmdUploadProfileImg implements ICommand {
 		String validExtensions[] = { "jpeg", "jpg", "png", "gif" };
 
 		try {
-			// Set the image uploading path
+			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
 			String uploadPath = "";
 			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById("USER_PIC_UPLOAD_PATH");
 			for (Collection<String> collection : picUploaDpath) {
@@ -54,7 +57,7 @@ public class CmdUploadProfileImg implements ICommand {
 				uploadPath = (String) config[2];
 			}
 
-			// get the number of bytes of the valid upload size
+			// get the number of bytes of the valid upload size. Taken the size from SYSTEMCONFIG table.
 			String uploadSize = "";
 			long uploadSizeLimit = 0;
 
@@ -94,6 +97,7 @@ public class CmdUploadProfileImg implements ICommand {
 				response.addProperty("size", item.getSize());
 				list.add(response);
 			}
+			//Set profile picture details to sent them back to the JSP page.
 			final ArrayList<String> propicDetails = new ArrayList<String>();
 			propicDetails.add(filePath);
 			propicDetails.add(fileUploadSuccess);
@@ -103,15 +107,13 @@ public class CmdUploadProfileImg implements ICommand {
 			Collection<Collection<String>> collection = new ArrayList<Collection<String>>();;
 			collection.add(singleCollection);
 			view.setCollection(collection);
-
+		}catch (SQLException sqle) {
+			log.info("execute() : sqle" + sqle.toString());
+			throw sqle;
 		} catch (Exception e) {
-			//logging the exception and throw, gives a 'SyntaxError: Unexpected end of JSON input'.
-			//So that StackTrace has printed in here.
 			log.info("execute() : e" + e.toString());
 			throw e;
-//			e.printStackTrace();
-		}
-
+		} 
 		return view;
 	}
 
