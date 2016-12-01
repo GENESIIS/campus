@@ -90,6 +90,7 @@ public class CourseProviderDAO implements ICrud{
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
 			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");
+			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
 			// sb.append("AND PROG.PROGRAMMESTATUS=1 ");
 			sb.append("AND CAT.ISACTIVE=? AND CAT.CODE=?");			
 			 
@@ -206,12 +207,12 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");			
 			if (cProvider.getCategory()>0) {
-				sb.append(" AND CAT.CODE= ");	
+				sb.append(" AND CAT.CODE = ");	
 				sb.append(cProvider.getCategory());
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
-			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS= ");
-			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
+			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS = ");
+			sb.append(cProvider.getCourseProviderStatus());
 			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX, PROVIDER.LOGOIMAGEPATH ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());
@@ -268,7 +269,7 @@ public class CourseProviderDAO implements ICrud{
 			}			
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=");
-			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
+			sb.append(cProvider.getCourseProviderStatus());
 			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH ORDER BY CPAVERAGE DESC");
 
 			stmt = conn.prepareStatement(sb.toString());

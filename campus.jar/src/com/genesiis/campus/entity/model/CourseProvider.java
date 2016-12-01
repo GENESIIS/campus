@@ -10,6 +10,7 @@ public class CourseProvider {
 	private String name;
 	private String uniqueprefix;	
 	private int courseProviderType;
+	private int courseProviderStatus;
 	
 	public int getCode() {
 		return code;
@@ -41,6 +42,12 @@ public class CourseProvider {
 	}
 	public void setCourseProviderType(int courseProviderType) {
 		this.courseProviderType = courseProviderType;
+	}
+	public int getCourseProviderStatus() {
+		return courseProviderStatus;
+	}
+	public void setCourseProviderStatus(int courseProviderStatus) {
+		this.courseProviderStatus = courseProviderStatus;
 	}
 	
 }

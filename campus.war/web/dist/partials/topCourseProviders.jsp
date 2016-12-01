@@ -18,8 +18,9 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 </head>
 <body>
-	<header>
-		<jsp:include page="/dist/partials/layout/header.jsp" /></header>
+	<!-- Header-->
+	<jsp:include page="/dist/partials/layout/header.jsp" />
+	<!-- End Header-->
 	<!-- Main Container - Contact-US -->
 	<div class="top-providers-screen clearfix">
 		<div class="inner-header">
@@ -92,7 +93,7 @@
 	<!-- W3-Include -->
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 	<!-- Footer -->
-	<footer>
-		<jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
+	<jsp:include page="/dist/partials/layout/footer.jsp" />
+	<!-- End Footer -->
 </body>
 </html>
