@@ -1,4 +1,5 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
+<!-- 20161130 CW c13 c13-display-course-details- modified bootstrap source path -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>

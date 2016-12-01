@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20161101 CM c13-Display course details Modified execute() method.
 //20161101 CM c13-Display course details Modified execute() method.
 //20161111 CM c13-Display course details Created calculateRating() method.
+//20161130 CW c13-Display course details Modified calculateRating() method. Add validations to allRateCount
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
