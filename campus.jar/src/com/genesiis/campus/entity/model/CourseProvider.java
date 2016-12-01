@@ -8,8 +8,7 @@ public class CourseProvider {
 	private int code;
 	private int category;
 	private String name;
-	private String uniqueprefix;
-	private boolean isGetAll;
+	private String uniqueprefix;	
 	private int courseProviderType;
 	
 	public int getCode() {
@@ -36,13 +35,7 @@ public class CourseProvider {
 	}
 	public void setUniqueprefix(String uniqueprefix) {
 		this.uniqueprefix = uniqueprefix;
-	}
-	public boolean isGetAll() {
-		return isGetAll;
-	}
-	public void setGetAll(boolean isGetAll) {
-		this.isGetAll = isGetAll;
-	}
+	}	
 	public int getCourseProviderType() {
 		return courseProviderType;
 	}
