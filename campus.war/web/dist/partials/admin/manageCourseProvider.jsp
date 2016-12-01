@@ -18,6 +18,16 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
+<!-- custom javascript -->
+<script language="JavaScript" type="text/javascript"
+	src="/dist/js/header/ui-populate-helper.js"></script>
+<script src="/dist/js/admin/ui-populate-helper.js"></script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -75,7 +85,7 @@
 }
 </style>
 
-<body onload="getCategoryData()">
+<body onload="getCategoryData();">
 	<!-- include Header-->
 	<header class="header"> <jsp:include
 		page="/dist/partials/layout/header.jsp"></jsp:include> </header>
@@ -412,6 +422,12 @@
 											id="featured-oneoff" value="one-off" /> One-Off Provider
 									</h1>
 								</div>
+								<div class="col-name">
+									<h1 class="pro-name">
+										<input type="radio" name="tutorRelated" id="tutorRelated"
+											value="Tutor" /> Tutor Related
+									</h1>
+								</div>
 							</li>
 							<!-- end -->
 
@@ -445,7 +461,7 @@
 				<!-- End left panel -->
 				<br /> <br />
 				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
+				<div class="course-filter-panel" id="accountInfo">
 					<h3 style="color: maroon;">Account Info</h3>
 					<!-- Filter result table -->
 					<div class="filter-result-table">
@@ -524,12 +540,12 @@
 
 
 				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
+				<div class="course-filter-panel" id="logoPanel">
 					<h3>Course Provider Images</h3>
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
-							<li class="course-info clearfix">
+							<li class="course-info clearfix" id="smallImg">
 								<div class="col-name">
 									<h1 class="pro-name">Logo image (Small) :</h1>
 								</div>
@@ -540,7 +556,7 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
+							<li class="course-info clearfix" id="largeImg">
 								<div class="col-name">
 									<h1 class="pro-name">Logo image (Large) :</h1>
 								</div>
@@ -551,7 +567,7 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
+							<li class="course-info clearfix" id="headerImg">
 								<div class="col-name">
 									<h1 class="pro-name">Header Image :</h1>
 								</div>
@@ -562,7 +578,7 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
+							<li class="course-info clearfix" id="commonImg">
 								<div class="col-name">
 									<h1 class="pro-name">Common Image :</h1>
 								</div>
@@ -591,17 +607,9 @@
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
 
-
-	<!-- custom javascript -->
-	<script src="/dist/js/header/ui-populate-helper.js"></script>
-
 	<!-- W3-Include -->
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 
-	<!-- jQuery & Other js -->
-	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-	<script src="/dist/js/main.js"></script>
+
 </body>
 </html>
