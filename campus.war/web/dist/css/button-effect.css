@@ -50,3 +50,16 @@
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
 }
+
+/* Social links - Sign up buttons */
+.btn-fb-sign-up{
+    padding-right: 2.2em;
+}
+.btn-fb-sign-up span{
+    font-size: 22px;
+}
+.btn-fb-sign-up:before, .btn-fb-sign-up:after{
+    content: "\f09a";
+    left: 1em;
+    padding: 0 1px;
+}
