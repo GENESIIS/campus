@@ -1,5 +1,6 @@
 <!-- <!-- 20161119 DN C18-student-signup-without-using-third-party-application-dn  created the page SignUpWoThirdParty.jsp -->
 <!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn /dist/js/jsonDataExchanger.js included to the page -->
+<!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn tool tip information for mobile number introduced -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -48,8 +49,13 @@
          <br>
         <div>
         <label for="input-phoneNumber" id="contactNumberLabel">Mobile Number<span>*</span></label><label id="phoneError" style="color:#FFFF00;"></label><br>
-        <input type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" placeholder="+94123445678|0094123456789|0777123456 formats are only accepted" >
+        <input type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="+94123445678 | 0094123456789 | 0777123456 formats are only accepted" >
         </div>
+        <script>
+			$(document).ready(function(){
+			    $('[data-toggle="tooltip"]').tooltip();   
+			});
+		</script>
         <br>
         <div>
          <label for="input-pathway" id="pathwayLabel">What Are You Engaged With</label><label id="pathwayError" style="color:#FFFF00;"></label><br>
