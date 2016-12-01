@@ -13,6 +13,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -46,12 +47,10 @@ public class CmdListTopCourseProviders implements ICommand   {
 					categoryCode = Integer.parseInt(categoryCodeString);
 					provider.setCategory(categoryCode);
 					helper.setAttribute("categoryCode", categoryCode);
-				}
-				provider.setGetAll(false);
-			} else {
-				// Setting the flag for retrieve all the institutes
-				provider.setGetAll(true);
-			}			
+				}				
+			}
+			//Set Course provider status
+			provider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
 			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
 			
