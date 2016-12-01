@@ -9,13 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class OneOffCourseProviderDAO implements ICrud{
+	
+	static Logger log = Logger.getLogger(OneOffCourseProviderDAO.class.getName());
 
 	/**
 	 * add method used to create a new one off course provider record. 
