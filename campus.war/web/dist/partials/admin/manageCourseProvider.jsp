@@ -24,6 +24,9 @@
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
+
 <!-- custom javascript -->
 <script language="JavaScript" type="text/javascript"
 	src="/dist/js/header/ui-populate-helper.js"></script>
@@ -91,25 +94,25 @@
 		page="/dist/partials/layout/header.jsp"></jsp:include> </header>
 	<!-- End Header -->
 
-	<form action="/AdminController" method="POST">
-		<!-- Main Container - Higher-Education -->
-		<div class="main-category clearfix">
 
-			<!-- page inner header -->
-			<div class="inner-header">
-				<div class="category-image">
-					<img src="/education/admin/images/courseProvider.jpg " alt="">
-				</div>
-				<div class="category-name">
-					<h1>| Register a Course Provider</h1>
-				</div>
+	<!-- Main Container - Higher-Education -->
+	<div class="main-category clearfix">
+
+		<!-- page inner header -->
+		<div class="inner-header">
+			<div class="category-name">
+				<h1>| Register a Course Provider</h1>
 			</div>
-			<!-- end inner header -->
-
+		</div>
+		<!-- end inner header -->
+		<form action="/AdminController" method="POST" id="basicForm">
 			<!-- Page content -->
+
+
+			<input type="hidden" name="CCO" id="CCO" value="" />
 			<div class="content-holder center-block clearfix">
 				<c:if test="${not empty userMessage }">
-					<div class="alert alert-danger" role="alert">${userMessage}</div>
+					<div class="alert alert-danger" role="alert" id="usermessage"></div>
 				</c:if>
 
 				<!-- course filter panel : left side -->
@@ -381,7 +384,6 @@
 				</div>
 				<!-- End left panel -->
 
-				<br /> <br />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
 					<h3 style="color: navy;">Admin Info</h3>
@@ -424,8 +426,8 @@
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">
-										<input type="radio" name="tutorRelated" id="tutorRelated"
-											value="Tutor" /> Tutor Related
+										<input type="radio" name="featured-oneoff"
+											id="featured-oneoff" value="Tutor" /> Tutor Related
 									</h1>
 								</div>
 							</li>
@@ -447,19 +449,12 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name" style="width: 50%;">
-									<input type="button" id="viewNext" value="Next"
-										class="btn btn-lg btn-info" />
-								</div>
-							</li>
-							<!-- end -->
 						</ul>
 					</div>
 					<!-- End filter result table -->
 				</div>
 				<!-- End left panel -->
-				<br /> <br />
+				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="" />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel" id="accountInfo">
 					<h3 style="color: maroon;">Account Info</h3>
@@ -531,85 +526,87 @@
 								</div>
 							</li>
 							<!-- end -->
-						</ul>
-					</div>
-					<!-- End filter result table -->
 
-				</div>
-				<!-- End left panel -->
-
-
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel" id="logoPanel">
-					<h3>Course Provider Images</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix" id="smallImg">
-								<div class="col-name">
-									<h1 class="pro-name">Logo image (Small) :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageSmall"
-										id="imageSmall" size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix" id="largeImg">
-								<div class="col-name">
-									<h1 class="pro-name">Logo image (Large) :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageLarge"
-										id="imageLarge" size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix" id="headerImg">
-								<div class="col-name">
-									<h1 class="pro-name">Header Image :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageHeader"
-										id="imageHeader" size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix" id="commonImg">
-								<div class="col-name">
-									<h1 class="pro-name">Common Image :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="file" name="imageCommon"
-										id="imageCommon" size="50px;" />
+							<li class="course-info clearfix">
+								<div class="col-name" style="width: 50%;">
+									<input type="submit" id="viewNext" value="Next"
+										class="btn btn-lg btn-info" onclick="getProviderType();" />
 								</div>
 							</li>
 							<!-- end -->
 						</ul>
 					</div>
 					<!-- End filter result table -->
-					<input type="hidden" name="CCO" id="CCO"
-						value="ADD_FEATURED_COURSE_PROVIDER" /> <input type="submit"
-						value="Add" class="btn btn-success" />
+
 				</div>
 				<!-- End left panel -->
+		</form>
 
+		<form action="/AdminController" method="POST">
+			<!-- course filter panel : left side -->
+			<div class="course-filter-panel" id="logoPanel">
+				<h3>Course Provider Images</h3>
+				<!-- Filter result table -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix" id="smallImg">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Small) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageSmall"
+									id="imageSmall" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix" id="largeImg">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Large) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageLarge"
+									id="imageLarge" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix" id="headerImg">
+							<div class="col-name">
+								<h1 class="pro-name">Header Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageHeader"
+									id="imageHeader" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+
+						<li class="course-info clearfix" id="commonImg">
+							<div class="col-name">
+								<h1 class="pro-name">Common Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageCommon"
+									id="imageCommon" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
+				</div>
+				<!-- End filter result table -->
+				<input type="submit" value="Add" class="btn btn-success" />
 			</div>
-			<!-- End page content  -->
-	</form>
+			<!-- End left panel -->
+		</form>
+	</div>
+	<!-- End page content  -->
 	</div>
 	<!-- End Main Container -->
 
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
-
-	<!-- W3-Include -->
-	<script src="/dist/bower-components/w3/w3data.js"></script>
-
 
 </body>
 </html>
