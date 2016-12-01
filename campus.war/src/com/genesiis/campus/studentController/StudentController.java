@@ -2,6 +2,7 @@ package com.genesiis.campus.studentController;
 
 //20161122 DN C18-student-signup-without-using-third-party-application-dn created the class
 //StudentController.java
+//20161122 DN C18-student-signup-without-using-third-party-application-dn removed unnecessary log message
 
 import java.io.IOException;
 
@@ -52,7 +53,6 @@ public class StudentController extends CampusController {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		log.info("Landed on the StudentController====");
 		super.doPost(request, response);
 	}
 
