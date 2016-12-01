@@ -8,6 +8,7 @@
 <!--20161116 DN c10-contacting-us-page-MP included validation.js file to view -->
 <!--20161122 DN c10-contacting-us-page-MP included mailto and jstl code to fill the fields -->
 <!--20161128 DN c10-contacting-us-page-MP  clearField('warningLabel') added to submit button and message displaying label has been given an id='warningLabel'  -->
+<!-- 20161128 DN c10-contacting-us-page-MP removed hard coded footer and header and use jsp include to include those jsps -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -31,61 +32,8 @@
 
 </head>
 <body>
-
-<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-    <div class="top">
-        <div class="logo-brand">
-            <h1 class="logo-txt">Campus.lk</h1>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="menu-bar">
-            <div class="home pull-left">
-                <a href="../../index.jsp" class="btn-home center-block"></a>
-            </div>
-            <!-- End home button -->
-            <div class="menu-tabs clearfix">
-                <!-- Main menu tabs -->
-                <div class="top-menus">
-                    <ul class="list-inline">
-                        <li><a href="courses.html">All Courses</a></li>
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="/dist/partials/contactUs.jsp">Contact Us</a></li>
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="f-and-q.html">F & Q</a></li>
-                        <li><a href="rss.html">Rss</a></li>
-                    </ul>
-                </div>
-                <!-- End Main menu tabs -->
-
-                <!-- Course Category tabs -->
-                <div class="bottom-menus">
-                    <ul class="list-inline">
-                        <li><a href="javascript:">Pre Education</a></li>
-                        <li><a href="javascript:">School Education</a></li>
-                        <li><a href="category/higher-education.html">Higher Education</a></li>
-                        <li><a href="javascript:">Corporate Training</a></li>
-                        <li><a href="javascript:">Vocational Training</a></li>
-                        <li><a href="javascript:">Talent & Skill</a></li>
-                    </ul>
-                </div>
-                <!-- End Course Category tabs -->
-            </div>
-            <div class="keyword-search pull-right">
-                <div class="search-bar">
-                    <input type="text" placeholder="Keyword Search">
-                    <a href="javascript:" class="colr-white">Enter</a>
-                </div>
-                <!-- End Keyword Search -->
-                <div class="login-link">
-                    <a href="javascript:" class="colr-white">Login</a>
-
-                </div>
-            </div>
-            <!-- End keyword search -->
-        </div>
-    </div>
-</header>
+<!-- End Header -->
+<jsp:include page="layout/header.jsp"></jsp:include>
 <!-- End Header -->
 
 <!-- Main Container - Contact-US -->
@@ -244,15 +192,8 @@
 <!-- End Container - Contact-Us -->
 
 <!-- Footer -->
-<!-- <footer w3-include-html="layout/footer.jsp"></footer> -->
-<footer>
-    <div class="ft-top">
-
-    </div>
-    <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright © Campus.lk</label>
-    </div>
-</footer>
+<jsp:include page="layout/footer.jsp"></jsp:include>
+<!-- End Footer -->
 
 <!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>

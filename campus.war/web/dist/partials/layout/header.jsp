@@ -20,7 +20,7 @@
                     <ul class="list-inline">
                         <li><a href="dist/partials/courses.html">All Courses</a></li>
                         <li><a href="dist/partials/about-us.html">About Us</a></li>
-                        <li><a href="dist/partials/contactUs.jsp">Contact Us</a></li>
+                        <li><a href="/dist/partials/contactUs.jsp">Contact Us</a></li>
                         <li><a href="dist/partials/news.html">News</a></li>
                         <li><a href="dist/partials/f-and-q.html">F & Q</a></li>
                         <li><a href="dist/partials/rss.html">Rss</a></li>
