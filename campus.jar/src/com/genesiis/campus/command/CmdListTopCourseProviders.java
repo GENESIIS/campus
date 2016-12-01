@@ -46,12 +46,8 @@ public class CmdListTopCourseProviders implements ICommand   {
 					categoryCode = Integer.parseInt(categoryCodeString);
 					provider.setCategory(categoryCode);
 					helper.setAttribute("categoryCode", categoryCode);
-				}
-				provider.setGetAll(false);
-			} else {
-				// Setting the flag for retrieve all the institutes
-				provider.setGetAll(true);
-			}			
+				}				
+			} 			
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
 			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
 			
