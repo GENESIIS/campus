@@ -1,6 +1,8 @@
 //20161121 DN C18-student-signup-without-using-third-party-application-dn
 //create the signUpWoThirdParty.js file to facilitate signUpWoThirdParty.jsp
 //20161121 DN C18-student-signup-without-using-third-party-application-dn splitPhoneNumber() method created
+//20161121 DN C18-student-signup-without-using-third-party-application-dn refactor the validateSignUpWoThirdPartyPageEmbedData
+// 		according to CREV comments.
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -74,9 +76,9 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#policyConfirm').val()),"policy Check box","policyConfirmError"))) {
 		return !validationPass;
-	} else{
+	} 
 		return validationPass;
-	}	
+	
 }
 
 /**
@@ -180,4 +182,4 @@ function splitPhoneNumber(phoneNumber){
 	 }
 	
 }
-
+//^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}
