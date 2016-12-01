@@ -2,6 +2,8 @@ package com.genesiis.campus.validation;
 
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
+//20161201 CW c36-Display-course-details modified method exception log errors
+//20161201 CW c36-Display-course-detailsremoved un wanted comments
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,13 +16,6 @@ public class Validator {
 
 	static Logger log = Logger.getLogger(Validator.class.getName());
 
-	/**
-	 * Calculate number of years in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return void
-	 */
 
 	/**
 	 * Check the given value is empty or not empty
@@ -45,7 +40,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * 
-	 * @return Returns the given time duration in years
+	 * @return the given time duration in years
 	 */
 	public int calculateYears(String duration) throws ArithmeticException,
 			Exception {
@@ -69,7 +64,7 @@ public class Validator {
 					+ arithmeticException.toString());
 			throw arithmeticException;
 		} catch (Exception e) {
-			log.error("calculateYears:  e" + e.toString());
+			log.error("calculateYears:  Exception" + e.toString());
 			throw e;
 		}
 		return years;
@@ -80,7 +75,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param duration
-	 * @return void
+	 * @return int
 	 */
 	public int calculateMonths() throws ArithmeticException, Exception {
 		int months = 0;
@@ -95,7 +90,7 @@ public class Validator {
 					+ arithmeticException.toString());
 			throw arithmeticException;
 		} catch (Exception e) {
-			log.error("calculateYears:  e" + e.toString());
+			log.error("calculateYears: Exception" + e.toString());
 			throw e;
 		}
 		return months;
@@ -107,7 +102,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param duration
-	 * @return void
+	 * @return int
 	 */
 	public int calculateWeeks() throws ArithmeticException, Exception {
 		int weeks = 0;
@@ -120,7 +115,7 @@ public class Validator {
 					+ arithmeticException.toString());
 			throw arithmeticException;
 		} catch (Exception e) {
-			log.error("calculateYears:  e" + e.toString());
+			log.error("calculateYears:  Exception" + e.toString());
 			throw e;
 		}
 		return weeks;
@@ -131,7 +126,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param duration
-	 * @return void
+	 * @return int
 	 */
 	public int calculateDates() throws ArithmeticException, Exception {
 		int days = 0;
@@ -143,7 +138,7 @@ public class Validator {
 					+ arithmeticException.toString());
 			throw arithmeticException;
 		} catch (Exception e) {
-			log.error("calculateYears:  e" + e.toString());
+			log.error("calculateYears:  Exception" + e.toString());
 			throw e;
 		}
 		return days;
@@ -170,7 +165,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param helper
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	public String validateTutorFields(IDataHelper helper) throws Exception {
@@ -192,7 +187,7 @@ public class Validator {
 			}
 
 		} catch (Exception e) {
-			log.error("validateTutorFields" + e);
+			log.error("validateTutorFields: Exception" + e.toString());
 			throw e;
 		}
 		return message;
