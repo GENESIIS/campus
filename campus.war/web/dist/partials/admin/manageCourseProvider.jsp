@@ -466,7 +466,7 @@
 									<h1 class="pro-name">Name:</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="email" name="providerName"
+									<input class="input" type="text" name="providerName"
 										id="providerName" size="50px;" />
 								</div>
 							</li>
@@ -542,12 +542,12 @@
 				<!-- End left panel -->
 		</form>
 
-		<form action="/AdminController" method="POST">
+	<!-- 	<form action="/AdminController" method="POST">
 			<!-- course filter panel : left side -->
-			<div class="course-filter-panel" id="logoPanel">
+		<!-- 	<div class="course-filter-panel" id="logoPanel">
 				<h3>Course Provider Images</h3>
 				<!-- Filter result table -->
-				<div class="filter-result-table">
+	<!--			<div class="filter-result-table">
 					<ul class="result-row">
 						<li class="course-info clearfix" id="smallImg">
 							<div class="col-name">
@@ -560,7 +560,7 @@
 						</li>
 						<!-- end -->
 
-						<li class="course-info clearfix" id="largeImg">
+	<!--					<li class="course-info clearfix" id="largeImg">
 							<div class="col-name">
 								<h1 class="pro-name">Logo image (Large) :</h1>
 							</div>
@@ -571,7 +571,7 @@
 						</li>
 						<!-- end -->
 
-						<li class="course-info clearfix" id="headerImg">
+	<!--					<li class="course-info clearfix" id="headerImg">
 							<div class="col-name">
 								<h1 class="pro-name">Header Image :</h1>
 							</div>
@@ -582,7 +582,7 @@
 						</li>
 						<!-- end -->
 
-						<li class="course-info clearfix" id="commonImg">
+	<!--					<li class="course-info clearfix" id="commonImg">
 							<div class="col-name">
 								<h1 class="pro-name">Common Image :</h1>
 							</div>
@@ -592,13 +592,13 @@
 							</div>
 						</li>
 						<!-- end -->
-					</ul>
+		<!--			</ul>
 				</div>
 				<!-- End filter result table -->
-				<input type="submit" value="Add" class="btn btn-success" />
+	<!--			<input type="submit" value="Add" class="btn btn-success" />
 			</div>
 			<!-- End left panel -->
-		</form>
+	<!--	</form> -->
 	</div>
 	<!-- End page content  -->
 	</div>
