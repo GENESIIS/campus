@@ -62,10 +62,10 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
             +" VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, "
             +" HEADOFFICETOWN, ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, "
-            +" PRINCIPAL, TUTOR, CRTON, CRTBY, MODON, MODBY )"
+            +" PRINCIPAL, CRTON, CRTBY, MODON, MODBY )"
             +" VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, "
             +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
-            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, getDate(), ?, getDate(),? )";
+            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )";
 			
 			/**
 			 * account query used to insert data into course provider account
@@ -116,10 +116,8 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setBoolean(33, true);
 			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setInt(36, 1);
-			preparedStatement.setInt(37, 0);
-			preparedStatement.setString(38, "djfkdj");
-			preparedStatement.setString(39, "djfkdj");
+			preparedStatement.setString(37, "admin");
+
 			
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, "Mr. Perera");
