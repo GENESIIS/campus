@@ -2,52 +2,54 @@ package com.genesiis.campus.entity.model;
 
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added additional fields and setters and getters
+//20161201 DN C18-student-signup-without-using-third-party-application-test-dn add private modifier to all fields as per CREVcomments
 
 public class Student {
-	int code;
-	String username;
-	String password;
-	String indexNo;
-	String firstName;
-	String middleName;
-	String lastName;
-	java.sql.Date dateOfBirth;
-	int gender;
-	String email;
-	String type;
-	String imagePath;
-	String landPhoneCountryCode;
-	String landPhoneAreaCode;
-	String landPhoneNo;
-	String mobilePhoneCountryCode;
-	String mobilePhoneNetworkCode;
-	String mobilePhoneNo;
-	String description;
-	String facebookUrl;
-	String twitterUrl;
-	String mySpaceUrl;
-	String linkedInUrl;
-	String instagramUrl;
-	String viberNumber;
-	String whatsAppNumber;
-	String address1;
-	String address2;
-	String address3;
-	String town;
-	String accountType;
-	String lastLoggedInUserAgent;
-	String lastLoggedInSessionid;
-	String lastLoggedInDate;
-	String lastLoggedInTime;
-	String lastLoggedInIpAddress;
-	String lastLoggedOutDate;
-	String lastLoggedOutTime;
-	String lastLoginAuthenticatedBy;
-	boolean isActive;
-	java.sql.Date crtOn;
-	String crtBy;
-	java.sql.Date modOn;
-	String modBy;
+	private int code;
+	private String username;
+	private String password;
+	private String indexNo;
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private java.sql.Date dateOfBirth;
+	private int gender;
+	private String email;
+	private String type;
+	private String imagePath;
+	private String landPhoneCountryCode;
+	private String landPhoneAreaCode;
+	private String landPhoneNo;
+	private String mobilePhoneCountryCode;
+	private String mobilePhoneNetworkCode;
+	private String mobilePhoneNo;
+	private String description;
+	private String facebookUrl;
+	private String twitterUrl;
+	private String mySpaceUrl;
+	private String linkedInUrl;
+	private String instagramUrl;
+	private String viberNumber;
+	private String whatsAppNumber;
+	private String address1;
+	private String address2;
+	private String address3;
+	private String town;
+	private String accountType;
+	private String lastLoggedInUserAgent;
+	private String lastLoggedInSessionid;
+	private String lastLoggedInDate;
+	private String lastLoggedInTime;
+	private String lastLoggedInIpAddress;
+	private String lastLoggedOutDate;
+	private String lastLoggedOutTime;
+	private String lastLoginAuthenticatedBy;
+	private boolean isActive;
+	private java.sql.Date crtOn;
+	private String crtBy;
+	private java.sql.Date modOn;
+	private String modBy;
+	
 	public int getCode() {
 		return code;
 	}
