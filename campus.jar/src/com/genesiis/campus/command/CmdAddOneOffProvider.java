@@ -6,7 +6,6 @@ package com.genesiis.campus.command;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
