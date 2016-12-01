@@ -4,6 +4,7 @@
 <!-- 20161115 JH c7-higher-education-landing-page-MP add carousel to display course providers -->
 <!-- 20161116 JH c7-higher-education-landing-page-MP load category details from the database for header wip -->
 <!-- 20161121 JH c7-higher-education-landing-page-MP removed unwanted style tags -->
+<!-- 20161201 JH c39-add-course-provider removed onload function used to load header details -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -26,7 +27,7 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 
-<body onload="getCategoryData()">
+<body>
 
 	<!-- include Header-->
 	<header class="header">
