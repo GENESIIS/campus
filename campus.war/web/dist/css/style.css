@@ -837,6 +837,42 @@ body, html {
               margin-top: 10px;
               margin-bottom: 15px; }
 
+.sign-up-screen {
+  display: block;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  width: 87%; }
+  .sign-up-screen .page-inner-header h1 {
+    padding-top: 30px;
+    font-family: Calibri;
+    font-size: 42px;
+    color: #37474f; }
+  .sign-up-screen .page-inner-header h2 {
+    color: #6a9cf1;
+    font-size: 20px;
+    line-height: 52px;
+    padding-left: 6px; }
+  .sign-up-screen .page-content .input-panel {
+    float: left;
+    position: relative;
+    padding-top: 25px; }
+    .sign-up-screen .page-content .input-panel .input-field {
+      padding-top: 35px;
+      padding-right: 22%; }
+      .sign-up-screen .page-content .input-panel .input-field label {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        color: #677d88;
+        line-height: 35px; }
+      .sign-up-screen .page-content .input-panel .input-field .text-field {
+        height: 40px;
+        border: 2px solid #ccdae8;
+        width: 100%; }
+  .sign-up-screen .page-content .social-link-panel {
+    float: right;
+    position: relative; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
