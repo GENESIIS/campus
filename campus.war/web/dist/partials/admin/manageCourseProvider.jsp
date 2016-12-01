@@ -393,7 +393,7 @@
 								</div>
 								<div class="col-name">
 									<input class="textarea" type="Date" name="expirationDate"
-										id="expirationDate"   size="50px;" />
+										id="expirationDate" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -404,7 +404,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerType"
-										id="providerType" size="50px;"   />
+										id="providerType" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -439,15 +439,20 @@
 								</div>
 							</li>
 							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name" style="width: 50%;">
+								<input type="button"  id="viewNext" value="Next"class="btn btn-lg btn-info"/>
+								</div>
+							</li>
+							<!-- end -->
 						</ul>
 					</div>
 					<!-- End filter result table -->
 				</div>
 				<!-- End left panel -->
 				<br />
-				<button id="viewNext"
-					style="float: right; position: relative; right: 600px;"
-					class="btn btn-lg btn-info">Next</button>
+
 				<br />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
