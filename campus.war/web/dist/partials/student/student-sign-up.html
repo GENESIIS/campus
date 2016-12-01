@@ -120,7 +120,7 @@
     <div class="page-content col-md-12 col-lg-12 col-sm-12 clearfix">
 
         <div class="social-link-panel col-md-6 col-lg-6 col-sm-12 clearfix">
-            <div>
+            <div class="signup-btn">
                 <button class="btn-image-change hvr-icon-float-away">Join with Facebook</button>
             </div>
         </div>
@@ -139,10 +139,10 @@
             </div>
             <!-- End first name -->
 
-            <div class="input-field">
-                <label>Gender :</label>
-                <input class="btn-radio" type="radio">Male
-                <input class="btn-radio" type="radio">Female
+            <div class="input-field gender-field col-lg-12 clearfix">
+                <label class="lbl-gender col-lg-4 pull-left">Gender :</label>
+                <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"><span>Male</span></div>
+                <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"><span>Female</span></div>
             </div>
             <!-- End first name -->
 
@@ -160,7 +160,9 @@
 
             <div class="input-field">
                 <label>Are you engaged with :</label><br>
-                <input class="text-field" type="text">
+                <select name="" id="">
+                    <option value="- Select One -">- Select One -</option>
+                </select>
             </div>
             <!-- End first name -->
 
@@ -181,6 +183,18 @@
                 <input class="text-field" type="password">
             </div>
             <!-- End first name -->
+
+            <div class="input-field">
+                <span class="check-box"><input type="checkbox"></span>
+                <p>I have read privacy policy and accept the terms and conditions.</p>
+            </div>
+            <!-- End Condition agreement -->
+
+            <div class="input-field">
+                <button class="btn-create">Create Account</button>
+            </div>
+            <!-- End submit button -->
+
         </div>
         <!-- End Sign-up : with input form -->
 
