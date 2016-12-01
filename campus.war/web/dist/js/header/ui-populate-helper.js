@@ -1,10 +1,15 @@
 //20161109 JH c7-higher-education-landing-page-MP ui-populate-helper.js created
 //20161116 JH c7-higher-education-landing-page-MP change displayCategory() method
 //20161117 JH c7-higher-education-landing-page-MP displayCategories() method created
+//20161201 JH c39-add-course-provider added document ready function 
 
 /**
  * This method is to load category details
  */
+
+$( document ).ready(function() {
+	getCategoryData() ;
+});
 
 window.categoryCollection = null;
 
