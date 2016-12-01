@@ -1,6 +1,7 @@
 package com.genesiis.campus.util.security;
 
-//20162223 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
+//20161123 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
+//20161201 DN C18-student-signup-without-using-third-party-application-dn add exception handling as per CREV comments
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -60,16 +61,31 @@ public class TripleDesEncryptor implements Encryptable{
 	        final byte[] cipherText = cipher.doFinal(plainTextBytes);
 
 	        return cipherText;
-	 }
-    	catch (java.security.InvalidAlgorithmParameterException e) { System.out.println("Invalid Algorithm"); }
-	    catch (javax.crypto.NoSuchPaddingException e) { System.out.println("No Such Padding"); }
-	    catch (java.security.NoSuchAlgorithmException e) { System.out.println("No Such Algorithm"); }
-	    catch (java.security.InvalidKeyException e) { System.out.println("Invalid Key"); }
-	    catch (BadPaddingException e) { System.out.println("Invalid Key");}
-	    catch (IllegalBlockSizeException e) { System.out.println("Invalid Key");}
-	    catch (UnsupportedEncodingException e) { System.out.println("Invalid Key");}
+		}catch (java.security.InvalidAlgorithmParameterException e) { 
+		 log.error("encrypt():InvalidAlgorithmParameterException "+e.toString()); 
+		 throw e;
+    	}  catch (javax.crypto.NoSuchPaddingException e) { 
+    		log.error("encrypt():NoSuchPaddingException"+e.toString()); 
+    		throw e;
+    	}catch (java.security.NoSuchAlgorithmException e) { 
+    		log.error("encrypt():NoSuchAlgorithmException"+e.toString()); 
+    		throw e; 
+    	}catch (java.security.InvalidKeyException e) { 
+    		log.error("encrypt():InvalidKeyException"+e.toString()); 
+    		throw e;
+    	}catch (BadPaddingException e) { 
+    		log.error("encrypt():BadPaddingException"+e.toString()); 
+    		throw e;
+    		
+    	}catch (IllegalBlockSizeException e) {
+    		log.error("encrypt():IllegalBlockSizeException"+e.toString()); 
+    		throw e;
+	    }catch (UnsupportedEncodingException e) { 
+	    	log.error("encrypt():UnsupportedEncodingException"+e.toString()); 
+    		throw e;
+	    	}
 	
-	    return null;
+	   
 	}
 
 	/**
@@ -81,7 +97,9 @@ public class TripleDesEncryptor implements Encryptable{
 	 */
 	@Override
 	public String decrypt(byte[] message) throws Exception {
-		 	final MessageDigest md = MessageDigest.getInstance("SHA");
+		
+		try{
+			final MessageDigest md = MessageDigest.getInstance("SHA");
 	        final byte[] digestOfPassword = md.digest("HG58YZ3CR9"
 	                .getBytes("utf-8"));
 	        final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
@@ -97,8 +115,35 @@ public class TripleDesEncryptor implements Encryptable{
 	        final byte[] plainText = decipher.doFinal(message);
 
 	        return new String(plainText, "UTF-8");
+			}catch (java.security.InvalidAlgorithmParameterException e) { 
+			 log.error("encrypt():InvalidAlgorithmParameterException "+e.toString()); 
+			 throw e;
+	    	}  catch (javax.crypto.NoSuchPaddingException e) { 
+	    		log.error("encrypt():NoSuchPaddingException"+e.toString()); 
+	    		throw e;
+	    	}catch (java.security.NoSuchAlgorithmException e) { 
+	    		log.error("encrypt():NoSuchAlgorithmException"+e.toString()); 
+	    		throw e; 
+	    	}catch (java.security.InvalidKeyException e) { 
+	    		log.error("encrypt():InvalidKeyException"+e.toString()); 
+	    		throw e;
+	    	}catch (BadPaddingException e) { 
+	    		log.error("encrypt():BadPaddingException"+e.toString()); 
+	    		throw e;
+	    		
+	    	}catch (IllegalBlockSizeException e) {
+	    		log.error("encrypt():IllegalBlockSizeException"+e.toString()); 
+	    		throw e;
+		    }catch (UnsupportedEncodingException e) { 
+		    	log.error("encrypt():UnsupportedEncodingException"+e.toString()); 
+	    		throw e;
+		    	}
+		 	
 	}
 
+	
+	
+	
 	public String getPassWord() {
 		return passWord;
 	}
