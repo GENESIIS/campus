@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryDAO  implements ICrud{
 	
@@ -57,9 +58,10 @@ public class CategoryDAO  implements ICrud{
 		final Collection<Collection<String>> allCategoryList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT CAT.CODE AS CATEGORYCODE , CAT.NAME AS CATEGORYNAME FROM [CAMPUS].CATEGORY CAT WHERE CAT.ISACTIVE=1 ";
+			String sql="SELECT CAT.CODE AS CATEGORYCODE , CAT.NAME AS CATEGORYNAME FROM [CAMPUS].CATEGORY CAT WHERE CAT.ISACTIVE=? ";
 			
 			stmt=conn.prepareStatement(sql.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
