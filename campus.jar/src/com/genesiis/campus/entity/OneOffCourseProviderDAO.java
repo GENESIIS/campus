@@ -16,6 +16,7 @@ import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
 
 public class OneOffCourseProviderDAO implements ICrud{
 	
@@ -48,14 +49,13 @@ public class OneOffCourseProviderDAO implements ICrud{
 			 */
 			String provider = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
 			+" COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE ,LANDPHONENO ,LANDPHONE2NO ,"
-			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, HEADERIMAGEPATH,"
-			+" LOGOIMAGEPATH, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
+			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
             +" VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, "
             +" HEADOFFICETOWN, ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, "
             +" PRINCIPAL, TUTOR, CRTON, CRTBY, MODON, MODBY )"
             +" VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, "
             +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
-            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, ?, ?, getDate(), ?, getDate(),? )";
+            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, getDate(), ?, getDate(),? )";
 			
 			preparedStatement = conn.prepareStatement(provider,
 					PreparedStatement.RETURN_GENERATED_KEYS);
@@ -74,14 +74,28 @@ public class OneOffCourseProviderDAO implements ICrud{
 			preparedStatement.setString(12, courseProvider.getMobilePhoneCountryCode());
 			preparedStatement.setString(13, courseProvider.getMobilePhoneNetworkCode());
 			preparedStatement.setString(14, courseProvider.getMobilePhoneNumber());
-			preparedStatement.setString(15, courseProvider.getHeaderImagePath());
-			preparedStatement.setString(16, courseProvider.getLogoImagePath());
-			preparedStatement.setString(17, courseProvider.getSpeciality());
-			preparedStatement.setString(18, courseProvider.getWeblink());
-			preparedStatement.setString(19, courseProvider.getFacebookURL());
-			preparedStatement.setString(20, courseProvider.getTwitterURL());
-			preparedStatement.setString(21, courseProvider.getMyspaceURL());
-			preparedStatement.setString(22, courseProvider.getLinkedinURL());
+			preparedStatement.setString(15, courseProvider.getSpeciality());
+			preparedStatement.setString(17, courseProvider.getWeblink());
+			preparedStatement.setString(17, courseProvider.getFacebookURL());
+			preparedStatement.setString(18, courseProvider.getTwitterURL());
+			preparedStatement.setString(19, courseProvider.getMyspaceURL());
+			preparedStatement.setString(20, courseProvider.getLinkedinURL());
+			preparedStatement.setString(21, courseProvider.getInstagramURL());
+			preparedStatement.setString(22, courseProvider.getViberNumber());
+			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
+			preparedStatement.setDate(24, courseProvider.getExpirationDate());
+			preparedStatement.setString(25, courseProvider.getAddress1());
+			preparedStatement.setString(26, courseProvider.getAddress2());
+			preparedStatement.setString(27, courseProvider.getAddress3());
+			preparedStatement.setInt(28, AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+			preparedStatement.setInt(29, courseProvider.getHeadOffice());
+			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
+			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
+			preparedStatement.setBoolean(32, false);
+			preparedStatement.setBoolean(33, true);
+			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(35, courseProvider.getPrincipal());
+			preparedStatement.setInt(35, courseProvider.getPrincipal());
 
 			conn.commit();
 			
