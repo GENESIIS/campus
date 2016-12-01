@@ -29,6 +29,7 @@ function getProviderType(){
 		if (radioValue == "Tutor") {
 			commandCode = "ADD_ONE_OFF_COURSE_PROVIDER";
 		}
+		alert(commandCode);
 
 		$
 				.ajax({
@@ -45,8 +46,9 @@ function getProviderType(){
 							window.message = response.userMessage;
 
 							alert("success" + window.message);
-							document.getElementById("logoPanel").style.display = "block";
-							document.getElementById("basicForm").style.display = "none";
+							document.getElementById("usermessage").html(window.message);
+						//	document.getElementById("logoPanel").style.display = "block";
+						//	document.getElementById("basicForm").style.display = "none";
 							
 						}
 					},
