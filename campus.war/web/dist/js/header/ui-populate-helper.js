@@ -44,7 +44,7 @@ function displayCategories() {
 				.each(
 						categoryCollectionList,
 						function(index, value) {
-							singleCategoryElement += '<li><form action="PublicController" method="POST">';
+							singleCategoryElement += '<li><form action="/PublicController" method="POST">';
 							singleCategoryElement += '<button type="submit" name="CCO" id="CCO" class="btn btn-info navbar-btn" value="LIST_CATEGORY_LANDING_PAGE">'
 									+ value[1] + '</button>';
 							singleCategoryElement += '<input type="hidden" name="categoryId" id="categoryId" value="'

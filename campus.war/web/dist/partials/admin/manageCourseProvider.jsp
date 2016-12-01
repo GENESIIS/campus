@@ -17,16 +17,7 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- custom javascript -->
-<script src="/dist/js/header/ui-populate-helper.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -107,9 +98,9 @@
 
 			<!-- Page content -->
 			<div class="content-holder center-block clearfix">
-			<c:if test="${not empty userMessage }">
-				<div class="alert alert-danger" role="alert">${userMessage}</div>
-			</c:if>
+				<c:if test="${not empty userMessage }">
+					<div class="alert alert-danger" role="alert">${userMessage}</div>
+				</c:if>
 
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
@@ -123,7 +114,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName"   size="50px;" />
+										id="providerName" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -134,7 +125,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="shortName"
-										id="shortName" size="50px;"   />
+										id="shortName" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -144,7 +135,7 @@
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
-										id="aboutMe"  ></textarea>
+										id="aboutMe"></textarea>
 								</div>
 							</li>
 							<!-- end -->
@@ -155,7 +146,7 @@
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="5" cols="90"
-										name="specialFeatures" id="specialFeatures"  ></textarea>
+										name="specialFeatures" id="specialFeatures"></textarea>
 								</div>
 							</li>
 							<!-- end -->
@@ -178,14 +169,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="generalEmail"
-										id="generalEmail"   size="25px;" />
+										id="generalEmail" size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Course Inquiry Email :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="inquiryMail"
-										id="inquiryMail" size="25px;"   />
+										id="inquiryMail" size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -196,14 +187,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="areaCode" id="areaCode"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Land Number 1 :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -254,7 +245,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address1" id="address1"
-										size="50px;"   />
+										size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -265,7 +256,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address2" id="address2"
-										size="50px;"   />
+										size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -276,7 +267,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address3" id="address3"
-										size="50px;"   />
+										size="50px;" />
 							</li>
 							<!-- end -->
 
@@ -286,7 +277,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="country" id="country"
-										size="50px;"   />
+										size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -297,7 +288,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="town" id="town"
-										size="50px;"   />
+										size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -308,14 +299,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="webLink" id="webLink"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Facebook URL :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="facebook" id="facebook"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -326,14 +317,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="linkdedIn"
-										id="linkdedIn" size="25px;"   />
+										id="linkdedIn" size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Twitter URL :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="twitter" id="twitter"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -345,14 +336,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="instagram"
-										id="instagram" size="25px;"   />
+										id="instagram" size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">MySpace URL :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="mySpace" id="mySpace"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -363,14 +354,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="whatsapp" id="whatsapp"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Viber Number :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="viber" id="viber"
-										size="25px;"   />
+										size="25px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -442,7 +433,8 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
-								<input type="button"  id="viewNext" value="Next"class="btn btn-lg btn-info"/>
+									<input type="button" id="viewNext" value="Next"
+										class="btn btn-lg btn-info" />
 								</div>
 							</li>
 							<!-- end -->
@@ -451,9 +443,7 @@
 					<!-- End filter result table -->
 				</div>
 				<!-- End left panel -->
-				<br />
-
-				<br />
+				<br /> <br />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
 					<h3 style="color: maroon;">Account Info</h3>
@@ -466,7 +456,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerName"
-										id="providerName"   size="50px;" />
+										id="providerName" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -477,7 +467,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
-										id="providerEmail"   size="50px;" />
+										id="providerEmail" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -488,7 +478,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
-										id="providerUsername"   size="50px;" />
+										id="providerUsername" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -499,7 +489,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;"   />
+										id="providerPassword" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -510,7 +500,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;"   />
+										id="cProviderPassword" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -521,7 +511,7 @@
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="5" cols="90"
-										name="accountDescription" id="accountDescription"  ></textarea>
+										name="accountDescription" id="accountDescription"></textarea>
 								</div>
 							</li>
 							<!-- end -->
@@ -545,7 +535,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="file" name="imageSmall"
-										id="imageSmall" size="50px;"   />
+										id="imageSmall" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -600,11 +590,18 @@
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
-	
+
+
+	<!-- custom javascript -->
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
+
+	<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
+
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 </body>
 </html>
