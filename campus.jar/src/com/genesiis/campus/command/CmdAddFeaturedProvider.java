@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161122 JH c39-add-course-provider implemented ICommand class
 //20161123 JH c39-add-course-provider execute method coding : retrieve request parameters
 //20161129 JH c39-add-course-provider code refactor due to course provider DAO class rename, handle user messages
+//20161201 JH c39-add-course-provider added application enum to get course provider status
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -19,12 +20,13 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
 public class CmdAddFeaturedProvider implements ICommand{
-	static Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());
 	
 	private IView courseProviderData;
 
@@ -56,32 +58,40 @@ public class CmdAddFeaturedProvider implements ICommand{
 		String systemMessage = null;
 
 		try {
-			Date date = new Date();
-			log.info(">>>>>>>>>>>" + date.toString());
 
+			log.info("lllllllllllllllll");
+			int pStatus = 0;
 			String expireDate = helper.getParameter("expirationDate");
-			String provider = helper.getParameter("featured-oneoff");
-			if(provider == "one-off"){
-				courseProvider.setCourseProviderType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+			
+			String providerStatus = helper.getParameter("providerStatus");
+			if(providerStatus =="active"){
+				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
+			}
+			if(providerStatus =="inactive"){
+				pStatus = ApplicationStatus.INACTIVE.getStatusValue();
+			}
+			if(providerStatus =="pending"){
+				pStatus = ApplicationStatus.PENDING.getStatusValue();
 			}
 			
-			
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-	        Date parsed = format.parse("15-04-2017");
+	        Date parsed = format.parse(expireDate);
 	        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+	        
 			courseProvider.setShortName(helper.getParameter("shortName"));
 			courseProvider.setName(helper.getParameter("providerName"));
 			courseProvider.setDescription(helper.getParameter("aboutMe"));
-			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 			courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
-//			courseProvider.setLandPhoneCountryCode(helper.getParameter("country"));
-//			courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
-//			courseProvider.setLandPhoneNo(helper.getParameter("land1"));
-//			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
-//			courseProvider.setFaxNo(helper.getParameter("fax"));
-//			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
-//			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
-//			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
+			courseProvider.setLandPhoneCountryCode(helper.getParameter("country"));
+			courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
+			courseProvider.setLandPhoneNo(helper.getParameter("land1"));
+			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
+			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
+			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
+			courseProvider.setExpirationDate(sql);
+			
+			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
+			courseProvider.setFaxNo(helper.getParameter("fax"));
 			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
 			courseProvider.setWeblink(helper.getParameter("webLink"));
 			courseProvider.setFacebookURL(helper.getParameter("facebook"));
@@ -94,10 +104,12 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setAddress1(helper.getParameter("address1"));
 			courseProvider.setAddress2(helper.getParameter("address2"));
 			courseProvider.setAddress3(helper.getParameter("address3"));
-//			courseProvider.setExpirationDate(helper.getParameter(""));
-//			courseProvider.setTutorRelated(helper.getParameter(""));
-//			courseProvider.setCourseProviderType(Integer.parseInt(helper.getParameter("providerType")));
-//			courseProvider.setCourseProviderStatus(Integer.parseInt(helper.getParameter("providerStatus")));
+			
+			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
+			courseProvider.setCourseProviderType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+			courseProvider.setTutorRelated(false);
+			courseProvider.setAdminAllowed(true);
+			courseProvider.setCourseProviderStatus(pStatus);
 			courseProviderAccount.setName(helper.getParameter("providerName"));
 			courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 			courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
@@ -110,11 +122,13 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 			int status = CourseProviderDAO.add(map);
 
-			if (status == 1) {
+			if (status >0) {
 				systemMessage = SystemMessage.ADDED.message();
-			} else if (status == 0) {
+			} else if (status ==0) {
 				systemMessage = SystemMessage.NOTADDED.message();
 			}
+			
+			log.info("???????????? featured" );
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
 			systemMessage = SystemMessage.ERROR.message();
