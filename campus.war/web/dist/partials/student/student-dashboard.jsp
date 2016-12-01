@@ -5,6 +5,7 @@
 <!-- 20161114 TR c25 profile-image-box - done  -->
 <!-- 20161130 PN c27-upload-user-image: added user input handling javascript code to the UI. - WIP. -->
 <!-- 		  PN c27-upload-user-image: added JSTL code block to get existing user profile image details taken from the servlet. -->
+<!-- 20161201 PN c27-upload-user-image: modified file size into 2MB in file input JavaScript. -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -441,7 +442,7 @@ $("#avatar-1").fileinput({
 	uploadUrl : "../../../StudentController?CCO=UUP",
     overwriteInitial: true,
     autoReplace : true,
-    maxFileSize: 1500,
+    maxFileSize: 2048,
     showUploadedThumbs : false,
     showClose: false,
     showCaption: false,
