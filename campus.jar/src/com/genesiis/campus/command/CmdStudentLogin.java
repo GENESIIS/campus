@@ -36,19 +36,19 @@ public class CmdStudentLogin implements ICommand {
 
 		log.info("testing Data ................ : EMAIL " + data.getUserKey() +"  Password  : "+data.getPassword());
 
-	//	String validateResult = LoginValidator.validateLogin(data);
+	String validateResult = LoginValidator.validateLogin(data);
 	//	log.info(validateResult);
 		
 		
-	//	if (validateResult.equalsIgnoreCase("True")) {
+		if (validateResult.equalsIgnoreCase("True")) {
 		//	log.info(validateResult);
 			data = LoginValidator.dataSeparator(data);
 			log.info("Student user key: " +data.getUserKey());
 			log.info("Student Assigen Email : " +data.getEmail());
 			log.info("Student username : " +data.getUsername());
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			 	dataCollection = loginDAO.findById(data);
-	//	}
+			 dataCollection = loginDAO.findById(data);
+		}
 
 		return view;
 	}

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
 public class StudentDAO implements ICrud {
 
 	static Logger Log = Logger.getLogger(StudentDAO.class.getName());
-
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
