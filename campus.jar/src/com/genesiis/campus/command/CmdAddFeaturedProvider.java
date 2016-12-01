@@ -59,10 +59,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 		try {
 
-			log.info("lllllllllllllllll");
 			int pStatus = 0;
 			String expireDate = helper.getParameter("expirationDate");
-			
 			String providerStatus = helper.getParameter("providerStatus");
 			if(providerStatus =="active"){
 				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
