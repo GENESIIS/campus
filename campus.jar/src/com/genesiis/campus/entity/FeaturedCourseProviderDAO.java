@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
-import com.sun.org.apache.bcel.internal.generic.CPInstruction;
+import com.genesiis.campus.validation.AccountType;
 
 public class FeaturedCourseProviderDAO implements ICrud{
 	
@@ -59,14 +59,13 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			 */
 			String provider = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
 			+" COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE ,LANDPHONENO ,LANDPHONE2NO ,"
-			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, HEADERIMAGEPATH,"
-			+" LOGOIMAGEPATH, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
+			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
             +" VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, "
             +" HEADOFFICETOWN, ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, "
             +" PRINCIPAL, TUTOR, CRTON, CRTBY, MODON, MODBY )"
             +" VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, "
             +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
-            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, ?, ?, getDate(), ?, getDate(),? )";
+            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, getDate(), ?, getDate(),? )";
 			
 			/**
 			 * account query used to insert data into course provider account
@@ -82,41 +81,41 @@ public class FeaturedCourseProviderDAO implements ICrud{
 
 			Date d1 = new Date();
 			java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
-			preparedStatement.setString(1, "djfkdj");
-			preparedStatement.setString(2, "djfkdj");
-			preparedStatement.setString(3, "djfkdj");
-			preparedStatement.setString(4, "djfkdj");
-			preparedStatement.setString(5, "djfkdj");
-			preparedStatement.setString(6, "djfkdj");
-			preparedStatement.setString(7, "djfkdj");
-			preparedStatement.setString(8, "djfkdj");
-			preparedStatement.setString(9, "djfkdj");
-			preparedStatement.setString(10, "djfkdj");
-			preparedStatement.setString(11, "djfkdj");
-			preparedStatement.setString(12,"djfkdj");
-			preparedStatement.setString(13, "djfkdj");
-			preparedStatement.setString(14, "djfkdj");
-			preparedStatement.setString(15, "djfkdj");
-			preparedStatement.setString(16, "djfkdj");
-			preparedStatement.setString(17, "djfkdj");
-			preparedStatement.setString(18, "djfkdj");
-			preparedStatement.setString(19, "djfkdj");
-			preparedStatement.setString(20, "djfkdj");
-			preparedStatement.setString(21, "djfkdj");
-			preparedStatement.setString(22, "djfkdj");
-			preparedStatement.setString(23, "djfkdj");
-			preparedStatement.setString(24, "djfkdj");
-			preparedStatement.setString(25, "djfkdj");
-			preparedStatement.setDate(26, sqlDate);
-			preparedStatement.setString(27, "djfkdj");
-			preparedStatement.setString(28, "djfkdj");
-			preparedStatement.setString(29, "djfkdj");
-			preparedStatement.setInt(30, 1);
-			preparedStatement.setInt(31, 1);
+			preparedStatement.setString(1, courseProvider.getUniquePrefix());
+			preparedStatement.setString(2, courseProvider.getShortName());
+			preparedStatement.setString(3, courseProvider.getName());
+			preparedStatement.setString(4, courseProvider.getDescription());
+			preparedStatement.setString(5, courseProvider.getGeneralEmail());
+			preparedStatement.setString(6, courseProvider.getCourseInquiryEmail());
+			preparedStatement.setString(7, courseProvider.getLandPhoneCountryCode());
+			preparedStatement.setString(8, courseProvider.getLandPhoneAreaCode());
+			preparedStatement.setString(9, courseProvider.getLandPhoneNo());
+			preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
+			preparedStatement.setString(11, courseProvider.getFaxNo());
+			preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
+			preparedStatement.setString(13, courseProvider.getMobilePhoneNetworkCode());
+			preparedStatement.setString(14, courseProvider.getMobilePhoneNumber());
+			preparedStatement.setString(15,courseProvider.getSpeciality());
+			preparedStatement.setString(16, courseProvider.getWeblink());
+			preparedStatement.setString(17, courseProvider.getFacebookURL());
+			preparedStatement.setString(18, courseProvider.getTwitterURL());
+			preparedStatement.setString(19, courseProvider.getMyspaceURL());
+			preparedStatement.setString(20, courseProvider.getLinkedinURL());
+			preparedStatement.setString(21, courseProvider.getInstagramURL());
+			preparedStatement.setString(22, courseProvider.getViberNumber());
+			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
+			preparedStatement.setDate(24, courseProvider.getExpirationDate());
+			preparedStatement.setString(25, courseProvider.getAddress1());
+			preparedStatement.setString(26, courseProvider.getAddress2());
+			preparedStatement.setString(27, courseProvider.getAddress3());
+			preparedStatement.setInt(28, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+			preparedStatement.setInt(29, courseProvider.getHeadOffice());
+			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
+			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
 			preparedStatement.setBoolean(32, false);
 			preparedStatement.setBoolean(33, true);
-			preparedStatement.setInt(34, 1);
-			preparedStatement.setInt(35, 1);
+			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(35, courseProvider.getPrincipal());
 			preparedStatement.setInt(36, 1);
 			preparedStatement.setInt(37, 0);
 			preparedStatement.setString(38, "djfkdj");
