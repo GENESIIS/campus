@@ -51,7 +51,6 @@ function sendSignUpCredentialsToBckEnd() {
 function validateSignUpWoThirdPartyPageEmbedData(){
 	var validationPass = true;
 	
-	
 	if(!(isFieldFilled(isempty($('#firstName').val()),"First Name Field","firstNameError"))){
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#lastName').val()),"Last Name Field","lastNameError"))) {
@@ -72,11 +71,11 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#policyConfirm').val()),"policy Check box","policyConfirmError"))) {
+	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"policy Check box","policyConfirmError"))) {
 		return !validationPass;
-	} else{
+	} 
 		return validationPass;
-	}	
+	
 }
 
 /**
@@ -99,7 +98,7 @@ function createJasonObject(){
 			"userName"	:$('#userName').val(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
-			"isPolicyConfirm"	:$('#policyConfirm').val()
+			"isPolicyConfirm"	:$('#policyConfirm').prop('checked')
 	};
 	return jsonData;
 }
