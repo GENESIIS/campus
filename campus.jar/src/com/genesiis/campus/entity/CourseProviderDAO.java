@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -191,30 +192,30 @@ public class CourseProviderDAO implements ICrud{
 		 Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {
-			int categoryCode=0;
-			boolean isGetAll=false;
-			if(UtilityHelper.isNotEmptyObject(provider)){
-				CourseProvider cp = (CourseProvider) provider;
-				categoryCode = cp.getCategory();
-				isGetAll=cp.isGetAll();
-			}	
+			CourseProvider cProvider=new CourseProvider();
+			int categoryCode=0;			
+			if (UtilityHelper.isNotEmptyObject(provider)) {
+				cProvider = (CourseProvider) provider;				
+			} else {
+				return allProviderList;
+			}
 			conn=ConnectionManager.getConnection();	
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH   FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
-			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");
-			if (!isGetAll) {
-				sb.append(" AND CAT.CODE= ? ");
+			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");			
+			if (cProvider.getCategory()>0) {
+				sb.append(" AND CAT.CODE= ");	
+				sb.append(cProvider.getCategory());
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
-			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
+			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS= ");
+			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
 			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX, PROVIDER.LOGOIMAGEPATH ORDER BY TOTAL DESC ");
 			
-			stmt = conn.prepareStatement(sb.toString());			
-			if(!isGetAll){
-				stmt.setInt(1, categoryCode);	
-			}	
+			stmt = conn.prepareStatement(sb.toString());
+			
 			log.debug("SQL : " + sb.toString());
 			resultSet= stmt.executeQuery();
 			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
@@ -248,27 +249,29 @@ public class CourseProviderDAO implements ICrud{
 		try {
 			int categoryCode=0;
 			boolean isGetAll=false;
+			CourseProvider cProvider =new CourseProvider();
 			if(UtilityHelper.isNotEmptyObject(provider)){
-				CourseProvider cp = (CourseProvider) provider;
-				categoryCode = cp.getCategory();
-				isGetAll=cp.isGetAll();
+				cProvider = (CourseProvider) provider;				
+			}else{
+				return allProviderList;
 			}	
-			conn=ConnectionManager.getConnection();
+			conn=ConnectionManager.getConnection();			
+			
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 AVG(ISNULL(NEWTABLE.PROGAVERAGE,0)) AS CPAVERAGE , PROVIDER.CODE AS CPCODE ,PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH AS LOGOPATH  FROM ( ");
 			sb.append(" SELECT AVG(ISNULL(RAT.RATINGVALUE,0)) AS PROGAVERAGE ,PROG.CODE AS PROGRAMMECODE, PROG.COURSEPROVIDER AS CPCODE ");
 			sb.append(" FROM  [CAMPUS].RATING RAT INNER JOIN [CAMPUS].PROGRAMME PROG  ON  RAT.PROGRAMME=PROG.CODE");
-			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE=1 ");
-			if (!isGetAll) {
-				sb.append(" AND CAT.CODE=?");
-			}
+			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE= ");
+			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
+			if (cProvider.getCategory()>0) {
+				sb.append(" AND CAT.CODE= ");	
+				sb.append(cProvider.getCategory());
+			}			
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
-			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=1");
+			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=");
+			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
 			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.UNIQUEPREFIX,PROVIDER.LOGOIMAGEPATH ORDER BY CPAVERAGE DESC");
 
-			stmt = conn.prepareStatement(sb.toString());			
-			if(!isGetAll){
-				stmt.setInt(1, categoryCode);	
-			}
+			stmt = conn.prepareStatement(sb.toString());
 			resultSet= stmt.executeQuery();
 			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);		
 			
@@ -332,7 +335,8 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDERTOWN CPTOWN ON PROVIDER.CODE=CPTOWN.COURSEPROVIDER");
 			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = CPTOWN.TOWN ");
 			sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT");
-			sb.append(" AND PROVIDER.COURSEPROVIDERSTATUS=1 ");
+			sb.append(" AND PROVIDER.COURSEPROVIDERSTATUS= ");
+			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
 					
 			if (searchDTO.getCategoryList() != null && !searchDTO.getCategoryList().isEmpty()) {
 				sb.append(" AND PROG.CATEGORY in ( ");
