@@ -1,8 +1,10 @@
 package com.genesiis.campus.util;
 
-//20161121 PN c27-upload-user-image: INIT class to manage uploaded file details.
+//20161121 PN c27-upload-user-image: INIT class to manage uploaded file details. File taken from SDB project.
 //20161121 PN c27-upload-user-image: implemented isFileExists() method.
 //20161124 PN c27-upload-user-image: implemented isValidImageFileType() method.
+//20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
+//		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -85,18 +88,19 @@ public class FileUtility {
 
 			ArrayList<String> list = new ArrayList<String>();
 
-			for (File f : paths)
+			for (File f : paths) {
 				list.add(f.getName().replaceFirst("[.][^.]+$", ""));
+			}
 
 			String highestValue = this.getTopOfSequence(list);
 
 			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
 
-			if (highestValue == null || highestValue.equalsIgnoreCase(""))
+			if (highestValue == null || highestValue.equalsIgnoreCase("")) {
 				fileName = "0." + ext;
-			else
+			} else {
 				fileName = Integer.toString((Integer.parseInt(highestValue) + 1)) + "." + ext;
-
+			}
 			savePath = folder.getAbsoluteFile() + "/" + fileName;
 			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
 
@@ -105,8 +109,17 @@ public class FileUtility {
 
 			this.renamedTo = fileName;
 
+		} catch (SecurityException se) {
+			log.error(this + "rename(): " + se.toString());
+			throw se;
+		} catch (NumberFormatException  nfe) {
+			log.error(this + "rename(): " + nfe.toString());
+			throw nfe;
+		} catch (PatternSyntaxException  pse) {
+			log.error(this + "rename(): " + pse.toString());
+			throw pse;
 		} catch (Exception e) {
-			log.error(this + "rename" + e.toString());
+			log.error(this + "rename(): " + e.toString());
 			throw e;
 		}
 
@@ -126,25 +139,22 @@ public class FileUtility {
 			this.uploaded = false;
 			File uploadLocation = new File(this.uploadPath);
 
-			if (!uploadLocation.isDirectory())
+			if (!uploadLocation.isDirectory()) {
 				uploadLocation.mkdirs();
-
+			}
 			String fileName = this.item.getName();
-
-			/**
-			 * check whether the / exists at the end of the upload path
-			 **/
-			if (this.uploadPath.length() - 1 == this.uploadPath.lastIndexOf("/"))
+			
+			//check whether the / exists at the end of the upload path
+			if (this.uploadPath.length() - 1 == this.uploadPath.lastIndexOf("/")) {
 				this.file = new File(this.uploadPath + fileName);
-			else
+			} else {
 				this.file = new File(this.uploadPath + "/" + fileName);
+			}
 
-			/**
-			 * write the file to the file system
-			 **/
-			if (this.file.exists())
+			//write the file to the file system
+			if (this.file.exists()) {
 				this.file = new File(this.uploadPath + "/(copy)" + fileName);
-
+			}
 			this.item.write(this.file);
 			this.uploaded = true;
 
@@ -212,13 +222,12 @@ public class FileUtility {
 			try {
 				values.add(Integer.parseInt(each));
 			} catch (NumberFormatException e) {
-				log.info(this + "ignore: nfe on parsing: " + each);
+				log.info(this + "ignore: nfe on parsing: getTopOfSequence() " + each);
 			}
 
 		}
 
 		if (values.size() > 0) {
-
 			Collections.sort(values);
 			name = Integer.toString(values.get(values.size() - 1));
 		}
@@ -251,27 +260,14 @@ public class FileUtility {
 			this.uploaded = false;
 			File uploadLocation = new File(this.uploadPath);
 
-			if (!uploadLocation.isDirectory())
+			if (!uploadLocation.isDirectory()){
 				uploadLocation.mkdirs();
-
-			// FileUtils.cleanDirectory(uploadLocation);
-
+			}
 			String fileName = this.item.getName();
 
-			/**
-			 * check whether the / exists at the end of the upload path
-			 **/
-			if (this.uploadPath.length() - 1 == this.uploadPath.lastIndexOf("/"))
-				this.file = new File(this.uploadPath + fileName);
-			else
-				this.file = new File(this.uploadPath + "/" + fileName);
-
-			/**
-			 * write the file to the file system
-			 **/
-			if (this.file.exists())
-				this.file = new File(this.uploadPath + "/(copy)" + fileName);
-
+			this.file = isFileExistsEndofUP(this.uploadPath, fileName, this.file);	
+			this.file = createCopyofFile(this.uploadPath, fileName, this.file);
+			
 			this.item.write(this.file);
 			this.uploaded = true;
 
@@ -306,7 +302,6 @@ public class FileUtility {
 
 			this.renamedTo = newfileName;
 		} catch (FileNotFoundException fne) {
-			//Comes when C:\\Users\\username\\AppData\\Local\\Temp\\ is not found. It is specific to the user's computer
 			log.error("renameIntoOne():  IGNORE THIS: " + fne.toString());
 			this.uploaded = false;
 			throw fne;
@@ -376,5 +371,34 @@ public class FileUtility {
 
 		return false;
 	}
-
+	
+	/**
+	 * This method is to check whether the / exists at the end of the upload path
+	 * @param uploadPath
+	 * @param fileName
+	 * @param file
+	 * @return File - after checking the existence. 
+	 */
+	public File isFileExistsEndofUP(String uploadPath, String fileName, File file ){
+		if (uploadPath.length() - 1 == uploadPath.lastIndexOf("/")) {
+			file = new File(uploadPath + fileName);
+		} else {
+			file = new File(uploadPath + "/" + fileName);
+		}
+		return file;
+	}
+	
+	/**
+	 * This method is to rename file name post fix with copy.
+	 * @param uploadPath
+	 * @param fileName
+	 * @param file
+	 * @return
+	 */
+	public File createCopyofFile(String uploadPath, String fileName, File file){
+		if (file.exists()){
+			file = new File(uploadPath + "/(copy)" + fileName);
+		}
+		return file;
+	}
 }
