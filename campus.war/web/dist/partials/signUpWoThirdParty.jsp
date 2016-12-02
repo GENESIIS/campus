@@ -1,5 +1,6 @@
-<!-- <!-- 20161119 DN C18-student-signup-without-using-third-party-application-dn  created the page SignUpWoThirdParty.jsp -->
+<!-- 20161119 DN C18-student-signup-without-using-third-party-application-dn  created the page SignUpWoThirdParty.jsp -->
 <!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn /dist/js/jsonDataExchanger.js included to the page -->
+<!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn tool tip information for mobile number introduced -->
 <!-- 20161201 DN C18-student-signup-without-using-third-party-application-dn add a tool tip to mobile number field -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -55,7 +56,8 @@
 			$(document).ready(function(){
 			    $('[data-toggle="tooltip"]').tooltip();   
 			});
-			</script>
+		</script>
+
         <br>
         <div>
          <label for="input-pathway" id="pathwayLabel">What Are You Engaged With</label><label id="pathwayError" style="color:#FFFF00;"></label><br>
