@@ -2,6 +2,7 @@ package com.genesiis.campus.util.security;
 
 //20161123 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
 //20161201 DN C18-student-signup-without-using-third-party-application-dn add exception handling as per CREV comments
+//20161202 DN C18-student-signup-without-using-third-party-application-dn add Method comments as per CREV comments
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -142,8 +143,6 @@ public class TripleDesEncryptor implements Encryptable{
 	}
 
 	
-	
-	
 	public String getPassWord() {
 		return passWord;
 	}
@@ -152,7 +151,13 @@ public class TripleDesEncryptor implements Encryptable{
 		this.passWord = passWord;
 	}
 
-	
+	/**
+	 * mehod returns the encrypted data in String format
+	 * @author dushantha DN
+	 * @return String the encrypted String
+	 * @throws Exception
+	 * 
+	 */
 	public String  encryptSensitiveDataToString() throws Exception{	
 		String encrypetedStringFormat = "";		
 		try {
@@ -167,6 +172,14 @@ public class TripleDesEncryptor implements Encryptable{
 	
 	}
 	
+	/**
+	 * the method accepts an encrypted String and it deycript parameter to a String 
+	 * @author dushantha DN
+	 * @param encryptedStringTobeDecrypted String
+	 * @return String deycripted value in String format
+	 * @throws Exception
+	 */
+	
 	public String  decryptSensitiveDataToString(String encryptedStringTobeDecrypted) throws Exception{	
 		String byteArradecrypetedToStringFormat = "";
 		byte[] encryptedByteArray = encryptedStringTobeDecrypted.getBytes(Charset.forName("UTF-8"));
@@ -178,19 +191,5 @@ public class TripleDesEncryptor implements Encryptable{
 		return byteArradecrypetedToStringFormat;
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
