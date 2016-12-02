@@ -61,14 +61,21 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 			int pStatus = 0;
 		//	String expireDate = helper.getParameter("expirationDate");
-			String providerStatus = helper.getParameter("courseProviderStatus");
-			if(providerStatus =="active"){
+			String providerType = helper.getParameter("featured-oneoff");
+			if(providerType.equalsIgnoreCase("featured")){
+				courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+			}else if(providerType.equalsIgnoreCase("one-off")){
+				courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+			}
+			
+			String providerStatus = helper.getParameter("providerStatus");
+			if(providerStatus.equalsIgnoreCase("active")){
 				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
 			}
-			if(providerStatus =="inactive"){
+			if(providerStatus.equalsIgnoreCase("inactive")){
 				pStatus = ApplicationStatus.INACTIVE.getStatusValue();
 			}
-			if(providerStatus =="pending"){
+			if(providerStatus.equalsIgnoreCase("pending") ){
 				pStatus = ApplicationStatus.PENDING.getStatusValue();
 			}
 			
@@ -88,6 +95,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
 //			courseProvider.setExpirationDate(sql);
 			
+			String dfd = helper.getParameter("shortName");
 			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 			courseProvider.setFaxNo(helper.getParameter("fax"));
 			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
@@ -127,6 +135,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			}
 			
 			log.info("???????????? featured" );
+			helper.setAttribute("registerId", status);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
 			systemMessage = SystemMessage.ERROR.message();
