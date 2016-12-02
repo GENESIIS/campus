@@ -19,7 +19,10 @@
     <link href="dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     
     <link href="dist/datatable/dataTables.checkboxes.css" rel="stylesheet" type="text/css">
-
+    
+    <!-- TagIt CSS-->
+	<link href="dist/css/tagit.css" rel="stylesheet" type="text/css">
+	
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
 
@@ -39,6 +42,19 @@
 
 <script src="dist/datatable/dataTables.checkboxes.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.checkboxes.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- TagIt JS-->
+<!-- <link rel="stylesheet" href="bootstrap-2.3.2/css/bootstrap.min.css"> -->
+<script src="dist/tagit/bootstrap-tagsinput.js"></script>
+<link rel="stylesheet" href="dist/tagit/bootstrap-tagsinput.css">
+<!-- <script src="bower_components/jquery/jquery.min.js"></script> -->
+<!-- <script src="bower_components/google-code-prettify-lite/prettify.js"></script> -->
+<!-- <script src="bootstrap-2.3.2/js/bootstrap.min.js"></script> -->
+<script src="dist/tagit/typeahead.js"></script>
+
+
+
+
 
 
 <style type="text/css">
@@ -63,6 +79,12 @@
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentProfessionalDetailsModal">
   Professional Experience
 </button>
+
+<!-- Button trigger School Education modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSkillDetailsModal">
+  Professional Experience
+</button>
+
 
 <!-- School Education -->
 <div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
@@ -298,6 +320,48 @@
    </div>
   </div>
 </div>
+
+<!-- Professional Details Modal -->
+<div class="modal fade" id="studentSkillDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentSkillDetails" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+        <h4 class="modal-title" id="studentSkillDetails">Professional Experience</h4>
+      </div>
+      <div class="modal-body">
+
+					<div>
+						<input type="text" id="category" data-role="tagsinput" />
+					</div>
+
+
+	 </div>					
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="">Save changes</button>
+      </div>
+   </div>
+  </div>
+</div>
+
+
+<script>
+$("#category").tagsinput({
+	  typeahead: {
+	    source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
+	  },
+	  freeInput: true
+	});
+	$("#category").on('itemAdded', function(event) {
+	    setTimeout(function(){
+	        $(">input[type=text]",".bootstrap-tagsinput").val("");
+	    }, 1);
+	});
+</script>
 
 </body>
 </html>
