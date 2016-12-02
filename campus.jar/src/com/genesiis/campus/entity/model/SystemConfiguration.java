@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20161122 PN c27-upload-user-image: INIT SystemConfiguration.java class
+//20161202 PN c27-upload-user-image: added private access modifier to the field attributes.
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -8,11 +9,11 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.validation.SystemMessage;
 
 public class SystemConfiguration {
-	SystemMessage returnMessage;
+	private SystemMessage returnMessage;
 	private String systemConfiguration;
 	private String value1,value2,value3,description;
-	int sortKey,code;
-	String isActive;
+	private int sortKey,code;
+	private String isActive;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
