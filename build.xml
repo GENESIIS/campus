@@ -66,12 +66,6 @@
 		<mkdir dir="${buildDir}/${campus.jar.name}/META-INF"/>
 		<mkdir dir="${buildDir}/${campus.jar.name}/src"/>
 		<mkdir dir="${buildDir}/${campus.war.name}/src"/>		
-		<mkdir dir="${buildDir}/${campus_student.war.name}/WEB-INF/lib"/>
-		<mkdir dir="${buildDir}/${campus_student.war.name}/WEB-INF/classes"/>
-		<mkdir dir="${buildDir}/${campus_student.jar.name}/META-INF"/>
-		<mkdir dir="${buildDir}/${campus_student.jar.name}/src"/>
-		<mkdir dir="${buildDir}/${campus_student.war.name}/src"/>
-		
 	</target>
 	
 	<!-- Main target  -->
@@ -135,68 +129,8 @@
 		</copy>					
 	</target>
 	
-	<!-- target: campus_student.jar  -->
-	<target name="campus_student.jar" depends = "campus.jar">
-		<!-- compilation step -->
-		<javac includeantruntime="false" srcdir="${campus_student.jar.dir}/src" destdir="${buildDir}/${campus_student.jar.name}" debug="${javadebug}" includes="**/*.java" fork="${campus.build.fork}" executable="${campus.build.executable}" >
-			<classpath>
-				<pathelement path="${buildDir}/${campus.jar.name}"/>
-				<pathelement path="${jbossClientLib}/jboss-client.jar" />		
-				<pathelement path="${jbossLibDir}/com/google/gson/main/gson-2.2.4.jar" /> 
-				<pathelement path="${jbossLibDir}/com/lowagie/text/main/itext-1.4.8.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/commons/io/main/commons-io-1.3.2.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/commons/lang3/main/commons-lang3-3.1.jar" />
-				<pathelement path="${jbossLibDir}/system/layers/base/javax/mail/api/main/mail-1.4.5.redhat-2.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/commons/fileupload/main/commons-fileupload-1.2.1.jar" />
-				<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
-				<pathelement path="${jbossLibDir}/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final-redhat-3.jar" />	
-				<pathelement path="${jbossLibDir}/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-2.jar" />
-				<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/as/web/main/jbossweb-7.5.10.Final-redhat-1.jar"/>				
-				<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/log4j/logmanager/main/log4j-jboss-logmanager-1.1.2.Final-redhat-1.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/lucene/main/lucene-core-5.3.0.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/lucene/main/lucene-codecs-5.3.0.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/lucene/main/lucene-queryparser-5.3.0.jar" />
-				<pathelement path="${jbossLibDir}/org/apache/lucene/main/lucene-analyzers-common-5.3.0.jar" />
-			</classpath>
-		</javac>
-		<!-- dd copy step -->
-		<copy todir="${buildDir}/${campus_student.jar.name}/META-INF">
-			<fileset dir="${campus_student.jar.dir}/src/META-INF" includes="ejb-jar.xml, jboss.xml, persistence.xml" /> 
-		</copy>
-	</target>	
-	
-	<!-- target: campus_student.war  -->	
-	<target name="campus_student.war" depends="campus.jar,campus_student.jar">
-		<!-- Compile Servlet Files -->
-		<javac includeantruntime="false" srcdir="${campus_student.war.dir}/src" destdir="${buildDir}/${campus_student.war.name}/WEB-INF/classes" debug="${javadebug}" includes="**/*.java" fork="${campus.build.fork}" executable="${campus.build.executable}" >
-				<classpath>
-					<pathelement path="${buildDir}/${campus.jar.name}"/>
-					<pathelement path="${buildDir}/${campus_student.jar.name}"/>
-					<pathelement path="${jbossClientLib}/jboss-client.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
-					<pathelement path="${jbossLibDir}/com/google/gson/main/gson-2.2.4.jar" />
-					<pathelement path="${jbossLibDir}/com/lowagie/text/main/itext-1.4.8.jar" />
-					<pathelement path="${jbossLibDir}/org/apache/commons/io/main/commons-io-1.3.2.jar" />	
-					<pathelement path="${jbossLibDir}/org/apache/commons/lang3/main/commons-lang3-3.1.jar" />					
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/mail/api/main/mail-1.4.5.redhat-2.jar" />
-					<pathelement path="${jbossLibDir}/org/apache/commons/fileupload/main/commons-fileupload-1.2.1.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final-redhat-3.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-2.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/as/web/main/jbossweb-7.5.10.Final-redhat-1.jar"/>
-					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/log4j/logmanager/main/log4j-jboss-logmanager-1.1.2.Final-redhat-1.jar" />
-					
-				</classpath>
-		</javac>
-		
-		<!-- copy the web files (jsp, html, images, css etc, including the dd web-xml) -->
-		<copy todir="${buildDir}/${campus_student.war.name}">
-			<fileset dir="${campus_student.war.dir}/web" includes="**/*.*" /> 
-		</copy>					
-	</target>
-
 	<!-- target: campus.ear  -->
-	<target name="campus.ear" depends="campus.jar, campus_student.jar, campus.war, campus_student.war">			
+	<target name="campus.ear" depends="campus.jar, campus.war">			
 				
 		<!-- ear meta information (sub-deployments)-->
 		<copy todir="${buildDir}/${campus.ear.name}/META-INF">
@@ -210,11 +144,6 @@
 		
 		<jar jarfile="${buildDir}/${campus.ear.name}/${campus.jar.name}" basedir="${buildDir}/${campus.jar.name}" />
 		
-		<copy todir="${buildDir}/${campus.ear.name}/${campus_student.war.name}">
-			<fileset dir="${buildDir}/${campus_student.war.name}" includes="**/*.*" /> 
-		</copy> 
-		
-		<jar jarfile="${buildDir}/${campus.ear.name}/${campus_student.jar.name}" basedir="${buildDir}/${campus_student.jar.name}" />
 	</target>
 	
 	<target name="redeploy">

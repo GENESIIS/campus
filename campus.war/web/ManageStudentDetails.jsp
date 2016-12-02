@@ -49,6 +49,11 @@
 </head>
 <body>
 
+<!-- Button trigger School Education modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
+  Personal Details
+</button>
+
 <!-- Button trigger Personal Details modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
   School Details
@@ -58,6 +63,92 @@
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentProfessionalDetailsModal">
   Professional Experience
 </button>
+
+<!-- School Education -->
+<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+        <h4 class="modal-title" id="studentPersonalDetails">School Education</h4>
+      </div>
+      <div class="modal-body">
+      <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
+      		<h2>Personal Details</h2>
+      		<div class="well">
+      		First Name <input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+      		Middle Name <input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+      		Last Name <input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+      
+      		Birth Date <input type="date" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			About <textarea type="text" name="" id="" onclick=""></textarea>
+			<span id="" name="" style="color:red"></span><br>
+			
+			</div>
+			<br>
+			
+			<h2>Contact Details</h2>
+			<div class="well">
+      		
+      		Mobile Number<input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			Home Number <input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+      		Other Number <input type="text" name="" id="" onkeypress="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+      
+      		Address<input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			Town
+			 <input type="text" id="" name="" list="" placeholder="-- Select Town --"/>
+			 	<datalist name="" id="">
+			 	</datalist>
+			<br/>
+      
+      		Facebook URL <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+      
+      		twitter URL <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			LinkedIn URL <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			Instergram URL <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			mySpace <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			WhatsApp <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			Viber <input type="text" name="" id="" onclick="">
+			<span id="" name="" style="color:red"></span><br>
+			
+			</div>
+			<br>			
+	  </div>
+      <div class="modal-footer">    
+      	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- School Education -->
