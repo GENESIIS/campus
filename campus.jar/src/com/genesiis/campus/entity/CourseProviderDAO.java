@@ -16,6 +16,7 @@ package com.genesiis.campus.entity;
 //DJ 20161123 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-add course provider type list to the query
 //DJ 20161124 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-reform the query to support  multiples in clauses
 //DJ 20161124 c17-provider-criteria-based-filter-search Implemented getCategoryWiseTypes() method
+//DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
 
 
 
@@ -245,8 +246,7 @@ public class CourseProviderDAO implements ICrud{
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {			
-			CourseProvider cProvider=new CourseProvider();
-			CourseProvider cProvider =new CourseProvider();
+			CourseProvider cProvider=new CourseProvider();			
 			if(UtilityHelper.isNotEmptyObject(provider)){
 				cProvider = (CourseProvider) provider;
 			}else{

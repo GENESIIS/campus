@@ -30,7 +30,7 @@ function getAjaxData(catCode,response) {
 						var data = res.split(",");
 						var x = data[0].toString();
 						var y = data[1].toString();
-						var z = data[2].toString();
+						
 						var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
 						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 					});
@@ -66,7 +66,7 @@ function getAjaxData(catCode,response) {
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
-		var z = data[2].toString();
+		
 		/*$('<option>').val(y).text(z).appendTo(districtName);*/
 		
 		htmlstr += '<option val="' + data[1] + '">' + data[2] + '</option>';
@@ -165,7 +165,7 @@ function populateAjaxResponse(response) {
 	var data = res.split(",");
 	var x = data[0].toString();
 	var y = data[1].toString();
-	var z = data[2].toString();
+	
 	var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
 	providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 	});
