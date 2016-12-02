@@ -27,5 +27,5 @@ public enum ApplicationStatus {
 	public int getStatusValue() {
 		return statusValue;
 	}
-
 }
+

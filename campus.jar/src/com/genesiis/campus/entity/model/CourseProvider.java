@@ -8,7 +8,7 @@ public class CourseProvider {
 	private int code;
 	private int category;
 	private String name;
-	private String uniqueprefix;	
+	private String uniqueprefix;
 	private int courseProviderType;
 	private int courseProviderStatus;
 	
@@ -48,6 +48,6 @@ public class CourseProvider {
 	}
 	public void setCourseProviderStatus(int courseProviderStatus) {
 		this.courseProviderStatus = courseProviderStatus;
-	}
+	}	
 	
 }

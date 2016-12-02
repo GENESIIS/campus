@@ -48,7 +48,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 					provider.setCategory(categoryCode);
 					helper.setAttribute("categoryCode", categoryCode);
 				}				
-			} 
+			}
 			//Set Course provider status
 			provider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
