@@ -1,6 +1,8 @@
 package com.genesiis.campus.command;
 //20161128 DN C18-student-signup-without-using-third-party-application-test-dn created CmdSignUpWithoutThirdParty.java
 //20161201 DN C18-student-signup-without-using-third-party-application-test-dn removed unnecessary comments as per CREV
+//20161202 DN C18-student-signup-without-using-third-party-application-test-dn add user name validation and validation to the
+//	validateFrontEndUserProvidedInformation()
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -137,6 +139,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			val.validateEmail(row.getEmail());
 			val.isNotEmpty(row.getPathway());
 			val.isNotEmpty(row.getUserName());
+			val.isStringContainsAlphaNumericAndUnderscore(row.getUserName(), 5);
 			val.isNotEmpty(row.getPassWord());
 			val.isNotEmpty(row.getConfirmPw());
 			val.isNotEmpty(String.valueOf(row.getIsPolicyConfirm())); // converts the boolean to String
