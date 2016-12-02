@@ -16,6 +16,7 @@ import java.util.HashMap;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.OneOffCourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.validation.SystemMessage;
@@ -50,8 +51,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
-
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 
@@ -60,14 +59,9 @@ public class CmdAddFeaturedProvider implements ICommand{
 		try {
 
 			int pStatus = 0;
-		//	String expireDate = helper.getParameter("expirationDate");
-			String providerType = helper.getParameter("featured-oneoff");
-			if(providerType.equalsIgnoreCase("featured")){
-				courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-			}else if(providerType.equalsIgnoreCase("one-off")){
-				courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
-			}
-			
+			int generatedKey = 0;
+			String expireDate = helper.getParameter("expirationDate");
+					
 			String providerStatus = helper.getParameter("providerStatus");
 			if(providerStatus.equalsIgnoreCase("active")){
 				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
@@ -80,9 +74,10 @@ public class CmdAddFeaturedProvider implements ICommand{
 			}
 			
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-	   //     Date parsed = format.parse(expireDate);
-	 //       java.sql.Date sql = new java.sql.Date(parsed.getTime());
+			Date parsed = format.parse(expireDate);
+			java.sql.Date sql = new java.sql.Date(parsed.getTime());
 	        
+			courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
 			courseProvider.setShortName(helper.getParameter("shortName"));
 			courseProvider.setName(helper.getParameter("providerName"));
 			courseProvider.setDescription(helper.getParameter("aboutMe"));
@@ -93,7 +88,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
 			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
 			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
-//			courseProvider.setExpirationDate(sql);
+			courseProvider.setExpirationDate(sql);
 			
 			String dfd = helper.getParameter("shortName");
 			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
@@ -112,30 +107,52 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setAddress3(helper.getParameter("address3"));
 			
 			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
-			courseProvider.setCourseProviderType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-			courseProvider.setTutorRelated(false);
 			courseProvider.setAdminAllowed(true);
 			courseProvider.setCourseProviderStatus(pStatus);
-			courseProviderAccount.setName(helper.getParameter("providerName"));
-			courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
-			courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
-			courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-			courseProviderAccount.setName(helper.getParameter("accountDescription"));		
+
 			
 			HashMap map = new HashMap();
 			map.put("provider", courseProvider);
-			map.put("account", courseProviderAccount);
+			
+			String providerType = helper.getParameter("featured-oneoff");
+			
+			/**
+			 * select the account type of the course provider. 
+			 * and will call different DAO classes depending on the course provider
+			 * type
+			 */
+			if(providerType.equalsIgnoreCase("featured")){
+				courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+				courseProvider.setTutorRelated(false);
+				
+				courseProviderAccount.setName(helper.getParameter("providerName"));
+				courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+				courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
+				courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
+				courseProviderAccount.setName(helper.getParameter("accountDescription"));		
+				
+				ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
+				map.put("account", courseProviderAccount);
+				generatedKey = CourseProviderDAO.add(map);
+				
+			}else if(providerType.equalsIgnoreCase("one-off")){
+				courseProvider.setTutorRelated(false);
+				
+				ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
+				courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+				generatedKey = oneOffCourseProviderDAO.add(courseProvider);
+			}
+			
 
-			int status = CourseProviderDAO.add(map);
 
-			if (status >0) {
+			if (generatedKey >0) {
 				systemMessage = SystemMessage.ADDED.message();
-			} else if (status ==0) {
+			} else if (generatedKey ==0) {
 				systemMessage = SystemMessage.NOTADDED.message();
 			}
 			
 			log.info("???????????? featured" );
-			helper.setAttribute("registerId", status);
+			helper.setAttribute("registerId", generatedKey);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
 			systemMessage = SystemMessage.ERROR.message();
