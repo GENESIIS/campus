@@ -109,7 +109,7 @@
 			<!-- Page content -->
 
 
-			<input type="hidden" name="CCO" id="CCO" value="" />
+			<input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
 			<div class="content-holder center-block clearfix">
 				<c:if test="${not empty userMessage }">
 					<div class="alert alert-danger" role="alert" id="usermessage"></div>
@@ -422,12 +422,6 @@
 									<h1 class="pro-name">
 										<input type="radio" name="featured-oneoff"
 											id="featured-oneoff" value="one-off" /> One-Off Provider
-									</h1>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="featured-oneoff"
-											id="featured-oneoff" value="Tutor" /> Tutor Related
 									</h1>
 								</div>
 							</li>
