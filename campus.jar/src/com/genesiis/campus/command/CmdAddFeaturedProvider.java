@@ -60,8 +60,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 		try {
 
 			int pStatus = 0;
-			String expireDate = helper.getParameter("expirationDate");
-			String providerStatus = helper.getParameter("providerStatus");
+		//	String expireDate = helper.getParameter("expirationDate");
+			String providerStatus = helper.getParameter("courseProviderStatus");
 			if(providerStatus =="active"){
 				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
 			}
@@ -73,8 +73,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 			}
 			
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-	        Date parsed = format.parse(expireDate);
-	        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+	   //     Date parsed = format.parse(expireDate);
+	 //       java.sql.Date sql = new java.sql.Date(parsed.getTime());
 	        
 			courseProvider.setShortName(helper.getParameter("shortName"));
 			courseProvider.setName(helper.getParameter("providerName"));
@@ -86,7 +86,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
 			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
 			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
-			courseProvider.setExpirationDate(sql);
+//			courseProvider.setExpirationDate(sql);
 			
 			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 			courseProvider.setFaxNo(helper.getParameter("fax"));
