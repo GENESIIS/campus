@@ -1,5 +1,5 @@
 package com.genesiis.campus.util;
-
+//20161102 AS c9-inquiry-form-for-institute-MP-cm changed logger statement ConnectionManager to MailServerManager
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -10,7 +10,7 @@ import javax.naming.NamingException;
 
 public class MailServerManager {
 	
-	static Logger log = Logger.getLogger(ConnectionManager.class.getName());
+	static Logger log = Logger.getLogger(MailServerManager.class.getName());
 
 	private static final String SESSION_JNDI_NAME = "java:jboss/mail/Default";
 	// The SESSION_JNDI_NAME is the property for mail session source name that the
