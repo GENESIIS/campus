@@ -40,6 +40,9 @@
 				alert("error");
 			}
 		});
+		
+		loadResultSet(event);		
+		
 	});
 
 	function getAjaxProviderData(response) {
@@ -54,6 +57,53 @@
 			$('<option>').val(x).text(y).appendTo(providerName);
 		});
 	}
+	
+	
+	function loadResultSet(event){
+		$('#searchList').on('click', function(event) {
+			alert(" searchList");
+			$(this).val();
+			var cpCode= $('#providerlist').val();
+			var startdate= $('#startdate').val();
+			var enddate= $('#enddate').val();			
+		});
+		
+		$.ajax({
+			url:'../../PublicController',
+			data:{
+				CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
+				cpCode:cpCode,
+				startdate:startdate,
+				enddate:enddate			
+				
+			},
+			datatype:"json",
+			success : function(response) {				
+				populateResultTable(response);
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+	
+	function populateResultTable(response){		
+		alert("populateResultTable ");		
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	function loadReportList(event) {
 		alert(event);
@@ -123,8 +173,7 @@
 		<!-- END inner-image-header -->
 		<div>
 			<div>
-				<div class="container">
-					<form action="PublicController" method="POST">
+				<div class="container">					
 						<fieldset>
 							<legend align="left">Search criteria </legend>
 							<div>
@@ -138,18 +187,17 @@
 								Start Date : <input type="date" id="startdate" name="search">
 							</div>
 							<div>
-								End Date : <input type="date" id="dendate" name="search">
+								End Date : <input type="date" id="enddate" name="search">
 							</div>
 							<div>
 								<button type="submit">Clear</button>
-								<button type="submit" onclick="loadReportList(this)">Search
+								<button type="submit" id="searchList" >Search
 									List</button>
 							</div>
-						</fieldset>
-					</form>
+						</fieldset>					
 				</div>
 			</div>
-			<div ></div>
+			</br></br>
 			<div>
 				<div class="container">
 					<h2>Result set</h2>
