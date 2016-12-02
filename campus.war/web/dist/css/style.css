@@ -913,6 +913,13 @@ body, html {
         .sign-up-screen .page-content .input-panel .input-field .check-box input {
           width: 15px;
           height: 15px; }
+      .sign-up-screen .page-content .input-panel .input-field .show-pwrd {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #728994;
+        line-height: 19px; }
+        .sign-up-screen .page-content .input-panel .input-field .show-pwrd span {
+          margin-right: 8px; }
       .sign-up-screen .page-content .input-panel .input-field p {
         padding-left: 25px;
         color: #728994;
@@ -920,7 +927,16 @@ body, html {
   .sign-up-screen .page-content .social-link-panel {
     float: right;
     position: relative;
-    padding-top: 24%; }
+    padding-top: 20%; }
+    .sign-up-screen .page-content .social-link-panel .lbl-or {
+      display: block;
+      position: absolute;
+      top: 70%;
+      left: -5%; }
+      .sign-up-screen .page-content .social-link-panel .lbl-or label {
+        color: #567798;
+        font-size: 48px;
+        font-family: "Open Sans"; }
     .sign-up-screen .page-content .social-link-panel .signup-btn {
       padding-left: 18%;
       margin-top: 65px; }
