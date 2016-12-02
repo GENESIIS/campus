@@ -30,7 +30,6 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		error : function(e) {
 			 alert("Error " + e);
 			 console.log(e);
-			 throw e; // throwing error to upper level 
 			
 		}
 	});	
