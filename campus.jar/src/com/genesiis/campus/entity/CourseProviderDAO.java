@@ -4,7 +4,7 @@ package com.genesiis.campus.entity;
 //20161031 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method.
 //20161031 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method.
 //20161115 CM c9-make-inquiry-for-institute CourseProviderDAO.java modified findById() method(Code Review Modifications).
-
+//20161201 AS c9-inquiry-form-for-institute-MP-cm  InquiryEmail variable name change to  inquiryEmail
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,7 +48,7 @@ public class CourseProviderDAO implements ICrud{
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		final Collection<Collection<String>> InquiryEmail = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> inquiryEmail = new ArrayList<Collection<String>>();
 		ArrayList<String> singleEmployeeList = null;
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
