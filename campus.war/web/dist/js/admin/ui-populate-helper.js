@@ -42,10 +42,10 @@ function getProviderType() {
 			success : function(response) {
 
 				if (response !== undefined && response !== null) {
-					message = response.userMessage;
-					var registerId = response.registerId;
+				//	message = response.userMessage;
+					var registerId = response.result;
 					
-					alert("success" + message + registerId);
+					alert("success"  + registerId);
 					document.getElementById("usermessage").html = message;
 					// document.getElementById("logoPanel").style.display
 					// = "block";
