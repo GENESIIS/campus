@@ -1,8 +1,9 @@
 package com.genesiis.campus.entity;
 
 //20161129 JH c39-add-course-provider OneOffCourseProviderDAO.java DAO class created 
-//20161130 JH c39-add-course-provide add method coding wip
-
+//20161130 JH c39-add-course-provider add method coding wip
+//20161202 JH c39-add-course-provider add method code modified
+ 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,7 +96,7 @@ public class OneOffCourseProviderDAO implements ICrud{
 			preparedStatement.setBoolean(33, true);
 			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setInt(35, courseProvider.getPrincipal());
+			preparedStatement.setInt(36, courseProvider.getPrincipal());
 
 			conn.commit();
 			
