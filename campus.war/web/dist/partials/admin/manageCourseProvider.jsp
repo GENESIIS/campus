@@ -1,6 +1,7 @@
 <!-- 20161121 JH c39-add-course-provider manageCourseProvider.jsp created -->
 <!-- 20161122 JH c39-add-course-provider sample UI page to add course provider details wip -->
 <!-- 20161123 JH c39-add-course-provider UI code modified -->
+<!-- 20161202 JH c39-add-course-provider added missing input fields -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -138,7 +139,14 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="shortName"
-										id="shortName" size="50px;" />
+										id="shortName" size="30px;" />
+								</div>
+								<div class="col-name">
+									<h1 class="pro-name">Unique Prefix:</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="uniquePrefix"
+										id="uniquePrefix" size="30px;" />
 								</div>
 							</li>
 							<!-- end -->
