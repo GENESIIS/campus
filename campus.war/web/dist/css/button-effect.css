@@ -52,14 +52,66 @@
 }
 
 /* Social links - Sign up buttons */
-.btn-fb-sign-up{
-    padding-right: 2.2em;
+.btn-sign-up {
+    padding-right: 16%;
+    height: 60px;
 }
-.btn-fb-sign-up span{
+.btn-sign-up span{
     font-size: 22px;
+    position: relative;
+    float: right;
 }
-.btn-fb-sign-up:before, .btn-fb-sign-up:after{
-    content: "\f09a";
-    left: 1em;
+.btn-sign-up:before, .btn-sign-up:after{
+    left: 65px; !important;
     padding: 0 1px;
+    right: inherit;
 }
+
+/* Facebook */
+.btn-fb{
+    background: rgba(59,89,152,0.9); !important;
+}
+.btn-fb:hover{
+    background: rgba(59,89,152,1);
+}
+.btn-fb:before, .btn-fb:after{
+    content: "\f09a";
+    bottom: -4px;
+}
+
+/* Google plus */
+.btn-gplus{
+    background: rgba(219, 68, 55, 0.9); !important;
+}
+.btn-gplus:hover{
+    background: #db4437;
+}
+.btn-gplus:before, .btn-gplus:after{
+    content: "\f0d5";
+    bottom: 2px;
+}
+
+/* LinkedIn */
+.btn-in{
+    background: rgba(0, 119, 181, 0.9); !important;
+}
+.btn-in:hover{
+    background: #0077b5;
+}
+.btn-in:before, .btn-in:after{
+    content: "\f0e1";
+    bottom: 2px;
+}
+
+/* Twitter */
+.btn-twitter{
+    background: rgba(67, 200, 245, 0.9); !important;
+}
+.btn-twitter:hover{
+    background: #43c8f5;
+}
+.btn-twitter:before, .btn-twitter:after{
+    content: "\f099";
+    bottom: 2px;
+}
+
