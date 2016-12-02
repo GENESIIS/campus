@@ -41,7 +41,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 		int generatedKey = 0;
 		
 		try{
-			HashMap map = new HashMap();
+			HashMap map =  (HashMap)(object);
 			
 			CourseProvider courseProvider = new CourseProvider();
 			CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
@@ -53,6 +53,10 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
+			
+			log.info("dkjfksdfkjds");
+			if(courseProvider.getAddress1() == "" ){
+				
 			
 			/**
 			 * provider query used to insert data into course provider table. 
@@ -104,7 +108,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setString(21, courseProvider.getInstagramURL());
 			preparedStatement.setString(22, courseProvider.getViberNumber());
 			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
-			preparedStatement.setDate(24, courseProvider.getExpirationDate());
+			preparedStatement.setDate(24, sqlDate);
 			preparedStatement.setString(25, courseProvider.getAddress1());
 			preparedStatement.setString(26, courseProvider.getAddress2());
 			preparedStatement.setString(27, courseProvider.getAddress3());
@@ -143,7 +147,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 				
 			status = preparedStatement2.executeUpdate();
 			}
-			
+			}
 			conn.commit();
 			
 			
