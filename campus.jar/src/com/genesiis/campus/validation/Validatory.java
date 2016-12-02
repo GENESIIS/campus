@@ -63,5 +63,18 @@ public interface Validatory {
 	 * @throws Exception
 	 */
 	public boolean isValidPhoneNumber(String number) throws Exception;
-
+	
+	/**
+	 * isStringContainsAlphaNumericAndUnderscore method checks if the 
+	 * parameter string contains alphanumeric and _ combination with 
+	 * minimum length as agreed. there is no restriction for maximum 
+	 * length that could be.
+	 * @param testableString
+	 * @param requiredMinimumLength
+	 * @return boolean if the test passes else false
+	 * @throws Exception
+	 */
+	
+	public boolean isStringContainsAlphaNumericAndUnderscore(String testableString,
+			int requiredMinimumLength) throws Exception;
 }
