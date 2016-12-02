@@ -5,6 +5,8 @@ package com.genesiis.campus.command;
 //20161123 JH c39-add-course-provider execute method coding : retrieve request parameters
 //20161129 JH c39-add-course-provider code refactor due to course provider DAO class rename, handle user messages
 //20161201 JH c39-add-course-provider added application enum to get course provider status
+//20161202 JH c39-add-course-provider fixed null point exception in execute method
+//20161202 JH c39-add-course-provider code refactor to support one-off and featured provider registration
 
 import java.sql.SQLException;
 import java.text.DateFormat;
