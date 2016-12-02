@@ -67,6 +67,8 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
+	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
+		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),"Confirm Password Field","confPassWordError"))){
@@ -181,4 +183,4 @@ function splitPhoneNumber(phoneNumber){
 	 }
 	
 }
-//^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}
+
