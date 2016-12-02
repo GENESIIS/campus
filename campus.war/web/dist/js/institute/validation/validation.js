@@ -11,6 +11,7 @@
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
+ *20161202 DN C18-student-signup-without-using-third-party-application-test-dn add isStringHasValiCharsAndLength() method
  */ 
 
  
@@ -53,10 +54,6 @@ function isFieldFilled(flag, elementName, errorLabelId){
 function isempty(fieldValue) {
 
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
-}
-
-function ignoreWhiteSpace(){
-	
 }
 
 /**
@@ -123,3 +120,24 @@ function validEmailFormat(){
 	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
 	return isPatternMatch(pattern,emailAddress);
 }
+
+/**
+ * method tests if the supply string consists of alpha numeric characters which is
+ * 62 case-sensitive characters (A-Z, a-z and 0-9)and "_" character in such a combination that
+ * the string contains more than 5 characters,starts with an alphabetic contains any combination of 
+ * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc
+ * @author dushantha DN
+ * @param testableInput the sting which is to tested to confirm if it abides the above precondition
+ * @returns boolean : true if conditions are met else false.
+ */
+function isStringHasValiCharsAndLength(testableInput){
+	var validCharAndLength= false;
+	if(testableInput!=""|testableInput!=null){
+		var testableRegularExpression = /^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g;
+		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim()); 
+	}
+	return validCharAndLength;
+}
+
+
+
