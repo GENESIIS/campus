@@ -20,7 +20,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.LIST_CATEGORY_LANDING_PAGE, new CmdListCategoryLandingPage());
 		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());
 		map.put(Operation.ADD_FEATURED_COURSE_PROVIDER, new CmdAddFeaturedProvider());
-		map.put(Operation.ADD_ONE_OFF_COURSE_PROVIDER, new CmdAddOneOffProvider());
+//		map.put(Operation.ADD_ONE_OFF_COURSE_PROVIDER, new CmdAddOneOffProvider());
 
 	}
 
@@ -35,9 +35,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		case LIST_CATEGORY_DATA :
 			command = map.get(o);
 			break;
-		case ADD_ONE_OFF_COURSE_PROVIDER:
-			command = map.get(o);
-			break;
+//		case ADD_ONE_OFF_COURSE_PROVIDER:
+//			command = map.get(o);
+//			break;
 		default:
 			break;
 		}

@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161128 JH c39-add-course-provider add method coding wip
 //20161129 JH c39-add-course-provider add method coding wip
 //20161129 JH c39-add-course-provider CourseProviderDAO class renamed as FeaturedCourseProviderDAO
+//20161202 JH c39-add-course-provider add method modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,9 +55,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
 			
-			log.info("dkjfksdfkjds");
-			if(courseProvider.getAddress1() == "" ){
-				
+			log.info("dkjfksdfkjds");				
 			
 			/**
 			 * provider query used to insert data into course provider table. 
@@ -146,7 +145,6 @@ public class FeaturedCourseProviderDAO implements ICrud{
 				preparedStatement2.setInt(6, generatedKey);
 				
 			status = preparedStatement2.executeUpdate();
-			}
 			}
 			conn.commit();
 			
