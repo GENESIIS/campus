@@ -1,0 +1,117 @@
+
+/* Icon Float Away */
+@-webkit-keyframes hvr-icon-float-away {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateY(-1em);
+        transform: translateY(-1em);
+    }
+}
+@keyframes hvr-icon-float-away {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateY(-1em);
+        transform: translateY(-1em);
+    }
+}
+/* Icon Float Away */
+.hvr-icon-float-away {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    padding-right: 2.2em;
+}
+.hvr-icon-float-away:before, .hvr-icon-float-away:after {
+    content: "\f030";
+    position: absolute;
+    right: 1em;
+    padding: 0 1px;
+    font-family: FontAwesome;
+}
+.hvr-icon-float-away:after {
+    opacity: 0;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+.hvr-icon-float-away:hover:after, .hvr-icon-float-away:focus:after, .hvr-icon-float-away:active:after {
+    -webkit-animation-name: hvr-icon-float-away;
+    animation-name: hvr-icon-float-away;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+}
+
+/* Social links - Sign up buttons */
+.btn-sign-up {
+    padding-right: 16%;
+    height: 60px;
+}
+.btn-sign-up span{
+    font-size: 22px;
+    position: relative;
+    float: right;
+}
+.btn-sign-up:before, .btn-sign-up:after{
+    left: 65px; !important;
+    padding: 0 1px;
+    right: inherit;
+}
+
+/* Facebook */
+.btn-fb{
+    background: rgba(59,89,152,0.9); !important;
+}
+.btn-fb:hover{
+    background: rgba(59,89,152,1);
+}
+.btn-fb:before, .btn-fb:after{
+    content: "\f09a";
+    bottom: -4px;
+}
+
+/* Google plus */
+.btn-gplus{
+    background: rgba(219, 68, 55, 0.9); !important;
+}
+.btn-gplus:hover{
+    background: #db4437;
+}
+.btn-gplus:before, .btn-gplus:after{
+    content: "\f0d5";
+    bottom: 2px;
+}
+
+/* LinkedIn */
+.btn-in{
+    background: rgba(0, 119, 181, 0.9); !important;
+}
+.btn-in:hover{
+    background: #0077b5;
+}
+.btn-in:before, .btn-in:after{
+    content: "\f0e1";
+    bottom: 2px;
+}
+
+/* Twitter */
+.btn-twitter{
+    background: rgba(67, 200, 245, 0.9); !important;
+}
+.btn-twitter:hover{
+    background: #43c8f5;
+}
+.btn-twitter:before, .btn-twitter:after{
+    content: "\f099";
+    bottom: 2px;
+}
+

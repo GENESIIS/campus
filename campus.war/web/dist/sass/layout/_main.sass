@@ -28,12 +28,17 @@ body,html
       position: relative
       width: 100%
 
-      img
+      .slider-mask
+        background: rgba(55, 71, 79, 0.3)
         width: 100%
+        height: 100%
+        position: absolute
+        z-index: 5
 
     .search-area
       display: block
       position: relative
+      z-index: 10
 
       .main-search-bar
         display: block
@@ -42,14 +47,18 @@ body,html
           display: block
           position: relative
           top: -42px
+          width: 80%
+          background: rgba(125, 125, 125, 0.5)
+          padding: 13px
 
           input
-            width: 80%
+            width: 100%
             line-height: 64px
-            border: 12px solid rgba(125,125,125,0.5)
+            border: none
             font-size: 24px
             color: #918a8a
             padding-left: 30px
+            padding-right: 30px
 
       .filter-boxes
         display: block
@@ -414,3 +423,448 @@ body,html
             .fax
               display: block
 
+<<<<<<< HEAD
+=======
+// ------------------ Main categories --------------------------------
+.main-category
+  display: block
+  position: relative
+
+  .inner-header
+    background: #fff
+
+    .category-image
+      display: inline-block
+      img
+        height: 120px
+
+    .category-name
+      display: inline-block
+      position: relative
+
+  .content-holder
+    display: block
+    position: relative
+    width: 98%
+
+    .course-filter-panel
+      width: 67%
+      display: block
+      position: relative
+      float: left
+
+      .filtering-area
+        display: block
+        border-bottom: 5px solid #ededed
+        padding-bottom: 15px
+
+        .top
+          display: block
+          width: 100%
+          height: 20px
+          background: #37474f
+          margin-bottom: 8px
+
+        .bottom
+          display: block
+          width: 100%
+          background: #e98800
+
+          ul > li
+            width: 16.66%
+            text-align: center
+            padding-top: 15px
+            padding-bottom: 15px
+            float: left
+            a
+              color: #fff
+              font-size: 18px
+              font-weight: 500
+              width: 100%
+
+      .filter-result-table
+        display: block
+        position: relative
+
+        .course-info
+          display: block
+          padding-top: 20px
+          padding-bottom: 20px
+          &:nth-child(even)
+            background: rgba(55, 71, 79, 0.07)
+
+          .col-name
+            display: inline-block
+            width: 15.2%
+            float: left
+            border-right: 1px solid #e1e1e1
+
+            .pro-name
+              display: block
+              text-align: center
+              font-family: 'Roboto', sans-serif
+              font-size: 20px
+              color: #193949
+              line-height: 30px
+              font-weight: 600
+
+            .pro-logo
+              display: block
+              text-align: center
+              height: 100px
+              img
+                width: 75px
+                height: 100%
+                padding-top: 8px
+
+          .col-description
+            display: inline-block
+            position: relative
+            width: 46.8%
+            height: 130px
+            float: left
+            text-align: center
+            padding-top: 45px
+            color: #717171
+            font-size: 18px
+            font-family: Oswald
+            border-right: 1px solid #e1e1e1
+
+
+          .col-location
+            display: inline-block
+            width: 20.6%
+            height: 130px
+            float: left
+            text-align: center
+            padding-top: 50px
+            border-right: 1px solid #e1e1e1
+            a
+              color: #4f7dd9
+              font-size: 18px
+
+          .col-duration
+            display: inline-block
+            float: right
+            width: 17.4%
+            text-align: center
+            color: #6b6c6f
+            font-size: 20px
+            padding-top: 36px
+            span
+              font-size: 18px
+              color: #a6a8ab
+              font-family: "Roboto", sans-serif
+              line-height: 35px
+              font-weight: lighter
+
+// ---------- Student Dashboard --------------------
+
+.dashboard
+  background: #edf7ff
+
+.stud-dashboard
+  display: block
+  position: relative
+  margin-right: auto
+  margin-left: auto
+  width: 87%
+
+  .prf-page-header
+    h1
+      line-height: 100px
+      font-family: Calibri
+      font-size: 42px
+      color: #37474f
+
+  .prf-page-container
+    display: block
+
+    .left-side
+      border-top: 6px solid #5d8ee1
+      padding: 0 !important
+
+      .prf-pic-holder
+        display: block
+        margin-top: 15px
+        border-radius: 10px
+        background: #fff
+        padding: 12px
+
+        .prf-image
+          display: block
+
+          img
+            width: 100%
+            position: relative
+            margin-bottom: -50px
+
+          button
+            position: relative
+            bottom: 0
+            width: 100%
+
+        .prf-name
+          font-family: "Roboto", sans-serif
+          text-align: center
+          h2
+            line-height: 55px
+            font-size: 24px
+            color: #2b57a0
+            font-weight: 600
+
+      .short-info-holder
+        display: block
+        margin-top: 20px
+        border-radius: 10px
+        background: #fff
+        padding: 12px
+
+        .tbl-left-info
+          width: 100%
+          font-family: "Roboto", sans-serif
+
+          tr
+            padding-bottom: 25px
+            display: block
+            .cat-icon
+              width: 35px
+              height: 35px
+              float: left
+
+            .field-name
+              p
+                color: #7b8488
+                font-size: 16px
+                line-height: 24px
+
+                span
+                  color: #6a9cf1
+
+                .sp-note
+                  color: #639ee1
+                  font-family: 'Muli', sans-serif
+                  font-size: 15px
+                  line-height: 20px
+
+    .right-side
+      display: block
+      padding-bottom: 30px
+      padding-left: 30px
+
+      .w-about-me
+        background: #fff
+        border-radius: 10px
+        padding: 14px 20px
+
+        .widget-content
+          padding-bottom: 20px
+
+          .tbl-wgt-about
+            tr
+              td
+                padding-top: 25px
+              .td-name
+                font-size: 16px
+                color: #37474f
+                font-family: "Roboto", sans-serif
+                font-weight: 500
+
+              .td-value
+                font-family: "Muli", sans-serif
+                font-size: 16px
+                color: #6f787c
+                padding-left: 30px
+
+      .widgets-e
+        display: block
+
+        .w-experience, .w-education, .w-activity, .w-skills
+          padding: 16px 20px
+          margin-top: 22px
+
+          .widget-content
+            .ul-experience, .ul-education
+              li
+                //list-style: circle
+                font-family: "Roboto", sans-serif
+                font-size: 16px
+                color: #6a9cf1
+                line-height: 20px
+                padding-top: 30px
+                padding-left: 35px
+
+                .drop-at
+                  color: #37474f
+
+                .drop-time
+                  color: #7a7a7a
+                  font-size: 13px
+                  font-family: "Raleway", sans-serif
+                  font-style: italic
+
+            .ul-activity
+              li
+                color: #686e77
+                font-family: "Roboto", sans-serif
+                font-size: 16px
+                line-height: 20px
+                padding-top: 30px
+                padding-left: 35px
+                font-style: italic
+
+                .act-time
+                  color: #7a7a7a
+                  font-size: 13px
+                  font-family: "Raleway", sans-serif
+                  font-style: normal
+
+            .ul-skills
+              li
+                color: #37474f
+                font-family: "Roboto", sans-serif
+                font-size: 16px
+                line-height: 20px
+                padding-top: 20px
+                padding-left: 35px
+
+                .progress
+                  height: 14px
+                  margin-top: 10px
+                  margin-bottom: 15px
+
+
+// Sign-up Screen
+.sign-up-screen
+  display: block
+  position: relative
+  margin-right: auto
+  margin-left: auto
+  width: 87%
+
+  .page-inner-header
+    h1
+      //line-height: 100px
+      padding-top: 30px
+      font-family: Calibri
+      font-size: 42px
+      color: #37474f
+
+    h2
+      color: #6a9cf1
+      font-size: 20px
+      line-height: 52px
+      padding-left: 6px
+
+  .page-content
+    .input-panel
+      float: left
+      position: relative
+      padding-top: 25px
+      padding-bottom: 150px
+
+      .gender-field
+        padding-left: 0
+        float: none
+
+      .input-field
+        padding-top: 35px
+        padding-right: 18%
+
+        label
+          font-family: "Roboto", sans-serif
+          font-size: 18px
+          color: #677d88
+          line-height: 35px
+          padding-right: 50px
+
+        .lbl-gender
+          padding-left: 0
+
+        .text-field
+          height: 40px
+          border: 2px solid #ccdae8
+          width: 100%
+          color: #626e83
+          font-family: "Muli", sans-serif
+          font-size: 20px
+          font-weight: 600
+          padding-left: 15px
+
+        select
+          height: 40px
+          border: 2px solid #ccdae8
+          width: 100%
+          font-size: 17px
+          color: #728994
+
+        .btn-radio
+          width: 18px
+          height: 18px
+          position: relative
+          left: -3px
+          top: 2px
+          margin-right: 12px
+
+        .btn-create
+          background: #3289d9
+          padding: 14px 50px
+          border: none
+          color: #fff
+          font-weight: 500
+          font-size: 18px
+
+        span
+          line-height: 35px
+          font-size: 17px
+          color: #728994
+          font-weight: 500
+
+        .check-box
+          float: left
+          top: -7px
+          position: relative
+
+          input
+            width: 15px
+            height: 15px
+
+        .show-pwrd
+          margin-top: 10px
+          font-size: 14px
+          color: #728994
+          line-height: 19px
+          span
+            margin-right: 8px
+
+        p
+          padding-left: 25px
+          color: #728994
+          line-height: 20px
+
+
+    .social-link-panel
+      float: right
+      position: relative
+      padding-top: 20%
+
+      .lbl-or
+        display: block
+        position: absolute
+        top: 70%
+        left: -5%
+
+        label
+          color: #567798
+          font-size: 48px
+          font-family: "Open Sans"
+
+      .signup-btn
+        padding-left: 18%
+        margin-top: 65px
+
+        button
+          width: 100%
+
+
+>>>>>>> origin/c18-ui-student-signup-without-using-third-party-application-MP-tr
