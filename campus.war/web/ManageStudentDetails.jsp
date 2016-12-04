@@ -2,6 +2,7 @@
 <!-- 20161126 PN c26-add-student-details: design error span and alert box. -->
 <!-- 20161128 PN c26-add-student-details: design Professional Experience pop up form. -->
 <!-- 20161129 PN c26-add-student-details: added onchange event for date range validations. -->
+<!-- 20161203 PN c26-add-student-details: modified Personal Details model UI elements ids, onClick event. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -82,11 +83,11 @@
 
 <!-- Button trigger School Education modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSkillDetailsModal">
-  Professional Experience
+  Student Skill
 </button>
 
 
-<!-- School Education -->
+<!-- Personal Details-->
 <div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -100,65 +101,94 @@
       <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
       		<h2>Personal Details</h2>
       		<div class="well">
-      		First Name <input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		First Name <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')">
+			<span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			
-      		Middle Name <input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		Middle Name <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')">
+			<span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			
-      		Last Name <input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')">
+			<span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
       
-      		Birth Date <input type="date" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')">
+			<span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
 			
-			About <textarea type="text" name="" id="" onclick=""></textarea>
-			<span id="" name="" style="color:red"></span><br>
+			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')"></textarea>
+			<span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			
 			</div>
 			<br>
 			
 			<h2>Contact Details</h2>
 			<div class="well">
-      		
-      		Mobile Number<input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
 			
-			Home Number <input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
-			
-      		Other Number <input type="text" name="" id="" onkeypress="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
-      
-      		Address<input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
-			
-			Town
-			 <input type="text" id="" name="" list="" placeholder="-- Select Town --"/>
-			 	<datalist name="" id="">
+			Country
+			<input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --"/>
+			 	<datalist name="sCountryList" id="sCountryList">
 			 	</datalist>
 			<br/>
+			
+			Town
+			 <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
+			 	<datalist name="sTownList" id="sTownList">
+			 	</datalist>
+			<br/>
+			<span id="sTownError" name="sTownError" style="color:red"></span><br>			
+			
+			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')">
+			<span id="sAddressError" name="sAddressError" style="color:red"></span><br>
+			
+			Mobile Number
+      		<div class="input-group">
+      		<span class="input-group-addon" id="countryCodePrefix">@</span>
+      		<input type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="" onclick="clearField('sMobileNumberError')">
+			</div>
+			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
+			
+			Home Number 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">@</span>
+			<input type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="" onclick="clearField('sHomeNumberError')">
+			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
+			</div>
+			
+<!-- 			<div class="input-group"> -->
+<!-- 			<span class="input-group-addon" id="countryCodePrefix">@</span> -->
+<!--       		Other Number <input type="text" name="sOtherNumber" id="sOtherNumber" onkeypress="" onclick="clearField('sOtherNumberError')"> -->
+<!-- 			<span id="sOtherNumberError" name="sOtherNumberError" style="color:red"></span><br> -->
+<!--       		</div> -->
+      		  		
+			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')">
+			<span id="sEmailError" name="sEmailError" style="color:red"></span><br>
       
-      		Facebook URL <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		Facebook URL <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')">
+			<span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
       
-      		twitter URL <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+      		twitter URL <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')">
+			<span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
 			
-			LinkedIn URL <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+			LinkedIn URL <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')">
+			<span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
 			
-			Instergram URL <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+			Instergram URL <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')">
+			<span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
 			
-			mySpace <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+			mySpace <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')">
+			<span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
 			
-			WhatsApp <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+			WhatsApp 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">@</span>
+			<input type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')">
+			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
+			</div>
 			
-			Viber <input type="text" name="" id="" onclick="">
-			<span id="" name="" style="color:red"></span><br>
+			Viber 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">@</span>
+			<input type="text" name="sViber" id="sViber" onclick="clearField('sViberError')">
+			<span id="sViberError" name="sViberError" style="color:red"></span><br>
+			</div>
 			
 			</div>
 			<br>			
