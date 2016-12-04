@@ -7,6 +7,7 @@
  * 			PN c26-add-student-details: professional details form dropdown details populate using db values.
  *			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
  * 20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
+ * 20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
  */
 
 $(document).ready(function() {
@@ -118,6 +119,50 @@ function getStudentData(response) {
         	$('#sseDescription').val(data[9]);       	
         });
     }
+	
+	// Set Qualification details
+ 	var sCountry = $("#sCountry");
+ 	sCountry.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(sCountry);
+	$.each(response.country2Collection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(sCountry);
+	});
+	
+	// Set Country details
+ 	var sCountryList = $("#sCountryList");
+ 	sCountryList.find('option').remove();
+ //	$('<option>').val("").text("--Select One--").appendTo(sseCountry);
+	$.each(response.country2Collection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+	//	$('<option>').val(y).text(x).appendTo(sCountryList);
+		$('#sCountryList').append("<option data-value='" + x + "'>"+y+"</option>");
+	});
+	
+	$("#sCountry").on('input', function () {
+	    var val = this.value;
+        var dValue = $('#sCountryList option').filter(function() {
+            return this.value === val;
+        }).data('value');
+        	var msg = dValue;
+        	if(msg){
+        		alert(msg);
+        		$("span[class='input-group-addon']").text("+("+msg+")");
+        	}
+	});
+	
+	$("input[class='phoneNum']").on('input propertychange paste', function (e) {
+	    var reg = /^0+/gi;
+	    if (this.value.match(reg)) {
+	        this.value = this.value.replace(reg, '');
+	    }
+	});
 }
 
 // Get data and sent to CmdAddSchoolEducationData.java.
@@ -289,6 +334,63 @@ function addProfessionalExpForm() {
 	
 }
 }
+
+
+function addStudentPersonalDetails(){
+	var firstName = $('#sFullName').val();
+	var middleName = $('#sMiddleName').val();
+	var lastName = $('#sLastName').val();
+	var dateOfBirth = $('#sBirthDate').val();
+	var description = $('#sAboutMe').val();
+	var mobilePhoneNo = $('#sMobileNumber').val();
+	var landPhoneNo = $('#sHomeNumber').val();
+	var address1 = $('#sAddress').val();
+	var town = $('#sTown').val();
+	var email = $('#sEmail').val();
+	var facebookUrl = $('#sFacebookUrl').val();
+	var twitterUrl = $('#stwitterUrl').val();
+	var linkedInUrl = $('#sLinkedInUrl').val();
+	var instagramUrl = $('#sInstergramUrl').val();
+	var mySpaceUrl = $('#smySpace').val();
+	var whatsAppNumber = $('#sWhatsApp').val();
+	var viberNumber = $('#sViber').val();
+	
+	$('#countryCodePrefix').text();
+	$('#sCountry').val();
+}
+
+function validateStudentPersonalDetails(){
+	isDropdownSelected(isemptyDropdown(("sFullName")),"Full Name","sFullNameError");
+	isDropdownSelected(isemptyDropdown(("sMiddleName")),"Middle Name","sMiddleNameError");
+	isDropdownSelected(isemptyDropdown(("sLastName")),"Last Name","sLastNameError");
+	isDropdownSelected(isemptyDropdown(("sBirthDate")),"Birth Date","sBirthDateError");
+	
+}
+
+function clearPersonalDetailsForm(){
+	$('#sFullName').val("");
+	$('#sMiddleName').val("");
+	$('#sLastName').val("");
+	$('#sBirthDate').val("");
+	$('#sAboutMe').val("");
+	$('#sCountry').val("");
+	$('#sTown').val("");
+	$('#sAddress').val("");
+	$('#countryCodePrefix').text("");
+	$('#sMobileNumber').val("");
+	$('#sHomeNumber').val("");
+	$('#sOtherNumber').val("");
+	$('#sEmail').val("");
+	$('#sFacebookUrl').val("");
+	$('#stwitterUrl').val("");
+	$('#sLinkedInUrl').val("");
+	$('#sInstergramUrl').val("");
+	$('#smySpace').val("");
+	$('#sWhatsApp').val("");
+	$('#sViber').val("");
+	$("#studentPersonalStatus").hide();
+}
+
 
 /**
  * All the required functions for Professional Education. 
