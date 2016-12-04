@@ -140,20 +140,20 @@
 			
 			Mobile Number
       		<div class="input-group">
-      		<span class="input-group-addon" id="countryCodePrefix">@</span>
-      		<input type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="" onclick="clearField('sMobileNumberError')">
+      		<span class="input-group-addon" id="countryCodePrefix">+</span>
+      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="" onclick="clearField('sMobileNumberError')">
 			</div>
 			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
 			
 			Home Number 
 			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">@</span>
-			<input type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="" onclick="clearField('sHomeNumberError')">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="" onclick="clearField('sHomeNumberError')">
 			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
 			</div>
 			
 <!-- 			<div class="input-group"> -->
-<!-- 			<span class="input-group-addon" id="countryCodePrefix">@</span> -->
+<!-- 			<span class="input-group-addon" id="countryCodePrefix">+</span> -->
 <!--       		Other Number <input type="text" name="sOtherNumber" id="sOtherNumber" onkeypress="" onclick="clearField('sOtherNumberError')"> -->
 <!-- 			<span id="sOtherNumberError" name="sOtherNumberError" style="color:red"></span><br> -->
 <!--       		</div> -->
@@ -178,15 +178,15 @@
 			
 			WhatsApp 
 			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">@</span>
-			<input type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')">
 			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
 			</div>
 			
 			Viber 
 			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">@</span>
-			<input type="text" name="sViber" id="sViber" onclick="clearField('sViberError')">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')">
 			<span id="sViberError" name="sViberError" style="color:red"></span><br>
 			</div>
 			
