@@ -10,9 +10,10 @@
  * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
- *20161125 PN (c26-add-student-details: implemented isNumber(evt) method.
+ *20161125 PN c26-add-student-details: implemented isNumber(evt) method.
  *20161126 PN c26-add-student-details: implemented isDropdownSelected(), isemptyDropdown() and getSelectedData() method.
- *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range
+ *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range 
+ *20161203 PN c26-add-student-details: implemented isLetter(evt) method.
  */ 
 
  
@@ -244,5 +245,18 @@ function checkDateRange(start, end, startDateErrLabelId, endDateErrLabelId) {
 //		return false;
 //	}
 	return true;
+}
+
+/**
+ * This method allows to type letters only on text field
+ * @param evt
+ * @returns
+ */
+function isLetter(evt) {
+	var inputValue = evt.charCode;
+	if (!(inputValue >= 65 && inputValue <= 122)
+			&& (inputValue != 32 && inputValue != 0)) {
+		evt.preventDefault();
+	}
 }
 
