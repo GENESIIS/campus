@@ -32,12 +32,12 @@ public class TutorDAO implements ICrud {
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
-				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, IMAGEPATH, "
+				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, "
 				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
 				+ ",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,"
 				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
 				+ ",CRTON,CRTBY,MODON, MODBY ) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		
@@ -53,32 +53,32 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
 			preparedStatement.setString(7, tutor.getEmailAddress());
-			preparedStatement.setString(8, tutor.getImagePath());
-			preparedStatement.setString(9, tutor.getLandCountryCode());
-			preparedStatement.setString(10, tutor.getLandAreaCode());
-			preparedStatement.setString(11, tutor.getLandNumber());
-			preparedStatement.setString(12, tutor.getMobileCountryCode());
-			preparedStatement.setString(13, tutor.getMobileNetworkCode());
-			preparedStatement.setString(14, tutor.getMobileNumber());
-			preparedStatement.setString(15, tutor.getDescription());
-			preparedStatement.setString(16, tutor.getExperience());
-			preparedStatement.setString(17, tutor.getWebLink());
-			preparedStatement.setString(18, tutor.getFacebookLink());
-			preparedStatement.setString(19, tutor.getTwitterNumber());
-			preparedStatement.setString(20, tutor.getMySpaceId()); 
-			preparedStatement.setString(21, tutor.getLinkedInLink());
-			preparedStatement.setString(22, tutor.getInstagramId());
-			preparedStatement.setString(23, tutor.getViber());
-			preparedStatement.setString(24, tutor.getWhatsAppId());
-			preparedStatement.setInt(25, ApplicationStatus.ACTIVE.getStatusValue());
-			preparedStatement.setInt(26, tutor.getIsApproved());
-			preparedStatement.setString(27, tutor.getAddressLine1());
-			preparedStatement.setString(28, tutor.getAddressLine2());
-			preparedStatement.setString(29, tutor.getAddressLine3());
-			preparedStatement.setString(30, tutor.getTown());
-			preparedStatement.setInt(31, tutor.getUsertype());
+			//preparedStatement.setString(8, tutor.getImagePath());
+			preparedStatement.setString(8, tutor.getLandCountryCode());
+			preparedStatement.setString(9, tutor.getLandAreaCode());
+			preparedStatement.setString(10, tutor.getLandNumber());
+			preparedStatement.setString(11, tutor.getMobileCountryCode());
+			preparedStatement.setString(12, tutor.getMobileNetworkCode());
+			preparedStatement.setString(13, tutor.getMobileNumber());
+			preparedStatement.setString(14, tutor.getDescription());
+			preparedStatement.setString(15, tutor.getExperience());
+			preparedStatement.setString(16, tutor.getWebLink());
+			preparedStatement.setString(17, tutor.getFacebookLink());
+			preparedStatement.setString(18, tutor.getTwitterNumber());
+			preparedStatement.setString(19, tutor.getMySpaceId()); 
+			preparedStatement.setString(20, tutor.getLinkedInLink());
+			preparedStatement.setString(21, tutor.getInstagramId());
+			preparedStatement.setString(22, tutor.getViber());
+			preparedStatement.setString(23, tutor.getWhatsAppId());
+			preparedStatement.setInt(24, ApplicationStatus.ACTIVE.getStatusValue());
+			preparedStatement.setInt(25, tutor.getIsApproved());
+			preparedStatement.setString(26, tutor.getAddressLine1());
+			preparedStatement.setString(27, tutor.getAddressLine2());
+			preparedStatement.setString(28, tutor.getAddressLine3());
+			preparedStatement.setString(29, tutor.getTown());
+			preparedStatement.setInt(30, tutor.getUsertype());
+			preparedStatement.setString(31, "chathuri");
 			preparedStatement.setString(32, "chathuri");
-			preparedStatement.setString(33, "chathuri");
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {

@@ -53,7 +53,7 @@ public class CmdAddTutorProfile implements ICommand {
 	private String whatsApp;
 	private String viber;
 	private String email;
-	private String imagePath;
+	//private String imagePath;
 	private String username;
 	private String password;
 	private String town;
@@ -100,7 +100,7 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setAddressLine1(addressLine1);
 				tutor.setAddressLine2(addressLine2);
 				tutor.setAddressLine3(addressLine3);
-				tutor.setImagePath("-");
+				//tutor.setImagePath("-");
 				tutor.setTown(town);
 				
 				UserTypeDAO typeOfUser = new UserTypeDAO();

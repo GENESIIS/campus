@@ -8,7 +8,7 @@
 </head>
 <body>
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
-	<form action="TutorController" method="post"
+	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
 		<table align="center">
 			<tr>
