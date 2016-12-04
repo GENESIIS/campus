@@ -63,7 +63,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#pathway').val()),"Pathway Field","pathwayError"))) {
+	} else if (!(isFieldFilled(isempty($('#town:selected').text()),"Pathway Field","pathwayError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
@@ -98,7 +98,7 @@ function createJasonObject(){
 			"mobilePhoneNo":mobilePhoneNumber,
 			"mobileCountryCode":mobilePhoneCountryCode,
 			"mobileNetworkCode":mobilePhoneNetWorkCode,
-			"pathway"	:$('#pathway').val(),
+			"pathway"	:$('#town:selected').text(),//changed check forcorrectness 
 			"userName"	:$('#userName').val(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
