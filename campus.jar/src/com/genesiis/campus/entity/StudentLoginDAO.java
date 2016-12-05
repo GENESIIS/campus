@@ -94,8 +94,8 @@ public class StudentLoginDAO implements ICrud {
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, IMAGEPATH, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
 			log.info(student.getEmail() + "" + student.getPassword());
-		//	Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword().trim());
-		//	encryptPassword = passwordEncryptor.encryptSensitiveDataToString();
+			Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword().trim());
+			encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 			log.info(encryptPassword);
 
 			conn = ConnectionManager.getConnection();
@@ -237,11 +237,11 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoggedOutTime); // 24
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
 
-					Encryptable passwordEncryptor = new TripleDesEncryptor();
-					encryptPassword = passwordEncryptor.decryptSensitiveDataToString(encryptedPasswordDb);
+			//		Encryptable passwordEncryptor = new TripleDesEncryptor();
+			//		encryptPassword = passwordEncryptor.decryptSensitiveDataToString(encryptedPasswordDb);
 				
 				
-				if(encryptPassword.equals(student.getPassword())){
+				if(encryptPassword.equals(encryptedPasswordDb)){
 					log.info("password match  :D");
 				}else{
 					
