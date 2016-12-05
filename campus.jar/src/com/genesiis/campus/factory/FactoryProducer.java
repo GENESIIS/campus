@@ -1,6 +1,7 @@
 package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
+//20161205 DJ  c51-report-courses-by-course-provider-MP-dj initiate the ReportController factory
 
 import org.apache.log4j.Logger;
 
@@ -25,6 +26,10 @@ public class FactoryProducer {
 		if (choice.equalsIgnoreCase("/PublicController")) {
 			return new PublicCmdFactory();
 
+		} 
+		if (choice.equalsIgnoreCase("/ReportController")) {
+			return new ReportCmdFactory();
+			
 		} 
 
 		return null;
