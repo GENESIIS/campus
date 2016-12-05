@@ -119,7 +119,8 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setBoolean(33, true);
 			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setString(36, "admin");
+			preparedStatement.setString(36, courseProvider.getCrtBy());
+			preparedStatement.setString(37, courseProvider.getModBy());
 
 			
 			preparedStatement2 = conn.prepareStatement(account);
