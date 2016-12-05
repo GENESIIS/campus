@@ -67,7 +67,7 @@ public class CourseProviderDAO implements ICrud{
 				singleEmployeeList.add(rs.getString("NAME"));
 				singleEmployeeList.add(rs.getString("CODE"));
 				final Collection<String> singleEmployeeCollection = singleEmployeeList;
-				InquiryEmail.add(singleEmployeeCollection);
+				inquiryEmail.add(singleEmployeeCollection);
 
 			}
 		} catch (SQLException SQLexception) {
@@ -87,7 +87,7 @@ public class CourseProviderDAO implements ICrud{
 			
 
 		}
-		return InquiryEmail;
+		return inquiryEmail;
 	}
 
 	@Override
