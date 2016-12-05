@@ -3,7 +3,7 @@
 <!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn tool tip information for mobile number introduced -->
 <!-- 20161201 DN C18-student-signup-without-using-third-party-application-dn add a tool tip to mobile number field -->
 <!-- 20161204 DN C18-student-signup-without-using-third-party-application-dn integrated with GUI complete 60% -->
-
+<!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -193,13 +193,20 @@
 		</script>
             <!-- End phone -->
 
+		 <div class="input-field">
+		         <label>Country :</label><label id="countryError" style="color:#C70039;"></label><br><br>
+		         <input list="countryList" class="text-field" type="text" placeholder="-- Select City --" onclick="clearField('countryError')" >
+		          <datalist id="countryList" name="countryist">
+		          </datalist>
+		         </div>
+            <!-- End Country -->
             <div class="input-field">
-                <label>Town :</label><label id="pathwayError" style="color:#C70039;"></label><br><br>
-                <input list="town" class="text-field" type="text" >
-                <datalist id="town">
-                    <option >- Select Your Town -</option>
-                    <option >Kurunegala</option>
-                    <option >Kandy</option>
+                <label>Town :</label><label id="townError" style="color:#C70039;"></label><br><br>
+                <input list="townList" class="text-field" type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
+                <datalist id="townList" name="townList">
+<!--                     <option >- Select Your Town -</option> -->
+<!--                     <option >Kurunegala</option> -->
+<!--                     <option >Kandy</option> -->
                 </datalist>
             </div>
             <!-- End Town -->
