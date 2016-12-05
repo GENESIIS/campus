@@ -76,7 +76,7 @@ public class OneOffCourseProviderDAO implements ICrud{
 			preparedStatement.setString(13, courseProvider.getMobilePhoneNetworkCode());
 			preparedStatement.setString(14, courseProvider.getMobilePhoneNumber());
 			preparedStatement.setString(15, courseProvider.getSpeciality());
-			preparedStatement.setString(17, courseProvider.getWeblink());
+			preparedStatement.setString(16, courseProvider.getWeblink());
 			preparedStatement.setString(17, courseProvider.getFacebookURL());
 			preparedStatement.setString(18, courseProvider.getTwitterURL());
 			preparedStatement.setString(19, courseProvider.getMyspaceURL());
@@ -96,7 +96,7 @@ public class OneOffCourseProviderDAO implements ICrud{
 			preparedStatement.setBoolean(33, true);
 			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setInt(36, courseProvider.getPrincipal());
+			preparedStatement.setInt(36, courseProvider.getTutor());
 
 			conn.commit();
 			

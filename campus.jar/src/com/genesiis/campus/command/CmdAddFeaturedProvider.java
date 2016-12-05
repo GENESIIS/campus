@@ -111,6 +111,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 			courseProvider.setAdminAllowed(true);
 			courseProvider.setCourseProviderStatus(pStatus);
+			courseProvider.setCrtBy("admin");
+			courseProvider.setModBy("admin");
 
 			
 			HashMap map = new HashMap();
