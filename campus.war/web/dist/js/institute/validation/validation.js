@@ -14,6 +14,7 @@
  *20161126 PN c26-add-student-details: implemented isDropdownSelected(), isemptyDropdown() and getSelectedData() method.
  *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range 
  *20161203 PN c26-add-student-details: implemented isLetter(evt) method.
+ *20161205 PN c26-add-student-details: implemented isPastfromNow(day, errorLabel).
  */ 
 
  
@@ -260,3 +261,19 @@ function isLetter(evt) {
 	}
 }
 
+/**
+ * This method validate given birthday is a past date
+ * @param day
+ * @param errorLabel
+ * @returns
+ */
+function isPastfromNow(day, errorLabel){
+	var selectedDate = Date.parse(document.getElementById(day).value);
+	var now = new Date();
+	now.setHours(0,0,0,0);
+	if (!(selectedDate < now)) {
+		document.getElementById(errorLabel).innerHTML = "The birth date must come before today's date.";
+		return false;
+	}
+	else true;
+}
