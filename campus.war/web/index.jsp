@@ -21,7 +21,7 @@
 <!-- custom javascript -->
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 </head>
-<body onload="getCategoryData()">
+<body>
 
 	<!-- Header-->
 	<header>
