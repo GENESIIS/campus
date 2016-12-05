@@ -6,6 +6,8 @@
 //20161128 MM c2-integrate-google-banners Renamed class to BannerDAO, incorporated
 //				ISACTIVE of PAGE table and EXPIRATIONDATE of BANNER table in query.
 //				Also modified code to use ApplicationStatus enum.
+//20161205 MM c2-integrate-google-banners Removed BANNERSTATUS from being considered
+//				when fetching banners to display
 
 package com.genesiis.campus.entity;
 
@@ -85,7 +87,7 @@ public class BannerDAO implements ICrud {
 			query.append("JOIN [campus].[PAGESLOT] ps ");
 			query.append("ON (p.CODE = ps.PAGE AND p.NAME = ? AND p.ISACTIVE = ? AND ps.ISACTIVE = ?) ");// 1, 2, 3
 			query.append("LEFT JOIN [campus].[BANNER] b ");
-			query.append("ON (b.PAGESLOT = ps.CODE AND b.BANNERSTATUS = ? AND b.EXPIRATIONDATE > ?)");// 4, 5
+			query.append("ON (b.PAGESLOT = ps.CODE AND b.ISACTIVE = ? AND b.EXPIRATIONDATE > ?)");// 4, 5
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
