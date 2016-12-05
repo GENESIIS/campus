@@ -9,6 +9,7 @@
  * 20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
  * 20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
  * 20161205 PN c26-add-student-details: validateStudentPersonalDetails() implementation completed.
+ *          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
  */
 
 $(document).ready(function() {
@@ -160,6 +161,18 @@ function getStudentData(response) {
         		$("span[class='input-group-addon']").text("+("+msg+")");
         		$('#sCountryCode').val(msg);
         		getTownDetails(msg);
+        	}
+	});
+	
+	//Set town code to passinto servlet.
+	$("#sTown").on('input', function () {
+	    var val = this.value;
+        var dValue = $('#sTownList option').filter(function() {
+            return this.value === val;
+        }).data('value');
+        	var msg = dValue;
+        	if(msg){
+        		$('#sTownCode').val(msg);
         	}
 	});
 	
@@ -403,7 +416,7 @@ function addStudentPersonalDetails(){
 		var mobilePhoneNo = $('#sMobileNumber').val();
 		var landPhoneNo = $('#sHomeNumber').val();
 		var address1 = $('#sAddress').val();
-		var town = $('#sTown').val();
+		var town = $('#sTownCode').val();
 		var email = $('#sEmail').val();
 		var facebookUrl = $('#sFacebookUrl').val();
 		var twitterUrl = $('#stwitterUrl').val();
@@ -447,19 +460,19 @@ function addStudentPersonalDetails(){
 			dataType : "json",
 			success : function(data) {			
 				alert(data);
-//				if(data.pesaveChangesStatus){	
-//						if(data.pesaveChangesStatus === "Unsuccessful."){
-//							$("#pesaveChangesStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
-//						}else if(data.pesaveChangesStatus === "Invalid Information"){
-//							$("#pesaveChangesStatus").addClass("alert alert-danger").text("Invalid Information.").show();
-//						}
-//					clearProfessionalExpForm();	
-//					$("#pesaveChangesStatus").addClass("alert alert-success").text(data.pesaveChangesStatus).show();
-//				}
+				if(data.studentPersonalStatus){	
+						if(data.studentPersonalStatus === "Unsuccessful."){
+							$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+						}else if(data.studentPersonalStatus === "Invalid Information"){
+							$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+						}
+					clearPersonalDetailsForm();	
+					$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+				}
 			},
 			error : function(e) {
 				alert("Error " + e);
-//				$("#pesaveChangesStatus").addClass("alert alert-warning").text(e).show();
+				$("#studentPersonalStatus").addClass("alert alert-warning").text(e).show();
 			}
 		});
 	}
@@ -511,6 +524,8 @@ function clearPersonalDetailsForm(){
 	$('#smySpace').val("");
 	$('#sWhatsApp').val("");
 	$('#sViber').val("");
+	$('#sTownCode').val("");
+	$('#sCountryCode').val("");
 	$("#studentPersonalStatus").hide();
 }
 
