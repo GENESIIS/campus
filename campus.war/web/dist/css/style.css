@@ -7,7 +7,8 @@
  * 20161118 JH c7-higher-education-landing-page-MP style changes for common header
  * 20161125 JH c7-higher-education-landing-page-MP style changes due to UI changes
  * 20161128 JH c7-higher-education-landing-page-MP removed static loading of course provider slider common image and load image dynamically
- * 20161129 JH c7-hihger-education-landing-page-MP removed .header class from header tag css
+ * 20161129 JH c7-higher-education-landing-page-MP removed .header class from header tag css
+ * 20161205 JH c7-higher-education-landing-page-MP added background colour to slider
  */
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 
@@ -1100,6 +1101,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 
 /**
 * + .carousel .carousel-inner .item
+* + background-color: #2f66c1;
 * - removed background image style
 * c7
 * JH
@@ -1108,6 +1110,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	{
 	height: 290px;
 	/*background: url("/dist/i/higher-education/slider-bg-1.jpg"); */
+	background-color: #2f66c1;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
