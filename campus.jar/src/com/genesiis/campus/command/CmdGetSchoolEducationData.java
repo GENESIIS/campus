@@ -41,7 +41,7 @@ public class CmdGetSchoolEducationData implements ICommand {
 		// This needs to be assign from the session.
 		int StudentCode = 1;
 		
-		SchoolEducationDAO schoolEducationDao = new SchoolEducationDAO();
+		ICrud schoolEducationDao = new SchoolEducationDAO();
 		ICrud majorDao = new MajorDAO();
 		ICrud schoolGradeDao = new SchoolGradeDAO();
 		ICrud mediumDao = new MediumDAO();

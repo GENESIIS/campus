@@ -45,7 +45,7 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 			data.setCrtBy("USER");
 			data.setModBy("USER");
 			
-			// Set incoming data to view collection..
+			// Set incoming data to view collection.
 			expData.add(Integer.toString(data.getIndustry()));
 			expData.add(Integer.toString(data.getJobCategoty()));
 			expData.add(data.getDesignation());

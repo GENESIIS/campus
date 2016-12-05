@@ -393,8 +393,7 @@ function addProfessionalExpForm() {
  * Get data and sent to CmdAddStudentPersonlDetails.java. 
  * @returns
  */
-function addStudentPersonalDetails(){
-	
+function addStudentPersonalDetails(){	
 	if(validateStudentPersonalDetails()){
 		var firstName = $('#sFullName').val();
 		var middleName = $('#sMiddleName').val();
@@ -467,18 +466,19 @@ function addStudentPersonalDetails(){
 }
 
 function validateStudentPersonalDetails(){
-	isDropdownSelected(isemptyDropdown(("sFullName")),"Full Name","sFullNameError");
+	isDropdownSelected(isemptyDropdown(("sFullName")),"First Name","sFullNameError");
 	isDropdownSelected(isemptyDropdown(("sLastName")),"Last Name","sLastNameError");
 	isDropdownSelected(isemptyDropdown(("sMobileNumber")),"Mobile Number","sMobileNumberError");
 	isDropdownSelected(isemptyDropdown(("sTown")),"Town","sTownError");
 	isDropdownSelected(isemptyDropdown(("sCountry")),"Country","sCountryError");
+	isDropdownSelected(isemptyDropdown(("sEmail")),"Email","sEmailError");
 	
 	if($('#sBirthDate').val()){
 		isPastfromNow("sBirthDate", "sBirthDateError");
 	}
 	
 	if(($('#sFullNameError').text() != '')||($('#sLastNameError').text() != '')||($('#sBirthDateError').text() != '')||
-	($('#sTownError').text() != '')||($('#sCountryError').text() != '')){
+	($('#sTownError').text() != '')||($('#sCountryError').text() != '')||($('#sEmailError').text() != '')){
 		if($('#sBirthDate').val()){
 			if($('#sBirthDateError') != ""){
 				return false;
