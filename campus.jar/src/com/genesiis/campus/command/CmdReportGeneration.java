@@ -9,6 +9,7 @@ import java.util.Collection;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
+import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
@@ -40,6 +41,8 @@ public class CmdReportGeneration  implements ICommand{
 				final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();
 				iView.setCollection(providerList);				
 			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_COURSES_BY_COURSE_PROVIDER.getCommandString())){
+				String startDateString = helper.getParameter("startDate");
+				String endDateString = helper.getParameter("endDate");
 				String providerCodeString = helper.getParameter("cProviderCode");
 				int providerCode=0; 
 				if (UtilityHelper.isNotEmpty(providerCodeString)) {
@@ -50,7 +53,9 @@ public class CmdReportGeneration  implements ICommand{
 				if(providerCode>0){
 					//List courses by course Providers
 					//param:cpcode,date range
-					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(providerCode);
+					Programme programme=new Programme();
+					programme.setCourseProvider(providerCode);
+					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					
 					//todo:Test Data
 					final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();

@@ -3,10 +3,22 @@ package com.genesiis.campus.entity;
 //DJ 20161128 c51-report-courses-by-course-provider-MP-dj created ProgrammeDAO.java
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
+import com.genesiis.campus.entity.model.Programme;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.UtilityHelper;
+
+import org.apache.log4j.Logger;
+
 public class ProgrammeDAO implements ICrud {
+	
+	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -26,11 +38,54 @@ public class ProgrammeDAO implements ICrud {
 		return 0;
 	}
 
-	@Override
-	public Collection<Collection<String>> findById(Object code)
+	/**
+	 * Get Programmes 
+	 * @param Programme DTO
+	 * @author DJ
+	 * @return Collection 
+	 */
+	public Collection<Collection<String>> findById(Object programmeDTO)
 			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		PreparedStatement  stmt = null;	
+		ResultSet resultSet =null;
+		final Collection<Collection<String>> programmeList = new ArrayList<Collection<String>>();
+		Programme programme=new Programme();
+		
+		try {
+			if(UtilityHelper.isNotEmptyObject(programmeDTO)){
+				programme = (Programme) programmeDTO;								
+			}else{
+				return programmeList;
+			}
+			conn=ConnectionManager.getConnection();
+			final StringBuilder sb=new StringBuilder( "SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE=?");
+			sb.append(" AND PROG.EXPIRYDATE AND PROG.PROGRAMMESTATUS=?");
+			
+			stmt = conn.prepareStatement(sb.toString());			
+			stmt.setInt(1, programme.getCourseProvider());
+			stmt.setDate(2, programme.getDisplayStartDate());
+			stmt.setDate(3, programme.getExpiryDate());
+			stmt.setInt(4, programme.getProgrammeStatus());
+			resultSet= stmt.executeQuery();
+			while(resultSet.next()){
+				final ArrayList<String> singleProgramme = new ArrayList<String>();
+				singleProgramme.add(resultSet.getString("CPCODE"));				
+				singleProgramme.add(resultSet.getString("UNIQUEPREFIX"));
+				singleProgramme.add(resultSet.getString("LOGOPATH"));
+				programmeList.add(singleProgramme);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return programmeList;
 	}
 
 	@Override

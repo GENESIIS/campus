@@ -66,8 +66,8 @@
 			alert(" searchList");
 			$(this).val();
 			var cpCode= $('#providerlist').val();
-			var startdate= $('#startdate').val();
-			var enddate= $('#enddate').val();			
+			var startDate= $('#startdate').val();
+			var endDate= $('#enddate').val();			
 		
 		
 		$.ajax({
@@ -75,8 +75,8 @@
 			data:{
 				CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
 				cProviderCode:cpCode,
-				startdate:startdate,
-				enddate:enddate			
+				startDate:startDate,
+				endDate:endDate			
 				
 			},
 			datatype:"json",
