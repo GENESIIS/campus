@@ -28,7 +28,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.ajax({
-			url : '../../PublicController',
+			url : '../../ReportController',
 			data : {
 				CCO : 'SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER'
 			},
@@ -60,19 +60,21 @@
 	
 	
 	function loadResultSet(event){
+		
+		
 		$('#searchList').on('click', function(event) {
 			alert(" searchList");
 			$(this).val();
 			var cpCode= $('#providerlist').val();
 			var startdate= $('#startdate').val();
 			var enddate= $('#enddate').val();			
-		});
+		
 		
 		$.ajax({
 			url:'../../PublicController',
 			data:{
 				CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
-				cpCode:cpCode,
+				cProviderCode:cpCode,
 				startdate:startdate,
 				enddate:enddate			
 				
@@ -84,6 +86,8 @@
 			error : function() {
 				alert("error");
 			}
+		});
+		
 		});
 	}
 	
