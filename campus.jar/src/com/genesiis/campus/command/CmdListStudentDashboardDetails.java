@@ -7,7 +7,7 @@ package com.genesiis.campus.command;
 //			details collection fetched and separate professional experience details from it
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.StudentDAO;
+import com.genesiis.campus.entity.StudentDashboardDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
@@ -42,7 +42,7 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 					student.setCode(studentCode);
 					
 					// Get profile information of Student represented by studentCode
-					StudentDAO studentDao = new StudentDAO();
+					StudentDashboardDAO studentDao = new StudentDashboardDAO();
 					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();
 					studentCollection = studentDao.findById(student);	
 					
