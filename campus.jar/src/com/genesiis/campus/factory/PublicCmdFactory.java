@@ -9,7 +9,13 @@ import com.genesiis.campus.validation.Operation;
 
 public class PublicCmdFactory implements ICmdFactory {
 
-	private ICommand command = null;
+	@Override
+	public ICommand getCommand(String command) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*private ICommand command = null;
 	static {
 		map.put(Operation.SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER, new CmdReportGeneration());
 		map.put(Operation.REPORT_COURSES_BY_COURSE_PROVIDER, new CmdReportGeneration());
@@ -31,6 +37,6 @@ public class PublicCmdFactory implements ICmdFactory {
 			break;
 		}
 		return command;
-	}
+	}*/
 
 }

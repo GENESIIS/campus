@@ -33,7 +33,7 @@ public class CmdReportGeneration  implements ICommand{
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
-			String providerCodeString = helper.getParameter("providerCode");
+			String providerCodeString = helper.getParameter("cProviderCode");
 			int providerCode=0; 
 			if (UtilityHelper.isNotEmpty(providerCodeString)) {
 				if (UtilityHelper.isInteger(providerCodeString)) {
