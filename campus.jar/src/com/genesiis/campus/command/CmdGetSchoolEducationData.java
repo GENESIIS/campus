@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 //20161124 PN c26-add-student-details: INIT CmdGetSchoolEducationData.java class.
 //20161125 PN c26-add-student-details: implemented execute() method to load data to student education details
+//20161125 PN c26-add-student-details: modified execute() method to load student personal details.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.entity.MediumDAO;
 import com.genesiis.campus.entity.SchoolEducationDAO;
 import com.genesiis.campus.entity.SchoolGradeDAO;
+import com.genesiis.campus.entity.StudentDAO;
+import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import org.apache.log4j.Logger;
 
@@ -46,6 +49,7 @@ public class CmdGetSchoolEducationData implements ICommand {
 		ICrud schoolGradeDao = new SchoolGradeDAO();
 		ICrud mediumDao = new MediumDAO();
 		ICrud country2Dao = new Country2DAO();
+		ICrud studentDao = new StudentDAO();
 		
 		Collection<Collection<String>> schoolEducationCollection = schoolEducationDao.findById(StudentCode);
 		view.setCollection(schoolEducationCollection);
@@ -61,6 +65,11 @@ public class CmdGetSchoolEducationData implements ICommand {
 
 		Collection<Collection<String>> country2Collection = country2Dao.getAll();
 		helper.setAttribute("country2Collection", country2Collection);
+		
+		Student student = new Student();
+		student.setCode(StudentCode);
+		Collection<Collection<String>> studentCollection = studentDao.findById(student.getCode());
+		helper.setAttribute("studentCollection", studentCollection);
 
 		return view;
 	}
