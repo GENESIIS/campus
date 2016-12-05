@@ -3,7 +3,8 @@
 //20161121 DN C18-student-signup-without-using-third-party-application-dn splitPhoneNumber() method created
 //20161121 DN C18-student-signup-without-using-third-party-application-dn refactor the validateSignUpWoThirdPartyPageEmbedData
 // 		according to CREV comments.
-
+//20161205 DN C18-student-signup-without-using-third-party-application-dn displaySignUpPrerequisitDetails()/
+// getPreRequisitPageData() created
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -11,9 +12,56 @@ theSecondScript.type = "text/javascript";
 theNewScript.src = "../../dist/js/institute/validation/validation.js";
 theSecondScript.src="../../dist/js/jsonDataExchanger.js";
 
+$(document).ready(function() {
+	displaySignUpPrerequisitDetails();
+});
+
+
 var mobilePhoneNumber ="";
 var mobilePhoneCountryCode="";
 var mobilePhoneNetWorkCode="";
+
+/**
+ * displaySignUpPrerequisitDetails() function is meant to pass an ajax 
+ * request to Servlet under the CCO DPRD-Display PreRequisit Data in order to extract
+ * town details from the back end data repository and display on page on load
+ */
+
+function displaySignUpPrerequisitDetails(){
+	$.ajax({
+		url:'../../StudentController',
+		data:{
+			CCO:'DPRD'
+		},
+		dataType: "json",
+		success: function(preRequistData){
+			alert(preRequistData);
+			getPreRequisitPageData(preRequistData);
+			
+		},
+		error: function(preRequistData){
+			alert("Error: "+preRequistData);
+		}
+	});
+	
+}
+
+function getPreRequisitPageData(preRequistData){
+	
+	// Set Country details preRequisteCollnWrapper
+	var countryList = jQuery('#countryList');
+	countryList.find('option').remove();
+	$.each(preRequistData.preRequisteCollnWrapper, function(indexm, value){
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('#countryList').append("<option data-value='" + x + "'>"+y+"</option>");
+	});
+	
+	// if any other logics to be followed
+}
+
 
 /**
  * method validates if the user inputs are correct and according to agreed
@@ -26,7 +74,6 @@ function sendSignUpCredentialsToBckEnd() {
 	var postaSessation = false;
 	if (validateSignUpWoThirdPartyPageEmbedData()) {
 		var jsonDataObject = createJasonObject();
-		
 		
 				jsonDataExchange(
 						jsonDataObject,
