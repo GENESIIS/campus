@@ -6,7 +6,7 @@ package com.genesiis.campus.validation;
 //20161031 CM c9-make-inquiry-for-institute Modified validateInquiry() methods
 //20161031 CM c9-make-inquiry-for-institute Renamed validateInquiry() methods as validateInstituteInquiry() method
 //20161126 PN c26-add-student-details: copied Validator.java class from c9 branch and implemented validateSchoolEduData(SchoolEducation education) method. 
-//20161126 PN c26-add-student-details: implemented validaProfExpData(ProfessionalExperience data) method.
+//20161205 PN c26-add-student-details: implemented validaProfExpData(ProfessionalExperience data) method.
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -140,7 +140,7 @@ public class Validator {
 		errors.put("Last Name", isNotEmpty(data.getLastName()));
 		errors.put("Mobile Number", isNotEmpty(data.getMobilePhoneNo()));
 		errors.put("Town", isNotEmpty(data.getTown()));
-		errors.put("Email,isNotEmpty(data.getFirstName()) )
+		errors.put("Email",isNotEmpty(data.getFirstName()));
 		return errors;
 	}
 }
