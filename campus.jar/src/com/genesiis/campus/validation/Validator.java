@@ -140,6 +140,7 @@ public class Validator {
 		errors.put("Last Name", isNotEmpty(data.getLastName()));
 		errors.put("Mobile Number", isNotEmpty(data.getMobilePhoneNo()));
 		errors.put("Town", isNotEmpty(data.getTown()));
+		errors.put("Email,isNotEmpty(data.getFirstName()) )
 		return errors;
 	}
 }
