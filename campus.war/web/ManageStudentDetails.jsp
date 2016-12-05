@@ -142,6 +142,7 @@
 			 	<datalist name="sTownList" id="sTownList">
 			 	</datalist>
 			<br/>
+			<input hidden type="text" id="sTownCode" name="sTownCode"/>
 			<span id="sTownError" name="sTownError" style="color:red"></span><br>			
 			
 			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')">
@@ -150,14 +151,14 @@
 			Mobile Number
       		<div class="input-group">
       		<span class="input-group-addon" id="countryCodePrefix">+</span>
-      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')">
+      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
 			</div>
 			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
 			
 			Home Number 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')">
+			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
 			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
 			</div>
 			
@@ -188,14 +189,14 @@
 			WhatsApp 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)">
+			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
 			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
 			</div>
 			
 			Viber 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)">
+			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
 			<span id="sViberError" name="sViberError" style="color:red"></span><br>
 			</div>
 			
