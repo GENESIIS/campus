@@ -6,14 +6,14 @@ package com.genesiis.campus.validation;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161109 DN c10-contacting-us-MP change the path of ContactUs.jsp page
 //20161123 DN C18-student-signup-without-using-third-party-application-dn add SIGN_UP_WO_THRD_PARTY enum
-
+// 20161205 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_PREREQUISITE_DATA enume added
 /**
  * Operation class facilitate in binding the CCO
  * 
  */
 public enum Operation {
 
-
+	
 	CONTACT_US_PUBLC("FBTSA",ResponseType.JSP, "dist/partials/contactUs.jsp"),
 	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSP, "index.jsp"),
 	SIGN_UP_WO_THRD_PARTY("SIWOTP",ResponseType.JSON,""),
@@ -23,6 +23,7 @@ public enum Operation {
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"),
+	DISPLAY_PREREQUISITE_DATA("DPRD", ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
 			
 	private final String commandString;
