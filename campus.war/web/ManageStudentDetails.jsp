@@ -3,6 +3,7 @@
 <!-- 20161128 PN c26-add-student-details: design Professional Experience pop up form. -->
 <!-- 20161129 PN c26-add-student-details: added onchange event for date range validations. -->
 <!-- 20161203 PN c26-add-student-details: modified Personal Details model UI elements ids, onClick event. -->
+<!-- 20161205 PN c26-add-student-details: completed front end validations for Student personal details form. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -110,8 +111,14 @@
       		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')">
 			<span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
       
-      		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')">
+      		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
 			<span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
+			
+			Gender
+			<div class="input-group">
+			<input type="radio" name="gender" value="1"> Male 
+  			<input type="radio" name="gender" value="0"> Female<br>
+  			</div>
 			
 			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')"></textarea>
 			<span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
@@ -123,10 +130,12 @@
 			<div class="well">
 			
 			Country
-			<input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --"/>
+			<input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
 			 	<datalist name="sCountryList" id="sCountryList">
 			 	</datalist>
 			<br/>
+			<input hidden type="text" id="sCountryCode" name="sCountryCode"/>
+			<span id="sCountryError" name="sCountryError" style="color:red"></span><br>
 			
 			Town
 			 <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
@@ -141,14 +150,14 @@
 			Mobile Number
       		<div class="input-group">
       		<span class="input-group-addon" id="countryCodePrefix">+</span>
-      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="" onclick="clearField('sMobileNumberError')">
+      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')">
 			</div>
 			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
 			
 			Home Number 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="" onclick="clearField('sHomeNumberError')">
+			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')">
 			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
 			</div>
 			
@@ -179,14 +188,14 @@
 			WhatsApp 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')">
+			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)">
 			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
 			</div>
 			
 			Viber 
 			<div class="input-group">
 			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')">
+			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)">
 			<span id="sViberError" name="sViberError" style="color:red"></span><br>
 			</div>
 			
@@ -196,7 +205,7 @@
       <div class="modal-footer">    
       	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="">Save changes</button>
+        <button type="button" class="btn btn-primary" id="" name="" onclick="addStudentPersonalDetails()">Save changes</button>
       </div>
     </div>
   </div>
