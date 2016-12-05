@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.entity.model.SchoolEducation;
+import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
@@ -123,6 +124,22 @@ public class Validator {
 		errors.put("Completion on date", isNotEmpty(String.valueOf(data.getCompletionOn())));
 		errors.put("Industry of the Organization", isNotEmpty(data.getOrganization()));
 		errors.put("Job Category", isNotEmpty(Integer.toString(data.getJobCategoty())));
+		return errors;
+	}
+
+	/**
+	 * This method is to validate Personal details form of a student.
+	 * 
+	 * @author pabodha
+	 * @param data : object of Student
+	 * @return Map<String, Boolean>
+	 */
+	public static Map<String, Boolean> validaPersonalData(Student data) {
+		Map<String, Boolean> errors = new HashMap<>();
+		errors.put("First Name", isNotEmpty(data.getFirstName()));
+		errors.put("Last Name", isNotEmpty(data.getLastName()));
+		errors.put("Mobile Number", isNotEmpty(data.getMobilePhoneNo()));
+		errors.put("Town", isNotEmpty(data.getTown()));
 		return errors;
 	}
 }
