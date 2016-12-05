@@ -10,6 +10,7 @@
 <!-- 20161128 JH c7-higher-education-landing-page-MP QA improvement: load course provider common image using system config  -->
 <!-- 20161129 JH c7-higher-education-lanidng-page-MP QA improvement: remove header and footer tags, move script tags to the bottom of the code -->
 <!-- 20161205 JH c7-higher-education-lanidng-page-MP QA improvement: load default logo image for provider -->
+<!-- 20161205 JH c7-higher-education-lanidng-page-MP QA improvement: load default colour for slider background -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -150,26 +151,19 @@
 												<div class="item active">
 													<div class="institute-info clearfix">
 														<div class="inst-logo">
-
 															<img
 																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
-																alt="Institute Logo" style="width: 100px; height: 75px;">
-
-															<!-- to load a default image -->
-															<!-- 		<img
-																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
-																alt="Institute Logo" style="width: 100px; height: 75px;"
-																onerror="this.src = '${defaultSmallLogo}'">  -->
-																
-															<div class="inst-name">
-																<h1 class="short-name">
-																	<c:out value="${featuredInstitute[2] }"></c:out>
-																</h1>
-																<h2 class="full-name">
-																	<c:out value="${featuredInstitute[3] }"></c:out>
-																</h2>
-															</div>
+																alt="Institute Logo" style="width: 100px; height: 75px;" onerror="this.src = '${defaultSmallLogo}'">
 														</div>
+														<div class="inst-name">
+															<h1 class="short-name">
+																<c:out value="${featuredInstitute[2] }"></c:out>
+															</h1>
+															<h2 class="full-name">
+																<c:out value="${featuredInstitute[3] }"></c:out>
+															</h2>
+														</div>
+													</div>
 													<div class="institute-description clearfix"
 														style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
@@ -196,15 +190,11 @@
 													<div class="institute-info clearfix">
 														<div class="inst-logo">
 
+															<!-- to load a default image -->
 															<img
 																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
-																alt="Institute Logo" style="width: 100px; height: 75px;">
-
-															<!-- to load a default image -->
-															<!-- 		<img
-																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
 																alt="Institute Logo" style="width: 100px; height: 75px;"
-																onerror="this.src = '${defaultSmallLogo}'">  -->
+																onerror="this.src = '${defaultSmallLogo}'">
 														</div>
 
 														<div class="inst-name">
@@ -257,14 +247,11 @@
 							<div class="banner-holder">
 								<div class="banner clearfix">
 									<div class="logo-image">
-									<img
+
+										<!-- to load a default image -->
+										<img
 											src="${providerLogoPath}${slash }${institute[0] }${slash}${institute[0] }${smallLogo}"
-											alt="Logo" >
-							
-							<!-- to load a default image -->
-								<!-- 		<img
-											src="${providerLogoPath}${slash }${institute[0] }${slash}${institute[0] }${smallLogo}"
-											alt="Logo" onerror="this.src ='${defaultSmallLogo }' ">		-->
+											alt="Logo" onerror="this.src = '${defaultSmallLogo}'">
 									</div>
 									<div class="description">
 										<h1>
