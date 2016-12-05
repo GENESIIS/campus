@@ -35,7 +35,7 @@ public class Country2DAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int countryCode = (int) code;
+		int countryCode = (Integer) code;
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
