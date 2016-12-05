@@ -17,6 +17,8 @@ public enum SystemMessage {
 	FAILED_TO_CREATE("Object not created"),
 	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
+	INVALIDUSER("Invalid Username or Password."),
+	
 	EMAILERROR("Invalid Email.");
 
 	

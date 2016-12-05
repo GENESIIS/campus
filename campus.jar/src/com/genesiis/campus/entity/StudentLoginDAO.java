@@ -7,12 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
+
 import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+import com.genesiis.campus.validation.SystemMessage;
 
 
 public class StudentLoginDAO implements ICrud {
@@ -86,7 +89,7 @@ public class StudentLoginDAO implements ICrud {
 		String encryptPassword = null;
 		String encryptedPasswordDb;
 		String decryptedPassword = null;
-
+		Collection<Collection<String>> studentList = null;
 		PreparedStatement preparedStatement = null;
 		String message = "Sorry, you are not a registered user! Please sign up first";
 		final Student student = (Student) data;
@@ -108,6 +111,7 @@ public class StudentLoginDAO implements ICrud {
 
 			if (!check) {
 				message = "not valid user ";
+				student.setValid(false);
 			} else if (check) {
 				
 				log.info("ohhh yeah......");
@@ -237,14 +241,18 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoggedOutTime); // 24
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
 
-			//		Encryptable passwordEncryptor = new TripleDesEncryptor();
-			//		encryptPassword = passwordEncryptor.decryptSensitiveDataToString(encryptedPasswordDb);
+		 
 				
 				
 				if(encryptPassword.equals(encryptedPasswordDb)){
 					log.info("password match  :D");
-				}else{
+					student.setValid(true);
+					final Collection<String> singleStudentCollection = singleStudent;
+					studentList.add(singleStudentCollection);
 					
+				}else{
+					student.setValid(false);
+					message = "not valid user ";
 					log.info("password not match :(");
 				}
 				log.info(encryptedPasswordDb);

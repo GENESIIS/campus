@@ -1,4 +1,4 @@
-/**
+/**rememberremember
  * 20161122 AS C19-student-login-without-using-third-party-application-test-as login.js class created.
  */
 var theNewScript = document.createElement("script");
@@ -9,6 +9,7 @@ function studentLogin(){
 	
 	var username = $("#email").val();
 	var password = $("#password").val();
+	var remember = $("#remember").val();
 	
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
@@ -22,10 +23,11 @@ function studentLogin(){
 	}
 	
 	if((username != null) && (password != null)){
-		alert(username +"-----"+password)
+		alert(username +"-----"+password +remember)
 		var jsonData = {
 				"userKey" : username,
-				"password" : password
+				"password" : password,
+				"remember" : remember
 		};
 		$.ajax({
 			type : "POST",
