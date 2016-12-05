@@ -10,6 +10,7 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -33,31 +34,37 @@ public class CmdReportGeneration  implements ICommand{
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
-			String providerCodeString = helper.getParameter("cProviderCode");
-			int providerCode=0; 
-			if (UtilityHelper.isNotEmpty(providerCodeString)) {
-				if (UtilityHelper.isInteger(providerCodeString)) {
-					providerCode = Integer.parseInt(providerCodeString);
+			String commandString = helper.getParameter("CCO");
+			
+			if(commandString!=null && commandString.equalsIgnoreCase(Operation.SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER.getCommandString())){
+				final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();
+				iView.setCollection(providerList);				
+			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_COURSES_BY_COURSE_PROVIDER.getCommandString())){
+				String providerCodeString = helper.getParameter("cProviderCode");
+				int providerCode=0; 
+				if (UtilityHelper.isNotEmpty(providerCodeString)) {
+					if (UtilityHelper.isInteger(providerCodeString)) {
+						providerCode = Integer.parseInt(providerCodeString);
+					}
 				}
+				if(providerCode>0){
+					//List courses by course Providers
+					//param:cpcode,date range
+					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(providerCode);
+					
+					//todo:Test Data
+					final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
+					final ArrayList<String> singleCPType = new ArrayList<String>();
+					singleCPType.add("CPTYPECODE");				
+					singleCPType.add("CPTYPENAME");				
+					allCourseProviderTypeList.add(singleCPType);
+					
+					helper.setAttribute("resultSet", allCourseProviderTypeList);
+					//iView.setCollection(providerList);	
+					
+				}
+				
 			}
-			if(providerCode>0){
-				//List courses by course Providers
-				//param:cpcode,date range
-				final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(providerCode);
-				
-				//todo:Test Data
-				final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
-				final ArrayList<String> singleCPType = new ArrayList<String>();
-				singleCPType.add("CPTYPECODE");				
-				singleCPType.add("CPTYPENAME");				
-				allCourseProviderTypeList.add(singleCPType);
-				
-				helper.setAttribute("resultSet", allCourseProviderTypeList);
-				
-				
-			}
-			final Collection<Collection<String>> providerList=new CourseProviderDAO().getAll();
-			iView.setCollection(providerList);
 			
 		}catch (Exception exception) {
 			log.error("execute() : Exception " + exception);

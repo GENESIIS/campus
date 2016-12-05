@@ -71,7 +71,7 @@
 		
 		
 		$.ajax({
-			url:'../../PublicController',
+			url:'../../ReportController',
 			data:{
 				CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
 				cProviderCode:cpCode,
