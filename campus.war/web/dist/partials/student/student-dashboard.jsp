@@ -1,7 +1,12 @@
 <!-- 20161114 TR c25 start styling user profile page container  -->
 <!-- 20161114 TR c25 page header - done  -->
 <!-- 20161114 TR c25 profile-image-box - done  -->
+<!-- 20161203 MM c25-student-create-dashboard-MP Converted to JSP and converted 
+					relative paths to absolute paths  -->
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,18 +15,18 @@
     <title>Campus.lk</title>
 
     <!-- Bootstrap & CSS Style-->
-    <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/image-slides.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
+    <link href="/dist/css/image-slides.css" rel="stylesheet">
 
     <!-- W3-Include -->
     <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
     <!-- jQuery & Other js -->
-    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/main.js"></script>
-    <script src="../../js/image-slides.js"></script>
+    <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    <script src="/dist/js/main.js"></script>
+    <script src="/dist/js/image-slides.js"></script>
 </head>
 
 <body>
@@ -119,7 +124,7 @@
             <div class="left-side col-md-3 col-lg-3 col-sm-12 clearfix">
                 <div class="prf-pic-holder">
                     <div class="prf-image">
-                        <img src="../../i/student/prf-pic.jpg" alt="Profile-Picture">
+                        <img src="/dist/i/student/prf-pic.jpg" alt="Profile-Picture">
                     </div>
                     <!-- End profile image -->
 
