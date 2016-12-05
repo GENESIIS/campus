@@ -2,6 +2,11 @@ package com.genesiis.campus.entity;
 
 //20161203 MM c25-student-create-dashboard-MP-mm INIT - Initialised file
 //20161204 MM c25-student-create-dashboard-MP-mm Implemented findById() 
+//20161205 MM c25-student-create-dashboard-MP-mm Converting the query to use advanced Transact SQL constructs 
+//				such as variables, conditions etc. to ensure that multiple queries that have to run based on 
+//				the availability/non-availability of results for student's provided data (such as Town and 
+//				interests) are run at once on the DB, and not from the Java code when each previous query 
+//				fails to return the adequate number of results.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,16 +55,51 @@ public class StudentDashboardDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-			// TODO convert this to a StringBuidler
-			String query = "DECLARE @numResults int; "
-					+ "SET @numResults = SELECT COUNT(*) "
+//			// TODO convert this to a StringBuidler
+//			String query = "DECLARE @neededNumOfResults int, @numResults int; "
+//					+ "SET @neededNumOfResults = 10;"
+//					+ "SELECT @numResults = COUNT(*) "
+//					+ "FROM [CAMPUS].[STUDENT];"
+//					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+//					+ "IF(@numResults < 1) "
+//					+ "BEGIN "
+//					+ "PRINT 'NO RESULTS' "
+//					+ "END "
+//					+ "ELSE "
+//					+ "BEGIN "
+//					+ "SELECT * FROM [CAMPUS].[STUDENT]"
+//					+ "END "
+//					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
+			
+			String query = "DECLARE @neededNumOfResults int, @numResults int; "
+					+ "SET @neededNumOfResults = 10;"
+					+ "SELECT TOP @neededNumOfResults @numResults = COUNT(*) "
 					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = ?) "
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = i.MAJOR) "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (pt.CODE = p.PROGRAMMETOWN) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
 					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = ?)";
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1);"
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "IF (@numResults < 1) "
+					+ "BEGIN "
+					+ ""
+					+ "END";
+			
+			
+//					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
+			
+//			String query = "DECLARE @numResults int; "
+//					+ "SET @numResults = SELECT COUNT(*) "
+//					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+//					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = ?) "
+//					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = i.MAJOR) "
+//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+//					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (pt.CODE = p.PROGRAMMETOWN) "
+//					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+//					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = ?)";
 			
 //			String oldQuery = "SELECT s.*, "
 //					+ "pe.CODE AS EXPERIENCECODE, pe.DESIGNATION, pe.ORGANIZATION, "
