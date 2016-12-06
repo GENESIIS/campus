@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><label> <input type="checkbox" name="remember" value="true" > keep me
+					<td><label> <input type="checkbox" name="remember" id="remember" > keep me
 							logged-in
 					</label></td>
 					<td></td>
