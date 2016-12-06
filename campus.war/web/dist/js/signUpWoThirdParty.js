@@ -5,6 +5,8 @@
 // 		according to CREV comments.
 //20161205 DN C18-student-signup-without-using-third-party-application-dn displaySignUpPrerequisitDetails()/
 // getPreRequisitPageData() created
+//0161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
+
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -29,13 +31,12 @@ var mobilePhoneNetWorkCode="";
 
 function displaySignUpPrerequisitDetails(){
 	$.ajax({
-		url:'../../StudentController',
+		url:"../../../StudentController",
 		data:{
 			CCO:'DPRD'
 		},
 		dataType: "json",
 		success: function(preRequistData){
-			alert(preRequistData);
 			getPreRequisitPageData(preRequistData);
 			
 		},
@@ -45,21 +46,87 @@ function displaySignUpPrerequisitDetails(){
 	});
 	
 }
-
+/**
+ * getPreRequisitPageData() suppose to manage the page view
+ * and decide on what content should be displayed on page load time.
+ * currently the cities will be displayed at page load time
+ * This method can be used to operate on response data at page load time.
+ * @param preRequistData response send from the server side
+ */
 function getPreRequisitPageData(preRequistData){
-	
-	// Set Country details preRequisteCollnWrapper
-	var countryList = jQuery('#countryList');
+	// Set Country details 
+	var countryList = $('#countryList');
 	countryList.find('option').remove();
-	$.each(preRequistData.preRequisteCollnWrapper, function(indexm, value){
+	$.each(preRequistData.result, function(index, value){
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
-		$('#countryList').append("<option data-value='" + x + "'>"+y+"</option>");
+		$('<option>').val(y).text(x).appendTo(countryList);
 	});
 	
-	// if any other logics to be followed
+	//Set country code prefixed to the phone numbers.
+	$("#country").on('input', function () {
+	    var val = this.value;
+        var dValue = $('#countryList option').filter(function() {
+            return this.value === val;
+        }).data('value'); //PROBLEM WITH THE FUNCTION TEST
+
+		var msg = dValue;
+        	if(msg){
+        		//$("span[class='input-group-addon']").text("+("+msg+")");
+        		//$('#sCountryCode').val(msg);
+        		extractRelaventTownList(msg);
+        	}
+	});
+	
+	//Set town code to passing to servlet.
+	$("#town").on('input', function () {
+	    var val = this.value;
+        var dValue = $('#townList option').filter(function() {
+            return this.value === val;
+        }).data('value');
+        	var msg = dValue;
+        	if(msg){
+        		$('#sTownCode').val(msg);
+        	}
+	});
+}
+
+function extractRelaventTownList(countryCode){
+	
+	$.ajax({
+		
+		url:"../../../StudentController",
+		data:{
+			country : countryCode,
+			CCO:'DPTWN'
+		},
+		dataType:"json",
+		success: function(townObject){
+			manageTownListing(townObject);
+		},
+		error: function(townObject){
+			alert("Error: "+townObject);
+		}
+	});
+	
+}
+/**
+ * manageTownListing supposes to populate the town data list
+ * from the response sent from the server
+ * @param townObject the response recieved from the server.
+ */
+function manageTownListing(townObject){
+	$('#townList').find('option').remove();
+	$.each(townObject.result,function(index,town){
+		var townString = town.toString();
+		var data = townString.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(y).text(x).appendTo($('#townList'));
+	});
+	
 }
 
 
@@ -78,7 +145,7 @@ function sendSignUpCredentialsToBckEnd() {
 				jsonDataExchange(
 						jsonDataObject,
 						"post",
-						"../../StudentController",
+						"../../../StudentController", // path is provided related to the jsp page
 						"SIWOTP",
 						"json");
 	//call function on the return function how to operate on it	
