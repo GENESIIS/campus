@@ -35,7 +35,7 @@ public enum Operation {
 	DELETE_PROFESSIONAL_EXP("DPE", ResponseType.JSON, "index.jsp"),
 	GET_TOWN_DETAILS("GTD", ResponseType.JSON, "index.jsp"),
 	ADD_STUDENT_DETAILS("APD", ResponseType.JSON, "index.jsp"),
-	GET_SKILL_DETAILS("GSD", ResponseType.JSON, "index.jsp");
+	GET_SKILL_DETAILS("GSL", ResponseType.JSON, "index.jsp");
 	
 	private final String commandString;
 	private final ResponseType responseType;
