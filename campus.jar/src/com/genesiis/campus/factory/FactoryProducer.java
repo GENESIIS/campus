@@ -22,14 +22,9 @@ public class FactoryProducer {
 	 * choice
 	 * @return ICmdFactory
 	 */
-	public static ICmdFactory getFactory(String choice) {
-		if (choice.equalsIgnoreCase("/PublicController")) {
-			return new PublicCmdFactory();
-
-		} 
+	public static ICmdFactory getFactory(String choice) {		 
 		if (choice.equalsIgnoreCase("/ReportController")) {
-			return new ReportCmdFactory();
-			
+			return new ReportCmdFactory();			
 		} 
 
 		return null;
