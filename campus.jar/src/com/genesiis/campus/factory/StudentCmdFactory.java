@@ -4,7 +4,7 @@ package com.genesiis.campus.factory;
 //20161124 PN c26-add-student-details: added GET_SCHOOLEDUCATION_DATA, GET_SCHOOLEDUCATION_DATA, UPDATE_SCHOOLEDUCATION_DATA attributes
 //20161129 PN c26-add-student-details: added ADD_PROFESSIONAL_EXP, UPDATE_PROFESSIONAL_EXP and DELETE_PROFESSIONAL_EXP attributes.
 //20161205 PN c26-add-student-details: added GET_TOWN_DETAILS and ADD_STUDENT_DETAILS attributes.
-//20161206 PN c26-add-student-details: added GET_SKILL_DETAILS attribute
+//20161206 PN c26-add-student-details: added GET_SKILL_DETAILS , ADD_STUDENT_SKILL attributes.
 
 import com.genesiis.campus.command.CmdGetProfileImg;
 import com.genesiis.campus.command.CmdGetSchoolEducationData;
@@ -15,6 +15,7 @@ import com.genesiis.campus.command.CmdUploadProfileImg;
 import com.genesiis.campus.command.CmdAddProfessionalExpDetails;
 import com.genesiis.campus.command.CmdAddSchoolEducationData;
 import com.genesiis.campus.command.CmdAddStudentPersonlDetails;
+import com.genesiis.campus.command.CmdAddStudentSkillDetails;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -31,6 +32,7 @@ public class StudentCmdFactory implements ICmdFactory{
 		map.put(Operation.GET_TOWN_DETAILS, new CmdGetTownDetails()); 
 		map.put(Operation.ADD_STUDENT_DETAILS, new CmdAddStudentPersonlDetails()); 
 		map.put(Operation.GET_SKILL_DETAILS, new CmdGetSkillDetails());
+		map.put(Operation.ADD_STUDENT_SKILL, new CmdAddStudentSkillDetails());
 	}
 
 	@Override
@@ -67,8 +69,13 @@ public class StudentCmdFactory implements ICmdFactory{
 			break;
 		case ADD_STUDENT_DETAILS:
 			command = map.get(o);
+			break;
 		case GET_SKILL_DETAILS:
 			command = map.get(o);
+			break;
+		case ADD_STUDENT_SKILL:
+			command = map.get(o);
+			break;
 		default:
 			break;
 		}
