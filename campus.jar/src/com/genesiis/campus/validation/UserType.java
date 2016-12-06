@@ -9,9 +9,22 @@ package com.genesiis.campus.validation;
 
 public enum UserType {
 
-	ADMIN,
-	FEATURED_COURSE_PROVIDER,
-	TUTOR,
-	STUDENT;
+	ADMIN("ADMIN"),
+	FEATURED_COURSE_PROVIDER("FEATURED_COURSE_PROVIDER"),
+	TUTOR("TUTOR"),
+	STUDENT("STUDENT");
+	
+	private final String userType;
+	
+	private UserType(final String userType) {
+		this.userType = userType;
+	}
+
+	/**
+	 * @return the userType
+	 */
+	public String getUserType() {
+		return userType;
+	}
 	
 }
