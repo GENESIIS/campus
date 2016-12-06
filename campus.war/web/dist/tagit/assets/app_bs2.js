@@ -1,6 +1,7 @@
 //20161206 PN c26-add-student-details: This JavaScript is to populate tagitUI with DB values.
+//		   PN c26-add-student-details: implemented addSkillDetails() Ajax method.
 
-var inputValues = "";
+var extStudentSkills = [];
 
 $(document).ready(function() {
 	$.ajax({
@@ -11,20 +12,24 @@ $(document).ready(function() {
 		dataType : "json",
 		success : function(response) {
 			alert(response.result);
-			var startBrc = "[";
-			var endBrc = "]";
-			var skills = "";
+			var inputValues = createJsonObj(response.result);
 			
-			$.each(response.result, function(index, value) {
+			$('.example_objects_as_tags > > input').tagsinput({
+				  itemValue: 'value',
+				  itemText: 'text',
+				  typeahead: {
+				    source: function(query) {
+				      return $.parseJSON(inputValues);
+				    }
+				  }
+			});
+			
+			$.each(response.stskillCollection, function(index, value) {
 				var res = value.toString();
 				var data = res.split(",");
-				var result = '{ "value": '+parseInt(data[0])+ ', "text": "' +data[1]+ '" , "continent": "A" },';
-				skills = skills.concat(result);
+				extStudentSkills.push(parseInt(data[0]));
+				$('.example_objects_as_tags > > input').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
 			});
-			startBrc = startBrc.concat(skills.slice(0, -1));
-			endBrc = startBrc.concat(endBrc);
-			inputValues = endBrc;
-			alert(inputValues);
 		},
 		error : function(response) {
 			alert("Error: "+response);
@@ -32,24 +37,71 @@ $(document).ready(function() {
 	});
 });
 
-$('.example_objects_as_tags > > input').tagsinput({
-  itemValue: 'value',
-  itemText: 'text',
-  typeahead: {
-    source: function(query) {
-      return $.parseJSON(inputValues);
-    }
-  }
-});
-$('.example_objects_as_tags > > input').tagsinput('add', { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    });
-$('.example_objects_as_tags > > input').tagsinput('add', { "value": 4 , "text": "Washington"  , "continent": "America"   });
+
+//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    });
+//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 4 , "text": "Washington"  , "continent": "America"   });
 //$('.example_objects_as_tags > > input').tagsinput('add', { "value": 7 , "text": "Sydney"      , "continent": "Australia" });
 //$('.example_objects_as_tags > > input').tagsinput('add', { "value": 10, "text": "Beijing"     , "continent": "Asia"      });
 //$('.example_objects_as_tags > > input').tagsinput('add', { "value": 13, "text": "Cairo"       , "continent": "Africa"    });
 
+/**
+ * This method generates a Json object to pass into tag-it input.
+ * @param response
+ * @returns
+ */
+function createJsonObj(response){
+	var inputValues = "";
+	var startBrc = "[";
+	var endBrc = "]";
+	var elements = "";
+	
+	$.each(response, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var result = '{ "value": '+parseInt(data[0])+ ', "text": "' +data[1]+ '" , "continent": "A" },';
+		elements = elements.concat(result);
+	});
+	startBrc = startBrc.concat(elements.slice(0, -1));
+	endBrc = startBrc.concat(endBrc);
+	inputValues = endBrc;
+	return inputValues;
+}
 
 
-
+/**
+ * This method is to save student skills into the DB.
+ * @returns
+ */
+function addSkillDetails() {
+	var values = $("#studentSkills").val();
+	var prevalues = extStudentSkills;
+	
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			oldStudentSkills : prevalues.toString(),
+			newStudentSkills : values,
+			CCO : "ASS"
+		},
+		dataType : "json",
+		success : function(data) {			
+			alert(data);
+//			if(data.studentPersonalStatus){	
+//					if(data.studentPersonalStatus === "Unsuccessful."){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+//					}else if(data.studentPersonalStatus === "Invalid Information"){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+//					}
+//				clearPersonalDetailsForm();	
+//				$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+//			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+		}
+	});
+}
 
 
 
@@ -76,31 +128,3 @@ $('.example_tagclass > > input').tagsinput('add', { "value": 4 , "text": "Washin
 $('.example_tagclass > > input').tagsinput('add', { "value": 7 , "text": "Sydney"      , "continent": "Australia" });
 $('.example_tagclass > > input').tagsinput('add', { "value": 10, "text": "Beijing"     , "continent": "Asia"      });
 $('.example_tagclass > > input').tagsinput('add', { "value": 13, "text": "Cairo"       , "continent": "Africa"    });
-
-//angular.module('AngularExample', ['bootstrap-tagsinput'])
-//  .controller('CityTagsInputController',
-//    function CityTagsInputController($scope, $http) {
-//      // Init with some cities
-//      $scope.cities = [
-//        { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    },
-//        { "value": 4 , "text": "Washington"  , "continent": "America"   },
-//        { "value": 7 , "text": "Sydney"      , "continent": "Australia" },
-//        { "value": 10, "text": "Beijing"     , "continent": "Asia"      },
-//        { "value": 13, "text": "Cairo"       , "continent": "Africa"    }
-//      ];
-//
-//      $scope.queryCities = function(query) {
-//        return $http.get('dist/tagit/assets/cities.json');
-//      };
-//
-//      $scope.getTagClass = function(city) {
-//        switch (city.continent) {
-//          case 'Europe'   : return 'label label-info';
-//          case 'America'  : return 'label label-danger label-important';
-//          case 'Australia': return 'label label-success';
-//          case 'Africa'   : return 'label';
-//          case 'Asia'     : return 'label label-warning';
-//        }
-//      };
-//    }
-//  );
