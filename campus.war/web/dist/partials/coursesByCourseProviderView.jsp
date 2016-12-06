@@ -17,6 +17,16 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 
+<!--     Data Table CSS -->
+<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+
+
+<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
 <!-- jQuery & Other js -->
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
@@ -88,12 +98,29 @@
 		
 		});
 	}
-	
+	var data ;
 	function populateResultTable(response){		
-		alert("populateResultTable ");	
+		alert("populateResultTable ");
+	
 		$.each(response.coursesList, function(index, value) {
 			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+			 data = 
+				[
+				    {
+				        "id": x,
+				        "name": y,				        
+				    }
+		];
+			
+			
 		});
+		
+		$('#table').bootstrapTable({
+	        data: data
+	    });
 	}
 
 </script>
@@ -150,20 +177,38 @@
 			<div>
 				<div class="container">
 					<h2>Result set</h2>
-					<table class="table-responsive">
+					<table id="table" class="table-responsive">
 						<thead>
 							<tr>
-							    <th>#</th>
-								<th>Firstname</th>
-								<th>Lastname</th>
-								<th>Email</th>
+							   <th data-field="id">Item ID</th>
+                               <th data-field="name">Item Name</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 						</tbody>
 					</table>
 				</div>
 			</div>
+			
+			
+			<div class="">
+					<table id="example"
+						class="table table-striped table-bordered dt-responsive nowrap"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Item ID</th>
+								<th>Item Name</th>								
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Item ID</td>
+								<td>Item Name</td>								
+							</tr>
+						</tbody>
+					</table>
+				</div>
 		</div>
 	</div>
 	<!-- End Container - Top Providers list -->
