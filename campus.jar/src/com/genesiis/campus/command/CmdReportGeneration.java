@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +56,10 @@ public class CmdReportGeneration  implements ICommand{
 					//param:cpcode,date range
 					Programme programme=new Programme();
 					programme.setCourseProvider(providerCode);
+					java.sql.Date startDate = new java.sql.Date(new Long(startDateString));
+					java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
+					programme.setDisplayStartDate(startDate);
+					programme.setExpiryDate(endDate);
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					
 					//todo:Test Data

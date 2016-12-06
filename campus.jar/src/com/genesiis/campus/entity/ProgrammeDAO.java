@@ -17,8 +17,9 @@ import com.genesiis.campus.validation.UtilityHelper;
 import org.apache.log4j.Logger;
 
 public class ProgrammeDAO implements ICrud {
-	
-	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
+
+	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAO.class
+			.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -39,43 +40,45 @@ public class ProgrammeDAO implements ICrud {
 	}
 
 	/**
-	 * Get Programmes 
-	 * @param Programme DTO
+	 * Get Programmes
+	 * 
+	 * @param Programme
+	 *            DTO
 	 * @author DJ
-	 * @return Collection 
+	 * @return Collection
 	 */
 	public Collection<Collection<String>> findById(Object programmeDTO)
 			throws SQLException, Exception {
 		Connection conn = null;
-		PreparedStatement  stmt = null;	
-		ResultSet resultSet =null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
 		final Collection<Collection<String>> programmeList = new ArrayList<Collection<String>>();
-		Programme programme=new Programme();
-		
+		Programme programme = new Programme();
+
 		try {
-			if(UtilityHelper.isNotEmptyObject(programmeDTO)){
-				programme = (Programme) programmeDTO;								
-			}else{
+			if (UtilityHelper.isNotEmptyObject(programmeDTO)) {
+				programme = (Programme) programmeDTO;
+			} else {
 				return programmeList;
 			}
-			conn=ConnectionManager.getConnection();
-			final StringBuilder sb=new StringBuilder( "SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE=?");
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE=?");
 			sb.append(" AND PROG.EXPIRYDATE AND PROG.PROGRAMMESTATUS=?");
-			
-			stmt = conn.prepareStatement(sb.toString());			
+
+			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, programme.getCourseProvider());
 			stmt.setDate(2, programme.getDisplayStartDate());
 			stmt.setDate(3, programme.getExpiryDate());
 			stmt.setInt(4, programme.getProgrammeStatus());
-			resultSet= stmt.executeQuery();
-			while(resultSet.next()){
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
-				singleProgramme.add(resultSet.getString("CPCODE"));				
+				singleProgramme.add(resultSet.getString("CPCODE"));
 				singleProgramme.add(resultSet.getString("UNIQUEPREFIX"));
 				singleProgramme.add(resultSet.getString("LOGOPATH"));
 				programmeList.add(singleProgramme);
 			}
-			
+
 		} catch (SQLException sqlException) {
 			log.info("findById() sqlException" + sqlException.toString());
 			throw sqlException;
