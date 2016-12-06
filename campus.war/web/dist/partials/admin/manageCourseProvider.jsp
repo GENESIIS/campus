@@ -528,11 +528,10 @@
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
 									<h1 class="pro-name">
-										<input type="radio" name="providerStatus" id="providerStatus"
+										<input type="radio" name="accountStatus" id="accountStatus"
 											value="active" /> Active &nbsp; <input type="radio"
-											name="providerStatus" id="providerStatus" value="inactive" />
-										InActive &nbsp; <input type="radio" name="providerStatus"
-											id="providerStatus" value="pending" /> Pending
+											name="accountStatus" id="accountStatus" value="inactive" />
+										InActive &nbsp; 
 									</h1>
 								</div>
 							</li>
