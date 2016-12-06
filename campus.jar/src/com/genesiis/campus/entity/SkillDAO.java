@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 
-//2016206 PN c11-criteria-based-filter-search INIT SkillDAO.java. Implemented geAll() method.
+//20161206 PN c26-add-student-details INIT SkillDAO.java. Implemented geAll() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

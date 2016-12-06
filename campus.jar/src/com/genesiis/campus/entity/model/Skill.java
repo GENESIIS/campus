@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity.model;
 
-//2016206 PN c11-criteria-based-filter-search INIT Skill.java
+//20161206 PN c26-add-student-details INIT Skill.java
 
 import java.sql.Date;
 

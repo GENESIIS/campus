@@ -1,6 +1,6 @@
 package com.genesiis.campus.command;
 
-//2016206 PN c26-add-student-details INIT CmdGetSkillDetails.java
+//20161206 PN c26-add-student-details INIT CmdGetSkillDetails.java
 //        PN c26-add-student-details implement execute() method.
 
 import java.sql.SQLException;
