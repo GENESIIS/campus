@@ -17,6 +17,9 @@
 //				BannerAndAdvertDAO to BannerDAO. Disabled the execution of code that 
 //				checks and assigns Google advert script code to be loaded into a banner slot
 //				when no banners are present there. 
+//20161206 MM c2-integrate-google-banners-MP Modified code to consider the omission of fetching
+//				BANNERSTATUS in the DAO class, and to make maintenance easier by accessing 
+//				indexes where fetched values are present via variables
 
 package com.genesiis.campus.validation;
 
@@ -93,17 +96,20 @@ public class BannerData {
 				Map<String, List<Collection<String>>> pageSlotCodeToBannerRecordsMap = new LinkedHashMap<String, List<Collection<String>>>();
 				Map<String, String> pageSlotCodeToNameMap = new LinkedHashMap<String, String>();
 
+				final int indexOfPageSlotCode = 0;
+				final int indexOfPageSlotName = 1;
+				
 				for (Collection<String> record : bannerCollection) {
 					int count = 0;
 					String pageSlotCodeStr = "";
 					String pageSlotName = "";
 					for (String field : record) {
 
-						if (count == 0) {
+						if (count == indexOfPageSlotCode) {
 							pageSlotCodeStr = field;
 						}
 
-						if (count == 1) {
+						if (count == indexOfPageSlotName) {
 							pageSlotName = field;
 
 							List<Collection<String>> bannerRecordList = pageSlotCodeToBannerRecordsMap
@@ -132,6 +138,10 @@ public class BannerData {
 
 
 				List<Collection<String>> listOfRecords = null;
+				final int indexOfBannerCode = 2;
+				final int indexOfImage = 10;
+				final int indexOfDisplayDuration = 5;
+				final int indexOfUrl = 7;
 				
 				for (String pageSlotCode : pageSlotCodeSet) {					
 					
@@ -143,10 +153,10 @@ public class BannerData {
 					for (Collection<String> singleRecord : listOfRecords) {
 						int count = 0;
 						for (String field : singleRecord) {
-							if (count == 2 || // banner code
-									count == 11 || // imagepath
-									count == 5 || // displayduration
-									count == 7) { // url
+							if (count == indexOfBannerCode || // banner code
+									count == indexOfImage || // imagepath
+									count == indexOfDisplayDuration || // displayduration
+									count == indexOfUrl) { // url
 								
 								if (field == null) {
 									areBannerRecordsAvailableForTheSlot = false;
