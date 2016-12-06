@@ -719,7 +719,8 @@ body, html {
     display: block; }
     .stud-dashboard .prf-page-container .left-side {
       border-top: 6px solid #5d8ee1;
-      padding: 0 !important; }
+      padding: 0 !important;
+      margin-bottom: 30px; }
       .stud-dashboard .prf-page-container .left-side .prf-pic-holder {
         display: block;
         margin-top: 15px;
@@ -738,6 +739,14 @@ body, html {
             font-size: 24px;
             color: #2b57a0;
             font-weight: 600; }
+          .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-name h3 {
+            color: #029cb7;
+            font-size: 16px;
+            line-height: 25px; }
+          .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-name h4 {
+            color: #7589a9;
+            font-size: 16px;
+            line-height: 25px; }
       .stud-dashboard .prf-page-container .left-side .short-info-holder {
         display: block;
         margin-top: 20px;
@@ -787,6 +796,45 @@ body, html {
             font-size: 16px;
             color: #6f787c;
             padding-left: 30px; }
+      .stud-dashboard .prf-page-container .right-side .w-rec-courses {
+        background: #fff;
+        border-radius: 10px;
+        padding: 14px 20px; }
+      .stud-dashboard .prf-page-container .right-side .w-rec-institute {
+        background: #fff;
+        border-radius: 10px;
+        padding: 14px 20px;
+        margin-top: 25px; }
+        .stud-dashboard .prf-page-container .right-side .w-rec-institute .rec-institute {
+          display: block;
+          padding-top: 15px; }
+          .stud-dashboard .prf-page-container .right-side .w-rec-institute .rec-institute ul li {
+            padding: 20px 0; }
+            .stud-dashboard .prf-page-container .right-side .w-rec-institute .rec-institute ul li .inst-logo {
+              text-align: center;
+              display: inline-block; }
+            .stud-dashboard .prf-page-container .right-side .w-rec-institute .rec-institute ul li a {
+              font-size: 22px;
+              font-family: "Roboto", sans-serif;
+              color: #5a8fe8;
+              line-height: initial; }
+      .stud-dashboard .prf-page-container .right-side .w-recent-activity {
+        background: #fff;
+        border-radius: 10px;
+        padding: 14px 20px;
+        margin-top: 25px; }
+        .stud-dashboard .prf-page-container .right-side .w-recent-activity .ul-activity li {
+          color: #686e77;
+          font-family: "Roboto", sans-serif;
+          font-size: 16px;
+          line-height: 20px;
+          padding-top: 30px;
+          padding-left: 35px; }
+          .stud-dashboard .prf-page-container .right-side .w-recent-activity .ul-activity li .act-time {
+            color: #7a7a7a;
+            font-size: 13px;
+            font-family: "Raleway", sans-serif;
+            font-style: italic; }
       .stud-dashboard .prf-page-container .right-side .widgets-e {
         display: block; }
         .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills {
@@ -951,7 +999,6 @@ body, html {
     font-size: 24px;
     color: #37474f;
     font-weight: 600;
-    text-transform: uppercase;
     padding-left: 15px;
     line-height: 35px; }
   .widget .widget-header button {
@@ -966,5 +1013,3 @@ body, html {
     .widget .widget-footer a {
       font-family: "Muli", sans-serif;
       color: #93a1b1; }
-
-/*# sourceMappingURL=style.css.map */
