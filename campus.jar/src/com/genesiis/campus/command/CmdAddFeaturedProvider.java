@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20161201 JH c39-add-course-provider added application enum to get course provider status
 //20161202 JH c39-add-course-provider fixed null point exception in execute method
 //20161202 JH c39-add-course-provider code refactor to support one-off and featured provider registration
+//20161206 JH c39-add-course-provider get accountStatus of the user account
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -75,6 +76,17 @@ public class CmdAddFeaturedProvider implements ICommand{
 				pStatus = ApplicationStatus.PENDING.getStatusValue();
 			}
 			
+			String accountStatus = helper.getParameter("accountStatus");
+			if(providerStatus.equalsIgnoreCase("active")){
+				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
+			}
+			if(providerStatus.equalsIgnoreCase("inactive")){
+				pStatus = ApplicationStatus.INACTIVE.getStatusValue();
+			}
+			if(providerStatus.equalsIgnoreCase("pending") ){
+				pStatus = ApplicationStatus.PENDING.getStatusValue();
+			}
+			
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Date parsed = format.parse(expireDate);
 			java.sql.Date sql = new java.sql.Date(parsed.getTime());
@@ -96,6 +108,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 			courseProvider.setFaxNo(helper.getParameter("fax"));
 			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
+			courseProvider.setExpirationDate(sql);
 			courseProvider.setWeblink(helper.getParameter("webLink"));
 			courseProvider.setFacebookURL(helper.getParameter("facebook"));
 			courseProvider.setTwitterURL(helper.getParameter("twitter"));
