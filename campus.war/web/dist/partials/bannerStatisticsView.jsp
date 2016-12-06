@@ -40,7 +40,7 @@
 		$.ajax({
 			url : '../../ReportController',
 			data : {
-				CCO : 'SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER'
+				CCO : 'SEARCH_VIEW_BANNER_STATISTICS'
 			},
 			dataType : "json",
 			success : function(response) {
@@ -51,9 +51,20 @@
 			}
 		});
 		
-		loadResultSet(event);		
-		
 	});
+	
+	function getAjaxProviderData(response) {
+
+		var providerName = $("#providerName");
+		$.each(response.result, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = data[0].toString();
+			var y = data[1].toString();
+
+			$('<option>').val(x).text(y).appendTo(providerName);
+		});
+	}
 
 </script>
 
