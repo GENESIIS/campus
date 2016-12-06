@@ -21,6 +21,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.UserType;
 
 public class FeaturedCourseProviderDAO implements ICrud{
 	
@@ -38,6 +39,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
 		int status = 0;
 		int generatedKey = 0;
 		
@@ -77,9 +79,18 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
 					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+			
+			
+			/**
+			 * getUserType query used to get the code of default course provider user type.
+			 * USERTYPESTRING is a new column added to the table to identify the default user 
+			 * types with the support of 'USERTYPE' enum class
+			 */
+			String getUserType = "SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE COURSEPROVIDER = -1 AND USERTYPESTRING = ?";
 
 			preparedStatement = conn.prepareStatement(provider,
 					PreparedStatement.RETURN_GENERATED_KEYS);
+
 
 //			Date d1 = new Date();
 //			java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
@@ -132,6 +143,17 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement2.setInt(7, 1);
 			preparedStatement2.setString(8, "admin");
 			preparedStatement2.setString(9, "admin");
+			
+			
+			preparedStatement3 = conn.prepareStatement(getUserType);
+			preparedStatement3.setString(1, UserType.FEATURED_COURSE_PROVIDER.getUserType());
+			
+			ResultSet rs = preparedStatement3.executeQuery();
+			
+			if(rs != null){//valid default user type
+				String userTypeId = rs.getString("CODE");
+			}
+
 			
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
