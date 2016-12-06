@@ -2,6 +2,7 @@
 <!-- 20161122 JH c39-add-course-provider sample UI page to add course provider details wip -->
 <!-- 20161123 JH c39-add-course-provider UI code modified -->
 <!-- 20161202 JH c39-add-course-provider added missing input fields -->
+<!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -297,8 +298,11 @@
 									<h1 class="pro-name">Country :</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="country" id="country"
-										size="50px;" />
+								<!-- 	<input class="input" type="text" name="country" id="country"
+										size="50px;" />  		 -->
+										<select>
+										<option>--Default--</option>
+										</select>
 								</div>
 							</li>
 							<!-- end -->
@@ -308,8 +312,11 @@
 									<h1 class="pro-name">Town :</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="town" id="town"
-										size="50px;" />
+								<!-- 	<input class="input" type="text" name="town" id="town"
+										size="50px;" />			-->	
+										<select>
+										<option>--Default--</option>
+										</select>
 								</div>
 							</li>
 							<!-- end -->
@@ -518,6 +525,19 @@
 							</li>
 							<!-- end -->
 
+							<li class="course-info clearfix">
+								<div class="col-name" style="width: 50%;">
+									<h1 class="pro-name">
+										<input type="radio" name="providerStatus" id="providerStatus"
+											value="active" /> Active &nbsp; <input type="radio"
+											name="providerStatus" id="providerStatus" value="inactive" />
+										InActive &nbsp; <input type="radio" name="providerStatus"
+											id="providerStatus" value="pending" /> Pending
+									</h1>
+								</div>
+							</li>
+							<!-- end -->
+							
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Description :</h1>
