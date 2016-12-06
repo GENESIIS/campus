@@ -8,6 +8,8 @@
 				caller page request attribute to be attached to a data attribute of image HTML tag --%>
 <%-- 20161128 MM c2-integrate-google-banners Modified code to check if the attribute containing 
 				banner/advert data is empty before accessing it --%>
+<%-- 20161206 MM c2-integrate-google-banners Modified code to change the index where value for banner 
+				image is found in an item in the returned collection of banners --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -49,7 +51,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_1}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
@@ -66,7 +68,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_2}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
@@ -83,7 +85,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_3}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[11]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
