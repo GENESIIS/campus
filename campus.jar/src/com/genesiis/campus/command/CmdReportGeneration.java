@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -65,9 +66,12 @@ public class CmdReportGeneration  implements ICommand{
 					//java.sql.Date startDate = new java.sql.Date((new Long(startDateString)).longValue());
 					//java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
 					//programme.setDisplayStartDate(startDate);
-					programme.setDisplayStartDate((Date) df.parse(startDateString));
-					programme.setExpiryDate((Date) df.parse(endDateString));
-					
+					//programme.setDisplayStartDate((Date) df.parse(startDateString));
+					//programme.setExpiryDate((Date) df.parse(endDateString));
+					LocalDate todayLocalDate=LocalDate.parse(startDateString);
+					LocalDate todayEndDate=LocalDate.parse(endDateString);
+					programme.setDisplayStartDate( java.sql.Date.valueOf(todayLocalDate));
+					programme.setExpiryDate(java.sql.Date.valueOf(todayEndDate));
 					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					
