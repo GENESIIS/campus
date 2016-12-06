@@ -65,7 +65,7 @@ public class CampusController extends HttpServlet {
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
-		helper = new DataHelper(request);
+		helper = new DataHelper(request,response);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
 
