@@ -139,35 +139,37 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement2.setString(3, courseProviderAccount.getPassword());
 			preparedStatement2.setString(4, courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
-			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
-			preparedStatement2.setInt(7, 1);
-			preparedStatement2.setString(8, "admin");
-			preparedStatement2.setString(9, "admin");
+			preparedStatement2.setString(8, courseProviderAccount.getCrtBy());
+			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
 			
 			
 			preparedStatement3 = conn.prepareStatement(getUserType);
 			preparedStatement3.setString(1, UserType.FEATURED_COURSE_PROVIDER.getUserType());
 			
-			ResultSet rs = preparedStatement3.executeQuery();
+			ResultSet userTypeRS = preparedStatement3.executeQuery();
 			
-			if(rs != null){//valid default user type
-				String userTypeId = rs.getString("CODE");
-			}
-
-			
-			status = preparedStatement.executeUpdate();
-			log.info(".........." + status);
-			
-			ResultSet rs = preparedStatement.getGeneratedKeys();
-			
-			if(rs.next()){
-				generatedKey = rs.getInt(1);
-				status = 1;
-				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
-				preparedStatement2.setInt(6, generatedKey);
+			if(userTypeRS != null){//valid default user type
+				int userTypeId = Integer.parseInt(rs.getString("CODE"));
 				
-			status = preparedStatement2.executeUpdate();
+				if(userTypeId !=0 ){
+					
+					status = preparedStatement.executeUpdate();
+					log.info(".........." + status);
+					
+					ResultSet rs = preparedStatement.getGeneratedKeys();
+					
+					if(rs.next()){
+						generatedKey = rs.getInt(1);
+						status = 1;
+						log.info(">>>>>>>>>>>>>>>    " + generatedKey);
+						preparedStatement2.setInt(6, generatedKey);
+						preparedStatement2.setInt(7, userTypeId);
+						
+					status = preparedStatement2.executeUpdate();
+					}
+				}
 			}
+	
 			conn.commit();
 			
 			
