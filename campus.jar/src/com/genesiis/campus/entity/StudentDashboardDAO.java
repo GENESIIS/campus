@@ -7,6 +7,8 @@ package com.genesiis.campus.entity;
 //				the availability/non-availability of results for student's provided data (such as Town and 
 //				interests) are run at once on the DB, and not from the Java code when each previous query 
 //				fails to return the adequate number of results.
+//20161205 MM c25-student-create-dashboard-MP-mm Modified query so that it falls back to discount student's
+//				specified Town or Interests when checking for recommended programmes.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,12 +83,41 @@ public class StudentDashboardDAO implements ICrud {
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
 					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
 					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1);"
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
 					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "IF (@numResults < 1) "
+
+					// If neededNumOfResults is not reached...
+					+ "IF (@neededNumOfResults > 0) "
+					// Discount Student's town
 					+ "BEGIN "
-					+ ""
-					+ "END";
+					+ "SELECT TOP @neededNumOfResults @numResults = COUNT(*) "
+					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN); "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					
+					// If still neededNumOfResults is not reached...
+					+ "IF (@neededNumOfResults > 0) "
+					// Discount Student's interests
+					+ "BEGIN "
+					+ "SELECT TOP @neededNumOfResults @numResults = COUNT(*) "
+					+ "FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "END "
+					
+					+ "END "
+					
+					+ "ELSE "
+					+ "BEGIN "
+					
+					+ "END ";
 			
 			
 //					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
