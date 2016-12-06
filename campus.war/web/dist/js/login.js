@@ -1,5 +1,6 @@
-/**rememberremember
+/**
  * 20161122 AS C19-student-login-without-using-third-party-application-test-as login.js class created.
+ * 20161206 AS C19-student-login-without-using-third-party-application-test-as added remember checkbox. 
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -9,7 +10,7 @@ function studentLogin(){
 	
 	var username = $("#email").val();
 	var password = $("#password").val();
-	var remember = $("#remember").val();
+	var remember = $("#remember").prop('checked');
 	
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
