@@ -54,8 +54,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
-			
-			log.info("dkjfksdfkjds");				
+					
 			
 			/**
 			 * provider query used to insert data into course provider table. 
@@ -82,8 +81,8 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement = conn.prepareStatement(provider,
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
-			Date d1 = new Date();
-			java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+//			Date d1 = new Date();
+//			java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
 			preparedStatement.setString(1, courseProvider.getUniquePrefix());
 			preparedStatement.setString(2, courseProvider.getShortName());
 			preparedStatement.setString(3, courseProvider.getName());
@@ -107,16 +106,16 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement.setString(21, courseProvider.getInstagramURL());
 			preparedStatement.setString(22, courseProvider.getViberNumber());
 			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
-			preparedStatement.setDate(24, sqlDate);
+			preparedStatement.setDate(24, courseProvider.getExpirationDate());
 			preparedStatement.setString(25, courseProvider.getAddress1());
 			preparedStatement.setString(26, courseProvider.getAddress2());
 			preparedStatement.setString(27, courseProvider.getAddress3());
-			preparedStatement.setInt(28, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+			preparedStatement.setInt(28, courseProvider.getAccountType());
 			preparedStatement.setInt(29, courseProvider.getHeadOffice());
 			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
 			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
-			preparedStatement.setBoolean(32, false);
-			preparedStatement.setBoolean(33, true);
+			preparedStatement.setInt(32, courseProvider.getCourseProviderStatus());
+			preparedStatement.setInt(33, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(35, courseProvider.getPrincipal());
 			preparedStatement.setString(36, courseProvider.getCrtBy());
@@ -124,11 +123,11 @@ public class FeaturedCourseProviderDAO implements ICrud{
 
 			
 			preparedStatement2 = conn.prepareStatement(account);
-			preparedStatement2.setString(1, "Mr. Perera");
-			preparedStatement2.setString(2, "Perera");
-			preparedStatement2.setString(3, "123");
-			preparedStatement2.setString(4, "user description");
-			preparedStatement2.setBoolean(5, true);
+			preparedStatement2.setString(1, courseProviderAccount.getName());
+			preparedStatement2.setString(2, courseProviderAccount.getUsername());
+			preparedStatement2.setString(3, courseProviderAccount.getPassword());
+			preparedStatement2.setString(4, courseProviderAccount.getDescription());
+			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
 			//preparedStatement2.setInt(6, courseProviderAccount.getCourseProvider());
 			preparedStatement2.setInt(7, 1);
 			preparedStatement2.setString(8, "admin");
