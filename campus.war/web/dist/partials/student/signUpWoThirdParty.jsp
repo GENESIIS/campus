@@ -4,6 +4,7 @@
 <!-- 20161201 DN C18-student-signup-without-using-third-party-application-dn add a tool tip to mobile number field -->
 <!-- 20161204 DN C18-student-signup-without-using-third-party-application-dn integrated with GUI complete 60% -->
 <!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
+<!-- 20161206 DN C18-student-signup-without-using-third-party-application-dn town field and other nodes  added -->
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -195,19 +196,18 @@
 
 		 <div class="input-field">
 		         <label>Country :</label><label id="countryError" style="color:#C70039;"></label><br><br>
-		         <input list="countryList" class="text-field" type="text" placeholder="-- Select City --" onclick="clearField('countryError')" >
+		         <input list="countryList" id="country" name="country" class="text-field" type="text" placeholder="-- Select City --" onclick="clearField('countryError');" >
 		          <datalist id="countryList" name="countryist">
 		          </datalist>
 		         </div>
             <!-- End Country -->
+            
             <div class="input-field">
                 <label>Town :</label><label id="townError" style="color:#C70039;"></label><br><br>
-                <input list="townList" class="text-field" type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
+                <input id="town" name="town" list="townList" class="text-field" type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
                 <datalist id="townList" name="townList">
-<!--                     <option >- Select Your Town -</option> -->
-<!--                     <option >Kurunegala</option> -->
-<!--                     <option >Kandy</option> -->
                 </datalist>
+                <input type="hidden"  id="sTownCode" name="sTownCode"/>
             </div>
             <!-- End Town -->
 
@@ -239,9 +239,9 @@
             </div>
             <!-- End Condition agreement -->
 
-            <div class="input-field">
-                <button class="btn-create" onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button>
-            </div>
+<!--             <div class="input-field"> -->
+<!--                 <button class="btn-create" onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button> -->
+<!--             </div> -->
             <!-- End submit button -->
 
         </div>
