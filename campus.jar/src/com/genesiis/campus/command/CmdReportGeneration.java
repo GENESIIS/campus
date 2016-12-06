@@ -2,19 +2,21 @@ package com.genesiis.campus.command;
 
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
 
-import java.sql.Date;
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -63,28 +65,19 @@ public class CmdReportGeneration  implements ICommand{
 					//param:cpcode,date range
 					final Programme programme=new Programme();
 					programme.setCourseProvider(providerCode);
+					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
 					//java.sql.Date startDate = new java.sql.Date((new Long(startDateString)).longValue());
 					//java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
 					//programme.setDisplayStartDate(startDate);
 					//programme.setDisplayStartDate((Date) df.parse(startDateString));
 					//programme.setExpiryDate((Date) df.parse(endDateString));
-					LocalDate todayLocalDate=LocalDate.parse(startDateString);
-					LocalDate todayEndDate=LocalDate.parse(endDateString);
-					programme.setDisplayStartDate( java.sql.Date.valueOf(todayLocalDate));
-					programme.setExpiryDate(java.sql.Date.valueOf(todayEndDate));
+					//LocalDate todayLocalDate=LocalDate.parse(startDateString);
+					//LocalDate todayEndDate=LocalDate.parse(endDateString);
+					/*programme.setDisplayStartDate( (Date)df.parse((startDateString)));
+					programme.setExpiryDate((Date)df.parse((endDateString)));*/
 					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
-					
-					//todo:Test Data
-					final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
-					final ArrayList<String> singleCPType = new ArrayList<String>();
-					singleCPType.add("CPTYPECODE");				
-					singleCPType.add("CPTYPENAME");				
-					allCourseProviderTypeList.add(singleCPType);
-					
-					helper.setAttribute("resultSet", allCourseProviderTypeList);
-					//iView.setCollection(providerList);	
-					
+					helper.setAttribute("coursesList", coursesList);
 				}
 				
 			}
