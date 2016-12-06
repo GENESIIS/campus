@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity.model;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 public class Programme {
 	private int code;
