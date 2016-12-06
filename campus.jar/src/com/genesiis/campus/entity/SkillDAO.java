@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class SkillDAO implements ICrud{
-	static Logger log = Logger.getLogger(InstituteDAO.class.getName());
+	static Logger log = Logger.getLogger(SkillDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
