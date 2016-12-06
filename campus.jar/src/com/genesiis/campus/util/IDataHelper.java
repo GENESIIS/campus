@@ -1,4 +1,5 @@
 package com.genesiis.campus.util;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.genesiis.campus.entity.IView;
@@ -15,7 +16,9 @@ public interface IDataHelper {
 	public IView getResultView(String cco) throws Exception;
 	
 	public ResponseType getResponseType(String cco);
-
+	
+	public HttpServletResponse getResponse();
+	
 	public String getParameter(String paramName);
 
 	public void setAttribute(String name, Object o);
