@@ -7,6 +7,9 @@ package com.genesiis.campus.validation;
 //20161109 DN c10-contacting-us-MP change the path of ContactUs.jsp page
 //20161123 DN C18-student-signup-without-using-third-party-application-dn add SIGN_UP_WO_THRD_PARTY enum
 // 20161205 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_PREREQUISITE_DATA enume added
+//20161206 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_TOWN_DATA enume added
+
+
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -24,6 +27,7 @@ public enum Operation {
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"),
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"),
 	DISPLAY_PREREQUISITE_DATA("DPRD", ResponseType.JSON,""),
+	DISPLAY_TOWN_DATA("DPTWN", ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
 			
 	private final String commandString;
