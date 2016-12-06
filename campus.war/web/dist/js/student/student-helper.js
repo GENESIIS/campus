@@ -164,7 +164,7 @@ function getStudentData(response) {
         	}
 	});
 	
-	//Set town code to passinto servlet.
+	//Set town code to pass into servlet.
 	$("#sTown").on('input', function () {
 	    var val = this.value;
         var dValue = $('#sTownList option').filter(function() {
