@@ -5,11 +5,15 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
+import com.genesiis.campus.util.CookieHandler;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.Validator;
@@ -37,9 +41,9 @@ public class CmdStudentLogin implements ICommand {
 		log.info("testing Data ................ : EMAIL " + data.getUserKey() +"  Password  : "+data.getPassword());
 
 	String validateResult = LoginValidator.validateLogin(data);
-	//	log.info(validateResult);
-		
-		
+	
+	boolean rememberMe = data.isRemember();
+	log.info("remember me :) "+rememberMe);
 		if (validateResult.equalsIgnoreCase("True")) {
 		//	log.info(validateResult);
 			data = LoginValidator.dataSeparator(data);
@@ -48,6 +52,13 @@ public class CmdStudentLogin implements ICommand {
 			log.info("Student username : " +data.getUsername());
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
 			 dataCollection = loginDAO.findById(data);
+			
+			 if(rememberMe==true){
+				  helper.setAttribute("student", data );
+				  
+				 CookieHandler.addCookie(helper.getResponse(), message, data.getUserKey(), 2592000);
+			 }
+			 
 		}
 
 		return view;

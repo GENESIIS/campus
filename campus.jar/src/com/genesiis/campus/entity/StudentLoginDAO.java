@@ -242,13 +242,14 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
 
 		 
-				
+				final Collection<String> singleStudentCollection = singleStudent;
+				studentList.add(singleStudentCollection);
 				
 				if(encryptPassword.equals(encryptedPasswordDb)){
 					log.info("password match  :D");
 					student.setValid(true);
-					final Collection<String> singleStudentCollection = singleStudent;
-					studentList.add(singleStudentCollection);
+				
+				
 					
 				}else{
 					student.setValid(false);
@@ -310,5 +311,7 @@ public class StudentLoginDAO implements ICrud {
 
 		return bean;
 	}
+	
+	//public privilageHandling(){}
 
 }
