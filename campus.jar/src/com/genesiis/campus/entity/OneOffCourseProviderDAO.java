@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161129 JH c39-add-course-provider OneOffCourseProviderDAO.java DAO class created 
 //20161130 JH c39-add-course-provider add method coding wip
 //20161202 JH c39-add-course-provider add method code modified
+//20161206 JH c39-add-course-provider add missing parameters and remove static values
  
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,15 +89,16 @@ public class OneOffCourseProviderDAO implements ICrud{
 			preparedStatement.setString(25, courseProvider.getAddress1());
 			preparedStatement.setString(26, courseProvider.getAddress2());
 			preparedStatement.setString(27, courseProvider.getAddress3());
-			preparedStatement.setInt(28, AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+			preparedStatement.setInt(28, courseProvider.getAccountType());
 			preparedStatement.setInt(29, courseProvider.getHeadOffice());
 			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
 			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
-			preparedStatement.setBoolean(32, false);
-			preparedStatement.setBoolean(33, true);
-			preparedStatement.setInt(34, courseProvider.getCourseProviderType());
-			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setInt(36, courseProvider.getTutor());
+			preparedStatement.setInt(32, courseProvider.getCourseProviderStatus());
+			preparedStatement.setInt(33, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(34, courseProvider.getPrincipal());
+			preparedStatement.setInt(35, courseProvider.getTutor());
+			preparedStatement.setString(36, courseProvider.getCrtBy());
+			preparedStatement.setString(37, courseProvider.getModBy());
 
 			conn.commit();
 			
