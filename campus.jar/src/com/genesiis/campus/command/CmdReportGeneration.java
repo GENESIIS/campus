@@ -57,31 +57,21 @@ public class CmdReportGeneration  implements ICommand{
 					}
 				}
 				
-				 final DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
-				
+				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 		
 				
 				if(providerCode>0){
 					//List courses by course Providers
 					//param:cpcode,date range
 					final Programme programme=new Programme();
 					programme.setCourseProvider(providerCode);
-					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
-					//java.sql.Date startDate = new java.sql.Date((new Long(startDateString)).longValue());
-					//java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
-					//programme.setDisplayStartDate(startDate);
-					//programme.setDisplayStartDate((Date) df.parse(startDateString));
-					//programme.setExpiryDate((Date) df.parse(endDateString));
-					//LocalDate todayLocalDate=LocalDate.parse(startDateString);
-					//LocalDate todayEndDate=LocalDate.parse(endDateString);
-					/*programme.setDisplayStartDate( (Date)df.parse((startDateString)));
-					programme.setExpiryDate((Date)df.parse((endDateString)));*/
+					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());					
+					programme.setDisplayStartDate(df.parse((startDateString)));
+					programme.setExpiryDate((Date)df.parse((endDateString)));
 					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					helper.setAttribute("coursesList", coursesList);
-				}
-				
-			}
-			
+				}				
+			}			
 		}catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
 			systemMessage = SystemMessage.ERROR;
