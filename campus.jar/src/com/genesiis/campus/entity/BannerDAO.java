@@ -8,6 +8,8 @@
 //				Also modified code to use ApplicationStatus enum.
 //20161205 MM c2-integrate-google-banners Removed BANNERSTATUS from being considered
 //				when fetching banners to display
+//20161206 MM c2-integrate-google-banners Removed BANNERSTATUS from being retrieved 
+//				when extracting returned data
 
 package com.genesiis.campus.entity;
 
@@ -135,10 +137,9 @@ public class BannerDAO implements ICrud {
 			singleBanner.add(rs.getString("DISPLAYDURATION")); // 5
 			singleBanner.add(rs.getString("LINKTYPE")); // 6
 			singleBanner.add(rs.getString("URL")); // 7
-			singleBanner.add(rs.getString("BANNERSTATUS")); // 8
-			singleBanner.add(rs.getString("ISACTIVE")); // 9
-			singleBanner.add(rs.getString("ADVERTISER")); // 10
-			singleBanner.add(rs.getString("IMAGEPATH")); // 11
+			singleBanner.add(rs.getString("ISACTIVE")); // 8
+			singleBanner.add(rs.getString("ADVERTISER")); // 9
+			singleBanner.add(rs.getString("IMAGEPATH")); // 10
 			final Collection<String> singleBannerCollection = singleBanner;
 			bannerCollection.add(singleBannerCollection);
 		}
