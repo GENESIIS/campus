@@ -4,6 +4,8 @@ package com.genesiis.campus.command;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -51,15 +53,22 @@ public class CmdReportGeneration  implements ICommand{
 						providerCode = Integer.parseInt(providerCodeString);
 					}
 				}
+				
+				 final DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+				
+				
 				if(providerCode>0){
 					//List courses by course Providers
 					//param:cpcode,date range
-					Programme programme=new Programme();
+					final Programme programme=new Programme();
 					programme.setCourseProvider(providerCode);
-					java.sql.Date startDate = new java.sql.Date(new Long(startDateString));
-					java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
-					programme.setDisplayStartDate(startDate);
-					programme.setExpiryDate(endDate);
+					//java.sql.Date startDate = new java.sql.Date((new Long(startDateString)).longValue());
+					//java.sql.Date endDate = new java.sql.Date(new Long(endDateString));
+					//programme.setDisplayStartDate(startDate);
+					programme.setDisplayStartDate((Date) df.parse(startDateString));
+					programme.setExpiryDate((Date) df.parse(endDateString));
+					
+					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					
 					//todo:Test Data

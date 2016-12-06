@@ -62,8 +62,8 @@ public class ProgrammeDAO implements ICrud {
 				return programmeList;
 			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE=?");
-			sb.append(" AND PROG.EXPIRYDATE AND PROG.PROGRAMMESTATUS=?");
+			final StringBuilder sb = new StringBuilder("SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE>=?");
+			sb.append(" AND PROG.EXPIRYDATE<= ? AND PROG.PROGRAMMESTATUS=?");
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, programme.getCourseProvider());
