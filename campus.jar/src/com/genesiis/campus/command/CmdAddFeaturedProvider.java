@@ -113,8 +113,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 			courseProvider.setAdminAllowed(true);
 			courseProvider.setCourseProviderStatus(pStatus);
-			courseProvider.setCrtBy("admin");
-			courseProvider.setModBy("admin");
+			courseProvider.setCrtBy("admin");//to be update after the session is created
+			courseProvider.setModBy("admin");//to be update after the session is created
 
 			
 			HashMap map = new HashMap();
@@ -143,7 +143,9 @@ public class CmdAddFeaturedProvider implements ICommand{
 				courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 				courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 				courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-				courseProviderAccount.setName(helper.getParameter("accountDescription"));		
+				courseProviderAccount.setName(helper.getParameter("accountDescription"));	
+				courseProviderAccount.setCrtBy("admin");//to be update after the session is created
+				courseProviderAccount.setMobBy("admin");//to be update after the session is created
 				
 				ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
 				map.put("account", courseProviderAccount);
