@@ -7,9 +7,13 @@ package com.genesiis.campus.validation;
 //20161031 CM c9-make-inquiry-for-institute Renamed validateInquiry() methods as validateInstituteInquiry() method
 //20161126 PN c26-add-student-details: copied Validator.java class from c9 branch and implemented validateSchoolEduData(SchoolEducation education) method. 
 //20161205 PN c26-add-student-details: implemented validaProfExpData(ProfessionalExperience data) method.
+//20161205 PN c26-add-student-details: implemented subtract(final List list1, final List list2) method to get the difference of two Lists.
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -143,4 +147,21 @@ public class Validator {
 		errors.put("Email",isNotEmpty(data.getFirstName()));
 		return errors;
 	}
+	
+	/**
+	 * This method is to get the difference of two Lists.
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static List subtract(final List list1, final List list2) {
+        final ArrayList result = new ArrayList(list1);
+        final Iterator iterator = list2.iterator();
+
+        while (iterator.hasNext()) {
+            result.remove(iterator.next());
+        }
+
+        return result;
+    }
 }
