@@ -76,17 +76,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 				pStatus = ApplicationStatus.PENDING.getStatusValue();
 			}
 			
-			String accountStatus = helper.getParameter("accountStatus");
-			if(providerStatus.equalsIgnoreCase("active")){
-				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
-			}
-			if(providerStatus.equalsIgnoreCase("inactive")){
-				pStatus = ApplicationStatus.INACTIVE.getStatusValue();
-			}
-			if(providerStatus.equalsIgnoreCase("pending") ){
-				pStatus = ApplicationStatus.PENDING.getStatusValue();
-			}
-			
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Date parsed = format.parse(expireDate);
 			java.sql.Date sql = new java.sql.Date(parsed.getTime());
@@ -141,7 +130,15 @@ public class CmdAddFeaturedProvider implements ICommand{
 			if(providerType.equalsIgnoreCase("featured")){
 				courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 				courseProvider.setTutorRelated(false);
-				
+							
+				String accountStatus = helper.getParameter("accountStatus");
+				if(providerStatus.equalsIgnoreCase("active")){	
+					courseProviderAccount.setActive(true);
+				}
+				if(providerStatus.equalsIgnoreCase("inactive")){	
+					courseProviderAccount.setActive(false);
+				}
+
 				courseProviderAccount.setName(helper.getParameter("providerName"));
 				courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 				courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
