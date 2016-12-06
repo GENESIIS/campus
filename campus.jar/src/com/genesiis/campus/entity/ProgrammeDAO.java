@@ -12,6 +12,7 @@ import java.util.Collection;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
@@ -62,20 +63,16 @@ public class ProgrammeDAO implements ICrud {
 				return programmeList;
 			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT * FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER=? AND PROG.DISPLAYSTARTDATE>=?");
-			sb.append(" AND PROG.EXPIRYDATE<= ? AND PROG.PROGRAMMESTATUS=?");
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME  FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? AND PROG.PROGRAMMESTATUS=?  ");
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, programme.getCourseProvider());
-			stmt.setDate(2, programme.getDisplayStartDate());
-			stmt.setDate(3, programme.getExpiryDate());
-			stmt.setInt(4, programme.getProgrammeStatus());
-			resultSet = stmt.executeQuery();
+			stmt.setInt(2, programme.getProgrammeStatus());
+			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
-				singleProgramme.add(resultSet.getString("CPCODE"));
-				singleProgramme.add(resultSet.getString("UNIQUEPREFIX"));
-				singleProgramme.add(resultSet.getString("LOGOPATH"));
+				singleProgramme.add(resultSet.getString("PROGCODE"));
+				singleProgramme.add(resultSet.getString("PROGNAME"));				
 				programmeList.add(singleProgramme);
 			}
 
