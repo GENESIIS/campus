@@ -27,15 +27,20 @@ public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
 
 	private static HttpServletRequest request;
-
+	private static HttpServletResponse response;
+	
 	private String cco = "";
 	private String commandChoice = "";
 	private String redirectPage = "llogin.jsp";
 
-	public DataHelper(HttpServletRequest request) {
+	public DataHelper(HttpServletRequest request ) {
 		this.request = request;
 	}
 
+	public DataHelper(HttpServletRequest request,  HttpServletResponse response ) {
+		this.request = request;
+		this.response = response;
+	}
 	/**
 	 * @return String
 	 * @param request
@@ -201,6 +206,12 @@ public class DataHelper implements IDataHelper {
 	public String getRemoteAddr() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public HttpServletResponse getResponse() {
+		
+		return response;
 	}
 
 }
