@@ -56,10 +56,10 @@ public class CmdListInstitute implements ICommand{
 			}
 			
 		} catch (SQLException sqle) {
-			log.info("execute() : sqle" + sqle.toString());
+			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			log.info("execute() : e" + e.toString());
+			log.error("execute() : e" + e.toString());
 			throw e;
 		}
 		return iview;

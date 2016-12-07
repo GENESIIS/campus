@@ -86,11 +86,11 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 			}
 		} catch (SQLException sqle) {
 			message = SystemMessage.ERROR.message();
-			log.info("execute() : sqle" + sqle.toString());
+			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
 			message = SystemMessage.ERROR.message();
-			log.info("execute() : e" + e.toString());
+			log.error("execute() : e" + e.toString());
 			throw e;
 		}
 		helper.setAttribute("pesaveChangesStatus", message);
