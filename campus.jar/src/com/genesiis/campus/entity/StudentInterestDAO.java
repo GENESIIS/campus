@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.StudentInterest;
 import com.genesiis.campus.entity.model.StudentSkill;
 import com.genesiis.campus.util.ConnectionManager;
@@ -47,7 +47,7 @@ public class StudentInterestDAO implements ICrud{
 			String query = "SELECT I.[CODE],I.[NAME],I.[DESCRIPTION] "
 					+ "FROM [CAMPUS].[STUDENTINTEREST] SI "
 					+ "INNER JOIN [CAMPUS].[INTEREST] I ON "
-					+ "SI.[SKILL] = I.[CODE] WHERE SI.[STUDENT] = ?;";
+					+ "SI.[INTEREST] = I.[CODE] WHERE SI.[STUDENT] = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);

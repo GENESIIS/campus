@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class InterestDAO implements ICrud{
