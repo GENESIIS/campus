@@ -5,7 +5,9 @@
 // 		according to CREV comments.
 //20161205 DN C18-student-signup-without-using-third-party-application-dn displaySignUpPrerequisitDetails()/
 // getPreRequisitPageData() created
-//0161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
+//20161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
+//20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
+// 		and the Town within Country
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -22,6 +24,8 @@ $(document).ready(function() {
 var mobilePhoneNumber ="";
 var mobilePhoneCountryCode="";
 var mobilePhoneNetWorkCode="";
+var selectedCountryCode ="";
+var selectedTownCode = "";
 
 /**
  * displaySignUpPrerequisitDetails() function is meant to pass an ajax 
@@ -65,36 +69,72 @@ function getPreRequisitPageData(preRequistData){
 		$('<option>').val(y).text(x).appendTo(countryList);
 	});
 	
+	//getting the selected country code 
+	$('#country').on('input', function(){
+		var status = false;
+		var val = this.value; //select what is changed from the input field.
+		var dValue =$('#countryList option').
+									filter( function(){
+												if($(this).val()===val){
+													status = true;
+													return $(this).val();
+												}
+									 		}).text();
+	//populating the town list 
+	if(status){
+		selectedCountryCode = dValue;
+		extractRelaventTownList(selectedCountryCode);
+		}
+	
+
+	});
+	
+	//getting the selected town 
+	$('#town').on('input', function(){
+		var status = false;
+		var val = this.value; //select what is changed from the input field.
+		var dValue =$('#townList option').
+									filter( function(){
+												if($(this).val()===val){
+													status = true;
+													return $(this).val();
+												}
+									 		}).text();
+	//setting the hidden field with the town value in the input field
+	alert("town code value"+dValue);
+	if(status){
+		selectedTownCode = dValue;
+		$('#sTownCode').val(selectedTownCode);
+	}
+	
+});
+	
+	
+//###############################################################################	
 	//Set country code prefixed to the phone numbers.
-	$("#country").on('input', function () {
-	    var val = this.value;
-        var dValue = $('#countryList option').filter(function() {
-            return this.value === val;
-        }).data('value'); //PROBLEM WITH THE FUNCTION TEST
+//	$("#country").on('input', function () {
+//	    var val = this.value;
+//	    extractRelaventTownList('94');
+//        var dValue = $('#countryList option').filter(function() {
+//            return this.value === val;
+//        }).data('value'); //PROBLEM WITH THE FUNCTION TEST
 
-		var msg = dValue;
-        	if(msg){
-        		//$("span[class='input-group-addon']").text("+("+msg+")");
-        		//$('#sCountryCode').val(msg);
-        		extractRelaventTownList(msg);
-        	}
-	});
-	
-	//Set town code to passing to servlet.
-	$("#town").on('input', function () {
-	    var val = this.value;
-        var dValue = $('#townList option').filter(function() {
-            return this.value === val;
-        }).data('value');
-        	var msg = dValue;
-        	if(msg){
-        		$('#sTownCode').val(msg);
-        	}
-	});
+//		var msg = dValue;
+//        	if(msg){
+//        		//$("span[class='input-group-addon']").text("+("+msg+")");
+//        		//$('#sCountryCode').val(msg);
+//        		extractRelaventTownList(msg);
+//        	}
+//	});
+
 }
-
+/**
+ * accepts the country code and extract the available town information
+ * that belongs to the country and bring it to the client side form 
+ * server end
+ * @param countryCode
+ */
 function extractRelaventTownList(countryCode){
-	
 	$.ajax({
 		
 		url:"../../../StudentController",
@@ -104,6 +144,7 @@ function extractRelaventTownList(countryCode){
 		},
 		dataType:"json",
 		success: function(townObject){
+			alert(townObject.result);
 			manageTownListing(townObject);
 		},
 		error: function(townObject){
@@ -177,9 +218,15 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#town:selected').text()),"Pathway Field","pathwayError"))) {
+	} 
+//	else if (!(isFieldFilled(isempty($('#town:selected').text()),"Pathway Field","pathwayError"))) {
+//		return !validationPass;
+//	}
+	else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
+	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
+		return !validationPass;
+	}else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
 	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
 		return !validationPass;
@@ -212,7 +259,7 @@ function createJasonObject(){
 			"mobilePhoneNo":mobilePhoneNumber,
 			"mobileCountryCode":mobilePhoneCountryCode,
 			"mobileNetworkCode":mobilePhoneNetWorkCode,
-			"pathway"	:$('#town:selected').text(),//changed check forcorrectness 
+			"town"		:selectedTownCode, 
 			"userName"	:$('#userName').val(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
