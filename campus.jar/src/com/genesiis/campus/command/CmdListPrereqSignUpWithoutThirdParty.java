@@ -2,7 +2,7 @@ package com.genesiis.campus.command;
 //20161205 DN C18-student-signup-without-using-third-party-application-dn created the class 
 // CmdListPrereqSignUpWithoutThirdParty.java
 //20161206 DN C18-student-signup-without-using-third-party-application-dn refactor method to include switch statement
-
+//20161207 DN C18: modified execute() to include view.setCollection(preRequisteCollnWrapper) call from one place
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,20 +35,22 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 				case DISPLAY_PREREQUISITE_DATA:
 					ICrud country2Dao = new Country2DAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
-					view.setCollection(preRequisteCollnWrapper);
+					
 					break;
 				case DISPLAY_TOWN_DATA :
 					
 					ICrud townDao = new TownDAO();
 					preRequisteCollnWrapper = townDao.findById(Integer.parseInt(helper.getParameter("country")));
+					
 					break;
 				default:
 					Collection<String> signUpdata = new ArrayList<String>();
 					signUpdata.add(null);
 					preRequisteCollnWrapper.add(signUpdata);
-					view.setCollection(preRequisteCollnWrapper);
+					
 					break;
-			}	
+			}
+			view.setCollection(preRequisteCollnWrapper);
 		} catch(SQLException sqle) {
 			log.error("execute: SQLException "+sqle.toString());
 			throw sqle;
