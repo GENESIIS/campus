@@ -17,7 +17,6 @@ import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.SystemMessage;
 
-
 public class StudentLoginDAO implements ICrud {
 	private String code;
 	private String username;
@@ -60,7 +59,7 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoggedOutTime;
 	private String lastLoginAuthenticatedBy;
 	boolean isActive;
-	static  Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
+	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -80,6 +79,58 @@ public class StudentLoginDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * @author anuradha
+	 * @param student
+	 *            object
+	 * @return int
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+
+	public static int loginDataUpdate(Object object) throws SQLException,
+			Exception {
+		Connection conn = null;
+		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?,  WHERE CODE=? ";
+		PreparedStatement ps = null;
+		Student student = (Student) object;
+		int rowInserted = 0;
+		try {
+			conn = ConnectionManager.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, student.getLastLoggedInUserAgent());
+			ps.setString(2, student.getLastLoggedInSessionid());
+			ps.setString(3, student.getLastLoggedInDate());
+			ps.setString(4, student.getLastLoggedInTime());
+			ps.setString(5, student.getLastLoggedInIpAddress());
+
+			rowInserted = ps.executeUpdate();
+
+			if (rowInserted > 0) {
+				rowInserted = 1;
+			} else {
+				rowInserted = 0;
+			}
+		} catch (SQLException e) {
+			log.info("loginDataUpdate(): SQLexception" + e.toString());
+			throw e;
+		} catch (Exception ex) {
+			log.info("loginDataUpdate(): Exception" + ex.toString());
+			throw ex;
+		} finally {
+
+			if (ps != null) {
+				ps.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+		return rowInserted;
+	}
+
 	@Override
 	public Collection<Collection<String>> findById(Object data)
 			throws SQLException, Exception {
@@ -89,7 +140,8 @@ public class StudentLoginDAO implements ICrud {
 		String encryptPassword = null;
 		String encryptedPasswordDb;
 		String decryptedPassword = null;
-		Collection<Collection<String>> studentList = null;
+		Collection<Collection<String>> studentList = new ArrayList<Collection<String>>();
+
 		PreparedStatement preparedStatement = null;
 		String message = "Sorry, you are not a registered user! Please sign up first";
 		final Student student = (Student) data;
@@ -97,8 +149,10 @@ public class StudentLoginDAO implements ICrud {
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, IMAGEPATH, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
 			log.info(student.getEmail() + "" + student.getPassword());
-			Encryptable passwordEncryptor = new TripleDesEncryptor(student.getPassword().trim());
-			encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
+			Encryptable passwordEncryptor = new TripleDesEncryptor(student
+					.getPassword().trim());
+			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
+					.trim();
 			log.info(encryptPassword);
 
 			conn = ConnectionManager.getConnection();
@@ -113,7 +167,7 @@ public class StudentLoginDAO implements ICrud {
 				message = "not valid user ";
 				student.setValid(false);
 			} else if (check) {
-				
+
 				log.info("ohhh yeah......");
 				code = rs.getString("CODE");
 				username = rs.getString("USERNAME");
@@ -198,12 +252,13 @@ public class StudentLoginDAO implements ICrud {
 				student.setActive(isActive);
 
 				final ArrayList<String> singleStudent = new ArrayList<String>();
+				final Collection<String> singleStudentCollection = singleStudent;
 
 				singleStudent.add(code);
 				singleStudent.add(username); // 0
 				singleStudent.add(rs.getString("USERNAME")); // 1
-			//	encryptedPasswordDb = rs.getString("PASSWORD").trim();
-			//	singleStudent.add(encryptedPasswordDb); // 2
+				// encryptedPasswordDb = rs.getString("PASSWORD").trim();
+				// singleStudent.add(encryptedPasswordDb); // 2
 				singleStudent.add(indexNo); // 3
 				singleStudent.add(firstName); // 4
 				singleStudent.add(middleName); // 5
@@ -241,17 +296,11 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoggedOutTime); // 24
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
 
-		 
-				final Collection<String> singleStudentCollection = singleStudent;
-				studentList.add(singleStudentCollection);
-				
-				if(encryptPassword.equals(encryptedPasswordDb)){
+				if (encryptPassword.equals(encryptedPasswordDb)) {
 					log.info("password match  :D");
 					student.setValid(true);
-				
-				
-					
-				}else{
+					studentList.add(singleStudentCollection);
+				} else {
 					student.setValid(false);
 					message = "not valid user ";
 					log.info("password not match :(");
@@ -276,7 +325,7 @@ public class StudentLoginDAO implements ICrud {
 
 		}
 
-		return null;
+		return studentList;
 	}
 
 	@Override
@@ -311,7 +360,7 @@ public class StudentLoginDAO implements ICrud {
 
 		return bean;
 	}
-	
-	//public privilageHandling(){}
+
+	// public privilageHandling(){}
 
 }
