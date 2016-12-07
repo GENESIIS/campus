@@ -100,11 +100,11 @@ public class StudentSkillDAO implements ICrud{
 		int result = -1;
 
 		try {
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSkill());
 			preparedStatement.setString(3, data.getCrtBy());
-			preparedStatement = connection.prepareStatement(query);
-		
+			
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.info("add(): SQLE: " + sqle.toString());
@@ -137,9 +137,10 @@ public class StudentSkillDAO implements ICrud{
 		int result = -1;
 
 		try {
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSkill());
-			preparedStatement = connection.prepareStatement(query);
+			
 		
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
