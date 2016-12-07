@@ -65,10 +65,10 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLE " + sqlException.toString());
+			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): E " + e.toString());
+			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -104,10 +104,10 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

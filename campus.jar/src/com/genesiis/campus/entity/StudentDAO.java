@@ -46,10 +46,10 @@ public class StudentDAO implements ICrud {
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
-			Log.info("update(Object object): SQLE " + sqlException.toString());
+			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			Log.info("update(Object object): E " + e.toString());
+			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -90,14 +90,14 @@ public class StudentDAO implements ICrud {
 			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
 
 		} catch (ClassCastException cce) {
-			Log.info("findById(Object): ClassCastException: " + cce.toString());
+			Log.error("findById(Object): ClassCastException: " + cce.toString());
 			throw new IllegalArgumentException(
 					"The argument passed is not of expected type (Programme)!");
 		} catch (SQLException sqle) {
-			Log.info("findById(Object): SQLException: " + sqle.toString());
+			Log.error("findById(Object): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			Log.info("findById(Object): Exception: " + e.toString());
+			Log.error("findById(Object): Exception: " + e.toString());
 			throw e;
 		} finally {
 			if (ps != null) {
@@ -223,10 +223,10 @@ public class StudentDAO implements ICrud {
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
-			Log.info("update(Object object): SQLE " + sqlException.toString());
+			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			Log.info("update(Object object): E " + e.toString());
+			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {

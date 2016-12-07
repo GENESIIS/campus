@@ -80,10 +80,10 @@ public class SchoolEducationDAO implements ICrud{
 				allEducationList.add(singleEducationCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLE " + sqlException.toString());
+			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): E " + e.toString());
+			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -128,10 +128,10 @@ public class SchoolEducationDAO implements ICrud{
 			preparedStatement.setInt(11, data.getMedium());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.info("add(): SQLE: " + sqle.toString());
+			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("add(): E: " + ex.toString());
+			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {
@@ -168,10 +168,10 @@ public class SchoolEducationDAO implements ICrud{
 			preparedStatement.setInt(11, data.getStudent());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.info("add(): SQLE: " + sqle.toString());
+			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("add(): E: " + ex.toString());
+			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {

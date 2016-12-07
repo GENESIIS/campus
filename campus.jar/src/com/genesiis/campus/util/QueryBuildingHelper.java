@@ -90,7 +90,7 @@ public class QueryBuildingHelper implements IQueryBuilder{
 		try {
 			queryString = gson.fromJson(data, String.class);
 		} catch (Exception e) {
-			log.info("ExtractFromgson - Exception " + e);
+			log.error("ExtractFromgson - Exception " + e);
 		}
 		return queryString;
 	}

@@ -28,6 +28,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(6, data.getOrganization());
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(3, data.getIndustry());
@@ -37,14 +38,14 @@ public class ProfessionalExperienceDAO implements ICrud{
 			preparedStatement.setDate(9, data.getCompletionOn());
 			preparedStatement.setString(10, data.getDescription());
 			preparedStatement.setString(10, data.getCrtBy());
-			preparedStatement = connection.prepareStatement(query);
+			
 		
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.info("add(): SQLE: " + sqle.toString());
+			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("add(): E: " + ex.toString());
+			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {

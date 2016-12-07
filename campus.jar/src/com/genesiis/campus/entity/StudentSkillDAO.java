@@ -66,10 +66,10 @@ public class StudentSkillDAO implements ICrud{
 				studentSkillList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			if (stmt != null) {
@@ -107,10 +107,10 @@ public class StudentSkillDAO implements ICrud{
 			
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.info("add(): SQLE: " + sqle.toString());
+			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("add(): E: " + ex.toString());
+			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {
@@ -144,10 +144,10 @@ public class StudentSkillDAO implements ICrud{
 		
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.info("add(): SQLE: " + sqle.toString());
+			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("add(): E: " + ex.toString());
+			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {
