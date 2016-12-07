@@ -97,6 +97,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		indusedStudent.setMobilePhoneNo(partialStudent.getMobilePhoneNo());
 		indusedStudent.setMobilePhoneCountryCode(partialStudent.getMobileCountryCode());
 		indusedStudent.setMobilePhoneNetworkCode(partialStudent.getMobileNetworkCode());
+		indusedStudent.setTown(partialStudent.getTown());
 		return indusedStudent;
 	}
 	
@@ -112,7 +113,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		innerCollection.add(partialStudent.getGender());
 		innerCollection.add(partialStudent.getMobilePhoneNo());
 		innerCollection.add(partialStudent.getEmail());
-		innerCollection.add(partialStudent.getPathway());//
+		innerCollection.add(partialStudent.getTown());//
 		innerCollection.add(partialStudent.getUserName());
 		innerCollection.add(partialStudent.getPassWord());
 		innerCollection.add(partialStudent.getConfirmPw());
@@ -137,7 +138,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			val.isNotEmpty(row.getGender());	
 			val.isValidPhoneNumber(row.getMobilePhoneNo());
 			val.validateEmail(row.getEmail());
-			val.isNotEmpty(row.getPathway());
+			val.isNotEmpty(row.getTown());
 			val.isNotEmpty(row.getUserName());
 			val.isStringContainsAlphaNumericAndUnderscore(row.getUserName(), 5);
 			val.isNotEmpty(row.getPassWord());
