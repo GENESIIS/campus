@@ -86,7 +86,15 @@ function addSkillDetails() {
 		},
 		dataType : "json",
 		success : function(data) {			
-			alert(data);
+			alert(data.skillChangesStatus);
+			extStudentSkills = [];
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				extStudentSkills.push(parseInt(data[0]));
+				$('.example_objects_as_tags > > input').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+			});
+			
 //			if(data.studentPersonalStatus){	
 //					if(data.studentPersonalStatus === "Unsuccessful."){
 //						$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
