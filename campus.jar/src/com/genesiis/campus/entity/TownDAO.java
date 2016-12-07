@@ -73,6 +73,7 @@ public class TownDAO implements ICrud{
 				conn.close();
 			}
 		}
+		
 		return allTownList;
 	}
 
