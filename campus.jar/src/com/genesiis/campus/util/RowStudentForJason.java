@@ -16,7 +16,7 @@ public class RowStudentForJason{
 	String mobilePhoneNo;
 	String mobileCountryCode;
 	String mobileNetworkCode;
-	String pathway	;
+	String town	;
 	String userName	;
 	String passWord	;
 	String confirmPw;
@@ -69,11 +69,11 @@ public class RowStudentForJason{
 	public void setMobilePhoneNo(String mobilePhoneNo) {
 		this.mobilePhoneNo = mobilePhoneNo;
 	}
-	public String getPathway() {
-		return pathway;
+	public String getTown() {
+		return town;
 	}
-	public void setPathway(String pathway) {
-		this.pathway = pathway;
+	public void setTown(String pathway) {
+		this.town = pathway;
 	}
 	public String getUserName() {
 		return userName;
