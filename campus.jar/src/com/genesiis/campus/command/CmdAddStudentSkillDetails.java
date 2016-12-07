@@ -1,11 +1,13 @@
 package com.genesiis.campus.command;
 
 //20161206 PN c26-add-student-details INIT CmdAddStudentSkillDetails.java. Implemented execute() method.
+//20161207 PN c26-add-student-details: modified execute() method by adding status messages.
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -79,8 +81,12 @@ public class CmdAddStudentSkillDetails implements ICommand {
 					skillDao.add(skill, connection);
 				}
 			}	
+			message = SystemMessage.SUCCESS.message();
 			// Commit if all the updations/additions successfully completed.
 			connection.commit();
+			
+			Collection<Collection<String>> studentSkillCollection = skillDao.findById(StudentCode);
+			view.setCollection(studentSkillCollection);		
 		} catch (SQLException sqle) {
 			message = SystemMessage.ERROR.message();
 			log.info("execute() : sqle" + sqle.toString());
@@ -94,7 +100,7 @@ public class CmdAddStudentSkillDetails implements ICommand {
 				connection.close();
 			}
 		}
-
+		helper.setAttribute("skillChangesStatus", message);
 		return view;
 	}
 }
