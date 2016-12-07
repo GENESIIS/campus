@@ -2,6 +2,7 @@
 //		   PN c26-add-student-details: implemented addSkillDetails() Ajax method.
 
 var extStudentSkills = [];
+var extStudentInterests = [];
 
 $(document).ready(function() {
 	$.ajax({
@@ -13,8 +14,8 @@ $(document).ready(function() {
 		success : function(response) {
 			alert(response.result);
 			var inputValues = createJsonObj(response.result);
-			
-			$('.example_objects_as_tags > > input').tagsinput({
+			alert(inputValues);
+			$('#studentSkills').tagsinput({
 				  itemValue: 'value',
 				  itemText: 'text',
 				  typeahead: {
@@ -23,13 +24,34 @@ $(document).ready(function() {
 				    }
 				  }
 			});
-			
+			alert(response.stskillCollection);
 			$.each(response.stskillCollection, function(index, value) {
 				var res = value.toString();
 				var data = res.split(",");
 				extStudentSkills.push(parseInt(data[0]));
-				$('.example_objects_as_tags > > input').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+				$('#studentSkills').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
 			});
+			
+			alert(response.interestCollection);
+			var inputValues2 = createJsonObj(response.interestCollection);
+			alert(inputValues2);
+			$('#studentInterests').tagsinput({
+				  itemValue: 'value',
+				  itemText: 'text',
+				  typeahead: {
+				    source: function(query) {
+				      return $.parseJSON(inputValues2);
+				    }
+				  }
+			});
+			alert(response.stinterestCollection);
+			$.each(response.stinterestCollection, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				extStudentInterests.push(parseInt(data[0]));
+				$('#studentInterests').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+			});
+			
 		},
 		error : function(response) {
 			alert("Error: "+response);
@@ -37,12 +59,48 @@ $(document).ready(function() {
 	});
 });
 
+/**
+ * This method is to save student interests into the DB.
+ * @returns
+ */
+function addInterestsDetails() {
+	var values = $("#studentInterests").val();
+	var prevalues = extStudentInterests;
+	
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			oldStudentInterests : prevalues.toString(),
+			newStudentInterests : values,
+			CCO : "ASI"
+		},
+		dataType : "json",
+		success : function(data) {			
+			extStudentInterests = [];
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				extStudentInterests.push(parseInt(data[0]));
+				$('#studentInterests').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+			});
+			
+//			if(data.studentPersonalStatus){	
+//					if(data.studentPersonalStatus === "Unsuccessful."){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+//					}else if(data.studentPersonalStatus === "Invalid Information"){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+//					}
+//				clearPersonalDetailsForm();	
+//				$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+//			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+		}
+	});
+}
 
-//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    });
-//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 4 , "text": "Washington"  , "continent": "America"   });
-//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 7 , "text": "Sydney"      , "continent": "Australia" });
-//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 10, "text": "Beijing"     , "continent": "Asia"      });
-//$('.example_objects_as_tags > > input').tagsinput('add', { "value": 13, "text": "Cairo"       , "continent": "Africa"    });
 
 /**
  * This method generates a Json object to pass into tag-it input.
@@ -86,7 +144,6 @@ function addSkillDetails() {
 		},
 		dataType : "json",
 		success : function(data) {			
-			alert(data.skillChangesStatus);
 			extStudentSkills = [];
 			$.each(response.result, function(index, value) {
 				var res = value.toString();

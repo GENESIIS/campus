@@ -24,6 +24,17 @@
           </div>
 				<button onclick="addSkillDetails()">Save Skills </button>
 		</div>
+		
+		<br><br>
+		
+		<h3>Interests</h3>     
+        <div class="example example_objects_as_tags">
+          <div class="bs-docs-example">
+            <input type="text" id="studentInterests" name="studentInterests"/>
+          </div>
+				<button onclick="addInterestsDetails()">Save Interests </button>
+		</div>
+		
       </section>
     </div>
 
