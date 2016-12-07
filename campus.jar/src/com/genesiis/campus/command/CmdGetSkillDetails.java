@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 //20161206 PN c26-add-student-details INIT CmdGetSkillDetails.java
 //         PN c26-add-student-details implement execute() method.
 //		   PN c26-add-student-details modified execute() method to get student's existing skill data.
-//20161207 PN c26-add-student-details modified execute() method to get student's existing interest data and all interest data..
+//20161207 PN c26-add-student-details modified execute() method to get student's existing interest data and all interest data.
 
 import java.sql.SQLException;
 import java.util.Collection;
