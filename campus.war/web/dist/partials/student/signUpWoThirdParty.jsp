@@ -239,9 +239,9 @@
             </div>
             <!-- End Condition agreement -->
 
-<!--             <div class="input-field"> -->
-<!--                 <button class="btn-create" onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button> -->
-<!--             </div> -->
+            <div class="input-field">
+                <button class="btn-create" onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button>
+            </div>
             <!-- End submit button -->
 
         </div>
