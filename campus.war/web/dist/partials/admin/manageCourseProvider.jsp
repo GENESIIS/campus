@@ -113,14 +113,14 @@
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
-
+<c:set var="headOfficeValue" value=${headOfficeCode }/>
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Head office code :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="headOffice"
-										id="headOffice" size="30px;" value="" readonly="readonly" />
+										id="headOffice" size="30px;" value="${headOfficeValue }" readonly="readonly" />
 								</div>
 							</li>
 							<!-- end -->

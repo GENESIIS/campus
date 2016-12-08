@@ -120,7 +120,7 @@
 									<h1 class="pro-name">Head office code :</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="headOfficeCode"
+									<input class="input" type="hidden" name="headOfficeCode"
 										id="headOfficeCode" size="20px;" value="" />
 								</div>
 							</li>
