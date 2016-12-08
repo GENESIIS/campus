@@ -6,7 +6,6 @@
 $(document).ready(function() {
 	arrangeUI();
 });
-var message = document.getElementById("usermessage").value;
 
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
