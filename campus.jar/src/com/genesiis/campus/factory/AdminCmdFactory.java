@@ -4,7 +4,9 @@ package com.genesiis.campus.factory;
 //20161122 JH c39-add-course-provider implemented ICmdFactory
 //20161122 JH c39-add-course-provider added new map for ADD_FEATURED_COURSE_PROVIDER
 //20161201 JH c39-add-course-provider added new map for ADD_ONE_OFF_COURSE_PROVIDER
+//20161208 JH c39-add-course-provider added new map for COURSE_PROVIDER_VALIDATION
 
+import com.genesiis.campus.command.CmdAddCourseProviderAccount;
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.command.CmdListCategories;
@@ -20,7 +22,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.LIST_CATEGORY_LANDING_PAGE, new CmdListCategoryLandingPage());
 		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());
 		map.put(Operation.ADD_FEATURED_COURSE_PROVIDER, new CmdAddFeaturedProvider());
-//		map.put(Operation.ADD_ONE_OFF_COURSE_PROVIDER, new CmdAddOneOffProvider());
+		map.put(Operation.COURSE_PROVIDER_VALIDATION, new CmdAddCourseProviderAccount());
 
 	}
 
@@ -35,9 +37,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		case LIST_CATEGORY_DATA :
 			command = map.get(o);
 			break;
-//		case ADD_ONE_OFF_COURSE_PROVIDER:
-//			command = map.get(o);
-//			break;
+		case COURSE_PROVIDER_VALIDATION:
+			command = map.get(o);
+			break;
 		default:
 			break;
 		}
