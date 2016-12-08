@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20161202 JH c39-add-course-provider fixed null point exception in execute method
 //20161202 JH c39-add-course-provider code refactor to support one-off and featured provider registration
 //20161206 JH c39-add-course-provider get accountStatus of the user account
+//20161208 JH c39-add-course-provider code modified due to entity class method changes
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -145,7 +146,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 				courseProviderAccount.setName(helper.getParameter("accountDescription"));	
 				courseProviderAccount.setCrtBy("admin");//to be update after the session is created
-				courseProviderAccount.setMobBy("admin");//to be update after the session is created
+				courseProviderAccount.setModBy("admin");//to be update after the session is created
 				
 				ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
 				map.put("account", courseProviderAccount);
@@ -153,6 +154,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				
 			}else if(providerType.equalsIgnoreCase("one-off")){
 				courseProvider.setTutorRelated(false);
+				courseProvider.setAdminAllowed(false);
 				
 				ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
 				courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());

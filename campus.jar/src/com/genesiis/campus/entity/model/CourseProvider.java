@@ -521,7 +521,7 @@ public class CourseProvider {
 	/**
 	 * @return the modOn
 	 */
-	public Date getModOn) {
+	public Date getModOn() {
 		return modOn;
 	}
 
