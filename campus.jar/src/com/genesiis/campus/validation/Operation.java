@@ -9,10 +9,11 @@ package com.genesiis.campus.validation;
 //20161122 JH c39-add-course-provider : added ADD_FEATURED_COURSE_PROVIDER
 //20161129 JH c39-add-course-provider : modify response url for ADD_FEATURED_COURSE_PROVIDER	
 //20161201 JH c39-add-course-provider : added ADD_ONE_OFF_COURSE_PROVIDER
+//20161208 JH c39-add-course-provider : added COURSE_PROVIDER_VALIDATION
 
 /**
  * Operation class facilitate in binding the CCO
- * 
+ *  
  */
 public enum Operation {
 	
@@ -20,7 +21,8 @@ public enum Operation {
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
 	ADD_FEATURED_COURSE_PROVIDER("ADD_FEATURED_COURSE_PROVIDER",  ResponseType.JSON, "" ),
-	ADD_ONE_OFF_COURSE_PROVIDER("ADD_ONE_OFF_COURSE_PROVIDER", ResponseType.JSON, "" );
+	ADD_ONE_OFF_COURSE_PROVIDER("ADD_ONE_OFF_COURSE_PROVIDER", ResponseType.JSON, "" ),
+	COURSE_PROVIDER_VALIDATION("COURSE_PROVIDER_VALIDATION", ResponseType.JSON, "" );
 			
 	
 	private final String commandString;
