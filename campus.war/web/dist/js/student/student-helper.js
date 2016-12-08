@@ -9,8 +9,8 @@
 //20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
 //20161205 PN c26-add-student-details: validateStudentPersonalDetails() implementation completed.
 //          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
-//20161206 PN c26-add-student-details: This JavaScript is to populate tagitUI with DB values.
-//		   PN c26-add-student-details: implemented addSkillDetails() Ajax method.
+//20161206 PN CAM-26 add-student-details: This JavaScript is to populate tagitUI with DB values.
+//		   PN CAM-26 add-student-details: implemented addSkillDetails(),addInterestsDetails() and createObject() methods.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -125,7 +125,7 @@ function getStudentData(response) {
         	$('#sseIndexNo').val(data[6]);
         	$('#sseSchool').val(data[7]);
         	$('#sseAchievedon').val(data[8]);
-        	$('#sseCountry').val("Russian Federation");
+        	$('#sseCountry').val(data[4]);
         	$('#sseDescription').val(data[9]);       	
         });
     }
@@ -602,6 +602,116 @@ function clearPersonalDetailsForm(){
 	$('#sCountryCode').val("");
 	$("#studentPersonalStatus").hide();
 }
+
+/**
+ * This method is to save student interests into the DB.
+ * @returns
+ */
+function addInterestsDetails() {
+	var values = $("#studentInterests").val();
+	var prevalues = extStudentInterests;
+	
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			oldStudentInterests : prevalues.toString(),
+			newStudentInterests : values,
+			CCO : "ASI"
+		},
+		dataType : "json",
+		success : function(data) {			
+			extStudentInterests = [];
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				extStudentInterests.push(parseInt(data[0]));
+				$('#studentInterests').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+			});
+			
+//			if(data.studentPersonalStatus){	
+//					if(data.studentPersonalStatus === "Unsuccessful."){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+//					}else if(data.studentPersonalStatus === "Invalid Information"){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+//					}
+//				clearPersonalDetailsForm();	
+//				$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+//			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+		}
+	});
+}
+
+
+/**
+ * This method generates a Json object to pass into tag-it input.
+ * @param response
+ * @returns
+ */
+function createJsonObj(response){
+	var inputValues = "";
+	var startBrc = "[";
+	var endBrc = "]";
+	var elements = "";
+	
+	$.each(response, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var result = '{ "value": '+parseInt(data[0])+ ', "text": "' +data[1]+ '" , "continent": "A" },';
+		elements = elements.concat(result);
+	});
+	startBrc = startBrc.concat(elements.slice(0, -1));
+	endBrc = startBrc.concat(endBrc);
+	inputValues = endBrc;
+	return inputValues;
+}
+
+
+/**
+ * This method is to save student skills into the DB.
+ * @returns
+ */
+function addSkillDetails() {
+	var values = $("#studentSkills").val();
+	var prevalues = extStudentSkills;
+	
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			oldStudentSkills : prevalues.toString(),
+			newStudentSkills : values,
+			CCO : "ASS"
+		},
+		dataType : "json",
+		success : function(data) {			
+			extStudentSkills = [];
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				extStudentSkills.push(parseInt(data[0]));
+				$('.example_objects_as_tags > > input').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+			});
+			
+//			if(data.studentPersonalStatus){	
+//					if(data.studentPersonalStatus === "Unsuccessful."){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+//					}else if(data.studentPersonalStatus === "Invalid Information"){
+//						$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+//					}
+//				clearPersonalDetailsForm();	
+//				$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+//			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+		}
+	});
+}
+
 
 
 /**

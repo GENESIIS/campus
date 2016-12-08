@@ -28,7 +28,7 @@ public class StudentCmdFactory implements ICmdFactory{
 		map.put(Operation.UPDATE_SCHOOLEDUCATION_DATA, new CmdUpdateSchoolEducationData());
 		map.put(Operation.ADD_PROFESSIONAL_EXP, new CmdAddProfessionalExpDetails());
 		map.put(Operation.UPDATE_PROFESSIONAL_EXP, new CmdAddSchoolEducationData());
-		map.put(Operation.DELETE_PROFESSIONAL_EXP, new CmdAddSchoolEducationData()); 
+		map.put(Operation.ADD_SCHOOLEDUCATION_DATA, new CmdAddSchoolEducationData()); 
 		map.put(Operation.GET_TOWN_DETAILS, new CmdGetTownDetails()); 
 		map.put(Operation.ADD_STUDENT_DETAILS, new CmdAddStudentPersonlDetails()); 
 		map.put(Operation.GET_SKILL_DETAILS, new CmdGetSkillDetails());
