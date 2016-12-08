@@ -2,14 +2,16 @@
 //20161116 JH c7-higher-education-landing-page-MP change displayCategory() method
 //20161117 JH c7-higher-education-landing-page-MP displayCategories() method created
 //20161201 JH c39-add-course-provider added document ready function 
+//20161208 JH c39-add-course-provider modified JavaScript function to load category data without onload function 
 
 /**
- * This method is to load category details
+ * This method is to load category details to the header
  */
 
-$( document ).ready(function() {
-	getCategoryData() ;
-});
+window.onload = function(){ 
+	getCategoryData();
+};
+
 
 window.categoryCollection = null;
 
