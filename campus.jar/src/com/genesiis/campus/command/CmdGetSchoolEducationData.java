@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 //20161124 PN c26-add-student-details: INIT CmdGetSchoolEducationData.java class.
 //20161125 PN c26-add-student-details: implemented execute() method to load data to student education details
 //20161125 PN c26-add-student-details: modified execute() method to load student personal details.
+//20161208 PN c26-add-student-details: modified execute() method to load student skills and interest details.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -9,11 +10,15 @@ import java.util.Collection;
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.InterestDAO;
 import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.entity.MediumDAO;
 import com.genesiis.campus.entity.SchoolEducationDAO;
 import com.genesiis.campus.entity.SchoolGradeDAO;
+import com.genesiis.campus.entity.SkillDAO;
 import com.genesiis.campus.entity.StudentDAO;
+import com.genesiis.campus.entity.StudentInterestDAO;
+import com.genesiis.campus.entity.StudentSkillDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import org.apache.log4j.Logger;
@@ -50,6 +55,10 @@ public class CmdGetSchoolEducationData implements ICommand {
 		ICrud mediumDao = new MediumDAO();
 		ICrud country2Dao = new Country2DAO();
 		ICrud studentDao = new StudentDAO();
+		ICrud skillDao = new SkillDAO();
+		ICrud studentSkillDao =  new StudentSkillDAO();
+		ICrud interestDao = new InterestDAO();
+		ICrud studentInterestDao =  new StudentInterestDAO();
 		
 		Collection<Collection<String>> schoolEducationCollection = schoolEducationDao.findById(StudentCode);
 		view.setCollection(schoolEducationCollection);
@@ -68,8 +77,20 @@ public class CmdGetSchoolEducationData implements ICommand {
 		
 		Student student = new Student();
 		student.setCode(StudentCode);
-		Collection<Collection<String>> studentCollection = studentDao.findById(student.getCode());
+		Collection<Collection<String>> studentCollection = studentDao.findById(student);
 		helper.setAttribute("studentCollection", studentCollection);
+		
+		Collection<Collection<String>> skillCollection = skillDao.getAll();
+		helper.setAttribute("skillCollection", skillCollection);
+		
+		Collection<Collection<String>> stskillCollection = studentSkillDao.findById(StudentCode);
+		helper.setAttribute("stskillCollection", stskillCollection);
+		
+		Collection<Collection<String>> interestCollection = interestDao.getAll();
+		helper.setAttribute("interestCollection", interestCollection);
+		
+		Collection<Collection<String>> stinterestCollection = studentInterestDao.findById(StudentCode);
+		helper.setAttribute("stinterestCollection", stinterestCollection);
 
 		return view;
 	}
