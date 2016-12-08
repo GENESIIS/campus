@@ -20,19 +20,6 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery.min.js"></script>
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-<script src="/dist/js/main.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
-
-<!-- custom javascript -->
-<script language="JavaScript" type="text/javascript"
-	src="/dist/js/header/ui-populate-helper.js"></script>
-<script src="/dist/js/admin/ui-populate-helper.js"></script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -111,7 +98,8 @@
 			<!-- Page content -->
 
 
-			<input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
+			<input type="hidden" name="CCO" id="CCO"
+				value="ADD_FEATURED_COURSE_PROVIDER" />
 			<div class="content-holder center-block clearfix">
 				<c:if test="${not empty userMessage }">
 					<div class="alert alert-danger" role="alert" id="usermessage"></div>
@@ -298,11 +286,11 @@
 									<h1 class="pro-name">Country :</h1>
 								</div>
 								<div class="col-name">
-								<!-- 	<input class="input" type="text" name="country" id="country"
+									<!-- 	<input class="input" type="text" name="country" id="country"
 										size="50px;" />  		 -->
-										<select>
+									<select>
 										<option>--Default--</option>
-										</select>
+									</select>
 								</div>
 							</li>
 							<!-- end -->
@@ -312,11 +300,11 @@
 									<h1 class="pro-name">Town :</h1>
 								</div>
 								<div class="col-name">
-								<!-- 	<input class="input" type="text" name="town" id="town"
-										size="50px;" />			-->	
-										<select>
+									<!-- 	<input class="input" type="text" name="town" id="town"
+										size="50px;" />			-->
+									<select>
 										<option>--Default--</option>
-										</select>
+									</select>
 								</div>
 							</li>
 							<!-- end -->
@@ -531,12 +519,12 @@
 										<input type="radio" name="accountStatus" id="accountStatus"
 											value="active" /> Active &nbsp; <input type="radio"
 											name="accountStatus" id="accountStatus" value="inactive" />
-										InActive &nbsp; 
+										InActive &nbsp;
 									</h1>
 								</div>
 							</li>
 							<!-- end -->
-							
+
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Description :</h1>
@@ -563,12 +551,12 @@
 				<!-- End left panel -->
 		</form>
 
-	<!-- 	<form action="/AdminController" method="POST">
+		<!-- 	<form action="/AdminController" method="POST">
 			<!-- course filter panel : left side -->
 		<!-- 	<div class="course-filter-panel" id="logoPanel">
 				<h3>Course Provider Images</h3>
 				<!-- Filter result table -->
-	<!--			<div class="filter-result-table">
+		<!--			<div class="filter-result-table">
 					<ul class="result-row">
 						<li class="course-info clearfix" id="smallImg">
 							<div class="col-name">
@@ -581,7 +569,7 @@
 						</li>
 						<!-- end -->
 
-	<!--					<li class="course-info clearfix" id="largeImg">
+		<!--					<li class="course-info clearfix" id="largeImg">
 							<div class="col-name">
 								<h1 class="pro-name">Logo image (Large) :</h1>
 							</div>
@@ -592,7 +580,7 @@
 						</li>
 						<!-- end -->
 
-	<!--					<li class="course-info clearfix" id="headerImg">
+		<!--					<li class="course-info clearfix" id="headerImg">
 							<div class="col-name">
 								<h1 class="pro-name">Header Image :</h1>
 							</div>
@@ -603,7 +591,7 @@
 						</li>
 						<!-- end -->
 
-	<!--					<li class="course-info clearfix" id="commonImg">
+		<!--					<li class="course-info clearfix" id="commonImg">
 							<div class="col-name">
 								<h1 class="pro-name">Common Image :</h1>
 							</div>
@@ -616,10 +604,10 @@
 		<!--			</ul>
 				</div>
 				<!-- End filter result table -->
-	<!--			<input type="submit" value="Add" class="btn btn-success" />
+		<!--			<input type="submit" value="Add" class="btn btn-success" />
 			</div>
 			<!-- End left panel -->
-	<!--	</form> -->
+		<!--	</form> -->
 	</div>
 	<!-- End page content  -->
 	</div>
@@ -628,6 +616,20 @@
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
+
+	<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+
+	<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
+
+	<!-- custom javascript -->
+	<script language="JavaScript" type="text/javascript"
+		src="/dist/js/header/ui-populate-helper.js"></script>
+	<script src="/dist/js/admin/ui-populate-helper.js"></script>
 
 </body>
 </html>
