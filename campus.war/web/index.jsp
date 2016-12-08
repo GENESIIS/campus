@@ -15,13 +15,8 @@
 	rel="stylesheet">
 <link href="dist/css/style.css" rel="stylesheet">
 
-<!-- W3-Include -->
-<script src="dist/bower-components/w3/w3data.js"></script>
-
-<!-- custom javascript -->
-<script src="/dist/js/header/ui-populate-helper.js"></script>
 </head>
-<body onload="getCategoryData()">
+<body>
 
 	<!-- Header-->
 	<header>
@@ -41,8 +36,14 @@
 	<!-- jQuery & Other js -->
 	<!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="dist/js/main.js"></script>
 
+	<!-- W3-Include -->
+	<script src="dist/bower-components/w3/w3data.js"></script>
+
+	<!-- custom javascript -->
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
+	
 </body>
 </html>
