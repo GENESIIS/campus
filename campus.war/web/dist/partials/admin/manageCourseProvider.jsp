@@ -106,12 +106,41 @@
 					<div class="alert alert-danger" role="alert" id="usermessage"></div>
 				</c:if>
 
+
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
 					<h3>Basic Info</h3>
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Head office code :</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="headOffice"
+										id="headOffice" size="30px;" value="" readonly="readonly" />
+								</div>
+							</li>
+							<!-- end -->
+
+							<!-- select the course provider type -->
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">
+										<input type="radio" name="featured-oneoff"
+											id="featured-oneoff" value="featured" /> Course Provider
+									</h1>
+								</div>
+								<div class="col-name">
+									<h1 class="pro-name">
+										<input type="radio" name="featured-oneoff"
+											id="featured-oneoff" value="one-off" /> One-Off Provider
+									</h1>
+								</div>
+							</li>
+							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Course Provider Name:</h1>
@@ -405,6 +434,8 @@
 							</li>
 							<!-- end -->
 
+
+							<!-- select the course provider type -->
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Course Provider Type :</h1>
@@ -412,21 +443,6 @@
 								<div class="col-name">
 									<input class="input" type="text" name="providerType"
 										id="providerType" size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="featured-oneoff"
-											id="featured-oneoff" value="featured" /> Course Provider
-									</h1>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="featured-oneoff"
-											id="featured-oneoff" value="one-off" /> One-Off Provider
-									</h1>
 								</div>
 							</li>
 							<!-- end -->
@@ -557,58 +573,58 @@
 			<div class="course-filter-panel" id="logoPanel">
 				<h3>Course Provider Images</h3>
 				<!-- Filter result table -->
-			<div class="filter-result-table">
-				<ul class="result-row">
-					<li class="course-info clearfix" id="smallImg">
-						<div class="col-name">
-							<h1 class="pro-name">Logo image (Small) :</h1>
-						</div>
-						<div class="col-name">
-							<input class="input" type="file" name="imageSmall"
-								id="imageSmall" size="50px;" />
-						</div>
-					</li>
-					<!-- end -->
+				<div class="filter-result-table">
+					<ul class="result-row">
+						<li class="course-info clearfix" id="smallImg">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Small) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageSmall"
+									id="imageSmall" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-					<li class="course-info clearfix" id="largeImg">
-						<div class="col-name">
-							<h1 class="pro-name">Logo image (Large) :</h1>
-						</div>
-						<div class="col-name">
-							<input class="input" type="file" name="imageLarge"
-								id="imageLarge" size="50px;" />
-						</div>
-					</li>
-					<!-- end -->
+						<li class="course-info clearfix" id="largeImg">
+							<div class="col-name">
+								<h1 class="pro-name">Logo image (Large) :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageLarge"
+									id="imageLarge" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-					<li class="course-info clearfix" id="headerImg">
-						<div class="col-name">
-							<h1 class="pro-name">Header Image :</h1>
-						</div>
-						<div class="col-name">
-							<input class="input" type="file" name="imageHeader"
-								id="imageHeader" size="50px;" />
-						</div>
-					</li>
-					<!-- end -->
+						<li class="course-info clearfix" id="headerImg">
+							<div class="col-name">
+								<h1 class="pro-name">Header Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageHeader"
+									id="imageHeader" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
 
-					<li class="course-info clearfix" id="commonImg">
-						<div class="col-name">
-							<h1 class="pro-name">Common Image :</h1>
-						</div>
-						<div class="col-name">
-							<input class="input" type="file" name="imageCommon"
-								id="imageCommon" size="50px;" />
-						</div>
-					</li>
-					<!-- end -->
-				</ul>
+						<li class="course-info clearfix" id="commonImg">
+							<div class="col-name">
+								<h1 class="pro-name">Common Image :</h1>
+							</div>
+							<div class="col-name">
+								<input class="input" type="file" name="imageCommon"
+									id="imageCommon" size="50px;" />
+							</div>
+						</li>
+						<!-- end -->
+					</ul>
+				</div>
+				<!-- End filter result table -->
+				<input type="submit" value="Add" class="btn btn-success" />
 			</div>
-			<!-- End filter result table -->
-			<input type="submit" value="Add" class="btn btn-success" />
-	</div>
-	<!-- End left panel -->
-	</form>
+			<!-- End left panel -->
+		</form>
 	</div>
 	<!-- End page content  -->
 	</div>
