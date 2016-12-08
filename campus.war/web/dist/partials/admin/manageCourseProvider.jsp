@@ -3,6 +3,7 @@
 <!-- 20161123 JH c39-add-course-provider UI code modified -->
 <!-- 20161202 JH c39-add-course-provider added missing input fields -->
 <!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
+<!-- 20161208 JH c39-add-course-provider crev modifications -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -551,63 +552,63 @@
 				<!-- End left panel -->
 		</form>
 
-		<!-- 	<form action="/AdminController" method="POST">
-			<!-- course filter panel : left side -->
-		<!-- 	<div class="course-filter-panel" id="logoPanel">
+		<form action="/AdminController" method="POST">
+			<!-- course filter panel : left side-->
+			<div class="course-filter-panel" id="logoPanel">
 				<h3>Course Provider Images</h3>
 				<!-- Filter result table -->
-		<!--			<div class="filter-result-table">
-					<ul class="result-row">
-						<li class="course-info clearfix" id="smallImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Small) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageSmall"
-									id="imageSmall" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
+			<div class="filter-result-table">
+				<ul class="result-row">
+					<li class="course-info clearfix" id="smallImg">
+						<div class="col-name">
+							<h1 class="pro-name">Logo image (Small) :</h1>
+						</div>
+						<div class="col-name">
+							<input class="input" type="file" name="imageSmall"
+								id="imageSmall" size="50px;" />
+						</div>
+					</li>
+					<!-- end -->
 
-		<!--					<li class="course-info clearfix" id="largeImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Large) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageLarge"
-									id="imageLarge" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
+					<li class="course-info clearfix" id="largeImg">
+						<div class="col-name">
+							<h1 class="pro-name">Logo image (Large) :</h1>
+						</div>
+						<div class="col-name">
+							<input class="input" type="file" name="imageLarge"
+								id="imageLarge" size="50px;" />
+						</div>
+					</li>
+					<!-- end -->
 
-		<!--					<li class="course-info clearfix" id="headerImg">
-							<div class="col-name">
-								<h1 class="pro-name">Header Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageHeader"
-									id="imageHeader" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
+					<li class="course-info clearfix" id="headerImg">
+						<div class="col-name">
+							<h1 class="pro-name">Header Image :</h1>
+						</div>
+						<div class="col-name">
+							<input class="input" type="file" name="imageHeader"
+								id="imageHeader" size="50px;" />
+						</div>
+					</li>
+					<!-- end -->
 
-		<!--					<li class="course-info clearfix" id="commonImg">
-							<div class="col-name">
-								<h1 class="pro-name">Common Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageCommon"
-									id="imageCommon" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-		<!--			</ul>
-				</div>
-				<!-- End filter result table -->
-		<!--			<input type="submit" value="Add" class="btn btn-success" />
+					<li class="course-info clearfix" id="commonImg">
+						<div class="col-name">
+							<h1 class="pro-name">Common Image :</h1>
+						</div>
+						<div class="col-name">
+							<input class="input" type="file" name="imageCommon"
+								id="imageCommon" size="50px;" />
+						</div>
+					</li>
+					<!-- end -->
+				</ul>
 			</div>
-			<!-- End left panel -->
-		<!--	</form> -->
+			<!-- End filter result table -->
+			<input type="submit" value="Add" class="btn btn-success" />
+	</div>
+	<!-- End left panel -->
+	</form>
 	</div>
 	<!-- End page content  -->
 	</div>
