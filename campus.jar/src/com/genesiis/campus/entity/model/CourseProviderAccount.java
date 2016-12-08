@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.model;
 //20161123 JH c39-add-course-provider CourseProviderAccount.java class created
 //20161123 JH c39-add-course-provider entity class coding : create getters and setters
 //20161128 JH c39-add-course-provider change data type int into boolean for isActive 
+//20161208 JH c39-add-course-provider ReFactor mobBy variable into modBy
 
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class CourseProviderAccount {
 	private String password;
 	private String description;
 	private String crtBy;
-	private String mobBy;
+	private String modBy;
 	
 	private boolean isActive;
 	private int courseProvider;
@@ -110,14 +111,14 @@ public class CourseProviderAccount {
 	/**
 	 * @return the mobBy
 	 */
-	public String getMobBy() {
-		return mobBy;
+	public String getModBy() {
+		return modBy;
 	}
 	/**
 	 * @param mobBy the mobBy to set
 	 */
-	public void setMobBy(String mobBy) {
-		this.mobBy = mobBy;
+	public void setModBy(String modBy) {
+		this.modBy = modBy;
 	}
 
 	/**
