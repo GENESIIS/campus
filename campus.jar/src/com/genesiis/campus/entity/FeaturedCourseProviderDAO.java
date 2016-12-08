@@ -149,7 +149,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			ResultSet userTypeRS = preparedStatement3.executeQuery();
 			
 			if(userTypeRS != null){//valid default user type
-				int userTypeId = Integer.parseInt(rs.getString("CODE"));
+				int userTypeId = Integer.parseInt(userTypeRS.getString("CODE"));
 				
 				if(userTypeId !=0 ){
 					
