@@ -27,9 +27,11 @@
 	
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
+    
+    <link rel="stylesheet" href="dist/bower-components/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/tagit/bootstrap-tagsinput.css">
 
 <!-- jQuery & Other js -->
-<!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
@@ -45,17 +47,12 @@
 <script src="dist/datatable/dataTables.checkboxes.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.checkboxes.min.js" type="text/javascript" charset="utf-8"></script>
 
-<!-- TagIt JS-->
-<!-- <link rel="stylesheet" href="bootstrap-2.3.2/css/bootstrap.min.css"> -->
-<script src="dist/tagit/bootstrap-tagsinput.js"></script>
-<link rel="stylesheet" href="dist/tagit/bootstrap-tagsinput.css">
-<!-- <script src="bower_components/jquery/jquery.min.js"></script> -->
-<!-- <script src="bower_components/google-code-prettify-lite/prettify.js"></script> -->
-<!-- <script src="bootstrap-2.3.2/js/bootstrap.min.js"></script> -->
-<script src="dist/tagit/typeahead.js"></script>
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    <script src="dist/tagit/bootstrap-tagsinput.min.js"></script>
+    <script src="dist/tagit/bootstrap-tagsinput-angular.min.js"></script>
+<!--     <script src="dist/tagit/assets/app_bs2.js"></script> -->
+<!--     <script src="dist/tagit/assets/app.js"></script> -->
 
 
 
@@ -93,9 +90,6 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
         <h4 class="modal-title" id="studentPersonalDetails">School Education</h4>
       </div>
       <div class="modal-body">
@@ -161,13 +155,7 @@
 			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
 			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
 			</div>
-			
-<!-- 			<div class="input-group"> -->
-<!-- 			<span class="input-group-addon" id="countryCodePrefix">+</span> -->
-<!--       		Other Number <input type="text" name="sOtherNumber" id="sOtherNumber" onkeypress="" onclick="clearField('sOtherNumberError')"> -->
-<!-- 			<span id="sOtherNumberError" name="sOtherNumberError" style="color:red"></span><br> -->
-<!--       		</div> -->
-      		  		
+			     		  		
 			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')">
 			<span id="sEmailError" name="sEmailError" style="color:red"></span><br>
       
@@ -218,9 +206,6 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
         <h4 class="modal-title" id="studentSchoolEducation">School Education</h4>
       </div>
       <div class="modal-body">
@@ -282,9 +267,6 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
         <h4 class="modal-title" id="studentProfessionalDetails">Professional Experience</h4>
       </div>
       <div class="modal-body">			
@@ -366,19 +348,34 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-        <h4 class="modal-title" id="studentSkillDetails">Professional Experience</h4>
+        <h4 class="modal-title" id="studentSkillDetails">Student Skills and Interests.</h4>
       </div>
       <div class="modal-body">
 
-					<div>
-						<input type="text" id="category" data-role="tagsinput" />
+					<div class="container">
+						<section id="examples">
+						<h3>Skills</h3>
+						<div class="example example_objects_as_tags">
+							<div class="bs-docs-example">
+								<input type="text" id="studentSkills" name="studentSkills" />
+							</div>
+							<button onclick="addSkillDetails()">Save Skills</button>
+						</div>
+
+						<br>
+						<br>
+
+						<h3>Interests</h3>
+						<div class="example example_objects_as_tags">
+							<div class="bs-docs-example">
+								<input type="text" id="studentInterests" name="studentInterests" />
+							</div>
+							<button onclick="addInterestsDetails()">Save Interests</button>
+						</div>
+
+						</section>
 					</div>
-
-
-	 </div>					
+				</div>					
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="">Clear</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
@@ -387,21 +384,6 @@
    </div>
   </div>
 </div>
-
-
-<script>
-$("#category").tagsinput({
-	  typeahead: {
-	    source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
-	  },
-	  freeInput: true
-	});
-	$("#category").on('itemAdded', function(event) {
-	    setTimeout(function(){
-	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-	    }, 1);
-	});
-</script>
 
 </body>
 </html>

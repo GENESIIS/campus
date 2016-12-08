@@ -1,16 +1,19 @@
-/**
- * 20161125 PN this file contains all the functions to handle the student
- * details. implemented getAjaxData(response), displayDetails() methods.
- * implemented addEducationDetails(), clearSchoolEducationForm() methods.
- * 20161126 PN c26-add-student-details: implemented validateForm() and modified code in addEducationDetails() method.
- * 20161128 PN c26-add-student-details: implemented addProfessionalExpForm() method, validateProfessionalExpForm() method and clearProfessionalExpForm() method.
- * 			PN c26-add-student-details: professional details form dropdown details populate using db values.
- *			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
- * 20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
- * 20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
- * 20161205 PN c26-add-student-details: validateStudentPersonalDetails() implementation completed.
- *          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
- */
+//20161125 PN this file contains all the functions to handle the student
+// details. implemented getAjaxData(response), displayDetails() methods.
+// implemented addEducationDetails(), clearSchoolEducationForm() methods.
+//20161126 PN c26-add-student-details: implemented validateForm() and modified code in addEducationDetails() method.
+//20161128 PN c26-add-student-details: implemented addProfessionalExpForm() method, validateProfessionalExpForm() method and clearProfessionalExpForm() method.
+// 			PN c26-add-student-details: professional details form dropdown details populate using db values.
+//			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
+//20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
+//20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
+//20161205 PN c26-add-student-details: validateStudentPersonalDetails() implementation completed.
+//          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
+//20161206 PN c26-add-student-details: This JavaScript is to populate tagitUI with DB values.
+//		   PN c26-add-student-details: implemented addSkillDetails() Ajax method.
+
+var extStudentSkills = [];
+var extStudentInterests = [];
 
 $(document).ready(function() {
 	displayDetails();
@@ -150,6 +153,52 @@ function getStudentData(response) {
 		$('#sCountryList').append("<option data-value='" + x + "'>"+y+"</option>");
 	});
 	
+	//Get existing skill values.
+	alert(response.skillCollection);
+	var inputValues = createJsonObj(response.skillCollection);
+	alert(inputValues);
+	$('#studentSkills').tagsinput({
+		  itemValue: 'value',
+		  itemText: 'text',
+		  typeahead: {
+		    source: function(query) {
+		      return $.parseJSON(inputValues);
+		    }
+		  }
+	});
+	
+	//Get skills assigned with Student
+	alert(response.stskillCollection);
+	$.each(response.stskillCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		extStudentSkills.push(parseInt(data[0]));
+		$('#studentSkills').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+	});
+	
+	//Get existing interest values.
+	alert(response.interestCollection);
+	var inputValues2 = createJsonObj(response.interestCollection);
+	alert(inputValues2);
+	$('#studentInterests').tagsinput({
+		  itemValue: 'value',
+		  itemText: 'text',
+		  typeahead: {
+		    source: function(query) {
+		      return $.parseJSON(inputValues2);
+		    }
+		  }
+	});
+	
+	//Get interest assigned with Student
+	alert(response.stinterestCollection);
+	$.each(response.stinterestCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		extStudentInterests.push(parseInt(data[0]));
+		$('#studentInterests').tagsinput('add', { "value": parseInt(data[0]) , "text": data[1] , "continent": "A" });
+	});	
+	
 	//Set country code prefixed to the phone numbers.
 	$("#sCountry").on('input', function () {
 	    var val = this.value;
@@ -184,6 +233,31 @@ function getStudentData(response) {
 			}
 	});
 }
+
+/**
+ * This method generates a Json object to pass into tag-it input.
+ * @param response
+ * @returns
+ */
+function createJsonObj(response){
+	var inputValues = "";
+	var startBrc = "[";
+	var endBrc = "]";
+	var elements = "";
+	
+	$.each(response, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var result = '{ "value": '+parseInt(data[0])+ ', "text": "' +data[1]+ '" , "continent": "A" },';
+		elements = elements.concat(result);
+	});
+	startBrc = startBrc.concat(elements.slice(0, -1));
+	endBrc = startBrc.concat(endBrc);
+	inputValues = endBrc;
+	return inputValues;
+}
+
+
 
 /**
  * Get town details according to the given country code
@@ -731,7 +805,3 @@ $('#frm-example').on('submit', function(e){
  e.preventDefault();
 });
 });
-/**
- * --------------------------------------------------------------------------------------------------------------------------------------------
- * --------------------------------------------------------------------------------------------------------------------------------------------
- */
