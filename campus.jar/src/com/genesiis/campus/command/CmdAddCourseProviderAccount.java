@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161208 JH c39-add-course-provider CmdAddCourseProviderAccount.java created
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -22,6 +23,11 @@ public class CmdAddCourseProviderAccount implements ICommand{
 	
 	if(action.equalsIgnoreCase("USERNAME_VALIDATION")){//used when validating a username
 		ICrud usernameDAO = new UsernameDAO();
+		String username = helper.getParameter("username");
+		
+		  usernameDAO.findById(username);
+
+		
 	}
 	else if(action.equalsIgnoreCase("PREFIX_VALIDATION")){//used when validating prefix
 		
