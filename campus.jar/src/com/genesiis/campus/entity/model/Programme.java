@@ -4,6 +4,7 @@ package com.genesiis.campus.entity.model;
 //20161025 JH c7-list-higher-education-courses create getters and setter methods
 //20161025 JH c7-list-higher-education-courses add new fields 
 //20161026 JH c7-list-higher-education-courses setExpiryDate method modified
+//20161208 JH c39-add-course-provider renamed entryRequiremtns to entryRequirements
 
 import java.sql.Date;
 
@@ -15,7 +16,7 @@ public class Programme {
 	private String image;
 	private String description;
 	private double duration;
-	private String entryRequiremtns;
+	private String entryRequirement;
 	private String counselerName;
 	private String counselerPhone;
 	private Date displayStartDate;
@@ -125,16 +126,16 @@ public class Programme {
 	/**
 	 * @return the entryRequiremtns
 	 */
-	public String getEntryRequiremtns() {
-		return entryRequiremtns;
+	public String getEntryRequirement() {
+		return entryRequirement;
 	}
 
 	/**
 	 * @param entryRequiremtns
 	 *            the entryRequiremtns to set
 	 */
-	public void setEntryRequiremtns(String entryRequiremtns) {
-		this.entryRequiremtns = entryRequiremtns;
+	public void setEntryRequirement(String entryRequirement) {
+		this.entryRequirement = entryRequirement;
 	}
 
 	/**
