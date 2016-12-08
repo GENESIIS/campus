@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 //20161205 PN c26-add-student-details: update(Connection con, Object object) method to update student personal details. 
+//20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,19 +86,21 @@ public class StudentDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, studentCode);
-			ResultSet rs = ps.executeQuery();
+			final ResultSet rs = ps.executeQuery();
 
-			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
+			while (rs.next()) {
+				final ArrayList<String> singleList = new ArrayList<String>();
+				singleList.add(rs.getString("CODE"));
 
-		} catch (ClassCastException cce) {
-			Log.error("findById(Object): ClassCastException: " + cce.toString());
-			throw new IllegalArgumentException(
-					"The argument passed is not of expected type (Programme)!");
-		} catch (SQLException sqle) {
-			Log.error("findById(Object): SQLException: " + sqle.toString());
-			throw sqle;
+				final Collection<String> singleCollection = singleList;
+				studentDetailsCollectionList.add(singleCollection);
+			}
+
+		} catch (SQLException sqlException) {
+			Log.error("findById(): SQLE " + sqlException.toString());
+			throw sqlException;
 		} catch (Exception e) {
-			Log.error("findById(Object): Exception: " + e.toString());
+			Log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
 			if (ps != null) {
@@ -110,59 +113,6 @@ public class StudentDAO implements ICrud {
 		return studentDetailsCollectionList;
 	}
 
-	private void retrieveStudentsFromResultSet(ResultSet rs,
-			Collection<Collection<String>> studentList) throws SQLException {
-
-		while (rs.next()) {
-			final ArrayList<String> singleStudent = new ArrayList<String>();
-			singleStudent.add(rs.getString("CODE")); // 0
-			singleStudent.add(rs.getString("USERNAME")); // 1
-			singleStudent.add(rs.getString("PASSWORD")); // 2
-			singleStudent.add(rs.getString("INDEXNO")); // 3
-			singleStudent.add(rs.getString("FIRSTNAME")); // 4
-			singleStudent.add(rs.getString("MIDDLENAME")); // 5
-			singleStudent.add(rs.getString("LASTNAME")); // 6
-			singleStudent.add(rs.getString("DATEOFBIRTH")); // 7
-			singleStudent.add(rs.getString("GENDER")); // 8
-			singleStudent.add(rs.getString("EMAIL")); // 9
-			singleStudent.add(rs.getString("TYPE")); // 10
-			singleStudent.add(rs.getString("IMAGEPATH")); // 11
-			singleStudent.add(rs.getString("LANDPHONECOUNTRYCODE")); // 12
-			singleStudent.add(rs.getString("LANDPHONEAREACODE")); // 13
-			singleStudent.add(rs.getString("LANDPHONENO")); // 14
-			singleStudent.add(rs.getString("MOBILEPHONECOUNTRYCODE")); // 15
-			singleStudent.add(rs.getString("MOBILEPHONEAREACODE")); // 16
-			singleStudent.add(rs.getString("MOBILEPHONENO")); // 17
-			singleStudent.add(rs.getString("DESCRIPTION")); // 18
-			singleStudent.add(rs.getString("FACEBOOKURL")); // 19
-			singleStudent.add(rs.getString("TWITTERURL")); // 20
-			singleStudent.add(rs.getString("MYSPACEURL")); // 21
-			singleStudent.add(rs.getString("LINKEDINURL")); // 22
-			singleStudent.add(rs.getString("INSTAGRAMURL")); // 23
-			singleStudent.add(rs.getString("VIBERNUMBER")); // 24
-			singleStudent.add(rs.getString("WHATSAPPNUMBER")); // 24
-			singleStudent.add(rs.getString("ADDRESS1")); // 24
-			singleStudent.add(rs.getString("ADDRESS2")); // 24
-			singleStudent.add(rs.getString("ADDRESS3")); // 24
-			singleStudent.add(rs.getString("TOWN")); // 24
-			singleStudent.add(rs.getString("ACCOUNTTYPE")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDINUSERAGENT")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDINSESSIONID")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDINDATE")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDINTIME")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDINIPADDRESS")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDOUTDATE")); // 24
-			singleStudent.add(rs.getString("LASTLOGGEDOUTTIME")); // 24
-			singleStudent.add(rs.getString("LASTLOGINAUTHENTICATEDBY")); // 24
-			singleStudent.add(rs.getString("ISACTIVE")); // 24
-			singleStudent.add(rs.getString("CRTON")); // 24
-			singleStudent.add(rs.getString("CRTBY")); // 24
-			singleStudent.add(rs.getString("MODON")); // 24
-			singleStudent.add(rs.getString("MODBY")); // 24
-			final Collection<String> singleStudentCollection = singleStudent;
-			studentList.add(singleStudentCollection);
-		}
-	}
 
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
