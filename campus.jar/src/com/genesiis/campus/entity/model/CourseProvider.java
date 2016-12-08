@@ -24,8 +24,6 @@ public class CourseProvider {
 	private String mobilePhoneCountryCode;
 	private String mobilePhoneNetworkCode;
 	private String mobilePhoneNumber;
-	private String headerImagePath;
-	private String logoImagePath;
 	private String speciality;
 	private String weblink;
 	private String facebookURL;
@@ -43,7 +41,7 @@ public class CourseProvider {
 
 	private Date expirationDate;
 	private Date crtOn;
-	private Date monOn;
+	private Date modOn;
 
 	private boolean isTutorRelated;
 	private boolean isAdminAllowed;
@@ -278,36 +276,6 @@ public class CourseProvider {
 	 */
 	public void setMobilePhoneNumber(String mobilePhoneNumber) {
 		this.mobilePhoneNumber = mobilePhoneNumber;
-	}
-
-	/**
-	 * @return the headerImagePath
-	 */
-	public String getHeaderImagePath() {
-		return headerImagePath;
-	}
-
-	/**
-	 * @param headerImagePath
-	 *            the headerImagePath to set
-	 */
-	public void setHeaderImagePath(String headerImagePath) {
-		this.headerImagePath = headerImagePath;
-	}
-
-	/**
-	 * @return the logoImagePath
-	 */
-	public String getLogoImagePath() {
-		return logoImagePath;
-	}
-
-	/**
-	 * @param logoImagePath
-	 *            the logoImagePath to set
-	 */
-	public void setLogoImagePath(String logoImagePath) {
-		this.logoImagePath = logoImagePath;
 	}
 
 	/**
@@ -551,18 +519,18 @@ public class CourseProvider {
 	}
 
 	/**
-	 * @return the monOn
+	 * @return the modOn
 	 */
-	public Date getMonOn() {
-		return monOn;
+	public Date getModOn) {
+		return modOn;
 	}
 
 	/**
-	 * @param monOn
-	 *            the monOn to set
+	 * @param modOn
+	 *            the modOn to set
 	 */
-	public void setMonOn(Date monOn) {
-		this.monOn = monOn;
+	public void setMonOn(Date modOn) {
+		this.modOn = modOn;
 	}
 
 	/**

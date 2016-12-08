@@ -109,13 +109,13 @@ public class CourseProviderAccount {
 		this.crtBy = crtBy;
 	}
 	/**
-	 * @return the mobBy
+	 * @return the modBy
 	 */
 	public String getModBy() {
 		return modBy;
 	}
 	/**
-	 * @param mobBy the mobBy to set
+	 * @param modBy the modBy to set
 	 */
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
