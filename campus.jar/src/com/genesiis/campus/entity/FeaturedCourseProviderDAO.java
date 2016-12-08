@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161129 JH c39-add-course-provider add method coding wip
 //20161129 JH c39-add-course-provider CourseProviderDAO class renamed as FeaturedCourseProviderDAO
 //20161202 JH c39-add-course-provider add method modified
+//20161208 JH c39-add-course-provider error fixed and code ReFactored
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -140,7 +141,7 @@ public class FeaturedCourseProviderDAO implements ICrud{
 			preparedStatement2.setString(4, courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
 			preparedStatement2.setString(8, courseProviderAccount.getCrtBy());
-			preparedStatement2.setString(9, courseProviderAccount.getMobBy());
+			preparedStatement2.setString(9, courseProviderAccount.getModBy());
 			
 			
 			preparedStatement3 = conn.prepareStatement(getUserType);
