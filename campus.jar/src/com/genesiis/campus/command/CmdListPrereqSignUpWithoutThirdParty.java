@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 // CmdListPrereqSignUpWithoutThirdParty.java
 //20161206 DN C18-student-signup-without-using-third-party-application-dn refactor method to include switch statement
 //20161207 DN C18: modified execute() to include view.setCollection(preRequisteCollnWrapper) call from one place
+//20161209 DN C18: code refactor execute() to add usertype logic
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.Collection;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TownDAO;
+import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.RowStudentForJason;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.model.Town;
 import com.google.gson.Gson;
@@ -34,8 +37,9 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 			switch(op){
 				case DISPLAY_PREREQUISITE_DATA:
 					ICrud country2Dao = new Country2DAO();
+					ICrud userTypeDao = new UserTypeDAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
-					
+					helper.setAttribute("userType", userTypeDao.findById(UserType.STUDENT.getUserType()));
 					break;
 				case DISPLAY_TOWN_DATA :
 					
