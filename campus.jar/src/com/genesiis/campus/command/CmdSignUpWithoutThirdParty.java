@@ -98,6 +98,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		indusedStudent.setMobilePhoneCountryCode(partialStudent.getMobileCountryCode());
 		indusedStudent.setMobilePhoneNetworkCode(partialStudent.getMobileNetworkCode());
 		indusedStudent.setTown(partialStudent.getTown());
+		indusedStudent.setUserTypeCode(Integer.parseInt(partialStudent.getUsertypeCode()));
 		return indusedStudent;
 	}
 	
