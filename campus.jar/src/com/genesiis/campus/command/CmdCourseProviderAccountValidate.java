@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161208 JH c39-add-course-provider CmdAddCourseProviderAccount.java created
+//20161209 JH c39-add-course-provider class name renamed to CmdCourseProviderAccountValidate
 
 import java.sql.SQLException;
 import java.util.Collection;

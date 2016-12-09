@@ -5,8 +5,9 @@ package com.genesiis.campus.factory;
 //20161122 JH c39-add-course-provider added new map for ADD_FEATURED_COURSE_PROVIDER
 //20161201 JH c39-add-course-provider added new map for ADD_ONE_OFF_COURSE_PROVIDER
 //20161208 JH c39-add-course-provider added new map for COURSE_PROVIDER_VALIDATION
+//20161209 JH c39-add-course-provider COURSE_PROVIDER_VALIDATION map modified
 
-import com.genesiis.campus.command.CmdAddCourseProviderAccount;
+import com.genesiis.campus.command.CmdCourseProviderAccountValidate;
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.command.CmdListCategories;
@@ -22,7 +23,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.LIST_CATEGORY_LANDING_PAGE, new CmdListCategoryLandingPage());
 		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());
 		map.put(Operation.ADD_FEATURED_COURSE_PROVIDER, new CmdAddFeaturedProvider());
-		map.put(Operation.COURSE_PROVIDER_VALIDATION, new CmdAddCourseProviderAccount());
+		map.put(Operation.COURSE_PROVIDER_VALIDATION, new CmdCourseProviderAccountValidate());
 
 	}
 
