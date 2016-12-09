@@ -17,13 +17,19 @@ public class RowStudentForJason{
 	String mobileCountryCode;
 	String mobileNetworkCode;
 	String town	;
+	String usertypeCode;
 	String userName	;
 	String passWord	;
 	String confirmPw;
 	boolean isPolicyConfirm	;
 	
-	
-	
+
+	public String getUsertypeCode() {
+		return usertypeCode;
+	}
+	public void setUsertypeCode(String usertypeCode) {
+		this.usertypeCode = usertypeCode;
+	}	
 	public String getMobileCountryCode() {
 		return mobileCountryCode;
 	}
