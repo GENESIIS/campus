@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.UsernameDAO;
+import com.genesiis.campus.entity.FeaturedProviderUsernameDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
@@ -22,7 +22,7 @@ public class CmdAddCourseProviderAccount implements ICommand{
 	String action = 	helper.getParameter("action");
 	
 	if(action.equalsIgnoreCase("USERNAME_VALIDATION")){//used when validating a username
-		ICrud usernameDAO = new UsernameDAO();
+		ICrud usernameDAO = new FeaturedProviderUsernameDAO();
 		String username = helper.getParameter("username");
 		
 		  usernameDAO.findById(username);
