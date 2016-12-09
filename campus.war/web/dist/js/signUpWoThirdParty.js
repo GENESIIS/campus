@@ -26,7 +26,7 @@ var mobilePhoneCountryCode="";
 var mobilePhoneNetWorkCode="";
 var selectedCountryCode ="";
 var selectedTownCode = "";
-
+var userTypeCode = "";
 /**
  * displaySignUpPrerequisitDetails() function is meant to pass an ajax 
  * request to Servlet under the CCO DPRD-Display PreRequisit Data in order to extract
@@ -69,6 +69,13 @@ function getPreRequisitPageData(preRequistData){
 		$('<option>').val(y).text(x).appendTo(countryList);
 	});
 	
+	// set the USERTYPE CODE to the hidden field
+	$('#userTypeCode').Text(function(index,preRequistData){
+		var collection = preRequistData.userType[0]; //get the first collection of the collection of collection
+		return collection[0];
+	});
+	
+	
 	//getting the selected country code 
 	$('#country').on('input', function(){
 		var status = false;
@@ -85,11 +92,9 @@ function getPreRequisitPageData(preRequistData){
 		selectedCountryCode = dValue;
 		extractRelaventTownList(selectedCountryCode);
 		}
-	
-
 	});
 	
-	//getting the selected town 
+	//getting the selected town and place it on the text box
 	$('#town').on('input', function(){
 		var status = false;
 		var val = this.value; //select what is changed from the input field.
@@ -108,6 +113,9 @@ function getPreRequisitPageData(preRequistData){
 	}
 	
 });
+	
+
+	
 	
 	
 //###############################################################################	
@@ -261,6 +269,7 @@ function createJasonObject(){
 			"mobileNetworkCode":mobilePhoneNetWorkCode,
 			"town"		:selectedTownCode, 
 			"userName"	:$('#userName').val(),
+			"userCode"	:$('#userTypeCode'),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
 			"isPolicyConfirm"	:$('#policyConfirm').prop('checked')
