@@ -220,6 +220,7 @@
             <div class="input-field">
                 <label id="passWordLabel">Password :<span>*</span></label><label id="passWordError" style="color:#C70039;"></label><br>
                 <input class="text-field" type="password" name="psw" id="passWord" onclick="clearField('passWordError')">
+                 <input type="hidden"  id="userTypeCode" name="userTypeCode" />
                 <div class="pull-right show-pwrd">
                     <span class="check-box"><input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')" ></span>Show Password
                 </div>
