@@ -13,11 +13,10 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
-import org.hibernate.validator.internal.xml.ValidatedByType;
 
-public class CmdAddCourseProviderAccount implements ICommand {
+public class CmdCourseProviderAccountValidate implements ICommand {
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(CmdAddCourseProviderAccount.class.getName());
+			.getLogger(CmdCourseProviderAccountValidate.class.getName());
 
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
