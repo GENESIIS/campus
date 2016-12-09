@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161208 JH c39-add-course-provider UsernameDAO.java created
 //20161209 JH c39-add-course-provider findById method coding 
+//20161209 JH c39-add-course-provider class name renamed to CourseProviderUsernameDAO.java
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +16,9 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.validation.UserType;
 
-public class FeaturedProviderUsernameDAO implements ICrud {
+public class CourseProviderUsernameDAO implements ICrud {
 	static org.apache.log4j.Logger log = Logger
-			.getLogger(FeaturedProviderUsernameDAO.class.getName());
+			.getLogger(CourseProviderUsernameDAO.class.getName());
 
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -45,9 +46,9 @@ public class FeaturedProviderUsernameDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-
+		final Collection<Collection<String>> usernameCollection = null;
+		
 		try {
-			final Collection<Collection<String>> usernameCollection = null;
 
 			preparedStatement = conn.prepareStatement(query);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -63,6 +64,9 @@ public class FeaturedProviderUsernameDAO implements ICrud {
 					singleAccountList.add(rs.getString("EMAIL"));
 					singleAccountList.add(rs.getString("DESCRIPTION"));
 					singleAccountList.add(rs.getString("COURSEPROVIDER"));
+					
+					final Collection<String> singleAccountColleciton = singleAccountList;
+					usernameCollection.add(singleAccountColleciton);
 				}
 
 			}
@@ -85,7 +89,7 @@ public class FeaturedProviderUsernameDAO implements ICrud {
 				preparedStatement.close();
 			}
 		}
-		return null;
+		return usernameCollection;
 	}
 
 	public Collection getAll() throws SQLException, Exception {
