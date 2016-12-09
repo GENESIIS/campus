@@ -5,14 +5,19 @@ package com.genesiis.campus.entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-public class UsernameDAO implements ICrud {
-	static org.apache.log4j.Logger log = Logger.getLogger(UsernameDAO.class
-			.getName());
+import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.validation.UserType;
+
+public class FeaturedProviderUsernameDAO implements ICrud {
+	static org.apache.log4j.Logger log = Logger
+			.getLogger(FeaturedProviderUsernameDAO.class.getName());
 
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -35,17 +40,43 @@ public class UsernameDAO implements ICrud {
 	 */
 	public Collection findById(Object code) throws SQLException, Exception {
 
+		final CourseProviderAccount courseProviderAccount = (CourseProviderAccount) code;
+		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDERACCOUNT] WHERE USERNAME = ? AND USERTYPE = ? AND ISACTIVE = ? ";
+
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			final Collection<Collection<String>> usernameCollection = null;
 
-			String query = "SELECT * FROM ";
+			preparedStatement = conn.prepareStatement(query);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs != null) {
+				while (rs.next()) {
+					final ArrayList<String> singleAccountList = new ArrayList<String>();
+
+					singleAccountList.add(rs.getString("CODE"));
+					singleAccountList.add(rs.getString("NAME"));
+					singleAccountList.add(rs.getString("USERNAME"));
+					singleAccountList.add(rs.getString("PASSWORD"));
+					singleAccountList.add(rs.getString("EMAIL"));
+					singleAccountList.add(rs.getString("DESCRIPTION"));
+					singleAccountList.add(rs.getString("COURSEPROVIDER"));
+				}
+
+			}
+
+		} catch (SQLException sqlException) {
+
+			log.error("finById method SQLException " + sqlException);
+			throw sqlException;
 
 		} catch (Exception exception) {
+
 			log.error("findById method Exception " + exception.toString());
 			throw exception;
+
 		} finally {
 			if (conn != null) {
 				conn.close();
