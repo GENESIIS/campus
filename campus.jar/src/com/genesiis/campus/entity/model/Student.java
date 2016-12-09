@@ -3,7 +3,7 @@ package com.genesiis.campus.entity.model;
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added additional fields and setters and getters
 //20161201 DN C18-student-signup-without-using-third-party-application-test-dn add private modifier to all fields as per CREVcomments
-
+//20161209 DN C18-student-signup-without-using-third-party-application-test-dn add userTypeCode.
 public class Student {
 	private int code;
 	private String username;
@@ -16,6 +16,7 @@ public class Student {
 	private int gender;
 	private String email;
 	private String type;
+	private int userTypeCode;
 	private String imagePath;
 	private String landPhoneCountryCode;
 	private String landPhoneAreaCode;
@@ -50,7 +51,15 @@ public class Student {
 	private java.sql.Date modOn;
 	private String modBy;
 	
-	public int getCode() {
+	
+	
+
+	public int getUserTypeCode() {
+		return userTypeCode;
+	}
+	public void setUserTypeCode(int userType) {
+		this.userTypeCode = userType;
+	}public int getCode() {
 		return code;
 	}
 	public String getUsername() {
