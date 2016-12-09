@@ -361,6 +361,13 @@ public class StudentLoginDAO implements ICrud {
 		return bean;
 	}
 
-	// public privilageHandling(){}
+	 public Collection<Collection<String>> privilageHandling(){
+		 
+		 Collection<Collection<String>> privilegeCollection = new ArrayList<Collection<String>>();
+			Connection conn = null;
+			Collection<Collection<String>> privilegeList = new ArrayList<Collection<String>>();
+			PreparedStatement preparedStatement = null;
+			String query = "SELECT ";
+	 }
 
 }
