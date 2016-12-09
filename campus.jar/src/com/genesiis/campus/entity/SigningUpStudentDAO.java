@@ -6,6 +6,8 @@ package com.genesiis.campus.entity;
 //20161128 DN C18-student-signup-without-using-third-party-application-dn userNameExisyt() -->userNameAndEmailExist()
 //		add(),addSignInDataWOThirdPartyAppToRepository():changed to use trim() and bug fixed in code
 //20161207 DN C18: add data to town field in Student table from back end in addSignInDataWOThirdPartyAppToRepository() method 
+//20161207 DN C18: add USERTYPE to the data base table STUDENT
+
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -211,8 +213,8 @@ public class SigningUpStudentDAO implements ICrud {
 		int status = 0;
 		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[STUDENT]");
 		queryBuilder.append(" ([USERNAME],[PASSWORD],[FIRSTNAME],[LASTNAME],[GENDER],[EMAIL],");
-		queryBuilder.append(" [MOBILEPHONENO],[TOWN],[CRTON],[CRTBY],[MODON],[MODBY],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE] ) ");
-		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),?,?,? );");
+		queryBuilder.append(" [MOBILEPHONENO],[TOWN],[CRTON],[CRTBY],[MODON],[MODBY],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE],[USERTYPE] ) ");
+		queryBuilder.append("  VALUES( ?,?,?,?,?,?,?,?,getDate(),?,getDate(),?,?,?,? );");
 		try{
 				Log.info("Adding user Account datails to the repository");
 				prepstmt =conn.prepareStatement(queryBuilder.toString());		
@@ -229,6 +231,7 @@ public class SigningUpStudentDAO implements ICrud {
 				prepstmt.setString(10,student.getUsername()); // this has to change once the Login session is implemented
 				prepstmt.setString(11,student.getMobilePhoneCountryCode());
 				prepstmt.setString(12,student.getMobilePhoneNetworkCode());
+				prepstmt.setInt(13,student.getUserTypeCode());
 				status = (prepstmt.executeUpdate()==1)?1:-2; //if execution succeeded set to 1 else to -2
 				
 			
