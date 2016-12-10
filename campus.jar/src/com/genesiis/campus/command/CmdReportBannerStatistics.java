@@ -9,14 +9,17 @@ import java.util.Collection;
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.PageDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
 public class CmdReportBannerStatistics implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdReportBannerStatistics.class.getName());
+	static Logger log = Logger.getLogger(CmdReportBannerStatistics.class
+			.getName());
 
 	/**
 	 * @author DJ
@@ -28,11 +31,19 @@ public class CmdReportBannerStatistics implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		final Collection<Collection<String>> bannerDetails = new ArrayList<Collection<String>>();
+
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		try {
-			bannerDetails = new BannerDAO().getAll();
-			iView.setCollection(bannerDetails);
+			String commandString = helper.getParameter("CCO");
+
+			if (commandString != null && commandString.equalsIgnoreCase(Operation.SEARCH_VIEW_BANNER_STATISTICS.getCommandString())) {
+				
+				final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
+		        iView.setCollection(pageDetails);
+
+			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_BANNER_STATISTICS.getCommandString())){
+				
+			}
 
 		} catch (SQLException sql) {
 			log.error("execute() : Exception " + sql);
