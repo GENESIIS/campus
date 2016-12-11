@@ -14,9 +14,11 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 
-
+import org.apache.log4j.Logger;
 
 public class PageDAO implements ICrud {
+	
+	static org.apache.log4j.Logger log = Logger.getLogger(PageDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
