@@ -10,6 +10,7 @@ import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.PageDAO;
+import com.genesiis.campus.entity.PageSlotDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemMessage;
@@ -41,7 +42,13 @@ public class CmdReportBannerStatistics implements ICommand {
 				final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
 		        iView.setCollection(pageDetails);
 
-			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_BANNER_STATISTICS.getCommandString())){
+			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGEWISE_PAGESLOTS.getCommandString())){
+				
+				String pageCode = helper.getParameter("pageCode");
+				final Collection<Collection<String>> pageSlotDetails = new PageSlotDAO().findById(pageCode);
+				
+			}
+			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_BANNER_STATISTICS.getCommandString())){
 				
 			}
 
