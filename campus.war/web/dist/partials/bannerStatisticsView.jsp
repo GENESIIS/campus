@@ -22,19 +22,6 @@
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
 
-<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="/dist/js/main.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.ajax({
@@ -55,14 +42,14 @@
 	
 	function getAjaxProviderData(response) {
 
-		var providerName = $("#providerName");
+		var pageName = $("#pageName");
 		$.each(response.result, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
 			var x = data[0].toString();
 			var y = data[1].toString();
 
-			$('<option>').val(x).text(y).appendTo(providerName);
+			$('<option>').val(x).text(y).appendTo(pageName);
 		});
 	}
 
@@ -96,10 +83,10 @@
 						<fieldset>
 							<legend align="left">Search criteria </legend>
 							<div>
-								Course Provider :<input type="text" name="providerlist"
-									id="providerlist" list="providerName"
+								Page :<input type="text" name="pagelist"
+									id="pagelist" list="pageName"
 									placeholder="-- Select District --" />
-								<datalist id="providerName">
+								<datalist id="pageName">
 								</datalist>
 							</div>
 							<div>
@@ -161,4 +148,17 @@
 	<!--End  Footer -->
 
 </body>
+<!-- Bootstrap js -->
+<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
 </html>
