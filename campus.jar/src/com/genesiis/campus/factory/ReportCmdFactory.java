@@ -2,6 +2,8 @@ package com.genesiis.campus.factory;
 
 //20161206 DJ c52-report-banner-statistics-MP-dj by inserting SEARCH_VIEW_BANNER_STATISTICS entry to the map
 //20161210 DJ c52-report-banner-statistics-MP-dj by inserting REPORT_BANNER_STATISTICS entry to the map
+//20161211 DJ c52-report-banner-statistics-MP-dj by inserting LIST_PAGE_WISE_PAGESLOTS entry to the map
+//20161211 DJ c52-report-banner-statistics-MP-dj by inserting LIST_PAGESLOT_WISE_BANNER entry to the map
 
 import com.genesiis.campus.command.CmdReportBannerStatistics;
 import com.genesiis.campus.command.ICommand;
@@ -13,6 +15,8 @@ public class ReportCmdFactory implements ICmdFactory{
 	static {
 		map.put(Operation.SEARCH_VIEW_BANNER_STATISTICS, new CmdReportBannerStatistics());
 		map.put(Operation.REPORT_BANNER_STATISTICS, new CmdReportBannerStatistics());
+		map.put(Operation.LIST_PAGE_WISE_PAGESLOTS, new CmdReportBannerStatistics());
+		map.put(Operation.LIST_PAGESLOT_WISE_BANNER, new CmdReportBannerStatistics());
 	}
 	
 	@Override
@@ -24,6 +28,12 @@ public class ReportCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;		
 		case REPORT_BANNER_STATISTICS:
+			command = map.get(o);
+			break;		
+		case LIST_PAGE_WISE_PAGESLOTS:
+			command = map.get(o);
+			break;		
+		case LIST_PAGESLOT_WISE_BANNER:
 			command = map.get(o);
 			break;		
 		default:
