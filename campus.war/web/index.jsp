@@ -9,9 +9,10 @@
 <body>
 	<h1>Report Generation</h1>
 	<h4>* Please Select the report type</h4>
-	<form action="ReportController" method="post">
+	<!-- <form action="ReportController" method="post">
 		<button type="submit" name="CCO"
 			value="SEARCH_VIEW_BANNER_STATISTICS">BANNER STATISTICS</button>
-	</form>
+	</form> -->
+	<a href="/dist/partials/bannerStatisticsView.jsp">Banner statistics</a>
 </body>
 </html>
