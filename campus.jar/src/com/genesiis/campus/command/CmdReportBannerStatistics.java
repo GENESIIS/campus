@@ -42,10 +42,16 @@ public class CmdReportBannerStatistics implements ICommand {
 				final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
 		        iView.setCollection(pageDetails);
 
-			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGEWISE_PAGESLOTS.getCommandString())){
+			}else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGE_WISE_PAGESLOTS.getCommandString())){
 				
 				String pageCode = helper.getParameter("pageCode");
 				final Collection<Collection<String>> pageSlotDetails = new PageSlotDAO().findById(pageCode);
+				
+			}
+			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGESLOT_WISE_BANNER.getCommandString())){
+				
+				String pageSlotCode = helper.getParameter("pageSlotCode");
+				final Collection<Collection<String>> pageSlotDetails = new PageSlotDAO().findById(pageSlotCode);
 				
 			}
 			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_BANNER_STATISTICS.getCommandString())){

@@ -63,7 +63,7 @@ public class PageDAO implements ICrud {
 			String sql="SELECT PAGE.CODE AS PAGECODE, PAGE.NAME AS PAGENAME FROM [CAMPUS].[PAGE] PAGE WHERE PAGE.ISACTIVE=?";
 			
 			stmt=conn.prepareStatement(sql);
-			stmt.setInt(1, ApplicationStatus.INACTIVE.getStatusValue());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			resultSet= stmt.executeQuery();	
 			while (resultSet.next()) {
 				final ArrayList<String> singlePageList = new ArrayList<String>();
