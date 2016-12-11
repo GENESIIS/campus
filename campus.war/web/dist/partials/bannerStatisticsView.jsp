@@ -20,10 +20,22 @@
 <!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+<!-- Bootstrap js -->
+<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function() {		
 		$.ajax({
 			url : '../../ReportController',
 			data : {
@@ -40,8 +52,8 @@
 		
 	});
 	
-	function getAjaxProviderData(response) {
-
+	function getAjaxProviderData(response) { 
+		 $("#pageName").get(0).options.length = 0;
 		var pageName = $("#pageName");
 		$.each(response.result, function(index, value) {
 			var res = value.toString();
@@ -50,7 +62,34 @@
 			var y = data[1].toString();
 
 			$('<option>').val(x).text(y).appendTo(pageName);
+		});	
+		
+		$('#pagelist').bind('change', function(event) {
+			alert(" click ");
+			var pageCode=0;
+			
+			$.ajax({
+				url : '../../ReportController',
+				data : {
+					CCO : 'LIST_PAGEWISE_PAGESLOTS',
+					pageCode:pageCode
+				},
+				dataType : "json",
+				success : function(response) {
+					getPageWisePageSlots(response);
+				},
+				error : function() {
+					alert("error");
+				}
+			});
+			
 		});
+	}	
+	
+	function getPageWisePageSlots(response) { 
+		alert(" getPageWisePageSlots ");
+		var pagecode=0;
+		
 	}
 
 </script>
@@ -69,7 +108,7 @@
 			</div>
 		</div>
 		<div class="page-topic">
-			<h2 class="page-topic-t1">| Courses by Course Providers</h2>
+			<h2 class="page-topic-t1">| Banner Statistics</h2>
 		</div>
 
 		<!-- image header -->
@@ -85,8 +124,22 @@
 							<div>
 								Page :<input type="text" name="pagelist"
 									id="pagelist" list="pageName"
-									placeholder="-- Select District --" />
+									placeholder="-- Select Page --" />
 								<datalist id="pageName">
+								</datalist>
+							</div>
+							<div>
+								Page Slot :<input type="text" name="pageSlotlist"
+									id="pageSlotlist" list="pageSlotName"
+									placeholder="-- Select Page Slot --" />
+								<datalist id="pageSlotName">
+								</datalist>
+							</div>
+							<div>
+								Banner Name :<input type="text" name="bannerList"
+									id="bannerList" list="bannerName"
+									placeholder="-- Select Banner Name --" />
+								<datalist id="bannerName">
 								</datalist>
 							</div>
 							<div>
@@ -148,17 +201,5 @@
 	<!--End  Footer -->
 
 </body>
-<!-- Bootstrap js -->
-<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="/dist/js/main.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
 </html>
