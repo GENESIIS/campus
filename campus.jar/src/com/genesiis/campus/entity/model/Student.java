@@ -4,6 +4,7 @@ package com.genesiis.campus.entity.model;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added additional fields and setters and getters
 //20161129 AS C19-student-login-without-using-third-party-application-test-as added userKey attribute. 
 //20161205 AS C19-student-login-without-using-third-party-application-test-as added valid and remember attributes. 
+//20161214 AS C19-student-login-without-using-third-party-application-test-as added userType attribute. 
 public class Student {
 	int code;
 	String username;
@@ -52,6 +53,15 @@ public class Student {
 	String modBy;
 	private boolean valid;
 	boolean remember;
+	String userType;
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	public boolean isRemember() {
 		return remember;
