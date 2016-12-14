@@ -10,6 +10,8 @@
 //				when fetching banners to display
 //20161206 MM c2-integrate-google-banners Removed BANNERSTATUS from being retrieved 
 //				when extracting returned data
+//20161214 MM c2-integrate-google-banners Changed a column name from IMAGEPATH to 
+//				IMAGE to match DDL changes
 
 package com.genesiis.campus.entity;
 
@@ -139,7 +141,7 @@ public class BannerDAO implements ICrud {
 			singleBanner.add(rs.getString("URL")); // 7
 			singleBanner.add(rs.getString("ISACTIVE")); // 8
 			singleBanner.add(rs.getString("ADVERTISER")); // 9
-			singleBanner.add(rs.getString("IMAGEPATH")); // 10
+			singleBanner.add(rs.getString("IMAGE")); // 10
 			final Collection<String> singleBannerCollection = singleBanner;
 			bannerCollection.add(singleBannerCollection);
 		}
