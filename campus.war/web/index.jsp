@@ -16,15 +16,18 @@
     <script src="dist/bower-components/w3/w3data.js"></script>
     <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="dist/js/image-slides.js"></script>
+    
+    <!-- CAM-1 To load categories. -->
+    <script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 
 </head>
 <body>
 
 <!-- Header-->
-<header w3-include-html="dist/partials/layout/header.html"></header>
+<header w3-include-html="dist/partials/layout/header.jsp"></header>
 
 <!-- Main Container - Landing -->
-<!--<div w3-include-html="dist/partials/landing.html"></div>-->
+<!--<div w3-include-html="dist/partials/landing.jsp"></div>-->
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
@@ -60,114 +63,8 @@
 
             <div class="filter-boxes clearfix">
                 <div class="box-holder center-block">
-                    <ul class="list-inline">
-                        <!-- Pre Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Pre Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                    <ul class="list-inline" name="mainCategoryList" id="mainCategoryList">
 
-                        <!-- School Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">School Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Higher Education -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Higher Education</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Corporate Training -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Corporate Training</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Vocational Training -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Vocational Training</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Talent & Skill -->
-                        <li>
-                            <div class="category-box clearfix">
-                                <div class="category-name text-center clearfix">
-                                    <a href="javascript:">Talent & Skill</a>
-                                </div>
-                                <div class="course-info clearfix">
-                                    <div class="image pull-left">
-                                        <img class="center-block" src="dist/i/pre-school.jpg" alt="">
-                                    </div>
-                                    <div class="description pull-right">
-                                        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                                        <a href="javascript:" class="pull-right">Show More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
 
@@ -182,7 +79,7 @@
 </div>
 
 <!-- Footer -->
-<footer w3-include-html="dist/partials/layout/footer.html"></footer>
+<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->
