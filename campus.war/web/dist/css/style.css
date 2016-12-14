@@ -817,6 +817,13 @@ body, html {
             color: #909090;
             line-height: 3;
             font-size: 100%; }
+        .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-control {
+          margin-top: 10% !important;
+          width: 5% !important; }
+        .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-control.left {
+          left: -30px !important; }
+        .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-control.right {
+          right: -30px !important; }
       .stud-dashboard .prf-page-container .right-side .w-rec-institute {
         background: #fff;
         border-radius: 10px;
@@ -1012,10 +1019,10 @@ body, html {
   background: #fff;
   border-radius: 10px; }
   .widget .widget-header label {
-    font-family: "Roboto", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: 24px;
-    color: #37474f;
-    font-weight: 600;
+    color: #6187c7;
+    font-weight: 500;
     padding-left: 15px;
     line-height: 35px; }
   .widget .widget-header button {
