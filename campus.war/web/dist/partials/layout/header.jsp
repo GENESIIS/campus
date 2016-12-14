@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!-- 20161025 TR c1 start style header bottom part -->
-<!-- 20161026 TR c1 added courses.html -->
+<!-- 20161026 TR c1 added courses.jsp -->
 <!-- 20161109 JH c7 renamed to header.jsp -->
 <!-- 20161110 JH c7 css styles changes -->
 <!-- 20161117 JH c7 load header categories from json object -->
