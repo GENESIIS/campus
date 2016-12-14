@@ -4,6 +4,7 @@
 <!-- 20161129 PN c26-add-student-details: added onchange event for date range validations. -->
 <!-- 20161203 PN c26-add-student-details: modified Personal Details model UI elements ids, onClick event. -->
 <!-- 20161205 PN c26-add-student-details: completed front end validations for Student personal details form. -->
+<!-- 20161214 PN CAM-28: completed front end for Student Higher education details form. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -64,26 +65,30 @@
 </head>
 <body>
 
-<!-- Button trigger School Education modal -->
+<!-- Button trigger Personal Details modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
   Personal Details
 </button>
 
-<!-- Button trigger Personal Details modal -->
+<!-- Button trigger School Details modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSchoolEducationModal">
   School Details
 </button>
 
-<!-- Button trigger School Education modal -->
+<!-- Button trigger Professional Experience modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentProfessionalDetailsModal">
   Professional Experience
 </button>
 
-<!-- Button trigger School Education modal -->
+<!-- Button trigger Student Skill modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentSkillDetailsModal">
   Student Skill
 </button>
 
+<!-- Button trigger Higher Education Details modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentHigherEduDetailsModal">
+  Higher Education Details
+</button>
 
 <!-- Personal Details-->
 <div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
@@ -343,7 +348,7 @@
   </div>
 </div>
 
-<!-- Professional Details Modal -->
+<!-- Skill Details Modal -->
 <div class="modal fade" id="studentSkillDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentSkillDetails" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -382,6 +387,73 @@
         <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="">Save changes</button>
       </div>
    </div>
+  </div>
+</div>
+
+
+<!-- Higher Education -->
+<div class="modal fade" id="studentHigherEduDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentSchoolEducation" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="studentHigherEduDetails">Higher Education</h4>
+      </div>
+      <div class="modal-body">
+      <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
+			Institute of Study  
+			<input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')">
+			<span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
+			<br/>
+			Affiliated Institute  
+			<input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')">
+			<span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span><br>
+			<br/>
+			
+			Area of study
+			<select id="areaofstudy" name = "areaofstudy" onchange="clearField('areaofstudyError')">
+				<option value="">--Select One--</option>
+			</select> <span id="areaofstudyError" name="areaofstudyError" style="color:red"></span>
+			<br/>
+			Award
+			<select id="award" name = "award" onchange="clearField('awardError')">
+				<option value="">--Select One--</option>
+			</select> <span id="awardError" name="awardError" style="color:red"></span>
+			<br/>
+			Student ID (University Index) <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')">
+			<span id="studentIdError" name="studentIdError" style="color:red"></span><br>
+			
+			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')">
+			<span id="gpa" name="gpa" style="color:red"></span><br>
+			
+			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')">
+			<span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span><br>
+			
+			Completed On <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')">
+			<span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span><br>
+			
+			Medium
+			<select name="heMedium" id="heMedium" onchange="clearField('heMediumError')">
+				<option value="">--Select One--</option>
+			</select><span name="heMediumError" id="heMediumError" style="color:red"></span>
+			<br/>
+			
+			Country
+			 <input type="text" id="heCountry" name="heCountry" list="heCountryList" placeholder="-- Select Country --"/>
+			 	<datalist name="heCountryList" id="heCountryList">
+			 	</datalist>
+			<br/>
+			<input hidden id="heCountryvalue" name="heCountryvalue"/>
+			
+			Description
+			<textarea rows="5" cols="40" name="heDescription" id="heDescription" ></textarea>
+			
+	  </div>
+      <div class="modal-footer">    
+      	<button type="button" class="btn btn-secondary" onclick="clearHigherEducationForm()">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearHigherEducationForm()">Close</button>
+        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
+      </div>
+    </div>
   </div>
 </div>
 
