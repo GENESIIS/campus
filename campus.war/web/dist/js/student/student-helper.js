@@ -11,6 +11,7 @@
 //          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
 //20161206 PN CAM-26 add-student-details: This JavaScript is to populate tagitUI with DB values.
 //		   PN CAM-26 add-student-details: implemented addSkillDetails(),addInterestsDetails() and createObject() methods.
+//20161214 PN CAM-28: getStudentData(response) method modified to load student personal details on load.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -42,6 +43,31 @@ function displayDetails() {
  * @returns
  */
 function getStudentData(response) {
+	$.each(response.studentCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		alert(data);
+		$('#sFullName').val(data[4]);
+		$('#sMiddleName').val(data[5]);
+		$('#sLastName').val(data[6]);
+		$('#sBirthDate').val(data[7]);
+		$('input[gender]:checked').val();
+		$('#sEmail').val(data[9]);
+		$('#sCountryCode').val();
+		$('#sHomeNumber').val(data[13]);
+		$('#sMobileNumber').val(data[16]);
+		$('#sAddress').val();
+		$('#sFacebookUrl').val(data[18]);
+		$('#stwitterUrl').val(data[19]);
+		$('#smySpace').val(data[20]);
+		$('#sLinkedInUrl').val(data[21]);
+		$('#sInstergramUrl').val(data[22]);
+		$('#sViber').val(data[23]);	
+		$('#sWhatsApp').val(data[24]);
+		$('#sAboutMe').val(data[17]);
+		$('#sTownCode').val(data[28]);	
+	});
+	
 	// Set Scheme details
 	var sseStream = $("#sseStream");
 	sseStream.find('option').remove();
@@ -500,7 +526,7 @@ function addStudentPersonalDetails(){
 		var whatsAppNumber = $('#sWhatsApp').val();
 		var viberNumber = $('#sViber').val();	
 		var landPhoneCountryCode = $('#sCountryCode').val();
-		var gender = $('input[gender]:checked').val()
+		var gender = $('input[gender]:checked').val();
 		
 		var jsonData = {
 				"firstName" : firstName,
