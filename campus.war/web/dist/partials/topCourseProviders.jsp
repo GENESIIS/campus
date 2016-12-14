@@ -48,7 +48,7 @@
 							<button type="submit" name="CCO"
 								value="LIST_ALL_COURSE_PROVIDERS">Show ALL</button>
 						</form> --%>
-						<a href="/dist/partials/viewMoreCourseProviders.jsp">Show ALL</a>
+						<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>
 					</div>
 				</div>
 				<!-- End list header -->
@@ -75,7 +75,7 @@
 						<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">Show
 							ALL</button>
 					</form> --%>
-					<a href="/dist/partials/viewMoreCourseProviders.jsp">Show ALL</a>
+					<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>
 				</div>
 			</div>
 			<!-- End top-rated-list -->
