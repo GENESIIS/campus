@@ -2,7 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161209 DN CAm-18 student : signup : without using third party application 
 //			  initial version of the UserTypeDAO.java created
-
+//20161214 DN CAM:18 added userTypeString to the prepared statement in findById()
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +49,7 @@ public class UserTypeDAO implements ICrud {
 			StringBuilder getUserTypeSQL = new StringBuilder("SELECT * FROM [CAMPUS].[USERTYPE] ");
 			getUserTypeSQL.append(" WHERE USERTYPESTRING = ? AND ISACTIVE=1 ; ");
 			prepaire = userTypeConnection.prepareStatement(getUserTypeSQL.toString());
+			prepaire.setString(1, userTypeString);
 			ResultSet userCode = prepaire.executeQuery();
 			
 			while(userCode.next()){
