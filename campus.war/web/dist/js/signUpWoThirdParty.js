@@ -8,6 +8,7 @@
 //20161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
 //20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
 // 		and the Town within Country
+//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode.
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -69,12 +70,9 @@ function getPreRequisitPageData(preRequistData){
 		$('<option>').val(y).text(x).appendTo(countryList);
 	});
 	
-	// set the USERTYPE CODE to the hidden field
-	$('#userTypeCode').Text(function(index,preRequistData){
-		var collection = preRequistData.userType[0]; //get the first collection of the collection of collection
-		return collection[0];
-	});
 	
+	// set the USERTYPE CODE to the hidden field
+	$('#userTypeCode').text(preRequistData.userType[0][0]);
 	
 	//getting the selected country code 
 	$('#country').on('input', function(){
@@ -106,7 +104,6 @@ function getPreRequisitPageData(preRequistData){
 												}
 									 		}).text();
 	//setting the hidden field with the town value in the input field
-	alert("town code value"+dValue);
 	if(status){
 		selectedTownCode = dValue;
 		$('#sTownCode').val(selectedTownCode);
@@ -152,7 +149,6 @@ function extractRelaventTownList(countryCode){
 		},
 		dataType:"json",
 		success: function(townObject){
-			alert(townObject.result);
 			manageTownListing(townObject);
 		},
 		error: function(townObject){
@@ -191,6 +187,7 @@ function sendSignUpCredentialsToBckEnd() {
 	if (validateSignUpWoThirdPartyPageEmbedData()) {
 		var jsonDataObject = createJasonObject();
 		
+		alert("jsonDataObject "+jsonDataObject);
 				jsonDataExchange(
 						jsonDataObject,
 						"post",
@@ -269,7 +266,7 @@ function createJasonObject(){
 			"mobileNetworkCode":mobilePhoneNetWorkCode,
 			"town"		:selectedTownCode, 
 			"userName"	:$('#userName').val(),
-			"userCode"	:$('#userTypeCode'),
+			"userCode"	:$('#userTypeCode').text(),
 			"passWord"	:$('#passWord').val(),
 			"confirmPw"	:$('#confrmpsw').val(),
 			"isPolicyConfirm"	:$('#policyConfirm').prop('checked')
