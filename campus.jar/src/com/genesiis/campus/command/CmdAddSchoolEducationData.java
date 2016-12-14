@@ -13,7 +13,6 @@ import javax.sound.midi.SysexMessage;
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.SchoolEducationDAO;
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;

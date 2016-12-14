@@ -6,12 +6,6 @@ package com.genesiis.campus.factory;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161121 PN c27-upload-user-image: added UPLOAD_USER_PROFILE attribute.
 
-import com.genesiis.campus.command.CmdGetSearchData;
-import com.genesiis.campus.command.CmdListCategories;
-import com.genesiis.campus.command.CmdListDistricts;
-import com.genesiis.campus.command.CmdListInstitute;
-import com.genesiis.campus.command.CmdListLevels;
-import com.genesiis.campus.command.CmdListMajors;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -19,12 +13,7 @@ public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
 	static {	
-		map.put(Operation.GET_SEARCH_DATA, new CmdGetSearchData());	
-		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());	
-		map.put(Operation.LIST_DISTRICT_DATA, new CmdListDistricts());	
-		map.put(Operation.LIST_LEVEL_DATA, new CmdListLevels());	
-		map.put(Operation.LIST_MAJOR_DATA, new CmdListMajors());	
-		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());
+
 	}
 
 	@Override
@@ -32,28 +21,6 @@ public class PublicCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		
-		case GET_SEARCH_DATA:
-			command = map.get(o);
-			break;
-		case LIST_CATEGORY_DATA:
-			command = map.get(o);
-			break;
-		case LIST_LEVEL_DATA:
-			command = map.get(o);
-			break;
-		case LIST_DISTRICT_DATA:
-			command = map.get(o);
-			break;
-		case LIST_MAJOR_DATA:
-			command = map.get(o);
-			break;
-		case LIST_TOWN_DATA:
-			command = map.get(o);
-			break;
-		case LIST_INSTITUTE_DATA:
-			command = map.get(o);
-			break;
 		default:
 			break;
 		}
