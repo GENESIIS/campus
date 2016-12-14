@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 //20161205 PN c26-add-student-details: update(Connection con, Object object) method to update student personal details. 
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
+//20161214 PN CAM-26: findById() method modified. SQL query and data list.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,7 +82,10 @@ public class StudentDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-			String query = "SELECT * FROM [CAMPUS].[STUDENT] WHERE CODE = ?";
+			String query = "SELECT [CODE],[USERNAME],[PASSWORD],[INDEXNO],[FIRSTNAME],[MIDDLENAME],[LASTNAME],[DATEOFBIRTH],[GENDER],[EMAIL],"
+					+ "[TYPE],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE],[LANDPHONENO],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE],"
+					+ "[MOBILEPHONENO],[DESCRIPTION],[FACEBOOKURL],[TWITTERURL],[MYSPACEURL],[LINKEDINURL],[INSTAGRAMURL],[VIBERNUMBER],[WHATSAPPNUMBER],"
+					+ "[ADDRESS1],[ADDRESS2],[ADDRESS3],[TOWN],[ACCOUNTTYPE] FROM [CAMPUS].[STUDENT] WHERE CODE = ?";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
@@ -91,7 +95,35 @@ public class StudentDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleList = new ArrayList<String>();
 				singleList.add(rs.getString("CODE"));
-
+				singleList.add(rs.getString("USERNAME"));
+				singleList.add(rs.getString("PASSWORD"));
+				singleList.add(rs.getString("INDEXNO"));
+				singleList.add(rs.getString("FIRSTNAME"));
+				singleList.add(rs.getString("MIDDLENAME"));
+				singleList.add(rs.getString("LASTNAME"));
+				singleList.add(rs.getString("DATEOFBIRTH"));
+				singleList.add(rs.getString("GENDER"));
+				singleList.add(rs.getString("EMAIL"));
+				singleList.add(rs.getString("TYPE"));
+				singleList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleList.add(rs.getString("LANDPHONEAREACODE"));
+				singleList.add(rs.getString("LANDPHONENO"));
+				singleList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				singleList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleList.add(rs.getString("MOBILEPHONENO"));
+				singleList.add(rs.getString("DESCRIPTION").replaceAll(",", "##"));
+				singleList.add(rs.getString("FACEBOOKURL"));
+				singleList.add(rs.getString("TWITTERURL"));
+				singleList.add(rs.getString("MYSPACEURL"));
+				singleList.add(rs.getString("LINKEDINURL"));
+				singleList.add(rs.getString("INSTAGRAMURL"));
+				singleList.add(rs.getString("VIBERNUMBER"));
+				singleList.add(rs.getString("WHATSAPPNUMBER"));
+				singleList.add(rs.getString("ADDRESS1").replaceAll(",", "##"));
+				singleList.add(rs.getString("ADDRESS2").replaceAll(",", "##"));
+				singleList.add(rs.getString("ADDRESS3").replaceAll(",", "##"));
+				singleList.add(rs.getString("TOWN"));
+				singleList.add(rs.getString("ACCOUNTTYPE"));
 				final Collection<String> singleCollection = singleList;
 				studentDetailsCollectionList.add(singleCollection);
 			}
