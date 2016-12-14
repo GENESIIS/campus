@@ -40,8 +40,7 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 					ICrud country2Dao = new Country2DAO();
 					ICrud userTypeDao = new UserTypeDAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
-					//helper.setAttribute("userType", userTypeDao.findById(UserType.STUDENT.getUserType()));
-					helper.setAttribute("userType",setTempdata(3));
+					helper.setAttribute("userType", userTypeDao.findById(UserType.STUDENT.getUserType()));
 					break;
 				case DISPLAY_TOWN_DATA :
 					
@@ -91,18 +90,5 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 //		}
 //		return rowObj;
 //	}
-	
-	
-	
-	private Collection<Collection<String>> setTempdata(int USERTYPE){
-		Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
-		Collection<String> inner = new ArrayList<String>();
-		inner.add(String.valueOf(USERTYPE));
-		inner.add(String.valueOf(4));
-		allTownList.add(inner);
-		return allTownList;
-		
-	}
-	
 
 }
