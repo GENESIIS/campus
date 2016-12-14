@@ -5,7 +5,7 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 //20161205 PN c26-add-student-details: update(Connection con, Object object) method to update student personal details. 
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
-//20161214 PN CAM-26: findById() method modified. SQL query and data list.
+//20161214 PN CAM-28: findById() method modified. SQL query and data list.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
