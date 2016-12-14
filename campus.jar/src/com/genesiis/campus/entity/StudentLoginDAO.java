@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as StudentLoginDAO class created.
+//20161214 AS C19-student-login-without-using-third-party-application-test-as findbyId method modified .
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +51,7 @@ public class StudentLoginDAO implements ICrud {
 	private String address2;
 	private String address3;
 	private String town;
+	private String userType;
 	private String accountType;
 	private String lastLoggedInUserAgent;
 	private String lastLoggedInSessionid;
@@ -141,12 +144,13 @@ public class StudentLoginDAO implements ICrud {
 		String encryptedPasswordDb;
 		String decryptedPassword = null;
 		Collection<Collection<String>> studentList = new ArrayList<Collection<String>>();
+		Collection<String> privilegeCollection = new ArrayList<String>();
 
 		PreparedStatement preparedStatement = null;
 		String message = "Sorry, you are not a registered user! Please sign up first";
 		final Student student = (Student) data;
 
-		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, IMAGEPATH, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
+		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, IMAGEPATH, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
 			log.info(student.getEmail() + "" + student.getPassword());
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
@@ -199,6 +203,7 @@ public class StudentLoginDAO implements ICrud {
 				address2 = rs.getString("ADDRESS2");
 				address3 = rs.getString("ADDRESS3");
 				town = rs.getString("TOWN");
+				userType = rs.getString("USERTYPE");
 				accountType = rs.getString("ACCOUNTTYPE");
 				lastLoggedInUserAgent = rs.getString("LASTLOGGEDINUSERAGENT");
 				lastLoggedInSessionid = rs.getString("LASTLOGGEDINSESSIONID");
@@ -240,6 +245,7 @@ public class StudentLoginDAO implements ICrud {
 				student.setAddress2(address2);
 				student.setAddress3(address3);
 				student.setTown(town);
+				student.setUserType(userType);
 				student.setAccountType(accountType);
 				student.setLastLoggedInUserAgent(lastLoggedInUserAgent);
 				student.setLastLoggedInSessionid(lastLoggedInSessionid);
@@ -286,6 +292,7 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(address2); // 24
 				singleStudent.add(address3); // 24
 				singleStudent.add(town); // 24
+				singleStudent.add(userType);
 				singleStudent.add(accountType); // 24
 				singleStudent.add(lastLoggedInUserAgent); // 24
 				singleStudent.add(lastLoggedInSessionid); // 24
@@ -300,6 +307,12 @@ public class StudentLoginDAO implements ICrud {
 					log.info("password match  :D");
 					student.setValid(true);
 					studentList.add(singleStudentCollection);
+					
+					StudentPrivilegeDAO sp = new StudentPrivilegeDAO();
+					privilegeCollection = sp.studentPrivilege(student);
+					studentList.add(privilegeCollection);
+					int status = StudentLoginDAO.loginDataUpdate(student);
+					
 				} else {
 					student.setValid(false);
 					message = "not valid user ";
@@ -361,13 +374,15 @@ public class StudentLoginDAO implements ICrud {
 		return bean;
 	}
 
-	 public Collection<Collection<String>> privilageHandling(){
-		 
-		 Collection<Collection<String>> privilegeCollection = new ArrayList<Collection<String>>();
-			Connection conn = null;
-			Collection<Collection<String>> privilegeList = new ArrayList<Collection<String>>();
-			PreparedStatement preparedStatement = null;
-			String query = "SELECT ";
-	 }
+	// public Collection<Collection<String>> privilageHandling(){
+	//
+	// Collection<Collection<String>> privilegeCollection = new
+	// ArrayList<Collection<String>>();
+	// Connection conn = null;
+	// Collection<Collection<String>> privilegeList = new
+	// ArrayList<Collection<String>>();
+	// PreparedStatement preparedStatement = null;
+	// String query = "SELECT ";
+	// }
 
 }
