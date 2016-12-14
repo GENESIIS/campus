@@ -76,7 +76,7 @@ public class CourseProviderDAO implements ICrud{
 				categoryCode = cp.getCategory();
 				}			
 			//categorystatus=1 and courseproviderstatus=1 ; this can be change in future.
-			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.UNIQUEPREFIX  ");
+			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.NAME AS CPNAME ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
 			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");			
@@ -120,7 +120,7 @@ public class CourseProviderDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS = ? ");
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.NAME AS CPNAME  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS = ? ");
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
@@ -188,7 +188,7 @@ public class CourseProviderDAO implements ICrud{
 				return allProviderList;
 			}	
 			conn=ConnectionManager.getConnection();	
-			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX   FROM (");
+			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.NAME AS CPNAME  FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
@@ -200,7 +200,7 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
 			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=  ");
 			sb.append(cProvider.getCourseProviderStatus());
-			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.UNIQUEPREFIX ORDER BY TOTAL DESC ");
+			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.NAME ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
 				
@@ -242,7 +242,7 @@ public class CourseProviderDAO implements ICrud{
 				return allProviderList;
 			}	
 			conn=ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 AVG(ISNULL(NEWTABLE.PROGAVERAGE,0)) AS CPAVERAGE , PROVIDER.CODE AS CPCODE ,PROVIDER.UNIQUEPREFIX AS UNIQUEPREFIX  FROM ( ");
+			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 AVG(ISNULL(NEWTABLE.PROGAVERAGE,0)) AS CPAVERAGE , PROVIDER.CODE AS CPCODE ,PROVIDER.NAME AS CPNAME  FROM ( ");
 			sb.append(" SELECT AVG(ISNULL(RAT.RATINGVALUE,0)) AS PROGAVERAGE ,PROG.CODE AS PROGRAMMECODE, PROG.COURSEPROVIDER AS CPCODE ");
 			sb.append(" FROM  [CAMPUS].RATING RAT INNER JOIN [CAMPUS].PROGRAMME PROG  ON  RAT.PROGRAMME=PROG.CODE");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE= ");
@@ -254,7 +254,7 @@ public class CourseProviderDAO implements ICrud{
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS = ");
 			sb.append(cProvider.getCourseProviderStatus());
-			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.UNIQUEPREFIX ORDER BY CPAVERAGE DESC");
+			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.NAME ORDER BY CPAVERAGE DESC");
 
 			stmt = conn.prepareStatement(sb.toString());			
 			
@@ -284,7 +284,7 @@ public class CourseProviderDAO implements ICrud{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
 			singleProvider.add(rs.getString("CPCODE"));				
-			singleProvider.add(rs.getString("UNIQUEPREFIX"));			
+			singleProvider.add(rs.getString("CPNAME"));			
 			allProviderList.add(singleProvider);
 		}
 		return allProviderList;
