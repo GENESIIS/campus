@@ -12,6 +12,7 @@
 //20161206 PN CAM-26 add-student-details: This JavaScript is to populate tagitUI with DB values.
 //		   PN CAM-26 add-student-details: implemented addSkillDetails(),addInterestsDetails() and createObject() methods.
 //20161214 PN CAM-28: getStudentData(response) method modified to load student personal details on load.
+//20161214 PN CAM-28: completed front UI population with db values, Student Higher education details form.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -80,6 +81,18 @@ function getStudentData(response) {
 		$('<option>').val(x).text(y).appendTo(sseStream);
 	});
 	
+	// Set area of study details
+	var areaofstudy = $("#areaofstudy");
+	areaofstudy.find('option').remove();
+	$('<option>').val("").text("--Select One--").appendTo(areaofstudy);
+	$.each(response.majorCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(areaofstudy);
+	});
+	
 	// Set Qualification details
  	var sseQualification = $("#sseQualification");
  	sseQualification.find('option').remove();
@@ -92,10 +105,32 @@ function getStudentData(response) {
 		$('<option>').val(x).text(y).appendTo(sseQualification);
 	});
 	
+	// Set award details
+ 	var award = $("#award");
+ 	award.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(award);
+	$.each(response.schoolGradeCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(award);
+	});
+	
+	// Set heCountryList details
+ 	var heCountryList = $("#heCountryList");
+ 	heCountryList.find('option').remove();
+	$.each(response.country2Collection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(y).text(x).appendTo(heCountryList);
+	});
+	
 	// Set Country details
  	var sseCountry = $("#sseCountryList");
  	sseCountry.find('option').remove();
- //	$('<option>').val("").text("--Select One--").appendTo(sseCountry);
 	$.each(response.country2Collection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -114,6 +149,18 @@ function getStudentData(response) {
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(x).text(y).appendTo(sseMedium);
+	});
+	
+	// Set heMedium details
+ 	var heMedium = $("#heMedium");
+ 	heMedium.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(heMedium);
+	$.each(response.mediumCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(heMedium);
 	});
 	
 	// Set Industry of the Organization
