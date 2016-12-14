@@ -800,6 +800,23 @@ body, html {
         background: #fff;
         border-radius: 10px;
         padding: 14px 20px; }
+        .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-inner {
+          min-height: 180px !important; }
+          .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-inner .item blockquote div > label {
+            line-height: 2;
+            font-size: 28px;
+            font-weight: 500;
+            color: #759444;
+            font-family: "Arvo", serif; }
+          .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-inner .item blockquote div > p {
+            font-family: "Muli", sans-serif;
+            line-height: 22px;
+            font-size: 17px;
+            color: #029cb7; }
+          .stud-dashboard .prf-page-container .right-side .w-rec-courses .carousel-inner .item blockquote div > small {
+            color: #909090;
+            line-height: 3;
+            font-size: 100%; }
       .stud-dashboard .prf-page-container .right-side .w-rec-institute {
         background: #fff;
         border-radius: 10px;
@@ -816,7 +833,7 @@ body, html {
             .stud-dashboard .prf-page-container .right-side .w-rec-institute .rec-institute ul li a {
               font-size: 22px;
               font-family: "Roboto", sans-serif;
-              color: #5a8fe8;
+              color: #337ab7;
               line-height: initial; }
       .stud-dashboard .prf-page-container .right-side .w-recent-activity {
         background: #fff;
