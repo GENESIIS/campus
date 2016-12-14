@@ -5,6 +5,9 @@
 <!-- 20161204 DN C18-student-signup-without-using-third-party-application-dn integrated with GUI complete 60% -->
 <!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
 <!-- 20161206 DN C18-student-signup-without-using-third-party-application-dn town field and other nodes  added -->
+<!-- 20161214 DN CAMP:18 rearranged the fields and add a input box to capture country code -->
+
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -183,18 +186,7 @@
             </div>
             <!-- End Email -->
 
-            <div class="input-field">
-                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;"></label><br>
-                <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="+94123445678 | 0094123456789 | 0777123456 formats are only accepted" >
-            </div>
-            <script>
-				$(document).ready(function(){
-				    $('[data-toggle="tooltip"]').tooltip();   
-				});
-		</script>
-            <!-- End phone -->
-
-		 <div class="input-field">
+		 	<div class="input-field">
 		         <label>Country :</label><label id="countryError" style="color:#C70039;"></label><br><br>
 		         <input list="countryList" id="country" name="country" class="text-field" type="text" placeholder="-- Select City --" onclick="clearField('countryError');" >
 		          <datalist id="countryList" name="countryist">
@@ -210,6 +202,18 @@
                 <input type="hidden"  id="sTownCode" name="sTownCode"/>
             </div>
             <!-- End Town -->
+            
+            <div class="input-field">
+                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;"></label><br>
+                <input class="text-field" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly maxlength="4" >
+                <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="+94123445678 | 0094123456789 | 0777123456 formats are only accepted" >
+            </div>
+            <script>
+				$(document).ready(function(){
+				    $('[data-toggle="tooltip"]').tooltip();   
+				});
+			</script>
+            <!-- End phone -->
 
             <div class="input-field">
                 <label id="usernameLabel" >Username :<span>*</span></label><label id="usernameError" style="color:#C70039;"></label><br>
