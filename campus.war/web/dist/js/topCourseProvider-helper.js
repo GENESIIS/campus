@@ -32,7 +32,7 @@ function getAjaxData(response) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();	
-		var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";		
+		var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";		
 		topRatedCProviders.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 	});
 	
@@ -41,7 +41,7 @@ function getAjaxData(response) {
 		var res = value.toString();
 		var data = res.split(",");	
 		var x = data[0].toString();		
-		var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";		
+		var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";		
 		topViewedCProviders.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 		
 	});	
