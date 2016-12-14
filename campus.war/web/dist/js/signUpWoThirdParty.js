@@ -8,7 +8,7 @@
 //20161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
 //20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
 // 		and the Town within Country
-//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode.
+//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode and avoid leading zero for the phone number field
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -88,6 +88,7 @@ function getPreRequisitPageData(preRequistData){
 	//populating the town list 
 	if(status){
 		selectedCountryCode = dValue;
+		$('#mobileCountryCode').val("+"+selectedCountryCode); // set the country code in the none editable field
 		extractRelaventTownList(selectedCountryCode);
 		}
 	});
@@ -108,10 +109,17 @@ function getPreRequisitPageData(preRequistData){
 		selectedTownCode = dValue;
 		$('#sTownCode').val(selectedTownCode);
 	}
-	
 });
-	
-
+	// checking if the leading value is a zero
+	$('#contactNumber').keyup(function(){
+		var firstDigit = this.value;
+		var patern = /^0/g;
+		if(isPatternMatch(patern,firstDigit)){
+			$('#phoneError').text("Leading Zero Is Not Alloved!");
+			$('#contactNumber').val("");
+		}
+		
+	});
 	
 	
 	
@@ -186,8 +194,6 @@ function sendSignUpCredentialsToBckEnd() {
 	var postaSessation = false;
 	if (validateSignUpWoThirdPartyPageEmbedData()) {
 		var jsonDataObject = createJasonObject();
-		
-		alert("jsonDataObject "+jsonDataObject);
 				jsonDataExchange(
 						jsonDataObject,
 						"post",
@@ -223,10 +229,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
 		return !validationPass;
-	} 
-//	else if (!(isFieldFilled(isempty($('#town:selected').text()),"Pathway Field","pathwayError"))) {
-//		return !validationPass;
-//	}
+	}
 	else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
@@ -319,6 +322,7 @@ function splitPhoneNumber(phoneNumber){
 		mobilePhoneNumber="";
 		mobilePhoneNetWorkCode="";
 		mobilePhoneCountryCode="";
+		
 	 var trimedPhoneNumber = phoneNumber.trim().replace(/\s+/g, "");
 	 var length = trimedPhoneNumber.length;
 	 switch(length){
@@ -350,4 +354,18 @@ function splitPhoneNumber(phoneNumber){
 	 }
 	
 }
+//CODE COMPLETE WITH THE CAPTURING PHONE NUMBER
+function managePhoneNumber(){
+	mobilePhoneNumber="";
+	mobilePhoneNetWorkCode="";
+	mobilePhoneCountryCode = $('#"mobileCountryCode"').val();
+	
+	
+	
+	
+}
+
+
+
+
 
