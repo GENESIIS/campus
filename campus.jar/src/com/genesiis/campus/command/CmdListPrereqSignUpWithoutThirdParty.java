@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161206 DN C18-student-signup-without-using-third-party-application-dn refactor method to include switch statement
 //20161207 DN C18: modified execute() to include view.setCollection(preRequisteCollnWrapper) call from one place
 //20161209 DN C18: code refactor execute() to add usertype logic
+//20161214 DN CAMP:18 setTempdata(int USERTYPE) temporary method created to by pass the USERTYPE table data issue
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 					ICrud country2Dao = new Country2DAO();
 					ICrud userTypeDao = new UserTypeDAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
-					helper.setAttribute("userType", userTypeDao.findById(UserType.STUDENT.getUserType()));
+					//helper.setAttribute("userType", userTypeDao.findById(UserType.STUDENT.getUserType()));
+					helper.setAttribute("userType",setTempdata(3));
 					break;
 				case DISPLAY_TOWN_DATA :
 					
@@ -89,6 +91,18 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 //		}
 //		return rowObj;
 //	}
+	
+	
+	
+	private Collection<Collection<String>> setTempdata(int USERTYPE){
+		Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
+		Collection<String> inner = new ArrayList<String>();
+		inner.add(String.valueOf(USERTYPE));
+		inner.add(String.valueOf(4));
+		allTownList.add(inner);
+		return allTownList;
+		
+	}
 	
 
 }
