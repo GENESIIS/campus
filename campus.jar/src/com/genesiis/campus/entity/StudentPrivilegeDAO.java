@@ -1,16 +1,21 @@
 package com.genesiis.campus.entity;
 
 //20161209 AS C19-student-login-without-using-third-party-application-test-as  StudentPrivilegeDAO created.
+//20161214 AS C19-student-login-without-using-third-party-application-test-as added studentPrivilege method . 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.ConnectionManager;
+
 public class StudentPrivilegeDAO implements ICrud {
-	static java.util.logging.Logger log = Logger
-			.getLogger(StudentPrivilegeDAO.class.getName());
+	static Logger log = Logger.getLogger(StudentPrivilegeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -30,22 +35,50 @@ public class StudentPrivilegeDAO implements ICrud {
 		return 0;
 	}
 
-	@Override
-	public Collection<Collection<String>> findById(Object code)
+	/**
+	 * Select all Interfaces and button actions student have.
+	 * @param student object
+	 * @return studentPrivilegeCollection
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	
+	public Collection<String> studentPrivilege(Object code)
 			throws SQLException, Exception {
-		Collection<Collection<String>> privilegeCollection = new ArrayList<Collection<String>>();
+
+		 Collection<String> studentPrivilegeCollection = new ArrayList<String>();
 		Connection conn = null;
-		Collection<Collection<String>> privilegeList = new ArrayList<Collection<String>>();
+		final Student student = (Student) code;
+		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
-		String query = "SELECT ";
+		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INERFACE.CODE WHERE STUDENT.USERTYPE = ? ";
 
 		try {
+			conn = ConnectionManager.getConnection();
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, student.getUserType());
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				privilegeList = new ArrayList<String>();
+				privilegeList.add(rs.getString(1));
+				privilegeList.add(rs.getString(2));
+				privilegeList.add(rs.getString(3));
+				privilegeList.add(rs.getString(4));
+				privilegeList.add(rs.getString(5));
+				privilegeList.add(rs.getString(6));
+				privilegeList.add(rs.getString(7));
+				privilegeList.add(rs.getString(8));
+				studentPrivilegeCollection = privilegeList;
+				
+			}
 
 		} catch (Exception e) {
 			log.info("findById Exception : " + e);
 			throw e;
 		}
-		return null;
+		return studentPrivilegeCollection;
 	}
 
 	@Override
@@ -74,6 +107,13 @@ public class StudentPrivilegeDAO implements ICrud {
 			Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Collection<Collection<String>> findById(Object code)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
