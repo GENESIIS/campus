@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161201 DN C18-student-signup-without-using-third-party-application-test-dn removed unnecessary comments as per CREV
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn add user name validation and validation to the
 //	validateFrontEndUserProvidedInformation()
+//20161214 DN CAMP:18 changed the convertRowStudentForJasonToStudent() refactor to accomadate usercode
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -98,7 +99,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		indusedStudent.setMobilePhoneCountryCode(partialStudent.getMobileCountryCode());
 		indusedStudent.setMobilePhoneNetworkCode(partialStudent.getMobileNetworkCode());
 		indusedStudent.setTown(partialStudent.getTown());
-		indusedStudent.setUserTypeCode(Integer.parseInt(partialStudent.getUsertypeCode()));
+		indusedStudent.setUserTypeCode(Integer.parseInt(partialStudent.getUserCode()));
 		return indusedStudent;
 	}
 	
