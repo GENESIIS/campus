@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //		add(),addSignInDataWOThirdPartyAppToRepository():changed to use trim() and bug fixed in code
 //20161207 DN C18: add data to town field in Student table from back end in addSignInDataWOThirdPartyAppToRepository() method 
 //20161207 DN C18: add USERTYPE to the data base table STUDENT
+//20161214 DN CAM:18 changed the method addSignInDataWOThirdPartyAppToRepository() to accommodate town code as a Long
 
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -226,7 +227,7 @@ public class SigningUpStudentDAO implements ICrud {
 				prepstmt.setInt(5, student.getGender());
 				prepstmt.setString(6,student.getEmail());
 				prepstmt.setString(7,student.getMobilePhoneNo());//correct
-				prepstmt.setLong(8,Integer.parseInt(student.getTown())); //Default town code is set when a new account is created
+				prepstmt.setLong(8,Long.parseLong(student.getTown())); //Default town code is set when a new account is created
 				prepstmt.setString(9,student.getUsername());
 				prepstmt.setString(10,student.getUsername()); // this has to change once the Login session is implemented
 				prepstmt.setString(11,student.getMobilePhoneCountryCode());
@@ -279,7 +280,5 @@ public class SigningUpStudentDAO implements ICrud {
 		} 
 		return res;
 	}
-	
-
 	
 }
