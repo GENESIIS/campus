@@ -13,6 +13,9 @@ package com.genesiis.campus.entity;
 //				variables, if constructs etc. so that it falls back to discount student's specified Interests, 
 //				if not Town, if adequate number of matching programmes is not found matching the interests and 
 //				town of the student.
+//20161214 MM c25-student-create-dashboard-MP-mm Modified query composing code to fix errors in the 
+//				generated query
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,44 +104,44 @@ public class StudentDashboardDAO implements ICrud {
 					+ "[CRTBY] [varchar](20),"
 					+ "[MODON] [date],"
 					+ "[MODBY] [varchar](20)"
-					+ ");"
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown"
-					+ "SELECT TOP (@neededNumOfResults) p.*"
-					+ "FROM [CAMPUS].[STUDENTINTEREST] si"
-					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1)"
-					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST)"
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR)"
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR)"
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME)"
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN)"
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1);"
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE;"
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults;"
-					+ "IF (@neededNumOfResults > 0)"
-					+ "BEGIN"
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown"
-					+ "SELECT TOP (@neededNumOfResults) p.*"
-					+ "FROM [CAMPUS].[STUDENTINTEREST] si"
-					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1)"
-					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST)"
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR)"
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR)"
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME)"
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN);"
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE;"
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults;"
-					+ "END"
-					+ "IF (@neededNumOfResults > 0)"
-					+ "BEGIN"
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown"
-					+ "SELECT TOP (@neededNumOfResults) p.*"
-					+ "FROM [CAMPUS].[PROGRAMME] p"
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME)"
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN)"
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1);"
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE;"
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults;"
-					+ "END"
+					+ "); "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "IF (@neededNumOfResults > 0) "
+					+ "BEGIN "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "END "
+					+ "IF (@neededNumOfResults > 0) "
+					+ "BEGIN "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "END "
 					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown WHERE CODE = (SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE);";
 			
 			
@@ -178,8 +181,8 @@ public class StudentDashboardDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, studentCode);
-			ps.setInt(2, studentCode);
+//			ps.setInt(1, studentCode);
+//			ps.setInt(2, studentCode);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
