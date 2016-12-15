@@ -30,6 +30,8 @@ public enum SystemMessage {
 	ACCOUNT_CREATED("User Account Created You Are Good To Go!"),
 	ACCOUNT_NOT_CREATED("User Account Creation Fail"),
 	USER_NAME_EXISTS("Chosen User Name Has Allready Taken. Please Choose Another!"),
+	MAIL_SUCCESS("Mail successfully submited to your email"),
+	MAIL_UNSUCCESS("Mail Sending failed"),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	

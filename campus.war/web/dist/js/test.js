@@ -8,6 +8,8 @@
  *			PN c26-add-student-details: addProfessionalExpForm() implementation completed.
  * 20161129 PN c26-add-student-details: addProfessionalExpForm() method modified.
  * 20161204 PN c26-add-student-details: set countryCode according to the selected country, as prefixed into the phone number.
+ * 20161205 PN c26-add-student-details: validateStudentPersonalDetails() implementation completed.
+ *          PN c26-add-student-details: validateStudentPersonalDetails(), addStudentPersonalDetails() and clearPersonalDetailsForm() methods modified.
  */
 
 $(document).ready(function() {
@@ -31,6 +33,11 @@ function displayDetails() {
 	});
 }
 
+/**
+ * This method populate data into UI elements on page loading.
+ * @param response
+ * @returns
+ */
 function getStudentData(response) {
 	// Set Scheme details
 	var sseStream = $("#sseStream");
@@ -135,16 +142,15 @@ function getStudentData(response) {
 	// Set Country details
  	var sCountryList = $("#sCountryList");
  	sCountryList.find('option').remove();
- //	$('<option>').val("").text("--Select One--").appendTo(sseCountry);
 	$.each(response.country2Collection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		var x = data[0].toString();
 		var y = data[1].toString();
-	//	$('<option>').val(y).text(x).appendTo(sCountryList);
 		$('#sCountryList').append("<option data-value='" + x + "'>"+y+"</option>");
 	});
 	
+	//Set country code prefixed to the phone numbers.
 	$("#sCountry").on('input', function () {
 	    var val = this.value;
         var dValue = $('#sCountryList option').filter(function() {
@@ -152,20 +158,70 @@ function getStudentData(response) {
         }).data('value');
         	var msg = dValue;
         	if(msg){
-        		alert(msg);
         		$("span[class='input-group-addon']").text("+("+msg+")");
+        		$('#sCountryCode').val(msg);
+        		getTownDetails(msg);
         	}
 	});
 	
+	//Set town code to passinto servlet.
+	$("#sTown").on('input', function () {
+	    var val = this.value;
+        var dValue = $('#sTownList option').filter(function() {
+            return this.value === val;
+        }).data('value');
+        	var msg = dValue;
+        	if(msg){
+        		$('#sTownCode').val(msg);
+        	}
+	});
+	
+	//Disable typing '0' at the beginning of the phone number text box. Already prefixed with country code. 
 	$("input[class='phoneNum']").on('input propertychange paste', function (e) {
 	    var reg = /^0+/gi;
-	    if (this.value.match(reg)) {
-	        this.value = this.value.replace(reg, '');
-	    }
+			if (this.value.match(reg)) {
+				this.value = this.value.replace(reg, '');
+			}
 	});
 }
 
-// Get data and sent to CmdAddSchoolEducationData.java.
+/**
+ * Get town details according to the given country code
+ * @param country
+ * @returns
+ */
+function getTownDetails(country){	
+	//var country = getSelectedData('sCountry','sCountryList');	
+	$.ajax({
+		url : '../../StudentController',
+		data : {
+			country : country,
+			CCO : 'GTD'
+		},
+		dataType : "json",
+		success : function(response) {
+			// Set Country details
+			$("#sTown").val("");
+		 	var sTownList = $("#sTownList");
+		 	sTownList.find('option').remove();
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				var x = data[0].toString();
+				var y = data[1].toString();
+				$('#sTownList').append("<option data-value='" + x + "'>"+y+"</option>");
+			});
+		},
+		error : function(response) {
+			alert("Error: "+response);
+		}
+	});
+}
+
+/**
+ * Get data and sent to CmdAddSchoolEducationData.java.
+ * @returns
+ */
 function addEducationDetails() {
 	if(validateForm()){
 	var schoolGrade = $('#sseQualification').val();
@@ -234,6 +290,10 @@ function clearSchoolEducationForm() {
 	$("#saveChangesStatus").hide();
 }
 
+/**
+ * Validate School education details form.
+ * @returns
+ */
 function validateForm(){
 	isDropdownSelected(isemptyDropdown(("sseIndexNo")),"IndexNO","sseIndexNoError");
 	isDropdownSelected(isemptyDropdown(("sseSchool")),"School name","sseSchoolError");
@@ -268,6 +328,10 @@ function clearProfessionalExpForm() {
 	$("#pesaveChangesStatus").hide();
 }
 
+/**
+ * Validate ProfessionalExp details form.
+ * @returns
+ */
 function validateProfessionalExpForm(){
 	isDropdownSelected(isemptyDropdown(("organization")),"Organization","organizationError");
 	isDropdownSelected(isemptyDropdown(("designation")),"Designation","designationError");
@@ -285,7 +349,10 @@ function validateProfessionalExpForm(){
 	}
 }
 
-//Get data and sent to CmdAddSchoolEducationData.java.
+/**
+ * Get data and sent to CmdProfessionalExpDetails.java.
+ * @returns
+ */
 function addProfessionalExpForm() {
 	if(validateProfessionalExpForm()){
 		var industry = $('#industryoftheOrganization').val();
@@ -335,36 +402,105 @@ function addProfessionalExpForm() {
 }
 }
 
-
-function addStudentPersonalDetails(){
-	var firstName = $('#sFullName').val();
-	var middleName = $('#sMiddleName').val();
-	var lastName = $('#sLastName').val();
-	var dateOfBirth = $('#sBirthDate').val();
-	var description = $('#sAboutMe').val();
-	var mobilePhoneNo = $('#sMobileNumber').val();
-	var landPhoneNo = $('#sHomeNumber').val();
-	var address1 = $('#sAddress').val();
-	var town = $('#sTown').val();
-	var email = $('#sEmail').val();
-	var facebookUrl = $('#sFacebookUrl').val();
-	var twitterUrl = $('#stwitterUrl').val();
-	var linkedInUrl = $('#sLinkedInUrl').val();
-	var instagramUrl = $('#sInstergramUrl').val();
-	var mySpaceUrl = $('#smySpace').val();
-	var whatsAppNumber = $('#sWhatsApp').val();
-	var viberNumber = $('#sViber').val();
-	
-	$('#countryCodePrefix').text();
-	$('#sCountry').val();
+/**
+ * Get data and sent to CmdAddStudentPersonlDetails.java. 
+ * @returns
+ */
+function addStudentPersonalDetails(){	
+	if(validateStudentPersonalDetails()){
+		var firstName = $('#sFullName').val();
+		var middleName = $('#sMiddleName').val();
+		var lastName = $('#sLastName').val();
+		var dateOfBirth = $('#sBirthDate').val();
+		var description = $('#sAboutMe').val();
+		var mobilePhoneNo = $('#sMobileNumber').val();
+		var landPhoneNo = $('#sHomeNumber').val();
+		var address1 = $('#sAddress').val();
+		var town = $('#sTownCode').val();
+		var email = $('#sEmail').val();
+		var facebookUrl = $('#sFacebookUrl').val();
+		var twitterUrl = $('#stwitterUrl').val();
+		var linkedInUrl = $('#sLinkedInUrl').val();
+		var instagramUrl = $('#sInstergramUrl').val();
+		var mySpaceUrl = $('#smySpace').val();
+		var whatsAppNumber = $('#sWhatsApp').val();
+		var viberNumber = $('#sViber').val();	
+		var landPhoneCountryCode = $('#sCountryCode').val();
+		var gender = $('input[gender]:checked').val()
+		
+		var jsonData = {
+				"firstName" : firstName,
+				"middleName" : middleName,
+				"lastName" : lastName,
+				"dateOfBirth" : dateOfBirth,
+				"description" : description,
+				"mobilePhoneNo" : mobilePhoneNo,
+				"landPhoneNo" : landPhoneNo,
+				"address1" : address1,
+				"town" : town,
+				"email" : email,
+				"facebookUrl" : facebookUrl,
+				"twitterUrl" : twitterUrl,
+				"linkedInUrl" : linkedInUrl,
+				"instagramUrl" : instagramUrl,
+				"mySpaceUrl" : mySpaceUrl,
+				"whatsAppNumber" : whatsAppNumber,
+				"viberNumber" : viberNumber,
+				"landPhoneCountryCode" : landPhoneCountryCode,
+				"gender" : gender
+		};
+		
+		$.ajax({
+			type : "POST",
+			url : '../../StudentController',
+			data : {
+				jsonData : JSON.stringify(jsonData),
+				CCO : "APD"
+			},
+			dataType : "json",
+			success : function(data) {			
+				alert(data);
+				if(data.studentPersonalStatus){	
+						if(data.studentPersonalStatus === "Unsuccessful."){
+							$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).show();
+						}else if(data.studentPersonalStatus === "Invalid Information"){
+							$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+						}
+					clearPersonalDetailsForm();	
+					$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).show();
+				}
+			},
+			error : function(e) {
+				alert("Error " + e);
+				$("#studentPersonalStatus").addClass("alert alert-warning").text(e).show();
+			}
+		});
+	}
 }
 
 function validateStudentPersonalDetails(){
-	isDropdownSelected(isemptyDropdown(("sFullName")),"Full Name","sFullNameError");
-	isDropdownSelected(isemptyDropdown(("sMiddleName")),"Middle Name","sMiddleNameError");
+	isDropdownSelected(isemptyDropdown(("sFullName")),"First Name","sFullNameError");
 	isDropdownSelected(isemptyDropdown(("sLastName")),"Last Name","sLastNameError");
-	isDropdownSelected(isemptyDropdown(("sBirthDate")),"Birth Date","sBirthDateError");
+	isDropdownSelected(isemptyDropdown(("sMobileNumber")),"Mobile Number","sMobileNumberError");
+	isDropdownSelected(isemptyDropdown(("sTown")),"Town","sTownError");
+	isDropdownSelected(isemptyDropdown(("sCountry")),"Country","sCountryError");
+	isDropdownSelected(isemptyDropdown(("sEmail")),"Email","sEmailError");
 	
+	if($('#sBirthDate').val()){
+		isPastfromNow("sBirthDate", "sBirthDateError");
+	}
+	
+	if(($('#sFullNameError').text() != '')||($('#sLastNameError').text() != '')||($('#sBirthDateError').text() != '')||
+	($('#sTownError').text() != '')||($('#sCountryError').text() != '')||($('#sEmailError').text() != '')){
+		if($('#sBirthDate').val()){
+			if($('#sBirthDateError') != ""){
+				return false;
+			}
+		}
+			return false;
+	}else{
+			return true;
+	}
 }
 
 function clearPersonalDetailsForm(){
@@ -388,6 +524,8 @@ function clearPersonalDetailsForm(){
 	$('#smySpace').val("");
 	$('#sWhatsApp').val("");
 	$('#sViber').val("");
+	$('#sTownCode').val("");
+	$('#sCountryCode').val("");
 	$("#studentPersonalStatus").hide();
 }
 

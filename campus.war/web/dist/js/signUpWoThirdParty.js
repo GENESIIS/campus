@@ -95,7 +95,11 @@ function getPreRequisitPageData(preRequistData){
 		}
 	});
 	
-	//getting the selected town and place it on the text box
+	
+	/*
+	 * getting the selected town and place it on the text box
+	 */
+	
 	$('#town').on('input', function(){
 		var status = false;
 		var val = this.value; //select what is changed from the input field.
@@ -112,16 +116,27 @@ function getPreRequisitPageData(preRequistData){
 		$('#sTownCode').val(selectedTownCode);
 	}
 });
-	// checking if the leading value is a zero if an error message will be popped out
-	//input text field will be erased
+	
+	/* checking if the leading value is a zero if an error message will be popped out
+	 * input text field will be erased
+	*/
 	$('#contactNumber').keyup(function(){
 		var firstDigit = this.value;
-		var patern = /(^0|^\+)/g; 		//matches the leading zero and leading + sin
+		var patern = /^[0|\+]([a-zA-Z0-9])*/g; 		//matches the leading zero and leading + sin with alpha numeric character combinations
 		if(isPatternMatch(patern,firstDigit)){
-			$('#phoneError').text("Leading Zero or '+' Is Not Alloved!");
+			$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
 			$('#contactNumber').val("");
 		}
 		
+	});
+	
+	/*
+	 * this function is available when the document is ready and
+	 * it clears any Main error message sent by the server 
+	 * in the on click event on text-field class
+	 */
+	$('input.text-field').on("click",function(){
+		$('#displayLabel').text(""); // clear if the ERROR message there is any.
 	});
 	
 
@@ -151,6 +166,7 @@ function extractRelaventTownList(countryCode){
 	});
 	
 }
+
 /**
  * manageTownListing supposes to populate the town data list
  * from the response sent from the server
@@ -186,7 +202,6 @@ function sendSignUpCredentialsToBckEnd() {
 						"../../../StudentController", // path is provided related to the jsp page
 						"SIWOTP",
 						"json");
-	//call function on the return function how to operate on it	
 		
 		} else {
 		return postaSessation;
@@ -357,27 +372,27 @@ function splitPhoneNumber(phoneNumber,length){
 	
 	 switch(length){
 	 case 9: 
-		 mobilePhoneNumber = trimedPhoneNumber.substr(2);
-		 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(0, 2);
+		 mobilePhoneNumber = phoneNumber.substr(2);
+		 mobilePhoneNetWorkCode = phoneNumber.substr(0, 2);
 		 break;
 	 case 10: // mobile number starts with a leading zero
-		 mobilePhoneNumber = trimedPhoneNumber.substr(3);
-		 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(0, 3);
+		 mobilePhoneNumber = phoneNumber.substr(3);
+		 mobilePhoneNetWorkCode = phoneNumber.substr(0, 3);
 		 break;
 	 case 12:
 		 var phonenumberPattern=/^\+/g;
 		 if(isPatternMatch(phonenumberPattern,phoneNumber)){
-			 mobilePhoneNumber = trimedPhoneNumber.substr(5);
-			 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(3,2);
-			// mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 3);
+			 mobilePhoneNumber = phoneNumber.substr(5);
+			 mobilePhoneNetWorkCode = phoneNumber.substr(3,2);
+			// mobilePhoneCountryCode = phoneNumber.substr(0, 3);
 		 }
 		 break;
 	 case 13:
 		 var phonenumberPattern=/(^00\d{2})/g;
 		 if(isPatternMatch(phonenumberPattern,phoneNumber)){
-			 mobilePhoneNumber = trimedPhoneNumber.substr(6);
-			 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(4,2);
-			 //mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 4);
+			 mobilePhoneNumber = phoneNumber.substr(6);
+			 mobilePhoneNetWorkCode = phoneNumber.substr(4,2);
+			 //mobilePhoneCountryCode = phoneNumber.substr(0, 4);
 		 }
 		 break;
 	 

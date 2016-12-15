@@ -53,6 +53,9 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		try{
 			validateFrontEndUserProvidedInformation(partialStudent);
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
+			
+			// insert a function to send the email probably call to CmdGenerateEmail
+			// then change the message to the client side by appending to the message generated from here
 			message = systemMessage(status);
 			Collection<String> signUpdata = new ArrayList<String>();
 			signUpdata.add(null);
