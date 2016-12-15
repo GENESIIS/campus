@@ -9,6 +9,8 @@
 //20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
 // 		and the Town within Country
 //20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode and avoid leading zero for the phone number field
+//20161215 DN CAMP:18 refactor splitPhoneNumber() introduced new client method managePhoneNumber() and 
+//         utility methods :extractInternationalPhoneNumber()/resetTheMobileNumberRelatedGlobalVariables().
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -110,41 +112,25 @@ function getPreRequisitPageData(preRequistData){
 		$('#sTownCode').val(selectedTownCode);
 	}
 });
-	// checking if the leading value is a zero
+	// checking if the leading value is a zero if an error message will be popped out
+	//input text field will be erased
 	$('#contactNumber').keyup(function(){
 		var firstDigit = this.value;
-		var patern = /^0/g;
+		var patern = /(^0|^\+)/g; 		//matches the leading zero and leading + sin
 		if(isPatternMatch(patern,firstDigit)){
-			$('#phoneError').text("Leading Zero Is Not Alloved!");
+			$('#phoneError').text("Leading Zero or '+' Is Not Alloved!");
 			$('#contactNumber').val("");
 		}
 		
 	});
 	
-	
-	
-//###############################################################################	
-	//Set country code prefixed to the phone numbers.
-//	$("#country").on('input', function () {
-//	    var val = this.value;
-//	    extractRelaventTownList('94');
-//        var dValue = $('#countryList option').filter(function() {
-//            return this.value === val;
-//        }).data('value'); //PROBLEM WITH THE FUNCTION TEST
-
-//		var msg = dValue;
-//        	if(msg){
-//        		//$("span[class='input-group-addon']").text("+("+msg+")");
-//        		//$('#sCountryCode').val(msg);
-//        		extractRelaventTownList(msg);
-//        	}
-//	});
 
 }
 /**
  * accepts the country code and extract the available town information
  * that belongs to the country and bring it to the client side form 
  * server end
+ * @author dushantha DN
  * @param countryCode
  */
 function extractRelaventTownList(countryCode){
@@ -168,7 +154,7 @@ function extractRelaventTownList(countryCode){
 /**
  * manageTownListing supposes to populate the town data list
  * from the response sent from the server
- * @param townObject the response recieved from the server.
+ * @param townObject the response received from the server.
  */
 function manageTownListing(townObject){
 	$('#townList').find('option').remove();
@@ -185,7 +171,7 @@ function manageTownListing(townObject){
 
 /**
  * method validates if the user inputs are correct and according to agreed
- * format, then collect the data and forms a javas cript object finally
+ * format, then collect the data and forms a java script object finally
  * the JASON data is passed to the server end.
  * @author dushantha DN
  * @returns {Boolean} if validation fails returns false
@@ -227,16 +213,17 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
 		return !validationPass;
+	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
+		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
 		return !validationPass;
-	}
-	else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
+	} else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
 		return !validationPass;
-	}else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
+	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
-	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
 		return !validationPass;
@@ -258,7 +245,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
  */
 
 function createJasonObject(){
-	splitPhoneNumber($('#contactNumber').val());
+	managePhoneNumber($('#contactNumber').val(),$('#mobileCountryCode').val());
 	var jsonData ={
 			"firstName" :$('#firstName').val(),
 			"lastName"  :$('#lastName').val(),
@@ -310,27 +297,70 @@ function passwordAndConfirmPassword(password, reconfirmPassWord){
 	return isBothValueAreIdentical;
 }
 
+/**
+ * Method :managePhoneNumber sets the mobilephone number,mobile phone
+ * networknumber and the country codedepending on the contry the user selects.
+ * 
+ * @author dushantha DN
+ * @param phoneNumber
+ * @param countryCode
+ */
+
+function managePhoneNumber(phoneNumber,countryCode){
+	resetTheMobileNumberRelatedGlobalVariables();
+	var trimedPhoneNumber = phoneNumber.trim().replace(/\s+/g, "");
+	var length = trimedPhoneNumber.length;
+	mobilePhoneCountryCode= countryCode;
+	if(mobilePhoneCountryCode === '+94'){
+		splitPhoneNumber(trimedPhoneNumber,length);
+	} else {
+		extractInternationalPhoneNumber(trimedPhoneNumber);
+	}
+	
+}
+
+/**
+ * resetTheMobileNumberRelatedGlobalVariables():method 
+ * resets the globall parameters associates with the
+ * mobilephone number mobilePhoneNumber,mobilePhoneNetWorkCode,mobilePhoneCountryCode
+ * @author dushantha DN
+ */
+function resetTheMobileNumberRelatedGlobalVariables(){
+	mobilePhoneNumber="";
+	mobilePhoneNetWorkCode="";
+	mobilePhoneCountryCode = "";
+}
+
+/**
+ * extractInternationalPhoneNumber: method uses the given number as it's. It desn't 
+ * split the number in to network provider and the phone
+ * number fields. further if the supplied phone number contains
+ * internal spaces this method does not handle those. hence it's the clients'
+ * responsibility to provide a trimed string as the parameter phoneNumber
+ * @author dushantha DN
+ * @param phoneNumber 
+ */
+function extractInternationalPhoneNumber(phoneNumber){
+	mobilePhoneNumber=phoneNumber;
+	
+}
 
 /**
  * splitPhoneNumber() separate the phone
- * number in to country code; network code an phone number
+ * number in network code an phone number
  * if the phone number is of the form 01234567898 or 123456789 format
  * the country code will not be populated.
+ * @author dushantha DN
  * @param phoneNumber
  */
-function splitPhoneNumber(phoneNumber){
-		mobilePhoneNumber="";
-		mobilePhoneNetWorkCode="";
-		mobilePhoneCountryCode="";
-		
-	 var trimedPhoneNumber = phoneNumber.trim().replace(/\s+/g, "");
-	 var length = trimedPhoneNumber.length;
+function splitPhoneNumber(phoneNumber,length){
+	
 	 switch(length){
 	 case 9: 
 		 mobilePhoneNumber = trimedPhoneNumber.substr(2);
 		 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(0, 2);
 		 break;
-	 case 10:
+	 case 10: // mobile number starts with a leading zero
 		 mobilePhoneNumber = trimedPhoneNumber.substr(3);
 		 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(0, 3);
 		 break;
@@ -339,7 +369,7 @@ function splitPhoneNumber(phoneNumber){
 		 if(isPatternMatch(phonenumberPattern,phoneNumber)){
 			 mobilePhoneNumber = trimedPhoneNumber.substr(5);
 			 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(3,2);
-			 mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 3);
+			// mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 3);
 		 }
 		 break;
 	 case 13:
@@ -347,23 +377,13 @@ function splitPhoneNumber(phoneNumber){
 		 if(isPatternMatch(phonenumberPattern,phoneNumber)){
 			 mobilePhoneNumber = trimedPhoneNumber.substr(6);
 			 mobilePhoneNetWorkCode = trimedPhoneNumber.substr(4,2);
-			 mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 4);
+			 //mobilePhoneCountryCode = trimedPhoneNumber.substr(0, 4);
 		 }
 		 break;
 	 
 	 }
-	
 }
-//CODE COMPLETE WITH THE CAPTURING PHONE NUMBER
-function managePhoneNumber(){
-	mobilePhoneNumber="";
-	mobilePhoneNetWorkCode="";
-	mobilePhoneCountryCode = $('#"mobileCountryCode"').val();
-	
-	
-	
-	
-}
+
 
 
 
