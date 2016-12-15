@@ -37,9 +37,6 @@ function getAjaxData(catCode,response) {
 						/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
 						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
 						
-						
-						/*var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
-						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
 					});
 
 
@@ -173,8 +170,7 @@ function populateFilterSearchResults(response) {
 			var y = value[1].toString();	
 		
 
-	var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";
-	/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
+	var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
 	providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
 	}
 	});
@@ -262,9 +258,9 @@ function populateCategoryWiseTypes(response){
 			
 			$("#select-level").find('type.levelClass');
 			
-			//$("#select-level").find('.levelClass')[0].attr('checked','checked');
+			$("#select-level").find('.levelClass').attr('checked','checked');
 			$("#level").attr('checked','checked');
-			$('input[name=level]').attr('checked');
+			 $('input:level').attr('checked','checked');
 		}
 		alert("levelAll ");
 		
