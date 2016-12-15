@@ -18,7 +18,7 @@ public class Student {
 	int gender;
 	String email;
 	String type;
-	String imagePath;
+
 	String landPhoneCountryCode;
 	String landPhoneAreaCode;
 	String landPhoneNo;
@@ -129,10 +129,6 @@ public class Student {
 
 	public String getType() {
 		return type;
-	}
-
-	public String getImagePath() {
-		return imagePath;
 	}
 
 	public String getLandPhoneCountryCode() {
@@ -305,10 +301,6 @@ public class Student {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
 	}
 
 	public void setLandPhoneCountryCode(String landPhoneCountryCode) {
