@@ -31,8 +31,13 @@ function getAjaxData(catCode,response) {
 						var x = data[0].toString();
 						var y = data[1].toString();
 						
-						var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
-						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
+						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";
+						/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+						
+						
+						/*var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
+						providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
 					});
 
 
@@ -41,10 +46,10 @@ function getAjaxData(catCode,response) {
 	var secondChoice = $("#select-category");
 	secondChoice.find('li').remove();
 	$.each(response.categoryList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var res = value;
+		//var data = res.split(",");
+		var x = value[0].toString();
+		var y = value[1].toString();
 		if(x==catCode){
 		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '" checked="checked"></a>' + y + '</li>');
 		}else{
@@ -145,7 +150,7 @@ function getAjaxData(catCode,response) {
 			},
 			dataType : "json",
 			success : function(response) {				
-				populateAjaxResponse(response);
+				populateFilterSearchResults(response);
 			},
 			error : function() {
 				alert("error");
@@ -156,7 +161,7 @@ function getAjaxData(catCode,response) {
 
 }
 
-function populateAjaxResponse(response) {
+function populateFilterSearchResults(response) {
 	
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
@@ -164,10 +169,12 @@ function populateAjaxResponse(response) {
 	var res = value.toString();
 	var data = res.split(",");
 	var x = data[0].toString();
-	var y = data[1].toString();
+	var y = data[1].toString();	
+
+	var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";
+	/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
+	providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
 	
-	var logo = "../../education/provider/logo/" + x + "/"+ x + ".png";
-	providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');
 	});
 	
 }
