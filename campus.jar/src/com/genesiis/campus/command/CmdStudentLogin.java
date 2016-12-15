@@ -3,7 +3,10 @@ package com.genesiis.campus.command;
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.StyledEditorKit.BoldAction;
@@ -24,12 +27,10 @@ import org.apache.log4j.Logger;
 public class CmdStudentLogin implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdStudentLogin.class.getName());
-	
+
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	
-	
-	
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -38,30 +39,54 @@ public class CmdStudentLogin implements ICommand {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
-		log.info("testing Data ................ : EMAIL " + data.getUserKey() +"  Password  : "+data.getPassword());
+		log.info("testing Data ................ : EMAIL " + data.getUserKey()
+				+ "  Password  : " + data.getPassword());
 
-	String validateResult = LoginValidator.validateLogin(data);
-	
-	boolean rememberMe = data.isRemember();
-	log.info("remember me :) "+rememberMe);
+		String validateResult = LoginValidator.validateLogin(data);
+
+		boolean rememberMe = data.isRemember();
+		log.info("remember me :) " + rememberMe);
 		if (validateResult.equalsIgnoreCase("True")) {
-		//	log.info(validateResult);
+			// log.info(validateResult);
 			data = LoginValidator.dataSeparator(data);
-			log.info("Student user key: " +data.getUserKey());
-			log.info("Student Assigen Email : " +data.getEmail());
-			log.info("Student username : " +data.getUsername());
+			log.info("Student user key: " + data.getUserKey());
+			log.info("Student Assigen Email : " + data.getEmail());
+			log.info("Student username : " + data.getUsername());
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			 dataCollection = loginDAO.findById(data);
-			
-			 if(rememberMe==true){
-				  helper.setAttribute("student", data );
-				  
-				 CookieHandler.addCookie(helper.getResponse(), message, data.getUserKey(), 2592000);
-			 }
-			 
-		}
+			dataCollection = loginDAO.findById(data);
 
+			if (rememberMe == true) {
+				helper.setAttribute("student", data);
+				CookieHandler.addCookie(helper.getResponse(), message,
+						data.getUserKey(), 2592000);
+
+			}
+		//	setStudentLoginDetails(data, helper);
+		}
+		log.info("wade harriiii :P");
+		helper.setRedirectPage("courseInquiry.jsp");
 		return view;
+	}
+
+	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+		Date loginTime = new Date();
+
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
+
+		object.setLastLoggedInDate(loginDate.toString());
+		object.setLastLoggedInTime(new Timestamp(loginTime.getTime())
+				.toString());
+
+		String browser = helper.getHeader("User-Agent");
+		String[] output = browser.split("/");
+		object.setLastLoggedInUserAgent(output[0]);
+
+		return object;
 	}
 
 	/**
