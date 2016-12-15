@@ -100,7 +100,7 @@ public class CmdGetSchoolEducationData implements ICommand {
 		Collection<Collection<String>> awardCollection = awardDao.getAll();
 		helper.setAttribute("awardCollection", awardCollection);
 		
-		Collection<Collection<String>> stdExpCollection = awardDao.getAll();
+		Collection<Collection<String>> stdExpCollection = expDao.findById(StudentCode);
 		helper.setAttribute("stdExpCollection", stdExpCollection);
 
 		return view;
