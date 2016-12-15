@@ -205,8 +205,8 @@
             
             <div class="input-field">
                 <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;"></label><br>
-                <input class="text-field" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly maxlength="4" >
-                <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="+94123445678 | 0094123456789 | 0777123456 formats are only accepted" >
+                <input class="text-field" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly title ="Country Code ,It Automatically Gets Filled Once You Select Your Contry" >
+                <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="Type Your Mobile Numebr Without The Leading Zero e.g 771234567 format" >
             </div>
             <script>
 				$(document).ready(function(){
