@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 //20161125 PN c26-add-student-details: implemented execute() method to load data to student education details
 //20161125 PN c26-add-student-details: modified execute() method to load student personal details.
 //20161208 PN c26-add-student-details: modified execute() method to load student skills and interest details.
-//20161215 PN CAM-28 :modified execute() method to load award details collection with DB values.
+//20161215 PN CAM-28 :modified execute() method to load award details collection and student Experience Collection with DB values.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -15,6 +15,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InterestDAO;
 import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.entity.MediumDAO;
+import com.genesiis.campus.entity.ProfessionalExperienceDAO;
 import com.genesiis.campus.entity.SchoolEducationDAO;
 import com.genesiis.campus.entity.SchoolGradeDAO;
 import com.genesiis.campus.entity.SkillDAO;
@@ -62,6 +63,7 @@ public class CmdGetSchoolEducationData implements ICommand {
 		ICrud interestDao = new InterestDAO();
 		ICrud studentInterestDao =  new StudentInterestDAO();
 		ICrud awardDao = new AwardDAO();
+		ICrud expDao = new ProfessionalExperienceDAO();
 		
 		Collection<Collection<String>> schoolEducationCollection = schoolEducationDao.findById(StudentCode);
 		view.setCollection(schoolEducationCollection);
@@ -97,6 +99,9 @@ public class CmdGetSchoolEducationData implements ICommand {
 		
 		Collection<Collection<String>> awardCollection = awardDao.getAll();
 		helper.setAttribute("awardCollection", awardCollection);
+		
+		Collection<Collection<String>> stdExpCollection = awardDao.getAll();
+		helper.setAttribute("stdExpCollection", stdExpCollection);
 
 		return view;
 	}
