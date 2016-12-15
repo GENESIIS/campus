@@ -46,8 +46,7 @@ function getAjaxData(catCode,response) {
 	var secondChoice = $("#select-category");
 	secondChoice.find('li').remove();
 	$.each(response.categoryList, function(index, value) {
-		var res = value;
-		//var data = res.split(",");
+		
 		var x = value[0].toString();
 		var y = value[1].toString();
 		if(x==catCode){
@@ -67,14 +66,15 @@ function getAjaxData(catCode,response) {
 
 	var htmlstr="";
 	$.each(response.districtList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		if(value!=null && value.length>0){
+		
+		/*var x = data[0].toString();
+		var y = data[1].toString();*/
 		
 		/*$('<option>').val(y).text(z).appendTo(districtName);*/
 		
-		htmlstr += '<option val="' + data[1] + '">' + data[2] + '</option>';
+		htmlstr += '<option val="' + value[1] + '">' + value[2] + '</option>';
+		}
 		
 	});		
 	$('#districtName').html(htmlstr);
@@ -166,15 +166,15 @@ function populateFilterSearchResults(response) {
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
 	$.each(response.result,	function(index, value) {
-	var res = value.toString();
-	var data = res.split(",");
-	var x = data[0].toString();
-	var y = data[1].toString();	
+		if(value!=null && value.length>0){
+			var x = value[0].toString();
+			var y = value[1].toString();	
+		
 
 	var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";
 	/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
 	providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-	
+	}
 	});
 	
 }
@@ -218,11 +218,11 @@ function populateCategoryWiseTypes(response){
 	var secondChoice = $("#select-cpType");
 	secondChoice.find('li').remove();
 	$.each(	response.cpTypeList,function(index, value) {
-	var res = value.toString();
-	var data = res.split(",");
-	var x = data[0].toString();
-	var y = data[1].toString();
-	secondChoice.append('<li><a href="javascript:"><input class="cpTypeClass" id="cpType'+ x + '" type="checkbox" value="'	+ x	+ '"></a>' + y + '</li>');
+		if(value!=null && value.length>0){
+			var x = value[0].toString();
+			var y = value[1].toString();
+			secondChoice.append('<li><a href="javascript:"><input class="cpTypeClass" id="cpType'+ x + '" type="checkbox" value="'	+ x	+ '"></a>' + y + '</li>');
+		}
 	cpTypeCount++;
 	});	
 	
@@ -231,11 +231,11 @@ function populateCategoryWiseTypes(response){
 	var secondChoice = $("#select-major");
 	secondChoice.find('li').remove();
 	$.each(response.majorList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="majorClass" id="major' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		if(value!=null && value.length>0){
+			var x = value[0].toString();
+			var y = value[1].toString();
+			secondChoice.append('<li><a href="javascript:"><input class="majorClass" id="major' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		}
 		majorCount++;
 	});
 	
@@ -243,11 +243,11 @@ function populateCategoryWiseTypes(response){
 	var secondChoice = $("#select-level");
 	secondChoice.find('li').remove();
 	$.each(response.levelList, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		secondChoice.append('<li><a href="javascript:"><input class="levelClass" id="level' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+		if(value!=null && value.length>0){			
+			var x = value[0].toString();
+			var y = value[1].toString();
+			secondChoice.append('<li><a href="javascript:"><input class="levelClass" id="level' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');			
+		}
 		levelCount++;
 	});
 }
