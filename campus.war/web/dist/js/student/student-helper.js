@@ -13,6 +13,7 @@
 //		   PN CAM-26 add-student-details: implemented addSkillDetails(),addInterestsDetails() and createObject() methods.
 //20161214 PN CAM-28: getStudentData(response) method modified to load student personal details on load.
 //20161214 PN CAM-28: completed front UI population with db values, Student Higher education details form.
+//20161215 PN CAM-28: implementing addHigherEducationDetails() method and validateHigherEducationForm(). - WIP
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -140,6 +141,7 @@ function getStudentData(response) {
 	});
 	
 	// Set medium details
+	alert("response.mediumCollection"+response.mediumCollection);
  	var sseMedium = $("#sseMedium");
  	sseMedium.find('option').remove();
  	$('<option>').val("").text("--Select One--").appendTo(sseMedium);
@@ -185,6 +187,18 @@ function getStudentData(response) {
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(x).text(y).appendTo(jobCategory);
+	});
+	
+	// Set Job Category
+ 	var award = $("#award");
+ 	award.find('option').remove();
+ 	$('<option>').val("").text("--Select One--").appendTo(award);
+	$.each(response.awardCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(award);
 	});
 	
 	if(response.result) {
@@ -364,6 +378,88 @@ function getTownDetails(country){
 		}
 	});
 }
+
+/**
+ * Get data and sent to CmdAddHigherEducationData.java.
+ * @returns
+ */
+function addHigherEducationDetails() {
+	if(validateHigherEducationForm()){
+	var instituteofStudy = $('#instituteofStudy').val();
+	var affiliatedInstitute = $('#affiliatedInstitute').val();
+	var areaofstudy = $('#areaofstudy').val();
+	var award = $('#award').val();
+	var studentId = $('#studentId').val();
+	var gpa = $('#gpa').val();
+	var heCommencedOn = $('#heCommencedOn').val();
+	var heCompletedOn = $('#heCompletedOn').val();
+	var heMedium = $('#heMedium').val();
+	var country = getSelectedData('heCountry','heCountryList');
+	var heDescription = $('#heDescription').val();
+
+	var jsonData = {
+		"instituteofStudy" : instituteofStudy,
+		"affiliatedInstitute" : affiliatedInstitute,
+		"areaofstudy" : areaofstudy,
+		"award" : award,
+		"studentId" : studentId,
+		"gpa" : gpa,
+		"heCommencedOn" : heCommencedOn,
+		"heCompletedOn" : heCompletedOn,
+		"heMedium" : heMedium,
+		"country" : country,
+		"heDescription" : heDescription
+	};
+
+	$.ajax({
+		type : "POST",
+		url : '../../StudentController',
+		data : {
+			jsonData : JSON.stringify(jsonData),
+			CCO : "AHE"
+		},
+		dataType : "json",
+		success : function(data) {			
+			if(data.saveChangesHigherEduStatus){	
+					if(data.saveChangesHigherEduStatus === "Unsuccessful."){
+						$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text(data.saveChangesHigherEduStatus).show();
+					}else if(data.saveChangesHigherEduStatus === "Invalid Information"){
+						$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").show();
+					}
+				//clearSchoolEducationForm();	
+				$("#saveChangesHigherEduStatus").addClass("alert alert-success").text(data.saveChangesHigherEduStatus).show();
+			}
+		},
+		error : function(e) {
+			alert("Error " + e);
+			$("#saveChangesHigherEduStatus").addClass("alert alert-warning").text(e).show();
+		}
+	});
+	}
+}
+
+/**
+ * Validate higher education details form.
+ * @returns
+ */
+function validateHigherEducationForm(){
+	isDropdownSelected(isemptyDropdown(("instituteofStudy")),"Institute of Study","instituteofStudyError");
+	isDropdownSelected(isemptyDropdown(("studentId")),"Student ID","studentIdError");
+	isDropdownSelected(isemptyDropdown(("heCommencedOn")),"Commenced on date","heCommencedOnError");
+	isDropdownSelected(isemptyDropdown(("heCompletedOn")),"Completion on date","heCompletedOnError");
+	
+	isDropdownSelected(isemptyDropdown('areaofstudy'),"Area of study","areaofstudyError");
+	isDropdownSelected(isemptyDropdown('award'),"Award","awardError");
+
+	if(($('#instituteofStudyError').text() != '')||($('#studentIdError').text() != '')||($('#heCommencedOnError').text() != '')||
+	($('#heCompletedOnError').text() != '')||($('#areaofstudyError').text() != '')||($('#awardError').text() != '')){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+
 
 /**
  * Get data and sent to CmdAddSchoolEducationData.java.
