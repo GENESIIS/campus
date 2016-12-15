@@ -5,6 +5,7 @@
 <!-- 20161203 PN c26-add-student-details: modified Personal Details model UI elements ids, onClick event. -->
 <!-- 20161205 PN c26-add-student-details: completed front end validations for Student personal details form. -->
 <!-- 20161214 PN CAM-28: completed front end for Student Higher education details form. -->
+<!-- 20161215 PN CAM-28: added front end validations for date fields. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -294,7 +295,7 @@
 			Designation <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
 			<span id="designationError" name="designationError" style="color:red"></span><br>
 			
-			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')">
+			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
 			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
 			
 			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
@@ -425,10 +426,10 @@
 			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')">
 			<span id="gpa" name="gpa" style="color:red"></span><br>
 			
-			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')">
+			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
 			<span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span><br>
 			
-			Completed On <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')">
+			Completed On <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
 			<span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span><br>
 			
 			Medium
