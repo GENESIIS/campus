@@ -32,7 +32,7 @@ public class StudentLoginDAO implements ICrud {
 	private String gender;
 	private String email;
 	private String type;
-	private String imagePath;
+
 	private String landPhoneCountryCode;
 	private String landPhoneAreaCode;
 	private String landPhoneNo;
@@ -62,6 +62,8 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoggedOutTime;
 	private String lastLoginAuthenticatedBy;
 	boolean isActive;
+
+	private static final int MAX_ATTEMPTS = 3;
 	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
 
 	@Override
@@ -94,7 +96,7 @@ public class StudentLoginDAO implements ICrud {
 	public static int loginDataUpdate(Object object) throws SQLException,
 			Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?,  WHERE CODE=? ";
+		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?  WHERE CODE=? ";
 		PreparedStatement ps = null;
 		Student student = (Student) object;
 		int rowInserted = 0;
@@ -106,7 +108,7 @@ public class StudentLoginDAO implements ICrud {
 			ps.setString(3, student.getLastLoggedInDate());
 			ps.setString(4, student.getLastLoggedInTime());
 			ps.setString(5, student.getLastLoggedInIpAddress());
-
+			ps.setInt(6, student.getCode());
 			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
@@ -150,7 +152,7 @@ public class StudentLoginDAO implements ICrud {
 		String message = "Sorry, you are not a registered user! Please sign up first";
 		final Student student = (Student) data;
 
-		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, IMAGEPATH, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
+		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
 			log.info(student.getEmail() + "" + student.getPassword());
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
@@ -184,7 +186,7 @@ public class StudentLoginDAO implements ICrud {
 				gender = rs.getString("GENDER");
 				email = rs.getString("EMAIL");
 				type = rs.getString("TYPE");
-				imagePath = rs.getString("IMAGEPATH");
+
 				landPhoneCountryCode = rs.getString("LANDPHONECOUNTRYCODE");
 				landPhoneAreaCode = rs.getString("LANDPHONEAREACODE");
 				landPhoneNo = rs.getString("LANDPHONENO");
@@ -226,7 +228,6 @@ public class StudentLoginDAO implements ICrud {
 				student.setGender(Integer.parseInt(gender));
 				student.setEmail(email);
 				student.setType(type);
-				student.setImagePath(imagePath);
 				student.setLandPhoneCountryCode(landPhoneCountryCode);
 				student.setLandPhoneAreaCode(landPhoneAreaCode);
 				student.setLandPhoneNo(landPhoneNo);
@@ -273,7 +274,7 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(gender); // 8
 				singleStudent.add(email); // 9
 				singleStudent.add(type); // 10
-				singleStudent.add(imagePath); // 11
+				// 11
 				singleStudent.add(landPhoneCountryCode); // 12
 				singleStudent.add(landPhoneAreaCode); // 13
 				singleStudent.add(landPhoneNo); // 14
@@ -307,12 +308,12 @@ public class StudentLoginDAO implements ICrud {
 					log.info("password match  :D");
 					student.setValid(true);
 					studentList.add(singleStudentCollection);
-					
+
 					StudentPrivilegeDAO sp = new StudentPrivilegeDAO();
 					privilegeCollection = sp.studentPrivilege(student);
 					studentList.add(privilegeCollection);
-					int status = StudentLoginDAO.loginDataUpdate(student);
-					
+				//	int status = StudentLoginDAO.loginDataUpdate(student);
+
 				} else {
 					student.setValid(false);
 					message = "not valid user ";
@@ -374,15 +375,6 @@ public class StudentLoginDAO implements ICrud {
 		return bean;
 	}
 
-	// public Collection<Collection<String>> privilageHandling(){
-	//
-	// Collection<Collection<String>> privilegeCollection = new
-	// ArrayList<Collection<String>>();
-	// Connection conn = null;
-	// Collection<Collection<String>> privilegeList = new
-	// ArrayList<Collection<String>>();
-	// PreparedStatement preparedStatement = null;
-	// String query = "SELECT ";
-	// }
+
 
 }
