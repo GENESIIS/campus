@@ -18,6 +18,8 @@ $(document).ready(function() {
 			alert("error");
 		}
 	});
+	
+	
 });
 
 function getAjaxData(catCode,response) {
@@ -249,6 +251,19 @@ function populateCategoryWiseTypes(response){
 			secondChoice.append('<li><a href="javascript:"><input class="levelClass" id="level' + x + '" type="checkbox" value="' + x + '"></a>' + y + '</li>');			
 		}
 		levelCount++;
+	});
+	
+	$('#levelAll').on('click', function(event) {
+		
+		if($(this).is(":checked")){
+			
+			$("#select-level").find('type.levelClass');
+			
+			//$("#select-level").find('.levelClass')[0].attr('checked','checked');
+			$('input[name=level]').attr('checked');
+		}
+		alert("levelAll ");
+		
 	});
 }
 
