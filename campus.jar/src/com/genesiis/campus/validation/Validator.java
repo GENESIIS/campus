@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //20161126 PN c26-add-student-details: copied Validator.java class from c9 branch and implemented validateSchoolEduData(SchoolEducation education) method. 
 //20161205 PN c26-add-student-details: implemented validaProfExpData(ProfessionalExperience data) method.
 //20161205 PN c26-add-student-details: implemented subtract(final List list1, final List list2) method to get the difference of two Lists.
+//20161215 PN CAM-28: implemented validaHighereducationData(HigherEducation data) to validate Higher Education form details from backend.
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.HigherEducation;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.entity.model.Student;
@@ -145,6 +147,23 @@ public class Validator {
 		errors.put("Mobile Number", isNotEmpty(data.getMobilePhoneNo()));
 		errors.put("Town", isNotEmpty(data.getTown()));
 		errors.put("Email",isNotEmpty(data.getFirstName()));
+		return errors;
+	}
+	
+	/**
+	 * This method is to validate Higher education details form of a student.
+	 * 
+	 * @author pabodha
+	 * @param data : object of Student higher education details
+	 * @return Map<String, Boolean>
+	 */
+	public static Map<String, Boolean> validaHighereducationData(HigherEducation data) {
+		Map<String, Boolean> errors = new HashMap<>();
+		errors.put("Institute of Study ", isNotEmpty(data.getInstitute()));
+		errors.put("Area of study ", isNotEmpty(Integer.toString(data.getMajor())));
+		errors.put("Award ", isNotEmpty(Integer.toString(data.getAward())));
+		errors.put("Student ID ", isNotEmpty(data.getStudentId()));
+		errors.put("GPA/Result",isNotEmpty(data.getResult()));
 		return errors;
 	}
 	
