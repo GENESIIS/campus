@@ -37,21 +37,23 @@ public class StudentPrivilegeDAO implements ICrud {
 
 	/**
 	 * Select all Interfaces and button actions student have.
-	 * @param student object
+	 * 
+	 * @param student
+	 *            object
 	 * @return studentPrivilegeCollection
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	
+
 	public Collection<String> studentPrivilege(Object code)
 			throws SQLException, Exception {
 
-		 Collection<String> studentPrivilegeCollection = new ArrayList<String>();
+		Collection<String> studentPrivilegeCollection = new ArrayList<String>();
 		Connection conn = null;
 		final Student student = (Student) code;
 		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
-		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INERFACE.CODE WHERE STUDENT.USERTYPE = ? ";
+		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE USERTYPE.CODE = ?";
 
 		try {
 			conn = ConnectionManager.getConnection();
@@ -70,8 +72,10 @@ public class StudentPrivilegeDAO implements ICrud {
 				privilegeList.add(rs.getString(6));
 				privilegeList.add(rs.getString(7));
 				privilegeList.add(rs.getString(8));
-				studentPrivilegeCollection = privilegeList;
 				
+				log.info(rs.getString(1) +rs.getString(2)+rs.getString(3)+rs.getString(5));
+				studentPrivilegeCollection = privilegeList;
+
 			}
 
 		} catch (Exception e) {
