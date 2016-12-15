@@ -450,8 +450,8 @@
 			
 	  </div>
       <div class="modal-footer">    
-      	<button type="button" class="btn btn-secondary" onclick="clearHigherEducationForm()">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearHigherEducationForm()">Close</button>
+      	<button type="button" class="btn btn-secondary" onclick="clearSchoolEducationForm()">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearSchoolEducationForm()">Close</button>
         <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
       </div>
     </div>

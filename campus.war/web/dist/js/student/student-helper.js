@@ -13,14 +13,15 @@
 //		   PN CAM-26 add-student-details: implemented addSkillDetails(),addInterestsDetails() and createObject() methods.
 //20161214 PN CAM-28: getStudentData(response) method modified to load student personal details on load.
 //20161214 PN CAM-28: completed front UI population with db values, Student Higher education details form.
-//20161215 PN CAM-28: implementing addHigherEducationDetails() method and validateHigherEducationForm(). - WIP
+//20161215 PN CAM-28: implemented addHigherEducationDetails() method and validateHigherEducationForm() done.
+//20161215 PN CAM-28: implemented clearSchoolEducationForm() method.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
 
-$(document).ready(function() {
-	displayDetails();
-});
+//$(document).ready(function() {
+//	
+//});
 
 function displayDetails() {
 	$.ajax({
@@ -398,17 +399,17 @@ function addHigherEducationDetails() {
 	var heDescription = $('#heDescription').val();
 
 	var jsonData = {
-		"instituteofStudy" : instituteofStudy,
+		"institute" : instituteofStudy,
 		"affiliatedInstitute" : affiliatedInstitute,
-		"areaofstudy" : areaofstudy,
+		"major" : areaofstudy,
 		"award" : award,
 		"studentId" : studentId,
-		"gpa" : gpa,
-		"heCommencedOn" : heCommencedOn,
-		"heCompletedOn" : heCompletedOn,
-		"heMedium" : heMedium,
+		"result" : gpa,
+		"commencedOn" : heCommencedOn,
+		"CompletedOn" : heCompletedOn,
+		"medium" : heMedium,
 		"country" : country,
-		"heDescription" : heDescription
+		"description" : heDescription
 	};
 
 	$.ajax({
@@ -426,7 +427,7 @@ function addHigherEducationDetails() {
 					}else if(data.saveChangesHigherEduStatus === "Invalid Information"){
 						$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").show();
 					}
-				//clearSchoolEducationForm();	
+				clearSchoolEducationForm();	
 				$("#saveChangesHigherEduStatus").addClass("alert alert-success").text(data.saveChangesHigherEduStatus).show();
 			}
 		},
@@ -459,6 +460,20 @@ function validateHigherEducationForm(){
 	}
 }
 
+
+function clearSchoolEducationForm(){
+	$('#instituteofStudy').val("");
+	$('#affiliatedInstitute').val("");
+	$('#areaofstudy').val("");
+	$('#award').val("");
+	$('#studentId').val("");
+	$('#gpa').val("");
+	$('#heCommencedOn').val("");
+	$('#heCompletedOn').val("");
+	$('#heMedium').val("");
+	$('#heCountry').val("");
+	$('#heDescription').val("");
+}
 
 
 /**
@@ -921,6 +936,8 @@ if($chkbox_checked.length === 0){
 }
 
 $(document).ready(function (){
+	displayDetails();
+	
 //Array holding selected row IDs
 var rows_selected = [];
 var table = $('#example').DataTable({
