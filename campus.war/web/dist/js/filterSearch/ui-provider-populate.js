@@ -212,14 +212,15 @@ function categoryClick(event){
 
 function populateCategoryWiseTypes(response){
 	
-	$("#cpTypeDiv").show();
-	$("#majorDiv").show();
-	$("#levelDiv").show();
+	$("#cpTypeDiv").hide();
+	$("#majorDiv").hide();
+	$("#levelDiv").hide();
 	
 	var cpTypeCount = 0;
 	var secondChoice = $("#select-cpType");
 	secondChoice.find('li').remove();
 	$.each(	response.cpTypeList,function(index, value) {
+		$("#cpTypeDiv").show();
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
@@ -233,6 +234,7 @@ function populateCategoryWiseTypes(response){
 	var secondChoice = $("#select-major");
 	secondChoice.find('li').remove();
 	$.each(response.majorList, function(index, value) {
+		$("#majorDiv").show();
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
@@ -245,6 +247,7 @@ function populateCategoryWiseTypes(response){
 	var secondChoice = $("#select-level");
 	secondChoice.find('li').remove();
 	$.each(response.levelList, function(index, value) {
+		$("#levelDiv").show();
 		if(value!=null && value.length>0){			
 			var x = value[0].toString();
 			var y = value[1].toString();
@@ -260,10 +263,15 @@ function populateCategoryWiseTypes(response){
 			$("#select-level").find('type.levelClass');
 			
 			//$("#select-level").find('.levelClass')[0].attr('checked','checked');
+			$("#level").attr('checked','checked');
 			$('input[name=level]').attr('checked');
 		}
 		alert("levelAll ");
 		
+	});
+	
+	$('#level').on('click', function(event) {
+		alert("level ");
 	});
 }
 
