@@ -31,7 +31,7 @@ public class DataHelper implements IDataHelper {
 	
 	private String cco = "";
 	private String commandChoice = "";
-	private String redirectPage = "llogin.jsp";
+	private String redirectPage = "login.jsp";
 
 	public DataHelper(HttpServletRequest request ) {
 		this.request = request;
