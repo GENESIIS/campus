@@ -936,7 +936,25 @@ if($chkbox_checked.length === 0){
 }
 
 $(document).ready(function (){
-	displayDetails();
+	//displayDetails();
+	
+	var tbd ="";
+	
+	$.ajax({
+		url : '../../StudentController',
+		data : {
+			CCO : 'GSD'
+		},
+		dataType : "json",
+		success : function(response) {
+			tbd = response.stdExpCollection;
+			alert(tbd);
+			getStudentData(response);
+		},
+		error : function(response) {
+			alert("Error: "+response);
+		}
+	});
 	
 //Array holding selected row IDs
 var rows_selected = [];
