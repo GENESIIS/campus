@@ -4,8 +4,9 @@ package com.genesiis.campus.command;
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn add user name validation and validation to the
 //	validateFrontEndUserProvidedInformation()
 //20161214 DN CAMP:18 changed the convertRowStudentForJasonToStudent() refactor to accomadate usercode
-//20161206 DN CAMP:18 add email generation request to execute() and integrate
+//20161216 DN CAMP:18 add email generation request to execute() and integrate
 //				message generated from their with current class.
+//				isEmailProduced() created and added exception handling.
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -55,8 +56,8 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		try{
 			validateFrontEndUserProvidedInformation(partialStudent);
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
-			new CmdGenerateEmailSinUp().execute(helper, view); //send email
 			message = systemMessage(status); 	// then change the message to the client side by appending to the message generated from here
+			isEmailProduced(status,helper,view);
 			Collection<String> signUpdata = new ArrayList<String>();
 			signUpdata.add(null);
 			studentSignUps.add(signUpdata);
@@ -82,6 +83,31 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		return view;
 	}
 	
+	
+	/*
+	 * isEmailProduced() sends an email if the emapilSendingStatus is 1
+	 * else it doesn't dispense an email
+	 * @author dushantha DN
+	 * @throws SQLException
+	 * @param emapilSendingStatus
+	 * @param helper
+	 * @param view
+	 */
+	private void isEmailProduced(int emapilSendingStatus,IDataHelper helper, IView view) throws SQLException,Exception {
+		
+			try{
+				if(emapilSendingStatus ==1){
+					ICommand emailSignUp = new CmdGenerateEmailSinUp();
+					emailSignUp.execute(helper, view); //send email
+				}
+			} catch (SQLException sqle){
+				log.error("isEmailProduced: SQLException " + sqle.toString());
+				throw sqle;
+		} catch (Exception exp){
+			log.error("isEmailProduced: Exception " + exp.toString());
+			throw exp;
+	}
+	}
 	
 /*
  * convertRowStudentForJasonToStudent produces the Student

@@ -36,7 +36,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	private String sendersphoneNumber;
 	private String mailingSubject;
 	private String mailBody;
-	private Connection connection = null;
+	//private Connection connection = null;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
 	private RowStudentForJason partialStudent;
@@ -44,14 +44,24 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		
-		int status;
-		String message = "";
-		setEnvironment(helper);
-		String gsonData = helper.getParameter("jsonData");
-		generalEmail = formatEmailInstance();
-		status=this.sendMail();
-		helper.setAttribute("message", composeOutStatusMessageToClient(status));
+		try{
+			
+			int status;
+			String message = "";
+			String gsonData = helper.getParameter("jsonData");
+			partialStudent = (RowStudentForJason)extractDumyObjectFrom(gsonData);
+			setEnvironment(helper);
+			generalEmail = formatEmailInstance();
+			status=this.sendMail();
+			helper.setAttribute("message", composeOutStatusMessageToClient(status));
+			
+		}catch (SQLException sexp) {
+			log.error("execute(): SQLException "+ sexp.toString());
+			throw sexp;
+		} catch (Exception exp) {
+			log.error("execute():Exception "+ exp.toString());
+			throw exp;
+		}
 		return null;
 	}
 	
@@ -98,7 +108,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * @param gsonData
 	 * @return
 	 */
-	public Object extractDumyObjectFrom(String gsonData) {
+	public Object extractDumyObjectFrom(String gsonData) throws Exception{
 		Gson gson = new Gson();
 		String message = "";
 		Object rowStudentObj = null;

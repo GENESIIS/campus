@@ -76,7 +76,7 @@ public class EmailDispenser {
 	}
 	
 	/**
-	 * isEmailNotSet() checks id the emaik is null or set to a value
+	 * isEmailNotSet() checks id the email is null or set to a value
 	 * @return
 	 */
 	public boolean isEmailNotSet(){		
