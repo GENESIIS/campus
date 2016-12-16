@@ -20,9 +20,9 @@
 var extStudentSkills = [];
 var extStudentInterests = [];
 
-//$(document).ready(function() {
-//	
-//});
+$(document).ready(function() {
+	displayDetails();
+});
 
 function displayDetails() {
 	$.ajax({
@@ -34,7 +34,6 @@ function displayDetails() {
 		success : function(response) {
 			//alert(response);
 			getStudentData(response);
-			populateTable(response.stdExpCollection);
 		},
 		error : function(response) {
 			alert("Error: "+response);
@@ -48,6 +47,19 @@ function displayDetails() {
  * @returns
  */
 function getStudentData(response) {
+	var t = $('#example').DataTable(); 
+	t.clear().draw();
+	$.each(response.stdExpCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		counter++;
+		t.row.add( [
+		            data[1].toString(),
+		            data[2].toString(),
+					data[3].toString()
+		        ] ).draw( false );
+	});
+	
 	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -954,8 +966,7 @@ var table = $('#example').DataTable({
     'orderable':false,
     'width':'1%',
     'className': 'dt-body-center',
-    'render': function (tbd, type, full, meta){
-    	alert("tbd"+tbd);
+    'render': function (data, type, full, meta){
         return '<input type="checkbox">';
     }
  }],
