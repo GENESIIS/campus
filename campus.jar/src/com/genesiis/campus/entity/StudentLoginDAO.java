@@ -136,8 +136,8 @@ public class StudentLoginDAO implements ICrud {
 		return rowInserted;
 	}
 
-	@Override
-	public Collection<Collection<String>> findById(Object data)
+	
+	public Collection<Collection<String>> findById(Object data, String messageDAO)
 			throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
@@ -169,10 +169,7 @@ public class StudentLoginDAO implements ICrud {
 			ResultSet rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
 			log.info(" Check bool : "+check);
-//			if (!check) {
-//				message = "not valid user ";
-//				student.setValid(false);
-//			} else 
+			
 			if (check) {
 
 				log.info("ohhh yeah......");
@@ -378,6 +375,13 @@ public class StudentLoginDAO implements ICrud {
 	public static Student studentLogin(Student bean) {
 
 		return bean;
+	}
+
+	@Override
+	public Collection<Collection<String>> findById(Object code)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

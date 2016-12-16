@@ -48,7 +48,7 @@ function studentLogin() {
 						alert(response['message']);
 						// window.location.href =
 						// '/dist/partials/student/student-dashboard.jsp';
-						document.getElementById('messsage').innerHTML = response.result;
+						//document.getElementById('messsage').innerHTML = response.result;
 						document.getElementById('errorMesssage').innerHTML = response['message'];
 						
 					

@@ -53,8 +53,11 @@ public class CmdStudentLogin implements ICommand {
 			log.info("Student user key: " + data.getUserKey());
 			log.info("Student Assigen Email : " + data.getEmail());
 			log.info("Student username : " + data.getUsername());
+			
+			String messageDAO = new String();
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			dataCollection = loginDAO.findById(data);
+			dataCollection = loginDAO.findById(data,messageDAO );
+			
 			message = SystemMessage.LOGGEDSUCCESSFULL.message();
 			if (rememberMe == true) {
 				helper.setAttribute("student", data);
