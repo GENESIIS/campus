@@ -19,7 +19,7 @@
  * 20161129 MM c2-integrate-google-banners-MP Modified code to get the anchor tag of the next banner
  * 				via the parent div tag, instead of the siblings() method, to rectify issue of a 
  * 				banner disappearing when it is the only one loaded for a slot
- *  
+ * 20161217 MM c2-integrate-google-banners-MP Modified msg displayed when Ajax request results in error
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -78,8 +78,7 @@ $('.banner').on('click', function(e) {
 
 
 // Event handler for sending DB add operation upon clicking of a banner
-function sendBannerStatisticsUpdateRequest(banner) {
-	// IMPORTANT: these values must be validated to be of numeric type before further steps are executed 
+function sendBannerStatisticsUpdateRequest(banner) { 
 	
 	var bannerCode = banner.attr('data-banner-code');
 	var callerPage = banner.attr('data-caller-page');
@@ -105,7 +104,7 @@ function sendBannerStatisticsUpdateRequest(banner) {
 			}
 		},
 		error : function(response) {			
-			console.log('Ajax request failed.');
+			console.log('Ajax request to update statistics failed.');
 		}
 	});
 }

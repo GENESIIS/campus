@@ -2,6 +2,10 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161108 DN, JH, DJ, AS, CM, MM Added implementation of getResponseType(String) method
+//20161108 JH Added code to discern an Ajax request from a normal request via checking  
+//				whether 'getHeader("x-requested-with")' returns 'XMLHttpRequest' in 
+//				getResponseType() method			
 //20161116 MM c2-integrate-google-banners-MP Added call to BannerData.setBannerDetails(IDatahelper, String) 
 //				in getResultView(String) method
 
