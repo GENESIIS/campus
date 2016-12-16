@@ -22,9 +22,10 @@
 
 <!-- Bootstrap & CSS Style-->
 
-<link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<!-- <link href="/dist/css/style.css" rel="stylesheet">  -->
+<link href="/dist/css/screen.css" rel="stylesheet">
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
 
 </head>
 
@@ -92,7 +93,7 @@
 							<li><a href="javascript:">Work Shops </a></li>
 							<li><a href="javascript:">Other</a></li>
 						</ul>
-					</div>
+					</div> 
 				</div>
 
 				<!-- Filter result table -->
@@ -104,7 +105,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">SLIIT</h1>
 									<div class="pro-logo">
-										<img src="/dist/i/sliit-logo.png" alt="">
+										<img src="/dist/i/sliit-logo.png" alt=""> 
 									</div>
 								</div>
 								<div class="col-description">
@@ -134,7 +135,7 @@
 						<div class="featured-institute clearfix">
 							<div class="slider-heading clearfix">
 								<div class="topic">
-									<h2>Most Viewed Institutes</h2>
+									<h2>Most Viewed</h2>
 								</div>
 							</div>
 
@@ -153,7 +154,7 @@
 														<div class="inst-logo">
 															<img
 																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
-																alt="Institute Logo" style="width: 100px; height: 75px;" onerror="this.src = '${defaultSmallLogo}'">
+																alt="Institute Logo" onerror="this.src = '${defaultSmallLogo}'">
 														</div>
 														<div class="inst-name">
 															<h1 class="short-name">
@@ -193,7 +194,7 @@
 															<!-- to load a default image -->
 															<img
 																src="${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${smallLogo}"
-																alt="Institute Logo" style="width: 100px; height: 75px;"
+																alt="Institute Logo" 
 																onerror="this.src = '${defaultSmallLogo}'">
 														</div>
 
@@ -210,7 +211,7 @@
 														style="background-image: url('${providerLogoPath}${slash }${featuredInstitute[0] }${slash}${featuredInstitute[0] }${commonLogo}');">
 														<p>
 															<c:out value="${featuredInstitute[4]}"></c:out>
-														</p>
+														</p> 
 														<div class="btn-more clearfix">
 															<button type="submit" name="CCO" id="CCO"
 																value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
@@ -226,9 +227,8 @@
 								</div>
 								<!-- Left and right controls -->
 
-								<a href="#myCarousel" role="button" data-slide="prev"
-									class="pull-left"> Previous </a> <a href="#myCarousel"
-									role="button" data-slide="next" class="pull-right"> Next </a>
+								<a href="#myCarousel" role="button" data-slide="prev" class="pull-left btn-move-pre fa fa-angle-left"></a> 
+								<a href="#myCarousel" role="button" data-slide="next" class="pull-right btn-move-nxt fa fa-angle-right"></a> 
 
 
 							</div>

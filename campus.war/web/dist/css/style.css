@@ -1059,7 +1059,7 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 	{
 	display: block;
 	padding: 10px 0;
-	height: 150px;
+	height: 150px; 
 }
 
 /**
@@ -1350,5 +1350,3 @@ body a:hover,body a:focus,body a.active,html a:hover,html a:focus,html a.active
 .slideable {
 	display: none;
 }
-
-/*# sourceMappingURL=style.css.map */
