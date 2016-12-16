@@ -103,7 +103,7 @@
 						<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">SLIIT</h1>
+									<a href="javascript:" class="pro-name">SLIIT</a> 
 									<div class="pro-logo">
 										<img src="/dist/i/sliit-logo.png" alt=""> 
 									</div>
@@ -112,7 +112,7 @@
 									<p>Lorem Ipsum is simply dummy text of the printing</p>
 								</div>
 								<div class="col-location">
-									<a href="javascript:">Malabe</a>
+									<a href="javascript:">Malabe</a> 
 								</div>
 								<div class="col-duration">
 									<label>Degree<br> <Span>4 Years</Span></label>
@@ -173,7 +173,7 @@
 														<div class="btn-more clearfix">
 															<!-- 	<a href="javascript:">Show More</a>  -->
 															<button type="submit" name="CCO" id="CCO"
-																value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+																value="LIST_COURSE_PROVIDER_PAGE" class="btn btn-show-more">Show
 																More</button>
 															<c:set var="provider" value="${featuredInstitute[0]}" />
 														</div>
@@ -214,7 +214,7 @@
 														</p> 
 														<div class="btn-more clearfix">
 															<button type="submit" name="CCO" id="CCO"
-																value="LIST_COURSE_PROVIDER_PAGE" class="btn">Show
+																value="LIST_COURSE_PROVIDER_PAGE" class="btn btn-show-more">Show
 																More</button>
 															<c:set var="provider" value="${featuredInstitute[0]}" />
 														</div>
@@ -227,8 +227,8 @@
 								</div>
 								<!-- Left and right controls -->
 
-								<a href="#myCarousel" role="button" data-slide="prev" class="pull-left btn-move-pre fa fa-angle-left"></a> 
-								<a href="#myCarousel" role="button" data-slide="next" class="pull-right btn-move-nxt fa fa-angle-right"></a> 
+								<a href="#myCarousel" alt="Previous" role="button" data-slide="prev" class="pull-left btn-move-pre fa fa-angle-left"></a> 
+								<a href="#myCarousel" alt="Next" role="button" data-slide="next" class="pull-right btn-move-nxt fa fa-angle-right"></a> 
 
 
 							</div>
@@ -254,11 +254,11 @@
 											alt="Logo" onerror="this.src = '${defaultSmallLogo}'">
 									</div>
 									<div class="description">
-										<h1>
+										<a href="javascript:">
 											<c:out value="${institute[2] }"></c:out>
 											<span>@ <c:out
 													value="${institute[26] }${institute[27] }${institute[28] }"></c:out></span>
-										</h1>
+										</a> 
 										<p>
 											<c:out value="${institute[3] }"></c:out>
 										</p>

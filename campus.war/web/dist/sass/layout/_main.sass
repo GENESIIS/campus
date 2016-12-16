@@ -505,25 +505,25 @@ body,html
 
             .pro-logo
               display: block
-              text-align: center
-              height: 100px
+              text-align: center 
               img
                 width: 75px
                 height: 100%
                 padding-top: 8px
-
+                margin-bottom: 10px 
+ 
           .col-description
             display: inline-block
             position: relative
             width: 46.8%
-            height: 130px
+            min-height: 130px 
             float: left
             text-align: center
-            padding-top: 45px
+            padding: 45px 20px 0 20px
             color: #717171
             font-size: 18px
             font-family: Oswald
-            border-right: 1px solid #e1e1e1
+            border-right: 1px solid #e1e1e1 
 
 
           .col-location
@@ -537,6 +537,11 @@ body,html
             a
               color: #4f7dd9
               font-size: 18px
+              
+              &:before
+                font-family: FontAwesome 
+                content: "\f041" 
+                padding-right: 10px 
 
           .col-duration
             display: inline-block
@@ -597,7 +602,7 @@ body,html
               width: 100% 
 
           .inst-name
-            display: inline-block
+            display: inline-block 
             float: left
             width: 70% 
             padding-top: 10px
@@ -620,16 +625,17 @@ body,html
             padding-right: 25px
             background: rgba(0, 0, 0, 0.36)
             color: #fff
-            font-family: 'Signika', sans-serif
+            font-family: 'Abel', sans-serif  
             font-size: 22px
             line-height: 28px 
             text-align: justify 
-
-
-          .btn-more
-            position: relative
+            font-weight: 200
+            text-shadow: 1px 2px 2px #000     
+              
+          .btn-more 
+            position: relative 
             display: block
-            bottom: 60px 
+            bottom: 80px 
             z-index: 99
             a
               padding: 8px 20px
@@ -657,12 +663,13 @@ body,html
             border: 1px solid #e1e1e1
             border-radius: 15px
             margin-top: 20px
-            padding: 25px 15px
+            padding: 8px 10px 
 
             .logo-image
               display: inline-block
               float: left
               width: 35%
+              padding: 15px 
               img
                 width: 100%
 
@@ -671,21 +678,27 @@ body,html
               float: left
               width: 65%
 
-              h1
+              a 
                 font-family: "Roboto", sans-serif
                 font-size: 18px
                 color: #3a3b3c
                 font-weight: 600
                 line-height: 22px
+                padding-top: 20px 
+                display: block 
+                transition: all 0.3s 
+                &:hover
+                  text-decoration: underline !important  
+                   
                 span
                   font-family: Arial
                   color: #9d9eb3
                   font-weight: 200
-                  font-size: 15px
+                  font-size: 15px        
 
               p
                 color: #717171
                 padding-top: 8px
                 font-family: Arial
                 font-size: 15px
-                line-height: 20px
+                line-height: 20px 
