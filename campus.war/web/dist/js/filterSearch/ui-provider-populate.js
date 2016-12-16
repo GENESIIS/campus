@@ -66,13 +66,7 @@ function getAjaxData(catCode,response) {
 	var htmlstr="";
 	$.each(response.districtList, function(index, value) {
 		if(value!=null && value.length>0){
-		
-		/*var x = data[0].toString();
-		var y = data[1].toString();*/
-		
-		/*$('<option>').val(y).text(z).appendTo(districtName);*/
-		
-		htmlstr += '<option val="' + value[1] + '">' + value[2] + '</option>';
+			htmlstr += '<option val="' + value[0] + '">' + value[2] + '</option>';
 		}
 		
 	});		
@@ -258,7 +252,7 @@ function populateCategoryWiseTypes(response){
 			
 			$("#select-level").find('type.levelClass');
 			
-			$("#select-level").find('.levelClass').attr('checked','checked');
+			var level=$("#select-level").find('.levelClass');
 			$("#level").attr('checked','checked');
 			 $('input:level').attr('checked','checked');
 		}
