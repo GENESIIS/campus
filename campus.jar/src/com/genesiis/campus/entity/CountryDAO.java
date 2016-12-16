@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161123 CM c36-add-tutor-information INIT CountryDAO 
 //20161123 CM c36-add-tutor-information Modified getAll() method. 
+//20161216 CW c36-add-tutor-details Modified getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,7 +64,7 @@ public class CountryDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2]";
+			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [NAME]";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();

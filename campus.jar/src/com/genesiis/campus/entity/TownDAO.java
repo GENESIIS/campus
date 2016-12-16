@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161122 CM c36-add-tutor-information Modified getAll() method. 
+//20161216 CW c36-add-tutor-details Modified getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class TownDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[Town]";
+			String query = "SELECT [CODE],[NAME], [COUNTRY] FROM [CAMPUS].[Town] ORDER BY [NAME]";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
@@ -65,6 +66,7 @@ public class TownDAO implements ICrud{
 				final ArrayList<String> singleTownList = new ArrayList<String>();
 				singleTownList.add(rs.getString("CODE"));
 				singleTownList.add(rs.getString("NAME"));
+				singleTownList.add(rs.getString("COUNTRY"));
 
 				final Collection<String> singleTownCollection = singleTownList;
 				allTownList.add(singleTownCollection);
