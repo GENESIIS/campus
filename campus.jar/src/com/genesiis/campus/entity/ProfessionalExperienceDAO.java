@@ -4,7 +4,7 @@ package com.genesiis.campus.entity;
 //20161129 PN c26-add-student-details: modified SQL query inside add() method.
 //20161208 PN CAM-26 : add-student-details: implemented add(object,Connection) method
 //20161215 PN CAM-28 : add-student-details: implemented findById() method
-
+//20161216 PN CAM-28 : re-implemented findById() method
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,9 +81,9 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE] ,[INSTITUTE] ,[AFFINSTITUTE] ,[AWARD] ,[MAJOR] ,[COUNTRY] ,"
-					+ "[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] "
-					+ "FROM [CAMPUS].[HIGHERDUCATION] "
+			String query = "SELECT [CODE], [ORGANIZATION], [STUDENT], [INDUSTRY], [JOBCATEGORY], "
+					+ "[DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION] "
+					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] "
 					+ "WHERE [STUDENT] = ? AND ISACTIVE = 1;";
 
 			stmt = conn.prepareStatement(query);
@@ -93,26 +93,30 @@ public class ProfessionalExperienceDAO implements ICrud{
 			while (rs.next()) {
 				final ArrayList<String> singlehigherEduList = new ArrayList<String>();
 				singlehigherEduList.add(rs.getString("CODE"));
-				singlehigherEduList.add(rs.getString("INSTITUTE"));
-				singlehigherEduList.add(rs.getString("AFFINSTITUTE"));
-				singlehigherEduList.add(rs.getString("AWARD"));
-				singlehigherEduList.add(rs.getString("MAJOR"));
+				singlehigherEduList.add(rs.getString("ORGANIZATION"));
 				
 				//Get country name, if in a case to pass the name to dataList
-				ICrud country2dao = new Country2DAO();
-				String countryName = "";
-				Collection<Collection<String>> country = country2dao.findById(Integer.parseInt(rs.getString("COUNTRY")));			
-				for (Collection<String> collection : country) {
+				ICrud majordao = new MajorDAO();
+				String jobcategoryName = "";
+				String industryName = "";
+					
+				Collection<Collection<String>> industry = majordao.findById(Integer.parseInt(rs.getString("JOBCATEGORY")));			
+				for (Collection<String> collection : industry) {
 					Object[] cdata = collection.toArray();
-					countryName = (String) cdata[1];
+					jobcategoryName = (String) cdata[1];
 				}
-				singlehigherEduList.add(countryName);
+				Collection<Collection<String>> jobcaegory = majordao.findById(Integer.parseInt(rs.getString("INDUSTRY")));				
+				for (Collection<String> collection : industry) {
+					Object[] cdata = collection.toArray();
+					industryName = (String) cdata[1];
+				}
+				
+				singlehigherEduList.add(rs.getString(industryName));
+				singlehigherEduList.add(rs.getString(jobcategoryName));
+				singlehigherEduList.add(rs.getString("DESIGNATION"));
 				singlehigherEduList.add(rs.getString("COMMENCEDON"));
 				singlehigherEduList.add(rs.getString("COMPLETIONON"));
-				singlehigherEduList.add(rs.getString("STUDENTID"));
-				singlehigherEduList.add(rs.getString("RESULT"));
 				singlehigherEduList.add(rs.getString("DESCRIPTION"));
-				singlehigherEduList.add(rs.getString("MEDIUM"));
 
 				final Collection<String> singlehigherEduCollection = singlehigherEduList;
 				allhigherEduList.add(singlehigherEduCollection);
