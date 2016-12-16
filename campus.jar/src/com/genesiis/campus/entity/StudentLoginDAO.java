@@ -149,7 +149,7 @@ public class StudentLoginDAO implements ICrud {
 		Collection<String> privilegeCollection = new ArrayList<String>();
 
 		PreparedStatement preparedStatement = null;
-		String message = "Sorry, you are not a registered user! Please sign up first";
+		String message = SystemMessage.NOTREGISTERD.message();
 		final Student student = (Student) data;
 
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
@@ -168,11 +168,12 @@ public class StudentLoginDAO implements ICrud {
 
 			ResultSet rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
-
-			if (!check) {
-				message = "not valid user ";
-				student.setValid(false);
-			} else if (check) {
+			log.info(" Check bool : "+check);
+//			if (!check) {
+//				message = "not valid user ";
+//				student.setValid(false);
+//			} else 
+			if (check) {
 
 				log.info("ohhh yeah......");
 				code = rs.getString("CODE");
@@ -312,16 +313,19 @@ public class StudentLoginDAO implements ICrud {
 					StudentPrivilegeDAO sp = new StudentPrivilegeDAO();
 					privilegeCollection = sp.studentPrivilege(student);
 					studentList.add(privilegeCollection);
-				//	int status = StudentLoginDAO.loginDataUpdate(student);
+					message = SystemMessage.VALIDUSER.message();
 
 				} else {
 					student.setValid(false);
-					message = "not valid user ";
+					message = SystemMessage.INVALIDUSER.message();
 					log.info("password not match :(");
 				}
 				log.info(encryptedPasswordDb);
 				log.info(encryptPassword);
 				log.info(firstName + lastName);
+			}else{
+				message = SystemMessage.INVALIDUSER.message();
+				student.setValid(false);
 			}
 
 		} catch (Exception exception) {
@@ -338,7 +342,8 @@ public class StudentLoginDAO implements ICrud {
 			}
 
 		}
-
+		log.info("DAO message  : "+message);
+		
 		return studentList;
 	}
 
