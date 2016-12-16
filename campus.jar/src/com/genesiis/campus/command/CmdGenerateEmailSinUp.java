@@ -1,9 +1,12 @@
 package com.genesiis.campus.command;
+// 20161216 DN CAMP:18 Created the CmdGenerateEmailSinUp.java class and Doc comment added.
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.mail.MessagingException;
 
@@ -18,6 +21,12 @@ import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
+/**
+ * CmdGenerateEmailSinUp class handles the email generation
+ * when an user account for a Student is created.
+ * @author dushantha DN
+ *
+ */
 public class CmdGenerateEmailSinUp implements ICommand {
 	static Logger log = Logger.getLogger(CmdGenerateEmailSinUp.class.getName());
 	
@@ -40,10 +49,22 @@ public class CmdGenerateEmailSinUp implements ICommand {
 		String message = "";
 		setEnvironment(helper);
 		String gsonData = helper.getParameter("jsonData");
-		 generalEmail = formatEmailInstance();
-		 status=this.sendMail();
-		 message = systemMessage(status);
+		generalEmail = formatEmailInstance();
+		status=this.sendMail();
+		helper.setAttribute("message", composeOutStatusMessageToClient(status));
 		return null;
+	}
+	
+	/*
+	 * composeOutStatusMessageToClient(): composes the system message
+	 * according to the int parameter sent in to the method.
+	 * @author dushantha DN
+	 * @param status int value which maps to a numeric table
+	 * that has a meaning of the successfulness or un_successfulness
+	 * of the the operation. 
+	 */
+	private String composeOutStatusMessageToClient(int status){
+		return systemMessage(status);
 	}
 	
 	/*
@@ -52,9 +73,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * @return int -3 fail sending email 3 sent email successfully 
 	 * @throws MessagingException in any case dispensing email fails
 	 */
-
 	private int sendMail()  {
-		
 		int MAIL_SENT_STATUS=3;
 		try{ 
 			emailDispenser = new EmailDispenser(generalEmail);
@@ -79,7 +98,6 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * @param gsonData
 	 * @return
 	 */
-
 	public Object extractDumyObjectFrom(String gsonData) {
 		Gson gson = new Gson();
 		String message = "";
@@ -95,8 +113,6 @@ public class CmdGenerateEmailSinUp implements ICommand {
 		return rowStudentObj;
 	}
 	
-	
-	
 	/*
 	 * setEnvironment() method initializes all the instance variable
 	 * @author DN
@@ -110,6 +126,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 		 mailBody = "Your User account is Successfully created ";
 
 	}
+	
 	/*
 	 * addContentToOriginalMailBody() formats the original details with
 	 * users credentials e.g email, contact number, full name
@@ -118,7 +135,10 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 */
 	private void addContentToOriginalMailBody(String originalMailBody){
 		StringBuilder result = new StringBuilder();
-		
+		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
+		result.append("Dear ");
+		result.append(recieversName);
+		result.append(System.getProperty("line.separator"));
 		result.append(originalMailBody) ;
 		result.append(System.getProperty("line.separator"));
 		result.append("Account credentials are as follows ");
