@@ -78,7 +78,9 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			log.error("execute():Exception " + e.toString());
 			throw e;
 		} finally {
-			helper.setAttribute("message", message+" "+(String)helper.getAttribute("message"));
+			String premessage = (String)helper.getAttribute("message");
+			premessage=(premessage==null)?"":premessage;
+			helper.setAttribute("message", message+" "+premessage);
 		}
 		return view;
 	}
