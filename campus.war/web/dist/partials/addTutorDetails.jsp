@@ -72,11 +72,27 @@
 			<tr>
 				<td>Mobile</td>
 				<td><span id="mobileError"></span><input type="text"
+					name="mobileCountryCode" id="mobileCountryCode" maxlength="4"
+					onclick="clearField('mobileError')" /></td>
+			
+				<td><span id="mobileError"></span><input type="text"
+					name="mobileNetworkCode" id="mobileNetworkCode" maxlength="11"
+					onclick="clearField('mobileError')" /></td>
+	
+				<td><span id="mobileError"></span><input type="text"
 					name="mobileNumber" id="mobileNumber" maxlength="11"
 					onclick="clearField('mobileError')" /></td>
 			</tr>
 			<tr>
-				<td>Home <span id="landError"></span></td>
+				<td>Land</td>
+				<td><span id="mobileError"></span><input type="text"
+					name="landCountryCode" id="landCountryCode" maxlength="4"
+					onclick="clearField('mobileError')" /></td>
+			
+				<td><span id="mobileError"></span><input type="text"
+					name="landAreaCode" id="landAreaCode" maxlength="11"
+					onclick="clearField('mobileError')" /></td>
+		
 				<td><input type="text" name="landNumber" id="landNumber"
 					maxlength="11" onclick="clearField('landError')" /></td>
 			</tr>
