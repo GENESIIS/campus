@@ -12,7 +12,7 @@ $(document).ready(function() {
 		},
 		dataType : "json",
 		success : function(response) {
-			getAjaxData(catCode,response);
+			getInitialPageResults(catCode,response);
 		},
 		error : function() {
 			alert("error");
@@ -22,7 +22,7 @@ $(document).ready(function() {
 	
 });
 
-function getAjaxData(catCode,response) {
+function getInitialPageResults(catCode,response) {
 
 	var totalCount = 0;
 
@@ -42,16 +42,16 @@ function getAjaxData(catCode,response) {
 
 
 	var catCount = 0;
-	var secondChoice = $("#select-category");
-	secondChoice.find('li').remove();
+	var eduCategoryList = $("#select-category");
+	eduCategoryList.find('li').remove();
 	$.each(response.categoryList, function(index, value) {
 		
 		var x = value[0].toString();
 		var y = value[1].toString();
 		if(x==catCode){
-		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '" checked="checked"></a>' + y + '</li>');
+			eduCategoryList.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '" checked="checked"></a>' + y + '</li>');
 		}else{
-		secondChoice.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
+			eduCategoryList.append('<li><a href="javascript:"><input class="categoryClass" onclick="categoryClick(this)" id="category' + x	+ '" type="checkbox" value="' + x + '"></a>' + y + '</li>');
 		}
 		catCount++;
 	});
@@ -67,8 +67,7 @@ function getAjaxData(catCode,response) {
 	$.each(response.districtList, function(index, value) {
 		if(value!=null && value.length>0){
 			htmlstr += '<option val="' + value[0] + '">' + value[2] + '</option>';
-		}
-		
+		}		
 	});		
 	$('#districtName').html(htmlstr);
 
@@ -154,19 +153,16 @@ function getAjaxData(catCode,response) {
 
 }
 
-function populateFilterSearchResults(response) {
-	
+function populateFilterSearchResults(response) {	
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
 	$.each(response.result,	function(index, value) {
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
-			var y = value[1].toString();	
-		
-
-	var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
-	providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-	}
+			var y = value[1].toString();
+			var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
+			providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+		}
 	});
 	
 }
@@ -246,18 +242,19 @@ function populateCategoryWiseTypes(response){
 		levelCount++;
 	});
 	
+
 	$('#levelAll').on('click', function(event) {
-		
-		if($(this).is(":checked")){
+		var levelObj = $("#select-level").find('.levelClass');
+		if ($(this).is(":checked")) {
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-level").find('.levelClass')[i].checked = true;
+			}
+		}else{
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-level").find('.levelClass')[i].checked = false;
+			}
 			
-			$("#select-level").find('type.levelClass');
-			
-			var level=$("#select-level").find('.levelClass');
-			$("#level").attr('checked','checked');
-			 $('input:level').attr('checked','checked');
 		}
-		alert("levelAll ");
-		
 	});
 	
 	$('#level').on('click', function(event) {
