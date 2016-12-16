@@ -95,7 +95,7 @@
 					<div id="majorDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-							<label>Major <span id="majorCount" name="majorCount"></span></label>
+							<label class="flip">Major <span id="majorCount" name="majorCount"></span></label>
 							<a href="javascript:"><input id="majorAll" type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
@@ -109,9 +109,8 @@
 					<div id="levelDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-							<label class="flip">Levels <span id="levelCount"
-								name="levelCount"></span></label> <a href="javascript:"><input
-								id="levelAll" type="checkbox"></a>
+							<label class="flip">Levels <span id="levelCount" name="levelCount"></span></label> 
+								<a href="javascript:"><input id="levelAll" type="checkbox"></a>
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
