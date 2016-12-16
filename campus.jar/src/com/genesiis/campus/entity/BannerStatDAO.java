@@ -2,6 +2,10 @@
 //20161118 MM c2-integrate-google-banners Implemented add(Object) method
 //20161123 MM c2-integrate-google-banners Added JavaDoc comment
 //20161128 MM c2-integrate-google-banners Corrected argument sent to Logger.getLogger()
+//20161214 MM c2-integrate-google-banners Changed a column name from IMAGEPATH to 
+//				statements in catch clauses
+//20161216 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
+//				statements in catch clauses
 
 package com.genesiis.campus.entity;
 
@@ -54,10 +58,10 @@ public class BannerStatDAO implements ICrud {
 			ps.setString(3, bannerStat.getCrtBy());
 			result = ps.executeUpdate();
 		} catch (SQLException sqle) {
-			Log.info("add(): SQLException: " + sqle.toString());
+			Log.error("add(): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			Log.info("add(): Exception:" + ex.toString());
+			Log.error("add(): Exception:" + ex.toString());
 			throw ex;
 		} finally {
 			if (connection != null) {
