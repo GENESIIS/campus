@@ -17,8 +17,13 @@ public enum SystemMessage {
 	FAILED_TO_CREATE("Object not created"),
 	NICERROR("Invalid NIC Number."),
 	PHONENUMBERERROR("Invalid Telephone Number."),
-	INVALIDUSER("Invalid Username or Password."),
-	
+	VALIDUSER("valid Username and Password."),
+	LOGINUNSUCCESSFULL("Login Unsuccessfull"),
+	LOGGEDSUCCESSFULL("Logged successfull"),
+	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
+	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
+	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),
+	ATTEMPS("You have done two attemps. Please try again or reset your password"),
 	EMAILERROR("Invalid Email.");
 
 	
