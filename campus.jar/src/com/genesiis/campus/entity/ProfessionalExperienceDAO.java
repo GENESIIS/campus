@@ -111,8 +111,8 @@ public class ProfessionalExperienceDAO implements ICrud{
 					industryName = (String) cdata[1];
 				}
 				
-				singlehigherEduList.add(rs.getString(industryName));
-				singlehigherEduList.add(rs.getString(jobcategoryName));
+				singlehigherEduList.add(industryName);
+				singlehigherEduList.add(jobcategoryName);
 				singlehigherEduList.add(rs.getString("DESIGNATION"));
 				singlehigherEduList.add(rs.getString("COMMENCEDON"));
 				singlehigherEduList.add(rs.getString("COMPLETIONON"));
