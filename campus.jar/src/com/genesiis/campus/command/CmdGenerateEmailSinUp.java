@@ -131,6 +131,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	private void setEnvironment(IDataHelper helper){
 		 recieversName = partialStudent.getFirstName()
 		 .concat(" "+ partialStudent.getLastName());
+		 sendersEmailAddress =partialStudent.getEmail();
 		 recieversEmailAddreses = wrapedRecieversCollection(partialStudent.getEmail());
 		 mailingSubject = "ACCOUNT CREATION";
 		 mailBody = "Your User account is Successfully created ";
@@ -146,7 +147,8 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	private void addContentToOriginalMailBody(String originalMailBody){
 		StringBuilder result = new StringBuilder();
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
-		result.append("Dear ");
+		result.append(System.getProperty("line.separator"));
+		result.append(" Dear ");
 		result.append(recieversName);
 		result.append(System.getProperty("line.separator"));
 		result.append(originalMailBody) ;
