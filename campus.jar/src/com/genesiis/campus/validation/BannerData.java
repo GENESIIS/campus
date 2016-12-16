@@ -20,6 +20,8 @@
 //20161206 MM c2-integrate-google-banners-MP Modified code to consider the omission of fetching
 //				BANNERSTATUS in the DAO class, and to make maintenance easier by accessing 
 //				indexes where fetched values are present via variables
+//20161217 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
+//				statements in catch clauses
 
 package com.genesiis.campus.validation;
 
@@ -154,7 +156,7 @@ public class BannerData {
 						int count = 0;
 						for (String field : singleRecord) {
 							if (count == indexOfBannerCode || // banner code
-									count == indexOfImage || // imagepath
+									count == indexOfImage || // image
 									count == indexOfDisplayDuration || // displayduration
 									count == indexOfUrl) { // url
 								
@@ -186,11 +188,11 @@ public class BannerData {
 				helper.setAttribute("callerPage", pageName);
 
 			} catch (SQLException sqle) {
-				Log.info("getBannerData(Operation): SQLException: "
+				Log.error("getBannerData(Operation): SQLException: "
 						+ sqle.toString());
 				throw sqle;
 			} catch (Exception e) {
-				Log.info("getBannerData(Operation): Exception: " + e.toString());
+				Log.error("getBannerData(Operation): Exception: " + e.toString());
 				throw e;
 			}
 		}

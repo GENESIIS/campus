@@ -1,6 +1,8 @@
 //20161118 MM c2-integrate-google-banners INIT - Initialised CmdAddBannerStat class
 //20161118 MM c2-integrate-google-banners INIT - Implemented execute() method
 //20161123 MM c2-integrate-google-banners INIT - Added JavaDoc comment
+//20161217 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
+//				statements in catch clauses
 
 package com.genesiis.campus.command;
 
@@ -87,15 +89,15 @@ public class CmdAddBannerStat implements ICommand {
 			}// end of if (bannerCodeStr != null && !bannerCodeStr.isEmpty())
 
 		} catch (NumberFormatException nfe) {
-			Log.info("execute(IDataHelper, IView) : NumberFormatException "
+			Log.error("execute(IDataHelper, IView) : NumberFormatException "
 					+ nfe.toString());
 			throw nfe;
 		} catch (IllegalArgumentException iae) {
-			Log.info("execute(IDataHelper, IView) : IllegalArgumentException "
+			Log.error("execute(IDataHelper, IView) : IllegalArgumentException "
 					+ iae.toString());
 			throw iae;
 		} catch (Exception e) {
-			Log.info("execute(IDataHelper, IView) : Exception " + e.toString());
+			Log.error("execute(IDataHelper, IView) : Exception " + e.toString());
 			throw e;
 		} finally {
 			helper.setAttribute("messages", msgList);
