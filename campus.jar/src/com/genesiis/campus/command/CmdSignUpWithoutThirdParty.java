@@ -4,6 +4,8 @@ package com.genesiis.campus.command;
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn add user name validation and validation to the
 //	validateFrontEndUserProvidedInformation()
 //20161214 DN CAMP:18 changed the convertRowStudentForJasonToStudent() refactor to accomadate usercode
+//20161206 DN CAMP:18 add email generation request to execute() and integrate
+//				message generated from their with current class.
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -53,10 +55,8 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		try{
 			validateFrontEndUserProvidedInformation(partialStudent);
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
-			
-			// insert a function to send the email probably call to CmdGenerateEmail
-			// then change the message to the client side by appending to the message generated from here
-			message = systemMessage(status);
+			new CmdGenerateEmailSinUp().execute(helper, view); //send email
+			message = systemMessage(status); 	// then change the message to the client side by appending to the message generated from here
 			Collection<String> signUpdata = new ArrayList<String>();
 			signUpdata.add(null);
 			studentSignUps.add(signUpdata);
@@ -77,7 +77,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			log.error("execute():Exception " + e.toString());
 			throw e;
 		} finally {
-			helper.setAttribute("message", message);
+			helper.setAttribute("message", message+" "+(String)helper.getAttribute("message"));
 		}
 		return view;
 	}
@@ -183,7 +183,7 @@ public Object extractDumyObjectFrom(String gsonData) {
 	 * the state of the status passed in
 	 * @return String the message
 	 * @param status 3 request submitted successfully.
-	 * @param status -3 request submition fails.
+	 * @param status -3 request submit fails.
 	 * 
 	 */
 	private String systemMessage(int status){
