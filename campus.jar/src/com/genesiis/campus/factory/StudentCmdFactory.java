@@ -7,7 +7,7 @@ package com.genesiis.campus.factory;
 //20161206 PN c26-add-student-details: added GET_SKILL_DETAILS , ADD_STUDENT_SKILL attributes.
 //20161215 PN CAM-28: added ADD_HIGHER_EDUCATION attribute
 
-import com.genesiis.campus.command.CmdGetSchoolEducationData;
+import com.genesiis.campus.command.CmdGetStudentData;
 import com.genesiis.campus.command.CmdGetSkillDetails;
 import com.genesiis.campus.command.CmdGetTownDetails;
 import com.genesiis.campus.command.CmdAddHigherEducationData;
@@ -21,7 +21,7 @@ import com.genesiis.campus.validation.Operation;
 public class StudentCmdFactory implements ICmdFactory{
 	private ICommand command = null;
 	static {	
-		map.put(Operation.GET_SCHOOLEDUCATION_DATA, new CmdGetSchoolEducationData());
+		map.put(Operation.GET_SCHOOLEDUCATION_DATA, new CmdGetStudentData());
 		map.put(Operation.ADD_PROFESSIONAL_EXP, new CmdAddProfessionalExpDetails());
 		map.put(Operation.UPDATE_PROFESSIONAL_EXP, new CmdAddSchoolEducationData());
 		map.put(Operation.ADD_SCHOOLEDUCATION_DATA, new CmdAddSchoolEducationData()); 

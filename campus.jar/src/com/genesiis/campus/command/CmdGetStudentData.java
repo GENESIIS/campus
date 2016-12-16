@@ -1,5 +1,5 @@
 package com.genesiis.campus.command;
-//20161124 PN c26-add-student-details: INIT CmdGetSchoolEducationData.java class.
+//20161124 PN c26-add-student-details: INIT CmdGetStudentData.java class.
 //20161125 PN c26-add-student-details: implemented execute() method to load data to student education details
 //20161125 PN c26-add-student-details: modified execute() method to load student personal details.
 //20161208 PN c26-add-student-details: modified execute() method to load student skills and interest details.
@@ -26,16 +26,16 @@ import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import org.apache.log4j.Logger;
 
-public class CmdGetSchoolEducationData implements ICommand {
-	static Logger log = Logger.getLogger(CmdGetSchoolEducationData.class.getName());
+public class CmdGetStudentData implements ICommand {
+	static Logger log = Logger.getLogger(CmdGetStudentData.class.getName());
 
 	private IView educationData;
 
-	public CmdGetSchoolEducationData(IView educationData) {
+	public CmdGetStudentData(IView educationData) {
 		this.educationData = educationData;
 	}
 
-	public CmdGetSchoolEducationData() {
+	public CmdGetStudentData() {
 		
 	}
 
