@@ -17,25 +17,26 @@
 <script src='/dist/js/login.js'></script>
 </head>
 <body>
-<!-- Header-->
-<header w3-include-html="/dist/partials/layout/header.jsp"></header>
+	<!-- Header-->
+	<header w3-include-html="/dist/partials/layout/header.jsp"></header>
 
 	<div align="center">
 
+		<label class="" id="errorMesssage"></label>
 		<table>
 			<thead>
 				<th></th>
 				<th></th>
 				<th></th>
-				<th></th>
 				<th>Login via</th>
+				<th></th>
 			</thead>
 			<tbody>
 				<tr>
-					<td><label class="" for="exampleInputEmail2">Email
-							address</label></td>
-					<td><input type="email" class="form-control"
-						id="email" placeholder="Email address" required></td>
+					<td><label class="" for="Email2">Email address</label></td>
+					<td><label id="emailtbError"></label><input type="email"
+						class="form-control" id="email" placeholder="Email address"
+						required onclick="clearField('emailtbError')"></td>
 					<td></td>
 					<td><a href="#" class="btn btn-fb"><i
 							class="fa fa-facebook"></i> Facebook</a></td>
@@ -43,8 +44,10 @@
 				</tr>
 				<tr>
 					<td><label class="" for="exampleInputPassword2">Password</label></td>
-					<td><input type="password" class="form-control"
-						id="password" placeholder="Password" required></td>
+					<td><label id="passtbError"></label><input type="password"
+						class="form-control" id="password" placeholder="Password" required onclick="clearField('passtbError')">
+
+					</td>
 					<td>Or</td>
 					<td><i class="fa fa-twitter"></i> Twitter</a></td>
 
@@ -58,15 +61,17 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><button class="btn btn-primary btn-block" type="button" name="CCO" id="CCO" value="SLOG" onclick="studentLogin()">Sign in</button></td>
+					<td><button class="btn btn-primary btn-block" type="button"
+							name="CCO" id="CCO" value="SLOG" onclick="studentLogin()">Sign
+							in</button></td>
 					<td></td>
 
 					<td><i class="fa fa-twitter"></i> Google+</a></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><label> <input type="checkbox" name="remember" id="remember" > keep me
-							logged-in
+					<td><label> <input type="checkbox" name="remember"
+							id="remember"> keep me logged-in
 					</label></td>
 					<td></td>
 
@@ -84,10 +89,10 @@
 
 
 	</div>
-	
+
 	<!-- Footer -->
-<footer w3-include-html="/dist/partials/layout/footer.jsp"></footer>
-<!-- jQuery & Other js -->
+	<footer w3-include-html="/dist/partials/layout/footer.jsp"></footer>
+	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
