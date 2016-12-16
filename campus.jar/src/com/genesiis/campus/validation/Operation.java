@@ -4,6 +4,9 @@ package com.genesiis.campus.validation;
 //20161108 DN, JH, DJ, AS, CM, PN, MM Added field responseType to enum.
 //20161116 MM c2-integrate-google-banners Added LIST_GOOGLE_ADVERTS enum
 //20161117 MM c2-integrate-google-banners Changed LIST_GOOGLE_ADVERTS to LOAD_BANNER_PAGE 
+//20161217 MM c2-integrate-google-banners Removed LOAD_BANNER_PAGE constant (before 
+//				merging with sprint branch) that was there for testing the banner 
+//				displaying functionality 
 
 /**
 * Operation class facilitate in binding the CCO
@@ -12,7 +15,6 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LOAD_BANNER_PAGE("LOAD_BANNER_PAGE", ResponseType.JSP, "bannerTest.jsp"),
 	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, "");
 			
 	private final String commandString;
@@ -25,7 +27,6 @@ public enum Operation {
 		this.commandString = newValue;
 		this.responseType = responseType;
 		this.viewJspUrl = viewJspUrl;
-
 	}
 
 	public String getCommandString() {
