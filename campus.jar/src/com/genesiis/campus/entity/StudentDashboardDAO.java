@@ -144,7 +144,34 @@ public class StudentDashboardDAO implements ICrud {
 					+ "END "
 					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown WHERE CODE = (SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE);";
 			
-			
+			String query2 = "DECLARE @TempProgrammes TABLE ("
+					+ "[CODE] [int],"
+					+ "[NAME] [varchar](100),"
+					+ "[EMAIL] [varchar](255),"
+					+ "[IMAGE] [varchar](100),"
+					+ "[DESCRIPTION] [text],"
+					+ "[DURATION] [float],"
+					+ "[ENTRYREQUIREMENTS] [varchar](2000),"
+					+ "[COUNSELORNAME] [varchar](35),"
+					+ "[COUNSELORPHONE] [varchar](15),"
+					+ "[DISPLAYSTARTDATE] [date],"
+					+ "[EXPIRYDATE] [date],"
+					+ "[PROGRAMMESTATUS] [tinyint],"
+					+ "[COURSEPROVIDER] [int],"
+					+ "[MAJOR] [int],"
+					+ "[CATEGORY] [int],"
+					+ "[LEVEL] [int],"
+					+ "[CLASSTYPE] [int],"
+					+ "[CRTON] [date],"
+					+ "[CRTBY] [varchar](20),"
+					+ "[MODON] [date],"
+					+ "[MODBY] [varchar](20)"
+					+ "); "
+					+ "INSERT INTO @TempProgrammes "
+					+ "SELECT TOP (1) * FROM [CAMPUS].[PROGRAMME]; "
+					+ "DECLARE @selectCommand varchar (1000) "
+					+ "SET @selectCommand = 'SELECT * FROM @TempProgrammes'; "
+					+ "EXEC(@selectCommand)";
 //					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
 			
 //			String query = "DECLARE @numResults int; "
@@ -180,7 +207,8 @@ public class StudentDashboardDAO implements ICrud {
 //					+ "JOIN [CAMPUS].[SKILL] sk ON (sk.CODE = ss.SKILL)";
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query2);
+//			ps = conn.prepareStatement(query);
 //			ps.setInt(1, studentCode);
 //			ps.setInt(2, studentCode);
 			ResultSet rs = ps.executeQuery();
