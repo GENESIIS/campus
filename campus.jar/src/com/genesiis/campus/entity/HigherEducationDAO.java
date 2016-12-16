@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161215 PN CAM-28: INIT HigherEducationDAO.java class and implemented add() method.
+//20161216 PN CAM-28 : add-student-details: implemented findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,8 +76,64 @@ public class HigherEducationDAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		int studentCode = (Integer) code;
+		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE] ,[INSTITUTE] ,[AFFINSTITUTE] ,[AWARD] ,[MAJOR] ,[COUNTRY] ,"
+					+ "[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] "
+					+ "FROM [CAMPUS].[HIGHERDUCATION] "
+					+ "WHERE [STUDENT] = ? AND ISACTIVE = 1;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, studentCode);
+			final ResultSet rs = stmt.executeQuery();	
+
+			while (rs.next()) {
+				final ArrayList<String> singlehigherEduList = new ArrayList<String>();
+				singlehigherEduList.add(rs.getString("CODE"));
+				singlehigherEduList.add(rs.getString("INSTITUTE"));
+				singlehigherEduList.add(rs.getString("AFFINSTITUTE"));
+				singlehigherEduList.add(rs.getString("AWARD"));
+				singlehigherEduList.add(rs.getString("MAJOR"));
+				
+				//Get country name, if in a case to pass the name to dataList
+				ICrud country2dao = new Country2DAO();
+				String countryName = "";
+				Collection<Collection<String>> country = country2dao.findById(Integer.parseInt(rs.getString("COUNTRY")));			
+				for (Collection<String> collection : country) {
+					Object[] cdata = collection.toArray();
+					countryName = (String) cdata[1];
+				}
+				singlehigherEduList.add(countryName);
+				singlehigherEduList.add(rs.getString("COMMENCEDON"));
+				singlehigherEduList.add(rs.getString("COMPLETIONON"));
+				singlehigherEduList.add(rs.getString("STUDENTID"));
+				singlehigherEduList.add(rs.getString("RESULT"));
+				singlehigherEduList.add(rs.getString("DESCRIPTION"));
+				singlehigherEduList.add(rs.getString("MEDIUM"));
+
+				final Collection<String> singlehigherEduCollection = singlehigherEduList;
+				allhigherEduList.add(singlehigherEduCollection);
+			}
+		} catch (SQLException sqlException) {
+			log.error("findById(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("findById(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allhigherEduList;
 	}
 
 	@Override
