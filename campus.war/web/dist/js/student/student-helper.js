@@ -47,18 +47,79 @@ function displayDetails() {
  * @returns
  */
 function getStudentData(response) {
-	var t = $('#example').DataTable(); 
-	t.clear().draw();
+	//Array holding selected row IDs
+	var rows_selected = [];
+	//displayDetails();
+	var table = $('#example').DataTable({
+		 'columnDefs': [{
+			    'targets': 0,
+			    'searchable':false,
+			    'orderable':false,
+			    'width':'1%',
+			    'className': 'dt-body-center',
+			    'render': function (){
+			        return '<input type="checkbox">';
+			    }
+			 }],
+			 'order': [1, 'asc'],
+			 'rowCallback': function(row, data, dataIndex){
+			    // Get row ID
+			    var rowId = data[0];
+			    //alert("data"+data);
+			    // If row ID is in the list of selected row IDs
+			    if($.inArray(rowId, rows_selected) !== -1){
+			       $(row).find('input[type="checkbox"]').prop('checked', true);
+			       $(row).addClass('selected');
+			    }
+			 }
+			});
+	
+	table.clear().draw();
 	$.each(response.stdExpCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
-		counter++;
-		t.row.add( [
+		table.row.add( [
+		            '',
 		            data[1].toString(),
 		            data[2].toString(),
 					data[3].toString()
 		        ] ).draw( false );
 	});
+
+	//Handle click on checkbox
+	$('#example tbody').on('click', 'input[type="checkbox"]', function(e){
+	 var $row = $(this).closest('tr');
+
+	 // Get row data
+	 var data = table.row($row).data();
+
+	 // Get row ID
+	 var rowId = data[0];
+
+	 // Determine whether row ID is in the list of selected row IDs 
+	 var index = $.inArray(rowId, rows_selected);
+
+	 // If checkbox is checked and row ID is not in list of selected row IDs
+	 if(this.checked && index === -1){
+	    rows_selected.push(rowId);
+
+	 // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+	 } else if (!this.checked && index !== -1){
+	    rows_selected.splice(index, 1);
+	 }
+
+	 if(this.checked){
+	    $row.addClass('selected');
+	 } else {
+	    $row.removeClass('selected');
+	 }
+
+	 // Update state of "Select all" control
+	 updateDataTableSelectAllCtrl(table);
+
+	 // Prevent click event from propagating to parent
+	 e.stopPropagation();
+	});	
 	
 	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
@@ -887,7 +948,7 @@ function addSkillDetails() {
 		dataType : "json",
 		success : function(data) {			
 			extStudentSkills = [];
-			$.each(response.result, function(index, value) {
+			$.each(response.result, function(index, value) { 
 				var res = value.toString();
 				var data = res.split(",");
 				extStudentSkills.push(parseInt(data[0]));
