@@ -63,10 +63,10 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 	 * @return Populating filter search parameter collection 
 	 */	
 	private void populateFilterSearch(final CourseProviderSearchDTO providerSearchDTO,final Map<String, String[]> searchParamCollection) {
-
-		String[] cpTypeAll = searchParamCollection.get("mainAreasMap[cpTypeAll]");
+       //TODO:Kept it for future purpose
+		/*String[] cpTypeAll = searchParamCollection.get("mainAreasMap[cpTypeAll]");
 		String[] majorAll = searchParamCollection.get("mainAreasMap[majorAll]");
-		String[] levelAll = searchParamCollection.get("mainAreasMap[levelAll]");
+		String[] levelAll = searchParamCollection.get("mainAreasMap[levelAll]");*/
 		String[] catCodeArray = searchParamCollection.get("categoryCodes[]");
 		String[] districtCode = searchParamCollection.get("districtCode");
 		String[] cpTypeArray = searchParamCollection.get("cpTypeCodes[]");
@@ -86,29 +86,9 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 			int district = Integer.parseInt(districtCode[0]);
 			providerSearchDTO.setDistrict(district);
 		}
-
 		providerSearchDTO.setCpTypeList(getSelectedCodeList(cpTypeArray));
 		providerSearchDTO.setMajorList(getSelectedCodeList(majorArray));
 		providerSearchDTO.setLevelList(getSelectedCodeList(levelArray));
-		
-		/*final List<Integer> codeList=getSelectedCodeList(cpTypeAyrray);
-
-		if (majorAyrray != null && majorAyrray.length > 0) {
-			final List<Integer> codeList = new ArrayList<Integer>();
-			for (String code : majorAyrray) {
-				codeList.add(Integer.parseInt(code));
-			}
-			providerSearchDTO.setMajorList(codeList);
-		}
-
-		if (levelAyrray != null && levelAyrray.length > 0) {
-			final List<Integer> codeList = new ArrayList<Integer>();
-			for (String code : levelAyrray) {
-				codeList.add(Integer.parseInt(code));
-			}
-			providerSearchDTO.setLevelList(codeList);
-		}*/
-
 	}
 
 	/**
