@@ -14,8 +14,24 @@ $(document).ready(function() {
 		success : function(response) {
 			getInitialPageResults(catCode,response);
 		},
-		error : function() {
-			alert("error");
+		error : function(jqXHR, exception) {			
+			var msg = '';
+	        if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        } else if (exception === 'parsererror') {
+	            msg = 'Requested JSON parse failed.';
+	        } else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else if (exception === 'abort') {
+	            msg = 'Ajax request aborted.';
+	        } else {
+	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+	        }	        
+	        alert(msg);
 		}
 	});
 	
@@ -144,8 +160,24 @@ function getInitialPageResults(catCode,response) {
 			success : function(response) {				
 				populateFilterSearchResults(response);
 			},
-			error : function() {
-				alert("error");
+			error : function(jqXHR, exception) {
+				var msg = '';
+		        if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        } else if (exception === 'parsererror') {
+		            msg = 'Requested JSON parse failed.';
+		        } else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        } else if (exception === 'abort') {
+		            msg = 'Ajax request aborted.';
+		        } else {
+		            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+		        }	        
+		        alert(msg);
 			}
 		});
 
@@ -190,8 +222,24 @@ function categoryClick(event){
 		success : function(response) {			
 			populateCategoryWiseTypes(response);
 		},
-		error : function() {
-			alert("error");
+		error : function(jqXHR, exception) {
+			var msg = '';
+	        if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        } else if (exception === 'parsererror') {
+	            msg = 'Requested JSON parse failed.';
+	        } else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else if (exception === 'abort') {
+	            msg = 'Ajax request aborted.';
+	        } else {
+	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+	        }	        
+	        alert(msg);
 		}
 	});
 }
@@ -241,6 +289,33 @@ function populateCategoryWiseTypes(response){
 		}
 		levelCount++;
 	});
+	$('#cpTypeAll').on('click', function(event) {
+		var levelObj = $("#select-cpType").find('.cpTypeClass');
+		if ($(this).is(":checked")) {
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-cpType").find('.cpTypeClass')[i].checked = true;
+			}
+		}else{
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-cpType").find('.cpTypeClass')[i].checked = false;
+			}
+			
+		}
+	});
+	
+	$('#majorAll').on('click', function(event) {
+		var levelObj = $("#select-major").find('.majorClass');
+		if ($(this).is(":checked")) {
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-major").find('.majorClass')[i].checked = true;
+			}
+		}else{
+			for (var i = 0; i < levelObj.length; i++) {
+				$("#select-major").find('.majorClass')[i].checked = false;
+			}
+			
+		}
+	});
 	
 
 	$('#levelAll').on('click', function(event) {
@@ -255,10 +330,6 @@ function populateCategoryWiseTypes(response){
 			}
 			
 		}
-	});
-	
-	$('#level').on('click', function(event) {
-		alert("level ");
 	});
 }
 
