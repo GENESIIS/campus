@@ -13,8 +13,7 @@ $(document).ready(function() {
 		success : function(response) {			
 			 getAjaxData(response);
 		},
-		error : function(jqXHR, exception) {
-			console.log(jqXHR.status);
+		error : function(jqXHR, exception) {			
 			var msg = '';
 	        if (jqXHR.status === 0) {
 	            msg = 'Not connect.\n Verify Network.';

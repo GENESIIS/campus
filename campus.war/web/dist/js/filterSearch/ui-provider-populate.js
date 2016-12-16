@@ -196,6 +196,9 @@ function populateFilterSearchResults(response) {
 			providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
 		}
 	});
+	if(response.result!=null && response.result.length===0){
+		providerChoice.append("No course providers for selected criteria");		
+	}
 	
 }
 
