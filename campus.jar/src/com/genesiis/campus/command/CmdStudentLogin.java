@@ -19,6 +19,7 @@ import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
 import com.genesiis.campus.util.CookieHandler;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
@@ -34,7 +35,7 @@ public class CmdStudentLogin implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		String message = "Unsuccessfull";
+		String message = SystemMessage.LOGINUNSUCCESSFULL.message();
 
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
@@ -54,20 +55,32 @@ public class CmdStudentLogin implements ICommand {
 			log.info("Student username : " + data.getUsername());
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
 			dataCollection = loginDAO.findById(data);
-
+			message = SystemMessage.LOGGEDSUCCESSFULL.message();
 			if (rememberMe == true) {
 				helper.setAttribute("student", data);
-				CookieHandler.addCookie(helper.getResponse(), message,
+				CookieHandler.addCookie(helper.getResponse(), "userIdendificationKey",
 						data.getUserKey(), 2592000);
 
 			}
-		//	setStudentLoginDetails(data, helper);
+			 setStudentLoginDetails(data, helper);
+			 int status = StudentLoginDAO.loginDataUpdate(data);
+		} else {
+			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 		}
-		log.info("wade harriiii :P");
-		helper.setRedirectPage("courseInquiry.jsp");
+		log.info("wade harriiii :P" + message);
+
+		helper.setAttribute("message", message);
+		view.setCollection(dataCollection);
 		return view;
 	}
 
+	/**
+	 * Student login  details maintain.
+	 * @param object
+	 * @param helper
+	 * @return Student object
+	 */
+	
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
