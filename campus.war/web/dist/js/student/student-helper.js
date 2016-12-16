@@ -15,6 +15,7 @@
 //20161214 PN CAM-28: completed front UI population with db values, Student Higher education details form.
 //20161215 PN CAM-28: implemented addHigherEducationDetails() method and validateHigherEducationForm() done.
 //20161215 PN CAM-28: implemented clearSchoolEducationForm() method.
+//20161216 PN CAM-28: implementing datatables using DB values. -WIP
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -31,8 +32,9 @@ function displayDetails() {
 		},
 		dataType : "json",
 		success : function(response) {
-			alert(response);
+			//alert(response);
 			getStudentData(response);
+			populateTable(response.stdExpCollection);
 		},
 		error : function(response) {
 			alert("Error: "+response);
@@ -49,7 +51,7 @@ function getStudentData(response) {
 	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
-		alert(data);
+		//alert(data);
 		$('#sFullName').val(data[4]);
 		$('#sMiddleName').val(data[5]);
 		$('#sLastName').val(data[6]);
@@ -142,7 +144,7 @@ function getStudentData(response) {
 	});
 	
 	// Set medium details
-	alert("response.mediumCollection"+response.mediumCollection);
+	//alert("response.mediumCollection"+response.mediumCollection);
  	var sseMedium = $("#sseMedium");
  	sseMedium.find('option').remove();
  	$('<option>').val("").text("--Select One--").appendTo(sseMedium);
@@ -242,9 +244,9 @@ function getStudentData(response) {
 	});
 	
 	//Get existing skill values.
-	alert(response.skillCollection);
+	//alert(response.skillCollection);
 	var inputValues = createJsonObj(response.skillCollection);
-	alert(inputValues);
+	//alert(inputValues);
 	$('#studentSkills').tagsinput({
 		  itemValue: 'value',
 		  itemText: 'text',
@@ -256,7 +258,7 @@ function getStudentData(response) {
 	});
 	
 	//Get skills assigned with Student
-	alert(response.stskillCollection);
+	//alert(response.stskillCollection);
 	$.each(response.stskillCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -265,9 +267,9 @@ function getStudentData(response) {
 	});
 	
 	//Get existing interest values.
-	alert(response.interestCollection);
+	//alert(response.interestCollection);
 	var inputValues2 = createJsonObj(response.interestCollection);
-	alert(inputValues2);
+	//alert(inputValues2);
 	$('#studentInterests').tagsinput({
 		  itemValue: 'value',
 		  itemText: 'text',
@@ -279,7 +281,7 @@ function getStudentData(response) {
 	});
 	
 	//Get interest assigned with Student
-	alert(response.stinterestCollection);
+	//alert(response.stinterestCollection);
 	$.each(response.stinterestCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -935,38 +937,25 @@ if($chkbox_checked.length === 0){
 }
 }
 
-$(document).ready(function (){
-	//displayDetails();
-	
-	var tbd ="";
-	
-	$.ajax({
-		url : '../../StudentController',
-		data : {
-			CCO : 'GSD'
-		},
-		dataType : "json",
-		success : function(response) {
-			tbd = response.stdExpCollection;
-			alert(tbd);
-			getStudentData(response);
-		},
-		error : function(response) {
-			alert("Error: "+response);
-		}
-	});
+//$(document).ready(function (){
+function populateTable(src){	
 	
 //Array holding selected row IDs
 var rows_selected = [];
+//displayDetails();
+	
+var tbd = src;
+
 var table = $('#example').DataTable({
- 'ajax': 'https://api.myjson.com/bins/1us28',
+//'ajax': 'https://api.myjson.com/bins/1us28',
  'columnDefs': [{
     'targets': 0,
     'searchable':false,
     'orderable':false,
     'width':'1%',
     'className': 'dt-body-center',
-    'render': function (data, type, full, meta){
+    'render': function (tbd, type, full, meta){
+    	alert("tbd"+tbd);
         return '<input type="checkbox">';
     }
  }],
@@ -1109,7 +1098,7 @@ $('#frm-example').on('submit', function(e){
  
  // Output form data to a console     
  //$('#example-console').text($(form).serialize());
- alert($(form).serialize());
+ //alert($(form).serialize());
  //console.log("Form submission", $(form).serialize());
   
  // Remove added elements
@@ -1118,4 +1107,4 @@ $('#frm-example').on('submit', function(e){
  // Prevent actual form submission
  e.preventDefault();
 });
-});
+}
