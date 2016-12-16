@@ -12,6 +12,8 @@
 //				when extracting returned data
 //20161214 MM c2-integrate-google-banners Changed a column name from IMAGEPATH to 
 //				IMAGE to match DDL changes
+//20161216 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
+//				statements in catch clauses
 
 package com.genesiis.campus.entity;
 
@@ -105,14 +107,14 @@ public class BannerDAO implements ICrud {
 			retrieveBannerList(rs, bannerList);
 
 		} catch (ClassCastException cce) {
-			Log.info("findById(Object): ClassCastException: " + cce.toString());
+			Log.error("findById(Object): ClassCastException: " + cce.toString());
 			throw new IllegalArgumentException(
 					"The argument passed is not of expected type (Programme)!");
 		} catch (SQLException sqle) {
-			Log.info("findById(Object): SQLException: " + sqle.toString());
+			Log.error("findById(Object): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			Log.info("findById(Object): Exception: " + e.toString());
+			Log.error("findById(Object): Exception: " + e.toString());
 			throw e;
 		} finally {
 			if (ps != null) {
