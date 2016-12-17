@@ -179,7 +179,8 @@ public class CourseProviderDAO implements ICrud{
 	}
 	
 	/**
-	 * Find Top Viewed Providers
+	 * Find Top Viewed Providers.Method can be re used from common landing page and also from category wise landing page.Set specific category code in CourseProvider DTO
+	 * to retrieve  category wise top viewed course providers.
 	 * @param CourseProvider DTO
 	 * @author DJ
 	 * @return Collection 
@@ -232,7 +233,8 @@ public class CourseProviderDAO implements ICrud{
 	}
 	
 	/**
-	 * Find Top Rated Providers
+	 * Find Top Rated Providers.Method can be re used from common landing page and also from category wise landing page.Set specific category code in CourseProvider DTO
+	 * to retrieve  category wise top rated course providers.
 	 * @param CourseProvider DTO
 	 * @author DJ
 	 * @return Collection 
