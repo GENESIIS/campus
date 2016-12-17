@@ -93,13 +93,13 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 
 	/**
 	 * @author DJ
-	 * @param selectedCodeArray 
+	 * @param selectedCodesArray 
 	 * @return Get  list of integer codes form string array 
 	 */	
-	private List<Integer> getSelectedCodeList(String[] selectedCodeArray) {
+	private List<Integer> getSelectedCodeList(String[] selectedCodesArray) {
 		final List<Integer> codeList = new ArrayList<Integer>();
-		if (selectedCodeArray != null && selectedCodeArray.length > 0) {			
-			for (String code : selectedCodeArray) {
+		if (selectedCodesArray != null && selectedCodesArray.length > 0) {			
+			for (String code : selectedCodesArray) {
 				codeList.add(Integer.parseInt(code));
 			}			
 		}
