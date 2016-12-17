@@ -162,7 +162,7 @@ function getInitialPageResults(catCode,response) {
 			},
 			error : function(jqXHR, exception) {
 				var msg = '';
-		        if (jqXHR.status === 0) {
+				if (jqXHR.status === 0) {
 		            msg = 'Not connect.\n Verify Network.';
 		        } else if (jqXHR.status == 404) {
 		            msg = 'Requested page not found. [404]';
