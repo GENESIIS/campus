@@ -22,11 +22,11 @@
 //				indexes where fetched values are present via variables
 //20161217 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
 //				statements in catch clauses
+//20161217 MM c2-integrate-google-banners Cleaned up imports
 
 package com.genesiis.campus.validation;
 
 import com.genesiis.campus.entity.BannerDAO;
-import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 import java.sql.SQLException;
