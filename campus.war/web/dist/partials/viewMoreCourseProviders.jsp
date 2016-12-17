@@ -180,7 +180,7 @@
 
 				<!-- Search Result List view -->
 				<div class="search-result-view clearfix">
-					<div class="result-box clearfix">
+					<div class="result-box center-block clearfix">
 						<ul id="providerList" class="list-inline clearfix">
 
 						</ul>
