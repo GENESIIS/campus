@@ -10,6 +10,8 @@
 				banner/advert data is empty before accessing it --%>
 <%-- 20161206 MM c2-integrate-google-banners Modified code to change the index where value for banner 
 				image is found in an item in the returned collection of banners --%>
+<%-- 20161217 MM c2-integrate-google-banners-MP Added instructions on how to use the code herein
+				in pages where banners should appear --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -22,9 +24,8 @@
 <title>Sample Page To Display Banners</title>
 
 <style>
+/*IMPORTANT: THE FOLLOWING CSS CODE *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE*/
 .banner-wrapper {
-	height: 180px;
-	width: 200px;
 	position: relative;
 }
 .banner-wrapper img {
@@ -42,6 +43,9 @@
 </head>
 <body>
 
+<%--IMPORTANT: FOR EACH "PAGESLOT" RECORD IN THE DB FOR THE "PAGE" RECORD THAT REPRESENTS 
+	A JSP PAGE, THERE NEEDS TO BE A DIV HTML TAG (WITH CLASS "banner-wrapper") ON THAT 
+	JSP WITH THE FOLLOWING STRUCTURE --%>
 	<div class="banner-wrapper"> 
 	<c:if test="${not empty SLOT_BANNER_TEST_1}">
 		<c:choose>
@@ -58,6 +62,9 @@
 		</c:choose>
 	</c:if>		
 	</div>	
+<%--IMPORTANT: THE STRING "SLOT_BANNER_TEST_1" ABOVE MUST BE REPLACED WITH THE VALUE 
+	GIVEN FOR "NAME" COLUMN IN THE RELATED "PAGESLOT" DB TABLE RECORD THAT REPRESENTS
+	THIS BANNER SLOT --%>
 	
 	<div class="banner-wrapper"> 
 	<c:if test="${not empty SLOT_BANNER_TEST_2}">
@@ -92,7 +99,9 @@
 		</c:choose>
 	</c:if>		
 	</div>
-<!-- WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR -->
+<%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
+	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
+<%-- WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR --%>
 <script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <!-- <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script> -->
 <script src="/dist/js/banner/banner_handler.js"></script>
