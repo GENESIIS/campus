@@ -2,6 +2,7 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
+//20161108 DN, JH, DJ, AS, CM, MM Added getResponseType(String) method
 
 import javax.servlet.http.HttpSession;
 

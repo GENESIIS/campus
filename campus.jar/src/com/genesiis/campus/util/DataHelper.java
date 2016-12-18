@@ -2,6 +2,12 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161108 DN, JH, DJ, AS, CM, MM Added implementation of getResponseType(String) method
+//20161108 JH Added code to discern an Ajax request from a normal request via checking  
+//				whether 'getHeader("x-requested-with")' returns 'XMLHttpRequest' in 
+//				getResponseType() method			
+//20161116 MM c2-integrate-google-banners-MP Added call to BannerData.setBannerDetails(IDatahelper, String) 
+//				in getResultView(String) method
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -15,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import com.genesiis.campus.validation.BannerData;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
@@ -97,6 +104,7 @@ public class DataHelper implements IDataHelper {
 			final ICommand iCommand = factory.getCommand(cco);
 			if (iCommand != null) {
 				result = iCommand.execute(this, result);
+				BannerData.setBannerDetails(this, getResultPage(cco));
 			}
 		} catch (Exception e) {
 			logger.info("getResultView() : " + e.toString());
