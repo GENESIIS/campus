@@ -1,5 +1,6 @@
 // 20161116 MM c2-integrate-google-banners INIT - Initialised class
 // 20161116 MM c2-integrate-google-banners Moved class inside com.genesiis.campus.entity.model package
+// 20161218 MM c2-integrate-google-banners Made default fields private
 
 package com.genesiis.campus.entity.model;
 
@@ -7,11 +8,11 @@ import java.sql.Date;
 
 public class BannerStat {
 	
-	int code;
-	String callerPage;
-	java.sql.Date viewDate;
-	java.sql.Time viewTime;
-	int banner;
+	private int code;
+	private String callerPage;
+	private java.sql.Date viewDate;
+	private java.sql.Time viewTime;
+	private int banner;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
