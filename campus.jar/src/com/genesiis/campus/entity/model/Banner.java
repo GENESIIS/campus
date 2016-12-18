@@ -1,21 +1,23 @@
 // 20161116 MM c2-integrate-google-banners INIT Created class Banner
 // 20161116 MM c2-integrate-google-banners Moved class inside com.genesiis.campus.entity.model package
 // 20161116 MM c2-integrate-google-banners Added fields crtOn, crtBy, modOn, modBy and their getters & setters
+// 20161218 MM c2-integrate-google-banners Made default fields private
+
 package com.genesiis.campus.entity.model;
 
 import java.util.Date;
 
 public class Banner {
-	int code;
-	String image;
-	Date expirationDate;
-	String type;
-	double displayDuration;
-	String linkType;
-	String url;
-	int bannerStatus;
-	boolean isActive;
-	int pageSlot;
+	private int code;
+	private String image;
+	private Date expirationDate;
+	private String type;
+	private double displayDuration;
+	private String linkType;
+	private String url;
+	private int bannerStatus;
+	private boolean isActive;
+	private int pageSlot;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
