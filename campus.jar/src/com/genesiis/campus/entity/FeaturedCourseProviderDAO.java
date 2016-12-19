@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20161208 JH c39-add-course-provider error fixed and code ReFactored
 //20161209 JH c39-add-course-provider findById method modified: removed query used to get userType
 //20161219 JH c39-add-course-provider code review modifications: use generics 
+//20161219 JH c39-add-course-provider fixed error in prepared statement
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -129,11 +130,11 @@ public class FeaturedCourseProviderDAO implements ICrud {
 					courseProvider.getCourseProviderStatus());
 			preparedStatement
 					.setInt(33, courseProvider.getCourseProviderType());
-			preparedStatement
-					.setInt(34, courseProvider.getCourseProviderType());
-			preparedStatement.setInt(35, courseProvider.getPrincipal());
-			preparedStatement.setString(36, courseProvider.getCrtBy());
-			preparedStatement.setString(37, courseProvider.getModBy());
+		//	preparedStatement
+				//	.setInt(34, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(34, courseProvider.getPrincipal());
+			preparedStatement.setString(35, courseProvider.getCrtBy());
+			preparedStatement.setString(36, courseProvider.getModBy());
 
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, courseProviderAccount.getName());
