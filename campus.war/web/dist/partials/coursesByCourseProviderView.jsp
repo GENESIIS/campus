@@ -66,6 +66,11 @@ $(document).ready(function() {
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});	
+	$('#clearParam').on('click', function(event) {
+		clearParameters(event);
+	});	
+	
+	
 });
 
 function getProviderSearchData(response){	
@@ -121,19 +126,44 @@ function loadResultSet(event){
 }
 function populateResultTable(response){
 	var coursesListTable = $("#table");
+	coursesListTable.find('tr').remove();
+	 var cCode='Course Code';
+	var cName='Course Name';
+	var cDes='Description';
+	var cStartDate='Display Start Date';
+	var cExDate='Expiry Date';
+	var headertr = '<tr>' ;
+	headertr += '<td>' + cCode  + '</td>';
+	headertr += '<td>' + cName  + '</td>'; 
+	headertr += '<td>' + cDes  + '</td>'; 
+	headertr += '<td>' + cStartDate  + '</td>'; 
+	headertr += '<td>' + cExDate  + '</td>'; 
+	coursesListTable.append(headertr);
 	$.each(response.coursesResultList, function(index, value) {
 	if(value!=null && value.length>0){ 
-		var x = value[0].toString();
-		var y = value[1].toString();
+		var code = value[0].toString();
+		var name = value[1].toString();
+		var des = value[2].toString();
+		var sDate = value[3].toString();
+		var eDate = value[4].toString();
 		
 		var tr = '<tr>' ;
-		tr += '<td>' + x  + '</td>';
-		tr += '<td>' + y  + '</td>';
+		tr += '<td>' + code  + '</td>';
+		tr += '<td>' + name  + '</td>';
+		tr += '<td>' + des  + '</td>';
+		tr += '<td>' + sDate  + '</td>';
+		tr += '<td>' + eDate  + '</td>';
 		coursesListTable.append(tr);
 		
 	 }
 	});
-	}
+}
+
+function clearParameters(event){
+	$('#providerlist').val("-- Select District --"); 
+	$('#startdate').val(" "); 
+	$('#enddate').val(" "); 	
+}
 
 </script>
 
@@ -178,7 +208,7 @@ function populateResultTable(response){
 								End Date : <input type="date" id="enddate" name="search">
 							</div>
 							<div>
-								<button type="submit">Clear</button>
+								<button type="submit" id="clearParam" >Clear</button>
 								<button type="submit" id="searchList" >Search
 									List</button>
 							</div>
@@ -191,9 +221,9 @@ function populateResultTable(response){
                 <div >
                 <table id="table" class="table-responsive">						
 							<!-- <tr>
-							   <th data-field="id">Item ID</th>
-                               <th data-field="name">Item Name</th>
-							</tr> -->					
+							   <td>Item ID</td>
+                               <td>Item Name</td>
+							</tr>	 -->				
 						
 					</table>
                 
