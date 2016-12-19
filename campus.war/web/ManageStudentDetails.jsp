@@ -311,7 +311,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><input name="select_all" value="1" type="checkbox"></th>
+									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
 									<th><b>Industry</b></th>
 									<th><b>Organization</b></th>
 									<th><b>Category</b></th>
