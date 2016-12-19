@@ -63,13 +63,21 @@ public class ProgrammeDAO implements ICrud {
 			}
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME  FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
-			sb.append("AND PROG.DISPLAYSTARTDATE >= ? AND PROG.EXPIRYDATE <= ? AND PROG.PROGRAMMESTATUS=?  ");
+			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
+				sb.append("AND PROG.DISPLAYSTARTDATE >=  ");
+				sb.append(new java.sql.Date(programme.getDisplayStartDate().getTime()));
+			}
+			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
+				sb.append("AND PROG.EXPIRYDATE <=  ");
+				sb.append(new java.sql.Date(programme.getExpiryDate().getTime()));
+			}
+			sb.append(" AND PROG.PROGRAMMESTATUS=?  ");
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, programme.getCourseProvider());
-			stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
-			stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
-			stmt.setInt(4, programme.getProgrammeStatus());
+			//stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
+			//stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
+			stmt.setInt(2, programme.getProgrammeStatus());
 			
 			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
