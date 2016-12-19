@@ -6,7 +6,7 @@
 <!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
 <!-- 20161206 DN C18-student-signup-without-using-third-party-application-dn town field and other nodes  added -->
 <!-- 20161214 DN CAMP:18 rearranged the fields and add a input box to capture country code -->
-
+<!-- 20161217 DN CAMP:18 Clear Data button is created-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -246,6 +246,7 @@
 
             <div class="input-field">
                 <button class="btn-create" onclick=" return (sendSignUpCredentialsToBckEnd()); clearField('displayLabel');">Create Account</button>
+                <button class="btn-create" onclick=" clearField('displayLabel');clearAllFields();">Clear Data</button>
             </div>
             <!-- End submit button -->
 
