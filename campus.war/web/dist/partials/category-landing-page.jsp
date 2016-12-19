@@ -32,7 +32,7 @@
 <body>
 
 	<!-- include Header-->
-		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
 	<!-- End Header -->
 
 	<!-- Main Container - Higher-Education -->
@@ -62,6 +62,7 @@
 						<c:out value="${category[1] }" />
 					</h1>
 				</div>
+				<div class="category-description"><c:out value="${category[2] }"/></div>
 				<c:set var="code" value="${category[0] }"></c:set>
 				<c:set var="categoryIdentifier" value="${category[4] }"></c:set>
 			</c:forEach>

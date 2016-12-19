@@ -198,7 +198,7 @@ header .header {
             color: #fff;
             height: 18px;
             float: left;
-            width: 90%; }
+            width: 86%; }
           header .header .bottom .menu-bar .keyword-search .search-bar a {
             display: inline-block;
             height: 18px;
@@ -553,18 +553,27 @@ body, html {
   .main-category .inner-header {
     background: #fff; }
     .main-category .inner-header .category-image {
-      display: inline-block; }
+      display: inline-block;
+      float: left; }
       .main-category .inner-header .category-image img {
-        height: 120px; }
+        height: 120px;
+        margin-bottom: 10px;
+        width: auto; }
     .main-category .inner-header .category-name {
       display: inline-block;
       position: relative; }
       .main-category .inner-header .category-name h1 {
-        padding-left: 25px;
+        padding-left: 30px;
         font-family: "Arvo", serif;
         font-size: 48px;
         color: #3a3b3c;
-        line-height: 120px; }
+        line-height: 120px;
+        margin-top: 0; }
+    .main-category .inner-header .category-description {
+      font-size: 14px;
+      padding: 10px 10px 10px 0;
+      color: #94979c;
+      font-family: "Roboto", sans-serif; }
   .main-category .content-holder {
     display: block;
     position: relative;
@@ -627,7 +636,7 @@ body, html {
               .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
                 width: 75px;
                 height: 100%;
-                padding-top: 8px;
+                padding: 6px;
                 margin-bottom: 10px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
             display: inline-block;
