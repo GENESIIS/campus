@@ -28,7 +28,7 @@ function studentLogin() {
 	}
 
 	if ((username != null) && (password != null)) {
-		alert(username + "-----" + password + remember)
+	//	alert(username + "-----" + password + remember)
 		var jsonData = {
 			"userKey" : username,
 			"password" : password,
@@ -45,12 +45,15 @@ function studentLogin() {
 					},
 					dataType : "json",
 					success : function(response) {
-						alert(response['message']);
-						// window.location.href =
-						// '/dist/partials/student/student-dashboard.jsp';
-						//document.getElementById('messsage').innerHTML = response.result;
-						document.getElementById('errorMesssage').innerHTML = response['message'];
+						//alert(response['message']);
 						
+						//document.getElementById('messsage').innerHTML = response.result;
+						
+						if(response['message'] === "valid Username and Password."){
+							 window.location.href ='/dist/partials/student/student-dashboard.jsp';
+						}else{
+							document.getElementById('errorMesssage').innerHTML = response['message'];
+						}
 					
 						
 					},

@@ -40,25 +40,15 @@ public class CmdStudentLogin implements ICommand {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
-		log.info("testing Data ................ : EMAIL " + data.getUserKey()
-				+ "  Password  : " + data.getPassword());
-
 		String validateResult = LoginValidator.validateLogin(data);
 
 		boolean rememberMe = data.isRemember();
-		log.info("remember me :) " + rememberMe);
+		
 		if (validateResult.equalsIgnoreCase("True")) {
-			// log.info(validateResult);
 			data = LoginValidator.dataSeparator(data);
-			log.info("Student user key: " + data.getUserKey());
-			log.info("Student Assigen Email : " + data.getEmail());
-			log.info("Student username : " + data.getUsername());
-			
-			
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
 			dataCollection = loginDAO.findById(data );
 			
-		//	messageDAO = SystemMessage.LOGGEDSUCCESSFULL.message();
 			if (rememberMe == true) {
 				helper.setAttribute("student", data);
 				CookieHandler.addCookie(helper.getResponse(), "userIdendificationKey",
@@ -71,17 +61,18 @@ public class CmdStudentLogin implements ICommand {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			
 		}
-		log.info("wade harriiii :P" + dataCollection);
+	
 		
 		for (Collection<String> collection : dataCollection) {
 			Object[] array = collection.toArray();
 			message = (String) array[0];
-			log.info("collection loop" + message);
+			
 
 		}
-		log.info("message" + message);
+		
 		helper.setAttribute("message", message);
 		view.setCollection(dataCollection);
+		helper.setRedirectPage("/dist/partials/student/student-dashboard.jsp");
 		return view;
 	}
 

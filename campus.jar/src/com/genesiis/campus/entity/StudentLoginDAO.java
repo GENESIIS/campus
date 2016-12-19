@@ -136,8 +136,8 @@ public class StudentLoginDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object data
-			) throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object data)
+			throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		String stringPassword = null;
@@ -154,13 +154,11 @@ public class StudentLoginDAO implements ICrud {
 
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
-			
-			log.info(student.getEmail() + "" + student.getPassword());
+
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
 					.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
 					.trim();
-			log.info(encryptPassword);
 
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
@@ -169,11 +167,9 @@ public class StudentLoginDAO implements ICrud {
 
 			ResultSet rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
-			log.info(" Check bool : " + check);
 
 			if (check) {
-
-				log.info("ohhh yeah......");
+				
 				code = rs.getString("CODE");
 				username = rs.getString("USERNAME");
 				encryptedPasswordDb = rs.getString("PASSWORD");
@@ -304,7 +300,7 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
 
 				if (encryptPassword.equals(encryptedPasswordDb)) {
-					log.info("password match  :D");
+
 					student.setValid(true);
 					studentList.add(singleStudentCollection);
 
@@ -316,11 +312,9 @@ public class StudentLoginDAO implements ICrud {
 				} else {
 					student.setValid(false);
 					message = SystemMessage.INVALIDPASSWORD.message();
-					log.info("password not match :(");
+
 				}
-				log.info(encryptedPasswordDb);
-				log.info(encryptPassword);
-				log.info(firstName + lastName);
+
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				student.setValid(false);
@@ -346,7 +340,6 @@ public class StudentLoginDAO implements ICrud {
 
 		messageIview = (Collection<String>) singleMessageList;
 
-		log.info("DAO message  : " + message);
 		studentList.add(messageIview);
 		return studentList;
 	}
@@ -379,12 +372,6 @@ public class StudentLoginDAO implements ICrud {
 		return 0;
 	}
 
-	public static Student studentLogin(Student bean) {
-
-		return bean;
-	}
-
 	
-
 
 }
