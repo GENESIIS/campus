@@ -32,7 +32,6 @@ public class StudentLoginDAO implements ICrud {
 	private String gender;
 	private String email;
 	private String type;
-
 	private String landPhoneCountryCode;
 	private String landPhoneAreaCode;
 	private String landPhoneNo;
@@ -149,11 +148,12 @@ public class StudentLoginDAO implements ICrud {
 		Collection<String> privilegeCollection = new ArrayList<String>();
 
 		PreparedStatement preparedStatement = null;
-		String message = SystemMessage.NOTREGISTERD.message();
+		String message = messageDAO;
 		final Student student = (Student) data;
 
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
+			message = SystemMessage.NOTREGISTERD.message();
 			log.info(student.getEmail() + "" + student.getPassword());
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
 					.getPassword().trim());
@@ -314,14 +314,14 @@ public class StudentLoginDAO implements ICrud {
 
 				} else {
 					student.setValid(false);
-					message = SystemMessage.INVALIDUSER.message();
+					message = SystemMessage.INVALIDPASSWORD.message();
 					log.info("password not match :(");
 				}
 				log.info(encryptedPasswordDb);
 				log.info(encryptPassword);
 				log.info(firstName + lastName);
 			}else{
-				message = SystemMessage.INVALIDUSER.message();
+				message = SystemMessage.INVALIDUSERNAME.message();
 				student.setValid(false);
 			}
 
@@ -339,6 +339,7 @@ public class StudentLoginDAO implements ICrud {
 			}
 
 		}
+		
 		log.info("DAO message  : "+message);
 		
 		return studentList;
