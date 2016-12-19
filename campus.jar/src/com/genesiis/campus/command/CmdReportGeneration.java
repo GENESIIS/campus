@@ -82,7 +82,7 @@ public class CmdReportGeneration  implements ICommand{
 					
 					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
-					helper.setAttribute("coursesList", coursesList);
+					helper.setAttribute("coursesResultList", coursesList);
 				}				
 			}			
 		}catch (Exception exception) {
