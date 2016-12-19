@@ -135,9 +135,9 @@ public class StudentLoginDAO implements ICrud {
 		return rowInserted;
 	}
 
-	
-	public Collection<Collection<String>> findById(Object data, String messageDAO)
-			throws SQLException, Exception {
+	@Override
+	public Collection<Collection<String>> findById(Object data
+			) throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		String stringPassword = null;
@@ -146,14 +146,15 @@ public class StudentLoginDAO implements ICrud {
 		String decryptedPassword = null;
 		Collection<Collection<String>> studentList = new ArrayList<Collection<String>>();
 		Collection<String> privilegeCollection = new ArrayList<String>();
-
+		Collection<String> messageIview = null;
+		ArrayList<String> singleMessageList = null;
 		PreparedStatement preparedStatement = null;
-		String message = messageDAO;
+		String message = SystemMessage.NOTREGISTERD.message();
 		final Student student = (Student) data;
 
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
-			message = SystemMessage.NOTREGISTERD.message();
+			
 			log.info(student.getEmail() + "" + student.getPassword());
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
 					.getPassword().trim());
@@ -168,8 +169,8 @@ public class StudentLoginDAO implements ICrud {
 
 			ResultSet rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
-			log.info(" Check bool : "+check);
-			
+			log.info(" Check bool : " + check);
+
 			if (check) {
 
 				log.info("ohhh yeah......");
@@ -320,7 +321,7 @@ public class StudentLoginDAO implements ICrud {
 				log.info(encryptedPasswordDb);
 				log.info(encryptPassword);
 				log.info(firstName + lastName);
-			}else{
+			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				student.setValid(false);
 			}
@@ -339,9 +340,14 @@ public class StudentLoginDAO implements ICrud {
 			}
 
 		}
-		
-		log.info("DAO message  : "+message);
-		
+
+		singleMessageList = new ArrayList<String>();
+		singleMessageList.add(message);
+
+		messageIview = (Collection<String>) singleMessageList;
+
+		log.info("DAO message  : " + message);
+		studentList.add(messageIview);
 		return studentList;
 	}
 
@@ -378,13 +384,7 @@ public class StudentLoginDAO implements ICrud {
 		return bean;
 	}
 
-	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 
 
 }

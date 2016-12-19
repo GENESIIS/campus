@@ -36,7 +36,7 @@ public class CmdStudentLogin implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-		String messageDAO = new String(message);
+		String messageReturn = new String(message);
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
@@ -56,7 +56,7 @@ public class CmdStudentLogin implements ICommand {
 			
 			
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			dataCollection = loginDAO.findById(data,messageDAO );
+			dataCollection = loginDAO.findById(data );
 			
 		//	messageDAO = SystemMessage.LOGGEDSUCCESSFULL.message();
 			if (rememberMe == true) {
@@ -68,12 +68,19 @@ public class CmdStudentLogin implements ICommand {
 			 setStudentLoginDetails(data, helper);
 			 int status = StudentLoginDAO.loginDataUpdate(data);
 		} else {
-			messageDAO = SystemMessage.LOGINUNSUCCESSFULL.message();
+			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			
 		}
-		log.info("wade harriiii :P" + messageDAO);
+		log.info("wade harriiii :P" + dataCollection);
+		
+		for (Collection<String> collection : dataCollection) {
+			Object[] array = collection.toArray();
+			message = (String) array[0];
+			log.info("collection loop" + message);
 
-		helper.setAttribute("message", messageDAO);
+		}
+		log.info("message" + message);
+		helper.setAttribute("message", message);
 		view.setCollection(dataCollection);
 		return view;
 	}
@@ -102,7 +109,7 @@ public class CmdStudentLogin implements ICommand {
 		String browser = helper.getHeader("User-Agent");
 		String[] output = browser.split("/");
 		object.setLastLoggedInUserAgent(output[0]);
-
+		object.setLastLoggedInIpAddress(helper.getRemoteAddress());
 		return object;
 	}
 
