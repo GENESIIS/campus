@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -64,16 +65,28 @@ public class CmdReportGeneration  implements ICommand{
 					//param:cpcode,date range
 					final Programme programme=new Programme();
 					programme.setCourseProvider(providerCode);
-					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());					
-					programme.setDisplayStartDate(df.parse((startDateString)));
-					programme.setExpiryDate((Date)df.parse((endDateString)));
+					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
+					try {
+						if(UtilityHelper.isNotEmpty(startDateString)){
+							programme.setDisplayStartDate(df.parse((startDateString)));
+						}
+						if(UtilityHelper.isNotEmpty(startDateString)){
+						   programme.setExpiryDate((Date)df.parse((endDateString)));
+						}
+						
+					} catch (ParseException parseException) {
+						log.error("execute() : ParseException " + parseException.toString());
+						systemMessage = SystemMessage.ERROR;
+						throw parseException;
+					}
+					
 					
 					final Collection<Collection<String>> coursesList=new ProgrammeDAO().findById(programme);
 					helper.setAttribute("coursesList", coursesList);
 				}				
 			}			
 		}catch (Exception exception) {
-			log.error("execute() : Exception " + exception);
+			log.error("execute() : Exception " + exception.toString());
 			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}	
