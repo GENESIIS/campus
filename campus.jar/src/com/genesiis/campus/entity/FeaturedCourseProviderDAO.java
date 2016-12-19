@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20161202 JH c39-add-course-provider add method modified
 //20161208 JH c39-add-course-provider error fixed and code ReFactored
 //20161209 JH c39-add-course-provider findById method modified: removed query used to get userType
+//20161219 JH c39-add-course-provider code review modifications: use generics 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -48,7 +50,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		int generatedKey = 0;
 
 		try {
-			HashMap map = (HashMap) (object);
+			Map map = (HashMap) (object);
 
 			CourseProvider courseProvider = new CourseProvider();
 			CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
