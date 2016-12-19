@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20161216 DN CAMP:18 add email generation request to execute() and integrate
 //				message generated from their with current class.
 //				isEmailProduced() created and added exception handling.
+//20161218 DN CAMP:18 added successCode int field to keep track of success/failure error status
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,12 +42,14 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 
 	static Logger log = Logger.getLogger(CmdSignUpWithoutThirdParty.class.getName());
 	private RowStudentForJason partialStudent;
-	
+	private int successCode=0;
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		
 		String message = "";
+		
 		Collection<Collection<String>> studentSignUps = new ArrayList<Collection<String>>();
 		String gsonData = helper.getParameter("jsonData");
 		partialStudent = (RowStudentForJason)extractDumyObjectFrom(gsonData);
@@ -81,6 +84,7 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			String premessage = (String)helper.getAttribute("message");
 			premessage=(premessage==null)?"":premessage;
 			helper.setAttribute("message", message+" "+premessage);
+			helper.setAttribute("successCode", this.getSuccessCode());
 		}
 		return view;
 	}
@@ -216,9 +220,11 @@ public Object extractDumyObjectFrom(String gsonData) {
 	 */
 	private String systemMessage(int status){
 		String message = SystemMessage.UNKNOWN.message();
+		setSuccessCode(status);
 		switch(status){		
 		case 1:
 			message =SystemMessage.ACCOUNT_CREATED.message();
+			
 			break;
 		case -1:
 			message =SystemMessage.USER_NAME_EXISTS.message();
@@ -229,10 +235,19 @@ public Object extractDumyObjectFrom(String gsonData) {
 		default:			
 			break;
 		}
+		
 		return message;
+		
 	}
 	
 	
-	
+	public int getSuccessCode() {
+		return successCode;
+	}
+
+
+	public void setSuccessCode(int successCode) {
+		this.successCode = successCode;
+	}
 	
 }
