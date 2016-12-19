@@ -1,5 +1,7 @@
 //20161121  DN C18-student-signup-without-using-third-party-application-dn 
 //created the jsonDataExchanger.js in order to facilitate generalization all the JSON data  exchanging and ajax call.
+//20161218 DN CAMP:18 enhanced the error option with many possible error options.
+//20161218 DN CAMP:18 include the delaying and redirecting function to success:option depend on error code.
 
 
 
@@ -24,13 +26,36 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		},
 		dataType : dataCategory,
 		success : function(response) {
-			jQuery('#displayLabel').html("<h2>"+response['message']+"</h2>");
+			
+			if(response['successCode']==='1'){
+				setTimeout( function(){
+					window.location.replace("studentLoginPage.jsp"); //this name may have to change depend on actual location of the page "Student Login"
+					}, 3000);
+				jQuery('#displayLabel').html("<h2>"+response['message']+"</h2>");
+			} else{
+				jQuery('#displayLabel').css('color','red').html("<h2>"+response['message']+"</h2>"); // if the account didn't createit's an error
+			}
 			
 		},
-		error : function(e) {
-			 alert("Error " + e);
-			 console.log(e);
+		error : function(response,error,errorThrown) {
 			
+			  var msg = '';
+		        if (response.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (response.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (response.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        } else if (error === 'parsererror') {
+		            msg = 'Requested JSON parse failed.';
+		        } else if (error === 'timeout') {
+		            msg = 'Time out error.';
+		        } else if (error === 'abort') {
+		            msg = 'Ajax request aborted.';
+		        } else {
+		            msg = 'Uncaught Error.\n' + response.responseText;
+		        }
+			jQuery('#displayLabel').css('color','red').html("<h2>"+msg+"</h2>");			
 		}
 	});	
 }
