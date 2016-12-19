@@ -11,6 +11,8 @@
 //20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode and avoid leading zero for the phone number field
 //20161215 DN CAMP:18 refactor splitPhoneNumber() introduced new client method managePhoneNumber() and 
 //         utility methods :extractInternationalPhoneNumber()/resetTheMobileNumberRelatedGlobalVariables().
+//20161217 DN CAMP:18 create a separate method isNotvalidMobileFormat()for reusing the logic on validating phone number.
+//				clearAllFields()created to clear all fields
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -120,14 +122,13 @@ function getPreRequisitPageData(preRequistData){
 	/* checking if the leading value is a zero if an error message will be popped out
 	 * input text field will be erased
 	*/
-	$('#contactNumber').keyup(function(){
+	
+	$('#contactNumber').on("change",function(){
 		var firstDigit = this.value;
-		var patern = /^[0|\+]([a-zA-Z0-9])*/g; 		//matches the leading zero and leading + sin with alpha numeric character combinations
-		if(isPatternMatch(patern,firstDigit)){
+		if(isNotvalidMobileFormat(firstDigit)){
 			$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
 			$('#contactNumber').val("");
 		}
-		
 	});
 	
 	/*
@@ -232,6 +233,9 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
 		return !validationPass;
+	} else if(isNotvalidMobileFormat($('#contactNumber').val())){
+		$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
+		return !validationPass;
 	} else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
@@ -252,6 +256,9 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return validationPass;
 	
 }
+
+
+
 
 /**
  * the purpose of the method is to create the java script object
@@ -278,6 +285,23 @@ function createJasonObject(){
 	};
 	return jsonData;
 }
+
+/**
+ * isNotvalidMobileFormat(): checks if the content submited
+ * is startswith zero or with "+" sign if so the return valuewill be 
+ * true else false.
+ * @author Dushantha DN
+ * @param firstDigit the content passed , method starts
+ * to check from the first digit.
+ * @returns boolean true if the content is a valid else false,if the 
+ * content starts with a leading 0, + or contains 
+ * alpha numeric combination ( not a number).
+ */
+function isNotvalidMobileFormat(firstDigit){
+	var patern = /^[0|\+]([a-zA-Z0-9])*/g; 		//matches the leading zero and leading + sin with alpha numeric character combinations
+	return(isPatternMatch(patern,firstDigit));
+}
+
 
 /**
  * convertPassWordToString() method displays the pass word to text
@@ -399,7 +423,13 @@ function splitPhoneNumber(phoneNumber,length){
 	 }
 }
 
-
+/**
+ * clearAllFields willclear all the data input text fields
+ * once it'scalled
+ */
+function clearAllFields(){
+	$('input.text-field').val("");
+}
 
 
 
