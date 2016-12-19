@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20161202 JH c39-add-course-provider code refactor to support one-off and featured provider registration
 //20161206 JH c39-add-course-provider get accountStatus of the user account
 //20161208 JH c39-add-course-provider code modified due to entity class method changes
+//20161219 JH c39-add-course-provider code review modifications: use generics 
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -118,7 +120,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setModBy("admin");//to be update after the session is created
 
 			
-			HashMap map = new HashMap();
+			Map map = new HashMap();
 			map.put("provider", courseProvider);
 			
 			String providerType = helper.getParameter("featured-oneoff");
