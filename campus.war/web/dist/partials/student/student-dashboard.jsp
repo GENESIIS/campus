@@ -475,9 +475,19 @@ $("#avatar-1").fileinput({
 		$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
 		$('#kv-success-1').fadeIn();
    		$('#profImage').attr("");
-   		$('#profImage').attr("src","../../../education/"+data[0]);
+   		var d = new Date();
+   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+d.getDate());
    		
    		location.reload(true);
+//    		$.ajax({
+//             url: "../../../StudentController?CCO=UUP",
+//             type: 'POST',
+//             CCO: 'UUP',        
+//             success: function(data) {
+//             	$('#profImage').attr("");
+//            		$('#profImage').attr("src","../../../education/"+imgname);   		  
+//             }
+//         });		
    		defaultPreviewContent: '<img src=../../../education/"'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
 	}
 	if(data[2] != ""){
