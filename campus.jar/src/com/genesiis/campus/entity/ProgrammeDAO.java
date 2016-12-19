@@ -62,7 +62,9 @@ public class ProgrammeDAO implements ICrud {
 				return programmeList;
 			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME  FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME , DESCRIPTION AS PROGDESCRIPTION, ");
+			sb.append("DISPLAYSTARTDATE AS PROGSTARTDATE,EXPIRYDATE AS PROGEXPIRYDATE ");
+			sb.append("FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
 			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
 				sb.append("AND PROG.DISPLAYSTARTDATE >=  ");
 				sb.append(new java.sql.Date(programme.getDisplayStartDate().getTime()));
@@ -84,6 +86,9 @@ public class ProgrammeDAO implements ICrud {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
 				singleProgramme.add(resultSet.getString("PROGCODE"));
 				singleProgramme.add(resultSet.getString("PROGNAME"));				
+				singleProgramme.add(resultSet.getString("PROGDESCRIPTION"));				
+				singleProgramme.add(resultSet.getString("PROGSTARTDATE"));				
+				singleProgramme.add(resultSet.getString("PROGEXPIRYDATE"));				
 				programmeList.add(singleProgramme);
 			}
 
