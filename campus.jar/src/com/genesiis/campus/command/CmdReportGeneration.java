@@ -70,7 +70,7 @@ public class CmdReportGeneration  implements ICommand{
 						if(UtilityHelper.isNotEmpty(startDateString)){
 							programme.setDisplayStartDate(df.parse((startDateString)));
 						}
-						if(UtilityHelper.isNotEmpty(startDateString)){
+						if(UtilityHelper.isNotEmpty(endDateString)){
 						   programme.setExpiryDate((Date)df.parse((endDateString)));
 						}
 						
