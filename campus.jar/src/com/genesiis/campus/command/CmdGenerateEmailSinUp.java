@@ -159,7 +159,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 		result.append(System.getProperty("line.separator"));
 		result.append("Pass word :"+partialStudent.getPassWord());
 		result.append(System.getProperty("line.separator"));
-		result.append("It's so much plessure to have you with us. Have a good day!");
+		result.append("It's so much pleasure to have you with us. Have a good day!");
 		this.mailBody = result.toString();
 		
 	}
