@@ -21,12 +21,6 @@
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
-
-<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-
 <!-- jQuery & Other js -->
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
@@ -36,91 +30,109 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$.ajax({
-			url : '../../ReportController',
-			data : {
-				CCO : 'SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER'
-			},
-			dataType : "json",
-			success : function(response) {
-				getAjaxProviderData(response);
-			},
-			error : function() {
-				alert("error");
-			}
-		});
-		
-		loadResultSet(event);		
-		
+
+$(document).ready(function() {
+	
+	$.ajax({
+		url : '../../ReportController',
+		data : {
+			CCO : 'SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER'
+		},
+		dataType : "json",
+		success : function(response) {
+			getProviderSearchData(response);
+		},
+		error : function(jqXHR, exception) {			
+			var msg = '';
+	        if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        } else if (exception === 'parsererror') {
+	            msg = 'Requested JSON parse failed.';
+	        } else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else if (exception === 'abort') {
+	            msg = 'Ajax request aborted.';
+	        } else {
+	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+	        }	        
+	        alert(msg);
+		}
 	});
-
-	function getAjaxProviderData(response) {
-
-		var providerName = $("#providerName");
-		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-
-			$('<option>').val(x).text(y).appendTo(providerName);
-		});
-	}
 	
+	$('#searchList').on('click', function(event) {
+		loadResultSet(event);
+	});	
+});
+
+function getProviderSearchData(response){	
+	var providerName = $("#providerName");
+	$.each(response.result, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+
+		$('<option>').val(x).text(y).appendTo(providerName);
+	});	
+} 
+
+function loadResultSet(event){	
+	var cpCode= $('#providerlist').val();
+	var startDate= $('#startdate').val();
+	var endDate= $('#enddate').val();
 	
-	function loadResultSet(event){
-		
-		
-		$('#searchList').on('click', function(event) {
-			var cpCode= $('#providerlist').val();
-			var startDate= $('#startdate').val();
-			var endDate= $('#enddate').val();			
-		
-		
-		$.ajax({
-			url:'../../ReportController',
-			data:{
-				CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
-				cProviderCode:cpCode,
-				startDate:startDate,
-				endDate:endDate			
-				
-			},
-			datatype:"json",
-			success : function(response) {				
-				populateResultTable(response);
-			},
-			error : function() {
-				alert("error");
-			}
-		});
-		
-		});
-	}
-	var data ;
-	function populateResultTable(response){		
-		alert("populateResultTable ");
-	
-		$.each(response.coursesList, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-			 data = 
-				[
-				    {
-				        "id": x,
-				        "name": y,				        
-				    }
-		];
+	$.ajax({
+		url:'../../ReportController',
+		data:{
+			CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
+			cProviderCode:cpCode,
+			startDate:startDate,
+			endDate:endDate			
 			
-			
-		});
+		},
+		datatype:"json",
+		success : function(response) {				
+			populateResultTable(response);
+		},
+		error : function(jqXHR, exception) {			
+			var msg = '';
+	        if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        } else if (exception === 'parsererror') {
+	            msg = 'Requested JSON parse failed.';
+	        } else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else if (exception === 'abort') {
+	            msg = 'Ajax request aborted.';
+	        } else {
+	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+	        }	        
+	        alert(msg);		
+		}
+	});
+}
+function populateResultTable(response){
+	var coursesListTable = $("#table");
+	$.each(response.coursesResultList, function(index, value) {
+	if(value!=null && value.length>0){ 
+		var x = value[0].toString();
+		var y = value[1].toString();
 		
-		$('#table').bootstrapTable({
-	        data: data
-	    });
+		var tr = '<tr>' ;
+		tr += '<td>' + x  + '</td>';
+		tr += '<td>' + y  + '</td>';
+		coursesListTable.append(tr);
+		
+	 }
+	});
 	}
 
 </script>
@@ -173,44 +185,26 @@
 						</fieldset>					
 				</div>
 			</div>
-			</br></br>
-			<div>
-				<div class="container">
-					<h2>Result set</h2>
-					<table id="table" class="table-responsive">
-						<thead>
-							<tr>
+			</br></br>			 
+			 <div >
+                <h1>Result set</h1>
+                <div >
+                <table id="table" class="table-responsive">						
+							<!-- <tr>
 							   <th data-field="id">Item ID</th>
                                <th data-field="name">Item Name</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-						</tbody>
+							</tr> -->					
+						
 					</table>
-				</div>
+                
+               <!--  <ul id="coursesList" class="list-inline clearfix">
+
+				</ul> -->
+                </div>
+                </div>
 			</div>
-			
-			
-			<div class="">
-					<table id="example"
-						class="table table-striped table-bordered dt-responsive nowrap"
-						cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>Item ID</th>
-								<th>Item Name</th>								
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Item ID</td>
-								<td>Item Name</td>								
-							</tr>
-						</tbody>
-					</table>
-				</div>
-		</div>
-	</div>
+			</br></br>		
+		</div>	
 	<!-- End Container - Top Providers list -->
 
 	<!-- Footer -->
