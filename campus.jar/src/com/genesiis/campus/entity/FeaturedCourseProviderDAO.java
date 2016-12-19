@@ -82,6 +82,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			stringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
 			stringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?,");
 			stringBuilder.append("?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
+			
+			String provider = stringBuilder.toString();
 
 			/**
 			 * account query used to insert data into course provider account
