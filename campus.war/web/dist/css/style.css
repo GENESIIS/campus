@@ -88,6 +88,16 @@ textarea:focus, input:focus {
   font-size: 32px;
   line-height: 54px; }
 
+.msg-warning {
+  color: #e28a01;
+  font-family: Verdana, sans-serif;
+  font-size: 16px; }
+
+.msg-danger {
+  color: #E64545;
+  font-family: Verdana, sans-serif;
+  font-size: 16px; }
+
 /*Font Face */
 /* Layout */
 footer .ft-top {
@@ -473,12 +483,14 @@ body, html {
                   font-size: 68px;
                   left: -45px;
                   top: -6px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
-              font-size: 18px;
-              line-height: 20px;
-              color: #6da6de;
-              text-align: justify;
-              padding-bottom: 10px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer {
+              display: block; }
+              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
+                font-size: 18px;
+                line-height: 20px;
+                color: #6da6de;
+                text-align: justify;
+                padding-bottom: 10px; }
         .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area {
           display: block;
           margin-top: 120px;
@@ -519,120 +531,6 @@ body, html {
               line-height: 35px; }
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
-
-.main-category {
-  display: block;
-  position: relative; }
-  .main-category .inner-header {
-    background: #fff; }
-    .main-category .inner-header .category-image {
-      display: inline-block; }
-      .main-category .inner-header .category-image img {
-        height: 120px; }
-    .main-category .inner-header .category-name {
-      display: inline-block;
-      position: relative; }
-  .main-category .content-holder {
-    display: block;
-    position: relative;
-    width: 98%; }
-    .main-category .content-holder .course-filter-panel {
-      width: 67%;
-      display: block;
-      position: relative;
-      float: left; }
-      .main-category .content-holder .course-filter-panel .filtering-area {
-        display: block;
-        border-bottom: 5px solid #ededed;
-        padding-bottom: 15px; }
-        .main-category .content-holder .course-filter-panel .filtering-area .top {
-          display: block;
-          width: 100%;
-          height: 20px;
-          background: #37474f;
-          margin-bottom: 8px; }
-        .main-category .content-holder .course-filter-panel .filtering-area .bottom {
-          display: block;
-          width: 100%;
-          background: #e98800; }
-          .main-category .content-holder .course-filter-panel .filtering-area .bottom ul > li {
-            width: 16.66%;
-            text-align: center;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            float: left; }
-            .main-category .content-holder .course-filter-panel .filtering-area .bottom ul > li a {
-              color: #fff;
-              font-size: 18px;
-              font-weight: 500;
-              width: 100%; }
-      .main-category .content-holder .course-filter-panel .filter-result-table {
-        display: block;
-        position: relative; }
-        .main-category .content-holder .course-filter-panel .filter-result-table .course-info {
-          display: block;
-          padding-top: 20px;
-          padding-bottom: 20px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info:nth-child(even) {
-            background: rgba(55, 71, 79, 0.07); }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name {
-            display: inline-block;
-            width: 15.2%;
-            float: left;
-            border-right: 1px solid #e1e1e1; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name {
-              display: block;
-              text-align: center;
-              font-family: "Roboto", sans-serif;
-              font-size: 20px;
-              color: #193949;
-              line-height: 30px;
-              font-weight: 600; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
-              display: block;
-              text-align: center;
-              height: 100px; }
-              .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
-                width: 75px;
-                height: 100%;
-                padding-top: 8px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
-            display: inline-block;
-            position: relative;
-            width: 46.8%;
-            height: 130px;
-            float: left;
-            text-align: center;
-            padding-top: 45px;
-            color: #717171;
-            font-size: 18px;
-            font-family: Oswald;
-            border-right: 1px solid #e1e1e1; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location {
-            display: inline-block;
-            width: 20.6%;
-            height: 130px;
-            float: left;
-            text-align: center;
-            padding-top: 50px;
-            border-right: 1px solid #e1e1e1; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location a {
-              color: #4f7dd9;
-              font-size: 18px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration {
-            display: inline-block;
-            float: right;
-            width: 17.4%;
-            text-align: center;
-            color: #6b6c6f;
-            font-size: 20px;
-            padding-top: 36px; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration span {
-              font-size: 18px;
-              color: #a6a8ab;
-              font-family: "Roboto", sans-serif;
-              line-height: 35px;
-              font-weight: lighter; }
 
 /* Modules */
 .btn-home {
@@ -689,12 +587,14 @@ body, html {
       cursor: pointer; }
       .filter-item .item-header label span {
         color: #3a8af7; }
-  .filter-item .item-container .select-item {
+  .filter-item .item-container {
     display: block; }
-    .filter-item .item-container .select-item label {
-      font-size: 20px;
-      color: #3a3b3c;
-      line-height: 40px; }
+    .filter-item .item-container .select-item {
+      display: block; }
+      .filter-item .item-container .select-item label {
+        font-size: 20px;
+        color: #3a3b3c;
+        line-height: 40px; }
 
 .btn-submit {
   width: 45%;
@@ -707,6 +607,3 @@ body, html {
   color: #fff; }
   .btn-submit:hover {
     background: #3a7be9; }
-
-.slideable {
-  display: none; }

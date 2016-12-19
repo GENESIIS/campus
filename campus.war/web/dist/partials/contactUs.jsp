@@ -86,27 +86,27 @@
                 	<form class="submit-form" method="post"  name="contactUsForm"  onsubmit="return (validateForm())"  action="../../PublicController" >
 		                     
 		                    	<div class="f-name">		                    	
-			                        <label for="input-firstName">First Name <span>*</span></label><br><label id="firstNameError" style="color:#FFFF00;"></label><br>
+			                        <label for="input-firstName">First Name <span>*</span></label><br><label class="msg-warning" id="firstNameError" "></label><br>
 			                        <input type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')" value="${fistName}">
 			                    </div>
 			                    <div class="l-name">
-			                        <label for="input-lastName">Last Name <span>*</span></label><br><label id="lastNameError" style="color:#FFFF00;"></label><br>
+			                        <label for="input-lastName">Last Name <span>*</span></label><br><label class="msg-warning" id="lastNameError" "></label><br>
 			                        <input type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" value="${lastName}" >
 			                    </div>
 			                    <div class="tp">
-			                        <label for="input-phoneNumber">Phone Number<span>*</span></label><br><label id="phoneNumberError" style="color:#FFFF00;"></label><br>
+			                        <label for="input-phoneNumber">Phone Number<span>*</span></label><br><label class="msg-warning" id="phoneNumberError" "></label><br>
 			                        <input type="text" id="contactNumber" name="contactNumber" onclick="clearField('phoneNumberError')" value="${phoneNumber}" placeholder="+94123445678|123456789|0777123456 formats are only accepted">
 			                    </div>
 			                    <div class="email">
-			                        <label for="eMail">Email <span>*</span></label><br><label id="emailError" style="color:#FFFF00;"></label><br>
+			                        <label for="eMail">Email <span>*</span></label><br><label class="msg-warning" id="emailError" "></label><br>
 			                        <input type="text" id="emailAddress" name="emailAddress" onclick="clearField('emailError')" value="${emailNumber}">
 			                    </div>
 			                    <div class="email-subject">
-			                        <label for="input-eMailSubject">Subject <span>*</span></label><br><label id="subjectError" style="color:#FFFF00;"></label><br>
+			                        <label for="input-eMailSubject">Subject <span>*</span></label><br><label class="msg-warning" id="subjectError" "></label><br>
 			                        <input type="text" id="subject" name="subject" onclick="clearField('subjectError')" value="${subjectText}">
 			                    </div>
 			                    <div class="user-message">
-			                        <label for="text-userMessage">Message <span>*</span></label><br><label id="userMessageError" style="color:#FFFF00;"></label><br>
+			                        <label for="text-userMessage">Message <span>*</span></label><br><label class="msg-warning" id="userMessageError" "></label><br>
 			                        <textarea id="message" rows="10" name="message" onclick="clearField('userMessageError')" >${messageText}</textarea>
 			                        <p class="pull-right"><span>*</span> Required fields</p>
 			                    </div>
@@ -115,7 +115,7 @@
 			                    	<div class="g-recaptcha"
 											data-sitekey="6LfDaQoUAAAAAJ9EWto6h6Dsd3TtQC1PcGFhc__c">
 									</div>
-									<br><label id="captureError" style="color:#FFFF00;"></label>
+									<br><label class="msg-danger" id="captureError" "></label>
 								</div>	
 			                   <button class="btn-submit" type="submit" name="CCO" id="CCO" value="FBTSA" onclick="clearField('warningLabel');">Submit Query</button>
 								<!--validateForm() FBTSA: FEED BACK TO SUPER ADMIN -->
