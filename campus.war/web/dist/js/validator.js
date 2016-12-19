@@ -218,7 +218,7 @@ function validateTutorFileds() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-
+/*
 	if (isempty(weblink)) {
 		if (!ValidURL(weblink)) {
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
@@ -261,6 +261,7 @@ function validateTutorFileds() {
 			flag = false;
 		}
 	}
+	*/
 
 	var usernameExist = ValidateUsername(username);
 	if (usernameExist.message == '0') {

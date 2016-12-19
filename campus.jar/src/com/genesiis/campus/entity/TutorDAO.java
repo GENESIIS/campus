@@ -70,8 +70,10 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(21, tutor.getInstagramId());
 			preparedStatement.setString(22, tutor.getViber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
-			preparedStatement.setInt(24, ApplicationStatus.ACTIVE.getStatusValue());
-			preparedStatement.setInt(25, tutor.getIsApproved());
+			tutor.setIsApproved(0);
+			preparedStatement.setInt(24, 0);
+		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
+			preparedStatement.setInt(25, 0);
 			preparedStatement.setString(26, tutor.getAddressLine1());
 			preparedStatement.setString(27, tutor.getAddressLine2());
 			preparedStatement.setString(28, tutor.getAddressLine3());

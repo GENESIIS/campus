@@ -75,6 +75,7 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setAddressLine2(tutorCollection.toArray()[24].toString());
 				tutor.setAddressLine3(tutorCollection.toArray()[25].toString());
 				tutor.setTown(tutorCollection.toArray()[26].toString());
+			//	tutor.setIsApproved(0);
 
 				
 				UserTypeDAO typeOfUser = new UserTypeDAO();
