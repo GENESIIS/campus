@@ -2,7 +2,7 @@
 //created the jsonDataExchanger.js in order to facilitate generalization all the JSON data  exchanging and ajax call.
 //20161218 DN CAMP:18 enhanced the error option with many possible error options.
 //20161218 DN CAMP:18 include the delaying and redirecting function to success:option depend on error code.
-
+//20161219 DN CAMP:18 refactor success: and error: options in the ajax(),  create displayLabelMessage() to better message reuse
 
 
 /**
@@ -27,14 +27,16 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		dataType : dataCategory,
 		success : function(response) {
 			
-			if(response['successCode']==='1'){
+			if(response['successCode']===1){
 				setTimeout( function(){
 					window.location.replace("studentLoginPage.jsp"); //this name may have to change depend on actual location of the page "Student Login"
-					}, 3000);
-				jQuery('#displayLabel').html("<h2>"+response['message']+"</h2>");
+					}, 7000);
+				displayLabelMessage('displayLabel','green',response['message']);
+				$(window).scrollTop(0);
 			} else{
-				jQuery('#displayLabel').css('color','red').html("<h2>"+response['message']+"</h2>"); // if the account didn't createit's an error
-			}
+				$(window).scrollTop(0);
+				displayLabelMessage('displayLabel','red',response['message']);
+				}
 			
 		},
 		error : function(response,error,errorThrown) {
@@ -55,8 +57,19 @@ function jsonDataExchange(jsonObject,httpMethod,transferPageUrl,commandCode,data
 		        } else {
 		            msg = 'Uncaught Error.\n' + response.responseText;
 		        }
-			jQuery('#displayLabel').css('color','red').html("<h2>"+msg+"</h2>");			
-		}
+		        displayLabelMessage('displayLabel','red',msg);
+		        }
 	});	
+}
+
+/**
+ * displayLabelMessage(): displays an user define text in the label
+ * designated.
+ * @author dushantha DN
+ * @param cssColour required color theme for the message to be displayed
+ * @param message the required message to be displayed
+ */
+function displayLabelMessage(labelid,cssColour,message){
+	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 }
 
