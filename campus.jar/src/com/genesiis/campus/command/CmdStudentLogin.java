@@ -36,7 +36,7 @@ public class CmdStudentLogin implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-
+		String messageDAO = new String(message);
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 
@@ -54,11 +54,11 @@ public class CmdStudentLogin implements ICommand {
 			log.info("Student Assigen Email : " + data.getEmail());
 			log.info("Student username : " + data.getUsername());
 			
-			String messageDAO = new String();
+			
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
 			dataCollection = loginDAO.findById(data,messageDAO );
 			
-			message = SystemMessage.LOGGEDSUCCESSFULL.message();
+		//	messageDAO = SystemMessage.LOGGEDSUCCESSFULL.message();
 			if (rememberMe == true) {
 				helper.setAttribute("student", data);
 				CookieHandler.addCookie(helper.getResponse(), "userIdendificationKey",
@@ -68,11 +68,12 @@ public class CmdStudentLogin implements ICommand {
 			 setStudentLoginDetails(data, helper);
 			 int status = StudentLoginDAO.loginDataUpdate(data);
 		} else {
-			message = SystemMessage.LOGINUNSUCCESSFULL.message();
+			messageDAO = SystemMessage.LOGINUNSUCCESSFULL.message();
+			
 		}
-		log.info("wade harriiii :P" + message);
+		log.info("wade harriiii :P" + messageDAO);
 
-		helper.setAttribute("message", message);
+		helper.setAttribute("message", messageDAO);
 		view.setCollection(dataCollection);
 		return view;
 	}
