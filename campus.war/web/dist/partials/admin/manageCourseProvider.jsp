@@ -117,8 +117,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Head office code :</h1>
 								</div>
-								<div class="col-name">
-								</div>
+								<div class="col-name"></div>
 							</li>
 							<!-- end -->
 
@@ -315,8 +314,15 @@
 								<div class="col-name">
 									<!-- 	<input class="input" type="text" name="country" id="country"
 										size="50px;" />  		 -->
+
 									<select>
 										<option>--Default--</option>
+										<c:if test="${not empty requestData }">
+											<c:forEach var="country" items="${requestData }">
+												<option>${country[1] }</option>
+											</c:forEach>
+										</c:if>
+
 									</select>
 								</div>
 							</li>
