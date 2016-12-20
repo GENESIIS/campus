@@ -34,8 +34,21 @@ $(document).ready(function() {
 	        alert(msg);
 		}
 	});
+		
 	
+	$("#filterAZ").click(function(){
+		alert(" radio button click filterA-Z");
+		
+		var res = response.result.sort(function(a,b){
+		    if(a.Name < b.Name) return -1;
+		    if(a.Name > b.Name) return 1;
+		    return 0;
+		});	
+	});
 	
+	$("#filterZA").click(function(){
+		alert(" radio button click filterZ-A");
+	});
 });
 
 function getInitialPageResults(catCode,response) {
