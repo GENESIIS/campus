@@ -26,7 +26,6 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 			Exception {
 
 		Collection<Collection<String>> preRequisteColleWrapper = new ArrayList<Collection<String>>();
-
 		try {
 
 			Operation op = Operation.getOperation(helper.getCommandCode());
@@ -50,7 +49,7 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 
 				break;
 			}
-
+			helper.setAttribute("requestData", preRequisteColleWrapper);
 		} catch (SQLException sqlException) {
 			log.error("execute: SQLException " + sqlException.toString());
 			throw sqlException;
