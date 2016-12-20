@@ -42,10 +42,18 @@ $(document).ready(function() {
 });
 
 function getProviderSearchData(response){
-	var htmlstr="";
+/*	var htmlstr="";
 	$.each(response.result, function(index, value) {
 		if(value!=null && value.length>0){
 			htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
+		}		
+	});		
+	$('#providerName').html(htmlstr);*/
+	
+	var htmlstr="";
+	$.each(response.result, function(index, value) {
+		if(value!=null && value.length>0){
+			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
 		}		
 	});		
 	$('#providerName').html(htmlstr);
@@ -65,6 +73,7 @@ function getProviderSearchData(response){
 } 
 
 function loadResultSet(event){	
+	var districtName = $('#providerlist').val();
 	var cpCode= $('#providerlist').val();
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
