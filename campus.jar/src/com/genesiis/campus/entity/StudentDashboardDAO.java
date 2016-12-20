@@ -19,6 +19,8 @@ package com.genesiis.campus.entity;
 //				of scope when sp_executesql provided the dynamic sql query 
 //20161220 MM c25-student-create-dashboard-MP-mm Resolved issue of SQLException (stating that the SQL statement 
 //				did not return a result set) 
+//20161220 MM c25-student-create-dashboard-MP-mm Modified query to eliminate duplicate records when retrieving 
+//				data from the table variable   
 
 
 import java.sql.Connection;
@@ -69,7 +71,7 @@ public class StudentDashboardDAO implements ICrud {
 			int studentCode = student.getCode();
 
 //			// TODO convert this to a StringBuidler			
-			String queryResolved = "DECLARE @sqlString nvarchar (3000); "
+			String query = "DECLARE @sqlString nvarchar (3000); "
 					+ "SET @sqlString = 'DECLARE @neededNumOfResults int, @numResults int; "
 					+ "SET @neededNumOfResults = 10; "
 					+ "SET NOCOUNT ON; "
@@ -136,14 +138,21 @@ public class StudentDashboardDAO implements ICrud {
 					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
 					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
 					+ "END; "
-					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
-					+ "WHERE CODE = ("
-					+ "SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE"
-					+ ");'; "
+//					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
+//					+ "WHERE CODE IN ("
+//					+ "SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE"
+//					+ ");'; "
+					+ "SELECT DISTINCT CODE, NAME, EMAIL, IMAGE, "
+					+ "CAST(DESCRIPTION AS VARCHAR(4000)) AS DESCRIPTION, "
+					+ "DURATION, ENTRYREQUIREMENTS, COUNSELORNAME, "
+					+ "COUNSELORPHONE, DISPLAYSTARTDATE, EXPIRYDATE, "
+					+ "PROGRAMMESTATUS, COURSEPROVIDER, MAJOR, "
+					+ "CATEGORY, LEVEL, CLASSTYPE "
+					+ "FROM @TempProgrammesBasedOnInterestsAndTown;'; "
 					+ "EXECUTE sp_executesql @sqlString;";
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(queryResolved);
+			ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
