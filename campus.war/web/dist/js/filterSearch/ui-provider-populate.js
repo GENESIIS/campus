@@ -337,6 +337,23 @@ function populateCategoryWiseTypes(response){
 			
 		}
 	});
+	
+	$("#select-level").find('.levelClass').on('click', function(event) {
+		alert("select-level");
+		var isChecked=false;
+		if ($(this).is(":checked")){
+			var levelObj = $("#select-level").find('.levelClass');		
+			for (var i = 0; i < levelObj.length; i++) {
+				if($("#select-level").find('.levelClass')[i].checked == true){
+					isChecked=true;
+				}
+			}
+			
+		}else{
+			$('#levelAll').attr('checked', false);
+		}
+		
+	});
 }
 
 
