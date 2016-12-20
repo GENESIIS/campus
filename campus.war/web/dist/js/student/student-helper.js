@@ -16,6 +16,7 @@
 //20161215 PN CAM-28: implemented addHigherEducationDetails() method and validateHigherEducationForm() done.
 //20161215 PN CAM-28: implemented clearSchoolEducationForm() method.
 //20161216 PN CAM-28: implementing datatables using DB values. -WIP
+//20161216 PN CAM-28: modified table.row.add() method to set code into checkobox.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -81,7 +82,7 @@ function getStudentData(response) {
 		var res = value.toString();
 		var data = res.split(",");
 		table.row.add(
-				[ '', data[1].toString(), data[2].toString(),
+				[ data[0].toString(), data[1].toString(), data[2].toString(),
 						data[3].toString() ]).draw(false);
 	});
 
@@ -162,8 +163,8 @@ function getStudentData(response) {
 	   // FOR DEMONSTRATION ONLY     
 	   
 	   // Output form data to a console     
-	   $('#example-console').text($(form).serialize());
-	   alert($(form).serialize());
+	   $('#example-console').text(rows_selected);
+	   alert(rows_selected);
 	   //console.log("Form submission", $(form).serialize());
 	    
 	   // Remove added elements
