@@ -4,6 +4,7 @@
  */
 
 window.countryCollection = null;
+window.countryCode = null;
 window.townCollection = null;
 
 $(document).ready(function() {
@@ -43,7 +44,7 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
 
-	singleCountryElement += '<select><option>--Default--</option>';
+	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getProviderTownListData()"><option>--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
 			singleCountryElement += '<option value="' +value[0]+'">';
@@ -58,13 +59,17 @@ function displayProviderCountries() {
 
 }
 
+//var selectedCountry = $("#selectedCountry");
+//alert(selectedCountry);
 function getProviderTownListData() {
-
+	var selectedCountry = 94;//document.getElementById('selectedCountry');
+	alert(selectedCountry);
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
 		data : {
-			'CCO' : 'DISPLAY_TOWN_DATA'
+			'CCO' : 'DISPLAY_TOWN_DATA',
+			'town' : selectedCountry
 		},
 		dataType : "json",
 		async : false,
@@ -79,7 +84,7 @@ function getProviderTownListData() {
 }
 
 function displayProviderTownList(){
-var 
+
 }
 
 function getProviderType() {

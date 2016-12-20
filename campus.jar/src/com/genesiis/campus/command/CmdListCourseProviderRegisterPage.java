@@ -60,7 +60,7 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 			throw exception;
 		}
 
-		view.setCollection(preRequisteColleWrapper);
+		view.setCollection(requestData);
 
 		return view;
 	}
