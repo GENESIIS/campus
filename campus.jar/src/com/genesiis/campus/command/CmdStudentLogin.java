@@ -35,56 +35,69 @@ public class CmdStudentLogin implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-		String messageReturn = new String(message);
-		String gsonData = helper.getParameter("jsonData");
-		data = getStudentdetails(gsonData);
+		try {
 
-		String validateResult = LoginValidator.validateLogin(data);
+			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
+			String messageReturn = new String(message);
+			String gsonData = helper.getParameter("jsonData");
+			data = getStudentdetails(gsonData);
 
-		boolean rememberMe = data.isRemember();
-		
-		if (validateResult.equalsIgnoreCase("True")) {
-			data = LoginValidator.dataSeparator(data);
-			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			dataCollection = loginDAO.findById(data );
-			
-			if (rememberMe == true) {
-				helper.setAttribute("student", data);
-				CookieHandler.addCookie(helper.getResponse(), "userIdendificationKey",
-						data.getUserKey(), 2592000);
+			String validateResult = LoginValidator.validateLogin(data);
+
+			boolean rememberMe = data.isRemember();
+
+			if (validateResult.equalsIgnoreCase("True")) {
+				data = LoginValidator.dataSeparator(data);
+				final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				dataCollection = loginDAO.findById(data);
+
+				if (rememberMe == true) {
+					helper.setAttribute("student", data);
+					CookieHandler
+							.addCookie(helper.getResponse(),
+									"userIdendificationKey", data.getUserKey(),
+									2592000);
+
+				}
+				setStudentLoginDetails(data, helper);
+				int status = StudentLoginDAO.loginDataUpdate(data);
+			} else {
+				message = SystemMessage.LOGINUNSUCCESSFULL.message();
 
 			}
-			 setStudentLoginDetails(data, helper);
-			 int status = StudentLoginDAO.loginDataUpdate(data);
-		} else {
-			message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			
-		}
-	
-		
-		for (Collection<String> collection : dataCollection) {
-			Object[] array = collection.toArray();
-			message = (String) array[0];
-			
 
+			for (Collection<String> collection : dataCollection) {
+				Object[] array = collection.toArray();
+				message = (String) array[0];
+
+			}
+
+			helper.setAttribute("message", message);
+			view.setCollection(dataCollection);
+			helper.setRedirectPage("/dist/partials/student/student-dashboard.jsp");
+
+		} catch (SQLException e) {
+			log.error("execute(IDataHelper helper, IView view):  SQLException" + e.toString());
+			throw e;
+		} catch (Exception e) {
+			log.error("execute(IDataHelper helper, IView view):  Exception" + e.toString());
+			throw e;
 		}
-		
-		helper.setAttribute("message", message);
-		view.setCollection(dataCollection);
-		helper.setRedirectPage("/dist/partials/student/student-dashboard.jsp");
 		return view;
 	}
 
 	/**
-	 * Student login  details maintain.
+	 * Student login details maintain.
+	 * 
 	 * @param object
 	 * @param helper
 	 * @return Student object
 	 */
-	
-	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
 
+	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
+ 
+		try {
+			
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -101,6 +114,10 @@ public class CmdStudentLogin implements ICommand {
 		String[] output = browser.split("/");
 		object.setLastLoggedInUserAgent(output[0]);
 		object.setLastLoggedInIpAddress(helper.getRemoteAddress());
+		} catch (Exception e) {
+			log.error("setStudentLoginDetails(Student object, IDataHelper helper):  Exception" + e.toString());
+			throw e;
+		}
 		return object;
 	}
 
