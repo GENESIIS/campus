@@ -102,7 +102,7 @@
 				<!-- Filter result table -->
 				<div class="filter-result-table">
 					<ul class="result-row">
-						<li><form action="/AdminController" method="POST">
+						<li><form action="/dist/partials/admin/manageCourseProvider.jsp" method="POST">
 								<input type="hidden" name="CCO" id="CCO"
 									value="LIST_PROVIDER_REGISTRATION_PAGE" /> <input
 									type="submit" value="Course Porovider" class="btn btn-info" />
@@ -131,7 +131,7 @@
 	<!-- custom javascript -->
 	<script language="JavaScript" type="text/javascript"
 		src="/dist/js/header/ui-populate-helper.js"></script>
-	<script src="/dist/js/admin/ui-populate-helper.js"></script>
+
 
 </body>
 </html>
