@@ -29,22 +29,23 @@ function getAjaxData(response) {
 	}
 	var topRatedCProviders = $("#tRCProviders");
 	$.each(response.tRCProviders,	function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();	
-		var y = data[1].toString();	
+		if(value!=null && value.length>0){
+		var x = value[0].toString();	
+		var y = value[1].toString();	
 		var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";		
-		topRatedCProviders.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+		//topRatedCProviders.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+		  topRatedCProviders.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' " title="' + y +'"/></div> </a></div> </li>');
+		}
+	
 	});
 	
 	var topViewedCProviders = $("#tVCProviders");
 	$.each(response.result,	function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");	
-		var x = data[0].toString();	
-		var y = data[1].toString();	
+		if(value!=null && value.length>0){	
+		var x = value[0].toString();	
+		var y = value[1].toString();	
 		var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
-		topViewedCProviders.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-		
+		topViewedCProviders.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' " title="' + y +'"/></div> </a></div> </li>');
+		}
 	});	
 }
