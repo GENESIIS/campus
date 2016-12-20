@@ -3,8 +3,8 @@
  * 
  */
 
-
 window.countryCollection = null;
+window.townCollection = null;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -32,7 +32,7 @@ function getProviderPageLoadData() {
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				window.countryCollection = response.requestData;
+				window.countryCollection = response.countryArrayList;
 				displayProviderCountries();
 			}
 		},
@@ -45,21 +45,41 @@ function displayProviderCountries() {
 
 	singleCountryElement += '<select><option>--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
-		$
-				.each(
-						countryCollection,
-						function(index, value) {
-							singleCountryElement += '<option>';
-							//singleCountryElement += '<button type="submit" name="CCO" id="CCO" class="btn btn-info navbar-btn" value="LIST_CATEGORY_LANDING_PAGE">'
-							//		+ value[1] + '</button>';
-							singleCountryElement +=  value[1] ;
-							singleCountryElement += '</option>';
+		$.each(countryCollection, function(index, value) {
+			singleCountryElement += '<option value="' +value[0]+'">';
+			singleCountryElement += value[1];
+			singleCountryElement += '</option>';
 
-						});
+		});
 	}
 	singleCountryElement += '</select>';
 	var countryNames = $("#country-List");
 	countryNames.html(singleCountryElement);
+
+}
+
+function getProviderTownListData() {
+
+	$.ajax({
+		url : '/AdminController',
+		method : 'POST',
+		data : {
+			'CCO' : 'DISPLAY_TOWN_DATA'
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+
+			if (response !== undefined && response !== null) {
+				window.townCollection = response.requestData;
+				displayProviderCountries();
+			}
+		},
+	});
+}
+
+function displayProviderTownList(){
+var 
 }
 
 function getProviderType() {

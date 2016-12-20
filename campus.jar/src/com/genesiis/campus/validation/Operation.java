@@ -26,7 +26,7 @@ public enum Operation {
 	ADD_ONE_OFF_COURSE_PROVIDER("ADD_ONE_OFF_COURSE_PROVIDER", ResponseType.JSON, "" ),
 	COURSE_PROVIDER_VALIDATION("COURSE_PROVIDER_VALIDATION", ResponseType.JSON, "" ),
 	LIST_PROVIDER_REGISTRATION_PAGE("LIST_PROVIDER_REGISTRATION_PAGE" , ResponseType.JSON, ""),
-	DISPLAY_TOWN_DATA("DISPLAY_TOWN_DATA", ResponseType.JSON, "/dist/partials/admin/manageCourseProvider.jsp");		
+	DISPLAY_TOWN_DATA("DISPLAY_TOWN_DATA", ResponseType.JSON, "");		
 	
 	private final String commandString;
 	private final ResponseType responseType;
