@@ -14,6 +14,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -29,6 +30,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
 * Servlet implementation class CampusController
@@ -73,6 +75,12 @@ public class CampusController extends HttpServlet {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
 			
+			HttpSession session = request.getSession(false);
+			
+			if(session != null){
+				String name = (String) session.getAttribute("name");
+				session.setMaxInactiveInterval(60 * 60);
+ 
 			if (ResponseType.JSP.equals(responseType)) {  
 	
 				request.setAttribute("result", result);
@@ -100,7 +108,10 @@ public class CampusController extends HttpServlet {
 				response.getWriter().write(gson.toJson(objectMap));
 				response.setContentType("application/json");
 			}
-
+			}else{
+				request.setAttribute("result", SystemMessage.SESSIONEXPIRED.message());
+				request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
+			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
