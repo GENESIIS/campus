@@ -44,36 +44,36 @@ public class CmdStudentLogin implements ICommand {
 		String validateResult = LoginValidator.validateLogin(data);
 
 		boolean rememberMe = data.isRemember();
-		
+
 		if (validateResult.equalsIgnoreCase("True")) {
 			data = LoginValidator.dataSeparator(data);
 			final StudentLoginDAO loginDAO = new StudentLoginDAO();
-			dataCollection = loginDAO.findById(data );
-			
+			dataCollection = loginDAO.findById(data);
+
 			if (rememberMe == true) {
 				helper.setAttribute("student", data);
-				CookieHandler.addCookie(helper.getResponse(), "userIdendificationKey",
-						data.getUserKey(), 2592000);
+				CookieHandler.addCookie(helper.getResponse(),
+						"userIdendificationKey", data.getUserKey(), 2592000);
 
 			}
-			 HttpSession session = helper.getSession(true);	    
-	          session.setAttribute("currentSessionUser",data.getUsername()); 
-			
-			 setStudentLoginDetails(data, helper);
-			 int status = StudentLoginDAO.loginDataUpdate(data);
+			HttpSession session = helper.getSession(true);
+			session.setAttribute("currentSessionUser", data.getUsername());
+			session.setAttribute("user", data.getFirstName());
+			session.setAttribute("userCode", data.getCode());
+
+			setStudentLoginDetails(data, helper);
+			int status = StudentLoginDAO.loginDataUpdate(data);
 		} else {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			
+
 		}
-	
-		
+
 		for (Collection<String> collection : dataCollection) {
 			Object[] array = collection.toArray();
 			message = (String) array[0];
-			
 
 		}
-		
+
 		helper.setAttribute("message", message);
 		view.setCollection(dataCollection);
 		helper.setRedirectPage("/dist/partials/student/student-dashboard.jsp");
@@ -81,12 +81,13 @@ public class CmdStudentLogin implements ICommand {
 	}
 
 	/**
-	 * Student login  details maintain.
+	 * Student login details maintain.
+	 * 
 	 * @param object
 	 * @param helper
 	 * @return Student object
 	 */
-	
+
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
