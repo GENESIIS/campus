@@ -106,9 +106,8 @@
 					<div class="filter-result-table">
 						<ul class="result-row">
 
-
 							<!-- select the course provider type -->
-							<li class="course-info clearfix">
+							<!-- 					<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
@@ -126,13 +125,18 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
+							<!-- 	<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
 									<input type="submit" value="Sub Company"
 										class="btn btn-lg btn-info" />
 								</div>
 							</li>
 							<!-- end -->
+							<li><form action="/AdminController" method="POST">
+									<input class="input" type="hidden" name="CCO" id="CCO"
+										size="20px;" value="LIST_PROVIDER_REGISTRATION_PAGE" /> <input
+										type="submit" value="Course Porovider" class="btn btn-info" />
+								</form></li>
 						</ul>
 					</div>
 				</div>
