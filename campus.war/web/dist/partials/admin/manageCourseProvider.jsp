@@ -321,7 +321,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Town :</h1>
 								</div>
-								<div class="col-name">
+								<div class="col-name" id="town-List">
 									<!-- 	<input class="input" type="text" name="town" id="town"
 										size="50px;" />			-->
 									<select>
