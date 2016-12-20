@@ -24,32 +24,34 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-
-		Collection<Collection<String>> preRequisteColleWrapper = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> requestData = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
 		try {
 
 			Operation op = Operation.getOperation(helper.getCommandCode());
 			switch (op) {
 			case LIST_PROVIDER_REGISTRATION_PAGE:
 				ICrud country2Dao = new Country2DAO();
-				preRequisteColleWrapper = country2Dao.getAll();
+				countryCollection = country2Dao.getAll();
+				helper.setAttribute("countryArrayList", countryCollection);
 				break;
 
 			case DISPLAY_TOWN_DATA:
 
 				ICrud townDao = new TownDAO();
-				preRequisteColleWrapper = townDao.findById(Integer
+				townCollection = townDao.findById(Integer
 						.parseInt(helper.getParameter("country")));
-
+				helper.setAttribute("townArrayList", townCollection);
 				break;
 			default:
 				Collection<String> signUpdata = new ArrayList<String>();
 				signUpdata.add(null);
-				preRequisteColleWrapper.add(signUpdata);
+				countryCollection.add(signUpdata);
 
 				break;
 			}
-			helper.setAttribute("requestData", preRequisteColleWrapper);
+			helper.setAttribute("requestData", requestData);
 		} catch (SQLException sqlException) {
 			log.error("execute: SQLException " + sqlException.toString());
 			throw sqlException;
