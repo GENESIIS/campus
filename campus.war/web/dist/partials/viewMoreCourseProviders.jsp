@@ -176,10 +176,16 @@
 					</div>
 				</div>
 				<!-- End Panel Header -->
+				<div>
+				<div>
+				Filter by: <input type="radio" id="filterAZ" name="az" value="az" > A-Z<br><input type="radio" id="filterZA" name="za" value="za"> Z-A<br>
+				</div>
+				</div>
 				<hr>
 
 				<!-- Search Result List view -->
 				<div class="search-result-view clearfix">
+				
 					<div class="result-box center-block clearfix">
 						<ul id="providerList" class="list-inline clearfix">
 
