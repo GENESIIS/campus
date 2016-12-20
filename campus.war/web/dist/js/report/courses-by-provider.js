@@ -118,6 +118,7 @@ function populateResultTable(response){
 	 var cCode='Course Code';
 	var cName='Course Name';
 	var cDes='Description';
+	var cStatus='Status';
 	var cStartDate='Display Start Date';
 	var cExDate='Expiry Date';
 	var headertr = '<tr>' ;
@@ -125,6 +126,7 @@ function populateResultTable(response){
 	headertr += '<td>' + cCode  + '</td>';
 	headertr += '<td>' + cName  + '</td>'; 
 	headertr += '<td>' + cDes  + '</td>'; 
+	headertr += '<td>' + cStatus  + '</td>'; 
 	headertr += '<td>' + cStartDate  + '</td>'; 
 	headertr += '<td>' + cExDate  + '</td>'; 
 	coursesListTable.append(headertr);
@@ -134,7 +136,8 @@ function populateResultTable(response){
 		var code = value[0].toString();
 		var name = value[1].toString();
 		var des = value[2].toString();
-		var sDate = value[3].toString();
+		var cStatus = value[3].toString();
+		var sDate = value[4].toString();
 		var eDate = value[4].toString();
 		
 		var tr = '<tr>' ;
@@ -142,6 +145,7 @@ function populateResultTable(response){
 		tr += '<td>' + code  + '</td>';
 		tr += '<td>' + name  + '</td>';
 		tr += '<td>' + des  + '</td>';
+		tr += '<td>' + cStatus  + '</td>';
 		tr += '<td>' + sDate  + '</td>';
 		tr += '<td>' + eDate  + '</td>';
 		coursesListTable.append(tr);
