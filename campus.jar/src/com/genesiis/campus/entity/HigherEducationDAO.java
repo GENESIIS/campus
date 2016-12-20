@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161215 PN CAM-28: INIT HigherEducationDAO.java class and implemented add() method.
 //20161216 PN CAM-28 : add-student-details: implemented findById() method
+//20161220 PN CAM-28: implemented delete(Object object, Connection conn) method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,6 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdAddHigherEducationData;
 import com.genesiis.campus.entity.model.HigherEducation;
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -156,8 +156,32 @@ public class HigherEducationDAO implements ICrud{
 
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		HigherEducation data = (HigherEducation) object;		
+		int studentCode = data.getCode();
+		Connection connection = conn;
+		PreparedStatement preparedStatement = null;
+		int result = -1;
+
+		String deleteSQL = "DELETE FROM [CAMPUS].[HIGHERDUCATION] WHERE [CODE] = ?;";
+
+		try {
+			preparedStatement = connection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, studentCode);
+
+			// execute delete SQL stetement
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			log.error("delete(): SQLE: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.error("delete(): E: " + ex.toString());
+			throw ex;
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+		}
+		return result;
 	}
 
 }
