@@ -80,9 +80,8 @@
 					<div id="cpTypeDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-							<label>Provider Type<span id="cpTypeCount"
-								name="cpTypeCount"></span></label> <a href="javascript:"><input
-								id="cpTypeAll" type="checkbox"></a>
+						<a href="javascript:"><input id="cpTypeAll" type="checkbox"></a>
+							<label>Provider Type<span id="cpTypeCount"	name="cpTypeCount"></span></label> 
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
@@ -95,8 +94,8 @@
 					<div id="majorDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-							<label class="flip">Major <span id="majorCount" name="majorCount"></span></label>
-							<a href="javascript:"><input id="majorAll" type="checkbox"></a>
+						<a href="javascript:"><input id="majorAll" type="checkbox"></a>
+							<label class="flip">Major <span id="majorCount" name="majorCount"></span></label>							
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
@@ -109,8 +108,9 @@
 					<div id="levelDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
+						  <a href="javascript:"><input id="levelAll" type="checkbox"></a>
 							<label class="flip">Levels <span id="levelCount" name="levelCount"></span></label> 
-								<a href="javascript:"><input id="levelAll" type="checkbox"></a>
+								
 						</div>
 						<!-- Item Drop list -->
 						<div id="dropItem1" class="item-container slideable">
