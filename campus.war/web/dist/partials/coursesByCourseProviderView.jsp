@@ -19,17 +19,6 @@
 
 <!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="/dist/js/main.js"></script>
-<script src="/dist/js/report/courses-by-provider.js"></script>
-
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
-
 </head>
 <body>
 	<!-- Header-->
@@ -57,10 +46,16 @@
 				<div class="container">					
 						<fieldset>
 							<legend align="left">Search criteria </legend>
-							<div class="courseProvider ">
+							<!-- <div class="courseProvider ">
 								Course Provider :<input type="text" name="providerlist"
 									id="providerlist" list="providerName"
 									placeholder="-- Select District --" />
+								<datalist id="providerName">
+								</datalist>
+							</div> -->
+							<div class="drop-holder">
+								<input type="text" name="providerlist" id="providerlist"
+									list="providerName" placeholder="-- Select District --" />
 								<datalist id="providerName">
 								</datalist>
 							</div>
@@ -99,6 +94,19 @@
 			</br></br>		
 		</div>	
 	<!-- End Container - Top Providers list -->
+	
+		
+<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"
+		charset="utf-8"></script>
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"
+		charset="utf-8"></script>
+	<script src="/dist/js/main.js"></script>
+
+    <script src="/dist/js/report/courses-by-provider.js"></script>
+
+	<!-- W3-Include -->
+	<script src="../bower-components/w3/w3data.js"></script>
 
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />
