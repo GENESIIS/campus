@@ -17,6 +17,8 @@ package com.genesiis.campus.entity;
 //				generated query
 //20161216 MM c25-student-create-dashboard-MP-mm Resolved the TransactSQL issue of table variable being out 
 //				of scope when sp_executesql provided the dynamic sql query 
+//20161220 MM c25-student-create-dashboard-MP-mm Resolved issue of SQLException (stating that the SQL statement 
+//				did not return a result set) 
 
 
 import java.sql.Connection;
@@ -66,89 +68,11 @@ public class StudentDashboardDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-//			// TODO convert this to a StringBuidler
-//			String query = "DECLARE @neededNumOfResults int, @numResults int; "
-//					+ "SET @neededNumOfResults = 10;"
-//					+ "SELECT @numResults = COUNT(*) "
-//					+ "FROM [CAMPUS].[STUDENT];"
-//					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-//					+ "IF(@numResults < 1) "
-//					+ "BEGIN "
-//					+ "PRINT 'NO RESULTS' "
-//					+ "END "
-//					+ "ELSE "
-//					+ "BEGIN "
-//					+ "SELECT * FROM [CAMPUS].[STUDENT]"
-//					+ "END "
-//					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
-			
-			String query = "DECLARE @neededNumOfResults int, @numResults int;"
-					+ "SET @neededNumOfResults = 10;"
-					+ "DECLARE @TempProgrammesBasedOnInterestsAndTown TABLE ("
-					+ "[CODE] [int],"
-					+ "[NAME] [varchar](100),"
-					+ "[EMAIL] [varchar](255),"
-					+ "[IMAGE] [varchar](100),"
-					+ "[DESCRIPTION] [text],"
-					+ "[DURATION] [float],"
-					+ "[ENTRYREQUIREMENTS] [varchar](2000),"
-					+ "[COUNSELORNAME] [varchar](35),"
-					+ "[COUNSELORPHONE] [varchar](15),"
-					+ "[DISPLAYSTARTDATE] [date],"
-					+ "[EXPIRYDATE] [date],"
-					+ "[PROGRAMMESTATUS] [tinyint],"
-					+ "[COURSEPROVIDER] [int],"
-					+ "[MAJOR] [int],"
-					+ "[CATEGORY] [int],"
-					+ "[LEVEL] [int],"
-					+ "[CLASSTYPE] [int],"
-					+ "[CRTON] [date],"
-					+ "[CRTBY] [varchar](20),"
-					+ "[MODON] [date],"
-					+ "[MODBY] [varchar](20)"
-					+ "); "
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-					+ "SELECT TOP (@neededNumOfResults) p.* "
-					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
-					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "IF (@neededNumOfResults > 0) "
-					+ "BEGIN "
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-					+ "SELECT TOP (@neededNumOfResults) p.* "
-					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
-					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
-					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN); "
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "END "
-					+ "IF (@neededNumOfResults > 0) "
-					+ "BEGIN "
-					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-					+ "SELECT TOP (@neededNumOfResults) p.* "
-					+ "FROM [CAMPUS].[PROGRAMME] p "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
-					+ "SELECT DISTINCT @numResults = COUNT(*) FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
-					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "END "
-					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown WHERE CODE = (SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE);";
-			
-			String queryResolved = "DECLARE @sqlString nvarchar (2550); "
+//			// TODO convert this to a StringBuidler			
+			String queryResolved = "DECLARE @sqlString nvarchar (3000); "
 					+ "SET @sqlString = 'DECLARE @neededNumOfResults int, @numResults int; "
 					+ "SET @neededNumOfResults = 10; "
+					+ "SET NOCOUNT ON; "
 					+ "DECLARE @TempProgrammesBasedOnInterestsAndTown TABLE ("
 					+ "[CODE] [int],"
 					+ "[NAME] [varchar](100),"
@@ -205,87 +129,21 @@ public class StudentDashboardDAO implements ICrud {
 					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
 					+ "SELECT TOP (@neededNumOfResults) p.* "
 					+ "FROM [CAMPUS].[PROGRAMME] p "
-					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt "
-					+ "ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
 					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
 					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
 					+ "SELECT DISTINCT @numResults = COUNT(*) "
 					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
 					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "END SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
+					+ "END; "
+					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
 					+ "WHERE CODE = ("
 					+ "SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE"
-					+ ");'"
+					+ ");'; "
 					+ "EXECUTE sp_executesql @sqlString;";
-			
-			String query2 = "DECLARE @TempProgrammes TABLE ("
-					+ "[CODE] [int],"
-					+ "[NAME] [varchar](100),"
-					+ "[EMAIL] [varchar](255),"
-					+ "[IMAGE] [varchar](100),"
-					+ "[DESCRIPTION] [text],"
-					+ "[DURATION] [float],"
-					+ "[ENTRYREQUIREMENTS] [varchar](2000),"
-					+ "[COUNSELORNAME] [varchar](35),"
-					+ "[COUNSELORPHONE] [varchar](15),"
-					+ "[DISPLAYSTARTDATE] [date],"
-					+ "[EXPIRYDATE] [date],"
-					+ "[PROGRAMMESTATUS] [tinyint],"
-					+ "[COURSEPROVIDER] [int],"
-					+ "[MAJOR] [int],"
-					+ "[CATEGORY] [int],"
-					+ "[LEVEL] [int],"
-					+ "[CLASSTYPE] [int],"
-					+ "[CRTON] [date],"
-					+ "[CRTBY] [varchar](20),"
-					+ "[MODON] [date],"
-					+ "[MODBY] [varchar](20)"
-					+ "); "
-					+ "INSERT INTO @TempProgrammes "
-					+ "SELECT TOP (1) * FROM [CAMPUS].[PROGRAMME]; "
-					+ "DECLARE @selectCommand varchar (1000) "
-					+ "SET @selectCommand = 'SELECT * FROM @TempProgrammes'; "
-					+ "EXEC(@selectCommand)";
-//					+ "PRINT 'neededNumOfResults : ' + CONVERT(@neededNumOfResults) + ', numResults:' + CONVERT(@numResults)";
-			
-//			String query = "DECLARE @numResults int; "
-//					+ "SET @numResults = SELECT COUNT(*) "
-//					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-//					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = ?) "
-//					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = i.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (pt.CODE = p.PROGRAMMETOWN) "
-//					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-//					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = ?)";
-			
-//			String oldQuery = "SELECT s.*, "
-//					+ "pe.CODE AS EXPERIENCECODE, pe.DESIGNATION, pe.ORGANIZATION, "
-//					+ "pe.COMMENCEDON AS EXPERIENCECOMMENCEDON, pe.COMPLETIONON AS EXPERIENCECOMPLETIONON, "
-//					+ "se.CODE AS SCHOOLEDUCATIONCODE, se.SCHOOL, se.ACHIVEDON AS ACHIEVEDON, "
-//					+ "se.SCHOOLGRADE, sg.TITLE, sg.LEVEL AS SCHOOLGRADELEVEL, " 
-//					+ "l.NAME AS LEVELNAME, "
-//					+ "he.CODE AS HIGHEREDUCATIONCODE, he.INSTITUTE AS HIGHEREDUCATIONINSTITUTE, he.AFFINSTITUTE, "
-//					+ "he.LEVEL AS HIGHEREDUCATIONLEVELCODE, he.AWARD AS HIGHEREDUCATIONAWARDCODE, "
-//					+ "he.MAJOR AS HIGHEREDUCATIONMAJORCODE, he.COMMENCEDON AS HIGHEREDUCATIONCOMMENCEDON, "
-//					+ "he.COMPLETIONON AS HIGHEREDUCATIONCOMPLETIONON, "
-//					+ "a.SHORTTITLE, a.LONGTITLE, "
-//					+ "ss.CODE AS STUDENTSKILLCODE, ss.RATING, ss.SKILL AS SKILLCODE, sk.NAME AS SKILLNAME "
-//					+ "FROM [CAMPUS].[STUDENT] s "
-//					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND s.CODE = ?) "
-//					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT) "
-//					+ "JOIN [CAMPUS].[SCHOOLGRADE] sg ON (sg.CODE = se.SCHOOLGRADE) "
-//					+ "JOIN [CAMPUS].[LEVEL] l ON (l.CODE = sg.LEVEL) "
-//					+ "JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT) "
-//					+ "JOIN [CAMPUS].[AWARD] a ON (a.CODE = he.AWARD) "
-//					+ "JOIN [CAMPUS].[STUDENTSKILL] ss ON (s.CODE = ss.STUDENT) "
-//					+ "JOIN [CAMPUS].[SKILL] sk ON (sk.CODE = ss.SKILL)";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(queryResolved);
-//			ps = conn.prepareStatement(query2);
-//			ps = conn.prepareStatement(query);
-//			ps.setInt(1, studentCode);
-//			ps.setInt(2, studentCode);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
