@@ -15,6 +15,8 @@ package com.genesiis.campus.entity;
 //				town of the student.
 //20161214 MM c25-student-create-dashboard-MP-mm Modified query composing code to fix errors in the 
 //				generated query
+//20161216 MM c25-student-create-dashboard-MP-mm Resolved the TransactSQL issue of table variable being out 
+//				of scope when sp_executesql provided the dynamic sql query 
 
 
 import java.sql.Connection;
@@ -144,6 +146,78 @@ public class StudentDashboardDAO implements ICrud {
 					+ "END "
 					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown WHERE CODE = (SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE);";
 			
+			String queryResolved = "DECLARE @sqlString nvarchar (2550); "
+					+ "SET @sqlString = 'DECLARE @neededNumOfResults int, @numResults int; "
+					+ "SET @neededNumOfResults = 10; "
+					+ "DECLARE @TempProgrammesBasedOnInterestsAndTown TABLE ("
+					+ "[CODE] [int],"
+					+ "[NAME] [varchar](100),"
+					+ "[EMAIL] [varchar](255),"
+					+ "[IMAGE] [varchar](100),"
+					+ "[DESCRIPTION] [text],"
+					+ "[DURATION] [float],"
+					+ "[ENTRYREQUIREMENTS] [varchar](2000),"
+					+ "[COUNSELORNAME] [varchar](35),"
+					+ "[COUNSELORPHONE] [varchar](15),"
+					+ "[DISPLAYSTARTDATE] [date],"
+					+ "[EXPIRYDATE] [date],"
+					+ "[PROGRAMMESTATUS] [tinyint],"
+					+ "[COURSEPROVIDER] [int],"
+					+ "[MAJOR] [int],"
+					+ "[CATEGORY] [int],"
+					+ "[LEVEL] [int],"
+					+ "[CLASSTYPE] [int],"
+					+ "[CRTON] [date],"
+					+ "[CRTBY] [varchar](20),"
+					+ "[MODON] [date],"
+					+ "[MODBY] [varchar](20)); "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) "
+					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "IF (@neededNumOfResults > 0) "
+					+ "BEGIN "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
+					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
+					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
+					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) "
+					+ "FROM @TempProgrammesBasedOnInterestsAndTown "
+					+ "GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "END "
+					+ "IF (@neededNumOfResults > 0) "
+					+ "BEGIN "
+					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
+					+ "SELECT TOP (@neededNumOfResults) p.* "
+					+ "FROM [CAMPUS].[PROGRAMME] p "
+					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt "
+					+ "ON (p.CODE = pt.PROGRAMME) "
+					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
+					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
+					+ "SELECT DISTINCT @numResults = COUNT(*) "
+					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
+					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
+					+ "END SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
+					+ "WHERE CODE = ("
+					+ "SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE"
+					+ ");'"
+					+ "EXECUTE sp_executesql @sqlString;";
+			
 			String query2 = "DECLARE @TempProgrammes TABLE ("
 					+ "[CODE] [int],"
 					+ "[NAME] [varchar](100),"
@@ -207,7 +281,8 @@ public class StudentDashboardDAO implements ICrud {
 //					+ "JOIN [CAMPUS].[SKILL] sk ON (sk.CODE = ss.SKILL)";
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query2);
+			ps = conn.prepareStatement(queryResolved);
+//			ps = conn.prepareStatement(query2);
 //			ps = conn.prepareStatement(query);
 //			ps.setInt(1, studentCode);
 //			ps.setInt(2, studentCode);
