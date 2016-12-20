@@ -113,14 +113,6 @@
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Head office code :</h1>
-								</div>
-								<div class="col-name"></div>
-							</li>
-							<!-- end -->
-
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
 								<div class="col-name">
@@ -311,19 +303,16 @@
 								<div class="col-name">
 									<h1 class="pro-name">Country :</h1>
 								</div>
-								<div class="col-name">
-									<!-- 	<input class="input" type="text" name="country" id="country"
-										size="50px;" />  		 -->
-
-									<select>
+								<div class="col-name" id="country-List">
+								<!-- 	<select  >
 										<option>--Default--</option>
 										<c:if test="${not empty requestData }">
 											<c:forEach var="country" items="${requestData }">
-												<option>${country[1] }</option>
+												<option value="${country[0] }">${country[1] }</option>
 											</c:forEach>
 										</c:if>
 
-									</select>
+									</select> -->
 								</div>
 							</li>
 							<!-- end -->
@@ -649,7 +638,7 @@
 	<!-- custom javascript -->
 	<script language="JavaScript" type="text/javascript"
 		src="/dist/js/header/ui-populate-helper.js"></script>
-	<script src="/dist/js/admin/ui-populate-helper.js"></script>
+	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
 
 </body>
 </html>
