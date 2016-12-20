@@ -8,7 +8,7 @@
 </head>
 <body>
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
-	<form action="/dist/partials/addTutorDetails.jsp" method="post"
+	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
 		<table align="center">
 			<!-- <tr>
@@ -177,7 +177,7 @@
 
 			<tr>
 				<td>
-					<button type="submit" name="CCO" id="CCO" value="TEST"
+					<button type="submit" name="CCO" id="CCO" value="VIEW_TUTOR_DETAILS"
 						class="btn btn-info navbar-btn">View Tutor</button>
 				</td>
 			</tr>

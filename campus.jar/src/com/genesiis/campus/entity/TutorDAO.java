@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
+//20161220 CW c36-add-tutor-information Modified findById()method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -116,58 +117,91 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 
-
+	
 	/**
-	 * Returns the username in Database
+	 * Returns the Tutor Details
 	 * 
-	 * @author Chathuri, Chinthaka
+	 * @author Chinthaka
 	 * 
-	 * @return Returns the username from a collection of collection
+	 * @param Object code - A Tutor Object with tutor code
+	 * 
+	 * @return Returns the Tutor Details in Database for a given Tutor Code from a collection of collection
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		
 		try {
 			Tutor tutor = (Tutor) code; 
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+			String query = "SELECT * FROM [CAMPUS].[TUTOR] WHERE CODE=?";
 
 			stmt = conn.prepareStatement(query);
-			stmt.setString(1, tutor.getUsername());
-			final ResultSet rs = stmt.executeQuery();
+			stmt.setInt(1, tutor.getCode());
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("USERNAME"));
+				final ArrayList<String> singleTutorList = new ArrayList<String>();		
+				
+				singleTutorList.add(rs.getString("CODE"));
+				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("GENDER"));
+				singleTutorList.add(rs.getString("EMAIL"));
+				singleTutorList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("DESCRIPTION"));
+				singleTutorList.add(rs.getString("EXPERIENCE"));
+				singleTutorList.add(rs.getString("WEBLINK"));
+				singleTutorList.add(rs.getString("FACEBOOKURL"));
+				singleTutorList.add(rs.getString("TWITTERURL"));
+				singleTutorList.add(rs.getString("MYSPACEURL"));
+				singleTutorList.add(rs.getString("LINKEDINURL"));
+				singleTutorList.add(rs.getString("INSTAGRAMURL"));
+				singleTutorList.add(rs.getString("VIBERNUMBER"));
+				singleTutorList.add(rs.getString("WHATSAPPNUMBER"));
+				singleTutorList.add(rs.getString("ADDRESS1"));
+				singleTutorList.add(rs.getString("ADDRESS2"));
+				singleTutorList.add(rs.getString("ADDRESS3"));
+				singleTutorList.add(rs.getString("TOWN"));
+				singleTutorList.add(rs.getString("USERTYPE"));
 
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
+				//final Collection<String> singleTownCollection = singleTownList;
+				allTutorList.add(singleTutorList);
 			}
 		} catch (ClassCastException cce) {
-			log.error("add(): ClassCastException " + cce.toString());
+			log.error("findById(): ClassCastException " + cce.toString());
 			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLException " + sqlException.toString());
+			log.info("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): Exception " + e.toString());
+			log.info("findById(): Exception " + e.toString());
 			throw e;
 		} finally {
+			try { if (rs != null) rs.close(); } catch (Exception e) {};
 			if (stmt != null) {
 				stmt.close();
 			}
 			if (conn != null) {
-				conn.close();
+				conn.close();                                  
 			}
 		}
-		return allTownList;
+		return allTutorList;
 
 	}
 
+	
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {

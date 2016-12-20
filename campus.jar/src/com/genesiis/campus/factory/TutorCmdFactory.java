@@ -11,6 +11,7 @@ import com.genesiis.campus.command.CmdLoadCountry;
 import com.genesiis.campus.command.CmdLoadTownDetails;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.command.CmdViewTutorProfile;
 
 public class TutorCmdFactory implements ICmdFactory {
 	static {
@@ -18,6 +19,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_TOWN_DATA, new CmdLoadTownDetails());
 		map.put(Operation.LIST_COUNTRY_DATA, new CmdLoadCountry());
 		map.put(Operation.CHECK_USERNAME, new CmdCheckUsername());
+		map.put(Operation.VIEW_TUTOR_DETAILS, new CmdViewTutorProfile());
 	}
 
 	@Override
@@ -36,6 +38,9 @@ public class TutorCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case CHECK_USERNAME:
+			command = map.get(o);
+			break;
+		case VIEW_TUTOR_DETAILS:
 			command = map.get(o);
 			break;
 		default:
