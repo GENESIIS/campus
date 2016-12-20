@@ -31,7 +31,25 @@
 </head>
 
 <body>
-
+	<%
+		//allow access only if session exists
+		String currentSessionUser = null;
+		if (session.getAttribute("user") == null) {
+			response.sendRedirect("login.jsp");
+		} else
+			currentSessionUser = (String) session.getAttribute("user");
+		String userName = null;
+		String sessionID = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user"))
+					userName = cookie.getValue();
+				if (cookie.getName().equals("JSESSIONID"))
+					sessionID = cookie.getValue();
+			}
+		}
+	%>
 	<!-- Header-->
 	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 		<div class="top">
@@ -111,8 +129,12 @@
 					</div>
 					<!-- End Keyword Search -->
 					<div class="login-link">
-						<a href="javascript:">Login</a>
-
+						<a href="javascript:">Logout</a>
+						<h3>
+							Hi
+							<%=currentSessionUser%>, Login successful. </h3>
+						
+						<br>
 					</div>
 				</div>
 				<!-- End keyword search -->
@@ -270,15 +292,15 @@
 								<div class="widget-content">
 									<ul class="ul-experience">
 										<li>CEO <span class="drop-at">at</span> Mc.Dondon <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											<span class="drop-time">March 2012 - Now</span></li>
 										<li>CEO <span class="drop-at">at</span> Mc.Dondon <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											<span class="drop-time">March 2012 - Now</span></li>
 										<li>Web Developer <span class="drop-at">at</span>
-											Genesiis Softwre <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											Genesiis Softwre <br> <span class="drop-time">March
+												2012 - Now</span></li>
 										<li>Web Designer <span class="drop-at">at</span> Genesiis
-											Softwre <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											Softwre <br> <span class="drop-time">March 2012 -
+												Now</span></li>
 									</ul>
 								</div>
 							</div>
@@ -295,17 +317,17 @@
 								<div class="widget-content">
 									<ul class="ul-education">
 										<li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span>
-											UCLA <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											UCLA <br> <span class="drop-time">March 2012 -
+												Now</span></li>
 										<li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span>
-											UCLA <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											UCLA <br> <span class="drop-time">March 2012 -
+												Now</span></li>
 										<li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span>
-											UCLA <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											UCLA <br> <span class="drop-time">March 2012 -
+												Now</span></li>
 										<li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span>
-											UCLA <br>
-										<span class="drop-time">March 2012 - Now</span></li>
+											UCLA <br> <span class="drop-time">March 2012 -
+												Now</span></li>
 									</ul>
 								</div>
 							</div>
@@ -321,14 +343,14 @@
 
 								<div class="widget-content">
 									<ul class="ul-activity">
-										<li>Change your user profile details <br>
-										<span class="act-time">~ March 2012 - Now</span></li>
-										<li>Added new article <br>
-										<span class="act-time">~ March 2012 - Now</span></li>
-										<li>Change profile picture <br>
-										<span class="act-time">~ March 2012 - Now</span></li>
-										<li>Your setting is updated <br>
-										<span class="act-time">~ March 2012 - Now</span></li>
+										<li>Change your user profile details <br> <span
+											class="act-time">~ March 2012 - Now</span></li>
+										<li>Added new article <br> <span class="act-time">~
+												March 2012 - Now</span></li>
+										<li>Change profile picture <br> <span
+											class="act-time">~ March 2012 - Now</span></li>
+										<li>Your setting is updated <br> <span
+											class="act-time">~ March 2012 - Now</span></li>
 									</ul>
 								</div>
 
