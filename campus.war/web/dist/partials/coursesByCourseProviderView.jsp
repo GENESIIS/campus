@@ -60,6 +60,11 @@
 								</datalist>
 							</div>
 							<div>
+								Status : 
+                                <input type="radio" name="gender" value="active"> Active
+  								<input type="radio" name="inactive" value="other"> Inactive
+							</div>
+							<div>
 								Start Date : <input type="date" id="startdate" name="search">
 							</div>
 							<div>
