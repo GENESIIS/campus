@@ -109,7 +109,7 @@
 				<tr>
 					<td>Country</td>
 					<td><span id="countryError"></span> <select
-						name="countryDetails" id="countryDetails">
+						name="countryDetails" id="countryDetails" value="${landphonecountrycode}">
 							<option></option>
 					</select></td>
 				</tr>
@@ -124,77 +124,77 @@
 					<td>Mobile</td>
 					<td><span id="mobileError"></span> <input type="text"
 						name="mobileCountryCode" id="mobileCountryCode" maxlength="4"
-						onclick="clearField('mobileError')" readonly /></td>
+						onclick="clearField('mobileError')" readonly value="${mobilephonecountrycode}"  /></td>
 
 					<td><span id="mobileError"></span> <input type="text"
 						name="mobileNetworkCode" id="mobileNetworkCode" maxlength="11"
-						onclick="clearField('mobileError')" /></td>
+						onclick="clearField('mobileError')" value="${mobilephonenetworkcode}" /></td>
 
 					<td><span id="mobileError"></span> <input type="text"
 						name="mobileNumber" id="mobileNumber" maxlength="11"
-						onclick="clearField('mobileError')" /></td>
+						onclick="clearField('mobileError')" value="${mobilephonenumber}" /></td>
 				</tr>
 				<tr>
 					<td>Land</td>
 					<td><span id="landError"></span> <input type="text"
 						name="landCountryCode" id="landCountryCode" maxlength="4"
-						onclick="clearField('mobileError')" readonly /></td>
+						onclick="clearField('mobileError')" readonly value="${landphonecountrycode}" /></td>
 
 					<td><span id="landError"></span> <input type="text"
 						name="landAreaCode" id="landAreaCode" maxlength="11"
-						onclick="clearField('mobileError')" /></td>
+						onclick="clearField('mobileError')" value="${landphoneareacode}" /></td>
 
 					<td><input type="text" name="landNumber" id="landNumber"
-						maxlength="11" onclick="clearField('landError')" /></td>
+						maxlength="11" onclick="clearField('landError')" value="${landphonenumber}" /></td>
 				</tr>
 				<tr>
 					<td>Address Line 1 <span id="address1Error"></span></td>
 					<td><input type="text" name="address1" id="address1"
-						maxlength="30" onclick="clearField('address1Error')" /></td>
+						maxlength="30" onclick="clearField('address1Error')" value="${address1}"/></td>
 				</tr>
 				<tr>
 					<td>Address line 2 <span id="address2Error"></span></td>
 					<td><input type="text" name="address2" id="address2"
-						maxlength="30" /></td>
+						maxlength="30" value="${address2}" /></td>
 				</tr>
 				<tr>
 					<td>Address line 3 <span id="address3Error"></span></td>
 					<td><input type="text" name="address3" id="address3"
-						maxlength="30" /></td>
+						maxlength="30" value="${address3}" /></td>
 				</tr>
 
 				<tr>
 					<td>Web link <span id="weblinkError"></span></td>
-					<td><input type="text" name="weblink" id="weblink" /></td>
+					<td><input type="text" name="weblink" id="weblink" value="${weblink}" /></td>
 				</tr>
 				<tr>
 					<td>Facebook <span id="facebookError"></span></td>
-					<td><input type="text" name="facebook" id="facebook" /></td>
+					<td><input type="text" name="facebook" id="facebook" value="${facebookurl}" /></td>
 				</tr>
 				<tr>
 					<td>LinkedIn <span id="linkedInError"></span></td>
-					<td><input type="text" name="linkedin" id="linkedin" /></td>
+					<td><input type="text" name="linkedin" id="linkedin" value="${linkedinurl}" /></td>
 				</tr>
 				<tr>
 					<td>Twitter <span id="twitterError"></span></td>
-					<td><input type="text" name="twitter" id="twitter" /></td>
+					<td><input type="text" name="twitter" id="twitter"  value="${twitterurl}"/></td>
 				</tr>
 				<tr>
 					<td>Instagram <span id="instagramError"></span></td>
-					<td><input type="text" name="instagram" id="instagram" /></td>
+					<td><input type="text" name="instagram" id="instagram" value="${instagramurl}" /></td>
 				</tr>
 				<tr>
 					<td>Myspace <span id="mySpaceError"></span></td>
-					<td><input type="text" name="myspace" id="myspace" /></td>
+					<td><input type="text" name="myspace" id="myspace" value="${myspaceurl}" /></td>
 				</tr>
 				<tr>
 					<td>WhatsApp <span id="whatsappError"></span></td>
 					<td><input type="text" name="whatsapp" id="whatsapp"
-						maxlength="10" /></td>
+						maxlength="10" value="${whatsappnumber}" /></td>
 				</tr>
 				<tr>
 					<td>Viber <span id="viberError"></span></td>
-					<td><input type="text" name="viber" id="viber" maxlength="10" /></td>
+					<td><input type="text" name="viber" id="viber" maxlength="10" value="${vibernumber}" /></td>
 				</tr>
 				<tr>
 					<td><h2>Account Info</h2></td>
@@ -202,17 +202,17 @@
 				<tr>
 					<td>Email <span id="emailError"></span></td>
 					<td><input type="text" name="email" id="email"
-						onclick="clearField('emailError')" /></td>
+						onclick="clearField('emailError')" value="${email}" /></td>
 				</tr>
 				<tr>
 					<td>Username <span id="usernameError"></span></td>
 					<td><input type="text" name="username" id="username"
-						maxlength="50" onclick="clearField('usernameError')" /></td>
+						maxlength="50" onclick="clearField('usernameError')" value="${username}" /></td>
 				</tr>
 				<tr>
 					<td>Password <span id="passwordError"></span></td>
 					<td><input type="password" name="password" id="password"
-						maxlength="20" onclick="clearField('passwordError')" /></td>
+						maxlength="20" onclick="clearField('passwordError')" value="${landphonenumber}" /></td>
 				</tr>
 				<tr>
 					<td>Confirm Password <span id="confirmPasswordError"></span></td>
