@@ -49,9 +49,9 @@ function getInitialPageResults(catCode,response) {
 						var x = data[0].toString();
 						var y = data[1].toString();
 						
-						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";
-						/*providerChoice.append('<li><a href="javascript:"><img height="100" width="100" src="'+ logo + ' " /> </a> </li>');*/
-						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
+						//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "  title="'+ y +'" /></div> </a></div> </li>');
 						
 					});
 
@@ -265,7 +265,7 @@ function populateCategoryWiseTypes(response){
 		}
 	cpTypeCount++;
 	});	
-	
+	$('#cpTypeCount').text(" " +cpTypeCount);
 	
 	var majorCount = 0;
 	var secondChoice = $("#select-major");
@@ -279,6 +279,7 @@ function populateCategoryWiseTypes(response){
 		}
 		majorCount++;
 	});
+	$('#majorCount').text(" " +majorCount);
 	
 	var levelCount = 0;
 	var secondChoice = $("#select-level");
@@ -292,6 +293,8 @@ function populateCategoryWiseTypes(response){
 		}
 		levelCount++;
 	});
+	$("#levelCount").text(" " +levelCount);
+	
 	$('#cpTypeAll').on('click', function(event) {
 		var levelObj = $("#select-cpType").find('.cpTypeClass');
 		if ($(this).is(":checked")) {
