@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import com.genesiis.campus.entity.IView;
@@ -55,6 +56,9 @@ public class CmdStudentLogin implements ICommand {
 						data.getUserKey(), 2592000);
 
 			}
+			 HttpSession session = helper.getSession(true);	    
+	          session.setAttribute("currentSessionUser",data.getUsername()); 
+			
 			 setStudentLoginDetails(data, helper);
 			 int status = StudentLoginDAO.loginDataUpdate(data);
 		} else {
