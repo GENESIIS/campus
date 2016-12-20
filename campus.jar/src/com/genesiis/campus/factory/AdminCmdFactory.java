@@ -27,6 +27,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.ADD_FEATURED_COURSE_PROVIDER, new CmdAddFeaturedProvider());
 		map.put(Operation.COURSE_PROVIDER_VALIDATION, new CmdCourseProviderAccountValidate());
 		map.put(Operation.LIST_PROVIDER_REGISTRATION_PAGE, new CmdListCourseProviderRegisterPage());
+		map.put(Operation.DISPLAY_TOWN_DATA, new CmdListCourseProviderRegisterPage());
 	}
 
 	@Override
@@ -44,6 +45,9 @@ public class AdminCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case LIST_PROVIDER_REGISTRATION_PAGE:
+			command = map.get(o);
+			break;
+		case DISPLAY_TOWN_DATA:
 			command = map.get(o);
 			break;
 		default:
