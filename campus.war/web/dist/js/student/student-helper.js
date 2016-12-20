@@ -84,11 +84,11 @@ function getStudentData(response) {
 		var data = res.split(",");
 		table.row.add(
 				[ data[0].toString(), data[1].toString(), data[2].toString(),
-						data[3].toString() ]).draw(false);
+						data[3].toString(), '<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
 	});
 
 	// Handle click on checkbox
-	$('#example tbody').on('click', 'input[type="checkbox"]', function(e){
+	$('#example').on('click', 'input[type="checkbox"]', function(e){
 	   var $row = $(this).closest('tr');
 
 	   // Get row data
@@ -123,9 +123,9 @@ function getStudentData(response) {
 	});
 
 	// Handle click on table cells with checkboxes
-	$('#example').on('click', 'tbody td, thead th:first-child', function(e){
-	   $(this).parent().find('input[type="checkbox"]').trigger('click');
-	});
+//	$('#example').on('click', 'tbody td, thead th:first-child', function(e){
+//	   $(this).parent().find('input[type="checkbox"]').trigger('click');
+//	});
 
 	// Handle click on "Select all" control
 	$('thead input[name="select_all"]', table.table().container()).on('click', function(e){

@@ -317,7 +317,7 @@
 									<th><b>Category</b></th>
 									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -328,7 +328,7 @@
 									<th><b>Category</b></th>
 									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
+									<th></th>
 								</tr>
 							</tfoot>			
 						</table>
