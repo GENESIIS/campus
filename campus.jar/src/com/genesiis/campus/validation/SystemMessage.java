@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161024 DN c10-contacting-us extracted to campus project
 //20161122 PN c27-upload-user-image: added new attributes to the Enum
 //20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
+//20161220 PN CAM-28: added new attributes to the Enum FAILDTODELETE,FAILDTOUPDATE,NODETAILSTOUPDATE,NODETAILSTODELETE 
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -176,8 +177,11 @@ public enum SystemMessage {
 	 * **/
 	NOT_AVAILABLE("notAvailable"), 
 	FILE_UPLOAD_FAILED("FILE UPLOAD FAILED"), 
-	INVALID_INFORMATION("Invalid Information");
-
+	INVALID_INFORMATION("Invalid Information"),
+	FAILDTODELETE("record/s failed to delete."),
+	FAILDTOUPDATE("record/s failed to save."),
+	NODETAILSTOUPDATE("No records to update."),
+	NODETAILSTODELETE("No records to delete.");
 	
 	private String message;
 
