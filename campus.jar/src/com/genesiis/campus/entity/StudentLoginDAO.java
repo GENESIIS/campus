@@ -9,9 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.apache.log4j.Logger;
-
 import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
@@ -62,7 +60,7 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoginAuthenticatedBy;
 	boolean isActive;
 
-	private static final int MAX_ATTEMPTS = 3;
+
 	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
 
 	@Override
@@ -298,7 +296,7 @@ public class StudentLoginDAO implements ICrud {
 				singleStudent.add(lastLoggedOutDate); // 24
 				singleStudent.add(lastLoggedOutTime); // 24
 				singleStudent.add(lastLoginAuthenticatedBy); // 24
-
+				rs.close();
 				if (encryptPassword.equals(encryptedPasswordDb)) {
 
 					student.setValid(true);
@@ -312,7 +310,12 @@ public class StudentLoginDAO implements ICrud {
 				} else {
 					student.setValid(false);
 					message = SystemMessage.INVALIDPASSWORD.message();
-
+					int MAX_ATTEMPTS;
+//					for (MAX_ATTEMPTS =0; MAX_ATTEMPTS < 3; ){
+//						log.info("max attempts : "+MAX_ATTEMPTS);
+//					}
+//					MAX_ATTEMPTS ++;
+					
 				}
 
 			} else {
