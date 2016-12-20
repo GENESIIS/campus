@@ -16,6 +16,30 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
+<style>
+.tooltip {
+    position: center;
+     display: inline-block;   
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 </head>
 <body>
 	<!-- Header-->
@@ -52,7 +76,6 @@
 					</div>
 				</div>
 				<!-- End list header -->
-
 				<div class="top-rated clearfix">
 					<h1 id="toprate">Top Rated</h1>
 					<div class="providers-grid center-block clearfix">
@@ -60,7 +83,7 @@
 
 						</ul>
 					</div>
-				</div>
+				</div>				
 				<div class="top-rated clearfix">
 					<h1 id="topview">Top Viewed</h1>
 					<div class="providers-grid center-block clearfix">
