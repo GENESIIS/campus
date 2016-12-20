@@ -17,18 +17,19 @@ function studentLogin() {
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
 
-	if (usernametb == false) {
+	// filed validation error messages handling
+	if (!(usernametb)) {
 		document.getElementById('emailtbError').innerHTML = "  ** Email can not be Empty.";
 		flag = false;
 		return false;
 	}
-	if (passtb == false) {
+	if (!(passtb)) {
 		document.getElementById('passtbError').innerHTML = "   ** Password can not be Empty.";
 		return false;
 	}
 
-	if ((username != null) && (password != null)) {
-	//	alert(username + "-----" + password + remember)
+	if ((username) && (password)) {
+
 		var jsonData = {
 			"userKey" : username,
 			"password" : password,
@@ -45,17 +46,13 @@ function studentLogin() {
 					},
 					dataType : "json",
 					success : function(response) {
-						//alert(response['message']);
-						
-						//document.getElementById('messsage').innerHTML = response.result;
-						
-						if(response['message'] === "valid Username and Password."){
-							 window.location.href ='/dist/partials/student/student-dashboard.jsp';
-						}else{
+
+						if (response['message'] === "valid Username and Password.") {
+							window.location.href = '/dist/partials/student/student-dashboard.jsp';
+						} else {
 							document.getElementById('errorMesssage').innerHTML = response['message'];
 						}
-					
-						
+
 					},
 					error : function(e) {
 						alert("Error " + e);
@@ -65,9 +62,4 @@ function studentLogin() {
 				});
 
 	}
-}
-
-
-function lastLoginDateTime( DateTimeString){
-	
 }
