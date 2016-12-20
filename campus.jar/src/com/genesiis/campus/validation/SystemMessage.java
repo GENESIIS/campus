@@ -24,6 +24,7 @@ public enum SystemMessage {
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),
 	ATTEMPS("You have done two attemps. Please try again or reset your password"),
+	SESSIONEXPIRED("Session Expired ! Please login again. "),
 	EMAILERROR("Invalid Email.");
 
 	
