@@ -1,11 +1,15 @@
 package com.genesiis.campus.command;
 
+import java.io.IOException;
+
 //20161121 PN c27-upload-user-image: INIT CmdUploadProfileImg.java class and implemented execute() method.
 //20161122 PN c27-upload-user-image: modified execute() method to create the folder using studentCode to store image.
 //20161124 PN c27-upload-user-image: modified execute() method. - modified exception handling, data setting into the IView
 //									 errorMessage handling over validations, 
 //20161130 PN c27-upload-user-image: modified filePath variable values.
 //		   PN c27-upload-user-image: added more code comments to the execute() method.
+//20161221 PN CAM-27: modified exception handling in execute() method by adding IOException and NullPointerException to the catch block.
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +45,8 @@ public class CmdUploadProfileImg implements ICommand {
 		ICrud sysconfigDAO = new SystemConfigDAO();
 		String fileUploadError = "";
 		String fileUploadSuccess = "";
+		//To store image file path
+		String filePath = "";
 		
 		// This needs to be assign from the session.
 		int StudentCode = 1;
@@ -77,8 +83,7 @@ public class CmdUploadProfileImg implements ICommand {
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(StudentCode) + "/");
 
-			//To store image file path
-			String filePath = "";
+			
 			for (FileItem item : files) {
 				utility.setFileItem(item);
 				JsonObject response = new JsonObject();
@@ -110,6 +115,10 @@ public class CmdUploadProfileImg implements ICommand {
 		}catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
+		}catch (IOException ioe) {
+			log.info("execute() : ioe - more than one users accessing the same image. Student code: "+ StudentCode);
+		}catch (NullPointerException npx) {
+			log.info("execute() : npx: ignore this NPX due to second POST request in student-dashboard.jsp $(fileUpload()) method.");
 		} catch (Exception e) {
 			log.info("execute() : e" + e.toString());
 			throw e;
