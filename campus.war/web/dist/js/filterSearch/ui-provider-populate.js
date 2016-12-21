@@ -1,5 +1,6 @@
 //20161118 DJ c17-provider-criteria-based-filter-search Load the details for the provider filter search
 //20161124 DJ c17-provider-criteria-based-filter-search Identified front end input selections 
+//20161221 DJ c17-provider-criteria-based-filter-search Identified checkbox tick untick on level/major/providertype 
 
 $(document).ready(function() {
 
@@ -35,7 +36,7 @@ $(document).ready(function() {
 		}
 	});
 		
-	
+/*	
 	$("#filterAZ").click(function(){
 		alert(" radio button click filterA-Z");
 		
@@ -48,7 +49,7 @@ $(document).ready(function() {
 	
 	$("#filterZA").click(function(){
 		alert(" radio button click filterZ-A");
-	});
+	});*/
 });
 
 function getInitialPageResults(catCode,response) {
@@ -308,35 +309,70 @@ function populateCategoryWiseTypes(response){
 	});
 	$("#levelCount").text(" " +levelCount);
 	
+	//Course provider type check implementation
 	$('#cpTypeAll').on('click', function(event) {
-		var levelObj = $("#select-cpType").find('.cpTypeClass');
+		var cpTypeObj = $("#select-cpType").find('.cpTypeClass');
 		if ($(this).is(":checked")) {
-			for (var i = 0; i < levelObj.length; i++) {
+			for (var i = 0; i < cpTypeObj.length; i++) {
 				$("#select-cpType").find('.cpTypeClass')[i].checked = true;
 			}
 		}else{
-			for (var i = 0; i < levelObj.length; i++) {
+			for (var i = 0; i < cpTypeObj.length; i++) {
 				$("#select-cpType").find('.cpTypeClass')[i].checked = false;
 			}
 			
 		}
 	});
+	$("#select-cpType").find('.cpTypeClass').on('click', function(event) {
+		if ($(this).is(":checked")){
+			var cpTypeObj = $("#select-cpType").find('.cpTypeClass');
+			var checkedCount=0;
+			for (var i = 0; i < cpTypeObj.length; i++) {
+				if($("#select-cpType").find('.cpTypeClass')[i].checked == true){					
+					checkedCount ++;
+				}
+			}
+			if(checkedCount==cpTypeObj.length){				
+				$('#cpTypeAll').prop('checked',true);
+			}			
+		}else{			
+			$('#cpTypeAll').prop('checked',false);
+		}		
+	});
 	
+//Major check implementation	
 	$('#majorAll').on('click', function(event) {
-		var levelObj = $("#select-major").find('.majorClass');
+		var majorObj = $("#select-major").find('.majorClass');
 		if ($(this).is(":checked")) {
-			for (var i = 0; i < levelObj.length; i++) {
+			for (var i = 0; i < majorObj.length; i++) {
 				$("#select-major").find('.majorClass')[i].checked = true;
 			}
 		}else{
-			for (var i = 0; i < levelObj.length; i++) {
+			for (var i = 0; i < majorObj.length; i++) {
 				$("#select-major").find('.majorClass')[i].checked = false;
 			}
 			
 		}
 	});
 	
-
+	$("#select-major").find('.majorClass').on('click', function(event) {
+		if ($(this).is(":checked")){
+			var majorObj = $("#select-major").find('.majorClass');
+			var checkedCount=0;
+			for (var i = 0; i < majorObj.length; i++) {
+				if($("#select-major").find('.majorClass')[i].checked == true){					
+					checkedCount ++;
+				}
+			}
+			if(checkedCount==majorObj.length){				
+				$('#majorAll').prop('checked',true);
+			}			
+		}else{			
+			$('#majorAll').prop('checked',false);
+		}		
+	});
+	
+//Level check Implementation
 	$('#levelAll').on('click', function(event) {
 		var levelObj = $("#select-level").find('.levelClass');
 		if ($(this).is(":checked")) {
@@ -352,20 +388,20 @@ function populateCategoryWiseTypes(response){
 	});
 	
 	$("#select-level").find('.levelClass').on('click', function(event) {
-		alert("select-level");
-		var isChecked=false;
 		if ($(this).is(":checked")){
-			var levelObj = $("#select-level").find('.levelClass');		
+			var levelObj = $("#select-level").find('.levelClass');
+			var checkedCount=0;
 			for (var i = 0; i < levelObj.length; i++) {
-				if($("#select-level").find('.levelClass')[i].checked == true){
-					isChecked=true;
+				if($("#select-level").find('.levelClass')[i].checked == true){					
+					checkedCount ++;
 				}
 			}
-			
-		}else{
-			$('#levelAll').attr('checked', false);
-		}
-		
+			if(checkedCount==levelObj.length){				
+				$('#levelAll').prop('checked',true);
+			}			
+		}else{			
+			$('#levelAll').prop('checked',false);
+		}		
 	});
 }
 

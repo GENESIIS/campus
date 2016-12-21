@@ -108,7 +108,7 @@
 					<div id="levelDiv" class="filter-item clearfix">
 						<!-- Drop item header -->
 						<div class="item-header flip">
-						  <a href="javascript:"><input id="levelAll" type="checkbox"></a>
+						  <a href="javascript:"><input name="levelAll" id="levelAll" type="checkbox"></a>
 							<label class="flip">Levels <span id="levelCount" name="levelCount"></span></label> 
 								
 						</div>
