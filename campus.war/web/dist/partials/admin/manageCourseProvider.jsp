@@ -323,10 +323,11 @@
 								</div>
 								<div class="col-name" id="town-List">
 									<!-- 	<input class="input" type="text" name="town" id="town"
-										size="50px;" />			-->
+										size="50px;" />			
 									<select>
 										<option>--Default--</option>
-									</select>
+									</select>-->
+									
 								</div>
 							</li>
 							<!-- end -->
