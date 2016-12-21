@@ -14,27 +14,27 @@
     <script src="dist/bower-components/w3/w3data.js"></script>
     <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
+	
+<style>
+body {background-color: powderblue;}
+h1   {color: red ;}
+p    {color: blue;}
+</style>
 
 </head>
 <body>	
 <!-- Header-->
 	<header> <jsp:include page="/dist/partials/layout/header.jsp" /></header>
 
-	<!-- Main Container - Landing -->
-	<%-- <div><jsp:include page="/dist/partials/landing.jsp" /></div> --%>
-	
 	<div>
-	
-	<h1>Report Generation</h1>
-	<h4>* Please Select the report type</h4>
-	<!-- <form action="PublicController" method="post">
-		<button type="submit" name="CCO"
-			value="SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER">Courses By Course
-			Provider</button>
-	</form> -->
-	
-	<a href="dist/partials/coursesByCourseProviderView.jsp">Courses By Course Provider</a>
+		<h1>Report Generation</h1><p>Please Select the report type</p>
 	</div>
+	<hr>
+	<div>		
+		<a href="dist/partials/coursesByCourseProviderView.jsp"><u>Courses By
+			Course Provider </u></a>
+	</div>
+	<hr>
 
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
