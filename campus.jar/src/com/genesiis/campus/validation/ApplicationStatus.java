@@ -1,7 +1,8 @@
 package com.genesiis.campus.validation;
 
 //20161124 JH c7-higher-education-landing-page-MP ApplicationStatus.java created
-//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus()
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -39,13 +40,41 @@ public enum ApplicationStatus {
 	public static int getApplicationStatus(String statusValue){
 		int applicationStatus=0;		
 		if(statusValue.equalsIgnoreCase("ACTIVE")){
-			applicationStatus = ApplicationStatus.ACTIVE.getStatusValue();
+			applicationStatus = ACTIVE.getStatusValue();
 		}
 		if(statusValue.equalsIgnoreCase("INACTIVE")){
-			applicationStatus = ApplicationStatus.INACTIVE.getStatusValue();
+			applicationStatus = INACTIVE.getStatusValue();
 		}
 		if(statusValue.equalsIgnoreCase("PENDING") ){
-			applicationStatus = ApplicationStatus.PENDING.getStatusValue();
+			applicationStatus = PENDING.getStatusValue();
+		}
+		if(statusValue.equalsIgnoreCase("EXPIRED") ){
+			applicationStatus = EXPIRED.getStatusValue();
+		}
+		
+		return applicationStatus;
+	}
+	
+	/**
+	 * Generic method for map the status int value with String.Purpose of status vie in front end.Able to call from whole campus application
+	 * @author DJ
+	 * @param selected int status Value 
+	 * @return applicationStatus
+	 * @throws Exception
+	 */
+	public static String getApplicationStatus(int statusValue){
+		String applicationStatus="";		
+		if(statusValue ==ACTIVE.statusValue){
+			applicationStatus = "Active";
+		}
+		if(statusValue==INACTIVE.statusValue){
+			applicationStatus = "InActive";
+		}
+		if(statusValue==PENDING.statusValue ){
+			applicationStatus = "Pending";
+		}
+		if(statusValue==EXPIRED.statusValue ){
+			applicationStatus = "Expired";
 		}
 		
 		return applicationStatus;
