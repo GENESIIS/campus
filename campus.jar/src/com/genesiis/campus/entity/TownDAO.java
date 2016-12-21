@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161122 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
+//20161221 CW c36-add-tutor-details Modified getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 public class TownDAO implements ICrud{
 	static Logger log = Logger.getLogger(TownDAO.class.getName());
@@ -51,25 +53,25 @@ public class TownDAO implements ICrud{
 	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+		
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
-			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME], [COUNTRY] FROM [CAMPUS].[Town] ORDER BY [NAME]";
 
+			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleTownList = new ArrayList<String>();
 				singleTownList.add(rs.getString("CODE"));
 				singleTownList.add(rs.getString("NAME"));
 				singleTownList.add(rs.getString("COUNTRY"));
-
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
+				allTownList.add(singleTownList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
@@ -78,12 +80,7 @@ public class TownDAO implements ICrud{
 			log.info("getAll(): E " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return allTownList;
 	}
