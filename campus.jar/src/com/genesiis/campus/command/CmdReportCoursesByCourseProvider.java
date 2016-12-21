@@ -1,6 +1,6 @@
 package com.genesiis.campus.command;
 
-//DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
+//DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportCoursesByCourseProvider.java
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Identify the selected applicationStatus
 
 
@@ -25,8 +25,8 @@ import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
-public class CmdReportGeneration  implements ICommand{
-	static Logger log = Logger.getLogger(CmdReportGeneration.class.getName());
+public class CmdReportCoursesByCourseProvider  implements ICommand{
+	static Logger log = Logger.getLogger(CmdReportCoursesByCourseProvider.class.getName());
 	
 	/**
 	 * @author DJ
