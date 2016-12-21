@@ -6,6 +6,8 @@
 <!-- 20161130 PN c27-upload-user-image: added user input handling javascript code to the UI. - WIP. -->
 <!-- 		  PN c27-upload-user-image: added JSTL code block to get existing user profile image details taken from the servlet. -->
 <!-- 20161201 PN c27-upload-user-image: modified file size into 2MB in file input JavaScript. -->
+<!-- 20161221 PN CAM-27: added javascript to page to fire on page loading. -->
+
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -23,9 +25,6 @@
     <link href="/dist/css/button-effect.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
-    <!-- W3-Include -->
-    <!--<script src="../../bower-components/w3/w3data.js"></script> -->
-
     <!-- jQuery & Other js -->
     <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
@@ -36,6 +35,80 @@
 <!-- Krajee JQuery Plugins - Kartik -->
 <link href="/dist/css/imageUpload/fileinput.css" media="all" rel="stylesheet" type="text/css" />
 <script src="/dist/js/imageUpload/fileinput.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+        url: "../../../StudentController?CCO=GUP",
+        type: 'POST',
+        CCO: 'GUP',        
+        success: function(data) {        	
+        	var res = data.proPicName;
+        	var e = new Date();
+        	$('#profImage').attr("");
+       		$('#profImage').attr("src","../../../"+res+"?"+e.getDate());   	
+        	
+       		<!-- the fileinput plugin initialization -->
+        	$("#avatar-1").fileinput({
+        		uploadAsync: false,
+        		uploadUrl : "../../../StudentController?CCO=UUP",
+        	    overwriteInitial: true,
+        	    autoReplace : true,
+        	    maxFileSize: 2048,
+        	    showUploadedThumbs : false,
+        	    showClose: false,
+        	    showCaption: false,
+        	    browseLabel: '',
+        	    removeLabel: '',
+        	    browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+        	    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        	    removeTitle: 'Cancel or reset changes',
+        	    elErrorContainer: '#kv-avatar-errors-1',
+        	    msgErrorClass: 'alert alert-block alert-danger',
+        	    defaultPreviewContent: '<img src=../../../'+res+' alt="ProfilePicture.jpg" style="width:160px">',
+        	    layoutTemplates: {main2: '{preview}{browse}'},
+        	    allowedFileExtensions: ["jpg", "png", "gif"]
+        	}).on('filebatchpreupload', function(event, data, id, index) {
+        		alert(data.response);
+        	    $('#kv-success-1').html('<h4>'+data.proPicName+'</h4><ul></ul>').hide();
+        	}).on('filepreupload', function(event, data, id, index) {
+        	}).on('fileuploaded', function(event, data, id, index) {
+        		var formdata = data.form, files = data.files, 
+        	    extradata = data.extra, responsedata = data.response;
+
+        		var propicDetails = responsedata.result;
+        		
+        		var res = propicDetails.toString();
+        		var data = res.split(",");
+        		var imgname = data[0].toString();
+        		var success = data[1].toString();
+        		var error = data[2].toString();
+        		
+        		if(data[1] != ""){
+        			$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
+        			$('#kv-success-1').fadeIn();
+        	   		$('#profImage').attr("");
+        	   		var d = new Date();
+        	   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+d.getDate());
+        	   		
+        	   		$.ajax({
+        	            url: "../../../StudentController?CCO=UUP",
+        	            type: 'POST',
+        	            CCO: 'UUP',        
+        	            success: function(data) {
+        	            	$('#profImage').attr("");
+        	           		$('#profImage').attr("src","../../../education/"+imgname);   		  
+        	            }
+        	        });		
+        		}
+        		if(data[2] != ""){
+        	    	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
+        		}	
+        	});
+        }
+    });		
+});
+</script>
 
 <!-- some CSS styling changes and overrides -->
 <style>
@@ -136,11 +209,6 @@
     </div>
 </header>
 <!--< End header -->
-
-<!-- C27: Existing user profile image details taken from the servlet. -->
-<c:forEach var="imgDetails" items="${result.collection}" varStatus="loop">
-		<c:set var="proPicPath" value="${imgDetails[0] }" />
-</c:forEach>
 
 <div class="dashboard">
     <div class="stud-dashboard clearfix">
@@ -417,90 +485,7 @@
 
 		</div>
 	</div>
-<!-- Modal -->
-
-
-<!-- the fileinput plugin initialization -->
-<script  type="text/javascript">
-//var profileImage = "../../../education/student/1/1.jpg";
-
-// $(document).ready(function(){
-//     if(profileImage==""){
-//     	$.ajax({
-// 			url: "../StudentController",
-// 			data : {
-// 				CCO : 'GUP'
-// 			},
-// 			dataType : "json",
-// 			success: function(response){
-// 				profileImage=response.proPicName;
-//         	}});
-//     }
-// });
-
-$("#avatar-1").fileinput({
-	uploadUrl : "../../../StudentController?CCO=UUP",
-    overwriteInitial: true,
-    autoReplace : true,
-    maxFileSize: 2048,
-    showUploadedThumbs : false,
-    showClose: false,
-    showCaption: false,
-    browseLabel: '',
-    removeLabel: '',
-    browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
-    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-    removeTitle: 'Cancel or reset changes',
-    elErrorContainer: '#kv-avatar-errors-1',
-    msgErrorClass: 'alert alert-block alert-danger',
-    defaultPreviewContent: '<img src="'+'${proPicPath}'+'" alt="ProfilePicture.jpg" style="width:160px">',
-    layoutTemplates: {main2: '{preview}{browse}'},
-    allowedFileExtensions: ["jpg", "png", "gif"]
-}).on('filebatchpreupload', function(event, data, id, index) {
-	alert(data.response);
-    $('#kv-success-1').html('<h4>'+data.proPicName+'</h4><ul></ul>').hide();
-}).on('fileuploaded', function(event, data, id, index) {
-	var formdata = data.form, files = data.files, 
-    extradata = data.extra, responsedata = data.response;
-
-	var propicDetails = responsedata.result;
-	
-	var res = propicDetails.toString();
-	var data = res.split(",");
-	var imgname = data[0].toString();
-	var success = data[1].toString();
-	var error = data[2].toString();
-	
-	if(data[1] != ""){
-		$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
-		$('#kv-success-1').fadeIn();
-   		$('#profImage').attr("");
-   		var d = new Date();
-   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+d.getDate());
-   		
-   		location.reload(true);
-//    		$.ajax({
-//             url: "../../../StudentController?CCO=UUP",
-//             type: 'POST',
-//             CCO: 'UUP',        
-//             success: function(data) {
-//             	$('#profImage').attr("");
-//            		$('#profImage').attr("src","../../../education/"+imgname);   		  
-//             }
-//         });		
-   		defaultPreviewContent: '<img src=../../../education/"'+data[0]+'" alt="ProfilePicture.jpg" style="width:160px">'
-	}
-	if(data[2] != ""){
-    	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
-	}
-	
-});
-</script>
-
 <!-- End of Model -->
-
-
-
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.html"></footer>-->
