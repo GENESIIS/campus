@@ -1,5 +1,5 @@
 package com.genesiis.campus.validation;
-
+//20161220 as c19-student-login-without-using-third-party-application-as removed unwanted comments and loggers
 import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,26 +46,16 @@ public class LoginValidator {
 			if (!vl.isNotEmpty(data.getUserKey())
 					|| !vl.isNotEmpty(data.getPassword())) {
 				message = SystemMessage.EMPTYFIELD.message();
-				log.info(message);
+
 			} else {
 				message = "True";
-				log.info(message);
 
-				// if(!validateEmail(data.getUserKey())){
-				// log.info("Email is : "+data.getUserKey());
-				// data.setEmail(data.getUserKey());
-				// }else if(!validateEmail(data.getUserKey())){
-				// data.setUsername(data.getUserKey());
-				// log.info("Login Username is : "+data.getUsername());
-				//
-				// }
 			}
 
 		} catch (Exception e) {
-			log.info("validateLogin : " + e);
+			log.error("validateLogin : " + e);
 		}
 
-		log.info("last message " + message);
 		return message;
 	}
 
@@ -78,14 +68,15 @@ public class LoginValidator {
 	public static Student dataSeparator(Student data) throws Exception {
 		try {
 			if (validateEmail(data.getUserKey())) {
-				log.info("Email is : " + data.getUserKey());
+				
 				data.setEmail(data.getUserKey());
 			} else if (!validateEmail(data.getUserKey())) {
 				data.setUsername(data.getUserKey());
-				log.info("Login Username is : " + data.getUsername());
+				
 			}
 		} catch (Exception e) {
-			log.info("dataSeparator : " + e);
+			log.error("dataSeparator : " + e);
+
 		}
 
 		return data;

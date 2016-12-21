@@ -77,9 +77,22 @@ public class StudentPrivilegeDAO implements ICrud {
 
 			}
 
+		} catch (SQLException e) {
+			log.info("findById SQLException : " + e);
+			throw e;
+		
 		} catch (Exception e) {
 			log.info("findById Exception : " + e);
 			throw e;
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+
 		}
 		return studentPrivilegeCollection;
 	}
