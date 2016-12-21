@@ -50,6 +50,7 @@ public class CmdGenerateEmail implements ICommand {
 	private String sendersphoneNumber;
 	private String mailingSubject;
 	private String mailBody;
+	private String mailBody2;
 	private Connection connection = null;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
@@ -124,7 +125,6 @@ public class CmdGenerateEmail implements ICommand {
 			log.error("execute():Exception " + e.toString());
 			throw e;
 		} finally {
-			if(!connection.isClosed())connection.close();
 			helper.setAttribute("message", message);
 		}
 			 return view;
@@ -209,7 +209,7 @@ public class CmdGenerateEmail implements ICommand {
 		addContentToOriginalMailBody(mailBody);
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,
 				sendersEmailAddress,
-				mailingSubject,mailBody);
+				mailingSubject,mailBody2);
 		return generalEmail;
 
 	}
@@ -289,7 +289,7 @@ public class CmdGenerateEmail implements ICommand {
 		result.append(sendersphoneNumber);
 		result.append(System.getProperty("line.separator"));
 		result.append(sendersEmailAddress);
-		this.mailBody = result.toString();
+		this.mailBody2 = result.toString();
 		
 	}
 	
