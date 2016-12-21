@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
+//20161221 CW c36-add-tutor-details Removed findById() method.
+//20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,9 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
 
@@ -31,6 +36,11 @@ public class TutorDAO implements ICrud {
 	 */
 	@Override
 	public int add(Object object) throws SQLException, Exception {
+		
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int status = -1;
+		
 		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
 				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, "
 				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
@@ -38,16 +48,16 @@ public class TutorDAO implements ICrud {
 				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
 				+ ",CRTON,CRTBY,MODON, MODBY ) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		
-		int status = -1;		
+				
 		try {			
 			final Tutor tutor = (Tutor) object;
-			conn = ConnectionManager.getConnection();
+			conn = ConnectionManager.getConnection();			
+
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+			
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, tutor.getUsername());
-			preparedStatement.setString(2, tutor.getPassword());
+			preparedStatement.setString(1, tutor.getUsername());			
+			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(3, tutor.getFirstName());
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
@@ -92,12 +102,7 @@ public class TutorDAO implements ICrud {
 			log.error("add(): Exception " + exception.toString());
 			throw exception;
 		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, preparedStatement, null);
 		}
 
 		return status;
@@ -115,56 +120,10 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 
-
-	/**
-	 * Returns the username in Database
-	 * 
-	 * @author Chathuri, Chinthaka
-	 * 
-	 * @return Returns the username from a collection of collection
-	 */
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		
-		try {
-			Tutor tutor = (Tutor) code; 
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
-
-			stmt = conn.prepareStatement(query);
-			stmt.setString(1, tutor.getUsername());
-			final ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("USERNAME"));
-
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
-			}
-		} catch (ClassCastException cce) {
-			log.error("add(): ClassCastException " + cce.toString());
-			throw cce;
-		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll(): Exception " + e.toString());
-			throw e;
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-		return allTownList;
-
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
