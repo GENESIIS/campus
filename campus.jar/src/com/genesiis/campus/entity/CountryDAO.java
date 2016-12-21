@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161123 CM c36-add-tutor-information INIT CountryDAO 
 //20161123 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
+//20161221 CW c36-add-tutor-details Modified getAll() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 public class CountryDAO implements ICrud{
 
@@ -56,26 +58,26 @@ public class CountryDAO implements ICrud{
 	 * @return Returns all the country details from a collection of collection
 	 */
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
+	public Collection<Collection<String>> getAll() throws SQLException,	Exception {
+		
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
-			conn = ConnectionManager.getConnection();
+			
 			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [NAME]";
-
+			
+			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
 				singleCountryList.add(rs.getString("DIALCODE"));
 				singleCountryList.add(rs.getString("NAME"));
-
-				final Collection<String> singleCountryCollection = singleCountryList;
-				allCountryList.add(singleCountryCollection);
+				allCountryList.add(singleCountryList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLException " + sqlException.toString());
@@ -84,12 +86,7 @@ public class CountryDAO implements ICrud{
 			log.info("getAll(): Exception " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return allCountryList;
 	}
