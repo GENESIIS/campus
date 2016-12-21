@@ -175,12 +175,7 @@
 						<!-- End find district drop down -->
 					</div>
 				</div>
-				<!-- End Panel Header -->
-				<div>
-				<div>
-				Filter by: <input type="radio" id="filterAZ" name="az" value="az" > A-Z<br><input type="radio" id="filterZA" name="za" value="za"> Z-A<br>
-				</div>
-				</div>
+				<!-- End Panel Header -->			
 				<hr>
 
 				<!-- Search Result List view -->
