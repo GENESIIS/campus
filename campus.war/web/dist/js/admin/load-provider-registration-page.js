@@ -62,29 +62,29 @@ function displayProviderCountries() {
 //var selectedCountry = $("#selectedCountry");
 //alert(selectedCountry);
 function getProviderTownListData() {
-	var selectedCountry = 94;//document.getElementById('selectedCountry');
+	var selectedCountry = document.getElementById('selectedCountry').value;
 	alert(selectedCountry);
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
 		data : {
 			'CCO' : 'DISPLAY_TOWN_DATA',
-			'town' : selectedCountry
+			'country' : selectedCountry
 		},
 		dataType : "json",
 		async : false,
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				window.townCollection = response.requestData;
-				displayProviderCountries();
+				window.townCollection = response.townArrayList;
+				displayProviderTownList();
 			}
 		},
 	});
 }
 
 function displayProviderTownList(){
-
+alert(townCollection);
 }
 
 function getProviderType() {
