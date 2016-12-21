@@ -143,7 +143,7 @@ function populateResultTable(response){
 }
 
 function clearParameters(event){
-	$('#providerlist').val("-- Select Course Provider--"); 
+	$('#providerlist').val("-- Select Provider--"); 
 	$('input:radio[name=status]').prop('checked', false);
 	$('#startdate').val(" "); 
 	$('#enddate').val(" "); 	
