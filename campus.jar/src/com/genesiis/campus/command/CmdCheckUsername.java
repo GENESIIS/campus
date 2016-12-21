@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161125 CM c36-add-tutor-information INIT CmdCheckUsername.java
 //20161125 CM c36-add-tutor-information Modified execute()method. 
+//20161221 CW c36-add-tutor-information Modified execute()method. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.entity.TutorUserName;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -25,29 +27,25 @@ public class CmdCheckUsername implements ICommand {
 	 * @return View object to servlet
 	 */
 	@Override
-	public IView execute(IDataHelper helper, IView view) throws SQLException,
-			Exception {
-		final TutorDAO tutorDAO = new TutorDAO();
-		final Tutor tutor = new Tutor();
+	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {		
+		
 		String message = "";
-		String usernm = null;
+		
 		Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
 		
 		try {
-			usernm = helper.getParameter("USERNAME");
+			String username = helper.getParameter("USERNAME");
 			
-			if (usernm != null){
-				
-					tutor.setUsername(usernm);
-					tutorCollection = tutorDAO.findById(tutor);
-			}
-			
-			
+			if (username != null){
+				final Tutor tutor = new Tutor();
+				tutor.setUsername(username);
+				tutorCollection = new TutorUserName().findById(tutor);
+			}			
 			
 			if (tutorCollection.isEmpty()) {
-				message = "1";
+				message = "1"; // user name does not exist
 			} else {
-				message = "0";
+				message = "0"; // user name Already exists
 			}
 			view.setCollection(tutorCollection);
 		} catch (Exception exception) {
