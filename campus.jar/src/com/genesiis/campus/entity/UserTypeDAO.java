@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 public class UserTypeDAO implements ICrud {
 	
@@ -74,13 +75,13 @@ public class UserTypeDAO implements ICrud {
 		int code = 0;
 		ResultSet res = null;		
 		PreparedStatement preparedStatement = null;
-		Connection con = ConnectionManager.getConnection();
+		Connection conn = ConnectionManager.getConnection();
 
 		try{
 			
 			String sql = "SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE [NAME] =? ";
 	
-			preparedStatement  = con.prepareStatement(sql);
+			preparedStatement  = conn.prepareStatement(sql);
 			preparedStatement.setString(1, name);// set the name parameter to the prepared statement
 			
 			res= preparedStatement.executeQuery();
@@ -94,9 +95,7 @@ public class UserTypeDAO implements ICrud {
 		} catch (Exception ex) {
 			log.info("getCode() : Exception :"+ ex.toString());
 		} finally {			
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
+			DaoHelper.cleanup(conn, preparedStatement, res);
 		}
 		return code;
 	}

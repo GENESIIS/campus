@@ -1,22 +1,20 @@
 package com.genesiis.campus.entity;
 
-//20161122 CM c36-add-tutor-information Modified getAll() method. 
-//20161216 CW c36-add-tutor-details Modified getAll() method. 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
-
+import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 
-public class TownDAO implements ICrud{
-	static Logger log = Logger.getLogger(TownDAO.class.getName());
+public class TutorUserName implements ICrud {
+
+	static Logger log = Logger.getLogger(TutorDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -35,53 +33,56 @@ public class TownDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	/**
-	 * Returns all the town details in Database
+	 * Returns the username in Database for the given Tutor Code
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * 
-	 * @return Returns all the town details from a collection of collection
+	 * @return Returns the username from a collection of collection
 	 */
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object code)	throws SQLException, Exception {
 		
-		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		
 		try {
-			String query = "SELECT [CODE],[NAME], [COUNTRY] FROM [CAMPUS].[Town] ORDER BY [NAME]";
-
+			Tutor tutor = (Tutor) code; 
 			conn = ConnectionManager.getConnection();
+			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+
 			stmt = conn.prepareStatement(query);
+			stmt.setString(1, tutor.getUsername());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("CODE"));
-				singleTownList.add(rs.getString("NAME"));
-				singleTownList.add(rs.getString("COUNTRY"));
-				allTownList.add(singleTownList);
+				final ArrayList<String> singleTutorList = new ArrayList<String>();
+				singleTutorList.add(rs.getString("USERNAME"));
+				allTutorList.add(singleTutorList);
 			}
+		} catch (ClassCastException cce) {
+			log.info("findById(): ClassCastException " + cce.toString());
+			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("findById(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-		return allTownList;
+		return allTutorList;
+
+	}
+
+	@Override
+	public Collection<Collection<String>> getAll() throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

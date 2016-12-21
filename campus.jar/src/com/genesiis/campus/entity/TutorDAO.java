@@ -15,6 +15,9 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
 
@@ -31,7 +34,12 @@ public class TutorDAO implements ICrud {
 	 * @return int number of success/fail status
 	 */
 	@Override
-	public int add(Object object) throws SQLException, Exception {
+public int add(Object object) throws SQLException, Exception {
+		
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int status = -1;
+		
 		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
 				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, "
 				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
@@ -39,22 +47,21 @@ public class TutorDAO implements ICrud {
 				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
 				+ ",CRTON,CRTBY,MODON, MODBY ) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		
-		int status = -1;		
+				
 		try {			
 			final Tutor tutor = (Tutor) object;
-			conn = ConnectionManager.getConnection();
+			conn = ConnectionManager.getConnection();			
+
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+			
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, tutor.getUsername());
-			preparedStatement.setString(2, tutor.getPassword());
+			preparedStatement.setString(1, tutor.getUsername());			
+			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(3, tutor.getFirstName());
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
 			preparedStatement.setString(7, tutor.getEmailAddress());
-			//preparedStatement.setString(8, tutor.getImagePath());
 			preparedStatement.setString(8, tutor.getLandCountryCode());
 			preparedStatement.setString(9, tutor.getLandAreaCode());
 			preparedStatement.setString(10, tutor.getLandNumber());
@@ -94,12 +101,7 @@ public class TutorDAO implements ICrud {
 			log.error("add(): Exception " + exception.toString());
 			throw exception;
 		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, preparedStatement, null);
 		}
 
 		return status;
