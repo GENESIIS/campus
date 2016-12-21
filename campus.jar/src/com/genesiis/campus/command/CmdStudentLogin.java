@@ -36,7 +36,7 @@ public class CmdStudentLogin implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try {
-
+			String pageURL = "";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			String messageReturn = new String(message);
 			String gsonData = helper.getParameter("jsonData");
@@ -59,6 +59,13 @@ public class CmdStudentLogin implements ICommand {
 									2592000);
 
 				}
+
+				if (data.getLastLoggedInSessionid().equalsIgnoreCase("")) {
+					pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
+				} else {
+					pageURL = "/dist/partials/student/student-dashboard.jsp";
+				}
+
 				setStudentLoginDetails(data, helper);
 				int status = StudentLoginDAO.loginDataUpdate(data);
 			} else {
@@ -73,14 +80,16 @@ public class CmdStudentLogin implements ICommand {
 			}
 
 			helper.setAttribute("message", message);
+			helper.setAttribute("pageURL", pageURL);
 			view.setCollection(dataCollection);
-			helper.setRedirectPage("/dist/partials/student/student-dashboard.jsp");
 
 		} catch (SQLException e) {
-			log.error("execute(IDataHelper helper, IView view):  SQLException" + e.toString());
+			log.error("execute(IDataHelper helper, IView view):  SQLException"
+					+ e.toString());
 			throw e;
 		} catch (Exception e) {
-			log.error("execute(IDataHelper helper, IView view):  Exception" + e.toString());
+			log.error("execute(IDataHelper helper, IView view):  Exception"
+					+ e.toString());
 			throw e;
 		}
 		return view;
@@ -95,27 +104,28 @@ public class CmdStudentLogin implements ICommand {
 	 */
 
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
- 
+
 		try {
-			
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-		Date loginTime = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-		java.util.Date utilDate = new java.util.Date();
-		java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
+			Date loginTime = new Date();
 
-		object.setLastLoggedInDate(loginDate.toString());
-		object.setLastLoggedInTime(new Timestamp(loginTime.getTime())
-				.toString());
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
 
-		String browser = helper.getHeader("User-Agent");
-		String[] output = browser.split("/");
-		object.setLastLoggedInUserAgent(output[0]);
-		object.setLastLoggedInIpAddress(helper.getRemoteAddress());
+			object.setLastLoggedInDate(loginDate.toString());
+			object.setLastLoggedInTime(new Timestamp(loginTime.getTime())
+					.toString());
+
+			String browser = helper.getHeader("User-Agent");
+			String[] output = browser.split("/");
+			object.setLastLoggedInUserAgent(output[0]);
+			object.setLastLoggedInIpAddress(helper.getRemoteAddress());
 		} catch (Exception e) {
-			log.error("setStudentLoginDetails(Student object, IDataHelper helper):  Exception" + e.toString());
+			log.error("setStudentLoginDetails(Student object, IDataHelper helper):  Exception"
+					+ e.toString());
 			throw e;
 		}
 		return object;
