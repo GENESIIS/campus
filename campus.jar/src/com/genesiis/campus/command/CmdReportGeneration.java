@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportGeneration.java
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Identify the selected applicationStatus
 
 
 import java.sql.SQLException;
@@ -51,6 +52,7 @@ public class CmdReportGeneration  implements ICommand{
 				String startDateString = helper.getParameter("startDate");
 				String endDateString = helper.getParameter("endDate");
 				String providerCodeString = helper.getParameter("cProviderCode");
+				String programmeStatus = helper.getParameter("cProviderCode");
 				int providerCode=0; 
 				if (UtilityHelper.isNotEmpty(providerCodeString)) {
 					if (UtilityHelper.isInteger(providerCodeString)) {
@@ -64,8 +66,8 @@ public class CmdReportGeneration  implements ICommand{
 					//List courses by course Providers
 					//param:cpcode,date range
 					final Programme programme=new Programme();
-					programme.setCourseProvider(providerCode);
-					programme.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
+					programme.setCourseProvider(providerCode);					
+					programme.setProgrammeStatus(ApplicationStatus.getApplicationStatus(programmeStatus));
 					try {
 						if(UtilityHelper.isNotEmpty(startDateString)){
 							programme.setDisplayStartDate(df.parse((startDateString)));
