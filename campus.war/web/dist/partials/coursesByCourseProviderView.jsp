@@ -61,8 +61,8 @@
 							</div>
 							<div>
 								Status : 
-                                <input type="radio" name="gender" value="active"> Active
-  								<input type="radio" name="inactive" value="other"> Inactive
+                                <input type="radio" name="status" value="ACTIVE"> Active
+  								<input type="radio" name="status" value="INACTIVE"> Inactive
 							</div>
 							<div>
 								Start Date : <input type="date" id="startdate" name="search">
