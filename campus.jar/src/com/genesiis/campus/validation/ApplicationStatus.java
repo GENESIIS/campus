@@ -38,18 +38,20 @@ public enum ApplicationStatus {
 	 * @throws Exception
 	 */
 	public static int getApplicationStatus(String statusValue){
-		int applicationStatus=0;		
-		if(statusValue.equalsIgnoreCase("ACTIVE")){
-			applicationStatus = ACTIVE.getStatusValue();
-		}
-		if(statusValue.equalsIgnoreCase("INACTIVE")){
-			applicationStatus = INACTIVE.getStatusValue();
-		}
-		if(statusValue.equalsIgnoreCase("PENDING") ){
-			applicationStatus = PENDING.getStatusValue();
-		}
-		if(statusValue.equalsIgnoreCase("EXPIRED") ){
-			applicationStatus = EXPIRED.getStatusValue();
+		int applicationStatus=0; 	
+		if (UtilityHelper.isNotEmpty(statusValue)) {
+			if (statusValue.equalsIgnoreCase("ACTIVE")) {
+				applicationStatus = ACTIVE.getStatusValue();
+			}
+			if (statusValue.equalsIgnoreCase("INACTIVE")) {
+				applicationStatus = INACTIVE.getStatusValue();
+			}
+			if (statusValue.equalsIgnoreCase("PENDING")) {
+				applicationStatus = PENDING.getStatusValue();
+			}
+			if (statusValue.equalsIgnoreCase("EXPIRED")) {
+				applicationStatus = EXPIRED.getStatusValue();
+			}
 		}
 		
 		return applicationStatus;
