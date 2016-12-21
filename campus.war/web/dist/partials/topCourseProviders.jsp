@@ -52,7 +52,6 @@
 					</div>
 				</div>
 				<!-- End list header -->
-
 				<div class="top-rated clearfix">
 					<h1 id="toprate">Top Rated</h1>
 					<div class="providers-grid center-block clearfix">
@@ -60,7 +59,7 @@
 
 						</ul>
 					</div>
-				</div>
+				</div>				
 				<div class="top-rated clearfix">
 					<h1 id="topview">Top Viewed</h1>
 					<div class="providers-grid center-block clearfix">
