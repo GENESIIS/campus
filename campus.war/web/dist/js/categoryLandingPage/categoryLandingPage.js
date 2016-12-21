@@ -208,6 +208,8 @@ function constructProgrammeListing(pageNum) {
 	var numOfResultsPerPage = window.numOfResultsPerPageFetched;
 	var oneOffProviderDetails = window.oneOffProviderDetails;
 	var logoTypeAndExtension = "_small.jpg";
+	var defaultImagePrefix = 'default';
+	var defaultSmallLogo = courseProviderLogoPath + '/' + defaultImagePrefix + logoTypeAndExtension; 
 
 	var indexIndicatorOfLastProg = null;
 	var indexOfFirstProgNeeded = null;
@@ -246,7 +248,7 @@ function constructProgrammeListing(pageNum) {
 			}			
 			var logoImgPath = courseProviderLogoPath + '\\' + courseProviderCode + '\\' + courseProviderCode + logoTypeAndExtension;
 			
-			programmesHtmlFragment += '<a href=""><img src="' + logoImgPath + '" alt="' + imgAlterTextShortName + ' logo"></a>';
+			programmesHtmlFragment += '<a href=""><img src="' + logoImgPath + '" alt="' + imgAlterTextShortName + ' logo" onerror="this.src = \'' + defaultSmallLogo + '\'"></a>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '</div>';
 			programmesHtmlFragment += '<div class="col-description">';

@@ -28,7 +28,7 @@
 						<li><a href="dist/partials/contact-us.jsp">Contact Us</a></li>
 						<li><a href="dist/partials/news.jsp">News</a></li>
 						<li><a href="dist/partials/f-and-q.jspl">F & Q</a></li>
-						<li><a href="dist/partials/rss.jsp">Rss</a></li>
+						<li><a href="dist/partials/rss.jsp">RSS</a></li>
 					</ul>
 				</div>
 				<!-- End Main menu tabs -->
@@ -52,4 +52,6 @@
 			<!-- End keyword search -->
 		</div>
 	</div>
+	
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
 </header>

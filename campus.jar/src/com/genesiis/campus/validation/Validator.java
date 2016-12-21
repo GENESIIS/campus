@@ -3,8 +3,8 @@ package com.genesiis.campus.validation;
 //20161102 JH c7-higher-education-landing-page Validator.java created
 //20161102 JH c7-higher-education-landing-page getDuration() created
 //20161115 JH c7-higher-education-landing-page isEmpty()method modified to support any string validation
-//20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
 //20161115 JH c7-higher-education-landing-page add method comments
+//20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
 
 import java.util.ArrayList;
 
@@ -45,7 +45,8 @@ public class Validator {
 
 		return valid;
 	}
-}
+	
+	
 	public static boolean isNumber(final CharSequence cs) {
 		if (cs == null || cs.toString().isEmpty()) {
 			return false;
@@ -58,3 +59,4 @@ public class Validator {
 		}
 		return true;
 	}
+}

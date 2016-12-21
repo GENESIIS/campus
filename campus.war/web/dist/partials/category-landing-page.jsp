@@ -23,7 +23,7 @@
 <!-- Bootstrap & CSS Style-->
 
 <!-- <link href="/dist/css/style.css" rel="stylesheet">  -->
-<link href="/dist/css/screen.css" rel="stylesheet">
+<link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
 
@@ -32,7 +32,7 @@
 <body>
 
 	<!-- include Header-->
-		<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 
 	<!-- Main Container - Higher-Education -->
@@ -81,50 +81,24 @@
 					<div class="top"></div>
 					<div class="bottom clearfix">
 						<ul class="list-inline">
-							<li><a href="javascript:">All</a></li>
-							<li><a href="javascript:">Cetificate</a></li>
-							<li><a href="javascript:">Degree</a></li>
-							<li><a href="javascript:">Diploma</a></li>
-							<li><a href="javascript:">HND</a></li>
-							<li><a href="javascript:">MBA</a></li>
-							<li><a href="javascript:">Languages</a></li>
-							<li><a href="javascript:">MSc</a></li>
-							<li><a href="javascript:">Foreign</a></li>
-							<li><a href="javascript:">Short Courses </a></li>
-							<li><a href="javascript:">Work Shops </a></li>
-							<li><a href="javascript:">Other</a></li>
 						</ul>
 					</div> 
 				</div>
 
-				<!-- Filter result table -->
-				<div class="filter-result-table">
-					<ul class="result-row">
-
-						<c:forEach var="featuredInstitute" items="${featuredInstitutes}">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<a href="javascript:" class="pro-name">SLIIT</a> 
-									<div class="pro-logo">
-										<img src="/dist/i/sliit-logo.png" alt=""> 
-									</div>
-								</div>
-								<div class="col-description">
-									<p>Lorem Ipsum is simply dummy text of the printing</p>
-								</div>
-								<div class="col-location">
-									<a href="javascript:">Malabe</a> 
-								</div>
-								<div class="col-duration">
-									<label>Degree<br> <Span>4 Years</Span></label>
-								</div>
-							</li>
-							<!-- end -->
-
-						</c:forEach>
-					</ul>
-				</div>
-				<!-- End filter result table -->
+            <!-- Filter result table -->
+            <div class="filter-result-table">
+                <ul class="result-row">
+                </ul>
+                <div class="programme-results-stat-info-div text-center">
+                </div>
+                <div class="paginator-div text-center">
+                	<nav aria-label="">
+                		<ul class="pagination pagination-lg">
+				  		</ul>
+					</nav>                	
+                </div>
+            </div>
+            <!-- End filter result table -->
 
 			</div>
 			<!-- End left panel -->
@@ -288,12 +262,13 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
+<script src="/dist/js/categoryLandingPage/categoryLandingPage.js"></script>
 
 	<!-- custom javascript -->
-	<script src="/dist/js/header/ui-populate-helper.js"></script>
+	<!-- <script src="/dist/js/header/ui-populate-helper.js"></script>  -->
 	
 	<!-- W3-Include -->
-	<script src="/dist/bower-components/w3/w3data.js"></script>
+	<!--   <script src="/dist/bower-components/w3/w3data.js"></script>-->
 
 
 </body>
