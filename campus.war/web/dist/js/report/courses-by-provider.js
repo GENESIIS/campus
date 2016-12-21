@@ -38,6 +38,11 @@ $(document).ready(function() {
 		clearParameters(event);
 	});	
 	
+	/*$("input[name=status]:radio").change(function () {
+		alert("radion click ");
+		var status=this.value;
+	});*/
+	
 	
 });
 
@@ -77,6 +82,7 @@ function loadResultSet(event){
 	var cpCode= $('#providerlist').val();
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
+	var statusValue=$('input:radio[name=status]:checked').val();
 	
 	$.ajax({
 		url:'../../ReportController',
@@ -84,8 +90,8 @@ function loadResultSet(event){
 			CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
 			cProviderCode:cpCode,
 			startDate:startDate,
-			endDate:endDate			
-			
+			endDate:endDate,
+			statusValue:statusValue			
 		},
 		datatype:"json",
 		success : function(response) {				
