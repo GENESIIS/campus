@@ -142,7 +142,7 @@ function populateResultTable(response){
 		var code = value[0].toString();
 		var name = value[1].toString();
 		var des = value[2].toString();
-		var cStatus = value[3].toString();
+		var cStatus = value[3].toString();		
 		var sDate = value[4].toString();
 		var eDate = value[4].toString();
 		
@@ -162,7 +162,7 @@ function populateResultTable(response){
 
 function clearParameters(event){
 	$('#providerlist').val("-- Select District --"); 
-	//var dropList=$('#providerlist');	
+	$('input:radio[name=status]').prop('checked', false);
 	$('#startdate').val(" "); 
 	$('#enddate').val(" "); 	
 }

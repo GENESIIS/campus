@@ -38,8 +38,8 @@ public class CmdReportGeneration  implements ICommand{
 
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
-			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();
+			Exception {	
+		
 		SystemMessage systemMessage = SystemMessage.UNKNOWN;
 		
 		try {
@@ -52,7 +52,7 @@ public class CmdReportGeneration  implements ICommand{
 				String startDateString = helper.getParameter("startDate");
 				String endDateString = helper.getParameter("endDate");
 				String providerCodeString = helper.getParameter("cProviderCode");
-				String programmeStatus = helper.getParameter("cProviderCode");
+				String programmeStatus = helper.getParameter("statusValue");
 				int providerCode=0; 
 				if (UtilityHelper.isNotEmpty(providerCodeString)) {
 					if (UtilityHelper.isInteger(providerCodeString)) {
