@@ -48,7 +48,7 @@ function studentLogin() {
 					success : function(response) {
 
 						if (response['message'] === "valid Username and Password.") {
-							window.location.href = '/dist/partials/student/student-dashboard.jsp';
+							window.location.href = response['pageURL'];
 						} else {
 							document.getElementById('errorMesssage').innerHTML = response['message'];
 						}
