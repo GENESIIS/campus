@@ -67,12 +67,14 @@ public class ProgrammeDAO implements ICrud {
 			sb.append("PROGRAMMESTATUS AS PROSTATUS,DISPLAYSTARTDATE AS PROGSTARTDATE,EXPIRYDATE AS PROGEXPIRYDATE ");
 			sb.append("FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
 			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
-				sb.append("AND PROG.DISPLAYSTARTDATE >=  ");
+				sb.append("AND PROG.DISPLAYSTARTDATE >= ' ");
 				sb.append(new java.sql.Date(programme.getDisplayStartDate().getTime()));
+				sb.append(" ' ");
 			}
-			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
-				sb.append("AND PROG.EXPIRYDATE <=  ");
+			if (programme.getExpiryDate() != null	&& programme.getExpiryDate().getTime() > 0) {
+				sb.append("AND PROG.EXPIRYDATE <= '");
 				sb.append(new java.sql.Date(programme.getExpiryDate().getTime()));
+				sb.append(" ' ");
 			}
 			if (programme.getProgrammeStatus() > 0) {
 				sb.append(" AND PROG.PROGRAMMESTATUS =  ");
