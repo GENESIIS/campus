@@ -149,8 +149,11 @@ public int add(Object object) throws SQLException, Exception {
 			while (rs.next()) {
 				final ArrayList<String> singleTutorList = new ArrayList<String>();		
 				
+				Encryptable passwordEncryptor = new TripleDesEncryptor();
+				
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD")));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));

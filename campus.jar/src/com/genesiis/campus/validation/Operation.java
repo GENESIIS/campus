@@ -3,6 +3,8 @@ package com.genesiis.campus.validation;
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161121 CM c36-add-tutor-information added a new attribute to the enum
 //20161122 CM c36-add-tutor-information added a new attribute to the enum
+//20161220 CW c38-view-update-tutor-profile added a new attribute to the enum
+//20161221 CW c38-view-update-tutor-profile added a new attribute to the enum
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -14,7 +16,8 @@ public enum Operation {
 	LIST_COUNTRY_DATA("LIST_COUNTRY_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
 	CHECK_USERNAME("CHECK_USERNAME", ResponseType.JSON, "addTutorDetails.jsp"),
 	ADD_TUTOR_PROFILE_DETAILS("ATPD", ResponseType.JSP,"dist/partials/addTutorDetails.jsp"),
-	VIEW_TUTOR_DETAILS("VIEW_TUTOR_DETAILS", ResponseType.JSP,"dist/partials/viewUpdateTutor.jsp");
+	VIEW_TUTOR_DETAILS("VIEW_TUTOR_DETAILS", ResponseType.JSP,"dist/partials/viewUpdateTutor.jsp"),
+	UPDATE_TUTOR("UPDATE_TUTOR", ResponseType.JSP,"dist/partials/viewUpdateTutor.jsp");
 	
 	private final String commandString;
 	private final ResponseType responseType;

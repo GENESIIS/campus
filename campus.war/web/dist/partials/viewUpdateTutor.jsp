@@ -17,32 +17,33 @@
 
 			<c:set var="code" value="${tutorList[0]}" />
 			<c:set var="username" value="${tutorList[1]}" />
-			<c:set var="firstname" value="${tutorList[2]}" />
-			<c:set var="middlename" value="${tutorList[3]}" />
-			<c:set var="lastname" value="${tutorList[4]}" />
-			<c:set var="gender" value="${tutorList[5]}" />
-			<c:set var="email" value="${tutorList[6]}" />
-			<c:set var="landphonecountrycode" value="${tutorList[7]}" />
-			<c:set var="landphoneareacode" value="${tutorList[8]}" />
-			<c:set var="landphonenumber" value="${tutorList[9]}" />
-			<c:set var="mobilephonecountrycode" value="${tutorList[10]}" />
-			<c:set var="mobilephonenetworkcode" value="${tutorList[11]}" />
-			<c:set var="mobilephonenumber" value="${tutorList[12]}" />
-			<c:set var="description" value="${tutorList[13]}" />
-			<c:set var="experience" value="${tutorList[14]}" />
-			<c:set var="weblink" value="${tutorList[15]}" />
-			<c:set var="facebookurl" value="${tutorList[16]}" />
-			<c:set var="twitterurl" value="${tutorList[17]}" />
-			<c:set var="myspaceurl" value="${tutorList[18]}" />
-			<c:set var="linkedinurl" value="${tutorList[19]}" />
-			<c:set var="instagramurl" value="${tutorList[20]}" />
-			<c:set var="vibernumber" value="${tutorList[21]}" />
-			<c:set var="whatsappnumber" value="${tutorList[22]}" />
-			<c:set var="address1" value="${tutorList[23]}" />
-			<c:set var="address2" value="${tutorList[24]}" />
-			<c:set var="address3" value="${tutorList[25]}" />
-			<c:set var="town" value="${tutorList[26]}" />
-			<c:set var="usertype" value="${tutorList[27]}" />
+			<c:set var="password" value="${tutorList[2]}" />
+			<c:set var="firstname" value="${tutorList[3]}" />
+			<c:set var="middlename" value="${tutorList[4]}" />
+			<c:set var="lastname" value="${tutorList[5]}" />
+			<c:set var="gender" value="${tutorList[6]}" />
+			<c:set var="email" value="${tutorList[7]}" />
+			<c:set var="landphonecountrycode" value="${tutorList[8]}" />
+			<c:set var="landphoneareacode" value="${tutorList[9]}" />
+			<c:set var="landphonenumber" value="${tutorList[10]}" />
+			<c:set var="mobilephonecountrycode" value="${tutorList[11]}" />
+			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}" />
+			<c:set var="mobilephonenumber" value="${tutorList[13]}" />
+			<c:set var="description" value="${tutorList[14]}" />
+			<c:set var="experience" value="${tutorList[15]}" />
+			<c:set var="weblink" value="${tutorList[16]}" />
+			<c:set var="facebookurl" value="${tutorList[17]}" />
+			<c:set var="twitterurl" value="${tutorList[18]}" />
+			<c:set var="myspaceurl" value="${tutorList[19]}" />
+			<c:set var="linkedinurl" value="${tutorList[20]}" />
+			<c:set var="instagramurl" value="${tutorList[21]}" />
+			<c:set var="vibernumber" value="${tutorList[22]}" />
+			<c:set var="whatsappnumber" value="${tutorList[23]}" />
+			<c:set var="address1" value="${tutorList[24]}" />
+			<c:set var="address2" value="${tutorList[25]}" />
+			<c:set var="address3" value="${tutorList[26]}" />
+			<c:set var="town" value="${tutorList[27]}" />
+			<c:set var="usertype" value="${tutorList[28]}" />
 
 		</c:forEach>
 
@@ -212,19 +213,25 @@
 				<tr>
 					<td>Password <span id="passwordError"></span></td>
 					<td><input type="password" name="password" id="password"
-						maxlength="20" onclick="clearField('passwordError')" value="${landphonenumber}" /></td>
+						maxlength="20" onclick="clearField('passwordError')" value="${password}" /></td>
 				</tr>
 				<tr>
 					<td>Confirm Password <span id="confirmPasswordError"></span></td>
 					<td><input type="password" name="confirmPassword"
 						id="confirmPassword" maxlength="20"
-						onclick="clearField('confirmPasswordError')" /></td>
+						onclick="clearField('confirmPasswordError')" value="${password}" /></td>
 				</tr>
 
 				<tr>
 					<td>
 						<button type="submit" name="CCO" id="CCO" value="ATPD"
 							class="btn btn-info navbar-btn">Save</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="submit" name="CCO" id="CCO" value="UPDATE_TUTOR"
+							class="btn btn-info navbar-btn">Update</button>
 					</td>
 				</tr>
 			</table>

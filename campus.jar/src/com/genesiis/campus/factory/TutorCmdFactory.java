@@ -20,6 +20,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_COUNTRY_DATA, new CmdLoadCountry());
 		map.put(Operation.CHECK_USERNAME, new CmdCheckUsername());
 		map.put(Operation.VIEW_TUTOR_DETAILS, new CmdViewTutorProfile());
+		map.put(Operation.UPDATE_TUTOR, new CmdUpdateTutorProfile());
 	}
 
 	@Override
@@ -41,6 +42,9 @@ public class TutorCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case VIEW_TUTOR_DETAILS:
+			command = map.get(o);
+			break;
+		case UPDATE_TUTOR:
 			command = map.get(o);
 			break;
 		default:
