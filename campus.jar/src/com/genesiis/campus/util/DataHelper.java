@@ -1,7 +1,11 @@
 package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
+//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
+//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
+//20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161108 JH c7-higher-education-landing-page-mp removed unwanted imports
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -60,7 +64,7 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		if (Operation.BAD_OPERATION.equals(o)) {
 			String headerValue = getHeader("x-requested-with");
-			if (headerValue != null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
 				return ResponseType.JSON;
 			} else {
 				return ResponseType.JSP;

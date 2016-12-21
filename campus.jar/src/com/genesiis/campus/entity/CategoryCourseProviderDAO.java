@@ -15,6 +15,16 @@ package com.genesiis.campus.entity;
 //20161102 JH c7-higher-education-landing-page findById query modified to remove unwanted attributes
 //20161102 JH c7-higher-education-landing-page findById query modified due to ddl changes
 //20161104 JH c7-higher-education-landing-page CourseProviderHigherEducationProgrammeDAO.java renamed as CategoryCourseProviderDAO.java
+//20161110 JH c7-higher-education-landing-page findById method modified : cast course provider description
+//20161110 JH c7-higher-education-landing-page findById method modified : get course provider head office
+//20161111 JH c7-higher-education-landing-page findById method modified : get 10 featured providers
+//20161116 JH c7-higher-education-landing-page findById method modified : code review mx modifications
+//20161117 JH c7-higher-education-landing-page removed logger prefix
+//20161124 JH c7-higher-education-landing-page QA code modifications
+//20161125 JH c7-higher-education-landing-page QA modifications: query changes to select only featured course providers
+//20161126 JH c7-higher-education-landing-page QA modifications: removed retrieving logo image path details from the database
+//20161129 JH c7-higher-education-landing-page QA modifications: findById method modified
+//20161130 JH c7-higher-education-landing-page-MP code review modifications: removed unwanted statements
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,13 +35,14 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryCourseProviderDAO implements ICrud {
 
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CategoryCourseProviderDAO.class.getName());
 
 	@Override
@@ -68,10 +79,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		PreparedStatement preparedStatement2 = null;
 
-		int status = 0;
-		String returnMessage = "";
 		final Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
 
 		/**
@@ -79,27 +87,32 @@ public class CategoryCourseProviderDAO implements ICrud {
 		 * criteria. 
 		 * 1. select programme stat for each programme for given
 		 * category 
-		 * 2. programmes that were expired within a year from the
-		 * current date is considered 
-		 * 3. get only top 5 course providers with their details
+		 * 2. Only featured course providers are selected for stat
+		 * 3. get only top 10 course providers with their details
 		 */
 
-		String query1 = "	SELECT  cp.*  FROM(SELECT TOP 5 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
-				+ "INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ?"
-				+ "	GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
-				+ "as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE AND COURSEPROVIDERSTATUS = ?";
-
+		String query1 = "SELECT SUBSTRING(DESCRIPTION,0 ,130) as CASTED, cp.*  FROM(SELECT TOP 10 p.COURSEPROVIDER as name , COUNT(*) as number FROM [CAMPUS].[PROGRAMME] p "
+				+ " INNER JOIN [CAMPUS].[PROGRAMMESTAT] ps ON p.CODE = ps.PROGRAMME AND p.CATEGORY = ? "
+				+ " INNER JOIN [CAMPUS].[COURSEPROVIDER] cp on cp.CODE = p.COURSEPROVIDER AND cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >= getDate() "
+				+ " AND cp.ACCOUNTTYPE = ? GROUP BY p.COURSEPROVIDER ORDER BY  COUNT(*) DESC) "
+				+ " as a JOIN [CAMPUS].[COURSEPROVIDER] cp on a.name= cp.CODE ";
+		
 		/**
-		 * query2 used to query the database to retrieve data of course
-		 * providers randomly who are active
+		 * query2 used to query the database to retrieve data of featured course
+		 * providers randomly who are active Here program table is used to
+		 * select course providers that have belongs to the given category.
+		 *  Eg:There is no way to identify the course provider category only by
+		 * selecting the course provider table. Because a one course provider
+		 * can publish programs in different categories
 		 */
-		String query2 = "SELECT TOP 10 * FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN( SELECT  DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p "
-				+ " where  p.CATEGORY = ? AND p.PROGRAMMESTATUS = ?  ) as a "
-				+ " on a.COURSEPROVIDER = cp.CODE and  cp.COURSEPROVIDERSTATUS = ?   ORDER BY NEWID()";
+		String query2 = "SELECT TOP 10 *,SUBSTRING(DESCRIPTION,0 ,130) as CASTED FROM [CAMPUS].[COURSEPROVIDER] cp INNER JOIN"
+				+ "( SELECT DISTINCT p.COURSEPROVIDER FROM   [CAMPUS].[PROGRAMME] p where  p.CATEGORY = ?  ) as a "
+				+ " on a.COURSEPROVIDER = cp.CODE AND  cp.COURSEPROVIDERSTATUS = ? AND cp.EXPIRATIONDATE >= getDate() AND cp.ACCOUNTTYPE = ? ORDER BY NEWID()";
 
 		try {
 
 			final Programme programme = (Programme) code;
+			
 			conn = ConnectionManager.getConnection();
 
 			int type = programme.getLevel();
@@ -108,44 +121,39 @@ public class CategoryCourseProviderDAO implements ICrud {
 			// get featured course providers
 			if (type == 1) {
 				preparedStatement = conn.prepareStatement(query1);
-				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, programme.getProgrammeStatus());
 
-				rs = preparedStatement.executeQuery();
-
-				int row = rs.getRow();
-				/**
-				 * if number of rows of the result set is 0, there are no
-				 * program stat records for selected category. Therefore course
-				 * providers with out stat records are retrieved by setting the
-				 * type = 0 .
-				 */
-				if (row == 0) {
-					type = 0;
-				}
-			}
-			if (type == 0) {// get random course providers
+			}else if (type == 0) {// get random course providers
 
 				preparedStatement = conn.prepareStatement(query2);
 
-				preparedStatement.setInt(1, programme.getCategory());
-				preparedStatement.setInt(2, programme.getProgrammeStatus());
-				preparedStatement.setInt(3, programme.getProgrammeStatus());
-
-				rs = preparedStatement.executeQuery();
 			}
+			preparedStatement.setInt(1, programme.getCategory());
+			preparedStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			preparedStatement.setInt(3, AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 
+			rs = preparedStatement.executeQuery();
 			if (rs != null) {
-
 				while (rs.next()) {
 
 					final ArrayList<String> singleCourseProviderList = new ArrayList<String>();
+					
+					/**
+					 * here the description and the casted description length
+					 * are compared to add an indicator '....' to the end of the
+					 * course provider description to show that the description
+					 * in casted to display /shorten to display only limited
+					 * text
+					 */
+					String castedDescription = rs.getString("CASTED");
+					if (rs.getString("DESCRIPTION").length() > castedDescription.length()) {
+						castedDescription = castedDescription + "...";
+					}
 
 					singleCourseProviderList.add(rs.getString("CODE"));
 					singleCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 					singleCourseProviderList.add(rs.getString("SHORTNAME"));
 					singleCourseProviderList.add(rs.getString("NAME"));
-					singleCourseProviderList.add(rs.getString("DESCRIPTION"));
+					singleCourseProviderList.add(castedDescription);
 					singleCourseProviderList.add(rs.getString("GENERALEMAIL"));
 					singleCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
 					singleCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
@@ -157,7 +165,6 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 					singleCourseProviderList.add(rs.getString("MOBILEPHONENO"));
 					singleCourseProviderList.add(rs.getString("HEADERIMAGEPATH"));
-					singleCourseProviderList.add(rs.getString("LOGOIMAGEPATH"));
 					singleCourseProviderList.add(rs.getString("SPECIALITY"));
 					singleCourseProviderList.add(rs.getString("WEBLINK"));
 					singleCourseProviderList.add(rs.getString("FACEBOOKURL"));
@@ -172,16 +179,13 @@ public class CategoryCourseProviderDAO implements ICrud {
 					singleCourseProviderList.add(rs.getString("ADDRESS2"));
 					singleCourseProviderList.add(rs.getString("ADDRESS3"));
 					singleCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
+					singleCourseProviderList.add(rs.getString("HEADOFFICETOWN"));
 					singleCourseProviderList.add(rs.getString("ISTUTORRELATED"));
 					singleCourseProviderList.add(rs.getString("ISADMINALLOWED"));
 					singleCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));
 					singleCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
 					singleCourseProviderList.add(rs.getString("PRINCIPAL"));
 					singleCourseProviderList.add(rs.getString("TUTOR"));
-					singleCourseProviderList.add(rs.getString("CRTON"));
-					singleCourseProviderList.add(rs.getString("CRTBY"));
-					singleCourseProviderList.add(rs.getString("MODON"));
-					singleCourseProviderList.add(rs.getString("MODBY"));
 
 					final Collection<String> singleCourseProviderCollection = singleCourseProviderList;
 					courseProviderCollection
@@ -189,23 +193,23 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 				}
 
-			} else {
-
-			}
+			} 
 
 		} catch (SQLException exception) {
-			log.error("findById(Object code) sql exception"
+			log.error("findById(Object code) SQL Exception"
 					+ exception.toString());
 			throw exception;
 
 		} catch (Exception exception) {
-			log.error("findById(Object code) " + exception.toString());
+			log.error("findById(Object code) Exception" + exception.toString());
 			throw exception;
 		} finally {
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			conn.close();
+			if(conn != null){
+				conn.close();		
+			}
 
 		}
 		return courseProviderCollection;

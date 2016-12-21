@@ -2,14 +2,21 @@ package com.genesiis.campus.validation;
 
 //20161102 JH c7-higher-education-landing-page Validator.java created
 //20161102 JH c7-higher-education-landing-page getDuration() created
+//20161115 JH c7-higher-education-landing-page isEmpty()method modified to support any string validation
 //20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
+//20161115 JH c7-higher-education-landing-page add method comments
 
 import java.util.ArrayList;
 
-import com.genesiis.campus.util.IDataHelper;
-
 public class Validator {
 
+	/**
+	 * Programme durations are stored as days which is to be converted into years and months.
+	 * getDuration method used to calculate the duration of a programme in years, months and days. 
+	 * @param duration
+	 * @return object 
+	 * @author JH
+	 */
 	public Object getDuration(int duration) {
 		ArrayList<String> programDuration = new ArrayList<String>();
 
@@ -25,20 +32,20 @@ public class Validator {
 		return programDuration;
 	}
 
-	public boolean isEmpty(IDataHelper helper) {
+	/**
+	 * isEmpty method used to validate string parameters. 
+	 * @param parameter
+	 * @return boolean true, false value
+	 */
+	public boolean isEmpty(String parameter) {
 		boolean valid = false;
-		if (helper.getParameter("categoryId") == null) {
+		if (parameter == null) {
 			valid = true;
 		}
 
 		return valid;
 	}
-
-	public static boolean isInteger(String numString) {
-
-		return false;
-	}
-
+}
 	public static boolean isNumber(final CharSequence cs) {
 		if (cs == null || cs.toString().isEmpty()) {
 			return false;
@@ -51,4 +58,3 @@ public class Validator {
 		}
 		return true;
 	}
-}

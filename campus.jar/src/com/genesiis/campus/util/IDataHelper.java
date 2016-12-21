@@ -14,7 +14,7 @@ public interface IDataHelper {
 	public String getResultPage(String cco);
 
 	public IView getResultView(String cco) throws Exception;
-	
+
 	public ResponseType getResponseType(String cco);
 
 	public String getParameter(String paramName);
@@ -22,11 +22,11 @@ public interface IDataHelper {
 	public void setAttribute(String name, Object o);
 
 	Object getAttribute(String name);
-	
+
 	public String[] getParameterValues(String name);
 
 	HttpSession getSession(boolean status);
-	
+
 	String getRemoteAddress();
 
 	String getHeader(String name);

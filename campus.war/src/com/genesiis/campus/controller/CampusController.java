@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class CampusController
- * extract from XenoController.java * 
+ * Servlet implementation class CampusController extract from
+ * XenoController.java *
  * 
  */
 @WebServlet("/CampusController")
@@ -73,31 +73,32 @@ public class CampusController extends HttpServlet {
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
-			
-			if (ResponseType.JSP.equals(responseType)) {  
-	
+
+			if (ResponseType.JSP.equals(responseType)) {
+
 				request.setAttribute("result", result);
 				request.getRequestDispatcher(helper.getResultPage(cco))
 						.forward(request, response);
-				
-			} else if (ResponseType.JSON.equals(responseType)) {  
+
+			} else if (ResponseType.JSON.equals(responseType)) {
 
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-				
-				if (result != null && result.getCollection() != null) {					
+
+				if (result != null && result.getCollection() != null) {
 					objectMap.put("result", result.getCollection());
 				} else {
 					objectMap.put("result", "NO-DATA");
 				}
-				
-				Enumeration<String> attributeNames = request.getAttributeNames();
+
+				Enumeration<String> attributeNames = request
+						.getAttributeNames();
 
 				while (attributeNames.hasMoreElements()) {
 					String currentAttributeName = attributeNames.nextElement();
 					Object object = helper.getAttribute(currentAttributeName);
 					objectMap.put(currentAttributeName, object);
 				}
-				
+
 				response.getWriter().write(gson.toJson(objectMap));
 				response.setContentType("application/json");
 			}
