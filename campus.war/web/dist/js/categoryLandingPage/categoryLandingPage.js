@@ -47,6 +47,8 @@
  * 													page displaying only 1 programme and total result set containing only 1 item.
  * 20161130 MM c5-corporate-training-landing-page-MP Modified code to handle an issue related to filtering area getting distorted
  * 													upon having filtering items that have names that are longer than around 25 chars
+ * 20161221 MM c5-corporate-training-landing-page-MP Changed the vertical alignment value for superscripted ordinal indicator of 
+ * 													item in message displayed as to what result set is being displayed currently. 
  */
 
 // IMPORTANT: Validate these values to see if they are in the expected format wherever they are used 
@@ -241,7 +243,7 @@ function constructProgrammeListing(pageNum) {
 			
 			if (val[24] === oneOffProviderDetails.name) {		
 				courseProviderCode = oneOffProviderDetails.code;
-				imgAlterTextShortName = "Default Provider"
+				imgAlterTextShortName = "Default Provider";
 			} else {				
 				courseProviderCode = val[11];	
 				imgAlterTextShortName = val[17];
@@ -387,7 +389,7 @@ function changeDisplayedResultsStatInfo (currentlyDisplayedProgInfo, totalNumOfR
     	    	'8': 'th',
     	    	'9': 'th',
     	    	};
-    	resultsStatInfoHtml += firstProgramme + '<sup style="vertical-align: bottom; font-size: 0.8em">' + 
+    	resultsStatInfoHtml += firstProgramme + '<sup style="vertical-align: middle; font-size: 0.8em">' + 
     	digitToSuffixMap[lastDigit] + '</sup>';
     	
     } else {

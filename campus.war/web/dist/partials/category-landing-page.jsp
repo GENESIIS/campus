@@ -32,7 +32,7 @@
 <body>
 
 	<!-- include Header-->
-		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
 	<!-- End Header -->
 
 	<!-- Main Container - Higher-Education -->
@@ -262,7 +262,7 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-<script src="/dist/js/categoryLandingPage/categoryLandingPage.js"></script>
+	<script src="/dist/js/categoryLandingPage/categoryLandingPage.js"></script>
 
 	<!-- custom javascript -->
 	<!-- <script src="/dist/js/header/ui-populate-helper.js"></script>  -->
