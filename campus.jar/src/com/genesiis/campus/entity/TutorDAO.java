@@ -53,7 +53,6 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
 			preparedStatement.setString(7, tutor.getEmailAddress());
-			//preparedStatement.setString(8, tutor.getImagePath());
 			preparedStatement.setString(8, tutor.getLandCountryCode());
 			preparedStatement.setString(9, tutor.getLandAreaCode());
 			preparedStatement.setString(10, tutor.getLandNumber());

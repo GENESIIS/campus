@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information INIT CmdAddTutorProfile.java
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
+//20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CmdAddTutorProfile implements ICommand {
 	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
 
 	/**
-	 * @author Chathuri
+	 * @author Chathuri, Chinthaka
 	 * @param helepr
 	 *            IDataHelper object of Object type view IView object of object
 	 *            type
@@ -44,40 +45,9 @@ public class CmdAddTutorProfile implements ICommand {
 			final Validator validator=new Validator();
 			message = validator.validateTutorFields(helper);
 			if (message.equalsIgnoreCase("True")) {
-
-				setVariables(helper,tutorCollection);
-				
 								
-				tutor.setUsername(tutorCollection.toArray()[0].toString());
-				tutor.setPassword(tutorCollection.toArray()[1].toString());
-				tutor.setFirstName(tutorCollection.toArray()[2].toString());
-				tutor.setMiddleName(tutorCollection.toArray()[3].toString());
-				tutor.setLastName(tutorCollection.toArray()[4].toString());
-				tutor.setGender(tutorCollection.toArray()[5].toString());
-				tutor.setEmailAddress(tutorCollection.toArray()[6].toString());
-				tutor.setLandCountryCode(tutorCollection.toArray()[7].toString());
-				tutor.setLandAreaCode(tutorCollection.toArray()[8].toString());
-				tutor.setLandNumber(tutorCollection.toArray()[9].toString());
-				tutor.setMobileCountryCode(tutorCollection.toArray()[10].toString());
-				tutor.setMobileNetworkCode(tutorCollection.toArray()[11].toString());
-				tutor.setMobileNumber(tutorCollection.toArray()[12].toString());
-				tutor.setDescription(tutorCollection.toArray()[13].toString());
-				tutor.setExperience(tutorCollection.toArray()[14].toString());
-				tutor.setWebLink(tutorCollection.toArray()[15].toString());
-				tutor.setFacebookLink(tutorCollection.toArray()[16].toString());
-				tutor.setTwitterNumber(tutorCollection.toArray()[17].toString());
-				tutor.setMySpaceId(tutorCollection.toArray()[18].toString());
-				tutor.setLinkedInLink(tutorCollection.toArray()[19].toString());
-				tutor.setInstagramId(tutorCollection.toArray()[20].toString());
-				tutor.setViberNumber(tutorCollection.toArray()[21].toString());
-				tutor.setWhatsAppId(tutorCollection.toArray()[22].toString());
-				tutor.setAddressLine1(tutorCollection.toArray()[23].toString());
-				tutor.setAddressLine2(tutorCollection.toArray()[24].toString());
-				tutor.setAddressLine3(tutorCollection.toArray()[25].toString());
-				tutor.setTown(tutorCollection.toArray()[26].toString());
-			//	tutor.setIsApproved(0);
+				setVariables(helper,tutor);
 
-				
 				UserTypeDAO typeOfUser = new UserTypeDAO();
 
 				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
@@ -104,111 +74,110 @@ public class CmdAddTutorProfile implements ICommand {
 	
 
 	/*
-	 * setEnvironment() method initializes all the instance variable
+	 * setVariables() method initializes all the instance variable
 	 * 
-	 * @author CM
+	 * @author CM, CW
 	 * 
-	 * @param helper IDataHelper
+	 * @param helper IDataHelper, Tutor
 	 */
 
-//	public void setVariables(IDataHelper helper, Collection<Collection<String>> tutorCollection)
-	public void setVariables(IDataHelper helper, Collection<String> tutorCollection) {
+	public void setVariables(IDataHelper helper, Tutor tutor) {
 		try {
-			
-			tutorCollection.add(helper.getParameter("username"));
-			tutorCollection.add(helper.getParameter("password"));
-			tutorCollection.add(helper.getParameter("firstname"));
+			tutor.setUsername(helper.getParameter("username"));
+			tutor.setPassword(helper.getParameter("password"));
+			tutor.setFirstName(helper.getParameter("firstname"));
 			
 			if (helper.getParameter("middlename").equals("")) {
-				tutorCollection.add("-");
+				tutor.setMiddleName("-");
 			} else {
-				tutorCollection.add(helper.getParameter("middlename"));
+				tutor.setMiddleName(helper.getParameter("middlename"));
 			}
 			
-			tutorCollection.add(helper.getParameter("lastname"));
-			tutorCollection.add(helper.getParameter("gender"));
-			tutorCollection.add(helper.getParameter("email"));
-			tutorCollection.add(helper.getParameter("countryDetails"));
-			tutorCollection.add(helper.getParameter("landAreaCode"));
-			tutorCollection.add(helper.getParameter("landNumber"));
-			tutorCollection.add(helper.getParameter("countryDetails"));
-			tutorCollection.add(helper.getParameter("mobileNetworkCode"));
-			tutorCollection.add(helper.getParameter("mobileNumber"));
+			tutor.setLastName(helper.getParameter("lastname"));
+			tutor.setGender(helper.getParameter("gender"));
+			tutor.setEmailAddress(helper.getParameter("email"));
+			tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+			tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
+			tutor.setLandNumber(helper.getParameter("landNumber"));
+			tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
+			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
 			
 			if (helper.getParameter("aboutMe").equals("")) {
-				tutorCollection.add("-");
+				tutor.setDescription("-");
 			} else {
-				tutorCollection.add(helper.getParameter("aboutMe"));
+				tutor.setDescription(helper.getParameter("aboutMe"));
 			}
 
 			if (helper.getParameter("experience").equals("")) {
-				tutorCollection.add("-");
+				tutor.setExperience("-");
 			} else {
-				tutorCollection.add(helper.getParameter("experience"));
+				tutor.setExperience(helper.getParameter("experience"));
 			}
 			
 			if (helper.getParameter("weblink").equals("")) {
-				tutorCollection.add("-");
+				tutor.setWebLink("-");
 			} else {
-				tutorCollection.add(helper.getParameter("weblink"));
+				tutor.setWebLink(helper.getParameter("weblink"));
 			}
 
 			if (helper.getParameter("facebook").equals("")) {
-				tutorCollection.add("-");
+				tutor.setFacebookLink("-");
 			} else {
-				tutorCollection.add(helper.getParameter("facebook"));
+				tutor.setFacebookLink(helper.getParameter("facebook"));
 			}
 
 			if (helper.getParameter("twitter").equals("")) {
-				tutorCollection.add("-");
+				tutor.setTwitterNumber("-");
 			} else {
-				tutorCollection.add(helper.getParameter("twitter"));
+				tutor.setTwitterNumber(helper.getParameter("twitter"));
 			}
 
 			if (helper.getParameter("myspace").equals("")) {
-				tutorCollection.add("-");
+				tutor.setMySpaceId("-");
 			} else {
-				tutorCollection.add(helper.getParameter("myspace"));
+				tutor.setMySpaceId(helper.getParameter("myspace"));
 			}
 
 			if (helper.getParameter("linkedin").equals("")) {
-				tutorCollection.add("-");
+				tutor.setLinkedInLink("-");
 			} else {
-				tutorCollection.add(helper.getParameter("linkedin"));
+				tutor.setLinkedInLink(helper.getParameter("linkedin"));
 			}
 
 			if (helper.getParameter("instagram").equals("")) {
-				tutorCollection.add("-");
+				tutor.setInstagramId("-");
 			} else {
-				tutorCollection.add(helper.getParameter("instagram"));
+				tutor.setInstagramId(helper.getParameter("instagram"));
 			}
 			
 			if (helper.getParameter("viber").equals("")) {
-				tutorCollection.add("-");
+				tutor.setViberNumber("-");
 			} else {
-				tutorCollection.add(helper.getParameter("viber"));
+				tutor.setViberNumber(helper.getParameter("viber"));
 			}
 
 			if (helper.getParameter("whatsapp").equals("")) {
-				tutorCollection.add("-");
+				tutor.setWhatsAppId("-");
 			} else {
-				tutorCollection.add(helper.getParameter("whatsapp"));
+				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
 			}
 			
-			tutorCollection.add(helper.getParameter("address1"));
+			tutor.setAddressLine1(helper.getParameter("address1"));
+			
 			if (helper.getParameter("address2").equals("")) {
-				tutorCollection.add("-");
+				tutor.setAddressLine2("-");
 			} else {
-				tutorCollection.add(helper.getParameter("address2"));
+				tutor.setAddressLine2(helper.getParameter("address2"));
 			}
 
 			if (helper.getParameter("address3").equals("")) {
-				tutorCollection.add("-");
+				tutor.setAddressLine3("-");
 			} else {
-				tutorCollection.add(helper.getParameter("address3"));
+				tutor.setAddressLine3(helper.getParameter("address3"));
 			}
 			
-			tutorCollection.add(helper.getParameter("townDetails"));
+			tutor.setTown(helper.getParameter("townDetails"));
 
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());

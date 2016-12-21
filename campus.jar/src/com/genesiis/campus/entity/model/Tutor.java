@@ -31,7 +31,6 @@ public class Tutor {
 	private String whatsAppId;
 	private String viberNumber; 
 	private String emailAddress;
-	//private String imagePath;
 	private String username;
 	private String password;
 	private String town;
@@ -341,21 +340,7 @@ public class Tutor {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
-	/**
-	 * @return the imagePath
-	 */
-/*	public String getImagePath() {
-		return imagePath;
-	}*/
-	
-	/**
-	 * @param imagePath the imagePath to set
-	 */
-/*	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}*/
-	
+		
 	/**
 	 * @return the username
 	 */
