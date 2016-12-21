@@ -47,23 +47,23 @@ function displayProviderCountries() {
 	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getProviderTownListData()"><option>--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
-			singleCountryElement += '<option value="' +value[0]+'">';
+			singleCountryElement += '<option value="' + value[0] + '">';
 			singleCountryElement += value[1];
 			singleCountryElement += '</option>';
 
 		});
 	}
-	singleCountryElement += '</select>';
+	singleCountryElement += '';
 	var countryNames = $("#country-List");
 	countryNames.html(singleCountryElement);
 
 }
 
-//var selectedCountry = $("#selectedCountry");
-//alert(selectedCountry);
+// var selectedCountry = $("#selectedCountry");
+// alert(selectedCountry);
 function getProviderTownListData() {
 	var selectedCountry = document.getElementById('selectedCountry').value;
-	alert(selectedCountry);
+	
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
@@ -83,8 +83,23 @@ function getProviderTownListData() {
 	});
 }
 
-function displayProviderTownList(){
-alert(townCollection);
+function displayProviderTownList() {
+
+	var countryCollection = window.townCollection;
+	var singleTownElement = '';
+
+	singleTownElement += '<select id="selectedTown" name="selectedTown">';
+	if (townCollection !== undefined & townCollection !== null) {
+		$.each(townCollection, function(index, value) {
+			singleTownElement += '<option value="' + value[2] + '">';
+			singleTownElement += value[1];
+			singleTownElement += '</option>';
+
+		});
+	}
+	singleTownElement += '</select>';
+	var townNames = $("#town-List");
+	townNames.html(singleTownElement);
 }
 
 function getProviderType() {
