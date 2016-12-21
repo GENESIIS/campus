@@ -1,4 +1,5 @@
 <!-- 20161130 PN c27-upload-user-image: added a button to load student profile page. -->
+<!-- 20161221 PN CAM-27 changed Student button into anchor tag. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -49,9 +50,10 @@
                         <li><a href="">F & Q</a></li>
                         <li><a href="">Rss</a></li>
                         <li>
-                            <form action="/StudentController" method="post" >
-                                <button type="submit" name="CCO" id="CCO" class="" value="GUP">Student</button>
-                            </form>
+                        <a href="dist/partials/student/student-dashboard.jsp">Student</a>
+<!--                             <form action="/StudentController" method="post" > -->
+<!--                                 <button type="submit" name="CCO" id="CCO" class="" value="GUP">Student</button> -->
+<!--                             </form> -->
                         </li>
                     </ul>
                 </div>
