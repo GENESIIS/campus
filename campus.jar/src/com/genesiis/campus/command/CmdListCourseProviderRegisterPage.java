@@ -40,8 +40,8 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 			case DISPLAY_TOWN_DATA:
 
 				ICrud townDao = new TownDAO();
-				townCollection = townDao.findById(Integer
-						.parseInt(helper.getParameter("country")));
+				int countryId = Integer.parseInt(helper.getParameter("country"));
+				townCollection = townDao.findById(countryId);
 				helper.setAttribute("townArrayList", townCollection);
 				break;
 			default:
