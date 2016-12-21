@@ -47,34 +47,14 @@ $(document).ready(function() {
 });
 
 function getProviderSearchData(response){
-/*	var htmlstr="";
-	$.each(response.result, function(index, value) {
-		if(value!=null && value.length>0){
-			htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
-		}		
-	});		
-	$('#providerName').html(htmlstr);*/
-	
+	$('#resultSetDiv').hide();	
 	var htmlstr="";
 	$.each(response.result, function(index, value) {
 		if(value!=null && value.length>0){
 			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
 		}		
 	});		
-	$('#providerName').html(htmlstr);
-	
-	
-	
-	
-	/*var providerName = $("#providerName");
-	$.each(response.result, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-
-		$('<option>').val(x).text(y).appendTo(providerName);
-	});	*/
+	$('#providerName').html(htmlstr);	
 } 
 
 function loadResultSet(event){	
@@ -119,6 +99,7 @@ function loadResultSet(event){
 	});
 }
 function populateResultTable(response){
+	$('#resultSetDiv').hide();
 	var coursesListTable = $("#table");
 	coursesListTable.find('tr').remove();
 	 var cCode='Course Code';
@@ -137,14 +118,15 @@ function populateResultTable(response){
 	headertr += '<td>' + cExDate  + '</td>'; 
 	coursesListTable.append(headertr);
 	var count=1;
-	$.each(response.coursesResultList, function(index, value) {		
+	$.each(response.coursesResultList, function(index, value) {	
+		$('#resultSetDiv').show();
 	if(value!=null && value.length>0){ 
 		var code = value[0].toString();
 		var name = value[1].toString();
 		var des = value[2].toString();
 		var cStatus = value[3].toString();		
 		var sDate = value[4].toString();
-		var eDate = value[4].toString();
+		var eDate = value[5].toString();
 		
 		var tr = '<tr>' ;
 		tr += '<td>' + count++  + '</td>';
@@ -161,7 +143,7 @@ function populateResultTable(response){
 }
 
 function clearParameters(event){
-	$('#providerlist').val("-- Select District --"); 
+	$('#providerlist').val("-- Select Course Provider--"); 
 	$('input:radio[name=status]').prop('checked', false);
 	$('#startdate').val(" "); 
 	$('#enddate').val(" "); 	

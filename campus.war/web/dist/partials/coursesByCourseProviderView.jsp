@@ -19,6 +19,23 @@
 
 <!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
 </head>
 <body>
 	<!-- Header-->
@@ -45,7 +62,7 @@
 			<div>
 				<div class="container">					
 						<fieldset>
-							<legend align="left">Search criteria </legend>
+							<legend align="left">Search criteria : </legend>
 							<!-- <div class="courseProvider ">
 								Course Provider :<input type="text" name="providerlist"
 									id="providerlist" list="providerName"
@@ -55,8 +72,8 @@
 							</div> -->
 							<div class="drop-holder">
 								<input type="text" name="providerlist" id="providerlist"
-									list="providerName" placeholder="-- Select District --" />
-								<datalist id="providerName">
+									list="providerName" placeholder="-- Select District --"  required/>
+								<datalist id="providerName" >
 								</datalist>
 							</div>
 							<div>
@@ -79,21 +96,15 @@
 				</div>
 			</div>
 			</br></br>			 
-			 <div >
-                <h1>Result set</h1>
-                <div >
-                <table id="table" class="table-responsive">						
+			 <div id="resultSetDiv" >
+                <!-- <h1>Result set</h1> -->              
+                <table id="table" >						
 							<!-- <tr>
 							   <td>Item ID</td>
                                <td>Item Name</td>
 							</tr>	 -->				
 						
-					</table>
-                
-               <!--  <ul id="coursesList" class="list-inline clearfix">
-
-				</ul> -->
-                </div>
+					</table>  
                 </div>
 			</div>
 			</br></br>		
