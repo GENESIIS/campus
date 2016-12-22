@@ -64,7 +64,7 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		if (Operation.BAD_OPERATION.equals(o)) {
 			String headerValue = getHeader("x-requested-with");
-			if (headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+			if (headerValue != null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
 				return ResponseType.JSON;
 			} else {
 				return ResponseType.JSP;
