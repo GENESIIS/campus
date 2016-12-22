@@ -90,8 +90,7 @@ public class CourseProviderDAO implements ICrud{
 			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.NAME AS CPNAME ");
 			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
 			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");			
-			// sb.append("AND PROG.PROGRAMMESTATUS=1 ");
+			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");	
 			sb.append("AND CAT.ISACTIVE=? AND CAT.CODE=?");			
 			 
 			stmt = conn.prepareStatement(sb.toString());
@@ -186,16 +185,16 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findTopViewedProviders(CourseProvider provider) throws SQLException,Exception{
+	public Collection<Collection<String>> findTopViewedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
 		 Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {			
-			CourseProvider cProvider=new CourseProvider();
+			CourseProviderSearchDTO cProvider=new CourseProviderSearchDTO();
 			if(UtilityHelper.isNotEmptyObject(provider)){
-				cProvider = (CourseProvider) provider;								
+				cProvider = (CourseProviderSearchDTO) provider;								
 			}else{
 				return allProviderList;
 			}	
@@ -240,7 +239,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findTopRatedProviders(CourseProvider provider) throws SQLException,Exception{
+	public Collection<Collection<String>> findTopRatedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
 		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
@@ -248,9 +247,9 @@ public class CourseProviderDAO implements ICrud{
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
 		try {			
-			CourseProvider cProvider=new CourseProvider();			
+			CourseProviderSearchDTO cProvider=new CourseProviderSearchDTO();			
 			if(UtilityHelper.isNotEmptyObject(provider)){
-				cProvider = (CourseProvider) provider;
+				cProvider = (CourseProviderSearchDTO) provider;
 			}else{
 				return allProviderList;
 			}	

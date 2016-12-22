@@ -18,6 +18,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.LevelDAO;
 import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
@@ -39,12 +40,11 @@ public class CmdListMoreCourseProviders implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;
+		final CourseProviderDAO providerDAO = new CourseProviderDAO();		
 		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		try {
 			int categoryCode = 0;
-			final CourseProvider provider = new CourseProvider();
+			final CourseProviderSearchDTO provider = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("categoryCode");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
@@ -69,8 +69,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
-			log.error("execute() : Exception " + exception);
-			systemMessage = SystemMessage.ERROR;
+			log.error("execute() : Exception " + exception);			
 			throw exception;
 		}
 		return iview;

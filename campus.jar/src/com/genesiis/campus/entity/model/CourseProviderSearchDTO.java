@@ -11,9 +11,7 @@ public class CourseProviderSearchDTO {
 	
 	private int courseProviderCode;
 	private int category;
-	private int level;
-	private int major;
-	private int courserProviderType;
+	private int courseProviderStatus;	
 	private int district;
 	private List<Integer> categoryList;
 	private List<Integer> cpTypeList;
@@ -32,24 +30,13 @@ public class CourseProviderSearchDTO {
 	public void setCategory(int category) {
 		this.category = category;
 	}
-	public int getLevel() {
-		return level;
+	
+	public int getCourseProviderStatus() {
+		return courseProviderStatus;
 	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	public int getMajor() {
-		return major;
-	}
-	public void setMajor(int major) {
-		this.major = major;
-	}
-	public int getCourserProviderType() {
-		return courserProviderType;
-	}
-	public void setCourserProviderType(int courserProviderType) {
-		this.courserProviderType = courserProviderType;
-	}
+	public void setCourseProviderStatus(int courseProviderStatus) {
+		this.courseProviderStatus = courseProviderStatus;
+	}	
 	public int getDistrict() {
 		return district;
 	}

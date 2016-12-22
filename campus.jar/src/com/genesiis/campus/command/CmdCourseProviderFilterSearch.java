@@ -34,9 +34,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-		
+		final CourseProviderDAO providerDAO = new CourseProviderDAO();			
 		try {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			final Map<String, String[]> searchParamCollection = helper.getParameterMap();			
@@ -49,7 +47,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
-			systemMessage = SystemMessage.ERROR;
+			
 			throw exception;
 		}		
 		
@@ -100,7 +98,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 		final List<Integer> codeList = new ArrayList<Integer>();
 		if (selectedCodesArray != null && selectedCodesArray.length > 0) {			
 			for (String code : selectedCodesArray) {
-				codeList.add(Integer.parseInt(code));
+				codeList.add(Integer.valueOf(code));
 			}			
 		}
 		return codeList;
