@@ -196,7 +196,8 @@ function populateFilterSearchResults(response) {
 		}
 	});
 	if(response.result!=null && response.result.length===0){
-		providerChoice.append("No course providers for selected criteria");		
+		
+		providerChoice.text("No course providers for selected criteria");		
 	}
 	
 }
@@ -257,6 +258,7 @@ function populateCategoryWiseTypes(response){
 	secondChoice.find('li').remove();
 	$.each(	response.cpTypeList,function(index, value) {
 		$("#cpTypeDiv").show();
+		$('#cpTypeAll').prop('checked',false);
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
@@ -271,6 +273,7 @@ function populateCategoryWiseTypes(response){
 	secondChoice.find('li').remove();
 	$.each(response.majorList, function(index, value) {
 		$("#majorDiv").show();
+		$('#majorAll').prop('checked',false);
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
@@ -285,6 +288,7 @@ function populateCategoryWiseTypes(response){
 	secondChoice.find('li').remove();
 	$.each(response.levelList, function(index, value) {
 		$("#levelDiv").show();
+		$('#levelAll').prop('checked',false);
 		if(value!=null && value.length>0){			
 			var x = value[0].toString();
 			var y = value[1].toString();
