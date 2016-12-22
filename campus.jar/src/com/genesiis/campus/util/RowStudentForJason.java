@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 //20161129 DN C18-student-signup-without-using-third-party-application-test-dn created RowStudentForJason.java utility class
 //20161214 DN CAM:18 userTypeCode renamed to userCode and getters and setters are renamed accordingly to support jason conversion
+//20161222 DN CAMP:18 made field access modifier private as per the crev comments.
 /*
  * RowStudentForJason  class maps the JSON data to raw Student object
  * till induce the brought in data from client side to proper  business model object
@@ -9,19 +10,19 @@ package com.genesiis.campus.util;
  *
  */
 public class RowStudentForJason{
-	String firstName ;
-	String lastName  ;
-	String gender	;
-	String email;
-	String mobilePhoneNo;
-	String mobileCountryCode;
-	String mobileNetworkCode;
-	String town	;
-	String userCode;
-	String userName	;
-	String passWord	;
-	String confirmPw;
-	boolean isPolicyConfirm	;
+	private String firstName ;
+	private String lastName  ;
+	private String gender	;
+	private String email;
+	private String mobilePhoneNo;
+	private String mobileCountryCode;
+	private String mobileNetworkCode;
+	private String town	;
+	private String userCode;
+	private String userName	;
+	private String passWord	;
+	private String confirmPw;
+	private boolean isPolicyConfirm	;
 	
 
 	public String getUserCode() {
