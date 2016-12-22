@@ -14,10 +14,9 @@
  */
 
 $(document).ready(function() {
-	$('#selectAll').attr('checked', false); // Unchecks it
 	displayDetails();
-	var t = $('#example').DataTable(); 
-	
+	$('#selectAll').attr('checked', false); // Unchecks it	
+	var t = $('#example').DataTable(); 	
 	$('#selectAll').change(function() {
         if ($(this).prop('checked')) {        	
         	//field clear by elementId the id of the HTML elements       
@@ -59,7 +58,7 @@ $(document).ready(function() {
     							'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
     						'</div>' +
     					'</div>',
-    					data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString()
+    					data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),data[17].toString()
     					        ] ).draw( false );
 
     				});
@@ -126,7 +125,7 @@ $('#addRow').on( 'click', function () {
 						'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
 					'</div>' +
 				'</div>',
-				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString()
+				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),data[17].toString()
 				        ] ).draw( false );
 
 			});
@@ -140,8 +139,6 @@ $('#addRow').on( 'click', function () {
 
 // Automatically add a first row of data
 $('#addRow').click();
-	
-	
 });
 
 function displayDetails() {
@@ -319,6 +316,7 @@ function displayDetailsOnLoad() {
 }
 
 function displayDetailsOnChange() {
+	alert("Hey Girl");
 	$(document).find('#instituelist').val('');
 	$(document).find('#districtlist').val('');
 	displayMajor();
@@ -341,14 +339,6 @@ function getNumFilteredRows(t){
 	   var info = t.page.info();
 	   return info.recordsDisplay;
 }
-
-$(document).ready(function() {
-//	$('#selectAll').attr('checked', false); // Unchecks it
-//    var t = $('#example').DataTable();   
-    
-
-
-} );
 
 /**
  * This method is to get selected checkbox values

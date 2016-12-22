@@ -43,8 +43,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$.fn.dataTableExt.sErrMode = 'throw';
-// 	var table = $('#example').DataTable( {
-//     } );
 } );
 </script>
 
@@ -227,8 +225,9 @@ $(document).ready(function() {
 						<thead>
 							<tr>
 								<th>Institute</th>
-								<th>Course Details</th>
+								<th>Course Details</th>								
 								<th>Starting Date</th>
+								<th>Cost</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -236,6 +235,7 @@ $(document).ready(function() {
 								<td>Institute</td>
 								<td>Course Details</td>
 								<td>Starting Date</td>
+								<th>Cost</th>
 							</tr>
 						</tbody>
 					</table>
