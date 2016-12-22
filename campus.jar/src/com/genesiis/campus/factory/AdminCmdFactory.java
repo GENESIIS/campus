@@ -7,6 +7,7 @@ package com.genesiis.campus.factory;
 //20161208 JH c39-add-course-provider added new map for COURSE_PROVIDER_VALIDATION
 //20161209 JH c39-add-course-provider COURSE_PROVIDER_VALIDATION map modified
 //20161220 JH c39-add-course-provider added new map for LIST_PROVIDER_REGISTRATION_PAGE
+//20161222 JH c39-add-course-provider added new map for COURSE_PROVIDER_USERNAME_VALIDATION
 
 import com.genesiis.campus.command.CmdCourseProviderAccountValidate;
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
@@ -28,6 +29,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.COURSE_PROVIDER_VALIDATION, new CmdCourseProviderAccountValidate());
 		map.put(Operation.LIST_PROVIDER_REGISTRATION_PAGE, new CmdListCourseProviderRegisterPage());
 		map.put(Operation.DISPLAY_TOWN_DATA, new CmdListCourseProviderRegisterPage());
+		map.put(Operation.COURSE_PROVIDER_USERNAME_VALIDATION, new CmdCourseProviderAccountValidate());
 	}
 
 	@Override
@@ -48,6 +50,9 @@ public class AdminCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case DISPLAY_TOWN_DATA:
+			command = map.get(o);
+			break;
+		case COURSE_PROVIDER_USERNAME_VALIDATION:
 			command = map.get(o);
 			break;
 		default:
