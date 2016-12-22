@@ -24,7 +24,12 @@
 <body>
 
 <!-- Header-->
-<header w3-include-html="dist/partials/layout/header.jsp"></header>
+<!-- End Header -->
+	<header>
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	</header>
+
+	<!-- End Header -->
 
 <!-- Main Container - Landing -->
 <!--<div w3-include-html="dist/partials/landing.jsp"></div>-->
@@ -79,7 +84,9 @@
 </div>
 
 <!-- Footer -->
-<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
+<!-- Footer -->
+	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
+	<!-- End Footer -->
 
 <!-- jQuery & Other js -->
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->

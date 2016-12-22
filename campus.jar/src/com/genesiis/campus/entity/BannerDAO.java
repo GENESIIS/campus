@@ -176,4 +176,11 @@ public class BannerDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Collection<Collection<String>> findById(Object object,
+			Connection conn) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

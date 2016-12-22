@@ -1,5 +1,5 @@
 package com.genesiis.campus.factory;
-//20161024 DN created ICmdFactory.java
+//20161024 DN c10-contacting-us create the initial version of ICmdFactory.java
 
 
 import java.util.HashMap;

@@ -155,4 +155,11 @@ public class InstituteDAO implements ICrud{
 		return 0;
 	}
 
+	@Override
+	public Collection<Collection<String>> findById(Object object,
+			Connection conn) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

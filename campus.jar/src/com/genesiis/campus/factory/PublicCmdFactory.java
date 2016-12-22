@@ -8,21 +8,23 @@ package com.genesiis.campus.factory;
 //20161116 MM c2-integrate-google-banners Changed map element with key LIST_GOOGLE_ADVERTS to LOAD_BANNER_PAGE
 //20161217 MM c2-integrate-google-banners Removed map element and case block related to LOAD_BANNER_PAGE, 
 //				that was there for testing purposes during development of the issue
-
+//20161026 DN c10-contacting-us-page amended by inserting CONTACT_US_PUBLC entry to the map
 
 import com.genesiis.campus.command.CmdListCategories;
 import com.genesiis.campus.command.CmdAddBannerStat;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
-
 import org.apache.log4j.Logger;
+import com.genesiis.campus.command.CmdGenerateEmail;
 
 public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
-	static {	
-		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());	
+	static {
+
+		map.put(Operation.LIST_CATEGORY_DATA, new CmdListCategories());
 		map.put(Operation.ADD_BANNER_STAT, new CmdAddBannerStat());
+		map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());
 	}
 
 	@Override
@@ -30,10 +32,15 @@ public class PublicCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
+
 		case LIST_CATEGORY_DATA:
 			command = map.get(o);
 			break;
 		case ADD_BANNER_STAT:
+			command = map.get(o);
+			break;
+
+		case CONTACT_US_PUBLC:
 			command = map.get(o);
 			break;
 		default:

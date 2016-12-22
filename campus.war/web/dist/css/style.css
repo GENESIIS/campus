@@ -88,6 +88,16 @@ textarea:focus, input:focus {
   font-size: 32px;
   line-height: 54px; }
 
+.msg-warning {
+  color: #e28a01;
+  font-family: Verdana, sans-serif;
+  font-size: 16px; }
+
+.msg-danger {
+  color: #E64545;
+  font-family: Verdana, sans-serif;
+  font-size: 16px; }
+
 /*Font Face */
 /* Layout */
 footer .ft-top {
@@ -441,6 +451,7 @@ body, html {
         .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > input {
           color: #dff4ff;
           line-height: 54px;
+          height: 54px;
           font-size: 22px;
           border: none;
           background: #506374;
@@ -507,6 +518,8 @@ body, html {
                   font-size: 68px;
                   left: -45px;
                   top: -6px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer {
+              display: block; }
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
               font-size: 18px;
               line-height: 20px;
@@ -748,6 +761,8 @@ body, html {
       cursor: pointer; }
       .filter-item .item-header label span {
         color: #3a8af7; }
+  .filter-item .item-container {
+    display: block; }
   .filter-item .item-container .select-item {
     display: block; }
     .filter-item .item-container .select-item label {
@@ -766,8 +781,3 @@ body, html {
   color: #fff; }
   .btn-submit:hover {
     background: #3a7be9; }
-
-.slideable {
-  display: none; }
-
-/*# sourceMappingURL=style.css.map */

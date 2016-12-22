@@ -8,6 +8,17 @@ package com.genesiis.campus.util;
 //				getResponseType() method			
 //20161116 MM c2-integrate-google-banners-MP Added call to BannerData.setBannerDetails(IDatahelper, String) 
 //				in getResultView(String) method
+//20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
+//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
+//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
+//20161031 DN c10-contacting-us-page getAttribute() method implemented
+//20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
+//20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
+// 			due to code review comment by CM
+
+import java.io.IOException;
+import java.util.Collection;
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -22,6 +33,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import com.genesiis.campus.validation.BannerData;
+import javax.servlet.http.HttpSession;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
