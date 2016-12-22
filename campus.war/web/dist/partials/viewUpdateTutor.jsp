@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Tutor Profile</title>
+<title>View or Update Tutor Profile</title>
 </head>
 <body>
 	<!-- 	onsubmit="return (validateTutorFileds())" -->

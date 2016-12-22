@@ -150,6 +150,9 @@ public int add(Object object) throws SQLException, Exception {
 				final ArrayList<String> singleTutorList = new ArrayList<String>();		
 				
 				Encryptable passwordEncryptor = new TripleDesEncryptor();
+
+				
+				System.out.println("-----"+ passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD")) + "------");
 				
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
