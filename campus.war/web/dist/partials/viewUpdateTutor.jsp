@@ -44,6 +44,7 @@
 			<c:set var="address3" value="${tutorList[26]}" />
 			<c:set var="town" value="${tutorList[27]}" />
 			<c:set var="usertype" value="${tutorList[28]}" />
+			<c:set var="countryname" value="${tutorList[29]}" />
 
 		</c:forEach>
 
@@ -109,13 +110,16 @@
 				</tr>
 				<tr>
 					<td>Country</td>
+					<td>${countryname}</td>
+						
 					<td><span id="countryError"></span> <select
-						name="countryDetails" id="countryDetails" value="${landphonecountrycode}">
+						name="countryDetails" id="countryDetails" >
 							<option></option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>Town</td>
+					<td>Town</td>					
+					<td>${town}</td>
 					<td><span id="townError"></span> <select name="townDetails"
 						id="townDetails">
 							<option></option>
