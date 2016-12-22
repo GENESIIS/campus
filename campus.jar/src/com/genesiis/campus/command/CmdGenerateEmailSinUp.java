@@ -1,5 +1,7 @@
 package com.genesiis.campus.command;
 // 20161216 DN CAMP:18 Created the CmdGenerateEmailSinUp.java class and Doc comment added.
+// 20161222 DN CAMP:18 created accessors and mutators for fields changed the execute() and sendMail() setEnvironment()
+//				to introduce the above methods when accessing private fields.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,7 +38,6 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	private String sendersphoneNumber;
 	private String mailingSubject;
 	private String mailBody;
-	//private Connection connection = null;
 	private EmailDispenser emailDispenser;
 	private IEmail generalEmail;
 	private RowStudentForJason partialStudent;
@@ -49,9 +50,9 @@ public class CmdGenerateEmailSinUp implements ICommand {
 			int status;
 			String message = "";
 			String gsonData = helper.getParameter("jsonData");
-			partialStudent = (RowStudentForJason)extractDumyObjectFrom(gsonData);
-			setEnvironment(helper);
-			generalEmail = formatEmailInstance();
+			this.setPartialStudent((RowStudentForJason)extractDumyObjectFrom(gsonData));
+			this.setEnvironment(helper);
+			this.setGeneralEmail(formatEmailInstance());
 			status=this.sendMail();
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 			
@@ -86,14 +87,17 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	private int sendMail()  {
 		int MAIL_SENT_STATUS=3;
 		try{ 
-			emailDispenser = new EmailDispenser(generalEmail);
-			emailDispenser.emailDispense();
+			this.setEmailDispenser(new EmailDispenser(generalEmail));
+			this.getEmailDispenser().emailDispense();
 		 
 		} catch (IllegalArgumentException illearg){
 			log.error("sendMail():IllegalArgumentException "+illearg.toString());
 			 MAIL_SENT_STATUS= -3;
 		} catch (MessagingException msexp) {
 			log.error("sendMail():MessagingException "+msexp.toString());
+		 MAIL_SENT_STATUS= -3;
+		} catch (NullPointerException msexp) {
+			log.error("sendMail():NullPointerException "+msexp.toString());
 		 MAIL_SENT_STATUS= -3;
 		} finally{
 			return MAIL_SENT_STATUS;
@@ -129,13 +133,13 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * @param helper IDataHelper
 	 */	
 	private void setEnvironment(IDataHelper helper){
-		 recieversName = partialStudent.getFirstName()
-		 .concat(" "+ partialStudent.getLastName());
-		 sendersEmailAddress =partialStudent.getEmail();
-		 recieversEmailAddreses = wrapedRecieversCollection(partialStudent.getEmail());
-		 mailingSubject = "ACCOUNT CREATION";
-		 mailBody = "Your User account is Successfully created ";
-
+		 String recieversName = partialStudent.getFirstName().concat(" "+ partialStudent.getLastName());
+		 ArrayList<String> recieversEmailAddreses = wrapedRecieversCollection(partialStudent.getEmail());
+		 this.setRecieversName(recieversName);
+		 this.setSendersEmailAddress(partialStudent.getEmail()); 
+		 this.setRecieversEmailAddreses(recieversEmailAddreses);
+		 this.setMailingSubject("ACCOUNT CREATION");
+		 this.setMailBody("Your User account is Successfully created ");
 	}
 	
 	/*
@@ -149,7 +153,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
 		result.append(System.getProperty("line.separator"));
 		result.append(" Dear ");
-		result.append(recieversName);
+		result.append(this.getRecieversName());
 		result.append(System.getProperty("line.separator"));
 		result.append(originalMailBody) ;
 		result.append(System.getProperty("line.separator"));
@@ -206,6 +210,82 @@ public class CmdGenerateEmailSinUp implements ICommand {
 			break;
 		}
 		return message;
+	}
+
+	/*
+	 * Accessor and mutator methods
+	 * 
+	 */
+	public String getRecieversName() {
+		return recieversName;
+	}
+
+	public void setRecieversName(String recieversName) {
+		this.recieversName = recieversName;
+	}
+
+	public String getSendersEmailAddress() {
+		return sendersEmailAddress;
+	}
+
+	public void setSendersEmailAddress(String sendersEmailAddress) {
+		this.sendersEmailAddress = sendersEmailAddress;
+	}
+
+	public ArrayList<String> getRecieversEmailAddreses() {
+		return recieversEmailAddreses;
+	}
+
+	public void setRecieversEmailAddreses(ArrayList<String> recieversEmailAddreses) {
+		this.recieversEmailAddreses = recieversEmailAddreses;
+	}
+
+	public String getSendersphoneNumber() {
+		return sendersphoneNumber;
+	}
+
+	public void setSendersphoneNumber(String sendersphoneNumber) {
+		this.sendersphoneNumber = sendersphoneNumber;
+	}
+
+	public String getMailingSubject() {
+		return mailingSubject;
+	}
+
+	public void setMailingSubject(String mailingSubject) {
+		this.mailingSubject = mailingSubject;
+	}
+
+	public String getMailBody() {
+		return mailBody;
+	}
+
+	public void setMailBody(String mailBody) {
+		this.mailBody = mailBody;
+	}
+
+	public EmailDispenser getEmailDispenser() {
+		return emailDispenser;
+	}
+
+	public void setEmailDispenser(EmailDispenser emailDispenser) {
+		this.emailDispenser = emailDispenser;
+	}
+
+	public IEmail getGeneralEmail() {
+		return generalEmail;
+	}
+
+	public void setGeneralEmail(IEmail generalEmail) {
+		this.generalEmail = generalEmail;
+	}
+
+	public RowStudentForJason getPartialStudent() {
+		return partialStudent;
+	}
+
+	public void setPartialStudent(RowStudentForJason partialStudent) {
+		this.partialStudent = partialStudent;
 	}
 	
 	
