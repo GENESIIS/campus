@@ -20,26 +20,21 @@ package com.genesiis.campus.entity;
 
 
 
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class CourseProviderDAO implements ICrud{
 	
@@ -83,7 +78,7 @@ public class CourseProviderDAO implements ICrud{
 			conn=ConnectionManager.getConnection();
 			int categoryCode=0;
 			if(UtilityHelper.isNotEmptyObject(code)){
-				final CourseProvider cp = (CourseProvider) code;
+				final CourseProviderSearchDTO cp = (CourseProviderSearchDTO) code;
 				categoryCode = cp.getCategory();
 				}			
 			//categorystatus=1 and courseproviderstatus=1 ; this can be change in future.
@@ -411,7 +406,7 @@ public class CourseProviderDAO implements ICrud{
 	}
 
 	/**
-	 * Find category wise course provider types, majors,levels
+	 * Find category wise course provider types, majors,levels.Set the result set to CourseProviderResultDTO
 	 * @param Integer 
 	 * @author DJ
 	 * @return CourseProviderResultDTO 

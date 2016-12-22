@@ -4,6 +4,11 @@ package com.genesiis.campus.entity;
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
 //DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findCPTypesByCodes() method
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CourseProviderTypeDAO implements ICrud{
 	

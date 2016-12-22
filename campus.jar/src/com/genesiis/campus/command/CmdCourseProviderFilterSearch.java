@@ -4,22 +4,17 @@ package com.genesiis.campus.command;
 //DJ 20161124 c17-provider-criteria-based-filter-search retrieved input select values to command class
 //DJ 20161216 c17-provider-criteria-based-filter-search Implement getSelectedCodeList() method
 
+import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
+import com.genesiis.campus.util.IDataHelper;
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import com.genesiis.campus.entity.CourseProviderDAO;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.CourseProvider;
-import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
-import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.validation.SystemMessage;
-import com.genesiis.campus.validation.UtilityHelper;
-
-import org.apache.log4j.Logger;
 
 public class CmdCourseProviderFilterSearch implements ICommand  {
 	
@@ -46,11 +41,9 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 			}			
 			
 		} catch (Exception exception) {
-			log.error("execute() : Exception " + exception);
-			
+			log.error("execute() : Exception " + exception);			
 			throw exception;
 		}		
-		
 		return iView;
 	}
 	

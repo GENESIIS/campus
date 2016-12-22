@@ -2,17 +2,16 @@ package com.genesiis.campus.entity;
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created DistrictDAO.java
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
 
 public class DistrictDAO  implements ICrud{
 	
