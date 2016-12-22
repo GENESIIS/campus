@@ -36,11 +36,9 @@ public class CmdListCategoryTypes implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;
-
-		// List categorywise types		
 		int categoryCode = 0;
+		try {
+		// List categorywise types		
 		String categoryCodeString = helper.getParameter("categoryCode");
 		if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 			if (UtilityHelper.isInteger(categoryCodeString)) {
@@ -78,8 +76,11 @@ public class CmdListCategoryTypes implements ICommand {
 				final Collection<Collection<String>> levelList = new LevelDAO().findLevelsByLevelCodes(levelCodeSet);
 				helper.setAttribute("levelList", levelList);
 			}
-
-		}
+		 }
+		}catch (Exception exception) {
+			log.error("execute() : Exception " + exception);			
+			throw exception;
+		}		
 		return view;
 	}
 
