@@ -3,7 +3,7 @@ package com.genesiis.campus.entity;
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
-//20161222 CW c38-view-update-tutor-profile added country & Town Name details method. 
+//20161222 CW c38-view-update-tutor-profile added country name & Town Name detail calling to findById. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

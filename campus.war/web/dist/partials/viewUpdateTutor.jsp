@@ -10,7 +10,7 @@
 <body>
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
 	<form action="/TutorController" method="post"
-		onsubmit="return (validateTutorFileds())">
+		onsubmit="return (validateTutorModifications())">
 
 
 		<c:forEach var="tutorList" items="${result.collection}">
@@ -118,7 +118,8 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>Town</td>					
+					<td>Town</td>
+					
 					<td>${town}</td>
 					<td><span id="townError"></span> <select name="townDetails"
 						id="townDetails">
@@ -132,11 +133,11 @@
 						onclick="clearField('mobileError')" readonly value="${mobilephonecountrycode}"  /></td>
 
 					<td><span id="mobileError"></span> <input type="text"
-						name="mobileNetworkCode" id="mobileNetworkCode" maxlength="11"
+						name="mobileNetworkCode" id="mobileNetworkCode" maxlength="10"
 						onclick="clearField('mobileError')" value="${mobilephonenetworkcode}" /></td>
 
 					<td><span id="mobileError"></span> <input type="text"
-						name="mobileNumber" id="mobileNumber" maxlength="11"
+						name="mobileNumber" id="mobileNumber" maxlength="15"
 						onclick="clearField('mobileError')" value="${mobilephonenumber}" /></td>
 				</tr>
 				<tr>
@@ -146,11 +147,11 @@
 						onclick="clearField('mobileError')" readonly value="${landphonecountrycode}" /></td>
 
 					<td><span id="landError"></span> <input type="text"
-						name="landAreaCode" id="landAreaCode" maxlength="11"
+						name="landAreaCode" id="landAreaCode" maxlength="10"
 						onclick="clearField('mobileError')" value="${landphoneareacode}" /></td>
 
 					<td><input type="text" name="landNumber" id="landNumber"
-						maxlength="11" onclick="clearField('landError')" value="${landphonenumber}" /></td>
+						maxlength="15" onclick="clearField('landError')" value="${landphonenumber}" /></td>
 				</tr>
 				<tr>
 					<td>Address Line 1 <span id="address1Error"></span></td>
@@ -231,16 +232,13 @@
 						<button type="submit" name="CCO" id="CCO" value="ATPD"
 							class="btn btn-info navbar-btn">Save</button>
 					</td>
-				</tr>
-				<tr>
 					<td>
 						<button type="submit" name="CCO" id="CCO" value="UPDATE_TUTOR"
 							class="btn btn-info navbar-btn">Update</button>
 					</td>
 				</tr>
+
 			</table>
-
-
 
 	</form>
 
