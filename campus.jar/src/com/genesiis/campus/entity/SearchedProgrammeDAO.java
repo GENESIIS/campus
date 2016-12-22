@@ -77,7 +77,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				conn = ConnectionManager.getConnection();
 				String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
 						+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
-						+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] "
+						+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , p.[COST] "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
 						+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
 						+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
@@ -114,6 +114,7 @@ public class SearchedProgrammeDAO implements ICrud {
 					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 					singleProgrammeList.add(rs.getString("CPCODE"));
 					singleProgrammeList.add(rs.getString("WEBLINK"));
+					singleProgrammeList.add(rs.getString("COST"));
 					final Collection<String> singleProgrammeCollection = singleProgrammeList;
 					allProgrammeList.add(singleProgrammeCollection);
 				}
@@ -147,7 +148,7 @@ public class SearchedProgrammeDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
 					+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
-					+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] "
+					+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] , p.[COST] "
 					+ "FROM [CAMPUS].[PROGRAMME] p "
 					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
 					+ "WHERE p.PROGRAMMESTATUS = 1";
@@ -174,6 +175,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("PROVIDER").replaceAll(",", "##"));
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("CPCODE"));
+				singleProgrammeList.add(rs.getString("COST"));
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
 			}
