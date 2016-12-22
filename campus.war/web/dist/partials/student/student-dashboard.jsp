@@ -28,10 +28,11 @@
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/image-slides.js"></script>
-<jsp:include page="/dist/partials/student/SessionDataLoader.jsp"></jsp:include>
+
 </head>
 
 <body>
+<jsp:include page="/dist/partials/student/SessionDetailsJSTL.jsp"></jsp:include>
 	<%
 		//allow access only if session exists
 // 		String currentSessionUser = null;
@@ -133,7 +134,7 @@
 						<a href="javascript:">Logout</a>
 						<h3>
 							Hi
-							<%=currentSessionUser%>, Login successful. </h3>
+							${sessionScope.user}, Login successful. </h3>
 						<a href="/dist/partials/student/SessionDataLoader.jsp"> Session details checker </a>
 						<br>
 					</div>
