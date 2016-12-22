@@ -14,7 +14,7 @@ import java.util.Map;
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.ProgrammeDAO;
+import com.genesiis.campus.entity.SearchedProgrammeDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.LuceneDemo;
 import com.genesiis.campus.util.LuceneTest;
@@ -29,7 +29,7 @@ public class CmdGetSearchData implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		ICrud programmeDAO = new ProgrammeDAO(); 
+		ICrud programmeDAO = new SearchedProgrammeDAO(); 
 		Collection<Collection<String>> programmeCollection = null;
 		String searchData =  helper.getParameter("searchData");
 		
