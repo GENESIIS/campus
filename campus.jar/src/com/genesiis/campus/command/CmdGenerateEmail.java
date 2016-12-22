@@ -16,6 +16,8 @@ package com.genesiis.campus.command;
 // in a case when validation fails
 //20161124 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() renamed to setFrontEndViewingDataIfValidationFails() and 
 // code refactor if any validation fails but to diplay data to front end.
+//20161222 DN CAMP:18 created accessors and mutators for fields changed the execute()
+//					to introduce the above methods when accessing private fields.
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -53,7 +55,7 @@ public class CmdGenerateEmail implements ICommand {
 	private String mailBody2;
 	private Connection connection = null;
 	private EmailDispenser emailDispenser;
-	private IEmail generalEmail;
+	private IEmail generalEmail ;
 	
 
 
@@ -88,17 +90,16 @@ public class CmdGenerateEmail implements ICommand {
 				 		switch(Operation.getOperation(cco)){
 						 case CONTACT_US_PUBLC:
 							 this.createDatabaseConnection();
-						
 							 String[] sysEmailAdress = {"ENQUIRY_EMAIL_TO","ENQUIRY_EMIL_ADMIN"};
 							 collectionOfCollectionOfEmails=(ArrayList<Collection<String>>)genesiis.findById(sysEmailAdress,
-						 connection);
-							 recieversEmailAddreses= composeSingleEmailList(collectionOfCollectionOfEmails);
-							 generalEmail = formatEmailInstance();
+						 this.getConnection());
+							 this.closeDataBaseConnection();
+							 this.setRecieversEmailAddreses(composeSingleEmailList(collectionOfCollectionOfEmails));
+							 this.setGeneralEmail( formatEmailInstance());
 							 setFrontEndViewingDataIfValidationFails(helper,view);
 						 break;
 						default:						
 						 break;
-					
 					 }
 					 status=this.sendMail();
 					 message = systemMessage(status);
@@ -251,6 +252,9 @@ public class CmdGenerateEmail implements ICommand {
 		} catch (MessagingException msexp) {
 			log.error("sendMail():MessagingException "+msexp.toString());
 		 MAIL_SENT_STATUS= -3;
+		}catch (NullPointerException msexp) {
+			log.error("sendMail():NullPointerException "+msexp.toString());
+		 MAIL_SENT_STATUS= -3;
 		} finally{
 			return MAIL_SENT_STATUS;
 		}
@@ -273,6 +277,21 @@ public class CmdGenerateEmail implements ICommand {
 		}
 	}
 	
+	/*
+	 * this method closes the connection if the connection is not null and 
+	 * that connection has not been closed
+	 */
+	private void closeDataBaseConnection()throws SQLException{
+		try{
+			if((getConnection()!=null) & (!getConnection().isClosed()) ){
+				getConnection().close();
+			}
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
+		
+	}
 	/*
 	 * addContentToOriginalMailBody() formats the original details with
 	 * users credentials e.g email, contact number, full name
@@ -314,6 +333,89 @@ public class CmdGenerateEmail implements ICommand {
 			break;
 		}
 		return message;
+	}
+
+	/*
+	 *Accessor and mutator methods
+	 */
+	public String getSendersName() {
+		return sendersName;
+	}
+
+	public void setSendersName(String sendersName) {
+		this.sendersName = sendersName;
+	}
+
+	public String getSendersEmailAddress() {
+		return sendersEmailAddress;
+	}
+
+	public void setSendersEmailAddress(String sendersEmailAddress) {
+		this.sendersEmailAddress = sendersEmailAddress;
+	}
+
+	public ArrayList<String> getRecieversEmailAddreses() {
+		return recieversEmailAddreses;
+	}
+
+	public void setRecieversEmailAddreses(ArrayList<String> recieversEmailAddreses) {
+		this.recieversEmailAddreses = recieversEmailAddreses;
+	}
+
+	public String getSendersphoneNumber() {
+		return sendersphoneNumber;
+	}
+
+	public void setSendersphoneNumber(String sendersphoneNumber) {
+		this.sendersphoneNumber = sendersphoneNumber;
+	}
+
+	public String getMailingSubject() {
+		return mailingSubject;
+	}
+
+	public void setMailingSubject(String mailingSubject) {
+		this.mailingSubject = mailingSubject;
+	}
+
+	public String getMailBody() {
+		return mailBody;
+	}
+
+	public void setMailBody(String mailBody) {
+		this.mailBody = mailBody;
+	}
+
+	public String getMailBody2() {
+		return mailBody2;
+	}
+
+	public void setMailBody2(String mailBody2) {
+		this.mailBody2 = mailBody2;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public EmailDispenser getEmailDispenser() {
+		return emailDispenser;
+	}
+
+	public void setEmailDispenser(EmailDispenser emailDispenser) {
+		this.emailDispenser = emailDispenser;
+	}
+
+	public IEmail getGeneralEmail() {
+		return generalEmail;
+	}
+
+	public void setGeneralEmail(IEmail generalEmail) {
+		this.generalEmail = generalEmail;
 	}
 	
 
