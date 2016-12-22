@@ -6,6 +6,8 @@
 <!-- 20161116 PN c11-criteria-based-filter-search added a name and id to checkbox near "All" -->
 <!-- 20161116 AS c11-criteria-based-filter-search added a name and id to checkbox near "All" fixed -->
 <!-- 20161124 PN c11-criteria-based-filter-search modified bootstrap-3.3.7.min.js imports. -->
+<!-- 20161222 PN CAM-116: modified DataTable styling -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,12 +43,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$.fn.dataTableExt.sErrMode = 'throw';
-	var table = $('#example').DataTable( {
-        fixedHeader: {
-            header: true,
-            footer: false
-        }
-    } );
+// 	var table = $('#example').DataTable( {
+//     } );
 } );
 </script>
 
@@ -118,17 +116,17 @@ $(document).ready(function() {
 			<div class="main-topic">
 				<h1>Choose your path</h1>
 			</div>
-			<div class="right-corner">
-				<div class="sort-box">
-					<!--<p>Sort by</p> -->
-					<input type="text" name="product" list="sortBy"
-						placeholder="Starting Soon" />
-					<datalist id="sortBy">
-						<option value="1" selected>Starting Soon</option>
-						<option value="2">Newest Courses</option>
-					</datalist>
-				</div>
-			</div>
+<!-- 			<div class="right-corner"> -->
+<!-- 				<div class="sort-box"> -->
+<!-- 					<p>Sort by</p> -->
+<!-- 					<input type="text" name="product" list="sortBy" -->
+<!-- 						placeholder="Starting Soon" /> -->
+<!-- 					<datalist id="sortBy"> -->
+<!-- 						<option value="1" selected>Starting Soon</option> -->
+<!-- 						<option value="2">Newest Courses</option> -->
+<!-- 					</datalist> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 
 		<!-- Filtering Area Container -->
@@ -222,10 +220,10 @@ $(document).ready(function() {
 				</div>
 				<!-- End Panel Header -->
 				<hr>
-				<div class="">
+				<div class="search-result-view clearfix">
 					<table id="example"
-						class="table table-striped table-bordered dt-responsive nowrap"
-						cellspacing="0" width="100%">
+						class="table table-striped table-bordered dt-responsive"
+						cellspacing="0" width="">
 						<thead>
 							<tr>
 								<th>Institute</th>
