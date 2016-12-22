@@ -7,6 +7,7 @@
 //20161116 PN c11-criteria-based-filter-search adding reset functionality via check-box -WIP
 //20161117 AS c11-criteria-based-filter-search adding reset functionality via check-box fixed
 //20161124 PN c11-criteria-based-filter-search implemented getNumFilteredRows() method for display course count on search results.
+//20161222 PN CAM-116: modified ajax method calls to populate UI elements from DB values. 
 
 /**
  * This method id to load category details
@@ -15,21 +16,17 @@
 $(document).ready(function() {
 	$('#selectAll').attr('checked', false); // Unchecks it
 	displayDetails();
+	var t = $('#example').DataTable(); 
 	
 	$('#selectAll').change(function() {
-        if ($(this).prop('checked')) {
-        	
-        	//field clear by elementId the id of the HTML elements
-       
+        if ($(this).prop('checked')) {        	
+        	//field clear by elementId the id of the HTML elements       
         	$(document).find('#categorylist').val('');
         	$(document).find('#instituelist').val('');
         	$(document).find('#districtlist').val('');
-        		
-        	
+        		     	
             displayDetails();
-            var t = $('#example').DataTable(); 
             
-
         	$.ajax({
     			url : '../../PublicController',
     			data : {
@@ -46,23 +43,23 @@ $(document).ready(function() {
     					counter++;
     					
     					t.row.add( [
-    					            '<div class="provider-info">' +
-    									'<input type="text" name="cpid" hidden value="'+ data[0].toString().trim() +'"><a href="javascript:">' +
-    										'<img src="../../education/provider/logo/'+ data[7].toString().trim() +'/'+data[7].toString().trim()+'_small.png" alt="'+ data[4].toString() +'" width="200" height="100">' +
-    									'</a>' +
-    								'</div>',
-    								'<div class="result-box clearfix">' +
-    									'<div class="course-name">' +
-    										'<a href="javascript:">' + data[1].toString() +
-    											'<span class="provider-name">' + " @"+ data[5].toString() +
-    											'</span>' +
-    										'</a>' +
-    									'</div>' +
-    									'<div class="course-info">' +
-    										'<p>'+ data[2].toString() + '</p>' +
-    									'</div>' +
-    								'</div>',
-    								data[3].toString()
+    			            '<div class="provider-info">' +
+    						'<a href="javascript:">' +
+    							'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
+    						'</a>' +
+    					'</div>',
+    					'<div class="result-box clearfix">' +
+    						'<div class="course-name">' +
+    							'<a href="'+data[16].toString()+'">' + data[1].toString() +
+    								'<span class="provider-name">' + " @"+ data[15].toString() +
+    								'</span>' +
+    							'</a>' +
+    						'</div>' +
+    						'<div class="course-info">' +
+    							'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
+    						'</div>' +
+    					'</div>',
+    					data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString()
     					        ] ).draw( false );
 
     				});
@@ -78,6 +75,73 @@ $(document).ready(function() {
             
         }
     });
+	
+    $('#example')
+    .on( 'order.dt',  function () { 
+    	var courses = getNumFilteredRows(t); 
+    	$("#courseCount").text(" " +pad(courses, 2));
+    } ).on( 'search.dt', function () { 
+    	var courses = getNumFilteredRows(t); 
+    	$("#courseCount").text(" " +pad(courses, 2));
+    } ).DataTable();
+
+$('#addRow').on( 'click', function () {
+	
+	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
+	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
+	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
+
+	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
+	var searchData = x+y+z+a;
+
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			searchData : JSON.stringify(searchData),
+			CCO : 'GET_SEARCH_DATA'
+		},
+		dataType : "json",
+		success : function(response) {
+			var counter = 0;
+			t.clear().draw();
+			$.each(response.result, function(index, value) {
+				var res = value.toString();
+				var data = res.split(",");
+				counter++;
+				
+				t.row.add( [
+		            '<div class="provider-info">' +
+					'<a href="javascript:">' +
+						'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
+					'</a>' +
+				'</div>',
+				'<div class="result-box clearfix">' +
+					'<div class="course-name">' +
+						'<a href="'+data[16].toString()+'">' + data[1].toString() +
+							'<span class="provider-name">' + " @"+ data[15].toString() +
+							'</span>' +
+						'</a>' +
+					'</div>' +
+					'<div class="course-info">' +
+						'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
+					'</div>' +
+				'</div>',
+				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString()
+				        ] ).draw( false );
+
+			});
+			$("#courseCount").text(" " +pad(counter, 2));
+		},
+		error : function(response) {
+			alert("Error: "+response);
+		}
+	});
+} );
+
+// Automatically add a first row of data
+$('#addRow').click();
+	
+	
 });
 
 function displayDetails() {
@@ -253,6 +317,8 @@ function displayDetailsOnLoad() {
 }
 
 function displayDetailsOnChange() {
+	$(document).find('#instituelist').val('');
+	$(document).find('#districtlist').val('');
 	displayMajor();
 	displayCourseProvider();
 	displayDistricts();	
@@ -269,81 +335,17 @@ function pad(number, length) {
     return str;
 }
 
+function getNumFilteredRows(t){
+	   var info = t.page.info();
+	   return info.recordsDisplay;
+}
 
 $(document).ready(function() {
-	$('#selectAll').attr('checked', false); // Unchecks it
-    var t = $('#example').DataTable();   
+//	$('#selectAll').attr('checked', false); // Unchecks it
+//    var t = $('#example').DataTable();   
     
 
-    function getNumFilteredRows(){
-    	   var info = t.page.info();
-    	   return info.recordsDisplay;
-    }
-    
-    $('#example')
-        .on( 'order.dt',  function () { 
-        	var courses = getNumFilteredRows(); 
-        	$("#courseCount").text(" " +pad(courses, 2));
-        } ).on( 'search.dt', function () { 
-        	var courses = getNumFilteredRows(); 
-        	$("#courseCount").text(" " +pad(courses, 2));
-        } ).DataTable();
- 
-    $('#addRow').on( 'click', function () {
-    	
-    	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
-    	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
-    	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
 
-    	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
-    	var searchData = x+y+z+a;
-
-    	$.ajax({
-			url : '../../PublicController',
-			data : {
-				searchData : JSON.stringify(searchData),
-				CCO : 'GET_SEARCH_DATA'
-			},
-			dataType : "json",
-			success : function(response) {
-				var counter = 0;
-				t.clear().draw();
-				$.each(response.result, function(index, value) {
-					var res = value.toString();
-					var data = res.split(",");
-					counter++;
-					
-					t.row.add( [
-					            '<div class="provider-info">' +
-									'<a href="javascript:">' +
-										'<img src="../../education/provider/logo/'+ data[7].toString().trim() +'/'+data[7].toString().trim()+'_small.png" alt="'+ data[4].toString() +'" width="200" height="100">' +
-									'</a>' +
-								'</div>',
-								'<div class="result-box clearfix">' +
-									'<div class="course-name">' +
-										'<a href="javascript:">' + data[1].toString() +
-											'<span class="provider-name">' + " @"+ data[5].toString() +
-											'</span>' +
-										'</a>' +
-									'</div>' +
-									'<div class="course-info">' +
-										'<p>'+ data[2].toString() + '</p>' +
-									'</div>' +
-								'</div>',
-								data[3].toString()
-					        ] ).draw( false );
-
-				});
-				$("#courseCount").text(" " +pad(counter, 2));
-			},
-			error : function(response) {
-				alert("Error: "+response);
-			}
-		});
-    } );
- 
-    // Automatically add a first row of data
-    $('#addRow').click();
 } );
 
 /**
