@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
+//20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,7 +85,7 @@ public class TownDAO implements ICrud{
 		PreparedStatement stmt = null;
 
 		try {
-			conn = ConnectionManager.getConnection();
+			conn = this.createDatabaseConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
@@ -109,9 +110,7 @@ public class TownDAO implements ICrud{
 			if (stmt != null) {
 				stmt.close();
 			}
-			if (conn != null) {
-				conn.close();
-			}
+			closeDataBaseConnection(conn);
 		}
 		return allTownList;
 	}
@@ -141,4 +140,34 @@ public class TownDAO implements ICrud{
 		return null;
 	}
 
+	/*
+	 * createDatabaseConnection() establishes the database connection with the
+	 * data repository
+	 * @author DN
+	 * @throw SQLException if the connection causes errors.
+	 */
+	private Connection createDatabaseConnection() throws SQLException {
+		try {
+			return ConnectionManager.getConnection();
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
+	}
+	
+	/*
+	 * this method closes the connection if the connection is not null and 
+	 * that connection has not been closed
+	 */
+	private void closeDataBaseConnection(Connection conn)throws SQLException{
+		try{
+			if((conn!=null) & (!conn.isClosed()) ){
+				conn.close();
+			}
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
+	}
+	
 }
