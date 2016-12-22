@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
+//20161222 CW c38-view-update-tutor-profile added country & Town Name details method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -136,6 +137,10 @@ public int add(Object object) throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int countryCode = 0;
+		double townCode = 0;
+		String countryName = null;
+		String townName = null;
 		
 		try {
 			Tutor tutor = (Tutor) code; 
@@ -151,12 +156,11 @@ public int add(Object object) throws SQLException, Exception {
 				
 				Encryptable passwordEncryptor = new TripleDesEncryptor();
 
-				
-				System.out.println("-----"+ passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD")) + "------");
-				
+								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
-				singleTutorList.add(passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD")));
+				//singleTutorList.add(passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD"))); // commented until password Encryption error fixed
+				singleTutorList.add("PASSWORD");
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
@@ -181,10 +185,25 @@ public int add(Object object) throws SQLException, Exception {
 				singleTutorList.add(rs.getString("ADDRESS1"));
 				singleTutorList.add(rs.getString("ADDRESS2"));
 				singleTutorList.add(rs.getString("ADDRESS3"));
-				singleTutorList.add(rs.getString("TOWN"));
+				
+				if (rs.getString("TOWN") != null) {
+					townCode = Double.parseDouble(rs.getString("TOWN"));
+					TownDAO country = new TownDAO();
+					townName = country.findTownByCode(townCode);
+				}
+				
+				singleTutorList.add(townName);				
+								
 				singleTutorList.add(rs.getString("USERTYPE"));
+								
+				if (rs.getString("LANDPHONECOUNTRYCODE") != null) {
+					countryCode = Integer.parseInt(rs.getString("LANDPHONECOUNTRYCODE"));
+					CountryDAO country = new CountryDAO();
+					countryName = country.findCountryByCode(countryCode);
+				}
+				
+				singleTutorList.add(countryName);
 
-				//final Collection<String> singleTownCollection = singleTownList;
 				allTutorList.add(singleTutorList);
 			}
 		} catch (ClassCastException cce) {
@@ -196,14 +215,8 @@ public int add(Object object) throws SQLException, Exception {
 		} catch (Exception e) {
 			log.info("findById(): Exception " + e.toString());
 			throw e;
-		} finally {
-			try { if (rs != null) rs.close(); } catch (Exception e) {};
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();                                  
-			}
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return allTutorList;
 
