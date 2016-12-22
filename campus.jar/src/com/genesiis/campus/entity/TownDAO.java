@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161122 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
+//20161222 CW c38-view-update-tutor-profile added findTownByCode() method. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,50 @@ public class TownDAO implements ICrud{
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Returns the Town Name in Database for given town code
+	 * 
+	 * @author Chinthaka
+	 * 
+	 * @param Town code as double value
+	 * 
+	 * @return Returns the Town name as a String
+	 */
+	public String findTownByCode(double code)
+			throws SQLException, Exception {
+		
+		final Collection<String> allTownList = new ArrayList<String>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String townName = null;
+
+		try {
+						
+			String query = "SELECT [NAME] FROM [CAMPUS].[TOWN] WHERE CODE=?";
+			
+			conn = ConnectionManager.getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.setDouble(1, code);
+			rs = stmt.executeQuery();
+			
+
+			while (rs.next()) {
+				townName = rs.getString("NAME");
+			}
+		} catch (SQLException sqlException) {
+			log.info("findTownByCode(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findTownByCode(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return townName;
+		
 	}
 
 	
