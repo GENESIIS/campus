@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161208 JH c39-add-course-provider UsernameDAO.java created
 //20161209 JH c39-add-course-provider findById method coding 
 //20161209 JH c39-add-course-provider class name renamed to CourseProviderUsernameDAO.java
+//20161222 JH c39-add-course-provider findById method modified: added missing parameters
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +52,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 		try {
 
 			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, courseProviderAccount.getUsername());
 			ResultSet rs = preparedStatement.executeQuery();
 
 			if (rs != null) {
