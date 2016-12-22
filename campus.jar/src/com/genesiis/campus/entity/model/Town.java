@@ -1,22 +1,22 @@
 package com.genesiis.campus.entity.model;
 //20161026 PN c11-criteria-based-filter-search: INIT Town.java class
 //20161028 PN c11-criteria-based-filter-search: added class attributes and data access methods.
-
+//20161222 DN CAMP:18 made field access modifier private as per the crev comments.
 import java.sql.Date;
 
 
 public class Town {
-	int code;
-	int isActive;
-	int town;
-	int sequence;
-	int country;
-	int province;
-	int district;
-	int dsd;
-	String name;
-	int sort;
-	int status;
+	private int code;
+	private int isActive;
+	private int town;
+	private int sequence;
+	private int country;
+	private int province;
+	private int district;
+	private int dsd;
+	private String name;
+	private int sort;
+	private int status;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
