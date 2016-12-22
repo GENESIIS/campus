@@ -3,11 +3,13 @@ package com.genesiis.campus.command;
 //20161201 DN C18-student-signup-without-using-third-party-application-test-dn removed unnecessary comments as per CREV
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn add user name validation and validation to the
 //	validateFrontEndUserProvidedInformation()
-//20161214 DN CAMP:18 changed the convertRowStudentForJasonToStudent() refactor to accomadate usercode
+//20161214 DN CAMP:18 changed the convertRowStudentForJasonToStudent() refactor to accommodate user_code
 //20161216 DN CAMP:18 add email generation request to execute() and integrate
 //				message generated from their with current class.
 //				isEmailProduced() created and added exception handling.
 //20161218 DN CAMP:18 added successCode int field to keep track of success/failure error status
+//20161222 DN CAMP:18 created accessors and mutators for fields changed the execute()
+//				to introduce the above methods when accessing private fields. setPartialStudent() amend to handle null instances
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,12 +54,12 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		
 		Collection<Collection<String>> studentSignUps = new ArrayList<Collection<String>>();
 		String gsonData = helper.getParameter("jsonData");
-		partialStudent = (RowStudentForJason)extractDumyObjectFrom(gsonData);
+		this.setPartialStudent((RowStudentForJason)extractDumyObjectFrom(gsonData));
 		ICrud studentDao = new SigningUpStudentDAO();
 		
 		int status = 0;
 		try{
-			validateFrontEndUserProvidedInformation(partialStudent);
+			validateFrontEndUserProvidedInformation(this.getPartialStudent());
 			status	= studentDao.add(convertRowStudentForJasonToStudent());
 			message = systemMessage(status); 	// then change the message to the client side by appending to the message generated from here
 			isEmailProduced(status,helper,view);
@@ -120,21 +122,19 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
  * from the Row data obtained from the client side
  * @return Student object
  */
-	
-	
 	private Student convertRowStudentForJasonToStudent(){
 		Student indusedStudent = new Student();
-		indusedStudent.setPassword(partialStudent.getPassWord());
-		indusedStudent.setUsername(partialStudent.getUserName());
-		indusedStudent.setEmail(partialStudent.getEmail());
-		indusedStudent.setGender(Integer.parseInt(partialStudent.getGender()));
-		indusedStudent.setFirstName(partialStudent.getFirstName());
-		indusedStudent.setLastName(partialStudent.getLastName());
-		indusedStudent.setMobilePhoneNo(partialStudent.getMobilePhoneNo());
-		indusedStudent.setMobilePhoneCountryCode(partialStudent.getMobileCountryCode());
-		indusedStudent.setMobilePhoneNetworkCode(partialStudent.getMobileNetworkCode());
-		indusedStudent.setTown(partialStudent.getTown());
-		indusedStudent.setUserTypeCode(Integer.parseInt(partialStudent.getUserCode()));
+		indusedStudent.setPassword(this.getPartialStudent().getPassWord());
+		indusedStudent.setUsername(this.getPartialStudent().getUserName());
+		indusedStudent.setEmail(this.getPartialStudent().getEmail());
+		indusedStudent.setGender(Integer.parseInt(this.getPartialStudent().getGender()));
+		indusedStudent.setFirstName(this.getPartialStudent().getFirstName());
+		indusedStudent.setLastName(this.getPartialStudent().getLastName());
+		indusedStudent.setMobilePhoneNo(this.getPartialStudent().getMobilePhoneNo());
+		indusedStudent.setMobilePhoneCountryCode(this.getPartialStudent().getMobileCountryCode());
+		indusedStudent.setMobilePhoneNetworkCode(this.getPartialStudent().getMobileNetworkCode());
+		indusedStudent.setTown(this.getPartialStudent().getTown());
+		indusedStudent.setUserTypeCode(Integer.parseInt(this.getPartialStudent().getUserCode()));
 		return indusedStudent;
 	}
 	
@@ -145,16 +145,16 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 	private void setFrontEndViewingDataIfValidationFails(IView view){
 		Collection<Collection<String>> outerCollectionWrapper = new ArrayList<Collection<String>>();
 		Collection<String> innerCollection =  new ArrayList<String>();
-		innerCollection.add(partialStudent.getFirstName());
-		innerCollection.add(partialStudent.getLastName());
-		innerCollection.add(partialStudent.getGender());
-		innerCollection.add(partialStudent.getMobilePhoneNo());
-		innerCollection.add(partialStudent.getEmail());
-		innerCollection.add(partialStudent.getTown());//
-		innerCollection.add(partialStudent.getUserName());
-		innerCollection.add(partialStudent.getPassWord());
-		innerCollection.add(partialStudent.getConfirmPw());
-		innerCollection.add(String.valueOf(partialStudent.getIsPolicyConfirm()));
+		innerCollection.add(this.getPartialStudent().getFirstName());
+		innerCollection.add(this.getPartialStudent().getLastName());
+		innerCollection.add(this.getPartialStudent().getGender());
+		innerCollection.add(this.getPartialStudent().getMobilePhoneNo());
+		innerCollection.add(this.getPartialStudent().getEmail());
+		innerCollection.add(this.getPartialStudent().getTown());//
+		innerCollection.add(this.getPartialStudent().getUserName());
+		innerCollection.add(this.getPartialStudent().getPassWord());
+		innerCollection.add(this.getPartialStudent().getConfirmPw());
+		innerCollection.add(String.valueOf(this.getPartialStudent().getIsPolicyConfirm()));
 		outerCollectionWrapper.add(innerCollection); // now the collection is set with the initial set.
 		view.setCollection(outerCollectionWrapper);
 	}
@@ -184,8 +184,6 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 		
 	}
 	
-	
-	
 /*
  * extractDumyObjectFrom helps extract the json data to a
  * row object with the same field name similar to the fields json data 
@@ -208,7 +206,6 @@ public Object extractDumyObjectFrom(String gsonData) {
 	}
 	return rowStudentObj;
 }
-
 
 	/*
 	 * systemMessage() handles the system Messages according to
@@ -240,7 +237,19 @@ public Object extractDumyObjectFrom(String gsonData) {
 		
 	}
 	
+	/*
+	 * isNullInstance () checks if the passed parameter is a null.
+	 * @param checkingInstance object thats to be checked if it's null
+	 * @return boolean true if it's null object else true
+	 */
+	private boolean isNullInstance(Object checkingInstance){
+		boolean isNull=( checkingInstance == null);
+		return isNull;
+	}
 	
+	/*
+	 * Accessor and mutator methods
+	 */
 	public int getSuccessCode() {
 		return successCode;
 	}
@@ -249,5 +258,16 @@ public Object extractDumyObjectFrom(String gsonData) {
 	public void setSuccessCode(int successCode) {
 		this.successCode = successCode;
 	}
+
+	public RowStudentForJason getPartialStudent() {
+		return partialStudent;
+	}
+
+
+	public void setPartialStudent(RowStudentForJason partialStudent) {
+		this.partialStudent = (this.isNullInstance(partialStudent)) ? new RowStudentForJason()
+				: partialStudent;
+	}
+	
 	
 }
