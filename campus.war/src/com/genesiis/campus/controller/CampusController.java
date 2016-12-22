@@ -1,3 +1,4 @@
+
 package com.genesiis.campus.controller;
 
 // 20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
@@ -95,6 +96,11 @@ public class CampusController extends HttpServlet {
 				
 				Enumeration<String> attributeNames = request.getAttributeNames();
 
+				log.info("instituteCollection Cont "+helper.getAttribute("instituteCollection"));
+				log.info("districtCollection Cont "+helper.getAttribute("districtCollection"));
+				log.info("majorCollection Cont "+helper.getAttribute("majorCollection"));
+				
+				
 				while (attributeNames.hasMoreElements()) {
 					String currentAttributeName = attributeNames.nextElement();
 					Object object = helper.getAttribute(currentAttributeName);

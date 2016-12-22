@@ -52,12 +52,15 @@ public class CmdListCategories implements ICommand{
 			
 			Collection<Collection<String>> instituteCollection = instituteDAO.getAll();
 			helper.setAttribute("instituteCollection", instituteCollection);
+			log.info("instituteCollection"+helper.getAttribute("instituteCollection"));
 			
 			Collection<Collection<String>> districtCollection = districtDAO.getAll();
 			helper.setAttribute("districtCollection", districtCollection);
+			log.info("districtCollection"+helper.getAttribute("districtCollection"));
 			
 			Collection<Collection<String>> majorCollection = majorDao.getAll();
 			helper.setAttribute("majorCollection", majorCollection);
+			log.info("majorCollection"+helper.getAttribute("majorCollection"));
 			
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());

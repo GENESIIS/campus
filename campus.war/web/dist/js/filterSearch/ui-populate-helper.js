@@ -186,6 +186,7 @@ function getAjaxData(response) {
 	
 	var districtName = $("#districtName");
 	districtName.find('option').remove();
+	alert("response.districtCollection "+response.districtCollection);
 	$.each(response.districtCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -197,6 +198,7 @@ function getAjaxData(response) {
 
 	var institueName = $("#institueName");
 	institueName.find('option').remove();
+	alert("response.instituteCollection "+response.instituteCollection);
 	$.each(response.instituteCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
