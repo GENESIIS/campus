@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //DJ 20161128 c51-report-courses-by-course-provider-MP-dj created ProgrammeDAO.java
+//DJ 20161221 c51-report-courses-by-course-provider-MP-dj Used ApplicationStatus.getApplicationStatus() in findById()
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,20 +63,39 @@ public class ProgrammeDAO implements ICrud {
 				return programmeList;
 			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME  FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
-			sb.append("AND PROG.DISPLAYSTARTDATE >= ? AND PROG.EXPIRYDATE <= ? AND PROG.PROGRAMMESTATUS=?  ");
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME , DESCRIPTION AS PROGDESCRIPTION, ");
+			sb.append("PROGRAMMESTATUS AS PROSTATUS,DISPLAYSTARTDATE AS PROGSTARTDATE,EXPIRYDATE AS PROGEXPIRYDATE ");
+			sb.append("FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
+			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
+				sb.append("AND PROG.DISPLAYSTARTDATE >= ' ");
+				sb.append(new java.sql.Date(programme.getDisplayStartDate().getTime()));
+				sb.append(" ' ");
+			}
+			if (programme.getExpiryDate() != null	&& programme.getExpiryDate().getTime() > 0) {
+				sb.append("AND PROG.EXPIRYDATE <= '");
+				sb.append(new java.sql.Date(programme.getExpiryDate().getTime()));
+				sb.append(" ' ");
+			}
+			if (programme.getProgrammeStatus() > 0) {
+				sb.append(" AND PROG.PROGRAMMESTATUS =  ");
+				sb.append(programme.getProgrammeStatus());
+			}
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, programme.getCourseProvider());
-			stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
-			stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
-			stmt.setInt(4, programme.getProgrammeStatus());
+			//stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
+			//stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
+			//stmt.setInt(2, programme.getProgrammeStatus());
 			
 			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
 				singleProgramme.add(resultSet.getString("PROGCODE"));
 				singleProgramme.add(resultSet.getString("PROGNAME"));				
+				singleProgramme.add(resultSet.getString("PROGDESCRIPTION"));				
+				singleProgramme.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("PROSTATUS")));				
+				singleProgramme.add(resultSet.getString("PROGSTARTDATE"));				
+				singleProgramme.add(resultSet.getString("PROGEXPIRYDATE"));				
 				programmeList.add(singleProgramme);
 			}
 

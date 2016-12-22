@@ -1,4 +1,6 @@
 package com.genesiis.campus.validation;
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj add SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER 
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj add REPORT_COURSES_BY_COURSE_PROVIDER entry 
 
 //20161206 DJ c52-report-banner-statistics-MP-dj add SEARCH_VIEW_BANNER_STATISTICS entry 
 //20161210 DJ c52-report-banner-statistics-MP-dj add REPORT_BANNER_STATISTICS entry 
@@ -12,6 +14,8 @@ package com.genesiis.campus.validation;
 public enum Operation {	
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
+	SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER("SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," "),
+	REPORT_COURSES_BY_COURSE_PROVIDER("REPORT_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," "),			
 	SEARCH_VIEW_BANNER_STATISTICS("SEARCH_VIEW_BANNER_STATISTICS",ResponseType.JSON,""),
 	LIST_PAGE_WISE_PAGESLOTS("LIST_PAGE_WISE_PAGESLOTS",ResponseType.JSON,""),
 	LIST_PAGESLOT_WISE_BANNER("LIST_PAGESLOT_WISE_BANNER",ResponseType.JSON,""),
