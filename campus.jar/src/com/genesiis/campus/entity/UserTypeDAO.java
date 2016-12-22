@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161209 DN CAm-18 student : signup : without using third party application 
 //			  initial version of the UserTypeDAO.java created
 //20161214 DN CAM:18 added userTypeString to the prepared statement in findById()
+//20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +46,7 @@ public class UserTypeDAO implements ICrud {
 			String userTypeString  = (String) code;
 		try{
 			Collection<Collection<String>> outerWrapper = new ArrayList<Collection<String>>();
-			 userTypeConnection = ConnectionManager.getConnection();
+			 userTypeConnection = createDatabaseConnection();
 			
 			StringBuilder getUserTypeSQL = new StringBuilder("SELECT * FROM [CAMPUS].[USERTYPE] ");
 			getUserTypeSQL.append(" WHERE USERTYPESTRING = ? AND ISACTIVE=1 ; ");
@@ -66,8 +68,7 @@ public class UserTypeDAO implements ICrud {
 			log.error("findById(): Wxcepption"+ exp.toString());
 			throw exp;
 		} finally{
-			if(userTypeConnection!=null)
-				userTypeConnection.close();
+			closeDataBaseConnection(userTypeConnection);
 			if(prepaire != null)
 				prepaire.close();
 		}
@@ -106,6 +107,36 @@ public class UserTypeDAO implements ICrud {
 			Connection conn) throws SQLException, Exception {
 		
 		return null;
+	}
+	
+	/*
+	 * createDatabaseConnection() establishes the database connection with the
+	 * data repository
+	 * @author DN
+	 * @throw SQLException if the connection causes errors.
+	 */
+	private Connection createDatabaseConnection() throws SQLException {
+		try {
+			return ConnectionManager.getConnection();
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
+	}
+	
+	/*
+	 * this method closes the connection if the connection is not null and 
+	 * that connection has not been closed
+	 */
+	private void closeDataBaseConnection(Connection conn)throws SQLException{
+		try{
+			if((conn!=null) & (!conn.isClosed()) ){
+				conn.close();
+			}
+		} catch (SQLException sqle) {
+			log.error("add():SQLException :" + sqle.toString());
+			throw sqle;
+		}
 	}
 
 }
