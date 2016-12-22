@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
 //20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
 //20161124 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query by selecting CP code.
+//20161222 CAM-11: PN renamed: campus.jar/src/com/genesiis/campus/entity/ProgrammeDAO.java -> campus.jar/src/com/genesiis/campus/entity/SearchedProgrammeDAO.java
+//         CAM-11: PN Modified the SQL query inside getAll() method and findById() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,8 +21,8 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IQueryBuilder;
 import com.genesiis.campus.util.QueryBuildingHelper;
 
-public class ProgrammeDAO implements ICrud {
-	static Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
+public class SearchedProgrammeDAO implements ICrud {
+	static Logger log = Logger.getLogger(SearchedProgrammeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -73,7 +75,9 @@ public class ProgrammeDAO implements ICrud {
 				log.info("tempquery " + tempquery);
 
 				conn = ConnectionManager.getConnection();
-				String query = "SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE]"
+				String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
+						+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
+						+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] "
 						+ "FROM [CAMPUS].[PROGRAMME] p "
 						+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
 						+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
@@ -93,13 +97,23 @@ public class ProgrammeDAO implements ICrud {
 				while (rs.next()) {
 					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
 					singleProgrammeList.add(rs.getString("CODE"));
-					singleProgrammeList.add(rs.getString("NAME"));
-					singleProgrammeList.add(rs.getString("DESCRIPTION"));
+					singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));
+					singleProgrammeList.add(rs.getString("DESCRIPTION").replaceAll(",", "##"));
+					singleProgrammeList.add(rs.getString("DURATION"));
+					singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
+					singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-					singleProgrammeList.add(rs.getString("PROVIDER"));
+					singleProgrammeList.add(rs.getString("EXPIRYDATE"));
+					singleProgrammeList.add(rs.getString("PROGRAMMESTATUS"));
+					singleProgrammeList.add(rs.getString("COURSEPROVIDER").replaceAll(",", "##"));
+					singleProgrammeList.add(rs.getString("MAJOR"));
+					singleProgrammeList.add(rs.getString("CATEGORY"));
+					singleProgrammeList.add(rs.getString("LEVEL"));
+					singleProgrammeList.add(rs.getString("CLASSTYPE"));
+					singleProgrammeList.add(rs.getString("PROVIDER").replaceAll(",", "##"));
 					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-					singleProgrammeList.add(rs.getString("IMAGE"));
 					singleProgrammeList.add(rs.getString("CPCODE"));
+					singleProgrammeList.add(rs.getString("WEBLINK"));
 					final Collection<String> singleProgrammeCollection = singleProgrammeList;
 					allProgrammeList.add(singleProgrammeCollection);
 				}
@@ -131,7 +145,9 @@ public class ProgrammeDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = " SELECT p.[CODE], p.[NAME], p.[IMAGE], p.[DESCRIPTION], p.[DISPLAYSTARTDATE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX] , cp.[CODE] as [CPCODE]"
+			String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
+					+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
+					+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] "
 					+ "FROM [CAMPUS].[PROGRAMME] p "
 					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
 					+ "WHERE p.PROGRAMMESTATUS = 1";
@@ -142,12 +158,21 @@ public class ProgrammeDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
 				singleProgrammeList.add(rs.getString("CODE"));
-				singleProgrammeList.add(rs.getString("NAME"));
-				singleProgrammeList.add(rs.getString("DESCRIPTION"));
+				singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("DESCRIPTION").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("DURATION"));
+				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
-				singleProgrammeList.add(rs.getString("PROVIDER"));
+				singleProgrammeList.add(rs.getString("EXPIRYDATE"));
+				singleProgrammeList.add(rs.getString("PROGRAMMESTATUS"));
+				singleProgrammeList.add(rs.getString("COURSEPROVIDER").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("MAJOR"));
+				singleProgrammeList.add(rs.getString("CATEGORY"));
+				singleProgrammeList.add(rs.getString("LEVEL"));
+				singleProgrammeList.add(rs.getString("CLASSTYPE"));
+				singleProgrammeList.add(rs.getString("PROVIDER").replaceAll(",", "##"));
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
-				singleProgrammeList.add(rs.getString("IMAGE"));
 				singleProgrammeList.add(rs.getString("CPCODE"));
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
