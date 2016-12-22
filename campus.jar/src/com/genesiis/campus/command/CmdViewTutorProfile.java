@@ -35,8 +35,8 @@ public class CmdViewTutorProfile implements ICommand {
 
 				tutorViewCollection = tutorDAO.findById(tutor);
 
-			view.setCollection(tutorViewCollection);
-
+			view.setCollection(tutorViewCollection);			
+			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
