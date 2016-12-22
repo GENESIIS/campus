@@ -102,6 +102,28 @@ function displayProviderTownList() {
 	townNames.html(singleTownElement);
 }
 
+function providerUsernameValidation(){
+	var selectedCountry = document.getElementById('providerUsername').value;
+	
+	$.ajax({
+		url : '/AdminController',
+		method : 'POST',
+		data : {
+			'CCO' : 'DISPLAY_TOWN_DATA',
+			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION'
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+
+			if (response !== undefined && response !== null) {
+				window.townCollection = response.townArrayList;
+				alert("dsjfkdsjf");
+			}
+		},
+	});
+}
+
 function getProviderType() {
 
 	var status = false;

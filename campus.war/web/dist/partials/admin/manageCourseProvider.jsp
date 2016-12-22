@@ -496,7 +496,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;" />
+										id="providerUsername" size="50px;" onchange="providerUsernameValidation();"/>
 								</div>
 							</li>
 							<!-- end -->
