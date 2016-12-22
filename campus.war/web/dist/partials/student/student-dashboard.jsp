@@ -28,27 +28,28 @@
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/image-slides.js"></script>
+<jsp:include page="/dist/partials/student/SessionDataLoader.jsp"></jsp:include>
 </head>
 
 <body>
 	<%
 		//allow access only if session exists
-		String currentSessionUser = null;
-		if (session.getAttribute("user") == null) {
-			response.sendRedirect("login.jsp");
-		} else
-			currentSessionUser = (String) session.getAttribute("user");
-		String userName = null;
-		String sessionID = null;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("user"))
-					userName = cookie.getValue();
-				if (cookie.getName().equals("JSESSIONID"))
-					sessionID = cookie.getValue();
-			}
-		}
+// 		String currentSessionUser = null;
+// 		if (session.getAttribute("user") == null) {
+// 			response.sendRedirect("login.jsp");
+// 		} else
+// 			currentSessionUser = (String) session.getAttribute("user");
+// 		String userName = null;
+// 		String sessionID = null;
+// 		Cookie[] cookies = request.getCookies();
+// 		if (cookies != null) {
+// 			for (Cookie cookie : cookies) {
+// 				if (cookie.getName().equals("user"))
+// 					userName = cookie.getValue();
+// 				if (cookie.getName().equals("JSESSIONID"))
+// 					sessionID = cookie.getValue();
+// 			}
+// 		}
 	%>
 	<!-- Header-->
 	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
@@ -133,7 +134,7 @@
 						<h3>
 							Hi
 							<%=currentSessionUser%>, Login successful. </h3>
-						
+						<a href="/dist/partials/student/SessionDataLoader.jsp"> Session details checker </a>
 						<br>
 					</div>
 				</div>

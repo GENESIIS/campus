@@ -48,7 +48,8 @@ public class StudentPrivilegeDAO implements ICrud {
 	public Collection<String> studentPrivilege(Object code)
 			throws SQLException, Exception {
 
-		Collection<String> studentPrivilegeCollection = new ArrayList<String>();
+		//Collection<String> studentPrivilegeCollection = new ArrayList<String>();
+		//Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		final Student student = (Student) code;
 		ArrayList<String> privilegeList = null;
@@ -62,8 +63,9 @@ public class StudentPrivilegeDAO implements ICrud {
 
 			ResultSet rs = preparedStatement.executeQuery();
 
+			privilegeList = new ArrayList<String>();
 			while (rs.next()) {
-				privilegeList = new ArrayList<String>();
+				
 				privilegeList.add(rs.getString(1));
 				privilegeList.add(rs.getString(2));
 				privilegeList.add(rs.getString(3));
@@ -73,9 +75,10 @@ public class StudentPrivilegeDAO implements ICrud {
 				privilegeList.add(rs.getString(7));
 				privilegeList.add(rs.getString(8));
 				
-				studentPrivilegeCollection = privilegeList;
+			
 
 			}
+			//studentPrivilegeCollection.add(privilegeList);
 
 		} catch (SQLException e) {
 			log.info("findById SQLException : " + e);
@@ -94,7 +97,8 @@ public class StudentPrivilegeDAO implements ICrud {
 			}
 
 		}
-		return studentPrivilegeCollection;
+		//return studentPrivilegeCollection;
+		return privilegeList;
 	}
 
 	@Override

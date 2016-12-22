@@ -256,7 +256,7 @@ public class StudentLoginDAO implements ICrud {
 
 				singleStudent.add(code);
 				singleStudent.add(username); // 0
-				singleStudent.add(rs.getString("USERNAME")); // 1
+				//singleStudent.add(rs.getString("USERNAME")); // 1
 				// encryptedPasswordDb = rs.getString("PASSWORD").trim();
 				// singleStudent.add(encryptedPasswordDb); // 2
 				singleStudent.add(indexNo); // 3
