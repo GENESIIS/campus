@@ -4,8 +4,8 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search implementing findById() method to retrieve data according to the criteria.
 //20161103 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query.
 //20161124 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query by selecting CP code.
-//20161222 CAM-11: PN renamed: campus.jar/src/com/genesiis/campus/entity/ProgrammeDAO.java -> campus.jar/src/com/genesiis/campus/entity/SearchedProgrammeDAO.java
-//         CAM-11: PN Modified the SQL query inside getAll() method and findById() method.
+//20161222 CAM-116: PN renamed: campus.jar/src/com/genesiis/campus/entity/ProgrammeDAO.java -> campus.jar/src/com/genesiis/campus/entity/SearchedProgrammeDAO.java
+//         CAM-116: PN Modified the SQL query inside getAll() method and findById() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
