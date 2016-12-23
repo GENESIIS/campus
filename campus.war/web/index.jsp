@@ -31,7 +31,7 @@ p    {color: blue;}
 	</div>
 	<hr>
 	<div>		
-		<a href="dist/partials/coursesByCourseProviderView.jsp"><u>Courses By
+		<a href="dist/partials/reportCoursesByCourseProvider.jsp"><u>Courses By
 			Course Provider </u></a>
 	</div>
 	<hr>

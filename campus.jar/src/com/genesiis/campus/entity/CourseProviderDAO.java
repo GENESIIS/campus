@@ -115,7 +115,7 @@ public class CourseProviderDAO  implements ICrud{
 	 * @return Collection
 	 * @throws SQLException
 	 */
-	public  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
+	private  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
 			singleProvider.add(rs.getString("CPCODE"));				
