@@ -1,9 +1,5 @@
 package com.genesiis.campus.command;
 
-//20161121 CM c36-add-tutor-information INIT CmdAddTutorProfile.java
-//20161121 CM c36-add-tutor-information Modified execute()method. 
-//20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,23 +15,16 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
 
-public class CmdAddTutorProfile implements ICommand {
+public class CmdUpdateTutorProfile implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
 
-	/**
-	 * @author Chathuri
-	 * @param helepr
-	 *            IDataHelper object of Object type view IView object of object
-	 *            type
-	 * @return View object to servlet
-	 */
-
+	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
 	private String message = "True";
-
+	
 	@Override
-	public IView execute(IDataHelper helper, IView view) throws SQLException,
-			Exception {
+	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		System.out.println("........@ CmdUpdateTutorProfile test..............");
 
 		try {
 			final TutorDAO tutorDAO = new TutorDAO();
@@ -43,10 +32,10 @@ public class CmdAddTutorProfile implements ICommand {
 			Collection<String> tutorCollection= new ArrayList<String>();
 			final Validator validator=new Validator();
 			message = validator.validateTutorFields(helper);
-			
 			if (message.equalsIgnoreCase("True")) {
 
-				setVariables(helper,tutorCollection);				
+				setVariables(helper,tutorCollection);
+				
 								
 				tutor.setUsername(tutorCollection.toArray()[0].toString());
 				tutor.setPassword(tutorCollection.toArray()[1].toString());
@@ -82,7 +71,7 @@ public class CmdAddTutorProfile implements ICommand {
 
 				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
 
-					int result = tutorDAO.add(tutor);
+					int result = tutorDAO.update(tutor);
 					if (result > 0) {
 						message = SystemMessage.ADDED.message();
 
@@ -100,7 +89,6 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		return view;
 	}
-
 	
 
 	/*
@@ -215,4 +203,5 @@ public class CmdAddTutorProfile implements ICommand {
 			throw e;
 		}
 	}
+
 }
