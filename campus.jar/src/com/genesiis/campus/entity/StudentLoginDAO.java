@@ -60,7 +60,6 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoginAuthenticatedBy;
 	boolean isActive;
 
-
 	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
 
 	@Override
@@ -79,6 +78,56 @@ public class StudentLoginDAO implements ICrud {
 	public int delete(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/**logout data updating 
+	 * @author anuradha
+	 * @param student
+	 *            object
+	 * @return int
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public static int logoutDataUpdate(Object object) throws SQLException,
+			Exception {
+		Connection conn = null;
+		String query = "UPDATE CAMPUS.STUDENT SET  LASTLOGGEDOUTDATE=?, LASTLOGGEDOUTTIME=?  WHERE CODE=? ";
+		PreparedStatement ps = null;
+		Student student = (Student) object;
+		int rowInserted = 0;
+		try {
+			conn = ConnectionManager.getConnection();
+			ps = conn.prepareStatement(query);
+
+			ps.setString(1, student.getLastLoggedOutDate());
+			ps.setString(2, student.getLastLoggedOutTime());
+			ps.setInt(3, student.getCode());
+			rowInserted = ps.executeUpdate();
+
+			if (rowInserted > 0) {
+				rowInserted = 1;
+			} else {
+				rowInserted = 0;
+			}
+		} catch (SQLException e) {
+			log.info("logoutDataUpdate(): SQLexception" + e.toString());
+			throw e;
+		} catch (Exception ex) {
+			log.info("logoutDataUpdate(): Exception" + ex.toString());
+			throw ex;
+		} finally {
+
+			if (ps != null) {
+				ps.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+		return rowInserted;
+
 	}
 
 	/**
@@ -167,7 +216,7 @@ public class StudentLoginDAO implements ICrud {
 			boolean check = rs.next();
 
 			if (check) {
-				
+
 				code = rs.getString("CODE");
 				username = rs.getString("USERNAME");
 				encryptedPasswordDb = rs.getString("PASSWORD");
@@ -256,7 +305,7 @@ public class StudentLoginDAO implements ICrud {
 
 				singleStudent.add(code);
 				singleStudent.add(username); // 0
-				//singleStudent.add(rs.getString("USERNAME")); // 1
+				// singleStudent.add(rs.getString("USERNAME")); // 1
 				// encryptedPasswordDb = rs.getString("PASSWORD").trim();
 				// singleStudent.add(encryptedPasswordDb); // 2
 				singleStudent.add(indexNo); // 3
@@ -311,11 +360,11 @@ public class StudentLoginDAO implements ICrud {
 					student.setValid(false);
 					message = SystemMessage.INVALIDPASSWORD.message();
 					int MAX_ATTEMPTS;
-//					for (MAX_ATTEMPTS =0; MAX_ATTEMPTS < 3; ){
-//						log.info("max attempts : "+MAX_ATTEMPTS);
-//					}
-//					MAX_ATTEMPTS ++;
-					
+					// for (MAX_ATTEMPTS =0; MAX_ATTEMPTS < 3; ){
+					// log.info("max attempts : "+MAX_ATTEMPTS);
+					// }
+					// MAX_ATTEMPTS ++;
+
 				}
 
 			} else {
@@ -374,7 +423,5 @@ public class StudentLoginDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 
 }
