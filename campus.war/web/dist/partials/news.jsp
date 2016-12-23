@@ -39,7 +39,7 @@
                         <li><a href="contact-us.jsp">Contact Us</a></li>
                         <li><a href="javascript:">News</a></li>
                         <li><a href="f-and-q.jsp">F & Q</a></li>
-                        <li><a href="rss.jsp">Rss</a></li>
+                        <li><a href="rss.jsp">RSS</a></li>
                     </ul>
                 </div>
                 <!-- End Main menu tabs -->

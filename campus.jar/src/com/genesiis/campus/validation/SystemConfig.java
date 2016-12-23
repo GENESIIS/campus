@@ -3,6 +3,10 @@ package com.genesiis.campus.validation;
 //20161113 MM c5-corporate-training-landing-page-MP Initialised file
 //20161118 MM c5-corporate-training-landing-page-MP Added fields value1, 
 //				value2 and value3 to match fields in SystemConfig table
+//20161127 MM c5-corporate-training-landing-page-MP Made value1, value2, 
+//				value3 final.
+//20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
+//20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
 
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
@@ -23,12 +27,13 @@ package com.genesiis.campus.validation;
 */
 public enum SystemConfig {
 	
-	PROVIDER_LOGO_PATH("", "", ""),
+	PROVIDER_LOGO_PATH("education/provider/logo", "", ""),
 	BANNER_PATH("education\\banner", "", ""),
 	BANNER_LINKED_IMAGE_PATH("","",""),
 	COURSE_IMAGE_PATH("","",""),
 	STUDENT_PROFILE_IMAGE_PATH("","",""),
-	TUTOR_PROFILE_IMAGE_PATH("","","");
+	TUTOR_PROFILE_IMAGE_PATH("","",""),
+	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 	
 	private String value1;
 	private String value2;

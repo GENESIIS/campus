@@ -30,6 +30,8 @@
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+
 
 <!-- W3-Include -->
 <!--     <script src="/dist/bower-components/w3/w3data.js"></script> -->
@@ -45,7 +47,9 @@
 <body>
 	<!-- End Header -->
 	<header>
-		<jsp:include page="layout/header.jsp"></jsp:include>
+	
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<%-- <jsp:include page="layout/header.jsp"></jsp:include> --%>
 	</header>
 
 	<!-- End Header -->

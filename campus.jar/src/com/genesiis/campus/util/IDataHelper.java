@@ -1,14 +1,10 @@
 package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161031 DN c10-contacting-us-page getAttribute(String attributeName) implemented
-//20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
-//20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
-//20161116 Dn c10-contacting-us-page-MP removed setContextAttribute(String,Object) method
-// due to Code review comment
-
-//20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
 //20161108 DN, JH, DJ, AS, CM, MM Added getResponseType(String) method
+//20161116 Dn c10-contacting-us-page-MP removed setContextAttribute(String,Object) method
+// due to Code review comment
 
 import javax.servlet.http.HttpSession;
 
