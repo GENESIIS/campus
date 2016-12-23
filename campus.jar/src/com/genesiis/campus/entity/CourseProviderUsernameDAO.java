@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161209 JH c39-add-course-provider findById method coding 
 //20161209 JH c39-add-course-provider class name renamed to CourseProviderUsernameDAO.java
 //20161222 JH c39-add-course-provider findById method modified: added missing parameters
+//20161223 JH c39-add-course-provider findById method query modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +44,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 	public Collection findById(Object code) throws SQLException, Exception {
 
 		final CourseProviderAccount courseProviderAccount = (CourseProviderAccount) code;
-		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDERACCOUNT] WHERE USERNAME = ? AND USERTYPE = ? AND ISACTIVE = ? ";
+		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDERACCOUNT] WHERE USERNAME = ? OR EMAIL = ? ";
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -53,6 +54,8 @@ public class CourseProviderUsernameDAO implements ICrud {
 
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, courseProviderAccount.getUsername());
+			preparedStatement.setString(2,courseProviderAccount.getEmail());
+			
 			ResultSet rs = preparedStatement.executeQuery();
 
 			if (rs != null) {
