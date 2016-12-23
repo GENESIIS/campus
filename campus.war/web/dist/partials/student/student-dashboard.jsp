@@ -19,7 +19,7 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- W3-Include -->
 <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
@@ -32,25 +32,32 @@
 </head>
 
 <body>
-<jsp:include page="/dist/partials/student/SessionDetailsJSTL.jsp"></jsp:include>
+	<%-- <jsp:include page="/dist/partials/student/SessionDetailsJSTL.jsp"></jsp:include> --%>
+
+	<c:if test="${sessionScope.currentSessionUser == null}">
+<!-- 	not valid user!! -->
+ <c:redirect url="/dist/partials/login.jsp" />
+
+	</c:if>
+
 	<%
 		//allow access only if session exists
-// 		String currentSessionUser = null;
-// 		if (session.getAttribute("user") == null) {
-// 			response.sendRedirect("login.jsp");
-// 		} else
-// 			currentSessionUser = (String) session.getAttribute("user");
-// 		String userName = null;
-// 		String sessionID = null;
-// 		Cookie[] cookies = request.getCookies();
-// 		if (cookies != null) {
-// 			for (Cookie cookie : cookies) {
-// 				if (cookie.getName().equals("user"))
-// 					userName = cookie.getValue();
-// 				if (cookie.getName().equals("JSESSIONID"))
-// 					sessionID = cookie.getValue();
-// 			}
-// 		}
+		// 		String currentSessionUser = null;
+		// 		if (session.getAttribute("user") == null) {
+		// 			response.sendRedirect("login.jsp");
+		// 		} else
+		// 			currentSessionUser = (String) session.getAttribute("user");
+		// 		String userName = null;
+		// 		String sessionID = null;
+		// 		Cookie[] cookies = request.getCookies();
+		// 		if (cookies != null) {
+		// 			for (Cookie cookie : cookies) {
+		// 				if (cookie.getName().equals("user"))
+		// 					userName = cookie.getValue();
+		// 				if (cookie.getName().equals("JSESSIONID"))
+		// 					sessionID = cookie.getValue();
+		// 			}
+		// 		}
 	%>
 	<!-- Header-->
 	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
@@ -132,11 +139,9 @@
 					<!-- End Keyword Search -->
 					<div class="login-link">
 						<a href="javascript:">Logout</a>
-						<h3>
-							Hi
-							${sessionScope.user}, Login successful. </h3>
-						<a href="/dist/partials/student/SessionDataLoader.jsp"> Session details checker </a>
-						<br>
+						<h3>Hi ${sessionScope.user}, Login successful.</h3>
+						<a href="/dist/partials/student/SessionDataLoader.jsp">
+							Session details checker </a> <br>
 					</div>
 				</div>
 				<!-- End keyword search -->
