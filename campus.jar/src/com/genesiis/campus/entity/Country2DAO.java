@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
 //			  c26-add-student-details: getAll() method SQL query modified.
 //20161126 PN c26-add-student-details: findById() method implemented.
+//20161223 DN CAMP18: remove unnecessary singleCountryCollection initialization
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,9 +55,7 @@ public class Country2DAO implements ICrud{
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
 				singleCountryList.add(rs.getString("CODE"));
 				singleCountryList.add(rs.getString("NAME"));
-
-				final Collection<String> singleCountryCollection = singleCountryList;
-				allCountryList.add(singleCountryCollection);
+				allCountryList.add(singleCountryList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
