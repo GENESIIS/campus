@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
+//20161223 DN CAMP18: remove unnecessary singleCountryCollection initialization
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,9 +57,7 @@ public class TownDAO implements ICrud{
 				singleTownList.add(rs.getString("CODE"));
 				singleTownList.add(rs.getString("NAME"));
 				singleTownList.add(rs.getString("DISTRICT"));
-
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
+				allTownList.add(singleTownList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll(): SQLE " + sqlException.toString());
