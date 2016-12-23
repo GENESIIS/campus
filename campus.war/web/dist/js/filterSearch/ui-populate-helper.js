@@ -7,7 +7,8 @@
 //20161116 PN c11-criteria-based-filter-search adding reset functionality via check-box -WIP
 //20161117 AS c11-criteria-based-filter-search adding reset functionality via check-box fixed
 //20161124 PN c11-criteria-based-filter-search implemented getNumFilteredRows() method for display course count on search results.
-//20161222 PN CAM-116: modified ajax method calls to populate UI elements from DB values. 
+//20161222 PN CAM-116: modified ajax method calls to populate UI elements from DB values.
+//20161223 PN CAM-116: removed alert messages from the code.
 
 /**
  * This method id to load category details
@@ -49,16 +50,17 @@ $(document).ready(function() {
     					'</div>',
     					'<div class="result-box clearfix">' +
     						'<div class="course-name">' +
-    							'<a href="'+data[16].toString()+'">' + data[1].toString() +
+    							'<a href="'+data[18].toString()+'">' + data[1].toString() +
     								'<span class="provider-name">' + " @"+ data[15].toString() +
     								'</span>' +
     							'</a>' +
     						'</div>' +
     						'<div class="course-info">' +
-    							'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
+    							'<p>'+ data[2].toString() + data[4].toString() + '</p>' +
     						'</div>' +
     					'</div>',
-    					data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),data[17].toString()
+    					data[6].toString()+' - '+data[7].toString()+data[3].toString(),
+    					data[19].toString()
     					        ] ).draw( false );
 
     				});
@@ -125,7 +127,8 @@ $('#addRow').on( 'click', function () {
 						'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
 					'</div>' +
 				'</div>',
-				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),data[17].toString()
+				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),
+				data[19].toString()
 				        ] ).draw( false );
 
 			});
@@ -183,7 +186,6 @@ function getAjaxData(response) {
 	
 	var districtName = $("#districtName");
 	districtName.find('option').remove();
-	alert("response.districtCollection "+response.districtCollection);
 	$.each(response.districtCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -195,7 +197,6 @@ function getAjaxData(response) {
 
 	var institueName = $("#institueName");
 	institueName.find('option').remove();
-	alert("response.instituteCollection "+response.instituteCollection);
 	$.each(response.instituteCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -316,7 +317,6 @@ function displayDetailsOnLoad() {
 }
 
 function displayDetailsOnChange() {
-	alert("Hey Girl");
 	$(document).find('#instituelist').val('');
 	$(document).find('#districtlist').val('');
 	displayMajor();
