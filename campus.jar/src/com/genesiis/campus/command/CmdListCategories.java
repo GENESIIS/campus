@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.CategoryDAO;
+import com.genesiis.campus.entity.LPCategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
@@ -40,7 +40,7 @@ public class CmdListCategories implements ICommand{
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
 
-		ICrud categoryDAO = new CategoryDAO();
+		ICrud categoryDAO = new LPCategoryDAO();
 		ICrud instituteDAO = new InstituteDAO();
 		final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
 		
