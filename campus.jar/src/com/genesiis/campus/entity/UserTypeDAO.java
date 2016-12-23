@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //			  initial version of the UserTypeDAO.java created
 //20161214 DN CAM:18 added userTypeString to the prepared statement in findById()
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
+//20161223 DN CAMP:18 add separate class DaoHelper.java of whose responsibility is to clean up the 
+// database resources.and used cleanup() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 public class UserTypeDAO implements ICrud {
 	
@@ -43,16 +46,17 @@ public class UserTypeDAO implements ICrud {
 			throws SQLException, Exception {
 			Connection userTypeConnection = null;
 			PreparedStatement prepaire =null;
+			ResultSet userCode =null;
 			String userTypeString  = (String) code;
 		try{
 			Collection<Collection<String>> outerWrapper = new ArrayList<Collection<String>>();
-			 userTypeConnection = createDatabaseConnection();
+			 userTypeConnection = ConnectionManager.getConnection();
 			
 			StringBuilder getUserTypeSQL = new StringBuilder("SELECT * FROM [CAMPUS].[USERTYPE] ");
 			getUserTypeSQL.append(" WHERE USERTYPESTRING = ? AND ISACTIVE=1 ; ");
 			prepaire = userTypeConnection.prepareStatement(getUserTypeSQL.toString());
 			prepaire.setString(1, userTypeString);
-			ResultSet userCode = prepaire.executeQuery();
+			userCode = prepaire.executeQuery();
 			
 			while(userCode.next()){
 				final Collection<String> singleUSerTypeList = new ArrayList<String>();
@@ -68,9 +72,12 @@ public class UserTypeDAO implements ICrud {
 			log.error("findById(): Wxcepption"+ exp.toString());
 			throw exp;
 		} finally{
-			closeDataBaseConnection(userTypeConnection);
-			if(prepaire != null)
-				prepaire.close();
+			try{
+				DaoHelper.cleanup(userTypeConnection, prepaire, userCode);
+			} catch(SQLException sqle){
+				log.error("findById(): SQLException in finally block "+ sqle.toString());
+				throw sqle;}
+			
 		}
 	}
 
@@ -107,36 +114,6 @@ public class UserTypeDAO implements ICrud {
 			Connection conn) throws SQLException, Exception {
 		
 		return null;
-	}
-	
-	/*
-	 * createDatabaseConnection() establishes the database connection with the
-	 * data repository
-	 * @author DN
-	 * @throw SQLException if the connection causes errors.
-	 */
-	private Connection createDatabaseConnection() throws SQLException {
-		try {
-			return ConnectionManager.getConnection();
-		} catch (SQLException sqle) {
-			log.error("add():SQLException :" + sqle.toString());
-			throw sqle;
-		}
-	}
-	
-	/*
-	 * this method closes the connection if the connection is not null and 
-	 * that connection has not been closed
-	 */
-	private void closeDataBaseConnection(Connection conn)throws SQLException{
-		try{
-			if((conn!=null) & (!conn.isClosed()) ){
-				conn.close();
-			}
-		} catch (SQLException sqle) {
-			log.error("add():SQLException :" + sqle.toString());
-			throw sqle;
-		}
 	}
 
 }
