@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161208 JH c39-add-course-provider CmdAddCourseProviderAccount.java created
 //20161209 JH c39-add-course-provider class name renamed to CmdCourseProviderAccountValidate
 //20161222 JH c39-add-course-provider code modifications for Username validation 
+//20161223 JH c39-add-course-provider code modified
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
+import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
@@ -37,8 +39,11 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 			if (action.equalsIgnoreCase("COURSE_PROVIDER_USERNAME_VALIDATION")) {
 			
 				ICrud usernameDAO = new CourseProviderUsernameDAO();
+				ICrud userTypeDAO = new UserTypeDAO();
 				String username = helper.getParameter("username");
+				String email = helper.getParameter("");
 				final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
+				//courseProviderAccount.setUserType(Integer.parseInt(userType));
 				courseProviderAccount.setUsername(username);
 				/*
 				 *have to set user type 
