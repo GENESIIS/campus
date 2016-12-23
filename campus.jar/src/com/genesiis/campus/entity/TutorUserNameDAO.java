@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO
+//20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
