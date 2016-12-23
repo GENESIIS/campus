@@ -50,7 +50,6 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 					break;
 				default:
 					Collection<String> signUpdata = new ArrayList<String>();
-					signUpdata.add(null);
 					preRequisteCollnWrapper.add(signUpdata);
 					
 					break;
