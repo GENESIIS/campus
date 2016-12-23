@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20161115 JH c7-higher-education-landing-page isEmpty()method modified to support any string validation
 //20161115 JH c7-higher-education-landing-page add method comments
 //20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
+//20161223 PN CAM-112: getSubDescription() method implement to substring the category description.
 
 import java.util.ArrayList;
 
@@ -59,4 +60,18 @@ public class Validator {
 		}
 		return true;
 	}
+	
+	/**
+	 * Substring the category description after 500 characters
+	 * @param description
+	 * @return sub-description
+	 */
+	public String getSubDescription(String description){
+		if(description.length() > 500){
+			return description.substring(0, 500)+" ... ";
+		}
+		return description;
+	}
+
+	
 }
