@@ -103,13 +103,14 @@ function displayProviderTownList() {
 }
 
 function providerUsernameValidation(){
-	var selectedCountry = document.getElementById('providerUsername').value;
+	var selectedUsername = document.getElementById('providerUsername').value;
+	alert(selectedUsername);
 	
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
 		data : {
-			'CCO' : 'DISPLAY_TOWN_DATA',
+			'CCO' : 'COURSE_PROVIDER_VALIDATION',
 			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION'
 		},
 		dataType : "json",
