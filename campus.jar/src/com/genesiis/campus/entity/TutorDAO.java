@@ -41,13 +41,13 @@ public int add(Object object) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		int status = -1;
 		
-		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
-				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, "
-				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
-				+ ",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,"
-				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
-				+ ",CRTON,CRTBY,MODON, MODBY ) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
+		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
+		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
+		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
+		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
+		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
+		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
+		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
 				
 		try {			
 			final Tutor tutor = (Tutor) object;
@@ -55,7 +55,7 @@ public int add(Object object) throws SQLException, Exception {
 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
-			preparedStatement = conn.prepareStatement(query);
+			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, tutor.getUsername());			
 			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(3, tutor.getFirstName());
@@ -111,7 +111,102 @@ public int add(Object object) throws SQLException, Exception {
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		return 0;
+
+		System.out.println("........@ update TutorDAO test..............");
+		
+
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int status = -1;
+		
+		/*
+		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
+		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
+		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
+		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
+		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
+		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
+		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
+		 * 
+		 * 
+		 */
+		
+		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
+		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? , ");
+		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? ");
+		/*
+		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
+		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , ISACTIVE = ? , ADDRESS1 = ? , ");
+		queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
+		queryBuilder.append("MODBY = ? ");*/
+		queryBuilder.append("WHERE USERNAME = ?;");
+				
+		try {			
+			final Tutor tutor = (Tutor) object;
+			conn = ConnectionManager.getConnection();			
+
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+			
+			preparedStatement = conn.prepareStatement(queryBuilder.toString());
+			//preparedStatement.setString(1, tutor.getUsername());			
+			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString());
+			preparedStatement.setString(2, tutor.getFirstName());
+			preparedStatement.setString(3, tutor.getMiddleName());
+			preparedStatement.setString(4, tutor.getLastName());
+			preparedStatement.setString(5, tutor.getGender());
+			
+			preparedStatement.setString(6, tutor.getEmailAddress());
+			preparedStatement.setString(7, tutor.getLandCountryCode());
+			preparedStatement.setString(8, tutor.getLandAreaCode());
+			preparedStatement.setString(9, tutor.getLandNumber());
+			preparedStatement.setString(10, tutor.getMobileCountryCode());
+			
+			preparedStatement.setString(11, tutor.getMobileNetworkCode());
+			preparedStatement.setString(12, tutor.getMobileNumber());
+			preparedStatement.setString(13, tutor.getDescription());
+			preparedStatement.setString(14, tutor.getExperience());
+			preparedStatement.setString(15, tutor.getWebLink());
+	/*	
+			preparedStatement.setString(16, tutor.getFacebookLink());
+			preparedStatement.setString(17, tutor.getTwitterNumber());
+			preparedStatement.setString(18, tutor.getMySpaceId()); 
+			preparedStatement.setString(19, tutor.getLinkedInLink());
+			preparedStatement.setString(20, tutor.getInstagramId());
+		
+			preparedStatement.setString(21, tutor.getViber());
+			preparedStatement.setString(22, tutor.getWhatsAppId());
+			tutor.setIsApproved(0);
+			preparedStatement.setInt(23, 0);
+		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
+			preparedStatement.setInt(24, 0);			
+			preparedStatement.setString(25, tutor.getAddressLine1());
+			
+			preparedStatement.setString(26, tutor.getAddressLine2());
+			preparedStatement.setString(27, tutor.getAddressLine3());
+			preparedStatement.setString(28, tutor.getTown());
+			preparedStatement.setInt(29, tutor.getUsertype());		
+			//	preparedStatement.setString(31, "chathuri");
+			preparedStatement.setString(30, "chathuri");
+			
+			//preparedStatement.setString(31, "chathuri");*/
+			preparedStatement.setString(16, tutor.getUsername());
+			status = preparedStatement.executeUpdate();
+
+		} catch (ClassCastException cce) {
+			log.error("update(): ClassCastException " + cce.toString());
+			throw cce;
+		} catch (SQLException exception) {
+			log.error("update(): SQLException " + exception.toString());
+			throw exception;
+		} catch (Exception exception) {
+			log.error("update(): Exception " + exception.toString());
+			throw exception;
+		} finally {
+			DaoHelper.cleanup(conn, preparedStatement, null);
+		}
+
+		return status;
+		
 	}
 
 	@Override

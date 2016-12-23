@@ -44,7 +44,7 @@ function isValidEmailFormat(email) {
 /**
  * Validate URL
  * 
- * @author Chathuri
+ * @author Chathuri, Chinthaka
  * @param str
  */
 function ValidURL(str) {
@@ -53,7 +53,7 @@ function ValidURL(str) {
 
 }
 
-//function validateTutorFileds() {
+
 function validateTutorModifications() {
 	var firstname = $("#firstName").val();
 	var middlename = $("#middleName").val();
@@ -120,38 +120,38 @@ function validateTutorModifications() {
 	
 	if (!isempty(mobileCountryCode)) {
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
 
 	if (mobileCountryCode.length > 4) {
 		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
 
 	if (isNaN(mobileCountryCode)) {
 		document.getElementById('mobileError').innerHTML = "**Invalid Country Code";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
 	
 
 	if (!isempty(mobileNetworkCode)) {
 		document.getElementById('mobileError').innerHTML = "**Mobile Network Code cannot be empty.";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileNetworkCode').focus();
 		flag = false;
 	}
 
 	if (mobileNetworkCode.length > 10) {
 		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileNetworkCode').focus();
 		flag = false;
 	}
 
 	if (isNaN(mobileNetworkCode)) {
 		document.getElementById('mobileError').innerHTML = "**Invalid Mobile Network Code";
-		document.getElementById('mobileNumber').focus();
+		document.getElementById('mobileNetworkCode').focus();
 		flag = false;
 	}
 	
@@ -176,37 +176,37 @@ function validateTutorModifications() {
 	
 	if (!isempty(landCountryCode)) {
 		document.getElementById('landError').innerHTML = "**Landphone Country Code cannot be empty.";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landCountryCode').focus();
 		flag = false;
 	}
 
 	if (landCountryCode.length > 4) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landCountryCode').focus();
 		flag = false;
 	}
 
 	if (isNaN(landCountryCode)) {
 		document.getElementById('landError').innerHTML = "**Invalid Landphone Country Code";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landCountryCode').focus();
 		flag = false;
 	}	
 	
 	if (!isempty(landAreaCode)) {
 		document.getElementById('landError').innerHTML = "**Landphone Area code cannot be empty.";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landAreaCode').focus();
 		flag = false;
 	}
 
 	if (landAreaCode.length > 10) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landAreaCode').focus();
 		flag = false;
 	}
 
 	if (isNaN(landAreaCode)) {
 		document.getElementById('landError').innerHTML = "**Invalid Landphone Area code";
-		document.getElementById('landNumber').focus();
+		document.getElementById('landAreaCode').focus();
 		flag = false;
 	}	
 	
@@ -216,7 +216,7 @@ function validateTutorModifications() {
 		flag = false;
 	}
 
-	if (landNumber.length > 11) {
+	if (landNumber.length > 15) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -227,24 +227,24 @@ function validateTutorModifications() {
 		document.getElementById('landNumber').focus();
 		flag = false;
 	}
-	
+/*	
 	if (isempty(whatsapp)) {
 		if (isNaN(whatsapp)) {
-			document.getElementById('landError').innerHTML = "**Invalid Phone number";
-			document.getElementById('landNumber').focus();
+			document.getElementById('whatsappError').innerHTML = "**Invalid whatsapp number";
+			document.getElementById('whatsapp').focus();
 			flag = false;
 		}
 	}
 	
 	if (isempty(viber)) {
 		if (isNaN(viber)) {
-			document.getElementById('landError').innerHTML = "**Invalid Phone number";
-			document.getElementById('landNumber').focus();
+			document.getElementById('viberError').innerHTML = "**Invalid viber number";
+			document.getElementById('viber').focus();
 			flag = false;
 		}
-	}
+	}*/
 
-	if (country == "DEFAULT") {
+/*	if (country == "DEFAULT") {
 		document.getElementById('countryError').innerHTML = "**Please select country.";
 		document.getElementById('countryDetails').focus();
 		flag = false;
@@ -254,7 +254,7 @@ function validateTutorModifications() {
 		document.getElementById('townError').innerHTML = "**Please select Town.";
 		document.getElementById('townDetails').focus();
 		flag = false;
-	}
+	}*/
 
 	if (!isempty(address1)) {
 		document.getElementById('address1Error').innerHTML = "**Please Fill Address";
@@ -359,16 +359,17 @@ function validateTutorModifications() {
 		}
 	}
 	*/
-
+/*
 	var usernameExist = ValidateUsername(username);
 	if (usernameExist.message == '0') {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
-	}
+	}*/
 	return (flag);
 }
 
+/*
 function ValidateUsername(username) {
 	var resp = null;
 	$.ajax({
@@ -390,9 +391,10 @@ function ValidateUsername(username) {
 
 	return resp;
 }
+*/
 
 function clearField(elementId) {
-	alert(elementId);
+	//alert(elementId);
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
 }

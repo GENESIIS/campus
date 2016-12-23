@@ -9,6 +9,7 @@ import com.genesiis.campus.command.CmdAddTutorProfile;
 import com.genesiis.campus.command.CmdCheckUsername;
 import com.genesiis.campus.command.CmdLoadCountry;
 import com.genesiis.campus.command.CmdLoadTownDetails;
+import com.genesiis.campus.command.CmdUpdateTutorProfile;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.command.CmdViewTutorProfile;

@@ -213,7 +213,7 @@
 				<tr>
 					<td>Username <span id="usernameError"></span></td>
 					<td><input type="text" name="username" id="username"
-						maxlength="50" onclick="clearField('usernameError')" value="${username}" /></td>
+						maxlength="50" onclick="clearField('usernameError')" value="${username}" readonly /></td>
 				</tr>
 				<tr>
 					<td>Password <span id="passwordError"></span></td>
