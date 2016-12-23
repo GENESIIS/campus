@@ -4,7 +4,7 @@ body,html
   font-family: 'Raleway', sans-serif
   a
     text-decoration: none
-    &:hover,
+
     &:focus,
     &.active
       //all: initial
@@ -414,136 +414,143 @@ body,html
             .fax
               display: block
 
-// ------------------ Main categories --------------------------------
-.main-category
-  display: block
-  position: relative
-
-  .inner-header
-    background: #fff
-
-    .category-image
-      display: inline-block
-      img
-        height: 120px
-
-    .category-name
-      display: inline-block
-      position: relative
-
-  .content-holder
-    display: block
-    position: relative
-    width: 98%
-
-    .course-filter-panel
-      width: 67%
-      display: block
-      position: relative
-      float: left
-
-      .filtering-area
-        display: block
-        border-bottom: 5px solid #ededed
-        padding-bottom: 15px
-
-        .top
-          display: block
-          width: 100%
-          height: 20px
-          background: #37474f
-          margin-bottom: 8px
-
-        .bottom
-          display: block
-          width: 100%
-          background: #e98800
-
-          ul > li
-            width: 16.66%
-            text-align: center
-            padding-top: 15px
-            padding-bottom: 15px
-            float: left
-            a
-              color: #fff
-              font-size: 18px
-              font-weight: 500
-              width: 100%
-
-      .filter-result-table
-        display: block
-        position: relative
-
-        .course-info
-          display: block
-          padding-top: 20px
-          padding-bottom: 20px
-          &:nth-child(even)
-            background: rgba(55, 71, 79, 0.07)
-
-          .col-name
-            display: inline-block
-            width: 15.2%
-            float: left
-            border-right: 1px solid #e1e1e1
-
-            .pro-name
-              display: block
-              text-align: center
-              font-family: 'Roboto', sans-serif
-              font-size: 20px
-              color: #193949
-              line-height: 30px
-              font-weight: 600
-
-            .pro-logo
-              display: block
-              text-align: center
-              height: 100px
-              img
-                width: 75px
-                height: 100%
-                padding-top: 8px
-
-          .col-description
-            display: inline-block
-            position: relative
-            width: 46.8%
-            height: 130px
-            float: left
-            text-align: center
-            padding-top: 45px
-            color: #717171
-            font-size: 18px
-            font-family: Oswald
-            border-right: 1px solid #e1e1e1
-
-
-          .col-location
-            display: inline-block
-            width: 20.6%
-            height: 130px
-            float: left
-            text-align: center
-            padding-top: 50px
-            border-right: 1px solid #e1e1e1
-            a
-              color: #4f7dd9
-              font-size: 18px
-
-          .col-duration
-            display: inline-block
-            float: right
-            width: 17.4%
-            text-align: center
-            color: #6b6c6f
-            font-size: 20px
-            padding-top: 36px
-            span
-              font-size: 18px
-              color: #a6a8ab
-              font-family: "Roboto", sans-serif
-              line-height: 35px
-              font-weight: lighter
+//// ------------------ Main categories --------------------------------
+//.main-category
+//  display: block
+//  position: relative
+//
+//  .inner-header
+//    background: #fff
+//
+//    .category-image
+//      display: inline-block
+//      img
+//        height: 120px
+//
+//    .category-name
+//      display: inline-block
+//      position: relative
+//
+//  .content-holder
+//    display: block
+//    position: relative
+//    width: 98%
+//
+//    .course-filter-panel
+//      width: 67%
+//      display: block
+//      position: relative
+//      float: left
+//
+//      .filtering-area
+//        display: block
+//        border-bottom: 5px solid #ededed
+//        padding-bottom: 15px
+//
+//        .top
+//          display: block
+//          width: 100%
+//          height: 20px
+//          background: #37474f
+//          margin-bottom: 8px
+//
+//        .bottom
+//          display: block
+//          width: 100%
+//          background: #e98800
+//
+//          ul > li
+//            width: 16.66%
+//            text-align: center
+//            padding-top: 15px
+//            padding-bottom: 15px
+//            float: left
+//            a
+//              color: #fff
+//              font-size: 18px
+//              font-weight: 500
+//              width: 100%
+//
+//      .filter-result-table
+//        display: block
+//        position: relative
+//
+//        .course-info
+//          display: block
+//          padding-top: 20px
+//          padding-bottom: 20px
+//          &:nth-child(even)
+//            background: rgba(55, 71, 79, 0.07)
+//
+//          .col-name
+//            display: inline-block
+//            width: 15.2%
+//            float: left
+//            border-right: 1px solid #e1e1e1
+//
+//            .pro-name
+//              display: block
+//              text-align: center
+//              font-family: 'Roboto', sans-serif
+//              font-size: 20px
+//              color: #193949
+//              line-height: 30px
+//              font-weight: 600
+//
+//            .pro-logo
+//              display: block
+//              text-align: center
+//              height: 100px
+//              img
+//                width: 75px
+//                height: 100%
+//                padding-top: 8px
+//
+//          .col-description
+//            display: inline-block
+//            position: relative
+//            width: 46.8%
+//            height: 130px
+//            float: left
+//            text-align: center
+//            padding-top: 45px
+//            color: #717171
+//            font-size: 16px
+//            line-height: 20px
+//            font-family: Oswald
+//            border-right: 1px solid #e1e1e1
+//            overflow-y: scroll
+//
+//            p
+//              padding: 10px
+//
+//
+//          .col-location
+//            display: inline-block
+//            width: 20.6%
+//            height: 130px
+//            float: left
+//            text-align: center
+//            padding-top: 50px
+//            border-right: 1px solid #e1e1e1
+//            overflow-y: scroll
+//            a
+//              color: #4f7dd9
+//              font-size: 17px
+//              line-height: 22px
+//
+//          .col-duration
+//            display: inline-block
+//            float: right
+//            width: 17.4%
+//            text-align: center
+//            color: #6b6c6f
+//            font-size: 20px
+//            padding-top: 36px
+//            span
+//              font-size: 18px
+//              color: #a6a8ab
+//              font-family: "Roboto", sans-serif
+//              line-height: 35px
+//              font-weight: lighter
 
