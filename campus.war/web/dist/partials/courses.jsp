@@ -114,17 +114,6 @@ $(document).ready(function() {
 			<div class="main-topic">
 				<h1>Choose your path</h1>
 			</div>
-<!-- 			<div class="right-corner"> -->
-<!-- 				<div class="sort-box"> -->
-<!-- 					<p>Sort by</p> -->
-<!-- 					<input type="text" name="product" list="sortBy" -->
-<!-- 						placeholder="Starting Soon" /> -->
-<!-- 					<datalist id="sortBy"> -->
-<!-- 						<option value="1" selected>Starting Soon</option> -->
-<!-- 						<option value="2">Newest Courses</option> -->
-<!-- 					</datalist> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
 		</div>
 
 		<!-- Filtering Area Container -->
