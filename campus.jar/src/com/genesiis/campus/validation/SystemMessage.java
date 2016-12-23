@@ -14,7 +14,9 @@ public enum SystemMessage {
 	NOTADDED("Problem when inserting data."),
 	USERNAME_VALID("valid username"),
 	USERNAME_INVALID("already exist the username"),
-	EMPTY_USERNAME("Please give a username");
+	EMPTY_USERNAME("Please give a username"),
+	EMPTY_FIELD("Empty field(s)");
+	
 	
 	private String message;
 
