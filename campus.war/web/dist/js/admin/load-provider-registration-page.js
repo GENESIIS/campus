@@ -103,23 +103,32 @@ function displayProviderTownList() {
 }
 
 function providerUsernameValidation(){
+	
 	var selectedUsername = document.getElementById('providerUsername').value;
-	alert(selectedUsername);
+	var userEmail = document.getElementById('providerEmail').value;
+	
+	if(selectedUsername == "" || selectedUsername ==null){
+		alert("give a username");
+	}
 	
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
 		data : {
 			'CCO' : 'COURSE_PROVIDER_VALIDATION',
-			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION'
+			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
+			'username' : selectedUsername,
+			'email': userEmail
 		},
 		dataType : "json",
 		async : false,
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				window.townCollection = response.townArrayList;
-				alert("dsjfkdsjf");
+				//window.townCollection = response.userMessage;
+				var countryNames = $("#usermessage");
+				countryNames.html(response.userMessage);
+				alert(response.userMessage);
 			}
 		},
 	});

@@ -474,7 +474,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" />
+										id="providerName" size="50px;"/>
 								</div>
 							</li>
 							<!-- end -->
@@ -485,7 +485,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
-										id="providerEmail" size="50px;" />
+										id="providerEmail" size="50px;"/>
 								</div>
 							</li>
 							<!-- end -->
@@ -496,7 +496,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;" onchange="providerUsernameValidation();"/>
+										id="providerUsername" size="50px;" onchange="providerUsernameValidation();" />
 								</div>
 							</li>
 							<!-- end -->
@@ -507,7 +507,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;" />
+										id="providerPassword" size="50px;" required/>
 								</div>
 							</li>
 							<!-- end -->
@@ -518,7 +518,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;" />
+										id="cProviderPassword" size="50px;" required/>
 								</div>
 							</li>
 							<!-- end -->
