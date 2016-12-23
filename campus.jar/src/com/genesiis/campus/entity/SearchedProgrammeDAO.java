@@ -6,6 +6,8 @@ package com.genesiis.campus.entity;
 //20161124 PN c11-criteria-based-filter-search modified getAll() method and findById() method by changing the SQL query by selecting CP code.
 //20161222 CAM-116: PN renamed: campus.jar/src/com/genesiis/campus/entity/ProgrammeDAO.java -> campus.jar/src/com/genesiis/campus/entity/SearchedProgrammeDAO.java
 //         CAM-116: PN Modified the SQL query inside getAll() method and findById() method.
+//20161223 CAM-116: PN Modified Collection<Collection<String>> findById(Object code) by providing two SQL queries to pass data in different cases.
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,12 +47,30 @@ public class SearchedProgrammeDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		String searchData = (String) code;
-		log.info("searchData: " + searchData);
 
 		Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		
+		String query1 = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
+				+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
+				+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , p.[COST] "
+				+ "FROM [CAMPUS].[PROGRAMME] p "
+				+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
+				+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
+				+ "JOIN [CAMPUS].[DISTRICT] d ON d.CODE = t.DISTRICT "
+				+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
+				+ "WHERE p.PROGRAMMESTATUS = 1 ";
+				
+		String query2 = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"+
+				"p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"+
+				"p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] , cp.[WEBLINK] , p.[COST] "+
+				"FROM [CAMPUS].[PROGRAMME] p "+
+				"JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "+
+				"WHERE p.PROGRAMMESTATUS = 1";
+		
+		String query = "";
+		
 		//This method to be changed with the PROGRAMSTATUS once defined it in the DML.
 		try {
 			IQueryBuilder qbh = new QueryBuildingHelper();
@@ -68,24 +88,13 @@ public class SearchedProgrammeDAO implements ICrud {
 				String subQuery = " AND d.CODE = ? ";
 				if ((districtCode == null) || (districtCode.length == 0)) {
 					tempquery = qbh.dynamicQuery(queryMap, "");
+					query = query2+ tempquery + ";";
 				} else {
 					tempquery = qbh.dynamicQuery(queryMap, subQuery);
+					query = query1+ tempquery + ";";
 				}
 
-				log.info("tempquery " + tempquery);
-
 				conn = ConnectionManager.getConnection();
-				String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
-						+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
-						+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , p.[COST] "
-						+ "FROM [CAMPUS].[PROGRAMME] p "
-						+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
-						+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN "
-						+ "JOIN [CAMPUS].[DISTRICT] d ON d.CODE = t.DISTRICT "
-						+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
-						+ "WHERE p.PROGRAMMESTATUS = 1 "
-						+ tempquery + ";";
-				log.info("query "+query);
 
 				stmt = conn.prepareStatement(query);
 				if (districtCode != null) {
@@ -146,12 +155,12 @@ public class SearchedProgrammeDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
-					+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
-					+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] , p.[COST] "
-					+ "FROM [CAMPUS].[PROGRAMME] p "
-					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "
-					+ "WHERE p.PROGRAMMESTATUS = 1";
+			String query = "SELECT p.[CODE] ,p.[NAME] ,p.[DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"+
+							"p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"+
+							"p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE] , cp.[WEBLINK] , p.[COST] "+
+							"FROM [CAMPUS].[PROGRAMME] p "+
+							"JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER "+
+							"WHERE p.PROGRAMMESTATUS = 1";
 
 			stmt = conn.prepareStatement(query);
 			final ResultSet rs = stmt.executeQuery();
@@ -175,6 +184,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("PROVIDER").replaceAll(",", "##"));
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("CPCODE"));
+				singleProgrammeList.add(rs.getString("WEBLINK"));
 				singleProgrammeList.add(rs.getString("COST"));
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
