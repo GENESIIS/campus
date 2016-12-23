@@ -45,7 +45,7 @@ public class DistrictDAO implements ICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
+			String query = "SELECT DISTINCT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
 					+ "JOIN [CAMPUS].[TOWN] t ON d.CODE = t.DISTRICT "
 					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON t.CODE = pt.TOWN "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON pt.PROGRAMME = p.CODE "
