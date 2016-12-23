@@ -32,62 +32,53 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 		SystemMessage message = null;
 		Validator validator = new Validator();
 
-		if (!validator.isEmpty(helper.getParameter("action"))) {
+		try {
+			if (!validator.isEmpty(helper.getParameter("action"))) {
 
-			action = helper.getParameter("action");
+				action = helper.getParameter("action");
 
-			if (action.equalsIgnoreCase("COURSE_PROVIDER_USERNAME_VALIDATION")) {
-			
-				ICrud usernameDAO = new CourseProviderUsernameDAO();
-				ICrud userTypeDAO = new UserTypeDAO();
-				String username = helper.getParameter("username");
-				String email = helper.getParameter("");
-				final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
-				//courseProviderAccount.setUserType(Integer.parseInt(userType));
-				courseProviderAccount.setUsername(username);
-				/*
-				 *have to set user type 
-				 *check whether we can check for user status 
-				 *add dao class 
-				 */
-				//courseProviderAccount.setUserType(UserType.STUDENT.getUserType);
-				Collection<Collection<String>> usernameCollection = usernameDAO.findById(courseProviderAccount);
-				if(usernameCollection != null){
-					helper.setAttribute("users", usernameCollection);
-					log.info("jsdkfkdsjfdfkdskj")	;
-				}else{
-					helper.setAttribute("users", usernameCollection);
+				if (action
+						.equalsIgnoreCase("COURSE_PROVIDER_USERNAME_VALIDATION")) {
+
+					ICrud usernameDAO = new CourseProviderUsernameDAO();
+					String username = helper.getParameter("username");
+					String email = helper.getParameter("email");
+
+					if (!validator.isEmpty(username)
+							|| !validator.isEmpty(email)) {
+						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
+						courseProviderAccount.setUsername(username);
+						courseProviderAccount.setEmail(email);
+						Collection<Collection<String>> usernameCollection = usernameDAO
+								.findById(courseProviderAccount);
+						if (usernameCollection != null) {
+							message = SystemMessage.USERNAME_INVALID;
+
+						} else {
+							message = SystemMessage.USERNAME_VALID;
+							log.info("jsdkfkdsjfdfkdskj");
+						}
+					} else {
+						message = SystemMessage.EMPTY_USERNAME;
+					}
 				}
-				
+
+			} else {
+				message = SystemMessage.EMPTY_USERNAME;
 			}
 
-			// if (action.equalsIgnoreCase("USERNAME_VALIDATION")) {// used when
-			// // validating
-			// // a
-			// // username
-			// ICrud usernameDAO = new CourseProviderUsernameDAO();
-			// String username = helper.getParameter("username");
-			//
-			// final Collection<Collection<String>> userAccountCollectin =
-			// usernameDAO
-			// .findById(username);
-			// if (userAccountCollectin.size() > 0) {// username exist
-			// message = SystemMessage.USERNAME_INVALID;
-			// } else {
-			// message = SystemMessage.USERNAME_VALID;
-			// }
-			//
-			// } else if (action.equalsIgnoreCase("PREFIX_VALIDATION")) {// used
-			// // when
-			// // validating
-			// // prefix
-			//
-			// }
-		} else {
-			message = SystemMessage.EMPTY_USERNAME;
+		} catch (SQLException exception) {
+			message = SystemMessage.ERROR;
+			log.error("execute method SQLException" + exception.toString());
+			throw exception;
+		} catch (Exception exception) {
+			message = SystemMessage.ERROR;
+			log.error("execute method Exception" + exception.toString());
+			throw exception;
+		}finally{
+			helper.setAttribute("userMessage", message.message());
 		}
 
-		helper.setAttribute("message", message.message());
 		return view;
 	}
 }
