@@ -60,7 +60,7 @@ $(document).ready(function() {
     						'</div>' +
     					'</div>',
     					data[6].toString()+' - '+data[7].toString()+data[3].toString(),
-    					data[19].toString()
+    					data[18].toString()
     					        ] ).draw( false );
 
     				});
@@ -128,7 +128,7 @@ $('#addRow').on( 'click', function () {
 					'</div>' +
 				'</div>',
 				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),
-				data[19].toString()
+				data[18].toString()
 				        ] ).draw( false );
 
 			});

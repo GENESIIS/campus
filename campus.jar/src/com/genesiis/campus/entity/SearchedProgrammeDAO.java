@@ -125,7 +125,7 @@ public class SearchedProgrammeDAO implements ICrud {
 					singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 					singleProgrammeList.add(rs.getString("CPCODE"));
 					singleProgrammeList.add(rs.getString("WEBLINK"));
-					singleProgrammeList.add(rs.getString("COST"));
+					singleProgrammeList.add(formatDecimal(rs.getString("COST")));
 					final Collection<String> singleProgrammeCollection = singleProgrammeList;
 					allProgrammeList.add(singleProgrammeCollection);
 				}
@@ -192,7 +192,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("CPCODE"));
 				singleProgrammeList.add(rs.getString("WEBLINK"));
-				singleProgrammeList.add(rs.getString("COST"));
+				singleProgrammeList.add(formatDecimal(rs.getString("COST")));
 				final Collection<String> singleProgrammeCollection = singleProgrammeList;
 				allProgrammeList.add(singleProgrammeCollection);
 			}
@@ -232,7 +232,6 @@ public class SearchedProgrammeDAO implements ICrud {
 	}
 	
 	/**
-	 * 
 	 * @param description
 	 * @return
 	 */
@@ -243,4 +242,17 @@ public class SearchedProgrammeDAO implements ICrud {
 		return description;
 	}
 
+	/**
+	 * @param number
+	 * @return
+	 */
+	public String formatDecimal(String number) {
+		  float num = Float.parseFloat(number);	
+		  float epsilon = 0.004f; // 4 tenths of a cent
+		  if (Math.abs(Math.round(num) - num) < epsilon) {
+		     return String.format("%10.0f", num); // sdb
+		  } else {
+		     return String.format("%10.2f", num); // dj_segfault
+		  }
+	}
 }
