@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.UserType;
 
 public class CourseProviderUsernameDAO implements ICrud {
@@ -51,14 +52,14 @@ public class CourseProviderUsernameDAO implements ICrud {
 		final Collection<Collection<String>> usernameCollection = null;
 		
 		try {
-
+			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, courseProviderAccount.getUsername());
 			preparedStatement.setString(2,courseProviderAccount.getEmail());
 			
 			ResultSet rs = preparedStatement.executeQuery();
 
-			if (rs != null) {
+			if (rs.next()) {
 				while (rs.next()) {
 					final ArrayList<String> singleAccountList = new ArrayList<String>();
 
