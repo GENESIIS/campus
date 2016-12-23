@@ -64,7 +64,6 @@ public class CmdSignUpWithoutThirdParty implements ICommand{
 			message = systemMessage(status); 	// then change the message to the client side by appending to the message generated from here
 			isEmailProduced(status,helper,view);
 			Collection<String> signUpdata = new ArrayList<String>();
-			signUpdata.add(null);
 			studentSignUps.add(signUpdata);
 			view.setCollection(studentSignUps); 
 		} catch(SQLException sqle){
