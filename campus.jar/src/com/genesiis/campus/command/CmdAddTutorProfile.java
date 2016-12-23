@@ -41,7 +41,6 @@ public class CmdAddTutorProfile implements ICommand {
 		try {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
-			Collection<String> tutorCollection= new ArrayList<String>();
 			final Validator validator=new Validator();
 			message = validator.validateTutorFields(helper);
 			if (message.equalsIgnoreCase("True")) {

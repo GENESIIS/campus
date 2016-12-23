@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161221 CW c36-add-tutor-details Removed findById() method.
 //20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
+//20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class TutorDAO implements ICrud {
 	/**
 	 * Save tutor details in Database
 	 * 
-	 * @author Chathuri
+	 * @author Chathuri, Chinthaka
 	 * @param object
 	 *            : Tutor object of Object type
 	 * @return int number of success/fail status
@@ -41,21 +42,21 @@ public class TutorDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		int status = -1;
 		
-		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
-				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, "
-				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
-				+ ",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,"
-				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
-				+ ",CRTON,CRTBY,MODON, MODBY ) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
-				
+		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
+		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
+		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
+		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
+		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
+		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
+		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
+						
 		try {			
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
-			preparedStatement = conn.prepareStatement(query);
+			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, tutor.getUsername());			
 			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(3, tutor.getFirstName());

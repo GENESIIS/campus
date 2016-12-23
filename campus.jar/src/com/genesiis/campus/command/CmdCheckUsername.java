@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.entity.TutorUserName;
+import com.genesiis.campus.entity.TutorUserNameDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -39,7 +39,7 @@ public class CmdCheckUsername implements ICommand {
 			if (username != null){
 				final Tutor tutor = new Tutor();
 				tutor.setUsername(username);
-				tutorCollection = new TutorUserName().findById(tutor);
+				tutorCollection = new TutorUserNameDAO().findById(tutor);
 			}			
 			
 			if (tutorCollection.isEmpty()) {
