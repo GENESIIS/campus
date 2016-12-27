@@ -1,7 +1,8 @@
 <%-- 20161114 TR c25 start styling user profile page container  --%>
 <%-- 20161114 TR c25 page header - done  --%>
 <%-- 20161114 TR c25 profile-image-box - done  --%>
-<%-- 20161203 MM c25-student-create-dashboard-MP Converted to JSP and converted relative paths to absolute paths --%>
+<%-- 20161227 MM c25-student-create-dashboard-MP Converted to JSP and converted relative paths to absolute paths --%>
+<%-- 20161227 MM c25-student-create-dashboard-MP Moved JS files to the bottom of the page for better performance included the call to studentDashboard.js file --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -21,11 +22,6 @@
     <!-- W3-Include -->
     <!--<script src="/dist/bower-components/w3/w3data.js"></script> -->
 
-    <!-- jQuery & Other js -->
-    <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    <script src="/dist/js/main.js"></script>
-    <script src="/dist/js/image-slides.js"></script>
 </head>
 
 <body>
@@ -322,6 +318,13 @@
     </div>
 </div>
 <!-- End Dashboard  -->
+
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/js/main.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+<script src="/dist/js/student/studentDashboard.js"></script>
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.html"></footer>-->
