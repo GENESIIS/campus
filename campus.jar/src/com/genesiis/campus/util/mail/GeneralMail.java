@@ -9,6 +9,7 @@ package com.genesiis.campus.util.mail;
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
 //20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
 //				setProperties() method refactor accordingly.
+//20161227 DN CAM:18 initialized the receivers field at its deceleration so that to avoid null pointer exceptions. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class GeneralMail implements IEmail {
 
 	static Logger log = Logger.getLogger(GeneralMail.class.getName());
 
-    private ArrayList<String> receivers = null;    
+    private ArrayList<String> receivers = new ArrayList<String>();    
     private String sender;    
     private String host ;
     private String subject;
@@ -67,7 +68,7 @@ public class GeneralMail implements IEmail {
     }
     
     /**
-     * setEmailMessage() setup sender,receiver list,subject,and the message bodyand the
+     * setEmailMessage() setup sender,receiver list,subject,and the message body and the
      * date of generating the email
      * @author DN
      * @return MimeMessage formatted message
@@ -76,7 +77,8 @@ public class GeneralMail implements IEmail {
     @Override
 	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
-	    	
+	    	// BCC and CC list has not yet implemented, it can be implemented in future 
+	    	// extensions as required
 	         addSenderToMail(this.message,this.sender); 
 	         addRecipientToMail(this.message,this.receivers);
 	         addSubjectToMail(this.message,this.subject);
