@@ -18,13 +18,9 @@ $(document).ready(function() {
 	            msg = 'Requested page not found. [404]';
 	        } else if (jqXHR.status == 500) {
 	            msg = 'Internal Server Error [500].';
-	        } else if (exception === 'parsererror') {
-	            msg = 'Requested JSON parse failed.';
 	        } else if (exception === 'timeout') {
 	            msg = 'Time out error.';
-	        } else if (exception === 'abort') {
-	            msg = 'Ajax request aborted.';
-	        } else {
+	        }  else {
 	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
 	        }	        
 	        alert(msg);
@@ -36,15 +32,9 @@ $(document).ready(function() {
 	});	
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
-	});	
-	
-	/*$("input[name=status]:radio").change(function () {
-		alert("radion click ");
-		var status=this.value;
-	});*/
-	
-	
+	});		
 });
+
 
 function getProviderSearchData(response){
 	$('#resultSetDiv').hide();	
@@ -79,21 +69,17 @@ function loadResultSet(event){
 		},
 		error : function(jqXHR, exception) {			
 			var msg = '';
-	        if (jqXHR.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (jqXHR.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (jqXHR.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        } else if (exception === 'parsererror') {
-	            msg = 'Requested JSON parse failed.';
-	        } else if (exception === 'timeout') {
-	            msg = 'Time out error.';
-	        } else if (exception === 'abort') {
-	            msg = 'Ajax request aborted.';
-	        } else {
-	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-	        }	        
+			   if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        } else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        }  else {
+		            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+		        }	        
 	        alert(msg);		
 		}
 	});
@@ -143,15 +129,8 @@ function populateResultTable(response){
 }
 
 function clearParameters(event){
-	//$('#providerlist').val("-- Select Provider--");
-	//$(':input').removeAttr('placeholder');
-	/*var htmlstr="";
-	htmlstr='<input type="text" name="providerlist" id="providerlist" '+
-									'list="providerName" placeholder="-- Select District --"  required/>'+
-								'<datalist id="providerName" >	</datalist> '*/
-	
-	$('#providerlist').attr('placeholder','-- Select Provider--');
+	$('#providerlist').val("");		
 	$('input:radio[name=status]').prop('checked', false);
-	$('#startdate').val(" "); 
-	$('#enddate').val(" "); 	
+	$('#startdate').val(""); 
+	$('#enddate').val(""); 	
 }
