@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 
-
 public class CourseProviderUsernameDAO implements ICrud {
 	static org.apache.log4j.Logger log = Logger
 			.getLogger(CourseProviderUsernameDAO.class.getName());
@@ -50,18 +49,20 @@ public class CourseProviderUsernameDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		final Collection<Collection<String>> usernameCollection = null;
-		 ResultSet rs = null;
-		
+		ResultSet rs = null;
+
 		try {
 			final CourseProviderAccount courseProviderAccount = (CourseProviderAccount) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
+			String username = courseProviderAccount.getUsername();
+			String email = courseProviderAccount.getEmail();
 			preparedStatement.setString(1, courseProviderAccount.getUsername());
 			preparedStatement.setString(2, courseProviderAccount.getEmail());
-			
+
 			rs = preparedStatement.executeQuery();
 
-			if (rs.next()) {
+			if (rs.first()) {
 				while (rs.next()) {
 					final ArrayList<String> singleAccountList = new ArrayList<String>();
 
@@ -72,13 +73,11 @@ public class CourseProviderUsernameDAO implements ICrud {
 					singleAccountList.add(rs.getString("EMAIL"));
 					singleAccountList.add(rs.getString("DESCRIPTION"));
 					singleAccountList.add(rs.getString("COURSEPROVIDER"));
-					
+
 					final Collection<String> singleAccountColleciton = singleAccountList;
 					usernameCollection.add(singleAccountColleciton);
 				}
-
 			}
-
 		} catch (SQLException sqlException) {
 
 			log.error("finById method SQLException " + sqlException);
