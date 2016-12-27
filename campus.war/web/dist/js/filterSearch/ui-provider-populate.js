@@ -17,20 +17,16 @@ $(document).ready(function() {
 		},
 		error : function(jqXHR, exception) {			
 			var msg = '';
-	        if (jqXHR.status === 0) {
+			if (jqXHR.status === 0) {
 	            msg = 'Not connect.\n Verify Network.';
 	        } else if (jqXHR.status == 404) {
 	            msg = 'Requested page not found. [404]';
 	        } else if (jqXHR.status == 500) {
 	            msg = 'Internal Server Error [500].';
-	        } else if (exception === 'parsererror') {
-	            msg = 'Requested JSON parse failed.';
-	        } else if (exception === 'timeout') {
+	        }  else if (exception === 'timeout') {
 	            msg = 'Time out error.';
-	        } else if (exception === 'abort') {
-	            msg = 'Ajax request aborted.';
 	        } else {
-	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+	            msg = 'Internal error is occurred. Please try again.';
 	        }	        
 	        alert(msg);
 		}
@@ -167,14 +163,10 @@ function getInitialPageResults(catCode,response) {
 		            msg = 'Requested page not found. [404]';
 		        } else if (jqXHR.status == 500) {
 		            msg = 'Internal Server Error [500].';
-		        } else if (exception === 'parsererror') {
-		            msg = 'Requested JSON parse failed.';
-		        } else if (exception === 'timeout') {
+		        }  else if (exception === 'timeout') {
 		            msg = 'Time out error.';
-		        } else if (exception === 'abort') {
-		            msg = 'Ajax request aborted.';
 		        } else {
-		            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+		            msg = 'Internal error is occurred. Please try again.';
 		        }	        
 		        alert(msg);
 			}
@@ -187,16 +179,18 @@ function getInitialPageResults(catCode,response) {
 function populateFilterSearchResults(response) {	
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
+	providerChoice.text("");
 	$.each(response.result,	function(index, value) {
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
 			var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
-			providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+			//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
+			  providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "  title="'+ y +'" /></div> </a></div> </li>');
+			
 		}
 	});
-	if(response.result!=null && response.result.length===0){
-		
+	if(response.result!=null && response.result.length===0){		
 		providerChoice.text("No course providers for selected criteria");		
 	}
 	
@@ -227,21 +221,17 @@ function categoryClick(event){
 		},
 		error : function(jqXHR, exception) {
 			var msg = '';
-	        if (jqXHR.status === 0) {
+			if (jqXHR.status === 0) {
 	            msg = 'Not connect.\n Verify Network.';
 	        } else if (jqXHR.status == 404) {
 	            msg = 'Requested page not found. [404]';
 	        } else if (jqXHR.status == 500) {
 	            msg = 'Internal Server Error [500].';
-	        } else if (exception === 'parsererror') {
-	            msg = 'Requested JSON parse failed.';
-	        } else if (exception === 'timeout') {
+	        }  else if (exception === 'timeout') {
 	            msg = 'Time out error.';
-	        } else if (exception === 'abort') {
-	            msg = 'Ajax request aborted.';
 	        } else {
-	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-	        }	        
+	            msg = 'Internal error is occurred. Please try again.';
+	        }        
 	        alert(msg);
 		}
 	});
