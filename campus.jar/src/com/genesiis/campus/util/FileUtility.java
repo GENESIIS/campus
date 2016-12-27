@@ -63,14 +63,75 @@ public class FileUtility {
 		this.uploadPath = uploadPath;
 
 	}
-
+	
+	
 	/**
 	 * Default constructor
 	 */
 	public FileUtility() {
 
 	}
+	
+	/**
+	 * @return the absolute path of the file associated with the instance:
+	 *         String
+	 **/
+	public String getUploadedFilePath() {
+		return this.file.getAbsolutePath();
+	}
 
+	/**
+	 * return this file associated with the instance
+	 * 
+	 * @return File
+	 **/
+	public File getFile() {
+		return this.file;
+	}
+
+	/**
+	 * set file
+	 * 
+	 * @param file:File
+	 **/
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	/**
+	 * @return uploaded file name
+	 */
+	public String getImageName() {
+		return this.imageName;
+	}
+
+	/**
+	 * @return uploaded file name
+	 */
+	public int getFileSize() {
+		return this.fileSize;
+	}
+
+	public void setFileItem(FileItem item) {
+		this.item = item;
+	}
+
+	public void setUploadPath(String path) {
+		this.uploadPath = path;
+	}
+
+	public String getNewName() {
+		return this.renamedTo;
+	}
+	
+	public void setRenamedTo(String renamedTo) {
+		this.renamedTo = renamedTo;
+	}
+
+	public String getRenamedTo() {
+		return renamedTo;
+	}
+	
 	/**
 	 * This function renames the file associated with the instance
 	 * 
@@ -88,8 +149,8 @@ public class FileUtility {
 
 			ArrayList<String> list = new ArrayList<String>();
 
-			for (File f : paths) {
-				list.add(f.getName().replaceFirst("[.][^.]+$", ""));
+			for (File file : paths) {
+				list.add(file.getName().replaceFirst("[.][^.]+$", ""));
 			}
 
 			String highestValue = this.getTopOfSequence(list);
@@ -107,8 +168,8 @@ public class FileUtility {
 			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + fileName));
 			FileUtils.forceDelete(this.file);
 
-			this.renamedTo = fileName;
-
+			//this.renamedTo = fileName;
+			setRenamedTo(fileName);
 		} catch (SecurityException se) {
 			log.error(this + "rename(): " + se.toString());
 			throw se;
@@ -166,45 +227,6 @@ public class FileUtility {
 		return this.uploaded;
 	}
 
-	/**
-	 * @return the absolute path of the file associated with the instance:
-	 *         String
-	 **/
-	public String getUploadedFilePath() {
-		return this.file.getAbsolutePath();
-	}
-
-	/**
-	 * return this file associated with the instance
-	 * 
-	 * @return File
-	 **/
-	public File getFile() {
-		return this.file;
-	}
-
-	/**
-	 * set file
-	 * 
-	 * @param file:File
-	 **/
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-	/**
-	 * @return uploaded file name
-	 */
-	public String getImageName() {
-		return this.imageName;
-	}
-
-	/**
-	 * @return uploaded file name
-	 */
-	public int getFileSize() {
-		return this.fileSize;
-	}
 
 	/**
 	 * parse all possible values in the list and sort them and retrieve the
@@ -236,17 +258,7 @@ public class FileUtility {
 
 	}
 
-	public void setFileItem(FileItem item) {
-		this.item = item;
-	}
 
-	public void setUploadPath(String path) {
-		this.uploadPath = path;
-	}
-
-	public String getNewName() {
-		return this.renamedTo;
-	}
 
 	/**
 	 * This function renames the file associated with the instance into one
