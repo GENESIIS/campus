@@ -134,6 +134,36 @@ function providerUsernameValidation(){
 	});
 }
 
+function providerPrefixValidation(){
+	
+	var selectedPrefix = document.getElementById('uniquePrefix').value;
+	
+	if(selectedPrefix == "" || selectedPrefix ==null){
+		alert("give a prefix");
+	}
+	
+	$.ajax({
+		url : '/AdminController',
+		method : 'POST',
+		data : {
+			'CCO' : 'COURSE_PROVIDER_VALIDATION',
+			'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
+			'username' : selectedPrefix
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+
+			if (response !== undefined && response !== null) {
+				//window.townCollection = response.userMessage;
+				var prefixMessage = $("#usermessage");
+				prefixMessage.html(response.userMessage);
+				alert(response.userMessage);
+			}
+		},
+	});
+}
+
 function getProviderType() {
 
 	var status = false;
