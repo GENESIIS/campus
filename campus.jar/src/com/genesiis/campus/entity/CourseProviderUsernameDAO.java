@@ -62,7 +62,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 
 			rs = preparedStatement.executeQuery();
 
-			if (rs.first()) {
+			if (rs.next()) {
 				while (rs.next()) {
 					final ArrayList<String> singleAccountList = new ArrayList<String>();
 
