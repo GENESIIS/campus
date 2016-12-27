@@ -34,6 +34,9 @@ public class ReportCmdFactory implements ICmdFactory{
 		case REPORT_COURSES_BY_COURSE_PROVIDER:
 			command = map.get(o);
 			break;
+		case SEARCH_VIEW_BANNER_STATISTICS:
+			command = map.get(o);
+			break;		
 		case REPORT_BANNER_STATISTICS:
 			command = map.get(o);
 			break;		
