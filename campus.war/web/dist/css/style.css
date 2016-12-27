@@ -903,6 +903,36 @@ body, html {
               margin-top: 10px;
               margin-bottom: 15px; }
 
+.report-screen {
+  display: block;
+  position: relative;
+  width: 100%; }
+  .report-screen .report-inline-header {
+    width: 90%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: 2px solid #c4c4c4; }
+    .report-screen .report-inline-header h1 {
+      color: #4c5054;
+      font-family: "Arvo", serif;
+      font-size: 26px;
+      line-height: 4; }
+  .report-screen .page-holder {
+    display: block;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto; }
+    .report-screen .page-holder .input-area {
+      padding: 35px 0 50px; }
+      .report-screen .page-holder .input-area .ctg-name label {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        color: #397ebf;
+        line-height: 32px; }
+      .report-screen .page-holder .input-area .ctg-input input {
+        height: 32px; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
