@@ -1,5 +1,8 @@
  /**
   * 20161227 MM c25-student-create-dashboard-MP - Initialised file with getProgrammeData()
+  * 20161227 MM c25-student-create-dashboard-MP - Added assignContentToCarousel() function to create 
+  * 			the carousel content with fetched programmes
+  * 
   */ 
 
 window.programmeCollectionFetched = null;
@@ -22,6 +25,8 @@ function getRecommendedProgrammes () {
 			
 			if (response !== undefined && response !== null) {
 				window.programmeCollectionFetched = response.result;
+				assignContentToCarousel();
+				
 			}			
 		},
 		error : function(response) {
@@ -33,3 +38,31 @@ function getRecommendedProgrammes () {
 	});
 	
 };
+
+function assignContentToCarousel() {
+//	alert("inside assignContentToCaraousel()");
+	
+	var programmeCollectionFetched = window.programmeCollectionFetched;
+	
+	var carouselInnerDiv = $('.carousel-inner');
+	var carouselItemsHtml = '';
+	var currentProgramme = null;
+	for (var i = 0; i < programmeCollectionFetched.length; i++) {
+		
+		currentProgramme = programmeCollectionFetched[i];
+		
+		carouselItemsHtml = '<div class="item active">\
+	        <blockquote>\
+	    <div class="row">\
+	        <div class="col-sm-8 col-sm-offset-2">';
+		carouselItemsHtml = '<label>' + currentProgramme[1] + '</label>';
+		carouselItemsHtml = '<p>' + currentProgramme[4] + '</p>';
+		carouselItemsHtml = '<small>' + 'CourseProvider' + '</small>';
+		carouselItemsHtml = '</div>\
+		    </div>\
+			</blockquote>\
+			</div>';
+	}
+	
+	carouselInnerDiv.html(carouselItemsHtml);	
+}
