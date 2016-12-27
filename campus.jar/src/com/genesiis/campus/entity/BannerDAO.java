@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.UtilityHelper;
 
 public class BannerDAO  implements ICrud{
 	
@@ -48,7 +49,7 @@ public class BannerDAO  implements ICrud{
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allBannerList = new ArrayList<Collection<String>>();
 
-		try {
+		/*try {
 			
 			
 			conn=ConnectionManager.getConnection();			
@@ -74,7 +75,7 @@ public class BannerDAO  implements ICrud{
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);
-		}
+		}*/
 		return allBannerList;
 	}
 
@@ -107,24 +108,28 @@ public class BannerDAO  implements ICrud{
 	 * @return Collection
 	 */
 	@Override
-	public Collection<Collection<String>> findById(Object object)
+	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		final Collection<Collection<String>> allBannerList = new ArrayList<Collection<String>>();
-
+		int pageSlotCode=0;
+		if(UtilityHelper.isNotEmptyObject(code)){
+			pageSlotCode=Integer.valueOf((String) code);			
+		}
 		try {
 			conn = ConnectionManager.getConnection();
-            final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= 1 AND BANNER.ISACTIVE= ?");
+            final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE , BANNER.IMAGE AS IMAGENAME  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
 			
 			stmt=conn.prepareStatement(sb.toString());
-			stmt.setInt(1, 1);
+			stmt.setInt(1, pageSlotCode);
 			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
 			resultSet= stmt.executeQuery();	
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
 				bannerList.add(resultSet.getString("BANNERCODE"));								
+				bannerList.add(resultSet.getString("IMAGENAME"));								
 				allBannerList.add(bannerList);
 			}	
 
