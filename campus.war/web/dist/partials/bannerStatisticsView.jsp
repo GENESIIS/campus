@@ -17,15 +17,6 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 
-<!--     Data Table CSS -->
-<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-<!-- Bootstrap js -->
-<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-
 <!-- jQuery & Other js -->
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
@@ -53,18 +44,18 @@
 	});
 	
 	function getAjaxProviderData(response) { 
-		 $("#pageName").get(0).options.length = 0;
-		var pageName = $("#pageName");
+		 //$("#pageName").get(0).options.length = 0;
+		//var pageName = $("#pageName");
+		var htmlstr="";
 		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = data[0].toString();
-			var y = data[1].toString();
-
-			$('<option>').val(x).text(y).appendTo(pageName);
+			if(value!=null && value.length>0){
+			    htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+			}
+			
 		});	
+		$('#pageName').html(htmlstr);
 		
-		$('#pagelist').bind('change', function(event) {
+	/* 	$('#pagelist').bind('change', function(event) {
 			alert(" click ");
 			var pageCode=0;
 			
@@ -83,14 +74,14 @@
 				}
 			});
 			
-		});
+		}); */
 	}	
 	
-	function getPageWisePageSlots(response) { 
+	/* function getPageWisePageSlots(response) { 
 		alert(" getPageWisePageSlots ");
 		var pagecode=0;
 		
-	}
+	} */
 
 </script>
 
@@ -157,41 +148,7 @@
 				</div>
 			</div>
 			</br></br>
-			<div>
-				<div class="container">
-					<h2>Result set</h2>
-					<table id="table" class="table-responsive">
-						<thead>
-							<tr>
-							   <th data-field="id">Item ID</th>
-                               <th data-field="name">Item Name</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-			
-			<div class="">
-					<table id="example"
-						class="table table-striped table-bordered dt-responsive nowrap"
-						cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>Item ID</th>
-								<th>Item Name</th>								
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Item ID</td>
-								<td>Item Name</td>								
-							</tr>
-						</tbody>
-					</table>
-				</div>
+		
 		</div>
 	</div>
 	<!-- End Container - Top Providers list -->
