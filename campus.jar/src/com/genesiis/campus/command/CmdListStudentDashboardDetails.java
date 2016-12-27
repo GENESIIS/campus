@@ -5,7 +5,7 @@ package com.genesiis.campus.command;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 //20161123 MM c25-student-login-create-dashboard-MP-mm Added code to search through the student
 //			details collection fetched and separate professional experience details from it
-//20161227 MM c25-student-login-create-dashboard-MP-mm Removed unused code
+//20161227 MM c25-student-create-dashboard-MP Removed unused code
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;

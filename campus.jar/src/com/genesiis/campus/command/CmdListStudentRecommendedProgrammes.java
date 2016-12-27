@@ -1,11 +1,7 @@
-//20161227 MM c25-student-login-create-dashboard-MP-mm Created class and implemented execute(IDataHelper, IView) method
-
 package com.genesiis.campus.command;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+//20161227 MM c25-student-create-dashboard-MP - Created class and implemented execute(IDataHelper, IView) method
+//20161227 MM c25-student-create-dashboard-MP - Organised imports; declared Logger reference
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;
@@ -13,6 +9,13 @@ import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Returns the list of recommended programmes for the student indicated by the request parameter 
@@ -26,6 +29,8 @@ import com.genesiis.campus.validation.Validator;
  *
  */
 public class CmdListStudentRecommendedProgrammes implements ICommand {
+	
+	static Logger Log = Logger.getLogger(CmdListStudentRecommendedProgrammes.class.getName());
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
@@ -34,7 +39,7 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 		List<String> msgList = new ArrayList<String>();
 		
 		try {
-			String studentCodeStr = helper.getParameter("student");
+			String studentCodeStr = "1"; // Get this from the session
 			if (studentCodeStr != null && !studentCodeStr.isEmpty()) {
 				if (Validator.isNumber(studentCodeStr)) {
 					
