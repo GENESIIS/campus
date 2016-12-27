@@ -66,7 +66,7 @@ public class Validator {
 	 * @param description
 	 * @return sub-description
 	 */
-	public String getSubDescription(String description){
+	public static String getSubDescription(String description){
 		if(description.length() > 500){
 			return description.substring(0, 500)+" ... ";
 		}
