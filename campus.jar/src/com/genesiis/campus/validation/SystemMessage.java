@@ -7,6 +7,7 @@ package com.genesiis.campus.validation;
 //20161116 DN  c10-contacting-us-page-MP removed unnecessary enum values.
 //20161125 DN  C18-student-signup-without-using-third-party-application-dn added ACCOUNT_CREATED,
 //			ACCOUNT_NOT_CREATED,USER_NAME_EXISTS enums
+//20161227 DN CAM 28: added STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT,STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT, RECAPTCHAVERIFICATION enum values.
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
@@ -32,6 +33,9 @@ public enum SystemMessage {
 	USER_NAME_EXISTS("Chosen User Name Has Allready Taken. Please Choose Another!"),
 	MAIL_SUCCESS("Mail successfully submited to your email"),
 	MAIL_UNSUCCESS("Mail Sending failed"),
+	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
+	STUDENT_SUCCESSFULL_CREATTION("Your User account is successfully created. "),
+	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	
