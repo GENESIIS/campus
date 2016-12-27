@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.UtilityHelper;
 
 public class BannerStatDAO implements ICrud {
 	
@@ -44,14 +45,25 @@ public class BannerStatDAO implements ICrud {
 		PreparedStatement stmt = null;
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allBannerStatsList = new ArrayList<Collection<String>>();
-
+		int bannerCode=0;
+		if(UtilityHelper.isNotEmptyObject(code)){
+			bannerCode=Integer.valueOf((String) code);			
+		}
 		try {
 			
+			
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb=new StringBuilder();
+			final StringBuilder sb=new StringBuilder("SELECT * FROM [CAMPUS].BANNERSTAT BANNERSTAT WHERE BANNERSTAT.BANNER= ");
 			
 			stmt=conn.prepareStatement(sb.toString());
-			resultSet=stmt.executeQuery();		
+			stmt.setInt(1, bannerCode);			
+			resultSet=stmt.executeQuery();
+			while (resultSet.next()) {
+				final ArrayList<String> bannerList = new ArrayList<String>();
+				bannerList.add(resultSet.getString("BANNERCODE"));								
+				bannerList.add(resultSet.getString("IMAGENAME"));								
+				allBannerStatsList.add(bannerList);
+			}
 			
 			
 		} catch (SQLException sqlException) {
