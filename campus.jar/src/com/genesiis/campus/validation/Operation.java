@@ -8,6 +8,8 @@ package com.genesiis.campus.validation;
 //				for LIST_STUDENT_DASHBOARD
 //20161203 MM c25-student-create-dashboard-MP - Modified code to change value for 
 //				viewJspUrl name for LIST_STUDENT_DASHBOARD constant
+//20161203 MM c25-student-create-dashboard-MP - Added constant 
+//				LIST_STUDENT_RECOMMENDED_PROGRAMMES with response type as JSON
 
 /**
 * Operation class facilitate in binding the CCO
@@ -16,7 +18,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "/dist/partials/student/student-dashboard.jsp");			
+	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "/dist/partials/student/student-dashboard.jsp"),		
+	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, "");			
 	
 	private final String commandString;
 	private final ResponseType responseType;
