@@ -130,8 +130,8 @@
                 <label for="">Status: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input type="radio"><span>Activate</span>
-                <input type="radio"><span>Deactivate</span>
+                <input class="btn-radio" type="radio"><span>Activate</span>
+                <input class="btn-radio" type="radio"><span>Deactivate</span>
             </div>
             <!-- second row -->
 
@@ -139,8 +139,8 @@
                 <label for="">Start Date: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input type="text">
-                <a href="javascript:">cal</a>
+                <input class="txt-date" type="text">
+                <a href="javascript:">calender</a>
             </div>
             <!-- Third Row -->
 
@@ -148,8 +148,8 @@
                 <label for="">End Date: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input type="text">
-                <a href="javascript:">cal</a>
+                <input class="txt-date" type="text">
+                <a href="javascript:">calender</a>
             </div>
             <!-- Fourth Row -->
         </div>
@@ -157,22 +157,26 @@
 
         <div class="courses-data-tbl-area">
             <div class="btn-actions">
-                <div class="btns-left">
-                    <div class="btn-clear col-lg-4 col-md-6 col-sm-6">
+                <div class="btn-left col-md-6 col-sm-12 col-lg-6">
+                    <div class="btn-clear">
                         <input type="submit" value="Clear">
                     </div>
                     <!-- end btn-clear -->
 
-                    <div class="btn-search col-lg-4 col-md-6 col-sm-6">
+                    <div class="btn-search">
                         <input type="submit" value="Search">
                     </div>
                     <!-- end btn-search -->
+                </div>
+                <!-- left side buttons -->
 
-                    <div class="btn-print col-lg-4 col-md-6 col-sm-6">
+                <div class="btn-right col-md-6 col-sm-12 col-lg-6">
+                    <div class="btn-print">
                         <input type="submit" value="Print">
                     </div>
                     <!-- end btn-print -->
                 </div>
+                <!-- End right side buttons -->
             </div>
             <!-- End action btn area -->
 
@@ -181,7 +185,7 @@
             </div>
 
             <div class="data-tbl col-md-12 col-lg-12 col-sm-12">
-                <table class="display" id="example" width="100%">
+                <table class="display">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -194,36 +198,36 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th>1</th>
-                            <th>BSc in IT</th>
-                            <th>4 Year degree for information technology </th>
-                            <th>UOM</th>
-                            <th>2017-01-01</th>
-                            <th>2021-01-01</th>
+                            <td>1</td>
+                            <td>BSc in IT</td>
+                            <td>4 Year degree for information technology </td>
+                            <td>UOM</td>
+                            <td>2017-01-01</td>
+                            <td>2021-01-01</td>
                         </tr>
                         <tr>
-                            <th>1</th>
-                            <th>BSc in Mathematics</th>
-                            <th>4 Year degree for information technology </th>
-                            <th>UOM</th>
-                            <th>2017-01-01</th>
-                            <th>2021-01-01</th>
+                            <td>2</td>
+                            <td>BSc in Mathematics</td>
+                            <td>4 Year degree for information technology </td>
+                            <td>UOM</td>
+                            <td>2017-01-01</td>
+                            <td>2021-01-01</td>
                         </tr>
                         <tr>
-                            <th>1</th>
-                            <th>BSc in IT</th>
-                            <th>4 Year degree for information technology </th>
-                            <th>UOM</th>
-                            <th>2017-01-01</th>
-                            <th>2021-01-01</th>
+                            <td>3</td>
+                            <td>BSc in IT</td>
+                            <td>4 Year degree for information technology </td>
+                            <td>UOM</td>
+                            <td>2017-01-01</td>
+                            <td>2021-01-01</td>
                         </tr>
                         <tr>
-                            <th>1</th>
-                            <th>BSc in Mathematics</th>
-                            <th>4 Year degree for information technology </th>
-                            <th>UOM</th>
-                            <th>2017-01-01</th>
-                            <th>2021-01-01</th>
+                            <td>4</td>
+                            <td>BSc in Mathematics</td>
+                            <td>4 Year degree for information technology </td>
+                            <td>UOM</td>
+                            <td>2017-01-01</td>
+                            <td>2021-01-01</td>
                         </tr>
                     </tbody>
                 </table>
