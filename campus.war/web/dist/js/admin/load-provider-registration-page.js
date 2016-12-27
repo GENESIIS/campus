@@ -63,7 +63,7 @@ function displayProviderCountries() {
 // alert(selectedCountry);
 function getProviderTownListData() {
 	var selectedCountry = document.getElementById('selectedCountry').value;
-	
+
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
@@ -102,15 +102,15 @@ function displayProviderTownList() {
 	townNames.html(singleTownElement);
 }
 
-function providerUsernameValidation(){
-	
+function providerUsernameValidation() {
+
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
-	
-	if(selectedUsername == "" || selectedUsername ==null){
+
+	if (selectedUsername == "" || selectedUsername == null) {
 		alert("give a username");
 	}
-	
+
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
@@ -118,14 +118,14 @@ function providerUsernameValidation(){
 			'CCO' : 'COURSE_PROVIDER_VALIDATION',
 			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
 			'username' : selectedUsername,
-			'email': userEmail
+			'email' : userEmail
 		},
 		dataType : "json",
 		async : false,
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				//window.townCollection = response.userMessage;
+				// window.townCollection = response.userMessage;
 				var countryNames = $("#usermessage");
 				countryNames.html(response.userMessage);
 				alert(response.userMessage);
@@ -134,28 +134,28 @@ function providerUsernameValidation(){
 	});
 }
 
-function providerPrefixValidation(){
-	
+function providerPrefixValidation() {
+
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
-	
-	if(selectedPrefix == "" || selectedPrefix ==null){
+
+	if (selectedPrefix == "" || selectedPrefix == null) {
 		alert("give a prefix");
 	}
-	
+
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
 		data : {
 			'CCO' : 'COURSE_PROVIDER_VALIDATION',
 			'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
-			'username' : selectedPrefix
+			'prefix' : selectedPrefix
 		},
 		dataType : "json",
 		async : false,
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				//window.townCollection = response.userMessage;
+				// window.townCollection = response.userMessage;
 				var prefixMessage = $("#usermessage");
 				prefixMessage.html(response.userMessage);
 				alert(response.userMessage);

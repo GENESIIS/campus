@@ -153,7 +153,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
-										id="uniquePrefix" size="30px;" />
+										id="uniquePrefix" size="30px;" onchange="providerPrefixValidation();"/>
 								</div>
 							</li>
 							<!-- end -->
