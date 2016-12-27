@@ -15,6 +15,7 @@ import java.util.Date;
 import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
+import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -31,22 +32,22 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 	/**
 	 * @author DJ
 	 * @param helper
-	 * @param view
-	 * @return
+	 * @param iView
+	 * @return iView
 	 * @throws Exception
 	 */
 
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		
+		    
 		try {
+			iView=new View();
 			String cco = helper.getParameter("CCO");
-
+			
 			switch (Operation.getOperation(cco)) {
 			case SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER:
-				final Collection<Collection<String>> providerList = new CourseProviderDAO()
-						.getAll();
+				final Collection<Collection<String>> providerList = new CourseProviderDAO().getAll();
 				iView.setCollection(providerList);
 				break;
 			case REPORT_COURSES_BY_COURSE_PROVIDER:
@@ -55,63 +56,57 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 			default:
 				break;
 			}
-			/*
-			 * if(commandString!=null &&
-			 * commandString.equalsIgnoreCase(Operation
-			 * .SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER.getCommandString())){
-			 * final Collection<Collection<String>> providerList=new
-			 * CourseProviderDAO().getAll(); iView.setCollection(providerList);
-			 * }
-			 */
-
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception.toString());			
 			throw exception;
 		}
 		return iView;
 	}
-
-	private void generateReportResults(IDataHelper helper)throws ParseException, Exception {
+	
+	/** Identify input search parameters and retrieve particular  result set according to search criteria.
+	 * @author DJ
+	 * @param helper
+	 * @throws Exception
+	 */
+	private void generateReportResults(IDataHelper helper)throws  Exception {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String providerCodeString = helper.getParameter("cProviderCode");
 		String programmeStatus = helper.getParameter("statusValue");
 		int providerCode = 0;
-		try{
-		if (UtilityHelper.isNotEmpty(providerCodeString)) {
-			if (UtilityHelper.isInteger(providerCodeString)) {
-				providerCode = Integer.parseInt(providerCodeString);
-			}
-		}
-
-		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-		if (providerCode > 0) {
-			// List courses by course Providers
-			// param:cpcode,date range
-			final Programme programme = new Programme();
-			programme.setCourseProvider(providerCode);
-			programme.setProgrammeStatus(ApplicationStatus
-					.getApplicationStatus(programmeStatus));
-			try {
-				if (UtilityHelper.isNotEmpty(startDateString)) {
-					programme.setDisplayStartDate(df.parse((startDateString)));
+		try {
+			if (UtilityHelper.isNotEmpty(providerCodeString)) {
+				if (UtilityHelper.isInteger(providerCodeString)) {
+					providerCode = Integer.parseInt(providerCodeString);
 				}
-				if (UtilityHelper.isNotEmpty(endDateString)) {
-					programme.setExpiryDate((Date) df.parse((endDateString)));
-				}
+			}
 
-			} catch (ParseException parseException) {
-				log.error("execute() : ParseException " + parseException.toString());
-				throw parseException;
+			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+			if (providerCode > 0) {
+				// List courses by course Providers
+				// param:cpcode,date range
+				final Programme programme = new Programme();
+				programme.setCourseProvider(providerCode);
+				programme.setProgrammeStatus(ApplicationStatus.getApplicationStatus(programmeStatus));
+				try {
+					if (UtilityHelper.isNotEmpty(startDateString)) {
+						programme.setDisplayStartDate(df.parse((startDateString)));
+					}
+					if (UtilityHelper.isNotEmpty(endDateString)) {
+						programme.setExpiryDate((Date) df.parse((endDateString)));
+					}
+
+				} catch (ParseException parseException) {
+					log.error("execute() : ParseException "	+ parseException.toString());
+					throw parseException;
+				}
+				final Collection<Collection<String>> coursesList = new ProgrammeDAO().findById(programme);
+				helper.setAttribute("coursesResultList", coursesList);
 			}
-			final Collection<Collection<String>> coursesList = new ProgrammeDAO()
-					.findById(programme);
-			helper.setAttribute("coursesResultList", coursesList);
+		} catch (Exception exception) {
+		log.error("execute() : Exception " + exception.toString());
+		throw exception;
 		}
-		}catch (Exception exception) {
-				log.error("execute() : Exception " + exception.toString());			
-				throw exception;
-			}
 	}
 }
