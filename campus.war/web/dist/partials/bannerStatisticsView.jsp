@@ -17,144 +17,7 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-<script src="/dist/js/main.js"></script>
 
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {		
-		$.ajax({
-			url : '../../ReportController',
-			data : {
-				CCO : 'SEARCH_VIEW_BANNER_STATISTICS'
-			},
-			dataType : "json",
-			success : function(response) {
-				getAjaxProviderData(response);
-			},
-			error : function(jqXHR,exception) {
-				var msg=0;
-				if (jqXHR.status === 0) {
-		            msg = 'Not connect.\n Verify Network.';
-		        } else if (jqXHR.status == 404) {
-		            msg = 'Requested page not found. [404]';
-		        } else if (jqXHR.status == 500) {
-		            msg = 'Internal Server Error [500].';
-		        }  else if (exception === 'timeout') {
-		            msg = 'Time out error.';
-		        } else {
-		            msg = 'Internal error is occurred. Please try again.';
-		        }
-				alert(msg);
-			}
-		});
-		
-		
-		$('#pagelist').bind('change', function(event) {
-			alert(" pagelist ");
-			var pageCode= $('#pagelist').val();
-			
-			$.ajax({
-				url : '../../ReportController',
-				data : {
-					CCO : 'LIST_PAGE_WISE_PAGESLOTS',
-					pageCode:pageCode
-				},
-				dataType : "json",
-				success : function(response) {
-					getPageWisePageSlots(response);
-				},
-				error : function(jqXHR,exception) {
-					var msg=0;
-					if (jqXHR.status === 0) {
-			            msg = 'Not connect.\n Verify Network.';
-			        } else if (jqXHR.status == 404) {
-			            msg = 'Requested page not found. [404]';
-			        } else if (jqXHR.status == 500) {
-			            msg = 'Internal Server Error [500].';
-			        }  else if (exception === 'timeout') {
-			            msg = 'Time out error.';
-			        } else {
-			            msg = 'Internal error is occurred. Please try again.';
-			        }
-					alert(msg);
-				}
-			});
-			
-		});
-		
-		$('#pageSlotlist').bind('change', function(event) {
-			alert(" pageSlotlist ");
-			var pageSlotCode= $('#pageSlotlist').val();
-			$.ajax({
-				url : '../../ReportController',
-				data : {
-					CCO : 'LIST_PAGESLOT_WISE_BANNER',
-					pageSlotCode:pageSlotCode
-				},
-				dataType : "json",
-				success : function(response) {
-					getPageSlotWiseBanners(response);
-				},
-				error : function(jqXHR,exception) {
-					var msg=0;
-					if (jqXHR.status === 0) {
-			            msg = 'Not connect.\n Verify Network.';
-			        } else if (jqXHR.status == 404) {
-			            msg = 'Requested page not found. [404]';
-			        } else if (jqXHR.status == 500) {
-			            msg = 'Internal Server Error [500].';
-			        }  else if (exception === 'timeout') {
-			            msg = 'Time out error.';
-			        } else {
-			            msg = 'Internal error is occurred. Please try again.';
-			        }
-					alert(msg);
-				}
-			});
-			
-		});
-		
-	});
-	
-	function getAjaxProviderData(response) { 		
-		var htmlstr="";
-		$.each(response.result, function(index, value) {
-			if(value!=null && value.length>0){
-			    htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
-			}
-			
-		});	
-		$('#pageName').html(htmlstr);
-	 
-	}	
-	
-	 function getPageWisePageSlots(response) { 
-		 var htmlstr="";
-			$.each(response.pageSlots, function(index, value) {
-				if(value!=null && value.length>0){
-				    htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
-				}
-				
-			});	
-			$('#pageSlotName').html(htmlstr);
-	} 
- function getPageSlotWiseBanners(response) { 
-		 var htmlstr="";
-			$.each(response.bannerDetails, function(index, value) {
-				if(value!=null && value.length>0){
-				    htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
-				}
-				
-			});	
-			$('#bannerName').html(htmlstr);
-	} 
-
-</script>
 
 </head>
 <body>
@@ -227,6 +90,14 @@
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />
 	<!--End  Footer -->
+	<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+<script src="/dist/js/report/banner-statistics.js"></script>
+
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
 
 </body>
 
