@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20161201 JH c39-add-course-provider removed unwanted enums
 //20161208 JH c39-add-course-provider added USERNAME_VALID, USERNAME_INVALID
 //20161209 JH c39-add-course-provider added EMPTY_USERNAME
+//20161227 JH c39-add-course-provider added PREFIX_INVALID, PREFIX_VALID
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -15,7 +16,9 @@ public enum SystemMessage {
 	USERNAME_VALID("valid username"),
 	USERNAME_INVALID("already exist the username"),
 	EMPTY_USERNAME("Please give a username"),
-	EMPTY_FIELD("Empty field(s)");
+	EMPTY_FIELD("Empty field(s)"),		
+	PREFIX_INVALID("Prefix is not available"),
+	PREFIX_VALID("Valid prefix");
 	
 	
 	private String message;
