@@ -149,11 +149,12 @@ public int add(Object object) throws SQLException, Exception {
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
-			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+		//	Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			//preparedStatement.setString(1, tutor.getUsername());			
-			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString());
+			//preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryptor removed
+			preparedStatement.setString(1, tutor.getPassword());
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
 			preparedStatement.setString(4, tutor.getLastName());
@@ -190,6 +191,7 @@ public int add(Object object) throws SQLException, Exception {
 			
 			preparedStatement.setString(26, tutor.getAddressLine2());
 			preparedStatement.setString(27, tutor.getAddressLine3());
+			System.out.println("Town = " + tutor.getTown());
 			preparedStatement.setString(28, tutor.getTown());
 			preparedStatement.setInt(29, tutor.getUsertype());		
 			//	preparedStatement.setString(31, "chathuri");
@@ -290,12 +292,15 @@ public int add(Object object) throws SQLException, Exception {
 				singleTutorList.add(rs.getString("ADDRESS3"));
 				
 				if (rs.getString("TOWN") != null) {
+					System.out.println(" rs.getString TOWN = " + rs.getString("TOWN"));
 					townCode = Double.parseDouble(rs.getString("TOWN"));
 					TownDAO country = new TownDAO();
 					townName = country.findTownByCode(townCode);
 				}
 				
-				singleTutorList.add(townName);				
+				singleTutorList.add(townName);
+				System.out.println("town dao town = " + townCode);
+				singleTutorList.add(rs.getString("TOWN"));				
 								
 				singleTutorList.add(rs.getString("USERTYPE"));
 								

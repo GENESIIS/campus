@@ -16,35 +16,36 @@
 		<c:forEach var="tutorList" items="${result.collection}">
 
 			<c:set var="code" value="${tutorList[0]}" scope="session"/>
-			<c:set var="username" value="${tutorList[1]}" />
-			<c:set var="password" value="${tutorList[2]}" />
-			<c:set var="firstname" value="${tutorList[3]}" />
-			<c:set var="middlename" value="${tutorList[4]}" />
-			<c:set var="lastname" value="${tutorList[5]}" />
-			<c:set var="gender" value="${tutorList[6]}" />
-			<c:set var="email" value="${tutorList[7]}" />
-			<c:set var="landphonecountrycode" value="${tutorList[8]}" />
-			<c:set var="landphoneareacode" value="${tutorList[9]}" />
-			<c:set var="landphonenumber" value="${tutorList[10]}" />
-			<c:set var="mobilephonecountrycode" value="${tutorList[11]}" />
-			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}" />
-			<c:set var="mobilephonenumber" value="${tutorList[13]}" />
-			<c:set var="description" value="${tutorList[14]}" />
-			<c:set var="experience" value="${tutorList[15]}" />
-			<c:set var="weblink" value="${tutorList[16]}" />
-			<c:set var="facebookurl" value="${tutorList[17]}" />
-			<c:set var="twitterurl" value="${tutorList[18]}" />
-			<c:set var="myspaceurl" value="${tutorList[19]}" />
-			<c:set var="linkedinurl" value="${tutorList[20]}" />
-			<c:set var="instagramurl" value="${tutorList[21]}" />
-			<c:set var="vibernumber" value="${tutorList[22]}" />
-			<c:set var="whatsappnumber" value="${tutorList[23]}" />
-			<c:set var="address1" value="${tutorList[24]}" />
-			<c:set var="address2" value="${tutorList[25]}" />
-			<c:set var="address3" value="${tutorList[26]}" />
-			<c:set var="town" value="${tutorList[27]}" />
-			<c:set var="usertype" value="${tutorList[28]}" />
-			<c:set var="countryname" value="${tutorList[29]}" />
+			<c:set var="username" value="${tutorList[1]}" scope="session"/>
+			<c:set var="password" value="${tutorList[2]}" scope="session"/>
+			<c:set var="firstname" value="${tutorList[3]}" scope="session"/>
+			<c:set var="middlename" value="${tutorList[4]}" scope="session"/>
+			<c:set var="lastname" value="${tutorList[5]}" scope="session"/>
+			<c:set var="gender" value="${tutorList[6]}" scope="session"/>
+			<c:set var="email" value="${tutorList[7]}" scope="session"/>
+			<c:set var="landphonecountrycode" value="${tutorList[8]}" scope="session"/>
+			<c:set var="landphoneareacode" value="${tutorList[9]}" scope="session"/>
+			<c:set var="landphonenumber" value="${tutorList[10]}" scope="session"/>
+			<c:set var="mobilephonecountrycode" value="${tutorList[11]}" scope="session"/>
+			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}" scope="session"/>
+			<c:set var="mobilephonenumber" value="${tutorList[13]}" scope="session"/>
+			<c:set var="description" value="${tutorList[14]}" scope="session"/>
+			<c:set var="experience" value="${tutorList[15]}" scope="session"/>
+			<c:set var="weblink" value="${tutorList[16]}" scope="session"/>
+			<c:set var="facebookurl" value="${tutorList[17]}" scope="session"/>
+			<c:set var="twitterurl" value="${tutorList[18]}" scope="session"/>
+			<c:set var="myspaceurl" value="${tutorList[19]}" scope="session"/>
+			<c:set var="linkedinurl" value="${tutorList[20]}" scope="session"/>
+			<c:set var="instagramurl" value="${tutorList[21]}" scope="session"/>
+			<c:set var="vibernumber" value="${tutorList[22]}" scope="session"/>
+			<c:set var="whatsappnumber" value="${tutorList[23]}" scope="session"/>
+			<c:set var="address1" value="${tutorList[24]}" scope="session"/>
+			<c:set var="address2" value="${tutorList[25]}" scope="session"/>
+			<c:set var="address3" value="${tutorList[26]}" scope="session"/>
+			<c:set var="town" value="${tutorList[27]}" scope="session"/>
+			<c:set var="towncode" value="${tutorList[28]}" scope="session"/>
+			<c:set var="usertype" value="${tutorList[29]}" scope="session"/>
+			<c:set var="countryname" value="${tutorList[30]}" scope="session"/>
 
 		</c:forEach>
 
@@ -120,7 +121,7 @@
 				<tr>
 					<td>Town</td>
 					
-					<td>${town}</td>
+					<td>${town}</td><td>${towncode}</td>
 					<td><span id="townError"></span> <select name="townDetails"
 						id="townDetails">
 							<option></option>

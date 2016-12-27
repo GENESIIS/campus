@@ -22,7 +22,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param value
-	 * @return boolean to validate is given string contains a null value.
+	 * @return boolean to validate is given string contains a null value. Returns true if String is not empty.
 	 * **/
 	public static boolean isNotEmpty(String text) {
 		boolean status = false;
