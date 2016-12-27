@@ -9,10 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class CourseProviderPrefixDAO implements ICrud {
+	static org.apache.log4j.Logger log = Logger
+			.getLogger(CourseProviderPrefixDAO.class.getName());
 
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -30,35 +35,35 @@ public class CourseProviderPrefixDAO implements ICrud {
 	}
 
 	public Collection findById(Object code) throws SQLException, Exception {
-		final CourseProviderAccount courseProviderAccount = (CourseProviderAccount) code;
-		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDERACCOUNT] WHERE USERNAME = ? OR EMAIL = ? ";
+		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE UNIQUEPREFIX = ? ";
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		final Collection<Collection<String>> usernameCollection = null;
-		
+		final Collection<Collection<String>> prefixCollection = null;
+		ResultSet rs = null;
+
 		try {
+			final CourseProvider courseProvider = (CourseProvider) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, courseProviderAccount.getUsername());
-			preparedStatement.setString(2,courseProviderAccount.getEmail());
-			
-			ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setString(1, courseProvider.getUniquePrefix());
 
-			if (rs.next()) {
+			rs = preparedStatement.executeQuery();
+
+			if (rs != null) {
 				while (rs.next()) {
-					final ArrayList<String> singleAccountList = new ArrayList<String>();
+					final ArrayList<String> singleProviderList = new ArrayList<String>();
 
-					singleAccountList.add(rs.getString("CODE"));
-					singleAccountList.add(rs.getString("NAME"));
-					singleAccountList.add(rs.getString("USERNAME"));
-					singleAccountList.add(rs.getString("PASSWORD"));
-					singleAccountList.add(rs.getString("EMAIL"));
-					singleAccountList.add(rs.getString("DESCRIPTION"));
-					singleAccountList.add(rs.getString("COURSEPROVIDER"));
-					
-					final Collection<String> singleAccountColleciton = singleAccountList;
-					usernameCollection.add(singleAccountColleciton);
+					singleProviderList.add(rs.getString("CODE"));
+					singleProviderList.add(rs.getString("UNIQUEPREFIX"));
+					singleProviderList.add(rs.getString("SHORTNAME"));
+					singleProviderList.add(rs.getString("PASSWORD"));
+					singleProviderList.add(rs.getString("EMAIL"));
+					singleProviderList.add(rs.getString("DESCRIPTION"));
+					singleProviderList.add(rs.getString("COURSEPROVIDER"));
+
+					final Collection<String> singleproviderColleciton = singleProviderList;
+					prefixCollection.add(singleproviderColleciton);
 				}
 
 			}
@@ -74,14 +79,17 @@ public class CourseProviderPrefixDAO implements ICrud {
 			throw exception;
 
 		} finally {
-			if (conn != null) {
-				conn.close();
+			if (rs != null) {
+				rs.close();
 			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
-		return usernameCollection;
+		return prefixCollection;
 	}
 
 	public Collection getAll() throws SQLException, Exception {
