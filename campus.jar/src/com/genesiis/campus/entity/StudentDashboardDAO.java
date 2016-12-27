@@ -25,6 +25,8 @@ package com.genesiis.campus.entity;
 //				into the result set and placed in the table variable, and to consider the relevant DSD, DISTRICT, 
 //				PROVINCE and COUNTRY2 of the student when the adequate number of programmes is not found with 
 //				student's interests and the exact town.
+//20161227 MM c25-student-create-dashboard-MP-mm Removed unnecessary code and troubleshooted issue that was 
+//				preventing results from being returned and assigned to programmeDetailsCollectionList
 
 
 import java.sql.Connection;
@@ -74,89 +76,8 @@ public class StudentDashboardDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-//			// TODO convert this to a StringBuidler			
-//			String query = "DECLARE @sqlString nvarchar (3000); "
-//					+ "SET @sqlString = 'DECLARE @neededNumOfResults int, @numResults int; "
-//					+ "SET @neededNumOfResults = 10; "
-//					+ "SET NOCOUNT ON; "
-//					+ "DECLARE @TempProgrammesBasedOnInterestsAndTown TABLE ("
-//					+ "[CODE] [int],"
-//					+ "[NAME] [varchar](100),"
-//					+ "[EMAIL] [varchar](255),"
-//					+ "[IMAGE] [varchar](100),"
-//					+ "[DESCRIPTION] [text],"
-//					+ "[DURATION] [float],"
-//					+ "[ENTRYREQUIREMENTS] [varchar](2000),"
-//					+ "[COUNSELORNAME] [varchar](35),"
-//					+ "[COUNSELORPHONE] [varchar](15),"
-//					+ "[DISPLAYSTARTDATE] [date],"
-//					+ "[EXPIRYDATE] [date],"
-//					+ "[PROGRAMMESTATUS] [tinyint],"
-//					+ "[COURSEPROVIDER] [int],"
-//					+ "[MAJOR] [int],"
-//					+ "[CATEGORY] [int],"
-//					+ "[LEVEL] [int],"
-//					+ "[CLASSTYPE] [int],"
-//					+ "[CRTON] [date],"
-//					+ "[CRTBY] [varchar](20),"
-//					+ "[MODON] [date],"
-//					+ "[MODBY] [varchar](20)); "
-//					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-//					+ "SELECT TOP (@neededNumOfResults) p.* "
-//					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-//					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
-//					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
-//					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-//					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-//					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
-//					+ "SELECT DISTINCT @numResults = COUNT(*) "
-//					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
-//					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-//					+ "IF (@neededNumOfResults > 0) "
-//					+ "BEGIN "
-//					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-//					+ "SELECT TOP (@neededNumOfResults) p.* "
-//					+ "FROM [CAMPUS].[STUDENTINTEREST] si "
-//					+ "JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = 1) "
-//					+ "JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) "
-//					+ "JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) "
-//					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-//					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN); "
-//					+ "SELECT DISTINCT @numResults = COUNT(*) "
-//					+ "FROM @TempProgrammesBasedOnInterestsAndTown "
-//					+ "GROUP BY CODE; "
-//					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-//					+ "END "
-//					+ "IF (@neededNumOfResults > 0) "
-//					+ "BEGIN "
-//					+ "INSERT INTO @TempProgrammesBasedOnInterestsAndTown "
-//					+ "SELECT TOP (@neededNumOfResults) p.* "
-//					+ "FROM [CAMPUS].[PROGRAMME] p "
-//					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) "
-//					+ "JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) "
-//					+ "JOIN [CAMPUS].[STUDENT] s ON (t.CODE = s.TOWN and s.CODE = 1); "
-//					+ "SELECT DISTINCT @numResults = COUNT(*) "
-//					+ "FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE; "
-//					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-//					+ "END; "
-////					+ "SELECT * FROM @TempProgrammesBasedOnInterestsAndTown "
-////					+ "WHERE CODE IN ("
-////					+ "SELECT DISTINCT CODE FROM @TempProgrammesBasedOnInterestsAndTown GROUP BY CODE"
-////					+ ");'; "
-//					+ "SELECT DISTINCT CODE, NAME, EMAIL, IMAGE, "
-//					+ "CAST(DESCRIPTION AS VARCHAR(4000)) AS DESCRIPTION, "
-//					+ "DURATION, ENTRYREQUIREMENTS, COUNSELORNAME, "
-//					+ "COUNSELORPHONE, DISPLAYSTARTDATE, EXPIRYDATE, "
-//					+ "PROGRAMMESTATUS, COURSEPROVIDER, MAJOR, "
-//					+ "CATEGORY, LEVEL, CLASSTYPE "
-//					+ "FROM @TempProgrammesBasedOnInterestsAndTown;'; "
-//					+ "EXECUTE sp_executesql @sqlString;";
-			
-			
-			String query2 = "DECLARE @sqlString nvarchar(MAX); "
+			// TODO convert this to a StringBuidler
+			String query = "DECLARE @sqlString nvarchar(MAX); "
 					+ "SET @sqlString = 'DECLARE @neededNumOfResults int, @numResults int, @studentTownCode bigint, @studentDSDCode smallint, @studentDistrictCode smallint, @studentProvinceCode smallint, @studentCountryCode smallint; "
 					+ "SET @neededNumOfResults = 10; "
 					+ "SET NOCOUNT ON; "
@@ -225,8 +146,7 @@ public class StudentDashboardDAO implements ICrud {
 					+ "EXECUTE sp_executesql @sqlString; ";
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query2);
-//			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
@@ -253,7 +173,7 @@ public class StudentDashboardDAO implements ICrud {
 	}
 
 	private void retrieveProgrammesFromResultSet(ResultSet rs,
-			Collection<Collection<String>> studentList) throws SQLException {
+			Collection<Collection<String>> programmeList) throws SQLException {
 
 		while (rs.next()) {
 			final ArrayList<String> singleProgramme = new ArrayList<String>();
@@ -275,7 +195,7 @@ public class StudentDashboardDAO implements ICrud {
 			singleProgramme.add(rs.getString("LEVEL")); // 15
 			singleProgramme.add(rs.getString("CLASSTYPE")); // 16
 			final Collection<String> singleProgrammeCollection = singleProgramme;
-			studentList.add(singleProgrammeCollection);
+			programmeList.add(singleProgrammeCollection);
 		}
 	}
 

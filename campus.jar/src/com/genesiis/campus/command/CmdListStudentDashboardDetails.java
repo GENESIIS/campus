@@ -45,7 +45,7 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 					// Get profile information of Student represented by studentCode
 					StudentDashboardDAO studentDao = new StudentDashboardDAO();
 					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();
-					studentCollection = studentDao.findById(student);					
+//					studentCollection = studentDao.findById(student);					
 															
 					// Get student profile image path from SystemConfig enum
 					String studentProfileImagePath = SystemConfig.STUDENT_PROFILE_IMAGE_PATH.getValue1();
