@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161209 JH c39-add-course-provider class name renamed to CourseProviderUsernameDAO.java
 //20161222 JH c39-add-course-provider findById method modified: added missing parameters
 //20161223 JH c39-add-course-provider findById method query modified
+//20161227 JH c39-add-course-provider findById method query modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;
 
 
@@ -44,18 +45,19 @@ public class CourseProviderUsernameDAO implements ICrud {
 	 */
 	public Collection findById(Object code) throws SQLException, Exception {
 
-		final CourseProvider courseProvider = (CourseProvider) code;
-		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDER] WHERE UNIQUEPREFIX = ? ";
+		String query = " SELECT * FROM [CAMPUS].[COURSEPROVIDERACCOUNT] WHERE USERNAME = ? OR EMAIL = ? ";
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		final Collection<Collection<String>> prefixCollection = null;
+		final Collection<Collection<String>> usernameCollection = null;
 		 ResultSet rs = null;
 		
 		try {
+			final CourseProviderAccount courseProviderAccount = (CourseProviderAccount) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, courseProvider.getUniquePrefix());
+			preparedStatement.setString(1, courseProviderAccount.getUsername());
+			preparedStatement.setString(2, courseProviderAccount.getEmail());
 			
 			rs = preparedStatement.executeQuery();
 
@@ -72,7 +74,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 					singleAccountList.add(rs.getString("COURSEPROVIDER"));
 					
 					final Collection<String> singleAccountColleciton = singleAccountList;
-					prefixCollection.add(singleAccountColleciton);
+					usernameCollection.add(singleAccountColleciton);
 				}
 
 			}
@@ -99,7 +101,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 			}
 
 		}
-		return prefixCollection;
+		return usernameCollection;
 	}
 
 	public Collection getAll() throws SQLException, Exception {
