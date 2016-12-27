@@ -8,16 +8,16 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
-import com.genesiis.campus.entity.UserTypeDAO;
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.validation.Operation;
-import com.genesiis.campus.validation.UserType;
 
 import org.apache.log4j.Logger;
 
@@ -41,11 +41,12 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 						.equalsIgnoreCase("COURSE_PROVIDER_USERNAME_VALIDATION")) {
 
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
-					String username = helper.getParameter("username");
-					String email = helper.getParameter("email");
 
-					if (!validator.isEmpty(username)
-							|| !validator.isEmpty(email)) {
+					if (validator.isEmpty(helper.getParameter("username"))
+							|| validator.isEmpty(helper.getParameter("email"))) {
+
+						String username = helper.getParameter("username");
+						String email = helper.getParameter("email");
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 						courseProviderAccount.setUsername(username);
 						courseProviderAccount.setEmail(email);
@@ -61,6 +62,29 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 					} else {
 						message = SystemMessage.EMPTY_USERNAME;
 					}
+				} else if (action
+						.equalsIgnoreCase("COURSE_PROVIDER_PREFIX_VALIDATION")) {
+
+					ICrud prefixDAO = new CourseProviderPrefixDAO();
+
+					if (!validator.isEmpty(helper.getParameter("prefix"))) {
+						String prefix = helper.getParameter("prefix");
+
+						final CourseProvider courseProvider = new CourseProvider();
+						courseProvider.setUniquePrefix("prefix");
+						Collection<Collection<String>> prefixCollection = prefixDAO
+								.findById(courseProvider);
+						if (prefixCollection != null) {
+							message = SystemMessage.PREFIX_INVALID;
+							log.info(">>>>>>>>>>>>>>>>>>>  not valid prefix");
+
+						} else {
+							message = SystemMessage.PREFIX_VALID;
+							log.info(">>>>>>>>>>>>>>>>>>>valid prefix");
+						}
+					} else {
+						message = SystemMessage.EMPTY_FIELD;
+					}
 				}
 
 			} else {
@@ -75,7 +99,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 			message = SystemMessage.ERROR;
 			log.error("execute method Exception" + exception.toString());
 			throw exception;
-		}finally{
+		} finally {
 			helper.setAttribute("userMessage", message.message());
 		}
 
