@@ -15,7 +15,7 @@
 
 		<c:forEach var="tutorList" items="${result.collection}">
 
-			<c:set var="code" value="${tutorList[0]}" />
+			<c:set var="code" value="${tutorList[0]}" scope="session"/>
 			<c:set var="username" value="${tutorList[1]}" />
 			<c:set var="password" value="${tutorList[2]}" />
 			<c:set var="firstname" value="${tutorList[3]}" />
@@ -83,13 +83,13 @@
 					<td>Gender</td>
 					<td>
 						<c:if test="${gender == 1}">
-							<input type="radio" name="gender" value="1" id="radioMale"
-							checked> Male<br> <input type="radio" name="gender" id="radioFemale"> Female<br>
+							<input type="radio" name="gender" value="1" id="radioMale" checked> Male<br> 
+							<input type="radio" name="gender" value="2" id="radioFemale"> Female<br>
 						</c:if>
 						
 						<c:if test="${gender == 2}">
 							<input type="radio" name="gender" value="1" id="radioMale"> Male<br> 
-							<input type="radio" name="gender" id="radioFemale" checked> Female<br>
+							<input type="radio" name="gender" value="2" id="radioFemale" checked> Female<br>
 						</c:if>
 						</td>
 				</tr>
@@ -110,7 +110,7 @@
 				</tr>
 				<tr>
 					<td>Country</td>
-					<td>${countryname}</td>
+					<td><input type="text" name="oldCountry" id ="oldCountry" value="${countryname}"/>${countryname}</td>
 						
 					<td><span id="countryError"></span> <select
 						name="countryDetails" id="countryDetails" >

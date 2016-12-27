@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
 //20161222 CW c38-view-update-tutor-profile added country name & Town Name detail calling to findById. 
+//20161223 CW c38-view-update-tutor-profile added update() method
+//20161227 CW c38-view-update-tutor-profile modified update() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,6 +64,9 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
+
+			System.out.println("Add Gender = " + tutor.getGender());
+			
 			preparedStatement.setString(7, tutor.getEmailAddress());
 			preparedStatement.setString(8, tutor.getLandCountryCode());
 			preparedStatement.setString(9, tutor.getLandAreaCode());
@@ -132,13 +137,12 @@ public int add(Object object) throws SQLException, Exception {
 		 */
 		
 		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
-		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? , ");
-		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? ");
-		/*
+		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
+		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
 		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
 		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , ISACTIVE = ? , ADDRESS1 = ? , ");
 		queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
-		queryBuilder.append("MODBY = ? ");*/
+		queryBuilder.append("MODBY = ? ");
 		queryBuilder.append("WHERE USERNAME = ?;");
 				
 		try {			
@@ -153,6 +157,9 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
 			preparedStatement.setString(4, tutor.getLastName());
+			
+			System.out.println("Gender = " + tutor.getGender());
+			
 			preparedStatement.setString(5, tutor.getGender());
 			
 			preparedStatement.setString(6, tutor.getEmailAddress());
@@ -166,7 +173,7 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(13, tutor.getDescription());
 			preparedStatement.setString(14, tutor.getExperience());
 			preparedStatement.setString(15, tutor.getWebLink());
-	/*	
+		
 			preparedStatement.setString(16, tutor.getFacebookLink());
 			preparedStatement.setString(17, tutor.getTwitterNumber());
 			preparedStatement.setString(18, tutor.getMySpaceId()); 
@@ -188,8 +195,9 @@ public int add(Object object) throws SQLException, Exception {
 			//	preparedStatement.setString(31, "chathuri");
 			preparedStatement.setString(30, "chathuri");
 			
-			//preparedStatement.setString(31, "chathuri");*/
-			preparedStatement.setString(16, tutor.getUsername());
+			//preparedStatement.setString(31, "chathuri");
+			preparedStatement.setString(31, tutor.getUsername());
+			System.out.println("Gender = " + tutor.getUsername());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {

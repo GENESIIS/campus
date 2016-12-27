@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.ejb.SessionBean;
+import javax.net.ssl.HttpsURLConnection;
+
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.IView;
@@ -36,7 +39,14 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 				setVariables(helper,tutorCollection);
 				
-								
+				
+
+				//helper.getSession(false).getAttribute("name");
+
+				
+				System.out.println("Code = " + helper.getSession(false).getAttribute("name"));
+				//System.out.println("username = " + helper.getAttribute("username"));
+				
 				tutor.setUsername(tutorCollection.toArray()[0].toString());
 				tutor.setPassword(tutorCollection.toArray()[1].toString());
 				tutor.setFirstName(tutorCollection.toArray()[2].toString());
@@ -73,7 +83,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 					int result = tutorDAO.update(tutor);
 					if (result > 0) {
-						message = SystemMessage.ADDED.message();
+						message = SystemMessage.UPDATED.message();
 
 					} else {
 						message = SystemMessage.ERROR.message();
