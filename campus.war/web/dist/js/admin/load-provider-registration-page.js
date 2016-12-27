@@ -155,7 +155,7 @@ function providerPrefixValidation() {
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				// window.townCollection = response.userMessage;
+				 window.UserMessage = response.userMessage;
 				var prefixMessage = $("#usermessage");
 				prefixMessage.html(response.userMessage);
 				alert(response.userMessage);
