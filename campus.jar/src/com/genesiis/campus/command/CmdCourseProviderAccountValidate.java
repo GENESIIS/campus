@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161223 JH c39-add-course-provider code modified
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
@@ -42,22 +43,22 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 
-					if (validator.isEmpty(helper.getParameter("username"))
-							|| validator.isEmpty(helper.getParameter("email"))) {
+					if (!validator.isEmpty(helper.getParameter("username"))
+							|| !validator.isEmpty(helper.getParameter("email"))) {
 
 						String username = helper.getParameter("username");
 						String email = helper.getParameter("email");
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 						courseProviderAccount.setUsername(username);
 						courseProviderAccount.setEmail(email);
-						Collection<Collection<String>> usernameCollection = usernameDAO
-								.findById(courseProviderAccount);
+						Collection<Collection<String>> usernameCollection = null;//new ArrayList<Collection<String>>(); 
+
+						usernameCollection = usernameDAO.findById(courseProviderAccount);
 						if (usernameCollection != null) {
 							message = SystemMessage.USERNAME_INVALID;
 
 						} else {
 							message = SystemMessage.USERNAME_VALID;
-							log.info("jsdkfkdsjfdfkdskj");
 						}
 					} else {
 						message = SystemMessage.EMPTY_USERNAME;
@@ -71,12 +72,12 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 						String prefix = helper.getParameter("prefix");
 
 						final CourseProvider courseProvider = new CourseProvider();
-						courseProvider.setUniquePrefix("prefix");
+						courseProvider.setUniquePrefix(prefix);
 						Collection<Collection<String>> prefixCollection = prefixDAO
 								.findById(courseProvider);
 						if (prefixCollection != null) {
 							message = SystemMessage.PREFIX_INVALID;
-							log.info(">>>>>>>>>>>>>>>>>>>  not valid prefix");
+	
 
 						} else {
 							message = SystemMessage.PREFIX_VALID;
