@@ -138,5 +138,22 @@ function loadResultSet(event){
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
 	
+	$.ajax({
+		url : '../../ReportController',
+		data : {
+			CCO : 'REPORT_BANNER_STATISTICS',
+			bannerCode : bannerCode,
+			startDate : startDate,
+			endDate :endDate 
+		},
+		dataType : "json",
+		success : function(response) {
+			populateResultTable(response);
+		},
+		error : function(jqXHR, exception) {
+			
+		}
+		});
+	
 }
 
