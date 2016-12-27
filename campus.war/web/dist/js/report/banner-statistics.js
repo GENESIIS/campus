@@ -132,3 +132,11 @@ function getPageSlotWiseBanners(response) {
 	$('#bannerName').html(htmlstr);
 }
 
+function loadResultSet(event){
+	
+	var bannerCode= $('#bannerList').val();
+	var startDate= $('#startdate').val();
+	var endDate= $('#enddate').val();
+	
+}
+
