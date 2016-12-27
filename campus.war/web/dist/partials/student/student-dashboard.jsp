@@ -1,12 +1,10 @@
-<!-- 20161114 TR c25 start styling user profile page container  -->
-<!-- 20161114 TR c25 page header - done  -->
-<!-- 20161114 TR c25 profile-image-box - done  -->
-<!-- 20161203 MM c25-student-create-dashboard-MP Converted to JSP and converted 
-					relative paths to absolute paths  -->
+<%-- 20161114 TR c25 start styling user profile page container  --%>
+<%-- 20161114 TR c25 page header - done  --%>
+<%-- 20161114 TR c25 profile-image-box - done  --%>
+<%-- 20161203 MM c25-student-create-dashboard-MP Converted to JSP and converted relative paths to absolute paths --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +16,10 @@
     <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/dist/css/style.css" rel="stylesheet">
     <link href="/dist/css/image-slides.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- W3-Include -->
-    <!--<script src="../../bower-components/w3/w3data.js"></script> -->
+    <!--<script src="/dist/bower-components/w3/w3data.js"></script> -->
 
     <!-- jQuery & Other js -->
     <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
@@ -41,7 +40,7 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="index.jsp" class="btn-home center-block"></a>
+                <a href="index.html" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
@@ -104,7 +103,6 @@
                 <!-- End Keyword Search -->
                 <div class="login-link">
                     <a href="javascript:">Login</a>
-
                 </div>
             </div>
             <!-- End keyword search -->
@@ -130,11 +128,13 @@
 
                     <div class="prf-name">
                         <h2>Kalana Perera</h2>
+                        <h3>University of Colombo</h3>
+                        <h4>Kandy</h4>
                     </div>
                     <!-- End profile name -->
-                    <div class="follow-me">
-                        <button class="btn-follow">Follow</button>
-                    </div>
+                    <!--<div class="follow-me">-->
+                        <!--<button class="btn-follow">Follow</button>-->
+                    <!--</div>-->
                     <!-- End follow-me button -->
                 </div>
                 <!-- end profile picture box -->
@@ -174,173 +174,145 @@
             <!-- End Left side panel -->
 
             <div class="right-side col-md-9 col-lg-9 col-sm-12 clearfix">
-                <div class="widget w-about-me clearfix">
+                <div class="widget w-rec-courses clearfix">
                     <div class="widget-header">
-                        <label for="About">About</label>
-                        <button>Edit</button>
+                        <label>Recommended Courses</label>
                     </div>
                     <!-- End widget header -->
 
                     <div class="widget-content clearfix">
-                        <div class="w-left-panel col-sm-12 col-md-6 col-lg-6">
-                            <table class="tbl-wgt-about">
-                                <tr>
-                                    <td class="td-name">First Name :</td>
-                                    <td class="td-value">Kalana </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Last Name :</td>
-                                    <td class="td-value">Perera </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">City :</td>
-                                    <td class="td-value">Kandy</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Birthday  :</td>
-                                    <td class="td-value">Nov 24,1999</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Website :</td>
-                                    <td class="td-value">www.blabla.com </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <!-- End about-me : left side -->
 
-                        <div class="w-right-panel col-sm-12 col-md-6 col-lg-6">
-                            <table class="tbl-wgt-about">
-                                <tr>
-                                    <td class="td-name">User Name :</td>
-                                    <td class="td-value">Kala</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Email :</td>
-                                    <td class="td-value">jamesbond@gmail.com </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Country :</td>
-                                    <td class="td-value">Sri Lanka </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Interests  :</td>
-                                    <td class="td-value">Web Design, Java </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Phone :</td>
-                                    <td class="td-value">077 555 6666</td>
-                                </tr>
-                            </table>
+                        <div class="col-md-12" data-wow-delay="0.2s">
+                            <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                                <!-- Bottom Carousel Indicators -->
+                                <!--<ol class="carousel-indicators">-->
+                                    <!--<li data-target="#quote-carousel" data-slide-to="0" class="active"><img class="img-responsive " src="../../i/icbt.png" alt="">-->
+                                    <!--</li>-->
+                                    <!--<li data-target="#quote-carousel" data-slide-to="1"><img class="img-responsive" src="../../i/icbt.png" alt="">-->
+                                    <!--</li>-->
+                                    <!--<li data-target="#quote-carousel" data-slide-to="2"><img class="img-responsive" src="../../i/icbt.png" alt="">-->
+                                    <!--</li>-->
+                                <!--</ol>-->
+
+                                <!-- Carousel Slides / Quotes -->
+                                <div class="carousel-inner text-center">
+
+                                    <!-- Quote 1 -->
+                                    <div class="item active">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-8 col-sm-offset-2">
+                                                    <label>BSc in Computer Science</label>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. !</p>
+                                                    <small>ICBT</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <!-- Quote 2 -->
+                                    <div class="item">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-8 col-sm-offset-2">
+                                                    <label>BSc in Electronic Engineering</label>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+                                                    <small>NIBM</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <!-- Quote 3 -->
+                                    <div class="item">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-8 col-sm-offset-2">
+                                                    <label>BSc in Software Engineering</label>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. .</p>
+                                                    <small>SLIIT</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                </div>
+
+                                <!-- Carousel Buttons Next/Prev -->
+                                <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+                            </div>
                         </div>
+
+
                         <!-- End about-me : right side -->
                     </div>
                     <!-- End widget content -->
                 </div>
                 <!-- End Widget : ABOUT -->
 
-                <div class="widgets-e">
-                    <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6">
-                        <div class="widget w-experience">
-                            <div class="widget-header">
-                                <label for="">Experience</label>
-                                <button>Edit</button>
-                            </div>
-
-                            <div class="widget-content">
-                                <ul class="ul-experience">
-                                    <li>CEO <span class="drop-at">at</span> Mc.Dondon <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>CEO <span class="drop-at">at</span> Mc.Dondon <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Web Developer <span class="drop-at">at</span> Genesiis Softwre <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Web Designer <span class="drop-at">at</span> Genesiis Softwre <br><span class="drop-time">March 2012 - Now</span></li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="widget w-rec-institute clearfix">
+                    <div class="widget-header">
+                        <label>Recommended Institutes</label>
                     </div>
-                    <!--  End Experience Widget -->
+                    <!-- End widget header -->
 
-                    <div class="pad-r-0 col-sm-12 col-md-6 col-lg-6">
-                        <div class="widget w-education">
-                            <div class="widget-header">
-                                <label for="">Education</label>
-                                <button>Edit</button>
-                            </div>
-
-                            <div class="widget-content">
-                                <ul class="ul-education">
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                </ul>
-                            </div>
+                    <div class="widget-content clearfix">
+                        <div class="rec-institute clearfix">
+                            <ul>
+                                <li class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
+                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
+                                </li>
+                                <!-- End li-->
+                                <li class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
+                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
+                                </li>
+                                <!-- End li-->
+                                <li class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
+                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
+                                </li>
+                                <!-- End li-->
+                                <li class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
+                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
+                                </li>
+                                <!-- End li-->
+                                <li class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
+                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
+                                </li>
+                                <!-- End li-->
+                            </ul>
                         </div>
+                        <!-- End about-me : left side -->
+
+
+                        <!-- End about-me : right side -->
                     </div>
-                    <!-- End Education Widget -->
-
-                    <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6">
-                        <div class="widget w-activity">
-                            <div class="widget-header">
-                                <label for="">Activity</label>
-                                <button>Edit</button>
-                            </div>
-
-                            <div class="widget-content">
-                                <ul class="ul-activity">
-                                    <li>Change your user profile details <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Added new article <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Change profile picture <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Your setting is updated <br><span class="act-time">~ March 2012 - Now</span></li>
-                                </ul>
-                            </div>
-
-                            <div class="widget-footer">
-                                <a href="javascript:">See All Activities >></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Activity Widget -->
-
-                    <div class="pad-r-0 col-sm-12 col-md-6 col-lg-6">
-                        <div class="widget w-skills">
-                            <div class="widget-header">
-                                <label for="">Skills</label>
-                                <button>Edit</button>
-                            </div>
-
-                            <div class="widget-content">
-                                <ul class="ul-skills">
-                                    <li>
-                                        Photoshop
-                                        <div class="progress">
-                                            <div class="progress-bar bg-green w-90" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        JAVA
-                                        <div class="progress">
-                                            <div class="progress-bar bg-blue w-50" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        AngularJS
-                                        <div class="progress">
-                                            <div class="progress-bar bg-orange w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        Javascript
-                                        <div class="progress">
-                                            <div class="progress-bar bg-red w-100" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- End Skills Widget -->
-
+                    <!-- End widget content -->
                 </div>
+                <!-- End Widget : ABOUT -->
+
+                <div class="widget w-recent-activity clearfix">
+                    <div class="widget-header">
+                        <label>Recent Activity</label>
+                    </div>
+                    <!-- End widget header -->
+
+                    <div class="widget-content">
+                        <ul class="ul-activity">
+                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - Now </span></li>
+                            <li>Applied to BSc in Software Engineering at "ICBT" <br><span class="act-time">~ 20 March 2012 - 18:52</span></li>
+                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - 16:45</span></li>
+                            <li>Applied to BSc in Software Engineering at "ICBT" <br><span class="act-time">~ 20 March 2012 - 10:50</span></li>
+                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - 08:35</span></li>
+                        </ul>
+                    </div>
+                    <!-- End widget content -->
+                </div>
+                <!-- End Widget : ABOUT -->
+
+
             </div>
             <!-- End Right side -->
 
@@ -358,7 +330,7 @@
 
     </div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright © Campus.lk</label>
+        <label >Copyright © Campus.lk</label>
     </div>
 </footer>
 
