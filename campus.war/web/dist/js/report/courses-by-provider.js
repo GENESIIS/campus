@@ -143,7 +143,14 @@ function populateResultTable(response){
 }
 
 function clearParameters(event){
-	$('#providerlist').val("-- Select Provider--"); 
+	//$('#providerlist').val("-- Select Provider--");
+	//$(':input').removeAttr('placeholder');
+	/*var htmlstr="";
+	htmlstr='<input type="text" name="providerlist" id="providerlist" '+
+									'list="providerName" placeholder="-- Select District --"  required/>'+
+								'<datalist id="providerName" >	</datalist> '*/
+	
+	$('#providerlist').attr('placeholder','-- Select Provider--');
 	$('input:radio[name=status]').prop('checked', false);
 	$('#startdate').val(" "); 
 	$('#enddate').val(" "); 	
