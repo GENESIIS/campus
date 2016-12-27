@@ -288,7 +288,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @return Collection
 	 * @throws SQLException
 	 */
-	public  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
+	private  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
 			singleProvider.add(rs.getString("CPCODE"));				
@@ -323,7 +323,7 @@ public class CourseProviderDAO implements ICrud{
 				return allProviderList;
 			}			
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(" SELECT  DISTINCT PROVIDER.CODE AS CPCODE , PROVIDER.NAME AS CPNAME ,PROVIDER.LOGOIMAGEPATH AS LOGOPATH  FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
+			final StringBuilder sb = new StringBuilder(" SELECT  DISTINCT PROVIDER.CODE AS CPCODE , PROVIDER.NAME AS CPNAME FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDERTOWN CPTOWN ON PROVIDER.CODE=CPTOWN.COURSEPROVIDER");
 			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = CPTOWN.TOWN ");
