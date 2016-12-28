@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161227 DN CAMP:18 refactor the class to accommodate signUpEmailComposer.java and pushed all remained fields to signUpEmailComposer
 //            for reusing the duplicated code
 //20161228 DN CAMP:18 switched to static declared type to IEmailComposer in execute(), refactor sendMail() signature to acceptIEmailComposer parameter.
+//20161228 DN CAMP:18  move the field signUpEmailComposer to the execute() method to reduce scope of variable to where the variable is used.
 
 import java.sql.SQLException;
 
@@ -32,12 +33,13 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	static final Logger log = Logger.getLogger(CmdGenerateEmailSinUp.class.getName());
 
 	private RowStudentForJason partialStudent;
-	private IEmailComposer signUpEmailComposer = new StudentSignUpEmailComposer();
+	
 	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try{ 
+			IEmailComposer signUpEmailComposer = new StudentSignUpEmailComposer();
 			int status;
 			String message = "";
 			String gsonData = helper.getParameter("jsonData");
@@ -64,7 +66,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 			log.error("execute():Exception "+ exp.toString());
 			throw exp;
 		}
-		return null;
+		return view;
 	}
 	
 	/*
