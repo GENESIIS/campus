@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
@@ -67,6 +69,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 			int pStatus = 0;
 			int generatedKey = 0;
 			String expireDate = helper.getParameter("expirationDate");
+			String countryCode = helper.getParameter("selectedCountry");
+			String courseProviderTown = helper.getParameter("selectedTown");
 					
 			String providerStatus = helper.getParameter("providerStatus");
 			if(providerStatus.equalsIgnoreCase("active")){
@@ -88,13 +92,15 @@ public class CmdAddFeaturedProvider implements ICommand{
 			courseProvider.setName(helper.getParameter("providerName"));
 			courseProvider.setDescription(helper.getParameter("aboutMe"));
 			courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
-			courseProvider.setLandPhoneCountryCode(helper.getParameter("country"));
+			courseProvider.setLandPhoneCountryCode(countryCode);
 			courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
 			courseProvider.setLandPhoneNo(helper.getParameter("land1"));
 			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
 			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
 			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
 			courseProvider.setExpirationDate(sql);
+			courseProvider.setMobilePhoneCountryCode(countryCode);
+			//courseProvider.setHeadOffice(null);
 			
 			String dfd = helper.getParameter("shortName");
 			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
@@ -170,8 +176,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			} else if (generatedKey ==0) {
 				systemMessage = SystemMessage.NOTADDED.message();
 			}
-			
-			log.info("???????????? featured" );
+
 			helper.setAttribute("registerId", generatedKey);
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
@@ -186,6 +191,20 @@ public class CmdAddFeaturedProvider implements ICommand{
 		
 		
 		return view;
+	}
+	
+	
+	public ArrayList<String> validateCourseProvider(IDataHelper helper){
+		Validator validator = new Validator();
+		boolean isValid = true;
+		ArrayList<String> errorString = new ArrayList<String>();
+		
+		if(!validator.isEmpty(helper.getParameter("expirationDate"))){
+
+			
+	
+		}
+		return errorString;
 	}
 
 }
