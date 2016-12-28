@@ -18,10 +18,8 @@ public class ProfessionalExperienceDAO implements ICrud{
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-		
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		Connection connection = ConnectionManager.getConnection();;
-
 		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
 				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
@@ -29,6 +27,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = ConnectionManager.getConnection();
 			ProfessionalExperience data = (ProfessionalExperience) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(6, data.getOrganization());
@@ -84,8 +83,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
-
+		
 		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
 				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
@@ -93,6 +91,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			Connection connection = conn;
 			ProfessionalExperience data = (ProfessionalExperience) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());

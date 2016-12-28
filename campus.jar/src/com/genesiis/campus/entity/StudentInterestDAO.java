@@ -15,9 +15,9 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.StudentInterest;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class StudentInterestDAO implements ICrud{
+public class StudentInterestDAO implements ICrud {
 	static Logger log = Logger.getLogger(StudentInterestDAO.class.getName());
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -45,16 +45,13 @@ public class StudentInterestDAO implements ICrud{
 		try {
 			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT I.[CODE],I.[NAME],I.[DESCRIPTION] "
-					+ "FROM [CAMPUS].[STUDENTINTEREST] SI "
-					+ "INNER JOIN [CAMPUS].[INTEREST] I ON "
-					+ "SI.[INTEREST] = I.[CODE] WHERE SI.[STUDENT] = ?;";
+			String query = "SELECT I.[CODE],I.[NAME],I.[DESCRIPTION] " + "FROM [CAMPUS].[STUDENTINTEREST] SI "
+					+ "INNER JOIN [CAMPUS].[INTEREST] I ON " + "SI.[INTEREST] = I.[CODE] WHERE SI.[STUDENT] = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
 			rs = stmt.executeQuery();
-			
-			
+
 			while (rs.next()) {
 				final ArrayList<String> singleInterest = new ArrayList<String>();
 				singleInterest.add(rs.getString("CODE"));
@@ -93,7 +90,7 @@ public class StudentInterestDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {	
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -108,7 +105,7 @@ public class StudentInterestDAO implements ICrud{
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getInterest());
 			preparedStatement.setString(3, data.getCrtBy());
-			
+
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.error("add(): SQLE: " + sqle.toString());
@@ -131,7 +128,7 @@ public class StudentInterestDAO implements ICrud{
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException, Exception {		
+	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -144,8 +141,7 @@ public class StudentInterestDAO implements ICrud{
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getInterest());
-			
-		
+
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.error("add(): SQLE: " + sqle.toString());
