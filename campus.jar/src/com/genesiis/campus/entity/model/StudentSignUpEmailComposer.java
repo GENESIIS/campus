@@ -1,6 +1,9 @@
 package com.genesiis.campus.entity.model;
 // 20161227 DN CAM 18 create the class SignUpEmailComposer.java to help compose the mailing 
 // specially when student Sign up to the system.
+//20161227 DN CAM 18 add override methods to the concrete implementation.
+//20161228 DN CAM 18 shift getEmailDispenser(),getGeneralEmail(),setGeneralEmail(),setEmailDispenser() methods to interface IEmailComposer.java
+// for code reuse purpose.
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,8 +12,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdGenerateEmailSinUp;
-import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
@@ -100,6 +101,40 @@ public class StudentSignUpEmailComposer implements IEmailComposer {
 		setMailBody(emailBodyText);
 	}
 	
+	@Override
+	public IEmail getGeneralEmail() {
+		return generalEmail;
+	}
+	
+	@Override
+	public void setGeneralEmail(IEmail generalEmail) throws IllegalArgumentException {
+		try{
+			if(generalEmail==null)
+				throw new IllegalArgumentException("generalEmail  is undefined must be set");	
+			this.generalEmail = generalEmail;
+		}catch (IllegalArgumentException ilexp){
+			log.error("setGeneralEmail(): IllegalArgumentException"+ ilexp.toString());
+			throw ilexp;
+		}
+	}
+	
+	@Override
+	public EmailDispenser getEmailDispenser() {
+		return emailDispenser;
+	}
+
+	@Override
+	public void setEmailDispenser(EmailDispenser emailDispenser) throws IllegalArgumentException {
+		try{
+			if(emailDispenser==null)
+				throw new IllegalArgumentException("emailDispenser  is undefined must be set");	
+			this.emailDispenser = emailDispenser;
+		}catch (IllegalArgumentException ilexp){
+			log.error("setEmailDispenser(): IllegalArgumentException"+ ilexp.toString());
+			throw ilexp;
+		}
+	}
+	
 	// getters and setters of the private fields
 	public String getRecieversName() {
 		return recieversName;
@@ -149,20 +184,5 @@ public class StudentSignUpEmailComposer implements IEmailComposer {
 		this.mailBody = mailBody;
 	}
 
-	public EmailDispenser getEmailDispenser() {
-		return emailDispenser;
-	}
-
-	public void setEmailDispenser(EmailDispenser emailDispenser) {
-		this.emailDispenser = emailDispenser;
-	}
-
-	public IEmail getGeneralEmail() {
-		return generalEmail;
-	}
-
-	public void setGeneralEmail(IEmail generalEmail) {
-		this.generalEmail = generalEmail;
-	}
 	
 }
