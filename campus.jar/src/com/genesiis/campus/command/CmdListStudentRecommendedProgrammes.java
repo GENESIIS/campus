@@ -2,6 +2,8 @@ package com.genesiis.campus.command;
 
 //20161227 MM c25-student-create-dashboard-MP - Created class and implemented execute(IDataHelper, IView) method
 //20161227 MM c25-student-create-dashboard-MP - Organised imports; declared Logger reference
+//20161228 MM c25-student-create-dashboard-MP - Added code to retrieve institutes from the same result set that
+//				was returned as the recommended programmes
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;
@@ -16,24 +18,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Returns the list of recommended programmes for the student indicated by the request parameter 
- * named "student" that is sent by the client 
- * 
- * @param IDataHelper Wraps an HTTPServletRequest object that contains the parameters sent by the client. 
- * @param IView Wraps a Collection<Collection<String>> that the collection of programmes selected for the student is assigned to.
- * @returns IView Contains the list of programmes fetched from the DB in Collection<Collection<String>> typed field within it. 
- * 
- * @author Miyuru
- *
- */
 public class CmdListStudentRecommendedProgrammes implements ICommand {
 	
 	static Logger Log = Logger.getLogger(CmdListStudentRecommendedProgrammes.class.getName());
 
+	/**
+	 * Returns the list of recommended programmes for the student indicated by the request parameter 
+	 * named "student" that is sent by the client 
+	 * 
+	 * @param helper An object that is an IDataHelper that wraps an HTTPServletRequest object that contains the parameters sent by the client. 
+	 * @param view An object that is an IView that wraps a Collection<Collection<String>> that the collection of programmes selected for the student is assigned to.
+	 * @returns an IView that contains the list of programmes fetched from the DB in the Collection typed field within it. 
+	 * 
+	 * @author Miyuru
+	 *
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -57,84 +60,57 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 					int indexOfCourseProviderCode = 12;
 					int indexOfCourseProviderShortName = 17;
 					int indexOfCourseProviderName = 18;
-					Map<String, List<String>> courseProviderCodeToCourseProvierNamesMap = new LinkedHashMap<String, List<String>>();
+					Map<String, List<String>> courseProviderCodeToCourseProviderNamesMap = new LinkedHashMap<String, List<String>>();
 					
 					dataCollection = studentDashboardDao.findById(student);		
 
 					for (Collection<String> prog : dataCollection) {
-						int count  = 0;
+						int index  = 0;
 						ArrayList<String> tempSingleTownDetailsList = null;
 						String courseProviderCode = null;
+						String courseProviderShortName = null;
+						String courseProviderName = null;
 						String townCode = null;
 						String majorOrLevelCode = null;
-						for (String field : prog) {
-							if (count == indexOfCourseProviderCode) {
-								courseProviderCode = field;								
-								List<String> providerRecord = courseProviderCodeToCourseProvierNamesMap.get(field);
-								if (providerRecord == null) {
-									providerRecord = prog;
-									progCodeToProgrammeMap.put(field, prog);
-								}
+						
+						for (String field : prog) {		
+													
+							if (index == indexOfCourseProviderCode) {
+								courseProviderCode = field;	
+								index++;	
+								continue;
 							}
-
-							if (count == indexOfTownCode) {
-								townCode = field;						
-							}
-
-							if (count == indexOfTownName) {
-								String currentTownName = field;
-								if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
-									ArrayList<List<String>> townList = programmeCodeToTownListMap.get(courseProviderCode);
-									if (townList == null) {
-										townList = new ArrayList<List<String>>();
-										programmeCodeToTownListMap.put(courseProviderCode, townList);
-									}
-									if (townList.size() != 0) {
-										boolean isTownAlreadyAdded = false; 
-										for (List<String> singleTownDetailsList : townList) {
-											if (singleTownDetailsList.get(0).equals(townCode)) {
-												isTownAlreadyAdded = true;
-											}
-										}
-										if (!isTownAlreadyAdded) {
-											tempSingleTownDetailsList = new ArrayList<String>();
-											tempSingleTownDetailsList.add(townCode);
-											tempSingleTownDetailsList.add(currentTownName);
-											townList.add(tempSingleTownDetailsList);
-										}
-									} else {
-										tempSingleTownDetailsList = new ArrayList<String>();
-										tempSingleTownDetailsList.add(townCode);
-										tempSingleTownDetailsList.add(currentTownName);
-										townList.add(tempSingleTownDetailsList);
-									}							
-								}					
-							}
-
-							if (count == indexOfMajorOrLevelCode) {
-								majorOrLevelCode = field;					
-							}
-
-							if (count == indexOfMajorOrLevelName) {
-								List<String> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
-								if (levelOrMajorList == null) {
-									levelOrMajorList = new ArrayList<String>();
-									levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
-								}
-								
-								if (levelOrMajorList.size() == 0) {
-									levelOrMajorList.add(majorOrLevelCode);
-									levelOrMajorList.add(field);
-								}
-							}	
 							
-							count++;
-						}
-					} // end of for (Collection<String> prog : programmeCollection)			
-					
-					
+							if (index == indexOfCourseProviderShortName) {
+								courseProviderShortName = field;	
+								index++;	
+								continue;
+							}
+
+							if (index == indexOfCourseProviderName) {
+								courseProviderName = field;	
+								index++;	
+								continue;
+							}
+							
+							index++;	
+						}	
+						
+						List<String> providerRecord = courseProviderCodeToCourseProviderNamesMap.get(courseProviderCode);
+						if (providerRecord == null) {
+							providerRecord = new LinkedList<String>();							
+							providerRecord.add(courseProviderCode);
+							providerRecord.add(courseProviderShortName);
+							providerRecord.add(courseProviderName);							
+							courseProviderCodeToCourseProviderNamesMap.put(courseProviderCode, providerRecord);
+						}									
+					}					
 											
 					view.setCollection(dataCollection);
+					helper.setAttribute("recommendedInstituteList", courseProviderCodeToCourseProviderNamesMap.values());
+					
+					String courseProviderLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
+					helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 				} else {
 					msgList.add("The value provided for student parameter is invalid!");
 				}// end of if (Validator.isNumber(studentCodeStr))	
