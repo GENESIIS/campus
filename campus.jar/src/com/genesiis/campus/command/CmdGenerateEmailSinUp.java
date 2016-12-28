@@ -5,26 +5,22 @@ package com.genesiis.campus.command;
 //CmdGenerateEmailSinUp
 //20161227 DN CAMP:18 refactor the class to accommodate signUpEmailComposer.java and pushed all remained fields to signUpEmailComposer
 //            for reusing the duplicated code
-import java.sql.Connection;
+//20161228 DN CAMP:18 switched to static declared type to IEmailComposer in execute(), refactor sendMail() signature to acceptIEmailComposer parameter.
+
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 import javax.mail.MessagingException;
 
+import org.apache.log4j.Logger;
+
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.StudentSignUpEmailComposer;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.RowStudentForJason;
 import com.genesiis.campus.util.mail.EmailDispenser;
-import com.genesiis.campus.util.mail.GeneralMail;
-import com.genesiis.campus.util.mail.IEmail;
+import com.genesiis.campus.util.mail.IEmailComposer;
 import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
-import com.genesiis.campus.entity.model.StudentSignUpEmailComposer;
-
-import org.apache.log4j.Logger;
 
 /**
  * CmdGenerateEmailSinUp class handles the email generation
@@ -36,7 +32,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	static final Logger log = Logger.getLogger(CmdGenerateEmailSinUp.class.getName());
 
 	private RowStudentForJason partialStudent;
-	private StudentSignUpEmailComposer signUpEmailComposer = new StudentSignUpEmailComposer();
+	private IEmailComposer signUpEmailComposer = new StudentSignUpEmailComposer();
 	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
@@ -89,7 +85,7 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * @return int -3 fail sending email 3 sent email successfully 
 	 * @throws MessagingException in any case dispensing email fails
 	 */
-	private int sendMail(StudentSignUpEmailComposer signUpEmailComposer)  {
+	private int sendMail(IEmailComposer signUpEmailComposer)  {
 		int MAIL_SENT_STATUS=3;
 		try{ 
 			if(signUpEmailComposer.getGeneralEmail()== null){
