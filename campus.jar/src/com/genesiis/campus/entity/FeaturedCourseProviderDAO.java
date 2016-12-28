@@ -78,9 +78,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			StringBuilder stringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
 			stringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
 			stringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
-			stringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE,HEADOFFICETOWN, ");
+			stringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, ");
 			stringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
-			stringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?,");
+			stringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
 			stringBuilder.append("?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
 			
 			String provider = stringBuilder.toString();
@@ -133,18 +133,18 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement.setString(26, courseProvider.getAddress2());
 			preparedStatement.setString(27, courseProvider.getAddress3());
 			preparedStatement.setInt(28, courseProvider.getAccountType());
-			preparedStatement.setInt(29, courseProvider.getHeadOffice());
-			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
-			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
-			preparedStatement.setInt(32,
+		//	preparedStatement.setInt(29, courseProvider.getHeadOffice());
+			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
+			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
+			preparedStatement.setInt(31,
 					courseProvider.getCourseProviderStatus());
 			preparedStatement
-					.setInt(33, courseProvider.getCourseProviderType());
+					.setInt(32, courseProvider.getCourseProviderType());
 		//	preparedStatement
 				//	.setInt(34, courseProvider.getCourseProviderType());
-			preparedStatement.setInt(34, courseProvider.getPrincipal());
-			preparedStatement.setString(35, courseProvider.getCrtBy());
-			preparedStatement.setString(36, courseProvider.getModBy());
+			preparedStatement.setInt(33, courseProvider.getPrincipal());
+			preparedStatement.setString(34, courseProvider.getCrtBy());
+			preparedStatement.setString(35, courseProvider.getModBy());
 
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, courseProviderAccount.getName());
