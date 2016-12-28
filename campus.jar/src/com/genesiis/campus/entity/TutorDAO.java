@@ -64,8 +64,6 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
-
-			System.out.println("Add Gender = " + tutor.getGender());
 			
 			preparedStatement.setString(7, tutor.getEmailAddress());
 			preparedStatement.setString(8, tutor.getLandCountryCode());
@@ -117,24 +115,9 @@ public int add(Object object) throws SQLException, Exception {
 	public int update(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 
-		System.out.println("........@ update TutorDAO test..............");
-		
-
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		int status = -1;
-		
-		/*
-		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
-		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
-		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
-		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
-		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
-		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
-		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
-		 * 
-		 * 
-		 */
 		
 		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
@@ -158,8 +141,6 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
 			preparedStatement.setString(4, tutor.getLastName());
-			
-			System.out.println("Gender = " + tutor.getGender());
 			
 			preparedStatement.setString(5, tutor.getGender());
 			
@@ -191,7 +172,6 @@ public int add(Object object) throws SQLException, Exception {
 			
 			preparedStatement.setString(26, tutor.getAddressLine2());
 			preparedStatement.setString(27, tutor.getAddressLine3());
-			System.out.println("Town = " + tutor.getTown());
 			preparedStatement.setString(28, tutor.getTown());
 			preparedStatement.setInt(29, tutor.getUsertype());		
 			//	preparedStatement.setString(31, "chathuri");
@@ -199,7 +179,6 @@ public int add(Object object) throws SQLException, Exception {
 			
 			//preparedStatement.setString(31, "chathuri");
 			preparedStatement.setString(31, tutor.getUsername());
-			System.out.println("Gender = " + tutor.getUsername());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -292,14 +271,12 @@ public int add(Object object) throws SQLException, Exception {
 				singleTutorList.add(rs.getString("ADDRESS3"));
 				
 				if (rs.getString("TOWN") != null) {
-					System.out.println(" rs.getString TOWN = " + rs.getString("TOWN"));
 					townCode = Double.parseDouble(rs.getString("TOWN"));
 					TownDAO country = new TownDAO();
 					townName = country.findTownByCode(townCode);
 				}
 				
 				singleTutorList.add(townName);
-				System.out.println("town dao town = " + townCode);
 				singleTutorList.add(rs.getString("TOWN"));				
 								
 				singleTutorList.add(rs.getString("USERTYPE"));

@@ -299,8 +299,8 @@ function validateTutorModifications() {
 	}
 	
 	if (password.length > 10) {
-		document.getElementById('usernameError').innerHTML = "**Max length exceeded.";
-		document.getElementById('username').focus();
+		document.getElementById('passwordError').innerHTML = "**Max length exceeded.";
+		document.getElementById('password').focus();
 		flag = false;
 	}
 	

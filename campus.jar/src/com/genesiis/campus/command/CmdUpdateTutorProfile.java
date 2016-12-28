@@ -86,398 +86,488 @@ public class CmdUpdateTutorProfile implements ICommand {
 	public boolean setVariables(IDataHelper helper, Tutor tutor) {
 			boolean updated = false;
 		try {
-			
-			////System.out.println("Code = " + helper.getSession(false).getAttribute("code"));
+			System.out.println("username = " + helper.getParameter("username"));
 			tutor.setUsername(helper.getParameter("username"));
 			
-			if(!((helper.getParameter("password")).equals(helper.getSession(false).getAttribute("password")))){				
-				tutor.setPassword(helper.getSession(false).getAttribute("password").toString());
-				updated = true;
-			}else{
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("password = " + helper.getParameter("password"));
+			System.out.println("password1 = " + helper.getSession(false).getAttribute("password"));
+			
+			if(!((helper.getParameter("password")).equals(helper.getSession(false).getAttribute("password").toString()))){				
 				tutor.setPassword(helper.getParameter("password"));
-			}
-			
-			if(!((helper.getParameter("firstname")).equals(helper.getSession(false).getAttribute("firstname")))){				
-				tutor.setFirstName(helper.getSession(false).getAttribute("firstname").toString());
 				updated = true;
 			}else{
-				tutor.setFirstName(helper.getParameter("firstname"));
+				tutor.setPassword(helper.getSession(false).getAttribute("password").toString());
 			}
 			
-			//tutor.setFirstName(helper.getParameter("firstname"));
-			//Validator.isNotEmpty(helper.getParameter("middlename")) && Validator.isNotEmpty(helper.getSession(false).getAttribute("middlename").toString())) ||
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("firstname = " + helper.getParameter("firstname"));
+			System.out.println("firstname = " + helper.getSession(false).getAttribute("firstname"));
 			
-			if(Validator.isNotEmpty(helper.getParameter("middlename"))){
-				if(!((helper.getParameter("middlename")).equals(helper.getSession(false).getAttribute("middlename")))){	
-					tutor.setMiddleName(helper.getSession(false).getAttribute("middlename").toString());	
+			if(!((helper.getParameter("firstname")).equals(helper.getSession(false).getAttribute("firstname").toString()))){				
+				tutor.setFirstName(helper.getParameter("firstname"));
+				updated = true;
+			}else{
+				tutor.setFirstName(helper.getSession(false).getAttribute("firstname").toString());
+			}
+						
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("middlename = " + helper.getParameter("middlename"));
+			System.out.println("middlename = " + helper.getSession(false).getAttribute("middlename"));
+			
+ 			if(Validator.isNotEmpty(helper.getParameter("middlename"))){
+				if(!((helper.getParameter("middlename")).equals(helper.getSession(false).getAttribute("middlename").toString()))){	
+					tutor.setMiddleName(helper.getParameter("middlename"));	
 					updated = true;		
 				}else{
 					tutor.setMiddleName(helper.getSession(false).getAttribute("middlename").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("middlename").toString())){
-					tutor.setMiddleName(helper.getSession(false).getAttribute("middlename").toString());
-				}else {
-					tutor.setMiddleName("-");
-				}
-				updated = true;
-			}
-			
-		/*	if (helper.getParameter("middlename").equals("")) {
 				tutor.setMiddleName("-");
-			} else {
-				tutor.setMiddleName(helper.getParameter("middlename"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("middlename").toString())){
+					updated = true;
+				}
+			}
 			
-			if(!((helper.getParameter("lastname")).equals(helper.getSession(false).getAttribute("lastname")))){				
+ 			
+ 			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("lastname = " + helper.getParameter("lastname"));
+			System.out.println("lastname = " + helper.getSession(false).getAttribute("lastname"));
+			
+			if(!((helper.getParameter("lastname")).equals(helper.getSession(false).getAttribute("lastname").toString()))){	
+				tutor.setLastName(helper.getParameter("lastname"));			
+				updated = true;
+			}else{
 				tutor.setLastName(helper.getSession(false).getAttribute("lastname").toString());
-				updated = true;
-			}else{
-				tutor.setLastName(helper.getParameter("lastname"));
 			}
 			
-			//tutor.setLastName(helper.getParameter("lastname"));
-			
 
-			if(!((helper.getParameter("gender")).equals(helper.getSession(false).getAttribute("gender")))){				
-				tutor.setGender(helper.getSession(false).getAttribute("gender").toString());
-				updated = true;
-			}else{
+			System.out.println("");
+			System.out.println("");
+			System.out.println("gender = " + helper.getParameter("gender"));
+			System.out.println("gender = " + helper.getSession(false).getAttribute("gender"));
+			
+			if(!((helper.getParameter("gender")).equals(helper.getSession(false).getAttribute("gender").toString()))){		
 				tutor.setGender(helper.getParameter("gender"));
-			}
-		//	tutor.setGender(helper.getParameter("gender"));
-
-			if(!((helper.getParameter("email")).equals(helper.getSession(false).getAttribute("email")))){				
-				tutor.setEmailAddress(helper.getSession(false).getAttribute("email").toString());
 				updated = true;
-			}else{
+			}else{		
+				tutor.setGender(helper.getSession(false).getAttribute("gender").toString());
+			}
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("email = " + helper.getParameter("email"));
+			System.out.println("email = " + helper.getSession(false).getAttribute("email"));
+			
+			if(!((helper.getParameter("email")).equals(helper.getSession(false).getAttribute("email").toString()))){				
 				tutor.setEmailAddress(helper.getParameter("email"));
+				updated = true;
+			}else{
+				tutor.setEmailAddress(helper.getSession(false).getAttribute("email").toString());
 			}
-			//tutor.setEmailAddress(helper.getParameter("email"));
 
-			if(!((helper.getParameter("countryDetails")).equals(helper.getSession(false).getAttribute("landphonecountrycode")))){				
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("countryDetails = " + helper.getParameter("countryDetails"));
+			System.out.println("landphonecountrycode = " + helper.getSession(false).getAttribute("landphonecountrycode"));
+			
+			if(!((helper.getParameter("countryDetails")).equals(helper.getSession(false).getAttribute("landphonecountrycode").toString()))){	
+				tutor.setLandCountryCode(helper.getParameter("countryDetails"));			
+				updated = true;
+			}else{
 				tutor.setLandCountryCode(helper.getSession(false).getAttribute("landphonecountrycode").toString());
-				updated = true;
-			}else{
-				tutor.setLandCountryCode(helper.getParameter("pacountryDetailsssword"));
 			}
-			//tutor.setLandCountryCode(helper.getParameter("countryDetails"));
 
-			if(!((helper.getParameter("landAreaCode")).equals(helper.getSession(false).getAttribute("landphoneareacode")))){				
-				tutor.setLandAreaCode(helper.getSession(false).getAttribute("landphoneareacode").toString());
-				updated = true;
-			}else{
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("landAreaCode = " + helper.getParameter("landAreaCode"));
+			System.out.println("landphoneareacode = " + helper.getSession(false).getAttribute("landphoneareacode"));
+			
+			if(!((helper.getParameter("landAreaCode")).equals(helper.getSession(false).getAttribute("landphoneareacode").toString()))){	
 				tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
-			}
-			//tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
-
-			if(!((helper.getParameter("landNumber")).equals(helper.getSession(false).getAttribute("landphonenumber")))){				
-				tutor.setLandNumber(helper.getSession(false).getAttribute("landphonenumber").toString());
 				updated = true;
-			}else{
+			}else{			
+				tutor.setLandAreaCode(helper.getSession(false).getAttribute("landphoneareacode").toString());
+			}
+
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("landNumber = " + helper.getParameter("landNumber"));
+			System.out.println("landphonenumber = " + helper.getSession(false).getAttribute("landphonenumber"));
+			
+			if(!((helper.getParameter("landNumber")).equals(helper.getSession(false).getAttribute("landphonenumber").toString()))){	
 				tutor.setLandNumber(helper.getParameter("landNumber"));
-			}
-			//tutor.setLandNumber(helper.getParameter("landNumber"));
-
-			if(!((helper.getParameter("countryDetails")).equals(helper.getSession(false).getAttribute("mobilephonecountrycode")))){				
-				tutor.setMobileCountryCode(helper.getSession(false).getAttribute("mobilephonecountrycode").toString());
 				updated = true;
-			}else{
+			}else{			
+				tutor.setLandNumber(helper.getSession(false).getAttribute("landphonenumber").toString());
+			}
+
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("countryDetails = " + helper.getParameter("countryDetails"));
+			System.out.println("mobilephonecountrycode" + helper.getSession(false).getAttribute("mobilephonecountrycode"));
+			
+			if(!((helper.getParameter("countryDetails")).equals(helper.getSession(false).getAttribute("mobilephonecountrycode").toString()))){		
 				tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+				updated = true;
+			}else{		
+				tutor.setMobileCountryCode(helper.getSession(false).getAttribute("mobilephonecountrycode").toString());
 			}
-			//tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 
-			if(!((helper.getParameter("mobileNetworkCode")).equals(helper.getSession(false).getAttribute("mobilephonenetworkcode")))){				
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("mobileNetworkCode = " + helper.getParameter("mobileNetworkCode"));
+			System.out.println("mobilephonenetworkcode = " + helper.getSession(false).getAttribute("mobilephonenetworkcode"));
+			
+			if(!((helper.getParameter("mobileNetworkCode")).equals(helper.getSession(false).getAttribute("mobilephonenetworkcode").toString()))){
+				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));		
+				updated = true;
+			}else{		
 				tutor.setMobileNetworkCode(helper.getSession(false).getAttribute("mobilephonenetworkcode").toString());
-				updated = true;
-			}else{
-				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 			}
-			//tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 
-			if(!((helper.getParameter("mobileNumber")).equals(helper.getSession(false).getAttribute("mobilephonenumber")))){				
-				tutor.setMobileNumber(helper.getSession(false).getAttribute("mobilephonenumber").toString());
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("mobileNumber = " + helper.getParameter("mobileNumber"));
+			System.out.println("mobilephonenumber = " + helper.getSession(false).getAttribute("mobilephonenumber"));
+			
+			if(!((helper.getParameter("mobileNumber")).equals(helper.getSession(false).getAttribute("mobilephonenumber").toString()))){	
+				tutor.setMobileNumber(helper.getParameter("mobileNumber"));			
 				updated = true;
 			}else{
-				tutor.setMobileNumber(helper.getParameter("mobileNumber"));
+				tutor.setMobileNumber(helper.getSession(false).getAttribute("mobilephonenumber").toString());
 			}
-			//tutor.setMobileNumber(helper.getParameter("mobileNumber"));
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("aboutMe = " + helper.getParameter("aboutMe"));
+			System.out.println("description = " + helper.getSession(false).getAttribute("description"));
 			
 			if(Validator.isNotEmpty(helper.getParameter("aboutMe"))){
-				if(!((helper.getParameter("aboutMe")).equals(helper.getSession(false).getAttribute("description")))){	
+				if(!((helper.getParameter("aboutMe")).equals(helper.getSession(false).getAttribute("description").toString()))){	
+					tutor.setDescription(helper.getParameter("aboutMe"));	
+					updated = true;		
+				}else{
 					tutor.setDescription(helper.getSession(false).getAttribute("description").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("description").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("description").toString())){
-					tutor.setDescription(helper.getSession(false).getAttribute("description").toString());
-				}else {
-					tutor.setDescription("-");
-				}
-				updated = true;
-			}
-		/*	
-			if (helper.getParameter("aboutMe").equals("")) {
 				tutor.setDescription("-");
-			} else {
-				tutor.setDescription(helper.getParameter("aboutMe"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("description").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("experience = " + helper.getParameter("experience"));
+			System.out.println("experience = " + helper.getSession(false).getAttribute("experience"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("experience"))){
-				if(!((helper.getParameter("experience")).equals(helper.getSession(false).getAttribute("experience")))){	
+				if(!((helper.getParameter("experience")).equals(helper.getSession(false).getAttribute("experience").toString()))){	
+					tutor.setExperience(helper.getParameter("experience"));	
+					updated = true;		
+				}else{
 					tutor.setExperience(helper.getSession(false).getAttribute("experience").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("experience").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("experience").toString())){
-					tutor.setExperience(helper.getSession(false).getAttribute("experience").toString());
-				}else {
-					tutor.setExperience("-");
-				}
-				updated = true;
-			}
-			
-			/*if (helper.getParameter("experience").equals("")) {
 				tutor.setExperience("-");
-			} else {
-				tutor.setExperience(helper.getParameter("experience"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("experience").toString())){
+					updated = true;
+				}
+			}			
+
+			
 			
 
+			System.out.println("");
+			System.out.println("");
+			System.out.println("weblink = " + helper.getParameter("weblink"));
+			System.out.println("weblink = " + helper.getSession(false).getAttribute("weblink"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("weblink"))){
-				if(!((helper.getParameter("weblink")).equals(helper.getSession(false).getAttribute("weblink")))){	
+				if(!((helper.getParameter("weblink")).equals(helper.getSession(false).getAttribute("weblink").toString()))){	
+					tutor.setWebLink(helper.getParameter("weblink"));	
+					updated = true;		
+				}else{
 					tutor.setWebLink(helper.getSession(false).getAttribute("weblink").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("weblink").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("weblink").toString())){
-					tutor.setWebLink(helper.getSession(false).getAttribute("weblink").toString());
-				}else {
-					tutor.setWebLink("-");
-				}
-				updated = true;
-			}
-		/*	if (helper.getParameter("weblink").equals("")) {
 				tutor.setWebLink("-");
-			} else {
-				tutor.setWebLink(helper.getParameter("weblink"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("weblink").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("facebook = " + helper.getParameter("facebook"));
+			System.out.println("facebookurl = " + helper.getSession(false).getAttribute("facebookurl"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("facebook"))){
-				if(!((helper.getParameter("facebook")).equals(helper.getSession(false).getAttribute("facebookurl")))){	
+				if(!((helper.getParameter("facebook")).equals(helper.getSession(false).getAttribute("facebookurl").toString()))){	
+					tutor.setFacebookLink(helper.getParameter("facebook"));	
+					updated = true;		
+				}else{
 					tutor.setFacebookLink(helper.getSession(false).getAttribute("facebookurl").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("facebookurl").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("facebookurl").toString())){
-					tutor.setFacebookLink(helper.getSession(false).getAttribute("facebookurl").toString());
-				}else {
-					tutor.setFacebookLink("-");
-				}
-				updated = true;
-			}
-		/*	if (helper.getParameter("facebook").equals("")) {
 				tutor.setFacebookLink("-");
-			} else {
-				tutor.setFacebookLink(helper.getParameter("facebook"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("facebookurl").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("twitter = " + helper.getParameter("twitter"));
+			System.out.println("twitterurl = " + helper.getSession(false).getAttribute("twitterurl"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("twitter"))){
-				if(!((helper.getParameter("twitter")).equals(helper.getSession(false).getAttribute("twitterurl")))){	
+				if(!((helper.getParameter("twitter")).equals(helper.getSession(false).getAttribute("twitterurl").toString()))){	
+					tutor.setTwitterNumber(helper.getParameter("twitter"));	
+					updated = true;		
+				}else{
 					tutor.setTwitterNumber(helper.getSession(false).getAttribute("twitterurl").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("twitterurl").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("twitterurl").toString())){
-					tutor.setTwitterNumber(helper.getSession(false).getAttribute("twitterurl").toString());
-				}else {
 					tutor.setTwitterNumber("-");
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("twitterurl").toString())){
+					updated = true;
 				}
-				updated = true;
 			}
-			/*if (helper.getParameter("twitter").equals("")) {
-				tutor.setTwitterNumber("-");
-			} else {
-				tutor.setTwitterNumber(helper.getParameter("twitter"));
-			}*/
 
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("myspace = " + helper.getParameter("myspace"));
+			System.out.println("myspaceurl = " + helper.getSession(false).getAttribute("myspaceurl"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("myspace"))){
-				if(!((helper.getParameter("myspace")).equals(helper.getSession(false).getAttribute("myspaceurl")))){	
+				if(!((helper.getParameter("myspace")).equals(helper.getSession(false).getAttribute("myspaceurl").toString()))){	
+					tutor.setMySpaceId(helper.getParameter("myspace"));	
+					updated = true;		
+				}else{
 					tutor.setMySpaceId(helper.getSession(false).getAttribute("myspaceurl").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("myspaceurl").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("myspaceurl").toString())){
-					tutor.setMySpaceId(helper.getSession(false).getAttribute("myspaceurl").toString());
-				}else {
-					tutor.setMySpaceId("-");
-				}
-				updated = true;
-			}
-			
-		/*	if (helper.getParameter("myspace").equals("")) {
 				tutor.setMySpaceId("-");
-			} else {
-				tutor.setMySpaceId(helper.getParameter("myspace"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("myspaceurl").toString())){
+					updated = true;
+				}
+			}
+			
+			
+			
+			
 
+			System.out.println("");
+			System.out.println("");
+			System.out.println("linkedin = " + helper.getParameter("linkedin"));
+			System.out.println("linkedinurl = " + helper.getSession(false).getAttribute("linkedinurl"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("linkedin"))){
-				if(!((helper.getParameter("linkedin")).equals(helper.getSession(false).getAttribute("linkedinurl")))){	
+				if(!((helper.getParameter("linkedin")).equals(helper.getSession(false).getAttribute("linkedinurl").toString()))){	
+					tutor.setLinkedInLink(helper.getParameter("linkedin"));	
+					updated = true;		
+				}else{
 					tutor.setLinkedInLink(helper.getSession(false).getAttribute("linkedinurl").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("linkedinurl").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("linkedinurl").toString())){
-					tutor.setLinkedInLink(helper.getSession(false).getAttribute("linkedinurl").toString());
-				}else {
-					tutor.setLinkedInLink("-");
-				}
-				updated = true;
-			}
-		/*	if (helper.getParameter("linkedin").equals("")) {
 				tutor.setLinkedInLink("-");
-			} else {
-				tutor.setLinkedInLink(helper.getParameter("linkedin"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("linkedinurl").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("instagram = " + helper.getParameter("instagram"));
+			System.out.println("instagramurl = " + helper.getSession(false).getAttribute("instagramurl"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("instagram"))){
-				if(!((helper.getParameter("instagram")).equals(helper.getSession(false).getAttribute("instagramurl")))){	
+				if(!((helper.getParameter("instagram")).equals(helper.getSession(false).getAttribute("instagramurl").toString()))){	
+					tutor.setInstagramId(helper.getParameter("instagram"));	
+					updated = true;		
+				}else{
 					tutor.setInstagramId(helper.getSession(false).getAttribute("instagramurl").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("instagramurl").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("instagramurl").toString())){
-					tutor.setInstagramId(helper.getSession(false).getAttribute("instagramurl").toString());
-				}else {
-					tutor.setInstagramId("-");
-				}
-				updated = true;
-			}
-/*			if (helper.getParameter("instagram").equals("")) {
 				tutor.setInstagramId("-");
-			} else {
-				tutor.setInstagramId(helper.getParameter("instagram"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("instagramurl").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("viber = " + helper.getParameter("viber"));
+			System.out.println("vibernumber = " + helper.getSession(false).getAttribute("vibernumber"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("viber"))){
-				if(!((helper.getParameter("viber")).equals(helper.getSession(false).getAttribute("vibernumber")))){	
+				if(!((helper.getParameter("viber")).equals(helper.getSession(false).getAttribute("vibernumber").toString()))){	
+					tutor.setViberNumber(helper.getParameter("viber"));	
+					updated = true;		
+				}else{
 					tutor.setViberNumber(helper.getSession(false).getAttribute("vibernumber").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("vibernumber").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("vibernumber").toString())){
-					tutor.setViberNumber(helper.getSession(false).getAttribute("vibernumber").toString());
-				}else {
 					tutor.setViberNumber("-");
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("vibernumber").toString())){
+					updated = true;
 				}
-				updated = true;
 			}
 			
-/*			if (helper.getParameter("viber").equals("")) {
-				tutor.setViberNumber("-");
-			} else {
-				tutor.setViberNumber(helper.getParameter("viber"));
-			}
-*/
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("whatsapp = " + helper.getParameter("whatsapp"));
+			System.out.println("whatsappnumber = " + helper.getSession(false).getAttribute("whatsappnumber"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("whatsapp"))){
-				if(!((helper.getParameter("whatsapp")).equals(helper.getSession(false).getAttribute("whatsappnumber")))){	
+				if(!((helper.getParameter("whatsapp")).equals(helper.getSession(false).getAttribute("whatsappnumber").toString()))){	
+					tutor.setWhatsAppId(helper.getParameter("whatsapp"));	
+					updated = true;		
+				}else{
 					tutor.setWhatsAppId(helper.getSession(false).getAttribute("whatsappnumber").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("whatsappnumber").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("whatsappnumber").toString())){
-					tutor.setWhatsAppId(helper.getSession(false).getAttribute("whatsappnumber").toString());
-				}else {
 					tutor.setWhatsAppId("-");
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("whatsappnumber").toString())){
+					updated = true;
 				}
-				updated = true;
 			}
-	/*		if (helper.getParameter("whatsapp").equals("")) {
-				tutor.setWhatsAppId("-");
-			} else {
-				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
-			}*/
+
 			
-			if(!((helper.getParameter("address1")).equals(helper.getSession(false).getAttribute("address1")))){				
-				tutor.setAddressLine1(helper.getSession(false).getAttribute("address1").toString());
-				updated = true;
-			}else{
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("address1 = " + helper.getParameter("address1"));
+			System.out.println("address1 = " + helper.getSession(false).getAttribute("address1"));
+			
+			if(!((helper.getParameter("address1")).equals(helper.getSession(false).getAttribute("address1").toString()))){				
 				tutor.setAddressLine1(helper.getParameter("address1"));
+				updated = true;
+			}else{
+				tutor.setAddressLine1(helper.getSession(false).getAttribute("address1").toString());
 			}
-/*			tutor.setAddressLine1(helper.getParameter("address1"));*/
 
+			
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("address2 = " + helper.getParameter("address2"));
+			System.out.println("address2 = " + helper.getSession(false).getAttribute("address2"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("address2"))){
-				if(!((helper.getParameter("address2")).equals(helper.getSession(false).getAttribute("address2")))){	
+				if(!((helper.getParameter("address2")).equals(helper.getSession(false).getAttribute("address2").toString()))){	
+					tutor.setAddressLine2(helper.getParameter("address2"));	
+					updated = true;		
+				}else{
 					tutor.setAddressLine2(helper.getSession(false).getAttribute("address2").toString());	
-					updated = true;		
-				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("address2").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("address2").toString())){
-					tutor.setAddressLine2(helper.getSession(false).getAttribute("address2").toString());
-				}else {
-					tutor.setAddressLine2("-");
-				}
-				updated = true;
-			}
-/*			if (helper.getParameter("address2").equals("")) {
 				tutor.setAddressLine2("-");
-			} else {
-				tutor.setAddressLine2(helper.getParameter("address2"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("address2").toString())){
+					updated = true;
+				}
+			}
 
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("address3 = " + helper.getParameter("address3"));
+			System.out.println("address3 = " + helper.getSession(false).getAttribute("address3"));
+			
 			if(Validator.isNotEmpty(helper.getParameter("address3"))){
-				if(!((helper.getParameter("address3")).equals(helper.getSession(false).getAttribute("address3")))){	
-					tutor.setAddressLine3(helper.getSession(false).getAttribute("address3").toString());	
+				if(!((helper.getParameter("address3")).equals(helper.getSession(false).getAttribute("address3").toString()))){	
+					tutor.setAddressLine3(helper.getParameter("address3"));	
 					updated = true;		
 				}else{
-					tutor.setMiddleName(helper.getSession(false).getAttribute("address3").toString());	
+					tutor.setAddressLine3(helper.getSession(false).getAttribute("address3").toString());	
 				}
 			}else{
-				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("address3").toString())){
-					tutor.setAddressLine3(helper.getSession(false).getAttribute("address3").toString());
-				}else {
-					tutor.setAddressLine3("-");
-				}
-				updated = true;
-			}
-/*			if (helper.getParameter("address3").equals("")) {
 				tutor.setAddressLine3("-");
-			} else {
-				tutor.setAddressLine3(helper.getParameter("address3"));
-			}*/
+				if(Validator.isNotEmpty(helper.getSession(false).getAttribute("address3").toString())){
+					updated = true;
+				}
+			}//done
 
-			if(!((helper.getParameter("townDetails")).equals(helper.getSession(false).getAttribute("town")))){	
-				System.out.println(" helper town = " + helper.getSession(false).getAttribute("town"));
-				System.out.println(" helper town code = " + helper.getSession(false).getAttribute("towncode"));
-				System.out.println(" helper town code string= " + helper.getSession(false).getAttribute("towncode").toString());
-				tutor.setTown(helper.getSession(false).getAttribute("towncode").toString());
-				updated = true;
+			
+			
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("townDetails = " + helper.getParameter("townDetails")); //4454031454
+			System.out.println("town = " + helper.getSession(false).getAttribute("town").toString()); //Aiyamperumal
+			System.out.println("towncode = " + helper.getSession(false).getAttribute("towncode").toString());
+			
+			if(helper.getParameter("townDetails") == "0"){
+				if(!((helper.getParameter("townDetails")).equals(helper.getSession(false).getAttribute("towncode").toString()))){	
+					tutor.setTown(helper.getParameter("townDetails"));
+					updated = true;
+				}else{
+					tutor.setTown(helper.getSession(false).getAttribute("towncode").toString());
+				}
 			}else{
-				tutor.setTown(helper.getParameter("townDetails"));
+				tutor.setTown(helper.getSession(false).getAttribute("towncode").toString());
 			}
-			//tutor.setTown(helper.getParameter("townDetails"));
 
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());

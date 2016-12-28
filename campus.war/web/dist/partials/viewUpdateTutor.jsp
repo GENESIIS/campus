@@ -111,7 +111,7 @@
 				</tr>
 				<tr>
 					<td>Country</td>
-					<td><input type="text" name="oldCountry" id ="oldCountry" value="${countryname}"/>${countryname}</td>
+					<td>${countryname}</td>
 						
 					<td><span id="countryError"></span> <select
 						name="countryDetails" id="countryDetails" >
@@ -121,7 +121,7 @@
 				<tr>
 					<td>Town</td>
 					
-					<td>${town}</td><td>${towncode}</td>
+					<td>${town}</td>
 					<td><span id="townError"></span> <select name="townDetails"
 						id="townDetails">
 							<option></option>

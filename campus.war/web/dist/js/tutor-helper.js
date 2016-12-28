@@ -6,6 +6,7 @@ $(document).ready(function() {
 
 	displayCountryDetails();
 	//displayTownDetails();
+	displayTownDefaults();
 });
 
 $("#countryDetails").on("change", function(){
@@ -54,6 +55,7 @@ function displayTownDetails(selected) {
 function getTownData(response, selected) {
 	var categories = $("#townDetails");
 	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select town ---").appendTo(categories);
 	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -80,4 +82,18 @@ function getCountryData(response) {
 	});
 }
 
+function displayTownDefaults() {
+	var categories = $("#townDetails");
+	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select Country to change the town ---").appendTo(categories);
+	/*
+	$.each(response.result, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		$('<option>').val(x).text(y).appendTo(categories);
+	});
+	*/
+}
 
