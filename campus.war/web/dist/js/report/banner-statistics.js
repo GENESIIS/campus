@@ -93,6 +93,10 @@ $(document).ready(function() {
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});
+	
+	$('#clearParam').on('click', function(event) {
+		clearParameters(event);
+	});	
 
 });
 
@@ -158,7 +162,7 @@ function loadResultSet(event){
 }
 
 function populateResultTable(response) {
-	$('#resultSetDiv').hide();
+	//$('#resultSetDiv').hide();
 	var bannerListTable = $("#table");
 	bannerListTable.find('tr').remove();
 	var callerPage = 'Caller Page';
@@ -179,5 +183,13 @@ function populateResultTable(response) {
 
 	});
 
+}
+
+function clearParameters(event){
+	$('#pagelist').val(""); 	
+	$('#pageSlotlist').val(""); 	
+	$('#bannerList').val(""); 	
+	$('#startdate').val(" "); 
+	$('#enddate').val(" "); 	
 }
 
