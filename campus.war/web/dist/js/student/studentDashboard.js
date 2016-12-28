@@ -5,10 +5,14 @@
   * 20161227 MM c25-student-create-dashboard-MP - Fixed errors in composing the html string of 
   * 			programme items for the carousel; modified code to display CourseProvider's ShortName
   * 			for each programme result displayed in the carousel 
+  * 20161228 MM c25-student-create-dashboard-MP - Added code to display the list of institutes sent 
+  * 			by the server in the Ajax response
   * 
   */ 
 
 window.programmeCollectionFetched = null;
+window.instituteCollectionFetched = null;
+window.courseProviderLogoPathFetched = null;
 window.messageType = {INFO: 'INFO', ERROR: 'ERROR'};
 
 $(document).ready(function() {
@@ -29,8 +33,10 @@ function getRecommendedProgrammes () {
 			
 			if (response !== undefined && response !== null) {
 				window.programmeCollectionFetched = response.result;
+				window.instituteCollectionFetched = response.recommendedInstituteList;
+				window.courseProviderLogoPathFetched = response.courseProviderLogoPath;
 				assignContentToCarousel();
-				
+				constructInstituteListing();				
 			}			
 		},
 		error : function(response) {
@@ -74,4 +80,36 @@ function assignContentToCarousel() {
 	}
 	
 	carouselInnerDiv.html(carouselItemsHtml);	
+}
+
+
+function constructInstituteListing() {
+	alert("inside constructInstituteListing()");
+	
+	var instituteCollectionFetched = window.instituteCollectionFetched;
+	var courseProviderLogoPath = window.courseProviderLogoPathFetched;
+	
+	var instituteULElement = $('div.rec-institute ul');
+	var instituteListHtml = '';
+	var currentInstitute = null;
+	var courseProviderImage = null;
+	var imageSuffix = '_small';
+	var imageExtension = '.jpg';
+	var imageSuffixAndExtension = imageSuffix + imageExtension;
+	for (var i = 0; i < instituteCollectionFetched.length; i++) {
+		
+		currentInstitute = instituteCollectionFetched[i];
+		var currentCourseProviderCode = currentInstitute[0];
+		var currentCourseProviderShortName = currentInstitute[1];
+		courseProviderImage = courseProviderLogoPath + '/' + currentCourseProviderCode + '/' + currentCourseProviderCode + imageSuffixAndExtension;
+		
+		instituteListHtml += '<li class="col-lg-12 col-sm-12 col-md-12">\
+        <div class="inst-logo col-lg-3 col-sm-12 col-md-4">\
+			<img height="60px" width="180px" src="' + courseProviderImage + '" alt="' + currentCourseProviderShortName + ' logo">\
+			</div>\
+        <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8" data-institute-code="' + currentCourseProviderCode + '">' + currentCourseProviderShortName + ' - ' + currentInstitute[2] + '</a>\
+    </li>';
+	}
+	
+	instituteULElement.html(instituteListHtml);	
 }
