@@ -5,6 +5,8 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 //20161205 PN c26-add-student-details: update(Connection con, Object object) method to update student personal details. 
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//		   PN CAM-26: Added connection.rollback() statements for the catch close.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +35,7 @@ public class StudentDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [IMAGEPATH] = ? , [MODON] = ?, [MODBY] = ? WHERE CODE = ?";
@@ -47,9 +49,11 @@ public class StudentDAO implements ICrud {
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
@@ -58,6 +62,9 @@ public class StudentDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if(rs != null){
+				rs.close();
 			}
 		}
 		return isUpdated;
@@ -76,7 +83,7 @@ public class StudentDAO implements ICrud {
 		final Collection<Collection<String>> studentDetailsCollectionList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+		ResultSet rs = null;
 		try {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
@@ -86,7 +93,7 @@ public class StudentDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, studentCode);
-			final ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleList = new ArrayList<String>();
@@ -97,9 +104,11 @@ public class StudentDAO implements ICrud {
 			}
 
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			Log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			Log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -108,6 +117,9 @@ public class StudentDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return studentDetailsCollectionList;

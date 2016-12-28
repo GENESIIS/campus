@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161206 PN c26-add-student-details INIT InterestDAO.java. Implemented geAll() method.
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//         PN CAM-26: Added connection.rollback() statements for the catch close.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,13 +45,13 @@ public class InterestDAO implements ICrud{
 		final Collection<Collection<String>> allInterestList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[INTEREST] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleinterestList = new ArrayList<String>();
@@ -61,9 +63,11 @@ public class InterestDAO implements ICrud{
 				allInterestList.add(singleInterestCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -72,6 +76,9 @@ public class InterestDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allInterestList;

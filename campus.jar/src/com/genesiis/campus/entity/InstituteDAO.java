@@ -4,6 +4,9 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search modified the sql query in findById() method.
 //		   PN c11-criteria-based-filter-search implemented getAll() method.
 //20161103 PN c11-criteria-based-filter-search modified SQL query inside getAll() and findById() methods
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//		   PN CAM-26: Added connection.rollback() statements for the catch close.
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,15 +47,14 @@ public class InstituteDAO implements ICrud{
 		final Collection<Collection<String>> allInstituteList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND l.COURSEPROVIDERSTATUS = 1;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
-			final ResultSet rs = stmt.executeQuery();
-			
+			rs = stmt.executeQuery();			
 			
 			while (rs.next()) {
 				final ArrayList<String> singleInstituteList = new ArrayList<String>();
@@ -64,9 +66,11 @@ public class InstituteDAO implements ICrud{
 				allInstituteList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -75,6 +79,9 @@ public class InstituteDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allInstituteList;
@@ -86,13 +93,13 @@ public class InstituteDAO implements ICrud{
 		final Collection<Collection<String>> allInstituteList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT CODE,NAME,UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] WHERE COURSEPROVIDERSTATUS = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			
 			while (rs.next()) {
@@ -105,9 +112,11 @@ public class InstituteDAO implements ICrud{
 				allInstituteList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -116,6 +125,9 @@ public class InstituteDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allInstituteList;

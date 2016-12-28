@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 //20161124 PN c26-add-student-details: INIT SchoolEducationDAO.java class.
 //20161125 PN c26-add-student-details: implemented findByIdMethod().
 //20161126 PN c26-add-student-details: modified findByIdMethod() method by setting country name to the return collection.
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//		   PN CAM-26: Added connection.rollback() statements for the catch close.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +43,7 @@ public class SchoolEducationDAO implements ICrud{
 		final Collection<Collection<String>> allEducationList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], [RESULT], "
@@ -50,7 +52,7 @@ public class SchoolEducationDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
-			final ResultSet rs = stmt.executeQuery();	
+			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
 				final ArrayList<String> singleEducationList = new ArrayList<String>();
@@ -79,9 +81,11 @@ public class SchoolEducationDAO implements ICrud{
 				allEducationList.add(singleEducationCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -90,6 +94,9 @@ public class SchoolEducationDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allEducationList;

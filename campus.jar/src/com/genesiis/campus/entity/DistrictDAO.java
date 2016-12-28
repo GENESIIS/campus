@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //         PN c11-criteria-based-filter-search modified sql query inside getAll() method. 
 //20161102 PN c11-criteria-based-filter-search getAll() method implemented.
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//         PN CAM-26: Added connection.rollback() statements for the catch close.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +44,7 @@ public class DistrictDAO implements ICrud{
 		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
@@ -53,7 +55,7 @@ public class DistrictDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, instituteCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleDistrictList = new ArrayList<String>();
@@ -65,9 +67,11 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -76,6 +80,9 @@ public class DistrictDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allDistrictList;
@@ -86,13 +93,13 @@ public class DistrictDAO implements ICrud{
 		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE CODE NOT IN (-1,31);";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleDistrictList = new ArrayList<String>();
@@ -104,9 +111,11 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -115,6 +124,9 @@ public class DistrictDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allDistrictList;

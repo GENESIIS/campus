@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 
 //20161206 PN c26-add-student-details INIT StudentSkillDAO.java. Implemented geAll() method.
 //		   PN c26-add-student-details INIT StudentSkillDAO.java. Implemented add(object,conn) and delete(object,conn) method.
+//20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
+//		   PN CAM-26: Added connection.rollback() statements for the catch close.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +44,7 @@ public class StudentSkillDAO implements ICrud{
 		final Collection<Collection<String>> studentSkillList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT K.[CODE],K.[NAME],K.[DESCRIPTION] "
@@ -52,7 +54,7 @@ public class StudentSkillDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			
 			while (rs.next()) {
@@ -65,9 +67,11 @@ public class StudentSkillDAO implements ICrud{
 				studentSkillList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -76,6 +80,9 @@ public class StudentSkillDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return studentSkillList;
