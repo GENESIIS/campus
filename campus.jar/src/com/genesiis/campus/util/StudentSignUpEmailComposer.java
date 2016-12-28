@@ -1,4 +1,4 @@
-package com.genesiis.campus.entity.model;
+package com.genesiis.campus.util;
 // 20161227 DN CAM 18 create the class SignUpEmailComposer.java to help compose the mailing 
 // specially when student Sign up to the system.
 //20161227 DN CAM 18 add override methods to the concrete implementation.
