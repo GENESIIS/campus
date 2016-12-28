@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161206 PN c26-add-student-details INIT CmdAddStudentSkillDetails.java. Implemented execute() method.
 //20161207 PN c26-add-student-details: modified execute() method by adding status messages.
+//20161228 PN CAM-26: removed unwanted logger statements. moved helper.getParameter() into try block.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,32 +30,27 @@ public class CmdAddStudentSkillDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// This needs to be assign from the session.
 		int StudentCode = 1;
-		String[] oldStudentSkills = helper.getParameter("oldStudentSkills").split(",");
-		String[] newStudentSkills = helper.getParameter("newStudentSkills").split(",");
 		String message = "";
-
 		ICrud skillDao = new StudentSkillDAO();
 		Connection connection = ConnectionManager.getConnection();
 		try {	
+			String[] oldStudentSkills = helper.getParameter("oldStudentSkills").split(",");
+			String[] newStudentSkills = helper.getParameter("newStudentSkills").split(",");
 			// Commit false till the updations/additions successfully
 			// completed.
 			connection.setAutoCommit(false);
 			
 			if (oldStudentSkills.length > newStudentSkills.length) {
-				log.info("Delete Diff.");
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
 					skillDao.delete(skill, connection);
 				}
 			} else if (oldStudentSkills.length < newStudentSkills.length) {
-				log.info("Add Diff.");
 				List diff = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
@@ -64,7 +60,6 @@ public class CmdAddStudentSkillDetails implements ICommand {
 			} else {
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
 				for (Object object : diff) {
-					log.info("old object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
@@ -73,7 +68,6 @@ public class CmdAddStudentSkillDetails implements ICommand {
 
 				List diff1 = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
 				for (Object object : diff1) {
-					log.info("new object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
