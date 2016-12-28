@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161222 JH c39-add-course-provider findById method modified: added missing parameters
 //20161223 JH c39-add-course-provider findById method query modified
 //20161227 JH c39-add-course-provider findById method query modified
+//20161228 JH c39-add-course-provider findById method modifie: sql exception fixed
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,7 +49,7 @@ public class CourseProviderUsernameDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		final Collection<Collection<String>> usernameCollection = null;
+		Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 		ResultSet rs = null;
 
 		try {
@@ -62,10 +63,10 @@ public class CourseProviderUsernameDAO implements ICrud {
 
 			rs = preparedStatement.executeQuery();
 
-			if (rs.next()) {
-				while (rs.next()) {
+				while(rs.next()){
+					
 					final ArrayList<String> singleAccountList = new ArrayList<String>();
-
+					
 					singleAccountList.add(rs.getString("CODE"));
 					singleAccountList.add(rs.getString("NAME"));
 					singleAccountList.add(rs.getString("USERNAME"));
@@ -73,11 +74,11 @@ public class CourseProviderUsernameDAO implements ICrud {
 					singleAccountList.add(rs.getString("EMAIL"));
 					singleAccountList.add(rs.getString("DESCRIPTION"));
 					singleAccountList.add(rs.getString("COURSEPROVIDER"));
-
+					
 					final Collection<String> singleAccountColleciton = singleAccountList;
 					usernameCollection.add(singleAccountColleciton);
 				}
-			}
+
 		} catch (SQLException sqlException) {
 
 			log.error("finById method SQLException " + sqlException);
