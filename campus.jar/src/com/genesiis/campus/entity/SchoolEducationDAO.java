@@ -38,13 +38,13 @@ public class SchoolEducationDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> allEducationList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], [RESULT], "
 					+ "[INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [MEDIUM] "
@@ -110,7 +110,6 @@ public class SchoolEducationDAO implements ICrud{
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
-		SchoolEducation data = (SchoolEducation) object;
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -120,6 +119,7 @@ public class SchoolEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			SchoolEducation data = (SchoolEducation) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSchoolGrade());

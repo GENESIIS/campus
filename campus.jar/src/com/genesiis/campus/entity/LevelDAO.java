@@ -40,12 +40,12 @@ public class LevelDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int categoryCode = (Integer) code;
 		final Collection<Collection<String>> allLevelList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int categoryCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT l.CODE,l.NAME,l.DESCRIPTION FROM [CAMPUS].[LEVEL] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.LEVEL JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND m.ISACTIVE = 1;";
 

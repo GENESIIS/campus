@@ -42,13 +42,13 @@ public class InstituteDAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		int categoryCode = (Integer) code;
+			throws SQLException, Exception {	
 		final Collection<Collection<String>> allInstituteList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int categoryCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND l.COURSEPROVIDERSTATUS = 1;";
 

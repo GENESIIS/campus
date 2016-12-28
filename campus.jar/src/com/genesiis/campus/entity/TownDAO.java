@@ -38,13 +38,13 @@ public class TownDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int countryCode  = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int countryCode  = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DISTRICT] FROM [CAMPUS].[TOWN] WHERE [COUNTRY] = ?;";
 

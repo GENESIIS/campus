@@ -18,7 +18,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = ConnectionManager.getConnection();;
 
@@ -29,6 +29,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(6, data.getOrganization());
 			preparedStatement.setInt(1, data.getStudent());
@@ -81,8 +82,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;
+	public int add(Object object, Connection conn) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -93,6 +93,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());
 			preparedStatement.setInt(2, data.getStudent());

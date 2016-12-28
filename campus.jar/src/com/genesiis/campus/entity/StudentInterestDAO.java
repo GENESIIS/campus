@@ -38,12 +38,12 @@ public class StudentInterestDAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
 		final Collection<Collection<String>> studentInterestList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT I.[CODE],I.[NAME],I.[DESCRIPTION] "
 					+ "FROM [CAMPUS].[STUDENTINTEREST] SI "
@@ -93,8 +93,7 @@ public class StudentInterestDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
-		StudentInterest data = (StudentInterest) object;
+	public int add(Object object, Connection conn) throws SQLException, Exception {	
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -104,6 +103,7 @@ public class StudentInterestDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentInterest data = (StudentInterest) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getInterest());
@@ -131,8 +131,7 @@ public class StudentInterestDAO implements ICrud{
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		StudentInterest data = (StudentInterest) object;
+	public int delete(Object object, Connection conn) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -141,6 +140,7 @@ public class StudentInterestDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentInterest data = (StudentInterest) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getInterest());

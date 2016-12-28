@@ -40,12 +40,12 @@ public class MajorDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int categoryCode = (Integer) code;
 		final Collection<Collection<String>> allMajorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int categoryCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT m.CODE, m.NAME, m.DESCRIPTION "
 					+ "FROM [CAMPUS].[MAJOR] m "

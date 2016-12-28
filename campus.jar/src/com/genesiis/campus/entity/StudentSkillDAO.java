@@ -39,13 +39,13 @@ public class StudentSkillDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> studentSkillList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT K.[CODE],K.[NAME],K.[DESCRIPTION] "
 					+ "FROM [CAMPUS].[STUDENTSKILL] SK "
@@ -95,8 +95,7 @@ public class StudentSkillDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
-		StudentSkill data = (StudentSkill) object;
+	public int add(Object object, Connection conn) throws SQLException, Exception {	
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -106,6 +105,7 @@ public class StudentSkillDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentSkill data = (StudentSkill) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSkill());
@@ -134,7 +134,7 @@ public class StudentSkillDAO implements ICrud{
 
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		StudentSkill data = (StudentSkill) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = conn;
 
@@ -143,11 +143,10 @@ public class StudentSkillDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentSkill data = (StudentSkill) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
-			preparedStatement.setInt(2, data.getSkill());
-			
-		
+			preparedStatement.setInt(2, data.getSkill());	
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.error("add(): SQLE: " + sqle.toString());

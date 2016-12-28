@@ -31,12 +31,13 @@ public class StudentDAO implements ICrud {
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		Student student = (Student) object;
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
 		ResultSet rs = null;
 		try {
+			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [IMAGEPATH] = ? , [MODON] = ?, [MODBY] = ? WHERE CODE = ?";
 

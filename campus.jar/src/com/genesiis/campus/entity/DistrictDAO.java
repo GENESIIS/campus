@@ -39,13 +39,13 @@ public class DistrictDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int instituteCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int instituteCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
 					+ "JOIN [CAMPUS].[TOWN] t ON d.CODE = t.DISTRICT "

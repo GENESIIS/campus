@@ -36,13 +36,13 @@ public class Country2DAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int countryCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {		
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int countryCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1) AND [CODE] = ?;";
 
