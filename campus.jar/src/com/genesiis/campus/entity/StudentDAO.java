@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
 //20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
 //		   PN CAM-26: Added connection.rollback() statements for the catch close.
+//20161228 PN CAM-26: update(Object object) method to update student personal details. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,31 +31,52 @@ public class StudentDAO implements ICrud {
 	}
 
 	@Override
-	public int update(Object object) throws SQLException, Exception {
-		
+	public int update(Object object) throws SQLException, Exception {	
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
-		ResultSet rs = null;
+
 		try {
 			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
-			String query ="UPDATE [CAMPUS].[STUDENT] SET [IMAGEPATH] = ? , [MODON] = ?, [MODBY] = ? WHERE CODE = ?";
+			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
+					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
+					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
+					+ "[DESCRIPTION] = ?, [FACEBOOKURL] = ?, [TWITTERURL] = ?, [MYSPACEURL] = ?, [LINKEDINURL] = ?, "
+					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [TOWN] = ?, "
+					+ "[MODON]=(getdate()), [MODBY] = ? "
+					+ "WHERE [CODE] = ?;";
 
-			stmt = conn.prepareStatement(query);
-			
-			stmt.setString(1, student.getImagePath());
-			stmt.setDate(2, student.getModOn());
-			stmt.setString(4, student.getModBy());
-			stmt.setInt(2, student.getCode());
+			stmt = conn.prepareStatement(query);	
+			stmt.setString(1, student.getFirstName());
+			stmt.setString(2, student.getMiddleName());
+			stmt.setString(3, student.getLastName());
+			stmt.setDate(4, student.getDateOfBirth());
+			stmt.setInt(5, student.getGender());
+			stmt.setString(6, student.getEmail());
+			stmt.setString(7, student.getLandPhoneCountryCode());
+			stmt.setString(8, student.getLandPhoneNo());
+			stmt.setString(9, student.getLandPhoneCountryCode());
+			stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
+			stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+			stmt.setString(12, student.getDescription());
+			stmt.setString(13, student.getFacebookUrl());
+			stmt.setString(14, student.getTwitterUrl());
+			stmt.setString(15, student.getMySpaceUrl());
+			stmt.setString(16, student.getLinkedInUrl());
+			stmt.setString(17, student.getInstagramUrl());
+			stmt.setString(18, student.getViberNumber());
+			stmt.setString(19, student.getWhatsAppNumber());
+			stmt.setString(20, student.getAddress1());
+			stmt.setString(21, student.getTown());
+			stmt.setString(22, student.getModBy());
+			stmt.setInt(23, student.getCode());		
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
@@ -63,9 +85,6 @@ public class StudentDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
-			}
-			if(rs != null){
-				rs.close();
 			}
 		}
 		return isUpdated;
@@ -150,7 +169,6 @@ public class StudentDAO implements ICrud {
 		int isUpdated = 0;
 
 		try {
-			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
 					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
@@ -194,9 +212,6 @@ public class StudentDAO implements ICrud {
 		} finally {
 			if (stmt != null) {
 				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
 			}
 		}
 		return isUpdated;
