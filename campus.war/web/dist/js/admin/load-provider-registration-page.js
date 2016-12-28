@@ -6,6 +6,7 @@
 window.countryCollection = null;
 window.countryCode = null;
 window.townCollection = null;
+windoe.usernameValidation = true;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -140,28 +141,30 @@ function providerPrefixValidation() {
 
 	if (selectedPrefix == "" || selectedPrefix == null) {
 		alert("give a prefix");
+	} else {
+
+		$.ajax({
+			url : '/AdminController',
+			method : 'POST',
+			data : {
+				'CCO' : 'COURSE_PROVIDER_VALIDATION',
+				'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
+				'prefix' : selectedPrefix
+			},
+			dataType : "json",
+			async : false,
+			success : function(response) {
+
+				if (response !== undefined && response !== null) {
+					window.UserMessage = response.userMessage;
+					var prefixMessage = $('#usermessage').val;
+					prefixMessage.val = (response.userMessage);
+					alert(response.userMessage);
+				}
+			},
+		});
 	}
 
-	$.ajax({
-		url : '/AdminController',
-		method : 'POST',
-		data : {
-			'CCO' : 'COURSE_PROVIDER_VALIDATION',
-			'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
-			'prefix' : selectedPrefix
-		},
-		dataType : "json",
-		async : false,
-		success : function(response) {
-
-			if (response !== undefined && response !== null) {
-				 window.UserMessage = response.userMessage;
-				var prefixMessage = $("#usermessage");
-				prefixMessage.html(response.userMessage);
-				alert(response.userMessage);
-			}
-		},
-	});
 }
 
 function getProviderType() {
