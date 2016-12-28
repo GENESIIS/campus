@@ -82,6 +82,11 @@
 				</div>
 			</div>
 			</br></br>
+			</br></br>			 
+			 <div id="resultSetDiv" >
+			 <table id="table" >
+			 </table>
+			 </div>
 		
 		</div>
 	</div>
