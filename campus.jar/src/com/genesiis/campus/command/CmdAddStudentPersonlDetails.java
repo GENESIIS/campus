@@ -39,9 +39,7 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 		Collection<Collection<String>> studentDataCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> studentData = new ArrayList<>();
 		String message = "";
-		Connection connection = null;
 		try {
-			connection =  ConnectionManager.getConnection();	
 			data = gson.fromJson(helper.getParameter("jsonData"), Student.class);
 			data.setCode(StudentCode);
 			data.setCrtBy("USER");
@@ -85,29 +83,18 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 			
 			//Only if data is valid DAO method will fire
 			if (isValid) {			
-				// Commit false till the updations/additions successfully
-				// completed.
-				connection.setAutoCommit(false);
-				int rowId = studentDao.update(data, connection);
+				int rowId = studentDao.update(data);
 				message = SystemMessage.UPDATED.message();
-				// Commit if all the updations/additions successfully completed.
-				connection.commit();
 			}
 
 		} catch (SQLException sqle) {
-			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		}catch (Exception e) {
-			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
-		} finally {
-			if (connection != null) {
-				connection.close();
-			}
 		}
 		helper.setAttribute("studentPersonalStatus", message);
 		return view;
