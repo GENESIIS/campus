@@ -36,7 +36,8 @@ public class CmdStudentLogin implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try {
-			String pageURL = "";
+			int attempts=0;
+			String pageURL = "/dist/partials/login.jsp";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			String messageReturn = new String(message);
 			String gsonData = helper.getParameter("jsonData");
@@ -51,31 +52,37 @@ public class CmdStudentLogin implements ICommand {
 				final StudentLoginDAO loginDAO = new StudentLoginDAO();
 				dataCollection = loginDAO.findById(data);
 
-				if (rememberMe == true) {
-					helper.setAttribute("student", data);
-					CookieHandler
-							.addCookie(helper.getResponse(),
-									"userIdendificationKey", data.getUserKey(),
-									2592000);
+				for (Collection<String> collection : dataCollection) {
+					Object[] array = collection.toArray();
+					message = (String) array[0];
 
 				}
 
-				if (data.getLastLoggedInSessionid().equalsIgnoreCase("")) {
-					pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
-				} else {
-					pageURL = "/dist/partials/student/student-dashboard.jsp";
+				if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
+
+					if (rememberMe == true) {
+						helper.setAttribute("student", data);
+						CookieHandler.addCookie(helper.getResponse(),
+								"userIdendificationKey", data.getUserKey(),
+								2592000);
+					}
+
+					setStudentLoginDetails(data, helper);
+					int status = StudentLoginDAO.loginDataUpdate(data);
+
+					if (data.getLastLoggedInSessionid().equalsIgnoreCase("")) {
+						pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
+					} else {
+						pageURL = "/dist/partials/student/student-dashboard.jsp";
+					}
+
+				}else{
+					//login attempts handle in here 
+					//after 3 attempts session will blocked user
 				}
 
-				setStudentLoginDetails(data, helper);
-				int status = StudentLoginDAO.loginDataUpdate(data);
 			} else {
 				message = SystemMessage.LOGINUNSUCCESSFULL.message();
-
-			}
-
-			for (Collection<String> collection : dataCollection) {
-				Object[] array = collection.toArray();
-				message = (String) array[0];
 
 			}
 
