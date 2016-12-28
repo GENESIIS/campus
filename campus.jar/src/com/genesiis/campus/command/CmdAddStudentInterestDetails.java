@@ -86,10 +86,12 @@ public class CmdAddStudentInterestDetails implements ICommand {
 			Collection<Collection<String>> studentInterestCollection = interestDao.findById(StudentCode);
 			view.setCollection(studentInterestCollection);
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;

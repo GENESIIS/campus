@@ -22,7 +22,7 @@ import com.google.gson.GsonBuilder;
 
 import org.apache.log4j.Logger;
 
-public class CmdAddProfessionalExpDetails implements ICommand{
+public class CmdAddProfessionalExpDetails implements ICommand {
 	static Logger log = Logger.getLogger(CmdAddProfessionalExpDetails.class.getName());
 
 	@Override
@@ -32,19 +32,19 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 
 		// Predefined date format.
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		
+
 		ProfessionalExperience data = new ProfessionalExperience();
 		ICrud expDao = new ProfessionalExperienceDAO();
 		Collection<Collection<String>> expCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> expData = new ArrayList<>();
 		String message = "";
-		
+		Connection connection = ConnectionManager.getConnection();
 		try {
 			data = gson.fromJson(helper.getParameter("jsonData"), ProfessionalExperience.class);
 			data.setStudent(StudentCode);
 			data.setCrtBy("USER");
 			data.setModBy("USER");
-			
+
 			// Set incoming data to view collection.
 			expData.add(Integer.toString(data.getIndustry()));
 			expData.add(Integer.toString(data.getJobCategoty()));
@@ -55,7 +55,7 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 			expData.add(data.getDescription());
 			expCollection.add(expData);
 			view.setCollection(expCollection);
-			
+
 			// Validate incoming data and set it into a HashMap.
 			Map<String, Boolean> map = Validator.validaProfExpData(data);
 			// Check if the given data is valid.
@@ -68,10 +68,9 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 					break;
 				}
 			}
-			
-			//Only if data is valid DAO method will fire
+
+			// Only if data is valid DAO method will fire
 			if (isValid) {
-				Connection connection = ConnectionManager.getConnection();
 				// Commit false till the updations/additions successfully
 				// completed.
 				connection.setAutoCommit(false);
@@ -85,13 +84,19 @@ public class CmdAddProfessionalExpDetails implements ICommand{
 				connection.commit();
 			}
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		helper.setAttribute("pesaveChangesStatus", message);
 		return view;

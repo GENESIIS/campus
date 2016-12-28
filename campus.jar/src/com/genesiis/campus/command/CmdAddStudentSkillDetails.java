@@ -88,10 +88,12 @@ public class CmdAddStudentSkillDetails implements ICommand {
 			Collection<Collection<String>> studentSkillCollection = skillDao.findById(StudentCode);
 			view.setCollection(studentSkillCollection);		
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
