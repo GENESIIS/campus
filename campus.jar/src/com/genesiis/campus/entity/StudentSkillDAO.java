@@ -12,7 +12,6 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.entity.model.StudentSkill;
 import com.genesiis.campus.util.ConnectionManager;
 

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.StudentInterest;
-import com.genesiis.campus.entity.model.StudentSkill;
 import com.genesiis.campus.util.ConnectionManager;
 
 public class StudentInterestDAO implements ICrud{

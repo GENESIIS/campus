@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import com.genesiis.campus.command.CmdAddProfessionalExpDetails;
 import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.util.ConnectionManager;

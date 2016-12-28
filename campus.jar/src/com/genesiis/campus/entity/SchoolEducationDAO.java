@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdGetSchoolEducationData;
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;
 
