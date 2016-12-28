@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 //20161204 PN c26-add-student-details: INIT CmdAddStudentPersonlDetails.java class.
 //20161205 PN c26-add-student-details: implementing execute() method.
+//20161228 PN CAM-26: modified execute() method by removing add() method inside if(isValid) {} block.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,8 +39,9 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 		Collection<Collection<String>> studentDataCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> studentData = new ArrayList<>();
 		String message = "";
-		Connection connection = ConnectionManager.getConnection();		
+		Connection connection = null;
 		try {
+			connection =  ConnectionManager.getConnection();	
 			data = gson.fromJson(helper.getParameter("jsonData"), Student.class);
 			data.setCode(StudentCode);
 			data.setCrtBy("USER");
@@ -88,10 +90,6 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 				connection.setAutoCommit(false);
 				int rowId = studentDao.update(data, connection);
 				message = SystemMessage.UPDATED.message();
-				if (rowId == 0) {
-					rowId = studentDao.add(data, connection);
-					message = SystemMessage.ADDED.message();
-				}
 				// Commit if all the updations/additions successfully completed.
 				connection.commit();
 			}
