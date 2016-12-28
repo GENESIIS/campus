@@ -36,8 +36,10 @@
 
   
   <input type="file" name="filename" accept="image/gif, image/jpeg, image/png">
-  <div align="centre">
-  	<img id="myImg" src="#" alt="your image" height=200 width=100>
+  <div align="center">
+  	<img id="profileImage" src="#"   alt="Profile-Picture"> <!-- src="../../../ "-->
+  	<!-- use a button to change the image -->
+  	
   </div>
 </form>
 </html>
