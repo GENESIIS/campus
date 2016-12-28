@@ -15,7 +15,9 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Returns the list of recommended programmes for the student indicated by the request parameter 
@@ -50,11 +52,89 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 					
 					// Get profile information of Student represented by studentCode
 					StudentDashboardDAO studentDashboardDao = new StudentDashboardDAO();
-					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();
+					Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 					
-					studentCollection = studentDashboardDao.findById(student);					
+					int indexOfCourseProviderCode = 12;
+					int indexOfCourseProviderShortName = 17;
+					int indexOfCourseProviderName = 18;
+					Map<String, List<String>> courseProviderCodeToCourseProvierNamesMap = new LinkedHashMap<String, List<String>>();
+					
+					dataCollection = studentDashboardDao.findById(student);		
+
+					for (Collection<String> prog : dataCollection) {
+						int count  = 0;
+						ArrayList<String> tempSingleTownDetailsList = null;
+						String courseProviderCode = null;
+						String townCode = null;
+						String majorOrLevelCode = null;
+						for (String field : prog) {
+							if (count == indexOfCourseProviderCode) {
+								courseProviderCode = field;								
+								List<String> providerRecord = courseProviderCodeToCourseProvierNamesMap.get(field);
+								if (providerRecord == null) {
+									providerRecord = prog;
+									progCodeToProgrammeMap.put(field, prog);
+								}
+							}
+
+							if (count == indexOfTownCode) {
+								townCode = field;						
+							}
+
+							if (count == indexOfTownName) {
+								String currentTownName = field;
+								if ((townCode != null && !townCode.isEmpty()) && (field != null && !field.isEmpty())) {
+									ArrayList<List<String>> townList = programmeCodeToTownListMap.get(courseProviderCode);
+									if (townList == null) {
+										townList = new ArrayList<List<String>>();
+										programmeCodeToTownListMap.put(courseProviderCode, townList);
+									}
+									if (townList.size() != 0) {
+										boolean isTownAlreadyAdded = false; 
+										for (List<String> singleTownDetailsList : townList) {
+											if (singleTownDetailsList.get(0).equals(townCode)) {
+												isTownAlreadyAdded = true;
+											}
+										}
+										if (!isTownAlreadyAdded) {
+											tempSingleTownDetailsList = new ArrayList<String>();
+											tempSingleTownDetailsList.add(townCode);
+											tempSingleTownDetailsList.add(currentTownName);
+											townList.add(tempSingleTownDetailsList);
+										}
+									} else {
+										tempSingleTownDetailsList = new ArrayList<String>();
+										tempSingleTownDetailsList.add(townCode);
+										tempSingleTownDetailsList.add(currentTownName);
+										townList.add(tempSingleTownDetailsList);
+									}							
+								}					
+							}
+
+							if (count == indexOfMajorOrLevelCode) {
+								majorOrLevelCode = field;					
+							}
+
+							if (count == indexOfMajorOrLevelName) {
+								List<String> levelOrMajorList = levelOrMajorCodeToLevelOrMajorDetailsMap.get(majorOrLevelCode);
+								if (levelOrMajorList == null) {
+									levelOrMajorList = new ArrayList<String>();
+									levelOrMajorCodeToLevelOrMajorDetailsMap.put(majorOrLevelCode, levelOrMajorList);
+								}
+								
+								if (levelOrMajorList.size() == 0) {
+									levelOrMajorList.add(majorOrLevelCode);
+									levelOrMajorList.add(field);
+								}
+							}	
+							
+							count++;
+						}
+					} // end of for (Collection<String> prog : programmeCollection)			
+					
+					
 											
-					view.setCollection(studentCollection);
+					view.setCollection(dataCollection);
 				} else {
 					msgList.add("The value provided for student parameter is invalid!");
 				}// end of if (Validator.isNumber(studentCodeStr))	
