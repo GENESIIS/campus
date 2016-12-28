@@ -32,6 +32,9 @@ function isempty(fieldValue) {
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
 }
 
+
+
+
 /**
  * isValidEmailFormat method validate a email address
  * 
@@ -150,21 +153,17 @@ function validateInstituteInquiryFileds() {
 		document.getElementById('input-inquiry-title').focus();
 		// flag = false;
 		return !flag;
-
-	 
+	} else if (isAvailableSpace(inquiry)) {
+		document.getElementById('inquiryError').innerHTML = "**Inquiry cannot be empty.";
+		document.getElementById('text-userMessage').focus();
+		// flag = false;
+		return !flag;
 	} else if (!isempty(inquiryTitle)) {
 		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
 		document.getElementById('input-inquiry-title').focus();
 		// flag = false;
 		return !flag;
-	} else
-
-	if (!isempty(inquiry)) {
-		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
-		document.getElementById('text-userMessage').focus();
-		// flag = false;
-		return !flag;
-	} else if (isAvailableSpace(inquiry)) {
+	} else if (!isempty(inquiry)) {
 		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
 		document.getElementById('text-userMessage').focus();
 		// flag = false;
