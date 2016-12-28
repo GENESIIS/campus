@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:useBean id="applicationStatusBean" class="com.genesiis.campus.validation.ApplicationStatusBean" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -206,7 +207,19 @@
 				<tr>
 					<td><h2>Account Info</h2></td>
 				</tr>
+												
 				<tr>
+				
+					<td>Tutor Status <span id="tutorError"></span></td>
+				    <td><select name="tutorStatus" id="tutorStatus" >
+				            <c:forEach items="${applicationStatusBean.values}" var="applicationStatus">
+				                <option value="${applicationStatus}">${applicationStatus}</option>        
+				            </c:forEach>
+				        </select>
+			        </td>
+				</tr>				
+				
+				<tr>				
 					<td>Email <span id="emailError"></span></td>
 					<td><input type="text" name="email" id="email"
 						onclick="clearField('emailError')" value="${email}" /></td>
