@@ -53,7 +53,7 @@ public class BannerStatDAO implements ICrud {
 			
 			
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb=new StringBuilder("SELECT * FROM [CAMPUS].BANNERSTAT BANNERSTAT WHERE BANNERSTAT.BANNER= ");
+			final StringBuilder sb=new StringBuilder("SELECT BANNERSTAT.CALLERPAGE, BANNERSTAT.VIEWDATE, BANNERSTAT.VIEWTIME FROM [CAMPUS].BANNERSTAT BANNERSTAT WHERE BANNERSTAT.BANNER= ");
 			
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, bannerCode);			
