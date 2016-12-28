@@ -74,7 +74,7 @@
 								End Date : <input type="date" id="enddate" name="search">
 							</div>
 							<div>
-								<button type="submit">Clear</button>
+								<button type="submit" id="clearParam">Clear</button>
 								<button type="submit" id="searchList" >Search
 									List</button>
 							</div>
