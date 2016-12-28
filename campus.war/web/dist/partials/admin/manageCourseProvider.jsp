@@ -153,7 +153,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
-										id="uniquePrefix" size="30px;" onblur="providerPrefixValidation();"/>
+										id="uniquePrefix" size="30px;" onfocusout="providerPrefixValidation();"/>
 								</div>
 							</li>
 							<!-- end -->
@@ -496,7 +496,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;" onchange="providerUsernameValidation();" />
+										id="providerUsername" size="50px;" onfocusout="providerUsernameValidation();" />
 								</div>
 							</li>
 							<!-- end -->

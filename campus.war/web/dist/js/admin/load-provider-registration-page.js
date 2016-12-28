@@ -6,7 +6,7 @@
 window.countryCollection = null;
 window.countryCode = null;
 window.townCollection = null;
-windoe.usernameValidation = true;
+window.usernameValidation = true;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -141,7 +141,7 @@ function providerPrefixValidation() {
 
 	if (selectedPrefix == "" || selectedPrefix == null) {
 		alert("give a prefix");
-	} else {
+	} else if(selectedPrefix != "" || selectedPrefix != null){
 
 		$.ajax({
 			url : '/AdminController',
