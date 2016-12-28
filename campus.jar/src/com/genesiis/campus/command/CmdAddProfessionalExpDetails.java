@@ -1,6 +1,6 @@
 package com.genesiis.campus.command;
 
-//20161129 PN c26-add-student-details: INIT CmdAddSchoolEducationData.java class.
+//20161129 PN c26-add-student-details: INIT CmdAddProfessionalExpDetails.java class.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,7 +12,6 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProfessionalExperienceDAO;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
-import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
