@@ -157,3 +157,27 @@ function loadResultSet(event){
 	
 }
 
+function populateResultTable(response) {
+	$('#resultSetDiv').hide();
+	var bannerListTable = $("#table");
+	bannerListTable.find('tr').remove();
+	var callerPage = 'Caller Page';
+	var date = 'Date';
+
+	var headertr = '<tr>';
+	headertr += '<td> # </td>';
+	headertr += '<td>' + callerPage + '</td>';
+	headertr += '<td>' + date + '</td>';
+	coursesListTable.append(headertr);
+	var count = 1;
+
+	$.each(response.bannerStatDetails, function(index, value) {
+		$('#resultSetDiv').show();
+		if (value != null && value.length > 0) {
+
+		}
+
+	});
+
+}
+
