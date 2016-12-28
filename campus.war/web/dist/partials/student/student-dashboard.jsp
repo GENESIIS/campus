@@ -3,6 +3,7 @@
 <%-- 20161114 TR c25 profile-image-box - done  --%>
 <%-- 20161227 MM c25-student-create-dashboard-MP Converted to JSP and converted relative paths to absolute paths --%>
 <%-- 20161227 MM c25-student-create-dashboard-MP Moved JS files to the bottom of the page for better performance included the call to studentDashboard.js file --%>
+<%-- 20161228 MM c25-student-create-dashboard-MP Removed static carousel template code that is replaced at runtime with dynamically produced element list --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -191,44 +192,7 @@
                                 <!--</ol>-->
 
                                 <!-- Carousel Slides / Quotes -->
-                                <div class="carousel-inner text-center">
-
-                                    <!-- Quote 1 -->
-                                    <div class="item active">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <label>BSc in Computer Science</label>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. !</p>
-                                                    <small>ICBT</small>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <!-- Quote 2 -->
-                                    <div class="item">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <label>BSc in Electronic Engineering</label>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-                                                    <small>NIBM</small>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <!-- Quote 3 -->
-                                    <div class="item">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <label>BSc in Software Engineering</label>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. .</p>
-                                                    <small>SLIIT</small>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
+                                <div class="carousel-inner text-center">                                    
                                 </div>
 
                                 <!-- Carousel Buttons Next/Prev -->

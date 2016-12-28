@@ -25,7 +25,7 @@ function getRecommendedProgrammes () {
 		dataType : "json",
 		async : false,
 		success : function(response) {
-			alert("Success");
+//			alert("Success");
 			
 			if (response !== undefined && response !== null) {
 				window.programmeCollectionFetched = response.result;
