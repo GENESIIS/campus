@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161227 JH c39-add-course-provider CourseProviderPrefixDAO.java created
+//20161228 JH c39-add-course-provider removed unwanted codes and loggers
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,9 +60,8 @@ public class CourseProviderPrefixDAO implements ICrud {
 					final ArrayList<String> singleProviderList = new ArrayList<String>();
 
 					singleProviderList.add(rs.getString("CODE"));
-					log.info(">>>>>>>>>>>>>> number of elements " + rs.getString("CODE"));
-					//singleProviderList.add(rs.getString("UNIQUEPREFIX"));
-				//	singleProviderList.add(rs.getString("SHORTNAME"));
+					singleProviderList.add(rs.getString("UNIQUEPREFIX"));
+					singleProviderList.add(rs.getString("SHORTNAME"));
 
 					final Collection<String> singleProviderColleciton = singleProviderList;
 					prefixCollection.add(singleProviderColleciton);
