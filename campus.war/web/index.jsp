@@ -35,6 +35,10 @@ p    {color: blue;}
 			Course Provider </u></a>
 	</div>
 	<hr>
+	<div>		
+		<a href="dist/partials/reportRegisteredStudents.jsp"><u>Registered Students </u></a>
+	</div>
+	<hr>
 
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
