@@ -14,9 +14,9 @@ import javax.mail.MessagingException;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.StudentSignUpEmailComposer;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.RowStudentForJason;
+import com.genesiis.campus.util.StudentSignUpEmailComposer;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.IEmailComposer;
 import com.genesiis.campus.validation.SystemMessage;
