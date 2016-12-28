@@ -51,10 +51,11 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 						courseProviderAccount.setUsername(username);
 						courseProviderAccount.setEmail(email);
-						Collection<Collection<String>> usernameCollection = null;//new ArrayList<Collection<String>>(); 
+						Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
-						usernameCollection = usernameDAO.findById(courseProviderAccount);
-						if (usernameCollection != null) {
+						usernameCollection = usernameDAO
+								.findById(courseProviderAccount);
+						if (usernameCollection.size() != 0) {
 							message = SystemMessage.USERNAME_INVALID;
 
 						} else {
@@ -75,13 +76,11 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 						courseProvider.setUniquePrefix(prefix);
 						Collection<Collection<String>> prefixCollection = prefixDAO
 								.findById(courseProvider);
-						if (prefixCollection != null) {
+						if (prefixCollection.size() != 0) {
 							message = SystemMessage.PREFIX_INVALID;
-	
 
-						} else {
+						} else if (prefixCollection.size() == 0) {
 							message = SystemMessage.PREFIX_VALID;
-							log.info(">>>>>>>>>>>>>>>>>>>valid prefix");
 						}
 					} else {
 						message = SystemMessage.EMPTY_FIELD;
