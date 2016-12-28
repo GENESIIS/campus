@@ -4,6 +4,8 @@
 <%-- 20161227 MM c25-student-create-dashboard-MP Converted to JSP and converted relative paths to absolute paths --%>
 <%-- 20161227 MM c25-student-create-dashboard-MP Moved JS files to the bottom of the page for better performance included the call to studentDashboard.js file --%>
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static carousel template code that is replaced at runtime with dynamically produced element list --%>
+<%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for institute list which, when running, 
+				is replaced with dynamically produced institute list --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -217,31 +219,6 @@
                     <div class="widget-content clearfix">
                         <div class="rec-institute clearfix">
                             <ul>
-                                <li class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
-                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
-                                </li>
-                                <!-- End li-->
-                                <li class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
-                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
-                                </li>
-                                <!-- End li-->
-                                <li class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
-                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
-                                </li>
-                                <!-- End li-->
-                                <li class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
-                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
-                                </li>
-                                <!-- End li-->
-                                <li class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="inst-logo col-lg-3 col-sm-12 col-md-4"><img src="/dist/i/icbt.png" alt=""></div>
-                                    <a href="javascript:" class="col-lg-9 col-sm-12 col-md-8">ICBT - International Campus of Bussiness and Technology</a>
-                                </li>
-                                <!-- End li-->
                             </ul>
                         </div>
                         <!-- End about-me : left side -->

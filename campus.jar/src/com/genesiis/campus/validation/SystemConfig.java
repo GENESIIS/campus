@@ -23,7 +23,7 @@ package com.genesiis.campus.validation;
 */
 public enum SystemConfig {
 	
-	PROVIDER_LOGO_PATH("", "", ""),
+	PROVIDER_LOGO_PATH("education\\provider\\logo", "", ""),
 	BANNER_PATH("education\\banner", "", ""),
 	BANNER_LINKED_IMAGE_PATH("","",""),
 	COURSE_IMAGE_PATH("","",""),
