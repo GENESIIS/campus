@@ -1,6 +1,7 @@
 package com.genesiis.campus.util.mail;
 //20161227 DN CAM 18: IEmailComposer.java interface is created in order to centerlise the reusable 
 //            body composing functions.
+//20161228 DN CAM 18: getEmailDispenser(),getGeneralEmail(),setGeneralEmail(),setEmailDispenser() methods are declared. 
 
 
 
@@ -63,5 +64,35 @@ void setEnvironment(String recieversName,
 		ArrayList<String> recieversEmailAddreses, 
 		String mailSubject,
 		String emailBodyText,String ... restoftheParameters);
+/**
+ * getGeneralEmail() manages to return the IEmail
+ * instance
+ * @author dushantha DN
+ * @return if exist IEmail else null will be return
+ */
+public IEmail getGeneralEmail();
+
+/**
+ * setGeneralEmail methods set the IEmail type variable
+ * @author dushantha DN
+ * @param generalEmail IEmail value needs to be set
+ * @throws IllegalArgumentException is thrown if the generalEmail passed is null or undefined 
+ */
+public void setGeneralEmail(IEmail generalEmail) throws IllegalArgumentException ;
+
+/**
+ * getEmailDispenser() gets the EmailDispenser instance bound with this instance
+ * @author dushantha DN
+ * @return EmailDispenser
+ */
+public EmailDispenser getEmailDispenser();
+
+/**
+ * setEmailDispenser sets the EmailDispenser instance
+ * is the setting value is undefined or null IllegalArgumentException is thrown
+ * @param emailDispenser
+ * @throws IllegalArgumentException
+ */
+public void setEmailDispenser(EmailDispenser emailDispenser) throws IllegalArgumentException;
 
 }
