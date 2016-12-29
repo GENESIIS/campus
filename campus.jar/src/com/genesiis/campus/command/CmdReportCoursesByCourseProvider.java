@@ -16,6 +16,7 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.View;
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -47,6 +48,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 			
 			switch (Operation.getOperation(cco)) {
 			case SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER:
+				final CourseProvider couseProvider=new CourseProvider();
+				final Collection<Collection<String>> providerList = new CourseProviderDAO().findById(code);
 				final Collection<Collection<String>> providerList = new CourseProviderDAO().getAll();
 				iView.setCollection(providerList);
 				break;
