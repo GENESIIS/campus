@@ -27,6 +27,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("input[name='providerStatus']").change(function(){	
+		alert("providerStatus ");
+		var statusValue=$('input:radio[name=status]:checked').val();
+		alert("providerStatus " + statusValue);
+	});
+	
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});	
@@ -43,7 +49,9 @@ function getProviderSearchData(response){
 	var htmlstr="";
 	$.each(response.result, function(index, value) {
 		if(value!=null && value.length>0){
+			if(value[2] !=null && value[2]==1){
 			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+			}
 		}		
 	});		
 	$('#providerName').html(htmlstr);	
