@@ -1,4 +1,8 @@
 //20161219 DJ CAM-51-report-courses-by-course-provider-MP-dj Ajax controls for courses by course provider report generation
+
+// allproviderListCollection contains all the course providers in all statuses
+var allproviderListCollection=0;
+
 $(document).ready(function() {
 	
 	$.ajax({
@@ -27,15 +31,31 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("input[name='providerStatus']").change(function(){	
-		alert("providerStatus ");
-		var statusValue=$('input:radio[name=status]:checked').val();
-		alert("providerStatus " + statusValue);
+	//Identify course provider status click
+	$("input[name='providerStatus']").change(function(){		
+		var statusValue=$('input:radio[name=providerStatus]:checked').val();
+		var cpStatusCheck=0;
+		if(statusValue=="ACTIVE"){
+			cpStatusCheck=1;
+		}else if(statusValue=="INACTIVE"){
+			cpStatusCheck=2;
+		}
+		var htmlstr="";
+		$.each(allproviderListCollection, function(index, value) {		
+			if(value!=null && value.length>0){
+				if(value[2] !=null && value[2]==cpStatusCheck){
+				htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+				}
+			}		
+		});
+		
+		$('#providerName').html(htmlstr);
 	});
 	
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});	
+	
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
 	});		
@@ -45,9 +65,9 @@ $(document).ready(function() {
 function getProviderSearchData(response){
 	$('#resultSetDiv').hide();
 	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
-	
-	var htmlstr="";
-	$.each(response.result, function(index, value) {
+	allproviderListCollection=response.courseProviderList;
+	var htmlstr="";	
+	$.each(response.courseProviderList, function(index, value) {		
 		if(value!=null && value.length>0){
 			if(value[2] !=null && value[2]==1){
 			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
