@@ -44,7 +44,7 @@
 			for (Collection<String> collection : dataCollection) {
 				int count = collection.size();
 				Object[] array = collection.toArray();
-				System.out.println("Set ******* Set"+collection);
+				out.write("Set ******* Set"+collection);
 // 				for (count = 0; count <= 1; count++) {
 					for (String data4455 : collection) {
 						System.out.println(data4455 +"	  -  	");
