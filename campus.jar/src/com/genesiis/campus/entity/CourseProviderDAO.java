@@ -1,7 +1,15 @@
 package com.genesiis.campus.entity;
 
 //DJ 20161206 c51-report-courses-by-course-provider-MP-dj created CourseProviderDAO.java
-//DJ 20161229 c51-report-courses-by-course-provider-MP-dj Iplement findById() method 
+//DJ 20161229 c51-report-courses-by-course-provider-MP-dj Implement findById() method 
+
+import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.UtilityHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
-import org.apache.log4j.Logger;
 
 public class CourseProviderDAO  implements ICrud{
 	
@@ -35,7 +38,7 @@ public class CourseProviderDAO  implements ICrud{
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 
-		try {
+		/*try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS = ? ");
 
@@ -52,7 +55,7 @@ public class CourseProviderDAO  implements ICrud{
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);
-		}
+		}*/
 		return allProviderList;
 	}
 
@@ -73,27 +76,37 @@ public class CourseProviderDAO  implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	/**
+	 * Get Course Providers.If  CourseProviderStatus is set to particular status result set could return according to the set status.	 * 
+	 * @param CourseProvider DTO
+	 * @author DJ
+	 * @return Collection 
+	 */
 	@Override
-	public Collection<Collection<String>> findById(Object code)
+	public Collection<Collection<String>> findById(Object provider)
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet resultSet =null;
+		ResultSet resultSet = null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 
 		try {
+			 CourseProvider courseProvider = new CourseProvider();
+			if (UtilityHelper.isNotEmptyObject(provider)) {
+				courseProvider = (CourseProvider) provider;
+			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX  FROM [CAMPUS].COURSEPROVIDER PROV WHERE ");
-			
-			if(){
-			sb.append(" PROV.COURSEPROVIDERSTATUS = ? ");
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX AS CPUNIQUEPREFIX, PROV.COURSEPROVIDERSTATUS AS CPSTATUS  FROM [CAMPUS].COURSEPROVIDER PROV WHERE 1=1");
+			if (courseProvider.getCourseProviderStatus() > 0) {
+				sb.append(" AND PROV.COURSEPROVIDERSTATUS = ");
+				sb.append(courseProvider.getCourseProviderStatus());
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			resultSet= stmt.executeQuery();
-			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
+
+			resultSet = stmt.executeQuery();
+			allProviderList = getCourseProviderResultSet(resultSet,allProviderList);
 
 		} catch (SQLException sqlException) {
 			log.info("findById() sqlException" + sqlException.toString());
@@ -146,7 +159,8 @@ public class CourseProviderDAO  implements ICrud{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
 			singleProvider.add(rs.getString("CPCODE"));				
-			singleProvider.add(rs.getString("UNIQUEPREFIX"));			
+			singleProvider.add(rs.getString("CPUNIQUEPREFIX"));			
+			singleProvider.add(rs.getString("CPSTATUS"));			
 			allProviderList.add(singleProvider);
 		}
 		return allProviderList;
