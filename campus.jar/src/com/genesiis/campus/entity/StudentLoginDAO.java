@@ -58,7 +58,7 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoggedOutDate;
 	private String lastLoggedOutTime;
 	private String lastLoginAuthenticatedBy;
-	boolean isActive;
+	private boolean isActive;
 
 
 	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
@@ -323,6 +323,10 @@ public class StudentLoginDAO implements ICrud {
 				student.setValid(false);
 			}
 
+		} catch (SQLException exception) {
+			log.error("findById(Object code):  SQLexception"
+					+ exception.toString());
+			throw exception;
 		} catch (Exception exception) {
 			log.error("findById(Object code):  exception"
 					+ exception.toString());
