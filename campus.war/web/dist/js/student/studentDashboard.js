@@ -7,6 +7,8 @@
   * 			for each programme result displayed in the carousel 
   * 20161228 MM c25-student-create-dashboard-MP - Added code to display the list of institutes sent 
   * 			by the server in the Ajax response
+  * 20161229 MM c25-student-create-dashboard-MP - Added function that facilitates displaying of 
+  * 			feedback messages to the user in case of error or absence of data
   * 
   */ 
 
@@ -18,6 +20,28 @@ window.messageType = {INFO: 'INFO', ERROR: 'ERROR'};
 $(document).ready(function() {
 	getRecommendedProgrammes();
 });
+
+function showMessages(messages, msgType) {
+
+	if (messages != undefined && messages != null && messages.length > 0) {
+		var msgStyleClass = '';
+		
+		if (msgType === 'INFO') {
+			msgStyleClass = 'alert-info';
+		} else if (msgType === 'ERROR') {
+			msgStyleClass = 'alert-danger';
+		}
+		
+		var messagesHtml = '<div id="message-container" class="alert text-center ' + msgStyleClass + '" role="alert">';
+		messagesHtml += '<span style="font-weight: 700">' + msgType + ': </span>';
+		for (var i = 0; i < messages.length; i++) {
+			messagesHtml += '<span>' + messages[i] + '</span></br>';
+		}
+		messagesHtml += '</div>';
+		
+		return messagesHtml;
+	}	
+}
 
 function getRecommendedProgrammes () {
 	$.ajax({
@@ -41,10 +65,10 @@ function getRecommendedProgrammes () {
 		},
 		error : function(response) {
 			alert("Ajax error");
-//			var messageList = [];
-//			messageList.push("There was an error retrieving data to display from the server.");
-//			messageList.push("Please check that you are connected to the Internet and that you are sending the correct data.");
-//			showMessages(messageList, window.messageType.ERROR);
+			var messageList = [];
+			messageList.push("There was an error retrieving data to display from the server.");
+			messageList.push("Please check that you are connected to the Internet and that you are sending the correct data.");
+			showMessages(messageList, window.messageType.ERROR);
 		}
 	});
 	
@@ -84,7 +108,7 @@ function assignContentToCarousel() {
 
 
 function constructInstituteListing() {
-	alert("inside constructInstituteListing()");
+//	alert("inside constructInstituteListing()");
 	
 	var instituteCollectionFetched = window.instituteCollectionFetched;
 	var courseProviderLogoPath = window.courseProviderLogoPathFetched;
