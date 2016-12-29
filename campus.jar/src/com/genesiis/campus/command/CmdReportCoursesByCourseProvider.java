@@ -94,7 +94,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-			if (providerCode > 0) {
+			//if (providerCode > 0) {
 				// List courses by course Providers
 				// param:cpcode,date range
 				final Programme programme = new Programme();
@@ -114,7 +114,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 				}
 				final Collection<Collection<String>> coursesList = new ProgrammeDAO().findById(programme);
 				helper.setAttribute("coursesResultList", coursesList);
-			}
+			//}
 		} catch (Exception exception) {
 		log.error("execute() : Exception " + exception.toString());
 		throw exception;
