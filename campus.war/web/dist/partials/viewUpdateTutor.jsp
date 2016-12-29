@@ -100,18 +100,11 @@
 							checked> Female<br>
 					</c:if></td>
 			</tr>
-			<tr>
-				<td>Experience <span id="experienceError"></span></td>
-				<td><textarea rows="10" cols="26" name="experience"
-						id="experience">
-							<c:out value="${experience}" /></textarea></td>
-			</tr>
+			<tr><td>Experience<span id="experienceError"></span></td><td><textarea rows="10" cols="26" name="experience" id="experience"><c:out value="${experience}"/></textarea></td></tr>
 
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
-				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
-						onclick="clearField('aboutMeError')">
-							<c:out value="${description}" /></textarea></td>
+				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')"><c:out value="${description}" /></textarea></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>

@@ -375,7 +375,8 @@ public class CmdUpdateTutorProfile implements ICommand {
 				}
 			}
 
-			if(Integer.parseInt(helper.getParameter("townDetails")) != 0){
+			System.out.println(" 0.8 "); //ccw
+			if(Double.parseDouble(helper.getParameter("townDetails")) != 0){
 				if(!((helper.getParameter("townDetails")).equals(helper.getSession(false).getAttribute("towncode").toString()))){	
 					tutor.setTown(helper.getParameter("townDetails"));
 					updated = true;
@@ -386,6 +387,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 				tutor.setTown(helper.getSession(false).getAttribute("towncode").toString());
 			}
 
+			System.out.println(" 0.9 "); //ccw
 			System.out.println(" 2 = "+ helper.getParameter("newtutorStatus")); //ccw
 			System.out.println(" 2.1 = "+ helper.getSession(false).getAttribute("tutorstatus")); //ccw
 			if(!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (Integer.parseInt(helper.getSession(false).getAttribute("tutorstatus").toString())))){	
