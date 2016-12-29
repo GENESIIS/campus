@@ -19,18 +19,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.OneOffCourseProviderDAO;
+import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -64,6 +67,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
+		ICrud userTypeDAO = new UserTypeDAO();
+		int userType = 0;
 
 		String systemMessage = null;
 
@@ -71,7 +76,21 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 			int pStatus = 0;
 			int generatedKey = 0;
-			
+			String userTypeString = UserType.FEATURED_COURSE_PROVIDER.getUserType();
+			ArrayList<Collection<String>> userTypeList  = (ArrayList<Collection<String>>) userTypeDAO.findById(userTypeString);
+
+//			if (userTypeList.size() > 0) {
+//				Iterator collectionIterator = userTypeList.iterator();
+//				while (collectionIterator.hasNext()) {
+//					ArrayList<String> singleList = (ArrayList<String>) collectionIterator
+//							.next();
+//					Iterator listIterator = singleList.iterator();
+//					while(listIterator.hasNext()){
+//						userType = listIterator.next();
+//					}
+//				}
+//			}
+//	
 			//back end validation for required fields
 			ArrayList<String> errorMessages = validateCourseProvider(helper);
 			if(errorMessages.size()==0){
