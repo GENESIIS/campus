@@ -88,8 +88,8 @@
                 <label for="">Course Provider Status: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="btn-radio" type="radio" name="providerStatus"  value="ACTIVE"><span>Activate</span>
-                <input class="btn-radio" type="radio" name="providerStatus"  value="INACTIVE"><span>Deactivate</span>
+                <input class="btn-radio" type="radio" name="providerStatus"  value="ACTIVE"><span>Active</span>
+                <input class="btn-radio" type="radio" name="providerStatus"  value="INACTIVE"><span>InActive</span>
             </div>
 <!--   Developer design end      -->
 
@@ -108,8 +108,8 @@
                 <label for=""> Course Status: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="btn-radio" type="radio" name="courseStatus"  value="ACTIVE"><span>Activate</span>
-                <input class="btn-radio" type="radio" name="courseStatus"  value="INACTIVE"><span>Deactivate</span>
+                <input class="btn-radio" type="radio" name="courseStatus"  value="ACTIVE"><span>Active</span>
+                <input class="btn-radio" type="radio" name="courseStatus"  value="INACTIVE"><span>InActive</span>
             </div>
             <!-- second row -->
 
@@ -117,7 +117,7 @@
                 <label for="">Start Date: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="txt-date" type="text">
+                <input class="txt-date" type="date"  id="startdate">
                 <a href="javascript:">calender</a>
             </div>
             <!-- Third Row -->
@@ -126,7 +126,7 @@
                 <label for="">End Date: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="txt-date" type="text">
+                <input class="txt-date" type="date" id="enddate" >
                 <a href="javascript:">calender</a>
             </div>
             <!-- Fourth Row -->
@@ -157,25 +157,27 @@
                 <!-- End right side buttons -->
             </div>
             <!-- End action btn area -->
-
+          <div  id="resultSetDiv">
             <div class="results-count col-md-12 col-lg-12 col-sm-12">
                 <label for="">50 Results</label>
             </div>
 
-            <div class="data-tbl col-md-12 col-lg-12 col-sm-12">
+            <div  class="data-tbl col-md-12 col-lg-12 col-sm-12">
                 <table class="display">
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Course Code </th>
                             <th>Course Name </th>
                             <th>Description</th>
                             <th>Course Provider </th>
+                            <th>Course Status </th>
                             <th>Start Date </th>
                             <th>End Date </th>
                         </tr>
                     </thead>
-                    <tbody id="table">
-                        <tr>
+                    <tbody id="tBody">
+                        <!-- <tr>
                             <td>1</td>
                             <td>BSc in IT</td>
                             <td>4 Year degree for information technology </td>
@@ -206,9 +208,10 @@
                             <td>UOM</td>
                             <td>2017-01-01</td>
                             <td>2021-01-01</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
+            </div>
             </div>
 
         </div>
