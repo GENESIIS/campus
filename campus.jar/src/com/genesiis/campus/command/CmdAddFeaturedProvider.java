@@ -68,116 +68,127 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 			int pStatus = 0;
 			int generatedKey = 0;
-			String expireDate = helper.getParameter("expirationDate");
-			String countryCode = helper.getParameter("selectedCountry");
-			String courseProviderTown = helper.getParameter("selectedTown");
+			
+			//back end validation for required fields
+			ArrayList<String> errorMessages = validateCourseProvider(helper);
+			if(errorMessages.size()==0){
+				log.info("no errors");
+				
+				String expireDate = helper.getParameter("expirationDate");
+				String countryCode = helper.getParameter("selectedCountry");
+				String courseProviderTown = helper.getParameter("selectedTown");
+						
+				String providerStatus = helper.getParameter("providerStatus");
+				if(providerStatus.equalsIgnoreCase("active")){
+					pStatus = ApplicationStatus.ACTIVE.getStatusValue();
+				}
+				if(providerStatus.equalsIgnoreCase("inactive")){
+					pStatus = ApplicationStatus.INACTIVE.getStatusValue();
+				}
+				if(providerStatus.equalsIgnoreCase("pending") ){
+					pStatus = ApplicationStatus.PENDING.getStatusValue();
+				}
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+				Date parsed = format.parse(expireDate);
+				java.sql.Date sql = new java.sql.Date(parsed.getTime());
+		        
+				courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
+				courseProvider.setShortName(helper.getParameter("shortName"));
+				courseProvider.setName(helper.getParameter("providerName"));
+				courseProvider.setDescription(helper.getParameter("aboutMe"));
+				courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
+				courseProvider.setLandPhoneCountryCode(countryCode);
+				courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
+				courseProvider.setLandPhoneNo(helper.getParameter("land1"));
+				courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
+				courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
+				courseProvider.setExpirationDate(sql);
+				courseProvider.setMobilePhoneCountryCode(countryCode);
+				//courseProvider.setHeadOffice(null);
+				
+				courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
+				courseProvider.setFaxNo(helper.getParameter("fax"));
+				courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
+				courseProvider.setExpirationDate(sql);
+				courseProvider.setWeblink(helper.getParameter("webLink"));
+				courseProvider.setFacebookURL(helper.getParameter("facebook"));
+				courseProvider.setTwitterURL(helper.getParameter("twitter"));
+				courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
+				courseProvider.setLinkedinURL(helper.getParameter("linkdedIn"));
+				courseProvider.setInstagramURL(helper.getParameter("instagram"));
+				courseProvider.setViberNumber(helper.getParameter("viber"));
+				courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
+				courseProvider.setAddress1(helper.getParameter("address1"));
+				courseProvider.setAddress2(helper.getParameter("address2"));
+				courseProvider.setAddress3(helper.getParameter("address3"));
+				
+				courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
+				courseProvider.setAdminAllowed(true);
+				courseProvider.setCourseProviderStatus(pStatus);
+				courseProvider.setCrtBy("admin");//to be update after the session is created
+				courseProvider.setModBy("admin");//to be update after the session is created
+
+				
+				Map map = new HashMap();
+				map.put("provider", courseProvider);
+				
+				String providerType = helper.getParameter("featured-oneoff");
+				
+				/**
+				 * select the account type of the course provider. 
+				 * and will call different DAO classes depending on the course provider
+				 * type
+				 */
+				if(providerType.equalsIgnoreCase("featured")){
+					courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+					courseProvider.setTutorRelated(false);
+								
+					String accountStatus = helper.getParameter("accountStatus");
+					if(providerStatus.equalsIgnoreCase("active")){	
+						courseProviderAccount.setActive(true);
+					}
+					if(providerStatus.equalsIgnoreCase("inactive")){	
+						courseProviderAccount.setActive(false);
+					}
+
+					courseProviderAccount.setName(helper.getParameter("providerName"));
+					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+					courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
+					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
+					courseProviderAccount.setName(helper.getParameter("accountDescription"));	
+					courseProviderAccount.setCrtBy("admin");//to be update after the session is created
+					courseProviderAccount.setModBy("admin");//to be update after the session is created
 					
-			String providerStatus = helper.getParameter("providerStatus");
-			if(providerStatus.equalsIgnoreCase("active")){
-				pStatus = ApplicationStatus.ACTIVE.getStatusValue();
-			}
-			if(providerStatus.equalsIgnoreCase("inactive")){
-				pStatus = ApplicationStatus.INACTIVE.getStatusValue();
-			}
-			if(providerStatus.equalsIgnoreCase("pending") ){
-				pStatus = ApplicationStatus.PENDING.getStatusValue();
-			}
-			
-			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-			Date parsed = format.parse(expireDate);
-			java.sql.Date sql = new java.sql.Date(parsed.getTime());
-	        
-			courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
-			courseProvider.setShortName(helper.getParameter("shortName"));
-			courseProvider.setName(helper.getParameter("providerName"));
-			courseProvider.setDescription(helper.getParameter("aboutMe"));
-			courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
-			courseProvider.setLandPhoneCountryCode(countryCode);
-			courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
-			courseProvider.setLandPhoneNo(helper.getParameter("land1"));
-			courseProvider.setMobilePhoneCountryCode(helper.getParameter("country"));
-			courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
-			courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
-			courseProvider.setExpirationDate(sql);
-			courseProvider.setMobilePhoneCountryCode(countryCode);
-			//courseProvider.setHeadOffice(null);
-			
-			String dfd = helper.getParameter("shortName");
-			courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
-			courseProvider.setFaxNo(helper.getParameter("fax"));
-			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
-			courseProvider.setExpirationDate(sql);
-			courseProvider.setWeblink(helper.getParameter("webLink"));
-			courseProvider.setFacebookURL(helper.getParameter("facebook"));
-			courseProvider.setTwitterURL(helper.getParameter("twitter"));
-			courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
-			courseProvider.setLinkedinURL(helper.getParameter("linkdedIn"));
-			courseProvider.setInstagramURL(helper.getParameter("instagram"));
-			courseProvider.setViberNumber(helper.getParameter("viber"));
-			courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
-			courseProvider.setAddress1(helper.getParameter("address1"));
-			courseProvider.setAddress2(helper.getParameter("address2"));
-			courseProvider.setAddress3(helper.getParameter("address3"));
-			
-			courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
-			courseProvider.setAdminAllowed(true);
-			courseProvider.setCourseProviderStatus(pStatus);
-			courseProvider.setCrtBy("admin");//to be update after the session is created
-			courseProvider.setModBy("admin");//to be update after the session is created
-
-			
-			Map map = new HashMap();
-			map.put("provider", courseProvider);
-			
-			String providerType = helper.getParameter("featured-oneoff");
-			
-			/**
-			 * select the account type of the course provider. 
-			 * and will call different DAO classes depending on the course provider
-			 * type
-			 */
-			if(providerType.equalsIgnoreCase("featured")){
-				courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-				courseProvider.setTutorRelated(false);
-							
-				String accountStatus = helper.getParameter("accountStatus");
-				if(providerStatus.equalsIgnoreCase("active")){	
-					courseProviderAccount.setActive(true);
+					ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
+					map.put("account", courseProviderAccount);
+					generatedKey = CourseProviderDAO.add(map);
+					
+				}else if(providerType.equalsIgnoreCase("one-off")){
+					courseProvider.setTutorRelated(false);
+					courseProvider.setAdminAllowed(false);
+					
+					ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
+					courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+					generatedKey = oneOffCourseProviderDAO.add(courseProvider);
 				}
-				if(providerStatus.equalsIgnoreCase("inactive")){	
-					courseProviderAccount.setActive(false);
+				
+
+
+				if (generatedKey >0) {
+					systemMessage = SystemMessage.ADDED.message();
+				} else if (generatedKey ==0) {
+					systemMessage = SystemMessage.NOTADDED.message();
 				}
 
-				courseProviderAccount.setName(helper.getParameter("providerName"));
-				courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
-				courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
-				courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-				courseProviderAccount.setName(helper.getParameter("accountDescription"));	
-				courseProviderAccount.setCrtBy("admin");//to be update after the session is created
-				courseProviderAccount.setModBy("admin");//to be update after the session is created
+				helper.setAttribute("registerId", generatedKey);
 				
-				ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
-				map.put("account", courseProviderAccount);
-				generatedKey = CourseProviderDAO.add(map);
-				
-			}else if(providerType.equalsIgnoreCase("one-off")){
-				courseProvider.setTutorRelated(false);
-				courseProvider.setAdminAllowed(false);
-				
-				ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
-				courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
-				generatedKey = oneOffCourseProviderDAO.add(courseProvider);
+			}else{
+				log.info("errors");
+	
 			}
 			
-
-
-			if (generatedKey >0) {
-				systemMessage = SystemMessage.ADDED.message();
-			} else if (generatedKey ==0) {
-				systemMessage = SystemMessage.NOTADDED.message();
-			}
-
-			helper.setAttribute("registerId", generatedKey);
+			
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
 			systemMessage = SystemMessage.ERROR.message();
@@ -198,12 +209,31 @@ public class CmdAddFeaturedProvider implements ICommand{
 		Validator validator = new Validator();
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
+
 		
 		if(!validator.isEmpty(helper.getParameter("expirationDate"))){
-
-			
+			errorString.add("Expiration Date, ");
 	
+		}if(!validator.isEmpty(helper.getParameter("selectedCountry"))){
+			errorString.add("Country, ");
+		}if(!validator.isEmpty(helper.getParameter("selectedTown"))){
+			errorString.add("Town, ");
+		}if(!validator.isEmpty(helper.getParameter("providerStatus"))){
+			errorString.add("Course Provider status, ");
+		}if(!validator.isEmpty(helper.getParameter("uniquePrefix"))){
+			errorString.add("Unique Prefix, ");
+		}if(!validator.isEmpty(helper.getParameter("shortName"))){
+			errorString.add("Short Name, ");
+		}if(!validator.isEmpty(helper.getParameter("providerName"))){
+			errorString.add("Provider Name, ");
+		}if(!validator.isEmpty(helper.getParameter("areaCode"))){
+			errorString.add("Area Code, ");
+		}if(!validator.isEmpty(helper.getParameter("land1"))){
+			errorString.add("Land number 1, ");
+		}if(!validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code, ");
 		}
+		
 		return errorString;
 	}
 
