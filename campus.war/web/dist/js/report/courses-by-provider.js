@@ -37,7 +37,9 @@ $(document).ready(function() {
 
 
 function getProviderSearchData(response){
-	$('#resultSetDiv').hide();	
+	$('#resultSetDiv').hide();
+	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	
 	var htmlstr="";
 	$.each(response.result, function(index, value) {
 		if(value!=null && value.length>0){
