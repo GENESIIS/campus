@@ -60,7 +60,6 @@ public class StudentLoginDAO implements ICrud {
 	private String lastLoginAuthenticatedBy;
 	private boolean isActive;
 
-
 	static Logger log = Logger.getLogger(StudentLoginDAO.class.getName());
 
 	@Override
@@ -167,7 +166,7 @@ public class StudentLoginDAO implements ICrud {
 			boolean check = rs.next();
 
 			if (check) {
-				
+
 				code = rs.getString("CODE");
 				username = rs.getString("USERNAME");
 				encryptedPasswordDb = rs.getString("PASSWORD");
@@ -254,48 +253,45 @@ public class StudentLoginDAO implements ICrud {
 				final ArrayList<String> singleStudent = new ArrayList<String>();
 				final Collection<String> singleStudentCollection = singleStudent;
 
-				singleStudent.add(code);
-				singleStudent.add(username); // 0
-				//singleStudent.add(rs.getString("USERNAME")); // 1
-				// encryptedPasswordDb = rs.getString("PASSWORD").trim();
-				// singleStudent.add(encryptedPasswordDb); // 2
-				singleStudent.add(indexNo); // 3
-				singleStudent.add(firstName); // 4
-				singleStudent.add(middleName); // 5
-				singleStudent.add(lastName); // 6
-				singleStudent.add(dateOfBirth.toString()); // 7
-				singleStudent.add(gender); // 8
-				singleStudent.add(email); // 9
-				singleStudent.add(type); // 10
-				// 11
-				singleStudent.add(landPhoneCountryCode); // 12
-				singleStudent.add(landPhoneAreaCode); // 13
-				singleStudent.add(landPhoneNo); // 14
-				singleStudent.add(mobilePhoneCountryCode); // 15
-				singleStudent.add(mobilePhoneNetworkCode); // 16
-				singleStudent.add(mobilePhoneNo); // 17
-				singleStudent.add(description); // 18
-				singleStudent.add(facebookUrl); // 19
-				singleStudent.add(twitterUrl); // 20
-				singleStudent.add(mySpaceUrl); // 21
-				singleStudent.add(linkedInUrl); // 22
-				singleStudent.add(instagramUrl); // 23
-				singleStudent.add(viberNumber); // 24
-				singleStudent.add(whatsAppNumber); // 24
+				singleStudent.add(code); // 0
+				singleStudent.add(username); // 1
+				singleStudent.add(indexNo); // 2
+				singleStudent.add(firstName); // 3
+				singleStudent.add(middleName); // 4
+				singleStudent.add(lastName); // 5
+				singleStudent.add(dateOfBirth.toString()); // 6
+				singleStudent.add(gender); // 7
+				singleStudent.add(email); // 8
+				singleStudent.add(type); // 9
+
+				singleStudent.add(landPhoneCountryCode); // 10
+				singleStudent.add(landPhoneAreaCode); // 11
+				singleStudent.add(landPhoneNo); // 12
+				singleStudent.add(mobilePhoneCountryCode); // 13
+				singleStudent.add(mobilePhoneNetworkCode); // 14
+				singleStudent.add(mobilePhoneNo); // 15
+				singleStudent.add(description); // 16
+				singleStudent.add(facebookUrl); // 17
+				singleStudent.add(twitterUrl); // 18
+				singleStudent.add(mySpaceUrl); // 19
+				singleStudent.add(linkedInUrl); // 20
+				singleStudent.add(instagramUrl); // 21
+				singleStudent.add(viberNumber); // 22
+				singleStudent.add(whatsAppNumber); // 23
 				singleStudent.add(address1); // 24
-				singleStudent.add(address2); // 24
-				singleStudent.add(address3); // 24
-				singleStudent.add(town); // 24
-				singleStudent.add(userType);
-				singleStudent.add(accountType); // 24
-				singleStudent.add(lastLoggedInUserAgent); // 24
-				singleStudent.add(lastLoggedInSessionid); // 24
-				singleStudent.add(lastLoggedInDate); // 24
-				singleStudent.add(lastLoggedInTime); // 24
-				singleStudent.add(lastLoggedInIpAddress); // 24
-				singleStudent.add(lastLoggedOutDate); // 24
-				singleStudent.add(lastLoggedOutTime); // 24
-				singleStudent.add(lastLoginAuthenticatedBy); // 24
+				singleStudent.add(address2); // 25
+				singleStudent.add(address3); // 26
+				singleStudent.add(town); // 27
+				singleStudent.add(userType); // 28
+				singleStudent.add(accountType); // 29
+				singleStudent.add(lastLoggedInUserAgent); // 30
+				singleStudent.add(lastLoggedInSessionid); // 31
+				singleStudent.add(lastLoggedInDate); // 32
+				singleStudent.add(lastLoggedInTime); // 33
+				singleStudent.add(lastLoggedInIpAddress); // 34
+				singleStudent.add(lastLoggedOutDate); // 35
+				singleStudent.add(lastLoggedOutTime); // 36
+				singleStudent.add(lastLoginAuthenticatedBy); // 37
 				rs.close();
 				if (encryptPassword.equals(encryptedPasswordDb)) {
 
@@ -311,11 +307,11 @@ public class StudentLoginDAO implements ICrud {
 					student.setValid(false);
 					message = SystemMessage.INVALIDPASSWORD.message();
 					int MAX_ATTEMPTS;
-//					for (MAX_ATTEMPTS =0; MAX_ATTEMPTS < 3; ){
-//						log.info("max attempts : "+MAX_ATTEMPTS);
-//					}
-//					MAX_ATTEMPTS ++;
-					
+					// for (MAX_ATTEMPTS =0; MAX_ATTEMPTS < 3; ){
+					// log.info("max attempts : "+MAX_ATTEMPTS);
+					// }
+					// MAX_ATTEMPTS ++;
+
 				}
 
 			} else {
@@ -378,7 +374,5 @@ public class StudentLoginDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 
 }
