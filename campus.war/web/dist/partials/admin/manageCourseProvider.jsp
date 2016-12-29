@@ -115,6 +115,9 @@
 						<ul class="result-row">
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
+									<div class="col-name">
+									<h1 class="pro-name">Account Type :</h1>
+								</div>
 								<div class="col-name">
 									<h1 class="pro-name">
 										<input type="radio" name="featured-oneoff"
