@@ -63,9 +63,13 @@ public class ProgrammeDAO implements ICrud {
 				return programmeList;
 			}
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME , DESCRIPTION AS PROGDESCRIPTION, ");
-			sb.append("PROGRAMMESTATUS AS PROSTATUS,DISPLAYSTARTDATE AS PROGSTARTDATE,EXPIRYDATE AS PROGEXPIRYDATE ");
-			sb.append("FROM [CAMPUS].PROGRAMME PROG WHERE PROG.COURSEPROVIDER = ? ");
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME ,  PROG.DESCRIPTION AS PROGDESCRIPTION ,PROV.NAME AS CPNAME , ");
+			sb.append(" PROG.PROGRAMMESTATUS AS PROSTATUS, PROG.DISPLAYSTARTDATE AS PROGSTARTDATE, PROG.EXPIRYDATE AS PROGEXPIRYDATE ");
+			sb.append(" FROM [CAMPUS].PROGRAMME PROG INNER JOIN  [CAMPUS].COURSEPROVIDER PROV ON PROG.COURSEPROVIDER=PROV.CODE WHERE 1=1 ");
+			if (programme.getCourseProvider() > 0) {
+				sb.append(" AND PROG.COURSEPROVIDER =  ");
+				sb.append(programme.getCourseProvider());
+			}
 			if (programme.getDisplayStartDate() != null	&& programme.getDisplayStartDate().getTime() > 0) {
 				sb.append("AND PROG.DISPLAYSTARTDATE >= ' ");
 				sb.append(new java.sql.Date(programme.getDisplayStartDate().getTime()));
@@ -82,7 +86,7 @@ public class ProgrammeDAO implements ICrud {
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1, programme.getCourseProvider());
+			//stmt.setInt(1, programme.getCourseProvider());
 			//stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
 			//stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
 			//stmt.setInt(2, programme.getProgrammeStatus());
@@ -93,6 +97,7 @@ public class ProgrammeDAO implements ICrud {
 				singleProgramme.add(resultSet.getString("PROGCODE"));
 				singleProgramme.add(resultSet.getString("PROGNAME"));				
 				singleProgramme.add(resultSet.getString("PROGDESCRIPTION"));				
+				singleProgramme.add(resultSet.getString("CPNAME"));				
 				singleProgramme.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("PROSTATUS")));				
 				singleProgramme.add(resultSet.getString("PROGSTARTDATE"));				
 				singleProgramme.add(resultSet.getString("PROGEXPIRYDATE"));				
