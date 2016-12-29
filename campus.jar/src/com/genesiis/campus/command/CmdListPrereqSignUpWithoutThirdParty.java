@@ -5,24 +5,22 @@ package com.genesiis.campus.command;
 //20161207 DN C18: modified execute() to include view.setCollection(preRequisteCollnWrapper) call from one place
 //20161209 DN C18: code refactor execute() to add usertype logic
 //20161214 DN CAMP:18 setTempdata(int USERTYPE) temporary method created to by pass the USERTYPE table data issue
+//20161229 DN CAMP18: removed unnecessary imports.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.RowStudentForJason;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.UserType;
-import com.genesiis.campus.entity.Country2DAO;
-import com.genesiis.campus.entity.model.Town;
-import com.google.gson.Gson;
-
-import org.apache.log4j.Logger;
 
 public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 
