@@ -13,6 +13,8 @@ package com.genesiis.campus.validation;
 //20161220 JH c39-add-course-provider : added LIST_PROVIDER_REGISTRATION_PAGE
 //20161220 JH c39-add-course-provider : added DISPLAY_TOWN_DATA
 //20161222 JH c39-add-course-provider : added COURSE_PROVIDER_USERNAME_VALIDATION
+//20161229 JH c39-add-course-provider : removed COURSE_PROVIDER_USERNAME_VALIDATION
+//20161229 JH c39-add-course-provider : added LIST_COUESE_PROVIDER_TYPES
 
 /**
  * Operation class facilitate in binding the CCO
@@ -28,7 +30,7 @@ public enum Operation {
 	COURSE_PROVIDER_VALIDATION("COURSE_PROVIDER_VALIDATION", ResponseType.JSON, "" ),
 	LIST_PROVIDER_REGISTRATION_PAGE("LIST_PROVIDER_REGISTRATION_PAGE" , ResponseType.JSON, ""),
 	DISPLAY_TOWN_DATA("DISPLAY_TOWN_DATA", ResponseType.JSON, ""),
-	COURSE_PROVIDER_USERNAME_VALIDATION("COURSE_PROVIDER_USERNAME_VALIDATION", ResponseType.JSON, "");		
+	LIST_COUESE_PROVIDER_TYPES("LIST_COUESE_PROVIDER_TYPES", ResponseType.JSON, "");
 	
 	private final String commandString;
 	private final ResponseType responseType;
