@@ -49,7 +49,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 			switch (Operation.getOperation(cco)) {
 			case SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER:
 				final CourseProvider couseProvider=new CourseProvider();
-				couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
+				//couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 				final Collection<Collection<String>> activeProviderList = new CourseProviderDAO().findById(couseProvider);				
 				iView.setCollection(activeProviderList);
 				break;
