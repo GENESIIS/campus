@@ -8,8 +8,7 @@
 </head>
 <body>
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
-	<form action="/TutorController" method="post"
-		onsubmit="return (validateTutorFileds())">
+	<form action="/TutorController" method="post">
 		<table align="center">
 			<!-- <tr>
 				<td>
@@ -188,8 +187,6 @@
 	
 	<script type="text/javascript"
 		src="\dist\bower-components\jquery\jquery.min.js"></script>
-	<script src="/dist/js/tutor-helper.js"></script>
-	<script src="/dist/js/validator.js"></script>
 	
 </body>
 </html>

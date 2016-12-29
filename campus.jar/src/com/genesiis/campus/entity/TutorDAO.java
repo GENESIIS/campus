@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161222 CW c38-view-update-tutor-profile added country name & Town Name detail calling to findById. 
 //20161223 CW c38-view-update-tutor-profile added update() method
 //20161227 CW c38-view-update-tutor-profile modified update() method
+//20161229 CW c38-view-update-tutor-profile modified update() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +48,7 @@ public int add(Object object) throws SQLException, Exception {
 		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
 		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
 		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
-		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
+		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,TUTORSTATUS, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
 		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
 		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
 				
@@ -82,8 +83,8 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(21, tutor.getInstagramId());
 			preparedStatement.setString(22, tutor.getViber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
-			tutor.setIsApproved(0);
-			preparedStatement.setInt(24, 0);
+			tutor.setIsApproved(false);
+			preparedStatement.setInt(24, 3); // initially tutor should be in pending status
 		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
 			preparedStatement.setInt(25, 0);
 			preparedStatement.setString(26, tutor.getAddressLine1());
@@ -123,7 +124,7 @@ public int add(Object object) throws SQLException, Exception {
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
 		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
 		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
-		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , ISACTIVE = ? , ADDRESS1 = ? , ");
+		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
 		queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
 		queryBuilder.append("MODBY = ? ");
 		queryBuilder.append("WHERE USERNAME = ?;");
@@ -164,10 +165,13 @@ public int add(Object object) throws SQLException, Exception {
 		
 			preparedStatement.setString(21, tutor.getViber());
 			preparedStatement.setString(22, tutor.getWhatsAppId());
-			tutor.setIsApproved(0);
-			preparedStatement.setInt(23, 0);
+			
+			System.out.println("isApproved = : " + tutor.getIsApproved());
+			//tutor.setIsApproved(tutor.getIsApproved());
+						
+			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
 		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
-			preparedStatement.setInt(24, 0);			
+			preparedStatement.setInt(24, tutor.getTutorStatus());			
 			preparedStatement.setString(25, tutor.getAddressLine1());
 			
 			preparedStatement.setString(26, tutor.getAddressLine2());
@@ -285,9 +289,11 @@ public int add(Object object) throws SQLException, Exception {
 					countryCode = Integer.parseInt(rs.getString("LANDPHONECOUNTRYCODE"));
 					CountryDAO country = new CountryDAO();
 					countryName = country.findCountryByCode(countryCode);
-				}
-				
+				}			
+
 				singleTutorList.add(countryName);
+				singleTutorList.add(rs.getString("ISAPPROVED"));
+				singleTutorList.add(rs.getString("TUTORSTATUS"));
 
 				allTutorList.add(singleTutorList);
 			}

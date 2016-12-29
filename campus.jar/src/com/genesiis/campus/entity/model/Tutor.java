@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20161121 CM c36-add-tutor-information INIT Tutor.java
+//20161229 CW c38-view-update-tutor-profile removed isActive field & add tutorStatus field
 
 import java.sql.Date;
 
@@ -36,8 +37,8 @@ public class Tutor {
 	private String password;
 	private String town;
 	private int usertype;
-	private int isActive;
-	private int isApproved;
+	private int tutorStatus;
+	private boolean isApproved;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
@@ -407,26 +408,26 @@ public class Tutor {
 	/**
 	 * @return the isActive
 	 */
-	public int getIsActive() {
-		return isActive;
+	public int getTutorStatus() {
+		return tutorStatus;
 	}
 	/**
 	 * @param isActive the isActive to set
 	 */
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
+	public void setTutorStatus(int tutorStatus) {
+		this.tutorStatus = tutorStatus;
 	}
 	
 	/**
 	 * @return the isApproved
 	 */
-	public int getIsApproved() {
+	public boolean getIsApproved() {
 		return isApproved;
 	}
 	/**
 	 * @param isApproved the isApproved to set
 	 */
-	public void setIsApproved(int isApproved) {
+	public void setIsApproved(boolean isApproved) {
 		this.isApproved = isApproved;
 	}
 	/**
