@@ -5,9 +5,9 @@
 // w3IncludeHTML();
 
 // Loading landing image slider
-$(function() {
+/*$(function() {
     $(".rslides").responsiveSlides();
-});
+});*/
 
 
 // SlideToggle Controller

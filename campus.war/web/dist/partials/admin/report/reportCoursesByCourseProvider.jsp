@@ -30,7 +30,7 @@
     <script src="../../../bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="../../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     <script src="../../../js/main.js"></script>
-    <script src="../../../js/image-slides.js"></script>
+    <!-- <script src="../../../js/image-slides.js"></script> -->
     <script src="/dist/js/report/courses-by-provider.js"></script>
 </head>
 
@@ -132,12 +132,12 @@
                 <label for="">Course Provider: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <!-- <input class="txt-course-provider" type="text"> -->
+                <input class="txt-course-provider" type="text">
                 
-                <input class="txt-course-provider" type="text" name="providerlist" id="providerlist"
+               <!--  <input class="txt-course-provider" type="text" name="providerlist" id="providerlist"
 									list="providerName" placeholder="-- Select Provider --" />
 								<datalist id="providerName" >
-								</datalist>
+								</datalist> -->
             </div>
             <!-- first row -->
 
