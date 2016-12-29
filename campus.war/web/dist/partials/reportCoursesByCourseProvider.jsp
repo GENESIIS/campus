@@ -70,23 +70,34 @@ tr:nth-child(even) {
 								<datalist id="providerName">
 								</datalist>
 							</div> -->
+							<div>
+							Course Provider Status:
+							<input type="radio" name="providerStatus" value="ACTIVE"> Active
+  							<input type="radio" name="providerStatus" value="INACTIVE"> Inactive
+							</div>
+							<br>
 							<div class="drop-holder">
+							Course Provider:
 								<input type="text" name="providerlist" id="providerlist"
 									list="providerName" placeholder="-- Select District --"  required/>
 								<datalist id="providerName" >
 								</datalist>
 							</div>
+							<br>
 							<div>
-								Status : 
+								Course Status : 
                                 <input type="radio" name="status" value="ACTIVE"> Active
   								<input type="radio" name="status" value="INACTIVE"> Inactive
 							</div>
+							<br>
 							<div>
 								Start Date : <input type="date" id="startdate" name="search">
 							</div>
+							<br>
 							<div>
 								End Date : <input type="date" id="enddate" name="search">
 							</div>
+							<br>
 							<div>
 								<button type="submit" id="clearParam" >Clear</button>
 								<button type="submit" id="searchList" >Search
