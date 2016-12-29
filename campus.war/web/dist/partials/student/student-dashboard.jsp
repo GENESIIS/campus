@@ -6,6 +6,7 @@
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static carousel template code that is replaced at runtime with dynamically produced element list --%>
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for institute list which, when running, 
 				is replaced with dynamically produced institute list --%>
+<%-- 20161229 MM c25-student-create-dashboard-MP Made minor modification to make it possible to get details from the session  --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -126,7 +127,7 @@
                     <!-- End profile image -->
 
                     <div class="prf-name">
-                        <h2>Kalana Perera</h2>
+                    	<h2>Kalana Perera <%-- {sessionScope.userFirstName} {sessionScope.userLastName} --%></h2>
                         <h3>University of Colombo</h3>
                         <h4>Kandy</h4>
                     </div>
