@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161102 JH c7-higher-education-landing-page getDuration() created
 //20161115 JH c7-higher-education-landing-page isEmpty()method modified to support any string validation
 //20161115 JH c7-higher-education-landing-page add method comments
+//20161229 JH c39-add-course-provider isEmpty() method modified
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class Validator {
 	 */
 	public boolean isEmpty(String parameter) {
 		boolean valid = false;
-		if (parameter == null) {
+		if ((parameter == null) || (parameter == "")) {
 			valid = true;
 		}
 
