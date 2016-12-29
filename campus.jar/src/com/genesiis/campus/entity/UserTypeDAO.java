@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //			  initial version of the UserTypeDAO.java created
 //20161214 DN CAM:18 added userTypeString to the prepared statement in findById()
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
+//20161229 JH c39-add-course-provider findById(): moved object type casting statement inside the try block, closed resource ResultSet
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,8 +44,10 @@ public class UserTypeDAO implements ICrud {
 			throws SQLException, Exception {
 		Connection userTypeConnection = null;
 		PreparedStatement prepaire = null;
-		String userTypeString = (String) code;
+		ResultSet userCode = null;
+
 		try {
+			String userTypeString = (String) code;
 			Collection<Collection<String>> outerWrapper = new ArrayList<Collection<String>>();
 			userTypeConnection = createDatabaseConnection();
 
@@ -55,7 +58,7 @@ public class UserTypeDAO implements ICrud {
 			prepaire = userTypeConnection.prepareStatement(getUserTypeSQL
 					.toString());
 			prepaire.setString(1, userTypeString);
-			ResultSet userCode = prepaire.executeQuery();
+			userCode = prepaire.executeQuery();
 
 			while (userCode.next()) {
 				final Collection<String> singleUSerTypeList = new ArrayList<String>();
