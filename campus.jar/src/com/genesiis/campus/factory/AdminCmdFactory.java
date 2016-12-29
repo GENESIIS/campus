@@ -7,7 +7,7 @@ package com.genesiis.campus.factory;
 //20161208 JH c39-add-course-provider added new map for COURSE_PROVIDER_VALIDATION
 //20161209 JH c39-add-course-provider COURSE_PROVIDER_VALIDATION map modified
 //20161220 JH c39-add-course-provider added new map for LIST_PROVIDER_REGISTRATION_PAGE
-//20161222 JH c39-add-course-provider added new map for LIST_COUESE_PROVIDER_TYPES
+//20161229 JH c39-add-course-provider added new map for LIST_COUESE_PROVIDER_TYPES
 
 
 import com.genesiis.campus.command.CmdCourseProviderAccountValidate;
