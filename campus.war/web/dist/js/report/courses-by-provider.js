@@ -63,7 +63,7 @@ $(document).ready(function() {
 
 
 function getProviderSearchData(response){
-	//$('#resultSetDiv').hide();
+	$('#resultSetDiv').hide();
 	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
 	allproviderListCollection=response.courseProviderList;
 	var htmlstr="";	
@@ -114,16 +114,16 @@ function loadResultSet(event){
 	});
 }
 function populateResultTable(response){
-	$('#resultSetDiv').hide();
-	var coursesListTable = $("#table");
+	//$('#resultSetDiv').hide();
+	var coursesListTable = $("#tBody");
 	coursesListTable.find('tr').remove();
-	 var cCode='Course Code';
+	/* var cCode='Course Code';
 	var cName='Course Name';
 	var cDes='Description';
 	var cStatus='Status';
 	var cStartDate='Display Start Date';
-	var cExDate='Expiry Date';
-	var headertr = '<tr>' ;
+	var cExDate='Expiry Date';*/
+	/*var headertr = '<tr>' ;
 	headertr += '<td> # </td>';
 	headertr += '<td>' + cCode  + '</td>';
 	headertr += '<td>' + cName  + '</td>'; 
@@ -131,7 +131,7 @@ function populateResultTable(response){
 	headertr += '<td>' + cStatus  + '</td>'; 
 	headertr += '<td>' + cStartDate  + '</td>'; 
 	headertr += '<td>' + cExDate  + '</td>'; 
-	coursesListTable.append(headertr);
+	coursesListTable.append(headertr);*/
 	var count=1;
 	$.each(response.coursesResultList, function(index, value) {	
 		$('#resultSetDiv').show();
@@ -139,15 +139,17 @@ function populateResultTable(response){
 		var code = value[0].toString();
 		var name = value[1].toString();
 		var des = value[2].toString();
-		var cStatus = value[3].toString();		
-		var sDate = value[4].toString();
-		var eDate = value[5].toString();
+		var cpName = value[3].toString();
+		var cStatus = value[4].toString();		
+		var sDate = value[5].toString();
+		var eDate = value[6].toString();
 		
 		var tr = '<tr>' ;
 		tr += '<td>' + count++  + '</td>';
 		tr += '<td>' + code  + '</td>';
 		tr += '<td>' + name  + '</td>';
 		tr += '<td>' + des  + '</td>';
+		tr += '<td>' + cpName  + '</td>';
 		tr += '<td>' + cStatus  + '</td>';
 		tr += '<td>' + sDate  + '</td>';
 		tr += '<td>' + eDate  + '</td>';
@@ -159,7 +161,8 @@ function populateResultTable(response){
 
 function clearParameters(event){
 	$('#providerlist').val("");		
-	$('input:radio[name=status]').prop('checked', false);
+	$('input:radio[name=providerStatus]').prop('checked', false);
+	$('input:radio[name=courseStatus]').prop('checked', false);
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
 }
