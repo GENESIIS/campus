@@ -73,7 +73,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			ArrayList<String> errorMessages = validateCourseProvider(helper);
 			if(errorMessages.size()==0){
 				log.info("no errors");
-				
+							
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
 				String courseProviderTown = helper.getParameter("selectedTown");
@@ -185,6 +185,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				
 			}else{
 				log.info("errors");
+				systemMessage = errorMessages.toString()+ SystemMessage.EMPTY_FIELD.message();
 	
 			}
 			
@@ -207,31 +208,51 @@ public class CmdAddFeaturedProvider implements ICommand{
 	
 	public ArrayList<String> validateCourseProvider(IDataHelper helper){
 		Validator validator = new Validator();
-		boolean isValid = true;
+	//	boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
 
-		
-		if(!validator.isEmpty(helper.getParameter("expirationDate"))){
-			errorString.add("Expiration Date, ");
-	
-		}if(!validator.isEmpty(helper.getParameter("selectedCountry"))){
-			errorString.add("Country, ");
-		}if(!validator.isEmpty(helper.getParameter("selectedTown"))){
-			errorString.add("Town, ");
-		}if(!validator.isEmpty(helper.getParameter("providerStatus"))){
-			errorString.add("Course Provider status, ");
-		}if(!validator.isEmpty(helper.getParameter("uniquePrefix"))){
-			errorString.add("Unique Prefix, ");
-		}if(!validator.isEmpty(helper.getParameter("shortName"))){
-			errorString.add("Short Name, ");
-		}if(!validator.isEmpty(helper.getParameter("providerName"))){
-			errorString.add("Provider Name, ");
-		}if(!validator.isEmpty(helper.getParameter("areaCode"))){
-			errorString.add("Area Code, ");
-		}if(!validator.isEmpty(helper.getParameter("land1"))){
-			errorString.add("Land number 1, ");
-		}if(!validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code, ");
+		if(validator.isEmpty(helper.getParameter("featured-oneoff"))){
+			errorString.add("Featured or One-off selection ");
+		}if(validator.isEmpty(helper.getParameter("providerName"))){
+			errorString.add("Provider Name ");
+		}if(validator.isEmpty(helper.getParameter("shortName"))){
+			errorString.add("Short Name ");
+		}if(validator.isEmpty(helper.getParameter("uniquePrefix"))){
+			errorString.add("Unique Prefix ");
+		}if(validator.isEmpty(helper.getParameter("aboutMe"))){
+			errorString.add("About Me ");
+		}if(validator.isEmpty(helper.getParameter("specialFeatures"))){
+			errorString.add("SpecialFeatures ");
+		}if(validator.isEmpty(helper.getParameter("aboutMe"))){
+			errorString.add("About Me ");
+		}if(validator.isEmpty(helper.getParameter("inquiryMail"))){
+			errorString.add("Inquiry Mail ");
+		}if(validator.isEmpty(helper.getParameter("generalEmail"))){
+			errorString.add("General Email ");
+		}if(validator.isEmpty(helper.getParameter("expirationDate"))){
+			errorString.add("Expiration Date ");
+		}if(validator.isEmpty(helper.getParameter("selectedCountry"))){
+			errorString.add("Country ");
+		}if(validator.isEmpty(helper.getParameter("selectedTown"))){
+			errorString.add("Town ");
+		}if(validator.isEmpty(helper.getParameter("providerStatus"))){
+			errorString.add("Course Provider status ");
+		}if(validator.isEmpty(helper.getParameter("areaCode"))){
+			errorString.add("Area Code ");
+		}if(validator.isEmpty(helper.getParameter("land1"))){
+			errorString.add("Land number 1 ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("networkCode"))){
+			errorString.add("Network code ");
 		}
 		
 		return errorString;
