@@ -24,21 +24,21 @@
 <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
 <!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="/dist/js/main.js"></script>
-<script src="/dist/js/image-slides.js"></script>
 
 </head>
 
 <body>
-	<%-- <jsp:include page="/dist/partials/student/SessionDetailsJSTL.jsp"></jsp:include> --%>
+	<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
 
-	<c:if test="${sessionScope.currentSessionUser == null}">
-<!-- 	not valid user!! -->
- <c:redirect url="/dist/partials/login.jsp" />
+	<%-- 	<c:if test="${sessionScope.currentSessionUser == null}"> --%>
+	<!-- 	not valid user!! -->
+	<%--  <c:redirect url="/dist/partials/login.jsp" /> --%>
 
-	</c:if>
+	<%-- 	</c:if> --%>
 
 	<%
 		//allow access only if session exists
@@ -141,7 +141,9 @@
 						<a href="javascript:">Logout</a>
 						<h3>Hi ${sessionScope.user}, Login successful.</h3>
 						<a href="/dist/partials/student/SessionDataLoader.jsp">
-							Session details checker </a> <br>
+							Session details checker Script lets</a> <br> <a
+							href="/dist/partials/student/SessionDetailsJSTL.jsp"> Session
+							details checker JSTL</a> <br>
 					</div>
 				</div>
 				<!-- End keyword search -->
@@ -167,7 +169,7 @@
 						<!-- End profile image -->
 
 						<div class="prf-name">
-							<h2>Kalana Perera</h2>
+							<h2>${col_stuCode}</h2>
 						</div>
 						<!-- End profile name -->
 						<div class="follow-me">
