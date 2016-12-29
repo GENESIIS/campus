@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20161209 JH c39-add-course-provider findById method modified: removed query used to get userType
 //20161219 JH c39-add-course-provider code review modifications: use generics 
 //20161219 JH c39-add-course-provider fixed error in prepared statement
+//20161229 JH c39-add-course-provider added queries to insert data into course provider town table
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.UserType;
@@ -47,17 +49,16 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
 		int status = 0;
 		int generatedKey = 0;
 
 		try {
-			Map map = (HashMap) (object);
+			Map map = (HashMap) object;
 
-			CourseProvider courseProvider = new CourseProvider();
-			CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
-
-			courseProvider = (CourseProvider) map.get("provider");
-			courseProviderAccount = (CourseProviderAccount) map.get("account");
+			CourseProvider courseProvider  = (CourseProvider) map.get("provider");
+			CourseProviderAccount courseProviderAccount = (CourseProviderAccount) map.get("account");
+			CourseProviderTown courseProviderTown = (CourseProviderTown) map.get("town");
 
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
@@ -94,31 +95,27 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
 					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
+			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
+					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
+
 			preparedStatement = conn.prepareStatement(provider,
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
-			// Date d1 = new Date();
-			// java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+			//set course provider basic details
 			preparedStatement.setString(1, courseProvider.getUniquePrefix());
 			preparedStatement.setString(2, courseProvider.getShortName());
 			preparedStatement.setString(3, courseProvider.getName());
 			preparedStatement.setString(4, courseProvider.getDescription());
 			preparedStatement.setString(5, courseProvider.getGeneralEmail());
-			preparedStatement.setString(6,
-					courseProvider.getCourseInquiryEmail());
-			preparedStatement.setString(7,
-					courseProvider.getLandPhoneCountryCode());
-			preparedStatement.setString(8,
-					courseProvider.getLandPhoneAreaCode());
+			preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
+			preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
+			preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
 			preparedStatement.setString(9, courseProvider.getLandPhoneNo());
 			preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
 			preparedStatement.setString(11, courseProvider.getFaxNo());
-			preparedStatement.setString(12,
-					courseProvider.getMobilePhoneCountryCode());
-			preparedStatement.setString(13,
-					courseProvider.getMobilePhoneNetworkCode());
-			preparedStatement.setString(14,
-					courseProvider.getMobilePhoneNumber());
+			preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
+			preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
+			preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
 			preparedStatement.setString(15, courseProvider.getSpeciality());
 			preparedStatement.setString(16, courseProvider.getWeblink());
 			preparedStatement.setString(17, courseProvider.getFacebookURL());
@@ -136,27 +133,30 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		//	preparedStatement.setInt(29, courseProvider.getHeadOffice());
 			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
 			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
-			preparedStatement.setInt(31,
-					courseProvider.getCourseProviderStatus());
-			preparedStatement
-					.setInt(32, courseProvider.getCourseProviderType());
-		//	preparedStatement
-				//	.setInt(34, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
+			preparedStatement.setInt(32, courseProvider.getCourseProviderType());
 			preparedStatement.setInt(33, courseProvider.getPrincipal());
 			preparedStatement.setString(34, courseProvider.getCrtBy());
 			preparedStatement.setString(35, courseProvider.getModBy());
-
+			
+			// set course provider account details
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, courseProviderAccount.getName());
-			preparedStatement2
-					.setString(2, courseProviderAccount.getUsername());
-			preparedStatement2
-					.setString(3, courseProviderAccount.getPassword());
-			preparedStatement2.setString(4,
-					courseProviderAccount.getDescription());
+			preparedStatement2.setString(2, courseProviderAccount.getUsername());
+			preparedStatement2.setString(3, courseProviderAccount.getPassword());
+			preparedStatement2.setString(4,courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
+			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
 			preparedStatement2.setString(8, courseProviderAccount.getCrtBy());
 			preparedStatement2.setString(9, courseProviderAccount.getModBy());
+			
+			
+			//set course provider town details
+			preparedStatement3 = conn.prepareStatement(town);
+			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
+			preparedStatement3.setInt(2, courseProviderTown.getCourseProvider());
+			preparedStatement3.setInt(3, courseProviderTown.getTown());
+			
 
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
@@ -168,8 +168,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				status = 1;
 				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
 				preparedStatement2.setInt(6, generatedKey);
-				preparedStatement2.setInt(7, 2);
-			//	preparedStatement2.setInt(7, userTypeId);
+			//	preparedStatement2.setInt(7, 2);
 
 				status = preparedStatement2.executeUpdate();
 			}
