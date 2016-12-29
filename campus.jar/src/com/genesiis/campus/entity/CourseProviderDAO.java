@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //DJ 20161206 c51-report-courses-by-course-provider-MP-dj created CourseProviderDAO.java
+//DJ 20161229 c51-report-courses-by-course-provider-MP-dj Iplement findById() method 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,8 +77,34 @@ public class CourseProviderDAO  implements ICrud{
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet =null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX  FROM [CAMPUS].COURSEPROVIDER PROV WHERE ");
+			
+			if(){
+			sb.append(" PROV.COURSEPROVIDERSTATUS = ? ");
+			}
+
+			stmt = conn.prepareStatement(sb.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
+
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return allProviderList;
 	}
 
 	@Override
