@@ -4,9 +4,13 @@ package com.genesiis.campus.command;
 //20161227 MM c25-student-create-dashboard-MP - Organised imports; declared Logger reference
 //20161228 MM c25-student-create-dashboard-MP - Added code to retrieve institutes from the same result set that
 //				was returned as the recommended programmes
+//20161229 MM c25-student-create-dashboard-MP - Modified code in execute(IDataHelper) so the number of programmes
+//				to fetch is specified from the command class and sent to DAO method; also modified code so it uses 
+//				the new RecommendedProgrammesSearchDTO instead of a Student object to send parameters to the DAO method 
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;
+import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
@@ -49,11 +53,12 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 				if (Validator.isNumber(studentCodeStr)) {
 					
 					int studentCode = Integer.parseInt(studentCodeStr);
+					int numberOfRecommendedProgrammesToShow = 10; // This can be fetched from the SystemConfig DB table in the future
 					
-					Student student = new Student();
-					student.setCode(studentCode);
-					
-					// Get profile information of Student represented by studentCode
+					RecommendedProgrammesSearchDTO recommendedProgrammesSearchDto = new RecommendedProgrammesSearchDTO();
+					recommendedProgrammesSearchDto.setStudent(studentCode);
+					recommendedProgrammesSearchDto.setNumberOfProgrammes(numberOfRecommendedProgrammesToShow);
+
 					StudentDashboardDAO studentDashboardDao = new StudentDashboardDAO();
 					Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 					
@@ -62,7 +67,7 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 					int indexOfCourseProviderName = 18;
 					Map<String, List<String>> courseProviderCodeToCourseProviderNamesMap = new LinkedHashMap<String, List<String>>();
 					
-					dataCollection = studentDashboardDao.findById(student);		
+					dataCollection = studentDashboardDao.findById(recommendedProgrammesSearchDto);		
 
 					for (Collection<String> prog : dataCollection) {
 						int index  = 0;
