@@ -18,20 +18,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus.lk</title>
 
+
+
     <!-- Bootstrap & CSS Style-->
-    <link href="../../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/image-slides.css" rel="stylesheet">
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
+    <!-- <link href="/dist/css/image-slides.css" rel="stylesheet"> -->
 
     <!-- W3-Include -->
     <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
-    <!-- jQuery & Other js -->
-    <script src="../../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    <script src="../../../js/main.js"></script>
-    <!-- <script src="../../../js/image-slides.js"></script> -->
-    <script src="/dist/js/report/courses-by-provider.js"></script>
+    
 </head>
 
 <body>
@@ -51,55 +48,6 @@
             <!-- End home button -->
             <div class="menu-tabs clearfix">
 
-                <!-- Main menu tabs -->
-                <!--<div class="top-menus">-->
-                    <!--<ul class="list-inline">-->
-                        <!--<li><a href="">All Courses</a></li>-->
-                        <!--<li><a href="">About Us</a></li>-->
-                        <!--<li><a href="">Contact Us</a></li>-->
-                        <!--<li><a href="dist/partials/student/student-dashboard.html">News</a></li>-->
-                        <!--<li><a href="">F & Q</a></li>-->
-                        <!--<li><a href="">Rss</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!-- End Main menu tabs -->
-
-                <!-- Course Category tabs -->
-                <!--<div class="bottom-menus" id="category-list">-->
-                    <!--<ul class="list-inline">-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" class="" value="LIST_CATEGORY_LANDING_PAGE">Pre School</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">School Education</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" class="" value="LIST_CATEGORY_LANDING_PAGE">Higher Education</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Corporate Training</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Vocational Training</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<form action="">-->
-                                <!--<button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Talent & Skill</button>-->
-                            <!--</form>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!-- End Course Category tabs -->
             </div>
             <div class="keyword-search pull-right">
                 <div class="search-bar">
@@ -128,25 +76,40 @@
 
     <div class="page-holder clearfix">
         <div class="input-area clearfix">
-            <div class="ctg-name col-lg-3 col-sm-12 col-md-3">
-                <label for="">Course Provider: </label>
+
+<!--   Developer design       -->
+				<!-- <div>
+					Course Provider Status: <input type="radio" name="providerStatus"
+						value="ACTIVE"> Active <input type="radio"
+						name="providerStatus" value="INACTIVE"> Inactive
+				</div> -->
+				
+				<div class="ctg-name col-lg-3 col-sm-12 col-md-3">
+                <label for="">Course Provider Status: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="txt-course-provider" type="text">
-                
-               <!--  <input class="txt-course-provider" type="text" name="providerlist" id="providerlist"
+                <input class="btn-radio" type="radio" name="providerStatus"  value="ACTIVE"><span>Activate</span>
+                <input class="btn-radio" type="radio" name="providerStatus"  value="INACTIVE"><span>Deactivate</span>
+            </div>
+<!--   Developer design end      -->
+
+			<div class="ctg-name col-lg-3 col-sm-12 col-md-3">
+                <label for="">Course Provider: </label>
+            </div>
+            <div class="ctg-input col-lg-9 col-md-9 col-sm-12">                
+              <input class="txt-course-provider" type="text" name="providerlist" id="providerlist"
 									list="providerName" placeholder="-- Select Provider --" />
 								<datalist id="providerName" >
-								</datalist> -->
+								</datalist> 
             </div>
             <!-- first row -->
 
             <div class="ctg-name col-lg-3 col-sm-12 col-md-3">
-                <label for="">Status: </label>
+                <label for=""> Course Status: </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
-                <input class="btn-radio" type="radio"><span>Activate</span>
-                <input class="btn-radio" type="radio"><span>Deactivate</span>
+                <input class="btn-radio" type="radio" name="courseStatus"  value="ACTIVE"><span>Activate</span>
+                <input class="btn-radio" type="radio" name="courseStatus"  value="INACTIVE"><span>Deactivate</span>
             </div>
             <!-- second row -->
 
@@ -174,12 +137,12 @@
             <div class="btn-actions">
                 <div class="btn-left col-md-6 col-sm-12 col-lg-6">
                     <div class="btn-clear">
-                        <input type="submit" value="Clear">
+                        <input type="submit" id="clearParam" value="Clear">
                     </div>
                     <!-- end btn-clear -->
 
                     <div class="btn-search">
-                        <input type="submit" value="Search">
+                        <input type="submit" id="searchList" value="Search">
                     </div>
                     <!-- end btn-search -->
                 </div>
@@ -211,7 +174,7 @@
                             <th>End Date </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table">
                         <tr>
                             <td>1</td>
                             <td>BSc in IT</td>
@@ -254,17 +217,18 @@
 
 </div>
 <!-- End Dashboard  -->
-
-<!-- Footer -->
-<!--<footer w3-include-html="../layout/footer.html"></footer>-->
-<footer>
-    <div class="ft-top">
-
-    </div>
-    <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright © Campus.lk</label>
-    </div>
-</footer>
+	
+	<!-- jQuery & Other js -->
+    <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    <script src="/dist/js/main.js"></script>
+    <!-- <script src="../../../js/image-slides.js"></script> -->
+    <script src="/dist/js/report/courses-by-provider.js"></script>
+<!-- W3-Include -->
+	<!-- <script src="../bower-components/w3/w3data.js"></script> -->
+	<!-- Footer -->
+	<jsp:include page="/dist/partials/layout/footer.jsp" />
+	<!--End  Footer -->
 
 </body>
 </html>

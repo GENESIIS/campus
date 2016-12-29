@@ -31,15 +31,21 @@ p    {color: blue;}
 	</div>
 	<hr>
 	<div>		
-		<a href="dist/partials/admin/report/reportCoursesByCourseProvider.jsp"><u>Courses By
-			Course Provider </u></a>
+		<a href="dist/partials/reportCoursesByCourseProviderOLD.jsp"><u>Courses By
+			Course Provider OLD </u></a>
 	</div>
 	<hr>
 	<div>		
-		<a href="/dist/partials/admin/report/reportCoursesByCourseProvider.jsp"><u>Courses By
+		<a href="/dist/partials/reportCoursesByCourseProvider.jsp"><u>Courses By
 			Course Provider3333 </u></a>
 	</div>
 	<hr>
+	<!-- <hr>
+	<div>		
+		<a href="/dist/partials/admin/report/reportCoursesByCourseProviderREfact.jsp"><u>Courses By
+			Course Provider Refactor </u></a>
+	</div>
+	<hr> -->
 
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>

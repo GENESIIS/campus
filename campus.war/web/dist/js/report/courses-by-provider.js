@@ -31,7 +31,7 @@ $(document).ready(function() {
 		}
 	});
 	
-/*	//Identify course provider status click
+	//Identify course provider status click
 	$("input[name='providerStatus']").change(function(){		
 		var statusValue=$('input:radio[name=providerStatus]:checked').val();
 		var cpStatusCheck=0;
@@ -50,21 +50,21 @@ $(document).ready(function() {
 		});
 		
 		$('#providerName').html(htmlstr);
-	});*/
+	});
 	
-	/*$('#searchList').on('click', function(event) {
+	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});	
 	
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
-	});*/		
+	});	
 });
 
 
 function getProviderSearchData(response){
 	//$('#resultSetDiv').hide();
-	//$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
 	allproviderListCollection=response.courseProviderList;
 	var htmlstr="";	
 	$.each(response.courseProviderList, function(index, value) {		
@@ -77,12 +77,11 @@ function getProviderSearchData(response){
 	$('#providerName').html(htmlstr);	
 } 
 
-/*function loadResultSet(event){	
-	var districtName = $('#providerlist').val();
+function loadResultSet(event){	
 	var cpCode= $('#providerlist').val();
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
-	var statusValue=$('input:radio[name=status]:checked').val();
+	var statusValue=$('input:radio[name=courseStatus]:checked').val();
 	
 	$.ajax({
 		url:'../../ReportController',
@@ -164,4 +163,3 @@ function clearParameters(event){
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
 }
-*/
