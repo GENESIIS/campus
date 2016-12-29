@@ -7,6 +7,8 @@ package com.genesiis.campus.command;
 //20161229 MM c25-student-create-dashboard-MP - Modified code in execute(IDataHelper) so the number of programmes
 //				to fetch is specified from the command class and sent to DAO method; also modified code so it uses 
 //				the new RecommendedProgrammesSearchDTO instead of a Student object to send parameters to the DAO method 
+//20161229 MM c25-student-create-dashboard-MP - Added code in execute(IDataHelper) to make it ready to extract details 
+//				from the session
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;
@@ -25,6 +27,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 public class CmdListStudentRecommendedProgrammes implements ICommand {
 	
@@ -49,6 +53,9 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 		
 		try {
 			String studentCodeStr = "1"; // Get this from the session
+//			HttpSession session = helper.getSession(false);
+//			studentCodeStr = (String) session.getAttribute("userCode");
+			
 			if (studentCodeStr != null && !studentCodeStr.isEmpty()) {
 				if (Validator.isNumber(studentCodeStr)) {
 					
