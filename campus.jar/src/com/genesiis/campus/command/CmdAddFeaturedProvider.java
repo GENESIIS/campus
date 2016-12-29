@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 //20161206 JH c39-add-course-provider get accountStatus of the user account
 //20161208 JH c39-add-course-provider code modified due to entity class method changes
 //20161219 JH c39-add-course-provider code review modifications: use generics 
+//20161229 JH c39-add-course-provider code modified to get course provider town data
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -26,6 +27,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.OneOffCourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -61,6 +63,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
+		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 
 		String systemMessage = null;
 
@@ -76,7 +79,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 							
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
-				String courseProviderTown = helper.getParameter("selectedTown");
+				String selectedTown = helper.getParameter("selectedTown");
 						
 				String providerStatus = helper.getParameter("providerStatus");
 				if(providerStatus.equalsIgnoreCase("active")){
@@ -93,6 +96,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				Date parsed = format.parse(expireDate);
 				java.sql.Date sql = new java.sql.Date(parsed.getTime());
 		        
+				//set basic data
 				courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
 				courseProvider.setShortName(helper.getParameter("shortName"));
 				courseProvider.setName(helper.getParameter("providerName"));
@@ -121,17 +125,22 @@ public class CmdAddFeaturedProvider implements ICommand{
 				courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
 				courseProvider.setAddress1(helper.getParameter("address1"));
 				courseProvider.setAddress2(helper.getParameter("address2"));
-				courseProvider.setAddress3(helper.getParameter("address3"));
-				
+				courseProvider.setAddress3(helper.getParameter("address3"));			
 				courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 				courseProvider.setAdminAllowed(true);
 				courseProvider.setCourseProviderStatus(pStatus);
 				courseProvider.setCrtBy("admin");//to be update after the session is created
 				courseProvider.setModBy("admin");//to be update after the session is created
 
+				//set course provider town details
+				courseProviderTown.setActive(true);
+				courseProviderTown.setTown(Integer.parseInt(selectedTown));
+				courseProviderTown.setCrtBy("admin");
+				courseProviderTown.setModBy("admin");
 				
 				Map map = new HashMap();
 				map.put("provider", courseProvider);
+				map.put("town" , courseProviderTown);
 				
 				String providerType = helper.getParameter("featured-oneoff");
 				
