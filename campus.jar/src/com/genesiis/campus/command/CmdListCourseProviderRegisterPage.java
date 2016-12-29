@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161209 JH c39-add-course-provider CmdListCourseProviderRegisterPage.java created
 //20161220 JH c39-add-course-provider execute method coding: added switch case
+//20161229 JH c39-add-course-provider added new switch case LIST_COUESE_PROVIDER_TYPES 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 				int countryId = Integer.parseInt(helper.getParameter("country"));
 				townCollection = townDao.findById(countryId);
 				helper.setAttribute("townArrayList", townCollection);
+				break;
+			case LIST_COUESE_PROVIDER_TYPES:
 				break;
 			default:
 				Collection<String> signUpdata = new ArrayList<String>();
