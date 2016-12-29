@@ -50,6 +50,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement2 = null;
 		PreparedStatement preparedStatement3 = null;
+		ResultSet rs = null;
 		int status = 0;
 		int generatedKey = 0;
 
@@ -154,23 +155,30 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			//set course provider town details
 			preparedStatement3 = conn.prepareStatement(town);
 			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
-			preparedStatement3.setInt(2, courseProviderTown.getCourseProvider());
 			preparedStatement3.setInt(3, courseProviderTown.getTown());
+			preparedStatement3.setString(4, courseProviderTown.getCrtBy());
+			preparedStatement3.setString(5, courseProviderTown.getModBy());
 			
 
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
 
-			ResultSet rs = preparedStatement.getGeneratedKeys();
+			rs = preparedStatement.getGeneratedKeys();
 
 			if (rs.next()) {
 				generatedKey = rs.getInt(1);
 				status = 1;
 				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
 				preparedStatement2.setInt(6, generatedKey);
-			//	preparedStatement2.setInt(7, 2);
+				// preparedStatement2.setInt(7, 2);
 
 				status = preparedStatement2.executeUpdate();
+				
+				if(status > 0){
+					
+					preparedStatement3.setInt(2, generatedKey);
+					status = preparedStatement3.executeUpdate();
+				}
 			}
 
 			conn.commit();
@@ -194,6 +202,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			}
 			if (preparedStatement2 != null) {
 				preparedStatement2.close();
+			}if(preparedStatement3 != null){
+				preparedStatement3.close();
+			}if(rs != null){
+				rs.close();
 			}
 		}
 		return generatedKey;
