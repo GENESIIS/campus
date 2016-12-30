@@ -90,7 +90,7 @@ function loadResultSet(event){
 			cProviderCode:cpCode,
 			startDate:startDate,
 			endDate:endDate,
-			statusValue:statusValue			
+			courseStatus:statusValue			
 		},
 		datatype:"json",
 		success : function(response) {				
@@ -114,9 +114,9 @@ function loadResultSet(event){
 	});
 }
 function populateResultTable(response){
-	//$('#resultSetDiv').hide();
-	var coursesListTable = $("#tBody");
-	coursesListTable.find('tr').remove();
+	$('#resultSetDiv').hide();
+	var programmeListTable = $("#tBody");
+	programmeListTable.find('tr').remove();
 	/* var cCode='Course Code';
 	var cName='Course Name';
 	var cDes='Description';
@@ -132,8 +132,8 @@ function populateResultTable(response){
 	headertr += '<td>' + cStartDate  + '</td>'; 
 	headertr += '<td>' + cExDate  + '</td>'; 
 	coursesListTable.append(headertr);*/
-	var count=1;
-	$.each(response.coursesResultList, function(index, value) {	
+	var count=1;	
+	$.each(response.allProgrammeResultList, function(index, value) {
 		$('#resultSetDiv').show();
 	if(value!=null && value.length>0){ 
 		var code = value[0].toString();
@@ -153,7 +153,7 @@ function populateResultTable(response){
 		tr += '<td>' + cStatus  + '</td>';
 		tr += '<td>' + sDate  + '</td>';
 		tr += '<td>' + eDate  + '</td>';
-		coursesListTable.append(tr);
+		programmeListTable.append(tr);
 		
 	 }
 	});
