@@ -1,5 +1,7 @@
 package com.genesiis.campus.entity;
 
+//20161229 MM c25-student-create-dashboard-MP-mm INIT class and implemented findById(Object) 
+
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 
