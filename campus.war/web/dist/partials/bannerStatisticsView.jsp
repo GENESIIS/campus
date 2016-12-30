@@ -75,10 +75,10 @@
 								</datalist>
 							</div>
 							<div>
-								Start Date : <input type="date" id="startdate" name="search">
+								From Date : <input type="date" id="fromDate" name="search">
 							</div>
 							<div>
-								End Date : <input type="date" id="enddate" name="search">
+								To Date : <input type="date" id="toDate" name="search">
 							</div>
 							<div>
 								<button type="submit" id="clearParam">Clear</button>
