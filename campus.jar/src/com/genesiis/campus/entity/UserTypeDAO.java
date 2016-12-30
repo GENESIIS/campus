@@ -54,7 +54,7 @@ public class UserTypeDAO implements ICrud {
 			StringBuilder getUserTypeSQL = new StringBuilder(
 					"SELECT * FROM [CAMPUS].[USERTYPE] ");
 			getUserTypeSQL
-					.append(" WHERE USERTYPESTRING = ? AND ISACTIVE=1 ; ");
+					.append(" WHERE USERTYPESTRING = ?");
 			prepaire = userTypeConnection.prepareStatement(getUserTypeSQL
 					.toString());
 			prepaire.setString(1, userTypeString);
