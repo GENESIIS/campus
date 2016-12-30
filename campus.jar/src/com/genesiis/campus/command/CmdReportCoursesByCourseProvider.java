@@ -8,7 +8,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.model.CourseProvider;
-import com.genesiis.campus.entity.model.Programme;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
@@ -94,32 +94,33 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 			}
 
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-			//if (providerCode > 0) {
-				// List courses by course Providers
-				// param:cpcode,date range
-				final Programme programme = new Programme();
-				programme.setCourseProvider(providerCode);
-				programme.setProviderStatus(ApplicationStatus.getApplicationStatus(providerStatus));
-				programme.setProgrammeStatus(ApplicationStatus.getApplicationStatus(programmeStatus));
-				try {
-					if (UtilityHelper.isNotEmpty(startDateString)) {
-						programme.setDisplayStartDate(df.parse((startDateString)));
-					}
-					if (UtilityHelper.isNotEmpty(endDateString)) {
-						programme.setExpiryDate((Date) df.parse((endDateString)));
-					}
-
-				} catch (ParseException parseException) {
-					log.error("execute() : ParseException "	+ parseException.toString());
-					throw parseException;
+			// List courses by course Providers
+			final ProgrammeSearchDTO programme = new ProgrammeSearchDTO();
+			programme.setCourseProvider(providerCode);
+			programme.setProviderStatus(ApplicationStatus
+					.getApplicationStatus(providerStatus));
+			programme.setProgrammeStatus(ApplicationStatus
+					.getApplicationStatus(programmeStatus));
+			try {
+				if (UtilityHelper.isNotEmpty(startDateString)) {
+					programme.setDisplayStartDate(df.parse((startDateString)));
 				}
-				final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO().findById(programme);
-				helper.setAttribute("allProgrammeResultList", allProgrammeResultList);
-			//}
+				if (UtilityHelper.isNotEmpty(endDateString)) {
+					programme.setExpiryDate((Date) df.parse((endDateString)));
+				}
+
+			} catch (ParseException parseException) {
+				log.error("execute() : ParseException "
+						+ parseException.toString());
+				throw parseException;
+			}
+			final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO()
+					.findById(programme);
+			helper.setAttribute("allProgrammeResultList",
+					allProgrammeResultList);		
 		} catch (Exception exception) {
-		log.error("execute() : Exception " + exception.toString());
-		throw exception;
+			log.error("execute() : Exception " + exception.toString());
+			throw exception;
 		}
 	}
 }

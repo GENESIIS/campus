@@ -3,7 +3,7 @@ package com.genesiis.campus.entity;
 //DJ 20161128 c51-report-courses-by-course-provider-MP-dj created ProgrammeDAO.java
 //DJ 20161221 c51-report-courses-by-course-provider-MP-dj Used ApplicationStatus.getApplicationStatus() in findById()
 
-import com.genesiis.campus.entity.model.Programme;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -42,23 +42,23 @@ public class ProgrammeDAO implements ICrud {
 	}
 
 	/**
-	 * Retrieve Programmes result set
-	 * 
-	 * @param ProgrammeDTO
+	 * Retrieve Programmes result set join with course provider table.	 * 
+	 * @param ProgrammeSearchDTO
 	 * @author DJ
 	 * @return Collection
 	 */
+	@Override
 	public Collection<Collection<String>> findById(Object programmeDTO)
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		final Collection<Collection<String>> programmeList = new ArrayList<Collection<String>>();
-		Programme programme = new Programme();
+		ProgrammeSearchDTO programme = new ProgrammeSearchDTO();
 
 		try {
 			if (UtilityHelper.isNotEmptyObject(programmeDTO)) {
-				programme = (Programme) programmeDTO;
+				programme = (ProgrammeSearchDTO) programmeDTO;
 			} else {
 				return programmeList;
 			}
@@ -90,11 +90,6 @@ public class ProgrammeDAO implements ICrud {
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
-			//stmt.setInt(1, programme.getCourseProvider());
-			//stmt.setDate(2, new java.sql.Date(programme.getDisplayStartDate().getTime()));
-			//stmt.setDate(3, new java.sql.Date(programme.getExpiryDate().getTime()));
-			//stmt.setInt(2, programme.getProgrammeStatus());
-			
 			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
@@ -154,5 +149,4 @@ public class ProgrammeDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
