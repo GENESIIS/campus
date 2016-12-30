@@ -10,11 +10,31 @@ window.usernameValidation = true;
 
 $(document).ready(function() {
 	arrangeUI();
+	getCourseProviderTypes();
 });
+
 
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
 
+}
+
+function getCourseProviderTypes(){
+	$.ajax({
+		url : '/AdminController',
+		method : 'POST',
+		data : {
+			'CCO' : 'LIST_COUESE_PROVIDER_TYPES'
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+
+			if (response !== undefined && response !== null) {
+				window.courseProviderTypes = response.countryArrayList;
+			}
+		},
+	});
 }
 
 window.onload = function() {
