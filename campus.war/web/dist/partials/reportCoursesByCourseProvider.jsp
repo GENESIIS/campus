@@ -78,18 +78,12 @@
         <div class="input-area clearfix">
 
 <!--   Developer design       -->
-				<!-- <div>
-					Course Provider Status: <input type="radio" name="providerStatus"
-						value="ACTIVE"> Active <input type="radio"
-						name="providerStatus" value="INACTIVE"> Inactive
-				</div> -->
-				
-				<div class="ctg-name col-lg-3 col-sm-12 col-md-3">
-                <label for="">Course Provider Status: </label>
+			<div class="ctg-name col-lg-3 col-sm-12 col-md-3">
+                <label for="">Course Provider Status :<font color="red">*</font> </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
                 <input class="btn-radio" type="radio" name="providerStatus"  value="ACTIVE"><span>Active</span>
-                <input class="btn-radio" type="radio" name="providerStatus"  value="INACTIVE"><span>InActive</span>
+                <input class="btn-radio" type="radio" name="providerStatus"  value="INACTIVE"><span>InActive</span>                
             </div>
 <!--   Developer design end      -->
 
@@ -105,7 +99,7 @@
             <!-- first row -->
 
             <div class="ctg-name col-lg-3 col-sm-12 col-md-3">
-                <label for=""> Course Status: </label>
+                <label for=""> Course Status:<font color="red">*</font> </label>
             </div>
             <div class="ctg-input col-lg-9 col-md-9 col-sm-12">
                 <input class="btn-radio" type="radio" name="courseStatus"  value="ACTIVE"><span>Active</span>
@@ -157,12 +151,12 @@
                 <!-- End right side buttons -->
             </div>
             <!-- End action btn area -->
-          <div  id="resultSetDiv">
+          <div >
             <div class="results-count col-md-12 col-lg-12 col-sm-12">
-                <label for="">50 Results</label>
+                <label id="totalResultsCount"  for=""></label>
             </div>
 
-            <div  class="data-tbl col-md-12 col-lg-12 col-sm-12">
+            <div  id="resultSetDiv" class="data-tbl col-md-12 col-lg-12 col-sm-12">
                 <table class="display">
                     <thead>
                         <tr>
