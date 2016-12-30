@@ -12,6 +12,8 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.BannerStatSearchDTO;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -39,29 +41,33 @@ public class BannerStatDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
+	public Collection<Collection<String>> findById(Object searchDTO)
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allBannerStatsList = new ArrayList<Collection<String>>();
-		int bannerCode=0;
-		if(UtilityHelper.isNotEmptyObject(code)){
-			bannerCode=Integer.valueOf((String) code);			
-		}
+		BannerStatSearchDTO bannerStatSearchDTO=new BannerStatSearchDTO();
 		try {
 			
-			
+			if (UtilityHelper.isNotEmptyObject(searchDTO)) {
+				bannerStatSearchDTO = (BannerStatSearchDTO) searchDTO;
+			} else {
+				return allBannerStatsList;
+			}
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb=new StringBuilder("SELECT BANNERSTAT.CALLERPAGE, BANNERSTAT.VIEWDATE, BANNERSTAT.VIEWTIME FROM [CAMPUS].BANNERSTAT BANNERSTAT WHERE BANNERSTAT.BANNER= ");
+			final StringBuilder sb=new StringBuilder("SELECT BANNERSTAT.CALLERPAGE ,BANNERSTAT.VIEWDATE, BANNERSTAT.VIEWTIME ");
+			sb.append(" FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 ");
+			sb.append(" AND BANNER.PAGESLOT= ? ");
 			
 			stmt=conn.prepareStatement(sb.toString());
-			stmt.setInt(1, bannerCode);			
+			stmt.setInt(1, bannerStatSearchDTO.getPageSlotCode());			
 			resultSet=stmt.executeQuery();
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
-				bannerList.add(resultSet.getString("BANNERCODE"));								
-				bannerList.add(resultSet.getString("IMAGENAME"));								
+				bannerList.add(resultSet.getString("CALLERPAGE"));								
+				bannerList.add(resultSet.getString("VIEWDATE"));								
+				bannerList.add(resultSet.getString("VIEWTIME"));								
 				allBannerStatsList.add(bannerList);
 			}
 			
