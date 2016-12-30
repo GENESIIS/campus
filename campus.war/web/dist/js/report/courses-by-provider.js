@@ -70,8 +70,8 @@ function getProviderSearchData(response){
 	var htmlstr="";	
 	$.each(response.courseProviderList, function(index, value) {		
 		if(value!=null && value.length>0){
-			if(value[2] !=null && value[2]==1){
-			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+			if(value[2] !=null && value[2]==1){			
+			htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
 			}
 		}		
 	});		
@@ -79,7 +79,19 @@ function getProviderSearchData(response){
 } 
 
 function loadResultSet(event){	
-	var cpCode= $('#providerlist').val();
+	
+	var cProviderName = $('#providerlist').val();
+	var providerCode=0;	
+	
+	var option=$('#providerName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#providerName').find('option')[i].outerHTML;
+		if(option[i].text ==cProviderName){				
+			providerCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
 	var providerStatus=$('input:radio[name=providerStatus]:checked').val();
@@ -100,7 +112,7 @@ function loadResultSet(event){
 		url:'../../ReportController',
 		data:{
 			CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
-			cProviderCode:cpCode,
+			cProviderCode:providerCode,
 			startDate:startDate,
 			endDate:endDate,
 			providerStatus:providerStatus,			
@@ -166,8 +178,19 @@ function populateResultTable(response){
 
 function clearParameters(event){
 	$('#providerlist').val("");	
-	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
-	$('input:radio[name="courseStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
+	
+	var htmlstr="";
+	$.each(allproviderListCollection, function(index, value) {		
+		if(value!=null && value.length>0){
+			if(value[2] !=null && value[2]==1){
+			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+			}
+		}		
+	});	
+	$('#providerName').html(htmlstr);
+	
+	$('input:radio[name="courseStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
 }
