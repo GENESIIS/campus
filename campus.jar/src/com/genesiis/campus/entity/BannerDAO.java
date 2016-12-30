@@ -120,7 +120,9 @@ public class BannerDAO  implements ICrud{
 		}
 		try {
 			conn = ConnectionManager.getConnection();
-            final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE , BANNER.IMAGE AS IMAGENAME  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
+            //final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE , BANNER.IMAGE AS IMAGENAME  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
+            final StringBuilder sb = new StringBuilder("SELECT DISTINCT ADVERTISER.CODE ADVERTISERCODE, ADVERTISER.NAME ADVERTISERNAME ");
+            sb.append("FROM [CAMPUS].[BANNER] BANNER INNER JOIN CAMPUS.ADVERTISER ADVERTISER ON BANNER.ADVERTISER=ADVERTISER.CODE WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
 			
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, pageSlotCode);
@@ -128,8 +130,8 @@ public class BannerDAO  implements ICrud{
 			resultSet= stmt.executeQuery();	
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
-				bannerList.add(resultSet.getString("BANNERCODE"));								
-				bannerList.add(resultSet.getString("IMAGENAME"));								
+				bannerList.add(resultSet.getString("ADVERTISERCODE"));								
+				bannerList.add(resultSet.getString("ADVERTISERNAME"));								
 				allBannerList.add(bannerList);
 			}	
 

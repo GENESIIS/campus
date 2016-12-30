@@ -60,11 +60,18 @@
 								<datalist id="pageSlotName">
 								</datalist>
 							</div>
-							<div>
+							<!-- <div>
 								Banner Name :<input type="text" name="bannerList"
 									id="bannerList" list="bannerName"
 									placeholder="-- Select Banner Name --" />
 								<datalist id="bannerName">
+								</datalist>
+							</div> -->
+							<div>
+								Banner Provider :<input type="text" name="bannerProviderList"
+									id="bannerProviderList" list="bannerProviderName"
+									placeholder="-- Select Banner Provider --" />
+								<datalist id="bannerProviderName">
 								</datalist>
 							</div>
 							<div>

@@ -64,12 +64,12 @@ $(document).ready(function() {
 		$.ajax({
 			url : '../../ReportController',
 			data : {
-				CCO : 'LIST_PAGESLOT_WISE_BANNER',
+				CCO : 'LIST_PAGESLOT_WISE_ADVERTISER',
 				pageSlotCode : pageSlotCode
 			},
 			dataType : "json",
 			success : function(response) {
-				getPageSlotWiseBanners(response);
+				getPageSlotWiseAdvertiser(response);
 			},
 			error : function(jqXHR, exception) {
 				var msg = 0;
@@ -125,7 +125,7 @@ function getPageWisePageSlots(response) {
 	$('#pageSlotName').html(htmlstr);
 }
 
-function getPageSlotWiseBanners(response) {
+/*function getPageSlotWiseBanners(response) {
 	var htmlstr = "";
 	$.each(response.bannerDetails, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -134,6 +134,16 @@ function getPageSlotWiseBanners(response) {
 		}
 	});
 	$('#bannerName').html(htmlstr);
+}*/
+function getPageSlotWiseAdvertiser(response) {
+	var htmlstr = "";
+	$.each(response.advertiserDetails, function(index, value) {
+		if (value != null && value.length > 0) {
+			htmlstr += '<option value="' + value[0] + '">' + value[1]
+			+ '</option>';
+		}
+	});
+	$('#bannerProviderName').html(htmlstr);
 }
 
 function loadResultSet(event){

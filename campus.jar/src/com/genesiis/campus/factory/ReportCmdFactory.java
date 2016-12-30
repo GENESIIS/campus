@@ -20,7 +20,7 @@ public class ReportCmdFactory implements ICmdFactory{
 		map.put(Operation.SEARCH_VIEW_BANNER_STATISTICS, new CmdReportBannerStatistics());
 		map.put(Operation.REPORT_BANNER_STATISTICS, new CmdReportBannerStatistics());
 		map.put(Operation.LIST_PAGE_WISE_PAGESLOTS, new CmdReportBannerStatistics());
-		map.put(Operation.LIST_PAGESLOT_WISE_BANNER, new CmdReportBannerStatistics());
+		map.put(Operation.LIST_PAGESLOT_WISE_ADVERTISER, new CmdReportBannerStatistics());
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class ReportCmdFactory implements ICmdFactory{
 		case LIST_PAGE_WISE_PAGESLOTS:
 			command = map.get(o);
 			break;		
-		case LIST_PAGESLOT_WISE_BANNER:
+		case LIST_PAGESLOT_WISE_ADVERTISER:
 			command = map.get(o);
 			break;		
 		default:

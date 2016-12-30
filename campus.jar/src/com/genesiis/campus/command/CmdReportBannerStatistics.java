@@ -50,11 +50,18 @@ public class CmdReportBannerStatistics implements ICommand {
 				final Collection<Collection<String>> pageSlotDetails = new PageSlotDAO().findById(pageCode);
 				helper.setAttribute("pageSlots", pageSlotDetails);				
 			}
-			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGESLOT_WISE_BANNER.getCommandString())){
+			/*else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGESLOT_WISE_BANNER.getCommandString())){
 				
 				String pageSlotCode = helper.getParameter("pageSlotCode");
 				final Collection<Collection<String>> bannerDetails = new BannerDAO().findById(pageSlotCode);
 				helper.setAttribute("bannerDetails", bannerDetails);	
+				
+			}*/
+			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.LIST_PAGESLOT_WISE_ADVERTISER.getCommandString())){
+				
+				String pageSlotCode = helper.getParameter("pageSlotCode");
+				final Collection<Collection<String>> advertiserDetails = new BannerDAO().findById(pageSlotCode);
+				helper.setAttribute("advertiserDetails", advertiserDetails);	
 				
 			}
 			else if(commandString!=null && commandString.equalsIgnoreCase(Operation.REPORT_BANNER_STATISTICS.getCommandString())){
