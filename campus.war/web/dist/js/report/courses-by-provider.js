@@ -65,6 +65,7 @@ $(document).ready(function() {
 function getProviderSearchData(response){
 	$('#resultSetDiv').hide();
 	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	$('input:radio[name="courseStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
 	allproviderListCollection=response.courseProviderList;
 	var htmlstr="";	
 	$.each(response.courseProviderList, function(index, value) {		
@@ -81,7 +82,19 @@ function loadResultSet(event){
 	var cpCode= $('#providerlist').val();
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
-	var statusValue=$('input:radio[name=courseStatus]:checked').val();
+	var providerStatus=$('input:radio[name=providerStatus]:checked').val();
+	var courseStatus=$('input:radio[name=courseStatus]:checked').val();	
+	
+	
+	if(!($('input:radio[name=providerStatus]:checked').length>0)){
+		 alert("you have to choose a provider status");
+		 return false;
+	}
+	if(!($('input:radio[name=courseStatus]:checked').length>0)){
+		alert("you have to choose a programme status");	
+		return false;
+	}
+	
 	
 	$.ajax({
 		url:'../../ReportController',
@@ -90,7 +103,8 @@ function loadResultSet(event){
 			cProviderCode:cpCode,
 			startDate:startDate,
 			endDate:endDate,
-			courseStatus:statusValue			
+			providerStatus:providerStatus,			
+			courseStatus:courseStatus			
 		},
 		datatype:"json",
 		success : function(response) {				
@@ -116,26 +130,12 @@ function loadResultSet(event){
 function populateResultTable(response){
 	$('#resultSetDiv').hide();
 	var programmeListTable = $("#tBody");
-	programmeListTable.find('tr').remove();
-	/* var cCode='Course Code';
-	var cName='Course Name';
-	var cDes='Description';
-	var cStatus='Status';
-	var cStartDate='Display Start Date';
-	var cExDate='Expiry Date';*/
-	/*var headertr = '<tr>' ;
-	headertr += '<td> # </td>';
-	headertr += '<td>' + cCode  + '</td>';
-	headertr += '<td>' + cName  + '</td>'; 
-	headertr += '<td>' + cDes  + '</td>'; 
-	headertr += '<td>' + cStatus  + '</td>'; 
-	headertr += '<td>' + cStartDate  + '</td>'; 
-	headertr += '<td>' + cExDate  + '</td>'; 
-	coursesListTable.append(headertr);*/
-	var count=1;	
+	programmeListTable.find('tr').remove();	
+	var totalResultCount=0;	
 	$.each(response.allProgrammeResultList, function(index, value) {
 		$('#resultSetDiv').show();
 	if(value!=null && value.length>0){ 
+		totalResultCount ++;
 		var code = value[0].toString();
 		var name = value[1].toString();
 		var des = value[2].toString();
@@ -145,7 +145,7 @@ function populateResultTable(response){
 		var eDate = value[6].toString();
 		
 		var tr = '<tr>' ;
-		tr += '<td>' + count++  + '</td>';
+		tr += '<td>' + totalResultCount + '</td>';
 		tr += '<td>' + code  + '</td>';
 		tr += '<td>' + name  + '</td>';
 		tr += '<td>' + des  + '</td>';
@@ -153,16 +153,21 @@ function populateResultTable(response){
 		tr += '<td>' + cStatus  + '</td>';
 		tr += '<td>' + sDate  + '</td>';
 		tr += '<td>' + eDate  + '</td>';
-		programmeListTable.append(tr);
-		
+		programmeListTable.append(tr);		
 	 }
 	});
+	if (totalResultCount > 0) {
+		$('#totalResultsCount').text("Result Count " +totalResultCount);
+	} else {
+		$('#totalResultsCount').text(
+				"No results found for selected search criteria");
+	}
 }
 
 function clearParameters(event){
-	$('#providerlist').val("");		
-	$('input:radio[name=providerStatus]').prop('checked', false);
-	$('input:radio[name=courseStatus]').prop('checked', false);
+	$('#providerlist').val("");	
+	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	$('input:radio[name="courseStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
 }
