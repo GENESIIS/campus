@@ -66,6 +66,10 @@ public class ProgrammeDAO implements ICrud {
 			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME ,  PROG.DESCRIPTION AS PROGDESCRIPTION ,PROV.NAME AS CPNAME , ");
 			sb.append(" PROG.PROGRAMMESTATUS AS PROSTATUS, PROG.DISPLAYSTARTDATE AS PROGSTARTDATE, PROG.EXPIRYDATE AS PROGEXPIRYDATE ");
 			sb.append(" FROM [CAMPUS].PROGRAMME PROG INNER JOIN  [CAMPUS].COURSEPROVIDER PROV ON PROG.COURSEPROVIDER=PROV.CODE WHERE 1=1 ");
+			if (programme.getProviderStatus() > 0) {
+				sb.append(" AND  PROV.COURSEPROVIDERSTATUS =  ");
+				sb.append(programme.getProviderStatus());
+			}
 			if (programme.getCourseProvider() > 0) {
 				sb.append(" AND PROG.COURSEPROVIDER =  ");
 				sb.append(programme.getCourseProvider());
