@@ -83,7 +83,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String providerCodeString = helper.getParameter("cProviderCode");
-		String programmeStatus = helper.getParameter("statusValue");
+		String programmeStatus = helper.getParameter("courseStatus");
 		int providerCode = 0;
 		try {
 			if (UtilityHelper.isNotEmpty(providerCodeString)) {
@@ -112,8 +112,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 					log.error("execute() : ParseException "	+ parseException.toString());
 					throw parseException;
 				}
-				final Collection<Collection<String>> coursesList = new ProgrammeDAO().findById(programme);
-				helper.setAttribute("coursesResultList", coursesList);
+				final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO().findById(programme);
+				helper.setAttribute("allProgrammeResultList", allProgrammeResultList);
 			//}
 		} catch (Exception exception) {
 		log.error("execute() : Exception " + exception.toString());
