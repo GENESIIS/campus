@@ -34,6 +34,12 @@ package com.genesiis.campus.entity;
 //20161229 MM c25-student-create-dashboard-MP-mm Modified query so at least 10 institutes are fetched 
 //				which makes the programme list to be greater than 10 
 
+import com.genesiis.campus.command.CmdListStudentDashboardDetails;
+import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,13 +47,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.command.CmdListStudentDashboardDetails;
-import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
-import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.util.ConnectionManager;
-
-import org.apache.log4j.Logger;
 
 public class StudentDashboardDAO implements ICrud {
 
@@ -120,8 +119,8 @@ public class StudentDashboardDAO implements ICrud {
 					+ "SELECT DISTINCT TOP (@neededNumOfResults) p.CODE, p.NAME, p.EMAIL, p.IMAGE, CAST(p.DESCRIPTION AS VARCHAR(4000)) AS DESCRIPTION, p.DURATION, p.ENTRYREQUIREMENTS, p.COUNSELORNAME, p.COUNSELORPHONE, p.DISPLAYSTARTDATE, p.EXPIRYDATE, p.PROGRAMMESTATUS, p.COURSEPROVIDER, p.MAJOR, p.CATEGORY, p.LEVEL, p.CLASSTYPE, p.CRTON, p.CRTBY, p.MODON, p.MODBY, cp.SHORTNAME, cp.NAME FROM [CAMPUS].[STUDENTINTEREST] si JOIN [CAMPUS].[INTEREST] i ON (i.CODE = si.INTEREST AND si.STUDENT = " + studentCode + ") JOIN [CAMPUS].[MAJORINTEREST] mi ON (i.CODE = mi.INTEREST) JOIN [CAMPUS].[MAJOR] m ON (m.CODE = mi.MAJOR) JOIN [CAMPUS].[PROGRAMME] p ON (m.CODE = p.MAJOR) JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER) JOIN [CAMPUS].[PROGRAMMETOWN] pt ON (p.CODE = pt.PROGRAMME) JOIN [CAMPUS].[TOWN] t ON (t.CODE = pt.TOWN) JOIN [CAMPUS].[PROVINCE] pr ON (pr.CODE = t.PROVINCE AND pr.CODE = @studentProvinceCode) WHERE p.CODE NOT IN (SELECT CODE FROM @TempProgrammes); "
 					+ "SELECT @numResults = COUNT(DISTINCT COURSEPROVIDER) FROM @TempProgrammes; "
 					+ "SET @neededNumOfResults = @neededNumOfResults - @numResults; "
-					+ "END ";
-					String query2 = "IF (@neededNumOfResults > 0) "
+					+ "END "
+					+ "IF (@neededNumOfResults > 0) "
 					+ "BEGIN "
 					+ "INSERT INTO @TempProgrammes (CODE, NAME, EMAIL, IMAGE, DESCRIPTION, DURATION, ENTRYREQUIREMENTS, COUNSELORNAME, COUNSELORPHONE, DISPLAYSTARTDATE, EXPIRYDATE, PROGRAMMESTATUS, COURSEPROVIDER, MAJOR, CATEGORY, LEVEL, CLASSTYPE, CRTON, CRTBY, MODON, MODBY, COURSEPROVIDERSHORTNAME, COURSEPROVIDERNAME) "
 					//+ "-- GET PROGRAMMES THAT MATCH INTERESTS AND COUNTRY OF A STUDENT "
@@ -155,8 +154,7 @@ public class StudentDashboardDAO implements ICrud {
 					+ "EXECUTE sp_executesql @sqlString; ";
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query + query2);
-//			ps.setInt(1, numberOfProgrammesToFetch);
+			ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
