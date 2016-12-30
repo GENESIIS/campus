@@ -1,5 +1,5 @@
 //20161227 DJ c52-report-banner-statistics-MP-dj  Banner stat report generation 
-
+var pageSlotCode = 0;
 $(document).ready(function() {
 	$.ajax({
 		url : '../../ReportController',
@@ -45,8 +45,18 @@ $(document).ready(function() {
 
 	});
 
-	$('#pageSlotlist').bind('change', function(event) {		
-		var pageSlotCode = $('#pageSlotlist').val();
+	$('#pageSlotlist').bind('change', function(event) {	
+		var pageSlotName = $('#pageSlotlist').val();		
+
+		var option = $('#pageSlotName').find('option');
+		for (var i = 0; i < option.length; i++) {
+			$('#pageSlotName').find('option')[i].outerHTML;
+			if (option[i].text == pageSlotName) {
+				pageSlotCode = option[i].attributes[0].value;
+				break;
+			}
+		}		
+		
 		$.ajax({
 			url : '../../ReportController',
 			data : {
@@ -91,7 +101,7 @@ function getPageWisePageSlots(response) {
 	var htmlstr = "";
 	$.each(response.pageSlots, function(index, value) {
 		if (value != null && value.length > 0) {
-			htmlstr += '<option value="' + value[0] + '">' + value[1]
+			htmlstr += '<option val="' + value[0] + '">' + value[1]
 					+ '</option>';
 		}
 
@@ -113,7 +123,7 @@ function getPageSlotWiseAdvertiser(response) {
 	var htmlstr = "";
 	$.each(response.advertiserDetails, function(index, value) {
 		if (value != null && value.length > 0) {
-			htmlstr += '<option value="' + value[0] + '">' + value[1]
+			htmlstr += '<option val="' + value[0] + '">' + value[1]
 			+ '</option>';
 		}
 	});
@@ -130,7 +140,7 @@ function loadResultSet(event){
 		url : '../../ReportController',
 		data : {
 			CCO : 'REPORT_BANNER_STATISTICS',
-			bannerCode : bannerCode,
+			pageSlotCode : pageSlotCode,
 			startDate : startDate,
 			endDate :endDate 
 		},
@@ -146,17 +156,11 @@ function loadResultSet(event){
 }
 
 function populateResultTable(response) {
+	//$('#resultPanel').show();
 	//$('#resultSetDiv').hide();
-	var bannerListTable = $("#table");
-	bannerListTable.find('tr').remove();
-	var callerPage = 'Caller Page';
-	var date = 'Date';
-
-	var headertr = '<tr>';
-	headertr += '<td> # </td>';
-	headertr += '<td>' + callerPage + '</td>';
-	headertr += '<td>' + date + '</td>';
-	coursesListTable.append(headertr);
+	var programmeListTable = $("#tBody");
+	programmeListTable.find('tr').remove();	;
+	
 	var totalResultCount=0;
 
 	$.each(response.bannerStatDetails, function(index, value) {
@@ -172,7 +176,7 @@ function populateResultTable(response) {
 			tr += '<td>' + code  + '</td>';
 			tr += '<td>' + name  + '</td>';
 			tr += '<td>' + des  + '</td>';			
-			coursesListTable.append(tr);	
+			programmeListTable.append(tr);	
 		}
 
 	});
@@ -182,9 +186,9 @@ function populateResultTable(response) {
 function clearParameters(event){
 	$('#pagelist').val(""); 	
 	$('#pageSlotlist').val(""); 	
-	$('#bannerList').val(""); 	
-	$('#startdate').val(" "); 
-	$('#enddate').val(" "); 	
+	$('#bannerProviderList').val(""); 	
+	$('#fromDate').val(" "); 
+	$('#toDate').val(" "); 	
 }
 
 function errorCodeGeneration(jqXHR, exception){
