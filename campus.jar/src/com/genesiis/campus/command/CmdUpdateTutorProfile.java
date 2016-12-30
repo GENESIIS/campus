@@ -58,6 +58,9 @@ public class CmdUpdateTutorProfile implements ICommand {
 				
 				if (result > 0) {
 					message = SystemMessage.UPDATED.message();
+					Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
+					tutorViewCollection = tutorDAO.findById(tutor);
+					view.setCollection(tutorViewCollection);		
 
 				} else {
 					message = SystemMessage.ERROR.message();
@@ -86,6 +89,8 @@ public class CmdUpdateTutorProfile implements ICommand {
 	public boolean setVariables(IDataHelper helper, Tutor tutor) {
 			boolean updated = false;
 		try {
+			tutor.setCode(Integer.parseInt(helper.getSession(false).getAttribute("code").toString()));
+			
 			tutor.setUsername(helper.getParameter("username"));
 			
 			if(!((helper.getParameter("password")).equals(helper.getSession(false).getAttribute("password").toString()))){				
@@ -348,8 +353,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 					updated = true;
 				}
 			}
-
-			System.out.println(" 0.7 "); //ccw
 			
 			if(Validator.isNotEmpty(helper.getParameter("address3"))){
 				if(!((helper.getParameter("address3")).equals(helper.getSession(false).getAttribute("address3").toString()))){	
@@ -364,18 +367,13 @@ public class CmdUpdateTutorProfile implements ICommand {
 					updated = true;
 				}
 			}
-
-			System.out.println(" 0.7 "); //ccw
 			
-			if (Validator.isNotEmpty(helper.getParameter("isApproved"))){
-				int a = Integer.parseInt(helper.getParameter("isApproved"));
-				System.out.println(" 1 "); //ccw
-				if (a == 1){
-					tutor.setIsApproved(true);
-				}
+			int approved = Integer.parseInt(helper.getParameter("isApproved"));
+			if (approved == 1){
+				tutor.setIsApproved(true);
+				updated = true;
 			}
 
-			System.out.println(" 0.8 "); //ccw
 			if(Double.parseDouble(helper.getParameter("townDetails")) != 0){
 				if(!((helper.getParameter("townDetails")).equals(helper.getSession(false).getAttribute("towncode").toString()))){	
 					tutor.setTown(helper.getParameter("townDetails"));
@@ -386,10 +384,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}else{
 				tutor.setTown(helper.getSession(false).getAttribute("towncode").toString());
 			}
-
-			System.out.println(" 0.9 "); //ccw
-			System.out.println(" 2 = "+ helper.getParameter("newtutorStatus")); //ccw
-			System.out.println(" 2.1 = "+ helper.getSession(false).getAttribute("tutorstatus")); //ccw
+			
 			if(!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (Integer.parseInt(helper.getSession(false).getAttribute("tutorstatus").toString())))){	
 				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("newtutorStatus")));
 				updated = true;
@@ -397,8 +392,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 				tutor.setTutorStatus(Integer.parseInt(helper.getSession(false).getAttribute("tutorstatus").toString()));
 			}
 			
-
-			System.out.println(" 3 "); //ccw
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());
 			throw e;

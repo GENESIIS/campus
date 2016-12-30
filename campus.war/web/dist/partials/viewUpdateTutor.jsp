@@ -100,11 +100,14 @@
 							checked> Female<br>
 					</c:if></td>
 			</tr>
-			<tr><td>Experience<span id="experienceError"></span></td><td><textarea rows="10" cols="26" name="experience" id="experience"><c:out value="${experience}"/></textarea></td></tr>
+			<tr><td>Experience<span id="experienceError"></span>
+			<td><textarea rows="10" cols="26" name="experience" id="experience">
+			<c:out value="${experience}"/></textarea></td></tr>
 
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
-				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')"><c:out value="${description}" /></textarea></td>
+				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')">
+				<c:out value="${description}" /></textarea></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>
@@ -219,15 +222,14 @@
 				<td><h2>Account Info</h2></td>
 			</tr>
 
-
-
 			<tr>
 				<td>Approve Status <span id="isApproved"></span></td>
 				<c:if test="${isapproved == 0}">
 					<td><input type="checkbox" name="isApproved" value="1" /></td>
-				</c:if>
+				</c:if> 
 				<c:if test="${isapproved == 1}">				
-					<td><input type="checkbox" name="isApproved" checked disabled readonly></td>;
+					<td><input type="checkbox" name="isApproved" value="1" checked disabled readonly></td>;
+					<input type="hidden" name="isApproved" id="isApproved" value="1"/>
 				</c:if>
 			</tr>
 
@@ -279,11 +281,7 @@
 					onclick="clearField('confirmPasswordError')" value="${password}" /></td>
 			</tr>
 
-			<tr>
-				<td>
-					<button type="submit" name="CCO" id="CCO" value="ATPD"
-						class="btn btn-info navbar-btn">Save</button>
-				</td>
+			<tr>				
 				<td>
 					<button type="submit" name="CCO" id="CCO" value="UPDATE_TUTOR"
 						class="btn btn-info navbar-btn">Update</button>

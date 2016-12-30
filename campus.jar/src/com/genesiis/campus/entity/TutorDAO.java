@@ -166,9 +166,6 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(21, tutor.getViber());
 			preparedStatement.setString(22, tutor.getWhatsAppId());
 			
-			System.out.println("isApproved = : " + tutor.getIsApproved());
-			//tutor.setIsApproved(tutor.getIsApproved());
-						
 			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
 		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
 			preparedStatement.setInt(24, tutor.getTutorStatus());			
@@ -178,10 +175,8 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(27, tutor.getAddressLine3());
 			preparedStatement.setString(28, tutor.getTown());
 			preparedStatement.setInt(29, tutor.getUsertype());		
-			//	preparedStatement.setString(31, "chathuri");
 			preparedStatement.setString(30, "chathuri");
 			
-			//preparedStatement.setString(31, "chathuri");
 			preparedStatement.setString(31, tutor.getUsername());
 			status = preparedStatement.executeUpdate();
 
