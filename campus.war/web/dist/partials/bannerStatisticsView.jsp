@@ -16,7 +16,21 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
-
+<style>
+tbody {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
 
 
 </head>
@@ -47,7 +61,7 @@
 						<fieldset>
 							<legend align="left">Search criteria </legend>
 							<div>
-								Page :<input type="text" name="pagelist"
+								Page :<font color="red">*</font><input type="text" name="pagelist"
 									id="pagelist" list="pageName"
 									placeholder="-- Select Page --" />
 								<datalist id="pageName">
@@ -75,10 +89,10 @@
 								</datalist>
 							</div>
 							<div>
-								From Date : <input type="date" id="fromDate" name="search">
+								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="search">
 							</div>
 							<div>
-								To Date : <input type="date" id="toDate" name="search">
+								To Date :<font color="red">*</font> <input type="date" id="toDate" name="search">
 							</div>
 							<div>
 								<button type="submit" id="clearParam">Clear</button>
@@ -90,10 +104,26 @@
 			</div>
 			</br></br>
 			</br></br>			 
-			 <div id="resultSetDiv" >
-			 <table id="table" >
-			 </table>
-			 </div>
+			<div id="resultPanel">
+            <div class="results-count col-md-12 col-lg-12 col-sm-12">
+                <label id="totalResultsCount"  for=""></label>
+            </div>
+
+            <div  id="resultSetDiv" class="data-tbl col-md-12 col-lg-12 col-sm-12">
+                <table class="display">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>CALLERPAGE </th>
+                            <th>VIEWDATE</th>
+                            <th>VIEWTIME</th>                            
+                        </tr>
+                    </thead>
+                    <tbody id="tBody">
+                    </tbody>
+                </table>
+            </div>
+            </div>
 		
 		</div>
 	</div>
@@ -108,8 +138,8 @@
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/report/banner-statistics.js"></script>
 
-<!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script>
+<!-- <!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script> -->
 
 </body>
 
