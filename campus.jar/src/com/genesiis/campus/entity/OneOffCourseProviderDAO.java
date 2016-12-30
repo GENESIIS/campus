@@ -64,67 +64,154 @@ public class OneOffCourseProviderDAO implements ICrud{
 //            +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
 //            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, getDate(), ?, getDate(),? )";
 			
-			StringBuilder stringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
-			stringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
-			stringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
-			stringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, ");
-			stringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
-			stringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
-			stringBuilder.append("?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
+			StringBuilder branchCourseProviderStringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
+			branchCourseProviderStringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
+			branchCourseProviderStringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
+			branchCourseProviderStringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE,");
+			branchCourseProviderStringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
+			branchCourseProviderStringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
+			branchCourseProviderStringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
 			
-			String provider = stringBuilder.toString();
+			String branchCourseProvider = branchCourseProviderStringBuilder.toString();
+
+			StringBuilder mainCourseProviderStringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
+			mainCourseProviderStringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
+			mainCourseProviderStringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
+			mainCourseProviderStringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE,");
+			mainCourseProviderStringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,CRTON, CRTBY, MODON, MODBY )");
+			mainCourseProviderStringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
+			mainCourseProviderStringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, ?, getDate(), ?, getDate(),? )");
 			
-			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
-					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
+			String mainCourseProvider = mainCourseProviderStringBuilder.toString();
+			//check whether the course provider has a head office or not
+			if(courseProvider.getPrincipal()==0){//does not have a head office
+				preparedStatement = conn.prepareStatement(mainCourseProvider,
+						PreparedStatement.RETURN_GENERATED_KEYS);
+				
+				//set course provider basic details
+				preparedStatement.setString(1, courseProvider.getUniquePrefix());
+				preparedStatement.setString(2, courseProvider.getShortName());
+				preparedStatement.setString(3, courseProvider.getName());
+				preparedStatement.setString(4, courseProvider.getDescription());
+				preparedStatement.setString(5, courseProvider.getGeneralEmail());
+				preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
+				preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
+				preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
+				preparedStatement.setString(9, courseProvider.getLandPhoneNo());
+				preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
+				preparedStatement.setString(11, courseProvider.getFaxNo());
+				preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
+				preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
+				preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
+				preparedStatement.setString(15, courseProvider.getSpeciality());
+				preparedStatement.setString(16, courseProvider.getWeblink());
+				preparedStatement.setString(17, courseProvider.getFacebookURL());
+				preparedStatement.setString(18, courseProvider.getTwitterURL());
+				preparedStatement.setString(19, courseProvider.getMyspaceURL());
+				preparedStatement.setString(20, courseProvider.getLinkedinURL());
+				preparedStatement.setString(21, courseProvider.getInstagramURL());
+				preparedStatement.setString(22, courseProvider.getViberNumber());
+				preparedStatement.setString(23, courseProvider.getWhatsappNumber());
+				preparedStatement.setDate(24, courseProvider.getExpirationDate());
+				preparedStatement.setString(25, courseProvider.getAddress1());
+				preparedStatement.setString(26, courseProvider.getAddress2());
+				preparedStatement.setString(27, courseProvider.getAddress3());
+				preparedStatement.setInt(28, courseProvider.getAccountType());
+			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
+				preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
+				preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
+				preparedStatement.setInt(32,courseProvider.getCourseProviderStatus());
+				preparedStatement.setInt(33, courseProvider.getCourseProviderType());
+				//preparedStatement.setInt(34, courseProvider.getPrincipal());
+				preparedStatement.setString(34, courseProvider.getCrtBy());
+				preparedStatement.setString(35, courseProvider.getModBy());
+
+			}if(courseProvider.getPrincipal() !=0){//has a head office 
+				preparedStatement = conn.prepareStatement(mainCourseProvider,
+						PreparedStatement.RETURN_GENERATED_KEYS);
+				
+				//set course provider basic details
+				preparedStatement.setString(1, courseProvider.getUniquePrefix());
+				preparedStatement.setString(2, courseProvider.getShortName());
+				preparedStatement.setString(3, courseProvider.getName());
+				preparedStatement.setString(4, courseProvider.getDescription());
+				preparedStatement.setString(5, courseProvider.getGeneralEmail());
+				preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
+				preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
+				preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
+				preparedStatement.setString(9, courseProvider.getLandPhoneNo());
+				preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
+				preparedStatement.setString(11, courseProvider.getFaxNo());
+				preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
+				preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
+				preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
+				preparedStatement.setString(15, courseProvider.getSpeciality());
+				preparedStatement.setString(16, courseProvider.getWeblink());
+				preparedStatement.setString(17, courseProvider.getFacebookURL());
+				preparedStatement.setString(18, courseProvider.getTwitterURL());
+				preparedStatement.setString(19, courseProvider.getMyspaceURL());
+				preparedStatement.setString(20, courseProvider.getLinkedinURL());
+				preparedStatement.setString(21, courseProvider.getInstagramURL());
+				preparedStatement.setString(22, courseProvider.getViberNumber());
+				preparedStatement.setString(23, courseProvider.getWhatsappNumber());
+				preparedStatement.setDate(24, courseProvider.getExpirationDate());
+				preparedStatement.setString(25, courseProvider.getAddress1());
+				preparedStatement.setString(26, courseProvider.getAddress2());
+				preparedStatement.setString(27, courseProvider.getAddress3());
+				preparedStatement.setInt(28, courseProvider.getAccountType());
+			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
+				preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
+				preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
+				preparedStatement.setInt(32,courseProvider.getCourseProviderStatus());
+				preparedStatement.setInt(33, courseProvider.getCourseProviderType());
+				preparedStatement.setInt(34, courseProvider.getPrincipal());
+				preparedStatement.setString(35, courseProvider.getCrtBy());
+				preparedStatement.setString(36, courseProvider.getModBy());
+
+			}
+
+////			
+//			preparedStatement = conn.prepareStatement(provider,
+//					PreparedStatement.RETURN_GENERATED_KEYS);
 			
-			preparedStatement = conn.prepareStatement(provider,
-					PreparedStatement.RETURN_GENERATED_KEYS);
-			
-			//set course provider details to provider query
-			preparedStatement.setString(1, courseProvider.getUniquePrefix());
-			preparedStatement.setString(2, courseProvider.getShortName());
-			preparedStatement.setString(3, courseProvider.getName());
-			preparedStatement.setString(4, courseProvider.getDescription());
-			preparedStatement.setString(5, courseProvider.getGeneralEmail());
-			preparedStatement.setString(6, courseProvider.getCourseInquiryEmail());
-			preparedStatement.setString(7, courseProvider.getLandPhoneCountryCode());
-			preparedStatement.setString(8, courseProvider.getLandPhoneAreaCode());
-			preparedStatement.setString(9, courseProvider.getLandPhoneNo());
-			preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
-			preparedStatement.setString(11, courseProvider.getFaxNo());
-			preparedStatement.setString(12, courseProvider.getMobilePhoneCountryCode());
-			preparedStatement.setString(13, courseProvider.getMobilePhoneNetworkCode());
-			preparedStatement.setString(14, courseProvider.getMobilePhoneNumber());
-			preparedStatement.setString(15, courseProvider.getSpeciality());
-			preparedStatement.setString(16, courseProvider.getWeblink());
-			preparedStatement.setString(17, courseProvider.getFacebookURL());
-			preparedStatement.setString(18, courseProvider.getTwitterURL());
-			preparedStatement.setString(19, courseProvider.getMyspaceURL());
-			preparedStatement.setString(20, courseProvider.getLinkedinURL());
-			preparedStatement.setString(21, courseProvider.getInstagramURL());
-			preparedStatement.setString(22, courseProvider.getViberNumber());
-			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
-			preparedStatement.setDate(24, courseProvider.getExpirationDate());
-			preparedStatement.setString(25, courseProvider.getAddress1());
-			preparedStatement.setString(26, courseProvider.getAddress2());
-			preparedStatement.setString(27, courseProvider.getAddress3());
-			preparedStatement.setInt(28, courseProvider.getAccountType());
-		//	preparedStatement.setInt(29, courseProvider.getHeadOffice());
-			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
-			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
-			preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
-			preparedStatement.setInt(32, courseProvider.getCourseProviderType());
-			preparedStatement.setInt(33, courseProvider.getPrincipal());
-			preparedStatement.setString(34, courseProvider.getCrtBy());
-			preparedStatement.setString(35, courseProvider.getModBy());
-			
-			
-			//set course provider town details
-			preparedStatement2 = conn.prepareStatement(town);
-			preparedStatement2.setBoolean(1, courseProviderTown.isActive());
-			preparedStatement2.setInt(3, courseProviderTown.getTown());
-			preparedStatement2.setString(4, courseProviderTown.getCrtBy());
-			preparedStatement2.setString(5, courseProviderTown.getModBy());
+//			//set course provider details to provider query
+//			preparedStatement.setString(1, courseProvider.getUniquePrefix());
+//			preparedStatement.setString(2, courseProvider.getShortName());
+//			preparedStatement.setString(3, courseProvider.getName());
+//			preparedStatement.setString(4, courseProvider.getDescription());
+//			preparedStatement.setString(5, courseProvider.getGeneralEmail());
+//			preparedStatement.setString(6, courseProvider.getCourseInquiryEmail());
+//			preparedStatement.setString(7, courseProvider.getLandPhoneCountryCode());
+//			preparedStatement.setString(8, courseProvider.getLandPhoneAreaCode());
+//			preparedStatement.setString(9, courseProvider.getLandPhoneNo());
+//			preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
+//			preparedStatement.setString(11, courseProvider.getFaxNo());
+//			preparedStatement.setString(12, courseProvider.getMobilePhoneCountryCode());
+//			preparedStatement.setString(13, courseProvider.getMobilePhoneNetworkCode());
+//			preparedStatement.setString(14, courseProvider.getMobilePhoneNumber());
+//			preparedStatement.setString(15, courseProvider.getSpeciality());
+//			preparedStatement.setString(16, courseProvider.getWeblink());
+//			preparedStatement.setString(17, courseProvider.getFacebookURL());
+//			preparedStatement.setString(18, courseProvider.getTwitterURL());
+//			preparedStatement.setString(19, courseProvider.getMyspaceURL());
+//			preparedStatement.setString(20, courseProvider.getLinkedinURL());
+//			preparedStatement.setString(21, courseProvider.getInstagramURL());
+//			preparedStatement.setString(22, courseProvider.getViberNumber());
+//			preparedStatement.setString(23,courseProvider.getWhatsappNumber());
+//			preparedStatement.setDate(24, courseProvider.getExpirationDate());
+//			preparedStatement.setString(25, courseProvider.getAddress1());
+//			preparedStatement.setString(26, courseProvider.getAddress2());
+//			preparedStatement.setString(27, courseProvider.getAddress3());
+//			preparedStatement.setInt(28, courseProvider.getAccountType());
+//		//	preparedStatement.setInt(29, courseProvider.getHeadOffice());
+//			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
+//			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
+//			preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
+//			preparedStatement.setInt(32, courseProvider.getCourseProviderType());
+//		//	preparedStatement.setInt(33, courseProvider.getPrincipal());
+//			preparedStatement.setString(33, courseProvider.getCrtBy());
+//			preparedStatement.setString(34, courseProvider.getModBy());
+
 			
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
@@ -135,10 +222,10 @@ public class OneOffCourseProviderDAO implements ICrud{
 				generatedKey = rs.getInt(1);
 				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
 
-				if (status > 0) {
-					preparedStatement2.setInt(2, generatedKey);
-					status = preparedStatement2.executeUpdate();
-				}
+//				if (status > 0) {
+//					preparedStatement2.setInt(2, generatedKey);
+//					status = preparedStatement2.executeUpdate();
+//				}
 
 			}
 
