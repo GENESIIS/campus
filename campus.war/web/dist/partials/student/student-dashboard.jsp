@@ -7,6 +7,7 @@
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for institute list which, when running, 
 				is replaced with dynamically produced institute list --%>
 <%-- 20161229 MM c25-student-create-dashboard-MP Made minor modification to make it possible to get details from the session  --%>
+<%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for activity list --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -239,12 +240,7 @@
 
                     <div class="widget-content">
                         <ul class="ul-activity">
-                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - Now </span></li>
-                            <li>Applied to BSc in Software Engineering at "ICBT" <br><span class="act-time">~ 20 March 2012 - 18:52</span></li>
-                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - 16:45</span></li>
-                            <li>Applied to BSc in Software Engineering at "ICBT" <br><span class="act-time">~ 20 March 2012 - 10:50</span></li>
-                            <li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - 08:35</span></li>
-                        </ul>
+						 </ul>
                     </div>
                     <!-- End widget content -->
                 </div>
