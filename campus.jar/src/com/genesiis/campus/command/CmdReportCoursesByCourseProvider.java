@@ -83,6 +83,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String providerCodeString = helper.getParameter("cProviderCode");
+		String providerStatus = helper.getParameter("providerStatus");
 		String programmeStatus = helper.getParameter("courseStatus");
 		int providerCode = 0;
 		try {
@@ -99,6 +100,7 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 				// param:cpcode,date range
 				final Programme programme = new Programme();
 				programme.setCourseProvider(providerCode);
+				programme.setProviderStatus(ApplicationStatus.getApplicationStatus(providerStatus));
 				programme.setProgrammeStatus(ApplicationStatus.getApplicationStatus(programmeStatus));
 				try {
 					if (UtilityHelper.isNotEmpty(startDateString)) {
