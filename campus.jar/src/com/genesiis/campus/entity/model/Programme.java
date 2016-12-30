@@ -10,6 +10,7 @@ public class Programme {
 	private int courseProvider;
 	private Date displayStartDate;
 	private Date expiryDate;
+	private int providerStatus;
 	private int programmeStatus;
 	public int getCode() {
 		return code;
@@ -40,6 +41,13 @@ public class Programme {
 	}
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+	
+	public int getProviderStatus() {
+		return providerStatus;
+	}
+	public void setProviderStatus(int providerStatus) {
+		this.providerStatus = providerStatus;
 	}
 	public int getProgrammeStatus() {
 		return programmeStatus;
