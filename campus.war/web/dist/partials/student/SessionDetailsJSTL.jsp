@@ -56,19 +56,26 @@
 <%--      <c:forEach var="userDataCollection" items="${sessionScope.currentUserData}" varStatus="rowCount"> --%>
 	
 <%-- 		<c:forEach var="collection2" items="userDataCollection" varStatus="loop"> --%>
-		
+<%-- <%-- 		<c:set var="col_${rowCount.index}_${loop.index}" value="varStatus" scope="session" /> --%> --%>
 <%-- 			<c:set var="col_${rowCount.index}_${loop.index}" value="varStatus" scope="session" /> --%>
+			
 <%-- 		</c:forEach> --%>
 		
 <%-- 		</c:forEach> --%>
     </c:when>
     
     <c:otherwise>
-	blah blah 
+	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:otherwise>
 </c:choose>
+
+<c:choose>
+<c:when test="">
+
+</c:when>
+</c:choose>
 	
-	<label id=code >${col_stuCode}</label>
+	
 	
 	
 
