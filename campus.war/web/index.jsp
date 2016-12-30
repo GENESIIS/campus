@@ -61,7 +61,7 @@
         <div class="search-area clearfix">
             <div class="main-search-bar center-block clearfix">
                 <div class="bar-holder center-block clearfix">
-                    <input class="center-block" type="text" placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
+                    <input class="center-block" type="text" placeholder="Search : Program, Course, or Career">
                 </div>
             </div>
             <!-- End Main search bar -->

@@ -763,12 +763,12 @@ body, html {
   header .header .bottom .menu-bar .menu-tabs .bottom-menus li {
     padding-left: 12px !important;
     padding-right: 12px !important; } }
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .main-screen .content-panel .search-area .main-search-bar .bar-holder {
     padding: 10px; }
     .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
-      font-size: 14px !important;
-      line-height: 48px !important; }
+      font-size: 16px !important;
+      line-height: 42px !important; }
   .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
     width: 100% !important; }
   .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
@@ -777,8 +777,8 @@ body, html {
   .main-screen .content-panel .search-area .main-search-bar .bar-holder {
     padding: 10px; }
     .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
-      font-size: 14px !important;
-      line-height: 48px !important; } }
+      font-size: 16px;
+      line-height: 42px; } }
 /* Modules */
 .btn-home {
   display: block;
