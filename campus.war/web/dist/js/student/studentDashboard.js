@@ -9,6 +9,8 @@
   * 			by the server in the Ajax response
   * 20161229 MM c25-student-create-dashboard-MP - Added function that facilitates displaying of 
   * 			feedback messages to the user in case of error or absence of data
+  * 20161230 MM c25-student-create-dashboard-MP - Added code to make Ajax call to retrieve data on 
+  * 			student recent activities
   * 
   */ 
 
@@ -136,4 +138,50 @@ function constructInstituteListing() {
 	}
 	
 	instituteULElement.html(instituteListHtml);	
+	
+	getStudentActivities();
+}
+
+function getStudentActivities () {
+	$.ajax({
+		url : '/StudentController',
+		method : 'POST',
+		data : {
+			'CCO' : 'LIST_STUDENT_RECENT_ACTIVITIES'
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+			
+			if (response !== undefined && response !== null) {
+				window.studentActivitiesFetched = response.result;
+			}			
+		},
+		error : function(response) {
+			alert("Ajax error");
+			var messageList = [];
+			messageList.push("There was an error retrieving data to display from the server.");
+			messageList.push("Please check that you are connected to the Internet and that you are sending the correct data.");
+			showMessages(messageList, window.messageType.ERROR);
+		}
+	});	
+};
+
+function constructActivityListing() {
+	
+	var studentActivities = window.studentActivitiesFetched;
+	
+	var activityULElement = $('div.widget-content ul.ul-activity');
+	var activityListHtml = '';
+
+	for (var i = 0; i < studentActivities.length; i++) {
+		
+		currentActivity = studentActivities[i];
+	
+		activityListHtml += '<li>Applied to BSc in Software Engineering at "Esoft Metro Campus" <br><span class="act-time">~ 20 March 2012 - Now </span></li>';
+	}
+	
+	activityULElement.html(instituteListHtml);	
+	
+	getStudentActivities();
 }
