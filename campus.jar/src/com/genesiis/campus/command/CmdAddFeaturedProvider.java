@@ -170,7 +170,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 				
 				Map map = new HashMap();
 				map.put("provider", courseProvider);
-				map.put("town" , courseProviderTown);
 				
 				String providerType = helper.getParameter("featured-oneoff");
 				
@@ -180,6 +179,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				 * type
 				 */
 				if(providerType.equalsIgnoreCase("featured")){
+					map.put("town" , courseProviderTown);
 					courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 					courseProvider.setTutorRelated(false);
 								
