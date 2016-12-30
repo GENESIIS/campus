@@ -80,10 +80,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			StringBuilder stringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
 			stringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
 			stringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
-			stringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, ");
+			stringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, HEADOFFICE,");
 			stringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
 			stringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
-			stringBuilder.append("?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
+			stringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
 			
 			String provider = stringBuilder.toString();
 
@@ -93,8 +93,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			 * as an input to this query.
 			 */
 
-			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
-					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, EMAIL, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
+					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
 			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
 					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
@@ -131,25 +131,37 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement.setString(26, courseProvider.getAddress2());
 			preparedStatement.setString(27, courseProvider.getAddress3());
 			preparedStatement.setInt(28, courseProvider.getAccountType());
-		//	preparedStatement.setInt(29, courseProvider.getHeadOffice());
-			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
-			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
-			preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
-			preparedStatement.setInt(32, courseProvider.getCourseProviderType());
-			preparedStatement.setInt(33, courseProvider.getPrincipal());
-			preparedStatement.setString(34, courseProvider.getCrtBy());
-			preparedStatement.setString(35, courseProvider.getModBy());
-			
+		//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
+			preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
+			preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
+			preparedStatement.setInt(32,courseProvider.getCourseProviderStatus());
+			preparedStatement.setInt(33, courseProvider.getCourseProviderType());
+			preparedStatement.setInt(34, courseProvider.getPrincipal());
+			preparedStatement.setString(35, courseProvider.getCrtBy());
+			preparedStatement.setString(36, courseProvider.getModBy());
+
+			/**
+			 * checks for course provider head office code. if code = 0, means
+			 * this course provider is a head office. Therefore we have to assign null
+			 * for that value
+			 * 
+			 */
+			if(courseProvider.getPrincipal()==0){
+				  preparedStatement.setInt(29, null);
+			}
+
 			// set course provider account details
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, courseProviderAccount.getName());
 			preparedStatement2.setString(2, courseProviderAccount.getUsername());
 			preparedStatement2.setString(3, courseProviderAccount.getPassword());
-			preparedStatement2.setString(4,courseProviderAccount.getDescription());
-			preparedStatement2.setBoolean(5, courseProviderAccount.isActive());
-			preparedStatement2.setInt(7, courseProviderAccount.getUserType());
-			preparedStatement2.setString(8, courseProviderAccount.getCrtBy());
-			preparedStatement2.setString(9, courseProviderAccount.getModBy());
+			preparedStatement2.setString(4, courseProviderAccount.getEmail());
+			preparedStatement2.setInt(5, courseProviderAccount.getUserType());
+			preparedStatement2.setString(6,courseProviderAccount.getDescription());
+			preparedStatement2.setBoolean(7, courseProviderAccount.isActive());
+			preparedStatement2.setInt(8, courseProviderAccount.getUserType());
+			preparedStatement2.setString(9, courseProviderAccount.getCrtBy());
+			preparedStatement2.setString(10, courseProviderAccount.getModBy());
 			
 			
 			//set course provider town details

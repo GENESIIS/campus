@@ -69,6 +69,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		ICrud userTypeDAO = new UserTypeDAO();
 		int userType = 0;
+		Validator validator = new Validator();
 
 		String systemMessage = null;
 
@@ -99,6 +100,15 @@ public class CmdAddFeaturedProvider implements ICommand{
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
 				String selectedTown = helper.getParameter("selectedTown");
+				String courseProviderType = helper.getParameter("providerType");
+				
+				/**
+				 * checks for head office code. if no head office code is provided 
+				 * assign null
+				 */
+				if(validator.isEmpty(helper.getParameter("headOffice"))){
+					courseProvider.setHeadOffice(0);
+				}
 						
 				String providerStatus = helper.getParameter("providerStatus");
 				if(providerStatus.equalsIgnoreCase("active")){
@@ -130,6 +140,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				courseProvider.setMobilePhoneCountryCode(countryCode);
 				//courseProvider.setHeadOffice(null);
 				
+				courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
 				courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 				courseProvider.setFaxNo(helper.getParameter("fax"));
 				courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
@@ -184,13 +195,14 @@ public class CmdAddFeaturedProvider implements ICommand{
 					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 					courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-					courseProviderAccount.setName(helper.getParameter("accountDescription"));	
+					courseProviderAccount.setName(helper.getParameter("accountDescription"));
+					courseProviderAccount.setUserType(5);
 					courseProviderAccount.setCrtBy("admin");//to be update after the session is created
 					courseProviderAccount.setModBy("admin");//to be update after the session is created
 					
-					ICrud CourseProviderDAO = new FeaturedCourseProviderDAO();
+					ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
 					map.put("account", courseProviderAccount);
-					generatedKey = CourseProviderDAO.add(map);
+					generatedKey = courseProviderDAO.add(map);
 					
 				}else if(providerType.equalsIgnoreCase("one-off")){
 					courseProvider.setTutorRelated(false);
