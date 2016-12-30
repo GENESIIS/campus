@@ -97,10 +97,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 			// List courses by course Providers
 			final ProgrammeSearchDTO programme = new ProgrammeSearchDTO();
 			programme.setCourseProvider(providerCode);
-			programme.setProviderStatus(ApplicationStatus
-					.getApplicationStatus(providerStatus));
-			programme.setProgrammeStatus(ApplicationStatus
-					.getApplicationStatus(programmeStatus));
+			programme.setProviderStatus(ApplicationStatus.getApplicationStatus(providerStatus));
+			programme.setProgrammeStatus(ApplicationStatus.getApplicationStatus(programmeStatus));
 			try {
 				if (UtilityHelper.isNotEmpty(startDateString)) {
 					programme.setDisplayStartDate(df.parse((startDateString)));

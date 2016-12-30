@@ -15,19 +15,7 @@ $(document).ready(function() {
 			getProviderSearchData(response);
 		},
 		error : function(jqXHR, exception) {			
-			var msg = '';
-	        if (jqXHR.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (jqXHR.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (jqXHR.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        } else if (exception === 'timeout') {
-	            msg = 'Time out error.';
-	        }  else {
-	            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-	        }	        
-	        alert(msg);
+			errorCodeGeneration(jqXHR, exception);
 		}
 	});
 	
@@ -78,68 +66,57 @@ function getProviderSearchData(response){
 	$('#providerName').html(htmlstr);	
 } 
 
-function loadResultSet(event){	
-	
+
+
+function loadResultSet(event) {
+
 	var cProviderName = $('#providerlist').val();
-	var providerCode=0;	
-	
-	var option=$('#providerName').find('option');
-	for(var i=0; i<option.length;i++){
+	var providerCode = 0;
+
+	var option = $('#providerName').find('option');
+	for (var i = 0; i < option.length; i++) {
 		$('#providerName').find('option')[i].outerHTML;
-		if(option[i].text ==cProviderName){				
-			providerCode=option[i].attributes[0].value;
+		if (option[i].text == cProviderName) {
+			providerCode = option[i].attributes[0].value;
 			break;
 		}
-	}	
-	
-	var startDate= $('#startdate').val();
-	var endDate= $('#enddate').val();
-	var providerStatus=$('input:radio[name=providerStatus]:checked').val();
-	var courseStatus=$('input:radio[name=courseStatus]:checked').val();	
-	
-	
-	if(!($('input:radio[name=providerStatus]:checked').length>0)){
-		 alert("you have to choose a provider status");
-		 return false;
 	}
-	if(!($('input:radio[name=courseStatus]:checked').length>0)){
-		alert("you have to choose a programme status");	
+
+	var startDate = $('#startdate').val();
+	var endDate = $('#enddate').val();
+	var providerStatus = $('input:radio[name=providerStatus]:checked').val();
+	var courseStatus = $('input:radio[name=courseStatus]:checked').val();
+
+	if (!($('input:radio[name=providerStatus]:checked').length > 0)) {
+		alert("you have to choose a provider status");
 		return false;
 	}
-	
-	
+	if (!($('input:radio[name=courseStatus]:checked').length > 0)) {
+		alert("you have to choose a programme status");
+		return false;
+	}
+
 	$.ajax({
-		url:'../../ReportController',
-		data:{
-			CCO:'REPORT_COURSES_BY_COURSE_PROVIDER',
-			cProviderCode:providerCode,
-			startDate:startDate,
-			endDate:endDate,
-			providerStatus:providerStatus,			
-			courseStatus:courseStatus			
+		url : '../../ReportController',
+		data : {
+			CCO : 'REPORT_COURSES_BY_COURSE_PROVIDER',
+			cProviderCode : providerCode,
+			startDate : startDate,
+			endDate : endDate,
+			providerStatus : providerStatus,
+			courseStatus : courseStatus
 		},
-		datatype:"json",
-		success : function(response) {				
+		datatype : "json",
+		success : function(response) {
 			populateResultTable(response);
 		},
-		error : function(jqXHR, exception) {			
-			var msg = '';
-			   if (jqXHR.status === 0) {
-		            msg = 'Not connect.\n Verify Network.';
-		        } else if (jqXHR.status == 404) {
-		            msg = 'Requested page not found. [404]';
-		        } else if (jqXHR.status == 500) {
-		            msg = 'Internal Server Error [500].';
-		        } else if (exception === 'timeout') {
-		            msg = 'Time out error.';
-		        }  else {
-		            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-		        }	        
-	        alert(msg);		
+		error : function(jqXHR, exception) {
+			errorCodeGeneration(jqXHR, exception);
 		}
 	});
 }
 function populateResultTable(response){
+	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
 	var programmeListTable = $("#tBody");
 	programmeListTable.find('tr').remove();	
@@ -176,7 +153,8 @@ function populateResultTable(response){
 	}
 }
 
-function clearParameters(event){
+function clearParameters(event){	
+	$('#resultPanel').hide();
 	$('#providerlist').val("");	
 	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
 	
@@ -193,4 +171,20 @@ function clearParameters(event){
 	$('input:radio[name="courseStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
+}
+
+function errorCodeGeneration(jqXHR, exception){
+	var msg = '';
+	   if (jqXHR.status === 0) {
+         msg = 'Not connect.\n Verify Network.';
+     } else if (jqXHR.status == 404) {
+         msg = 'Requested page not found. [404]';
+     } else if (jqXHR.status == 500) {
+         msg = 'Internal Server Error [500].';
+     } else if (exception === 'timeout') {
+         msg = 'Time out error.';
+     }  else {
+         msg = 'Uncaught Error.\n' + jqXHR.responseText;
+     }	        
+ alert(msg);	
 }
