@@ -8,6 +8,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:useBean id="applicationStatusBean"
+	class="com.genesiis.campus.validation.ApplicationStatusBean" />
+<jsp:useBean id="accountTypeBean"
+	class="com.genesiis.campus.validation.AccountTypeBean" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -115,20 +119,15 @@
 						<ul class="result-row">
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
-									<div class="col-name">
+								<div class="col-name">
 									<h1 class="pro-name">Account Type :</h1>
 								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="featured-oneoff"
-											id="featured-oneoff" value="featured" /> Course Provider
-									</h1>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										<input type="radio" name="featured-oneoff"
-											id="featured-oneoff" value="one-off" /> One-Off Provider
-									</h1>
+								<div class="col-name" style="width: 50%;">
+										<c:forEach items="${accountTypeBean.values}"
+											var="accountTypes">
+											<input type="radio" name="providerType" id="providerType"
+												value="${accountTypes.typeValue}" /> ${accountTypes}
+									 </c:forEach>
 								</div>
 							</li>
 							<!-- end -->
@@ -156,7 +155,8 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
-										id="uniquePrefix" size="30px;" onfocusout="providerPrefixValidation();"/>
+										id="uniquePrefix" size="30px;"
+										onfocusout="providerPrefixValidation();" />
 								</div>
 							</li>
 							<!-- end -->
@@ -306,17 +306,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Country :</h1>
 								</div>
-								<div class="col-name" id="country-List">
-								<!-- 	<select  >
-										<option>--Default--</option>
-										<c:if test="${not empty requestData }">
-											<c:forEach var="country" items="${requestData }">
-												<option value="${country[0] }">${country[1] }</option>
-											</c:forEach>
-										</c:if>
-
-									</select> -->
-								</div>
+								<div class="col-name" id="country-List"></div>
 							</li>
 							<!-- end -->
 
@@ -324,14 +314,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Town :</h1>
 								</div>
-								<div class="col-name" id="town-List">
-									<!-- 	<input class="input" type="text" name="town" id="town"
-										size="50px;" />			
-									<select>
-										<option>--Default--</option>
-									</select>-->
-									
-								</div>
+								<div class="col-name" id="town-List"></div>
 							</li>
 							<!-- end -->
 
@@ -436,9 +419,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerType"
-										id="providerType" size="50px;" />
+								<div class="col-name" id="providerTypeList">
 								</div>
 							</li>
 							<!-- end -->
@@ -449,11 +430,17 @@
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<h1 class="pro-name">
+										<c:forEach items="${applicationStatusBean.values}"
+											var="applicationStatus">
+											<input type="radio" name="providerStatus" id="providerStatus"
+												value="${applicationStatus.statusValue}" /> ${applicationStatus}
+									 </c:forEach>
+										<!-- 
 										<input type="radio" name="providerStatus" id="providerStatus"
 											value="active" /> Active &nbsp; <input type="radio"
 											name="providerStatus" id="providerStatus" value="inactive" />
 										InActive &nbsp; <input type="radio" name="providerStatus"
-											id="providerStatus" value="pending" /> Pending
+											id="providerStatus" value="pending" /> Pending -->
 									</h1>
 								</div>
 							</li>
@@ -477,7 +464,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;"/>
+										id="providerName" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -488,7 +475,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
-										id="providerEmail" size="50px;"/>
+										id="providerEmail" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
@@ -499,7 +486,8 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;" onfocusout="providerUsernameValidation();" />
+										id="providerUsername" size="50px;"
+										onfocusout="providerUsernameValidation();" />
 								</div>
 							</li>
 							<!-- end -->
@@ -510,7 +498,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;" required/>
+										id="providerPassword" size="50px;" required />
 								</div>
 							</li>
 							<!-- end -->
@@ -521,7 +509,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;" required/>
+										id="cProviderPassword" size="50px;" required />
 								</div>
 							</li>
 							<!-- end -->

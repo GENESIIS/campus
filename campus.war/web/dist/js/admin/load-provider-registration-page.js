@@ -7,6 +7,7 @@ window.countryCollection = null;
 window.countryCode = null;
 window.townCollection = null;
 window.usernameValidation = true;
+window.courseProviderTypes  = null;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -18,6 +19,12 @@ function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
 
 }
+
+
+window.onload = function() {
+	getProviderPageLoadData();
+//	getCourseProviderTypes();
+};
 
 function getCourseProviderTypes(){
 	$.ajax({
@@ -31,15 +38,30 @@ function getCourseProviderTypes(){
 		success : function(response) {
 
 			if (response !== undefined && response !== null) {
-				window.courseProviderTypes = response.countryArrayList;
+				window.courseProviderTypes = response.providerTypes;
 			}
 		},
 	});
 }
 
-window.onload = function() {
-	getProviderPageLoadData();
-};
+function displayProviderTypes() {
+	var providerTypeCollection = window.courseProviderTypes;
+	var singleTypeElement = '';
+
+	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" >';
+	if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
+		$.each(providerTypeCollection, function(index, value) {
+			singleTypeElement += '<option value="' + value[0] + '">';
+			singleTypeElement += value[1];
+			singleTypeElement += '</option>';
+
+		});
+	}
+	singleTypeElement += '';
+	var providerTypeNames = $("#providerTypeList");
+	providerTypeNames.html(singleTypeElement);
+
+}
 
 function getProviderPageLoadData() {
 
@@ -56,6 +78,8 @@ function getProviderPageLoadData() {
 			if (response !== undefined && response !== null) {
 				window.countryCollection = response.countryArrayList;
 				displayProviderCountries();
+				window.courseProviderTypes = response.providerTypes;
+				 displayProviderTypes();
 			}
 		},
 	});
