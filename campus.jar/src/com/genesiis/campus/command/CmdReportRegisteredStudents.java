@@ -8,11 +8,17 @@ import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.StudentAccountType;
+import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 
@@ -59,31 +65,37 @@ public class CmdReportRegisteredStudents implements ICommand {
 	 * @param helper
 	 * @throws Exception
 	 */
-	private void generateReportResults(IDataHelper helper) throws  Exception{
+	private void generateReportResults(IDataHelper helper)
+			throws ParseException {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
+		String studentStatus = helper.getParameter("studentStatus");
 		final Student student = new Student();
 		try {
-		/*try {
-			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			if (UtilityHelper.isNotEmpty(startDateString)) {
-				student.setDisplayStartDate(df.parse((startDateString)));
-			}
-			if (UtilityHelper.isNotEmpty(endDateString)) {
-				student.setExpiryDate((Date) df.parse((endDateString)));
-			}
+			try {
+				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				if (UtilityHelper.isNotEmpty(startDateString)) {
+					student.setFromDate(df.parse((startDateString)));
+				}
+				if (UtilityHelper.isNotEmpty(endDateString)) {
+					student.setToDate(df.parse((endDateString)));
+				}
+				student.setStatus(ApplicationStatus.getApplicationStatus(studentStatus));
+				student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
 
-		} catch (ParseException parseException) {
-			log.error("execute() : ParseException "	+ parseException.toString());
-			throw parseException;
-		}*/
-		final Collection<Collection<String>> registeredStudentList = new ReportStudentDAO().findById(student);
-		helper.setAttribute("registeredStudentList", registeredStudentList);
+			} catch (ParseException parseException) {
+				log.error("execute() : ParseException "
+						+ parseException.toString());
+				throw parseException;
+			}
+			final Collection<Collection<String>> registeredStudentList = new ReportStudentDAO()
+					.findById(student);
+			helper.setAttribute("registeredStudentList", registeredStudentList);
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception.toString());
 			throw exception;
-			}
-		
+		}
+
 	}
 
 }
