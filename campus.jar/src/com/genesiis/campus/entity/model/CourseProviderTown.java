@@ -1,14 +1,15 @@
 package com.genesiis.campus.entity.model;
 
-import java.util.Date;
-
 //20161229 JH c39-add-course-provider CourseProviderTown.java class created
+//20170102 JH c39-add-course-provider data type string to long for town attribute
+
+import java.util.Date;
 
 public class CourseProviderTown {
 
 	private int code;
 	private int courseProvider;
-	private int town;
+	private Long town;
 	
 	private String crtBy;
 	private String modBy;
@@ -29,10 +30,10 @@ public class CourseProviderTown {
 	public void setCourseProvider(int courseProvider) {
 		this.courseProvider = courseProvider;
 	}
-	public int getTown() {
+	public Long getTown() {
 		return town;
 	}
-	public void setTown(int town) {
+	public void setTown(Long town) {
 		this.town = town;
 	}
 	public String getCrtBy() {
