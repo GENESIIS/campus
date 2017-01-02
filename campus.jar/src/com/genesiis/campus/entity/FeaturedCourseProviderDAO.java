@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20161219 JH c39-add-course-provider code review modifications: use generics 
 //20161219 JH c39-add-course-provider fixed error in prepared statement
 //20161229 JH c39-add-course-provider added queries to insert data into course provider town table
+//20170102 JH c39-add-course-provider code modified to fix number format exception in course provider town entity
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,7 +86,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			mainCourseProviderStringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
 			mainCourseProviderStringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE,");
 			mainCourseProviderStringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,CRTON, CRTBY, MODON, MODBY )");
-			mainCourseProviderStringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
+			mainCourseProviderStringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
 			mainCourseProviderStringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, ?, getDate(), ?, getDate(),? )");
 			
 			String mainCourseProvider = mainCourseProviderStringBuilder.toString();
@@ -216,7 +217,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			//set course provider town details
 			preparedStatement3 = conn.prepareStatement(town);
 			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
-			preparedStatement3.setInt(3, courseProviderTown.getTown());
+			preparedStatement3.setLong(3, Long.parseLong(courseProviderTown.getTown()));
 			preparedStatement3.setString(4, courseProviderTown.getCrtBy());
 			preparedStatement3.setString(5, courseProviderTown.getModBy());
 			
