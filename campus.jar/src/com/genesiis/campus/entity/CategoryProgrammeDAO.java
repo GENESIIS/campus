@@ -17,6 +17,7 @@ package com.genesiis.campus.entity;
 //20161127 MM c5-corporate-training-landing-page-MP Modified code to use ApplicationStatus enum 
 //				to set arguments to status related parameters, and to consider DISPLAYSTARTDATE in query
 //20161127 MM c5-corporate-training-landing-page-MP Removed unused java.sql.Date object.
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +50,7 @@ public class CategoryProgrammeDAO implements ICrud {
 		final Collection<Collection<String>> corporateProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+		ResultSet rs = null;
 		try {
 			Programme programme = (Programme) code;
 			int categoryCode = programme.getCategory();
@@ -83,7 +84,7 @@ public class CategoryProgrammeDAO implements ICrud {
 			ps.setInt(6, ApplicationStatus.ACTIVE.getStatusValue());
 			ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
 			ps.setInt(8, ApplicationStatus.ACTIVE.getStatusValue());
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			retrieveProgrammesFromResultSet(rs, corporateProgrammeList);
 
@@ -102,6 +103,9 @@ public class CategoryProgrammeDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return corporateProgrammeList;

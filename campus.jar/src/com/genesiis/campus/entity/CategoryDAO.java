@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 //20161129 JH c7-higher-education-landing-page-MP QA modifications: findById method finally block modified
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: findById, getAll methods modified
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,13 +60,13 @@ public class CategoryDAO implements ICrud{
 		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[ISACTIVE] FROM [CAMPUS].[CATEGORY] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
@@ -88,6 +89,9 @@ public class CategoryDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allCategoryList;
@@ -128,7 +132,7 @@ public class CategoryDAO implements ICrud{
 		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-
+		ResultSet rs = null;
 		try {
 
 			conn = ConnectionManager.getConnection();
@@ -140,7 +144,7 @@ public class CategoryDAO implements ICrud{
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, category.getCode());
 
-			final ResultSet rs = preparedStatement.executeQuery();
+			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
@@ -170,6 +174,9 @@ public class CategoryDAO implements ICrud{
 			}
 			if(conn != null){
 				conn.close();
+			}
+			if(rs != null){
+				rs.close();
 			}
 		}
 

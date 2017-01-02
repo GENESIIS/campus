@@ -14,6 +14,7 @@
 //				IMAGE to match DDL changes
 //20161216 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
 //				statements in catch clauses
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 
 package com.genesiis.campus.entity;
 
@@ -77,7 +78,7 @@ public class BannerDAO implements ICrud {
 		final Collection<Collection<String>> bannerList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+		ResultSet rs = null;
 		try {
 			String pageName = (String) code;
 			
@@ -102,7 +103,7 @@ public class BannerDAO implements ICrud {
 			ps.setInt(3, ApplicationStatus.ACTIVE.getStatusValue());
 			ps.setInt(4, ApplicationStatus.ACTIVE.getStatusValue());
 			ps.setDate(5, today);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 
 			retrieveBannerList(rs, bannerList);
 
@@ -122,6 +123,9 @@ public class BannerDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return bannerList;

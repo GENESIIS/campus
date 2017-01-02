@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 // 20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,7 +73,8 @@ public class SystemConfigDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
-		
+		ResultSet resultSet = null;
+		PreparedStatement prstmtFind = null;
 		String[]  sysConfigCode = (String[])object;		
 		
 		StringBuilder queryBuilder = new StringBuilder("SELECT [CODE] ,[SYSTEMCONFIGCODE] ,[DESCRIPTION] ,[VALUE1] ");
@@ -95,8 +97,8 @@ public class SystemConfigDAO implements ICrud {
 		
 		try{
 			
-			PreparedStatement prstmtFind = conn.prepareStatement(findSql);
-			ResultSet resultSet = prstmtFind.executeQuery();
+			prstmtFind = conn.prepareStatement(findSql);
+			resultSet = prstmtFind.executeQuery();
 			
 			while(resultSet.next()){
 				final ArrayList<String> systemConfigurations = new ArrayList<String>();				
@@ -114,6 +116,16 @@ public class SystemConfigDAO implements ICrud {
 		} catch (SQLException sqle){
 			log.error("findById(Object object,Connection conn):SQLException :" +sqle.toString());
 			throw sqle;	
+		} finally {
+			if (prstmtFind != null) {
+				prstmtFind.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+			if (resultSet != null) {
+				resultSet.close();
+			}
 		} 
 		
 		return outerCollection;

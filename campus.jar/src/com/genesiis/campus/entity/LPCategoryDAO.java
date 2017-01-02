@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161223 PN CAM-112: INIT LPCategoryDAO.java class.
 //20161227 PN CAM-112: Modified getAll() method implementation.
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.]
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,13 +49,13 @@ static Logger log = Logger.getLogger(CategoryDAO.class.getName());
 		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[ISACTIVE] FROM [CAMPUS].[CATEGORY] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCategoryList = new ArrayList<String>();
@@ -77,6 +78,9 @@ static Logger log = Logger.getLogger(CategoryDAO.class.getName());
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allCategoryList;
