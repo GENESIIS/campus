@@ -3,7 +3,6 @@ package com.genesiis.campus.entity;
 
 //DJ 20161229 c53-report-registered-students-MP-dj created ReportStudentDAO.java
 
-import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 
@@ -47,13 +46,13 @@ public class ReportStudentDAO  implements ICrud{
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
-		Programme programme = new Programme();
+		//Programme programme = new Programme();
 
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("");
 			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1, programme.getCourseProvider());
+			//stmt.setInt(1, programme.getCourseProvider());
 			
 			
 			resultSet= stmt.executeQuery();			

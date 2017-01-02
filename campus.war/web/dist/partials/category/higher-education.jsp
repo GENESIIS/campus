@@ -1,4 +1,5 @@
 <!-- 20161027 TR c11 start styling courses filter result page -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
