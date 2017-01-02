@@ -66,22 +66,15 @@ public class FeaturedCourseProviderDAO implements ICrud {
 
 			/**
 			 * provider query used to insert data into course provider table.
+			 * depending on whether the account is a head office or a branch under a head office, 
+			 * the query should be chosen (between branchCourseProvider and mainCourseProvider)
 			 */
-//			String provider = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
-//					+ " COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE ,LANDPHONENO ,LANDPHONE2NO ,"
-//					+ " FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
-//					+ " VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, "
-//					+ " HEADOFFICETOWN, ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, "
-//					+ " PRINCIPAL, CRTON, CRTBY, MODON, MODBY )"
-//					+ " VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, "
-//					+ " ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
-//					+ " ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )";
-			
+	
 			StringBuilder branchCourseProviderStringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
-			branchCourseProviderStringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
+			branchCourseProviderStringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL, COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
 			branchCourseProviderStringBuilder.append("LANDPHONE2NO ,FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK,FACEBOOKURL, TWITTERURL, MYSPACEURL , ");
 			branchCourseProviderStringBuilder.append("LINKEDINURL, INSTAGRAMURL ,VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE,");
-			branchCourseProviderStringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE,PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
+			branchCourseProviderStringBuilder.append("ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, PRINCIPAL, CRTON, CRTBY, MODON, MODBY )");
 			branchCourseProviderStringBuilder.append("VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?,");
 			branchCourseProviderStringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, ?, ?, getDate(), ?, getDate(),? )");
 			
@@ -146,13 +139,13 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
 			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
-				preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
-				preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
-				preparedStatement.setInt(32,courseProvider.getCourseProviderStatus());
-				preparedStatement.setInt(33, courseProvider.getCourseProviderType());
+				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
+				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
+				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
+				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
 				//preparedStatement.setInt(34, courseProvider.getPrincipal());
-				preparedStatement.setString(34, courseProvider.getCrtBy());
-				preparedStatement.setString(35, courseProvider.getModBy());
+				preparedStatement.setString(33, courseProvider.getCrtBy());
+				preparedStatement.setString(34, courseProvider.getModBy());
 
 			}if(courseProvider.getPrincipal() !=0){//has a head office 
 				preparedStatement = conn.prepareStatement(mainCourseProvider,
@@ -188,13 +181,13 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
 			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
-				preparedStatement.setBoolean(30, courseProvider.isTutorRelated());
-				preparedStatement.setBoolean(31, courseProvider.isAdminAllowed());
-				preparedStatement.setInt(32,courseProvider.getCourseProviderStatus());
-				preparedStatement.setInt(33, courseProvider.getCourseProviderType());
-				preparedStatement.setInt(34, courseProvider.getPrincipal());
-				preparedStatement.setString(35, courseProvider.getCrtBy());
-				preparedStatement.setString(36, courseProvider.getModBy());
+				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
+				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
+				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
+				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
+				preparedStatement.setInt(33, courseProvider.getPrincipal());
+				preparedStatement.setString(34, courseProvider.getCrtBy());
+				preparedStatement.setString(35, courseProvider.getModBy());
 
 			}
 
