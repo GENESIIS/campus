@@ -1,5 +1,7 @@
 package com.genesiis.campus.tutorController;
 
+//20170102 DN CAM:47 created the Servlet class for managing tutor related 
+
 import com.genesiis.campus.controller.CampusController;
 import java.io.IOException;
 import javax.servlet.ServletException;
