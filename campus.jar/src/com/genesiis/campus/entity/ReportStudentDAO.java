@@ -2,8 +2,9 @@ package com.genesiis.campus.entity;
 
 
 //DJ 20161229 c53-report-registered-students-MP-dj created ReportStudentDAO.java
+//DJ 20170102 c53-report-registered-students-MP-dj Enhanced findById() with date range.
 
-import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.DataHelper;
@@ -44,30 +45,46 @@ public class ReportStudentDAO  implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object studentDTO)
+	public Collection<Collection<String>> findById(Object studentSearchDTO)
 			throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
-		Student student=new Student();
+		StudentSearchDTO student=new StudentSearchDTO();
 		final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
-		 if(UtilityHelper.isNotEmptyObject(studentDTO)){
-			  student=(Student)studentDTO;			 
+		 if(UtilityHelper.isNotEmptyObject(studentSearchDTO)){
+			  student=(StudentSearchDTO)studentSearchDTO;			 
 		 }
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS, STUDENT.CRTON AS REGISTEREDDATE, ");
-			sb.append("STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT WHERE 1=1 ");
-			sb.append( " STUDENT.ACCOUNTTYPE=?");
-			sb.append(" AND	STUDENT.ISACTIVE=? AND STUDENT.CRTON BETWEEN '2016-11-17' AND '2016-12-16'");
-			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1,student.getAccountType());
-			stmt.setInt(2,student.getStatus());
-			/*stmt.setInt(3,student.getFromDate());
-			stmt.setInt(4,student.gettODate());*/
+			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
+			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT WHERE 1=1 ");
+			if (student.getAccountType() > 0) {
+				sb.append("AND STUDENT.ACCOUNTTYPE= ");
+				sb.append(student.getAccountType());
+			}
+			if (student.getStatus() > 0) {
+				sb.append("AND	STUDENT.ISACTIVE= ");
+				sb.append(student.getStatus());
+			}
+			if ((student.getFromDate() != null && student.getFromDate()	.getTime() > 0)	&& (student.getToDate() != null && student.getToDate().getTime() > 0)) {
+				sb.append("AND STUDENT.CRTON BETWEEN ' ");
+				sb.append(new java.sql.Date(student.getFromDate().getTime()));
+				sb.append(" ' AND ' ");
+				sb.append(new java.sql.Date(student.getToDate().getTime()));
+				sb.append(" '  ");
+			} else if (student.getFromDate() != null && student.getFromDate().getTime() > 0) {
+				sb.append("AND STUDENT.CRTON >= ' ");
+				sb.append(new java.sql.Date(student.getFromDate().getTime()));
+				sb.append("'");
+			} else if (student.getToDate() != null	&& student.getToDate().getTime() > 0) {
+				sb.append("AND STUDENT.CRTON <= ' ");
+				sb.append(new java.sql.Date(student.getToDate().getTime()));
+				sb.append("'");			
+			}
 			
-			
+			stmt = conn.prepareStatement(sb.toString());			
 			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
 				final ArrayList<String> singleProvider = new ArrayList<String>();
