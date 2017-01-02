@@ -18,22 +18,23 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 
 <!--     Data Table CSS -->
-<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/dist/datatable/dataTables.bootstrap.min.css"
+	rel="stylesheet" type="text/css">
 <style>
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+td,th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+	background-color: #dddddd;
 }
 </style>
 </head>
@@ -60,61 +61,68 @@ tr:nth-child(even) {
 		<!-- END inner-image-header -->
 		<div>
 			<div>
-				<div class="container">					
-						<fieldset>
-							<legend align="left">Search criteria : </legend>							
-							<!-- <div class="drop-holder">
-								<input type="text" name="providerlist" id="providerlist"
-									list="providerName" placeholder="-- Select District --"  required/>
-								<datalist id="providerName" >
-								</datalist>
-							</div> -->
-							<div>
-								Status : 
-                                <input type="radio" name="status" value="ACTIVE"> Active
-  								<input type="radio" name="status" value="INACTIVE"> Inactive
-							</div>
-							<div>
-								Start Date : <input type="date" id="startdate" name="search">
-							</div>
-							<div>
-								End Date : <input type="date" id="enddate" name="search">
-							</div>
-							<div>
-								<button type="submit" id="clearParam" >Clear</button>
-								<button type="submit" id="searchList" >Search
-									List</button>
-							</div>
-						</fieldset>					
+				<div class="container">
+					<fieldset>
+						<legend align="left">Search criteria : </legend>
+						<div>
+							Status : <input type="radio" name="studentStatus" value="ACTIVE">
+							Active <input type="radio" name="studentStatus" value="INACTIVE">
+							Inactive
+						</div>
+						<div>
+							Start Date : <input type="date" id="startdate" name="search">
+						</div>
+						<div>
+							End Date : <input type="date" id="enddate" name="search">
+						</div>
+						<div>
+							<button type="submit" id="clearParam">Clear</button>
+							<button type="submit" id="searchList">Search List</button>
+						</div>
+					</fieldset>
 				</div>
 			</div>
-			</br></br>			 
-			 <div id="resultSetDiv" >
-                <!-- <h1>Result set</h1> -->              
-                <table id="table" >
-					</table>  
-                </div>
+			<div id="resultPanel">
+				<div class="results-count col-md-12 col-lg-12 col-sm-12">
+					<label id="totalResultsCount" for=""></label>
+				</div>
+
+				<div id="resultSetDiv"
+					class="data-tbl col-md-12 col-lg-12 col-sm-12">
+					<table class="display">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Student Code</th>
+								<th>Student Name</th>
+								<th>Interest</th>
+								<th>Registered date</th>
+								<th>Last login date</th>								
+							</tr>
+						</thead>
+						<tbody id="tBody">
+						</tbody>
+					</table>
+				</div>
 			</div>
-			</br></br>		
-		</div>	
-	<!-- End Container - Top Providers list -->
-	
-		
-<!-- jQuery & Other js -->
-	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"
-		charset="utf-8"></script>
-	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"
-		charset="utf-8"></script>
-	<script src="/dist/js/main.js"></script>
+		</div>
+		<!-- End Container - Top Providers list -->
 
-    <script src="/dist/js/report/courses-by-provider.js"></script>
 
-	<!-- W3-Include -->
-	<script src="../bower-components/w3/w3data.js"></script>
+		<!-- jQuery & Other js -->
+		<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"
+			charset="utf-8"></script>
+		<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"
+			charset="utf-8"></script>
+		<script src="/dist/js/main.js"></script>
 
-	<!-- Footer -->
-	<jsp:include page="/dist/partials/layout/footer.jsp" />
-	<!--End  Footer -->
+		<script src="/dist/js/report/courses-by-provider.js"></script>
 
+		<!-- W3-Include -->
+		<script src="../bower-components/w3/w3data.js"></script>
+
+		<!-- Footer -->
+		<jsp:include page="/dist/partials/layout/footer.jsp" />
+		<!--End  Footer -->
 </body>
 </html>
