@@ -93,12 +93,13 @@ $(function() {
         		var error = data[2].toString();
         		
         		if(data[1] != ""){
+        			$('#kv-success-1').html("");
         			$('#kv-success-1').append('<h4>'+data[1]+'</h4>');
         			$('#kv-success-1').fadeIn();
         	   		$('#profImage').attr("");
         	   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+Math.random());
         	   		$('#kv-success-1').fadeOut();
-        	   		$('#kv-success-1').append('<h4></h4>');
+        	   		
         	   		$.ajax({
         	            url: "../../../StudentController?CCO=UUP",
         	            type: 'POST',
