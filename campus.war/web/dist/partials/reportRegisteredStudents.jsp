@@ -21,7 +21,7 @@
 <link href="/dist/datatable/dataTables.bootstrap.min.css"
 	rel="stylesheet" type="text/css">
 <style>
-table {
+tbody {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
@@ -65,7 +65,7 @@ tr:nth-child(even) {
 					<fieldset>
 						<legend align="left">Search criteria : </legend>
 						<div>
-							Status : <input type="radio" name="studentStatus" value="ACTIVE">
+							Student Status : <input type="radio" name="studentStatus" value="ACTIVE">
 							Active <input type="radio" name="studentStatus" value="INACTIVE">
 							Inactive
 						</div>
@@ -116,7 +116,7 @@ tr:nth-child(even) {
 			charset="utf-8"></script>
 		<script src="/dist/js/main.js"></script>
 
-		<script src="/dist/js/report/courses-by-provider.js"></script>
+		<script src="/dist/js/report/registered-students.js"></script>
 
 		<!-- W3-Include -->
 		<script src="../bower-components/w3/w3data.js"></script>
