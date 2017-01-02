@@ -10,6 +10,9 @@ public class Student {
 	private String firstName;
 	private String LastName;	
 	private int status;
+	private int accountType;
+	private Date fromDate;
+	private Date toDate;
 	
 	public int getCode() {
 		return code;
@@ -34,6 +37,24 @@ public class Student {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public int getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(int accountType) {
+		this.accountType = accountType;
+	}
+	public Date getFromDate() {
+		return fromDate;
+	}
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+	public Date getToDate() {
+		return toDate;
+	}
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
 	}
 	
 
