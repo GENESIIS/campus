@@ -136,7 +136,7 @@ function displayProviderTownList() {
 	singleTownElement += '<select id="selectedTown" name="selectedTown">';
 	if (townCollection !== undefined & townCollection !== null) {
 		$.each(townCollection, function(index, value) {
-			singleTownElement += '<option value="' + value[2] + '">';
+			singleTownElement += '<option value="' + value[0] + '">';
 			singleTownElement += value[1];
 			singleTownElement += '</option>';
 
