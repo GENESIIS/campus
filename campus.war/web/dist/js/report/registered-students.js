@@ -40,13 +40,30 @@ function loadResultSet(event) {
 function populateResultTable(response) {
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
-	var programmeListTable = $("#tBody");
-	programmeListTable.find('tr').remove();
+	var studentListTable = $("#tBody");
+	studentListTable.find('tr').remove();
 	var totalResultCount = 0;
 	$.each(response.registeredStudentList, function(index, value) {
 		$('#resultSetDiv').show();
 		if (value != null && value.length > 0) {
-
+			totalResultCount ++;
+			var code = value[0].toString();
+			var name = value[1].toString();
+			var cStatus = value[2].toString();
+			var crtOn = value[3].toString();
+			var lastLoggedIn = value[4].toString();
+			
+			
+			
+			var tr = '<tr>' ;
+			tr += '<td>' + totalResultCount + '</td>';
+			tr += '<td>' + code  + '</td>';
+			tr += '<td>' + name  + '</td>';
+			tr += '<td>' + cStatus  + '</td>';	
+			tr += '<td>' + crtOn  + '</td>';
+			tr += '<td>' + lastLoggedIn  + '</td>';
+					
+			studentListTable.append(tr);	
 		}
 	});
 }
