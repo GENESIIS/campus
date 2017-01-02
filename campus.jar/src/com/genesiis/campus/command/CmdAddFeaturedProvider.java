@@ -100,7 +100,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
 				String selectedTown = helper.getParameter("selectedTown");
-				String courseProviderType = helper.getParameter("providerType");
+				String courseProviderType = helper.getParameter("selectedProviderType");
 				
 				/**
 				 * checks for head office code. if no head office code is provided 
@@ -108,16 +108,18 @@ public class CmdAddFeaturedProvider implements ICommand{
 				 */
 				if(validator.isEmpty(helper.getParameter("headOffice"))){
 					courseProvider.setHeadOffice(0);
+				}else{
+					courseProvider.setHeadOffice(Integer.parseInt("headOffice"));
 				}
 						
-				String providerStatus = helper.getParameter("providerStatus");
-				if(providerStatus.equalsIgnoreCase("active")){
+				int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
+				if(providerStatus == ApplicationStatus.ACTIVE.getStatusValue()){
 					pStatus = ApplicationStatus.ACTIVE.getStatusValue();
 				}
-				if(providerStatus.equalsIgnoreCase("inactive")){
+				if(providerStatus == ApplicationStatus.INACTIVE.getStatusValue()){
 					pStatus = ApplicationStatus.INACTIVE.getStatusValue();
 				}
-				if(providerStatus.equalsIgnoreCase("pending") ){
+				if(providerStatus == ApplicationStatus.PENDING.getStatusValue() ){
 					pStatus = ApplicationStatus.PENDING.getStatusValue();
 				}
 				
@@ -171,23 +173,23 @@ public class CmdAddFeaturedProvider implements ICommand{
 				Map map = new HashMap();
 				map.put("provider", courseProvider);
 				
-				String providerType = helper.getParameter("featured-oneoff");
+				int providerType = Integer.parseInt(helper.getParameter("courseProvider"));
 				
 				/**
 				 * select the account type of the course provider. 
 				 * and will call different DAO classes depending on the course provider
 				 * type
 				 */
-				if(providerType.equalsIgnoreCase("featured")){
+				if(providerType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
 					map.put("town" , courseProviderTown);
 					courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 					courseProvider.setTutorRelated(false);
 								
 					String accountStatus = helper.getParameter("accountStatus");
-					if(providerStatus.equalsIgnoreCase("active")){	
+					if(accountStatus.equalsIgnoreCase("active")){	
 						courseProviderAccount.setActive(true);
 					}
-					if(providerStatus.equalsIgnoreCase("inactive")){	
+					if(accountStatus.equalsIgnoreCase("inactive")){	
 						courseProviderAccount.setActive(false);
 					}
 
@@ -204,7 +206,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 					map.put("account", courseProviderAccount);
 					generatedKey = courseProviderDAO.add(map);
 					
-				}else if(providerType.equalsIgnoreCase("one-off")){
+				}else if(providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()){
 					courseProvider.setTutorRelated(false);
 					courseProvider.setAdminAllowed(false);
 					
@@ -251,7 +253,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 	//	boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
 
-		if(validator.isEmpty(helper.getParameter("featured-oneoff"))){
+		if(validator.isEmpty(helper.getParameter("courseProvider"))){
 			errorString.add("Featured or One-off selection ");
 		}if(validator.isEmpty(helper.getParameter("providerName"))){
 			errorString.add("Provider Name ");
@@ -283,16 +285,34 @@ public class CmdAddFeaturedProvider implements ICommand{
 			errorString.add("Land number 1 ");
 		}if(validator.isEmpty(helper.getParameter("networkCode"))){
 			errorString.add("Network code ");
-		}if(validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code ");
-		}if(validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code ");
-		}if(validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code ");
-		}if(validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code ");
-		}if(validator.isEmpty(helper.getParameter("networkCode"))){
-			errorString.add("Network code ");
+		}if(validator.isEmpty(helper.getParameter("mobile"))){
+			errorString.add("Mobile code ");
+		}if(validator.isEmpty(helper.getParameter("selectedProviderType"))){
+			errorString.add("Course Provider Type ");
+		}if(validator.isEmpty(helper.getParameter("fax"))){
+			errorString.add("Fax number");
+		}if(validator.isEmpty(helper.getParameter("address1"))){
+			errorString.add("Address Line 1");
+		}if(validator.isEmpty(helper.getParameter("address2"))){
+			errorString.add("Address Line 2");
+		}if(validator.isEmpty(helper.getParameter("address3"))){
+			errorString.add("Address Line 3");
+		}if(validator.isEmpty(helper.getParameter("accountStatus"))){
+			errorString.add("Account Status");
+		}if(validator.isEmpty(helper.getParameter("providerName"))){
+			errorString.add("Provider Name");
+		}if(validator.isEmpty(helper.getParameter("providerEmail"))){
+			errorString.add("Private Email");
+		}if(validator.isEmpty(helper.getParameter("providerUsername"))){
+			errorString.add("Username");
+		}if(validator.isEmpty(helper.getParameter("providerPassword"))){
+			errorString.add("Password");
+		}if(validator.isEmpty(helper.getParameter("accountDescription"))){
+			errorString.add("Account Description");
+		}if(validator.isEmpty(helper.getParameter("address3"))){
+			errorString.add("Address Line 3");
+		}if(validator.isEmpty(helper.getParameter("address3"))){
+			errorString.add("Address Line 3");
 		}
 		
 		return errorString;
