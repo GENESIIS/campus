@@ -58,9 +58,14 @@ public class ReportStudentDAO  implements ICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS, STUDENT.CRTON AS REGISTEREDDATE, ");
-			sb.append("STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT WHERE STUDENT.ACCOUNTTYPE=?");
+			sb.append("STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT WHERE 1=1 ");
+			sb.append( " STUDENT.ACCOUNTTYPE=?");
+			sb.append(" AND	STUDENT.ISACTIVE=? AND STUDENT.CRTON BETWEEN '2016-11-17' AND '2016-12-16'");
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1,student.getAccountType());
+			stmt.setInt(2,student.getStatus());
+			/*stmt.setInt(3,student.getFromDate());
+			stmt.setInt(4,student.gettODate());*/
 			
 			
 			resultSet= stmt.executeQuery();			
