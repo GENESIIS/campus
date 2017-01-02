@@ -1,6 +1,9 @@
 //DJ 20170102 c53-report-registered-students-MP-dj Ajax controls for registered students generation
 
 $(document).ready(function() {
+	
+	$('#resultPanel').hide();
+	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
 
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
@@ -51,9 +54,7 @@ function populateResultTable(response) {
 			var name = value[1].toString();
 			var cStatus = value[2].toString();
 			var crtOn = value[3].toString();
-			var lastLoggedIn = value[4].toString();
-			
-			
+			var lastLoggedIn = value[4].toString();	
 			
 			var tr = '<tr>' ;
 			tr += '<td>' + totalResultCount + '</td>';
@@ -66,6 +67,19 @@ function populateResultTable(response) {
 			studentListTable.append(tr);	
 		}
 	});
+	if (totalResultCount > 0) {
+		$('#totalResultsCount').text("Result Count " +totalResultCount);
+	} else {
+		$('#totalResultsCount').text(
+				"No results found for selected search criteria");
+	}
+}
+
+function clearParameters(event){	
+	$('#resultPanel').hide();
+	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
+	$('#startdate').val(""); 
+	$('#enddate').val(""); 
 }
 
 function errorCodeGeneration(jqXHR, exception) {
