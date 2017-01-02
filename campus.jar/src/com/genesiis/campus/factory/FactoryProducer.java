@@ -1,6 +1,7 @@
 package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
+//20170102 DN CAM: 47 added TutorController if else branch
 
 import com.genesiis.campus.command.CmdGenerateEmail;
 import org.apache.log4j.Logger;
@@ -27,6 +28,8 @@ public class FactoryProducer {
 			return new PublicCmdFactory();
 
 		} else if (choice.equalsIgnoreCase("/StudentController")) {
+			return new StudentCmdFactory();
+		} else if (choice.equalsIgnoreCase("/TutorController")) {
 			return new StudentCmdFactory();
 		}
 
