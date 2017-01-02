@@ -6,7 +6,7 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
-import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
@@ -70,8 +70,10 @@ public class CmdReportRegisteredStudents implements ICommand {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String studentStatus = helper.getParameter("studentStatus");
-		final Student student = new Student();
+		final StudentSearchDTO student = new StudentSearchDTO();
 		try {
+			student.setStatus(ApplicationStatus.getApplicationStatus(studentStatus));
+			student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
 			try {
 				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				if (UtilityHelper.isNotEmpty(startDateString)) {
@@ -79,20 +81,17 @@ public class CmdReportRegisteredStudents implements ICommand {
 				}
 				if (UtilityHelper.isNotEmpty(endDateString)) {
 					student.setToDate(df.parse((endDateString)));
-				}
-				student.setStatus(ApplicationStatus.getApplicationStatus(studentStatus));
-				student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
+				}		
 
 			} catch (ParseException parseException) {
-				log.error("execute() : ParseException "
+				log.error("generateReportResults() : ParseException "
 						+ parseException.toString());
 				throw parseException;
 			}
-			final Collection<Collection<String>> registeredStudentList = new ReportStudentDAO()
-					.findById(student);
+			final Collection<Collection<String>> registeredStudentList = new ReportStudentDAO().findById(student);
 			helper.setAttribute("registeredStudentList", registeredStudentList);
 		} catch (Exception exception) {
-			log.error("execute() : Exception " + exception.toString());
+			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
 
