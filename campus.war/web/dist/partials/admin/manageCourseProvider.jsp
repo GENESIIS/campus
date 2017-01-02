@@ -123,10 +123,9 @@
 									<h1 class="pro-name">Account Type :</h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
-										<c:forEach items="${accountTypeBean.values}"
-											var="accountTypes">
-											<input type="radio" name="providerType" id="providerType"
-												value="${accountTypes.typeValue}" /> ${accountTypes}
+									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
+										<input type="radio" name="courseProvider" id="courseProvider"
+											value="${accountTypes.typeValue}" /> ${accountTypes}
 									 </c:forEach>
 								</div>
 							</li>
@@ -419,8 +418,7 @@
 								<div class="col-name">
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
-								<div class="col-name" id="providerTypeList">
-								</div>
+								<div class="col-name" id="providerTypeList"></div>
 							</li>
 							<!-- end -->
 
