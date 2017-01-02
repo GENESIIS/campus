@@ -8,6 +8,12 @@
 <!-- 20161201 PN c27-upload-user-image: modified file size into 2MB in file input JavaScript. -->
 <!-- 20161221 PN CAM-27: added javascript to page to fire on page loading. -->
 
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+//prevents caching at the proxy server
+%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -37,16 +43,19 @@
 <script src="/dist/js/imageUpload/fileinput.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-$(function() {
+$(function() {	
+    $("#btnchangestdpropic").click(function(){
+        $("#userImageModal").modal();
+    });
+	
 	$.ajax({
         url: "../../../StudentController?CCO=GUP",
         type: 'POST',
         CCO: 'GUP',        
-        success: function(data) {        	
+        success: function(data) {        	        	
         	var res = data.proPicName;
-        	var e = new Date();
         	$('#profImage').attr("");
-       		$('#profImage').attr("src","../../../"+res+"?"+e.getDate());   	
+       		$('#profImage').attr("src","../../../"+res+"?"+Math.random());   	
         	
        		<!-- the fileinput plugin initialization -->
         	$("#avatar-1").fileinput({
@@ -65,19 +74,17 @@ $(function() {
         	    removeTitle: 'Cancel or reset changes',
         	    elErrorContainer: '#kv-avatar-errors-1',
         	    msgErrorClass: 'alert alert-block alert-danger',
-        	    defaultPreviewContent: '<img src=../../../'+res+' alt="ProfilePicture.jpg" style="width:160px">',
+        	    defaultPreviewContent: '<img src=../../../'+res+'?'+Math.random()+' alt="ProfilePicture.jpg" style="width:160px">',
         	    layoutTemplates: {main2: '{preview}{browse}'},
         	    allowedFileExtensions: ["jpg", "png", "gif"]
         	}).on('filebatchpreupload', function(event, data, id, index) {
-        		alert(data.response);
         	    $('#kv-success-1').html('<h4>'+data.proPicName+'</h4><ul></ul>').hide();
         	}).on('filepreupload', function(event, data, id, index) {
         	}).on('fileuploaded', function(event, data, id, index) {
         		var formdata = data.form, files = data.files, 
         	    extradata = data.extra, responsedata = data.response;
 
-        		var propicDetails = responsedata.result;
-        		
+        		var propicDetails = responsedata.result;       		
         		var res = propicDetails.toString();
         		var data = res.split(",");
         		var imgname = data[0].toString();
@@ -88,16 +95,16 @@ $(function() {
         			$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
         			$('#kv-success-1').fadeIn();
         	   		$('#profImage').attr("");
-        	   		var d = new Date();
-        	   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+d.getDate());
-        	   		
+        	   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+Math.random());
+        	   		$('#kv-success-1').fadeOut();
         	   		$.ajax({
         	            url: "../../../StudentController?CCO=UUP",
         	            type: 'POST',
         	            CCO: 'UUP',        
         	            success: function(data) {
         	            	$('#profImage').attr("");
-        	           		$('#profImage').attr("src","../../../education/"+imgname);   		  
+        	           		$('#profImage').attr("src","../../../education/"+imgname+"?"+Math.random());   	
+        	           		layoutTemplates: {main2: '{preview}{browse}'};
         	            }
         	        });		
         		}
@@ -223,7 +230,7 @@ $(function() {
                     <div class="prf-image">
                     	<c:set var="absProPicPath" value="" />
                         <img id="profImage" src="../../../<c:out value="${proPicPath}" />" alt="Profile-Picture">
-                        <button class="btn-image-change hvr-icon-float-away" data-toggle="modal" data-target="#userImageModal">Change Image</button>
+                        <button class="btn-image-change hvr-icon-float-away" id="btnchangestdpropic">Change Image</button>
 						</div>
                     <!-- End profile image -->
 
