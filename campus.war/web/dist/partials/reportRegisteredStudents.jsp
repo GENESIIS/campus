@@ -82,6 +82,7 @@ tr:nth-child(even) {
 					</fieldset>
 				</div>
 			</div>
+			<br>
 			<div id="resultPanel">
             <div class="results-count col-md-12 col-lg-12 col-sm-12">
                 <label id="totalResultsCount"  for=""></label>
