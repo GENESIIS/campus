@@ -8,6 +8,7 @@ import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.DataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import java.sql.Connection;
@@ -90,7 +91,7 @@ public class ReportStudentDAO  implements ICrud{
 				final ArrayList<String> singleProvider = new ArrayList<String>();
 				singleProvider.add(resultSet.getString("STUDENTCODE"));				
 				singleProvider.add(resultSet.getString("STUDENTNAME"));	
-				singleProvider.add(resultSet.getString("STUDENTSTATUS"));
+				singleProvider.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("STUDENTSTATUS")));
 				singleProvider.add(resultSet.getString("REGISTEREDDATE"));
 				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));
 				registeredStudentList.add(singleProvider);
