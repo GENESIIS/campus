@@ -7,6 +7,7 @@
 <!-- 		  PN c27-upload-user-image: added JSTL code block to get existing user profile image details taken from the servlet. -->
 <!-- 20161201 PN c27-upload-user-image: modified file size into 2MB in file input JavaScript. -->
 <!-- 20161221 PN CAM-27: added javascript to page to fire on page loading. -->
+<!-- 20170102 PN CAM-27: added a code block to the top of JSP page to remove cache. Modified image attribute by passing another parameter. -->
 
 <%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
@@ -46,7 +47,7 @@ response.setDateHeader ("Expires", 0);
 $(function() {	
     $("#btnchangestdpropic").click(function(){
         $("#userImageModal").modal();
-    });
+    })
 	
 	$.ajax({
         url: "../../../StudentController?CCO=GUP",
@@ -92,11 +93,12 @@ $(function() {
         		var error = data[2].toString();
         		
         		if(data[1] != ""){
-        			$('#kv-success-1').append('<h4>'+data[1]+'</h4><ul></ul>');
+        			$('#kv-success-1').append('<h4>'+data[1]+'</h4>');
         			$('#kv-success-1').fadeIn();
         	   		$('#profImage').attr("");
         	   		$('#profImage').attr("src","../../../education/"+data[0]+"?"+Math.random());
         	   		$('#kv-success-1').fadeOut();
+        	   		$('#kv-success-1').append('<h4></h4>');
         	   		$.ajax({
         	            url: "../../../StudentController?CCO=UUP",
         	            type: 'POST',
@@ -109,7 +111,7 @@ $(function() {
         	        });		
         		}
         		if(data[2] != ""){
-        	    	$('#kv-error-1').append('<h4>'+data[2]+'</h4><ul></ul>');
+        	    	$('#kv-error-1').append('<h4>'+data[2]+'</h4>');
         		}	
         	});
         }
