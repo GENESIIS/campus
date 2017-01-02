@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20161208 JH c39-add-course-provider code modified due to entity class method changes
 //20161219 JH c39-add-course-provider code review modifications: use generics 
 //20161229 JH c39-add-course-provider code modified to get course provider town data
+//20170102 JH c39-add-course-provider back end code validation 
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -93,6 +94,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 //			}
 //	
 			//back end validation for required fields
+			
+			log.info(helper.getParameter("selectedTown"));
 			ArrayList<String> errorMessages = validateCourseProvider(helper);
 			if(errorMessages.size()==0){
 				log.info("no errors");
@@ -166,7 +169,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 				//set course provider town details
 				courseProviderTown.setActive(true);
-				courseProviderTown.setTown(Integer.parseInt(selectedTown));
+				courseProviderTown.setTown(selectedTown);
 				courseProviderTown.setCrtBy("admin");
 				courseProviderTown.setModBy("admin");
 				
