@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161229 MM c25-student-create-dashboard-MP - INIT - Initialised file and implemented execute() method
+//20170101 MM c25-student-create-dashboard-MP - Added code in execute(IDataHelper) to process the fetched list of student activities
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentActivitiyDAO;
@@ -57,9 +58,62 @@ public class CmdListStudentRecentActivity implements ICommand {
 
 					StudentActivitiyDAO studentActivityDao = new StudentActivitiyDAO();
 					Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
+					List<String> courseProviderCodeToCourseProviderNamesMap;
 								
-					dataCollection = studentActivityDao.findById(student);
-											
+					dataCollection = studentActivityDao.findById(student);											
+
+					for (Collection<String> prog : dataCollection) {
+						int index  = 0;				
+						int indexOfCourseProviderCode;
+						int indexOfCourseProviderShortName;
+						int indexOfCourseProviderName;
+						ArrayList<String> tempSingleTownDetailsList = null;
+						int courseProviderCode = 0;
+						String courseProviderShortName = null;
+						String courseProviderName = null;
+						int tableIndicatorIndex = 0;
+						String tableIndicator = "";
+						String majorOrLevelCode = null;
+						
+						for (String field : prog) {		
+							
+							if (index == tableIndicatorIndex) {
+								tableIndicator = field;	
+								index++;	
+								continue;
+							}							
+									
+							if (index == indexOfCourseProviderCode) {
+								courseProviderCode = Integer.parseInt(field);	
+								index++;	
+								continue;
+							}
+							
+							if (index == indexOfCourseProviderShortName) {
+								courseProviderShortName = field;	
+								index++;	
+								continue;
+							}
+
+							if (index == indexOfCourseProviderName) {
+								courseProviderName = field;	
+								index++;	
+								continue;
+							}
+							
+							index++;	
+						}	
+						
+						LinkedList<String> providerRecord = null; //courseProviderCodeToCourseProviderNamesMap.get(courseProviderCode);
+						if (providerRecord == null) {
+							providerRecord = new LinkedList<String>();							
+//							providerRecord.add(courseProviderCode);
+							providerRecord.add(courseProviderShortName);
+							providerRecord.add(courseProviderName);							
+//							courseProviderCodeToCourseProviderNamesMap.put(String.valueOf(courseProviderCode), providerRecord);
+						}									
+					}						
+					
 					view.setCollection(dataCollection);
 				} else {
 					msgList.add("The value provided for student parameter is invalid!");
