@@ -3,8 +3,9 @@ package com.genesiis.campus.entity.model;
 import java.util.Date;
 
 //DJ 20161228 c53-report-registered-students-MP-dj created Student.java
+//DJ 20170102 c53-report-registered-students-MP-dj Renamed as StudentSearchDTO.java
 
-public class Student {
+public class StudentSearchDTO {
 	
 	private int code;
 	private String firstName;
