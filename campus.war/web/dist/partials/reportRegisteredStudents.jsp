@@ -83,19 +83,18 @@ tr:nth-child(even) {
 				</div>
 			</div>
 			<div id="resultPanel">
-				<div class="results-count col-md-12 col-lg-12 col-sm-12">
-					<label id="totalResultsCount" for=""></label>
-				</div>
+            <div class="results-count col-md-12 col-lg-12 col-sm-12">
+                <label id="totalResultsCount"  for=""></label>
+            </div>
 
-				<div id="resultSetDiv"
-					class="data-tbl col-md-12 col-lg-12 col-sm-12">
-					<table class="display">
+            <div  id="resultSetDiv" class="data-tbl col-md-12 col-lg-12 col-sm-12">
+                <table class="display">					
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Student Code</th>
 								<th>Student Name</th>
-								<th>Interest</th>
+								<th>Status</th>
 								<th>Registered date</th>
 								<th>Last login date</th>								
 							</tr>
@@ -105,6 +104,7 @@ tr:nth-child(even) {
 					</table>
 				</div>
 			</div>
+		</div>
 		</div>
 		<!-- End Container - Top Providers list -->
 
