@@ -66,7 +66,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 	 * @throws Exception
 	 */
 	private void generateReportResults(IDataHelper helper)
-			throws ParseException {
+			throws Exception {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String studentStatus = helper.getParameter("studentStatus");
