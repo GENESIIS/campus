@@ -46,13 +46,14 @@ public class ReportStudentDAO  implements ICrud{
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
-		//Programme programme = new Programme();
+		 
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("");
+			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE ");
+			sb.append(" FROM CAMPUS.STUDENT STUDENT WHERE STUDENT.ACCOUNTTYPE=?");
 			stmt = conn.prepareStatement(sb.toString());
-			//stmt.setInt(1, programme.getCourseProvider());
+			stmt.setInt(1, 1);
 			
 			
 			resultSet= stmt.executeQuery();			
