@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
-//20161229 MM c25-student-create-dashboard-MP-mm INIT class and implemented findById(Object) 
+//20161229 MM c25-student-create-dashboard-MP INIT class and implemented findById(Object) 
+//20170101 MM c25-student-create-dashboard-MP Modified query to fetch data from additional tables
 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
@@ -62,24 +63,30 @@ public class StudentActivitiyDAO implements ICrud {
 					+ "UNION ALL SELECT CODE, MODON, MODBY FROM [CAMPUS].[STUDENTINTEREST] WHERE CODE = ? "
 					+ "UNION ALL SELECT CODE, MODON, MODBY FROM [CAMPUS].[STUDENTSKILL] WHERE CODE = ? ";
 			
-			String query2 = "SELECT * FROM"
-					+ "(SELECT 'STUDENT' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINUSERAGENT, LASTLOGGEDINIPADDRESS, LASTLOGINAUTHENTICATEDBY, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, '' AS REFNUMBER, '' AS APPLIEDDATE, '' AS APPLIEDTIME, '' AS PROGRAMMENAME, '' AS COURSEPROVIDERNAME FROM [CAMPUS].[STUDENT] s WHERE CODE = 1"
-					+ "UNION ALL"
-					+ "SELECT 'HIGHEREDUCATION' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[HIGHERDUCATION] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'SCHOOLEDUCATION' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[SCHOOLEDUCATION] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'PROFESSIONALEXPERIENCE' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[PROFESSIONALEXPERIENCE] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'STUDENTINTEREST' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTINTEREST] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'STUDENTSKILL' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTSKILL] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'INQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[INQUIRY] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'STUDENTCOURSEPROVIDERINQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY] WHERE STUDENT = 1" 
-					+ "UNION ALL" 
-					+ "SELECT 'STUDENTPROGRAMINQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTPROGRAMINQUIRY] WHERE STUDENT = 1) as tempResult";
+			String query2 = "SELECT 'STUDENT' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINUSERAGENT, LASTLOGGEDINIPADDRESS, LASTLOGINAUTHENTICATEDBY, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, '' AS REFNUMBER, '' AS APPLIEDDATE, '' AS APPLIEDTIME, '' AS PROGRAMMENAME, '' AS COURSEPROVIDERNAME FROM [CAMPUS].[STUDENT] s WHERE CODE = 1 "
+					+ "UNION ALL "
+					+ "SELECT 'HIGHEREDUCATION' AS TABLEINDICATOR, '', MODON, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[HIGHERDUCATION] WHERE STUDENT = 1 GROUP BY MODON "
+					+ "UNION ALL "
+					+ "SELECT 'SCHOOLEDUCATION' AS TABLEINDICATOR, '', MODON, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[SCHOOLEDUCATION] WHERE STUDENT = 1 GROUP BY MODON "
+					+ "UNION ALL "
+					+ "SELECT 'PROFESSIONALEXPERIENCE' AS TABLEINDICATOR, '', MODON, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[PROFESSIONALEXPERIENCE] WHERE STUDENT = 1 GROUP BY MODON "
+					+ "UNION ALL "
+					+ "SELECT 'STUDENTINTEREST' AS TABLEINDICATOR, '', MODON, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTINTEREST] WHERE STUDENT = 1 GROUP BY MODON "
+					+ "UNION ALL "
+					+ "SELECT 'STUDENTSKILL' AS TABLEINDICATOR, '', MODON, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTSKILL] WHERE STUDENT = 1 GROUP BY MODON "
+					+ "UNION ALL "
+					+ "SELECT 'INQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[INQUIRY] WHERE STUDENT = 1 "
+					+ "UNION ALL  "
+					+ "SELECT 'STUDENTCOURSEPROVIDERINQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY] WHERE STUDENT = 1 "
+					+ "UNION ALL "
+					+ "SELECT 'STUDENTPROGRAMINQUIRY' AS TABLEINDICATOR, CODE, MODON, MODBY, CRTON, CRTBY, '', '', '', '', '', '', '', '', '', '', '', '' FROM [CAMPUS].[STUDENTPROGRAMINQUIRY] WHERE STUDENT = 1 "
+					+ "UNION ALL "
+					+ "SELECT 'APPLICATION' AS TABLEINDICATOR, a.CODE, a.MODON, a.MODBY, a.CRTON, a.CRTBY, '', '', '', '', '', '', '', a.REFNUMBER, a.APPLIEDDATE, a.APPLIEDTIME, p.NAME AS PROGRAMMENAME, cp.NAME AS COURSEPROVIDERNAME "
+					+ "FROM [CAMPUS].[APPLICATION] a "
+					+ "JOIN [CAMPUS].[INTAKE] i ON (i.CODE = a.INTAKE) "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON (p.CODE = i.PROGRAMME) "
+					+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON (cp.CODE = p.COURSEPROVIDER) "
+					+ "WHERE a.STUDENT = 1";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query2);
@@ -126,6 +133,20 @@ public class StudentActivitiyDAO implements ICrud {
 			singleActivity.add(rs.getString("CODE")); // 0
 			singleActivity.add(rs.getString("MODON")); // 1
 			singleActivity.add(rs.getString("MODBY")); // 2
+			singleActivity.add(rs.getString("CRTON")); // 3
+			singleActivity.add(rs.getString("CRTBY")); // 4
+			singleActivity.add(rs.getString("LASTLOGGEDINDATE")); // 5
+			singleActivity.add(rs.getString("LASTLOGGEDINTIME")); // 6
+			singleActivity.add(rs.getString("LASTLOGGEDINUSERAGENT")); // 7
+			singleActivity.add(rs.getString("LASTLOGGEDINIPADDRESS")); // 8
+			singleActivity.add(rs.getString("LASTLOGINAUTHENTICATEDBY")); // 9
+			singleActivity.add(rs.getString("LASTLOGGEDOUTDATE")); // 10
+			singleActivity.add(rs.getString("LASTLOGGEDOUTTIME")); // 11
+			singleActivity.add(rs.getString("REFNUMBER")); // 12
+			singleActivity.add(rs.getString("APPLIEDDATE")); // 13
+			singleActivity.add(rs.getString("APPLIEDTIME")); // 14
+			singleActivity.add(rs.getString("PROGRAMMENAME")); // 15
+			singleActivity.add(rs.getString("COURSEPROVIDERNAME")); // 16
 			final Collection<String> singleActivityCollection = singleActivity;
 			activityList.add(singleActivityCollection);
 		}
