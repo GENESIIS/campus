@@ -169,7 +169,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 				//set course provider town details
 				courseProviderTown.setActive(true);
-				courseProviderTown.setTown(selectedTown);
+				courseProviderTown.setTown(Long.parseLong(selectedTown));
 				courseProviderTown.setCrtBy("admin");
 				courseProviderTown.setModBy("admin");
 				
