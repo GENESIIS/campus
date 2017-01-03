@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161202 JH c39-add-course-provider add method code modified
 //20161206 JH c39-add-course-provider add missing parameters and remove static values
 //20170103 JH c39-add-course-provider added queries to insert course provider town data
+//20170103 JH c39-add-course-provider town query changed due to course provider town table changes
  
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
@@ -75,16 +75,19 @@ public class OneOffCourseProviderDAO implements ICrud{
 			
 			String mainCourseProvider = mainCourseProviderStringBuilder.toString();
 			
-			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
-					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
+			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, ADDRESS1, ADDRESS2, ADDRESS3, CRTON, CRTBY, MODON, MODBY)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 			
 			
 			//set course provider town details
 			preparedStatement2 = conn.prepareStatement(town);
 			preparedStatement2.setBoolean(1, courseProviderTown.isActive());
 			preparedStatement2.setLong(3, courseProviderTown.getTown());
-			preparedStatement2.setString(4, courseProviderTown.getCrtBy());
-			preparedStatement2.setString(5, courseProviderTown.getModBy());
+			preparedStatement2.setString(4, courseProviderTown.getAddress1());
+			preparedStatement2.setString(5, courseProviderTown.getAddress2());
+			preparedStatement2.setString(6, courseProviderTown.getAddress3());
+			preparedStatement2.setString(7, courseProviderTown.getCrtBy());
+			preparedStatement2.setString(8, courseProviderTown.getModBy());
 			
 			//check whether the course provider has a head office or not
 			if(courseProvider.getPrincipal()==0){//does not have a head office
