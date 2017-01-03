@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161216 PN CAM-28 : re-implemented findById() method
 //20161220 PN CAM-28: implemented delete(Object object, Connection conn) method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+//20170103 PN CAM-28: changed the findById(Object object) method by giving condition to check different types of the 'object' parameter.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,8 @@ import java.util.Collection;
 
 import com.genesiis.campus.command.CmdAddProfessionalExpDetails;
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.entity.model.Major;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -102,24 +105,31 @@ public class ProfessionalExperienceDAO implements ICrud{
 				singlehigherEduList.add(rs.getString("ORGANIZATION"));
 				
 				//Get country name, if in a case to pass the name to dataList
-				ICrud majordao = new MajorDAO();
+				ICrud majordao = new StdProfMajorDAO();
 				String jobcategoryName = "";
 				String industryName = "";
+				
+				Major jcname = new Major();
+				jcname.setCode(Integer.parseInt(rs.getString("JOBCATEGORY")));
 					
-				Collection<Collection<String>> industry = majordao.findById(Integer.parseInt(rs.getString("JOBCATEGORY")));			
+				Collection<Collection<String>> industry = majordao.findById(jcname);			
 				for (Collection<String> collection : industry) {
 					Object[] cdata = collection.toArray();
 					jobcategoryName = (String) cdata[1];
 				}
-				Collection<Collection<String>> jobcaegory = majordao.findById(Integer.parseInt(rs.getString("INDUSTRY")));				
+				
+				Major indname = new Major();
+				indname.setCode(Integer.parseInt(rs.getString("INDUSTRY")));
+				
+				Collection<Collection<String>> jobcaegory = majordao.findById(indname);				
 				for (Collection<String> collection : industry) {
 					Object[] cdata = collection.toArray();
 					industryName = (String) cdata[1];
 				}
 				
 				singlehigherEduList.add(industryName);
-				singlehigherEduList.add(jobcategoryName);
 				singlehigherEduList.add(rs.getString("DESIGNATION"));
+				singlehigherEduList.add(jobcategoryName);
 				singlehigherEduList.add(rs.getString("COMMENCEDON"));
 				singlehigherEduList.add(rs.getString("COMPLETIONON"));
 				singlehigherEduList.add(rs.getString("DESCRIPTION"));
