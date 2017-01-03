@@ -21,8 +21,7 @@ public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "/dist/partials/student/student-dashboard.jsp"),		
-	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, ""),			
-	LIST_STUDENT_RECENT_ACTIVITIES("LIST_STUDENT_RECENT_ACTIVITIES", ResponseType.JSON, "");			
+	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, "");			
 	
 	private final String commandString;
 	private final ResponseType responseType;

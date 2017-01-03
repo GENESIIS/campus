@@ -9,7 +9,6 @@ package com.genesiis.campus.factory;
 //				and switch case item for LIST_STUDENT_RECENT_ACTIVITIES
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
-import com.genesiis.campus.command.CmdListStudentRecentActivity;
 import com.genesiis.campus.command.CmdListStudentRecommendedProgrammes;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -18,7 +17,6 @@ public class StudentCmdFactory implements ICmdFactory {
 	static {
 		map.put(Operation.LIST_STUDENT_DASHBOARD, new CmdListStudentDashboardDetails());
 		map.put(Operation.LIST_STUDENT_RECOMMENDED_PROGRAMMES, new CmdListStudentRecommendedProgrammes());
-		map.put(Operation.LIST_STUDENT_RECENT_ACTIVITIES, new CmdListStudentRecentActivity());
 	}
 
 	@Override
@@ -31,9 +29,6 @@ public class StudentCmdFactory implements ICmdFactory {
 				command = map.get(o);
 				break;
 			case LIST_STUDENT_RECOMMENDED_PROGRAMMES:
-				command = map.get(o);
-				break;
-			case LIST_STUDENT_RECENT_ACTIVITIES:
 				command = map.get(o);
 				break;
 			default:
