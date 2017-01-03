@@ -1195,3 +1195,18 @@ function updateDataTableSelectAllCtrl(table) {
 		}
 	}
 }
+
+/**
+ * This method is to set the selected option in a drop-down list using selectedIndex property.
+ * @param selectObj
+ * @param valueToSet
+ * @returns
+ */
+function setSelectedValue(selectObj, valueToSet) {
+    for (var i = 0; i < selectObj.options.length; i++) {
+        if (selectObj.options[i].text== valueToSet) {
+            selectObj.options[i].selected = true;
+            return;
+        }
+    }
+}
