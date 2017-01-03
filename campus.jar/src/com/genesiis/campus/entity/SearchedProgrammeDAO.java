@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //         CAM-116: PN Modified the SQL query inside getAll() method and findById() method.
 //20161223 CAM-116: PN Modified Collection<Collection<String>> findById(Object code) by providing two SQL queries to pass data in different cases.
 //		   CAM-116: PN Modified SQL queries inside findById(Object code) and getAll() method by adding GROUP BY clause.
+//20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,7 @@ public class SearchedProgrammeDAO implements ICrud {
 		Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		String query1 = "SELECT p.[CODE] ,p.[NAME] ,CAST(p.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
 				+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
 				+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , ISNULL(MIN(itk.[FEE]),0.00) as COST "
@@ -102,7 +103,7 @@ public class SearchedProgrammeDAO implements ICrud {
 					stmt.setInt(1, Integer.parseInt(districtCode[0]));
 				}
 
-				final ResultSet rs = stmt.executeQuery();
+				rs = stmt.executeQuery();
 
 				while (rs.next()) {
 					final ArrayList<String> singleProgrammeList = new ArrayList<String>();
@@ -139,6 +140,9 @@ public class SearchedProgrammeDAO implements ICrud {
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
@@ -154,7 +158,7 @@ public class SearchedProgrammeDAO implements ICrud {
 		final Collection<Collection<String>> allProgrammeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT p.[CODE] ,p.[NAME] , CAST(p.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
@@ -169,7 +173,7 @@ public class SearchedProgrammeDAO implements ICrud {
 					+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME], cp.[UNIQUEPREFIX], cp.[CODE] , cp.[WEBLINK]; ";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
@@ -203,6 +207,9 @@ public class SearchedProgrammeDAO implements ICrud {
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}

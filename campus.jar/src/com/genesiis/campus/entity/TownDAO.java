@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
+//20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,13 +46,13 @@ public class TownDAO implements ICrud{
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleTownList = new ArrayList<String>();
@@ -69,6 +70,9 @@ public class TownDAO implements ICrud{
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}

@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161101 PN c11-criteria-based-filter-search modified getAll() method SQL query.
+//20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,14 +43,14 @@ public class LevelDAO implements ICrud {
 		final Collection<Collection<String>> allLevelList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT l.CODE,l.NAME,l.DESCRIPTION FROM [CAMPUS].[LEVEL] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.LEVEL JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND m.ISACTIVE = 1;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			
 			while (rs.next()) {
@@ -68,6 +69,9 @@ public class LevelDAO implements ICrud {
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
@@ -83,13 +87,13 @@ public class LevelDAO implements ICrud {
 		final Collection<Collection<String>> allLevelList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[LEVEL] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleLevelList = new ArrayList<String>();
@@ -107,6 +111,9 @@ public class LevelDAO implements ICrud {
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
