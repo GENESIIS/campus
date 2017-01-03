@@ -56,11 +56,13 @@ public class BannerStatDAO implements ICrud {
 			}
 			conn=ConnectionManager.getConnection();			
 			final StringBuilder sb=new StringBuilder("SELECT BANNER.CODE AS BANNERCODE, BANNERSTAT.VIEWDATE,  COUNT(BANNERSTAT.CODE) AS BANNERHITCOUNT"); 
-			sb.append("FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 "); 
-			sb.append(" AND BANNER.PAGESLOT= ? AND BANNER.ADVERTISER=1 GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE"); 
-			
+			sb.append(" FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 "); 
+			sb.append(" AND BANNER.PAGESLOT= 1 AND BANNER.ADVERTISER=1 GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE"); 
+			/*SELECT * FROM [CAMPUS].PAGE PAGE INNER JOIN [CAMPUS].PAGESLOT PAGESLOT ON PAGE.CODE=PAGESLOT.PAGE  INNER JOIN [CAMPUS].BANNER BANNER  ON PAGESLOT.CODE= BANNER.PAGESLOT  WHERE PAGE.CODE=1 AND PAGESLOT.CODE=1 
+					AND BANNER.ADVERTISER=1*/
 			stmt=conn.prepareStatement(sb.toString());
-			stmt.setInt(1, bannerStatSearchDTO.getPageSlotCode());			
+			//stmt.setInt(1, bannerStatSearchDTO.getPageSlotCode());			
+			//stmt.setInt(2, bannerStatSearchDTO.getPageSlotCode());			
 			resultSet=stmt.executeQuery();
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
