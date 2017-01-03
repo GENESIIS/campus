@@ -90,16 +90,16 @@ public class StudentActivitiyDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query2);
-			ps.setInt(1, studentCode);
-			ps.setInt(2, studentCode);
-			ps.setInt(3, studentCode);
-			ps.setInt(4, studentCode);
-			ps.setInt(5, studentCode);
-			ps.setInt(6, studentCode);
-			ps.setInt(7, studentCode);
-			ps.setInt(8, studentCode);
-			ps.setInt(9, studentCode);
-			ps.setInt(10, studentCode);
+//			ps.setInt(1, studentCode);
+//			ps.setInt(2, studentCode);
+//			ps.setInt(3, studentCode);
+//			ps.setInt(4, studentCode);
+//			ps.setInt(5, studentCode);
+//			ps.setInt(6, studentCode);
+//			ps.setInt(7, studentCode);
+//			ps.setInt(8, studentCode);
+//			ps.setInt(9, studentCode);
+//			ps.setInt(10, studentCode);
 			ResultSet rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
@@ -147,6 +147,7 @@ public class StudentActivitiyDAO implements ICrud {
 			singleActivity.add(rs.getString("APPLIEDTIME")); // 14
 			singleActivity.add(rs.getString("PROGRAMMENAME")); // 15
 			singleActivity.add(rs.getString("COURSEPROVIDERNAME")); // 16
+			singleActivity.add(rs.getString("TABLEINDICATOR")); // 17
 			final Collection<String> singleActivityCollection = singleActivity;
 			activityList.add(singleActivityCollection);
 		}
