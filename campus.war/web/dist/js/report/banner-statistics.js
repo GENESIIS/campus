@@ -132,15 +132,50 @@ function getPageSlotWiseAdvertiser(response) {
 
 function loadResultSet(event){
 	
-	var bannerCode= $('#bannerList').val();
+	var pageName= $('#pagelist').val();
+	var pageCode=0;
+	var option = $('#pageName').find('option');
+	for (var i = 0; i < option.length; i++) {
+		$('#pageName').find('option')[i].outerHTML;
+		if (option[i].text == pageName) {
+			pageCode = option[i].attributes[0].value;
+			break;
+		}
+	}
+	
+	var pageSlotName= $('#pageSlotlist').val();
+	var pageSlotCode=0;
+	var option = $('#pageSlotName').find('option');
+	for (var i = 0; i < option.length; i++) {
+		$('#pageSlotName').find('option')[i].outerHTML;
+		if (option[i].text == pageSlotName) {
+			pageSlotCode = option[i].attributes[0].value;
+			break;
+		}
+	}
+	
+	var bannerProviderName= $('#bannerProviderList').val();
+	var bannerProviderCode=0;
+	var option = $('#bannerProviderName').find('option');
+	for (var i = 0; i < option.length; i++) {
+		$('#bannerProviderName').find('option')[i].outerHTML;
+		if (option[i].text == bannerProviderName) {
+			bannerProviderCode = option[i].attributes[0].value;
+			break;
+		}
+	}
+	
 	var startDate= $('#startdate').val();
 	var endDate= $('#enddate').val();
+		
 	
 	$.ajax({
 		url : '../../ReportController',
 		data : {
 			CCO : 'REPORT_BANNER_STATISTICS',
+			pageCode : pageCode,
 			pageSlotCode : pageSlotCode,
+			bannerProviderCode : bannerProviderCode,
 			startDate : startDate,
 			endDate :endDate 
 		},
@@ -152,6 +187,9 @@ function loadResultSet(event){
 			errorCodeGeneration(jqXHR, exception);			
 		}
 		});
+	
+}
+function getCode(){
 	
 }
 
