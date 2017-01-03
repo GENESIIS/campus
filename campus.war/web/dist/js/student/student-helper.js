@@ -18,6 +18,8 @@
 //20161216 PN CAM-28: implementing datatables using DB values. -WIP
 //20161220 PN CAM-28: modified table.row.add() method to set code into checkobox.
 //20161220 PN CAM-28: implemented Ajax method call to pass selected checkbox values to be deleted, into servlet.
+//20161215 PN CAM-28: added JavaScript method to get datatable row data back as an alert.
+
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -84,7 +86,8 @@ function getStudentData(response) {
 		var data = res.split(",");
 		table.row.add(
 				[ data[0].toString(), data[1].toString(), data[2].toString(),
-						data[3].toString(), '<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
+						data[3].toString(), data[4].toString(),  data[5].toString()+"<br/>"+data[6].toString(),
+						data[7].toString(), '<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
 	});
 
 	// Handle click on checkbox
@@ -121,6 +124,23 @@ function getStudentData(response) {
 	   // Prevent click event from propagating to parent
 	   e.stopPropagation();
 	});
+	
+	$('#example tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();       
+        if(data){
+        alert( data[0] +"'s salary is: "+ data[ 5 ] );
+        }else{
+        	alert("Empty");
+    	    var idx = $(this).index(this);
+    	    if (idx > 0) {
+    	        var $tr = $(this).eq(idx - 1).closest('tr');
+    	    } else {
+    	        var $tr = table.row($(this).closest('tr').prev('tr') ).data();
+    	    }
+    	    alert($tr);
+        }
+    } );
+	
 
 	// Handle click on table cells with checkboxes
 //	$('#example').on('click', 'tbody td, thead th:first-child', function(e){
