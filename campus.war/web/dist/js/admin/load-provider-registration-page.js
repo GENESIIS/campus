@@ -30,9 +30,20 @@ function changeRequiredData(typeValue){
 	 */
 	if(window.accountType == 1){
 		
+		$('#providerPrivateName').val("");
+		$('#providerEmail').val("");
+		$('#providerUsername').val("");
+		$('#providerPassword').val("");
+		$('#cProviderPassword').val("");
+		$('#accountStatus').val("");
+		$('#accountDescription').val("");
+		
+		document.getElementById("accountInfo").style.display = "block";
+		
 	}if(window.accountType == 2){
+		
 		document.getElementById("accountInfo").style.display = "none";
-	//	var commonValue = "";
+
 		$('#providerPrivateName').val("common name");
 		$('#providerEmail').val("common");
 		$('#providerUsername').val("common");
@@ -40,7 +51,6 @@ function changeRequiredData(typeValue){
 		$('#cProviderPassword').val("common");
 		$('#accountStatus').val("common");
 		$('#accountDescription').val("common");
-	//	document.getElementById("providerName"). = commonValue;
 		
 	}
 }

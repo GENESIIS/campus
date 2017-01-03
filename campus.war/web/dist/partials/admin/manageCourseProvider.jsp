@@ -472,7 +472,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerPrivateName"
-										id="providerName" size="50px;" />
+										id="providerPrivateName" size="50px;" />
 								</div>
 							</li>
 							<!-- end -->
