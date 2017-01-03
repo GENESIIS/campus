@@ -264,8 +264,11 @@ function getProviderType() {
 				// message = response.userMessage;
 				var registerId = response.registerId;
 
-				alert("success" + registerId);
-				document.getElementById("userMessage").html = response.userMessage;
+				alert("error message" + response.userMessage);
+				var responseErrorMessage = response.userMessage;
+				var userErrorMessage = $("#usermessage");
+				userErrorMessage.html(responseErrorMessage);
+				//document.getElementById("userMessage").html = response.userMessage;
 				// document.getElementById("logoPanel").style.display
 				// = "block";
 				// document.getElementById("basicForm").style.display
