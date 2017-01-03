@@ -55,18 +55,18 @@ public class BannerStatDAO implements ICrud {
 				return allBannerStatsList;
 			}
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb=new StringBuilder("SELECT BANNERSTAT.CALLERPAGE ,BANNERSTAT.VIEWDATE, BANNERSTAT.VIEWTIME ");
-			sb.append(" FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 ");
-			sb.append(" AND BANNER.PAGESLOT= ? ");
+			final StringBuilder sb=new StringBuilder("SELECT BANNER.CODE AS BANNERCODE, BANNERSTAT.VIEWDATE,  COUNT(BANNERSTAT.CODE) AS BANNERHITCOUNT"); 
+			sb.append("FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 "); 
+			sb.append(" AND BANNER.PAGESLOT= ? AND BANNER.ADVERTISER=1 GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE"); 
 			
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, bannerStatSearchDTO.getPageSlotCode());			
 			resultSet=stmt.executeQuery();
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
-				bannerList.add(resultSet.getString("CALLERPAGE"));								
+				bannerList.add(resultSet.getString("BANNERCODE"));								
 				bannerList.add(resultSet.getString("VIEWDATE"));								
-				bannerList.add(resultSet.getString("VIEWTIME"));								
+				bannerList.add(resultSet.getString("BANNERHITCOUNT"));								
 				allBannerStatsList.add(bannerList);
 			}
 			

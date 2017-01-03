@@ -4,7 +4,7 @@ package com.genesiis.campus.entity.model;
 
 public class CourseProvider {
 
-	private int code;
+	/*private int code;
 	private String uniquePrefix;
 	private String shortName;
 	private String name;
@@ -58,5 +58,5 @@ public class CourseProvider {
 	public void setCourseProviderStatus(int courseProviderStatus) {
 		this.courseProviderStatus = courseProviderStatus;
 	}
-
+*/
 }
