@@ -12,7 +12,6 @@ package com.genesiis.campus.factory;
 
 import com.genesiis.campus.command.CmdCourseProviderAccountValidate;
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
-import com.genesiis.campus.command.CmdAddOneOffProvider;
 import com.genesiis.campus.command.CmdListCategories;
 import com.genesiis.campus.command.CmdListCategoryLandingPage;
 import com.genesiis.campus.command.CmdListCourseProviderRegisterPage;
