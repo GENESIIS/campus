@@ -6,16 +6,13 @@ package com.genesiis.campus.factory;
 
 
 import com.genesiis.campus.command.CmdReportBannerStatistics;
-import com.genesiis.campus.command.CmdReportCoursesByCourseProvider;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
 public class ReportCmdFactory implements ICmdFactory{
 	
 	private ICommand command = null;
-	static {
-		map.put(Operation.SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER, new CmdReportCoursesByCourseProvider());
-		map.put(Operation.REPORT_COURSES_BY_COURSE_PROVIDER, new CmdReportCoursesByCourseProvider());
+	static {	
 		
 		map.put(Operation.SEARCH_VIEW_BANNER_STATISTICS, new CmdReportBannerStatistics());
 		map.put(Operation.REPORT_BANNER_STATISTICS, new CmdReportBannerStatistics());
@@ -27,13 +24,7 @@ public class ReportCmdFactory implements ICmdFactory{
 	public ICommand getCommand(String cco) {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
-		switch (o) {
-		case SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER:
-			command = map.get(o);
-			break;
-		case REPORT_COURSES_BY_COURSE_PROVIDER:
-			command = map.get(o);
-			break;
+		switch (o) {		
 		case SEARCH_VIEW_BANNER_STATISTICS:
 			command = map.get(o);
 			break;		

@@ -17,7 +17,7 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.PageDAO;
 import com.genesiis.campus.entity.PageSlotDAO;
-import com.genesiis.campus.entity.model.BannerStat;
+//import com.genesiis.campus.entity.model.BannerStat;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Operation;
@@ -151,7 +151,7 @@ public class CmdReportBannerStatistics implements ICommand {
 				throw parseException;
 			}
 
-			final BannerStat bannerStat = new BannerStat();
+			//final BannerStat bannerStat = new BannerStat();
 			final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO()
 					.findById(searchDTO);
 			helper.setAttribute("bannerStatDetails", bannerStatDetails);

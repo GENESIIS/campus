@@ -13,7 +13,6 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
-import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.UtilityHelper;
