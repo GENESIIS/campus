@@ -18,9 +18,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CourseProviderDAO  implements ICrud{
+//public class CourseProviderDAO  implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
+	/*static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
 	
 
 	@Override
@@ -41,12 +41,12 @@ public class CourseProviderDAO  implements ICrud{
 		return 0;
 	}
 	
-	/**
+	*//**
 	 * Get Course Providers.If  CourseProviderStatus is set to particular status result set could return according to the set status.	 * 
 	 * @param CourseProvider DTO
 	 * @author DJ
 	 * @return Collection 
-	 */
+	 *//*
 	@Override
 	public Collection<Collection<String>> findById(Object provider)
 			throws SQLException, Exception {
@@ -112,13 +112,13 @@ public class CourseProviderDAO  implements ICrud{
 		return null;
 	}
 	
-	/**
+	*//**
 	 * @param rs
 	 * @param allProviderList
 	 * @author DJ
 	 * @return Collection
 	 * @throws SQLException
-	 */
+	 *//*
 	private  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
 		while (rs.next()) {				
 			final ArrayList<String> singleProvider = new ArrayList<String>();
@@ -136,8 +136,8 @@ public class CourseProviderDAO  implements ICrud{
 			Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 
 
-}
+//}
