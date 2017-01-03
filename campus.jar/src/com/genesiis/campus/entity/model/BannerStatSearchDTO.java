@@ -6,23 +6,30 @@ import java.util.Date;
 
 public class BannerStatSearchDTO {
 	
-	private int bannerCode;
+	
+	private int pageCode;
 	private int pageSlotCode;
+	private int bannerProviderCode;
 	private Date fromDate;
-	private Date toDate;
+	private Date toDate;	
 	
-	public int getBannerCode() {
-		return bannerCode;
+	public int getPageCode() {
+		return pageCode;
 	}
-	public void setBannerCode(int bannerCode) {
-		this.bannerCode = bannerCode;
+	public void setPageCode(int pageCode) {
+		this.pageCode = pageCode;
 	}
-	
 	public int getPageSlotCode() {
 		return pageSlotCode;
 	}
 	public void setPageSlotCode(int pageSlotCode) {
 		this.pageSlotCode = pageSlotCode;
+	}	
+	public int getBannerProviderCode() {
+		return bannerProviderCode;
+	}
+	public void setBannerProviderCode(int bannerProviderCode) {
+		this.bannerProviderCode = bannerProviderCode;
 	}
 	public Date getFromDate() {
 		return fromDate;
@@ -36,7 +43,4 @@ public class BannerStatSearchDTO {
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
-	
-	
-
 }
