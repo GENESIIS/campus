@@ -311,10 +311,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 			errorString.add("Password fields does not match");
 		}if(validator.isEmpty(helper.getParameter("accountDescription"))){
 			errorString.add("Account Description");
-		}if(validator.isEmpty(helper.getParameter("address3"))){
-			errorString.add("Address Line 3");
-		}if(validator.isEmpty(helper.getParameter("address3"))){
-			errorString.add("Address Line 3");
 		}
 		
 		return errorString;

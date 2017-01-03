@@ -9,10 +9,11 @@ window.townCollection = null;
 window.usernameValidation = true;
 window.courseProviderTypes  = null;
 window.accountType = null;
+window.registerId = null;
 
 $(document).ready(function() {
 	arrangeUI();
-	//getCourseProviderTypes();
+	// getCourseProviderTypes();
 });
 
 
@@ -25,8 +26,8 @@ function changeRequiredData(typeValue){
 	window.accountType = typeValue ;
 	
 	/**
-	 * here methods are created to hidden input fields that are not needed
-	 * for the the of the course provider 
+	 * here methods are created to hidden input fields that are not needed for
+	 * the the of the course provider
 	 */
 	if(window.accountType == 1){
 		
@@ -234,9 +235,9 @@ function providerPrefixValidation() {
 
 				if (response !== undefined && response !== null) {
 					window.UserMessage = response.userMessage;
-					var prefixMessage = $('#usermessage').val;
-					prefixMessage.val = (response.userMessage);
-					alert(response.userMessage);
+				// var prefixMessage = $('#usermessage').val;
+				// prefixMessage.val = (response.userMessage);
+					showUserMessage();
 				}
 			},
 		});
@@ -244,11 +245,15 @@ function providerPrefixValidation() {
 
 }
 
+function showUserMessage{
+	if(window.UserMessage != null){
+		var userErrorMessage = $("#usermessage");
+		userErrorMessage.html(responseErrorMessage);
+	}
+}
+
 function getProviderType() {
 
-	var status = false;
-	var radioValue = $("input[name='featured-oneoff']:checked").val();
-	var statusValue = $("input[name='providerStatus']:checked").val();
 
 	var form = $('#basicForm');
 	var formData = $(form).serialize();
@@ -262,13 +267,13 @@ function getProviderType() {
 
 			if (response !== undefined && response !== null) {
 				// message = response.userMessage;
-				var registerId = response.registerId;
+				window.registerId = response.registerId;
 
-				alert("error message" + response.userMessage);
 				var responseErrorMessage = response.userMessage;
 				var userErrorMessage = $("#usermessage");
 				userErrorMessage.html(responseErrorMessage);
-				//document.getElementById("userMessage").html = response.userMessage;
+			
+				document.getElementById("usermessage").html = response.userMessage;
 				// document.getElementById("logoPanel").style.display
 				// = "block";
 				// document.getElementById("basicForm").style.display
