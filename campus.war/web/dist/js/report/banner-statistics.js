@@ -165,8 +165,8 @@ function loadResultSet(event){
 		}
 	}
 	
-	var startDate= $('#startdate').val();
-	var endDate= $('#enddate').val();
+	var fromDate= $('#fromDate').val();
+	var toDate= $('#toDate').val();
 		
 	
 	$.ajax({
@@ -176,8 +176,8 @@ function loadResultSet(event){
 			pageCode : pageCode,
 			pageSlotCode : pageSlotCode,
 			bannerProviderCode : bannerProviderCode,
-			startDate : startDate,
-			endDate :endDate 
+			fromDate : fromDate,
+			toDate :toDate 
 		},
 		dataType : "json",
 		success : function(response) {
