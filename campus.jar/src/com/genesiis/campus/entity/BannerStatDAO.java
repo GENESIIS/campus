@@ -71,6 +71,21 @@ public class BannerStatDAO implements ICrud {
 				sb.append(" AND BANNER.ADVERTISER= ");
 				sb.append(bannerStatSearchDTO.getBannerProviderCode());
 			}
+			if ((bannerStatSearchDTO.getFromDate() != null && bannerStatSearchDTO.getFromDate()	.getTime() > 0)	&& (bannerStatSearchDTO.getToDate() != null && bannerStatSearchDTO.getToDate().getTime() > 0)) {
+				sb.append("AND BANNERSTAT.VIEWDATE BETWEEN ' ");
+				sb.append(new java.sql.Date(bannerStatSearchDTO.getFromDate().getTime()));
+				sb.append(" ' AND ' ");
+				sb.append(new java.sql.Date(bannerStatSearchDTO.getToDate().getTime()));
+				sb.append(" '  ");
+			} else 	if (bannerStatSearchDTO.getFromDate() != null && bannerStatSearchDTO.getFromDate().getTime() > 0) {
+				sb.append("AND BANNERSTAT.VIEWDATE >= ' ");
+				sb.append(new java.sql.Date(bannerStatSearchDTO.getFromDate().getTime()));
+				sb.append("'");
+			} else if (bannerStatSearchDTO.getToDate() != null	&& bannerStatSearchDTO.getToDate().getTime() > 0) {
+				sb.append("AND BANNERSTAT.VIEWDATE <= ' ");
+				sb.append(new java.sql.Date(bannerStatSearchDTO.getToDate().getTime()));
+				sb.append("'");			
+			}
 			sb.append(" GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE ");
 
 			stmt = conn.prepareStatement(sb.toString());
