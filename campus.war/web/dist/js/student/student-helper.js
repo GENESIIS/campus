@@ -18,7 +18,7 @@
 //20161216 PN CAM-28: implementing datatables using DB values. -WIP
 //20161220 PN CAM-28: modified table.row.add() method to set code into checkobox.
 //20161220 PN CAM-28: implemented Ajax method call to pass selected checkbox values to be deleted, into servlet.
-//20161215 PN CAM-28: added JavaScript method to get datatable row data back as an alert.
+//20170103 PN CAM-28: added JavaScript method to get datatable row data back as an alert.
 
 
 var extStudentSkills = [];

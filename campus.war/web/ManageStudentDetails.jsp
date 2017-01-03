@@ -6,6 +6,7 @@
 <!-- 20161205 PN c26-add-student-details: completed front end validations for Student personal details form. -->
 <!-- 20161214 PN CAM-28: completed front end for Student Higher education details form. -->
 <!-- 20161215 PN CAM-28: added front end validations for date fields. -->
+<!-- 20170103 PN CAM-28: modified datatable headers. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -317,6 +318,7 @@
 									<th><b>Category</b></th>
 									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
 									<th></th>
 								</tr>
 							</thead>
@@ -328,6 +330,7 @@
 									<th><b>Category</b></th>
 									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
 									<th></th>
 								</tr>
 							</tfoot>			
