@@ -226,7 +226,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				
 			}else{
 				log.info("errors");
-				systemMessage = errorMessages.toString()+ SystemMessage.EMPTY_FIELD.message();
+				systemMessage = errorMessages.toString()+ " "+ SystemMessage.EMPTY_FIELD.message();
 	
 			}
 			
@@ -304,8 +304,11 @@ public class CmdAddFeaturedProvider implements ICommand{
 			errorString.add("Private Email");
 		}if(validator.isEmpty(helper.getParameter("providerUsername"))){
 			errorString.add("Username");
-		}if(validator.isEmpty(helper.getParameter("providerPassword"))){
-			errorString.add("Password");
+		}if(validator.isEmpty(helper.getParameter("providerPassword")) || 
+				validator.isEmpty(helper.getParameter("cProviderPassword"))){
+			errorString.add("Password does not match or empty");
+		}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
+			errorString.add("Password fields does not match");
 		}if(validator.isEmpty(helper.getParameter("accountDescription"))){
 			errorString.add("Account Description");
 		}if(validator.isEmpty(helper.getParameter("address3"))){
