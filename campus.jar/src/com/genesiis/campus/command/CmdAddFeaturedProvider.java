@@ -161,6 +161,10 @@ public class CmdAddFeaturedProvider implements ICommand{
 				//set course provider town details
 				courseProviderTown.setActive(true);
 				courseProviderTown.setTown(Long.parseLong(selectedTown));
+				courseProviderTown.setAddress1(helper.getParameter("address1"));
+				courseProviderTown.setAddress2(helper.getParameter("address2"));
+				courseProviderTown.setAddress3(helper.getParameter("address3"));
+				
 				courseProviderTown.setCrtBy("admin");
 				courseProviderTown.setModBy("admin");
 				
@@ -213,6 +217,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 				if (generatedKey >0) {
 					systemMessage = SystemMessage.ADDED.message();
+					helper.setAttribute("registerId", generatedKey);
 				} else if (generatedKey ==0) {
 					systemMessage = SystemMessage.NOTADDED.message();
 				}
