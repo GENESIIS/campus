@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
 //			  c26-add-student-details: getAll() method SQL query modified.
 //20161126 PN c26-add-student-details: findById() method implemented.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,14 +40,14 @@ public class Country2DAO implements ICrud{
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1) AND [CODE] = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, countryCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
@@ -68,6 +69,9 @@ public class Country2DAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allCountryList;
@@ -78,13 +82,13 @@ public class Country2DAO implements ICrud{
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1);";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
@@ -106,6 +110,9 @@ public class Country2DAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allCountryList;

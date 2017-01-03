@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161206 PN c26-add-student-details INIT SkillDAO.java. Implemented geAll() method.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,13 +46,13 @@ public class SkillDAO implements ICrud{
 		final Collection<Collection<String>> allSkillList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[SKILL] WHERE [ISACTIVE] = 1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleLevelList = new ArrayList<String>();
@@ -74,6 +75,9 @@ public class SkillDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allSkillList;

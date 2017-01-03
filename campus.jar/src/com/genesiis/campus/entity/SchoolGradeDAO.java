@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
 //			  c26-add-student-details: changed getAll() method SQL query.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,13 +45,13 @@ public class SchoolGradeDAO implements ICrud{
 		final Collection<Collection<String>> allGradeList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[LEVEL],[TITLE] FROM [CAMPUS].[SCHOOLGRADE] WHERE [LEVEL] = 17 AND [ISACTIVE]=1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				final ArrayList<String> singleGradeList = new ArrayList<String>();
@@ -73,6 +74,9 @@ public class SchoolGradeDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allGradeList;

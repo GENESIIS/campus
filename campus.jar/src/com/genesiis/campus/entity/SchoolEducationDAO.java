@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //20161124 PN c26-add-student-details: INIT SchoolEducationDAO.java class.
 //20161125 PN c26-add-student-details: implemented findByIdMethod().
 //20161126 PN c26-add-student-details: modified findByIdMethod() method by setting country name to the return collection.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +43,7 @@ public class SchoolEducationDAO implements ICrud{
 		final Collection<Collection<String>> allEducationList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], [RESULT], "
@@ -51,7 +52,7 @@ public class SchoolEducationDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
-			final ResultSet rs = stmt.executeQuery();	
+			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
 				final ArrayList<String> singleEducationList = new ArrayList<String>();
@@ -91,6 +92,9 @@ public class SchoolEducationDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allEducationList;

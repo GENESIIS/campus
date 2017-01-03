@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,13 +43,13 @@ public class MediumDAO implements ICrud{
 		final Collection<Collection<String>> allMediumList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT  [CODE],[DESCRIPTION] FROM CAMPUS.MEDIUM WHERE ISACTIVE=1;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleMediumList = new ArrayList<String>();
@@ -70,6 +71,9 @@ public class MediumDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allMediumList;

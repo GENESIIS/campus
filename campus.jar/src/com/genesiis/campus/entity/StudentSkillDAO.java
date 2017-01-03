@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161206 PN c26-add-student-details INIT StudentSkillDAO.java. Implemented geAll() method.
 //		   PN c26-add-student-details INIT StudentSkillDAO.java. Implemented add(object,conn) and delete(object,conn) method.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +44,7 @@ public class StudentSkillDAO implements ICrud{
 		final Collection<Collection<String>> studentSkillList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT K.[CODE],K.[NAME],K.[DESCRIPTION] "
@@ -53,7 +54,7 @@ public class StudentSkillDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			
 			while (rs.next()) {

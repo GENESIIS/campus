@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161205 PN c26-add-student-details: update(Connection con, Object object) method to update student personal details. 
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
 //20161214 PN CAM-28: findById() method modified. SQL query and data list.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -77,7 +78,7 @@ public class StudentDAO implements ICrud {
 		final Collection<Collection<String>> studentDetailsCollectionList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+		ResultSet rs = null;
 		try {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
@@ -90,7 +91,7 @@ public class StudentDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, studentCode);
-			final ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleList = new ArrayList<String>();
@@ -140,6 +141,9 @@ public class StudentDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return studentDetailsCollectionList;

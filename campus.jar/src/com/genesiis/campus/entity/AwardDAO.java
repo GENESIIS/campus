@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20161215 PN CAM-28: INIT AwardDAO.java class and implemented add() method.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,13 +47,13 @@ public class AwardDAO implements ICrud{
 		final Collection<Collection<String>> allAwardList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[SHORTTITLE],[LONGTITLE] FROM [CAMPUS].[AWARD];";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleAwardList = new ArrayList<String>();
@@ -74,6 +76,9 @@ public class AwardDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allAwardList;

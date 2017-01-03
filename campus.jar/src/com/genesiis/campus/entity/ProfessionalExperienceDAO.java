@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161215 PN CAM-28 : add-student-details: implemented findById() method
 //20161216 PN CAM-28 : re-implemented findById() method
 //20161220 PN CAM-28: implemented delete(Object object, Connection conn) method.
+//20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,6 +59,9 @@ public class ProfessionalExperienceDAO implements ICrud{
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		return result;
 	}
@@ -80,7 +84,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [ORGANIZATION], [STUDENT], [INDUSTRY], [JOBCATEGORY], "
@@ -90,7 +94,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
-			final ResultSet rs = stmt.executeQuery();	
+			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
 				final ArrayList<String> singlehigherEduList = new ArrayList<String>();
@@ -135,6 +139,9 @@ public class ProfessionalExperienceDAO implements ICrud{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allhigherEduList;
