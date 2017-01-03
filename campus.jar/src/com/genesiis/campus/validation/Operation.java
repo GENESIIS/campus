@@ -29,7 +29,7 @@ public enum Operation {
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"),
 	DISPLAY_PREREQUISITE_DATA("DPRD", ResponseType.JSON,""),
 	DISPLAY_TOWN_DATA("DPTWN", ResponseType.JSON,""),
-	UPLOAD_EXISTING_PROFILE_PIC("UEPP",ResponseType.JSON,""),
+	UPLOAD_EXISTING_TUTOR_PROFILE_PIC("UETPP",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
 			
 	private final String commandString;

@@ -27,11 +27,12 @@
     <script src="../../js/main.js"></script>
     <script src="../../js/image-slides.js"></script>
     <script src="/dist/js/institute/validation/validation.js"></script>
-	<script src="/dist/js/jsonDataExchanger.js"></script>
+	<script src="/dist/js/tutor/tutorUploadImage.js"></script>
 	
 
 </head>
 <body>
+<label id="displayLabel" style="color:#F39C12;" ></label>
 <form action="" method="post" action="" enctype="multipart/form-data">
 
   

@@ -11,8 +11,15 @@ package com.genesiis.campus.util;
 // 			due to code review comment by CM
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.ICommand;
@@ -208,5 +215,48 @@ public class DataHelper implements IDataHelper {
 	public Object getAttribute(String attributeName){
 		return request.getAttribute(attributeName);
 	}
+	
+	
+	/**
+	 * getFiles() - method is to get files inside a specific folder in disk.
+	 * 
+	 * @return ArrayList<FileItem> - contains list of images
+	 * @author pabodha
+	 */
+	@Override
+	public ArrayList<FileItem> getFiles() throws FileUploadException{
+		ArrayList<FileItem> files = null;
+
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+
+		try {
+
+			if (request != null && request.getContentType() != null) {
+				files = new ArrayList<FileItem>();
+				@SuppressWarnings("unchecked")
+				List<Object> list = upload.parseRequest(request);
+
+				if (list != null) {
+
+					for (Object fileItem : list) {
+
+						FileItem item = (FileItem) fileItem;
+						if (!(item.isFormField()))
+							files.add(item);
+
+					}
+
+				}
+
+			}
+		} catch (Exception e) {
+			logger.error("getFiles(): " + e);
+			throw e;
+		}
+
+		return files;
+	}
+
 	
 }
