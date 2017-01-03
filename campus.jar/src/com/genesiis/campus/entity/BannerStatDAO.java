@@ -55,20 +55,32 @@ public class BannerStatDAO implements ICrud {
 				return allBannerStatsList;
 			}
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb=new StringBuilder("SELECT BANNER.CODE AS BANNERCODE, BANNERSTAT.VIEWDATE,  COUNT(BANNERSTAT.CODE) AS BANNERHITCOUNT"); 
-			sb.append(" FROM [CAMPUS].BANNERSTAT BANNERSTAT INNER JOIN [CAMPUS].BANNER BANNER ON BANNERSTAT.BANNER=BANNER.CODE  WHERE 1=1 "); 
-			sb.append(" AND BANNER.PAGESLOT= 1 AND BANNER.ADVERTISER=1 GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE"); 
-			/*SELECT * FROM [CAMPUS].PAGE PAGE INNER JOIN [CAMPUS].PAGESLOT PAGESLOT ON PAGE.CODE=PAGESLOT.PAGE  INNER JOIN [CAMPUS].BANNER BANNER  ON PAGESLOT.CODE= BANNER.PAGESLOT  WHERE PAGE.CODE=1 AND PAGESLOT.CODE=1 
-					AND BANNER.ADVERTISER=1*/
-			stmt=conn.prepareStatement(sb.toString());
-			//stmt.setInt(1, bannerStatSearchDTO.getPageSlotCode());			
-			//stmt.setInt(2, bannerStatSearchDTO.getPageSlotCode());			
-			resultSet=stmt.executeQuery();
+			final StringBuilder sb = new StringBuilder(" SELECT BANNER.CODE AS BANNERCODE, BANNERSTAT.VIEWDATE,  COUNT(BANNERSTAT.CODE) AS BANNERHITCOUNT FROM [CAMPUS].PAGE PAGE ");
+			sb.append("INNER JOIN [CAMPUS].PAGESLOT PAGESLOT ON PAGE.CODE=PAGESLOT.PAGE ");
+			sb.append("INNER JOIN [CAMPUS].BANNER BANNER  ON PAGESLOT.CODE= BANNER.PAGESLOT ");
+			sb.append("INNER JOIN [CAMPUS].BANNERSTAT BANNERSTAT ON BANNER.CODE=BANNERSTAT.BANNER  WHERE 1=1 ");
+			if (bannerStatSearchDTO.getPageCode() > 0) {
+				sb.append(" AND  PAGE.CODE= ");
+				sb.append(bannerStatSearchDTO.getPageCode());
+			}
+			if (bannerStatSearchDTO.getPageSlotCode() > 0) {
+				sb.append(" AND PAGESLOT.CODE= ");
+				sb.append(bannerStatSearchDTO.getPageSlotCode());
+			}
+			if (bannerStatSearchDTO.getBannerProviderCode() > 0) {
+				sb.append(" AND BANNER.ADVERTISER= ");
+				sb.append(bannerStatSearchDTO.getBannerProviderCode());
+			}
+			sb.append(" GROUP BY BANNER.CODE,BANNERSTAT.VIEWDATE ");
+
+			stmt = conn.prepareStatement(sb.toString());
+
+			resultSet = stmt.executeQuery();
 			while (resultSet.next()) {
 				final ArrayList<String> bannerList = new ArrayList<String>();
-				bannerList.add(resultSet.getString("BANNERCODE"));								
-				bannerList.add(resultSet.getString("VIEWDATE"));								
-				bannerList.add(resultSet.getString("BANNERHITCOUNT"));								
+				bannerList.add(resultSet.getString("BANNERCODE"));
+				bannerList.add(resultSet.getString("VIEWDATE"));
+				bannerList.add(resultSet.getString("BANNERHITCOUNT"));
 				allBannerStatsList.add(bannerList);
 			}
 			
