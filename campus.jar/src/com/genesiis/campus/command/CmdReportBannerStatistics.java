@@ -87,16 +87,20 @@ public class CmdReportBannerStatistics implements ICommand {
 		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
 		String fromDateString = helper.getParameter("startDate");
 		String toDateString = helper.getParameter("endDate");
-		int pageSlot = 0;
+		
 		try {
-			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
-				if (UtilityHelper.isInteger(pageSlotCodeString)) {
-					pageSlot = Integer.parseInt(pageSlotCodeString);
-				}
-			}
-			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();
-			searchDTO.setPageSlotCode(pageSlot);
+			if (UtilityHelper.isNotEmpty(pageCodeString)) {
+				searchDTO.setPageCode(Integer.valueOf(pageCodeString));
+			}
+			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
+				searchDTO.setPageSlotCode(Integer.valueOf(pageSlotCodeString));
+			}
+			if (UtilityHelper.isNotEmpty(bannerProviderCodeString)) {
+				searchDTO.setBannerProviderCode(Integer.valueOf(bannerProviderCodeString));
+			}
+			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
+			
 			try {
 				if (UtilityHelper.isNotEmpty(fromDateString)) {
 					searchDTO.setFromDate(df.parse((fromDateString)));
