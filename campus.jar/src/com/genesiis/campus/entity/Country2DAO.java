@@ -64,14 +64,14 @@ public class Country2DAO implements ICrud{
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
 			if (conn != null) {
 				conn.close();
-			}
-			if (rs != null) {
-				rs.close();
 			}
 		}
 		return allCountryList;
@@ -105,14 +105,14 @@ public class Country2DAO implements ICrud{
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
 			if (conn != null) {
 				conn.close();
-			}
-			if (rs != null) {
-				rs.close();
 			}
 		}
 		return allCountryList;

@@ -136,14 +136,14 @@ public class StudentDAO implements ICrud {
 			Log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (ps != null) {
 				ps.close();
 			}
 			if (conn != null) {
 				conn.close();
-			}
-			if (rs != null) {
-				rs.close();
 			}
 		}
 		return studentDetailsCollectionList;

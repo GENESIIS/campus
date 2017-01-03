@@ -70,15 +70,15 @@ public class AwardDAO implements ICrud{
 		} catch (Exception e) {
 			log.error("getAll(): E " + e.toString());
 			throw e;
-		} finally {
+		} finally {			
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
 			if (conn != null) {
 				conn.close();
-			}
-			if (rs != null) {
-				rs.close();
 			}
 		}
 		return allAwardList;
