@@ -85,8 +85,8 @@ public class CmdReportBannerStatistics implements ICommand {
 		String pageCodeString = helper.getParameter("pageCode");
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
 		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
-		String fromDateString = helper.getParameter("startDate");
-		String toDateString = helper.getParameter("endDate");
+		String fromDateString = helper.getParameter("fromDate");
+		String toDateString = helper.getParameter("toDate");
 		
 		try {
 			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();
@@ -115,8 +115,7 @@ public class CmdReportBannerStatistics implements ICommand {
 				throw parseException;
 			}
 			
-			final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO()
-					.findById(searchDTO);
+			final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO().findById(searchDTO);
 			helper.setAttribute("bannerStatDetails", bannerStatDetails);
 		} catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception.toString());
