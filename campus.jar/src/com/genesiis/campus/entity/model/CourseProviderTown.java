@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20161229 JH c39-add-course-provider CourseProviderTown.java class created
 //20170102 JH c39-add-course-provider data type string to long for town attribute
+//20170103 JH c39-add-course-provider added new attributes for address field  
 
 import java.util.Date;
 
@@ -11,6 +12,9 @@ public class CourseProviderTown {
 	private int courseProvider;
 	private Long town;
 	
+	private String address1;
+	private String address2;
+	private String address3;
 	private String crtBy;
 	private String modBy;
 	
@@ -35,6 +39,24 @@ public class CourseProviderTown {
 	}
 	public void setTown(Long town) {
 		this.town = town;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getAddress3() {
+		return address3;
+	}
+	public void setAddress3(String address3) {
+		this.address3 = address3;
 	}
 	public String getCrtBy() {
 		return crtBy;
