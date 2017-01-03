@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161130 JH c39-add-course-provider add method coding wip
 //20161202 JH c39-add-course-provider add method code modified
 //20161206 JH c39-add-course-provider add missing parameters and remove static values
+//20170103 JH c39-add-course-provider added queries to insert course provider town data
  
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,10 +44,9 @@ public class OneOffCourseProviderDAO implements ICrud{
 		int generatedKey = 0;
 		
 		try{
-			//Map map = (HashMap) object;
-			
-			CourseProvider courseProvider  = (CourseProvider) object;
-		//	CourseProviderTown courseProviderTown = (CourseProviderTown) map.get("town");
+			Map map = (HashMap) object;		
+			CourseProvider courseProvider  = (CourseProvider) map.get("provider");
+			CourseProviderTown courseProviderTown = (CourseProviderTown) map.get("town");
 
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
@@ -54,15 +54,6 @@ public class OneOffCourseProviderDAO implements ICrud{
 			/**
 			 * provider query used to insert data into course provider table. 
 			 */
-//			String provider = "INSERT INTO [CAMPUS].[COURSEPROVIDER](UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,"
-//			+" COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE ,LANDPHONENO ,LANDPHONE2NO ,"
-//			+" FAXNO ,MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, SPECIALITY ,WEBLINK, FACEBOOKURL, TWITTERURL, MYSPACEURL , LINKEDINURL, INSTAGRAMURL ,"
-//            +" VIBERNUMBER, WHATSAPPNUMBER, EXPIRATIONDATE, ADDRESS1, ADDRESS2, ADDRESS3, ACCOUNTTYPE, "
-//            +" HEADOFFICETOWN, ISTUTORRELATED, ISADMINALLOWED, COURSEPROVIDERSTATUS, COURSEPROVIDERTYPE, "
-//            +" PRINCIPAL, TUTOR, CRTON, CRTBY, MODON, MODBY )"
-//            +" VALUES ( ?, ?, ? , ? , ?, ?, ? , ?, ?, ?, "
-//            +" ? ,?, ?, ? , ? , ?, ?, ? , ?, ?, ?, ?, ?, "
-//            +" ?, ?, ? , ? , ?, ?, ? , ?, ?, ?,?, ?, getDate(), ?, getDate(),? )";
 			
 			StringBuilder branchCourseProviderStringBuilder = new StringBuilder("INSERT INTO [CAMPUS].[COURSEPROVIDER]");
 			branchCourseProviderStringBuilder.append("(UNIQUEPREFIX ,SHORTNAME, NAME, DESCRIPTION, GENERALEMAIL,COURSEINQUIRYEMAIL, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO ,");
@@ -83,6 +74,18 @@ public class OneOffCourseProviderDAO implements ICrud{
 			mainCourseProviderStringBuilder.append("?, ?, ? , ?, ? , ?, ?, ? , ?, ?, getDate(), ?, getDate(),? )");
 			
 			String mainCourseProvider = mainCourseProviderStringBuilder.toString();
+			
+			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
+					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
+			
+			
+			//set course provider town details
+			preparedStatement2 = conn.prepareStatement(town);
+			preparedStatement2.setBoolean(1, courseProviderTown.isActive());
+			preparedStatement2.setLong(3, courseProviderTown.getTown());
+			preparedStatement2.setString(4, courseProviderTown.getCrtBy());
+			preparedStatement2.setString(5, courseProviderTown.getModBy());
+			
 			//check whether the course provider has a head office or not
 			if(courseProvider.getPrincipal()==0){//does not have a head office
 				preparedStatement = conn.prepareStatement(mainCourseProvider,
@@ -176,7 +179,9 @@ public class OneOffCourseProviderDAO implements ICrud{
 
 			if (rs.next()) {
 				generatedKey = rs.getInt(1);
-
+				preparedStatement2.setInt(2, generatedKey);
+				status = preparedStatement2.executeUpdate();
+				
 			}
 
 			conn.commit();

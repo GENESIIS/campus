@@ -116,15 +116,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 				}
 						
 				int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
-				if(providerStatus == ApplicationStatus.ACTIVE.getStatusValue()){
-					pStatus = ApplicationStatus.ACTIVE.getStatusValue();
-				}
-				if(providerStatus == ApplicationStatus.INACTIVE.getStatusValue()){
-					pStatus = ApplicationStatus.INACTIVE.getStatusValue();
-				}
-				if(providerStatus == ApplicationStatus.PENDING.getStatusValue() ){
-					pStatus = ApplicationStatus.PENDING.getStatusValue();
-				}
 				
 				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 				Date parsed = format.parse(expireDate);
@@ -163,7 +154,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				courseProvider.setAddress3(helper.getParameter("address3"));			
 				courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 				courseProvider.setAdminAllowed(true);
-				courseProvider.setCourseProviderStatus(pStatus);
+				courseProvider.setCourseProviderStatus(providerStatus);
 				courseProvider.setCrtBy("admin");//to be update after the session is created
 				courseProvider.setModBy("admin");//to be update after the session is created
 
@@ -175,6 +166,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 				
 				Map map = new HashMap();
 				map.put("provider", courseProvider);
+				map.put("town" , courseProviderTown);
 				
 				int providerType = Integer.parseInt(helper.getParameter("courseProvider"));
 				
@@ -184,7 +176,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 				 * type
 				 */
 				if(providerType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
-					map.put("town" , courseProviderTown);
 					courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
 					courseProvider.setTutorRelated(false);
 								
@@ -215,7 +206,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 					
 					ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
 					courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
-					generatedKey = oneOffCourseProviderDAO.add(courseProvider);
+					generatedKey = oneOffCourseProviderDAO.add(map);
 				}
 				
 
