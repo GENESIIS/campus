@@ -313,10 +313,10 @@
 							<thead>
 								<tr>
 									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
-									<th><b>Industry</b></th>
 									<th><b>Organization</b></th>
+									<th><b>Industry</b></th>
+									<th><b>Designation</b></th>
 									<th><b>Category</b></th>
-									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
 									<th><b>Description</b></th>
 									<th></th>
@@ -325,10 +325,10 @@
 							<tfoot>
 								<tr>
 									<th></th>
-									<th><b>Industry</b></th>
 									<th><b>Organization</b></th>
+									<th><b>Industry</b></th>
+									<th><b>Designation</b></th>
 									<th><b>Category</b></th>
-									<th><b>Designation.</b></th>
 									<th><b>Duration</b></th>
 									<th><b>Description</b></th>
 									<th></th>

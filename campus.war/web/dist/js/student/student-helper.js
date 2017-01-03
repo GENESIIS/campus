@@ -19,6 +19,7 @@
 //20161220 PN CAM-28: modified table.row.add() method to set code into checkobox.
 //20161220 PN CAM-28: implemented Ajax method call to pass selected checkbox values to be deleted, into servlet.
 //20170103 PN CAM-28: added JavaScript method to get datatable row data back as an alert.
+// 		   PN CAM-28: modified the JavaScript code to set edit data into textboxes.
 
 
 var extStudentSkills = [];
@@ -38,11 +39,10 @@ function displayDetails() {
 		},
 		dataType : "json",
 		success : function(response) {
-			// alert(response);
 			getStudentData(response);
 		},
 		error : function(response) {
-			alert("Error: " + response);
+		//	alert("Error: " + response);
 		}
 	});
 }
@@ -54,7 +54,6 @@ function displayDetails() {
  * @returns
  */
 function getStudentData(response) {
-	// displayDetails();
 	var table = $('#example').DataTable({
 		'columnDefs' : [ {
 			'targets' : 0,
@@ -70,7 +69,6 @@ function getStudentData(response) {
 		'rowCallback' : function(row, data, dataIndex) {
 			// Get row ID
 			var rowId = data[0];
-			// alert("data"+data);
 			// If row ID is in the list of selected row IDs
 			if ($.inArray(rowId, rows_selected) !== -1) {
 				$(row).find('input[type="checkbox"]').prop('checked', true);
@@ -125,28 +123,60 @@ function getStudentData(response) {
 	   e.stopPropagation();
 	});
 	
+	//This handles the edit button click.
 	$('#example tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();       
-        if(data){
-        alert( data[0] +"'s salary is: "+ data[ 5 ] );
+        if(data){        
+	    $('#organization').val(data[1]);
+	    $('#designation').val(data[3]);
+	    
+	    var str = data[5];
+	    var res = str.split("<br/>");
+	       
+	    $('#commencedOn').val(res[0]);
+	    $('#completionOn').val(res[1]);
+	    $('#jobDescription').val(data[6]);
+        
+	    //Get select object
+	    var industry = document.getElementById("industryoftheOrganization");
+	    //Set selected
+	    setSelectedValue(industry, data[2]);
+	    
+	    //Get select object
+	    var jobCategory = document.getElementById("jobCategory");
+	    //Set selected
+	    setSelectedValue(jobCategory, data[4]);
+	    
         }else{
-        	alert("Empty");
     	    var idx = $(this).index(this);
     	    if (idx > 0) {
-    	        var $tr = $(this).eq(idx - 1).closest('tr');
+    	        var data = $(this).eq(idx - 1).closest('tr');
     	    } else {
-    	        var $tr = table.row($(this).closest('tr').prev('tr') ).data();
+    	        var data = table.row($(this).closest('tr').prev('tr') ).data();
     	    }
-    	    alert($tr);
+    	    
+    	    $('#organization').val(data[1]);
+    	    $('#designation').val(data[3]);
+    	    
+    	    var str = data[5];
+    	    var res = str.split("<br/>");
+    	    
+    	    $('#commencedOn').val(res[0]);
+    	    $('#completionOn').val(res[1]);
+    	    $('#jobDescription').val(data[6]);
+    	      	    
+    	    //Get select object
+    	    var industry = document.getElementById("industryoftheOrganization");
+    	    //Set selected
+    	    setSelectedValue(industry, data[2]);
+    	    
+    	    //Get select object
+    	    var jobCategory = document.getElementById("jobCategory");
+    	    //Set selected
+    	    setSelectedValue(jobCategory, data[4]);
         }
     } );
 	
-
-	// Handle click on table cells with checkboxes
-//	$('#example').on('click', 'tbody td, thead th:first-child', function(e){
-//	   $(this).parent().find('input[type="checkbox"]').trigger('click');
-//	});
-
 	// Handle click on "Select all" control
 	$('thead input[name="select_all"]', table.table().container()).on('click', function(e){
 	   if(this.checked){
@@ -181,8 +211,7 @@ function getStudentData(response) {
 	      table.row('.selected').remove().draw( false );
 	   });
 
-	   // FOR DEMONSTRATION ONLY     
-	   
+	   // FOR DEMONSTRATION ONLY     	   
 	   // Output form data to a console     
 	   $('#example-console').text(rows_selected);
 	      
@@ -197,12 +226,10 @@ function getStudentData(response) {
 				
 			},
 			error : function(response) {
-				alert("Error: " + response);
+			//	alert("Error: " + response);
 			}
 		});
-	   
-	   
-	    
+	     
 	   // Remove added elements
 	   $('input[name="id\[\]"]', form).remove();
 	    
@@ -215,7 +242,6 @@ function getStudentData(response) {
 	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
-		// alert(data);
 		$('#sFullName').val(data[4]);
 		$('#sMiddleName').val(data[5]);
 		$('#sLastName').val(data[6]);
@@ -308,7 +334,6 @@ function getStudentData(response) {
 	});
 
 	// Set medium details
-	// alert("response.mediumCollection"+response.mediumCollection);
 	var sseMedium = $("#sseMedium");
 	sseMedium.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(sseMedium);
@@ -410,9 +435,7 @@ function getStudentData(response) {
 	});
 
 	// Get existing skill values.
-	// alert(response.skillCollection);
 	var inputValues = createJsonObj(response.skillCollection);
-	// alert(inputValues);
 	$('#studentSkills').tagsinput({
 		itemValue : 'value',
 		itemText : 'text',
@@ -424,7 +447,6 @@ function getStudentData(response) {
 	});
 
 	// Get skills assigned with Student
-	// alert(response.stskillCollection);
 	$.each(response.stskillCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -437,9 +459,7 @@ function getStudentData(response) {
 	});
 
 	// Get existing interest values.
-	// alert(response.interestCollection);
 	var inputValues2 = createJsonObj(response.interestCollection);
-	// alert(inputValues2);
 	$('#studentInterests').tagsinput({
 		itemValue : 'value',
 		itemText : 'text',
@@ -451,7 +471,6 @@ function getStudentData(response) {
 	});
 
 	// Get interest assigned with Student
-	// alert(response.stinterestCollection);
 	$.each(response.stinterestCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -531,7 +550,6 @@ function createJsonObj(response) {
  * @returns
  */
 function getTownDetails(country) {
-	// var country = getSelectedData('sCountry','sCountryList');
 	$.ajax({
 		url : '../../StudentController',
 		data : {
@@ -554,7 +572,7 @@ function getTownDetails(country) {
 			});
 		},
 		error : function(response) {
-			alert("Error: " + response);
+		//	alert("Error: " + response);
 		}
 	});
 }
