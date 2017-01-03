@@ -13,7 +13,7 @@ import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InterestDAO;
-import com.genesiis.campus.entity.MajorDAO;
+import com.genesiis.campus.entity.StdProfMajorDAO;
 import com.genesiis.campus.entity.MediumDAO;
 import com.genesiis.campus.entity.ProfessionalExperienceDAO;
 import com.genesiis.campus.entity.SchoolEducationDAO;
@@ -53,7 +53,7 @@ public class CmdGetStudentData implements ICommand {
 		int StudentCode = 1;
 		
 		ICrud schoolEducationDao = new SchoolEducationDAO();
-		ICrud majorDao = new MajorDAO();
+		ICrud majorDao = new StdProfMajorDAO();
 		ICrud schoolGradeDao = new SchoolGradeDAO();
 		ICrud mediumDao = new MediumDAO();
 		ICrud country2Dao = new Country2DAO();
