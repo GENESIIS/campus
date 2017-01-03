@@ -139,12 +139,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				preparedStatement.setString(26, courseProvider.getAddress2());
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
-			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
 				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
 				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
 				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
 				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
-				//preparedStatement.setInt(34, courseProvider.getPrincipal());
 				preparedStatement.setString(33, courseProvider.getCrtBy());
 				preparedStatement.setString(34, courseProvider.getModBy());
 
@@ -181,7 +179,6 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				preparedStatement.setString(26, courseProvider.getAddress2());
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
-			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
 				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
 				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
 				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
@@ -217,7 +214,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			//set course provider town details
 			preparedStatement3 = conn.prepareStatement(town);
 			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
-			preparedStatement3.setLong(3, Long.parseLong(courseProviderTown.getTown()));
+			preparedStatement3.setLong(3, courseProviderTown.getTown());
 			preparedStatement3.setString(4, courseProviderTown.getCrtBy());
 			preparedStatement3.setString(5, courseProviderTown.getModBy());
 			
