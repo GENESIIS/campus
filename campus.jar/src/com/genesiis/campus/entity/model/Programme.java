@@ -3,28 +3,29 @@ package com.genesiis.campus.entity.model;
 //20161026 PN c11-criteria-based-filter-search: INIT Program.java class
 //20161024 CM  c13 display course details INIT Prgramme.java.
 //20161024 CM  c13 display course details Create variables, getters and setters.
+//20160102 PN CAM-116: added private access modifier to the fields.
 
 import java.sql.Date;
 
 public class Programme {
 
-	int code;
-	String name;
-	String email;
-	String image;
-	String description;
-	String duration;
-	String entryRequiremtns;
-	String counselerName;
-	String counselerPhone;
-	Date displayDatrtDate;
-	Date expirationDate;
-	int programmeStatus;
-	int courseProvider;
-	int major;
-	int category;
-	int level;
-	int town;
+	private int code;
+	private String name;
+	private String email;
+	private String image;
+	private String description;
+	private String duration;
+	private String entryRequiremtns;
+	private String counselerName;
+	private String counselerPhone;
+	private Date displayDatrtDate;
+	private Date expirationDate;
+	private int programmeStatus;
+	private int courseProvider;
+	private int major;
+	private int category;
+	private int level;
+	private int town;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;

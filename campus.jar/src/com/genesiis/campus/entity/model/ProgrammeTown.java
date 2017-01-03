@@ -5,12 +5,13 @@ import java.sql.Date;
 //20161026 PN c11-criteria-based-filter-search: INIT ProgramTown.java class
 //20161028 PN c11-criteria-based-filter-search: added class attributes and data access methods.
 //20161029 PN c11-criteria-based-filter-search: renamed class ProgramTown -> ProgrammeTown
+//20160102 PN CAM-116: added private access modifier to the fields.
 
 public class ProgrammeTown {
-	int code;
-	int IsActive;
-	int program;
-	int town;
+	private int code;
+	private int IsActive;
+	private int program;
+	private int town;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
