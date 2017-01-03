@@ -196,7 +196,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 						courseProviderAccount.setActive(false);
 					}
 
-					courseProviderAccount.setName(helper.getParameter("providerName"));
+					courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
 					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 					courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
@@ -302,7 +302,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			errorString.add("Address Line 3");
 		}if(validator.isEmpty(helper.getParameter("accountStatus"))){
 			errorString.add("Account Status");
-		}if(validator.isEmpty(helper.getParameter("providerName"))){
+		}if(validator.isEmpty(helper.getParameter("providerPrivateName"))){
 			errorString.add("Provider Name");
 		}if(validator.isEmpty(helper.getParameter("providerEmail"))){
 			errorString.add("Private Email");
