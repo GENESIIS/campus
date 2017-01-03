@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //20161219 JH c39-add-course-provider fixed error in prepared statement
 //20161229 JH c39-add-course-provider added queries to insert data into course provider town table
 //20170102 JH c39-add-course-provider code modified to fix number format exception in course provider town entity
+//20170103 JH c39-add-course-provider town query changed due to course provider town table changes
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -100,9 +101,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, EMAIL, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
 					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
-
-			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, CRTON, CRTBY, MODON, MODBY)"
-					+ " VALUES (?, ?, ?, getDate(), ?, getDate(), ?)";
+			
+			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, ADDRESS1, ADDRESS2, ADDRESS3, CRTON, CRTBY, MODON, MODBY)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
 			
 			//check whether the course provider has a head office or not
@@ -212,12 +213,15 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			
 			
 			//set course provider town details
+			//set course provider town details
 			preparedStatement3 = conn.prepareStatement(town);
 			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
 			preparedStatement3.setLong(3, courseProviderTown.getTown());
-			preparedStatement3.setString(4, courseProviderTown.getCrtBy());
-			preparedStatement3.setString(5, courseProviderTown.getModBy());
-			
+			preparedStatement3.setString(4, courseProviderTown.getAddress1());
+			preparedStatement3.setString(5, courseProviderTown.getAddress2());
+			preparedStatement3.setString(6, courseProviderTown.getAddress3());
+			preparedStatement3.setString(7, courseProviderTown.getCrtBy());
+			preparedStatement3.setString(8, courseProviderTown.getModBy());
 
 			status = preparedStatement.executeUpdate();
 			log.info(".........." + status);
