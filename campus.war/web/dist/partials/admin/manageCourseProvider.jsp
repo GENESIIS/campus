@@ -131,11 +131,16 @@
 									<!-- back end code is already completed to handle one-off course providers as well -->
 
 									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
-
-										<input type="radio" name="courseProvider" id="courseProvider"
-											value="${accountTypes.typeValue}"
-											onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
-	
+										<c:if test="${accountTypes.typeValue == 1}">
+											<input type="radio" name="courseProvider" id="courseProvider"
+												value="${accountTypes.typeValue}" checked="checked"
+												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+										</c:if>
+										<c:if test="${accountTypes.typeValue != 1}">
+											<input type="radio" name="courseProvider" id="courseProvider"
+												value="${accountTypes.typeValue}" disabled="disabled"
+												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+										</c:if>
 									</c:forEach>
 								</div>
 							</li>
@@ -437,19 +442,17 @@
 									<h1 class="pro-name">Status :</h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name">
-										<c:forEach items="${applicationStatusBean.values}"
-											var="applicationStatus">
-											<input type="radio" name="providerStatus" id="providerStatus"
-												value="${applicationStatus.statusValue}" /> ${applicationStatus}
+									<c:forEach items="${applicationStatusBean.values}"
+										var="applicationStatus">
+										<input type="radio" name="providerStatus" id="providerStatus"
+											value="${applicationStatus.statusValue}" /> ${applicationStatus}
 									 </c:forEach>
-										<!-- 
+									<!-- 
 										<input type="radio" name="providerStatus" id="providerStatus"
 											value="active" /> Active &nbsp; <input type="radio"
 											name="providerStatus" id="providerStatus" value="inactive" />
 										InActive &nbsp; <input type="radio" name="providerStatus"
 											id="providerStatus" value="pending" /> Pending -->
-									</h1>
 								</div>
 							</li>
 							<!-- end -->
