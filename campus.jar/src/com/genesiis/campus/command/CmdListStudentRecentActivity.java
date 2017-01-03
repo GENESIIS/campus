@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161229 MM c25-student-create-dashboard-MP - INIT - Initialised file and implemented execute() method
 //20170101 MM c25-student-create-dashboard-MP - Added code in execute(IDataHelper) to process the fetched list of student activities
+//20170103 MM c25-student-create-dashboard-MP - Modifying code in execute(IDataHelper) to process data retrieved from multiple tables
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentActivitiyDAO;
@@ -17,6 +18,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,23 +64,40 @@ public class CmdListStudentRecentActivity implements ICommand {
 								
 					dataCollection = studentActivityDao.findById(student);											
 
-					for (Collection<String> prog : dataCollection) {
+					for (Collection<String> prog : dataCollection) {						
 						int index  = 0;				
-						int indexOfCourseProviderCode;
-						int indexOfCourseProviderShortName;
-						int indexOfCourseProviderName;
+						int indexOfCourseProviderCode = 0;
+						int indexOfCourseProviderShortName = 0;
+						int indexOfCourseProviderName = 0;
 						ArrayList<String> tempSingleTownDetailsList = null;
 						int courseProviderCode = 0;
 						String courseProviderShortName = null;
 						String courseProviderName = null;
-						int tableIndicatorIndex = 0;
-						String tableIndicator = "";
+						int tableIndicatorIndex = 17;
+						String tableIndicatorString = "";
 						String majorOrLevelCode = null;
+						
+						Map<String, String> tableIndicatorStringMap = new HashMap<String, String>();
+						tableIndicatorStringMap.put("STUDENT", "STUDENT");
+						tableIndicatorStringMap.put("HIGHEREDUCATION", "HIGHEREDUCATION");
+						tableIndicatorStringMap.put("SCHOOLEDUCATION", "SCHOOLEDUCATION");
+						tableIndicatorStringMap.put("PROFESSIONALEXPERIENCE", "PROFESSIONALEXPERIENCE");
+						tableIndicatorStringMap.put("STUDENTINTEREST", "STUDENTINTEREST");
+						tableIndicatorStringMap.put("STUDENTSKILL", "STUDENTSKILL");
+						tableIndicatorStringMap.put("INQUIRY", "INQUIRY");
+						tableIndicatorStringMap.put("STUDENTCOURSEPROVIDERINQUIRY", "STUDENTCOURSEPROVIDERINQUIRY");
+						tableIndicatorStringMap.put("STUDENTPROGRAMINQUIRY", "STUDENTPROGRAMINQUIRY");
+						tableIndicatorStringMap.put("APPLICATION", "APPLICATION");
 						
 						for (String field : prog) {		
 							
 							if (index == tableIndicatorIndex) {
-								tableIndicator = field;	
+								tableIndicatorString = field;
+								
+								if (tableIndicatorStringMap.get("STUDENT").equals(tableIndicatorString)) {
+									 
+								} 
+								
 								index++;	
 								continue;
 							}							
