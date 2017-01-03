@@ -5,15 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <title>Insert title here</title>
 </head>
 <body>
 	<c:if test="${sessionScope.currentSessionUser == null}">
 	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:if>
-	
+<%-- 		<c:if test="${sessionScope.currentUserData != null}"> --%>
 	<c:choose>
-    <c:when test="${sessionScope.currentUserData != null }">
+    <c:when test="${sessionScope.currentUserData != null && sessionScope.currentSessionUser != null}">
     	<c:set var="col_stuCode" value="${sessionScope.currentUserData[0][0]}" scope="session" />
     	<c:set var="col_stuUsername" value="${sessionScope.currentUserData[0][1]}" scope="session" />
     	<c:set var="col_stuIndexNo" value="${sessionScope.currentUserData[0][2]}" scope="session" />
@@ -53,27 +54,24 @@
     	<c:set var="col_stulastLoggedOutTime" value="${sessionScope.currentUserData[0][36]}" scope="session" />
     	<c:set var="col_stulastLoginAuthenticatedBy" value="${sessionScope.currentUserData[0][37]}" scope="session" />
     	
-<%--      <c:forEach var="userDataCollection" items="${sessionScope.currentUserData}" varStatus="rowCount"> --%>
-	
-<%-- 		<c:forEach var="collection2" items="userDataCollection" varStatus="loop"> --%>
-<%-- <%-- 		<c:set var="col_${rowCount.index}_${loop.index}" value="varStatus" scope="session" /> --%> --%>
-<%-- 			<c:set var="col_${rowCount.index}_${loop.index}" value="varStatus" scope="session" /> --%>
-			
-<%-- 		</c:forEach> --%>
-		
-<%-- 		</c:forEach> --%>
-    </c:when>
-    
-    <c:otherwise>
+<%--    </c:if> --%>
+    </c:when><c:otherwise>
 	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:otherwise>
 </c:choose>
 
-<c:choose>
-<c:when test="">
+<%-- <c:choose> --%>
+<%-- <c:when test="${sessionScope.currentUserData[1] != null }"> --%>
+<%--   <c:forEach var="userDataCollection" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="5" step="8"> --%>
+<%-- 		<c:set var="url" value="${userDataCollection}" scope="session" />  --%>
 
-</c:when>
-</c:choose>
+<%-- 		${url}<br> --%>
+<%-- 		</c:forEach> --%>
+<%-- </c:when> --%>
+<%-- <c:otherwise> --%>
+<%-- 	<% response.sendRedirect("http://www.campus.dev:8080/index.jsp"); %> --%>
+<%-- </c:otherwise> --%>
+<%-- </c:choose> --%>
 	
 	
 	
