@@ -8,10 +8,11 @@ window.countryCode = null;
 window.townCollection = null;
 window.usernameValidation = true;
 window.courseProviderTypes  = null;
+window.accountType = null;
 
 $(document).ready(function() {
 	arrangeUI();
-	getCourseProviderTypes();
+	//getCourseProviderTypes();
 });
 
 
@@ -20,10 +21,32 @@ function arrangeUI() {
 
 }
 
+function changeRequiredData(typeValue){
+	window.accountType = typeValue ;
+	
+	/**
+	 * here methods are created to hidden input fields that are not needed
+	 * for the the of the course provider 
+	 */
+	if(window.accountType == 1){
+		
+	}if(window.accountType == 2){
+		document.getElementById("accountInfo").style.display = "none";
+	//	var commonValue = "";
+		$('#providerPrivateName').val("common name");
+		$('#providerEmail').val("common");
+		$('#providerUsername').val("common");
+		$('#providerPassword').val("common");
+		$('#cProviderPassword').val("common");
+		$('#accountStatus').val("common");
+		$('#accountDescription').val("common");
+	//	document.getElementById("providerName"). = commonValue;
+		
+	}
+}
 
 window.onload = function() {
 	getProviderPageLoadData();
-//	getCourseProviderTypes();
 };
 
 function getCourseProviderTypes(){
@@ -218,7 +241,7 @@ function getProviderType() {
 	var statusValue = $("input[name='providerStatus']:checked").val();
 
 	var form = $('#basicForm');
-	var formDate = $(form).serialize();
+	var formData = $(form).serialize();
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',

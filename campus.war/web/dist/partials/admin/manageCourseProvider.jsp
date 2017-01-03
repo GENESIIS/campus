@@ -123,10 +123,20 @@
 									<h1 class="pro-name">Account Type :</h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
+									<!-- here we selects featured course provider account type as default and all other account
+								types are disabled by default. This is due to current requirements.
+								If we want to manage one-off course providers, then the only change need to be done is to
+								enable to select one-off provider account type and call the command class CmdAddFeaturedProvider.java -->
+
+									<!-- back end code is already completed to handle one-off course providers as well -->
+
 									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
+
 										<input type="radio" name="courseProvider" id="courseProvider"
-											value="${accountTypes.typeValue}" /> ${accountTypes}
-									 </c:forEach>
+											value="${accountTypes.typeValue}"
+											onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+	
+									</c:forEach>
 								</div>
 							</li>
 							<!-- end -->
@@ -461,7 +471,7 @@
 									<h1 class="pro-name">Name:</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="providerName"
+									<input class="input" type="text" name="providerPrivateName"
 										id="providerName" size="50px;" />
 								</div>
 							</li>
@@ -535,6 +545,19 @@
 							</li>
 							<!-- end -->
 
+						</ul>
+					</div>
+					<!-- End filter result table -->
+
+				</div>
+				<!-- End left panel -->
+
+				<!-- course filter panel : left side -->
+				<div class="course-filter-panel">
+					<!-- Filter result table -->
+					<div class="filter-result-table">
+						<ul class="result-row">
+
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
 									<input type="submit" id="viewNext" value="Next"
@@ -544,10 +567,7 @@
 							<!-- end -->
 						</ul>
 					</div>
-					<!-- End filter result table -->
-
-				</div>
-				<!-- End left panel -->
+					<!-- End left panel -->
 		</form>
 
 		<form action="/AdminController" method="POST">
