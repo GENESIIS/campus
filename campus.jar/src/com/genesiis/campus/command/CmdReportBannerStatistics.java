@@ -82,9 +82,11 @@ public class CmdReportBannerStatistics implements ICommand {
 	 * @throws Exception
 	 */
 	private void generateReportResults(IDataHelper helper) throws Exception {
+		String pageCodeString = helper.getParameter("pageCode");
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
-		String fromDateString = helper.getParameter("fromDate");
-		String toDateString = helper.getParameter("toDate");
+		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
+		String fromDateString = helper.getParameter("startDate");
+		String toDateString = helper.getParameter("endDate");
 		int pageSlot = 0;
 		try {
 			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
@@ -104,7 +106,7 @@ public class CmdReportBannerStatistics implements ICommand {
 				}
 
 			} catch (ParseException parseException) {
-				log.error("execute() : ParseException "
+				log.error("generateReportResults() : ParseException "
 						+ parseException.toString());
 				throw parseException;
 			}
@@ -113,7 +115,7 @@ public class CmdReportBannerStatistics implements ICommand {
 					.findById(searchDTO);
 			helper.setAttribute("bannerStatDetails", bannerStatDetails);
 		} catch (Exception exception) {
-			log.error("execute() : Exception " + exception.toString());
+			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
 	}
