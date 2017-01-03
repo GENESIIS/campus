@@ -16,8 +16,6 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SearchedProgrammeDAO;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.LuceneDemo;
-import com.genesiis.campus.util.LuceneTest;
 import com.genesiis.campus.util.QueryBuildingHelper;
 
 import org.apache.log4j.Logger;
