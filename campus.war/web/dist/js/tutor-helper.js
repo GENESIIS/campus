@@ -68,6 +68,8 @@ function getTownData(response, selected) {
 function getCountryData(response) {
 	var categories = $("#countryDetails");
 	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select to Change Country ---").appendTo(categories);
+	
 	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");

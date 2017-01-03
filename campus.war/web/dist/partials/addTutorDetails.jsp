@@ -22,157 +22,158 @@
 				</td>
 			</tr>
 			<tr>
-				<td>First Name <span id="firstNameError"></span></td>
+				<td>First Name * </td>
 				<td><input type="text" name="firstname" id="firstName"
-					maxlength="20" onclick="clearField('firstNameError')" /></td>
+					maxlength="20" onchange="clearField('firstNameError')" /><span id="firstNameError" style="color: red" > </span></td>
 			</tr>
 			<tr>
-				<td>Middle Name <span id="middleNameError"></span></td>
+				<td>Middle Name </td>
 				<td><input type="text" name="middlename" id="middleName"
-					maxlength="20" onclick="clearField('middleNameError')" /></td>
+					maxlength="20" onchange="clearField('middleNameError')" /><span id="middleNameError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Last Name <span id="lastNameError"></span></td>
+				<td>Last Name * </td>
 				<td><input type="text" name="lastname" id="lastName"
-					maxlength="20" onclick="clearField('lastNameError')" /></td>
+					maxlength="20" onchange="clearField('lastNameError')" /><span id="lastNameError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Gender</td>
+				<td>Gender * </td>
 				<td><input type="radio" name="gender" value="1" id="radioMale"
 					checked> Male<br> <input type="radio" name="gender"
 					value="2" id="radioFemale"> Female<br></td>
 			</tr>
 			<tr>
-				<td>Experience <span id="experienceError"></span></td>
+				<td>Experience </td>
 				<td><textarea rows="10" cols="26" name="experience"
-						id="experience" onclick="clearField('experienceError')"></textarea></td>
+						id="experience" onchange="clearField('experienceError')"></textarea><span id="experienceError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>About Me <span id="aboutMeError"></span></td>
+				<td>About Me </span></td>
 				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
-						onclick="clearField('aboutMeError')"></textarea></td>
+						onchange="clearField('aboutMeError')"></textarea><span id="aboutMeError" style="color: red" ></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>
 			</tr>
 			<tr>
-				<td>Country</td>
-				<td><span id="countryError"></span> <select
-					name="countryDetails" id="countryDetails">
+				<td>Country * </td>
+				<td> <select
+					name="countryDetails" id="countryDetails" onchange="clearField('countryError')">
 						<option></option>
-				</select></td>
+				</select><span id="countryError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Town</td>
-				<td><span id="townError"></span> <select name="townDetails"
-					id="townDetails">
+				<td>Town* </td>
+				<td> <select name="townDetails"
+					id="townDetails" onchange="clearField('townError')">
 						<option></option>
-				</select></td>
+				</select><span id="townError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Mobile</td>
-				<td><span id="mobileError"></span>
+				<td>Mobile * </td>
+				<td>
 				<input type="text"
 					name="mobileCountryCode" id="mobileCountryCode" maxlength="4"
-					onclick="clearField('mobileError')" readonly/></td>
+					onchange="clearField('mobileError')" readonly/><span id="mobileError" style="color: red" ></span></td>
 			
-				<td><span id="mobileError"></span>
+				<td>
 				<input type="text"
 					name="mobileNetworkCode" id="mobileNetworkCode" maxlength="11"
-					onclick="clearField('mobileError')"/></td>
+					onchange="clearField('mobileNetworkError')"/><span id="mobileNetworkError" style="color: red" ></span></td>
 	
-				<td><span id="mobileError"></span>
+				<td></span>
 				<input type="text"
 					name="mobileNumber" id="mobileNumber" maxlength="11"
-					onclick="clearField('mobileError')" /></td>
+					onchange="clearField('mobileNumberError')" /><span id="mobileNumberError" style="color: red" ></td>
 			</tr>
 			<tr>
-				<td>Land</td>
-				<td><span id="landError"></span>
+				<td>Land * </td>
+				<td>
 				<input type="text"
 					name="landCountryCode" id="landCountryCode" maxlength="4"
-					onclick="clearField('mobileError')" readonly/></td>
+					onchange="clearField('landError')" readonly/><span id="landError" style="color: red" ></span></td>
 			
-				<td><span id="landError"></span>
+				<td>
 				<input type="text"
 					name="landAreaCode" id="landAreaCode" maxlength="11"
-					onclick="clearField('mobileError')" /></td>
+					onchange="clearField('landAreaCodeError')" /><span id="landAreaCodeError" style="color: red" ></span></td>
 		
-				<td><input type="text" name="landNumber" id="landNumber"
-					maxlength="11" onclick="clearField('landError')" /></td>
+				<td>
+				<input type="text" name="landNumber" id="landNumber"
+					maxlength="11" onchange="clearField('landNumberError')" /><span id="landNumberError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Address Line 1 <span id="address1Error"></span></td>
+				<td>Address Line 1 * </td>
 				<td><input type="text" name="address1" id="address1"
-					maxlength="30" onclick="clearField('address1Error')" /></td>
+					maxlength="30" onchange="clearField('address1Error')" /><span id="address1Error" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Address line 2 <span id="address2Error"></span></td>
+				<td>Address line 2 </span></td>
 				<td><input type="text" name="address2" id="address2"
 					maxlength="30" /></td>
 			</tr>
 			<tr>
-				<td>Address line 3 <span id="address3Error"></span></td>
+				<td>Address line 3 </span></td>
 				<td><input type="text" name="address3" id="address3"
 					maxlength="30" /></td>
 			</tr>
 
 			<tr>
-				<td>Web link <span id="weblinkError"></span></td>
-				<td><input type="text" name="weblink" id="weblink" /></td>
+				<td>Web link </td>
+				<td><input type="text" name="weblink" id="weblink" onchange="clearField('weblinkError')" /><span id="weblinkError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Facebook <span id="facebookError"></span></td>
-				<td><input type="text" name="facebook" id="facebook" /></td>
+				<td>Facebook </span></td>
+				<td><input type="text" name="facebook" id="facebook" onchange="clearField('facebookError')" /><span id="facebookError" style="color: red" ></td>
 			</tr>
 			<tr>
-				<td>LinkedIn <span id="linkedInError"></span></td>
-				<td><input type="text" name="linkedin" id="linkedin" /></td>
+				<td>LinkedIn </td>
+				<td><input type="text" name="linkedin" id="linkedin" onchange="clearField('linkedInError')" /><span id="linkedInError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Twitter <span id="twitterError"></span></td>
-				<td><input type="text" name="twitter" id="twitter" /></td>
+				<td>Twitter </td>
+				<td><input type="text" name="twitter" id="twitter" onchange="clearField('twitterError')" /><span id="twitterError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Instagram <span id="instagramError"></span></td>
-				<td><input type="text" name="instagram" id="instagram" /></td>
+				<td>Instagram </td>
+				<td><input type="text" name="instagram" id="instagram" onchange="clearField('instagramError')" /><span id="instagramError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Myspace <span id="mySpaceError"></span></td>
-				<td><input type="text" name="myspace" id="myspace" /></td>
+				<td>Myspace </td>
+				<td><input type="text" name="myspace" id="myspace" onchange="clearField('mySpaceError')" /><span id="mySpaceError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>WhatsApp <span id="whatsappError"></span></td>
+				<td>WhatsApp </td>
 				<td><input type="text" name="whatsapp" id="whatsapp"
-					maxlength="10" /></td>
+					maxlength="10" onchange="clearField('whatsappError')" /><span id="whatsappError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Viber <span id="viberError"></span></td>
-				<td><input type="text" name="viber" id="viber" maxlength="10" /></td>
+				<td>Viber </td>
+				<td><input type="text" name="viber" id="viber" maxlength="10" onchange="clearField('viberError')" /><span id="viberError" style="color: red" ></span></td>
 			</tr>
 			<tr>
 				<td><h2>Account Info</h2></td>
 			</tr>
 			<tr>
-				<td>Email <span id="emailError"></span></td>
+				<td>Email * </td>
 				<td><input type="text" name="email" id="email"
-					onclick="clearField('emailError')" /></td>
+					onchange="clearField('emailError')" /><span id="emailError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Username <span id="usernameError"></span></td>
+				<td>Username * </td>
 				<td><input type="text" name="username" id="username"
-					maxlength="50" onclick="clearField('usernameError')" /></td>
+					maxlength="50" onchange="clearField('usernameError')" /><span id="usernameError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Password <span id="passwordError"></span></td>
+				<td>Password * </td>
 				<td><input type="password" name="password" id="password"
-					maxlength="20" onclick="clearField('passwordError')" /></td>
+					maxlength="20" onchange="clearField('passwordError')" /><span id="passwordError" style="color: red" ></span></td>
 			</tr>
 			<tr>
-				<td>Confirm Password <span id="confirmPasswordError"></span></td>
+				<td>Confirm Password * </td>
 				<td><input type="password" name="confirmPassword"
 					id="confirmPassword" maxlength="20"
-					onclick="clearField('confirmPasswordError')" /></td>
+					onchange="clearField('confirmPasswordError')" /><span id="confirmPasswordError" style="color: red" ></span></td>
 			</tr>
 
 			<tr>
