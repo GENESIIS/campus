@@ -8,6 +8,7 @@
 				is replaced with dynamically produced institute list --%>
 <%-- 20161229 MM c25-student-create-dashboard-MP Made minor modification to make it possible to get details from the session  --%>
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for activity list --%>
+<%-- 20170104 MM c25-student-dashboard-MP Assigned dynamic content to items that display student biographical info --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -128,14 +129,14 @@
                     <!-- End profile image -->
 
                     <div class="prf-name">
-                    	<h2>Kalana Perera <%-- {sessionScope.userFirstName} {sessionScope.userLastName} --%></h2>
-                        <h3>University of Colombo</h3>
-                        <h4>Kandy</h4>
+                    	<h2>{result.collection[0]} {result.collection[1]} <%-- {sessionScope.userFirstName} {sessionScope.userLastName} --%></h2>
+                        <h3>{result.collection[4]} via {result.collection[5]}</h3>
+                        <h4>{result.collection[3]}</h4>
                     </div>
                     <!-- End profile name -->
-                    <!--<div class="follow-me">-->
-                        <!--<button class="btn-follow">Follow</button>-->
-                    <!--</div>-->
+                    <div class="follow-me">
+                        <button class="btn-follow">View Profile</button>
+                    </div>
                     <!-- End follow-me button -->
                 </div>
                 <!-- end profile picture box -->
@@ -144,19 +145,19 @@
                     <table class="tbl-left-info">
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Senior Software Engineer at <span>Genesiis Software pvt Ltd.</span></p></td>
+                            <td class="field-name"><p>{result.collection[9]} at <span>{result.collection[8]}</span></p></td>
                         </tr>
                         <!-- End works at -->
 
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Studied at <span>ICBT Colombo Campus</span></p></td>
+                            <td class="field-name"><p>Studied at <span>{result.collection[6]}</span></p></td>
                         </tr>
                         <!-- End studied at -->
 
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Lives in <span>Colombo</span></p></td>
+                            <td class="field-name"><p>Lives in <span>{result.collection[3]}</span></p></td>
                         </tr>
                         <!-- End lives in -->
                         <tr>
@@ -166,7 +167,7 @@
                         <!-- End from -->
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Notes <br> <span class="sp-note">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></p></td>
+                            <td class="field-name"><p>Notes <br> <span class="sp-note">{result.collection[2]}</span></p></td>
                         </tr>
                         <!-- End Notes -->
                     </table>
