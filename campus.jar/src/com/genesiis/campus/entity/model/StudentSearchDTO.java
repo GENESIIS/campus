@@ -4,10 +4,12 @@ import java.util.Date;
 
 //DJ 20161228 c53-report-registered-students-MP-dj created Student.java
 //DJ 20170102 c53-report-registered-students-MP-dj Renamed as StudentSearchDTO.java
+//DJ 20170104 c53-report-registered-students-MP-dj Add  districtCode entity
 
 public class StudentSearchDTO {
 	
 	private int code;
+	private int districtCode;
 	private String firstName;
 	private String LastName;	
 	private int status;
@@ -20,6 +22,12 @@ public class StudentSearchDTO {
 	}
 	public void setCode(int code) {
 		this.code = code;
+	}	
+	public int getDistrictCode() {
+		return districtCode;
+	}
+	public void setDistrictCode(int districtCode) {
+		this.districtCode = districtCode;
 	}
 	public String getFirstName() {
 		return firstName;
