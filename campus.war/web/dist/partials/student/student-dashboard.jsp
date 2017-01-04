@@ -9,8 +9,11 @@
 <%-- 20161229 MM c25-student-create-dashboard-MP Made minor modification to make it possible to get details from the session  --%>
 <%-- 20161228 MM c25-student-create-dashboard-MP Removed static template code for activity list --%>
 <%-- 20170104 MM c25-student-dashboard-MP Assigned dynamic content to items that display student biographical info --%>
+<%-- 20170104 MM c25-student-dashboard-MP Fixed bugs in JSTL code that accesses the data payload sent from the command class; removed header/footer code from 
+				this page and included header and footer files instead --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,84 +36,7 @@
 <body>
 
 <!-- Header-->
-<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-    <div class="top">
-        <div class="logo-brand">
-            <h1 class="logo-txt">Campus.lk</h1>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="menu-bar">
-            <div class="home pull-left">
-                <a href="index.html" class="btn-home center-block"></a>
-            </div>
-            <!-- End home button -->
-            <div class="menu-tabs clearfix">
-
-                <!-- Main menu tabs -->
-                <div class="top-menus">
-                    <ul class="list-inline">
-                        <li><a href="">All Courses</a></li>
-                        <li><a href="">About Us</a></li>
-                        <li><a href="">Contact Us</a></li>
-                        <li><a href="dist/partials/student/student-dashboard.html">News</a></li>
-                        <li><a href="">F & Q</a></li>
-                        <li><a href="">Rss</a></li>
-                    </ul>
-                </div>
-                <!-- End Main menu tabs -->
-
-                <!-- Course Category tabs -->
-                <div class="bottom-menus" id="category-list">
-                    <ul class="list-inline">
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" class="" value="LIST_CATEGORY_LANDING_PAGE">Pre School</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">School Education</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" class="" value="LIST_CATEGORY_LANDING_PAGE">Higher Education</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Corporate Training</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Vocational Training</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="">
-                                <button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Talent & Skill</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End Course Category tabs -->
-            </div>
-            <div class="keyword-search pull-right">
-                <div class="search-bar">
-                    <input type="text" placeholder="Keyword Search">
-                    <a href="javascript:" class="colr-white"></a>
-                </div>
-                <!-- End Keyword Search -->
-                <div class="login-link">
-                    <a href="javascript:">Login</a>
-                </div>
-            </div>
-            <!-- End keyword search -->
-        </div>
-    </div>
-</header>
+<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 <!--< End header -->
 
 <div class="dashboard">
@@ -129,9 +55,9 @@
                     <!-- End profile image -->
 
                     <div class="prf-name">
-                    	<h2>{result.collection[0]} {result.collection[1]} <%-- {sessionScope.userFirstName} {sessionScope.userLastName} --%></h2>
-                        <h3>{result.collection[4]} via {result.collection[5]}</h3>
-                        <h4>{result.collection[3]}</h4>
+                    	<h2>${result.collection[0][0]} ${result.collection[0][1]} <%-- ${sessionScope.userFirstName} ${sessionScope.userLastName} --%></h2>
+                        <h3>${result.collection[0][5]} (via ${result.collection[0][4]})</h3>
+                        <h4>${result.collection[0][3]}</h4>
                     </div>
                     <!-- End profile name -->
                     <div class="follow-me">
@@ -145,29 +71,24 @@
                     <table class="tbl-left-info">
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>{result.collection[9]} at <span>{result.collection[8]}</span></p></td>
+                            <td class="field-name"><p>${result.collection[0][9]} at <span>${result.collection[0][8]}</span></p></td>
                         </tr>
                         <!-- End works at -->
 
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Studied at <span>{result.collection[6]}</span></p></td>
+                            <td class="field-name"><p>Studied at <span>${result.collection[0][6]}</span></p></td>
                         </tr>
                         <!-- End studied at -->
 
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Lives in <span>{result.collection[3]}</span></p></td>
+                            <td class="field-name"><p>Lives in <span>${result.collection[0][3]}</span></p></td>
                         </tr>
                         <!-- End lives in -->
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>From <span>Katugasthota, Kandy</span></p></td>
-                        </tr>
-                        <!-- End from -->
-                        <tr>
-                            <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Notes <br> <span class="sp-note">{result.collection[2]}</span></p></td>
+                            <td class="field-name"><p>About Me:<br> <span class="sp-note">${result.collection[0][2]}</span></p></td>
                         </tr>
                         <!-- End Notes -->
                     </table>
@@ -267,14 +188,7 @@
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.html"></footer>-->
-<footer>
-    <div class="ft-top">
-
-    </div>
-    <div class="ft-bottom text-center">
-        <label >Copyright © Campus.lk</label>
-    </div>
-</footer>
+<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 
 </body>
 </html>
