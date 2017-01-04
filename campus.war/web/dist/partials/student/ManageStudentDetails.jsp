@@ -63,7 +63,7 @@
 </style>
 </head>
 <body>
-
+<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
 <!-- Button trigger School Education modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal">
   Personal Details

@@ -34,31 +34,7 @@
 <body>
 	<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
 
-	<%-- 	<c:if test="${sessionScope.currentSessionUser == null}"> --%>
-	<!-- 	not valid user!! -->
-	<%--  <c:redirect url="/dist/partials/login.jsp" /> --%>
 
-	<%-- 	</c:if> --%>
-
-	<%
-		//allow access only if session exists
-		// 		String currentSessionUser = null;
-		// 		if (session.getAttribute("user") == null) {
-		// 			response.sendRedirect("login.jsp");
-		// 		} else
-		// 			currentSessionUser = (String) session.getAttribute("user");
-		// 		String userName = null;
-		// 		String sessionID = null;
-		// 		Cookie[] cookies = request.getCookies();
-		// 		if (cookies != null) {
-		// 			for (Cookie cookie : cookies) {
-		// 				if (cookie.getName().equals("user"))
-		// 					userName = cookie.getValue();
-		// 				if (cookie.getName().equals("JSESSIONID"))
-		// 					sessionID = cookie.getValue();
-		// 			}
-		// 		}
-	%>
 	<!-- Header-->
 	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 		<div class="top">
@@ -219,6 +195,44 @@
 											simply dummy text of the printing and typesetting industry.</span>
 									</p></td>
 							</tr>
+							<tr>
+								<td><div class="widget-header">
+										<c:if test="${buttionAction == 'stu_dashbord_add'}">
+											<button id="stu_dashbord_add">Add</button>
+										</c:if>
+										<c:if test="${buttionAction != 'stu_dashbord_add'}">
+											<button id="stu_dashbord_add" disabled="disabled">Add disabled</button>
+										</c:if>
+									</div></td>
+								<td><div class="widget-header">
+										<c:if test="${buttionAction == 'stu_dashbord_update'}">
+											<button id="stu_dashbord_add">Update</button>
+										</c:if>
+										<c:if test="${buttionAction != 'stu_dashbord_update'}">
+											<button id="stu_dashbord_add" disabled="disabled">Update disabled</button>
+										</c:if>
+									</div></td>
+								<td><div class="widget-header">
+										<c:if test="${buttionAction == 'stu_dashbord_delete'}">
+											<button id="stu_dashbord_add">Delete</button>
+										</c:if>
+										<c:if test="${buttionAction != 'stu_dashbord_delete'}">
+											<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button>
+										</c:if>
+									</div></td>
+<%-- 									<td><div class="widget-header"> ${buttionAction} --%>
+<%-- 										<% if(request.getAttribute("buttionAction").equals("stu_dashbord_delete") ){ %> --%>
+<!-- 											<button id="stu_dashbord_add">delete scriptlet</button> -->
+<%-- 										<% 	 --%>
+<%--  										}else{ %>  --%>
+<!-- 												<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button> -->
+<%-- 									<%	} --%>
+<%--  										%>  --%>
+											
+										
+										
+<!-- 									</div></td> -->
+							</tr>
 							<!-- End Notes -->
 						</table>
 					</div>
@@ -238,11 +252,11 @@
 								<table class="tbl-wgt-about">
 									<tr>
 										<td class="td-name">First Name :</td>
-										<td class="td-value">Kalana</td>
+										<td class="td-value">${col_stuFirstName}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Last Name :</td>
-										<td class="td-value">Perera</td>
+										<td class="td-value">${col_stuLastName}</td>
 									</tr>
 									<tr>
 										<td class="td-name">City :</td>
@@ -250,11 +264,11 @@
 									</tr>
 									<tr>
 										<td class="td-name">Birthday :</td>
-										<td class="td-value">Nov 24,1999</td>
+										<td class="td-value">${col_stuDOB}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Website :</td>
-										<td class="td-value">www.blabla.com</td>
+										<td class="td-value">${col_stuInstagramUrl}</td>
 									</tr>
 								</table>
 							</div>
@@ -264,11 +278,11 @@
 								<table class="tbl-wgt-about">
 									<tr>
 										<td class="td-name">User Name :</td>
-										<td class="td-value">Kala</td>
+										<td class="td-value">${col_stuUsername}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Email :</td>
-										<td class="td-value">jamesbond@gmail.com</td>
+										<td class="td-value">${col_stuEmail}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Country :</td>
@@ -280,7 +294,7 @@
 									</tr>
 									<tr>
 										<td class="td-name">Phone :</td>
-										<td class="td-value">077 555 6666</td>
+										<td class="td-value">${col_stuMobilePhoneCountryCode+col_stuMobilePhoneNetworkCode+col_stuMobilePhoneNo}</td>
 									</tr>
 								</table>
 							</div>

@@ -12,9 +12,9 @@
 	<c:if test="${sessionScope.currentSessionUser == null}">
 	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:if>
-<%-- 		<c:if test="${sessionScope.currentUserData != null}"> --%>
-	<c:choose>
-    <c:when test="${sessionScope.currentUserData != null && sessionScope.currentSessionUser != null}">
+		<c:if test="${sessionScope.currentUserData != null}">
+<%-- 	<c:choose> --%>
+<%--     <c:when test="${sessionScope.currentUserData != null && sessionScope.currentSessionUser != null}"> --%>
     	<c:set var="col_stuCode" value="${sessionScope.currentUserData[0][0]}" scope="session" />
     	<c:set var="col_stuUsername" value="${sessionScope.currentUserData[0][1]}" scope="session" />
     	<c:set var="col_stuIndexNo" value="${sessionScope.currentUserData[0][2]}" scope="session" />
@@ -54,24 +54,32 @@
     	<c:set var="col_stulastLoggedOutTime" value="${sessionScope.currentUserData[0][36]}" scope="session" />
     	<c:set var="col_stulastLoginAuthenticatedBy" value="${sessionScope.currentUserData[0][37]}" scope="session" />
     	
-<%--    </c:if> --%>
-    </c:when><c:otherwise>
-	<% response.sendRedirect("/dist/partials/login.jsp"); %>
-	</c:otherwise>
-</c:choose>
+   </c:if>
 
-<%-- <c:choose> --%>
-<%-- <c:when test="${sessionScope.currentUserData[1] != null }"> --%>
-<%--   <c:forEach var="userDataCollection" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="5" step="8"> --%>
-<%-- 		<c:set var="url" value="${userDataCollection}" scope="session" />  --%>
+ <c:set var="currentUrl" value="${pageContext.request.requestURI}" ></c:set>
 
-<%-- 		${url}<br> --%>
-<%-- 		</c:forEach> --%>
-<%-- </c:when> --%>
-<%-- <c:otherwise> --%>
-<%-- 	<% response.sendRedirect("http://www.campus.dev:8080/index.jsp"); %> --%>
-<%-- </c:otherwise> --%>
-<%-- </c:choose> --%>
+<c:if test="${sessionScope.currentUserData[1] != null }">
+<c:set var="conVal" value="0" /> 
+  <c:forEach var="userDataCollection" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="5" step="8">
+		<c:set var="url" value="${userDataCollection}" /> 	
+
+			<c:if test="${currentUrl == url}">
+			<c:set var="conVal" value="1" /> 
+			</c:if>
+			
+		</c:forEach>
+		<c:if test="${conVal == 0}">
+ 			<% response.sendRedirect("/index.jsp"); %>
+			</c:if>
+<%-- 			<c:set var="buttionAction" value="disabled" />  --%>
+			<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
+				<c:set var="buttionAction" value="${userDataCollection2}" scope="request"/>	
+				
+			</c:forEach>
+<%-- 			<c:set var="realbuttionActionArray" value="${fn:split(buttionAction, ',')}" /> --%>
+			${buttionAction}<br>
+		</c:if>
+
 	
 	
 	
