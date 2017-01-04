@@ -99,6 +99,8 @@ label{
 						</fieldset>					
 				</div>
 			</div>
+			<div id ="displayErrorMessage">
+			</div>
 			</br></br>
 			</br></br>			 
 			<div id="resultPanel">

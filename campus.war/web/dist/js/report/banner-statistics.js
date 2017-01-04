@@ -143,7 +143,7 @@ function loadResultSet(event){
 	}
 	//Validate Page list
 	if(!pageCode>0){
-		$('#errorPageList').text("Please enter page list");
+		$('#errorPageList').text("Please select a page");
 		document.getElementById('errorPageList').style.color = "red";
 		return false;
 	}
@@ -191,6 +191,13 @@ function loadResultSet(event){
     }else{
     	$('#errorToDate').text("");
     }
+    
+    var difference = (toDate - fromDate) / (86400000 * 7);
+	if (difference < 0) {		
+		$('#errorToDate').text("The commenced date must come before the completed date.");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+	}
 	
 	$.ajax({
 		url : '../../ReportController',
@@ -213,6 +220,15 @@ function loadResultSet(event){
 }
 
 function populateResultTable(response) {
+	var errorMessageList = $("#displayErrorMessage");
+	$.each(response.message, function(index, value) {
+		if (value != null && value.length > 0) {
+			//var msg = value[0].toString();
+			//errorMessageList.append("<li>Appended item</li>");
+		}
+		
+	});
+	
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
 	var programmeListTable = $("#tBody");
