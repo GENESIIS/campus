@@ -20,12 +20,16 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class CmdReportBannerStatistics implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdReportBannerStatistics.class
 			.getName());
+	
+	SystemMessage systemMessage = SystemMessage.UNKNOWN;
 
 	/**
 	 * @author DJ
@@ -38,7 +42,8 @@ public class CmdReportBannerStatistics implements ICommand {
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
 
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;
+			
+		
 		try {
 			String commandString = helper.getParameter("CCO");
 			
@@ -82,14 +87,17 @@ public class CmdReportBannerStatistics implements ICommand {
 	 * @throws Exception
 	 */
 	private void generateReportResults(IDataHelper helper) throws Exception {
+		List<String> msgList = new ArrayList<String>();
 		String pageCodeString = helper.getParameter("pageCode");
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
 		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
-		String fromDateString = helper.getParameter("fromDate");
-		String toDateString = helper.getParameter("toDate");
+		
 		
 		try {
 			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();
+			
+			reportBannerStatValidator(searchDTO,helper,msgList );
+			
 			if (UtilityHelper.isNotEmpty(pageCodeString)) {
 				searchDTO.setPageCode(Integer.valueOf(pageCodeString));
 			}
@@ -99,21 +107,7 @@ public class CmdReportBannerStatistics implements ICommand {
 			if (UtilityHelper.isNotEmpty(bannerProviderCodeString)) {
 				searchDTO.setBannerProviderCode(Integer.valueOf(bannerProviderCodeString));
 			}
-			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
 			
-			try {
-				if (UtilityHelper.isNotEmpty(fromDateString)) {
-					searchDTO.setFromDate(df.parse((fromDateString)));
-				}
-				if (UtilityHelper.isNotEmpty(toDateString)) {
-					searchDTO.setToDate(df.parse((toDateString)));
-				}
-
-			} catch (ParseException parseException) {
-				log.error("generateReportResults() : ParseException "
-						+ parseException.toString());
-				throw parseException;
-			}
 			
 			final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO().findById(searchDTO);
 			helper.setAttribute("bannerStatDetails", bannerStatDetails);
@@ -121,6 +115,34 @@ public class CmdReportBannerStatistics implements ICommand {
 			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
+	}
+
+	private void reportBannerStatValidator (BannerStatSearchDTO searchDTO,
+			IDataHelper helper, List<String> msgList) throws Exception{
+		String fromDateString = helper.getParameter("fromDate");
+		String toDateString = helper.getParameter("toDate");
+		
+		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
+		
+		try {
+			if (UtilityHelper.isNotEmpty(fromDateString)) {
+				searchDTO.setFromDate(df.parse((fromDateString)));
+			}else{
+				msgList.add(SystemMessage.INVALIDENDDATE.message());
+			}
+			if (UtilityHelper.isNotEmpty(toDateString)) {
+				searchDTO.setToDate(df.parse((toDateString)));
+			}else{
+				msgList.add(SystemMessage.INVALIDENDDATE.message());
+			}
+
+		} catch (ParseException parseException) {
+			log.error("generateReportResults() : ParseException "
+					+ parseException.toString());
+			throw parseException;
+		}
+		
+		
 	}
 
 }
