@@ -29,8 +29,6 @@ public class CmdReportBannerStatistics implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdReportBannerStatistics.class
 			.getName());
-	
-	SystemMessage systemMessage = SystemMessage.UNKNOWN;
 
 	/**
 	 * @author DJ
@@ -41,9 +39,7 @@ public class CmdReportBannerStatistics implements ICommand {
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
-			Exception {
-
-			
+			Exception {	
 		
 		try {
 			String commandString = helper.getParameter("CCO");
@@ -75,8 +71,7 @@ public class CmdReportBannerStatistics implements ICommand {
 			}
 
 		}  catch (Exception exception) {
-			log.error("execute() : Exception " + exception);
-			systemMessage = SystemMessage.ERROR;
+			log.error("execute() : Exception " + exception);			
 			throw exception;
 		}
 		return iView;
@@ -91,12 +86,10 @@ public class CmdReportBannerStatistics implements ICommand {
 		List<String> msgList = new ArrayList<String>();
 		
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
-		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
-		
+		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");		
 		
 		try {
-			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();
-			
+			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();			
 			
 			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
 				searchDTO.setPageSlotCode(Integer.valueOf(pageSlotCodeString));
@@ -117,27 +110,33 @@ public class CmdReportBannerStatistics implements ICommand {
 			throw exception;
 		}
 	}
-
+	
+	/**
+	 * Validate mandatory input search parameters.
+	 * 
+	 * @author DJ
+	 * @param helper
+	 * @throws Exception
+	 */
 	private boolean isReportBannerStatValidate(BannerStatSearchDTO searchDTO,
-			IDataHelper helper, List<String> msgList)throws Exception{
+			IDataHelper helper, List<String> msgList) throws Exception {
 		String pageCodeString = helper.getParameter("pageCode");
 		String fromDateString = helper.getParameter("fromDate");
 		String toDateString = helper.getParameter("toDate");
-		
+
 		if (UtilityHelper.isNotEmpty(pageCodeString)) {
 			searchDTO.setPageCode(Integer.valueOf(pageCodeString));
-		}else{
+		} else {
 			msgList.add(SystemMessage.INVALIDPAGESELECTION.message());
 			return false;
 		}
-		
+
 		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		
-		
+
 		try {
 			if (UtilityHelper.isNotEmpty(fromDateString)) {
 				searchDTO.setFromDate(df.parse((fromDateString)));
-			} else  {
+			} else {
 				msgList.add(SystemMessage.INVALIDENDDATE.message());
 				return false;
 			}
@@ -146,15 +145,13 @@ public class CmdReportBannerStatistics implements ICommand {
 			} else {
 				msgList.add(SystemMessage.INVALIDENDDATE.message());
 				return false;
-			}			
+			}
 
 		} catch (ParseException parseException) {
-			log.error("generateReportResults() : ParseException "
+			log.error("isReportBannerStatValidate() : ParseException "
 					+ parseException.toString());
 			throw parseException;
 		}
-		
 		return true;
 	}	
-
 }

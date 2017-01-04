@@ -3,19 +3,19 @@ package com.genesiis.campus.entity;
 //DJ 20161210 c52-report-banner-statistics-MP-dj  Implement  PageSlotDAO.java
 //DJ 20161210 c52-report-banner-statistics-MP-dj  Implement  findById() method
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class PageSlotDAO implements ICrud {

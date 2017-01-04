@@ -4,19 +4,19 @@ package com.genesiis.campus.entity;
 //DJ 20161206 c52-report-banner-statistics-MP-dj Initiate getAll() method
 //DJ 20161211 c52-report-banner-statistics-MP-dj Implement findById() method
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.UtilityHelper;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
-import com.genesiis.campus.validation.UtilityHelper;
 
 public class BannerDAO  implements ICrud{
 	
@@ -38,46 +38,7 @@ public class BannerDAO  implements ICrud{
 	public int delete(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet resultSet =null;
-		Collection<Collection<String>> allBannerList = new ArrayList<Collection<String>>();
-
-		/*try {
-			
-			
-			conn=ConnectionManager.getConnection();			
-			//final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= 1 AND BANNER.ISACTIVE=1");
-			
-			///stmt=conn.prepareStatement(sb.toString());
-			stmt.setInt(1, 1);
-			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
-			resultSet= stmt.executeQuery();	
-			while (resultSet.next()) {
-				final ArrayList<String> bannerList = new ArrayList<String>();
-				bannerList.add(resultSet.getString("BANNERCODE"));								
-				allBannerList.add(bannerList);
-			}			
-				
-			
-			
-		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
-			throw e;
-		} finally {
-			DaoHelper.cleanup(conn, stmt, resultSet);
-		}*/
-		return allBannerList;
-	}
+	}	
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException,
@@ -120,7 +81,6 @@ public class BannerDAO  implements ICrud{
 		}
 		try {
 			conn = ConnectionManager.getConnection();
-            //final StringBuilder sb = new StringBuilder("SELECT BANNER.CODE AS BANNERCODE , BANNER.IMAGE AS IMAGENAME  FROM [CAMPUS].[BANNER] BANNER WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
             final StringBuilder sb = new StringBuilder("SELECT DISTINCT ADVERTISER.CODE ADVERTISERCODE, ADVERTISER.NAME ADVERTISERNAME ");
             sb.append("FROM [CAMPUS].[BANNER] BANNER INNER JOIN CAMPUS.ADVERTISER ADVERTISER ON BANNER.ADVERTISER=ADVERTISER.CODE WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
 			
@@ -150,6 +110,13 @@ public class BannerDAO  implements ICrud{
 	@Override
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getAll() throws SQLException,
+			Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

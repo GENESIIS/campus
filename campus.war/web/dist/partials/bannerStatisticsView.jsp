@@ -30,7 +30,14 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
-label{
+ul
+{
+    list-style-type: square;
+}
+
+ul > li
+{
+    color: red;
 }
 </style>
 
@@ -59,48 +66,56 @@ label{
 		<!-- END inner-image-header -->
 		<div>
 			<div>
-				<div class="container">					
-						<fieldset>
-							<legend align="left">Search criteria </legend>
-							<div>
-								Page :<font color="red">*</font><input type="text" name="pagelist"
-									id="pagelist" list="pageName"
-									placeholder="-- Select Page --" />
-								<datalist id="pageName">
-								</datalist><label id="errorPageList"  for=""></label>
-							</div>
-							<div>
-								Page Slot :<input type="text" name="pageSlotlist"
-									id="pageSlotlist" list="pageSlotName"
-									placeholder="-- Select Page Slot --" />
-								<datalist id="pageSlotName">
-								</datalist>
-							</div>							
-							<div>
-								Banner Provider :<input type="text" name="bannerProviderList"
-									id="bannerProviderList" list="bannerProviderName"
-									placeholder="-- Select Banner Provider --" />
-								<datalist id="bannerProviderName">
-								</datalist>
-							</div>
-							<div>
-								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="fromDate" required>
-								<label id="errorFromDate"  for=""></label>
-							</div>
-							<div>
-								To Date :<font color="red">*</font> <input type="date" id="toDate" name="toDate" required>
-								<label id="errorToDate"  for=""></label>
-							</div>
-							<div>
-								<button type="submit" id="clearParam">Clear</button>
-								<button type="submit" id="searchList" >Search
-									List</button>
-							</div>
-						</fieldset>					
+				<div class="container">
+					<fieldset>
+						<legend align="left">Search criteria </legend>
+						<div>
+							Page :<font color="red">*</font><input type="text"
+								name="pagelist" id="pagelist" list="pageName"
+								placeholder="-- Select Page --" />
+							<datalist id="pageName">
+							</datalist>
+							<label id="errorPageList" for=""></label>
+						</div>
+						<div>
+							Page Slot :<input type="text" name="pageSlotlist"
+								id="pageSlotlist" list="pageSlotName"
+								placeholder="-- Select Page Slot --" />
+							<datalist id="pageSlotName">
+							</datalist>
+						</div>
+						<div>
+							Banner Provider :<input type="text" name="bannerProviderList"
+								id="bannerProviderList" list="bannerProviderName"
+								placeholder="-- Select Banner Provider --" />
+							<datalist id="bannerProviderName">
+							</datalist>
+						</div>
+						<div>
+							From Date :<font color="red">*</font> <input type="date"
+								id="fromDate" name="fromDate" required> <label
+								id="errorFromDate" for=""></label>
+						</div>
+						<div>
+							To Date :<font color="red">*</font> <input type="date"
+								id="toDate" name="toDate" required> <label
+								id="errorToDate" for=""></label>
+						</div>
+						<div>
+							<button type="submit" id="clearParam">Clear</button>
+							<button type="submit" id="searchList">Search List</button>
+						</div>
+					</fieldset>
+					</br></br>
+					<fieldset>
+						<div>
+							<ul id="displayErrorMessage">
+							</ul>
+						</div>
+					</fieldset>
 				</div>
 			</div>
-			<div id ="displayErrorMessage">
-			</div>
+
 			</br></br>
 			</br></br>			 
 			<div id="resultPanel">

@@ -4,9 +4,7 @@ package com.genesiis.campus.entity.model;
 
 import java.util.Date;
 
-public class BannerStatSearchDTO {
-	
-	
+public class BannerStatSearchDTO {	
 	private int pageCode;
 	private int pageSlotCode;
 	private int bannerProviderCode;

@@ -190,11 +190,10 @@ function loadResultSet(event){
 		return false;
     }else{
     	$('#errorToDate').text("");
-    }
-    
-    var difference = (toDate - fromDate) / (86400000 * 7);
-	if (difference < 0) {		
-		$('#errorToDate').text("The commenced date must come before the completed date.");
+    }    
+   
+	if (fromDate> toDate) {		
+		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
 		document.getElementById('errorToDate').style.color = "red";
 		return false;
 	}
@@ -220,19 +219,20 @@ function loadResultSet(event){
 }
 
 function populateResultTable(response) {
+	$('#displayErrorMessage').show();
 	var errorMessageList = $("#displayErrorMessage");
+	errorMessageList.find('li').remove();
 	$.each(response.message, function(index, value) {
 		if (value != null && value.length > 0) {
-			//var msg = value[0].toString();
-			//errorMessageList.append("<li>Appended item</li>");
-		}
-		
+			var msg = value.toString();
+			errorMessageList.append("<li>"+msg+"</li>");
+		}		
 	});
 	
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
 	var programmeListTable = $("#tBody");
-	programmeListTable.find('tr').remove();	;
+	programmeListTable.find('tr').remove();
 	
 	var totalResultCount=0;
 
@@ -271,7 +271,8 @@ function clearParameters(event){
 	$('#toDate').val(" ");
 	$('#errorPageList').text("");
 	$('#errorFromDate').text("");
-	$('#errorToDate').text("");
+	$('#errorToDate').text("");	
+	$('#displayErrorMessage').hide();	
 }
 
 function errorCodeGeneration(jqXHR, exception){
