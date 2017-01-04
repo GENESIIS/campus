@@ -89,10 +89,10 @@ tr:nth-child(even) {
 								</datalist>
 							</div>
 							<div>
-								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="search">
+								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="fromDate" required="required">
 							</div>
 							<div>
-								To Date :<font color="red">*</font> <input type="date" id="toDate" name="search">
+								To Date :<font color="red">*</font> <input type="date" id="toDate" name="toDate" required="required">
 							</div>
 							<div>
 								<button type="submit" id="clearParam">Clear</button>
@@ -114,9 +114,9 @@ tr:nth-child(even) {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>CALLERPAGE </th>
-                            <th>VIEWDATE</th>
-                            <th>VIEWTIME</th>                            
+                            <th>BANNER CODE </th>
+                            <th>VIEW DATE</th>
+                            <th>BANNER HIT COUNT</th>                            
                         </tr>
                     </thead>
                     <tbody id="tBody">

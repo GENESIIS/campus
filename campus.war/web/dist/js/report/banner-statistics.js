@@ -1,6 +1,7 @@
 //20161227 DJ c52-report-banner-statistics-MP-dj  Banner stat report generation 
 var pageSlotCode = 0;
 $(document).ready(function() {
+	
 	$.ajax({
 		url : '../../ReportController',
 		data : {
@@ -85,6 +86,7 @@ $(document).ready(function() {
 });
 
 function loadReportBannerStatisticsView(response) {
+	$('#resultPanel').hide();
 	var htmlstr = "";
 	$.each(response.result, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -194,8 +196,8 @@ function getCode(){
 }
 
 function populateResultTable(response) {
-	//$('#resultPanel').show();
-	//$('#resultSetDiv').hide();
+	$('#resultPanel').show();
+	$('#resultSetDiv').hide();
 	var programmeListTable = $("#tBody");
 	programmeListTable.find('tr').remove();	;
 	
@@ -218,10 +220,17 @@ function populateResultTable(response) {
 		}
 
 	});
+	if (totalResultCount > 0) {
+		$('#totalResultsCount').text("Result Count " +totalResultCount);
+	} else {
+		$('#totalResultsCount').text(
+				"No results found for selected search criteria");
+	}
 
 }
 
 function clearParameters(event){
+	$('#resultPanel').hide();
 	$('#pagelist').val(""); 	
 	$('#pageSlotlist').val(""); 	
 	$('#bannerProviderList').val(""); 	
