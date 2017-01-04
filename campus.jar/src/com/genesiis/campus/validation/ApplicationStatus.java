@@ -12,10 +12,11 @@ package com.genesiis.campus.validation;
 */
 public enum ApplicationStatus {
 
+	
+	INACTIVE(0),
 	ACTIVE(1),
-	INACTIVE(2),
-	PENDING(3),
-	EXPIRED(4);	
+	PENDING(2),
+	EXPIRED(3);	
 	
 	private final int statusValue;
 
