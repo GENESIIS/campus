@@ -1,8 +1,10 @@
 package com.genesiis.campus.command;
 
 //DJ 20161228 c53-report-registered-students-MP-dj created CmdReportRegisteredStudents.java
+//DJ 20170104 c53-report-registered-students-MP-dj Identified command SEARCH_VIEW_REGISTERED_STUDENTS
 
 import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
@@ -41,9 +43,9 @@ public class CmdReportRegisteredStudents implements ICommand {
 			String cco = helper.getParameter("CCO");
 			
 			switch (Operation.getOperation(cco)) {
-			case SEARCH_VIEW_REGISTERED_STUDENTS:
-				final Collection<Collection<String>> providerList = new CourseProviderDAO().getAll();
-				iView.setCollection(providerList);
+			case SEARCH_VIEW_REGISTERED_STUDENTS:				
+				final Collection<Collection<String>> districtList=new DistrictDAO().getAll();
+				helper.setAttribute("districtList", districtList);
 				break;
 			case REPORT_REGISTERED_STUDENTS:
 				generateReportResults(helper);
