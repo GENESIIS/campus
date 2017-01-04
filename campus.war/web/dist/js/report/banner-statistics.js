@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 });
 
-function loadReportBannerStatisticsView(response) {
+function loadReportBannerStatisticsView(response) {		
 	$('#resultPanel').hide();
 	var htmlstr = "";
 	$.each(response.result, function(index, value) {
@@ -96,10 +96,15 @@ function loadReportBannerStatisticsView(response) {
 
 	});
 	$('#pageName').html(htmlstr);
+	
+	$('#pageSlotlist').prop("disabled", true);
+	$('#bannerProviderList').prop("disabled", true);
 
 }
 
 function getPageWisePageSlots(response) {
+	$('#pageSlotlist').prop("disabled", false);
+	$('#errorPageList').text("");
 	var htmlstr = "";
 	$.each(response.pageSlots, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -111,17 +116,9 @@ function getPageWisePageSlots(response) {
 	$('#pageSlotName').html(htmlstr);
 }
 
-/*function getPageSlotWiseBanners(response) {
-	var htmlstr = "";
-	$.each(response.bannerDetails, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlstr += '<option value="' + value[0] + '">' + value[1]
-					+ '</option>';
-		}
-	});
-	$('#bannerName').html(htmlstr);
-}*/
+
 function getPageSlotWiseAdvertiser(response) {
+	$('#bannerProviderList').prop("disabled", false);
 	var htmlstr = "";
 	$.each(response.advertiserDetails, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -143,6 +140,12 @@ function loadResultSet(event){
 			pageCode = option[i].attributes[0].value;
 			break;
 		}
+	}
+	//Validate Page list
+	if(!pageCode>0){
+		$('#errorPageList').text("Please enter page list");
+		document.getElementById('errorPageList').style.color = "red";
+		return false;
 	}
 	
 	var pageSlotName= $('#pageSlotlist').val();
@@ -167,9 +170,27 @@ function loadResultSet(event){
 		}
 	}
 	
-	var fromDate= $('#fromDate').val();
-	var toDate= $('#toDate').val();
-		
+	
+	var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+	
+	var fromDate= $('#fromDate').val();    
+    if(!regex.test(fromDate)){
+    	$('#errorFromDate').text("Please enter valid From Date");
+		document.getElementById('errorFromDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorFromDate').text("");
+    }
+    
+    
+    var toDate= $('#toDate').val();
+    if(!regex.test(toDate)){
+    	$('#errorToDate').text("Please enter valid To Date");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorToDate').text("");
+    }
 	
 	$.ajax({
 		url : '../../ReportController',
@@ -235,7 +256,10 @@ function clearParameters(event){
 	$('#pageSlotlist').val(""); 	
 	$('#bannerProviderList').val(""); 	
 	$('#fromDate').val(" "); 
-	$('#toDate').val(" "); 	
+	$('#toDate').val(" ");
+	$('#errorPageList').text("");
+	$('#errorFromDate').text("");
+	$('#errorToDate').text("");
 }
 
 function errorCodeGeneration(jqXHR, exception){
