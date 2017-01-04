@@ -7,6 +7,8 @@ package com.genesiis.campus.command;
 //			details collection fetched and separate professional experience details from it
 //20161227 MM c25-student-create-dashboard-MP Removed unused code
 //20170104 MM c25-student-dashboard-MP Added code to fetch student biographical info from DB
+//20170104 MM c25-student-dashboard-MP Readied the code to get the student code from the 
+//				session when session management is implemented.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentBasicBioDAO;
@@ -32,7 +34,10 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 		List<String> msgList = new ArrayList<String>();
 		
 		try {
-			String studentCodeStr = helper.getParameter("student");
+			String studentCodeStr = "1"; // Get this from the session
+//			HttpSession session = helper.getSession(false);
+//			studentCodeStr = (String) session.getAttribute("userCode");
+			
 			if (studentCodeStr != null && !studentCodeStr.isEmpty()) {
 				if (Validator.isNumber(studentCodeStr)) {
 					
@@ -43,7 +48,9 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 					
 					// Get profile information of Student represented by studentCode
 					StudentBasicBioDAO studentDao = new StudentBasicBioDAO();
-					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();				
+					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();	
+					
+					studentCollection = studentDao.findById(student);
 															
 					// Get student profile image path from SystemConfig enum
 					String studentProfileImagePath = SystemConfig.STUDENT_PROFILE_IMAGE_PATH.getValue1();
