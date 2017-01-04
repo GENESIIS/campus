@@ -7,6 +7,7 @@
 <!-- 20161214 PN CAM-28: completed front end for Student Higher education details form. -->
 <!-- 20161215 PN CAM-28: added front end validations for date fields. -->
 <!-- 20170103 PN CAM-28: modified datatable headers. -->
+<!-- 20170104 PN CAM-28: designed a datatable to display  student higher education details. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -397,7 +398,7 @@
 
 <!-- Higher Education -->
 <div class="modal fade" id="studentHigherEduDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentSchoolEducation" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="studentHigherEduDetails">Higher Education</h4>
@@ -450,6 +451,48 @@
 			
 			Description
 			<textarea rows="5" cols="40" name="heDescription" id="heDescription" ></textarea>
+			
+						<br/><br/>
+					<form id="frm-hedu" action="/path/to/your/script" method="POST">
+
+						<table id="higherEdutbl"
+							class="table table-striped table-bordered dt-responsive nowrap"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th><input name="higherEdu_select_all" id="higherEdu-select-all" value="1" type="checkbox"></th>
+									<th><b>Institute</b></th>
+									<th><b>Certificate</b></th>
+									<th><b>Result</b></th>
+									<th><b>Medium</b></th>
+									<th><b>Country</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th><b>Institute</b></th>
+									<th><b>Certificate</b></th>
+									<th><b>Result</b></th>
+									<th><b>Medium</b></th>
+									<th><b>Country</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</tfoot>			
+						</table>
+						<hr>
+						<p>
+							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+						</p>
+						<pre id="higherEdu-console"></pre>
+					</form>
+					<br />
+			
 			
 	  </div>
       <div class="modal-footer">    
