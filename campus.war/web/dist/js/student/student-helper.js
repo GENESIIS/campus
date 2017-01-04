@@ -26,6 +26,7 @@
 var extStudentSkills = [];
 var extStudentInterests = [];
 var rows_selected = [];
+var hEdurowsSelected = [];
 
 $(document).ready(function() {
 	displayDetails();
@@ -43,7 +44,7 @@ function displayDetails() {
 			getStudentData(response);
 		},
 		error : function(response) {
-		//	alert("Error: " + response);
+		// alert("Error: " + response);
 		}
 	});
 }
@@ -99,14 +100,15 @@ function getStudentData(response) {
 	   // Get row ID
 	   var rowId = data[0];
 
-	   // Determine whether row ID is in the list of selected row IDs 
+	   // Determine whether row ID is in the list of selected row IDs
 	   var index = $.inArray(rowId, rows_selected);
 
 	   // If checkbox is checked and row ID is not in list of selected row IDs
 	   if(this.checked && index === -1){
 	      rows_selected.push(rowId);
 
-	   // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+	   // Otherwise, if checkbox is not checked and row ID is in list of
+		// selected row IDs
 	   } else if (!this.checked && index !== -1){
 	      rows_selected.splice(index, 1);
 	   }
@@ -124,7 +126,7 @@ function getStudentData(response) {
 	   e.stopPropagation();
 	});
 	
-	//This handles the edit button click.
+	// This handles the edit button click.
 	$('#example tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();       
         if(data){        
@@ -138,14 +140,14 @@ function getStudentData(response) {
 	    $('#completionOn').val(res[1]);
 	    $('#jobDescription').val(data[6]);
         
-	    //Get select object
+	    // Get select object
 	    var industry = document.getElementById("industryoftheOrganization");
-	    //Set selected
+	    // Set selected
 	    setSelectedValue(industry, data[2]);
 	    
-	    //Get select object
+	    // Get select object
 	    var jobCategory = document.getElementById("jobCategory");
-	    //Set selected
+	    // Set selected
 	    setSelectedValue(jobCategory, data[4]);
 	    
         }else{
@@ -166,14 +168,14 @@ function getStudentData(response) {
     	    $('#completionOn').val(res[1]);
     	    $('#jobDescription').val(data[6]);
     	      	    
-    	    //Get select object
+    	    // Get select object
     	    var industry = document.getElementById("industryoftheOrganization");
-    	    //Set selected
+    	    // Set selected
     	    setSelectedValue(industry, data[2]);
     	    
-    	    //Get select object
+    	    // Get select object
     	    var jobCategory = document.getElementById("jobCategory");
-    	    //Set selected
+    	    // Set selected
     	    setSelectedValue(jobCategory, data[4]);
         }
     } );
@@ -196,13 +198,13 @@ function getStudentData(response) {
 	   updateDataTableSelectAllCtrl(table);
 	});
 	 
-	// Handle form submission event 
+	// Handle form submission event
 	$('#frm-example').on('submit', function(e){
 	   var form = this;
 
 	   // Iterate over all selected checkboxes
 	   $.each(rows_selected, function(index, rowId){
-	      // Create a hidden element 
+	      // Create a hidden element
 	      $(form).append(
 	          $('<input>')
 	             .attr('type', 'hidden')
@@ -212,8 +214,8 @@ function getStudentData(response) {
 	      table.row('.selected').remove().draw( false );
 	   });
 
-	   // FOR DEMONSTRATION ONLY     	   
-	   // Output form data to a console     
+	   // FOR DEMONSTRATION ONLY
+	   // Output form data to a console
 	   $('#example-console').text(rows_selected);
 	      
 	   $.ajax({
@@ -227,7 +229,7 @@ function getStudentData(response) {
 				
 			},
 			error : function(response) {
-			//	alert("Error: " + response);
+			// alert("Error: " + response);
 			}
 		});
 	     
@@ -522,162 +524,157 @@ function getStudentData(response) {
 	
 	
 		
-////Higher Education DataTable Scripts starting from here.	
-	var hEdurowsSelected = [];
+// //Higher Education DataTable Scripts starting from here.
 
-	/**
-	 * This method populate data into UI elements on page loading.
-	 * 
-	 * @param response
-	 * @returns
-	 */
-	function getStudentData(response) {
-		var higherEdutbl = $('#higherEdutbl').DataTable({
-			'columnDefs' : [ {
-				'targets' : 0,
-				'searchable' : false,
-				'orderable' : false,
-				'width' : '1%',
-				'className' : 'dt-body-center',
-				'render' : function(data, type, full, meta) {
-					return '<input type="checkbox">';
-				}
-			} ],
-			'order' : [ 1, 'asc' ],
-			'rowCallback' : function(row, data, dataIndex) {
-				// Get row ID
-				var rowId = data[0];
-				// If row ID is in the list of selected row IDs
-				if ($.inArray(rowId, hEdurowsSelected) !== -1) {
-					$(row).find('input[type="checkbox"]').prop('checked', true);
-					$(row).addClass('selected');
-				}
+
+	var higherEdutbl = $('#higherEdutbl').DataTable({
+		'columnDefs' : [ {
+			'targets' : 0,
+			'searchable' : false,
+			'orderable' : false,
+			'width' : '1%',
+			'className' : 'dt-body-center',
+			'render' : function(data, type, full, meta) {
+				return '<input type="checkbox">';
+			}
+		} ],
+		'order' : [ 1, 'asc' ],
+		'rowCallback' : function(row, data, dataIndex) {
+			// Get row ID
+			var rowId = data[0];
+			// If row ID is in the list of selected row IDs
+			if ($.inArray(rowId, hEdurowsSelected) !== -1) {
+				$(row).find('input[type="checkbox"]').prop('checked', true);
+				$(row).addClass('selected');
+			}
+		}
+	});
+
+	higherEdutbl.clear().draw();
+	$.each(response.stdHighEduCollection, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		higherEdutbl.row.add(
+				[ data[0].toString(), data[1].toString(), data[2].toString(),
+						data[3].toString(), data[4].toString(),  data[5].toString()+"<br/>"+data[6].toString(),
+						data[7].toString(), '<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
+	});
+
+	// Handle click on checkbox
+	$('#higherEdutbl').on('click', 'input[type="checkbox"]', function(e){
+	   var $row = $(this).closest('tr');
+
+	   // Get row data
+	   var data = higherEdutbl.row($row).data();
+
+	   // Get row ID
+	   var rowId = data[0];
+
+	   // Determine whether row ID is in the list of selected row IDs
+	   var index = $.inArray(rowId, hEdurowsSelected);
+
+	   // If checkbox is checked and row ID is not in list of selected row IDs
+	   if(this.checked && index === -1){
+	      hEdurowsSelected.push(rowId);
+
+	   // Otherwise, if checkbox is not checked and row ID is in list of
+		// selected row IDs
+	   } else if (!this.checked && index !== -1){
+	      hEdurowsSelected.splice(index, 1);
+	   }
+
+	   if(this.checked){
+	      $row.addClass('selected');
+	   } else {
+	      $row.removeClass('selected');
+	   }
+
+	   // Update state of "Select all" control
+	   updateDataTableSelectAllCtrl(higherEdutbl);
+
+	   // Prevent click event from propagating to parent
+	   e.stopPropagation();
+	});
+	
+	// This handles the edit button click.
+	$('#higherEdutbl tbody').on( 'click', 'button', function () {
+        var data = higherEdutbl.row( $(this).parents('tr') ).data();       
+        if(data){        
+
+	    
+        }else{
+    	    var idx = $(this).index(this);
+    	    if (idx > 0) {
+    	        var data = $(this).eq(idx - 1).closest('tr');
+    	    } else {
+    	        var data = higherEdutbl.row($(this).closest('tr').prev('tr') ).data();
+    	    }
+    	    
+        }
+    } );
+	
+	// Handle click on "Select all" control
+	$('thead input[name="select_all"]', higherEdutbl.table().container()).on('click', function(e){
+	   if(this.checked){
+	      $('#higherEdutbl tbody input[type="checkbox"]:not(:checked)').trigger('click');
+	   } else {
+	      $('#higherEdutbl tbody input[type="checkbox"]:checked').trigger('click');
+	   }
+
+	   // Prevent click event from propagating to parent
+	   e.stopPropagation();
+	});
+
+	// Handle table draw event
+	higherEdutbl.on('draw', function(){
+	   // Update state of "Select all" control
+	   updateDataTableSelectAllCtrl(higherEdutbl);
+	});
+	 
+	// Handle form submission event
+	$('#ffrm-hedu').on('submit', function(e){
+	   var form = this;
+
+	   // Iterate over all selected checkboxes
+	   $.each(hEdurowsSelected, function(index, rowId){
+	      // Create a hidden element
+	      $(form).append(
+	          $('<input>')
+	             .attr('type', 'hidden')
+	             .attr('name', 'id[]')
+	             .val(rowId)
+	      );
+	      higherEdutbl.row('.selected').remove().draw( false );
+	   });
+
+	   // FOR DEMONSTRATION ONLY
+	   // Output form data to a console
+	   $('#example-console').text(hEdurowsSelected);
+	      
+	   $.ajax({
+			url : '../../StudentController',
+			data : {
+				rows : hEdurowsSelected,
+				CCO : 'DPE'
+			},
+			dataType : "json",
+			success : function(response) {
+				
+			},
+			error : function(response) {
+			// alert("Error: " + response);
 			}
 		});
+	     
+	   // Remove added elements
+	   $('input[name="id\[\]"]', form).remove();
+	    
+	   // Prevent actual form submission
+	   e.preventDefault();
+	});
 
-		higherEdutbl.clear().draw();
-		$.each(response.stdHighEduCollection, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			higherEdutbl.row.add(
-					[ data[0].toString(), data[1].toString(), data[2].toString(),
-							data[3].toString(), data[4].toString(),  data[5].toString()+"<br/>"+data[6].toString(),
-							data[7].toString(), '<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
-		});
+}
 
-		// Handle click on checkbox
-		$('#higherEdutbl').on('click', 'input[type="checkbox"]', function(e){
-		   var $row = $(this).closest('tr');
-
-		   // Get row data
-		   var data = higherEdutbl.row($row).data();
-
-		   // Get row ID
-		   var rowId = data[0];
-
-		   // Determine whether row ID is in the list of selected row IDs 
-		   var index = $.inArray(rowId, hEdurowsSelected);
-
-		   // If checkbox is checked and row ID is not in list of selected row IDs
-		   if(this.checked && index === -1){
-		      hEdurowsSelected.push(rowId);
-
-		   // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-		   } else if (!this.checked && index !== -1){
-		      hEdurowsSelected.splice(index, 1);
-		   }
-
-		   if(this.checked){
-		      $row.addClass('selected');
-		   } else {
-		      $row.removeClass('selected');
-		   }
-
-		   // Update state of "Select all" control
-		   updateDataTableSelectAllCtrl(higherEdutbl);
-
-		   // Prevent click event from propagating to parent
-		   e.stopPropagation();
-		});
-		
-		//This handles the edit button click.
-		$('#higherEdutbl tbody').on( 'click', 'button', function () {
-	        var data = higherEdutbl.row( $(this).parents('tr') ).data();       
-	        if(data){        
-
-		    
-	        }else{
-	    	    var idx = $(this).index(this);
-	    	    if (idx > 0) {
-	    	        var data = $(this).eq(idx - 1).closest('tr');
-	    	    } else {
-	    	        var data = higherEdutbl.row($(this).closest('tr').prev('tr') ).data();
-	    	    }
-	    	    
-	        }
-	    } );
-		
-		// Handle click on "Select all" control
-		$('thead input[name="select_all"]', higherEdutbl.table().container()).on('click', function(e){
-		   if(this.checked){
-		      $('#higherEdutbl tbody input[type="checkbox"]:not(:checked)').trigger('click');
-		   } else {
-		      $('#higherEdutbl tbody input[type="checkbox"]:checked').trigger('click');
-		   }
-
-		   // Prevent click event from propagating to parent
-		   e.stopPropagation();
-		});
-
-		// Handle table draw event
-		higherEdutbl.on('draw', function(){
-		   // Update state of "Select all" control
-		   updateDataTableSelectAllCtrl(higherEdutbl);
-		});
-		 
-		// Handle form submission event 
-		$('#ffrm-hedu').on('submit', function(e){
-		   var form = this;
-
-		   // Iterate over all selected checkboxes
-		   $.each(hEdurowsSelected, function(index, rowId){
-		      // Create a hidden element 
-		      $(form).append(
-		          $('<input>')
-		             .attr('type', 'hidden')
-		             .attr('name', 'id[]')
-		             .val(rowId)
-		      );
-		      higherEdutbl.row('.selected').remove().draw( false );
-		   });
-
-		   // FOR DEMONSTRATION ONLY     	   
-		   // Output form data to a console     
-		   $('#example-console').text(hEdurowsSelected);
-		      
-		   $.ajax({
-				url : '../../StudentController',
-				data : {
-					rows : hEdurowsSelected,
-					CCO : 'DPE'
-				},
-				dataType : "json",
-				success : function(response) {
-					
-				},
-				error : function(response) {
-				//	alert("Error: " + response);
-				}
-			});
-		     
-		   // Remove added elements
-		   $('input[name="id\[\]"]', form).remove();
-		    
-		   // Prevent actual form submission
-		   e.preventDefault();
-		});
-
-	}
 	
 }
 
@@ -735,7 +732,7 @@ function getTownDetails(country) {
 			});
 		},
 		error : function(response) {
-		//	alert("Error: " + response);
+		// alert("Error: " + response);
 		}
 	});
 }
@@ -1346,7 +1343,7 @@ function addSkillDetails() {
 }
 
 //
-//Updates "Select all" control in a data table
+// Updates "Select all" control in a data table
 //
 function updateDataTableSelectAllCtrl(table) {
 	var $table = table.table().node();
@@ -1378,7 +1375,9 @@ function updateDataTableSelectAllCtrl(table) {
 }
 
 /**
- * This method is to set the selected option in a drop-down list using selectedIndex property.
+ * This method is to set the selected option in a drop-down list using
+ * selectedIndex property.
+ * 
  * @param selectObj
  * @param valueToSet
  * @returns
