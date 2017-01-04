@@ -605,8 +605,7 @@ function getStudentData(response) {
 	$('#higherEdutbl tbody').on( 'click', 'button', function () {
         var data = higherEdutbl.row( $(this).parents('tr') ).data();       
         if(data){        
-
-	    
+        	alert(data);	    
         }else{
     	    var idx = $(this).index(this);
     	    if (idx > 0) {
@@ -614,8 +613,9 @@ function getStudentData(response) {
     	    } else {
     	        var data = higherEdutbl.row($(this).closest('tr').prev('tr') ).data();
     	    }
-    	    
+    	    alert(data);
         }
+        
     } );
 	
 	// Handle click on "Select all" control
@@ -637,7 +637,7 @@ function getStudentData(response) {
 	});
 	 
 	// Handle form submission event 
-	$('#ffrm-hedu').on('submit', function(e){
+	$('#frm-hedu').on('submit', function(e){
 	   var form = this;
 
 	   // Iterate over all selected checkboxes
