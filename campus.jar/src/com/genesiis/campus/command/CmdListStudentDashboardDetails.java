@@ -6,9 +6,10 @@ package com.genesiis.campus.command;
 //20161123 MM c25-student-login-create-dashboard-MP-mm Added code to search through the student
 //			details collection fetched and separate professional experience details from it
 //20161227 MM c25-student-create-dashboard-MP Removed unused code
+//20170104 MM c25-student-dashboard-MP Added code to fetch student biographical info from DB
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.StudentDashboardDAO;
+import com.genesiis.campus.entity.StudentBasicBioDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
@@ -19,9 +20,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CmdListStudentDashboardDetails  implements ICommand {
 	
@@ -43,7 +42,7 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 					student.setCode(studentCode);
 					
 					// Get profile information of Student represented by studentCode
-					StudentDashboardDAO studentDao = new StudentDashboardDAO();
+					StudentBasicBioDAO studentDao = new StudentBasicBioDAO();
 					Collection<Collection<String>> studentCollection = new ArrayList<Collection<String>>();				
 															
 					// Get student profile image path from SystemConfig enum
