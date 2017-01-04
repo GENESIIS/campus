@@ -54,7 +54,7 @@ public class CmdAddTutorProfile implements ICommand {
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {
 						message = SystemMessage.ADDED.message();
-
+						isEmailProduced(result,helper,view);
 					} else {
 						message = SystemMessage.ERROR.message();
 					}
@@ -181,6 +181,31 @@ public class CmdAddTutorProfile implements ICommand {
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());
 			throw e;
+		}
+	}
+	
+	/*
+	 * isEmailProduced() sends an email if the emapilSendingStatus is 1
+	 * else it doesn't dispense an email
+	 * @author dushantha DN
+	 * @throws SQLException
+	 * @param emapilSendingStatus
+	 * @param helper
+	 * @param view
+	 */
+	private void isEmailProduced(int emapilSendingStatus,IDataHelper helper, IView view) throws SQLException,Exception {
+		
+			try{
+				if(emapilSendingStatus ==1){
+					ICommand emailSignUp = new CmdGenerateEmailSinUp();
+					emailSignUp.execute(helper, view); //send email
+				}
+			} catch (SQLException sqle){
+				log.error("isEmailProduced: SQLException " + sqle.toString());
+				throw sqle;
+		} catch (Exception exp){
+			log.error("isEmailProduced: Exception " + exp.toString());
+			throw exp;
 		}
 	}
 }
