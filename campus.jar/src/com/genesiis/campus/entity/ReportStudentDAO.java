@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 
 //DJ 20161229 c53-report-registered-students-MP-dj created ReportStudentDAO.java
 //DJ 20170102 c53-report-registered-students-MP-dj Enhanced findById() with date range.
+//DJ 20170104 c53-report-registered-students-MP-dj Enhanced findById() District filtering.
 
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
@@ -60,7 +61,10 @@ public class ReportStudentDAO  implements ICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
-			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT WHERE 1=1 ");
+			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT ");
+			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = STUDENT.TOWN ");
+		    sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT  ");
+			sb.append(" WHERE 1=1 ");
 			if (student.getAccountType() > 0) {
 				sb.append("AND STUDENT.ACCOUNTTYPE= ");
 				sb.append(student.getAccountType());
@@ -69,6 +73,11 @@ public class ReportStudentDAO  implements ICrud{
 				sb.append("AND	STUDENT.ISACTIVE= ");
 				sb.append(student.getStatus());
 			}
+			if (student.getDistrictCode() > 0) {
+				sb.append("AND DISTRICT.CODE = ");
+				sb.append(student.getDistrictCode());
+			}
+			
 			if ((student.getFromDate() != null && student.getFromDate()	.getTime() > 0)	&& (student.getToDate() != null && student.getToDate().getTime() > 0)) {
 				sb.append("AND STUDENT.CRTON BETWEEN ' ");
 				sb.append(new java.sql.Date(student.getFromDate().getTime()));
