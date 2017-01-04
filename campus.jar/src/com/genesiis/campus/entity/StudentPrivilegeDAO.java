@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class StudentPrivilegeDAO implements ICrud {
 	static Logger log = Logger.getLogger(StudentPrivilegeDAO.class.getName());
@@ -54,12 +55,15 @@ public class StudentPrivilegeDAO implements ICrud {
 		final Student student = (Student) code;
 		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
-		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE USERTYPE.CODE = ?";
+		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE BUTTONACTION.ISACTIVE=? AND INTERFACE.ISACTIVE=? AND PRIVILEGE.ISACTIVE=? AND USERTYPE.CODE = ?";
 
 		try {
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, student.getUserType());
+			preparedStatement.setString(1, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement.setString(2, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement.setString(4, student.getUserType());
 
 			ResultSet rs = preparedStatement.executeQuery();
 
