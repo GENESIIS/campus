@@ -2,8 +2,21 @@
 
 $(document).ready(function() {
 	
-	$('#resultPanel').hide();
-	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+	$.ajax({
+		url : '../../ReportController',
+		data : {
+			CCO : 'SEARCH_VIEW_REGISTERED_STUDENTS'			
+		},
+		datatype : "json",
+		success : function(response) {
+			getStudentSearchData(response);
+		},
+		error : function(jqXHR, exception) {
+			errorCodeGeneration(jqXHR, exception);
+		}
+	});	
+	
+	
 
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
@@ -14,6 +27,22 @@ $(document).ready(function() {
 	});
 
 });
+
+//Populate search view for registered Student report generation
+function getStudentSearchData(response){
+	$('#resultPanel').hide();
+	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
+
+	var htmlstr="";	
+	$.each(response.districtList, function(index, value) {		
+		if(value!=null && value.length>0){
+			if(value!=null && value.length>0){		
+				htmlstr += '<option val="' + value[0] + '">' + value[2] + '</option>';
+			}
+		}		
+	});		
+	$('#districtName').html(htmlstr);	
+} 
 
 function loadResultSet(event) {
 
