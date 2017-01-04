@@ -20,8 +20,8 @@
 //20161220 PN CAM-28: implemented Ajax method call to pass selected checkbox values to be deleted, into servlet.
 //20170103 PN CAM-28: added JavaScript method to get datatable row data back as an alert.
 // 		   PN CAM-28: modified the JavaScript code to set edit data into textboxes.
-//20170104 PN CAM-28: implement JavaScript methods to populate student Higher education details data table. -WIP
-
+//20170104 PN CAM-28: implement JavaScript methods to populate student Higher education details data table.
+//20170104 PN CAM-28: implement JavaScript code to edit data taken from the data table.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -605,7 +605,39 @@ function getStudentData(response) {
 	$('#higherEdutbl tbody').on( 'click', 'button', function () {
         var data = higherEdutbl.row( $(this).parents('tr') ).data();       
         if(data){        
-        	alert(data);	    
+        	alert(data);
+        	var institute = data[1];
+        	var res1 = institute.split("<br/>");
+
+        	$('#instituteofStudy').val(res1[0]);
+        	$('#affiliatedInstitute').val(res1[1]);
+
+        	var certificate = data[2];
+        	var res2 = certificate.split("<br/>");
+
+    	    var areaofstudy = document.getElementById("areaofstudy");
+    	    setSelectedValue(areaofstudy, res2[0]);
+    	    
+    	    var award = document.getElementById("award");
+    	    setSelectedValue(award, res2[1]);
+
+        	var result = data[3];
+        	var res3 = result.split("<br/>");
+
+        	$('#studentId').val(res3[1]);
+        	$('#gpa').val(res3[0]);
+
+        	var duration = data[6];
+        	var res4 = duration.split("<br/>");
+
+        	$('#heCommencedOn').val(res4[0]);
+        	$('#heCompletedOn').val(res4[1]);
+
+        	var heMedium = document.getElementById("heMedium");
+     	    setSelectedValue(heMedium, data[4]);
+        	
+        	$('#heCountry').val(data[5]);
+        	$('#heDescription').val(data[7]);
         }else{
     	    var idx = $(this).index(this);
     	    if (idx > 0) {
@@ -614,6 +646,38 @@ function getStudentData(response) {
     	        var data = higherEdutbl.row($(this).closest('tr').prev('tr') ).data();
     	    }
     	    alert(data);
+        	var institute = data[1];
+        	var res1 = institute.split("<br/>");
+
+        	$('#instituteofStudy').val(res1[0]);
+        	$('#affiliatedInstitute').val(res1[1]);
+
+        	var certificate = data[2];
+        	var res2 = certificate.split("<br/>");
+
+    	    var areaofstudy = document.getElementById("areaofstudy");
+    	    setSelectedValue(areaofstudy, res2[0]);
+    	    
+    	    var award = document.getElementById("award");
+    	    setSelectedValue(award, res2[1]);
+
+        	var result = data[3];
+        	var res3 = result.split("<br/>");
+
+        	$('#studentId').val(res3[1]);
+        	$('#gpa').val(res3[0]);
+
+        	var duration = data[6];
+        	var res4 = duration.split("<br/>");
+
+        	$('#heCommencedOn').val(res4[0]);
+        	$('#heCompletedOn').val(res4[1]);
+
+        	var heMedium = document.getElementById("heMedium");
+     	    setSelectedValue(heMedium, data[4]);
+        	
+        	$('#heCountry').val(data[5]);
+        	$('#heDescription').val(data[7]);
         }
         
     } );
