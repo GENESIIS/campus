@@ -40,7 +40,7 @@
 <script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
 <script src="dist/js/institute/validation/validation.js"></script>
-<script src="dist/js/student/student-helper.js"></script>
+<script src="dist/js/student/student-details-table-handler.js"></script>
 
 <script src="dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
@@ -460,7 +460,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><input name="higherEdu_select_all" id="higherEdu-select-all" value="1" type="checkbox"></th>
+									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
 									<th><b>Institute</b></th>
 									<th><b>Certificate</b></th>
 									<th><b>Result</b></th>
