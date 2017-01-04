@@ -75,14 +75,7 @@ label{
 									placeholder="-- Select Page Slot --" />
 								<datalist id="pageSlotName">
 								</datalist>
-							</div>
-							<!-- <div>
-								Banner Name :<input type="text" name="bannerList"
-									id="bannerList" list="bannerName"
-									placeholder="-- Select Banner Name --" />
-								<datalist id="bannerName">
-								</datalist>
-							</div> -->
+							</div>							
 							<div>
 								Banner Provider :<input type="text" name="bannerProviderList"
 									id="bannerProviderList" list="bannerProviderName"

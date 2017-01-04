@@ -209,11 +209,7 @@ function loadResultSet(event){
 		error : function(jqXHR, exception) {
 			errorCodeGeneration(jqXHR, exception);			
 		}
-		});
-	
-}
-function getCode(){
-	
+		});	
 }
 
 function populateResultTable(response) {
