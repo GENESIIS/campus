@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //DJ 20161206 c52-report-banner-statistics-MP-dj created CmdReportBannerStatistics.java
 //DJ 20161231 c52-report-banner-statistics-MP-dj Implement  generateReportResults() method
+//DJ 20170104 c52-report-banner-statistics-MP-dj Implement  isReportBannerStatValidate() method
 
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.BannerStatDAO;
@@ -88,7 +89,7 @@ public class CmdReportBannerStatistics implements ICommand {
 	 */
 	private void generateReportResults(IDataHelper helper) throws Exception {
 		List<String> msgList = new ArrayList<String>();
-		String pageCodeString = helper.getParameter("pageCode");
+		
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
 		String bannerProviderCodeString = helper.getParameter("bannerProviderCode");
 		
@@ -96,11 +97,7 @@ public class CmdReportBannerStatistics implements ICommand {
 		try {
 			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();
 			
-			reportBannerStatValidator(searchDTO,helper,msgList );
 			
-			if (UtilityHelper.isNotEmpty(pageCodeString)) {
-				searchDTO.setPageCode(Integer.valueOf(pageCodeString));
-			}
 			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
 				searchDTO.setPageSlotCode(Integer.valueOf(pageSlotCodeString));
 			}
@@ -108,33 +105,48 @@ public class CmdReportBannerStatistics implements ICommand {
 				searchDTO.setBannerProviderCode(Integer.valueOf(bannerProviderCodeString));
 			}
 			
-			
-			final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO().findById(searchDTO);
-			helper.setAttribute("bannerStatDetails", bannerStatDetails);
+			if(isReportBannerStatValidate(searchDTO,helper,msgList )){
+				final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO().findById(searchDTO);
+				helper.setAttribute("bannerStatDetails", bannerStatDetails);				
+			}else{
+				helper.setAttribute("message", msgList);
+			}
+		
 		} catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
 	}
 
-	private void reportBannerStatValidator (BannerStatSearchDTO searchDTO,
-			IDataHelper helper, List<String> msgList) throws Exception{
+	private boolean isReportBannerStatValidate(BannerStatSearchDTO searchDTO,
+			IDataHelper helper, List<String> msgList)throws Exception{
+		String pageCodeString = helper.getParameter("pageCode");
 		String fromDateString = helper.getParameter("fromDate");
 		String toDateString = helper.getParameter("toDate");
 		
-		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
+		if (UtilityHelper.isNotEmpty(pageCodeString)) {
+			searchDTO.setPageCode(Integer.valueOf(pageCodeString));
+		}else{
+			msgList.add(SystemMessage.INVALIDPAGESELECTION.message());
+			return false;
+		}
+		
+		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
 		
 		try {
 			if (UtilityHelper.isNotEmpty(fromDateString)) {
 				searchDTO.setFromDate(df.parse((fromDateString)));
-			}else{
+			} else  {
 				msgList.add(SystemMessage.INVALIDENDDATE.message());
+				return false;
 			}
 			if (UtilityHelper.isNotEmpty(toDateString)) {
 				searchDTO.setToDate(df.parse((toDateString)));
-			}else{
+			} else {
 				msgList.add(SystemMessage.INVALIDENDDATE.message());
-			}
+				return false;
+			}			
 
 		} catch (ParseException parseException) {
 			log.error("generateReportResults() : ParseException "
@@ -142,7 +154,7 @@ public class CmdReportBannerStatistics implements ICommand {
 			throw parseException;
 		}
 		
-		
-	}
+		return true;
+	}	
 
 }
