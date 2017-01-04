@@ -1,9 +1,15 @@
 package com.genesiis.campus.entity;
 
 //20160104 MM c25-student-dashboard-MP-mm INIT - Initialised class and implemented findById(Object)
+//20160104 MM c25-student-dashboard-MP-mm INIT - Modified query used to fetch student profile info 
+//				(in findById(Object) to select the most recent school attended, the most recent 
+//				higher education qualification and the most recent position held 
 
+import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class StudentBasicBioDAO implements ICrud {
+	
+	static Logger Log = Logger.getLogger(StudentBasicBioDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -44,15 +52,15 @@ public class StudentBasicBioDAO implements ICrud {
 			
 			int studentCode = student.getCode();
 
-			// TODO convert this to a StringBuidler
-			String query = "SELECT s.FIRSTNAME, s.LASTNAME, s.DESCRIPTION, t.NAME AS TOWNNAME, he.INSTITUTE, "
-					+ "he.AFFINSTITUTE, se.SCHOOL, c.NAME AS COUNTRYNAME, pe.ORGANIZATION, pe.DESIGNATION, s.CODE "
+			// TODO convert this to a StringBuidler			
+			String query = "SELECT s.FIRSTNAME, s.LASTNAME, s.DESCRIPTION, t.NAME AS TOWNNAME, he.INSTITUTE, he.AFFINSTITUTE, se.SCHOOL, "
+					+ "c.NAME AS COUNTRYNAME, pe.ORGANIZATION, pe.DESIGNATION, s.CODE "
 					+ "FROM [CAMPUS].[STUDENT] s "
 					+ "JOIN [CAMPUS].[TOWN] t ON (s.CODE = 1 AND t.CODE = s.TOWN) "
-					+ "JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT) "
-					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT) "
+					+ "JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT AND he.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[HIGHERDUCATION] ORDER BY COMPLETIONON DESC)) "
+					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT AND se.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[SCHOOLEDUCATION] ORDER BY ACHIVEDON DESC)) "
 					+ "JOIN [CAMPUS].[COUNTRY2] c ON (c.CODE = se.COUNTRY) "
-					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT)";
+					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND pe.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] ORDER BY ACHIVEDON DESC))";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
