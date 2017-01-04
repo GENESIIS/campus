@@ -30,6 +30,8 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+label{
+}
 </style>
 
 
@@ -65,7 +67,7 @@ tr:nth-child(even) {
 									id="pagelist" list="pageName"
 									placeholder="-- Select Page --" />
 								<datalist id="pageName">
-								</datalist>
+								</datalist><label id="errorPageList"  for=""></label>
 							</div>
 							<div>
 								Page Slot :<input type="text" name="pageSlotlist"
@@ -89,10 +91,12 @@ tr:nth-child(even) {
 								</datalist>
 							</div>
 							<div>
-								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="fromDate" required="required">
+								From Date :<font color="red">*</font> <input type="date" id="fromDate" name="fromDate" required>
+								<label id="errorFromDate"  for=""></label>
 							</div>
 							<div>
-								To Date :<font color="red">*</font> <input type="date" id="toDate" name="toDate" required="required">
+								To Date :<font color="red">*</font> <input type="date" id="toDate" name="toDate" required>
+								<label id="errorToDate"  for=""></label>
 							</div>
 							<div>
 								<button type="submit" id="clearParam">Clear</button>
