@@ -73,7 +73,7 @@ public class ProgrammeDAO implements ICrud {
 		try {
 			final Programme programme = (Programme) code;
 			final Validator validator=new Validator();
-			
+						
 			conn = ConnectionManager.getConnection();
 
 			String query = "SELECT p.NAME,p.DESCRIPTION,p.DURATION,p.ENTRYREQUIREMENTS,p.COUNSELORNAME,p.COUNSELORPHONE,  c.NAME, c.UNIQUEPREFIX,p.IMAGE,l.NAME,m.NAME,p.EMAIL,c.ACCOUNTTYPE from CAMPUS.PROGRAMME p"

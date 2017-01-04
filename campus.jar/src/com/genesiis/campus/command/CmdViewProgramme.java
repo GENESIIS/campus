@@ -50,8 +50,7 @@ public class CmdViewProgramme implements ICommand {
 	 * @return View object to servlet
 	 */
 	@Override
-	public IView execute(IDataHelper helper, IView view) throws SQLException,
-			Exception {
+	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		try {
 			final Programme programme = new Programme();
 			ICrud programmeDAO = new ProgrammeDAO();
@@ -63,31 +62,23 @@ public class CmdViewProgramme implements ICommand {
 			ICrud programmeRatingDAO = new ProgrammeRatingDAO();
 
 			if (helper.getParameter("programmeCode") != null) {
-				int programmeId = Integer.parseInt(helper
-						.getParameter("programmeCode"));
+				int programmeId = Integer.parseInt(helper.getParameter("programmeCode"));
 
 				programme.setCode(programmeId);
 
-				Collection<Collection<String>> programmeDAOCollection = programmeDAO
-						.findById(programme);
-				Collection<Collection<String>> semesterDAOCollection = semesterDAO
-						.findById(programme);
+				Collection<Collection<String>> programmeDAOCollection = programmeDAO.findById(programme);
+				Collection<Collection<String>> semesterDAOCollection = semesterDAO.findById(programme);
 
-				Collection<Collection<String>> moduleDAOCollection = moduleDAO
-						.findById(programme);
+				Collection<Collection<String>> moduleDAOCollection = moduleDAO.findById(programme);
 				view.setCollection(moduleDAOCollection);
 
-				Collection<Collection<String>> intakeDAOCollection = intakeDAO
-						.findById(programme);
+				Collection<Collection<String>> intakeDAOCollection = intakeDAO.findById(programme);
 
-				Collection<Collection<String>> classTypeDAOCollection = classTypeDAO
-						.findById(programme);
+				Collection<Collection<String>> classTypeDAOCollection = classTypeDAO.findById(programme);
 
-				Collection<Collection<String>> locationDAOCollection = locationDAO
-						.findById(programme);
+				Collection<Collection<String>> locationDAOCollection = locationDAO.findById(programme);
 
-				Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO
-						.findById(programme);
+				Collection<Collection<String>> programmeRatingCollection = programmeRatingDAO.findById(programme);
 
 				double ratings = calculateRating(programmeRatingCollection);
 
@@ -117,8 +108,7 @@ public class CmdViewProgramme implements ICommand {
 	 * @param programmeRatingCollection
 	 * @return double value of total ratings
 	 */
-	public double calculateRating(
-			Collection<Collection<String>> programmeRatingCollection) throws Exception {
+	public double calculateRating(Collection<Collection<String>> programmeRatingCollection) throws Exception {
 		double ratingValue = 0;
 		double ratingCount = 0;
 		double allRateCount = 0;
@@ -142,8 +132,8 @@ public class CmdViewProgramme implements ICommand {
 				allRateCount += ratingCount;
 
 			}
-			
-			if (allRateCount > 0){
+
+			if (allRateCount > 0) {
 				totalRating = rate / allRateCount;
 				DecimalFormat df = new DecimalFormat("#.##");
 				totalRating = Double.valueOf(df.format(totalRating));

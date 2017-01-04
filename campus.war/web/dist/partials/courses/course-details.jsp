@@ -21,7 +21,8 @@
 
 </head>
 <body>
-	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
+	 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix"> 
+		
 	<div class="top">
 		<div class="logo-brand"> 
 			<h1 class="logo-txt">Campus.lk</h1>
@@ -54,6 +55,15 @@
 						<li><a href="javascript:">School Education</a></li>
 						<li><a href="javascript:">Higher Education</a></li>
 						<li><a href="javascript:">Corporate Training</a></li>
+						<li>
+							<!-- add Programme Id here for test course preview -->
+							<form method="Post" action="/PublicController">
+								<input type="hidden" name="programmeCode" value="8" />
+								<button type="submit" name="CCO" id="CCO" value="VPD"
+									class="btn btn-info navbar-btn">View Programme Details</button>
+
+							</form>
+						</li>
 						<li><a href="javascript:">Vocational Training</a></li>
 						<li><a href="javascript:">Talent & Skill</a></li>
 					</ul>
