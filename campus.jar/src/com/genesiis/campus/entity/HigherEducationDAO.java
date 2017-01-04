@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161216 PN CAM-28 : add-student-details: implemented findById() method
 //20161220 PN CAM-28: implemented delete(Object object, Connection conn) method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+//20160104 PN CAM-28: modified the SQL query inside findById() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,10 +88,13 @@ public class HigherEducationDAO implements ICrud{
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE] ,[INSTITUTE] ,[AFFINSTITUTE] ,[AWARD] ,[MAJOR] ,[COUNTRY] ,"
-					+ "[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] "
-					+ "FROM [CAMPUS].[HIGHERDUCATION] "
-					+ "WHERE [STUDENT] = ? AND ISACTIVE = 1;";
+			String query = "SELECT he.[CODE] ,[INSTITUTE] ,[AFFINSTITUTE] ,[STUDENT] ,le.[DESCRIPTION] AS [LEVEL], aw.[SHORTTITLE] AS [AWARD], mj.[NAME] AS [MAJOR],"
+					+ " co.[NAME] AS [COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,he.[DESCRIPTION] AS [DESCRIPTION] , md.[DESCRIPTION] AS [MEDIUM] "
+					+ "FROM [CAMPUS].[HIGHERDUCATION] he JOIN [CAMPUS].[LEVEL] le ON he.[LEVEL] = le.[CODE] "
+					+ "JOIN [CAMPUS].[COUNTRY2] co ON he.[COUNTRY] = co.[CODE] "
+					+ "JOIN [CAMPUS].[AWARD] aw ON he.[AWARD] = aw.[CODE] "
+					+ "JOIN [CAMPUS].[MAJOR] mj ON he.[MAJOR] = mj.[CODE] "
+					+ "JOIN [CAMPUS].[MEDIUM] md ON he.[MEDIUM] = md.[CODE] WHERE STUDENT = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
@@ -103,16 +107,7 @@ public class HigherEducationDAO implements ICrud{
 				singlehigherEduList.add(rs.getString("AFFINSTITUTE"));
 				singlehigherEduList.add(rs.getString("AWARD"));
 				singlehigherEduList.add(rs.getString("MAJOR"));
-				
-				//Get country name, if in a case to pass the name to dataList
-				ICrud country2dao = new Country2DAO();
-				String countryName = "";
-				Collection<Collection<String>> country = country2dao.findById(Integer.parseInt(rs.getString("COUNTRY")));			
-				for (Collection<String> collection : country) {
-					Object[] cdata = collection.toArray();
-					countryName = (String) cdata[1];
-				}
-				singlehigherEduList.add(countryName);
+				singlehigherEduList.add(rs.getString("COUNTRY"));
 				singlehigherEduList.add(rs.getString("COMMENCEDON"));
 				singlehigherEduList.add(rs.getString("COMPLETIONON"));
 				singlehigherEduList.add(rs.getString("STUDENTID"));
