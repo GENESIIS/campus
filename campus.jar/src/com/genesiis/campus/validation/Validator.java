@@ -7,6 +7,8 @@ package com.genesiis.campus.validation;
 //20161229 JH c39-add-course-provider isEmpty() method modified
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validator {
 
@@ -44,5 +46,21 @@ public class Validator {
 		}
 
 		return valid;
+	}
+	
+	
+	/**
+	 * Check the given mail address is valid email or not
+	 * 
+	 * @author Chathuri
+	 * @param value
+	 * @return boolean to validate email address.
+	 **/
+	public static boolean validateEmail(String email) {
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+				Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+		return matcher.find();
+
 	}
 }
