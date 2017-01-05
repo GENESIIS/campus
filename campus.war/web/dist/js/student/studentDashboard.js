@@ -13,6 +13,8 @@
   * 			student recent activities
   * 20170105 MM c25-student-dashboard-MP - Added code to hide recommended programmes and institutes sections from view 
   * 			when no data is available for them; disabled the display of section that shows recent activity
+  * 20170105 MM c25-student-dashboard-MP - Added comment to explain the commented-out functions related 
+  * 			to displaying of student activity 
   * 
   */ 
 
@@ -154,6 +156,7 @@ function constructInstituteListing() {
 //	getStudentActivities();
 }
 
+// IMPORTANT: THE FOLLOWING BLOCK OF COMMENTED CODE IS PRESERVED THUS BECAUSE IT HAS TO RE-ENABLED WHEN STUDENT ACTIVITY IS DISPLAYED ON THE STUDENT DASHBOARD IN THE FUTURE
 //function getStudentActivities () {
 //	$.ajax({
 //		url : '/StudentController',
