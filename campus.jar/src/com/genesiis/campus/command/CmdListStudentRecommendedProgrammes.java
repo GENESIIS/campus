@@ -9,6 +9,8 @@ package com.genesiis.campus.command;
 //				the new RecommendedProgrammesSearchDTO instead of a Student object to send parameters to the DAO method 
 //20161229 MM c25-student-create-dashboard-MP - Added code in execute(IDataHelper) to make it ready to extract details 
 //				from the session
+//20170105 MM c25-student-create-dashboard-MP - Modified JavaDoc comment so that it supports the changed behaviour of 
+//				the method.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDashboardDAO;
@@ -35,8 +37,8 @@ public class CmdListStudentRecommendedProgrammes implements ICommand {
 	static Logger Log = Logger.getLogger(CmdListStudentRecommendedProgrammes.class.getName());
 
 	/**
-	 * Returns the list of recommended programmes for the student indicated by the request parameter 
-	 * named "student" that is sent by the client 
+	 * Creates and makes available lists of recommended programmes and recommended institutes for a logged-in student who has sent the current request. The list of 
+	 * programmes is assigned to collection field of an IView type of object while the list of institutes is assigned to a request attribute via IDataHelper parameter. 
 	 * 
 	 * @param helper An object that is an IDataHelper that wraps an HTTPServletRequest object that contains the parameters sent by the client. 
 	 * @param view An object that is an IView that wraps a Collection<Collection<String>> that the collection of programmes selected for the student is assigned to.
