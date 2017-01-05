@@ -39,7 +39,7 @@ public class CmdUploadTutorImage implements ICommand {
 		try{
 			Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
 			int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
-			String tutorProfileImageUploadPath = new ImageUtility().getImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_PATH);
+			String tutorProfileImageUploadPath =ImageUtility.getImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_PATH);
 			fileUtility.setUploadPath(tutorProfileImageUploadPath + "/" + "username_"+ Integer.toString(tutorCode));
 			
 		} catch(Exception exp) {
