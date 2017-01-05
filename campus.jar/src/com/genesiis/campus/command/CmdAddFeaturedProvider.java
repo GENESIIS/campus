@@ -80,25 +80,20 @@ public class CmdAddFeaturedProvider implements ICommand{
 			int generatedKey = 0;
 			String userTypeString = UserType.FEATURED_COURSE_PROVIDER.getUserType();
 			ArrayList<Collection<String>> userTypeList  = (ArrayList<Collection<String>>) userTypeDAO.findById(userTypeString);
-
-//			if (userTypeList.size() > 0) {
-//				Iterator collectionIterator = userTypeList.iterator();
-//				while (collectionIterator.hasNext()) {
-//					ArrayList<String> singleList = (ArrayList<String>) collectionIterator
-//							.next();
-//					Iterator listIterator = singleList.iterator();
-//					while(listIterator.hasNext()){
-//						userType = listIterator.next();
-//					}
-//				}
-//			}
-//	
-			//back end validation for required fields
 			
-			log.info(helper.getParameter("selectedTown"));
+			for (Collection<String> collection : userTypeList) {
+				Object[] userTypeData = collection.toArray();
+				String userTypeCode  = (String) userTypeData[0];
+				userType = Integer.parseInt(userTypeCode);
+			}
+
+			//back end validation for required fields
+
 			ArrayList<String> errorMessages = validateCourseProvider(helper);
 			if(errorMessages.size()==0){
-				log.info("no errors");
+				if(helper.getParameter("uniquePrefix").length() >5){
+					errorMessages.add("Unique Name is too long ");
+				}else{
 							
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
@@ -196,7 +191,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 					courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 					courseProviderAccount.setName(helper.getParameter("accountDescription"));
-					courseProviderAccount.setUserType(5);
+					courseProviderAccount.setUserType(userType);
 					courseProviderAccount.setCrtBy("admin");//to be update after the session is created
 					courseProviderAccount.setModBy("admin");//to be update after the session is created
 					
@@ -222,10 +217,10 @@ public class CmdAddFeaturedProvider implements ICommand{
 					systemMessage = SystemMessage.NOTADDED.message();
 				}
 
-				helper.setAttribute("registerId", generatedKey);
-				
+					helper.setAttribute("registerId", generatedKey);
+				}
 			}else{
-				log.info("errors");
+
 				systemMessage = errorMessages.toString()+ " "+ SystemMessage.EMPTY_FIELD.message();
 	
 			}
@@ -259,7 +254,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		}if(validator.isEmpty(helper.getParameter("shortName"))){
 			errorString.add("Short Name ");
 		}if(validator.isEmpty(helper.getParameter("uniquePrefix"))){
-			errorString.add("Unique Prefix ");
+			errorString.add("Unique Name ");
 		}if(validator.isEmpty(helper.getParameter("aboutMe"))){
 			errorString.add("About Me ");
 		}if(validator.isEmpty(helper.getParameter("specialFeatures"))){
