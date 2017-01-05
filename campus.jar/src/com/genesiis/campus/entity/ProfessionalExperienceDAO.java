@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170103 PN CAM-28: changed the findById(Object object) method by giving condition to check different types of the 'object' parameter.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170105 PN CAM-28: update(Object object, Connection conn) DAO method implemented.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -212,8 +213,42 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		ProfessionalExperience data = (ProfessionalExperience) object;
+		PreparedStatement preparedStatement = null;
+		Connection connection = null;
+
+		String query = "UPDATE [CAMPUS].[PROFESSIONALEXPERIENCE] SET [ORGANIZATION] = ? ,[STUDENT] = ? ,[INDUSTRY] = ? ,[JOBCATEGORY] = ? ,"
+				+ "[DESIGNATION] = ? ,[COMMENCEDON] = ? ,[COMPLETIONON] = ? ,[DESCRIPTION] = ? , [MODBY] = ? WHERE [CODE] = ?;";
+
+		int result = -1;
+
+		try {
+			connection = conn;
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, data.getOrganization());
+			preparedStatement.setInt(2, data.getStudent());
+			preparedStatement.setInt(3, data.getIndustry());
+			preparedStatement.setInt(4, data.getJobCategoty());
+			preparedStatement.setString(5, data.getDesignation());
+			preparedStatement.setDate(6, data.getCommencedOn());
+			preparedStatement.setDate(7, data.getCompletionOn());
+			preparedStatement.setString(8, data.getDescription());
+			preparedStatement.setString(9, data.getModBy());
+			preparedStatement.setString(10, data.getModBy());
+		
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			log.error("add(): SQLE: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.error("add(): E: " + ex.toString());
+			throw ex;
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+		}
+		return result;
 	}
 
 
