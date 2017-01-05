@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161230 JH c39-add-course-provider CourseProviderTypeDAO.java created
 //20161231 JH c39-add-course-provider getAll() method modified
+//20170105 JH c39-add-course-provider getAll() method modified: implement ApplicatonSatatus enum class
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CourseProviderTypeDAO implements ICrud {
 	static Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());
@@ -45,11 +47,12 @@ public class CourseProviderTypeDAO implements ICrud {
 
 		try {
 
-			String courseProviderTypes = "SELECT * FROM [CAMPUS].[COURSEPROVIDERTYPE] WHERE ISACTIVE = 1 ";
+			String courseProviderTypes = "SELECT * FROM [CAMPUS].[COURSEPROVIDERTYPE] WHERE ISACTIVE = ? ";
 			
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(courseProviderTypes);
-
+			preparedStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			
 			resultSet = preparedStatement.executeQuery();
 
 			while(resultSet.next()){
