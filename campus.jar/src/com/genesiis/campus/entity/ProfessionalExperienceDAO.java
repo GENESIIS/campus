@@ -123,17 +123,17 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
+		ProfessionalExperience data = (ProfessionalExperience) object;
 		PreparedStatement preparedStatement = null;
-		
-		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
-				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
+		Connection connection = null;
+
+		String query = "UPDATE [CAMPUS].[PROFESSIONALEXPERIENCE] SET [ORGANIZATION] = ? ,[STUDENT] = ? ,[INDUSTRY] = ? ,[JOBCATEGORY] = ? ,"
+				+ "[DESIGNATION] = ? ,[COMMENCEDON] = ? ,[COMPLETIONON] = ? ,[DESCRIPTION] = ? , [MODBY] = ? WHERE [CODE] = ?;";
 
 		int result = -1;
 
 		try {
-			Connection connection = conn;
-			ProfessionalExperience data = (ProfessionalExperience) object;
+			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());
 			preparedStatement.setInt(2, data.getStudent());
@@ -144,7 +144,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 			preparedStatement.setDate(7, data.getCompletionOn());
 			preparedStatement.setString(8, data.getDescription());
 			preparedStatement.setString(9, data.getModBy());
-			
+			preparedStatement.setString(10, data.getModBy());
 		
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
