@@ -7,7 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
+/**The class {@code DaoHelper} is a form utility helper class.Created for the purpose of DAO level utility functions. * 
+ * @author dumani DJ     
+ */
+
 public class DaoHelper {
+	static Logger log = Logger.getLogger(DaoHelper.class.getName());
 	
 	 /**
      * Closes down resources
@@ -17,7 +24,7 @@ public class DaoHelper {
      * @author DJ     
      */
 	
-	public static void cleanup(Connection conn, Statement statement, ResultSet rs)
+	public static void cleanup(Connection conn, Statement statement, ResultSet rs) throws SQLException
     {      
         if (rs != null)
         {
@@ -25,7 +32,10 @@ public class DaoHelper {
             {
                 rs.close();
             }
-            catch (SQLException ignore){}
+            catch (SQLException ignore){
+            	log.error("cleanup():SQLException "+ ignore.toString()); 
+            	throw ignore;
+            }
         }
         if (statement != null)
         {
@@ -33,7 +43,10 @@ public class DaoHelper {
             {                
                 statement.close();
             }
-            catch (SQLException ignore){}
+            catch (SQLException ignore){
+            	log.error("cleanup():SQLException "+ ignore.toString()); 
+            	throw ignore;
+            }
         }
         if (conn != null)
         {
@@ -41,7 +54,10 @@ public class DaoHelper {
             {               
                 conn.close();
             }
-            catch (SQLException ignore){}
+            catch (SQLException ignore){
+            	log.error("cleanup():SQLException "+ ignore.toString()); 
+            	throw ignore;
+            }
         }       
     }
 

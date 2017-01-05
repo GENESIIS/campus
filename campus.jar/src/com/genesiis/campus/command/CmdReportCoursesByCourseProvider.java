@@ -80,12 +80,12 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		
 	}
 
-	/* Identify input search parameters and retrieve particular  result set according to search criteria.
+	/** Identify input search parameters and retrieve particular  result set according to search criteria.
 	 * @author dumani DJ
 	 * @param helper
-	 * @throws Exception
+	 * @throws ParseException,Exception
 	 */
-	private void generateReportResults(IDataHelper helper)throws  Exception {
+	private void generateReportResults(IDataHelper helper)throws ParseException, Exception {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String providerCodeString = helper.getParameter("cProviderCode");
