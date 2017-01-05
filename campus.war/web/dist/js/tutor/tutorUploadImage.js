@@ -28,6 +28,7 @@ function displayTutorProfileImageAtPageLoad(){
 			if(response['successCode']===1){
 				
 				displayLabelMessage('displayLabel','green',response['message']);
+				jQuery('#profileImage').attr('src',"../../../"+responce['profilePicture']);
 				
 			} else{
 				// if the execution success but logically generated error application vice
