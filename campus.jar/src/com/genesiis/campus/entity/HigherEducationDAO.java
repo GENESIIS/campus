@@ -6,8 +6,10 @@ package com.genesiis.campus.entity;
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20160104 PN CAM-28: modified the SQL query inside findById() method.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170105 PN CAM-28: update(Object object, Connection conn) DAO method implemented.
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -200,8 +202,50 @@ public class HigherEducationDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		HigherEducation data = (HigherEducation) object;
+		PreparedStatement preparedStatement = null;
+		Connection connection = null;
+
+		String query = "UPDATE [CAMPUS].[HIGHERDUCATION]  SET [INSTITUTE] = ? ,[AFFINSTITUTE] = ? ,[STUDENT] = ? ,[LEVEL] = ?  ,[AWARD] = ? ,[MAJOR] = ? ,"
+				+ "[COUNTRY] = ? ,[COMMENCEDON] = ? ,[COMPLETIONON] = ? ,[STUDENTID] = ? ,[RESULT] = ? ,[DESCRIPTION] = ? ,[MEDIUM] = ? ,"
+				+ ",[MODBY] = ? WHERE [CODE] = ?;";
+
+		int result = -1;
+
+		try {
+			connection = conn;
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, data.getInstitute());
+			preparedStatement.setString(2, data.getAffiliatedInstitute());
+			preparedStatement.setInt(3, data.getStudent());
+			preparedStatement.setInt(4, data.getLevel());
+			preparedStatement.setInt(5, data.getAward());
+			preparedStatement.setInt(6, data.getMajor());
+			preparedStatement.setInt(7, data.getCountry());
+			preparedStatement.setDate(8, data.getCommencedOn());
+			preparedStatement.setDate(9, data.getCompletedOn());
+			preparedStatement.setString(10, data.getStudentId());
+			preparedStatement.setString(11, data.getResult());
+			preparedStatement.setString(12, data.getDescription());
+			preparedStatement.setInt(13, data.getMedium());
+			preparedStatement.setInt(14, data.getCode());
+			
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			log.error("add(): SQLE: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.error("add(): E: " + ex.toString());
+			throw ex;
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+		return result;
 	}
 
 	@Override
