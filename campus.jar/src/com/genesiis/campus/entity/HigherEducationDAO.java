@@ -165,7 +165,7 @@ public class HigherEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getInstitute());
 			preparedStatement.setString(2, data.getAffiliatedInstitute());
