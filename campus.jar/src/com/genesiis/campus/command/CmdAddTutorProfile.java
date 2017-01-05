@@ -161,6 +161,8 @@ public class CmdAddTutorProfile implements ICommand {
 			} else {
 				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
 			}
+
+			tutor.setIsApproved(false);
 			
 			tutor.setAddressLine1(helper.getParameter("address1"));
 			

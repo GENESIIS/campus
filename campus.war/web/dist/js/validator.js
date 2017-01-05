@@ -68,8 +68,6 @@ function validateTutorFileds() {
 	var landAreaCode = $("#landAreaCode").val();
 	var landNumber = $("#landNumber").val();
 	var address1 = $("#address1").val();
-	//var address2 = $("#address2").val();
-	//var address3 = $("#address3").val();
 	var weblink = $("#weblink").val();
 	var facebook = $("#facebook").val();
 	var linkedin = $("#linkedin").val();

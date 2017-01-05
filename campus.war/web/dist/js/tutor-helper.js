@@ -5,13 +5,11 @@
 $(document).ready(function() {
 
 	displayCountryDetails();
-	//displayTownDetails();
 });
 
 $("#countryDetails").on("change", function(){
 		var selected = $(this).val();
 		displayTownDetails(selected);
-		//viewCountryCodes(selected);
 		$("#mobileCountryCode").val("+" + selected);
 		$("#landCountryCode").val("+" + selected);
 	})
