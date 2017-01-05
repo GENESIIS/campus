@@ -163,12 +163,12 @@ public class StudentDAO implements ICrud {
 	@Override
 	public int update(Object object, Connection con) throws SQLException,
 			Exception {
-		Student student = (Student) object;
-		Connection conn = con;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
 
 		try {
+			Student student = (Student) object;
+			Connection conn = con;
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
 					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
@@ -200,9 +200,8 @@ public class StudentDAO implements ICrud {
 			stmt.setString(20, student.getAddress1());
 			stmt.setString(21, student.getTown());
 			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());		
-			stmt.executeUpdate();
-			isUpdated = 1;
+			stmt.setInt(23, student.getCode());			
+			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;

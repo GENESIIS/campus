@@ -130,13 +130,11 @@ public class StudentInterestDAO implements ICrud {
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
-
 		String query = "DELETE FROM  [CAMPUS].[STUDENTINTEREST] WHERE [STUDENT] = ? AND [INTEREST] = ?;";
-
 		int result = -1;
 
 		try {
+			Connection connection = conn;
 			StudentInterest data = (StudentInterest) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());

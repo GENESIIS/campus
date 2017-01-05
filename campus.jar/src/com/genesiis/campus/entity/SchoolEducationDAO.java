@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161126 PN c26-add-student-details: modified findByIdMethod() method by setting country name to the return collection.
 //20161228 PN CAM-26: Removed final modifier from the ResultSet variables. Added close statement for the ResultSet with in the finally statement. 
 //		   PN CAM-26: Added connection.rollback() statements for the catch close.
+//20170105 PN CAM-26: implemented update(Object object, Connection conn) method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.SchoolEducation;
@@ -111,14 +114,13 @@ public class SchoolEducationDAO implements ICrud{
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
-
 		String query = "INSERT INTO [CAMPUS].[SCHOOLEDUCATION] ([STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], "
 				+ "[RESULT], [INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [CRTON], [CRTBY], [MEDIUM]) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?,(getdate()), ?, ?);";
 		int result = -1;
 
 		try {
+			Connection connection = conn;
 			SchoolEducation data = (SchoolEducation) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
@@ -149,35 +151,36 @@ public class SchoolEducationDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		SchoolEducation data = (SchoolEducation) object;
+		
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		
 
-		String query = "UPDATE [CAMPUS].[SCHOOLEDUCATION] SET "
-				+ "[SCHOOLGRADE]=?, [MAJOR]=?, [COUNTRY]=?, [RESULT]=?, [INDEXNO]=?, [SCHOOL]=?, "
-				+ "[ACHIVEDON]=?, [DESCRIPTION]=?, [MODON]=(getdate()), [MODBY]=?, [MEDIUM]=? "
-				+ "WHERE [STUDENT]=?;";
+		String query = "UPDATE [CAMPUS].[SCHOOLEDUCATION] SET [SCHOOLGRADE] = ? ,[MAJOR] = ? ,[COUNTRY] = ? ,[RESULT] = ? ,[SCHOOL] = ? ,"
+				+ "[ACHIVEDON] = ? ,[DESCRIPTION] = ? ,[MODON] = ? ,[MODBY] = ? ,[MEDIUM] = ? ,[INDEXNO] = ? WHERE [STUDENT] = ?;";
 		int result = -1;
 
 		try {
+			SchoolEducation data = (SchoolEducation) object;
+			Connection connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getSchoolGrade());
 			preparedStatement.setInt(2, data.getMajor());
 			preparedStatement.setInt(3, data.getCountry());
 			preparedStatement.setInt(4, data.getResult());
-			preparedStatement.setString(5, data.getIndexNo());
-			preparedStatement.setString(6, data.getSchoolName());
-			preparedStatement.setDate(7, data.getAchievedOn());
-			preparedStatement.setString(8, data.getDescription());
+			preparedStatement.setString(5, data.getSchoolName());
+			preparedStatement.setDate(6, data.getAchievedOn());
+			preparedStatement.setString(7, data.getDescription());
+			preparedStatement.setString(8, String.valueOf(new Date()));
 			preparedStatement.setString(9, data.getModBy());
 			preparedStatement.setInt(10, data.getMedium());
-			preparedStatement.setInt(11, data.getStudent());
+			preparedStatement.setString(11, data.getIndexNo());
+			preparedStatement.setInt(16, data.getStudent());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			log.error("add(): SQLE: " + sqle.toString());
+			log.error("update(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.error("add(): E: " + ex.toString());
+			log.error("update(): E: " + ex.toString());
 			throw ex;
 		} finally {
 			if (preparedStatement != null) {

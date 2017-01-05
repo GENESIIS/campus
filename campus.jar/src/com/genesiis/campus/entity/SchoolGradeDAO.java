@@ -49,7 +49,7 @@ public class SchoolGradeDAO implements ICrud{
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[LEVEL],[TITLE] FROM [CAMPUS].[SCHOOLGRADE] WHERE [LEVEL] = 17 AND [ISACTIVE]=1;";
+			String query = "SELECT [CODE],[LEVEL],[TITLE] FROM [CAMPUS].[SCHOOLGRADE] WHERE [LEVEL] = 17 AND [ISACTIVE]=1;";//17 is the level for school education.
 
 			stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
