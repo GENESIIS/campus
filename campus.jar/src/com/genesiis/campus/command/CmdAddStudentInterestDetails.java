@@ -31,9 +31,9 @@ public class CmdAddStudentInterestDetails implements ICommand {
 		String message = "";
 
 		ICrud interestDao = new StudentInterestDAO();
-		Connection connection = ConnectionManager.getConnection();
+		Connection connection = null;
 		try {
-			
+			connection = ConnectionManager.getConnection();
 			String[] oldStudentInterest = helper.getParameter("oldStudentInterest").split(",");
 			String[] newStudentInterest = helper.getParameter("newStudentInterest").split(",");
 			

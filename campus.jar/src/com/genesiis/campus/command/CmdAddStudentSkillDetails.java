@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -32,14 +31,15 @@ public class CmdAddStudentSkillDetails implements ICommand {
 		int StudentCode = 1;
 		String message = "";
 		ICrud skillDao = new StudentSkillDAO();
-		Connection connection = ConnectionManager.getConnection();
-		try {	
+		Connection connection = null;
+		try {
+			connection = ConnectionManager.getConnection();
 			String[] oldStudentSkills = helper.getParameter("oldStudentSkills").split(",");
 			String[] newStudentSkills = helper.getParameter("newStudentSkills").split(",");
 			// Commit false till the updations/additions successfully
 			// completed.
 			connection.setAutoCommit(false);
-			
+
 			if (oldStudentSkills.length > newStudentSkills.length) {
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
 				for (Object object : diff) {
@@ -74,13 +74,13 @@ public class CmdAddStudentSkillDetails implements ICommand {
 					skill.setCrtBy("USER");
 					skillDao.add(skill, connection);
 				}
-			}	
+			}
 			message = SystemMessage.SUCCESS.message();
 			// Commit if all the updations/additions successfully completed.
 			connection.commit();
-			
+
 			Collection<Collection<String>> studentSkillCollection = skillDao.findById(StudentCode);
-			view.setCollection(studentSkillCollection);		
+			view.setCollection(studentSkillCollection);
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();
@@ -91,8 +91,8 @@ public class CmdAddStudentSkillDetails implements ICommand {
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
-		}finally{
-			if(connection != null){
+		} finally {
+			if (connection != null) {
 				connection.close();
 			}
 		}

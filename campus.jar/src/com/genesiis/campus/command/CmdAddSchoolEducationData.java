@@ -39,9 +39,10 @@ public class CmdAddSchoolEducationData implements ICommand {
 		Collection<Collection<String>> educationCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> educationData = new ArrayList<>();
 		String message = "";
-		Connection connection = ConnectionManager.getConnection();
+		Connection connection = null;
 
 		try {
+			connection = ConnectionManager.getConnection();
 			data = gson.fromJson(helper.getParameter("jsonData"), SchoolEducation.class);
 			data.setStudent(StudentCode);
 			data.setCrtBy("USER");
