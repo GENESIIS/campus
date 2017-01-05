@@ -2,7 +2,7 @@ package com.genesiis.campus.entity;
 //20161128 PN c26-add-student-details: INIT ProfessionalExperienceDAO.java class.
 //		   PN c26-add-student-details: implemented add() method.
 //20161129 PN c26-add-student-details: modified SQL query inside add() method.
-//20161208 PN CAM-26 : add-student-details: implemented add(object,Connection) method
+//20161208 PN CAM-26 : add-student-details: implemented add(object,Connection) method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,8 +122,42 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement preparedStatement = null;
+		
+		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
+				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
+
+		int result = -1;
+
+		try {
+			Connection connection = conn;
+			ProfessionalExperience data = (ProfessionalExperience) object;
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, data.getOrganization());
+			preparedStatement.setInt(2, data.getStudent());
+			preparedStatement.setInt(3, data.getIndustry());
+			preparedStatement.setInt(4, data.getJobCategoty());
+			preparedStatement.setString(5, data.getDesignation());
+			preparedStatement.setDate(6, data.getCommencedOn());
+			preparedStatement.setDate(7, data.getCompletionOn());
+			preparedStatement.setString(8, data.getDescription());
+			preparedStatement.setString(9, data.getModBy());
+			
+		
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			log.error("add(): SQLE: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.error("add(): E: " + ex.toString());
+			throw ex;
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+		}
+		return result;
 	}
 
 	@Override
