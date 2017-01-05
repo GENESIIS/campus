@@ -245,7 +245,7 @@ function providerPrefixValidation() {
 
 }
 
-function showUserMessage{
+function showUserMessage(){
 	if(window.UserMessage != null){
 		var userErrorMessage = $("#usermessage");
 		userErrorMessage.html(responseErrorMessage);
@@ -270,10 +270,11 @@ function getProviderType() {
 				window.registerId = response.registerId;
 
 				var responseErrorMessage = response.userMessage;
-				var userErrorMessage = $("#usermessage");
-				userErrorMessage.html(responseErrorMessage);
+				alert(responseErrorMessage);
+				var userErrorMessage = $("#errorMessage");
+				userErrorMessage.html(response.userMessage);
 			
-				document.getElementById("usermessage").html = response.userMessage;
+			//	document.getElementById("usermessage").html = response.userMessage;
 				// document.getElementById("logoPanel").style.display
 				// = "block";
 				// document.getElementById("basicForm").style.display
