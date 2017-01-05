@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170104 MM c25-student-dashboard-MP Added code to fetch student biographical info from DB
 //20170104 MM c25-student-dashboard-MP Readied the code to get the student code from the 
 //				session when session management is implemented.
+//20170105 MM c25-student-dashboard-MP Added JavaDoc comment for execute(IDataHelper, IView) method
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentBasicBioDAO;
@@ -28,6 +29,16 @@ public class CmdListStudentDashboardDetails  implements ICommand {
 	
 	static Logger Log = Logger.getLogger(CmdListStudentDashboardDetails.class.getName());
 
+	/**
+	 * Fetches student profile-related data from the DB to be displayed in the Student Dashboard.
+	 * 
+	 * @param An IDataHelper that wraps an HttpRequest typed object that contains the parameters sent by the client.  
+	 * @param An IView that wraps a variable of type Collection<Collection<String>> that will be assigned profile-related content as a result of the execution of this method. 
+	 * @return An IView that contains the student-profile related data collection.   
+	 * 
+	 * @author miyuru
+	 *
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		
