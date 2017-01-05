@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: implemented findByIdMethod().
 //20161126 PN c26-add-student-details: modified findByIdMethod() method by setting country name to the return collection.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+//20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,9 +82,11 @@ public class SchoolEducationDAO implements ICrud{
 				allEducationList.add(singleEducationCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -110,7 +113,7 @@ public class SchoolEducationDAO implements ICrud{
 	public int add(Object object, Connection conn) throws SQLException, Exception {
 		SchoolEducation data = (SchoolEducation) object;
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[SCHOOLEDUCATION] ([STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], "
 				+ "[RESULT], [INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [CRTON], [CRTBY], [MEDIUM]) "
@@ -118,6 +121,7 @@ public class SchoolEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSchoolGrade());
@@ -149,7 +153,7 @@ public class SchoolEducationDAO implements ICrud{
 	public int update(Object object, Connection conn) throws SQLException, Exception {
 		SchoolEducation data = (SchoolEducation) object;
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		Connection connection = null;
 
 		String query = "UPDATE [CAMPUS].[SCHOOLEDUCATION] SET "
 				+ "[SCHOOLGRADE]=?, [MAJOR]=?, [COUNTRY]=?, [RESULT]=?, [INDEXNO]=?, [SCHOOL]=?, "
@@ -158,6 +162,7 @@ public class SchoolEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getSchoolGrade());
 			preparedStatement.setInt(2, data.getMajor());

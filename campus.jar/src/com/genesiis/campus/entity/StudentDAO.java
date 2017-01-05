@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161208 PN CAM-26: add-student-details: modified findById() method exception handling logger messages.
 //20161214 PN CAM-28: findById() method modified. SQL query and data list.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+//20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,9 +50,11 @@ public class StudentDAO implements ICrud {
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
@@ -130,9 +133,11 @@ public class StudentDAO implements ICrud {
 			}
 
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			Log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			Log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -168,11 +173,12 @@ public class StudentDAO implements ICrud {
 	public int update(Object object, Connection con) throws SQLException,
 			Exception {
 		Student student = (Student) object;
-		Connection conn = con;
+		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
 
 		try {
+			conn = con;
 			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "

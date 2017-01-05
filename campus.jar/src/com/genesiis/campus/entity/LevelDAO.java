@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161101 PN c11-criteria-based-filter-search modified getAll() method SQL query.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
+//20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,9 +64,11 @@ public class LevelDAO implements ICrud {
 				allLevelList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -105,9 +108,11 @@ public class LevelDAO implements ICrud {
 				allLevelList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

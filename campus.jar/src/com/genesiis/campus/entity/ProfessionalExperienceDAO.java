@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20161220 PN CAM-28: implemented delete(Object object, Connection conn) method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170103 PN CAM-28: changed the findById(Object object) method by giving condition to check different types of the 'object' parameter.
+//20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +31,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 	public int add(Object object) throws SQLException, Exception {
 		ProfessionalExperience data = (ProfessionalExperience) object;
 		PreparedStatement preparedStatement = null;
-		Connection connection = ConnectionManager.getConnection();;
+		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
 				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
@@ -39,6 +40,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = ConnectionManager.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(6, data.getOrganization());
 			preparedStatement.setInt(1, data.getStudent());
@@ -53,9 +55,11 @@ public class ProfessionalExperienceDAO implements ICrud{
 		
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
+			connection.rollback();
 			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
+			connection.rollback();
 			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
@@ -138,9 +142,11 @@ public class ProfessionalExperienceDAO implements ICrud{
 				allhigherEduList.add(singlehigherEduCollection);
 			}
 		} catch (SQLException sqlException) {
+			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -167,7 +173,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 	public int add(Object object, Connection conn) throws SQLException, Exception {
 		ProfessionalExperience data = (ProfessionalExperience) object;
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[PROFESSIONALEXPERIENCE] ([ORGANIZATION], [STUDENT], [INDUSTRY],"
 				+ " [JOBCATEGORY], [DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION],[CRTBY]) "
@@ -176,6 +182,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());
 			preparedStatement.setInt(2, data.getStudent());
@@ -214,13 +221,14 @@ public class ProfessionalExperienceDAO implements ICrud{
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		ProfessionalExperience data = (ProfessionalExperience) object;		
 		int studentCode = data.getCode();
-		Connection connection = conn;
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int result = -1;
 
 		String deleteSQL = "DELETE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] WHERE [CODE] = ?;";
 
 		try {
+			connection = conn;
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, studentCode);
 
