@@ -44,15 +44,15 @@ public class CmdGenerateEmailSinUp implements ICommand {
 			String message = "";
 			String gsonData = helper.getParameter("jsonData");
 			this.setPartialStudent((RowStudentForJason)extractDumyObjectFrom(gsonData));
-			 String recieversName = partialStudent.getFirstName().concat(" "+ partialStudent.getLastName());
-			 signUpEmailComposer.setEnvironment(recieversName,
-			 							partialStudent.getEmail(),
-			 							signUpEmailComposer.composeSingleEmailList(partialStudent.getEmail()),
-			 							SystemMessage.STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT.message(),
-			 							SystemMessage.STUDENT_SUCCESSFULL_CREATTION.message());
+			String recieversName = partialStudent.getFirstName().concat(" "+ partialStudent.getLastName());
+			signUpEmailComposer.setEnvironment(recieversName,
+										partialStudent.getEmail(),
+										signUpEmailComposer.composeSingleEmailList(partialStudent.getEmail()),
+										SystemMessage.STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT.message(),
+										SystemMessage.STUDENT_SUCCESSFULL_CREATTION.message());
 			 							
-			 signUpEmailComposer.setGeneralEmail(signUpEmailComposer.formatEmailInstance(
-					 addSpecificContentToOriginalMailBody())); 	
+			signUpEmailComposer.setGeneralEmail(signUpEmailComposer.formatEmailInstance(
+				 addSpecificContentToOriginalMailBody())); 	
 			status=this.sendMail(signUpEmailComposer);
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 			

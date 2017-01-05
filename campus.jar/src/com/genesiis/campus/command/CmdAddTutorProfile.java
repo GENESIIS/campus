@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
 //20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
+//20170105 CW c98-send-email-at-tutor-signup Modified execute() add email sending at tutor signup
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,22 +55,25 @@ public class CmdAddTutorProfile implements ICommand {
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {
 						message = SystemMessage.ADDED.message();
-						isEmailProduced(result,helper,view);
+						//ICommand emailSignUp = new CmdGenerateEmailSinUp();
+						ICommand emailSignUp = new CmdGenerateEmailTutorSinUp();
+						emailSignUp.execute(helper, view); //send email
 					} else {
 						message = SystemMessage.ERROR.message();
 					}
 				
 			}
+		}  catch (SQLException sqle){
+			log.error("execute(): SQLException " + sqle.toString());
+			throw sqle;
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
-
 		}
 		return view;
 	}
-
 	
 
 	/*
@@ -162,6 +166,8 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
 			}
 			
+			tutor.setIsApproved(false);
+			
 			tutor.setAddressLine1(helper.getParameter("address1"));
 			
 			if (helper.getParameter("address2").equals("")) {
@@ -181,31 +187,6 @@ public class CmdAddTutorProfile implements ICommand {
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());
 			throw e;
-		}
-	}
-	
-	/*
-	 * isEmailProduced() sends an email if the emapilSendingStatus is 1
-	 * else it doesn't dispense an email
-	 * @author dushantha DN
-	 * @throws SQLException
-	 * @param emapilSendingStatus
-	 * @param helper
-	 * @param view
-	 */
-	private void isEmailProduced(int emapilSendingStatus,IDataHelper helper, IView view) throws SQLException,Exception {
-		
-			try{
-				if(emapilSendingStatus ==1){
-					ICommand emailSignUp = new CmdGenerateEmailSinUp();
-					emailSignUp.execute(helper, view); //send email
-				}
-			} catch (SQLException sqle){
-				log.error("isEmailProduced: SQLException " + sqle.toString());
-				throw sqle;
-		} catch (Exception exp){
-			log.error("isEmailProduced: Exception " + exp.toString());
-			throw exp;
 		}
 	}
 }
