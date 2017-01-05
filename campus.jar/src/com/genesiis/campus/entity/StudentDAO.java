@@ -8,7 +8,7 @@ package com.genesiis.campus.entity;
 //20161214 PN CAM-28: findById() method modified. SQL query and data list.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
-
+//20170105 PN CAM-28: edit user information: modified update(Object object, Connection con) method coding.
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,22 +39,44 @@ public class StudentDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query ="UPDATE [CAMPUS].[STUDENT] SET [IMAGEPATH] = ? , [MODON] = ?, [MODBY] = ? WHERE CODE = ?";
+			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
+					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
+					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
+					+ "[DESCRIPTION] = ?, [FACEBOOKURL] = ?, [TWITTERURL] = ?, [MYSPACEURL] = ?, [LINKEDINURL] = ?, "
+					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [TOWN] = ?, "
+					+ "[MODON]=(getdate()), [MODBY] = ? "
+					+ "WHERE [CODE] = ?;";
 
-			stmt = conn.prepareStatement(query);
-			
-			stmt.setString(1, student.getImagePath());
-			stmt.setDate(2, student.getModOn());
-			stmt.setString(4, student.getModBy());
-			stmt.setInt(2, student.getCode());
+			stmt = conn.prepareStatement(query);	
+			stmt.setString(1, student.getFirstName());
+			stmt.setString(2, student.getMiddleName());
+			stmt.setString(3, student.getLastName());
+			stmt.setDate(4, student.getDateOfBirth());
+			stmt.setInt(5, student.getGender());
+			stmt.setString(6, student.getEmail());
+			stmt.setString(7, student.getLandPhoneCountryCode());
+			stmt.setString(8, student.getLandPhoneNo());
+			stmt.setString(9, student.getLandPhoneCountryCode());
+			stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
+			stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+			stmt.setString(12, student.getDescription());
+			stmt.setString(13, student.getFacebookUrl());
+			stmt.setString(14, student.getTwitterUrl());
+			stmt.setString(15, student.getMySpaceUrl());
+			stmt.setString(16, student.getLinkedInUrl());
+			stmt.setString(17, student.getInstagramUrl());
+			stmt.setString(18, student.getViberNumber());
+			stmt.setString(19, student.getWhatsAppNumber());
+			stmt.setString(20, student.getAddress1());
+			stmt.setString(21, student.getTown());
+			stmt.setString(22, student.getModBy());
+			stmt.setInt(23, student.getCode());		
 			stmt.executeUpdate();
 			isUpdated = 1;
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			Log.error("update(Object object): E " + e.toString());
 			throw e;
 		} finally {
@@ -179,7 +201,6 @@ public class StudentDAO implements ICrud {
 
 		try {
 			conn = con;
-			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
 					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
