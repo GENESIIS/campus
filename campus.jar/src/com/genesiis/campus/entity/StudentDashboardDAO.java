@@ -33,6 +33,8 @@ package com.genesiis.campus.entity;
 //				the number of programmes to fetch are taken dynamically
 //20161229 MM c25-student-create-dashboard-MP-mm Modified query so at least 10 institutes are fetched 
 //				which makes the programme list to be greater than 10 
+//20170105 MM c25-student-create-dashboard-MP-mm Added JavaDoc comment for the findByID(Object) method; 
+//				converted string building query to use a StringBuilder object  
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
@@ -70,6 +72,25 @@ public class StudentDashboardDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * Selects the recommended programmes for a student. Programmes are searched for based on the following procedure until the 
+	 * result set has programmes of 10 unique course providers.  
+	 * 
+	 * When programmes with 10 unique CourseProvider records are not obtained by a particular step, the next step is taken.
+	 *	1. Select Programmes that match a Student's Interests AND the exact Town
+	 *	2. Select Programmes that match a Student's Interests AND DSD
+	 *	3. Select Programmes that match a Student's Interests AND District
+	 *	4. Select Programmes that match a Student's Interests AND Province
+	 *	5. Select Programmes that match a Student's Interests AND Country
+	 *	6. Select Programmes that match only Interests of a student
+	 *	7. Select Programmes that match only Town of a student
+	 *	8. Select a random list of Programmes
+	 * 
+	 * @param An Object containing the code of the Student.
+	 * @return An object of type Collection<Collection<String>> containing a list of recommended programmes for a student.
+	 * 
+	 * @author miyuru
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -160,14 +181,14 @@ public class StudentDashboardDAO implements ICrud {
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
 
 		} catch (ClassCastException cce) {
-			Log.info("findById(Object): ClassCastException: " + cce.toString());
+			Log.error("findById(Object): ClassCastException: " + cce.toString());
 			throw new IllegalArgumentException(
 					"The argument passed is not of expected type (RecommendedProgrammesSearchDTO)!");
 		} catch (SQLException sqle) {
-			Log.info("findById(Object): SQLException: " + sqle.toString());
+			Log.error("findById(Object): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			Log.info("findById(Object): Exception: " + e.toString());
+			Log.error("findById(Object): Exception: " + e.toString());
 			throw e;
 		} finally {
 			if (ps != null) {
@@ -236,5 +257,4 @@ public class StudentDashboardDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
