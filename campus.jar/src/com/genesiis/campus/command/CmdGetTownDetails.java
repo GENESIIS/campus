@@ -18,11 +18,15 @@ public class CmdGetTownDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		ICrud townDao = new TownDAO();
-		
+
 		try {
-			Collection<Collection<String>> townCollection = townDao
-					.findById(Integer.parseInt(helper.getParameter("country")));
-			view.setCollection(townCollection);
+
+			if (helper.getParameter("country") != null) {
+
+				Collection<Collection<String>> townCollection = townDao
+						.findById(Integer.parseInt(helper.getParameter("country")));
+				view.setCollection(townCollection);
+			}
 		} catch (SQLException sqle) {
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;

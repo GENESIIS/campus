@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class SchoolEducationDAO implements ICrud{
 	static Logger log = Logger.getLogger(SchoolEducationDAO.class.getName());
@@ -46,15 +47,18 @@ public class SchoolEducationDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
+		
 		try {
 			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], [RESULT], "
 					+ "[INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [MEDIUM] "
-					+ "FROM [CAMPUS].[SCHOOLEDUCATION] WHERE [STUDENT] = ? AND ISACTIVE = 1;";
+					+ "FROM [CAMPUS].[SCHOOLEDUCATION] WHERE [STUDENT] = ? AND ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
+			stmt.setInt(2, isActive);
 			rs = stmt.executeQuery();	
 
 			while (rs.next()) {

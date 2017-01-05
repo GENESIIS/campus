@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class MediumDAO implements ICrud{
 	static Logger log = Logger.getLogger(MediumDAO.class.getName());
@@ -45,11 +46,14 @@ public class MediumDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
+		
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT  [CODE],[DESCRIPTION] FROM CAMPUS.MEDIUM WHERE ISACTIVE=1;";
+			String query = "SELECT  [CODE],[DESCRIPTION] FROM CAMPUS.MEDIUM WHERE ISACTIVE=?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, isActive);	
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

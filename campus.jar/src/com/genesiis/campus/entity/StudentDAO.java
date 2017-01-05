@@ -70,9 +70,8 @@ public class StudentDAO implements ICrud {
 			stmt.setString(20, student.getAddress1());
 			stmt.setString(21, student.getTown());
 			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());		
-			stmt.executeUpdate();
-			isUpdated = 1;
+			stmt.setInt(23, student.getCode());				
+			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;

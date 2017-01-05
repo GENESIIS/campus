@@ -25,6 +25,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
 
 		int result = -1;
+		
 
 		try {
 			connection = ConnectionManager.getConnection();

@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class MajorDAO implements ICrud {
 	static Logger log = Logger.getLogger(MajorDAO.class.getName());
@@ -44,6 +45,8 @@ public class MajorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
+		
 		try {
 			int categoryCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
@@ -51,10 +54,11 @@ public class MajorDAO implements ICrud {
 					+ "FROM [CAMPUS].[MAJOR] m "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON m.CODE = p.MAJOR "
 					+ "JOIN [CAMPUS].[CATEGORY] c ON c.CODE = p.CATEGORY "
-					+ "WHERE c.CODE = ? AND c.ISACTIVE = 1;";
+					+ "WHERE c.CODE = ? AND c.ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
+			stmt.setInt(2, isActive);
 			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
@@ -94,11 +98,14 @@ public class MajorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
+		
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

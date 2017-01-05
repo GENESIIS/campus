@@ -1,7 +1,5 @@
 package com.genesiis.campus.command;
 
-import java.sql.Connection;
-
 //20161204 PN c26-add-student-details: INIT CmdAddStudentPersonlDetails.java class.
 //20161205 PN c26-add-student-details: implementing execute() method.
 //20161228 PN CAM-26: modified execute() method by removing add() method inside if(isValid) {} block.
@@ -17,7 +15,6 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
