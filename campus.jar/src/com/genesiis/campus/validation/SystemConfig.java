@@ -3,6 +3,8 @@ package com.genesiis.campus.validation;
 //20161113 MM c5-corporate-training-landing-page-MP Initialised file
 //20161118 MM c5-corporate-training-landing-page-MP Added fields value1, 
 //				value2 and value3 to match fields in SystemConfig table
+//20170104 MM c25-student-dashboard-MP - Added value passed for value1 field in the constructor for the 
+//				constant STUDENT_PROFILE_IMAGE_PATH
 
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
@@ -27,7 +29,7 @@ public enum SystemConfig {
 	BANNER_PATH("education\\banner", "", ""),
 	BANNER_LINKED_IMAGE_PATH("","",""),
 	COURSE_IMAGE_PATH("","",""),
-	STUDENT_PROFILE_IMAGE_PATH("","",""),
+	STUDENT_PROFILE_IMAGE_PATH("education\\student\\pro_image","",""),
 	TUTOR_PROFILE_IMAGE_PATH("","","");
 	
 	private String value1;
