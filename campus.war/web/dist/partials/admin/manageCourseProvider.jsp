@@ -106,7 +106,7 @@
 			<input type="hidden" name="CCO" id="CCO"
 				value="ADD_FEATURED_COURSE_PROVIDER" />
 			<div class="content-holder center-block clearfix">
-				<div class="alert alert-danger" role="alert" id="usermessage">
+				<div class="alert alert-danger" role="alert" id="errorMessage">
 				</div>
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
