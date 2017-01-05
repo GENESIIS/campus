@@ -23,15 +23,21 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * The class {@code CmdReportCoursesByCourseProvider} is a form of Command class.It is  created for the purpose of handling commands of
+ * courses by course provider report generation. 
+ * @author dumani DJ
+ *
+*/
 public class CmdReportCoursesByCourseProvider implements ICommand {
 	static Logger log = Logger.getLogger(CmdReportCoursesByCourseProvider.class
 			.getName());
 
 	/**
 	 * @author DJ
-	 * @param helper
-	 * @param iView
-	 * @return iView
+	 * @param helper -  IDataHelper object
+	 * @param iView -   IView Object
+	 * @return iView - Collection of strings 
 	 * @throws Exception
 	 */
 
@@ -61,8 +67,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 	}
 	
 	/** Retrieve course providers for drop down list in search view.
-	 * @author DJ
-	 * @param helper
+	 * @author dumani DJ
+	 * @param helper -IDataHelper object
 	 * @throws Exception
 	 */	
 	private void generateReportSearchView(IDataHelper helper) throws Exception {
@@ -74,8 +80,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		
 	}
 
-	/** Identify input search parameters and retrieve particular  result set according to search criteria.
-	 * @author DJ
+	/* Identify input search parameters and retrieve particular  result set according to search criteria.
+	 * @author dumani DJ
 	 * @param helper
 	 * @throws Exception
 	 */

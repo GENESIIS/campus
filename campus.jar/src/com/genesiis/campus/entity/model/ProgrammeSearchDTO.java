@@ -4,6 +4,12 @@ package com.genesiis.campus.entity.model;
 
 import java.util.Date;
 
+/**
+ * The class {@code ProgrammeSearchDTO} is a form of SearchDTO created for the purpose of transfer input parameters to DAO level. 
+ * @author dumani DJ
+ *
+*/
+
 public class ProgrammeSearchDTO {
 	private int programmeCode;
 	private int courseProviderCode;

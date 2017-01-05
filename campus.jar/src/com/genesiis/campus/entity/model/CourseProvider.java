@@ -2,6 +2,12 @@ package com.genesiis.campus.entity.model;
 
 //DJ 20161229 c51-report-courses-by-course-provider-MP-dj created CourseProvider.java
 
+/**
+ * The class {@code CourseProvider} is a form of SearchDTO created for the purpose of transfer input parameters to DAO level. 
+ * @author dumani DJ
+ *
+*/
+
 public class CourseProvider {
 
 	private int code;
