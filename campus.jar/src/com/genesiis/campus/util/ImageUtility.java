@@ -1,10 +1,17 @@
 package com.genesiis.campus.util;
-
+//20170105 DN c47-tutor-add-tutor-information-upload-image-dn created the ImageUtility.java
 import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemConfig;
 
 import org.apache.log4j.Logger;
 
+
+/**
+ * ImageUtility class responsible for supporting a define set of facilities for images
+ * Such as getting the uploading path etc
+ * @author dushantha DN
+ *
+ */
 public class ImageUtility {
 	static final Logger log = Logger.getLogger(ImageUtility.class.getName());
 	
@@ -18,7 +25,7 @@ public class ImageUtility {
 	 * @throws Exception will be thrown if the SystemConfig enum has not defined such a value given by the parameter
 	 */
 	
-	public String getImageUploadPath(SystemConfig imageUploadPath)throws Exception{
+	public static String getImageUploadPath(SystemConfig imageUploadPath)throws Exception{
 		String imagePath = "";
 		if(isNullObject(imageUploadPath)){
 			try{
@@ -40,7 +47,7 @@ public class ImageUtility {
 	 * @throws Exception will be thrown if the SystemConfig enum has not defined such a value given by the parameter
 	 */
 	
-	public long getAlloawablePictureSize(SystemConfig pictureCategory) throws Exception{
+	public static long getAlloawablePictureSize(SystemConfig pictureCategory) throws Exception{
 		if(isNullObject(pictureCategory)){
 			try{
 				throw new Exception();
@@ -57,14 +64,13 @@ public class ImageUtility {
 	 * @param nullCheckingObjet
 	 * @return true if the parameter is null else false
 	 */
-	public boolean isNullObject(Object nullCheckingObjet){
+	public static boolean isNullObject(Object nullCheckingObjet){
 		boolean status = false;
 		if (nullCheckingObjet == null) {
 			status = true;
 		} 
 		return status;
 	}
-	
 	
 	
 
