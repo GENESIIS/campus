@@ -3,7 +3,6 @@ package com.genesiis.campus.command;
 //DJ 20161228 c53-report-registered-students-MP-dj created CmdReportRegisteredStudents.java
 //DJ 20170104 c53-report-registered-students-MP-dj Identified command SEARCH_VIEW_REGISTERED_STUDENTS
 
-import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ReportStudentDAO;
@@ -26,7 +25,7 @@ import java.util.Collection;
 
 public class CmdReportRegisteredStudents implements ICommand {
 	
-	static Logger log = Logger.getLogger(CmdReportCoursesByCourseProvider.class.getName());
+	static Logger log = Logger.getLogger(CmdReportRegisteredStudents.class.getName());
 	/**
 	 * @author DJ
 	 * @param helper
@@ -74,7 +73,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 		String studentStatus = helper.getParameter("studentStatus");
 		final StudentSearchDTO student = new StudentSearchDTO();
 		try {
-			student.setStatus(ApplicationStatus.getApplicationStatus(studentStatus));
+			student.setStudentStatus(ApplicationStatus.getApplicationStatus(studentStatus));
 			student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
 			try {
 				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

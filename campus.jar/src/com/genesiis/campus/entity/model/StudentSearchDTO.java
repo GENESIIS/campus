@@ -6,23 +6,16 @@ import java.util.Date;
 //DJ 20170102 c53-report-registered-students-MP-dj Renamed as StudentSearchDTO.java
 //DJ 20170104 c53-report-registered-students-MP-dj Add  districtCode entity
 
-public class StudentSearchDTO {
+public class StudentSearchDTO {	
 	
-	private int code;
 	private int districtCode;
 	private String firstName;
 	private String LastName;	
-	private int status;
+	private int studentStatus;
 	private int accountType;
 	private Date fromDate;
 	private Date toDate;
-	
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}	
+			
 	public int getDistrictCode() {
 		return districtCode;
 	}
@@ -41,11 +34,11 @@ public class StudentSearchDTO {
 	public void setLastName(String lastName) {
 		LastName = lastName;
 	}
-	public int getStatus() {
-		return status;
+	public int getStudentStatus() {
+		return studentStatus;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setStudentStatus(int status) {
+		this.studentStatus = status;
 	}
 	public int getAccountType() {
 		return accountType;
