@@ -10,20 +10,22 @@
     <!-- Bootstrap & CSS Style-->
     <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/style.css" rel="stylesheet">
-
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
 </head>
 <body>
-
 <!-- Header-->
-<header w3-include-html="dist/partials/layout/header.jsp"></header>
+	<header>
+			<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	</header>
 
-<!-- Main Container - Landing -->
-<div w3-include-html="dist/partials/landing.html"></div>
 
-<!-- Footer -->
-<footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
+
+	<!-- Footer -->
+	<footer>
+		<jsp:include page="dist/partials/layout/footer.jsp"></jsp:include>
+	</footer>
 
 <!-- jQuery & Other js -->
 <!--<script src="dist/bower-components/jquery/jquery.min.js"></script>-->

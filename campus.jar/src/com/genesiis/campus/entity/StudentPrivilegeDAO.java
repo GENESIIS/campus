@@ -56,7 +56,7 @@ public class StudentPrivilegeDAO implements ICrud {
 		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE BUTTONACTION.ISACTIVE=? AND INTERFACE.ISACTIVE=? AND PRIVILEGE.ISACTIVE=? AND USERTYPE.CODE = ?";
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
@@ -65,7 +65,7 @@ public class StudentPrivilegeDAO implements ICrud {
 			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
 			preparedStatement.setString(4, student.getUserType());
 
-			ResultSet rs = preparedStatement.executeQuery();
+			rs = preparedStatement.executeQuery();
 
 			privilegeList = new ArrayList<String>();
 			while (rs.next()) {
@@ -92,7 +92,9 @@ public class StudentPrivilegeDAO implements ICrud {
 			log.info("findById Exception : " + e);
 			throw e;
 		} finally {
-
+			if (rs != null) {
+				rs.close();
+			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}

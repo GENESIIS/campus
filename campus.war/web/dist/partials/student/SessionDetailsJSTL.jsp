@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -74,10 +75,11 @@
 <%-- 			<c:set var="buttionAction" value="disabled" />  --%>
 			<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
 				<c:set var="buttionAction" value="${userDataCollection2}" scope="request"/>	
-				
+				<c:set var="action" value="${action},${buttionAction}" scope="request"/>	
 			</c:forEach>
-<%-- 			<c:set var="realbuttionActionArray" value="${fn:split(buttionAction, ',')}" /> --%>
-			${buttionAction}<br>
+
+
+			${action}<br>
 		</c:if>
 
 	

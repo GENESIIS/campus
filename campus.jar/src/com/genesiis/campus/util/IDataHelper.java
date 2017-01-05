@@ -1,4 +1,5 @@
 package com.genesiis.campus.util;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,8 @@ public interface IDataHelper {
 	public ResponseType getResponseType(String cco);
 	
 	public HttpServletResponse getResponse();
+	
+	public HttpServletRequest getRequest();
 	
 	public String getParameter(String paramName);
 

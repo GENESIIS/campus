@@ -18,7 +18,9 @@
 </head>
 <body>
 	<!-- Header-->
-	<header w3-include-html="/dist/partials/layout/header.jsp"></header>
+	<header> <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	</header>
+	<!-- End Header -->
 
 	<div align="center">
 
@@ -45,9 +47,8 @@
 				<tr>
 					<td><label class="" for="exampleInputPassword2">Password</label></td>
 					<td><label id="passtbError"></label><input type="password"
-						class="form-control" id="password" placeholder="Password" required onclick="clearField('passtbError')">
-
-					</td>
+						class="form-control" id="password" placeholder="Password" required
+						onclick="clearField('passtbError')"></td>
 					<td>Or</td>
 					<td><i class="fa fa-twitter"></i> Twitter</a></td>
 
@@ -91,7 +92,8 @@
 	</div>
 
 	<!-- Footer -->
-	<footer w3-include-html="/dist/partials/layout/footer.jsp"></footer>
+	 <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
+	</header>
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>

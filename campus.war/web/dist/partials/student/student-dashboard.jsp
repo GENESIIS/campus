@@ -20,6 +20,7 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- W3-Include -->
 <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
@@ -36,97 +37,10 @@
 
 
 	<!-- Header-->
-	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-		<div class="top">
-			<div class="logo-brand">
-				<h1 class="logo-txt">Campus.lk</h1>
-			</div>
-		</div>
-		<div class="bottom">
-			<div class="menu-bar">
-				<div class="home pull-left">
-					<a href="index.jsp" class="btn-home center-block"></a>
-				</div>
-				<!-- End home button -->
-				<div class="menu-tabs clearfix">
-
-					<!-- Main menu tabs -->
-					<div class="top-menus">
-						<ul class="list-inline">
-							<li><a href="">All Courses</a></li>
-							<li><a href="">About Us</a></li>
-							<li><a href="">Contact Us</a></li>
-							<li><a href="dist/partials/student/student-dashboard.html">News</a></li>
-							<li><a href="">F & Q</a></li>
-							<li><a href="">Rss</a></li>
-						</ul>
-					</div>
-					<!-- End Main menu tabs -->
-
-					<!-- Course Category tabs -->
-					<div class="bottom-menus" id="category-list">
-						<ul class="list-inline">
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO" class=""
-										value="LIST_CATEGORY_LANDING_PAGE">Pre School</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">School Education</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO" class=""
-										value="LIST_CATEGORY_LANDING_PAGE">Higher Education</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Corporate Training</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Vocational
-										Training</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Talent & Skill</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-					<!-- End Course Category tabs -->
-				</div>
-				<div class="keyword-search pull-right">
-					<div class="search-bar">
-						<input type="text" placeholder="Keyword Search"> <a
-							href="javascript:" class="colr-white"></a>
-					</div>
-					<!-- End Keyword Search -->
-					<div class="login-link">
-						<a href="javascript:">Logout</a>
-						<h3>Hi ${sessionScope.user}, Login successful.</h3>
-						<a href="/dist/partials/student/SessionDataLoader.jsp">
-							Session details checker Script lets</a> <br> <a
-							href="/dist/partials/student/SessionDetailsJSTL.jsp"> Session
-							details checker JSTL</a> <br>
-					</div>
-				</div>
-				<!-- End keyword search -->
-			</div>
-		</div>
+	<header>
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 	</header>
-	<!--< End header -->
+	<!-- End Header -->
 
 	<div class="dashboard">
 		<div class="stud-dashboard clearfix">
@@ -197,41 +111,55 @@
 							</tr>
 							<tr>
 								<td><div class="widget-header">
-										<c:if test="${buttionAction == 'stu_dashbord_add'}">
+										<c:if test="${fn:split(action, ',') == 'stu_dashbord_add'}">
 											<button id="stu_dashbord_add">Add</button>
 										</c:if>
-										<c:if test="${buttionAction != 'stu_dashbord_add'}">
-											<button id="stu_dashbord_add" disabled="disabled">Add disabled</button>
+										<c:if test="${fn:split(action, ',') != 'stu_dashbord_add'}">
+											<button id="stu_dashbord_add" disabled="disabled">Add
+												disabled</button>
 										</c:if>
 									</div></td>
 								<td><div class="widget-header">
+										
+										<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
+											<c:set var="buttionAction" value="${userDataCollection2}" scope="request" />
+											
 										<c:if test="${buttionAction == 'stu_dashbord_update'}">
 											<button id="stu_dashbord_add">Update</button>
 										</c:if>
+												</c:forEach>
+												<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
+											<c:set var="buttionAction" value="${userDataCollection2}" scope="request" />
 										<c:if test="${buttionAction != 'stu_dashbord_update'}">
-											<button id="stu_dashbord_add" disabled="disabled">Update disabled</button>
+											<button id="stu_dashbord_add" disabled="disabled">Update
+												disabled</button>
 										</c:if>
+									</c:forEach>
+
+										
 									</div></td>
 								<td><div class="widget-header">
 										<c:if test="${buttionAction == 'stu_dashbord_delete'}">
 											<button id="stu_dashbord_add">Delete</button>
 										</c:if>
 										<c:if test="${buttionAction != 'stu_dashbord_delete'}">
-											<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button>
+											<button id="stu_dashbord_add" disabled="disabled">Delete
+												disabled</button>
 										</c:if>
+										
 									</div></td>
-<%-- 									<td><div class="widget-header"> ${buttionAction} --%>
-<%-- 										<% if(request.getAttribute("buttionAction").equals("stu_dashbord_delete") ){ %> --%>
-<!-- 											<button id="stu_dashbord_add">delete scriptlet</button> -->
-<%-- 										<% 	 --%>
-<%--  										}else{ %>  --%>
-<!-- 												<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button> -->
-<%-- 									<%	} --%>
-<%--  										%>  --%>
-											
-										
-										
-<!-- 									</div></td> -->
+								<%-- 									<td><div class="widget-header"> ${buttionAction} --%>
+								<%-- 										<% if(request.getAttribute("buttionAction").equals("stu_dashbord_delete") ){ %> --%>
+								<!-- 											<button id="stu_dashbord_add">delete scriptlet</button> -->
+								<%-- 										<% 	 --%>
+								<%--  										}else{ %>  --%>
+								<!-- 												<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button> -->
+								<%-- 									<%	} --%>
+								<%--  										%>  --%>
+
+
+
+								<!-- 									</div></td> -->
 							</tr>
 							<!-- End Notes -->
 						</table>

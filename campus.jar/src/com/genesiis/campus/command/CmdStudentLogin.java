@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -75,6 +75,8 @@ public class CmdStudentLogin implements ICommand {
 					}
 
 					HttpSession session = helper.getSession(true);
+					String sessionID = session.getId();
+					data.setLastLoggedInSessionid(sessionID);
 					session.setAttribute("currentSessionUser",
 							data.getUsername());
 					session.setAttribute("user", data.getFirstName());
@@ -117,7 +119,7 @@ public class CmdStudentLogin implements ICommand {
 	 */
 
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
-
+		
 		try {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");

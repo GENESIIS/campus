@@ -9,12 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
-import com.genesiis.campus.command.CmdStudentLogin;
+
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 
 public class StudentLoginDAO implements ICrud {
@@ -97,6 +99,7 @@ public class StudentLoginDAO implements ICrud {
 		Student student = (Student) object;
 		int rowInserted = 0;
 		try {
+			
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, student.getLastLoggedInUserAgent());
@@ -148,8 +151,8 @@ public class StudentLoginDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		String message = SystemMessage.NOTREGISTERD.message();
 		final Student student = (Student) data;
-
-		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
+		ResultSet rs = null;
+		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = ? ";
 		try {
 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
@@ -161,8 +164,8 @@ public class StudentLoginDAO implements ICrud {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, student.getUsername());
 			preparedStatement.setString(2, student.getEmail());
-
-			ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
 
 			if (check) {
@@ -328,7 +331,9 @@ public class StudentLoginDAO implements ICrud {
 					+ exception.toString());
 			throw exception;
 		} finally {
-
+			if (rs != null) {
+				rs.close();
+			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
