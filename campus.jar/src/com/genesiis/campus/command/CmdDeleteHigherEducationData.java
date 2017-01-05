@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161220 PN CAM-28: INIT CmdDeleteHigherEducationData.java class and implemented execute method.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class CmdDeleteHigherEducationData implements ICommand {
 
 		// Predefined date format.
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		
+
 		ICrud eduDao = new HigherEducationDAO();
 		Connection connection = null;
 		String message = "";
@@ -45,7 +46,7 @@ public class CmdDeleteHigherEducationData implements ICommand {
 			int rowCount = 0;
 
 			String rows[] = helper.getParameterValues("rows[]");
-			
+
 			if ((rows != null) && (rows.length > 0)) {
 				for (int i = 0; i < rows.length; i++) {
 					HigherEducation data = new HigherEducation();
@@ -70,19 +71,25 @@ public class CmdDeleteHigherEducationData implements ICommand {
 			} else {
 				message = SystemMessage.NODETAILSTODELETE.message();
 			}
-			
+			expCollection = eduDao.findById(StudentCode);
+			view.setCollection(expCollection);
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
 		}
+
 		helper.setAttribute("saveChangesHigherEduStatus", message);
-		expCollection = eduDao.findById(StudentCode);
-		view.setCollection(expCollection);
 		return view;
 	}
 

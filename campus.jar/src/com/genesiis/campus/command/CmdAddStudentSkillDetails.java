@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161206 PN c26-add-student-details INIT CmdAddStudentSkillDetails.java. Implemented execute() method.
 //20161207 PN c26-add-student-details: modified execute() method by adding status messages.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -34,12 +35,13 @@ public class CmdAddStudentSkillDetails implements ICommand {
 		String message = "";
 
 		ICrud skillDao = new StudentSkillDAO();
-		Connection connection = ConnectionManager.getConnection();
-		try {	
+		Connection connection = null;
+		try {
 			// Commit false till the updations/additions successfully
 			// completed.
+			connection = ConnectionManager.getConnection();
 			connection.setAutoCommit(false);
-			
+
 			if (oldStudentSkills.length > newStudentSkills.length) {
 				log.info("Delete Diff.");
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
@@ -80,23 +82,25 @@ public class CmdAddStudentSkillDetails implements ICommand {
 					skill.setCrtBy("USER");
 					skillDao.add(skill, connection);
 				}
-			}	
+			}
 			message = SystemMessage.SUCCESS.message();
 			// Commit if all the updations/additions successfully completed.
 			connection.commit();
-			
+
 			Collection<Collection<String>> studentSkillCollection = skillDao.findById(StudentCode);
-			view.setCollection(studentSkillCollection);		
+			view.setCollection(studentSkillCollection);
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
-		}finally{
-			if(connection != null){
+		} finally {
+			if (connection != null) {
 				connection.close();
 			}
 		}

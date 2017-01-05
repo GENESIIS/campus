@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161207 PN c26-add-student-details INIT CmdAddStudentInterestDetails.java. Implemented execute() method.
 //		   PN c26-add-student-details: modified execute() method by adding status messages.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,27 +33,24 @@ public class CmdAddStudentInterestDetails implements ICommand {
 		String message = "";
 
 		ICrud interestDao = new StudentInterestDAO();
-		Connection connection = ConnectionManager.getConnection();
+		Connection connection = null;
 		try {
 			// Commit false till the updations/additions successfully
 			// completed.
+			connection = ConnectionManager.getConnection();
 			connection.setAutoCommit(false);
 
 			if (oldStudentInterest.length > newStudentInterest.length) {
-				log.info("Delete Diff.");
 				List diff = Validator.subtract(Arrays.asList(oldStudentInterest), Arrays.asList(newStudentInterest));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
 					interest.setInterest(Integer.parseInt(object.toString()));
 					interestDao.delete(interest, connection);
 				}
 			} else if (oldStudentInterest.length < newStudentInterest.length) {
-				log.info("Add Diff.");
 				List diff = Validator.subtract(Arrays.asList(newStudentInterest), Arrays.asList(oldStudentInterest));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
 					interest.setInterest(Integer.parseInt(object.toString()));
@@ -62,7 +60,6 @@ public class CmdAddStudentInterestDetails implements ICommand {
 			} else {
 				List diff = Validator.subtract(Arrays.asList(oldStudentInterest), Arrays.asList(newStudentInterest));
 				for (Object object : diff) {
-					log.info("old object " + object);
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
 					interest.setInterest(Integer.parseInt(object.toString()));
@@ -71,7 +68,6 @@ public class CmdAddStudentInterestDetails implements ICommand {
 
 				List diff1 = Validator.subtract(Arrays.asList(newStudentInterest), Arrays.asList(oldStudentInterest));
 				for (Object object : diff1) {
-					log.info("new object " + object);
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
 					interest.setInterest(Integer.parseInt(object.toString()));
@@ -86,10 +82,12 @@ public class CmdAddStudentInterestDetails implements ICommand {
 			Collection<Collection<String>> studentInterestCollection = interestDao.findById(StudentCode);
 			view.setCollection(studentInterestCollection);
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;

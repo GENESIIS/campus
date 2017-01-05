@@ -1,6 +1,8 @@
 package com.genesiis.campus.command;
 //20161124 PN c26-add-student-details: INIT CmdAddSchoolEducationData.java class.
+
 //20161126 PN c26-add-student-details: implemented execute() method by providing backend validations.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +43,8 @@ public class CmdAddSchoolEducationData implements ICommand {
 		Collection<Collection<String>> educationCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> educationData = new ArrayList<>();
 		String message = "";
-		
+		Connection connection = null;
+
 		try {
 			data = gson.fromJson(helper.getParameter("jsonData"), SchoolEducation.class);
 			data.setStudent(StudentCode);
@@ -60,7 +63,7 @@ public class CmdAddSchoolEducationData implements ICommand {
 			educationData.add(data.getDescription());
 			educationCollection.add(educationData);
 			view.setCollection(educationCollection);
-			
+
 			// Validate incoming data and set it into a HashMap.
 			Map<String, Boolean> map = Validator.validateSchoolEduData(data);
 			// Check if the given data is valid.
@@ -74,9 +77,9 @@ public class CmdAddSchoolEducationData implements ICommand {
 				}
 			}
 
-			//Only if data is valid DAO method will fire
+			// Only if data is valid DAO method will fire
 			if (isValid) {
-				Connection connection = ConnectionManager.getConnection();
+				connection = ConnectionManager.getConnection();
 				// Commit false till the updations/additions successfully
 				// completed.
 				connection.setAutoCommit(false);
@@ -90,13 +93,19 @@ public class CmdAddSchoolEducationData implements ICommand {
 				connection.commit();
 			}
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		helper.setAttribute("saveChangesStatus", message);
 		return view;

@@ -1,15 +1,16 @@
 package com.genesiis.campus.command;
 
-import java.sql.Connection;
+
 
 //20161204 PN c26-add-student-details: INIT CmdAddStudentPersonlDetails.java class.
 //20161205 PN c26-add-student-details: implementing execute() method.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
+import java.sql.Connection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.ICrud;
@@ -23,8 +24,9 @@ import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class CmdAddStudentPersonlDetails implements ICommand{
+public class CmdAddStudentPersonlDetails implements ICommand {
 	static Logger log = Logger.getLogger(CmdAddStudentPersonlDetails.class.getName());
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// This needs to be assign from the session.
@@ -32,19 +34,20 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 
 		// Predefined date format.
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-				
+
 		Student data = new Student();
 		ICrud studentDao = new StudentDAO();
 		Collection<Collection<String>> studentDataCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> studentData = new ArrayList<>();
 		String message = "";
-				
+		Connection connection = null;
+
 		try {
 			data = gson.fromJson(helper.getParameter("jsonData"), Student.class);
 			data.setCode(StudentCode);
 			data.setCrtBy("USER");
 			data.setModBy("USER");
-			
+
 			// Set incoming data to view collection.
 			studentData.add(data.getFirstName());
 			studentData.add(data.getMiddleName());
@@ -67,7 +70,7 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 			studentData.add(data.getLandPhoneCountryCode());
 			studentDataCollection.add(studentData);
 			view.setCollection(studentDataCollection);
-			
+
 			// Validate incoming data and set it into a HashMap.
 			Map<String, Boolean> map = Validator.validaPersonalData(data);
 			// Check if the given data is valid.
@@ -80,10 +83,10 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 					break;
 				}
 			}
-			
-			//Only if data is valid DAO method will fire
+
+			// Only if data is valid DAO method will fire
 			if (isValid) {
-				Connection connection = ConnectionManager.getConnection();
+				connection = ConnectionManager.getConnection();
 				// Commit false till the updations/additions successfully
 				// completed.
 				connection.setAutoCommit(false);
@@ -98,13 +101,19 @@ public class CmdAddStudentPersonlDetails implements ICommand{
 			}
 
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		helper.setAttribute("studentPersonalStatus", message);
 		return view;

@@ -146,8 +146,49 @@ public class HigherEducationDAO implements ICrud{
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		HigherEducation data = (HigherEducation) object;
+		PreparedStatement preparedStatement = null;
+		Connection connection = ConnectionManager.getConnection();
+
+		String query = "INSERT INTO [CAMPUS].[HIGHERDUCATION] ([INSTITUTE] ,[AFFINSTITUTE] ,[STUDENT] ,[LEVEL] ,[AWARD] ,"
+				+ "[MAJOR] ,[COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] ,[CRTON] ,[CRTBY]) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,getDate(),?);";
+
+		int result = -1;
+
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, data.getInstitute());
+			preparedStatement.setString(2, data.getAffiliatedInstitute());
+			preparedStatement.setInt(3, data.getStudent());
+			preparedStatement.setInt(4, data.getLevel());
+			preparedStatement.setInt(5, data.getAward());
+			preparedStatement.setInt(6, data.getMajor());
+			preparedStatement.setInt(7, data.getCountry());
+			preparedStatement.setDate(8, data.getCommencedOn());
+			preparedStatement.setDate(9, data.getCompletedOn());
+			preparedStatement.setString(10, data.getStudentId());
+			preparedStatement.setString(11, data.getResult());
+			preparedStatement.setString(12, data.getDescription());
+			preparedStatement.setInt(13, data.getMedium());
+			preparedStatement.setString(14, data.getCrtBy());
+			
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			log.error("add(): SQLE: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.error("add(): E: " + ex.toString());
+			throw ex;
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+		return result;
 	}
 
 	@Override

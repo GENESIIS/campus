@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161215 PN CAM-28: INIT CmdAddHigherEducationData.java class and implemented execute() method.
+//20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ public class CmdAddHigherEducationData implements ICommand {
 		Collection<Collection<String>> educationCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> educationData = new ArrayList<>();
 		String message = "";
-
+		Connection connection = null;
 		try {
 			data = gson.fromJson(helper.getParameter("jsonData"), HigherEducation.class);
 			data.setStudent(StudentCode);
@@ -74,20 +75,34 @@ public class CmdAddHigherEducationData implements ICommand {
 
 			// Only if data is valid DAO method will fire
 			if (isValid) {
-				int rowId = educationDao.add(data);
-				if (rowId > 0) {
+				connection = ConnectionManager.getConnection();
+				// Commit false till the updations/additions successfully
+				// completed.
+				connection.setAutoCommit(false);
+				int rowId = educationDao.update(data, connection);
+				message = SystemMessage.UPDATED.message();
+				if (rowId == 0) {
+					rowId = educationDao.add(data, connection);
 					message = SystemMessage.ADDED.message();
 				}
+				// Commit if all the updations/additions successfully completed.
+				connection.commit();
 			}
 
 		} catch (SQLException sqle) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
+			connection.rollback();
 			message = SystemMessage.ERROR.message();
 			log.error("execute() : e" + e.toString());
 			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		helper.setAttribute("saveChangesHigherEduStatus", message);
 		return view;
