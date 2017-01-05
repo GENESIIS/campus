@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CookieHandler {
-
+	
+	//check cookie is null or already created  
 	public static String getCookieValue(HttpServletRequest request, String name) {
 	    Cookie[] cookies = request.getCookies();
 	    if (cookies != null) {
@@ -17,7 +18,7 @@ public class CookieHandler {
 	    }
 	    return null;
 	}
-
+			//create cookie and added cookie details 
 	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
 	    Cookie cookie = new Cookie(name, value);
 	    cookie.setPath("/");
@@ -25,7 +26,7 @@ public class CookieHandler {
 	    response.addCookie(cookie);
 	    
 	}
-
+		//removed cookies already created 
 	public static void removeCookie(HttpServletResponse response, String name) {
 	    addCookie(response, name, null, 0);
 	}

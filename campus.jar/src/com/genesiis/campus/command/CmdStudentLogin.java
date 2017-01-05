@@ -7,10 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.StudentLoginDAO;

@@ -9,10 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.apache.log4j.Logger;
-
-import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
@@ -151,7 +148,7 @@ public class StudentLoginDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		String message = SystemMessage.NOTREGISTERD.message();
 		final Student student = (Student) data;
-
+		ResultSet rs = null;
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
 
@@ -163,13 +160,13 @@ public class StudentLoginDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, student.getUsername());
-			preparedStatement.setString(2, student.getEmail());
+			// preparedStatement.setString(2, student.getEmail());
 
-			ResultSet rs = preparedStatement.executeQuery();
+			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
 
 			if (check) {
-				
+
 				code = rs.getString("CODE");
 				username = rs.getString("USERNAME");
 				encryptedPasswordDb = rs.getString("PASSWORD");
@@ -329,7 +326,9 @@ public class StudentLoginDAO implements ICrud {
 					+ exception.toString());
 			throw exception;
 		} finally {
-
+			if (rs != null) {
+				rs.close();
+			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
@@ -375,7 +374,5 @@ public class StudentLoginDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 
 }
