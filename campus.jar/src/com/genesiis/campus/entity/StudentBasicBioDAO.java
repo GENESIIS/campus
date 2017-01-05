@@ -1,9 +1,10 @@
 package com.genesiis.campus.entity;
 
 //20160104 MM c25-student-dashboard-MP-mm INIT - Initialised class and implemented findById(Object)
-//20160104 MM c25-student-dashboard-MP-mm INIT - Modified query used to fetch student profile info 
+//20160104 MM c25-student-dashboard-MP-mm Modified query used to fetch student profile info 
 //				(in findById(Object) to select the most recent school attended, the most recent 
 //				higher education qualification and the most recent position held 
+//20160105 MM c25-student-dashboard-MP-mm Added JavaDoc comment for findById(Object) method 
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
@@ -40,6 +41,15 @@ public class StudentBasicBioDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * Searches for a student's basic profile information by the student code that is contained in the parameter of type Object that 
+	 * is passed into the method.
+	 * 
+	 *  @param An Object, but, in reality, must specifically be of type Student that must also contain the student code based on which the 
+	 *  information is searched for.
+	 *  
+	 *  @return A Collection<Collection<String>> containing the programme data that is selected from the DB. 
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		
@@ -48,24 +58,22 @@ public class StudentBasicBioDAO implements ICrud {
 		PreparedStatement ps = null;
 
 		try {
-			Student student = (Student) code;
-			
+			Student student = (Student) code;			
 			int studentCode = student.getCode();
-
-			// TODO convert this to a StringBuidler			
-			String query = "SELECT s.FIRSTNAME, s.LASTNAME, s.DESCRIPTION, t.NAME AS TOWNNAME, he.INSTITUTE, he.AFFINSTITUTE, se.SCHOOL, "
-					+ "c.NAME AS COUNTRYNAME, pe.ORGANIZATION, pe.DESIGNATION, s.CODE "
-					+ "FROM [CAMPUS].[STUDENT] s "
-					+ "JOIN [CAMPUS].[TOWN] t ON (s.CODE = 1 AND t.CODE = s.TOWN) "
-					+ "JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT AND he.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[HIGHERDUCATION] ORDER BY COMPLETIONON DESC)) "
-					+ "JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT AND se.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[SCHOOLEDUCATION] ORDER BY ACHIVEDON DESC)) "
-					+ "JOIN [CAMPUS].[COUNTRY2] c ON (c.CODE = se.COUNTRY) "
-					+ "JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND pe.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] ORDER BY ACHIVEDON DESC))";
+		
+			StringBuilder query = new StringBuilder("SELECT s.FIRSTNAME, s.LASTNAME, s.DESCRIPTION, t.NAME AS TOWNNAME, he.INSTITUTE, he.AFFINSTITUTE, se.SCHOOL, ");
+					query.append("c.NAME AS COUNTRYNAME, pe.ORGANIZATION, pe.DESIGNATION, s.CODE ");
+					query.append("FROM [CAMPUS].[STUDENT] s ");
+					query.append("JOIN [CAMPUS].[TOWN] t ON (s.CODE = 1 AND t.CODE = s.TOWN) ");
+					query.append("JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT AND he.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[HIGHERDUCATION] ORDER BY COMPLETIONON DESC)) ");
+					query.append("JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT AND se.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[SCHOOLEDUCATION] ORDER BY ACHIVEDON DESC)) ");
+					query.append("JOIN [CAMPUS].[COUNTRY2] c ON (c.CODE = se.COUNTRY) ");
+					query.append("JOIN [CAMPUS].[PROFESSIONALEXPERIENCE] pe ON (s.CODE = pe.STUDENT AND pe.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] ORDER BY ACHIVEDON DESC))");
 
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query.toString());
+			
 			ResultSet rs = ps.executeQuery();
-
 			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
 
 		} catch (ClassCastException cce) {
