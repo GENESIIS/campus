@@ -11,6 +11,8 @@
 <%-- 20170104 MM c25-student-dashboard-MP Assigned dynamic content to items that display student biographical info --%>
 <%-- 20170104 MM c25-student-dashboard-MP Fixed bugs in JSTL code that accesses the data payload sent from the command class; removed header/footer code from 
 				this page and included header and footer files instead --%>
+<%-- 20170104 MM c25-student-dashboard-MP Added code to dynamically assign the path to the profile image of the student;
+				disabled the displaying of the student-activity section --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -50,7 +52,11 @@
             <div class="left-side col-md-3 col-lg-3 col-sm-12 clearfix">
                 <div class="prf-pic-holder">
                     <div class="prf-image">
-                        <img src="/dist/i/student/prf-pic.jpg" alt="Profile-Picture">
+                        <c:set var="studentCode" value="${result.collection[0][10]}"/>
+                        <c:set var="slashChar" value="/"/>
+                        <c:set var="imageExtension" value=".jpg"/>
+                        <c:set var="fullImagePath" value="${studentProfileImagePath}${slashChar}${studentCode}${slashChar}${studentCode}${imageExtension}"/>
+                        <img src="${fullImagePath}" alt="Image of ${result.collection[0][0]} ${result.collection[0][1]}">
                     </div>
                     <!-- End profile image -->
 
@@ -154,7 +160,7 @@
                 </div>
                 <!-- End Widget : ABOUT -->
 
-                <div class="widget w-recent-activity clearfix">
+<%--            <div class="widget w-recent-activity clearfix">
                     <div class="widget-header">
                         <label>Recent Activity</label>
                     </div>
@@ -167,6 +173,7 @@
                     <!-- End widget content -->
                 </div>
                 <!-- End Widget : ABOUT -->
+--%>
 
 
             </div>
