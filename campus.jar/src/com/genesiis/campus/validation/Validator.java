@@ -3,42 +3,16 @@ package com.genesiis.campus.validation;
 //20161102 JH c7-higher-education-landing-page Validator.java created
 //20161102 JH c7-higher-education-landing-page getDuration() created
 //20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
-
-import java.util.ArrayList;
-
-import com.genesiis.campus.util.IDataHelper;
+//20170105 MM c25-student-dashboard-MP - Added JavaDoc for isNumber and isEmpty() methods and removed unused methods. 
 
 public class Validator {
 
-	public Object getDuration(int duration) {
-		ArrayList<String> programDuration = new ArrayList<String>();
-
-		int years = duration / 365;
-		duration = duration % 365;
-		int month = duration / 30;
-		duration = duration % 30;
-
-		programDuration.add(String.valueOf(years));
-		programDuration.add(String.valueOf(month));
-		programDuration.add(String.valueOf(duration));
-
-		return programDuration;
-	}
-
-	public boolean isEmpty(IDataHelper helper) {
-		boolean valid = false;
-		if (helper.getParameter("categoryId") == null) {
-			valid = true;
-		}
-
-		return valid;
-	}
-
-	public static boolean isInteger(String numString) {
-
-		return false;
-	}
-
+	/**
+	 * Checks if a string passed into the method represents a number.
+	 * 
+	 * @param cs, of type CharSequence that represents the string to check if it represents a number.	  
+	 * @return A boolean primitive that indicates whether the string that was passed is in fact a number. 
+	 */
 	public static boolean isNumber(final CharSequence cs) {
 		if (cs == null || cs.toString().isEmpty()) {
 			return false;
