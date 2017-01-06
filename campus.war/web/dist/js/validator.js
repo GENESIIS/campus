@@ -124,7 +124,7 @@ function validateTutorModifications() {
 		flag = false;
 	}
 
-	if (mobileCountryCode.length > 4) {
+	if (mobileCountryCode.length > 5) {
 		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
@@ -180,7 +180,7 @@ function validateTutorModifications() {
 		flag = false;
 	}
 
-	if (landCountryCode.length > 4) {
+	if (landCountryCode.length > 5) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landCountryCode').focus();
 		flag = false;
@@ -227,7 +227,7 @@ function validateTutorModifications() {
 		document.getElementById('landNumber').focus();
 		flag = false;
 	}
-/*	
+	
 	if (isempty(whatsapp)) {
 		if (isNaN(whatsapp)) {
 			document.getElementById('whatsappError').innerHTML = "**Invalid whatsapp number";
@@ -242,7 +242,7 @@ function validateTutorModifications() {
 			document.getElementById('viber').focus();
 			flag = false;
 		}
-	}*/
+	}
 
 /*	if (country == "DEFAULT") {
 		document.getElementById('countryError').innerHTML = "**Please select country.";
@@ -280,7 +280,7 @@ function validateTutorModifications() {
 		flag = false;
 	}
 	
-	if (username.length > 40) {
+	if (username.length > 50) {
 		document.getElementById('usernameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('username').focus();
 		flag = false;
@@ -298,8 +298,14 @@ function validateTutorModifications() {
 		flag = false;
 	}
 	
-	if (password.length > 10) {
+	if (password.length > 20) {
 		document.getElementById('passwordError').innerHTML = "**Max length exceeded.";
+		document.getElementById('password').focus();
+		flag = false;
+	}
+	
+	if (password.length < 6) {
+		document.getElementById('passwordError').innerHTML = "**Password should have at least 6 characters.";
 		document.getElementById('password').focus();
 		flag = false;
 	}
@@ -315,7 +321,7 @@ function validateTutorModifications() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-/*
+
 	if (isempty(weblink)) {
 		if (!ValidURL(weblink)) {
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
@@ -358,7 +364,7 @@ function validateTutorModifications() {
 			flag = false;
 		}
 	}
-	*/
+	
 /*
 	var usernameExist = ValidateUsername(username);
 	if (usernameExist.message == '0') {
@@ -394,7 +400,6 @@ function ValidateUsername(username) {
 */
 
 function clearField(elementId) {
-	//alert(elementId);
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
 }
