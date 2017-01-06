@@ -98,16 +98,18 @@ function populateResultTable(response) {
 		$('#resultSetDiv').show();
 		if (value != null && value.length > 0) {
 			totalResultCount ++;
-			var code = value[0].toString();
-			var name = value[1].toString();
-			var cStatus = value[2].toString();
-			var crtOn = value[3].toString();
-			var lastLoggedIn = value[4].toString();	
+			var code = value[0];
+			var name = value[1];
+			var interest = value[2];
+			var cStatus = value[3];
+			var crtOn = value[4];
+			var lastLoggedIn = value[5];	
 			
 			var tr = '<tr>' ;
 			tr += '<td>' + totalResultCount + '</td>';
 			tr += '<td>' + code  + '</td>';
 			tr += '<td>' + name  + '</td>';
+			tr += '<td>' + interest  + '</td>';
 			tr += '<td>' + cStatus  + '</td>';	
 			tr += '<td>' + crtOn  + '</td>';
 			tr += '<td>' + lastLoggedIn  + '</td>';
