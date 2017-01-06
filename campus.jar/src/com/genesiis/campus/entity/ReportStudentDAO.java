@@ -61,9 +61,11 @@ public class ReportStudentDAO  implements ICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
-			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE  FROM CAMPUS.STUDENT STUDENT ");
+			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE,ISNULL(INTEREST.NAME, ' ') AS INTERESTNAME  FROM CAMPUS.STUDENT STUDENT ");
 			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = STUDENT.TOWN ");
 		    sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT  ");
+		    sb.append(" LEFT JOIN [CAMPUS].[STUDENTINTEREST] STUDENTINTEREST ON STUDENTINTEREST.STUDENT=STUDENT.CODE ");
+		    sb.append(" LEFT JOIN [CAMPUS].[INTEREST]  INTEREST ON STUDENTINTEREST.INTEREST=INTEREST.CODE ");
 			sb.append(" WHERE 1=1 ");
 			if (student.getAccountType() > 0) {
 				sb.append("AND STUDENT.ACCOUNTTYPE= ");
@@ -100,9 +102,10 @@ public class ReportStudentDAO  implements ICrud{
 				final ArrayList<String> singleProvider = new ArrayList<String>();
 				singleProvider.add(resultSet.getString("STUDENTCODE"));				
 				singleProvider.add(resultSet.getString("STUDENTNAME"));	
+				singleProvider.add(resultSet.getString("INTERESTNAME"));
 				singleProvider.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("STUDENTSTATUS")));
 				singleProvider.add(resultSet.getString("REGISTEREDDATE"));
-				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));
+				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));				
 				registeredStudentList.add(singleProvider);
 			}
 
