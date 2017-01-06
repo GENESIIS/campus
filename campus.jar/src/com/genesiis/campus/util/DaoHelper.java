@@ -17,10 +17,10 @@ public class DaoHelper {
 	static Logger log = Logger.getLogger(DaoHelper.class.getName());
 	
 	 /**
-     * Closes down resources
-     * @param conn
-     * @param rs
-     * @param statement
+     * Closes down resources.
+     * @param conn Connection 
+     * @param rs Statement
+     * @param statement ResultSet
      * @author DJ     
      */
 	
