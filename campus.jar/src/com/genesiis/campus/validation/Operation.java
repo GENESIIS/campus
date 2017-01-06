@@ -9,6 +9,7 @@ package com.genesiis.campus.validation;
 // 20161205 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_PREREQUISITE_DATA enume added
 //20161206 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_TOWN_DATA enume added
 //20170102 DN CAM:47 add UPLOAD_EXISTING_PROFILE_PIC enum to the list
+//20170106 DN CAM:47 add UPLOAD_SUBMITED_TUTOR_IMAGE enum to the list
 
 
 /**
@@ -30,6 +31,7 @@ public enum Operation {
 	DISPLAY_PREREQUISITE_DATA("DPRD", ResponseType.JSON,""),
 	DISPLAY_TOWN_DATA("DPTWN", ResponseType.JSON,""),
 	UPLOAD_EXISTING_TUTOR_PROFILE_PIC("UETPP",ResponseType.JSON,""),
+	UPLOAD_SUBMITED_TUTOR_IMAGE("USTIMG",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
 			
 	private final String commandString;
