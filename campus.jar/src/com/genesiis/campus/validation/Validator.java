@@ -93,7 +93,7 @@ public class Validator {
 	public static ArrayList<String> validateCourseProvider(IDataHelper helper){
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
-		System.out.println("kkkkkkkkkkkkkkk  2");
+
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
@@ -110,18 +110,24 @@ public class Validator {
 			errorString.add("Short Name ");
 			isValid = false;
 		}if(isEmptyString(helper.getParameter("uniquePrefix"))){
-			helper.setAttribute("errorUniquePrefix", "Unique name can't be empty");
+			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
 			errorString.add("Unique Name ");
 			isValid = false;
+		}if(!isEmptyString(helper.getParameter("uniquePrefix"))){
+			if(helper.getParameter("uniquePrefix").length() >5){
+				helper.setAttribute("errorUniquePrefix", "Unique name is too long");
+				isValid = false;
+			}
 		}if(isEmptyString(helper.getParameter("aboutMe"))){
 			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("specialFeatures"))){
-			courseProvider.setSpeciality("-");
-		}if(!isEmptyString(helper.getParameter("specialFeatures"))){
-			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
-		}if(isEmptyString(helper.getParameter("expirationDate"))){
+		}
+//		if(isEmptyString(helper.getParameter("specialFeatures"))){
+//			courseProvider.setSpeciality("-");
+//		}if(!isEmptyString(helper.getParameter("specialFeatures"))){
+
+		if(isEmptyString(helper.getParameter("expirationDate"))){
 			helper.setAttribute("errorExpirationDate", "Select an expiration date");
 			errorString.add("Expiration Date ");
 			isValid = false;
@@ -145,9 +151,11 @@ public class Validator {
 			helper.setAttribute("errorLand1", "Phone number 1 is empty or invalid");
 			errorString.add("Land number 1 ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("land2"))){
-			courseProvider.setLandPhpneNo2("-");
-		}if(!isInteger(helper.getParameter("land2"))){
+		}
+//		if(isEmptyString(helper.getParameter("land2"))){
+//			courseProvider.setLandPhpneNo2("-");
+//		}
+		if(!isInteger(helper.getParameter("land2"))){
 			helper.setAttribute("errorLand2", "Phone number 2 is invalid");
 			errorString.add("land number 2");
 			isValid = false;
@@ -163,7 +171,7 @@ public class Validator {
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("fax"))){
+		}if(isEmptyString(helper.getParameter("fax"))|| !isInteger(helper.getParameter("fax"))){
 			courseProvider.setFaxNo("-");
 		}if(isEmptyString(helper.getParameter("address1"))){
 			helper.setAttribute("errorAddress1", "Empty address");
@@ -206,7 +214,6 @@ public class Validator {
 			errorString.add("Empty or invalid email address");
 			isValid = false;
 		}
-		System.out.println("kkkkkkkkkkkkkkk" + isValid);
 		return errorString;
 		
 	}

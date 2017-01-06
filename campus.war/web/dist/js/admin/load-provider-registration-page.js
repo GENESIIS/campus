@@ -205,9 +205,9 @@ function providerUsernameValidation() {
 
 			if (response !== undefined && response !== null) {
 				// window.townCollection = response.userMessage;
-				var countryNames = $("#usermessage");
-				countryNames.html(response.userMessage);
-				alert(response.userMessage);
+				var errorUsername = $("#errorUsername");
+				errorUsername.html(response.errorUsername);
+			//	alert(response.userMessage);
 			}
 		},
 	});
@@ -234,9 +234,9 @@ function providerPrefixValidation() {
 			success : function(response) {
 
 				if (response !== undefined && response !== null) {
-					window.UserMessage = response.userMessage;
-				// var prefixMessage = $('#usermessage').val;
-				// prefixMessage.val = (response.userMessage);
+					window.responseErrorPrefix = response.userMessage;
+				 var prefixMessage = $('#errorPrefix');
+				 prefixMessage.val = (response.userMessage);
 					showUserMessage();
 				}
 			},
@@ -247,8 +247,8 @@ function providerPrefixValidation() {
 
 function showUserMessage(){
 	if(window.UserMessage != null){
-		var userErrorMessage = $("#usermessage");
-		userErrorMessage.html(responseErrorMessage);
+		var errorPrefix = $("#errorPrefix");
+		errorPrefix.html(window.responseErrorMessage);
 	}
 }
 
@@ -269,7 +269,7 @@ function getProviderType() {
 				// message = response.userMessage;
 				window.registerId = response.registerId;
 
-			var responseErrorMessage = response.userMessage;
+			window.responseErrorMessage = response.userMessage;
 //				alert(responseErrorMessage);
 //				var userErrorMessage = $("#errorMessage");
 //				userErrorMessage.html("errors");

@@ -168,6 +168,7 @@
 									<input class="input" type="text" name="uniquePrefix"
 										id="uniquePrefix" size="30px;"
 										onfocusout="providerPrefixValidation();" />
+										<div id="errorPrefix"></div>
 								</div>
 							</li>
 							<!-- end -->
@@ -496,6 +497,7 @@
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
 										onfocusout="providerUsernameValidation();" />
+										<div id="errorUsername" name = "errorUsername"></div>
 								</div>
 							</li>
 							<!-- end -->
