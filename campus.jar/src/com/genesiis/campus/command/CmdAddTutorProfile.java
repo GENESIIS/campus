@@ -16,6 +16,7 @@ import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
@@ -163,6 +164,8 @@ public class CmdAddTutorProfile implements ICommand {
 			}
 
 			tutor.setIsApproved(false);
+			
+			tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
 			
 			tutor.setAddressLine1(helper.getParameter("address1"));
 			
