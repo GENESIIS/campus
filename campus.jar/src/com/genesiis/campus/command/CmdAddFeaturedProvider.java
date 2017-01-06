@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.genesiis.campus.entity.CourseProviderPrefixDAO;
+import com.genesiis.campus.entity.CourseProviderUsernameDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -86,16 +88,44 @@ public class CmdAddFeaturedProvider implements ICommand{
 				String userTypeCode  = (String) userTypeData[0];
 				userType = Integer.parseInt(userTypeCode);
 			}
-log.info("1");
 			//back end validation for required fields
 
 			ArrayList<String> errorMessages = Validator.validateCourseProvider(helper);
-			log.info("5<<<<<<<<<<<" +errorMessages.size());
+			
 			if(errorMessages.size()==0){
-				if(helper.getParameter("uniquePrefix").length() >5){
-					errorMessages.add("Unique Name is too long ");
-				}else{
-					log.info("6");	
+					
+					//validate username
+					ICrud usernameDAO = new CourseProviderUsernameDAO();
+					String username = helper.getParameter("providerUsername");
+					courseProviderAccount.setUsername(username);
+					Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+
+					usernameCollection = usernameDAO
+							.findById(courseProviderAccount);
+					if (usernameCollection.size() != 0) {
+					//	message = SystemMessage.USERNAME_INVALID;
+						helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
+					}
+					
+					
+					//valdate prefix
+					
+					String prefix = helper.getParameter("uniquePrefix");
+					if(prefix.length() <5){
+						
+					}else{
+						ICrud prefixDAO = new CourseProviderPrefixDAO();
+						courseProvider.setUniquePrefix(prefix);
+						Collection<Collection<String>> prefixCollection = prefixDAO
+								.findById(courseProvider);
+						if (prefixCollection.size() != 0) {
+							helper.setAttribute("userMessage",SystemMessage.PREFIX_INVALID.message() );
+
+						} else if (prefixCollection.size() == 0) {
+							helper.setAttribute("userMessage", SystemMessage.PREFIX_VALID.message());
+						}
+					}
+					
 				String expireDate = helper.getParameter("expirationDate");
 				String countryCode = helper.getParameter("selectedCountry");
 				String selectedTown = helper.getParameter("selectedTown");
@@ -188,8 +218,8 @@ log.info("1");
 					}
 
 					courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
-					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
-					courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
+				//	courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+				//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 					courseProviderAccount.setName(helper.getParameter("accountDescription"));
 					courseProviderAccount.setUserType(userType);
@@ -219,7 +249,7 @@ log.info("1");
 				}
 
 					helper.setAttribute("registerId", generatedKey);
-				}
+				
 			}else{
 
 				systemMessage = errorMessages.toString()+ " "+ SystemMessage.EMPTY_FIELD.message();
