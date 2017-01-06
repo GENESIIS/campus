@@ -3,7 +3,7 @@ package com.genesiis.campus.validation;
 //20170102 DN c47-tutor-add-tutor-information-upload-image-dn added value1 to TUTOR_PROFILE_IMAGE_PATH,TUTOR_PROFILE_IMAGE_SIZE
 //20170102 DN c47-tutor-add-tutor-information-upload-image-dn added default tutor image path enum value TUTOR_DEFAULT_PROFILE_IMAGE_PATH
 //20170105 DN c47-tutor-add-tutor-information-upload-image-dn TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,TUTOR_DEFAULT_PROFILE_IMAGE_WAR_PATH,TUTOR_DEFAULT_PROFILE_IMAGE_ABSOLUTE_PATH ADDED
-
+//20170106 DN c47-tutor-add-tutor-information-upload-image-dn replaced "education.war" with "education" in enum values
 /**
  * SystemConfig enum is intended to be used for the purpose of identifying the
  * String to use to fetch a specific record from the SYSTEMCONFIG DB table.
@@ -24,9 +24,9 @@ package com.genesiis.campus.validation;
 public enum SystemConfig {
 
 	
-	TUTOR_PROFILE_IMAGE_PATH("education.war/tutor/pro_image", "", ""),
+	TUTOR_PROFILE_IMAGE_PATH("education/tutor/pro_image", "", ""),
 	TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/tutor/pro_image","",""),
-	TUTOR_DEFAULT_PROFILE_IMAGE_WAR_PATH("education.war/tutor/default","",""),
+	TUTOR_DEFAULT_PROFILE_IMAGE_WAR_PATH("education/tutor/default","",""),
 	TUTOR_DEFAULT_PROFILE_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/tutor/default","",""),
 	TUTOR_PROFILE_IMAGE_SIZE("2","",""),
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
