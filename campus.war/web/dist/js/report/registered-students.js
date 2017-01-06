@@ -25,7 +25,14 @@ $(document).ready(function() {
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
 	});
-
+	
+	
+	$('#districtlist').on('keypress', function(e){
+		 if (evt.which < 48 || evt.which > 57)
+		    {
+		        evt.preventDefault();
+		    }
+	});
 });
 
 //Populate search view for registered Student report generation
