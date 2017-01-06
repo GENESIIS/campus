@@ -22,16 +22,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 
+/**The class {@code CmdReportRegisteredStudents} is a form of command handling class.Created for the purpose of handling commands of registered
+ * student report generation. 
+ * @author dumani DJ   
+ */
 
 public class CmdReportRegisteredStudents implements ICommand {
 	
 	static Logger log = Logger.getLogger(CmdReportRegisteredStudents.class.getName());
 	/**
-	 * @author DJ
-	 * @param helper
-	 * @param iView
-	 * @return iView
-	 * @throws Exception
+	 * @author dumani DJ
+	 * @param helper IDataHelper object
+	 * @param iView IView 
+	 * @return iView Collection of strings
+	 * @throws SQLException, Exception
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
@@ -62,19 +66,24 @@ public class CmdReportRegisteredStudents implements ICommand {
 	}
 	
 	/** Identify input search parameters and retrieve particular  result set according to search criteria.
-	 * @author DJ
-	 * @param helper
-	 * @throws Exception
+	 * @author dumani DJ
+	 * @param helper IDataHelper object
+	 * @throws ParseException, Exception
 	 */
-	private void generateReportResults(IDataHelper helper)
-			throws Exception {
+	private void generateReportResults(IDataHelper helper)throws ParseException, Exception {
 		String startDateString = helper.getParameter("startDate");
 		String endDateString = helper.getParameter("endDate");
 		String studentStatus = helper.getParameter("studentStatus");
+		String districtCodeString = helper.getParameter("districtCode");
 		final StudentSearchDTO student = new StudentSearchDTO();
 		try {
 			student.setStudentStatus(ApplicationStatus.getApplicationStatus(studentStatus));
 			student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
+			if (UtilityHelper.isNotEmpty(districtCodeString)) {
+				if (UtilityHelper.isInteger(districtCodeString)) {
+					student.setDistrictCode(Integer.valueOf(districtCodeString));
+				}
+			}					
 			try {
 				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				if (UtilityHelper.isNotEmpty(startDateString)) {
@@ -95,7 +104,6 @@ public class CmdReportRegisteredStudents implements ICommand {
 			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
-
 	}
 
 }
