@@ -39,7 +39,13 @@ public class CmdGetTutorProfileImg implements ICommand {
 		}
 	}
 	
-	
+	/**
+	 * Method handles the providing of the image path and setting relevant helper attributes
+	 * @param helper
+	 * @param view
+	 * @return IView
+	 * @throws Exception
+	 */
 	
 	private IView getExistingImageFilePathFromTheStorage(IDataHelper helper, IView view) throws Exception{
 		
@@ -65,14 +71,30 @@ public class CmdGetTutorProfileImg implements ICommand {
 		}
 		return view;
 	}
-	
+
+	/*
+	 * method provides the image path. If the image exists ,then that path will be provided relative to war folder.
+	 * If there is no profile picture found the default image path will be supplied based on
+	 * the gender.
+	 * 
+	 * @author dushantha DN
+	 * @param tutorCode Tutor unique identification number of int
+	 * 
+	 * @param gender this must be single letter selected from the domain {"M","F"} and 
+	 * the selected value should be either "M" or "F" only. Other gender type such as  neuter
+	 * has not been considered. If there is any situation where the neuter has to be consider, use the 
+	 * female typ: "F".
+	 * 
+	 * @return String the image path that starts from the war folder  e.g.education/tutor/pro_image/username_1/imagename.jpg
+	 * @throws Exception
+	 */
 	
 	private String getProfilePictureIfExisitElseDefault(int tutorCode,String gender) throws Exception{
 		try{
 			String tutorWarFileImagePath = ImageUtility
 					.getImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_PATH)+"/username_"+tutorCode;
 			String tutorAbsoluteImagePath = ImageUtility
-					.getImageUploadPath(SystemConfig.TUTOR_DEFAULT_PROFILE_IMAGE_ABSOLUTE_PATH)+"/username_"+tutorCode;
+					.getImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH)+"/username_"+tutorCode+"/";
 			String tutorWarDefaultFileImagePath = ImageUtility
 					.getImageUploadPath(SystemConfig.TUTOR_DEFAULT_PROFILE_IMAGE_WAR_PATH);
 			String tutorAbsoluteDefaultImagePath =ImageUtility
