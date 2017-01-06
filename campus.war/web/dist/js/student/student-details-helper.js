@@ -22,6 +22,7 @@
 // 		   PN CAM-28: modified the JavaScript code to set edit data into textboxes.
 //20170104 PN CAM-28: implement JavaScript methods to populate student Higher education details data table.
 //20170104 PN CAM-28: implement JavaScript code to edit data taken from the data table.
+//20170104 PN CAM-28: implemented radionButtonSelectedValueSet(name, SelectdValue) method to set radio button value from the DB.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -1531,3 +1532,12 @@ function setSelectedValue(selectObj, valueToSet) {
 	}
 }
 
+
+/**
+ * This method is to set radio input value according to the DB values.
+ * @param name
+ * @param SelectdValue
+ */
+function radionButtonSelectedValueSet(name, SelectdValue) {
+    $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+}
