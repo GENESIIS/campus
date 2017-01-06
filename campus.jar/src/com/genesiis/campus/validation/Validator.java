@@ -206,7 +206,8 @@ public class Validator {
 	public boolean isValidUserName(String userName) throws ArithmeticException, Exception {
 		boolean valid = false;
 		try {
-			
+
+			System.out.println("isValidUserName = ");
 			if((isNotEmpty(userName)) &&(userName.length() > 6) && (userName.length() < 50)){
 				final TutorDAO tutorDAO = new TutorDAO();
 				valid = tutorDAO.isAvailableUserName(userName);				

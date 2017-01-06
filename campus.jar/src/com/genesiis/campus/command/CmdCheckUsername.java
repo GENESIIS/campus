@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 //20161125 CM c36-add-tutor-information INIT CmdCheckUsername.java
 //20161125 CM c36-add-tutor-information Modified execute()method. 
 //20161221 CW c36-add-tutor-information Modified execute()method. 
-//20170106 CW c36-add-tutor-information Modified execute()method & validate the username. 
+//20170106 CW c36-add-tutor-information Modified execute()method & validate the usename. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;

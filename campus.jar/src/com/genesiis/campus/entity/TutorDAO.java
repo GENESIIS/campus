@@ -171,16 +171,26 @@ public class TutorDAO implements ICrud {
 		ResultSet rs = null;
 		
 		try { 
+			System.out.println("isAvailableUserName userName ="+userName+"AAAA");
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT COUNT(*) userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+			//String query = "SELECT COUNT([USERNAME]) userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+			String query = "SELECT [USERNAME] userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
 
+		    System.out.println(" @1 "); 
 			stmt = conn.prepareStatement(query);
 			stmt.setString(1, userName);
 			rs = stmt.executeQuery();
 
+			if (!rs.isBeforeFirst() ) {    
+			    System.out.println("No data"); 
+			} 
+			
+			System.out.println("isAvailableUserName count = " + rs.getInt("userCount"));
 			while (rs.next()) {
+				System.out.println("ttttttttt");
 				if (rs.getInt("userCount") == 0 ){
 					valid = true;
+					System.out.println("valid = " + valid);
 				}
 			}
 		} catch (SQLException sqlException) {
