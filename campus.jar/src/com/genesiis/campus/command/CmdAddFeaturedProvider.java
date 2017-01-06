@@ -252,6 +252,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 			errorString.add("Featured or One-off selection ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("providerName"))){
+			helper.setAttribute("errorProviderName", "Give a name");
 			errorString.add("Provider Name ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("shortName"))){
