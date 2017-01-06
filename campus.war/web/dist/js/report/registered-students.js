@@ -45,6 +45,17 @@ function getStudentSearchData(response){
 } 
 
 function loadResultSet(event) {
+	var districtName = $('#districtlist').val();
+	var districtCode = 0;
+
+	var option = $('#districtName').find('option');
+	for (var i = 0; i < option.length; i++) {
+		$('#districtName').find('option')[i].outerHTML;
+		if (option[i].text == districtName) {
+			districtCode = option[i].attributes[0].value;
+			break;
+		}
+	}
 
 	var startDate = $('#startdate').val();
 	var endDate = $('#enddate').val();
@@ -56,7 +67,8 @@ function loadResultSet(event) {
 			CCO : 'REPORT_REGISTERED_STUDENTS',
 			startDate : startDate,
 			endDate : endDate,
-			studentStatus : studentStatus
+			studentStatus : studentStatus,
+			districtCode :districtCode
 		},
 		datatype : "json",
 		success : function(response) {
