@@ -9,6 +9,12 @@ import com.genesiis.campus.command.CmdReportCoursesByCourseProvider;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
+/**
+ * The class {@code ReportCmdFactory} is a form of command factory class created for the purpose of manipulating report generation 
+ * commands for campus application. 
+ * @author dumani DJ
+ *
+*/
 public class ReportCmdFactory implements ICmdFactory{
 	
 	private ICommand command = null;
