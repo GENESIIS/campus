@@ -192,4 +192,42 @@ public class Validator {
 		}
 		return message;
 	}
+	
+	/*
+	var usernameExist = ValidateUsername(username);
+	if (usernameExist.message == '0') {
+		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
+		document.getElementById('username').focus();
+		flag = false;
+	}*/
+
+/*
+function ValidateUsername(username) {
+	var resp = null;
+	$.ajax({
+		url : '/TutorController',
+		method : 'POST',
+		async : false,
+		data : {
+			CCO : 'CHECK_USERNAME',
+			USERNAME : username
+		},
+		dataType : "json",
+		success : function(response) {
+			resp = response;
+		},
+		error : function(response) {
+			resp = response;
+		}
+	});
+
+	return resp;
+}
+*/
+	
+	
+	
+	
+	
+	
 }
