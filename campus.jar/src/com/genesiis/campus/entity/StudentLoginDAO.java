@@ -94,9 +94,10 @@ public class StudentLoginDAO implements ICrud {
 		Connection conn = null;
 		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?  WHERE CODE=? ";
 		PreparedStatement ps = null;
-		Student student = (Student) object;
+		
 		int rowInserted = 0;
 		try {
+			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, student.getLastLoggedInUserAgent());
@@ -147,11 +148,11 @@ public class StudentLoginDAO implements ICrud {
 		ArrayList<String> singleMessageList = null;
 		PreparedStatement preparedStatement = null;
 		String message = SystemMessage.NOTREGISTERD.message();
-		final Student student = (Student) data;
+	
 		ResultSet rs = null;
 		String query = "SELECT CODE, USERNAME, PASSWORD, INDEXNO, FIRSTNAME, MIDDLENAME, LASTNAME, DATEOFBIRTH, GENDER, EMAIL, TYPE, LANDPHONECOUNTRYCODE, LANDPHONEAREACODE, LANDPHONENO, MOBILEPHONECOUNTRYCODE, MOBILEPHONENETWORKCODE, MOBILEPHONENO, DESCRIPTION, FACEBOOKURL, TWITTERURL, MYSPACEURL, LINKEDINURL, INSTAGRAMURL, VIBERNUMBER, WHATSAPPNUMBER, ADDRESS1, ADDRESS2, ADDRESS3, TOWN, USERTYPE, ACCOUNTTYPE, LASTLOGGEDINUSERAGENT, LASTLOGGEDINSESSIONID, LASTLOGGEDINDATE, LASTLOGGEDINTIME, LASTLOGGEDINIPADDRESS, LASTLOGGEDOUTDATE, LASTLOGGEDOUTTIME, LASTLOGINAUTHENTICATEDBY, ISACTIVE FROM CAMPUS.STUDENT  WHERE USERNAME= ? OR EMAIL =? AND ISACTIVE = 1 ";
 		try {
-
+			final Student student = (Student) data;
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
 					.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
@@ -160,7 +161,7 @@ public class StudentLoginDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, student.getUsername());
-			// preparedStatement.setString(2, student.getEmail());
+			preparedStatement.setString(2, student.getEmail());
 
 			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();

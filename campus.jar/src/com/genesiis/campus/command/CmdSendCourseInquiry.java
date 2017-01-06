@@ -61,7 +61,7 @@ public class CmdSendCourseInquiry implements ICommand {
 
 			String gsonData = helper.getParameter("jsonData");
 			data = getInstituteInquirydetails(gsonData);
-			log.info("testing Data ................ : " + data);
+			
 			String validateResult = Validator.validateCourseInquiry(data);
 
 			if (validateResult.equalsIgnoreCase("True")) {
@@ -141,7 +141,7 @@ public class CmdSendCourseInquiry implements ICommand {
 	 * @return IEmail formatted Email out put
 	 */
 	private IEmail formatEmailInstance() {
-		log.info(data.getInquiry() + data.getInquiryTitle());
+		
 		addContentToOriginalMailBody(data.getInquiry());
 
 		IEmail generalEmail = new GeneralMail(recieversEmailAddreses,

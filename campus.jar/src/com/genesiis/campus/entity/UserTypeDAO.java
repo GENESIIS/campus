@@ -41,15 +41,16 @@ public class UserTypeDAO implements ICrud {
 			throws SQLException, Exception {
 			Connection userTypeConnection = null;
 			PreparedStatement prepaire =null;
-			String userTypeString  = (String) code;
+			ResultSet userCode = null;
 		try{
+			String userTypeString  = (String) code;
 			Collection<Collection<String>> outerWrapper = new ArrayList<Collection<String>>();
 			 userTypeConnection = ConnectionManager.getConnection();
 			
 			StringBuilder getUserTypeSQL = new StringBuilder("SELECT * FROM [CAMPUS].[USERTYPE] ");
 			getUserTypeSQL.append(" WHERE USERTYPESTRING = ? AND ISACTIVE=1 ; ");
 			prepaire = userTypeConnection.prepareStatement(getUserTypeSQL.toString());
-			ResultSet userCode = prepaire.executeQuery();
+			 userCode = prepaire.executeQuery();
 			
 			while(userCode.next()){
 				final Collection<String> singleUSerTypeList = new ArrayList<String>();
@@ -65,10 +66,15 @@ public class UserTypeDAO implements ICrud {
 			log.error("findById(): Exception"+ exp.toString());
 			throw exp;
 		} finally{
-			if(userTypeConnection!=null)
-				userTypeConnection.close();
-			if(prepaire != null)
+			if (userCode != null) {
+				userCode.close();
+			}
+			if (prepaire != null) {
 				prepaire.close();
+			}
+			if (userTypeConnection != null) {
+				userTypeConnection.close();
+			}
 		}
 	}
 

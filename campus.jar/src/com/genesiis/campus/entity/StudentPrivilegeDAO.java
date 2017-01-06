@@ -50,12 +50,13 @@ public class StudentPrivilegeDAO implements ICrud {
 
 		Collection<String> studentPrivilegeCollection = new ArrayList<String>();
 		Connection conn = null;
-		final Student student = (Student) code;
+		
 		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE USERTYPE.CODE = ?";
 		ResultSet rs = null;
 		try {
+			final Student student = (Student) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, student.getUserType());
