@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
+
 	<div class="top">
 		<div class="logo-brand">
 			<h1 class="logo-txt">Campus.lk</h1>
@@ -16,7 +17,7 @@
 	<div class="bottom">
 		<div class="menu-bar">
 			<div class="home pull-left">
-				<a href="index.jsp" class="btn-home center-block"></a>
+				<a href="/index.jsp" class="btn-home center-block"></a>
 			</div>
 			<!-- End home button -->
 			<div class="menu-tabs clearfix">
@@ -43,8 +44,8 @@
 						href="javascript:" class="colr-white"></a>
 				</div>
 				<!-- End Keyword Search -->
+				
 				<div class="login-link">
-
 					<c:if test="${sessionScope.currentSessionUser == null}">
 						<a href="dist/partials/login.jsp" class="colr-white">Login</a>
 					</c:if>
