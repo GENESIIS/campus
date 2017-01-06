@@ -67,24 +67,16 @@
 			<c:if test="${currentUrl == url}">
 			<c:set var="conVal" value="1" /> 
 			</c:if>
-			
 		</c:forEach>
 		<c:if test="${conVal == 0}">
  			<% response.sendRedirect("/index.jsp"); %>
 			</c:if>
-<%-- 			<c:set var="buttionAction" value="disabled" />  --%>
+
 			<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
 				<c:set var="buttionAction" value="${userDataCollection2}" scope="request"/>	
 				<c:set var="action" value="${action},${buttionAction}" scope="request"/>	
 			</c:forEach>
 
-
-			${action}<br>
 		</c:if>
-
-	
-	
-	
-	
 
 </body>
