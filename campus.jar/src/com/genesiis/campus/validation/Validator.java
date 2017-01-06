@@ -4,12 +4,14 @@ package com.genesiis.campus.validation;
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
 //20161201 CW c36-Display-course-detailsremoved un wanted comments
+//20170106 CW c36-add-tutor-details Added isValidUserName() method
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
@@ -191,5 +193,29 @@ public class Validator {
 			throw e;
 		}
 		return message;
+	}
+	
+	
+	/**
+	 * Check the entered username is a valid one
+	 * 
+	 * @author Chinthaka
+	 * @param username
+	 * @return boolean - Returns true if the requested username is a valid one
+	 */
+	public boolean isValidUserName(String userName) throws ArithmeticException, Exception {
+		boolean valid = false;
+		try {
+			
+			if((isNotEmpty(userName)) &&(userName.length() > 6) && (userName.length() < 50)){
+				final TutorDAO tutorDAO = new TutorDAO();
+				valid = tutorDAO.isAvailableUserName(userName);				
+			}			
+
+		} catch (Exception e) {
+			log.error("isValidUserName:  Exception" + e.toString());
+			throw e;
+		}
+		return valid;
 	}
 }
