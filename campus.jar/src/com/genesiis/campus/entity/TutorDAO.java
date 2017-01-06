@@ -83,10 +83,8 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(21, tutor.getInstagramId());
 			preparedStatement.setString(22, tutor.getViber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
-			tutor.setIsApproved(false);
-			preparedStatement.setInt(24, 3); // initially tutor should be in pending status
-		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
-			preparedStatement.setInt(25, 0);
+			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
+			preparedStatement.setInt(25, tutor.getTutorStatus()); 
 			preparedStatement.setString(26, tutor.getAddressLine1());
 			preparedStatement.setString(27, tutor.getAddressLine2());
 			preparedStatement.setString(28, tutor.getAddressLine3());
