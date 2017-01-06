@@ -34,7 +34,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 		Validator validator = new Validator();
 
 		try {
-			if (!validator.isEmpty(helper.getParameter("action"))) {
+			if (!validator.isEmptyString(helper.getParameter("action"))) {
 
 				action = helper.getParameter("action");
 
@@ -43,8 +43,8 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 
-					if (!validator.isEmpty(helper.getParameter("username"))
-							|| !validator.isEmpty(helper.getParameter("email"))) {
+					if (!validator.isEmptyString(helper.getParameter("username"))
+							|| !validator.isEmptyString(helper.getParameter("email"))) {
 
 						String username = helper.getParameter("username");
 						String email = helper.getParameter("email");
@@ -69,7 +69,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud prefixDAO = new CourseProviderPrefixDAO();
 
-					if (!validator.isEmpty(helper.getParameter("prefix"))) {
+					if (!validator.isEmptyString(helper.getParameter("prefix"))) {
 						String prefix = helper.getParameter("prefix");
 
 						final CourseProvider courseProvider = new CourseProvider();
