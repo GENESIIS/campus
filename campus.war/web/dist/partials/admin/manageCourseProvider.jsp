@@ -148,7 +148,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" />
+										id="providerName" size="50px;" /><span id="errorProviderName">${errorProviderName }</span>
 								</div>
 							</li>
 							<!-- end -->

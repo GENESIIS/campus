@@ -269,16 +269,11 @@ function getProviderType() {
 				// message = response.userMessage;
 				window.registerId = response.registerId;
 
-				var responseErrorMessage = response.userMessage;
-				alert(responseErrorMessage);
-				var userErrorMessage = $("#errorMessage");
-				userErrorMessage.html(response.userMessage);
-			
-			//	document.getElementById("usermessage").html = response.userMessage;
-				// document.getElementById("logoPanel").style.display
-				// = "block";
-				// document.getElementById("basicForm").style.display
-				// = "none";
+			var responseErrorMessage = response.userMessage;
+//				alert(responseErrorMessage);
+//				var userErrorMessage = $("#errorMessage");
+//				userErrorMessage.html("errors");
+
 
 			}
 		},
