@@ -164,11 +164,9 @@ public class StudentDAO implements ICrud {
 			}
 
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			Log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			Log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
