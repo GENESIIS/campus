@@ -1,7 +1,5 @@
 package com.genesiis.campus.command;
 
-
-
 //20161204 PN c26-add-student-details: INIT CmdAddStudentPersonlDetails.java class.
 //20161205 PN c26-add-student-details: implementing execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.

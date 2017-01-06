@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+//20170106 PN CAM-28: SQL query modified in findById(Object code) method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,10 +112,13 @@ public class StudentDAO implements ICrud {
 			Student student = (Student) code;
 			int studentCode = student.getCode();
 
-			String query = "SELECT [CODE],[USERNAME],[PASSWORD],[INDEXNO],[FIRSTNAME],[MIDDLENAME],[LASTNAME],[DATEOFBIRTH],[GENDER],[EMAIL],"
-					+ "[TYPE],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE],[LANDPHONENO],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE],"
+			String query = "SELECT st.[CODE],[USERNAME],[PASSWORD],[INDEXNO],[FIRSTNAME],[MIDDLENAME],[LASTNAME],[DATEOFBIRTH],[GENDER],"
+					+ "[EMAIL],[TYPE],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE],[LANDPHONENO],[MOBILEPHONECOUNTRYCODE],[MOBILEPHONENETWORKCODE],"
 					+ "[MOBILEPHONENO],[DESCRIPTION],[FACEBOOKURL],[TWITTERURL],[MYSPACEURL],[LINKEDINURL],[INSTAGRAMURL],[VIBERNUMBER],[WHATSAPPNUMBER],"
-					+ "[ADDRESS1],[ADDRESS2],[ADDRESS3],[TOWN],[ACCOUNTTYPE] FROM [CAMPUS].[STUDENT] WHERE CODE = ?";
+					+ "[ADDRESS1],[ADDRESS2],[ADDRESS3],[TOWN],[ACCOUNTTYPE], co.[NAME]  AS [COUNTRYNAME], tw.[NAME]  AS [TOWNNAME] "
+					+ "FROM [CAMPUS].[STUDENT] st "
+					+ "JOIN [CAMPUS].[COUNTRY2] co ON st.[LANDPHONECOUNTRYCODE] = co.[CODE] "
+					+ "JOIN [CAMPUS].[TOWN] tw ON st.[TOWN] = tw.[CODE] WHERE st.[CODE] = ?;";
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
@@ -153,6 +157,8 @@ public class StudentDAO implements ICrud {
 				singleList.add(rs.getString("ADDRESS3").replaceAll(",", "##"));
 				singleList.add(rs.getString("TOWN"));
 				singleList.add(rs.getString("ACCOUNTTYPE"));
+				singleList.add(rs.getString("COUNTRYNAME"));
+				singleList.add(rs.getString("TOWNNAME"));
 				final Collection<String> singleCollection = singleList;
 				studentDetailsCollectionList.add(singleCollection);
 			}
@@ -222,8 +228,16 @@ public class StudentDAO implements ICrud {
 			stmt.setString(7, student.getLandPhoneCountryCode());
 			stmt.setString(8, student.getLandPhoneNo());
 			stmt.setString(9, student.getLandPhoneCountryCode());
-			stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
-			stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+			
+			//This will be change later once a proper way confirmed to check the phone number, and network code.
+			if(student.getMobilePhoneNo().length() > 4){
+				stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
+				stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+			}else{
+				stmt.setString(10, student.getMobilePhoneNo());
+				stmt.setString(11, student.getMobilePhoneNo());
+			}
+		
 			stmt.setString(12, student.getDescription());
 			stmt.setString(13, student.getFacebookUrl());
 			stmt.setString(14, student.getTwitterUrl());
@@ -235,9 +249,8 @@ public class StudentDAO implements ICrud {
 			stmt.setString(20, student.getAddress1());
 			stmt.setString(21, student.getTown());
 			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());		
-			stmt.executeUpdate();
-			isUpdated = 1;
+			stmt.setInt(23, student.getCode());				
+			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
@@ -247,9 +260,6 @@ public class StudentDAO implements ICrud {
 		} finally {
 			if (stmt != null) {
 				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
 			}
 		}
 		return isUpdated;
