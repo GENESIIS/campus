@@ -15,9 +15,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The class {@code CourseProviderDAO} is a form of DAO class.It is  created for the purpose of retrieving data from database, for 
+ * courses by course provider report generation. 
+ * @author dumani DJ
+ *
+*/
 public class CourseProviderDAO  implements ICrud{
 	
 	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
@@ -42,10 +49,11 @@ public class CourseProviderDAO  implements ICrud{
 	}
 	
 	/**
-	 * Get Course Providers.If  CourseProviderStatus is set to particular status result set could return according to the set status.	 * 
-	 * @param CourseProvider DTO
-	 * @author DJ
-	 * @return Collection 
+	 * Get Course Providers.If  CourseProviderStatus is set to particular status result set could return according to the set status. 
+	 * @param provider CourseProviderDTO
+	 * @author dumani DJ
+	 * @return allProviderList -Collections of strings
+	 * @throws SQLException,Exception
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object provider)
@@ -112,11 +120,11 @@ public class CourseProviderDAO  implements ICrud{
 		return null;
 	}
 	
-	/**
-	 * @param rs
-	 * @param allProviderList
-	 * @author DJ
-	 * @return Collection
+	/** Manipulate the result set to a collection of strings.
+	 * @param rs ResultSet
+	 * @param allProviderList Collection of strings
+	 * @author dumani DJ
+	 * @return Collection of strings
 	 * @throws SQLException
 	 */
 	private  Collection<Collection<String>> getCourseProviderResultSet(ResultSet rs, Collection<Collection<String>> allProviderList)throws SQLException ,Exception{
