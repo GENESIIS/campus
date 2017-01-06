@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161125 CM c36-add-tutor-information INIT CmdCheckUsername.java
 //20161125 CM c36-add-tutor-information Modified execute()method. 
 //20161221 CW c36-add-tutor-information Modified execute()method. 
+//20170106 CW c36-add-tutor-information Modified execute()method & validate the username. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.TutorUserNameDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.Validator;
 
 public class CmdCheckUsername implements ICommand {
 	static Logger log = Logger.getLogger(CmdCheckUsername.class.getName());
@@ -35,8 +37,9 @@ public class CmdCheckUsername implements ICommand {
 		
 		try {
 			String username = helper.getParameter("USERNAME");
-			
-			if (username != null){
+			Validator validate = new Validator();
+						
+			if (validate.isValidUserName(username)){
 				final Tutor tutor = new Tutor();
 				tutor.setUsername(username);
 				tutorCollection = new TutorUserNameDAO().findById(tutor);
