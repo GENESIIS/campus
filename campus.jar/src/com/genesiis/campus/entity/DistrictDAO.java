@@ -6,6 +6,8 @@ package com.genesiis.campus.entity;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
+/**The class  {@code DistrictDAO} is a form of DAO class.It is  created for the purpose of retrieving District details from  database. 
+ * @author dumani DJ   
+ */
 public class DistrictDAO  implements ICrud {
 	
 	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAO.class.getName());

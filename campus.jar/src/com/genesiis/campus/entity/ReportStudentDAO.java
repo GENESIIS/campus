@@ -1,6 +1,5 @@
 package com.genesiis.campus.entity;
 
-
 //DJ 20161229 c53-report-registered-students-MP-dj created ReportStudentDAO.java
 //DJ 20170102 c53-report-registered-students-MP-dj Enhanced findById() with date range.
 //DJ 20170104 c53-report-registered-students-MP-dj Enhanced findById() District filtering.
@@ -8,9 +7,10 @@ package com.genesiis.campus.entity;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,10 +19,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
-
-
+/**The class  {@code ReportStudentDAO} is a form of DAO class.It is  created for the purpose of retrieving student details for registered student report generation.
+ *  @author dumani DJ   
+ */
 public class ReportStudentDAO  implements ICrud{
 	
 	static org.apache.log4j.Logger log = Logger.getLogger(ReportStudentDAO.class
@@ -45,7 +44,14 @@ public class ReportStudentDAO  implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	/**
+	 * Method returns student details.Student table joins with town,district,student interest and interest tables.Cann be reuse populating particular values to 
+	 * StudentSearchDTO and by building query.
+	 * @param studentSearchDTO StudentSearchDTO
+	 * @author dumani DJ
+	 * @return Collection of strings
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object studentSearchDTO)
 			throws SQLException, Exception {

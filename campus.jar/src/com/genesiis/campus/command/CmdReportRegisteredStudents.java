@@ -41,7 +41,6 @@ public class CmdReportRegisteredStudents implements ICommand {
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
 		try {
-
 			iView=new View();
 			String cco = helper.getParameter("CCO");
 			
@@ -56,14 +55,13 @@ public class CmdReportRegisteredStudents implements ICommand {
 			default:
 				break;
 			}
-
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception.toString());
 			throw exception;
 		}
 		return iView;
-
 	}
+	
 	
 	/** Identify input search parameters and retrieve particular  result set according to search criteria.
 	 * @author dumani DJ
