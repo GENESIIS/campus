@@ -101,15 +101,17 @@ function populateResultTable(response) {
 			var code = value[0];
 			var name = value[1];
 			var interest = value[2];
-			var cStatus = value[3];
-			var crtOn = value[4];
-			var lastLoggedIn = value[5];	
+			var townName = value[3];
+			var cStatus = value[4];
+			var crtOn = value[5];
+			var lastLoggedIn = value[6];	
 			
 			var tr = '<tr>' ;
 			tr += '<td>' + totalResultCount + '</td>';
 			tr += '<td>' + code  + '</td>';
 			tr += '<td>' + name  + '</td>';
 			tr += '<td>' + interest  + '</td>';
+			tr += '<td>' + townName  + '</td>';
 			tr += '<td>' + cStatus  + '</td>';	
 			tr += '<td>' + crtOn  + '</td>';
 			tr += '<td>' + lastLoggedIn  + '</td>';

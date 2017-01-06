@@ -102,6 +102,7 @@ tr:nth-child(even) {
 								<th>Student Code</th>
 								<th>Student Name</th>
 								<th>Interest</th>
+								<th>Town Name</th>
 								<th>Status</th>
 								<th>Registered date</th>
 								<th>Last login date</th>								
