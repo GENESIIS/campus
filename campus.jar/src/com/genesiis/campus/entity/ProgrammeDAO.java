@@ -18,6 +18,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The class {@code ProgrammeDAO} is a form of DAO class.It is  created for the purpose of retrieving and manipulating data from database, for 
+ * courses by course provider report generation. 
+ * @author dumani DJ
+ *
+*/
 public class ProgrammeDAO implements ICrud {
 
 	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAO.class
@@ -42,10 +48,11 @@ public class ProgrammeDAO implements ICrud {
 	}
 
 	/**
-	 * Retrieve Programmes result set join with course provider table.	 * 
-	 * @param ProgrammeSearchDTO
-	 * @author DJ
-	 * @return Collection
+	 * Retrieve Programme details against course provider.Developer able to re use the query by adding conditions to the query builder by setting
+	 * parameters to ProgrammeSearchDTO
+	 * @param programmeDTO ProgrammeSearchDTO
+	 * @author dumani DJ
+	 * @return Collection od strings
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object programmeDTO)
