@@ -72,3 +72,77 @@ function displayTutorProfileImageAtPageLoad(){
 function displayLabelMessage(labelid,cssColour,message){
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 }
+
+
+function uploadImage(){
+	jQuery('#upload-button').html("Uploading ...").css({'color':'green','font-weight':'bold'});
+	$('#file-select').on('change', uploadFile);
+}
+
+function uploadFile(event){
+	
+	event.stopPropagation(); 
+    event.preventDefault(); 
+    var files = event.target.files; 
+    var data = new FormData();
+    $.each(files, function(key, value)
+    {
+        data.append(key, value);
+    });
+    postFilesData(data); 
+ }
+
+
+function postFilesData(data)
+{
+ $.ajax({
+    url: '../../../TutorController',
+    type: 'POST',
+    //data: data,
+    data: {
+		CCO:"USTIMG", //UPLOAD SUBMITED TUTOR IMAGE
+		formData:data
+	},
+    cache: false,
+    dataType: 'json',
+    processData: false, 
+    contentType: false, 
+    success:function(response){
+		
+		if(response['successCode']===1){
+			
+			displayLabelMessage('displayLabel','green',response['message']);
+			jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+			
+		} else{
+			// if the execution success but logically generated error application vice
+			displayLabelMessage('displayLabel','red',response['message']);
+			}
+		
+	},
+	error:function(response,error,errorThrown) {
+		
+		  var msg = '';
+	        if (response.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (response.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (response.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        } else if (error === 'parsererror') {
+	            msg = 'Requested JSON parse failed.';
+	        } else if (error === 'timeout') {
+	            msg = 'Time out error.';
+	        } else if (error === 'abort') {
+	            msg = 'Ajax request aborted.';
+	        } else {
+	            msg = 'Uncaught Error.\n' + response.responseText;
+	        }
+	        displayLabelMessage('displayLabel','red',msg);
+	        }
+	
+});
+}
+
+
+
