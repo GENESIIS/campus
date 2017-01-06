@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161221 CW c36-add-tutor-details Removed findById() method.
 //20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
 //20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
+//20170106 CW c36-add-tutor-details Added isAvailableUserName() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -151,6 +152,48 @@ public class TutorDAO implements ICrud {
 			Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	
+	/**
+	 * Check the entered username is already available in the database
+	 * 
+	 * @author Chinthaka
+	 * @param Requested username
+	 * @return boolean - returns true if Requested username is not used by any tutor
+	 */
+	
+	public boolean isAvailableUserName(String userName) throws SQLException, Exception {
+		boolean valid = false;
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try { 
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT COUNT(*) userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, userName);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				if (rs.getInt("userCount") == 0 ){
+					valid = true;
+				}
+			}
+		} catch (SQLException sqlException) {
+			log.info("isAvailableUserName(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("isAvailableUserName(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return valid;
 	}
 
 }
