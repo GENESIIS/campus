@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
@@ -73,31 +76,40 @@ public class Validator {
 		Validator validator = new Validator();
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
+		
+		final CourseProvider courseProvider = new CourseProvider();
+		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
+		final CourseProviderTown courseProviderTown = new CourseProviderTown();
+		
 		if(validator.isEmpty(helper.getParameter("courseProvider"))){
-			errorString.add("Featured or One-off selection ");
+			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("providerName"))){
+			helper.setAttribute("errorProviderName", "Name can't be empty");
 			errorString.add("Provider Name ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("shortName"))){
+			helper.setAttribute("errorShortName", "Give a short name");
 			errorString.add("Short Name ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("uniquePrefix"))){
+			helper.setAttribute("errorUniquePrefix", "Unique name can't be empty");
 			errorString.add("Unique Name ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("aboutMe"))){
+			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("specialFeatures"))){
+			helper.setAttribute("errorSpecialFeatures", "Empty fields");
 			errorString.add("SpecialFeatures ");
 			isValid = false;
-		}if(validator.isEmpty(helper.getParameter("aboutMe"))){
-			errorString.add("About Me ");
-			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("inquiryMail"))){
+			helper.setAttribute("errorInquiryMail", "Empty email address");
 			errorString.add("Inquiry Mail ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("generalEmail"))){
+			helper.setAttribute("errorGeneralEmail", "Empty email address");
 			errorString.add("General Email ");
 			isValid = false;
 		}if(validator.isEmpty(helper.getParameter("expirationDate"))){
