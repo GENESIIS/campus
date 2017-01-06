@@ -40,7 +40,7 @@
 <script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="dist/js/main.js"></script>
 <script src="dist/js/institute/validation/validation.js"></script>
-<script src="dist/js/student/student-details-table-handler.js"></script>
+<script src="dist/js/student/student-details-helper.js"></script>
 
 <script src="dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
