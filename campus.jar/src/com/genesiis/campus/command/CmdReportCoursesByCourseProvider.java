@@ -66,23 +66,30 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		return iView;
 	}
 	
+	
 	/** Retrieve course providers for drop down list in search view.
 	 * @author dumani DJ
 	 * @param helper -IDataHelper object
 	 * @throws Exception
 	 */	
 	private void generateReportSearchView(IDataHelper helper) throws Exception {
-		//TODO: Initiate the couseProvider object for future purposes
-		final CourseProvider couseProvider=new CourseProvider();
-		//couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
-		final Collection<Collection<String>> courseProviderList = new CourseProviderDAO().findById(couseProvider);				
-		helper.setAttribute("courseProviderList", courseProviderList);
-		
+		// TODO: Initiate the couseProvider object for future purposes
+		final CourseProvider couseProvider = new CourseProvider();
+		// couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
+		try {
+			final Collection<Collection<String>> courseProviderList = new CourseProviderDAO().findById(couseProvider);
+			helper.setAttribute("courseProviderList", courseProviderList);
+		} catch (Exception exception) {
+			log.error("generateReportSearchView() : Exception "
+					+ exception.toString());
+			throw exception;
+		}
 	}
+	
 
 	/** Identify input search parameters and retrieve particular  result set according to search criteria.
 	 * @author dumani DJ
-	 * @param helper
+	 * @param helper -IDataHelper object
 	 * @throws ParseException,Exception
 	 */
 	private void generateReportResults(IDataHelper helper)throws ParseException, Exception {
