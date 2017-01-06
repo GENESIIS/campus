@@ -287,9 +287,11 @@ function getStudentData(response) {
 		$('#sTown').val(data[31]);
 		$("span[class='input-group-addon']").text("+(" + data[11] + ")");
 		
-		if()
-		
-		$('#' + newcol).prop('checked',true);
+		if(parseInt(val[8])==1){
+			radionButtonSelectedValueSet("gender","1");
+		}else if(parseInt(val[8])==2){
+			radionButtonSelectedValueSet("gender","2");
+		}
 		
 	});
 

@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 //20161128 PN c26-add-student-details: INIT ProfessionalExperienceDAO.java class.
+
 //		   PN c26-add-student-details: implemented add() method.
 //20161129 PN c26-add-student-details: modified SQL query inside add() method.
 //20161208 PN CAM-26 : add-student-details: implemented add(object,Connection) method
@@ -29,11 +30,11 @@ import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;
 
-public class ProfessionalExperienceDAO implements ICrud{
+public class ProfessionalExperienceDAO implements ICrud {
 	static Logger log = Logger.getLogger(ProfessionalExperienceDAO.class.getName());
-	
+
 	@Override
-	public int add(Object object) throws SQLException, Exception {		
+	public int add(Object object) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -56,8 +57,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 			preparedStatement.setDate(9, data.getCompletionOn());
 			preparedStatement.setString(10, data.getDescription());
 			preparedStatement.setString(10, data.getCrtBy());
-			
-		
+
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			connection.rollback();
@@ -92,7 +92,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		
+
 		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -103,42 +103,41 @@ public class ProfessionalExperienceDAO implements ICrud{
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [ORGANIZATION], [STUDENT], [INDUSTRY], [JOBCATEGORY], "
 					+ "[DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION] "
-					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] "
-					+ "WHERE [STUDENT] = ? AND ISACTIVE = ?;";
+					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] " + "WHERE [STUDENT] = ? AND ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
 			stmt.setInt(2, isActive);
-			rs = stmt.executeQuery();	
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singlehigherEduList = new ArrayList<String>();
 				singlehigherEduList.add(rs.getString("CODE"));
 				singlehigherEduList.add(rs.getString("ORGANIZATION"));
-				
-				//Get country name, if in a case to pass the name to dataList
+
+				// Get country name, if in a case to pass the name to dataList
 				ICrud majordao = new StdProfMajorDAO();
 				String jobcategoryName = "";
 				String industryName = "";
-				
+
 				Major jcname = new Major();
 				jcname.setCode(Integer.parseInt(rs.getString("JOBCATEGORY")));
-					
-				Collection<Collection<String>> industry = majordao.findById(jcname);			
+
+				Collection<Collection<String>> industry = majordao.findById(jcname);
 				for (Collection<String> collection : industry) {
 					Object[] cdata = collection.toArray();
 					jobcategoryName = (String) cdata[1];
 				}
-				
+
 				Major indname = new Major();
 				indname.setCode(Integer.parseInt(rs.getString("INDUSTRY")));
-				
-				Collection<Collection<String>> jobcaegory = majordao.findById(indname);				
+
+				Collection<Collection<String>> jobcaegory = majordao.findById(indname);
 				for (Collection<String> collection : industry) {
 					Object[] cdata = collection.toArray();
 					industryName = (String) cdata[1];
 				}
-				
+
 				singlehigherEduList.add(industryName);
 				singlehigherEduList.add(rs.getString("DESIGNATION"));
 				singlehigherEduList.add(jobcategoryName);
@@ -179,7 +178,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
-		
+
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -202,8 +201,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 			preparedStatement.setDate(7, data.getCompletionOn());
 			preparedStatement.setString(8, data.getDescription());
 			preparedStatement.setString(9, data.getCrtBy());
-			
-		
+
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.error("add(): SQLE: " + sqle.toString());
@@ -221,7 +219,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		
+
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -244,7 +242,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 			preparedStatement.setString(8, data.getDescription());
 			preparedStatement.setString(9, data.getModBy());
 			preparedStatement.setString(10, data.getModBy());
-		
+
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			log.error("add(): SQLE: " + sqle.toString());
@@ -260,11 +258,8 @@ public class ProfessionalExperienceDAO implements ICrud{
 		return result;
 	}
 
-
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		
-		int studentCode = data.getCode();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int result = -1;
@@ -272,7 +267,8 @@ public class ProfessionalExperienceDAO implements ICrud{
 		String deleteSQL = "DELETE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] WHERE [CODE] = ?;";
 
 		try {
-			ProfessionalExperience data = (ProfessionalExperience) object;		
+			ProfessionalExperience data = (ProfessionalExperience) object;
+			int studentCode = data.getCode();
 			connection = conn;
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, studentCode);
