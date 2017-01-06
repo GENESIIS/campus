@@ -69,7 +69,7 @@ public class ReportStudentDAO  implements ICrud{
 				sb.append("AND STUDENT.ACCOUNTTYPE= ");
 				sb.append(student.getAccountType());
 			}
-			if (student.getStudentStatus() > 0) {
+			if (student.getStudentStatus() >= 0) {
 				sb.append("AND	STUDENT.ISACTIVE= ");
 				sb.append(student.getStudentStatus());
 			}
