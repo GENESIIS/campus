@@ -110,56 +110,30 @@
 									</p></td>
 							</tr>
 							<tr>
+				
 								<td><div class="widget-header">
-										<c:if test="${fn:split(action, ',') == 'stu_dashbord_add'}">
-											<button id="stu_dashbord_add">Add</button>
-										</c:if>
-										<c:if test="${fn:split(action, ',') != 'stu_dashbord_add'}">
-											<button id="stu_dashbord_add" disabled="disabled">Add
-												disabled</button>
+<!-- 										 This sampal 3 button  added for example of buttion action handling in JSTL  -->
+										<c:forEach var="userDataCollection2"
+											items="${fn:split(action, ',')}">
+
+											<c:if test="${userDataCollection2 == 'stu_dashbord_add'}">
+												<button id="stu_dashbord_add">Student dashboard add</button>
+											</c:if>
+									</div></td>
+								<td><div class="widget-header">
+										<c:if test="${userDataCollection2 == 'stu_dashbord_update'}">
+											<button id="stu_dashbord_addghk">Student dashboard
+												update</button>
 										</c:if>
 									</div></td>
 								<td><div class="widget-header">
-										
-										<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
-											<c:set var="buttionAction" value="${userDataCollection2}" scope="request" />
-											
-										<c:if test="${buttionAction == 'stu_dashbord_update'}">
-											<button id="stu_dashbord_add">Update</button>
+										<c:if test="${userDataCollection2 == 'stu_dashbord_delete'}">
+											<button id="stu_dashbord_addh">Student dashboard
+												delete</button>
 										</c:if>
-												</c:forEach>
-												<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
-											<c:set var="buttionAction" value="${userDataCollection2}" scope="request" />
-										<c:if test="${buttionAction != 'stu_dashbord_update'}">
-											<button id="stu_dashbord_add" disabled="disabled">Update
-												disabled</button>
-										</c:if>
-									</c:forEach>
-
-										
+										</c:forEach>
 									</div></td>
-								<td><div class="widget-header">
-										<c:if test="${buttionAction == 'stu_dashbord_delete'}">
-											<button id="stu_dashbord_add">Delete</button>
-										</c:if>
-										<c:if test="${buttionAction != 'stu_dashbord_delete'}">
-											<button id="stu_dashbord_add" disabled="disabled">Delete
-												disabled</button>
-										</c:if>
-										
-									</div></td>
-								<%-- 									<td><div class="widget-header"> ${buttionAction} --%>
-								<%-- 										<% if(request.getAttribute("buttionAction").equals("stu_dashbord_delete") ){ %> --%>
-								<!-- 											<button id="stu_dashbord_add">delete scriptlet</button> -->
-								<%-- 										<% 	 --%>
-								<%--  										}else{ %>  --%>
-								<!-- 												<button id="stu_dashbord_add" disabled="disabled">Delete disabled</button> -->
-								<%-- 									<%	} --%>
-								<%--  										%>  --%>
 
-
-
-								<!-- 									</div></td> -->
 							</tr>
 							<!-- End Notes -->
 						</table>
