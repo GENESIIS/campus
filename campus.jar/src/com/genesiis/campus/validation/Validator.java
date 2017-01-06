@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20161115 JH c7-higher-education-landing-page add method comments
 //20161229 JH c39-add-course-provider isEmpty() method modified
 //20170105 JH c39-add-course-provider added validateCourseProvider(IDataHelper) method
+//20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class Validator {
 	 * @param parameter
 	 * @return boolean true, false value
 	 */
-	public boolean isEmpty(String parameter) {
+	public static boolean isEmptyString(String parameter) {
 		boolean valid = false;
 		if ((parameter == null) || (parameter == "")) {
 			valid = true;
@@ -89,124 +90,124 @@ public class Validator {
 		return true;
 	}
 	
-	public Map<String, Object> validateCourseProvider(IDataHelper helper){
+	public static ArrayList<String> validateCourseProvider(IDataHelper helper){
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
-		
+		System.out.println("kkkkkkkkkkkkkkk  2");
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		
-		if(isEmpty(helper.getParameter("courseProvider"))){
+		if(isEmptyString(helper.getParameter("courseProvider"))){
 			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerName"))){
+		}if(isEmptyString(helper.getParameter("providerName"))){
 			helper.setAttribute("errorProviderName", "Name can't be empty");
 			errorString.add("Provider Name ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("shortName"))){
+		}if(isEmptyString(helper.getParameter("shortName"))){
 			helper.setAttribute("errorShortName", "Give a short name");
 			errorString.add("Short Name ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("uniquePrefix"))){
+		}if(isEmptyString(helper.getParameter("uniquePrefix"))){
 			helper.setAttribute("errorUniquePrefix", "Unique name can't be empty");
 			errorString.add("Unique Name ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("aboutMe"))){
+		}if(isEmptyString(helper.getParameter("aboutMe"))){
 			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("specialFeatures"))){
+		}if(isEmptyString(helper.getParameter("specialFeatures"))){
 			courseProvider.setSpeciality("-");
-		}if(!isEmpty(helper.getParameter("specialFeatures"))){
+		}if(!isEmptyString(helper.getParameter("specialFeatures"))){
 			courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
-		}if(isEmpty(helper.getParameter("inquiryMail"))){
-			helper.setAttribute("errorInquiryMail", "Empty email address");
-			errorString.add("Inquiry Mail ");
-			isValid = false;
-		}if(isEmpty(helper.getParameter("generalEmail"))){
-			helper.setAttribute("errorGeneralEmail", "Empty email address");
-			errorString.add("General Email ");
-			isValid = false;
-		}if(isEmpty(helper.getParameter("expirationDate"))){
+		}if(isEmptyString(helper.getParameter("expirationDate"))){
 			helper.setAttribute("errorExpirationDate", "Select an expiration date");
 			errorString.add("Expiration Date ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("selectedCountry"))){
+		}if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
 			errorString.add("Country ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("selectedTown"))){
+		}if(isEmptyString(helper.getParameter("selectedTown"))){
 			helper.setAttribute("errorSelectedTown", "Select a town");
 			errorString.add("Town ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerStatus"))){
+		}if(isEmptyString(helper.getParameter("providerStatus"))){
 			helper.setAttribute("errorProviderStatus", "Select a status");
 			errorString.add("Course Provider status ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("areaCode"))){
+		}if(isEmptyString(helper.getParameter("areaCode"))){
 			helper.setAttribute("errorAreaCode", "Give an area code");
 			errorString.add("Area Code ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("land1")) || !isInteger(helper.getParameter("land1"))){
+		}if(isEmptyString(helper.getParameter("land1")) || !isInteger(helper.getParameter("land1"))){
 			helper.setAttribute("errorLand1", "Phone number 1 is empty or invalid");
 			errorString.add("Land number 1 ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("land2"))){
+		}if(isEmptyString(helper.getParameter("land2"))){
 			courseProvider.setLandPhpneNo2("-");
 		}if(!isInteger(helper.getParameter("land2"))){
 			helper.setAttribute("errorLand2", "Phone number 2 is invalid");
 			errorString.add("land number 2");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("networkCode")) || !isInteger(helper.getParameter("networkCode"))){
+		}if(isEmptyString(helper.getParameter("networkCode")) || !isInteger(helper.getParameter("networkCode"))){
 			helper.setAttribute("errorNetworkCode", "Network code is empty or invalid");
 			errorString.add("Network code ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("mobile")) || !isInteger(helper.getParameter("mobile"))){
+		}if(isEmptyString(helper.getParameter("mobile")) || !isInteger(helper.getParameter("mobile"))){
 			helper.setAttribute("errorMobile", "Mobile number is empty or invalid");
 			errorString.add("Mobile code ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("selectedProviderType"))){
+		}if(isEmptyString(helper.getParameter("selectedProviderType"))){
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("fax"))){
+		}if(isEmptyString(helper.getParameter("fax"))){
 			courseProvider.setFaxNo("-");
-		}if(isEmpty(helper.getParameter("address1"))){
+		}if(isEmptyString(helper.getParameter("address1"))){
+			helper.setAttribute("errorAddress1", "Empty address");
 			errorString.add("Address Line 1");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("address2"))){
+		}if(isEmptyString(helper.getParameter("address2"))){
 			courseProvider.setAddress2("-");
-		}if(isEmpty(helper.getParameter("address3"))){
+		}if(isEmptyString(helper.getParameter("address3"))){
 			courseProvider.setAddress3("-");
-		}if(isEmpty(helper.getParameter("accountStatus"))){
+		}if(isEmptyString(helper.getParameter("accountStatus"))){
 			errorString.add("Account Status");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerPrivateName"))){
+		}if(isEmptyString(helper.getParameter("providerPrivateName"))){
+			helper.setAttribute("errorPrivateName", "Give a contact name");
 			errorString.add("Provider Name");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerEmail"))){
+		}if(isEmptyString(helper.getParameter("providerEmail"))){
+			helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
 			errorString.add("Private Email");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerUsername"))){
+		}if(isEmptyString(helper.getParameter("providerUsername"))){
+			helper.setAttribute("errorUsername", "Give a usename");
 			errorString.add("Username");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("providerPassword")) || 
-				isEmpty(helper.getParameter("cProviderPassword"))){
+		}if(isEmptyString(helper.getParameter("providerPassword")) || 
+				isEmptyString(helper.getParameter("cProviderPassword"))){
 			errorString.add("Password fields are empty");
 			isValid = false;
-		}if(isEmpty(helper.getParameter("accountDescription"))){
 			courseProviderAccount.setDescription("-");
 		}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
 			helper.setAttribute("errorPassword", "Password fields does not match");
 			errorString.add("Password fields does not match");
 			isValid = false;
 		}if(!validateEmail(helper.getParameter("inquiryMail"))){
-			helper.setAttribute("errorInquiryMail", "Empty email address");
-			errorString.add("Invalid email");
+			helper.setAttribute("errorInquiryMail", "Empty or invalid email address");
+			errorString.add("Empty or invalid email address");
+			isValid = false;
+		}if(!validateEmail(helper.getParameter("generalEmail"))){
+			helper.setAttribute("errorGeneralEmail", "Empty or invalid email address");
+			errorString.add("Empty or invalid email address");
+			isValid = false;
 		}
-		
-		return null;
+		System.out.println("kkkkkkkkkkkkkkk" + isValid);
+		return errorString;
 		
 	}
 }
