@@ -43,7 +43,7 @@ function displayDetails() {
 			getStudentData(response);
 		},
 		error : function(response) {
-		//	alert("Error: " + response);
+			// alert("Error: " + response);
 		}
 	});
 }
@@ -77,170 +77,189 @@ function getStudentData(response) {
 			}
 		}
 	});
-		
 
 	table.clear().draw();
-	$.each(response.stdExpCollection, function(index, value) {
-		alert(response.stdExpCollection);
-		var res = value.toString();
-		var data = res.split(",");
-		table.row.add(
-				[ data[0].toString(), data[1].toString(), data[2].toString(),
-						data[3].toString(), data[4].toString(),  data[5].toString()+"<br/>"+data[6].toString(),
-						data[7].toString(), '<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
-	});
+	$
+			.each(
+					response.stdExpCollection,
+					function(index, value) {
+						alert(response.stdExpCollection);
+						var res = value.toString();
+						var data = res.split(",");
+						table.row
+								.add(
+										[
+												data[0].toString(),
+												data[1].toString(),
+												data[2].toString(),
+												data[3].toString(),
+												data[4].toString(),
+												data[5].toString() + "<br/>"
+														+ data[6].toString(),
+												data[7].toString(),
+												'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+								.draw(false);
+					});
 
 	// Handle click on checkbox
-	$('#example').on('click', 'input[type="checkbox"]', function(e){
-	   var $row = $(this).closest('tr');
+	$('#example').on('click', 'input[type="checkbox"]', function(e) {
+		var $row = $(this).closest('tr');
 
-	   // Get row data
-	   var data = table.row($row).data();
+		// Get row data
+		var data = table.row($row).data();
 
-	   // Get row ID
-	   var rowId = data[0];
+		// Get row ID
+		var rowId = data[0];
 
-	   // Determine whether row ID is in the list of selected row IDs 
-	   var index = $.inArray(rowId, rows_selected);
+		// Determine whether row ID is in the list of selected row IDs
+		var index = $.inArray(rowId, rows_selected);
 
-	   // If checkbox is checked and row ID is not in list of selected row IDs
-	   if(this.checked && index === -1){
-	      rows_selected.push(rowId);
+		// If checkbox is checked and row ID is not in list of selected row IDs
+		if (this.checked && index === -1) {
+			rows_selected.push(rowId);
 
-	   // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-	   } else if (!this.checked && index !== -1){
-	      rows_selected.splice(index, 1);
-	   }
+			// Otherwise, if checkbox is not checked and row ID is in list of
+			// selected row IDs
+		} else if (!this.checked && index !== -1) {
+			rows_selected.splice(index, 1);
+		}
 
-	   if(this.checked){
-	      $row.addClass('selected');
-	   } else {
-	      $row.removeClass('selected');
-	   }
+		if (this.checked) {
+			$row.addClass('selected');
+		} else {
+			$row.removeClass('selected');
+		}
 
-	   // Update state of "Select all" control
-	   updateDataTableSelectAllCtrl(table);
+		// Update state of "Select all" control
+		updateDataTableSelectAllCtrl(table);
 
-	   // Prevent click event from propagating to parent
-	   e.stopPropagation();
+		// Prevent click event from propagating to parent
+		e.stopPropagation();
 	});
-	
-	//This handles the edit button click.
-	$('#example tbody').on( 'click', 'button', function () {
-        var data = table.row( $(this).parents('tr') ).data();       
-        if(data){        
-	    $('#organization').val(data[1]);
-	    $('#designation').val(data[3]);
-	    
-	    var str = data[5];
-	    var res = str.split("<br/>");
-	       
-	    $('#commencedOn').val(res[0]);
-	    $('#completionOn').val(res[1]);
-	    $('#jobDescription').val(data[6]);
-        
-	    //Get select object
-	    var industry = document.getElementById("industryoftheOrganization");
-	    //Set selected
-	    setSelectedValue(industry, data[2]);
-	    
-	    //Get select object
-	    var jobCategory = document.getElementById("jobCategory");
-	    //Set selected
-	    setSelectedValue(jobCategory, data[4]);
-	    
-        }else{
-    	    var idx = $(this).index(this);
-    	    if (idx > 0) {
-    	        var data = $(this).eq(idx - 1).closest('tr');
-    	    } else {
-    	        var data = table.row($(this).closest('tr').prev('tr') ).data();
-    	    }
-    	    
-    	    $('#organization').val(data[1]);
-    	    $('#designation').val(data[3]);
-    	    
-    	    var str = data[5];
-    	    var res = str.split("<br/>");
-    	    
-    	    $('#commencedOn').val(res[0]);
-    	    $('#completionOn').val(res[1]);
-    	    $('#jobDescription').val(data[6]);
-    	      	    
-    	    //Get select object
-    	    var industry = document.getElementById("industryoftheOrganization");
-    	    //Set selected
-    	    setSelectedValue(industry, data[2]);
-    	    
-    	    //Get select object
-    	    var jobCategory = document.getElementById("jobCategory");
-    	    //Set selected
-    	    setSelectedValue(jobCategory, data[4]);
-        }
-    } );
-	
+
+	// This handles the edit button click.
+	$('#example tbody').on(
+			'click',
+			'button',
+			function() {
+				var data = table.row($(this).parents('tr')).data();
+				if (data) {
+					$('#organization').val(data[1]);
+					$('#designation').val(data[3]);
+
+					var str = data[5];
+					var res = str.split("<br/>");
+
+					$('#commencedOn').val(res[0]);
+					$('#completionOn').val(res[1]);
+					$('#jobDescription').val(data[6]);
+
+					// Get select object
+					var industry = document
+							.getElementById("industryoftheOrganization");
+					// Set selected
+					setSelectedValue(industry, data[2]);
+
+					// Get select object
+					var jobCategory = document.getElementById("jobCategory");
+					// Set selected
+					setSelectedValue(jobCategory, data[4]);
+
+				} else {
+					var idx = $(this).index(this);
+					if (idx > 0) {
+						var data = $(this).eq(idx - 1).closest('tr');
+					} else {
+						var data = table.row($(this).closest('tr').prev('tr'))
+								.data();
+					}
+
+					$('#organization').val(data[1]);
+					$('#designation').val(data[3]);
+
+					var str = data[5];
+					var res = str.split("<br/>");
+
+					$('#commencedOn').val(res[0]);
+					$('#completionOn').val(res[1]);
+					$('#jobDescription').val(data[6]);
+
+					// Get select object
+					var industry = document
+							.getElementById("industryoftheOrganization");
+					// Set selected
+					setSelectedValue(industry, data[2]);
+
+					// Get select object
+					var jobCategory = document.getElementById("jobCategory");
+					// Set selected
+					setSelectedValue(jobCategory, data[4]);
+				}
+			});
+
 	// Handle click on "Select all" control
-	$('thead input[name="select_all"]', table.table().container()).on('click', function(e){
-	   if(this.checked){
-	      $('#example tbody input[type="checkbox"]:not(:checked)').trigger('click');
-	   } else {
-	      $('#example tbody input[type="checkbox"]:checked').trigger('click');
-	   }
+	$('thead input[name="select_all"]', table.table().container()).on(
+			'click',
+			function(e) {
+				if (this.checked) {
+					$('#example tbody input[type="checkbox"]:not(:checked)')
+							.trigger('click');
+				} else {
+					$('#example tbody input[type="checkbox"]:checked').trigger(
+							'click');
+				}
 
-	   // Prevent click event from propagating to parent
-	   e.stopPropagation();
-	});
+				// Prevent click event from propagating to parent
+				e.stopPropagation();
+			});
 
 	// Handle table draw event
-	table.on('draw', function(){
-	   // Update state of "Select all" control
-	   updateDataTableSelectAllCtrl(table);
+	table.on('draw', function() {
+		// Update state of "Select all" control
+		updateDataTableSelectAllCtrl(table);
 	});
-	 
-	// Handle form submission event 
-	$('#frm-example').on('submit', function(e){
-	   var form = this;
 
-	   // Iterate over all selected checkboxes
-	   $.each(rows_selected, function(index, rowId){
-	      // Create a hidden element 
-	      $(form).append(
-	          $('<input>')
-	             .attr('type', 'hidden')
-	             .attr('name', 'id[]')
-	             .val(rowId)
-	      );
-	      table.row('.selected').remove().draw( false );
-	   });
+	// Handle form submission event
+	$('#frm-example').on(
+			'submit',
+			function(e) {
+				var form = this;
 
-	   // FOR DEMONSTRATION ONLY     	   
-	   // Output form data to a console     
-	   $('#example-console').text(rows_selected);
-	      
-	   $.ajax({
-			url : '../../StudentController',
-			data : {
-				rows : rows_selected,
-				CCO : 'DPE'
-			},
-			dataType : "json",
-			success : function(response) {
-				
-			},
-			error : function(response) {
-			//	alert("Error: " + response);
-			}
-		});
-	     
-	   // Remove added elements
-	   $('input[name="id\[\]"]', form).remove();
-	    
-	   // Prevent actual form submission
-	   e.preventDefault();
-	});
-	
-	
-	
+				// Iterate over all selected checkboxes
+				$.each(rows_selected, function(index, rowId) {
+					// Create a hidden element
+					$(form).append(
+							$('<input>').attr('type', 'hidden').attr('name',
+									'id[]').val(rowId));
+					table.row('.selected').remove().draw(false);
+				});
+
+				// FOR DEMONSTRATION ONLY
+				// Output form data to a console
+				$('#example-console').text(rows_selected);
+
+				$.ajax({
+					url : '../../StudentController',
+					data : {
+						rows : rows_selected,
+						CCO : 'DPE'
+					},
+					dataType : "json",
+					success : function(response) {
+
+					},
+					error : function(response) {
+						// alert("Error: " + response);
+					}
+				});
+
+				// Remove added elements
+				$('input[name="id\[\]"]', form).remove();
+
+				// Prevent actual form submission
+				e.preventDefault();
+			});
+
 	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
@@ -250,7 +269,7 @@ function getStudentData(response) {
 		$('#sBirthDate').val(data[7]);
 		$('input[gender]:checked').val();
 		$('#sEmail').val(data[9]);
-		$('#sCountryCode').val();
+		$('#sCountryCode').val(data[11]);
 		$('#sHomeNumber').val(data[13]);
 		$('#sMobileNumber').val(data[16]);
 		$('#sAddress').val();
@@ -263,6 +282,14 @@ function getStudentData(response) {
 		$('#sWhatsApp').val(data[24]);
 		$('#sAboutMe').val(data[17]);
 		$('#sTownCode').val(data[28]);
+		$('#sCountry').val(data[30]);
+		$('#sTown').val(data[31]);
+		$("span[class='input-group-addon']").text("+(" + data[11] + ")");
+		
+		if()
+		
+		$('#' + newcol).prop('checked',true);
+		
 	});
 
 	// Set Scheme details
@@ -518,14 +545,10 @@ function getStudentData(response) {
 			this.value = this.value.replace(reg, '');
 		}
 	});
-	
-	
-	
-	
-		
-////Higher Education DataTable Scripts starting from here.	
+
+	// //Higher Education DataTable Scripts starting from here.
 	var hEdurowsSelected = [];
-	
+
 	var higherEdutbl = $('#higherEdutbl').DataTable({
 		'columnDefs' : [ {
 			'targets' : 0,
@@ -549,199 +572,220 @@ function getStudentData(response) {
 		}
 	});
 
-	
 	higherEdutbl.clear().draw();
-	$.each(response.stdHighEduCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		higherEdutbl.row.add(
-				[ data[0].toString(), 
-				data[1].toString()+"<br/>"+ data[2].toString(),
-				data[3].toString()+"<br/>"+data[4].toString(), 
-				data[9].toString()+"<br/>"+"IndexNo: "+data[8].toString(), 
-				data[11].toString(),
-				data[5].toString(),
-				data[6].toString()+"<br/>"+data[7].toString(),
-				data[10].toString(),
-				'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ]).draw(false);
-	});
+	$
+			.each(
+					response.stdHighEduCollection,
+					function(index, value) {
+						var res = value.toString();
+						var data = res.split(",");
+						higherEdutbl.row
+								.add(
+										[
+												data[0].toString(),
+												data[1].toString() + "<br/>"
+														+ data[2].toString(),
+												data[3].toString() + "<br/>"
+														+ data[4].toString(),
+												data[9].toString() + "<br/>"
+														+ "IndexNo: "
+														+ data[8].toString(),
+												data[11].toString(),
+												data[5].toString(),
+												data[6].toString() + "<br/>"
+														+ data[7].toString(),
+												data[10].toString(),
+												'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+								.draw(false);
+					});
 
 	// Handle click on checkbox
-	$('#higherEdutbl').on('click', 'input[type="checkbox"]', function(e){
-	   var $row = $(this).closest('tr');
+	$('#higherEdutbl').on('click', 'input[type="checkbox"]', function(e) {
+		var $row = $(this).closest('tr');
 
-	   // Get row data
-	   var data = higherEdutbl.row($row).data();
+		// Get row data
+		var data = higherEdutbl.row($row).data();
 
-	   // Get row ID
-	   var rowId = data[0];
+		// Get row ID
+		var rowId = data[0];
 
-	   // Determine whether row ID is in the list of selected row IDs 
-	   var index = $.inArray(rowId, hEdurowsSelected);
+		// Determine whether row ID is in the list of selected row IDs
+		var index = $.inArray(rowId, hEdurowsSelected);
 
-	   // If checkbox is checked and row ID is not in list of selected row IDs
-	   if(this.checked && index === -1){
-	      hEdurowsSelected.push(rowId);
+		// If checkbox is checked and row ID is not in list of selected row IDs
+		if (this.checked && index === -1) {
+			hEdurowsSelected.push(rowId);
 
-	   // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-	   } else if (!this.checked && index !== -1){
-	      hEdurowsSelected.splice(index, 1);
-	   }
+			// Otherwise, if checkbox is not checked and row ID is in list of
+			// selected row IDs
+		} else if (!this.checked && index !== -1) {
+			hEdurowsSelected.splice(index, 1);
+		}
 
-	   if(this.checked){
-	      $row.addClass('selected');
-	   } else {
-	      $row.removeClass('selected');
-	   }
+		if (this.checked) {
+			$row.addClass('selected');
+		} else {
+			$row.removeClass('selected');
+		}
 
-	   // Update state of "Select all" control
-	   updatehigherEduDataTableSelectAllCtrl(higherEdutbl);
+		// Update state of "Select all" control
+		updatehigherEduDataTableSelectAllCtrl(higherEdutbl);
 
-	   // Prevent click event from propagating to parent
-	   e.stopPropagation();
+		// Prevent click event from propagating to parent
+		e.stopPropagation();
 	});
-	
-	//This handles the edit button click.
-	$('#higherEdutbl tbody').on( 'click', 'button', function () {
-        var data = higherEdutbl.row( $(this).parents('tr') ).data();       
-        if(data){        
-        	alert(data);
-        	var institute = data[1];
-        	var res1 = institute.split("<br/>");
 
-        	$('#instituteofStudy').val(res1[0]);
-        	$('#affiliatedInstitute').val(res1[1]);
+	// This handles the edit button click.
+	$('#higherEdutbl tbody').on(
+			'click',
+			'button',
+			function() {
+				var data = higherEdutbl.row($(this).parents('tr')).data();
+				if (data) {
+					alert(data);
+					var institute = data[1];
+					var res1 = institute.split("<br/>");
 
-        	var certificate = data[2];
-        	var res2 = certificate.split("<br/>");
+					$('#instituteofStudy').val(res1[0]);
+					$('#affiliatedInstitute').val(res1[1]);
 
-    	    var areaofstudy = document.getElementById("areaofstudy");
-    	    setSelectedValue(areaofstudy, res2[0]);
-    	    
-    	    var award = document.getElementById("award");
-    	    setSelectedValue(award, res2[1]);
+					var certificate = data[2];
+					var res2 = certificate.split("<br/>");
 
-        	var result = data[3];
-        	var res3 = result.split("<br/>");
+					var areaofstudy = document.getElementById("areaofstudy");
+					setSelectedValue(areaofstudy, res2[0]);
 
-        	$('#studentId').val(res3[1]);
-        	$('#gpa').val(res3[0]);
+					var award = document.getElementById("award");
+					setSelectedValue(award, res2[1]);
 
-        	var duration = data[6];
-        	var res4 = duration.split("<br/>");
+					var result = data[3];
+					var res3 = result.split("<br/>");
 
-        	$('#heCommencedOn').val(res4[0]);
-        	$('#heCompletedOn').val(res4[1]);
+					$('#studentId').val(res3[1]);
+					$('#gpa').val(res3[0]);
 
-        	var heMedium = document.getElementById("heMedium");
-     	    setSelectedValue(heMedium, data[4]);
-        	
-        	$('#heCountry').val(data[5]);
-        	$('#heDescription').val(data[7]);
-        }else{
-    	    var idx = $(this).index(this);
-    	    if (idx > 0) {
-    	        var data = $(this).eq(idx - 1).closest('tr');
-    	    } else {
-    	        var data = higherEdutbl.row($(this).closest('tr').prev('tr') ).data();
-    	    }
-    	    alert(data);
-        	var institute = data[1];
-        	var res1 = institute.split("<br/>");
+					var duration = data[6];
+					var res4 = duration.split("<br/>");
 
-        	$('#instituteofStudy').val(res1[0]);
-        	$('#affiliatedInstitute').val(res1[1]);
+					$('#heCommencedOn').val(res4[0]);
+					$('#heCompletedOn').val(res4[1]);
 
-        	var certificate = data[2];
-        	var res2 = certificate.split("<br/>");
+					var heMedium = document.getElementById("heMedium");
+					setSelectedValue(heMedium, data[4]);
 
-    	    var areaofstudy = document.getElementById("areaofstudy");
-    	    setSelectedValue(areaofstudy, res2[0]);
-    	    
-    	    var award = document.getElementById("award");
-    	    setSelectedValue(award, res2[1]);
+					$('#heCountry').val(data[5]);
+					$('#heDescription').val(data[7]);
+				} else {
+					var idx = $(this).index(this);
+					if (idx > 0) {
+						var data = $(this).eq(idx - 1).closest('tr');
+					} else {
+						var data = higherEdutbl.row(
+								$(this).closest('tr').prev('tr')).data();
+					}
+					alert(data);
+					var institute = data[1];
+					var res1 = institute.split("<br/>");
 
-        	var result = data[3];
-        	var res3 = result.split("<br/>");
+					$('#instituteofStudy').val(res1[0]);
+					$('#affiliatedInstitute').val(res1[1]);
 
-        	$('#studentId').val(res3[1]);
-        	$('#gpa').val(res3[0]);
+					var certificate = data[2];
+					var res2 = certificate.split("<br/>");
 
-        	var duration = data[6];
-        	var res4 = duration.split("<br/>");
+					var areaofstudy = document.getElementById("areaofstudy");
+					setSelectedValue(areaofstudy, res2[0]);
 
-        	$('#heCommencedOn').val(res4[0]);
-        	$('#heCompletedOn').val(res4[1]);
+					var award = document.getElementById("award");
+					setSelectedValue(award, res2[1]);
 
-        	var heMedium = document.getElementById("heMedium");
-     	    setSelectedValue(heMedium, data[4]);
-        	
-        	$('#heCountry').val(data[5]);
-        	$('#heDescription').val(data[7]);
-        }
-        
-    } );
-	
+					var result = data[3];
+					var res3 = result.split("<br/>");
+
+					$('#studentId').val(res3[1]);
+					$('#gpa').val(res3[0]);
+
+					var duration = data[6];
+					var res4 = duration.split("<br/>");
+
+					$('#heCommencedOn').val(res4[0]);
+					$('#heCompletedOn').val(res4[1]);
+
+					var heMedium = document.getElementById("heMedium");
+					setSelectedValue(heMedium, data[4]);
+
+					$('#heCountry').val(data[5]);
+					$('#heDescription').val(data[7]);
+				}
+
+			});
+
 	// Handle click on "Select all" control
-	$('thead input[name="select_all"]', higherEdutbl.table().container()).on('click', function(e){
-	   if(this.checked){
-	      $('#higherEdutbl tbody input[type="checkbox"]:not(:checked)').trigger('click');
-	   } else {
-	      $('#higherEdutbl tbody input[type="checkbox"]:checked').trigger('click');
-	   }
+	$('thead input[name="select_all"]', higherEdutbl.table().container())
+			.on(
+					'click',
+					function(e) {
+						if (this.checked) {
+							$(
+									'#higherEdutbl tbody input[type="checkbox"]:not(:checked)')
+									.trigger('click');
+						} else {
+							$(
+									'#higherEdutbl tbody input[type="checkbox"]:checked')
+									.trigger('click');
+						}
 
-	   // Prevent click event from propagating to parent
-	   e.stopPropagation();
-	});
+						// Prevent click event from propagating to parent
+						e.stopPropagation();
+					});
 
 	// Handle table draw event
-	higherEdutbl.on('draw', function(){
-	   // Update state of "Select all" control
+	higherEdutbl.on('draw', function() {
+		// Update state of "Select all" control
 		updatehigherEduDataTableSelectAllCtrl(higherEdutbl);
 	});
-	 
-	// Handle form submission event 
-	$('#frm-hedu').on('submit', function(e){
-	   var form = this;
 
-	   // Iterate over all selected checkboxes
-	   $.each(hEdurowsSelected, function(index, rowId){
-	      // Create a hidden element 
-	      $(form).append(
-	          $('<input>')
-	             .attr('type', 'hidden')
-	             .attr('name', 'id[]')
-	             .val(rowId)
-	      );
-	      higherEdutbl.row('.selected').remove().draw( false );
-	   });
+	// Handle form submission event
+	$('#frm-hedu').on(
+			'submit',
+			function(e) {
+				var form = this;
 
-	   // FOR DEMONSTRATION ONLY     	   
-	   // Output form data to a console     
-	   $('#example-console').text(hEdurowsSelected);
-	      
-	   $.ajax({
-			url : '../../StudentController',
-			data : {
-				rows : hEdurowsSelected,
-				CCO : 'DPE'
-			},
-			dataType : "json",
-			success : function(response) {
-				
-			},
-			error : function(response) {
-			//	alert("Error: " + response);
-			}
-		});
-	     
-	   // Remove added elements
-	   $('input[name="id\[\]"]', form).remove();
-	    
-	   // Prevent actual form submission
-	   e.preventDefault();
-	});
-	
+				// Iterate over all selected checkboxes
+				$.each(hEdurowsSelected, function(index, rowId) {
+					// Create a hidden element
+					$(form).append(
+							$('<input>').attr('type', 'hidden').attr('name',
+									'id[]').val(rowId));
+					higherEdutbl.row('.selected').remove().draw(false);
+				});
+
+				// FOR DEMONSTRATION ONLY
+				// Output form data to a console
+				$('#example-console').text(hEdurowsSelected);
+
+				$.ajax({
+					url : '../../StudentController',
+					data : {
+						rows : hEdurowsSelected,
+						CCO : 'DPE'
+					},
+					dataType : "json",
+					success : function(response) {
+
+					},
+					error : function(response) {
+						// alert("Error: " + response);
+					}
+				});
+
+				// Remove added elements
+				$('input[name="id\[\]"]', form).remove();
+
+				// Prevent actual form submission
+				e.preventDefault();
+			});
+
 }
 
 /**
@@ -798,7 +842,7 @@ function getTownDetails(country) {
 			});
 		},
 		error : function(response) {
-		//	alert("Error: " + response);
+			// alert("Error: " + response);
 		}
 	});
 }
@@ -850,22 +894,22 @@ function addHigherEducationDetails() {
 							if (data.saveChangesHigherEduStatus === "Unsuccessful.") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
-										data.saveChangesHigherEduStatus).show();
+										data.saveChangesHigherEduStatus).fadeIn();
 							} else if (data.saveChangesHigherEduStatus === "Invalid Information") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
-										"Invalid Information.").show();
+										"Invalid Information.").fadeIn();
 							}
 							clearSchoolEducationForm();
 							$("#saveChangesHigherEduStatus").addClass(
 									"alert alert-success").text(
-									data.saveChangesHigherEduStatus).show();
+									data.saveChangesHigherEduStatus).fadeIn();
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
 						$("#saveChangesHigherEduStatus").addClass(
-								"alert alert-warning").text(e).show();
+								"alert alert-warning").text(e).fadeIn();
 					}
 				});
 	}
@@ -959,22 +1003,22 @@ function addEducationDetails() {
 							if (data.saveChangesStatus === "Unsuccessful.") {
 								$("#saveChangesStatus").addClass(
 										"alert alert-danger").text(
-										data.saveChangesStatus).show();
+										data.saveChangesStatus).fadeIn();
 							} else if (data.saveChangesStatus === "Invalid Information") {
 								$("#saveChangesStatus").addClass(
 										"alert alert-danger").text(
-										"Invalid Information.").show();
+										"Invalid Information.").fadeIn();
 							}
 							clearSchoolEducationForm();
 							$("#saveChangesStatus").addClass(
 									"alert alert-success").text(
-									data.saveChangesStatus).show();
+									data.saveChangesStatus).fadeIn();
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
 						$("#saveChangesStatus").addClass("alert alert-warning")
-								.text(e).show();
+								.text(e).fadeIn();
 					}
 				});
 	}
@@ -1117,22 +1161,22 @@ function addProfessionalExpForm() {
 							if (data.pesaveChangesStatus === "Unsuccessful.") {
 								$("#pesaveChangesStatus").addClass(
 										"alert alert-danger").text(
-										data.pesaveChangesStatus).show();
+										data.pesaveChangesStatus).fadeIn();
 							} else if (data.pesaveChangesStatus === "Invalid Information") {
 								$("#pesaveChangesStatus").addClass(
 										"alert alert-danger").text(
-										"Invalid Information.").show();
+										"Invalid Information.").fadeIn();
 							}
 							clearProfessionalExpForm();
 							$("#pesaveChangesStatus").addClass(
 									"alert alert-success").text(
-									data.pesaveChangesStatus).show();
+									data.pesaveChangesStatus).fadeIn();
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
 						$("#pesaveChangesStatus").addClass(
-								"alert alert-warning").text(e).show();
+								"alert alert-warning").text(e).fadeIn();
 					}
 				});
 
@@ -1198,27 +1242,25 @@ function addStudentPersonalDetails() {
 					},
 					dataType : "json",
 					success : function(data) {
-						alert(data);
 						if (data.studentPersonalStatus) {
 							if (data.studentPersonalStatus === "Unsuccessful.") {
 								$("#studentPersonalStatus").addClass(
 										"alert alert-danger").text(
-										data.pesaveChangesStatus).show();
+										data.pesaveChangesStatus).fadeIn();
 							} else if (data.studentPersonalStatus === "Invalid Information") {
 								$("#studentPersonalStatus").addClass(
 										"alert alert-danger").text(
-										"Invalid Information.").show();
+										"Invalid Information.").fadeIn();
 							}
-							clearPersonalDetailsForm();
 							$("#studentPersonalStatus").addClass(
 									"alert alert-success").text(
-									data.studentPersonalStatus).show();
+									data.studentPersonalStatus).fadeIn();
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
 						$("#studentPersonalStatus").addClass(
-								"alert alert-warning").text(e).show();
+								"alert alert-warning").text(e).fadeIn();
 					}
 				});
 	}
@@ -1317,14 +1359,14 @@ function addInterestsDetails() {
 			// if(data.studentPersonalStatus){
 			// if(data.studentPersonalStatus === "Unsuccessful."){
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text(data.pesaveChangesStatus).show();
+			// alert-danger").text(data.pesaveChangesStatus).fadeIn();
 			// }else if(data.studentPersonalStatus === "Invalid Information"){
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text("Invalid Information.").show();
+			// alert-danger").text("Invalid Information.").fadeIn();
 			// }
 			// clearPersonalDetailsForm();
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-success").text(data.studentPersonalStatus).show();
+			// alert-success").text(data.studentPersonalStatus).fadeIn();
 			// }
 		},
 		error : function(e) {
@@ -1392,14 +1434,14 @@ function addSkillDetails() {
 			// if(data.studentPersonalStatus){
 			// if(data.studentPersonalStatus === "Unsuccessful."){
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text(data.pesaveChangesStatus).show();
+			// alert-danger").text(data.pesaveChangesStatus).fadeIn();
 			// }else if(data.studentPersonalStatus === "Invalid Information"){
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text("Invalid Information.").show();
+			// alert-danger").text("Invalid Information.").fadeIn();
 			// }
 			// clearPersonalDetailsForm();
 			// $("#studentPersonalStatus").addClass("alert
-			// alert-success").text(data.studentPersonalStatus).show();
+			// alert-success").text(data.studentPersonalStatus).fadeIn();
 			// }
 		},
 		error : function(e) {
@@ -1409,7 +1451,7 @@ function addSkillDetails() {
 }
 
 //
-//Updates "Select all" control in a data table
+// Updates "Select all" control in a data table
 //
 function updateDataTableSelectAllCtrl(table) {
 	var $table = table.table().node();
@@ -1441,7 +1483,7 @@ function updateDataTableSelectAllCtrl(table) {
 }
 
 //
-//Updates "Select all" control in a data table
+// Updates "Select all" control in a data table
 //
 function updatehigherEduDataTableSelectAllCtrl(table) {
 	var $table = table.table().node();
@@ -1472,18 +1514,20 @@ function updatehigherEduDataTableSelectAllCtrl(table) {
 	}
 }
 
-
 /**
- * This method is to set the selected option in a drop-down list using selectedIndex property.
+ * This method is to set the selected option in a drop-down list using
+ * selectedIndex property.
+ * 
  * @param selectObj
  * @param valueToSet
  * @returns
  */
 function setSelectedValue(selectObj, valueToSet) {
-    for (var i = 0; i < selectObj.options.length; i++) {
-        if (selectObj.options[i].text== valueToSet) {
-            selectObj.options[i].selected = true;
-            return;
-        }
-    }
+	for (var i = 0; i < selectObj.options.length; i++) {
+		if (selectObj.options[i].text == valueToSet) {
+			selectObj.options[i].selected = true;
+			return;
+		}
+	}
 }
+
