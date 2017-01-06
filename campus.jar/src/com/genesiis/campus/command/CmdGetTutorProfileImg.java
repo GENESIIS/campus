@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 //20170103 DN c47-tutor-add-tutor-information-upload-image-dn create the CmdGetTutorProfileImg.java class
 //20170105 DN c47-tutor-add-tutor-information-upload-image-dn introduced getExistingImageFilePathFromTheStorage()
 //getProfilePictureIfExisitElseDefault()
+//20170105 DN c47 add doc comments for the method
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
@@ -39,7 +40,7 @@ public class CmdGetTutorProfileImg implements ICommand {
 		}
 	}
 	
-	/**
+	/*
 	 * Method handles the providing of the image path and setting relevant helper attributes
 	 * @param helper
 	 * @param view
