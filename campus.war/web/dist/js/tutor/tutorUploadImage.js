@@ -1,6 +1,7 @@
 //20161121 DN c47-tutor-add-tutor-information-upload-image-dn created the tutorUploadImage.js
 
 
+
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
 theNewScript.src = "../../dist/js/institute/validation/validation.js";
@@ -28,7 +29,7 @@ function displayTutorProfileImageAtPageLoad(){
 			if(response['successCode']===1){
 				
 				displayLabelMessage('displayLabel','green',response['message']);
-				jQuery('#profileImage').attr('src',"../../../"+responce['profilePicture']);
+				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
 				
 			} else{
 				// if the execution success but logically generated error application vice
