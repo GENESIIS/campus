@@ -354,7 +354,7 @@ function validateTutorFileds() {
 	}
 	
 	if (password.length < 6) {
-		document.getElementById('passwordError').innerHTML = "**Password should have at least 5 characters.";
+		document.getElementById('passwordError').innerHTML = "**Password should have at least 6 characters.";
 		document.getElementById('password').focus();
 		flag = false;
 	}
