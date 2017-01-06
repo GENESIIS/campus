@@ -4,6 +4,9 @@ package com.genesiis.campus.entity;
 //		   PN c26-add-student-details INIT StudentSkillDAO.java. Implemented add(object,conn) and delete(object,conn) method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,13 +43,13 @@ public class StudentSkillDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> studentSkillList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT K.[CODE],K.[NAME],K.[DESCRIPTION] "
 					+ "FROM [CAMPUS].[STUDENTSKILL] SK "
@@ -96,10 +99,9 @@ public class StudentSkillDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
-		StudentSkill data = (StudentSkill) object;
+	public int add(Object object, Connection conn) throws SQLException, Exception {	
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[STUDENTSKILL] ([STUDENT], [SKILL], [CRTON], [CRTBY]) "
 				+ "VALUES(?, ?, (getdate()), ?);";
@@ -107,6 +109,8 @@ public class StudentSkillDAO implements ICrud{
 		int result = -1;
 
 		try {
+			connection = conn;
+			StudentSkill data = (StudentSkill) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSkill());
@@ -134,16 +138,17 @@ public class StudentSkillDAO implements ICrud{
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		StudentSkill data = (StudentSkill) object;
+	public int delete(Object object, Connection conn) throws SQLException, Exception {	
 		PreparedStatement preparedStatement = null;
-		Connection connection = conn;
+		Connection connection = null;
 
 		String query = "DELETE FROM  [CAMPUS].[STUDENTSKILL] WHERE [STUDENT] = ? AND [SKILL] = ?;";
 
 		int result = -1;
 
 		try {
+			connection = conn;
+			StudentSkill data = (StudentSkill) object;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
 			preparedStatement.setInt(2, data.getSkill());

@@ -9,6 +9,10 @@ package com.genesiis.campus.entity;
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 //20170105 PN CAM-28: edit user information: modified update(Object object, Connection con) method coding.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,12 +36,13 @@ public class StudentDAO implements ICrud {
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		Student student = (Student) object;
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
 
 		try {
+			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
@@ -70,9 +75,8 @@ public class StudentDAO implements ICrud {
 			stmt.setString(20, student.getAddress1());
 			stmt.setString(21, student.getTown());
 			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());		
-			stmt.executeUpdate();
-			isUpdated = 1;
+			stmt.setInt(23, student.getCode());					
+			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());
 			throw sqlException;
@@ -99,7 +103,6 @@ public class StudentDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-
 		final Collection<Collection<String>> studentDetailsCollectionList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -193,13 +196,13 @@ public class StudentDAO implements ICrud {
 
 	@Override
 	public int update(Object object, Connection con) throws SQLException,
-			Exception {
-		Student student = (Student) object;
+			Exception {	
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int isUpdated = 0;
 
 		try {
+			Student student = (Student) object;
 			conn = con;
 			String query ="UPDATE [CAMPUS].[STUDENT] SET [FIRSTNAME] = ?, [MIDDLENAME] = ?, "
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "

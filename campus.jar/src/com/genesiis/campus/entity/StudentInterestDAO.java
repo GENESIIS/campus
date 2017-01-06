@@ -4,6 +4,9 @@ package com.genesiis.campus.entity;
 //PN c26-add-student-details INIT StudentSkillDAO.java. Implemented add(object,conn) and delete(object,conn) method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,13 +41,13 @@ public class StudentInterestDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {	
 		final Collection<Collection<String>> studentInterestList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT I.[CODE],I.[NAME],I.[DESCRIPTION] "
 					+ "FROM [CAMPUS].[STUDENTINTEREST] SI "
@@ -95,7 +98,7 @@ public class StudentInterestDAO implements ICrud{
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
-		StudentInterest data = (StudentInterest) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -105,6 +108,7 @@ public class StudentInterestDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentInterest data = (StudentInterest) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());
@@ -134,7 +138,7 @@ public class StudentInterestDAO implements ICrud{
 
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		StudentInterest data = (StudentInterest) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -143,6 +147,7 @@ public class StudentInterestDAO implements ICrud{
 		int result = -1;
 
 		try {
+			StudentInterest data = (StudentInterest) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, data.getStudent());

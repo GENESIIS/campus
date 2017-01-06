@@ -2,6 +2,9 @@ package com.genesiis.campus.entity;
 //20161125 PN c26-add-student-details: INIT the class and getAll() method implemented.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class MediumDAO implements ICrud{
 	static Logger log = Logger.getLogger(MediumDAO.class.getName());
@@ -45,11 +49,13 @@ public class MediumDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT  [CODE],[DESCRIPTION] FROM CAMPUS.MEDIUM WHERE ISACTIVE=1;";
+			String query = "SELECT  [CODE],[DESCRIPTION] FROM CAMPUS.MEDIUM WHERE ISACTIVE=?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

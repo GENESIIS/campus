@@ -10,6 +10,9 @@ package com.genesiis.campus.entity;
 //20170103 PN CAM-28: changed the findById(Object object) method by giving condition to check different types of the 'object' parameter.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 //20170105 PN CAM-28: update(Object object, Connection conn) DAO method implemented.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,13 +27,13 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Major;
 import com.genesiis.campus.entity.model.ProfessionalExperience;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class ProfessionalExperienceDAO implements ICrud{
 	static Logger log = Logger.getLogger(ProfessionalExperienceDAO.class.getName());
 	
 	@Override
-	public int add(Object object) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;
+	public int add(Object object) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -41,6 +44,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;
 			connection = ConnectionManager.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(6, data.getOrganization());
@@ -88,20 +92,23 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+		
 		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE], [ORGANIZATION], [STUDENT], [INDUSTRY], [JOBCATEGORY], "
 					+ "[DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION] "
 					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] "
-					+ "WHERE [STUDENT] = ? AND ISACTIVE = 1;";
+					+ "WHERE [STUDENT] = ? AND ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
+			stmt.setInt(2, isActive);
 			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
@@ -172,7 +179,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int add(Object object, Connection conn) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -183,6 +190,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());
@@ -213,7 +221,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int update(Object object, Connection conn) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -223,6 +231,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		int result = -1;
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getOrganization());
@@ -254,7 +263,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 
 	@Override
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		ProfessionalExperience data = (ProfessionalExperience) object;		
+		
 		int studentCode = data.getCode();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -263,6 +272,7 @@ public class ProfessionalExperienceDAO implements ICrud{
 		String deleteSQL = "DELETE FROM [CAMPUS].[PROFESSIONALEXPERIENCE] WHERE [CODE] = ?;";
 
 		try {
+			ProfessionalExperience data = (ProfessionalExperience) object;		
 			connection = conn;
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, studentCode);

@@ -3,6 +3,9 @@ package com.genesiis.campus.entity;
 //20161215 PN CAM-28: INIT AwardDAO.java class and implemented add() method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.CmdGetStudentData;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class AwardDAO implements ICrud{
 	static Logger log = Logger.getLogger(AwardDAO.class.getName());
@@ -48,11 +52,13 @@ public class AwardDAO implements ICrud{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[SHORTTITLE],[LONGTITLE] FROM [CAMPUS].[AWARD];";
+			String query = "SELECT [CODE],[SHORTTITLE],[LONGTITLE] FROM [CAMPUS].[AWARD] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

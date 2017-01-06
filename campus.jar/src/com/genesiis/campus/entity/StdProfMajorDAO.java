@@ -5,6 +5,9 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Major;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class StdProfMajorDAO implements ICrud {
 	static Logger log = Logger.getLogger(StdProfMajorDAO.class.getName());
@@ -44,26 +48,29 @@ public class StdProfMajorDAO implements ICrud {
 		int categoryCode = 0;
 		String query = "";
 
-		if (code instanceof Integer) {
-			categoryCode = (Integer) code;
-			query = "SELECT DISTINCT m.CODE, m.NAME, m.DESCRIPTION " + "FROM [CAMPUS].[MAJOR] m "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON m.CODE = p.MAJOR "
-					+ "JOIN [CAMPUS].[CATEGORY] c ON c.CODE = p.CATEGORY " + "WHERE c.CODE = ? AND c.ISACTIVE = 1;";
-		} else if (code instanceof Major) {
-			Major major = (Major) code;
-			categoryCode = major.getCode();
-			query = "SELECT m.CODE, m.NAME, m.DESCRIPTION FROM [CAMPUS].[MAJOR] m WHERE m.CODE = ? AND m.ISACTIVE = 1;";
-		}
-
 		final Collection<Collection<String>> allMajorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		ResultSet rs = null;		
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
 		try {
+			
+			if (code instanceof Integer) {
+				categoryCode = (Integer) code;
+				query = "SELECT DISTINCT m.CODE, m.NAME, m.DESCRIPTION " + "FROM [CAMPUS].[MAJOR] m "
+						+ "JOIN [CAMPUS].[PROGRAMME] p ON m.CODE = p.MAJOR "
+						+ "JOIN [CAMPUS].[CATEGORY] c ON c.CODE = p.CATEGORY " + "WHERE c.CODE = ? AND c.ISACTIVE = ?;";
+			} else if (code instanceof Major) {
+				Major major = (Major) code;
+				categoryCode = major.getCode();
+				query = "SELECT m.CODE, m.NAME, m.DESCRIPTION FROM [CAMPUS].[MAJOR] m WHERE m.CODE = ? AND m.ISACTIVE = ?;";
+			}
+			
 			conn = ConnectionManager.getConnection();
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
+			stmt.setInt(2, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -103,11 +110,13 @@ public class StdProfMajorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int isActive = ApplicationStatus.ACTIVE.getStatusValue();
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

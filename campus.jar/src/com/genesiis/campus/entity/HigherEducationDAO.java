@@ -7,6 +7,9 @@ package com.genesiis.campus.entity;
 //20160104 PN CAM-28: modified the SQL query inside findById() method.
 //20170105 PN CAM-28: edit user information: modified DAO method coding modified with improved connection property management.
 //20170105 PN CAM-28: update(Object object, Connection conn) DAO method implemented.
+//20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
+//20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
+//20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -24,8 +27,7 @@ import com.genesiis.campus.util.ConnectionManager;
 public class HigherEducationDAO implements ICrud{
 	static Logger log = Logger.getLogger(HigherEducationDAO.class.getName());
 	@Override
-	public int add(Object object) throws SQLException, Exception {
-		HigherEducation data = (HigherEducation) object;
+	public int add(Object object) throws SQLException, Exception {	
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -36,6 +38,7 @@ public class HigherEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			HigherEducation data = (HigherEducation) object;
 			connection = ConnectionManager.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getInstitute());
@@ -86,13 +89,13 @@ public class HigherEducationDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		int studentCode = (Integer) code;
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {		
 		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT he.[CODE] ,[INSTITUTE] ,[AFFINSTITUTE] ,[STUDENT] ,le.[DESCRIPTION] AS [LEVEL], aw.[SHORTTITLE] AS [AWARD], mj.[NAME] AS [MAJOR],"
 					+ " co.[NAME] AS [COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,he.[DESCRIPTION] AS [DESCRIPTION] , md.[DESCRIPTION] AS [MEDIUM] "
@@ -153,8 +156,7 @@ public class HigherEducationDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {
-		HigherEducation data = (HigherEducation) object;
+	public int add(Object object, Connection conn) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -165,6 +167,7 @@ public class HigherEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			HigherEducation data = (HigherEducation) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getInstitute());
@@ -193,16 +196,12 @@ public class HigherEducationDAO implements ICrud{
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			if (connection != null) {
-				connection.close();
-			}
 		}
 		return result;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException, Exception {
-		HigherEducation data = (HigherEducation) object;
+	public int update(Object object, Connection conn) throws SQLException, Exception {		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -213,6 +212,7 @@ public class HigherEducationDAO implements ICrud{
 		int result = -1;
 
 		try {
+			HigherEducation data = (HigherEducation) object;
 			connection = conn;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, data.getInstitute());
@@ -241,17 +241,12 @@ public class HigherEducationDAO implements ICrud{
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
-			if (connection != null) {
-				connection.close();
-			}
 		}
 		return result;
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException, Exception {
-		HigherEducation data = (HigherEducation) object;		
-		int studentCode = data.getCode();
+	public int delete(Object object, Connection conn) throws SQLException, Exception {						
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int result = -1;
@@ -259,6 +254,8 @@ public class HigherEducationDAO implements ICrud{
 		String deleteSQL = "DELETE FROM [CAMPUS].[HIGHERDUCATION] WHERE [CODE] = ?;";
 
 		try {
+			HigherEducation data = (HigherEducation) object;
+			int studentCode = data.getCode();
 			connection = conn;
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, studentCode);
