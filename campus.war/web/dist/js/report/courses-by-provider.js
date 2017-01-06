@@ -3,8 +3,10 @@
 // allproviderListCollection contains all the course providers in all statuses
 var allproviderListCollection=0;
 
-$(document).ready(function() {
-	
+$(document).ready(function() {		
+	/*
+	 * This ajax call load the initial search interface for courses by course provider report generation.
+	 */
 	$.ajax({
 		url : '../../ReportController',
 		data : {
@@ -19,7 +21,10 @@ $(document).ready(function() {
 		}
 	});
 	
-	//Identify course provider status click
+	/*
+	 * Identify course provider status click.Providers list according to provider status selection. 
+	 */
+	
 	$("input[name='providerStatus']").change(function(){		
 		var statusValue=$('input:radio[name=providerStatus]:checked').val();
 		var cpStatusCheck=0;
@@ -28,28 +33,37 @@ $(document).ready(function() {
 		}else if(statusValue=="INACTIVE"){
 			cpStatusCheck=2;
 		}
+		$('#providerlist').val("");	
 		var htmlstr="";
 		$.each(allproviderListCollection, function(index, value) {		
 			if(value!=null && value.length>0){
 				if(value[2] !=null && value[2]==cpStatusCheck){
-				htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+				htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
 				}
 			}		
 		});
 		
 		$('#providerName').html(htmlstr);
-	});
-	
+	});	
+
+	/*
+	 * trigger Search button click. 
+	 */
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
-	});	
+	});
 	
+	/*
+	 * trigger Clear button click. 
+	 */
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
 	});	
 });
 
-
+/*
+ * This method getProviderSearchData() populate data for  initial search interface for courses by course provider report generation.
+ */
 function getProviderSearchData(response){
 	$('#resultSetDiv').hide();
 	$('input:radio[name="providerStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
@@ -67,7 +81,9 @@ function getProviderSearchData(response){
 } 
 
 
-
+/*
+ * This method loadResultSet() identify input parameters for report search.
+ */
 function loadResultSet(event) {
 
 	var cProviderName = $('#providerlist').val();
@@ -115,6 +131,10 @@ function loadResultSet(event) {
 		}
 	});
 }
+
+/**
+ * This method populateResultTable() manipulate search data list to a display table.
+ */
 function populateResultTable(response){
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
@@ -153,6 +173,9 @@ function populateResultTable(response){
 	}
 }
 
+/**
+ * This method clearParameters() clear load form.
+ */
 function clearParameters(event){	
 	$('#resultPanel').hide();
 	$('#providerlist').val("");	
@@ -173,6 +196,9 @@ function clearParameters(event){
 	$('#enddate').val(""); 	
 }
 
+/**
+ * This method errorCodeGeneration() manipulate with errors.
+ */
 function errorCodeGeneration(jqXHR, exception){
 	var msg = '';
 	   if (jqXHR.status === 0) {
