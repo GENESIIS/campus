@@ -33,12 +33,12 @@
 </head>
 <body>
 <label id="displayLabel" style="color:#F39C12;" ></label>
-<form action="" method="post" action="" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data">
 
   
   <input type="file" name="filename" accept="image/gif, image/jpeg, image/png">
   <div align="center">
-  	<img id="profileImage" src="#"   alt="Profile-Picture"> <!-- src="../../../ "-->
+  	<img id="profileImage" style="width:200px;hight:auto" src="#"   alt="Profile-Picture">
   	<!-- use a button to change the image -->
   	
   </div>
