@@ -1,7 +1,9 @@
 //DJ 20170102 c53-report-registered-students-MP-dj Ajax controls for registered students generation
 
 $(document).ready(function() {
-	
+	/*
+	 * This ajax call load the initial search interface for registered student report generation.
+	 */
 	$.ajax({
 		url : '../../ReportController',
 		data : {
@@ -14,28 +16,27 @@ $(document).ready(function() {
 		error : function(jqXHR, exception) {
 			errorCodeGeneration(jqXHR, exception);
 		}
-	});	
+	});		
 	
-	
-
+	/*
+	 * trigger Search button click. 
+	 */
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});
-
+	
+	/*
+	 * trigger Clear button click. 
+	 */
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
 	});
 	
-	
-	$('#districtlist').on('keypress', function(e){
-		 if (evt.which < 48 || evt.which > 57)
-		    {
-		        evt.preventDefault();
-		    }
-	});
 });
 
-//Populate search view for registered Student report generation
+/*
+ * This method getStudentSearchData() populate data for  initial search interface for registered student report generation.
+ */
 function getStudentSearchData(response){
 	$('#resultPanel').hide();
 	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
@@ -49,8 +50,11 @@ function getStudentSearchData(response){
 		}		
 	});		
 	$('#districtName').html(htmlstr);	
-} 
+}
 
+/*
+ * This method loadResultSet() identify input parameters for report search.
+ */
 function loadResultSet(event) {
 	var districtName = $('#districtlist').val();
 	var districtCode = 0;
@@ -87,7 +91,9 @@ function loadResultSet(event) {
 	});
 
 }
-
+/**
+ * This method populateResultTable() manipulate search data list to a display table.
+ */
 function populateResultTable(response) {
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
@@ -127,13 +133,20 @@ function populateResultTable(response) {
 	}
 }
 
+/**
+ * This method clearParameters() clear load form.
+ */
 function clearParameters(event){	
 	$('#resultPanel').hide();
 	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 
+	$('#districtlist').val("");	
 }
 
+/**
+ * This method errorCodeGeneration() manipulate with errors.
+ */
 function errorCodeGeneration(jqXHR, exception) {
 	var msg = '';
 	if (jqXHR.status === 0) {
