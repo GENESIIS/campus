@@ -6,6 +6,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The class {@code CalendarUtilityHelper} is a form of utility helper class for calendar function implementation.
+ * @author dumani DJ
+ *
+*/
 public class CalendarUtilityHelper {
 	public static java.sql.Date getSqlDate(String dateString) throws Exception {
 		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

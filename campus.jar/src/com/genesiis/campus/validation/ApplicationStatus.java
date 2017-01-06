@@ -11,10 +11,9 @@ package com.genesiis.campus.validation;
 *
 */
 public enum ApplicationStatus {
-
 	
 	INACTIVE(0),
-	ACTIVE(1),
+	ACTIVE(1),	
 	PENDING(2),
 	EXPIRED(3);	
 	
@@ -34,8 +33,8 @@ public enum ApplicationStatus {
 	/**
 	 * Generic method for map the status.Able to call from whole campus application
 	 * @author DJ
-	 * @param selected status Value string
-	 * @return applicationStatus
+	 * @param statusValue selected status Value string
+	 * @return integer applicationStatus
 	 * @throws Exception
 	 */
 	public static int getApplicationStatus(String statusValue){
@@ -59,14 +58,15 @@ public enum ApplicationStatus {
 	}
 	
 	/**
-	 * Generic method for map the status int value with String.Purpose of status vie in front end.Able to call from whole campus application
+	 * Generic method for map the status int value with String.Purpose of status view in front end.Able to call from whole campus application
 	 * @author DJ
-	 * @param selected int status Value 
-	 * @return applicationStatus
+	 * @param statusValue selected int status Value 
+	 * @return String applicationStatus
 	 * @throws Exception
 	 */
 	public static String getApplicationStatus(int statusValue){
-		String applicationStatus="";		
+		String applicationStatus="";				
+		
 		if(statusValue ==ACTIVE.statusValue){
 			applicationStatus = "Active";
 		}
