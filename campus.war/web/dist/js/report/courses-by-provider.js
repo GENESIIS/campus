@@ -27,11 +27,11 @@ $(document).ready(function() {
 	
 	$("input[name='providerStatus']").change(function(){		
 		var statusValue=$('input:radio[name=providerStatus]:checked').val();
-		var cpStatusCheck=0;
+		var cpStatusCheck=-1;
 		if(statusValue=="ACTIVE"){
 			cpStatusCheck=1;
 		}else if(statusValue=="INACTIVE"){
-			cpStatusCheck=2;
+			cpStatusCheck=0;
 		}
 		$('#providerlist').val("");	
 		var htmlstr="";
