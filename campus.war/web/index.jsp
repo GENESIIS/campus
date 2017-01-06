@@ -29,28 +29,16 @@ p    {color: blue;}
 	<div>
 		<h1>Report Generation</h1><p>Please Select the report type</p>
 	</div>
-	<!-- <hr>
-	<div>		
-		<a href="dist/partials/reportCoursesByCourseProviderOLD.jsp"><u>Courses By
-			Course Provider OLD </u></a>
-	</div> -->
 	<hr>
 	<div>		
 		<a href="/dist/partials/reportCoursesByCourseProvider.jsp"><u>Courses By
 			Course Provider</u></a>
 	</div>
 	<hr>
-<hr>
 	<div>		
 		<a href="dist/partials/reportRegisteredStudents.jsp"><u>Registered Students </u></a>
 	</div>
-	<!-- <hr>
-	<div>		
-		<a href="/dist/partials/admin/report/reportCoursesByCourseProviderREfact.jsp"><u>Courses By
-			Course Provider Refactor </u></a>
-	</div>
-	<hr> -->
-
+    <hr>
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
 

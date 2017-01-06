@@ -76,7 +76,7 @@ tr:nth-child(even) {
 							End Date : <input type="date" id="enddate" name="search">
 						</div>
 						<div class="drop-holder">
-								<input type="text" name="districtlist" id="districtlist"
+							District : <input type="text" name="districtlist" id="districtlist"
 									list="districtName" placeholder="-- Select District --" />
 								<datalist id="districtName">
 								</datalist>
