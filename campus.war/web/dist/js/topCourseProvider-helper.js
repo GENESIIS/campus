@@ -13,8 +13,20 @@ $(document).ready(function() {
 		success : function(response) {			
 			 getAjaxData(response);
 		},
-		error : function() {
-			alert("error");
+		error : function(jqXHR, exception) {			
+			var msg = '';
+			if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        }  else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else {
+	            msg = 'Internal error is occurred. Please try again.';
+	        }          
+	        alert(msg);
 		}
 	});
 });

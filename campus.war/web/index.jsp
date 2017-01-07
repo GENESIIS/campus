@@ -7,28 +7,30 @@
 <title>Campus.lk</title>
 
 <!-- Bootstrap & CSS Style-->
-<link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-<link href="dist/css/style.css" rel="stylesheet">
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/dist/css/style.css" rel="stylesheet">
 
-<!-- W3-Include -->
-    <script src="dist/bower-components/w3/w3data.js"></script>
-    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
+
 
 </head>
 <body>	
 <!-- Header-->
-	<header> <jsp:include page="/dist/partials/layout/header.jsp" /></header>
+	 <jsp:include page="/dist/partials/layout/header.jsp" />
 
 	<!-- Main Container - Landing -->
 	<div><jsp:include page="/dist/partials/landing.jsp" /></div>
 
 	<!-- Footer -->
-	<footer> <jsp:include page="/dist/partials/layout/footer.jsp" /></footer>
+	 <jsp:include page="/dist/partials/layout/footer.jsp" />
 
 	<!-- jQuery & Other js -->
-	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-	<script src="dist/js/main.js"></script>
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+	
+	<!-- W3-Include -->
+    <script src="/dist/bower-components/w3/w3data.js"></script>
+    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="/dist/js/landingPage/landing-page-ui-helper.js"></script>
 </body>
 </html>

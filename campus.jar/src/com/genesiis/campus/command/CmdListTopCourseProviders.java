@@ -6,19 +6,17 @@ package com.genesiis.campus.command;
 //DJ 20161109 c6-list-available-institutes-on-the-view add topRatedCourseProviders implementation
 //DJ 20161123 c6-list-available-institutes-on-the-view add SystemConfig.PROVIDER_LOGO_PATH
 
-import java.sql.SQLException;
-import java.util.Collection;
-
-import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.CourseProviderDAO;
-import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemConfig;
-import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
-
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class CmdListTopCourseProviders implements ICommand   {
 	
@@ -34,13 +32,12 @@ public class CmdListTopCourseProviders implements ICommand   {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();
-		SystemMessage systemMessage = SystemMessage.UNKNOWN;				
+		final CourseProviderDAO providerDAO = new CourseProviderDAO();						
 		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		
 		try {
 			int categoryCode = 0;
-			final CourseProvider provider = new CourseProvider();
+			final CourseProviderSearchDTO provider = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("category");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
@@ -58,8 +55,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
 		} catch (Exception exception) {
-			log.error("execute() :Exception  " + exception);
-			systemMessage = SystemMessage.ERROR;
+			log.error("execute() :Exception  " + exception);			
 			throw exception;
 		}
 		return iview;

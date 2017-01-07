@@ -351,22 +351,26 @@ body, html {
           padding: 20px 10px 40px; }
           .courses-screen .filter-area .result-panel .search-result-view .result-box:nth-child(even) {
             background: rgba(47, 102, 194, 0.03); }
-          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name {
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name, .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-name {
             display: block;
             width: 100%; }
-            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name a {
+            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name a, .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-name a {
               font-size: 25px;
               color: #3a8af7;
               font-family: "Slabo 27px", serif;
               line-height: 45px; }
-            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name:hover {
-              text-decoration: underline; }
-          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-info {
+              .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name a .provider-loc, .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-name a .provider-loc {
+                font-size: 18px;
+                color: #75787d; }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-info, .courses-screen .filter-area .result-panel .search-result-view .result-box .p-info {
             display: inline-block;
             width: 72%;
             float: left;
-            padding-top: 30px; }
-          .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-info {
+            padding-top: 22px; }
+            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-info p, .courses-screen .filter-area .result-panel .search-result-view .result-box .p-info p {
+              color: #a9a9a9;
+              line-height: 20px; }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-info, .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-logo {
             display: inline-block;
             float: right;
             width: 28%; }

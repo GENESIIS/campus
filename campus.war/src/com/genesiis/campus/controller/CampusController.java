@@ -1,7 +1,6 @@
 package com.genesiis.campus.controller;
 // 20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
 
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -35,7 +34,6 @@ public class CampusController extends HttpServlet {
 	static Logger log = Logger.getLogger(CampusController.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -78,19 +76,18 @@ public class CampusController extends HttpServlet {
 
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 				
-				if (result.getCollection() != null) {					
+				if (result != null && result.getCollection() != null) {					
 					objectMap.put("result", result.getCollection());
-	
-					Enumeration<String> attributeNames = request
-							.getAttributeNames();
-	
-					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames.nextElement();
-						Object object = helper.getAttribute(currentAttributeName);
-						objectMap.put(currentAttributeName, object);
-					}
 				} else {
 					objectMap.put("result", "NO-DATA");
+				}
+				
+				Enumeration<String> attributeNames = request.getAttributeNames();
+
+				while (attributeNames.hasMoreElements()) {
+					String currentAttributeName = attributeNames.nextElement();
+					Object object = helper.getAttribute(currentAttributeName);
+					objectMap.put(currentAttributeName, object);
 				}
 				
 				response.getWriter().write(gson.toJson(objectMap));
