@@ -447,4 +447,11 @@ public class CourseProviderDAO implements CourseProviderICrud{
 		return dtos;
 	}
 
+	@Override
+	public Collection<Collection<String>> findById(Integer provider)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

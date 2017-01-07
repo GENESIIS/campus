@@ -7,5 +7,6 @@ package com.genesiis.campus.entity;
  *  @author dumani DJ   
  */
 public interface ProgrammeICrud extends ICrud {
+	
 
 }
