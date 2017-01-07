@@ -6,14 +6,15 @@ package com.genesiis.campus.command;
 //DJ 20161110 c6-list-available-institutes-on-the-view identified get all and category wise course providers
 //DJ 20161123 c6-list-available-institutes-on-the-view add SystemConfig.PROVIDER_LOGO_PATH
 
-import com.genesiis.campus.entity.CategoryDAO;
-import com.genesiis.campus.entity.CourseProviderDAO;
-import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.dao.CategoryDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAO;
+import com.genesiis.campus.entity.dao.DistrictDAO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.UtilityHelper;
+
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;

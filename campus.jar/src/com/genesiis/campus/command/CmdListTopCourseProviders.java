@@ -6,13 +6,15 @@ package com.genesiis.campus.command;
 //DJ 20161109 c6-list-available-institutes-on-the-view add topRatedCourseProviders implementation
 //DJ 20161123 c6-list-available-institutes-on-the-view add SystemConfig.PROVIDER_LOGO_PATH
 
-import com.genesiis.campus.entity.CourseProviderDAO;
+import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.dao.CourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.UtilityHelper;
+
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -32,7 +34,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
-		final CourseProviderDAO providerDAO = new CourseProviderDAO();						
+		final CourseProviderICrud providerDAO = new CourseProviderDAO();						
 		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		
 		try {

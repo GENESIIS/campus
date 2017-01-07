@@ -3,14 +3,15 @@ package com.genesiis.campus.command;
 //DJ 20161124 c17-provider-criteria-based-filter-search created CmdListCategoryTypes.java
 //DJ 20161125 c17-provider-criteria-based-filter-search execute method implementation 
 
-import com.genesiis.campus.entity.CourseProviderDAO;
-import com.genesiis.campus.entity.CourseProviderTypeDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.LevelDAO;
-import com.genesiis.campus.entity.MajorDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAO;
+import com.genesiis.campus.entity.dao.CourseProviderTypeDAO;
+import com.genesiis.campus.entity.dao.LevelDAO;
+import com.genesiis.campus.entity.dao.MajorDAO;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.UtilityHelper;
+
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;

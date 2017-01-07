@@ -1,9 +1,12 @@
-package com.genesiis.campus.entity;
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created DistrictDAO.java
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
+package com.genesiis.campus.entity.dao;
 
+//DJ 20161111 c17-provider-criteria-based-filter-search-MP-dj created CategoryDAO.java
+
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -13,9 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DistrictDAO  implements ICrud{
+
+public class CategoryDAO  implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CategoryDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -41,9 +45,8 @@ public class DistrictDAO  implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	/**
-	 * Get all DistrictList details
+	 * Get all category details
 	 * @param 
 	 * @author DJ
 	 * @return Collection 
@@ -54,22 +57,20 @@ public class DistrictDAO  implements ICrud{
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		final Collection<Collection<String>> allDistrictList=new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allCategoryList=new ArrayList<Collection<String>>();
 		try {
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE CODE NOT IN (-1,31);";
-
-			stmt = conn.prepareStatement(query);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleDistrictList = new ArrayList<String>();
-				singleDistrictList.add(rs.getString("CODE"));
-				singleDistrictList.add(rs.getString("PROVINCE"));
-				singleDistrictList.add(rs.getString("NAME"));
-
-				final Collection<String> singleDistrictCollection = singleDistrictList;
-				allDistrictList.add(singleDistrictCollection);
+			conn=ConnectionManager.getConnection();
+			String sql="SELECT CAT.CODE AS CATEGORYCODE , CAT.NAME AS CATEGORYNAME FROM [CAMPUS].CATEGORY CAT WHERE CAT.ISACTIVE=? ";
+			
+			stmt=conn.prepareStatement(sql.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			rs=stmt.executeQuery();
+			
+			while (rs.next()) {				
+				final ArrayList<String> singleCategory = new ArrayList<String>();
+				singleCategory.add(rs.getString("CATEGORYCODE"));				
+				singleCategory.add(rs.getString("CATEGORYNAME"));				
+				allCategoryList.add(singleCategory);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());
@@ -81,7 +82,7 @@ public class DistrictDAO  implements ICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
-		return allDistrictList;
+		return allCategoryList;
 	}
 
 	@Override

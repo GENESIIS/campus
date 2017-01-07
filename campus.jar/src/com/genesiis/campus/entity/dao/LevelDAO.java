@@ -1,12 +1,14 @@
-package com.genesiis.campus.entity;
+package com.genesiis.campus.entity.dao;
 
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created CourseProviderTypeDAO.java
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
-//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findCPTypesByCodes() method
+//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created LevelDAO.java
+//DJ 20161118 c17-provider-criteria-based-filter-search-MP-dj created getAll() method
+//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findLevelsByLevelCodes() method
 
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-public class CourseProviderTypeDAO implements ICrud{
-	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());
+
+public class LevelDAO  implements ICrud{
+	static org.apache.log4j.Logger log = Logger.getLogger(LevelDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -45,9 +47,8 @@ public class CourseProviderTypeDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	/**
-	 * Get all course provider type details
+	 * Get all Level details
 	 * @param 
 	 * @author DJ
 	 * @return Collection 
@@ -59,20 +60,20 @@ public class CourseProviderTypeDAO implements ICrud{
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
+			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=? ";
 			
 			stmt=conn.prepareStatement(sql.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
-				final ArrayList<String> singleCPType = new ArrayList<String>();
-				singleCPType.add(rs.getString("CPTYPECODE"));				
-				singleCPType.add(rs.getString("CPTYPENAME"));				
-				allCourseProviderTypeList.add(singleCPType);
+				final ArrayList<String> singleLevel = new ArrayList<String>();
+				singleLevel.add(rs.getString("LEVELCODE"));				
+				singleLevel.add(rs.getString("LEVELNAME"));				
+				allLevelList.add(singleLevel);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());
@@ -84,7 +85,7 @@ public class CourseProviderTypeDAO implements ICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
-		return allCourseProviderTypeList;
+		return allLevelList;
 	}
 
 	@Override
@@ -114,52 +115,53 @@ public class CourseProviderTypeDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	/**
-	 * Get all course provider type details by course provider type codes
-	 * @param cpTypeSet
+	 * Get all education level list details by level code set
+	 * @param levelCodeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException,Exception{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		final Collection<Collection<String>> courseProviderTypeList = new ArrayList<Collection<String>>();
+	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)  throws SQLException,Exception{
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
 		try {
-			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
-			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
+			conn=ConnectionManager.getConnection();			
+			final StringBuilder sb =new StringBuilder("SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL  ");
+			sb.append(" WHERE LEVEL.ISACTIVE=? AND LEVEL.CODE IN (");
 			boolean doneOne = false;
-			for (Integer code : cpTypeCodeSet) {
+			for (Integer code : levelCodeSet) {
 				if (doneOne) {
 					sb.append(", ");
 				}
 				sb.append(code);
 				doneOne = true;
 			}
-			sb.append(" ) ");
-
-			stmt = conn.prepareStatement(sb.toString());
+			sb.append(")" );
+			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleCPType = new ArrayList<String>();
-				singleCPType.add(rs.getString("CPTYPECODE"));
-				singleCPType.add(rs.getString("CPTYPENAME"));
-				courseProviderTypeList.add(singleCPType);
+		    rs=stmt.executeQuery();
+			
+			while (rs.next()) {				
+				final ArrayList<String> singleLevel = new ArrayList<String>();
+				singleLevel.add(rs.getString("LEVELCODE"));				
+				singleLevel.add(rs.getString("LEVELNAME"));				
+				allLevelList.add(singleLevel);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findByCPTypes() sqlException" + sqlException.toString());
+			log.info("findLevelsByLevelCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findByCPTypes() Exception" + e.toString());
+			log.info("findLevelsByLevelCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-
-		return courseProviderTypeList;
+		
+		return allLevelList;
 	}
+
 
 }

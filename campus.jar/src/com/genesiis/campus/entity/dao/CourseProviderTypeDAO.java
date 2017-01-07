@@ -1,12 +1,14 @@
-package com.genesiis.campus.entity;
+package com.genesiis.campus.entity.dao;
 
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created LevelDAO.java
-//DJ 20161118 c17-provider-criteria-based-filter-search-MP-dj created getAll() method
-//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findLevelsByLevelCodes() method
+//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created CourseProviderTypeDAO.java
+//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
+//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findCPTypesByCodes() method
 
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-
-public class LevelDAO  implements ICrud{
-	static org.apache.log4j.Logger log = Logger.getLogger(LevelDAO.class.getName());
+public class CourseProviderTypeDAO implements ICrud{
+	
+	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -45,8 +47,9 @@ public class LevelDAO  implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	/**
-	 * Get all Level details
+	 * Get all course provider type details
 	 * @param 
 	 * @author DJ
 	 * @return Collection 
@@ -58,20 +61,20 @@ public class LevelDAO  implements ICrud{
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=? ";
+			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
 			
 			stmt=conn.prepareStatement(sql.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
-				final ArrayList<String> singleLevel = new ArrayList<String>();
-				singleLevel.add(rs.getString("LEVELCODE"));				
-				singleLevel.add(rs.getString("LEVELNAME"));				
-				allLevelList.add(singleLevel);
+				final ArrayList<String> singleCPType = new ArrayList<String>();
+				singleCPType.add(rs.getString("CPTYPECODE"));				
+				singleCPType.add(rs.getString("CPTYPENAME"));				
+				allCourseProviderTypeList.add(singleCPType);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());
@@ -83,7 +86,7 @@ public class LevelDAO  implements ICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
-		return allLevelList;
+		return allCourseProviderTypeList;
 	}
 
 	@Override
@@ -113,53 +116,52 @@ public class LevelDAO  implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	/**
-	 * Get all education level list details by level code set
-	 * @param levelCodeSet
+	 * Get all course provider type details by course provider type codes
+	 * @param cpTypeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)  throws SQLException,Exception{
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
+	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException,Exception{
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		final Collection<Collection<String>> courseProviderTypeList = new ArrayList<Collection<String>>();
 		try {
-			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb =new StringBuilder("SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL  ");
-			sb.append(" WHERE LEVEL.ISACTIVE=? AND LEVEL.CODE IN (");
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
+			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
 			boolean doneOne = false;
-			for (Integer code : levelCodeSet) {
+			for (Integer code : cpTypeCodeSet) {
 				if (doneOne) {
 					sb.append(", ");
 				}
 				sb.append(code);
 				doneOne = true;
 			}
-			sb.append(")" );
-			stmt=conn.prepareStatement(sb.toString());
+			sb.append(" ) ");
+
+			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-		    rs=stmt.executeQuery();
-			
-			while (rs.next()) {				
-				final ArrayList<String> singleLevel = new ArrayList<String>();
-				singleLevel.add(rs.getString("LEVELCODE"));				
-				singleLevel.add(rs.getString("LEVELNAME"));				
-				allLevelList.add(singleLevel);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleCPType = new ArrayList<String>();
+				singleCPType.add(rs.getString("CPTYPECODE"));
+				singleCPType.add(rs.getString("CPTYPENAME"));
+				courseProviderTypeList.add(singleCPType);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findLevelsByLevelCodes() sqlException" + sqlException.toString());
+			log.info("findByCPTypes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findLevelsByLevelCodes() Exception" + e.toString());
+			log.info("findByCPTypes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-		
-		return allLevelList;
-	}
 
+		return courseProviderTypeList;
+	}
 
 }

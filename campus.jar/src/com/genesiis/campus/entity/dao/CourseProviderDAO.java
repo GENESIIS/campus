@@ -1,4 +1,4 @@
-package com.genesiis.campus.entity;
+package com.genesiis.campus.entity.dao;
 //DJ 20161026 c6-list-available-institutes-on-the-view created CourseProviderDAO.java
 //DJ 20161028 c6-list-available-institutes-on-the-view created findById()
 //DJ 20161030 c6-list-available-institutes-on-the-view refactored query to identified get all institutes 
@@ -20,12 +20,15 @@ package com.genesiis.campus.entity;
 
 
 
+import com.genesiis.campus.entity.CourseProviderICrud;
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.UtilityHelper;
+
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -36,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CourseProviderDAO implements ICrud{
+public class CourseProviderDAO implements CourseProviderICrud{
 	
 	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
 
@@ -179,7 +182,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @author DJ
 	 * @return Collection 
 	 */
-
+	@Override
 	public Collection<Collection<String>> findTopViewedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
@@ -233,7 +236,7 @@ public class CourseProviderDAO implements ICrud{
 	 * @author DJ
 	 * @return Collection 
 	 */
-
+	@Override
 	public Collection<Collection<String>> findTopRatedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
 		
 		Connection conn = null;
