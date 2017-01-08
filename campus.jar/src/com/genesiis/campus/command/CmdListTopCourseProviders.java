@@ -24,34 +24,34 @@ public class CmdListTopCourseProviders implements ICommand   {
 	
 	static Logger log = Logger.getLogger(CmdListTopCourseProviders.class.getName());
 	
-	/**
-	 * @author DJ
-	 * @param helper
-	 * @param view
+	/**	 * 
+	 * @author dumani DJ
+	 * @param helper IDataHelper Object
+	 * @param view IView Object
 	 * @return Top rated and top viewed course providers
 	 * @throws Exception
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
-			Exception {
-		final CourseProviderICrud providerDAO = new CourseProviderDAO();						
+			Exception {								
 		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		
 		try {
 			int categoryCode = 0;
-			final CourseProviderSearchDTO provider = new CourseProviderSearchDTO();
+			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("category");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
-					provider.setCategory(categoryCode);
+					providerSearchDTO.setCategory(categoryCode);
 					helper.setAttribute("categoryCode", categoryCode);
 				}				
 			}
 			//Set Course provider status
-			provider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
-			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(provider);
-			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(provider);
+			providerSearchDTO.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
+			final CourseProviderICrud providerDAO = new CourseProviderDAO();
+			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(providerSearchDTO);
+			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(providerSearchDTO);
 			
 			iview.setCollection(topViewedCourseProviders);
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
