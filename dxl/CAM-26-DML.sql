@@ -1,5 +1,6 @@
 /* 20161125 PN c26-add-student-details: DML file is to insert data into [CAMPUS].[SKILL] TABLE.
 *  20170108 PN CAM-28: DML updated with insert statements to insert data into [CAMPUS].[SCHOOLGRADE] TABLE.
+*  20170108 PN CAM-28: DML updated with insert statements to insert data into [CAMPUS].[INTEREST] TABLE.
 */
 
 INSERT INTO [CAMPUS].[NVQ]
@@ -62,3 +63,14 @@ INSERT INTO [CAMPUS].[SCHOOLGRADE] (LEVEL, ISACTIVE, TITLE, CRTON, CRTBY, MODON,
 INSERT INTO [CAMPUS].[SCHOOLGRADE] (LEVEL, ISACTIVE, TITLE, CRTON, CRTBY, MODON, MODBY) VALUES(15, ((1)), ('International Syllabus - Ordinary Level (Grade 10/11)'), (getdate()), ('PN'), (getdate()), ('PN'));
 INSERT INTO [CAMPUS].[SCHOOLGRADE] (LEVEL, ISACTIVE, TITLE, CRTON, CRTBY, MODON, MODBY) VALUES(15, ((1)), ('International Syllabus - Advanced Level (Grade 12/13)'), (getdate()), ('PN'), (getdate()), ('PN'));
 
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Reading'), ('Reading'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Blogging'), ('Blogging'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Reading'), ('Reading'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Collecting'), ('Collecting'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Volunteer Work/Community Involvement'), ('Volunteer Work/Community Involvement'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Cooking'), ('Cooking'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Child Care'), ('Child Care'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Sports'), ('Sports'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Club Memberships'), ('Club Memberships'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Puzzles'), ('Puzzles'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
+INSERT INTO [CAMPUS].[INTEREST] (NAME, DESCRIPTION, ISACTIVE, CRTON, CRTBY, MODON, MODBY) VALUES(('Indoor Games'), ('Indoor Games'), ((1)), (getdate()), ('PN'), (getdate()), ('PN'));
