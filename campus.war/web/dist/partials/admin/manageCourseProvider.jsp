@@ -24,7 +24,6 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
-
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -139,6 +138,7 @@
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 									</c:forEach>
+									<span id="errorCourseProvider"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -148,7 +148,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" /><span id="errorProviderName">${errorProviderName }</span>
+										id="providerName" size="50px;" onchange="normalValdation();"/><span id="errorProviderName">${errorProviderName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -174,7 +174,7 @@
 							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">About Me:</h1>
+									<h1 class="pro-name">Company Profile:</h1>
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
@@ -650,6 +650,7 @@
 	<!-- custom javascript -->
 	<script language="JavaScript" type="text/javascript"
 		src="/dist/js/header/ui-populate-helper.js"></script>
+		<script type="text/javascript" src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
 
 </body>
