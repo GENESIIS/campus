@@ -17,6 +17,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20161124 c17-provider-criteria-based-filter-search findFilterdCourseProviders()-reform the query to support  multiples in clauses
 //DJ 20161124 c17-provider-criteria-based-filter-search Implemented getCategoryWiseTypes() method
 //DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
+//DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
 
 
 
@@ -38,6 +39,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CourseProviderDAO implements CourseProviderICrud{
 	
@@ -445,14 +447,7 @@ public class CourseProviderDAO implements CourseProviderICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}		
 		return dtos;
-	}
-
-	@Override
-	public Collection<Collection<String>> findById(Integer provider)
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 	@Override
 	public Collection<Collection<String>> getAllCourseProviders()
@@ -480,6 +475,46 @@ public class CourseProviderDAO implements CourseProviderICrud{
 			throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * Get all course provider type details
+	 * @param 
+	 * @author DJ
+	 * @return Collection 
+	 */
+	@Override
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(
+			Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
+		try {
+			conn=ConnectionManager.getConnection();
+			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
+			
+			stmt=conn.prepareStatement(sql.toString());
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			rs=stmt.executeQuery();
+			
+			while (rs.next()) {				
+				final ArrayList<String> singleCPType = new ArrayList<String>();
+				singleCPType.add(rs.getString("CPTYPECODE"));				
+				singleCPType.add(rs.getString("CPTYPENAME"));				
+				allCourseProviderTypeList.add(singleCPType);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allCourseProviderTypeList;
 	}
 
 }
