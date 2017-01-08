@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Set;
 
 /**The class  {@code ProgrammeICrud} is a form of Interface class.
  * The Interface {@code ProgrammeICrud} has precise control over programme dao level manipulations. 
@@ -20,6 +21,10 @@ public interface ProgrammeICrud extends ICrud {
 	
 	public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
 	
-	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;	
+	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;
+	
+	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException,Exception;
+	
+	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)throws SQLException,Exception;	
 
 }

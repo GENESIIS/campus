@@ -9,6 +9,7 @@ import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**The class  {@code CourseProviderICrud} is a form of Interface class.
  * The Interface {@code CourseProviderICrud} has precise control over course provider dao level manipulations. 
@@ -41,6 +42,6 @@ public interface CourseProviderICrud extends ICrud{
 	
 	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode)throws SQLException,Exception;
 	
-	
-	
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;
+		
 }

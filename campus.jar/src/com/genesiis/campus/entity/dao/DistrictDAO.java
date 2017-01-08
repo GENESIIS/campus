@@ -4,7 +4,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170108 c6-list-available-institutes-on-the-view Implement getAllDistricts() method
 
 import com.genesiis.campus.entity.ICrud;
-import com.genesiis.campus.entity.TownICrud;
+import com.genesiis.campus.entity.DistrictICrud;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DistrictDAO  implements TownICrud{
+public class DistrictDAO  implements DistrictICrud{
 	
 	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAO.class.getName());
 
