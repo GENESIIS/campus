@@ -20,8 +20,14 @@ public interface CourseProviderICrud extends ICrud{
    //Retrieve all the fields of course provider table
 	public Collection<Collection<String>> getAllCourseProviders()throws SQLException,Exception;
 	
+	//Retrieve all the fields of course provider table
+	public Collection<Collection<String>> getAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
+	
 	//Retrieve basic fields of course provider table
 	public Collection<Collection<String>> getLightAllCourseProviders()throws SQLException,Exception;
+	
+	//Retrieve basic fields of course provider table
+	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
 	
 	//Retrieve a course provider details by course provider code
 	public Collection<Collection<String>> getCourseProviderById(Integer courseProviderCode)throws SQLException,Exception;
@@ -42,6 +48,6 @@ public interface CourseProviderICrud extends ICrud{
 	
 	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode)throws SQLException,Exception;
 	
-	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;	
 		
 }

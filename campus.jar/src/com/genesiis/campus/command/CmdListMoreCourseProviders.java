@@ -14,6 +14,7 @@ import com.genesiis.campus.entity.dao.DistrictDAO;
 import com.genesiis.campus.entity.dao.ProgrammeDAO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -39,22 +40,19 @@ public class CmdListMoreCourseProviders implements ICommand {
 		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		try {
 			int categoryCode = 0;
-			final CourseProviderSearchDTO provider = new CourseProviderSearchDTO();
+			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("categoryCode");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
-					provider.setCategory(categoryCode);
+					providerSearchDTO.setCategory(categoryCode);
 				}				
 			}
+			providerSearchDTO.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 			final CourseProviderICrud  providerDAO = new CourseProviderDAO();
-			if (categoryCode > 0) {
-				final Collection<Collection<String>> categoryWiseCourseProviders = providerDAO.findById(provider);
-				iview.setCollection(categoryWiseCourseProviders);
-			} else {
-				final Collection<Collection<String>> allCourseProviders = providerDAO.getAll();
-				iview.setCollection(allCourseProviders);
-			}
+			final Collection<Collection<String>> allCourseProviders = providerDAO.getLightAllCourseProviders(providerSearchDTO);
+			iview.setCollection(allCourseProviders);
+
 			//List Category data for the drop down		
 			final Collection<Collection<String>> categoryList=new ProgrammeDAO().getAllCategories();
 			helper.setAttribute("categoryList", categoryList);
