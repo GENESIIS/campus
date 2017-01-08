@@ -454,4 +454,32 @@ public class CourseProviderDAO implements CourseProviderICrud{
 		return null;
 	}
 
+	@Override
+	public Collection<Collection<String>> getAllCourseProviders()
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getLightAllCourseProviders()
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getCourseProviderById(
+			Integer courseProviderCode) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getAllCourseProviderTypes()
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
