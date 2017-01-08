@@ -8,5 +8,11 @@ package com.genesiis.campus.entity;
  */
 public interface ProgrammeICrud extends ICrud {
 	
+	getAllMajors();
+	getAllCategories();
+	getAllLevels();
+	getAllSemesters();
+	getAllProgrammeInterests;
+	
 
 }
