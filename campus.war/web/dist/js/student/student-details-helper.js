@@ -1012,7 +1012,6 @@ function addEducationDetails() {
 										"alert alert-danger").text(
 										"Invalid Information.").fadeIn();
 							}
-							clearSchoolEducationForm();
 							$("#saveChangesStatus").addClass(
 									"alert alert-success").text(
 									data.saveChangesStatus).fadeIn();
