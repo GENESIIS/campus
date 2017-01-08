@@ -270,6 +270,7 @@ function getProviderType() {
 				window.registerId = response.registerId;
 
 			window.responseErrorMessage = response.userMessage;
+			$("#errorProviderName").val() = response.errorProviderName;
 //				alert(responseErrorMessage);
 //				var userErrorMessage = $("#errorMessage");
 //				userErrorMessage.html("errors");
