@@ -9,7 +9,6 @@ package com.genesiis.campus.command;
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.dao.CategoryDAO;
 import com.genesiis.campus.entity.dao.CourseProviderDAO;
 import com.genesiis.campus.entity.dao.DistrictDAO;
 import com.genesiis.campus.entity.dao.ProgrammeDAO;

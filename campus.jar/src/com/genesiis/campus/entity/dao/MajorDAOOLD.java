@@ -1,8 +1,8 @@
 package com.genesiis.campus.entity.dao;
 
-//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created CourseProviderTypeDAO.java
+//DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj created MajorDAO.java
 //DJ 20161115 c17-provider-criteria-based-filter-search-MP-dj Implement getAll()
-//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findCPTypesByCodes() method
+//DJ 20161125 c17-provider-criteria-based-filter-search-MP-dj Implement findMajorsByMajorCodes() method
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.util.ConnectionManager;
@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-public class CourseProviderTypeDAO implements ICrud{
-	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());
+public class MajorDAOOLD implements ICrud{
+	static org.apache.log4j.Logger log = Logger.getLogger(MajorDAOOLD.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -47,34 +46,36 @@ public class CourseProviderTypeDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
-	 * Get all course provider type details
+	 * Get all major list details
 	 * @param 
 	 * @author DJ
 	 * @return Collection 
 	 */
-
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
+		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
 		try {
-			conn=ConnectionManager.getConnection();
-			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
-			
-			stmt=conn.prepareStatement(sql.toString());
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?";
+
+			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			rs=stmt.executeQuery();
-			
-			while (rs.next()) {				
-				final ArrayList<String> singleCPType = new ArrayList<String>();
-				singleCPType.add(rs.getString("CPTYPECODE"));				
-				singleCPType.add(rs.getString("CPTYPENAME"));				
-				allCourseProviderTypeList.add(singleCPType);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleMajorList = new ArrayList<String>();
+				singleMajorList.add(rs.getString("CODE"));
+				singleMajorList.add(rs.getString("NAME"));
+				singleMajorList.add(rs.getString("DESCRIPTION"));
+
+				final Collection<String> singleMajorCollection = singleMajorList;
+				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());
@@ -86,7 +87,7 @@ public class CourseProviderTypeDAO implements ICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
-		return allCourseProviderTypeList;
+		return allMajorList;
 	}
 
 	@Override
@@ -116,52 +117,55 @@ public class CourseProviderTypeDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	/**
-	 * Get all course provider type details by course provider type codes
-	 * @param cpTypeSet
+	 * Get all major list details by major code set
+	 * @param majorCodeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
-	public Collection<Collection<String>> findCPTypesByCodes(Set<Integer> cpTypeCodeSet) throws SQLException,Exception{
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		final Collection<Collection<String>> courseProviderTypeList = new ArrayList<Collection<String>>();
+
+	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException,Exception {
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
-			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
+			final StringBuilder sb =new StringBuilder(" SELECT MAJOR.[CODE] AS MAJORCODE,MAJOR.[NAME] AS MAJORNAME FROM [CAMPUS].[MAJOR] MAJOR ");
+			sb.append(" WHERE MAJOR.ISACTIVE = ? AND MAJOR.CODE IN( " );
 			boolean doneOne = false;
-			for (Integer code : cpTypeCodeSet) {
+			for (Integer code : majorCodeSet) {
 				if (doneOne) {
 					sb.append(", ");
 				}
 				sb.append(code);
 				doneOne = true;
 			}
-			sb.append(" ) ");
+			sb.append(")" );
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleCPType = new ArrayList<String>();
-				singleCPType.add(rs.getString("CPTYPECODE"));
-				singleCPType.add(rs.getString("CPTYPENAME"));
-				courseProviderTypeList.add(singleCPType);
+				final ArrayList<String> singleMajorList = new ArrayList<String>();
+				singleMajorList.add(rs.getString("MAJORCODE"));
+				singleMajorList.add(rs.getString("MAJORNAME"));
+				final Collection<String> singleMajorCollection = singleMajorList;
+				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findByCPTypes() sqlException" + sqlException.toString());
+			log.info("findMajorsByMajorCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findByCPTypes() Exception" + e.toString());
+			log.info("findMajorsByMajorCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-
-		return courseProviderTypeList;
-	}
+		
+		return allMajorList;
+	}	
 
 }

@@ -20,8 +20,8 @@ import java.util.Collection;
 import java.util.Set;
 
 
-public class LevelDAO  implements ICrud{
-	static org.apache.log4j.Logger log = Logger.getLogger(LevelDAO.class.getName());
+public class LevelDAOOLD  implements ICrud{
+	static org.apache.log4j.Logger log = Logger.getLogger(LevelDAOOLD.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {

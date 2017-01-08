@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class CategoryDAO  implements ICrud{
+public class CategoryDAOOLD  implements ICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(CategoryDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CategoryDAOOLD.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
