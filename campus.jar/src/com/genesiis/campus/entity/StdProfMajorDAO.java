@@ -83,11 +83,9 @@ public class StdProfMajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
@@ -129,11 +127,9 @@ public class StdProfMajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

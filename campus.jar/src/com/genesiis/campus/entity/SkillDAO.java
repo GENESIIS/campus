@@ -71,11 +71,9 @@ public class SkillDAO implements ICrud{
 				allSkillList.add(singleSkillCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

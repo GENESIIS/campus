@@ -65,11 +65,9 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -109,11 +107,9 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

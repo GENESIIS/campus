@@ -62,11 +62,9 @@ public class Country2DAO implements ICrud{
 				allCountryList.add(singleCountryCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -105,11 +103,9 @@ public class Country2DAO implements ICrud{
 				allCountryList.add(singleCountryCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

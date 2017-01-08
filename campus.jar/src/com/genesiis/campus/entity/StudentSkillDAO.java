@@ -71,11 +71,9 @@ public class StudentSkillDAO implements ICrud{
 				studentSkillList.add(singleLevelCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

@@ -20,9 +20,9 @@ import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 
-public class DistrictDAO implements ICrud{
+public class DistrictDAO implements ICrud {
 	static Logger log = Logger.getLogger(DistrictDAO.class.getName());
-	
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -42,7 +42,7 @@ public class DistrictDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {		
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		final Collection<Collection<String>> allDistrictList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -53,8 +53,7 @@ public class DistrictDAO implements ICrud{
 			String query = "SELECT d.[CODE],d.[PROVINCE],d.[NAME] FROM [CAMPUS].[DISTRICT] d "
 					+ "JOIN [CAMPUS].[TOWN] t ON d.CODE = t.DISTRICT "
 					+ "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON t.CODE = pt.TOWN "
-					+ "JOIN [CAMPUS].[PROGRAMME] p ON pt.PROGRAMME = p.CODE "
-					+ "WHERE p.COURSEPROVIDER = ?;";
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON pt.PROGRAMME = p.CODE " + "WHERE p.COURSEPROVIDER = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, instituteCode);
@@ -70,11 +69,9 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
@@ -114,11 +111,9 @@ public class DistrictDAO implements ICrud{
 				allDistrictList.add(singleDistrictCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {

@@ -88,11 +88,9 @@ public class SchoolEducationDAO implements ICrud{
 				allEducationList.add(singleEducationCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {

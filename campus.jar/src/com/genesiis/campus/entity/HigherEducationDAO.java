@@ -58,11 +58,9 @@ public class HigherEducationDAO implements ICrud{
 			
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
-			connection.rollback();
 			log.error("add(): SQLE: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			connection.rollback();
 			log.error("add(): E: " + ex.toString());
 			throw ex;
 		} finally {
@@ -128,11 +126,9 @@ public class HigherEducationDAO implements ICrud{
 				allhigherEduList.add(singlehigherEduCollection);
 			}
 		} catch (SQLException sqlException) {
-			conn.rollback();
 			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			conn.rollback();
 			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
