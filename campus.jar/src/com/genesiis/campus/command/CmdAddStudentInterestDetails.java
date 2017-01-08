@@ -28,8 +28,8 @@ public class CmdAddStudentInterestDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// This needs to be assign from the session.
 		int StudentCode = 1;
-		String[] oldStudentInterest = helper.getParameter("oldStudentInterest").split(",");
-		String[] newStudentInterest = helper.getParameter("newStudentInterest").split(",");
+		String[] oldStudentInterest = helper.getParameter("oldStudentInterests").split(",");
+		String[] newStudentInterest = helper.getParameter("newStudentInterests").split(",");
 		String message = "";
 
 		ICrud interestDao = new StudentInterestDAO();

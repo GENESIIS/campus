@@ -11,7 +11,7 @@ package com.genesiis.campus.validation;
 //20161205 PN c26-add-student-details: added GET_TOWN_DETAILS and ADD_STUDENT_DETAILS attributes.
 //20161206 PN c26-add-student-details: added GET_SKILL_DETAILS, ADD_STUDENT_SKILL attributes
 //20161215 PN CAM-28: added ADD_HIGHER_EDUCATION, UPDATE_HIGHER_EDUCATION, DELETE_HIGHER_EDUCATION attributes
-
+//20170108 PN CAM-28: added ADD_STUDENT_INTEREST attribute
 
 /**
  * Operation class facilitate in binding the CCO
@@ -39,6 +39,7 @@ public enum Operation {
 	ADD_STUDENT_DETAILS("APD", ResponseType.JSON, "index.jsp"),
 	GET_SKILL_DETAILS("GSL", ResponseType.JSON, "index.jsp"),
 	ADD_STUDENT_SKILL("ASS", ResponseType.JSON, "index.jsp"),
+	ADD_STUDENT_INTEREST("ASI", ResponseType.JSON, "index.jsp"),
 	ADD_HIGHER_EDUCATION("AHE", ResponseType.JSON, "index.jsp"),
 	UPDATE_HIGHER_EDUCATION("UHE", ResponseType.JSON, "index.jsp"),
 	DELETE_HIGHER_EDUCATION("DHE", ResponseType.JSON, "index.jsp");
