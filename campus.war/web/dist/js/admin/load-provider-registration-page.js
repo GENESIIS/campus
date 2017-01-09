@@ -260,6 +260,21 @@ function showUserMessage(){
 //     });
 //});
 
+function landPhoneNubmerHelper(){
+	var country = $("#country-List :selected").val();
+	var areaCode = $("#areaCode").val();
+	var land1 = $("#land1").val();
+	var land2 = $("#land2").val();
+	var networkCode = $("#networkCode").val();
+	var mobile = $("#land1").val();
+	
+	var lastLandNumber1 = "+"+ country + " "+ areaCode + " " + land1 ;
+	var lastLandNumber2 = "+"+ country + " "+ areaCode + " " + land2 ;
+	var lastMobilNumber = "+"+ country + " "+ networkCode + " " + mobile ;
+	
+	document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+	
+}
 function getProviderType() {
 
 	alert(vaidateCourseProviderDeatils());
