@@ -40,11 +40,11 @@ public class CmdCheckUsername implements ICommand {
 		
 		try {
 			
-			valid = Validator.isNotEmpty(helper.getParameter("USERNAME"));
+			valid = Validator.isNotEmpty(helper.getParameter("username"));
 			
 			if (valid){
 				final Tutor tutor = new Tutor();
-				tutor.setUsername(helper.getParameter("USERNAME"));
+				tutor.setUsername(helper.getParameter("username"));
 				tutorCollection = new TutorUserNameDAO().findById(tutor);		
 			}
 			

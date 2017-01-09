@@ -1,5 +1,8 @@
 package com.genesiis.campus.validation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -14,6 +17,17 @@ package com.genesiis.campus.validation;
 //20170108 CW c36-add-tutor-details Added isValidLandAreaCode() method
 //20170108 CW c36-add-tutor-details Added isValidLandNumber() method
 //20170108 CW c36-add-tutor-details Added isValidAddressLine1() method
+//20170109 CW c36-add-tutor-details modified isValidUserName() method
+//20170109 CW c36-add-tutor-details modified isValidFirstname() method
+//20170109 CW c36-add-tutor-details modified isValidLastname() method
+//20170109 CW c36-add-tutor-details modified isValidMobileCountryCode() method
+//20170109 CW c36-add-tutor-details modified isValidMobileNetworkCode() method
+//20170109 CW c36-add-tutor-details modified isValidMobileNumber() method
+//20170109 CW c36-add-tutor-details modified isValidLandCountryCode() method
+//20170109 CW c36-add-tutor-details modified isValidLandAreaCode() method
+//20170109 CW c36-add-tutor-details modified isValidLandNumber() method
+//20170109 CW c36-add-tutor-details modified isValidAddressLine1() method
+//20170109 CW c36-add-tutor-details modified validateTutorFields() method
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +35,8 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.entity.TutorUserNameDAO;
+import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
@@ -173,47 +189,54 @@ public class Validator {
 	 */
 	public String validateTutorFields(IDataHelper helper) throws Exception {
 
-		String message = "True";
-//gender, country, town, mobile, land, address line1,email, confirmpassword,  
+		String message = "True"; 
 		try {
+			
+			
+			System.out.println("country = "+helper.getParameter("countryDetails"));
+			System.out.println("town = "+helper.getParameter("townDetails"));
+			
+			
+			
 			if (!(Validator.isNotEmpty(helper.getParameter("username"))
-					|| (Validator.isNotEmpty(helper.getParameter("password")))
-					|| (Validator.isNotEmpty(helper.getParameter("confirmPassword")))
-					|| (Validator.isNotEmpty(helper.getParameter("firstname")))
-					|| (Validator.isNotEmpty(helper.getParameter("lastname")))
-					|| (Validator.isNotEmpty(helper.getParameter("email")))
-					|| (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
-					|| (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
-					|| (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
-					|| (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
-					|| (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
-					|| (Validator.isNotEmpty(helper.getParameter("landNumber")))
-					|| (Validator.isNotEmpty(helper.getParameter("addressLine1"))))) {
+					&& (Validator.isNotEmpty(helper.getParameter("password")))
+					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword")))
+					&& (Validator.isNotEmpty(helper.getParameter("firstname")))
+					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
+					&& (Validator.isNotEmpty(helper.getParameter("email")))
+					&& (!((helper.getParameter("countryDetails")).equals("0")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
+					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
+					&& (Validator.isNotEmpty(helper.getParameter("address1"))))) {
 				message = SystemMessage.EMPTYFIELD.message();
-			} else if (!isValidUserName(helper.getParameter("username"))) {
-				message = SystemMessage.EMAILERROR.message();
+			} else if (!isValidUserName(helper)) {
+				message = SystemMessage.USERNAME_EXIST.message();
 			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
-				message = SystemMessage.EMAILERROR.message();
+				message = SystemMessage.PASSWORDERROR.message();
 			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
-				message = SystemMessage.EMAILERROR.message();
+				message = SystemMessage.FIRSTNAMEERROR.message();
 			} else if (!isValidLastname(helper.getParameter("lastname"))) {
-				message = SystemMessage.EMAILERROR.message();
+				message = SystemMessage.LASTNAMEERROR.message();
 			} else if (!validateEmail(helper.getParameter("email"))) {
 				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidMobileCountryCode(helper.getParameter("mobileCountryCode"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidMobileNetworkCode(helper.getParameter("mobileNetworkCode"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidMobileNumber(helper.getParameter("mobileNumber"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidLandCountryCode(helper.getParameter("landCountryCode"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidLandAreaCode(helper.getParameter("landAreaCode"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidLandNumber(helper.getParameter("landNumber"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidAddressLine1(helper.getParameter("addressLine1"))) {
-				message = SystemMessage.EMAILERROR.message();
+			} else if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
+				message = SystemMessage.MOBILECOUNTRYCODEERROR.message();
+			} else if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
+				message = SystemMessage.NETWORKCODEERROR.message();
+			} else if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
+				message = SystemMessage.MOBILENUMBERERROR.message();
+			} else if (!isValidCountryCode(helper.getParameter("landCountryCode"))) {
+				message = SystemMessage.LANDCOUNTRYCODEERROR.message();
+			} else if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
+				message = SystemMessage.LANDAREACODEERROR.message();
+			} else if (!isValidContactNumber(helper.getParameter("landNumber"))) {
+				message = SystemMessage.LANDNUMBERERROR.message();
+			} else if (!isValidAddressLine1(helper.getParameter("address1"))) {
+				message = SystemMessage.ADDRESSLINE1ERROR.message();
 			}
 
 		} catch (Exception e) {
@@ -230,15 +253,24 @@ public class Validator {
 	 * @param username
 	 * @return boolean - Returns true if the requested username is a valid one
 	 */
-	public boolean isValidUserName(String userName) throws ArithmeticException, Exception {
+	public boolean isValidUserName(IDataHelper helper) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
+	
+			if (Validator.isNotEmpty(helper.getParameter("username"))){
+				final Tutor tutor = new Tutor();
+				tutor.setUsername(helper.getParameter("username"));
+				tutorCollection = new TutorUserNameDAO().findById(tutor);		
 			}
+			
+			if (tutorCollection.isEmpty()) {
+				valid = true; // user name does not exist
+			} else {
+				valid = false; // user name Already exists
+			}
+			
 
 		} catch (Exception e) {
 			log.error("isValidUserName:  Exception" + e.toString());
@@ -252,20 +284,18 @@ public class Validator {
 	 * 
 	 * @author Chinthaka
 	 * @param password, confirmPassword
-	 * @return boolean - Returns true if the requested password & confirmPassword are valid
+	 * @return boolean - Returns true if the requested password & confirmPassword are same & valid in lengths
 	 */
-	public boolean isValidPassword(String password, String confirmPassword) throws ArithmeticException, Exception {
+	public boolean isValidPassword(String password, String confirmPassword) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(password)) && (isNotEmpty(confirmPassword)) && (password.length() > 5) && (password.length() < 21) && (password.equals(confirmPassword))) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
@@ -278,18 +308,16 @@ public class Validator {
 	 * @param firstName
 	 * @return boolean - Returns true if the requested firstName is a valid one
 	 */
-	public boolean isValidFirstname(String firstName) throws ArithmeticException, Exception {
+	public boolean isValidFirstname(String firstName) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(firstName)) && (firstName.length() < 36)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidFirstname:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
@@ -302,167 +330,87 @@ public class Validator {
 	 * @param lastName
 	 * @return boolean - Returns true if the requested lastName is a valid one
 	 */
-	public boolean isValidLastname(String lastName) throws ArithmeticException, Exception {
+	public boolean isValidLastname(String lastName) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(lastName)) && (lastName.length() < 36)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidLastname:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
 	}
 	
 	/**
-	 * Check the entered mobileCountryCode is a valid one
+	 * Check the entered countryCode is a valid one
 	 * 
 	 * @author Chinthaka
-	 * @param mobileCountryCode
-	 * @return boolean - Returns true if the requested mobileCountryCode is a valid one
+	 * @param countryCode
+	 * @return boolean - Returns true if the requested countryCode is a valid one
 	 */
-	public boolean isValidMobileCountryCode(String mobileCountryCode) throws ArithmeticException, Exception {
+	public boolean isValidCountryCode(String countryCode) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidCountryCode:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
 	}
 	
 	/**
-	 * Check the entered mobileNetworkCode is a valid one
+	 * Check the entered networkCode is a valid one
 	 * 
 	 * @author Chinthaka
-	 * @param mobileNetworkCode
-	 * @return boolean - Returns true if the requested mobileNetworkCode is a valid one
+	 * @param networkCode
+	 * @return boolean - Returns true if the requested networkCode is a valid one
 	 */
-	public boolean isValidMobileNetworkCode(String mobileNetworkCode) throws ArithmeticException, Exception {
+	public boolean isValidNetworkCode(String networkCode) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidNetworkCode:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
 	}
 	
 	/**
-	 * Check the entered mobileNumber is a valid one
+	 * Check the entered contactNumber is a valid one
 	 * 
 	 * @author Chinthaka
-	 * @param mobileNumber
-	 * @return boolean - Returns true if the requested mobileNumber is a valid one
+	 * @param contactNumber
+	 * @return boolean - Returns true if the requested contactNumber is a valid one
 	 */
-	public boolean isValidMobileNumber(String mobileNumber) throws ArithmeticException, Exception {
+	public boolean isValidContactNumber(String contactNumber) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 12)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidContactNumber:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
 	}
-	
-	/**
-	 * Check the entered landCountryCode is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param landCountryCode
-	 * @return boolean - Returns true if the requested landCountryCode is a valid one
-	 */
-	public boolean isValidLandCountryCode(String landCountryCode) throws ArithmeticException, Exception {
-		boolean valid = false;
-		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
-			}
-
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered landAreaCode is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param landAreaCode
-	 * @return boolean - Returns true if the requested landAreaCode is a valid one
-	 */
-	public boolean isValidLandAreaCode(String landAreaCode) throws ArithmeticException, Exception {
-		boolean valid = false;
-		try {
-
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
-			}
-
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered landNumber is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param landNumber
-	 * @return boolean - Returns true if the requested landNumber is a valid one
-	 */
-	public boolean isValidLandNumber(String landNumber) throws ArithmeticException, Exception {
-		boolean valid = false;
-		try {
-
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
-			}
-
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
 	/**
 	 * Check the entered addressLine1 is a valid one
 	 * 
@@ -470,18 +418,16 @@ public class Validator {
 	 * @param addressLine1
 	 * @return boolean - Returns true if the requested addressLine1 is a valid one
 	 */
-	public boolean isValidAddressLine1(String addressLine1) throws ArithmeticException, Exception {
+	public boolean isValidAddressLine1(String addressLine1) throws Exception {
 		boolean valid = false;
 		try {
 
-			System.out.println("isValidUserName = ");
-			if ((isNotEmpty(userName)) && (userName.length() > 6) && (userName.length() < 50)) {
-				final TutorDAO tutorDAO = new TutorDAO();
-				valid = tutorDAO.isAvailableUserName(userName);
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 50)) {
+				valid = true;
 			}
 
 		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
+			log.error("isValidAddressLine1:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;

@@ -39,10 +39,10 @@ public class CmdAddTutorProfile implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		try {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
 			final Validator validator=new Validator();
+		try {
 			message = validator.validateTutorFields(helper);
 			if (message.equalsIgnoreCase("True")) {
 								
@@ -52,13 +52,14 @@ public class CmdAddTutorProfile implements ICommand {
 
 				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
 
-					int result = tutorDAO.add(tutor);
-					if (result > 0) {
-						message = SystemMessage.ADDED.message();
+				int result = tutorDAO.add(tutor);
+				if (result > 0) {
+					message = SystemMessage.ADDED.message();
 
-					} else {
-						message = SystemMessage.ERROR.message();
-					}
+				} else {
+					
+					message = SystemMessage.ERROR.message();
+				}
 				
 			}
 		} catch (Exception exception) {
@@ -66,7 +67,7 @@ public class CmdAddTutorProfile implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
-
+			helper.setAttribute("tutor", tutor);
 		}
 		return view;
 	}

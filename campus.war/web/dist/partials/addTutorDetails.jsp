@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +11,13 @@
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
+		
+		<c:forEach var="tutorList" items="${tutor}">
+			<c:set var="username" value="${tutorList[0]}" scope="session" />
+			<c:set var="password" value="${tutorList[1]}" scope="session" />
+		</c:forEach>
+		
+		
 		<table align="center">
 			<tr>
 				<td>
@@ -22,6 +30,8 @@
 				</td>
 			</tr>
 			<tr>
+			<td>${username}</td>
+			<td>${password}</td>
 				<td>First Name * </td>
 				<td><input type="text" name="firstname" id="firstName"
 					maxlength="20" onchange="clearField('firstNameError')" /><span id="firstNameError" style="color: red" > </span></td>

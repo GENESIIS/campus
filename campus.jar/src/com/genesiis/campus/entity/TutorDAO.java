@@ -162,7 +162,7 @@ public class TutorDAO implements ICrud {
 	 * @param Requested username
 	 * @return boolean - returns true if Requested username is not used by any tutor
 	 */
-	
+	/*
 	public boolean isAvailableUserName(String userName) throws SQLException, Exception {
 		boolean valid = false;
 		
@@ -205,5 +205,6 @@ public class TutorDAO implements ICrud {
 		
 		return valid;
 	}
+	*/
 
 }
