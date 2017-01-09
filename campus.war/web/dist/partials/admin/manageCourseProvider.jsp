@@ -243,7 +243,7 @@
 									<h1 class="pro-name">Town :</h1>
 								</div>
 								<div class="col-name" id="town-List"></div> <span
-								id="errorShortName" style="color: red;">${errorShortName }</span>
+								id="errorSelectedTown" style="color: red;">${errorSelectedTown }</span>
 							</li>
 							<!-- end -->
 
@@ -356,7 +356,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="webLink" id="webLink"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorWebLink" style="color: red;">${errorWebLink }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Facebook URL :</h1>
@@ -364,7 +364,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="facebook" id="facebook"
 										size="25px;" />.
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorFacebook" style="color: red;">${errorFacebook }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -376,7 +376,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="linkdedIn"
 										id="linkdedIn" size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorLinkedIn" style="color: red;">${errorLinkedIn }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Twitter URL :</h1>
@@ -384,7 +384,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="twitter" id="twitter"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorTwitter" style="color: red;">${errorTwitter }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -397,7 +397,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="instagram"
 										id="instagram" size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorInstagram" style="color: red;">${errorInstagram }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">MySpace URL :</h1>
@@ -405,7 +405,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mySpace" id="mySpace"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorMyspace" style="color: red;">${errorMyspace }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -417,7 +417,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="whatsapp" id="whatsapp"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorWhatsapp" style="color: red;">${errorWhatsapp }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Viber Number :</h1>
@@ -425,7 +425,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="viber" id="viber"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorViber" style="color: red;">${errorViber }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -448,7 +448,7 @@
 								<div class="col-name">
 									<input class="textarea" type="Date" name="expirationDate"
 										id="expirationDate" size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorExpiration" style="color: red;">${errorExpiration }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -460,7 +460,7 @@
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
 								<div class="col-name" id="providerTypeList"></div>
-								<span id="errorShortName" style="color: red;">${errorShortName }</span>
+								<span id="errorProviderStatus" style="color: red;">${errorProviderStatus }</span>
 							</li>
 							<!-- end -->
 
@@ -480,7 +480,7 @@
 											name="providerStatus" id="providerStatus" value="inactive" />
 										InActive &nbsp; <input type="radio" name="providerStatus"
 											id="providerStatus" value="pending" /> Pending -->
-							<span id="errorShortName" style="color: red;">${errorShortName }</span>
+							<span id="errorPrivateName" style="color: red;">${errorPrivateName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -504,7 +504,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="providerPrivateName"
 										id="providerPrivateName" size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorPrivateName" style="color: red;">${errorPrivateName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -516,7 +516,7 @@
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
 										id="providerEmail" size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorProviderEmail" style="color: red;">${errorProviderEmail }</span>
 								</div>
 							</li>
 							<!-- end -->
