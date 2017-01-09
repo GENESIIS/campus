@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 // 20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
+//20170109 DN CAM47 refactor the method findById(Object object,Connection con) to include finally block
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+
+import com.genesiis.campus.util.DaoHelper;
 
 public class SystemConfigDAO implements ICrud {
 	
@@ -92,11 +95,12 @@ public class SystemConfigDAO implements ICrud {
 		
 		String findSql =queryBuilder.toString();		
 		final Collection<Collection<String>> outerCollection = new ArrayList<Collection<String>>();
-		
+		PreparedStatement prstmtFind =null;
+		ResultSet resultSet =null;
 		try{
 			
-			PreparedStatement prstmtFind = conn.prepareStatement(findSql);
-			ResultSet resultSet = prstmtFind.executeQuery();
+			 prstmtFind = conn.prepareStatement(findSql);
+			 resultSet = prstmtFind.executeQuery();
 			
 			while(resultSet.next()){
 				final ArrayList<String> systemConfigurations = new ArrayList<String>();				
@@ -114,7 +118,10 @@ public class SystemConfigDAO implements ICrud {
 		} catch (SQLException sqle){
 			log.error("findById(Object object,Connection conn):SQLException :" +sqle.toString());
 			throw sqle;	
-		} 
+		} finally{
+			
+			DaoHelper.cleanup(null, prstmtFind, resultSet); // connection will be closed from where it has been created
+		}
 		
 		return outerCollection;
 	}
