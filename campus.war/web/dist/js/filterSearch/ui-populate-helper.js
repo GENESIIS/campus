@@ -9,6 +9,7 @@
 //20161124 PN c11-criteria-based-filter-search implemented getNumFilteredRows() method for display course count on search results.
 //20161222 PN CAM-116: modified ajax method calls to populate UI elements from DB values.
 //20161223 PN CAM-116: removed alert messages from the code.
+//20170109 PN CAM-116: added character replacement code to replace ',' character.
 
 /**
  * This method id to load category details
@@ -50,17 +51,17 @@ $(document).ready(function() {
     					'</div>',
     					'<div class="result-box clearfix">' +
     						'<div class="course-name">' +
-    							'<a href="'+data[18].toString()+'">' + data[1].toString() +
-    								'<span class="provider-name">' + " @"+ data[15].toString() +
+    							'<a href="'+data[18].toString()+'">' + data[1].toString().replace(/##/g , ",") +
+    								'<span class="provider-name">' + " @"+ data[15].toString().replace(/##/g , ",") +
     								'</span>' +
     							'</a>' +
     						'</div>' +
     						'<div class="course-info">' +
-    							'<p>'+ data[2].toString() + data[4].toString() + '</p>' +
+    							'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
     						'</div>' +
     					'</div>',
-    					data[6].toString()+' - '+data[7].toString()+data[3].toString(),
-    					data[18].toString()
+    					data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
+    					data[18].toString().replace(/##/g , ",")
     					        ] ).draw( false );
 
     				});
@@ -118,17 +119,17 @@ $('#addRow').on( 'click', function () {
 				'</div>',
 				'<div class="result-box clearfix">' +
 					'<div class="course-name">' +
-						'<a href="'+data[16].toString()+'">' + data[1].toString() +
-							'<span class="provider-name">' + " @"+ data[15].toString() +
+						'<a href="'+data[18].toString()+'">' + data[1].toString().replace(/##/g , ",") +
+							'<span class="provider-name">' + " @"+ data[15].toString().replace(/##/g , ",") +
 							'</span>' +
 						'</a>' +
 					'</div>' +
 					'<div class="course-info">' +
-						'<p>'+ data[2].toString() + '<br>' + data[4].toString() + '<br></p>' +
+						'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
 					'</div>' +
 				'</div>',
-				data[6].toString()+' - '+data[7].toString()+'<br>'+data[3].toString(),
-				data[18].toString()
+				data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
+				data[18].toString().replace(/##/g , ",")
 				        ] ).draw( false );
 
 			});
