@@ -216,7 +216,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="generalEmail"
 										id="generalEmail" size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorGeneralEmail" style="color: red;">${errorGeneralEmail }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Course Inquiry Email :</h1>
@@ -224,7 +224,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="inquiryMail"
 										id="inquiryMail" size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorInquiryMail" style="color: red;">${errorInquiryMail }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -236,7 +236,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="areaCode" id="areaCode"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorAreaCode" style="color: red;">${errorAreaCode }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Land Number 1 :</h1>
@@ -244,7 +244,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorLand1" style="color: red;">${errorLand1 }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -256,7 +256,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="land2" id="land2"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorLand2" style="color: red;">${errorLand2 }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Fax Number :</h1>
@@ -595,7 +595,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
-									<input type="submit" id="viewNext" value="Next"
+									<input type="button" id="viewNext" value="Next"
 										class="btn btn-lg btn-info" onclick="getProviderType();" />
 								</div>
 							</li>
