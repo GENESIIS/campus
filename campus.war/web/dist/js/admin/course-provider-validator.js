@@ -3,7 +3,6 @@
  * 
  */
 
-
 /**
  * 
  * @param fieldValue
@@ -13,7 +12,6 @@
 function isempty(fieldValue) {
 	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
 }
-
 
 /**
  * Validate URL
@@ -39,7 +37,6 @@ function isValidEmailFormat(email) {
 	return isPatternMatch(pattern, emailAddress);
 }
 
-
 /**
  * @param regularExpression
  *            pattern
@@ -52,14 +49,84 @@ function isPatternMatch(regularExpression, source) {
 
 }
 
-function normalValdation(){
+function normalValdation() {
 	var providerName = $("#providerName").val();
+}
+
+function providerUsernameValidation() {
+
+	var selectedUsername = document.getElementById('providerUsername').value;
+	var userEmail = document.getElementById('providerEmail').value;
+
+	if (!isempty(selectedUsername)) {
+		document.getElementById('errorUsername').innerHTML = "**Username is empty.";
+		if(selectedUsername.length <6){
+			document.getElementById('errorUsername').innerHTML = "**Username should have atleast 6 characters.";
+		}
+		document.getElementById('providerUsername').focus();
+	} else {
+
+		$
+				.ajax({
+					url : '/AdminController',
+					method : 'POST',
+					data : {
+						'CCO' : 'COURSE_PROVIDER_VALIDATION',
+						'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
+						'username' : selectedUsername,
+						'email' : userEmail
+					},
+					dataType : "json",
+					async : false,
+					success : function(response) {
+
+						if (response !== undefined && response !== null) {
+							document.getElementById('errorUsername').innerHTML = response.userMessage;
+						}
+					},
+				});
+
+	}
+}
+
+function providerPrefixValidation() {
+
+	var selectedPrefix = document.getElementById('uniquePrefix').value;
+
+	if (!isempty(selectedPrefix)) {
+		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
+		document.getElementById('uniquePrefix').focus();
+	} else if (isempty(selectedPrefix)) {
+		document.getElementById('errorUniquePrefix').innerHTML = "";
+
+		$
+				.ajax({
+					url : '/AdminController',
+					method : 'POST',
+					data : {
+						'CCO' : 'COURSE_PROVIDER_VALIDATION',
+						'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
+						'prefix' : selectedPrefix
+					},
+					dataType : "json",
+					async : false,
+					success : function(response) {
+
+						if (response !== undefined && response !== null) {
+							window.responseErrorPrefix = response.userMessage;
+
+							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
+						}
+					},
+				});
+	}
+
 }
 
 /**
  * created to validate course provider details before submit
  */
-function vaidateCourseProviderDeatils(form){
+function vaidateCourseProviderDeatils(form) {
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
 	var shortName = $("#shortName").val();
@@ -98,7 +165,6 @@ function vaidateCourseProviderDeatils(form){
 	var accountStatus = $("#accountStatus").val();
 	var accountDescription = $("#accountDescription").val();
 
-		
 	var validateFlag = true;
 
 	if (!isempty(courseProvider)) {
@@ -151,16 +217,18 @@ function vaidateCourseProviderDeatils(form){
 		document.getElementById('errorLand1').focus();
 		flag = false;
 	}
-//	if (!isempty(land2)) {
-//		document.getElementById('errorLand2').innerHTML = "**Give a course provider Unique name.";
-//		document.getElementById('errorLand2').focus();
-//		flag = false;
-//	}
-//	if (!isempty(fax)) {
-//		document.getElementById('errorPrefix').innerHTML = "**Give a course provider Unique name.";
-//		document.getElementById('errorPrefix').focus();
-//		flag = false;
-//	}
+	// if (!isempty(land2)) {
+	// document.getElementById('errorLand2').innerHTML = "**Give a course
+	// provider Unique name.";
+	// document.getElementById('errorLand2').focus();
+	// flag = false;
+	// }
+	// if (!isempty(fax)) {
+	// document.getElementById('errorPrefix').innerHTML = "**Give a course
+	// provider Unique name.";
+	// document.getElementById('errorPrefix').focus();
+	// flag = false;
+	// }
 	if (!isempty(networkCode)) {
 		document.getElementById('errorNetworkCode').innerHTML = "**Give the network. ";
 		document.getElementById('errorNetworkCode').focus();
@@ -176,16 +244,18 @@ function vaidateCourseProviderDeatils(form){
 		document.getElementById('errorAddress1').focus();
 		flag = false;
 	}
-//	if (!isempty(address2)) {
-//		document.getElementById('errorPrefix').innerHTML = "**Give a course provider Unique name.";
-//		document.getElementById('errorPrefix').focus();
-//		flag = false;
-//	}
-//	if (!isempty(address3)) {
-//		document.getElementById('errorPrefix').innerHTML = "**Give a course provider Unique name.";
-//		document.getElementById('errorPrefix').focus();
-//		flag = false;
-//	}
+	// if (!isempty(address2)) {
+	// document.getElementById('errorPrefix').innerHTML = "**Give a course
+	// provider Unique name.";
+	// document.getElementById('errorPrefix').focus();
+	// flag = false;
+	// }
+	// if (!isempty(address3)) {
+	// document.getElementById('errorPrefix').innerHTML = "**Give a course
+	// provider Unique name.";
+	// document.getElementById('errorPrefix').focus();
+	// flag = false;
+	// }
 	if (!isempty(country)) {
 		document.getElementById('errorSelectedCountry').innerHTML = "**Give a course provider Unique name.";
 		document.getElementById('errorSelectedCountry').focus();
@@ -276,5 +346,5 @@ function vaidateCourseProviderDeatils(form){
 		document.getElementById('errorAccountStatus').focus();
 		flag = false;
 	}
-return flag;
+	return flag;
 }
