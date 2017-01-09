@@ -562,7 +562,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
-									<input type="submit" id="viewNext" value="Next"
+									<input type="button" id="viewNext" value="Next"
 										class="btn btn-lg btn-info" onclick="getProviderType();" />
 								</div>
 							</li>

@@ -253,7 +253,10 @@ function showUserMessage(){
 }
 
 function getProviderType() {
-
+var sdf = $("#providerName").val;
+	if(sdf == null || sdf==""){
+		errorProviderName.html("Please give name");
+	}
 
 	var form = $('#basicForm');
 	var formData = $(form).serialize();
@@ -270,7 +273,7 @@ function getProviderType() {
 				window.registerId = response.registerId;
 
 			window.responseErrorMessage = response.userMessage;
-			$("#errorProviderName").val() = response.errorProviderName;
+			$("#errorProviderName").html(response.errorProviderName);
 //				alert(responseErrorMessage);
 //				var userErrorMessage = $("#errorMessage");
 //				userErrorMessage.html("errors");
