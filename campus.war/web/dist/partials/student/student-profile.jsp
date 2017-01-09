@@ -312,69 +312,72 @@
                     </div>
                     <!-- End Education Widget -->
 
-                    <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6">
+<!--                     <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6"> -->
+<!--                         <div class="widget w-activity"> -->
+<!--                             <div class="widget-header"> -->
+<!--                                 <label for="">Activity</label> -->
+<!--                                 <button>Edit</button> -->
+<!--                             </div> -->
+
+<!--                             <div class="widget-content"> -->
+<!--                                 <ul class="ul-activity"> -->
+<!--                                     <li>Change your user profile details <br><span class="act-time">~ March 2012 - Now</span></li> -->
+<!--                                     <li>Added new article <br><span class="act-time">~ March 2012 - Now</span></li> -->
+<!--                                     <li>Change profile picture <br><span class="act-time">~ March 2012 - Now</span></li> -->
+<!--                                     <li>Your setting is updated <br><span class="act-time">~ March 2012 - Now</span></li> -->
+<!--                                 </ul> -->
+<!--                             </div> -->
+
+<!--                             <div class="widget-footer"> -->
+<!--                                 <a href="javascript:">See All Activities >></a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+                    <!-- End Activity Widget -->
+                    
+                      <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6">
                         <div class="widget w-activity">
                             <div class="widget-header">
-                                <label for="">Activity</label>
-                                <button>Edit</button>
+                                <label for="">Skills</label>
+<!--                                 <button>Edit</button> -->
                             </div>
 
                             <div class="widget-content">
-                                <ul class="ul-activity">
-                                    <li>Change your user profile details <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Added new article <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Change profile picture <br><span class="act-time">~ March 2012 - Now</span></li>
-                                    <li>Your setting is updated <br><span class="act-time">~ March 2012 - Now</span></li>
-                                </ul>
+                            <div id="studentSkillSaveStatus" name="studentSkillSaveStatus" class="alert alert-success"></div>
+                                <div class="example example_objects_as_tags">
+									<div class="bs-docs-example">
+										<input type="text" id="studentSkills" name="studentSkills" />
+									</div>
+									<button onclick="addSkillDetails()">Save Changes</button>
+								</div>
                             </div>
 
-                            <div class="widget-footer">
-                                <a href="javascript:">See All Activities >></a>
-                            </div>
                         </div>
                     </div>
-                    <!-- End Activity Widget -->
+                     <!-- End Interest Widget -->
+                    
 
                     <div class="pad-r-0 col-sm-12 col-md-6 col-lg-6">
                         <div class="widget w-skills">
                             <div class="widget-header">
-                                <label for="">Skills</label>
-                                <button>Edit</button>
+                                <label for="">Interest</label>
+<!--                                 <button>Edit</button> -->
                             </div>
 
                             <div class="widget-content">
-                                <ul class="ul-skills">
-                                    <li>
-                                        Photoshop
-                                        <div class="progress">
-                                            <div class="progress-bar bg-green w-90" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        JAVA
-                                        <div class="progress">
-                                            <div class="progress-bar bg-blue w-50" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        AngularJS
-                                        <div class="progress">
-                                            <div class="progress-bar bg-orange w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        Javascript
-                                        <div class="progress">
-                                            <div class="progress-bar bg-red w-100" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <div id="studentInterestSaveStatus" name="studentInterestSaveStatus" class="alert alert-success"></div>
+								<div class="example example_objects_as_tags">
+									<div class="bs-docs-example">
+										<input type="text" id="studentInterests" name="studentInterests" />
+									</div>
+									<button onclick="addInterestsDetails()">Save Changes</button>
+								</div>
                             </div>
 
                         </div>
                     </div>
                     <!-- End Skills Widget -->
-
+                    
                 </div>
             </div>
             <!-- End Right side -->
