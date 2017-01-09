@@ -148,7 +148,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" onchange="normalValdation();"/><span id="errorProviderName" style="color: red;">${errorProviderName }</span>
+										id="providerName" size="50px;"/><span id="errorProviderName" style="color: red;">${errorProviderName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -168,7 +168,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
 										id="uniquePrefix" size="30px;"
-										onfocusout="providerPrefixValidation();" />
+										onkeyup="providerPrefixValidation();" />
 										<span id="errorUniquePrefix" style="color: red;">${errorUniquePrefix }</span>
 								</div>
 							</li>
@@ -233,9 +233,8 @@
 								<div class="col-name">
 									<h1 class="pro-name">Country :</h1>
 								</div>
-								<div class="col-name" id="country-List"
-									onclick="landPhoneNubmerHelper();"></div> <span
-								id="errorShortName" style="color: red;">${errorShortName }</span>
+								<div class="col-name" id="country-List"></div> <span
+								id="errorSelectedCountry" style="color: red;">${errorSelectedCountry }</span>
 							</li>
 							<!-- end -->
 
@@ -275,9 +274,9 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land2" id="land2"
-										size="25px;" />
+										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
 										<span id="errorLand2" style="color: red;">${errorLand2 }</span>
-										<span id="landNumber1" style="color: blue;"></span>
+										<span id="landNumber2" style="color: blue;"></span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Fax Number :</h1>
@@ -296,7 +295,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="networkCode"
-										id="networkCode" size="25px;" />
+										id="networkCode" size="25px;" onkeyup="landPhoneNubmerHelper();"/>
 										<span id="errorShortName" style="color: red;">${errorShortName }</span>
 								</div>
 								<div class="col-name">
@@ -304,9 +303,9 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
-										size="25px;" />
+										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
 										<span id="errorShortName" style="color: red;">${errorShortName }</span>
-										<span id="landNumber1" style="color: blue;"></span>
+										<span id="lastMobileNumber" style="color: blue;"></span>
 								</div>
 
 							</li>
@@ -529,8 +528,8 @@
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
-										onfocusout="providerUsernameValidation();" />
-								<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										onkeyup="providerUsernameValidation();" />
+								<span id="errorUsername" style="color: red;">${errorShortName }</span>
 								</div>
 							</li>
 							<!-- end -->
