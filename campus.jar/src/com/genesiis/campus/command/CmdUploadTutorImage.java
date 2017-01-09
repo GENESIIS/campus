@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 //create the initial CmdUploadTutorImage.java with help of CmdUploadProfileImg.java from CAM:27
 //20170109 DN c47-tutor-add-tutor-information-upload-image-dn added getTutorProfileImageUploadPath(), refactor execute() and add doc comments
+//20170109 DN c47-tutor-add-tutor-information-upload-image-dn created isImageWithinSize(), asccessInerLoopSingleElement() created
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,12 +53,13 @@ public class CmdUploadTutorImage implements ICommand {
 		try{
 			Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
 			int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
-			
+			con = ConnectionManager.getConnection();
 			//get the tutor image upload path
 			String tutorProfileImageUploadPath =getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
 			//check if the image is within the allowed size
 			// get the allowable image size
-			long uploadSizeLimit  = ImageUtility.getAlloawablePictureSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE);
+			
+			//long uploadSizeLimit  = ImageUtility.getAlloawablePictureSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE);
 			
 			
 			
@@ -94,47 +96,91 @@ public class CmdUploadTutorImage implements ICommand {
 		String[] systemConfigCode = {tutorImageProfilePath.toString()};
 		//access the data base system configuration data related table and retrieve the path
 		ICrud systemConfigDAO = new SystemConfigDAO();
-		try{
-			con = ConnectionManager.getConnection();
-			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO.findById(systemConfigCode,con);
-			//the collection should contains only one collection encapsulated one record from the systemconfig table
-			if(turoUploadImageCollection.size()==1){
-				for(Collection<String> inner:turoUploadImageCollection){
-					Object[] innerArray = inner.toArray();
-					if((innerArray[0]!=null)&(innerArray[0]!="")){
-						 tutorDefaultImagePath=(String)innerArray[0]+ "/" + "username_"+ Integer.toString(tutorCode)+"/";
-						 
-					}
-				}	
-			}
+		try {
+
+			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO
+					.findById(systemConfigCode, con);
+			// the collection should contains only one collection encapsulated
+			// one record from the systemconfig table
+			tutorDefaultImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
+			tutorDefaultImagePath=(tutorDefaultImagePath!=null)?tutorDefaultImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
+
 			return tutorDefaultImagePath;
-				
-		} catch(SQLException exp) {
-			log.error("getTutorProfileImageUploadPath(): SQLException"+exp.toString());
+
+		} catch (SQLException exp) {
+			log.error("getTutorProfileImageUploadPath(): SQLException"
+					+ exp.toString());
 			throw exp;
-			
-		}catch(Exception exp) {
-			log.error("getTutorProfileImageUploadPath(): SQLException"+exp.toString());
+
+		} catch (Exception exp) {
+			log.error("getTutorProfileImageUploadPath(): SQLException"
+					+ exp.toString());
 			throw exp;
-			
-		} 
-		
+
+		}
 		
 	}
 	
-	
-	private boolean isImageWithinSize(SystemConfig tutorImageProfilePath,Connection con)throws SQLException,
+	/**
+	 * 
+	 * 
+	 * @param tutorProfilePictureSize
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con)throws SQLException,
 	Exception{
 		
-		//get the image size from the database.
+		try{
+			long tutorDefaultImageSize=0;
+			//get the image size from the database.
+			ICrud systemConfigDAO = new SystemConfigDAO();
+			Collection<Collection<String>> allovableImageSizeWrapper = systemConfigDAO.findById(tutorProfilePictureSize, con);
 		
-		//get the uploaded image and get the size and return if it within size
+			Object JhonDoe = asccessInerLoopSingleElement(allovableImageSizeWrapper);
+			tutorDefaultImageSize=(long)((JhonDoe!=null)?Long.parseLong((String)JhonDoe)*1024*1024:0.00);
+			
+			//get the uploaded image and get the size and return if it within size
+			
+		}  catch(SQLException exp) {
+			log.error("isImageWithinSize(): SQLException"+exp.toString());
+			throw exp;
+			
+		}catch(Exception exp) {
+			log.error("isImageWithinSize(): SQLException"+exp.toString());
+			throw exp;
+			
+		}
 		
 		return false;
 		
 	}
 	
-	
+	/**
+	 * Method process accepts a Collection<Collection<String>> as a parameter and
+	 * returns the inner collections' stored element as an object.
+	 * 
+	 * <b>NOTE<b> the precondition of the method is that the outer wrapper (Collection that 
+	 * holds Collection) can only have one element which should NOT be NULL or EMPTY string a Collection of String.
+	 * where the conditions are not met will result a null value to be returned.
+	 *   
+	 * @param wrapper Collection<Collection<String>> 
+	 * @return Object
+	 */
+	private Object asccessInerLoopSingleElement(Collection<Collection<String>> wrapper){
+		Object element=null;
+		if(wrapper.size()==1){
+			for(Collection<String> inner:wrapper){
+				Object[] innerArray = inner.toArray();
+				if((innerArray[0]!=null)&(innerArray[0]!="")){
+					element= innerArray[0];
+				}
+			}	
+		}
+		return element;
+	}
 	
 }
 
