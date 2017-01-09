@@ -23,6 +23,7 @@
 //20170104 PN CAM-28: implement JavaScript methods to populate student Higher education details data table.
 //20170104 PN CAM-28: implement JavaScript code to edit data taken from the data table.
 //20170104 PN CAM-28: implemented radionButtonSelectedValueSet(name, SelectdValue) method to set radio button value from the DB.
+//20170109 PN CAM-28: modified JavaScript code to display the updated details after saving them to the DB. Added character replacement for replace ','.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -35,7 +36,7 @@ $(document).ready(function() {
 function displayDetails() {
 	// Array holding selected row IDs
 	$.ajax({
-		url : '../../StudentController',
+		url : '../../../StudentController',
 		data : {
 			CCO : 'GSD'
 		},
@@ -240,7 +241,7 @@ function getStudentData(response) {
 				$('#example-console').text(rows_selected);
 
 				$.ajax({
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						rows : rows_selected,
 						CCO : 'DPE'
@@ -261,19 +262,32 @@ function getStudentData(response) {
 				e.preventDefault();
 			});
 
-	$.each(response.studentCollection, function(index, value) {
+	$.each(response.studentCollection, function(index, value) {	
 		var res = value.toString();
 		var data = res.split(",");
-		$('#sFullName').val(data[4]);
-		$('#sMiddleName').val(data[5]);
-		$('#sLastName').val(data[6]);
+		
+		$('#td-value-username').html("<b>"+data[1].replace(/##/g , ",")+"</b>");
+		$('#td-value-fullname').html(data[4].replace(/##/g , ",")+' '+data[5].replace(/##/g , ",")+' '+data[6].replace(/##/g , ","));
+		$('#td-value-birthday').html(data[7]);
+		$('#td-value-gender').html(getGenderString(parseInt(data[8])));
+		$('#td-value-email').html(data[9]);
+		$('#td-value-country').html(data[30]);
+		$('#td-value-town').html(data[31]);
+		$('#td-value-address').html(data[19].replace(/##/g , ","));
+		$('#td-value-fbprofile').html(data[18].replace(/##/g , ","));
+		$('#td-value-mobileno').html('+'+data[11]+'-'+data[16].replace(/##/g , ","));
+		
+
+		$('#sFullName').val(data[4].replace(/##/g , ","));
+		$('#sMiddleName').val(data[5].replace(/##/g , ","));
+		$('#sLastName').val(data[6].replace(/##/g , ","));
 		$('#sBirthDate').val(data[7]);
 		$('input[gender]:checked').val();
 		$('#sEmail').val(data[9]);
 		$('#sCountryCode').val(data[11]);
 		$('#sHomeNumber').val(data[13]);
 		$('#sMobileNumber').val(data[16]);
-		$('#sAddress').val();
+		$('#sAddress').val(data[19].replace(/##/g , ","));
 		$('#sFacebookUrl').val(data[18]);
 		$('#stwitterUrl').val(data[19]);
 		$('#smySpace').val(data[20]);
@@ -281,7 +295,7 @@ function getStudentData(response) {
 		$('#sInstergramUrl').val(data[22]);
 		$('#sViber').val(data[23]);
 		$('#sWhatsApp').val(data[24]);
-		$('#sAboutMe').val(data[17]);
+		$('#sAboutMe').val(data[17].replace(/##/g , ","));
 		$('#sTownCode').val(data[28]);
 		$('#sCountry').val(data[30]);
 		$('#sTown').val(data[31]);
@@ -292,6 +306,8 @@ function getStudentData(response) {
 		}else if(parseInt(data[8])==0){
 			radionButtonSelectedValueSet("gender","0");
 		}
+		
+
 		
 	});
 
@@ -768,7 +784,7 @@ function getStudentData(response) {
 				$('#example-console').text(hEdurowsSelected);
 
 				$.ajax({
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						rows : hEdurowsSelected,
 						CCO : 'DPE'
@@ -824,7 +840,7 @@ function createJsonObj(response) {
  */
 function getTownDetails(country) {
 	$.ajax({
-		url : '../../StudentController',
+		url : '../../../StudentController',
 		data : {
 			country : country,
 			CCO : 'GTD'
@@ -886,7 +902,7 @@ function addHigherEducationDetails() {
 		$
 				.ajax({
 					type : "POST",
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
 						CCO : "AHE"
@@ -995,7 +1011,7 @@ function addEducationDetails() {
 		$
 				.ajax({
 					type : "POST",
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
 						CCO : "ASD"
@@ -1152,7 +1168,7 @@ function addProfessionalExpForm() {
 		$
 				.ajax({
 					type : "POST",
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
 						CCO : "APE"
@@ -1237,7 +1253,7 @@ function addStudentPersonalDetails() {
 		$
 				.ajax({
 					type : "POST",
-					url : '../../StudentController',
+					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
 						CCO : "APD"
@@ -1248,15 +1264,30 @@ function addStudentPersonalDetails() {
 							if (data.studentPersonalStatus === "Unsuccessful.") {
 								$("#studentPersonalStatus").addClass(
 										"alert alert-danger").text(
-										data.pesaveChangesStatus).fadeIn();
+										data.pesaveChangesStatus).fadeIn();		
+								$("#studentPersonalStatus").fadeOut();
+								return;
 							} else if (data.studentPersonalStatus === "Invalid Information") {
 								$("#studentPersonalStatus").addClass(
 										"alert alert-danger").text(
 										"Invalid Information.").fadeIn();
+								$("#studentPersonalStatus").fadeOut();
+								return;
 							}
 							$("#studentPersonalStatus").addClass(
 									"alert alert-success").text(
 									data.studentPersonalStatus).fadeIn();
+							$('#td-value-fullname').html(firstName+' '+middleName+' '+lastName);
+							$('#td-value-birthday').html(dateOfBirth);
+							$('#td-value-gender').html(getGenderString(parseInt(gender)));
+							$('#td-value-email').html(email);
+							$('#td-value-country').html($('#sCountry').val());
+							$('#td-value-town').html($('#sTown').val());
+							$('#td-value-address').html(address1);
+							$('#td-value-fbprofile').html(facebookUrl);
+							$('#td-value-mobileno').html('+'+landPhoneCountryCode+'-'+mobilePhoneNo);
+							$("#studentPersonalStatus").fadeOut();
+							return;
 						}
 					},
 					error : function(e) {
@@ -1338,7 +1369,7 @@ function addInterestsDetails() {
 
 	$.ajax({
 		type : "POST",
-		url : '../../StudentController',
+		url : '../../../StudentController',
 		data : {
 			oldStudentInterests : prevalues.toString(),
 			newStudentInterests : values,
@@ -1413,7 +1444,7 @@ function addSkillDetails() {
 
 	$.ajax({
 		type : "POST",
-		url : '../../StudentController',
+		url : '../../../StudentController',
 		data : {
 			oldStudentSkills : prevalues.toString(),
 			newStudentSkills : values,
@@ -1541,4 +1572,17 @@ function setSelectedValue(selectObj, valueToSet) {
  */
 function radionButtonSelectedValueSet(name, SelectdValue) {
     $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+}
+
+/**
+ * This is to get the string value of gender name.
+ * @param val
+ * @returns
+ */
+function getGenderString(val) {
+	if(parseInt(val) == 1){
+		return "Male";
+	}else if(parseInt(val) == 0){
+		return "Female";
+	}
 }
