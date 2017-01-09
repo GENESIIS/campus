@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161125 CM c36-add-tutor-information Modified execute()method. 
 //20161221 CW c36-add-tutor-information Modified execute()method. 
 //20170106 CW c36-add-tutor-information Modified execute()method & validate the usename. 
+//20170109 CW c36-add-tutor-information Modified execute()method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class CmdCheckUsername implements ICommand {
 
 	/**
 	 * @author Chathuri
+	 * @modified Chinthaka
 	 * @param helepr
 	 *            IDataHelper object of Object type view IView object of object
 	 *            type
@@ -32,25 +34,28 @@ public class CmdCheckUsername implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {		
 		
 		String message = "";
+		boolean valid = false;
 		
 		Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
 		
 		try {
-			String username = helper.getParameter("USERNAME");
-			Validator validate = new Validator();
-						
-			if (validate.isValidUserName(username)){
+			
+			valid = Validator.isNotEmpty(helper.getParameter("USERNAME"));
+			
+			if (valid){
 				final Tutor tutor = new Tutor();
-				tutor.setUsername(username);
-				tutorCollection = new TutorUserNameDAO().findById(tutor);
-			}			
+				tutor.setUsername(helper.getParameter("USERNAME"));
+				tutorCollection = new TutorUserNameDAO().findById(tutor);		
+			}
 			
 			if (tutorCollection.isEmpty()) {
 				message = "1"; // user name does not exist
 			} else {
 				message = "0"; // user name Already exists
 			}
+			
 			view.setCollection(tutorCollection);
+			
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception.toString());
 			throw exception;
