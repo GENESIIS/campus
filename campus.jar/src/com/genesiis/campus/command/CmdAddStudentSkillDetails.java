@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161206 PN c26-add-student-details INIT CmdAddStudentSkillDetails.java. Implemented execute() method.
 //20161207 PN c26-add-student-details: modified execute() method by adding status messages.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170109 PN CAM-28: execute() method code modified to display 'No records to update.' error message when user not selected any Skill from the UI.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,14 +62,23 @@ public class CmdAddStudentSkillDetails implements ICommand {
 				}
 			} else {
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
+				List diff1 = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
+				
+				if ((diff.size() == 0)||(diff1.size() == 0)) {
+					Collection<Collection<String>> studentSkillCollection = skillDao.findById(StudentCode);
+					view.setCollection(studentSkillCollection);
+					message = SystemMessage.NODETAILSTOUPDATE.message();
+					helper.setAttribute("studentSkillSaveStatus", message);
+					return view;
+				}
+								
 				for (Object object : diff) {
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
 					skillDao.delete(skill, connection);
 				}
-
-				List diff1 = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
+			
 				for (Object object : diff1) {
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);

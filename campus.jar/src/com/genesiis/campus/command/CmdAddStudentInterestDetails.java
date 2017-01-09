@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161207 PN c26-add-student-details INIT CmdAddStudentInterestDetails.java. Implemented execute() method.
 //		   PN c26-add-student-details: modified execute() method by adding status messages.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170109 PN CAM-28: execute() method code modified to display 'No records to update.' error message when user not selected any Interest from the UI.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -59,6 +60,16 @@ public class CmdAddStudentInterestDetails implements ICommand {
 				}
 			} else {
 				List diff = Validator.subtract(Arrays.asList(oldStudentInterest), Arrays.asList(newStudentInterest));
+				List diff1 = Validator.subtract(Arrays.asList(newStudentInterest), Arrays.asList(oldStudentInterest));
+
+				if ((diff.size() == 0)||(diff1.size() == 0)) {
+					Collection<Collection<String>> studentInterestCollection = interestDao.findById(StudentCode);
+					view.setCollection(studentInterestCollection);
+					message = SystemMessage.NODETAILSTOUPDATE.message();
+					helper.setAttribute("studentInterestSaveStatus", message);
+					return view;
+				}
+
 				for (Object object : diff) {
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
@@ -66,7 +77,6 @@ public class CmdAddStudentInterestDetails implements ICommand {
 					interestDao.delete(interest, connection);
 				}
 
-				List diff1 = Validator.subtract(Arrays.asList(newStudentInterest), Arrays.asList(oldStudentInterest));
 				for (Object object : diff1) {
 					StudentInterest interest = new StudentInterest();
 					interest.setStudent(StudentCode);
@@ -74,6 +84,7 @@ public class CmdAddStudentInterestDetails implements ICommand {
 					interest.setCrtBy("USER");
 					interestDao.add(interest, connection);
 				}
+
 			}
 			message = SystemMessage.SUCCESS.message();
 			// Commit if all the updations/additions successfully completed.
