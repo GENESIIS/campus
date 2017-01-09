@@ -1,6 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!-- 20161114 TR c25 start styling user profile page container  -->
 <!-- 20161114 TR c25 page header - done  -->
 <!-- 20161114 TR c25 profile-image-box - done  -->
+<!-- 20170109 PN CAM-28: INIT the JSP file  -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +50,7 @@
                         <li><a href="">All Courses</a></li>
                         <li><a href="">About Us</a></li>
                         <li><a href="">Contact Us</a></li>
-                        <li><a href="dist/partials/student/student-dashboard.html">News</a></li>
+                        <li><a href="dist/partials/student/student-dashboard.jsp">News</a></li>
                         <li><a href="">F & Q</a></li>
                         <li><a href="">Rss</a></li>
                     </ul>
@@ -347,7 +350,7 @@
 <!-- End Dashboard  -->
 
 <!-- Footer -->
-<!--<footer w3-include-html="../layout/footer.html"></footer>-->
+<!--<footer w3-include-html="../layout/footer.jsp"></footer>-->
 <footer>
     <div class="ft-top">
 
