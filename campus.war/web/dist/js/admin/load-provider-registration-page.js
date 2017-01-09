@@ -119,11 +119,14 @@ function getProviderPageLoadData() {
 	});
 }
 
+/**
+ * display all countries
+ */
 function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
 
-	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getProviderTownListData()"><option>--Default--</option>';
+	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrtSelection()"><option value="">--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
 			singleCountryElement += '<option value="' + value[0] + '">';
@@ -135,6 +138,25 @@ function displayProviderCountries() {
 	singleCountryElement += '';
 	var countryNames = $("#country-List");
 	countryNames.html(singleCountryElement);
+	
+}
+
+/**
+ * display country code and list town data
+ */
+function getDataOnCountrtSelection(){
+	
+	if(!isempty(document.getElementById('selectedCountry').value)){
+		document.getElementById('errorSelectedCountry').innerHTML = "**Select a country to proceed.";
+		document.getElementById('selectedCountry').focus();
+		document.getElementById('landNumber1').innerHTML = "";
+		document.getElementById('landNumber2').innerHTML = "";
+		document.getElementById('lastMobileNumber').innerHTML = "";
+		
+	}else{
+		landPhoneNubmerHelper();
+		getProviderTownListData();
+	}
 
 }
 
@@ -181,76 +203,6 @@ function displayProviderTownList() {
 	townNames.html(singleTownElement);
 }
 
-function providerUsernameValidation() {
-
-	var selectedUsername = document.getElementById('providerUsername').value;
-	var userEmail = document.getElementById('providerEmail').value;
-
-	if (selectedUsername == "" || selectedUsername == null) {
-		alert("give a username");
-	}
-
-	$.ajax({
-		url : '/AdminController',
-		method : 'POST',
-		data : {
-			'CCO' : 'COURSE_PROVIDER_VALIDATION',
-			'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
-			'username' : selectedUsername,
-			'email' : userEmail
-		},
-		dataType : "json",
-		async : false,
-		success : function(response) {
-
-			if (response !== undefined && response !== null) {
-				// window.townCollection = response.userMessage;
-				var errorUsername = $("#errorUsername");
-				errorUsername.html(response.errorUsername);
-			//	alert(response.userMessage);
-			}
-		},
-	});
-}
-
-function providerPrefixValidation() {
-
-	var selectedPrefix = document.getElementById('uniquePrefix').value;
-
-	if (selectedPrefix == "" || selectedPrefix == null) {
-		alert("give a prefix");
-	} else if(selectedPrefix != "" || selectedPrefix != null){
-
-		$.ajax({
-			url : '/AdminController',
-			method : 'POST',
-			data : {
-				'CCO' : 'COURSE_PROVIDER_VALIDATION',
-				'action' : 'COURSE_PROVIDER_PREFIX_VALIDATION',
-				'prefix' : selectedPrefix
-			},
-			dataType : "json",
-			async : false,
-			success : function(response) {
-
-				if (response !== undefined && response !== null) {
-					window.responseErrorPrefix = response.userMessage;
-				 var prefixMessage = $('#errorPrefix');
-				 prefixMessage.val = (response.userMessage);
-					showUserMessage();
-				}
-			},
-		});
-	}
-
-}
-
-function showUserMessage(){
-	if(window.UserMessage != null){
-		var errorPrefix = $("#errorPrefix");
-		errorPrefix.html(window.responseErrorMessage);
-	}
-}
 //$(document).ready(function(){
 //    $('#basicForm').submit(function (e) {
 //       e.preventDefault();
@@ -266,14 +218,23 @@ function landPhoneNubmerHelper(){
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
 	var networkCode = $("#networkCode").val();
-	var mobile = $("#land1").val();
-	
-	var lastLandNumber1 = "+"+ country + " "+ areaCode + " " + land1 ;
-	var lastLandNumber2 = "+"+ country + " "+ areaCode + " " + land2 ;
-	var lastMobilNumber = "+"+ country + " "+ networkCode + " " + mobile ;
-	
-	document.getElementById('landNumber1').innerHTML = lastLandNumber1;
-	
+	var mobile = $("#mobile").val();
+		
+	if (!isempty(country)) {
+		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
+	} else {
+		
+		document.getElementById('errorLand1').innerHTML = "";
+		
+		var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
+		var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
+		var lastMobilNumber = "+" + country + " " + networkCode + " " + mobile;
+
+		document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+		document.getElementById('landNumber2').innerHTML = lastLandNumber2;
+		document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+	}
+
 }
 function getProviderType() {
 
