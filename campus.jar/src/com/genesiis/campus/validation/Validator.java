@@ -1,8 +1,5 @@
 package com.genesiis.campus.validation;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -28,6 +25,9 @@ import java.util.Collection;
 //20170109 CW c36-add-tutor-details modified isValidLandNumber() method
 //20170109 CW c36-add-tutor-details modified isValidAddressLine1() method
 //20170109 CW c36-add-tutor-details modified validateTutorFields() method
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

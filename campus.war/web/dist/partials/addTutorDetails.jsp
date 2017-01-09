@@ -11,12 +11,12 @@
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
-		
+	<!-- 	
 		<c:forEach var="tutorList" items="${tutor}">
 			<c:set var="username" value="${tutorList[0]}" scope="session" />
 			<c:set var="password" value="${tutorList[1]}" scope="session" />
 		</c:forEach>
-		
+		 -->
 		
 		<table align="center">
 			<tr>
@@ -30,8 +30,8 @@
 				</td>
 			</tr>
 			<tr>
-			<td>${username}</td>
-			<td>${password}</td>
+	<!--		<td>${username}</td>	-->
+	<!--		<td>${password}</td>	-->
 				<td>First Name * </td>
 				<td><input type="text" name="firstname" id="firstName"
 					maxlength="20" onchange="clearField('firstNameError')" /><span id="firstNameError" style="color: red" > </span></td>

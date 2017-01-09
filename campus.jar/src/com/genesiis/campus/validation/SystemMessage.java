@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20170109 c36-add-tutor-details-added few more enum fields cw
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
