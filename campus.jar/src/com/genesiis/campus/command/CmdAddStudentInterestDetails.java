@@ -96,7 +96,7 @@ public class CmdAddStudentInterestDetails implements ICommand {
 				connection.close();
 			}
 		}
-		helper.setAttribute("InterestChangesStatus", message);
+		helper.setAttribute("studentInterestSaveStatus", message);
 		return view;
 	}
 }

@@ -43,20 +43,16 @@ public class CmdAddStudentSkillDetails implements ICommand {
 			connection.setAutoCommit(false);
 
 			if (oldStudentSkills.length > newStudentSkills.length) {
-				log.info("Delete Diff.");
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
 					skillDao.delete(skill, connection);
 				}
 			} else if (oldStudentSkills.length < newStudentSkills.length) {
-				log.info("Add Diff.");
 				List diff = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
 				for (Object object : diff) {
-					log.info("object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
@@ -66,7 +62,6 @@ public class CmdAddStudentSkillDetails implements ICommand {
 			} else {
 				List diff = Validator.subtract(Arrays.asList(oldStudentSkills), Arrays.asList(newStudentSkills));
 				for (Object object : diff) {
-					log.info("old object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
@@ -75,7 +70,6 @@ public class CmdAddStudentSkillDetails implements ICommand {
 
 				List diff1 = Validator.subtract(Arrays.asList(newStudentSkills), Arrays.asList(oldStudentSkills));
 				for (Object object : diff1) {
-					log.info("new object " + object);
 					StudentSkill skill = new StudentSkill();
 					skill.setStudent(StudentCode);
 					skill.setSkill(Integer.parseInt(object.toString()));
@@ -104,7 +98,7 @@ public class CmdAddStudentSkillDetails implements ICommand {
 				connection.close();
 			}
 		}
-		helper.setAttribute("skillChangesStatus", message);
+		helper.setAttribute("studentSkillSaveStatus", message);
 		return view;
 	}
 }
