@@ -36,7 +36,6 @@ public enum ApplicationStatus {
 	 * @author DJ
 	 * @param selected status Value string
 	 * @return applicationStatus
-	 * @throws Exception
 	 */
 	public static int getApplicationStatus(String statusValue){
 		int applicationStatus=0; 	
@@ -62,8 +61,7 @@ public enum ApplicationStatus {
 	 * Generic method for map the status int value with String.Purpose of status vie in front end.Able to call from whole campus application
 	 * @author DJ
 	 * @param selected int status Value 
-	 * @return applicationStatus
-	 * @throws Exception
+	 * @return applicationStatus	 
 	 */
 	public static String getApplicationStatus(int statusValue){
 		String applicationStatus="";		
