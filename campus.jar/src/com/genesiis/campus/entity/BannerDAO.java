@@ -75,11 +75,11 @@ public class BannerDAO  implements ICrud{
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		final Collection<Collection<String>> allBannerList = new ArrayList<Collection<String>>();
-		int pageSlotCode=0;
-		if(UtilityHelper.isNotEmptyObject(code)){
-			pageSlotCode=Integer.valueOf((String) code);			
-		}
+		int pageSlotCode=0;		
 		try {
+			if(UtilityHelper.isNotEmptyObject(code)){
+				pageSlotCode=Integer.parseInt((String) code);			
+			}
 			conn = ConnectionManager.getConnection();
             final StringBuilder sb = new StringBuilder("SELECT DISTINCT ADVERTISER.CODE ADVERTISERCODE, ADVERTISER.NAME ADVERTISERNAME ");
             sb.append("FROM [CAMPUS].[BANNER] BANNER INNER JOIN CAMPUS.ADVERTISER ADVERTISER ON BANNER.ADVERTISER=ADVERTISER.CODE WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");

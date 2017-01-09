@@ -53,12 +53,11 @@ public class PageSlotDAO implements ICrud {
 		PreparedStatement stmt=null;
 		ResultSet resultSet=null;
 		final Collection<Collection<String>> pageSlotList = new ArrayList<Collection<String>>();
-		int pageCode=0;
-		if(UtilityHelper.isNotEmptyObject(code)){
-			 pageCode=Integer.valueOf((String) code);			
-		}
-        
+		int pageCode=0;        
 		try {
+			if(UtilityHelper.isNotEmptyObject(code)){
+				 pageCode=Integer.parseInt((String) code);			
+			}
 			conn=ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder(
 					"SELECT SLOT.CODE AS PAGESLOTCODE , SLOT.NAME AS PAGESLOTNAME FROM [CAMPUS].[PAGESLOT] SLOT WHERE");
