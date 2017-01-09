@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //		   PN c11-criteria-based-filter-search implemented getAll() method.
 //20161103 PN c11-criteria-based-filter-search modified SQL query inside getAll() and findById() methods
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
+//20170109 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class InstituteDAO implements ICrud{
 	static Logger log = Logger.getLogger(InstituteDAO.class.getName());
@@ -48,10 +50,14 @@ public class InstituteDAO implements ICrud{
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY WHERE m.CODE = ? AND l.COURSEPROVIDERSTATUS = 1;";
+			String query = "SELECT DISTINCT l.CODE,l.NAME,l.UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] l "
+					+ "JOIN [CAMPUS].[PROGRAMME] p ON l.CODE = p.COURSEPROVIDER "
+					+ "JOIN [CAMPUS].[CATEGORY] m ON m.CODE = p.CATEGORY "
+					+ "WHERE m.CODE = ? AND l.COURSEPROVIDERSTATUS = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
+			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 			
 			
@@ -93,9 +99,11 @@ public class InstituteDAO implements ICrud{
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT DISTINCT CODE,NAME,UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] WHERE COURSEPROVIDERSTATUS = 1;";
+			String query = "SELECT DISTINCT CODE,NAME,UNIQUEPREFIX FROM [CAMPUS].[COURSEPROVIDER] "
+					+ "WHERE COURSEPROVIDERSTATUS = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 			
 			

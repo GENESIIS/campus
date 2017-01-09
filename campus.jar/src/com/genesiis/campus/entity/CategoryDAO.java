@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161028 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
+//20170109 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -49,9 +51,10 @@ public class CategoryDAO implements ICrud {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[CATEGORY] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[CATEGORY] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

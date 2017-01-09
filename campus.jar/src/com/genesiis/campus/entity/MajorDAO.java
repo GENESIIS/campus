@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
+//20170109 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 public class MajorDAO implements ICrud {
 	static Logger log = Logger.getLogger(MajorDAO.class.getName());
@@ -50,10 +52,11 @@ public class MajorDAO implements ICrud {
 					+ "FROM [CAMPUS].[MAJOR] m "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON m.CODE = p.MAJOR "
 					+ "JOIN [CAMPUS].[CATEGORY] c ON c.CODE = p.CATEGORY "
-					+ "WHERE c.CODE = ? AND c.ISACTIVE = 1;";
+					+ "WHERE c.CODE = ? AND c.ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
+			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
@@ -93,9 +96,10 @@ public class MajorDAO implements ICrud {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
