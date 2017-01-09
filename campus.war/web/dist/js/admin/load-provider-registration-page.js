@@ -253,33 +253,34 @@ function showUserMessage(){
 }
 
 function getProviderType() {
-var sdf = $("#providerName").val;
-	if(sdf == null || sdf==""){
-		errorProviderName.html("Please give name");
-	}
+//var sdf = $("#providerName").val;
+//	if(sdf == null || sdf==""){
+//		errorProviderName.html("Please give name");
+//	}
+	vaidateCourseProviderDeatils();
 
 	var form = $('#basicForm');
-	var formData = $(form).serialize();
-	$.ajax({
-		url : '/AdminController',
-		method : 'POST',
-		data : formData,
-		dataType : "json",
-		async : false,
-		success : function(response) {
-
-			if (response !== undefined && response !== null) {
-				// message = response.userMessage;
-				window.registerId = response.registerId;
-
-			window.responseErrorMessage = response.userMessage;
-			$("#errorProviderName").html(response.errorProviderName);
-//				alert(responseErrorMessage);
-//				var userErrorMessage = $("#errorMessage");
-//				userErrorMessage.html("errors");
-
-
-			}
-		},
-	});
+//	var formData = $(form).serialize();
+//	$.ajax({
+//		url : '/AdminController',
+//		method : 'POST',
+//		data : formData,
+//		dataType : "json",
+//		async : false,
+//		success : function(response) {
+//
+//			if (response !== undefined && response !== null) {
+//				// message = response.userMessage;
+//				window.registerId = response.registerId;
+//
+//			window.responseErrorMessage = response.userMessage;
+//			$("#errorProviderName").html(response.errorProviderName);
+////				alert(responseErrorMessage);
+////				var userErrorMessage = $("#errorMessage");
+////				userErrorMessage.html("errors");
+//
+//
+//			}
+//		},
+//	});
 }
