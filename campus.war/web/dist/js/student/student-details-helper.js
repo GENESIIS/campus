@@ -278,8 +278,7 @@ function getStudentData(response) {
 		$('#td-value-town').html(data[31]);
 		$('#td-value-address').html(data[19].replace(/##/g, ","));
 		$('#td-value-fbprofile').html(data[18].replace(/##/g, ","));
-		$('#td-value-mobileno').html(
-				'+' + data[11] + '-' + data[16].replace(/##/g, ","));
+		$('#td-value-mobileno').html(data[11] + '-' + data[16].replace(/##/g, ","));
 
 		$('#sFullName').val(data[4].replace(/##/g, ","));
 		$('#sMiddleName').val(data[5].replace(/##/g, ","));
