@@ -215,17 +215,36 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="generalEmail"
-										id="generalEmail" size="25px;" />
-										<span id="errorGeneralEmail" style="color: red;">${errorGeneralEmail }</span>
+										id="generalEmail" size="25px;" /> <span
+										id="errorGeneralEmail" style="color: red;">${errorGeneralEmail }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Course Inquiry Email :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="inquiryMail"
-										id="inquiryMail" size="25px;" />
-										<span id="errorInquiryMail" style="color: red;">${errorInquiryMail }</span>
+										id="inquiryMail" size="25px;" /> <span id="errorInquiryMail"
+										style="color: red;">${errorInquiryMail }</span>
 								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Country :</h1>
+								</div>
+								<div class="col-name" id="country-List"
+									onclick="landPhoneNubmerHelper();"></div> <span
+								id="errorShortName" style="color: red;">${errorShortName }</span>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Town :</h1>
+								</div>
+								<div class="col-name" id="town-List"></div> <span
+								id="errorShortName" style="color: red;">${errorShortName }</span>
 							</li>
 							<!-- end -->
 
@@ -234,7 +253,7 @@
 									<h1 class="pro-name">Land Phone Area Code :</h1>
 								</div>
 								<div class="col-name">
-									<input class="input" type="text" name="areaCode" id="areaCode"
+									<input class="input" type="text" name="areaCode" id="areaCode" onkeyup="landPhoneNubmerHelper();"
 										size="25px;" />
 										<span id="errorAreaCode" style="color: red;">${errorAreaCode }</span>
 								</div>
@@ -243,8 +262,9 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
-										size="25px;" />
+										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
 										<span id="errorLand1" style="color: red;">${errorLand1 }</span>
+										<span id="landNumber1" style="color: blue;"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -257,6 +277,7 @@
 									<input class="input" type="text" name="land2" id="land2"
 										size="25px;" />
 										<span id="errorLand2" style="color: red;">${errorLand2 }</span>
+										<span id="landNumber1" style="color: blue;"></span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Fax Number :</h1>
@@ -285,6 +306,7 @@
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" />
 										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="landNumber1" style="color: blue;"></span>
 								</div>
 
 							</li>
@@ -302,6 +324,7 @@
 										size="50px;" />
 										<span id="errorShortName" style="color: red;">${errorShortName }</span>
 								</div>
+								<span id="infoLandNumber1" style="color: blue;"></span>
 							</li>
 							<!-- end -->
 
@@ -316,33 +339,14 @@
 								</div>
 							</li>
 							<!-- end -->
-
+										
 							<li class="course-info clearfix">
 								<div class="col-name">
 									<h1 class="pro-name">Address Line 3 :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address3" id="address3"
-										size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Country :</h1>
-								</div>
-								<div class="col-name" id="country-List"></div>
-								<span id="errorShortName" style="color: red;">${errorShortName }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Town :</h1>
-								</div>
-								<div class="col-name" id="town-List"></div>
-								<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										size="50px;" /> <span id="errorShortName" style="color: red;">${errorShortName }</span>
 							</li>
 							<!-- end -->
 
