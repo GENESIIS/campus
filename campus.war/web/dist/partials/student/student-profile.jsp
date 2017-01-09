@@ -4,6 +4,7 @@
 <!-- 20161114 TR c25 page header - done  -->
 <!-- 20161114 TR c25 profile-image-box - done  -->
 <!-- 20170109 PN CAM-28: INIT the JSP file  -->
+<!-- 20170109 PN CAM-28: modified textfield length with textfield attribute.  -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,17 @@
     <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/image-slides.css" rel="stylesheet">
+    
+    <!-- Data Table CSS -->
+    <link href="../../datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
+	<!-- CheckBox CSS -->
+	<link href="../../datatable/dataTables.checkboxes.css" rel="stylesheet" type="text/css">
+	
+	<!-- TagIt CSS-->
+	<link href="../../css/tagit.css" rel="stylesheet" type="text/css">
+	
     <!-- W3-Include -->
     <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
@@ -25,6 +36,32 @@
     <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     <script src="../../js/main.js"></script>
     <script src="../../js/image-slides.js"></script>
+    
+    <!-- Issue specific JS files. -->
+    <script src="../../js/institute/validation/validation.js"></script>
+	<script src="../../js/student/student-details-helper.js"></script>
+	
+	<!-- Data Table JS files -->
+	<script src="../../datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- CheckBox JS files -->
+	<script src="../../datatable/dataTables.checkboxes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../datatable/dataTables.checkboxes.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<!-- TagIt JS-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    <script src="../../tagit/bootstrap-tagsinput.min.js"></script>
+    <script src="../../tagit/bootstrap-tagsinput-angular.min.js"></script>
+   
+<style type="text/css">
+.alert{
+    display: none;
+}
+</style>    
 </head>
 
 <body>
@@ -175,7 +212,7 @@
                 <div class="widget w-about-me clearfix">
                     <div class="widget-header">
                         <label for="About">About</label>
-                        <button>Edit</button>
+                        <button data-toggle="modal" data-target="#studentPersonalDetailsModal">Edit</button>
                     </div>
                     <!-- End widget header -->
 
@@ -183,24 +220,24 @@
                         <div class="w-left-panel col-sm-12 col-md-6 col-lg-6">
                             <table class="tbl-wgt-about">
                                 <tr>
-                                    <td class="td-name">First Name :</td>
-                                    <td class="td-value">Kalana </td>
+                                    <td class="td-name">User Name :</td>
+                                    <td class="td-value" id="td-value-username"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Last Name :</td>
-                                    <td class="td-value">Perera </td>
+                                    <td class="td-name">Full Name :</td>
+                                    <td class="td-value" id="td-value-fullname"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">City :</td>
-                                    <td class="td-value">Kandy</td>
+                                    <td class="td-name">Birthday :</td>
+                                    <td class="td-value" id="td-value-birthday"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Birthday  :</td>
-                                    <td class="td-value">Nov 24,1999</td>
+                                    <td class="td-name">Gender :</td>
+                                    <td class="td-value" id="td-value-gender"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Website :</td>
-                                    <td class="td-value">www.blabla.com </td>
+                                    <td class="td-name">Email  :</td>
+                                    <td class="td-value" id="td-value-email"></td>
                                 </tr>
                             </table>
                         </div>
@@ -209,24 +246,24 @@
                         <div class="w-right-panel col-sm-12 col-md-6 col-lg-6">
                             <table class="tbl-wgt-about">
                                 <tr>
-                                    <td class="td-name">User Name :</td>
-                                    <td class="td-value">Kala</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-name">Email :</td>
-                                    <td class="td-value">jamesbond@gmail.com </td>
-                                </tr>
-                                <tr>
                                     <td class="td-name">Country :</td>
-                                    <td class="td-value">Sri Lanka </td>
+                                    <td class="td-value" id="td-value-country"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Interests  :</td>
-                                    <td class="td-value">Web Design, Java </td>
+                                    <td class="td-name">Town :</td>
+                                    <td class="td-value" id="td-value-town"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Phone :</td>
-                                    <td class="td-value">077 555 6666</td>
+                                    <td class="td-name">Address :</td>
+                                    <td class="td-value" id="td-value-address"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-name">FB profile :</td>
+                                    <td class="td-value" id="td-value-fbprofile"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-name">Mobile NO :</td>
+                                    <td class="td-value" id="td-value-mobileno"></td>
                                 </tr>
                             </table>
                         </div>
@@ -348,6 +385,127 @@
     </div>
 </div>
 <!-- End Dashboard  -->
+
+
+
+
+<!-- Personal Details-->
+<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="studentPersonalDetails"><label>School Education</label></h4>
+      </div>
+      <div class="modal-body">
+      <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
+      		<h2>Personal Details</h2>
+      		<div class="well">
+      		First Name <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')">
+			<span id="sFullNameError" name="sFullNameError" style="color:red" maxlength="200"></span><br>
+			
+      		Middle Name <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')">
+			<span id="sMiddleNameError" name="sMiddleNameError" style="color:red" maxlength="200"></span><br>
+			
+      		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')">
+			<span id="sLastNameError" name="sLastNameError" style="color:red" maxlength="200"></span><br>
+      
+      		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
+			<span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
+			
+			Gender
+			<div class="input-group">
+			<input type="radio" name="gender" value="1"> Male 
+  			<input type="radio" name="gender" value="0"> Female<br>
+  			</div>
+			
+			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')"></textarea>
+			<span id="sAboutMeError" name="sAboutMeError" style="color:red" maxlength="200"></span><br>
+			
+			</div>
+			<br>
+			
+			<h2>Contact Details</h2>
+			<div class="well">
+			
+			Country
+			<input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
+			 	<datalist name="sCountryList" id="sCountryList">
+			 	</datalist>
+			<br/>
+			<input hidden type="text" id="sCountryCode" name="sCountryCode"/>
+			<span id="sCountryError" name="sCountryError" style="color:red"></span><br>
+			
+			Town
+			 <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
+			 	<datalist name="sTownList" id="sTownList">
+			 	</datalist>
+			<br/>
+			<input hidden type="text" id="sTownCode" name="sTownCode"/>
+			<span id="sTownError" name="sTownError" style="color:red"></span><br>			
+			
+			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')">
+			<span id="sAddressError" name="sAddressError" style="color:red" maxlength="200"></span><br>
+			
+			Mobile Number
+      		<div class="input-group">
+      		<span class="input-group-addon" id="countryCodePrefix">+</span>
+      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
+			</div>
+			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
+			
+			Home Number 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
+			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
+			</div>
+			     		  		
+			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')">
+			<span id="sEmailError" name="sEmailError" style="color:red" maxlength="200"></span><br>
+      
+      		Facebook URL <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')">
+			<span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red" maxlength="200"></span><br>
+      
+      		twitter URL <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')">
+			<span id="stwitterUrlError" name="stwitterUrlError" style="color:red" maxlength="200"></span><br>
+			
+			LinkedIn URL <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')">
+			<span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red" maxlength="200"></span><br>
+			
+			Instergram URL <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')">
+			<span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red" maxlength="200"></span><br>
+			
+			mySpace <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')">
+			<span id="smySpaceError" name="smySpaceError" style="color:red" maxlength="200"></span><br>
+			
+			WhatsApp 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
+			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
+			</div>
+			
+			Viber 
+			<div class="input-group">
+			<span class="input-group-addon" id="countryCodePrefix">+</span>
+			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
+			<span id="sViberError" name="sViberError" style="color:red"></span><br>
+			</div>
+			
+			</div>
+			<br>			
+	  </div>
+      <div class="modal-footer">    
+      	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-primary" id="" name="" onclick="addStudentPersonalDetails()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.jsp"></footer>-->
