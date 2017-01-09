@@ -19,8 +19,6 @@ package com.genesiis.campus.entity.dao;
 //DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
 
-
-
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
@@ -417,20 +415,8 @@ public class CourseProviderDAO implements CourseProviderICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}		
 		return dtos;
-	}	
-
-	@Override
-	public Collection<Collection<String>> getAllCourseProviders() throws SQLException, Exception {
-		// TODO Auto-generated method stub
-				return null;	
 	}
 
-	@Override
-	public Collection<Collection<String>> getLightAllCourseProviders()
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;		
-	}
 
 	@Override
 	public Collection<Collection<String>> getCourseProviderById(
@@ -483,14 +469,6 @@ public class CourseProviderDAO implements CourseProviderICrud{
 		}
 		
 		return allCourseProviderTypeList;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAllCourseProviders(
-			CourseProviderSearchDTO providerSearchDTO) throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

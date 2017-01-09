@@ -17,6 +17,11 @@ import java.util.Set;
  */
 public interface CourseProviderICrud extends ICrud{	
 	
+	//TODO: Declared for presentation purpose and for Future benefits.
+	/*public int addCourseProvider(CourseProvider courseProvider) throws SQLException, Exception;
+		
+	public int updateCourseProvider(CourseProvider courseProvider) throws SQLException, Exception;
+	
    //Retrieve all the fields of course provider table
 	public Collection<Collection<String>> getAllCourseProviders()throws SQLException,Exception;
 	
@@ -24,7 +29,7 @@ public interface CourseProviderICrud extends ICrud{
 	public Collection<Collection<String>> getAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
 	
 	//Retrieve basic fields of course provider table
-	public Collection<Collection<String>> getLightAllCourseProviders()throws SQLException,Exception;
+	public Collection<Collection<String>> getLightAllCourseProviders()throws SQLException,Exception;*/
 	
 	//Retrieve basic fields of course provider table
 	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
@@ -33,12 +38,7 @@ public interface CourseProviderICrud extends ICrud{
 	public Collection<Collection<String>> getCourseProviderById(Integer courseProviderCode)throws SQLException,Exception;
 	
 	 //Retrieve all the fields of Course Provider Type table
-	public Collection<Collection<String>> getAllCourseProviderTypes()throws SQLException,Exception;
-	
-	//TODO:For Future benefits
-	/*public int addCourseProvider(CourseProvider courseProvider) throws SQLException, Exception;
-	
-	public int updateCourseProvider(CourseProvider courseProvider) throws SQLException, Exception;*/
+	public Collection<Collection<String>> getAllCourseProviderTypes()throws SQLException,Exception;	
 	
 	public Collection<Collection<String>> findTopViewedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception;
 	

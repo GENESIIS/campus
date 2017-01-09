@@ -13,15 +13,16 @@ import java.util.Set;
  */
 public interface ProgrammeICrud extends ICrud {
 	
-	public Collection<Collection<String>> getAllMajors()throws SQLException,Exception;
-	
-	public Collection<Collection<String>> getAllCategories()throws SQLException,Exception;
+	//TODO: Declared for presentation purpose and for Future benefits.
+	/*public Collection<Collection<String>> getAllMajors()throws SQLException,Exception;	
 	
 	public Collection<Collection<String>> getAllLevels()throws SQLException,Exception;
 	
 	public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
 	
-	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;
+	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;*/
+	
+	public Collection<Collection<String>> getAllCategories()throws SQLException,Exception;
 	
 	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException,Exception;
 	

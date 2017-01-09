@@ -84,14 +84,7 @@ public class ProgrammeDAO implements ProgrammeICrud{
 			Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAllMajors() throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 	/**
 	 * Get all category details
@@ -131,29 +124,7 @@ public class ProgrammeDAO implements ProgrammeICrud{
 		}
 		
 		return allCategoryList;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAllLevels() throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAllSemesters()
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Collection<String>> getAllProgrammeInterests()
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	}	
 	/**
 	 * Get all major list details
 	 * @param 
