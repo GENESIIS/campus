@@ -251,15 +251,21 @@ function showUserMessage(){
 		errorPrefix.html(window.responseErrorMessage);
 	}
 }
+//$(document).ready(function(){
+//    $('#basicForm').submit(function (e) {
+//       e.preventDefault();
+//       // Do something...  
+////       $('#weber-form').submit();
+//    
+//     });
+//});
 
 function getProviderType() {
-//var sdf = $("#providerName").val;
-//	if(sdf == null || sdf==""){
-//		errorProviderName.html("Please give name");
-//	}
-	vaidateCourseProviderDeatils();
 
-	var form = $('#basicForm');
+	alert(vaidateCourseProviderDeatils());
+	
+
+	//var form = $('#basicForm');
 //	var formData = $(form).serialize();
 //	$.ajax({
 //		url : '/AdminController',
