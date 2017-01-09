@@ -36,11 +36,11 @@ public class CourseInquiryDAO implements ICrud {
 		String query = "INSERT INTO CAMPUS.STUDENTPROGRAMINQUIRY ( NAME, EMAIL, TELEPHONECOUNTRYCODE, TELEPHONEAREACODE, TELEPHONENUM, INQUIRYTITLE, INQUIRYTEXT, INQUIRYDATE, INQUIRYTIME, STUDENT, PROGRAMME, ISACTIVE, CRTON, CRTBY) VALUES( ?, ?, ?, ?, ?, ?, ?, getdate(), getdate(), ?, ?, '1', getdate(), 'admin') ";
 		Connection conn = null;
 		PreparedStatement ps = null;
-		StudentProgrammeInquiry spi = (StudentProgrammeInquiry) object;
+		
 		int status = -1;
 
 		try {
-
+			StudentProgrammeInquiry spi = (StudentProgrammeInquiry) object;
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, spi.getStudentName());

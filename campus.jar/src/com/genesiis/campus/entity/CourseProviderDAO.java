@@ -50,6 +50,7 @@ public class CourseProviderDAO implements ICrud{
 		ArrayList<String> singleEmployeeList = null;
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 		String query = "SELECT COURSEPROVIDER.COURSEINQUIRYEMAIL FROM [CAMPUS].[COURSEPROVIDER] INNER JOIN [CAMPUS].[PROGRAMME] ON COURSEPROVIDER.CODE = PROGRAMME.COURSEPROVIDER  WHERE PROGRAMME.CODE = ?";
 		try {
 			StudentProgrammeInquiry studentProgrammeInquiry = (StudentProgrammeInquiry) code;
@@ -57,7 +58,7 @@ public class CourseProviderDAO implements ICrud{
 			preparedStatement = conn
 					.prepareStatement(query);
 			preparedStatement.setInt(1, studentProgrammeInquiry.getProgramme());
-			ResultSet rs = preparedStatement.executeQuery();
+			 rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				singleEmployeeList = new ArrayList<String>();
@@ -74,6 +75,9 @@ public class CourseProviderDAO implements ICrud{
 			throw exception;
 		} finally {
 
+			if (rs != null) {
+				rs.close();
+			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
