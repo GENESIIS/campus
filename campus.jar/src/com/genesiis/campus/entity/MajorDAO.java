@@ -4,7 +4,7 @@ package com.genesiis.campus.entity;
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
-//20170109 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
+//20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

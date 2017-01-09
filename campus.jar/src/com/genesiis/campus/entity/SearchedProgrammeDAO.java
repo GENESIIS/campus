@@ -10,7 +10,7 @@ package com.genesiis.campus.entity;
 //20161223 CAM-116: PN Modified Collection<Collection<String>> findById(Object code) by providing two SQL queries to pass data in different cases.
 //		   CAM-116: PN Modified SQL queries inside findById(Object code) and getAll() method by adding GROUP BY clause.
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
-//20170109 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
+//20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
