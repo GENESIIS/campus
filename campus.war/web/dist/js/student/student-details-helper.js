@@ -262,32 +262,35 @@ function getStudentData(response) {
 				e.preventDefault();
 			});
 
-	$.each(response.studentCollection, function(index, value) {	
+	$.each(response.studentCollection, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
-		
-		$('#td-value-username').html("<b>"+data[1].replace(/##/g , ",")+"</b>");
-		$('#td-value-fullname').html(data[4].replace(/##/g , ",")+' '+data[5].replace(/##/g , ",")+' '+data[6].replace(/##/g , ","));
+
+		$('#td-value-username').html(
+				"<b>" + data[1].replace(/##/g, ",") + "</b>");
+		$('#td-value-fullname').html(
+				data[4].replace(/##/g, ",") + ' ' + data[5].replace(/##/g, ",")
+						+ ' ' + data[6].replace(/##/g, ","));
 		$('#td-value-birthday').html(data[7]);
 		$('#td-value-gender').html(getGenderString(parseInt(data[8])));
 		$('#td-value-email').html(data[9]);
 		$('#td-value-country').html(data[30]);
 		$('#td-value-town').html(data[31]);
-		$('#td-value-address').html(data[19].replace(/##/g , ","));
-		$('#td-value-fbprofile').html(data[18].replace(/##/g , ","));
-		$('#td-value-mobileno').html('+'+data[11]+'-'+data[16].replace(/##/g , ","));
-		
+		$('#td-value-address').html(data[19].replace(/##/g, ","));
+		$('#td-value-fbprofile').html(data[18].replace(/##/g, ","));
+		$('#td-value-mobileno').html(
+				'+' + data[11] + '-' + data[16].replace(/##/g, ","));
 
-		$('#sFullName').val(data[4].replace(/##/g , ","));
-		$('#sMiddleName').val(data[5].replace(/##/g , ","));
-		$('#sLastName').val(data[6].replace(/##/g , ","));
+		$('#sFullName').val(data[4].replace(/##/g, ","));
+		$('#sMiddleName').val(data[5].replace(/##/g, ","));
+		$('#sLastName').val(data[6].replace(/##/g, ","));
 		$('#sBirthDate').val(data[7]);
 		$('input[gender]:checked').val();
 		$('#sEmail').val(data[9]);
 		$('#sCountryCode').val(data[11]);
 		$('#sHomeNumber').val(data[13]);
 		$('#sMobileNumber').val(data[16]);
-		$('#sAddress').val(data[19].replace(/##/g , ","));
+		$('#sAddress').val(data[19].replace(/##/g, ","));
 		$('#sFacebookUrl').val(data[18]);
 		$('#stwitterUrl').val(data[19]);
 		$('#smySpace').val(data[20]);
@@ -295,20 +298,18 @@ function getStudentData(response) {
 		$('#sInstergramUrl').val(data[22]);
 		$('#sViber').val(data[23]);
 		$('#sWhatsApp').val(data[24]);
-		$('#sAboutMe').val(data[17].replace(/##/g , ","));
+		$('#sAboutMe').val(data[17].replace(/##/g, ","));
 		$('#sTownCode').val(data[28]);
 		$('#sCountry').val(data[30]);
 		$('#sTown').val(data[31]);
 		$("span[class='input-group-addon']").text("+(" + data[11] + ")");
-		
-		if(parseInt(data[8])==1){
-			radionButtonSelectedValueSet("gender","1");
-		}else if(parseInt(data[8])==0){
-			radionButtonSelectedValueSet("gender","0");
-		}
-		
 
-		
+		if (parseInt(data[8]) == 1) {
+			radionButtonSelectedValueSet("gender", "1");
+		} else if (parseInt(data[8]) == 0) {
+			radionButtonSelectedValueSet("gender", "0");
+		}
+
 	});
 
 	// Set Scheme details
@@ -913,7 +914,8 @@ function addHigherEducationDetails() {
 							if (data.saveChangesHigherEduStatus === "Unsuccessful.") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
-										data.saveChangesHigherEduStatus).fadeIn();
+										data.saveChangesHigherEduStatus)
+										.fadeIn();
 							} else if (data.saveChangesHigherEduStatus === "Invalid Information") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
@@ -1264,7 +1266,7 @@ function addStudentPersonalDetails() {
 							if (data.studentPersonalStatus === "Unsuccessful.") {
 								$("#studentPersonalStatus").addClass(
 										"alert alert-danger").text(
-										data.pesaveChangesStatus).fadeIn();		
+										data.pesaveChangesStatus).fadeIn();
 								$("#studentPersonalStatus").fadeOut();
 								return;
 							} else if (data.studentPersonalStatus === "Invalid Information") {
@@ -1277,15 +1279,19 @@ function addStudentPersonalDetails() {
 							$("#studentPersonalStatus").addClass(
 									"alert alert-success").text(
 									data.studentPersonalStatus).fadeIn();
-							$('#td-value-fullname').html(firstName+' '+middleName+' '+lastName);
+							$('#td-value-fullname').html(
+									firstName + ' ' + middleName + ' '
+											+ lastName);
 							$('#td-value-birthday').html(dateOfBirth);
-							$('#td-value-gender').html(getGenderString(parseInt(gender)));
+							$('#td-value-gender').html(
+									getGenderString(parseInt(gender)));
 							$('#td-value-email').html(email);
 							$('#td-value-country').html($('#sCountry').val());
 							$('#td-value-town').html($('#sTown').val());
 							$('#td-value-address').html(address1);
 							$('#td-value-fbprofile').html(facebookUrl);
-							$('#td-value-mobileno').html('+'+landPhoneCountryCode+'-'+mobilePhoneNo);
+							$('#td-value-mobileno').html(landPhoneCountryCode + '-'
+											+ mobilePhoneNo);
 							$("#studentPersonalStatus").fadeOut();
 							return;
 						}
@@ -1378,7 +1384,7 @@ function addInterestsDetails() {
 		dataType : "json",
 		success : function(data) {
 			extStudentInterests = [];
-			$.each(response.result, function(index, value) {
+			$.each(data.result, function(index, value) {
 				var res = value.toString();
 				var data = res.split(",");
 				extStudentInterests.push(parseInt(data[0]));
@@ -1389,18 +1395,17 @@ function addInterestsDetails() {
 				});
 			});
 
-			// if(data.studentPersonalStatus){
-			// if(data.studentPersonalStatus === "Unsuccessful."){
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text(data.pesaveChangesStatus).fadeIn();
-			// }else if(data.studentPersonalStatus === "Invalid Information"){
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text("Invalid Information.").fadeIn();
-			// }
-			// clearPersonalDetailsForm();
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-success").text(data.studentPersonalStatus).fadeIn();
-			// }
+			 if(data.studentInterestSaveStatus){
+				 if(data.studentInterestSaveStatus === "Unsuccessful."){
+					 	$("#studentInterestSaveStatus").addClass("alert	 alert-danger").text(data.studentSkillSaveStatus).fadeIn();
+					 	return;
+				 }else if(data.studentPersonalStatus === "Invalid Information"){
+				 		$("#studentInterestSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+				 		return;
+				 }
+			 $("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeIn();
+			 $("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeOut();
+			 }
 		},
 		error : function(e) {
 			alert("Error " + e);
@@ -1453,7 +1458,7 @@ function addSkillDetails() {
 		dataType : "json",
 		success : function(data) {
 			extStudentSkills = [];
-			$.each(response.result, function(index, value) {
+			$.each(data.result, function(index, value) {
 				var res = value.toString();
 				var data = res.split(",");
 				extStudentSkills.push(parseInt(data[0]));
@@ -1464,18 +1469,17 @@ function addSkillDetails() {
 				});
 			});
 
-			// if(data.studentPersonalStatus){
-			// if(data.studentPersonalStatus === "Unsuccessful."){
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text(data.pesaveChangesStatus).fadeIn();
-			// }else if(data.studentPersonalStatus === "Invalid Information"){
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-danger").text("Invalid Information.").fadeIn();
-			// }
-			// clearPersonalDetailsForm();
-			// $("#studentPersonalStatus").addClass("alert
-			// alert-success").text(data.studentPersonalStatus).fadeIn();
-			// }
+			 if(data.studentSkillSaveStatus){
+				 if(data.studentSkillSaveStatus === "Unsuccessful."){
+					 	$("#studentSkillSaveStatus").addClass("alert alert-danger").text(data.studentSkillSaveStatus).fadeIn();
+					 	return;
+				 }else if(data.studentSkillSaveStatus === "Invalid Information"){
+				 		$("#studentSkillSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+				 		return;
+				 }
+			 $("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeIn();
+			 $("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeOut();
+			 }
 		},
 		error : function(e) {
 			alert("Error " + e);
@@ -1564,25 +1568,27 @@ function setSelectedValue(selectObj, valueToSet) {
 	}
 }
 
-
 /**
  * This method is to set radio input value according to the DB values.
+ * 
  * @param name
  * @param SelectdValue
  */
 function radionButtonSelectedValueSet(name, SelectdValue) {
-    $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+	$('input[name="' + name + '"][value="' + SelectdValue + '"]').prop(
+			'checked', true);
 }
 
 /**
  * This is to get the string value of gender name.
+ * 
  * @param val
  * @returns
  */
 function getGenderString(val) {
-	if(parseInt(val) == 1){
+	if (parseInt(val) == 1) {
 		return "Male";
-	}else if(parseInt(val) == 0){
+	} else if (parseInt(val) == 0) {
 		return "Female";
 	}
 }
