@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -16,7 +16,7 @@ import com.genesiis.campus.util.DaoHelper;
 
 public class TutorUserNameDAO implements ICrud {
 
-	static Logger log = Logger.getLogger(TutorDAO.class.getName());
+	static Logger log = Logger.getLogger(TutorUserNameDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
