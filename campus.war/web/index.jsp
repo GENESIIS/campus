@@ -83,6 +83,9 @@
                                 <button type="submit" name="CCO" id="CCO" value="LIST_CATEGORY_LANDING_PAGE">Talent & Skill</button>
                             </form>
                         </li>
+                        <li>
+                            <a style="color: #fff;" href="dist/partials/student/student-profile.jsp" class="button">Student Profile</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Course Category tabs -->
