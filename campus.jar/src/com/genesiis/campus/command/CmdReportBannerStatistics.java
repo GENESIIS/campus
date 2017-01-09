@@ -92,10 +92,10 @@ public class CmdReportBannerStatistics implements ICommand {
 			final BannerStatSearchDTO searchDTO = new BannerStatSearchDTO();			
 			
 			if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
-				searchDTO.setPageSlotCode(Integer.valueOf(pageSlotCodeString));
+				searchDTO.setPageSlotCode(Integer.parseInt(pageSlotCodeString));
 			}
 			if (UtilityHelper.isNotEmpty(bannerProviderCodeString)) {
-				searchDTO.setBannerProviderCode(Integer.valueOf(bannerProviderCodeString));
+				searchDTO.setBannerProviderCode(Integer.parseInt(bannerProviderCodeString));
 			}
 			
 			if(isReportBannerStatValidate(searchDTO,helper,msgList )){
@@ -125,7 +125,7 @@ public class CmdReportBannerStatistics implements ICommand {
 		String toDateString = helper.getParameter("toDate");
 
 		if (UtilityHelper.isNotEmpty(pageCodeString)) {
-			searchDTO.setPageCode(Integer.valueOf(pageCodeString));
+			searchDTO.setPageCode(Integer.parseInt(pageCodeString));
 		} else {
 			msgList.add(SystemMessage.INVALIDPAGESELECTION.message());
 			return false;
