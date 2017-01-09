@@ -13,6 +13,8 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 //20170106 PN CAM-28: SQL query modified in findById(Object code) method.
+//20170109 PN CAM-28: Added character replacement for replace ',' in findById() method.
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -128,12 +130,12 @@ public class StudentDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleList = new ArrayList<String>();
 				singleList.add(rs.getString("CODE"));
-				singleList.add(rs.getString("USERNAME"));
+				singleList.add(rs.getString("USERNAME").replaceAll(",", "##"));
 				singleList.add(rs.getString("PASSWORD"));
 				singleList.add(rs.getString("INDEXNO"));
-				singleList.add(rs.getString("FIRSTNAME"));
-				singleList.add(rs.getString("MIDDLENAME"));
-				singleList.add(rs.getString("LASTNAME"));
+				singleList.add(rs.getString("FIRSTNAME").replaceAll(",", "##"));
+				singleList.add(rs.getString("MIDDLENAME").replaceAll(",", "##"));
+				singleList.add(rs.getString("LASTNAME").replaceAll(",", "##"));
 				singleList.add(rs.getString("DATEOFBIRTH"));
 				singleList.add(rs.getString("GENDER"));
 				singleList.add(rs.getString("EMAIL"));
