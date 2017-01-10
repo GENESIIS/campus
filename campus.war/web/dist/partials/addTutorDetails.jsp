@@ -11,12 +11,6 @@
 	<!-- 	onsubmit="return (validateTutorFileds())" -->
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
-	<!-- 	
-		<c:forEach var="tutorList" items="${tutor}">
-			<c:set var="username" value="${tutorList[0]}" scope="session" />
-			<c:set var="password" value="${tutorList[1]}" scope="session" />
-		</c:forEach>
-		 -->
 		
 		<table align="center">
 			<tr>

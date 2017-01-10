@@ -88,8 +88,8 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(28, tutor.getAddressLine3());
 			preparedStatement.setString(29, tutor.getTown());
 			preparedStatement.setInt(30, tutor.getUsertype());
-			preparedStatement.setString(31, "chathuri");
-			preparedStatement.setString(32, "chathuri");
+			preparedStatement.setString(31, tutor.getCrtBy());
+			preparedStatement.setString(32, tutor.getModBy());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {

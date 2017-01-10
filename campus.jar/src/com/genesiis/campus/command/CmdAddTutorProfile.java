@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
 //20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
+//20170110 CW c36-add-tutor-details Modified setVariables() method - add tutor crtBy & modBy using setter methods 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -183,6 +184,9 @@ public class CmdAddTutorProfile implements ICommand {
 			}
 			
 			tutor.setTown(helper.getParameter("townDetails"));
+			
+			tutor.setCrtBy("chathuri");
+			tutor.setModBy("chathuri");
 
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());
