@@ -5,6 +5,7 @@ package com.genesiis.campus.util;
 //20161124 PN c27-upload-user-image: implemented isValidImageFileType() method.
 //20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
+//20170110 DN c47-tutor-add-tutor-information-upload-image-dn getFileItem() method
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -115,7 +116,11 @@ public class FileUtility {
 	public void setFileItem(FileItem item) {
 		this.item = item;
 	}
-
+	
+	public FileItem getFileItem() {
+		return item ;
+	}
+	
 	public void setUploadPath(String path) {
 		this.uploadPath = path;
 	}
