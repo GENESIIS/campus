@@ -268,29 +268,32 @@ function getProviderType() {
 
 	alert(vaidateCourseProviderDeatils());
 	
+	if(vaidateCourseProviderDeatils()){
+		
+		var form = $('#basicForm');
+		var formData = $(form).serialize();
+		$.ajax({
+			url : '/AdminController',
+			method : 'POST',
+			data : formData,
+			dataType : "json",
+			async : false,
+			success : function(response) {
 
-	//var form = $('#basicForm');
-//	var formData = $(form).serialize();
-//	$.ajax({
-//		url : '/AdminController',
-//		method : 'POST',
-//		data : formData,
-//		dataType : "json",
-//		async : false,
-//		success : function(response) {
-//
-//			if (response !== undefined && response !== null) {
-//				// message = response.userMessage;
-//				window.registerId = response.registerId;
-//
-//			window.responseErrorMessage = response.userMessage;
-//			$("#errorProviderName").html(response.errorProviderName);
-////				alert(responseErrorMessage);
-////				var userErrorMessage = $("#errorMessage");
-////				userErrorMessage.html("errors");
-//
-//
-//			}
-//		},
-//	});
+				if (response !== undefined && response !== null) {
+					// message = response.userMessage;
+					window.registerId = response.registerId;
+
+				window.responseErrorMessage = response.userMessage;
+				$("#errorProviderName").html(response.errorProviderName);
+//					alert(responseErrorMessage);
+//					var userErrorMessage = $("#errorMessage");
+//					userErrorMessage.html("errors");
+
+
+				}
+			},
+		});
+	}
+	
 }
