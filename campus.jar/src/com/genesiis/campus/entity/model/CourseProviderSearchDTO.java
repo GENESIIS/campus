@@ -5,10 +5,12 @@ package com.genesiis.campus.entity.model;
 
 import java.util.List;
 
-
-
-public class CourseProviderSearchDTO {
-	
+/**
+ * The class {@code CourseProviderSearchDTO} is a form of SearchDTO created for the purpose of transfer input parameters to DAO level. 
+ * @author dumani DJ
+ *
+*/
+public class CourseProviderSearchDTO {	
 	private int courseProviderCode;
 	private int category;
 	private int courseProviderStatus;	
@@ -29,8 +31,7 @@ public class CourseProviderSearchDTO {
 	}
 	public void setCategory(int category) {
 		this.category = category;
-	}
-	
+	}	
 	public int getCourseProviderStatus() {
 		return courseProviderStatus;
 	}
@@ -42,8 +43,7 @@ public class CourseProviderSearchDTO {
 	}
 	public void setDistrict(int district) {
 		this.district = district;
-	}
-	
+	}	
 	public List<Integer> getCategoryList() {
 		return categoryList;
 	}
