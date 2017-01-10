@@ -10,6 +10,7 @@ window.usernameValidation = true;
 window.courseProviderTypes  = null;
 window.accountType = null;
 window.registerId = null;
+window.courseProviderAcoountStatus = null;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -82,7 +83,7 @@ function displayProviderTypes() {
 	var providerTypeCollection = window.courseProviderTypes;
 	var singleTypeElement = '';
 
-	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" >';
+	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" ><option value="">--Default--</option>';
 	if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
 		$.each(providerTypeCollection, function(index, value) {
 			singleTypeElement += '<option value="' + value[0] + '">';
@@ -94,6 +95,25 @@ function displayProviderTypes() {
 	singleTypeElement += '';
 	var providerTypeNames = $("#providerTypeList");
 	providerTypeNames.html(singleTypeElement);
+
+}
+
+function displayAccountStatusList() {
+	var accountList = courseProviderAcoountStatus;
+	var singleTypeElement = '';
+
+	singleTypeElement += '';
+	if (accountList !== undefined & accountList !== null) {
+		$.each(accountList, function(index, value) {
+			singleTypeElement += '<input type="radio" name="accountStatus" id="accountStatus" value="' + value[0] + '"/>';
+			singleTypeElement += value[1];
+			singleTypeElement += '&nbsp;&nbsp;';
+
+		});
+	}
+	singleTypeElement += '';
+	var providerAccountStatus = $("#accountStatusList");
+	providerAccountStatus.html(singleTypeElement);
 
 }
 
@@ -113,8 +133,10 @@ function getProviderPageLoadData() {
 				window.countryCollection = response.countryArrayList;
 				displayProviderCountries();
 				window.courseProviderTypes = response.providerTypes;
+				window.courseProviderAcoountStatus = response.accountStatusList;
 				 displayProviderTypes();
 				 getProviderTownListData();
+				 displayAccountStatusList();
 			}
 		},
 	});
