@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161215 PN CAM-28: INIT CmdAddHigherEducationData.java class and implemented execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170109 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class CmdAddHigherEducationData implements ICommand {
 			educationData.add(Integer.toString(data.getCountry()));
 			educationData.add(data.getDescription());
 			educationCollection.add(educationData);
-			view.setCollection(educationCollection);
+			//view.setCollection(educationCollection);
 
 			// Validate incoming data and set it into a HashMap.
 			Map<String, Boolean> map = Validator.validaHighereducationData(data);
@@ -104,6 +105,8 @@ public class CmdAddHigherEducationData implements ICommand {
 				connection.close();
 			}
 		}
+		Collection<Collection<String>> stdHighEduCollection = educationDao.findById(StudentCode);
+		view.setCollection(stdHighEduCollection);
 		helper.setAttribute("saveChangesHigherEduStatus", message);
 		return view;
 	}
