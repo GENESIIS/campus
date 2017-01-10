@@ -478,7 +478,7 @@
 											name="providerStatus" id="providerStatus" value="inactive" />
 										InActive &nbsp; <input type="radio" name="providerStatus"
 											id="providerStatus" value="pending" /> Pending -->
-							<span id="errorPrivateName" style="color: red;">${errorPrivateName }</span>
+							<span id="errorProviderStatus" style="color: red;">${errorProviderStatus }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -563,7 +563,7 @@
 											value="active" /> Active &nbsp; <input type="radio"
 											name="accountStatus" id="accountStatus" value="inactive" />
 										InActive &nbsp;
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorAccountStatus" style="color: red;">${errorAccountStatus }</span>
 									</h1>
 								</div>
 							</li>
@@ -576,7 +576,7 @@
 								<div class="col-name">
 									<textarea class="textarea" rows="5" cols="90"
 										name="accountDescription" id="accountDescription"></textarea>
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorAccountDescription" style="color: red;">${errorAccountDescription }</span>
 								</div>
 							</li>
 							<!-- end -->

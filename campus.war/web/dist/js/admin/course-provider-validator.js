@@ -214,7 +214,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(areaCode)) {
-		document.getElementById('errorAreaCode').innerHTML = "**Give an area code";
+		document.getElementById('errorAreaCode').innerHTML = "**Give the area code.(Ex:11, 31, 81)";
 		document.getElementById('areaCode').focus();
 		flag = false;
 	}
@@ -236,7 +236,7 @@ function vaidateCourseProviderDeatils(form) {
 	// flag = false;
 	// }
 	if (!isempty(networkCode)) {
-		document.getElementById('errorNetworkCode').innerHTML = "**Give the network.(ex:77,72,71....) ";
+		document.getElementById('errorNetworkCode').innerHTML = "**Give the network code.(ex:77,72,71....) ";
 		document.getElementById('errorNetworkCode').focus();
 		flag = false;
 	}
@@ -269,52 +269,57 @@ function vaidateCourseProviderDeatils(form) {
 	}
 	if (!isempty(townList)) {
 		document.getElementById('errorSelectedTown').innerHTML = "**First select your country.";
-		document.getElementById('selectedTown').focus();
+		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-	if (!ValidURL(webLink)) {
-		document.getElementById('errorWebLink').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('webLink').focus();
-		flag = false;
-	}
-	if (!ValidURL(facebook)) {
-		document.getElementById('errorFacebook').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('facebook').focus();
-		flag = false;
-	}
-	if (!ValidURL(linkdedIn)) {
-		document.getElementById('errorLinkedIn').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('linkedIn').focus();
-		flag = false;
-	}
-	if (!ValidURL(twitter)) {
-		document.getElementById('errorTwitter').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('twitter').focus();
-		flag = false;
-	}
-	if (!ValidURL(instagram)) {
-		document.getElementById('errorInstagram').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('instagram').focus();
-		flag = false;
-	}
-	if (!ValidURL(mySpace)) {
-		document.getElementById('errorMyspace').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('myspace').focus();
-		flag = false;
-	}
-	if (!isempty(whatsapp)) {
-		document.getElementById('errorWhatsapp').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('whatsapp').focus();
-		flag = false;
-	}
-	if (!isempty(viber)) {
-		document.getElementById('errorViber').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('viber').focus();
-		flag = false;
-	}
+//	if (!ValidURL(webLink)) {
+//		document.getElementById('errorWebLink').innerHTML = "**Give a valid web link URL.";
+//		document.getElementById('webLink').focus();
+//		flag = false;
+//	}
+//	if (!ValidURL(facebook)) {
+//		document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook URL.";
+//		document.getElementById('facebook').focus();
+//		flag = false;
+//	}
+//	if (!ValidURL(linkdedIn)) {
+//		document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn URL.";
+//		document.getElementById('linkdedIn').focus();
+//		flag = false;
+//	}
+//	if (!ValidURL(twitter)) {
+//		document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter URL.";
+//		document.getElementById('twitter').focus();
+//		flag = false;
+//	}
+//	if (!ValidURL(instagram)) {
+//		document.getElementById('errorInstagram').innerHTML = "**Give a valid Instagram URL.";
+//		document.getElementById('instagram').focus();
+//		flag = false;
+//	}
+//	if (!ValidURL(mySpace)) {
+//		document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace URL.";
+//		document.getElementById('mySpace').focus();
+//		flag = false;
+//	}
+//	if (!isempty(whatsapp)) {
+//		document.getElementById('errorWhatsapp').innerHTML = "**Give a valid whatsapp number.";
+//		document.getElementById('whatsapp').focus();
+//		flag = false;
+//	}
+//	if (!isempty(viber)) {
+//		document.getElementById('errorViber').innerHTML = "**Give a valid viber number.";
+//		document.getElementById('viber').focus();
+//		flag = false;
+//	}
 	if (!isempty(expirationDate)) {
-		document.getElementById('errorExpiration').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('expiration').focus();
+		document.getElementById('errorExpiration').innerHTML = "**Expiration date is not valid.";
+		document.getElementById('expirationDate').focus();
+		flag = false;
+	}
+	if (!isempty(providerType)) {
+		document.getElementById('errorProviderStatus').innerHTML = "**Select course provider type.";
+		document.getElementById('providerTypeList').focus();
 		flag = false;
 	}
 	if (!isempty(providerStatus)) {
@@ -324,32 +329,32 @@ function vaidateCourseProviderDeatils(form) {
 	}
 	if (!isempty(providerPrivateName)) {
 		document.getElementById('errorPrivateName').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('privateName').focus();
+		document.getElementById('providerPrivateName').focus();
 		flag = false;
 	}
 	if (!isempty(providerEmail)) {
 		document.getElementById('errorProviderEmail').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('errorProviderEmail').focus();
+		document.getElementById('providerEmail').focus();
 		flag = false;
 	}
 	if (!isempty(providerUsername)) {
-		document.getElementById('errorProviderUsername').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('errorProviderUsername').focus();
+		document.getElementById('errorUsername').innerHTML = "**Give a username.";
+		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
 	if (!isempty(providerPassword)) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('errorProviderPassword').focus();
+		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
 	if (!isempty(cProviderPassword)) {
 		document.getElementById('errorCProviderPassword').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('errorCProviderPassword').focus();
+		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
 	if (!isempty(accountStatus)) {
 		document.getElementById('errorAccountStatus').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('errorAccountStatus').focus();
+		document.getElementById('accountStatus').focus();
 		flag = false;
 	}
 	return flag;
