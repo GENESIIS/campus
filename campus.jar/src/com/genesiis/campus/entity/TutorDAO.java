@@ -5,7 +5,8 @@ package com.genesiis.campus.entity;
 //20161221 CW c36-add-tutor-details Removed findById() method.
 //20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
 //20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
-//20170106 CW c36-add-tutor-details Added isAvailableUserName() method
+//20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
+//20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
