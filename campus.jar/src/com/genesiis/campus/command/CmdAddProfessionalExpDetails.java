@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161129 PN c26-add-student-details: INIT CmdAddSchoolEducationData.java class.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170110 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -101,6 +102,8 @@ public class CmdAddProfessionalExpDetails implements ICommand {
 				connection.close();
 			}
 		}
+		Collection<Collection<String>> stdExpCollection = expDao.findById(StudentCode);
+		view.setCollection(stdExpCollection);
 		helper.setAttribute("pesaveChangesStatus", message);
 		return view;
 	}

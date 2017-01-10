@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161220 PN CAM-28: INIT CmdDeleteProfessionalExpDetails.java class and implemented execute method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170110 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -71,8 +72,7 @@ public class CmdDeleteProfessionalExpDetails implements ICommand {
 			} else {
 				message = SystemMessage.NODETAILSTODELETE.message();
 			}
-			expCollection = expDao.findById(StudentCode);
-			view.setCollection(expCollection);
+
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();
@@ -88,7 +88,8 @@ public class CmdDeleteProfessionalExpDetails implements ICommand {
 				connection.close();
 			}
 		}
-
+		expCollection = expDao.findById(StudentCode);
+		view.setCollection(expCollection);
 		helper.setAttribute("pesaveChangesStatus", message);
 		return view;
 	}
