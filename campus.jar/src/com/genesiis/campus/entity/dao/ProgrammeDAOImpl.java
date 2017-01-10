@@ -22,9 +22,9 @@ import java.util.Set;
  * The Interface {@code ProgrammeDAO} has precise control over programme dao level manipulations. 
  *  @author dumani DJ   
  */
-public class ProgrammeDAO implements ProgrammeICrud{
+public class ProgrammeDAOImpl implements ProgrammeICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAOImpl.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -126,8 +126,8 @@ public class ProgrammeDAO implements ProgrammeICrud{
 		return allCategoryList;
 	}	
 	/**
-	 * Get all major list details
-	 * @param 
+	 * Get all major list details by major code set
+	 * @param majorCodeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
@@ -139,26 +139,34 @@ public class ProgrammeDAO implements ProgrammeICrud{
 		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?";
+			final StringBuilder sb =new StringBuilder(" SELECT MAJOR.[CODE] AS MAJORCODE,MAJOR.[NAME] AS MAJORNAME FROM [CAMPUS].[MAJOR] MAJOR ");
+			sb.append(" WHERE MAJOR.ISACTIVE = ? AND MAJOR.CODE IN( " );
+			boolean doneOne = false;
+			for (Integer code : majorCodeSet) {
+				if (doneOne) {
+					sb.append(", ");
+				}
+				sb.append(code);
+				doneOne = true;
+			}
+			sb.append(")" );
 
-			stmt = conn.prepareStatement(query);
+			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
-				singleMajorList.add(rs.getString("CODE"));
-				singleMajorList.add(rs.getString("NAME"));
-				singleMajorList.add(rs.getString("DESCRIPTION"));
-
+				singleMajorList.add(rs.getString("MAJORCODE"));
+				singleMajorList.add(rs.getString("MAJORNAME"));
 				final Collection<String> singleMajorCollection = singleMajorList;
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
+			log.info("findMajorsByMajorCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
+			log.info("findMajorsByMajorCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -168,8 +176,8 @@ public class ProgrammeDAO implements ProgrammeICrud{
 	}
 	
 	/**
-	 * Get all Level details
-	 * @param 
+	 * Get all education level list details by level code set
+	 * @param levelCodeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
@@ -180,12 +188,21 @@ public class ProgrammeDAO implements ProgrammeICrud{
 		ResultSet rs=null;
 		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
 		try {
-			conn=ConnectionManager.getConnection();
-			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL WHERE LEVEL.ISACTIVE=? ";
-			
-			stmt=conn.prepareStatement(sql.toString());
+			conn=ConnectionManager.getConnection();			
+			final StringBuilder sb =new StringBuilder("SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL  ");
+			sb.append(" WHERE LEVEL.ISACTIVE=? AND LEVEL.CODE IN (");
+			boolean doneOne = false;
+			for (Integer code : levelCodeSet) {
+				if (doneOne) {
+					sb.append(", ");
+				}
+				sb.append(code);
+				doneOne = true;
+			}
+			sb.append(")" );
+			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			rs=stmt.executeQuery();
+		    rs=stmt.executeQuery();
 			
 			while (rs.next()) {				
 				final ArrayList<String> singleLevel = new ArrayList<String>();
@@ -194,10 +211,10 @@ public class ProgrammeDAO implements ProgrammeICrud{
 				allLevelList.add(singleLevel);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
+			log.info("findLevelsByLevelCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
+			log.info("findLevelsByLevelCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);

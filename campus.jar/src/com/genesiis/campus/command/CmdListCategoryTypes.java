@@ -7,8 +7,8 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
-import com.genesiis.campus.entity.dao.CourseProviderDAO;
-import com.genesiis.campus.entity.dao.ProgrammeDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -45,7 +45,7 @@ public class CmdListCategoryTypes implements ICommand {
 				}
 			}
 			if (categoryCode > 0) {
-				final CourseProviderICrud courseProviderDAO=new CourseProviderDAO();
+				final CourseProviderICrud courseProviderDAO=new CourseProviderDAOImpl();
 				final List<CourseProviderResultDTO> categoryTypes =courseProviderDAO.getCategoryWiseTypes(categoryCode);
 
 				final Set<Integer> cpTypeCodeSet = new HashSet<>();
@@ -62,7 +62,7 @@ public class CmdListCategoryTypes implements ICommand {
 					final Collection<Collection<String>> cpTypeList = courseProviderDAO.findCPTypesByCPTypeCodes(cpTypeCodeSet);
 					helper.setAttribute("cpTypeList", cpTypeList);
 				}
-				final ProgrammeICrud programmeDAO=new ProgrammeDAO();
+				final ProgrammeICrud programmeDAO=new ProgrammeDAOImpl();
 				// List Majors for the drop down
 				if (majorCodeSet != null && !majorCodeSet.isEmpty()) {
 					final Collection<Collection<String>> majorList =programmeDAO.findMajorsByMajorCodes(majorCodeSet);

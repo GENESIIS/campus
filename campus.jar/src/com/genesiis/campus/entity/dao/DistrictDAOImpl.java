@@ -17,9 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DistrictDAO  implements DistrictICrud{
+public class DistrictDAOImpl  implements DistrictICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAOImpl.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {

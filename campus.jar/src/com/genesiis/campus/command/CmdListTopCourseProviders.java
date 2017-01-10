@@ -8,7 +8,7 @@ package com.genesiis.campus.command;
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.dao.CourseProviderDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -49,7 +49,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			}
 			//Set Course provider status
 			providerSearchDTO.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
-			final CourseProviderICrud providerDAO = new CourseProviderDAO();
+			final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
 			final Collection<Collection<String>> topViewedCourseProviders = providerDAO.findTopViewedProviders(providerSearchDTO);
 			final Collection<Collection<String>> topRatedCourseProviders = providerDAO.findTopRatedProviders(providerSearchDTO);
 			

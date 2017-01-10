@@ -39,9 +39,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class CourseProviderDAO implements CourseProviderICrud{
+public class CourseProviderDAOImpl implements CourseProviderICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAO.class.getName());
+	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAOImpl.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {

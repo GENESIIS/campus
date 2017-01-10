@@ -9,9 +9,9 @@ package com.genesiis.campus.command;
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.dao.CourseProviderDAO;
-import com.genesiis.campus.entity.dao.DistrictDAO;
-import com.genesiis.campus.entity.dao.ProgrammeDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.entity.dao.DistrictDAOImpl;
+import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -49,16 +49,16 @@ public class CmdListMoreCourseProviders implements ICommand {
 				}				
 			}
 			providerSearchDTO.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
-			final CourseProviderICrud  providerDAO = new CourseProviderDAO();
+			final CourseProviderICrud  providerDAO = new CourseProviderDAOImpl();
 			final Collection<Collection<String>> allCourseProviders = providerDAO.getLightAllCourseProviders(providerSearchDTO);
 			iview.setCollection(allCourseProviders);
 
 			//List Category data for the drop down		
-			final Collection<Collection<String>> categoryList=new ProgrammeDAO().getAllCategories();
+			final Collection<Collection<String>> categoryList=new ProgrammeDAOImpl().getAllCategories();
 			helper.setAttribute("categoryList", categoryList);
 			
 			//List location for the drop down
-			final Collection<Collection<String>> districtList=new DistrictDAO().getAllDistricts();
+			final Collection<Collection<String>> districtList=new DistrictDAOImpl().getAllDistricts();
 			helper.setAttribute("districtList", districtList);			
 			
 			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);

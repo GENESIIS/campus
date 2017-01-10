@@ -6,7 +6,7 @@ package com.genesiis.campus.command;
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.dao.CourseProviderDAO;
+import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -31,7 +31,7 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		final CourseProviderICrud providerDAO = new CourseProviderDAO();			
+		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();			
 		try {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			final Map<String, String[]> searchParamCollection = helper.getParameterMap();			
