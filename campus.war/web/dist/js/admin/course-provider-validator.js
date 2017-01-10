@@ -125,14 +125,12 @@ function providerPrefixValidation() {
  * created to validate course provider details before submit
  */
 function vaidateCourseProviderDeatils(form) {
-	
-	//$(".error-message").remove();
+
 	var errorMessageList = document.getElementsByClassName('error-message');
-	alert(errorMessageList);
 	
-//	for (i = 0; i < errorMessageList.length; i++) { 
-//	    text += cars[i] + "<br>";
-//	}
+	for (var i = 0; i < errorMessageList.length; i++) { 
+		errorMessageList[i].innerHTML = "";
+	}
 	
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
@@ -162,7 +160,7 @@ function vaidateCourseProviderDeatils(form) {
 	var whatsapp = $("#whatsapp").val();
 	var viber = $("#viber").val();
 	var expirationDate = $("#expirationDate").val();
-	var providerType = $("#providerTypeList").val();
+	var providerType = $("#selectedProviderType").val();
 	var providerStatus = $("#providerStatus").val();
 	var providerPrivateName = $("#providerPrivateName").val();
 	var providerEmail = $("#providerEmail").val();
@@ -337,22 +335,22 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerType)) {
-		document.getElementById('errorProviderStatus').innerHTML = "**Select course provider type.";
-		document.getElementById('providerTypeList').focus();
+		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
+		document.getElementById('selectedProviderType').focus();
 		flag = false;
 	}
-	if (!isempty(providerStatus)) {
-		document.getElementById('errorProviderStatus').innerHTML = "**Give a course provider Unique name.";
+	if (!isempty(providerStatus) || (providerStatus ==0)) {
+		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 		document.getElementById('providerStatus').focus();
 		flag = false;
 	}
 	if (!isempty(providerPrivateName)) {
-		document.getElementById('errorPrivateName').innerHTML = "**Give a course provider Unique name.";
+		document.getElementById('errorPrivateName').innerHTML = "**Give a private contact name of the course provider.";
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
 	}
 	if (!isempty(providerEmail)) {
-		document.getElementById('errorProviderEmail').innerHTML = "**Give a course provider Unique name.";
+		document.getElementById('errorProviderEmail').innerHTML = "**Give a private contact email of the course provider.";
 		document.getElementById('providerEmail').focus();
 		flag = false;
 	}
@@ -361,21 +359,26 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
-	if (!isempty(providerPassword)) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Give a course provider Unique name.";
+	if (!isempty(providerPassword) || providerPassword.length <6) {
+		document.getElementById('errorProviderPassword').innerHTML = "**Password is empty or weak.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
 	if (!isempty(cProviderPassword)) {
-		document.getElementById('errorCProviderPassword').innerHTML = "**Give a course provider Unique name.";
+		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password is empty.";
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-	if (!isempty(accountStatus)) {
-		document.getElementById('errorAccountStatus').innerHTML = "**Give a course provider Unique name.";
-		document.getElementById('accountStatus').focus();
+	if(isempty(cProviderPassword) && (providerPassword != cProviderPassword)){
+		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
+		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
+//	if (!isempty(accountStatus) ||(accountStatus != 0) ||(accountStatus != 1)) {
+//		document.getElementById('errorAccountStatusValue').innerHTML = "**Give a course provider Unique name.";
+//		document.getElementById('accountStatus').focus();
+//		flag = false;
+//	}
 
 	return flag;
 }
