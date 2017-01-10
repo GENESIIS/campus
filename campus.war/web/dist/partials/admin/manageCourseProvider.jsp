@@ -172,7 +172,7 @@
 									<input class="input" type="text" name="uniquePrefix"
 										id="uniquePrefix" size="30px;"
 										onkeyup="providerPrefixValidation();" />
-										<span id="errorUniquePrefix" style="color: red;">${errorUniquePrefix }</span>
+										<span id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -183,7 +183,7 @@
 								<div class="col-name">
 									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
 										id="aboutMe"></textarea>
-										<span id="errorAboutMe" style="color: red;">${errorAboutMe }</span>
+										<span id="errorAboutMe" class="error-message">${errorAboutMe }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -195,7 +195,7 @@
 								<div class="col-name">
 									<textarea class="textarea" rows="5" cols="90"
 										name="specialFeatures" id="specialFeatures"></textarea>
-										<span id="errorSpecialFeatures" style="color: red;">${errorSpecialFeatures }</span>
+										<span id="errorSpecialFeatures" class="error-message">${errorSpecialFeatures }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -219,7 +219,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="generalEmail"
 										id="generalEmail" size="25px;" /> <span
-										id="errorGeneralEmail" style="color: red;">${errorGeneralEmail }</span>
+										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Course Inquiry Email :</h1>
@@ -227,7 +227,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="inquiryMail"
 										id="inquiryMail" size="25px;" /> <span id="errorInquiryMail"
-										style="color: red;">${errorInquiryMail }</span>
+										class="error-message">${errorInquiryMail }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -237,7 +237,7 @@
 									<h1 class="pro-name">Country :</h1>
 								</div>
 								<div class="col-name" id="country-List"></div> <span
-								id="errorSelectedCountry" style="color: red;">${errorSelectedCountry }</span>
+								id="errorSelectedCountry" class="error-message">${errorSelectedCountry }</span>
 							</li>
 							<!-- end -->
 
@@ -246,7 +246,7 @@
 									<h1 class="pro-name">Town :</h1>
 								</div>
 								<div class="col-name" id="town-List"></div> <span
-								id="errorSelectedTown" style="color: red;">${errorSelectedTown }</span>
+								id="errorSelectedTown" class="error-message">${errorSelectedTown }</span>
 							</li>
 							<!-- end -->
 
@@ -257,7 +257,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="areaCode" id="areaCode" onkeyup="landPhoneNubmerHelper();"
 										size="25px;" />
-										<span id="errorAreaCode" style="color: red;">${errorAreaCode }</span>
+										<span id="errorAreaCode" class="error-message">${errorAreaCode }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Land Number 1 :</h1>
@@ -265,7 +265,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
 										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorLand1" style="color: red;">${errorLand1 }</span>
+										<span id="errorLand1" class="error-message">${errorLand1 }</span>
 										<span id="landNumber1" style="color: blue;"></span>
 								</div>
 							</li>
@@ -278,7 +278,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="land2" id="land2"
 										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorLand2" style="color: red;">${errorLand2 }</span>
+										<span id="errorLand2" class="error-message">${errorLand2 }</span>
 										<span id="landNumber2" style="color: blue;"></span>
 								</div>
 								<div class="col-name">
@@ -287,7 +287,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="fax" id="fax"
 										size="25px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorShortName" class="error-message">${errorShortName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -299,7 +299,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="networkCode"
 										id="networkCode" size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorNetworkCode" style="color: red;">${errorNetworkCode }</span>
+										<span id="errorNetworkCode" class="error-message">${errorNetworkCode }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Mobile Number :</h1>
@@ -307,7 +307,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorMobile" style="color: red;">${errorMobile }</span>
+										<span id="errorMobile" class="error-message">${errorMobile }</span>
 										<span id="lastMobileNumber" style="color: blue;"></span>
 								</div>
 
@@ -324,7 +324,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="address1" id="address1"
 										size="50px;" />
-										<span id="errorAddress1" style="color: red;">${errorAddress1 }</span>
+										<span id="errorAddress1" class="error-message">${errorAddress1 }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -357,7 +357,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="webLink" id="webLink"
 										size="25px;" />
-										<span id="errorWebLink" style="color: red;">${errorWebLink }</span>
+										<span id="errorWebLink" class="error-message">${errorWebLink }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Facebook URL :</h1>
@@ -365,7 +365,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="facebook" id="facebook"
 										size="25px;" />.
-										<span id="errorFacebook" style="color: red;">${errorFacebook }</span>
+										<span id="errorFacebook" class="error-message">${errorFacebook }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -377,7 +377,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="linkdedIn"
 										id="linkdedIn" size="25px;" />
-										<span id="errorLinkedIn" style="color: red;">${errorLinkedIn }</span>
+										<span id="errorLinkedIn" class="error-message">${errorLinkedIn }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Twitter URL :</h1>
@@ -385,7 +385,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="twitter" id="twitter"
 										size="25px;" />
-										<span id="errorTwitter" style="color: red;">${errorTwitter }</span>
+										<span id="errorTwitter" class="error-message">${errorTwitter }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -398,7 +398,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="instagram"
 										id="instagram" size="25px;" />
-										<span id="errorInstagram" style="color: red;">${errorInstagram }</span>
+										<span id="errorInstagram" class="error-message">${errorInstagram }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">MySpace URL :</h1>
@@ -406,7 +406,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mySpace" id="mySpace"
 										size="25px;" />
-										<span id="errorMyspace" style="color: red;">${errorMyspace }</span>
+										<span id="errorMyspace" class="error-message">${errorMyspace }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -418,7 +418,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="whatsapp" id="whatsapp"
 										size="25px;" />
-										<span id="errorWhatsapp" style="color: red;">${errorWhatsapp }</span>
+										<span id="errorWhatsapp" class="error-message">${errorWhatsapp }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Viber Number :</h1>
@@ -426,7 +426,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="viber" id="viber"
 										size="25px;" />
-										<span id="errorViber" style="color: red;">${errorViber }</span>
+										<span id="errorViber" class="error-message">${errorViber }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -449,7 +449,7 @@
 								<div class="col-name">
 									<input class="textarea" type="Date" name="expirationDate"
 										id="expirationDate" size="50px;" />
-										<span id="errorExpiration" style="color: red;">${errorExpiration }</span>
+										<span id="errorExpiration" class="error-message">${errorExpiration }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -461,13 +461,13 @@
 									<h1 class="pro-name">Course Provider Type :</h1>
 								</div>
 								<div class="col-name" id="providerTypeList"></div>
-								<span id="errorProviderStatus" style="color: red;">${errorProviderStatus }</span>
+								<span id="errorProviderType" class="error-message">${errorProviderStatus }</span>
 							</li>
 							<!-- end -->
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Status :</h1>
+									<h1 class="pro-name">Course Provider Status :</h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<c:forEach items="${applicationStatusBean.values}"
@@ -481,7 +481,7 @@
 											name="providerStatus" id="providerStatus" value="inactive" />
 										InActive &nbsp; <input type="radio" name="providerStatus"
 											id="providerStatus" value="pending" /> Pending -->
-							<span id="errorProviderStatus" style="color: red;">${errorProviderStatus }</span>
+							<span id="errorProviderStatus" class="error-message">${errorProviderStatus }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -505,7 +505,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="providerPrivateName"
 										id="providerPrivateName" size="50px;" />
-										<span id="errorPrivateName" style="color: red;">${errorPrivateName }</span>
+										<span id="errorPrivateName" class="error-message">${errorPrivateName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -517,7 +517,7 @@
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
 										id="providerEmail" size="50px;" />
-										<span id="errorProviderEmail" style="color: red;">${errorProviderEmail }</span>
+										<span id="errorProviderEmail" class="error-message">${errorProviderEmail }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -530,7 +530,7 @@
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
 										onkeyup="providerUsernameValidation();" />
-								<span id="errorUsername" style="color: red;">${errorShortName }</span>
+								<span id="errorUsername" class="error-message">${errorShortName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -542,7 +542,7 @@
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
 										id="providerPassword" size="50px;" required />
-										<span id="errorProviderPassword" style="color: red;">${errorProviderPassword }</span>
+										<span id="errorProviderPassword" class="error-message">${errorProviderPassword }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -554,7 +554,7 @@
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
 										id="cProviderPassword" size="50px;" required />
-										<span id="errorCProviderPassword" style="color: red;">${errorCProviderPassword }</span>
+										<span id="errorCProviderPassword" class="error-message">${errorCProviderPassword }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -562,13 +562,14 @@
 							<li class="course-info clearfix"><div class="col-name">
 									<h1 class="pro-name">Account status :</h1>
 								</div>
-								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name">
-										<input type="radio" name="accountStatus" id="accountStatus"
+								<div class="col-name" style="width: 50%;" >
+									<h1 class="pro-name" id="accountStatusList">
+								<!-- 		<input type="radio" name="accountStatus" id="accountStatus"
 											value="active" /> Active &nbsp; <input type="radio"
 											name="accountStatus" id="accountStatus" value="inactive" />
-										InActive &nbsp;
-										<span id="errorAccountStatus" style="color: red;">${errorAccountStatus }</span>
+										InActive &nbsp; -->
+									
+										<span id="errorAccountStatusValue" class="error-message">${errorAccountStatus }</span>
 									</h1>
 								</div>
 							</li>
@@ -581,7 +582,7 @@
 								<div class="col-name">
 									<textarea class="textarea" rows="5" cols="90"
 										name="accountDescription" id="accountDescription"></textarea>
-										<span id="errorAccountDescription" style="color: red;">${errorAccountDescription }</span>
+										<span id="errorAccountDescription" class="error-message">${errorAccountDescription }</span>
 								</div>
 							</li>
 							<!-- end -->
