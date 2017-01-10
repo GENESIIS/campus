@@ -114,6 +114,7 @@ function getProviderPageLoadData() {
 				displayProviderCountries();
 				window.courseProviderTypes = response.providerTypes;
 				 displayProviderTypes();
+				 getProviderTownListData();
 			}
 		},
 	});
@@ -126,7 +127,7 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
 
-	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrtSelection()"><option value="">--Default--</option>';
+	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrySelection()"><option value="">--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
 			singleCountryElement += '<option value="' + value[0] + '">';
@@ -144,7 +145,7 @@ function displayProviderCountries() {
 /**
  * display country code and list town data
  */
-function getDataOnCountrtSelection(){
+function getDataOnCountrySelection(){
 	
 	if(!isempty(document.getElementById('selectedCountry').value)){
 		document.getElementById('errorSelectedCountry').innerHTML = "**Select a country to proceed.";
@@ -164,24 +165,29 @@ function getDataOnCountrtSelection(){
 // alert(selectedCountry);
 function getProviderTownListData() {
 	var selectedCountry = document.getElementById('selectedCountry').value;
+	
+	if(selectedCountry == '' || selectedCountry == null){
+		document.getElementById('errorSelectedTown').innerHTML = "**Select your country first.";
+	}else {
+		document.getElementById('errorSelectedTown').innerHTML = "";
+		$.ajax({
+			url : '/AdminController',
+			method : 'POST',
+			data : {
+				'CCO' : 'DISPLAY_TOWN_DATA',
+				'country' : selectedCountry
+			},
+			dataType : "json",
+			async : false,
+			success : function(response) {
 
-	$.ajax({
-		url : '/AdminController',
-		method : 'POST',
-		data : {
-			'CCO' : 'DISPLAY_TOWN_DATA',
-			'country' : selectedCountry
-		},
-		dataType : "json",
-		async : false,
-		success : function(response) {
-
-			if (response !== undefined && response !== null) {
-				window.townCollection = response.townArrayList;
-				displayProviderTownList();
-			}
-		},
-	});
+				if (response !== undefined && response !== null) {
+					window.townCollection = response.townArrayList;
+					displayProviderTownList();
+				}
+			},
+		});
+	}
 }
 
 function displayProviderTownList() {
