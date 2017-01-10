@@ -21,6 +21,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The class {@code CmdListCategoryTypes} is a form of Command class.It is created for the purpose of handling commands of
+ * listing category types. 
+ * @author dumani DJ
+ *
+*/
 public class CmdListCategoryTypes implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdListCategoryTypes.class.getName());
@@ -48,11 +54,11 @@ public class CmdListCategoryTypes implements ICommand {
 				final CourseProviderICrud courseProviderDAO=new CourseProviderDAOImpl();
 				final List<CourseProviderResultDTO> categoryTypes =courseProviderDAO.getCategoryWiseTypes(categoryCode);
 
-				final Set<Integer> cpTypeCodeSet = new HashSet<>();
-				final Set<Integer> majorCodeSet = new HashSet<>();
-				final Set<Integer> levelCodeSet = new HashSet<>();
+				final Set<Integer> cpTypeCodeSet = new HashSet<Integer>();
+				final Set<Integer> majorCodeSet = new HashSet<Integer>();
+				final Set<Integer> levelCodeSet = new HashSet<Integer>();
 
-				for (CourseProviderResultDTO dto : categoryTypes) {
+				for (final CourseProviderResultDTO dto : categoryTypes) {
 					cpTypeCodeSet.add(dto.getCourserProviderType());
 					majorCodeSet.add(dto.getMajor());
 					levelCodeSet.add(dto.getLevel());

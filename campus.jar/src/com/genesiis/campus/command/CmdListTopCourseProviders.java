@@ -20,6 +20,12 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.Collection;
 
+/**
+ * The class {@code CmdListTopCourseProviders} is a form of Command class.It is created for the purpose of handling commands of
+ * listing top course providers. 
+ * @author dumani DJ
+ *
+*/
 public class CmdListTopCourseProviders implements ICommand   {
 	
 	static Logger log = Logger.getLogger(CmdListTopCourseProviders.class.getName());

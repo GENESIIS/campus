@@ -18,6 +18,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class {@code CmdCourseProviderFilterSearch} is a form of Command class.It is created for the purpose of handling commands of
+ * course provider filter search. 
+ * @author dumani DJ
+ *
+*/
 public class CmdCourseProviderFilterSearch implements ICommand  {
 	
 	static Logger log = Logger.getLogger(CmdCourseProviderFilterSearch.class.getName());
