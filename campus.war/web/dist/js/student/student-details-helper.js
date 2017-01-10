@@ -279,7 +279,8 @@ function getStudentData(response) {
 		$('#td-value-town').html(data[31]);
 		$('#td-value-address').html(data[19].replace(/##/g, ","));
 		$('#td-value-fbprofile').html(data[18].replace(/##/g, ","));
-		$('#td-value-mobileno').html(data[11] + '-' + data[16].replace(/##/g, ","));
+		$('#td-value-mobileno').html(
+				data[11] + '-' + data[16].replace(/##/g, ","));
 
 		$('#sFullName').val(data[4].replace(/##/g, ","));
 		$('#sMiddleName').val(data[5].replace(/##/g, ","));
@@ -456,10 +457,14 @@ function getStudentData(response) {
 			$('#sseAchievedon').val(data[8]);
 			$('#sseCountry').val(data[4]);
 			$('#sseDescription').val(data[9]);
-			
+
 			var schooledu = $('#li-std-schooledu');
 			schooledu.find('li').remove();
-			schooledu.append('<li>'+$("#sseQualification option:selected").text()+' <span class="drop-at"> at </span> '+data[7]+' <br><span class="drop-time">'+data[8]+'</span></li>');
+			schooledu.append('<li>'
+					+ $("#sseQualification option:selected").text()
+					+ ' <span class="drop-at"> at </span> ' + data[7]
+					+ ' <br><span class="drop-time">' + data[8]
+					+ '</span></li>');
 		});
 	}
 
@@ -597,12 +602,33 @@ function getStudentData(response) {
 	});
 
 	higherEdutbl.clear().draw();
+	var highereducount = 0;
+	var higheredu = $('#li-std-higheredu');
+	higheredu.find('li').remove();
 	$
 			.each(
 					response.stdHighEduCollection,
 					function(index, value) {
+
 						var res = value.toString();
 						var data = res.split(",");
+
+						if (highereducount < 2) {
+							higheredu
+									.append('<li>'
+											+ data[3].toString()
+											+ '-'
+											+ data[4].toString()
+											+ ' <span class="drop-at"> at </span> '
+											+ data[1].toString()
+											+ ' <br><span class="drop-time"> Duration: '
+											+ data[6].toString() + ' to '
+											+ data[7].toString()
+											+ '</span></li>');
+						}
+
+						highereducount++;
+
 						higherEdutbl.row
 								.add(
 										[
@@ -770,45 +796,120 @@ function getStudentData(response) {
 	});
 
 	// Handle form submission event
-	$('#frm-hedu').on(
-			'submit',
-			function(e) {
-				var form = this;
+	$('#frm-hedu')
+			.on(
+					'submit',
+					function(e) {
+						var form = this;
 
-				// Iterate over all selected checkboxes
-				$.each(hEdurowsSelected, function(index, rowId) {
-					// Create a hidden element
-					$(form).append(
-							$('<input>').attr('type', 'hidden').attr('name',
-									'id[]').val(rowId));
-					higherEdutbl.row('.selected').remove().draw(false);
-				});
+						// Iterate over all selected checkboxes
+						$.each(hEdurowsSelected, function(index, rowId) {
+							// Create a hidden element
+							$(form).append(
+									$('<input>').attr('type', 'hidden').attr(
+											'name', 'id[]').val(rowId));
+							higherEdutbl.row('.selected').remove().draw(false);
+						});
 
-				// FOR DEMONSTRATION ONLY
-				// Output form data to a console
-				$('#example-console').text(hEdurowsSelected);
+						// FOR DEMONSTRATION ONLY
+						// Output form data to a console
+						$('#example-console').text(hEdurowsSelected);
 
-				$.ajax({
-					url : '../../../StudentController',
-					data : {
-						rows : hEdurowsSelected,
-						CCO : 'DPE'
-					},
-					dataType : "json",
-					success : function(response) {
+						$
+								.ajax({
+									url : '../../../StudentController',
+									data : {
+										rows : hEdurowsSelected,
+										CCO : 'DHE'
+									},
+									dataType : "json",
+									success : function(response) {
 
-					},
-					error : function(response) {
-						// alert("Error: " + response);
-					}
-				});
+										var higherEdutbl = $('#higherEdutbl')
+												.DataTable();
+										higherEdutbl.clear().draw();
+										var highereducount = 0;
+										var higheredu = $('#li-std-higheredu');
+										higheredu.find('li').remove();
+										$
+												.each(
+														response.result,
+														function(index, value) {
 
-				// Remove added elements
-				$('input[name="id\[\]"]', form).remove();
+															var res = value
+																	.toString();
+															var data = res
+																	.split(",");
 
-				// Prevent actual form submission
-				e.preventDefault();
-			});
+															if (highereducount < 2) {
+																higheredu
+																		.append('<li>'
+																				+ data[3]
+																						.toString()
+																				+ '-'
+																				+ data[4]
+																						.toString()
+																				+ ' <span class="drop-at"> at </span> '
+																				+ data[1]
+																						.toString()
+																				+ ' <br><span class="drop-time"> Duration: '
+																				+ data[6]
+																						.toString()
+																				+ ' to '
+																				+ data[7]
+																						.toString()
+																				+ '</span></li>');
+															}
+
+															highereducount++;
+
+															higherEdutbl.row
+																	.add(
+																			[
+																					data[0]
+																							.toString(),
+																					data[1]
+																							.toString()
+																							+ "<br/>"
+																							+ data[2]
+																									.toString(),
+																					data[3]
+																							.toString()
+																							+ "<br/>"
+																							+ data[4]
+																									.toString(),
+																					data[9]
+																							.toString()
+																							+ "<br/>"
+																							+ "IndexNo: "
+																							+ data[8]
+																									.toString(),
+																					data[11]
+																							.toString(),
+																					data[5]
+																							.toString(),
+																					data[6]
+																							.toString()
+																							+ "<br/>"
+																							+ data[7]
+																									.toString(),
+																					data[10]
+																							.toString(),
+																					'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+																	.draw(false);
+														});
+									},
+									error : function(response) {
+										// alert("Error: " + response);
+									}
+								});
+
+						// Remove added elements
+						$('input[name="id\[\]"]', form).remove();
+
+						// Prevent actual form submission
+						e.preventDefault();
+					});
 
 }
 
@@ -913,14 +1014,14 @@ function addHigherEducationDetails() {
 						CCO : "AHE"
 					},
 					dataType : "json",
-					success : function(data) {
-						if (data.saveChangesHigherEduStatus) {
-							if (data.saveChangesHigherEduStatus === "Unsuccessful.") {
+					success : function(response) {
+						if (response.saveChangesHigherEduStatus) {
+							if (response.saveChangesHigherEduStatus === "Unsuccessful.") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
-										data.saveChangesHigherEduStatus)
+										response.saveChangesHigherEduStatus)
 										.fadeIn();
-							} else if (data.saveChangesHigherEduStatus === "Invalid Information") {
+							} else if (response.saveChangesHigherEduStatus === "Invalid Information") {
 								$("#saveChangesHigherEduStatus").addClass(
 										"alert alert-danger").text(
 										"Invalid Information.").fadeIn();
@@ -928,7 +1029,80 @@ function addHigherEducationDetails() {
 							clearSchoolEducationForm();
 							$("#saveChangesHigherEduStatus").addClass(
 									"alert alert-success").text(
-									data.saveChangesHigherEduStatus).fadeIn();
+									response.saveChangesHigherEduStatus)
+									.fadeIn();
+
+							var higherEdutbl = $('#higherEdutbl').DataTable();
+							higherEdutbl.clear().draw();
+							var highereducount = 0;
+							var higheredu = $('#li-std-higheredu');
+							higheredu.find('li').remove();
+							$
+									.each(
+											response.result,
+											function(index, value) {
+
+												var res = value.toString();
+												var data = res.split(",");
+
+												if (highereducount < 2) {
+													higheredu
+															.append('<li>'
+																	+ data[3]
+																			.toString()
+																	+ '-'
+																	+ data[4]
+																			.toString()
+																	+ ' <span class="drop-at"> at </span> '
+																	+ data[1]
+																			.toString()
+																	+ ' <br><span class="drop-time"> Duration: '
+																	+ data[6]
+																			.toString()
+																	+ ' to '
+																	+ data[7]
+																			.toString()
+																	+ '</span></li>');
+												}
+
+												highereducount++;
+
+												higherEdutbl.row
+														.add(
+																[
+																		data[0]
+																				.toString(),
+																		data[1]
+																				.toString()
+																				+ "<br/>"
+																				+ data[2]
+																						.toString(),
+																		data[3]
+																				.toString()
+																				+ "<br/>"
+																				+ data[4]
+																						.toString(),
+																		data[9]
+																				.toString()
+																				+ "<br/>"
+																				+ "IndexNo: "
+																				+ data[8]
+																						.toString(),
+																		data[11]
+																				.toString(),
+																		data[5]
+																				.toString(),
+																		data[6]
+																				.toString()
+																				+ "<br/>"
+																				+ data[7]
+																						.toString(),
+																		data[10]
+																				.toString(),
+																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+														.draw(false);
+											});
+
 						}
 					},
 					error : function(e) {
@@ -1039,7 +1213,13 @@ function addEducationDetails() {
 									data.saveChangesStatus).fadeIn();
 							var schooledu = $('#li-std-schooledu');
 							schooledu.find('li').remove();
-							schooledu.append('<li>'+$("#sseQualification option:selected").text()+' <span class="drop-at"> at </span> '+schoolName+' <br><span class="drop-time">'+achievedOn+'</span></li>');
+							schooledu.append('<li>'
+									+ $("#sseQualification option:selected")
+											.text()
+									+ ' <span class="drop-at"> at </span> '
+									+ schoolName
+									+ ' <br><span class="drop-time">'
+									+ achievedOn + '</span></li>');
 							$("#saveChangesStatus").fadeOut();
 						}
 					},
@@ -1298,8 +1478,8 @@ function addStudentPersonalDetails() {
 							$('#td-value-town').html($('#sTown').val());
 							$('#td-value-address').html(address1);
 							$('#td-value-fbprofile').html(facebookUrl);
-							$('#td-value-mobileno').html(landPhoneCountryCode + '-'
-											+ mobilePhoneNo);
+							$('#td-value-mobileno').html(
+									landPhoneCountryCode + '-' + mobilePhoneNo);
 							$("#studentPersonalStatus").fadeOut();
 							return;
 						}
@@ -1381,44 +1561,53 @@ function addInterestsDetails() {
 	var values = $("#studentInterests").val();
 	var prevalues = extStudentInterests;
 
-	$.ajax({
-		type : "POST",
-		url : '../../../StudentController',
-		data : {
-			oldStudentInterests : prevalues.toString(),
-			newStudentInterests : values,
-			CCO : "ASI"
-		},
-		dataType : "json",
-		success : function(data) {
-			extStudentInterests = [];
-			$.each(data.result, function(index, value) {
-				var res = value.toString();
-				var data = res.split(",");
-				extStudentInterests.push(parseInt(data[0]));
-				$('#studentInterests').tagsinput('add', {
-					"value" : parseInt(data[0]),
-					"text" : data[1],
-					"continent" : "A"
-				});
-			});
+	$
+			.ajax({
+				type : "POST",
+				url : '../../../StudentController',
+				data : {
+					oldStudentInterests : prevalues.toString(),
+					newStudentInterests : values,
+					CCO : "ASI"
+				},
+				dataType : "json",
+				success : function(data) {
+					extStudentInterests = [];
+					$.each(data.result, function(index, value) {
+						var res = value.toString();
+						var data = res.split(",");
+						extStudentInterests.push(parseInt(data[0]));
+						$('#studentInterests').tagsinput('add', {
+							"value" : parseInt(data[0]),
+							"text" : data[1],
+							"continent" : "A"
+						});
+					});
 
-			 if(data.studentInterestSaveStatus){
-				 if(data.studentInterestSaveStatus === "Unsuccessful."){
-					 	$("#studentInterestSaveStatus").addClass("alert	 alert-danger").text(data.studentSkillSaveStatus).fadeIn();
-					 	return;
-				 }else if(data.studentPersonalStatus === "Invalid Information"){
-				 		$("#studentInterestSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
-				 		return;
-				 }
-			 $("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeIn();
-			 $("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeOut();
-			 }
-		},
-		error : function(e) {
-			alert("Error " + e);
-		}
-	});
+					if (data.studentInterestSaveStatus) {
+						if (data.studentInterestSaveStatus === "Unsuccessful.") {
+							$("#studentInterestSaveStatus").addClass(
+									"alert	 alert-danger").text(
+									data.studentSkillSaveStatus).fadeIn();
+							return;
+						} else if (data.studentPersonalStatus === "Invalid Information") {
+							$("#studentInterestSaveStatus").addClass(
+									"alert alert-danger").text(
+									"Invalid Information.").fadeIn();
+							return;
+						}
+						$("#studentInterestSaveStatus").addClass(
+								"alert alert-success").text(
+								data.studentInterestSaveStatus).fadeIn();
+						$("#studentInterestSaveStatus").addClass(
+								"alert alert-success").text(
+								data.studentInterestSaveStatus).fadeOut();
+					}
+				},
+				error : function(e) {
+					alert("Error " + e);
+				}
+			});
 }
 
 /**
@@ -1455,44 +1644,54 @@ function addSkillDetails() {
 	var values = $("#studentSkills").val();
 	var prevalues = extStudentSkills;
 
-	$.ajax({
-		type : "POST",
-		url : '../../../StudentController',
-		data : {
-			oldStudentSkills : prevalues.toString(),
-			newStudentSkills : values,
-			CCO : "ASS"
-		},
-		dataType : "json",
-		success : function(data) {
-			extStudentSkills = [];
-			$.each(data.result, function(index, value) {
-				var res = value.toString();
-				var data = res.split(",");
-				extStudentSkills.push(parseInt(data[0]));
-				$('.example_objects_as_tags > > input').tagsinput('add', {
-					"value" : parseInt(data[0]),
-					"text" : data[1],
-					"continent" : "A"
-				});
-			});
+	$
+			.ajax({
+				type : "POST",
+				url : '../../../StudentController',
+				data : {
+					oldStudentSkills : prevalues.toString(),
+					newStudentSkills : values,
+					CCO : "ASS"
+				},
+				dataType : "json",
+				success : function(data) {
+					extStudentSkills = [];
+					$.each(data.result, function(index, value) {
+						var res = value.toString();
+						var data = res.split(",");
+						extStudentSkills.push(parseInt(data[0]));
+						$('.example_objects_as_tags > > input').tagsinput(
+								'add', {
+									"value" : parseInt(data[0]),
+									"text" : data[1],
+									"continent" : "A"
+								});
+					});
 
-			 if(data.studentSkillSaveStatus){
-				 if(data.studentSkillSaveStatus === "Unsuccessful."){
-					 	$("#studentSkillSaveStatus").addClass("alert alert-danger").text(data.studentSkillSaveStatus).fadeIn();
-					 	return;
-				 }else if(data.studentSkillSaveStatus === "Invalid Information"){
-				 		$("#studentSkillSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
-				 		return;
-				 }
-			 $("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeIn();
-			 $("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeOut();
-			 }
-		},
-		error : function(e) {
-			alert("Error " + e);
-		}
-	});
+					if (data.studentSkillSaveStatus) {
+						if (data.studentSkillSaveStatus === "Unsuccessful.") {
+							$("#studentSkillSaveStatus").addClass(
+									"alert alert-danger").text(
+									data.studentSkillSaveStatus).fadeIn();
+							return;
+						} else if (data.studentSkillSaveStatus === "Invalid Information") {
+							$("#studentSkillSaveStatus").addClass(
+									"alert alert-danger").text(
+									"Invalid Information.").fadeIn();
+							return;
+						}
+						$("#studentSkillSaveStatus").addClass(
+								"alert alert-success").text(
+								data.studentSkillSaveStatus).fadeIn();
+						$("#studentSkillSaveStatus").addClass(
+								"alert alert-success").text(
+								data.studentSkillSaveStatus).fadeOut();
+					}
+				},
+				error : function(e) {
+					alert("Error " + e);
+				}
+			});
 }
 
 //

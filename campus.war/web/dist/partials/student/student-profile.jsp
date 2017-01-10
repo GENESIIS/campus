@@ -306,9 +306,7 @@
                                 </ul>
                                 <br>
                                 <span style="color:#6187c7">Higher Education</span>
-                                <ul class="ul-education">
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
+                                <ul class="ul-education" id="li-std-higheredu">
                                 </ul>
                             </div>
                         </div>
