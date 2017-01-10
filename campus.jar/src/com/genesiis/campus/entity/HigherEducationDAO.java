@@ -10,7 +10,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
-
+//20170110 PN CAM-28: modified SQL query with, sub query to select LEVEL by using AWARD value.
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -32,8 +32,8 @@ public class HigherEducationDAO implements ICrud{
 		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[HIGHERDUCATION] ([INSTITUTE] ,[AFFINSTITUTE] ,[STUDENT] ,[LEVEL] ,[AWARD] ,"
-				+ "[MAJOR] ,[COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] ,[CRTON] ,[CRTBY]) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,getDate(),?);";
+				+ "[MAJOR] ,[COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] ,[CRTBY]) "
+				+ "VALUES (?,?,?,(SELECT [LEVEL] FROM [CAMPUS].[AWARD] aw WHERE aw.[CODE] = ?),?,?,?,?,?,?,?,?,?,?);";
 
 		int result = -1;
 
@@ -157,8 +157,8 @@ public class HigherEducationDAO implements ICrud{
 		Connection connection = null;
 
 		String query = "INSERT INTO [CAMPUS].[HIGHERDUCATION] ([INSTITUTE] ,[AFFINSTITUTE] ,[STUDENT] ,[LEVEL] ,[AWARD] ,"
-				+ "[MAJOR] ,[COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] ,[CRTON] ,[CRTBY]) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,getDate(),?);";
+				+ "[MAJOR] ,[COUNTRY] ,[COMMENCEDON] ,[COMPLETIONON] ,[STUDENTID] ,[RESULT] ,[DESCRIPTION] ,[MEDIUM] ,[CRTBY]) "
+				+ "VALUES (?,?,?, (SELECT [LEVEL] FROM [CAMPUS].[AWARD] aw WHERE aw.[CODE] = ?), ?,?,?,?,?,?,?,?,?,?);";
 
 		int result = -1;
 
@@ -169,7 +169,7 @@ public class HigherEducationDAO implements ICrud{
 			preparedStatement.setString(1, data.getInstitute());
 			preparedStatement.setString(2, data.getAffiliatedInstitute());
 			preparedStatement.setInt(3, data.getStudent());
-			preparedStatement.setInt(4, data.getLevel());
+			preparedStatement.setInt(4, data.getAward());
 			preparedStatement.setInt(5, data.getAward());
 			preparedStatement.setInt(6, data.getMajor());
 			preparedStatement.setInt(7, data.getCountry());
@@ -201,9 +201,10 @@ public class HigherEducationDAO implements ICrud{
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
-		String query = "UPDATE [CAMPUS].[HIGHERDUCATION]  SET [INSTITUTE] = ? ,[AFFINSTITUTE] = ? ,[STUDENT] = ? ,[LEVEL] = ?  ,[AWARD] = ? ,[MAJOR] = ? ,"
-				+ "[COUNTRY] = ? ,[COMMENCEDON] = ? ,[COMPLETIONON] = ? ,[STUDENTID] = ? ,[RESULT] = ? ,[DESCRIPTION] = ? ,[MEDIUM] = ? ,"
-				+ ",[MODBY] = ? WHERE [CODE] = ?;";
+		String query = "UPDATE [CAMPUS].[HIGHERDUCATION]  SET [INSTITUTE] = ? ,[AFFINSTITUTE] = ? ,[STUDENT] = ? ,"
+				+ "[LEVEL] = (SELECT [LEVEL] FROM [CAMPUS].[AWARD] aw WHERE aw.[CODE] = ?) ,"
+				+ "[AWARD] = ? ,[MAJOR] = ? ,[COUNTRY] = ? ,[COMMENCEDON] = ? ,[COMPLETIONON] = ? ,[STUDENTID] = ? ,"
+				+ "[RESULT] = ? ,[DESCRIPTION] = ? ,[MEDIUM] = ? ,[MODBY] = ? WHERE [CODE] = ?;";
 
 		int result = -1;
 
@@ -214,7 +215,7 @@ public class HigherEducationDAO implements ICrud{
 			preparedStatement.setString(1, data.getInstitute());
 			preparedStatement.setString(2, data.getAffiliatedInstitute());
 			preparedStatement.setInt(3, data.getStudent());
-			preparedStatement.setInt(4, data.getLevel());
+			preparedStatement.setInt(4, data.getAward());
 			preparedStatement.setInt(5, data.getAward());
 			preparedStatement.setInt(6, data.getMajor());
 			preparedStatement.setInt(7, data.getCountry());
@@ -224,7 +225,8 @@ public class HigherEducationDAO implements ICrud{
 			preparedStatement.setString(11, data.getResult());
 			preparedStatement.setString(12, data.getDescription());
 			preparedStatement.setInt(13, data.getMedium());
-			preparedStatement.setInt(14, data.getCode());
+			preparedStatement.setString(14, data.getModBy());
+			preparedStatement.setInt(15, data.getCode());
 			
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
