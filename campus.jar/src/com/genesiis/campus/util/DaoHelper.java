@@ -7,10 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 /**The class {@code DaoHelper} is a form utility helper class.Created for the purpose of DAO level utility functions. * 
  * @author dumani DJ     
  */
 public class DaoHelper {
+	
+	static Logger log = Logger.getLogger(DaoHelper.class.getName());
 	
 	 /**
      * Closes down resources.

@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 /**The class  {@code CourseProviderICrud} is a form of Interface class.
- * The Interface {@code CourseProviderICrud} has precise control over course provider dao level manipulations. 
+ * The Interface {@code CourseProviderICrud} has precise control over course provider dao level manipulations.
+ * 
+ *  Interface declare methods related to course provider table and tables around it, join directly and meaningfully.
+ *  For an example; methods related course provider types. 
  *  @author dumani DJ   
  */
 public interface CourseProviderICrud extends ICrud{	
