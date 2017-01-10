@@ -250,8 +250,8 @@ public class CmdUploadTutorImage implements ICommand {
 				//############this.message =this.message + systemMessage(-1); should be set from isImageAccordanceWithSystemRequirement()
 				isFilePassSizeRequirement= false;
 
-			}else if(imageItems.get(0).getSize()>=tutorDefaultImageSize){
-				this.getFileUtility().setFileItem(imageItems.get(0)); 
+			}else if(files.get(0).getSize()>=tutorDefaultImageSize){
+				this.getFileUtility().setFileItem(files.get(0)); 
 				isFilePassSizeRequirement=true;
 			}
 			
