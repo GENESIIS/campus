@@ -21,6 +21,7 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemConfig;
 
 import org.apache.log4j.Logger;
@@ -68,10 +69,11 @@ public class CategoryDAO implements ICrud {
 			
 			Category category = (Category) code;
 
-			String query = "SELECT * FROM [CAMPUS].[CATEGORY] WHERE ISACTIVE = 1 AND CODE = ?";
+			String query = "SELECT * FROM [CAMPUS].[CATEGORY] WHERE ISACTIVE = ? AND CODE = ?";
 
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setInt(1, category.getCode());
+			preparedStatement.setString(1, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement.setInt(2, category.getCode());
 
 			final ResultSet rs = preparedStatement.executeQuery();
 

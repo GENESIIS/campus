@@ -14,8 +14,7 @@
 	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:if>
 		<c:if test="${sessionScope.currentUserData != null}">
-<%-- 	<c:choose> --%>
-<%--     <c:when test="${sessionScope.currentUserData != null && sessionScope.currentSessionUser != null}"> --%>
+
     	<c:set var="col_stuCode" value="${sessionScope.currentUserData[0][0]}" scope="session" />
     	<c:set var="col_stuUsername" value="${sessionScope.currentUserData[0][1]}" scope="session" />
     	<c:set var="col_stuIndexNo" value="${sessionScope.currentUserData[0][2]}" scope="session" />

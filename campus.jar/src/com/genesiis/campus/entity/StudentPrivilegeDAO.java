@@ -49,10 +49,8 @@ public class StudentPrivilegeDAO implements ICrud {
 	public Collection<String> studentPrivilege(Object code)
 			throws SQLException, Exception {
 
-		//Collection<String> studentPrivilegeCollection = new ArrayList<String>();
-		//Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
-		
+
 		ArrayList<String> privilegeList = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT USERTYPE.NAME, USERTYPE.USERTYPESTRING, USERTYPE.DESCRIPTION, INTERFACE.TITLE, INTERFACE.DESCRIPTION, INTERFACE.URL , BUTTONACTION.ACTION, BUTTONACTION.DESCRIPTION FROM CAMPUS.STUDENT INNER JOIN CAMPUS.USERTYPE ON STUDENT.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.PRIVILEGE ON PRIVILEGE.USERTYPE = USERTYPE.CODE INNER JOIN CAMPUS.INTERFACE ON PRIVILEGE.INTERFACE = INTERFACE.CODE INNER JOIN CAMPUS.BUTTONACTION ON BUTTONACTION.INTERFACE = INTERFACE.CODE WHERE BUTTONACTION.ISACTIVE=? AND INTERFACE.ISACTIVE=? AND PRIVILEGE.ISACTIVE=? AND USERTYPE.CODE = ?";
@@ -61,16 +59,22 @@ public class StudentPrivilegeDAO implements ICrud {
 			final Student student = (Student) code;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
-			preparedStatement.setString(2, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
-			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement
+					.setString(1, Integer.toString(ApplicationStatus.ACTIVE
+							.getStatusValue()));
+			preparedStatement
+					.setString(2, Integer.toString(ApplicationStatus.ACTIVE
+							.getStatusValue()));
+			preparedStatement
+					.setString(3, Integer.toString(ApplicationStatus.ACTIVE
+							.getStatusValue()));
 			preparedStatement.setString(4, student.getUserType());
 
 			rs = preparedStatement.executeQuery();
 
 			privilegeList = new ArrayList<String>();
 			while (rs.next()) {
-				
+
 				privilegeList.add(rs.getString(1));
 				privilegeList.add(rs.getString(2));
 				privilegeList.add(rs.getString(3));
@@ -79,16 +83,13 @@ public class StudentPrivilegeDAO implements ICrud {
 				privilegeList.add(rs.getString(6));
 				privilegeList.add(rs.getString(7));
 				privilegeList.add(rs.getString(8));
-				
-			
 
 			}
-			//studentPrivilegeCollection.add(privilegeList);
 
 		} catch (SQLException e) {
 			log.info("findById SQLException : " + e);
 			throw e;
-		
+
 		} catch (Exception e) {
 			log.info("findById Exception : " + e);
 			throw e;
@@ -104,7 +105,7 @@ public class StudentPrivilegeDAO implements ICrud {
 			}
 
 		}
-		//return studentPrivilegeCollection;
+
 		return privilegeList;
 	}
 

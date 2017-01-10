@@ -5,9 +5,6 @@ package com.genesiis.campus.factory;
 //20161031 AS C8-inquiry-form-for-course modified InstituteCmdFactory to getFactory method
 //20161123 AS C19-student-login-without-using-third-party-application-test-as added LoginController to method.
 
-
-import com.genesiis.campus.command.CmdGenerateEmail;
-
 import org.apache.log4j.Logger;
 
 
@@ -34,8 +31,7 @@ public class FactoryProducer {
 
 		} else if (choice.equalsIgnoreCase("/PayrollController")) {
 			//return new PayrollCmdFactory();
-		}else if (choice.equalsIgnoreCase("/InstituteController")){
-			return new InstituteCmdFactory();
+		
 		}else if (choice.equalsIgnoreCase("/LoginController")){
 			return new LoginCmdFactory();
 		}
