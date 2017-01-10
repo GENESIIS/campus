@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+//20170110 PN CAM-28: SQL query modified inside DAO methods. 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -237,7 +238,7 @@ public class ProfessionalExperienceDAO implements ICrud {
 			preparedStatement.setDate(7, data.getCompletionOn());
 			preparedStatement.setString(8, data.getDescription());
 			preparedStatement.setString(9, data.getModBy());
-			preparedStatement.setString(10, data.getModBy());
+			preparedStatement.setInt(10, data.getCode());
 
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
