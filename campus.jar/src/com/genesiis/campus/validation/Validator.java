@@ -182,6 +182,7 @@ public class Validator {
 		}if(isEmptyString(helper.getParameter("address3"))){
 			courseProvider.setAddress3("-");
 		}if(isEmptyString(helper.getParameter("accountStatus"))){
+			helper.setAttribute("errorAccountStatus", "Select the account status");
 			errorString.add("Account Status");
 			isValid = false;
 		}if(isEmptyString(helper.getParameter("providerPrivateName"))){

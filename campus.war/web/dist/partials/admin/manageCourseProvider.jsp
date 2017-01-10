@@ -296,7 +296,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="networkCode"
 										id="networkCode" size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorNetworkCode" style="color: red;">${errorNetworkCode }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Mobile Number :</h1>
@@ -304,7 +304,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" onkeyup="landPhoneNubmerHelper();"/>
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorMobile" style="color: red;">${errorMobile }</span>
 										<span id="lastMobileNumber" style="color: blue;"></span>
 								</div>
 
@@ -321,9 +321,8 @@
 								<div class="col-name">
 									<input class="input" type="text" name="address1" id="address1"
 										size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorAddress1" style="color: red;">${errorAddress1 }</span>
 								</div>
-								<span id="infoLandNumber1" style="color: blue;"></span>
 							</li>
 							<!-- end -->
 
@@ -334,7 +333,6 @@
 								<div class="col-name">
 									<input class="input" type="text" name="address2" id="address2"
 										size="50px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -345,7 +343,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address3" id="address3"
-										size="50px;" /> <span id="errorShortName" style="color: red;">${errorShortName }</span>
+										size="50px;" /> 
 							</li>
 							<!-- end -->
 
@@ -541,7 +539,7 @@
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
 										id="providerPassword" size="50px;" required />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorProviderPassword" style="color: red;">${errorProviderPassword }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -553,7 +551,7 @@
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
 										id="cProviderPassword" size="50px;" required />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorCProviderPassword" style="color: red;">${errorCProviderPassword }</span>
 								</div>
 							</li>
 							<!-- end -->
