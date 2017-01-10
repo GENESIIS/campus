@@ -8,6 +8,10 @@ package com.genesiis.campus.validation;
 //20161125 DN  C18-student-signup-without-using-third-party-application-dn added ACCOUNT_CREATED,
 //			ACCOUNT_NOT_CREATED,USER_NAME_EXISTS enums
 //20161227 DN CAM 28: added STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT,STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT, RECAPTCHAVERIFICATION enum values.
+//20170110 DN CAM47: upload tutor profile image SUCCESSFULLY_IMAGE_UPLOAD,IMAGE_UPLOADING_FAIL,DOES_NOT_CONTAIN_FILE added
+
+
+
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
@@ -36,6 +40,9 @@ public enum SystemMessage {
 	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
 	STUDENT_SUCCESSFULL_CREATTION("Your User account is successfully created. "),
 	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
+	SUCCESSFULLY_IMAGE_UPLOAD("Image Uploaded successfully. "),
+	IMAGE_UPLOADING_FAIL("Image Upload Failed. "),
+	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Process."),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	
