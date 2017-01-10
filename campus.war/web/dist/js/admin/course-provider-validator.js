@@ -86,7 +86,8 @@ function providerUsernameValidation() {
 }
 
 function providerPrefixValidation() {
-
+	
+    var prefixFlag = true;
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
 
 	if (!isempty(selectedPrefix)) {
@@ -112,6 +113,7 @@ function providerPrefixValidation() {
 							window.responseErrorPrefix = response.userMessage;
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
+							prefixFlag == false;
 						}
 					},
 				});
@@ -123,6 +125,15 @@ function providerPrefixValidation() {
  * created to validate course provider details before submit
  */
 function vaidateCourseProviderDeatils(form) {
+	
+	//$(".error-message").remove();
+	var errorMessageList = document.getElementsByClassName('error-message');
+	alert(errorMessageList);
+	
+//	for (i = 0; i < errorMessageList.length; i++) { 
+//	    text += cars[i] + "<br>";
+//	}
+	
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
 	var shortName = $("#shortName").val();
@@ -272,46 +283,54 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-//	if (!ValidURL(webLink)) {
-//		document.getElementById('errorWebLink').innerHTML = "**Give a valid web link URL.";
-//		document.getElementById('webLink').focus();
-//		flag = false;
-//	}
-//	if (!ValidURL(facebook)) {
-//		document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook URL.";
-//		document.getElementById('facebook').focus();
-//		flag = false;
-//	}
-//	if (!ValidURL(linkdedIn)) {
-//		document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn URL.";
-//		document.getElementById('linkdedIn').focus();
-//		flag = false;
-//	}
-//	if (!ValidURL(twitter)) {
-//		document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter URL.";
-//		document.getElementById('twitter').focus();
-//		flag = false;
-//	}
-//	if (!ValidURL(instagram)) {
-//		document.getElementById('errorInstagram').innerHTML = "**Give a valid Instagram URL.";
-//		document.getElementById('instagram').focus();
-//		flag = false;
-//	}
-//	if (!ValidURL(mySpace)) {
-//		document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace URL.";
-//		document.getElementById('mySpace').focus();
-//		flag = false;
-//	}
-//	if (!isempty(whatsapp)) {
-//		document.getElementById('errorWhatsapp').innerHTML = "**Give a valid whatsapp number.";
-//		document.getElementById('whatsapp').focus();
-//		flag = false;
-//	}
-//	if (!isempty(viber)) {
-//		document.getElementById('errorViber').innerHTML = "**Give a valid viber number.";
-//		document.getElementById('viber').focus();
-//		flag = false;
-//	}
+// if (!ValidURL(webLink)) {
+// document.getElementById('errorWebLink').innerHTML = "**Give a valid web link
+// URL.";
+// document.getElementById('webLink').focus();
+// flag = false;
+// }
+// if (!ValidURL(facebook)) {
+// document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook
+// URL.";
+// document.getElementById('facebook').focus();
+// flag = false;
+// }
+// if (!ValidURL(linkdedIn)) {
+// document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn
+// URL.";
+// document.getElementById('linkdedIn').focus();
+// flag = false;
+// }
+// if (!ValidURL(twitter)) {
+// document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter
+// URL.";
+// document.getElementById('twitter').focus();
+// flag = false;
+// }
+// if (!ValidURL(instagram)) {
+// document.getElementById('errorInstagram').innerHTML = "**Give a valid
+// Instagram URL.";
+// document.getElementById('instagram').focus();
+// flag = false;
+// }
+// if (!ValidURL(mySpace)) {
+// document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace
+// URL.";
+// document.getElementById('mySpace').focus();
+// flag = false;
+// }
+// if (!isempty(whatsapp)) {
+// document.getElementById('errorWhatsapp').innerHTML = "**Give a valid whatsapp
+// number.";
+// document.getElementById('whatsapp').focus();
+// flag = false;
+// }
+// if (!isempty(viber)) {
+// document.getElementById('errorViber').innerHTML = "**Give a valid viber
+// number.";
+// document.getElementById('viber').focus();
+// flag = false;
+// }
 	if (!isempty(expirationDate)) {
 		document.getElementById('errorExpiration').innerHTML = "**Expiration date is not valid.";
 		document.getElementById('expirationDate').focus();
@@ -357,5 +376,6 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('accountStatus').focus();
 		flag = false;
 	}
+
 	return flag;
 }

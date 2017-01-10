@@ -18,6 +18,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
 
 public class CmdListCourseProviderRegisterPage implements ICommand {
@@ -42,6 +43,21 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 
 				//get course provider types
 				providerTypeCollection = providerTypeDAO.getAll();
+				
+				ArrayList<String> activeAccountStatus = new ArrayList<String>();
+				ArrayList<String> inactiveAccountStatus = new ArrayList<String>();
+				
+				ArrayList<ArrayList<String>> accountStatusList = new ArrayList<ArrayList<String>>();
+				
+				activeAccountStatus.add(String.valueOf(ApplicationStatus.ACTIVE.getStatusValue()));
+				activeAccountStatus.add(ApplicationStatus.ACTIVE.name());
+				inactiveAccountStatus.add(String.valueOf(ApplicationStatus.INACTIVE.getStatusValue()));
+				inactiveAccountStatus.add(ApplicationStatus.INACTIVE.name());
+				
+				accountStatusList.add(activeAccountStatus);
+				accountStatusList.add(inactiveAccountStatus);
+				
+				helper.setAttribute("accountStatusList", accountStatusList);
 				helper.setAttribute("providerTypes", providerTypeCollection);
 				break;
 

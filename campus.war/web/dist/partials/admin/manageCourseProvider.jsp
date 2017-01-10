@@ -79,6 +79,9 @@
 	text-align: center;
 	float: left;
 }
+.error-message{
+	color : red;
+}
 </style>
 
 <body onload="getCategoryData();">
@@ -138,7 +141,7 @@
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 									</c:forEach>
-									<span id="errorCourseProvider"></span>
+									<span id="errorCourseProvider" class="error-message"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -148,7 +151,7 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;"/><span id="errorProviderName" style="color: red;">${errorProviderName }</span>
+										id="providerName" size="50px;"/><span id="errorProviderName" class="error-message">${errorProviderName }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -160,7 +163,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="shortName"
 										id="shortName" size="30px;" />
-										<span id="errorShortName" style="color: red;">${errorShortName }</span>
+										<span id="errorShortName" class="error-message">${errorShortName }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Unique Prefix:</h1>
@@ -556,7 +559,9 @@
 							</li>
 							<!-- end -->
 
-							<li class="course-info clearfix">
+							<li class="course-info clearfix"><div class="col-name">
+									<h1 class="pro-name">Account status :</h1>
+								</div>
 								<div class="col-name" style="width: 50%;">
 									<h1 class="pro-name">
 										<input type="radio" name="accountStatus" id="accountStatus"
