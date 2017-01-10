@@ -2,7 +2,7 @@ package com.genesiis.campus.command;
 
 //20161215 PN CAM-28: INIT CmdAddHigherEducationData.java class and implemented execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
-//20170109 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
+//20170110 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
 
 import java.sql.Connection;
 import java.sql.SQLException;
