@@ -25,10 +25,12 @@
 //20170104 PN CAM-28: implemented radionButtonSelectedValueSet(name, SelectdValue) method to set radio button value from the DB.
 //20170109 PN CAM-28: modified JavaScript code to display the updated details after saving them to the DB. Added character replacement for replace ','.
 //20170110 PN CAM-28: modified JavaScript to display School Education details after save them to DB.
+//20170110 PN CAM-28: modified JavaScript to display Higher Education details after save them to DB.
+//20170110 PN CAM-28: modified JavaScript to display Professional Experience details after save them to DB.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
-var rows_selected = [];
+
 
 $(document).ready(function() {
 	displayDetails();
@@ -58,6 +60,8 @@ function displayDetails() {
  * @returns
  */
 function getStudentData(response) {
+	var rows_selected = [];
+	
 	var table = $('#example').DataTable({
 		'columnDefs' : [ {
 			'targets' : 0,
@@ -82,13 +86,22 @@ function getStudentData(response) {
 	});
 
 	table.clear().draw();
+	var experienceducount = 0;
+	var experience = $('#li-std-experience');
+	experience.find('li').remove();
 	$
 			.each(
 					response.stdExpCollection,
 					function(index, value) {
-						alert(response.stdExpCollection);
 						var res = value.toString();
 						var data = res.split(",");
+						
+						if (experienceducount < 4) {
+							experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+						}
+
+						experienceducount++;
+						
 						table.row
 								.add(
 										[
@@ -249,7 +262,44 @@ function getStudentData(response) {
 					},
 					dataType : "json",
 					success : function(response) {
+						
+						var table = $('#example').DataTable();
+						table.clear().draw();
 
+						var experienceducount = 0;
+						var experience = $('#li-std-experience');
+						experience.find('li').remove();
+
+						$
+								.each(
+										response.stdExpCollection,
+										function(index, value) {
+											var res = value.toString();
+											var data = res.split(",");
+											
+											if (experienceducount < 4) {
+													experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+												}
+
+											experienceducount++;
+																
+											table.row
+													.add(
+															[
+																	data[0].toString(),
+																	data[1].toString(),
+																	data[2].toString(),
+																	data[3].toString(),
+																	data[4].toString(),
+																	data[5].toString() + "<br/>"
+																			+ data[6].toString(),
+																	data[7].toString(),
+																	'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+													.draw(false);
+										});
+						
+						
+						
 					},
 					error : function(response) {
 						// alert("Error: " + response);
@@ -281,7 +331,8 @@ function getStudentData(response) {
 		$('#td-value-fbprofile').html(data[18].replace(/##/g, ","));
 		$('#td-value-mobileno').html(
 				data[11] + '-' + data[16].replace(/##/g, ","));
-
+		$('#td-value-aboutme').html(data[17].replace(/##/g, ","));
+		
 		$('#sFullName').val(data[4].replace(/##/g, ","));
 		$('#sMiddleName').val(data[5].replace(/##/g, ","));
 		$('#sLastName').val(data[6].replace(/##/g, ","));
@@ -692,7 +743,6 @@ function getStudentData(response) {
 			function() {
 				var data = higherEdutbl.row($(this).parents('tr')).data();
 				if (data) {
-					alert(data);
 					var institute = data[1];
 					var res1 = institute.split("<br/>");
 
@@ -733,7 +783,6 @@ function getStudentData(response) {
 						var data = higherEdutbl.row(
 								$(this).closest('tr').prev('tr')).data();
 					}
-					alert(data);
 					var institute = data[1];
 					var res1 = institute.split("<br/>");
 
@@ -1031,7 +1080,8 @@ function addHigherEducationDetails() {
 									"alert alert-success").text(
 									response.saveChangesHigherEduStatus)
 									.fadeIn();
-
+							
+							
 							var higherEdutbl = $('#higherEdutbl').DataTable();
 							higherEdutbl.clear().draw();
 							var highereducount = 0;
@@ -1102,7 +1152,7 @@ function addHigherEducationDetails() {
 																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 														.draw(false);
 											});
-
+							$("#saveChangesHigherEduStatus").fadeOut();
 						}
 					},
 					error : function(e) {
@@ -1364,13 +1414,13 @@ function addProfessionalExpForm() {
 						CCO : "APE"
 					},
 					dataType : "json",
-					success : function(data) {
-						if (data.pesaveChangesStatus) {
-							if (data.pesaveChangesStatus === "Unsuccessful.") {
+					success : function(response) {
+						if (response.pesaveChangesStatus) {
+							if (response.pesaveChangesStatus === "Unsuccessful.") {
 								$("#pesaveChangesStatus").addClass(
 										"alert alert-danger").text(
-										data.pesaveChangesStatus).fadeIn();
-							} else if (data.pesaveChangesStatus === "Invalid Information") {
+										response.pesaveChangesStatus).fadeIn();
+							} else if (response.pesaveChangesStatus === "Invalid Information") {
 								$("#pesaveChangesStatus").addClass(
 										"alert alert-danger").text(
 										"Invalid Information.").fadeIn();
@@ -1378,7 +1428,45 @@ function addProfessionalExpForm() {
 							clearProfessionalExpForm();
 							$("#pesaveChangesStatus").addClass(
 									"alert alert-success").text(
-									data.pesaveChangesStatus).fadeIn();
+									 response.pesaveChangesStatus).fadeIn();
+							
+							
+							var table = $('#example').DataTable();
+							table.clear().draw();
+
+							var experienceducount = 0;
+							var experience = $('#li-std-experience');
+							experience.find('li').remove();
+
+							$
+									.each(
+											response.stdExpCollection,
+											function(index, value) {
+												var res = value.toString();
+												var data = res.split(",");
+												
+												if (experienceducount < 2) {
+														experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+													}
+
+												experienceducount++;
+																	
+												table.row
+														.add(
+																[
+																		data[0].toString(),
+																		data[1].toString(),
+																		data[2].toString(),
+																		data[3].toString(),
+																		data[4].toString(),
+																		data[5].toString() + "<br/>"
+																				+ data[6].toString(),
+																		data[7].toString(),
+																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+														.draw(false);
+											});
+							
+							$("#pesaveChangesStatus").fadeOut();
 						}
 					},
 					error : function(e) {
@@ -1480,6 +1568,8 @@ function addStudentPersonalDetails() {
 							$('#td-value-fbprofile').html(facebookUrl);
 							$('#td-value-mobileno').html(
 									landPhoneCountryCode + '-' + mobilePhoneNo);
+							$('#td-value-aboutme').html(description);
+							
 							$("#studentPersonalStatus").fadeOut();
 							return;
 						}

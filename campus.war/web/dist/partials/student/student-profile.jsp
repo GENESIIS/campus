@@ -178,30 +178,30 @@
                     <table class="tbl-left-info">
                         <tr>
                             <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Senior Software Engineer at <span>Genesiis Software pvt Ltd.</span></p></td>
+                            <td class="field-name" id="td-value-aboutme"></td>
                         </tr>
                         <!-- End works at -->
 
-                        <tr>
-                            <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Studied at <span>ICBT Colombo Campus</span></p></td>
-                        </tr>
-                        <!-- End studied at -->
+<!--                         <tr> -->
+<!--                             <td class="cat-icon">i</td> -->
+<!--                             <td class="field-name"><p>Studied at <span>ICBT Colombo Campus</span></p></td> -->
+<!--                         </tr> -->
+<!--                         End studied at -->
 
-                        <tr>
-                            <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Lives in <span>Colombo</span></p></td>
-                        </tr>
-                        <!-- End lives in -->
-                        <tr>
-                            <td class="cat-icon">i</td>
-                            <td class="field-name"><p>From <span>Katugasthota, Kandy</span></p></td>
-                        </tr>
-                        <!-- End from -->
-                        <tr>
-                            <td class="cat-icon">i</td>
-                            <td class="field-name"><p>Notes <br> <span class="sp-note">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></p></td>
-                        </tr>
+<!--                         <tr> -->
+<!--                             <td class="cat-icon">i</td> -->
+<!--                             <td class="field-name"><p>Lives in <span>Colombo</span></p></td> -->
+<!--                         </tr> -->
+<!--                         End lives in -->
+<!--                         <tr> -->
+<!--                             <td class="cat-icon">i</td> -->
+<!--                             <td class="field-name"><p>From <span>Katugasthota, Kandy</span></p></td> -->
+<!--                         </tr> -->
+<!--                         End from -->
+<!--                         <tr> -->
+<!--                             <td class="cat-icon">i</td> -->
+<!--                             <td class="field-name"><p>Notes <br> <span class="sp-note">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></p></td> -->
+<!--                         </tr> -->
                         <!-- End Notes -->
                     </table>
                 </div>
@@ -278,15 +278,11 @@
                         <div class="widget w-experience">
                             <div class="widget-header">
                                 <label for="">Experience</label>
-                                <button>Edit</button>
+                                <button data-toggle="modal" data-target="#studentProfessionalDetailsModal">Edit</button>
                             </div>
 
                             <div class="widget-content">
-                                <ul class="ul-experience">
-                                    <li>CEO <span class="drop-at">at</span> Mc.Dondon <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>CEO <span class="drop-at">at</span> Mc.Dondon <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Web Developer <span class="drop-at">at</span> Genesiis Softwre <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Web Designer <span class="drop-at">at</span> Genesiis Softwre <br><span class="drop-time">March 2012 - Now</span></li>
+                                <ul class="ul-experience" id="li-std-experience">
                                 </ul>
                             </div>
                         </div>
@@ -390,9 +386,6 @@
 </div>
 <!-- End Dashboard  -->
 
-
-
-
 <!-- Personal Details-->
 <div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -404,14 +397,14 @@
       <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
       		<h2>Personal Details</h2>
       		<div class="well">
-      		First Name <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')">
-			<span id="sFullNameError" name="sFullNameError" style="color:red" maxlength="200"></span><br>
+      		First Name <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
+			<span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			
-      		Middle Name <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')">
-			<span id="sMiddleNameError" name="sMiddleNameError" style="color:red" maxlength="200"></span><br>
+      		Middle Name <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
+			<span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			
-      		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')">
-			<span id="sLastNameError" name="sLastNameError" style="color:red" maxlength="200"></span><br>
+      		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
+			<span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
       
       		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
 			<span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
@@ -422,8 +415,8 @@
   			<input type="radio" name="gender" value="0"> Female<br>
   			</div>
 			
-			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')"></textarea>
-			<span id="sAboutMeError" name="sAboutMeError" style="color:red" maxlength="200"></span><br>
+			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
+			<span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			
 			</div>
 			<br>
@@ -447,8 +440,8 @@
 			<input hidden type="text" id="sTownCode" name="sTownCode"/>
 			<span id="sTownError" name="sTownError" style="color:red"></span><br>			
 			
-			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')">
-			<span id="sAddressError" name="sAddressError" style="color:red" maxlength="200"></span><br>
+			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
+			<span id="sAddressError" name="sAddressError" style="color:red"></span><br>
 			
 			Mobile Number
       		<div class="input-group">
@@ -464,23 +457,23 @@
 			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
 			</div>
 			     		  		
-			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')">
-			<span id="sEmailError" name="sEmailError" style="color:red" maxlength="200"></span><br>
+			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
+			<span id="sEmailError" name="sEmailError" style="color:red"></span><br>
       
-      		Facebook URL <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')">
-			<span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red" maxlength="200"></span><br>
+      		Facebook URL <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200">
+			<span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
       
-      		twitter URL <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')">
-			<span id="stwitterUrlError" name="stwitterUrlError" style="color:red" maxlength="200"></span><br>
+      		twitter URL <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200">
+			<span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
 			
-			LinkedIn URL <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')">
-			<span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red" maxlength="200"></span><br>
+			LinkedIn URL <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200">
+			<span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
 			
-			Instergram URL <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')">
-			<span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red" maxlength="200"></span><br>
+			Instergram URL <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200">
+			<span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
 			
-			mySpace <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')">
-			<span id="smySpaceError" name="smySpaceError" style="color:red" maxlength="200"></span><br>
+			mySpace <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200">
+			<span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
 			
 			WhatsApp 
 			<div class="input-group">
@@ -547,11 +540,11 @@
 				<option value="0">Fail</option>
 			</select> <span id="sseResultError" name="sseResultError" style="color:red"></span>
 			<br/>
-			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')">
-			<span id="sseIndexNoError" name="sseIndexNoError" style="color:red" maxlength="20"></span><br>
+			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')" maxlength="20">
+			<span id="sseIndexNoError" name="sseIndexNoError" style="color:red"></span><br>
 			
-			School <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')">
-			<span id="sseSchoolError" name="sseSchoolError" style="color:red" maxlength="200"></span><br>
+			School <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')" maxlength="200">
+			<span id="sseSchoolError" name="sseSchoolError" style="color:red"></span><br>
 			
 			Achieved on <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')">
 			<span id="sseAchievedonError" name="sseAchievedonError" style="color:red"></span><br>
@@ -582,11 +575,11 @@
 				<div class="">
       <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
 			Institute of Study  
-			<input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')">
+			<input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200">
 			<span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
 			<br/>
 			Affiliated Institute  
-			<input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')">
+			<input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')" maxlength="200">
 			<span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span><br>
 			<br/>
 			
@@ -600,10 +593,10 @@
 				<option value="">--Select One--</option>
 			</select> <span id="awardError" name="awardError" style="color:red"></span>
 			<br/>
-			Student ID (University Index) <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')">
+			Student ID (University Index) <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200">
 			<span id="studentIdError" name="studentIdError" style="color:red"></span><br>
 			
-			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')">
+			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')" maxlength="2" onkeypress="return isNumber(event)">
 			<span id="gpa" name="gpa" style="color:red"></span><br>
 			
 			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
@@ -626,7 +619,7 @@
 			<input hidden id="heCountryvalue" name="heCountryvalue"/>
 			
 			Description
-			<textarea rows="5" cols="40" name="heDescription" id="heDescription" ></textarea>
+			<textarea rows="5" cols="40" name="heDescription" id="heDescription" maxlength="200" ></textarea>
 			
 						<br/><br/>
 					<form id="frm-hedu" action="/path/to/your/script" method="POST">
@@ -686,6 +679,88 @@
   </div>
 </div>
 
+<!-- Professional Details Modal -->
+<div class="modal fade" id="studentProfessionalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="studentProfessionalDetails">Professional Experience</h4>
+      </div>
+      <div class="modal-body">			
+			<div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div>
+			Industry of the Organization  
+			<select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
+				<option value="">--Select One--</option>
+			</select> <span id="industryoftheOrganizationError" name="industryoftheOrganizationError" style="color:red"></span>
+			<br/>
+			
+			Organization <input type="text" name="organization" id="organization" onclick="clearField('organizationError')">
+			<span id="organizationError" name="organizationError" style="color:red"></span><br>
+			
+			Job Category  
+			<select id="jobCategory" name = "jobCategory" onchange="clearField('jobCategoryError')">
+				<option value="">--Select One--</option>
+			</select> <span id="jobCategoryError" name="jobCategoryError" style="color:red"></span>
+			<br/>
+			
+			Designation <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
+			<span id="designationError" name="designationError" style="color:red"></span><br>
+			
+			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
+			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
+			
+			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
+			<span id="completionOnError" name="completionOnError" style="color:red"></span><br>
+			
+			Description
+			<textarea rows="5" cols="40" name="jobDescription" id="jobDescription" ></textarea>
+			<br/><br/>
+					<form id="frm-example" action="/path/to/your/script" method="POST">
+
+						<table id="example"
+							class="table table-striped table-bordered dt-responsive nowrap"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
+									<th><b>Organization</b></th>
+									<th><b>Industry</b></th>
+									<th><b>Designation</b></th>
+									<th><b>Category</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th><b>Organization</b></th>
+									<th><b>Industry</b></th>
+									<th><b>Designation</b></th>
+									<th><b>Category</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</tfoot>			
+						</table>
+						<hr>
+						<p>
+							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+						</p>
+						<pre id="example-console"></pre>
+					</form>
+					<br />
+	  </div>					
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="clearProfessionalExpForm()">Clear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearProfessionalExpForm()">Close</button>
+        <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="addProfessionalExpForm()">Save changes</button>
+      </div>
+   </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.jsp"></footer>-->
