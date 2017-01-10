@@ -4,7 +4,8 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
 //20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
-//20170110 CW c36-add-tutor-details Modified setVariables() method - add tutor crtBy & modBy using setter methods 
+//20170110 CW c36-add-tutor-details Modified setVariables() method - add tutor crtBy & modBy using setter methods  
+//20170110 CW c36-add-tutor-details Modified execute() method - changed the way of calling the findById() method
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,8 +51,19 @@ public class CmdAddTutorProfile implements ICommand {
 				setVariables(helper,tutor);
 
 				UserTypeDAO typeOfUser = new UserTypeDAO();
-
-				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
+				Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();
+				userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+				
+				int userType = 9999;
+				
+				for(Collection<String> userTypeInnerCollection : userTypeCollection ){
+					Object arr[] = userTypeInnerCollection.toArray();
+					userType = Integer.parseInt(arr[0].toString());
+				} 
+				
+				if (userType != 9999){
+					tutor.setUsertype(userType);
+				}
 
 				int result = tutorDAO.add(tutor);
 				if (result > 0) {
@@ -63,7 +75,10 @@ public class CmdAddTutorProfile implements ICommand {
 				}
 				
 			}
-		} catch (Exception exception) {
+		}  catch (SQLException sqle){
+			log.error("execute(): SQLException "+ sqle.toString());
+			throw sqle;
+		}  catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
