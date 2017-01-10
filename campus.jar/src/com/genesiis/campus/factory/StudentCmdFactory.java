@@ -18,6 +18,7 @@ import com.genesiis.campus.command.CmdAddSchoolEducationData;
 import com.genesiis.campus.command.CmdAddStudentInterestDetails;
 import com.genesiis.campus.command.CmdAddStudentPersonlDetails;
 import com.genesiis.campus.command.CmdAddStudentSkillDetails;
+import com.genesiis.campus.command.CmdDeleteHigherEducationData;
 import com.genesiis.campus.command.CmdDeleteProfessionalExpDetails;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -36,6 +37,7 @@ public class StudentCmdFactory implements ICmdFactory{
 		map.put(Operation.ADD_HIGHER_EDUCATION, new CmdAddHigherEducationData());
 		map.put(Operation.DELETE_PROFESSIONAL_EXP, new CmdDeleteProfessionalExpDetails());
 		map.put(Operation.ADD_STUDENT_INTEREST, new CmdAddStudentInterestDetails());
+		map.put(Operation.DELETE_HIGHER_EDUCATION, new CmdDeleteHigherEducationData());
 	}
 
 	@Override
