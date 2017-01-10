@@ -24,6 +24,7 @@
 //20170104 PN CAM-28: implement JavaScript code to edit data taken from the data table.
 //20170104 PN CAM-28: implemented radionButtonSelectedValueSet(name, SelectdValue) method to set radio button value from the DB.
 //20170109 PN CAM-28: modified JavaScript code to display the updated details after saving them to the DB. Added character replacement for replace ','.
+//20170110 PN CAM-28: modified JavaScript to display School Education details after save them to DB.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -455,6 +456,10 @@ function getStudentData(response) {
 			$('#sseAchievedon').val(data[8]);
 			$('#sseCountry').val(data[4]);
 			$('#sseDescription').val(data[9]);
+			
+			var schooledu = $('#li-std-schooledu');
+			schooledu.find('li').remove();
+			schooledu.append('<li>'+$("#sseQualification option:selected").text()+' <span class="drop-at"> at </span> '+data[7]+' <br><span class="drop-time">'+data[8]+'</span></li>');
 		});
 	}
 
@@ -1032,6 +1037,10 @@ function addEducationDetails() {
 							$("#saveChangesStatus").addClass(
 									"alert alert-success").text(
 									data.saveChangesStatus).fadeIn();
+							var schooledu = $('#li-std-schooledu');
+							schooledu.find('li').remove();
+							schooledu.append('<li>'+$("#sseQualification option:selected").text()+' <span class="drop-at"> at </span> '+schoolName+' <br><span class="drop-time">'+achievedOn+'</span></li>');
+							$("#saveChangesStatus").fadeOut();
 						}
 					},
 					error : function(e) {

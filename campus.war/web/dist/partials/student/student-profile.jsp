@@ -299,11 +299,14 @@
                                 <label for="">Education</label>
                                 <button data-toggle="modal" data-target="#studentSchoolEducationModal">Edit</button>
                             </div>
-
+							<br>
                             <div class="widget-content">
+                            	<span style="color:#6187c7">School Education</span>
+                                <ul class="ul-education" id="li-std-schooledu">
+                                </ul>
+                                <br>
+                                <span style="color:#6187c7">Higher Education</span>
                                 <ul class="ul-education">
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
-                                    <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
                                     <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
                                     <li>Bachelor’s Degree, E-Commerce <span class="drop-at">at</span> UCLA <br><span class="drop-time">March 2012 - Now</span></li>
                                 </ul>
@@ -524,6 +527,9 @@
 
 		<div class="tab-content ">
 			<div class="tab-pane active" id="1">
+			
+			<br>
+			<p>Please add you most highest completed school education details.</p>
 				<div class="">
       				<div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div>
 			Grade  
@@ -574,6 +580,102 @@
 			</div>
 			<div class="tab-pane" id="2">
 				<h3>Higher Education</h3>
+				
+				<div class="">
+      <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
+			Institute of Study  
+			<input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')">
+			<span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
+			<br/>
+			Affiliated Institute  
+			<input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')">
+			<span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span><br>
+			<br/>
+			
+			Area of study
+			<select id="areaofstudy" name = "areaofstudy" onchange="clearField('areaofstudyError')">
+				<option value="">--Select One--</option>
+			</select> <span id="areaofstudyError" name="areaofstudyError" style="color:red"></span>
+			<br/>
+			Award
+			<select id="award" name = "award" onchange="clearField('awardError')">
+				<option value="">--Select One--</option>
+			</select> <span id="awardError" name="awardError" style="color:red"></span>
+			<br/>
+			Student ID (University Index) <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')">
+			<span id="studentIdError" name="studentIdError" style="color:red"></span><br>
+			
+			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')">
+			<span id="gpa" name="gpa" style="color:red"></span><br>
+			
+			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
+			<span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span><br>
+			
+			Completed On <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
+			<span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span><br>
+			
+			Medium
+			<select name="heMedium" id="heMedium" onchange="clearField('heMediumError')">
+				<option value="">--Select One--</option>
+			</select><span name="heMediumError" id="heMediumError" style="color:red"></span>
+			<br/>
+			
+			Country
+			 <input type="text" id="heCountry" name="heCountry" list="heCountryList" placeholder="-- Select Country --"/>
+			 	<datalist name="heCountryList" id="heCountryList">
+			 	</datalist>
+			<br/>
+			<input hidden id="heCountryvalue" name="heCountryvalue"/>
+			
+			Description
+			<textarea rows="5" cols="40" name="heDescription" id="heDescription" ></textarea>
+			
+						<br/><br/>
+					<form id="frm-hedu" action="/path/to/your/script" method="POST">
+
+						<table id="higherEdutbl"
+							class="table table-striped table-bordered dt-responsive nowrap"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
+									<th><b>Institute</b></th>
+									<th><b>Certificate</b></th>
+									<th><b>Result</b></th>
+									<th><b>Medium</b></th>
+									<th><b>Country</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th><b>Institute</b></th>
+									<th><b>Certificate</b></th>
+									<th><b>Result</b></th>
+									<th><b>Medium</b></th>
+									<th><b>Country</b></th>
+									<th><b>Duration</b></th>
+									<th><b>Description</b></th>
+									<th></th>
+								</tr>
+							</tfoot>			
+						</table>
+						<hr>
+						<p>
+							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+						</p>
+						<pre id="higherEdu-console"></pre>
+					</form>
+					<br />
+			
+			
+	  </div>
+				 	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
+        			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+        			<button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
 			</div>
 		</div>
 	</div>
