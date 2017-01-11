@@ -1,5 +1,9 @@
 package com.genesiis.campus.validation;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -25,6 +29,8 @@ package com.genesiis.campus.validation;
 //20170109 CW c36-add-tutor-details modified isValidLandNumber() method
 //20170109 CW c36-add-tutor-details modified isValidAddressLine1() method
 //20170109 CW c36-add-tutor-details modified validateTutorFields() method
+//20170109 CW c36-add-tutor-details added isValidUserNameLength() method
+//20170111 CW c36-add-tutor-details modified validateTutorFields() method, isValidURL(), isValidWhatsappViber(), isValidUserNameLength() methods added
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,7 +54,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param value
-	 * @return boolean to validate is given string contains a null value.
+	 * @return boolean returns true if the text contains some value.
 	 **/
 	public static boolean isNotEmpty(String text) {
 		boolean status = false;
@@ -182,7 +188,7 @@ public class Validator {
 	/**
 	 * Validate Tutor fields before values go to database.
 	 * 
-	 * @author Chathuri
+	 * @author Chathuri, Chinthaka
 	 * @param helper
 	 * @return String
 	 * @throws Exception
@@ -190,20 +196,9 @@ public class Validator {
 	public String validateTutorFields(IDataHelper helper) throws Exception {
 
 		String message = "True"; 
-		try {
-			
-			
-			System.out.println("country = "+helper.getParameter("countryDetails"));
-			System.out.println("town = "+helper.getParameter("townDetails"));
-			
-			
-			
-			if (!(Validator.isNotEmpty(helper.getParameter("username"))
-					&& (Validator.isNotEmpty(helper.getParameter("password")))
-					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword")))
-					&& (Validator.isNotEmpty(helper.getParameter("firstname")))
+		try {		
+			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
 					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
-					&& (Validator.isNotEmpty(helper.getParameter("email")))
 					&& (!((helper.getParameter("countryDetails")).equals("0")))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
@@ -211,18 +206,16 @@ public class Validator {
 					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
 					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
 					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("address1"))))) {
+					&& (Validator.isNotEmpty(helper.getParameter("address1")))
+					&& (Validator.isNotEmpty(helper.getParameter("email")))
+					&& (Validator.isNotEmpty(helper.getParameter("username")))
+					&& (Validator.isNotEmpty(helper.getParameter("password")))
+					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
 				message = SystemMessage.EMPTYFIELD.message();
-			} else if (!isValidUserName(helper)) {
-				message = SystemMessage.USERNAME_EXIST.message();
-			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
-				message = SystemMessage.PASSWORDERROR.message();
 			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
 				message = SystemMessage.FIRSTNAMEERROR.message();
 			} else if (!isValidLastname(helper.getParameter("lastname"))) {
 				message = SystemMessage.LASTNAMEERROR.message();
-			} else if (!validateEmail(helper.getParameter("email"))) {
-				message = SystemMessage.EMAILERROR.message();
 			} else if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
 				message = SystemMessage.MOBILECOUNTRYCODEERROR.message();
 			} else if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
@@ -237,69 +230,38 @@ public class Validator {
 				message = SystemMessage.LANDNUMBERERROR.message();
 			} else if (!isValidAddressLine1(helper.getParameter("address1"))) {
 				message = SystemMessage.ADDRESSLINE1ERROR.message();
-			}
+			} else if (!isValidURL(helper.getParameter("weblink"))) {
+				message = SystemMessage.WEBLINKERROR.message();
+			} else if (!isValidURL(helper.getParameter("facebook"))) {
+				message = SystemMessage.FACEBOOKERROR.message();
+			} else if (!isValidURL(helper.getParameter("linkedin"))) {
+				message = SystemMessage.LINKEDINERROR.message();
+			} else if (!isValidURL(helper.getParameter("twitter"))) {
+				message = SystemMessage.TWITTERERROR.message();
+			} else if (!isValidURL(helper.getParameter("instagram"))) {
+				message = SystemMessage.INSTAGRAMERROR.message();
+			} else if (!isValidURL(helper.getParameter("myspace"))) {
+				message = SystemMessage.MYSPACEERROR.message();
+			} else if (!isValidWhatsappViber(helper.getParameter("whatsapp"))) {
+				message = SystemMessage.WHATSAPPERROR.message();
+			} else if (!isValidWhatsappViber(helper.getParameter("viber"))) {
+				message = SystemMessage.VIBERERROR.message();
+			} else if (!validateEmail(helper.getParameter("email"))) {
+				message = SystemMessage.EMAILERROR.message();
+			} else if (!isValidUserName(helper)) {
+				message = SystemMessage.USERNAME_EXIST.message();
+			} else if (!isValidUserNameLength(helper.getParameter("username"))) {
+				message = SystemMessage.USERNAME_LENGTH.message();
+			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
+				message = SystemMessage.PASSWORDERROR.message();
+			} 
 
 		} catch (Exception e) {
 			log.error("validateTutorFields: Exception" + e.toString());
 			throw e;
 		}
 		return message;
-	}
-
-	/**
-	 * Check the entered username is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param username
-	 * @return boolean - Returns true if the requested username is a valid one
-	 */
-	public boolean isValidUserName(IDataHelper helper) throws Exception {
-		boolean valid = false;
-		try {
-
-			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
-	
-			if (Validator.isNotEmpty(helper.getParameter("username"))){
-				final Tutor tutor = new Tutor();
-				tutor.setUsername(helper.getParameter("username"));
-				tutorCollection = new TutorUserNameDAO().findById(tutor);		
-			}
-			
-			if (tutorCollection.isEmpty()) {
-				valid = true; // user name does not exist
-			} else {
-				valid = false; // user name Already exists
-			}
-			
-
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered password is a valid one & is it same with confirmPassword value
-	 * 
-	 * @author Chinthaka
-	 * @param password, confirmPassword
-	 * @return boolean - Returns true if the requested password & confirmPassword are same & valid in lengths
-	 */
-	public boolean isValidPassword(String password, String confirmPassword) throws Exception {
-		boolean valid = false;
-		try {
-
-			if ((isNotEmpty(password)) && (isNotEmpty(confirmPassword)) && (password.length() > 5) && (password.length() < 21) && (password.equals(confirmPassword))) {
-				valid = true;
-			}
-
-		} catch (Exception e) {
-			log.error("isValidPassword:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
+	}	
 	
 	/**
 	 * Check the entered firstName is a valid one
@@ -312,7 +274,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(firstName)) && (firstName.length() < 36)) {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 21)) {
 				valid = true;
 			}
 
@@ -334,7 +296,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 36)) {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 21)) {
 				valid = true;
 			}
 
@@ -400,7 +362,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 12)) {
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11)) {
 				valid = true;
 			}
 
@@ -422,12 +384,138 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 50)) {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31)) {
 				valid = true;
 			}
 
 		} catch (Exception e) {
 			log.error("isValidAddressLine1:  Exception" + e.toString());
+			throw e;
+		}
+		return valid;
+	}
+
+	/**
+	 * Check the entered url is a valid one
+	 * 
+	 * @author Chinthaka
+	 * @param url
+	 * @return boolean - Returns true if the requested url is a valid one
+	 */
+	public boolean isValidURL(String url) {  
+
+	    URL u = null;
+	    
+	    if ((isNotEmpty(url))){
+		    try {  
+		        u = new URL(url);  
+		    } catch (MalformedURLException e) {  
+		        return false;  
+		    }
+	
+		    try {  
+		        u.toURI();  
+		    } catch (URISyntaxException e) {  
+		        return false;  
+		    }  
+	    }
+	    return true;  
+	}
+	
+	/**
+	 * Check the entered viber or whatsapp numbers are valid
+	 * 
+	 * @author Chinthaka
+	 * @param number
+	 * @return boolean - Returns true if the requested number is a valid one
+	 */
+	public boolean isValidWhatsappViber(String number) throws Exception {
+		boolean valid = false;
+		
+		try{
+			double newNumber = Double.parseDouble(number);
+		} catch (Exception e){
+			return false;
+		}		
+		
+		if ((isNotEmpty(number)) && (number.length() < 21)) {
+			valid = true;
+		}
+		return valid;
+	}
+	
+	/**
+	 * Check the entered username is a valid one
+	 * 
+	 * @author Chinthaka
+	 * @param username
+	 * @return boolean - Returns true if the requested username is a valid one
+	 */
+	public boolean isValidUserName(IDataHelper helper) throws Exception {
+		boolean valid = false;
+		try {
+
+			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
+	
+			if (Validator.isNotEmpty(helper.getParameter("username"))){
+				final Tutor tutor = new Tutor();
+				tutor.setUsername(helper.getParameter("username"));
+				tutorCollection = new TutorUserNameDAO().findById(tutor);		
+			}
+			
+			if (tutorCollection.isEmpty()) {
+				valid = true; // user name does not exist
+			} else {
+				valid = false; // user name Already exists
+			}
+			
+
+		} catch (Exception e) {
+			log.error("isValidUserName:  Exception" + e.toString());
+			throw e;
+		}
+		return valid;
+	}
+	
+	/**
+	 * Check the entered user name is having a valid size
+	 * user name should have at least 6 characters & should be not more than 20 characters
+	 * @author Chinthaka
+	 * @param username
+	 * @return boolean - Returns true if the requested username is having valid lengths
+	 */
+	public boolean isValidUserNameLength(String username) throws Exception {
+		boolean valid = false;
+		try {
+
+			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 21)) {
+				valid = true;
+			}
+
+		} catch (Exception e) {
+			log.error("isValidUserNameLength:  Exception" + e.toString());
+			throw e;
+		}
+		return valid;
+	}
+	
+	/**
+	 * Check the entered password is a valid one & is it same with confirmPassword value
+	 * 
+	 * @author Chinthaka
+	 * @param password, confirmPassword
+	 * @return boolean - Returns true if the requested password & confirmPassword are same & valid in lengths
+	 */
+	public boolean isValidPassword(String password, String confirmPassword) throws Exception {
+		boolean valid = false;
+		try {
+
+			if ((isNotEmpty(password)) && (isNotEmpty(confirmPassword)) && (password.length() > 5) && (password.length() < 21) && (password.equals(confirmPassword))) {
+				valid = true;
+			}
+
+		} catch (Exception e) {
+			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
