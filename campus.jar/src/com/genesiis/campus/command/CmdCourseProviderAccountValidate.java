@@ -32,7 +32,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 		final String action;
 		SystemMessage message = null;
 		Validator validator = new Validator();
-		boolean prefixFlag = true;
+		boolean validationFlag = true;
 
 		try {
 			if (!validator.isEmptyString(helper.getParameter("action"))) {
@@ -58,15 +58,15 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProviderAccount);
 						if (usernameCollection.size() != 0) {
 							message = SystemMessage.USERNAME_INVALID;
-							prefixFlag = false;
+							validationFlag = false;
 
 						} else {
 							message = SystemMessage.USERNAME_VALID;
-							prefixFlag = true;
+							validationFlag = true;
 						}
 					} else {
 						message = SystemMessage.EMPTY_USERNAME;
-						prefixFlag = false;
+						validationFlag = false;
 					}
 				} else if (action
 						.equalsIgnoreCase("COURSE_PROVIDER_PREFIX_VALIDATION")) {
@@ -82,24 +82,23 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProvider);
 						if (prefixCollection.size() != 0) {
 							message = SystemMessage.PREFIX_INVALID;
-							prefixFlag = false;
+							validationFlag = false;
 
 						} else if (prefixCollection.size() == 0) {
 							message = SystemMessage.PREFIX_VALID;
-							prefixFlag = true;
+							validationFlag = true;
 						}
 					} else {
 						message = SystemMessage.EMPTY_FIELD;
-						prefixFlag = false;
+						validationFlag = false;
 					}
 				}
 
 			} else {
-				message = SystemMessage.EMPTY_USERNAME;
-				prefixFlag = false;
+				validationFlag = false;
 			}
 
-			helper.setAttribute("prefixFlag", prefixFlag);
+			helper.setAttribute("validationFlag", validationFlag);
 			
 		} catch (SQLException exception) {
 			message = SystemMessage.ERROR;
