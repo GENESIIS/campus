@@ -5,8 +5,15 @@ package com.genesiis.campus.entity;
 //				(in findById(Object) to select the most recent school attended, the most recent 
 //				higher education qualification and the most recent position held 
 //20160105 MM c25-student-dashboard-MP-mm Added JavaDoc comment for findById(Object) method 
-//20170111 MM c25-student-create-dashboard-MP-mm Moved ResultSet declaration to outside of try clause so it can
-//				be closed in the finally clause
+//20160111 MM c25-student-dashboard-MP-mm Modified code in 
+//				retrieveStudentsFromResultSet(ResultSet, Collection<Collection<String>>) 
+//				to remove statement that assigned an ArrayList to a Collection, before which that 
+//				collection was passed as the parameter to the "add()" method of another Collection. 
+//				Now directly passing the ArrayList object itself to the "add()" method of the Collection;
+//				added code to close the ResultSet-typed object object inside findById(Object);
+//				modified query to remove hard-coded student number (it is now taken via SQL parameter)
+//20170111 MM c25-student-dashboard-MP-mm Moved ResultSet declaration to outside of try clause so it can be closed 
+//				in the finally clause in findById(Object) method in StudentBasicBioDAO
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
@@ -67,7 +74,7 @@ public class StudentBasicBioDAO implements ICrud {
 			StringBuilder query = new StringBuilder("SELECT s.FIRSTNAME, s.LASTNAME, s.DESCRIPTION, t.NAME AS TOWNNAME, he.INSTITUTE, he.AFFINSTITUTE, se.SCHOOL, ");
 					query.append("c.NAME AS COUNTRYNAME, pe.ORGANIZATION, pe.DESIGNATION, s.CODE ");
 					query.append("FROM [CAMPUS].[STUDENT] s ");
-					query.append("JOIN [CAMPUS].[TOWN] t ON (s.CODE = 1 AND t.CODE = s.TOWN) ");
+					query.append("JOIN [CAMPUS].[TOWN] t ON (s.CODE = ? AND t.CODE = s.TOWN) ");
 					query.append("JOIN [CAMPUS].[HIGHERDUCATION] he ON (s.CODE = he.STUDENT AND he.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[HIGHERDUCATION] ORDER BY COMPLETIONON DESC)) ");
 					query.append("JOIN [CAMPUS].[SCHOOLEDUCATION] se ON (s.CODE = se.STUDENT AND se.CODE = (SELECT TOP 1 CODE FROM [CAMPUS].[SCHOOLEDUCATION] ORDER BY ACHIVEDON DESC)) ");
 					query.append("JOIN [CAMPUS].[COUNTRY2] c ON (c.CODE = se.COUNTRY) ");
@@ -75,10 +82,10 @@ public class StudentBasicBioDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
+			ps.setInt(1, studentCode);
 			
 			rs = ps.executeQuery();
 			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
-
 		} catch (ClassCastException cce) {
 			Log.error("findById(Object): ClassCastException: " + cce.toString());
 			throw new IllegalArgumentException(
@@ -119,8 +126,7 @@ public class StudentBasicBioDAO implements ICrud {
 			singleStudent.add(rs.getString("ORGANIZATION")); // 8
 			singleStudent.add(rs.getString("DESIGNATION")); // 9
 			singleStudent.add(rs.getString("CODE")); // 10
-			final Collection<String> singleStudentCollection = singleStudent;
-			studentCollection.add(singleStudentCollection);
+			studentCollection.add(singleStudent);
 		}
 	}
 
