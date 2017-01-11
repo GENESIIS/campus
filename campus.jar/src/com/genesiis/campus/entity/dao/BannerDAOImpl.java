@@ -120,9 +120,10 @@ public class BannerDAOImpl implements BannerICrud{
 		}
 		return pageList;
 	}
+	
 	/**
 	 * Retrieve active Page Slots result set by page code.
-	 * @param 
+	 * @param pageCode page code number
 	 * @author DJ
 	 * @return Collection
 	 */
@@ -160,10 +161,11 @@ public class BannerDAOImpl implements BannerICrud{
 		}
 		return pageSlotList;
 	}
+	
 	/**
 	 * Retrieve Active banner providers by Page Slot.
 	 * 
-	 * @param 
+	 * @param pageSlotCode page Slot Code number
 	 * @author DJ
 	 * @return Collection
 	 */
@@ -190,10 +192,10 @@ public class BannerDAOImpl implements BannerICrud{
 			}	
 
 		} catch (SQLException sqlException) {
-			log.info("findById() sqlException" + sqlException.toString());
+			log.info("getBannerProviderByPageSlotCode() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById() Exception" + e.toString());
+			log.info("getBannerProviderByPageSlotCode() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);

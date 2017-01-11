@@ -81,7 +81,13 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	/**
+	 * Retrieve banner statistic information for banner statistic report generation.
+	 * @param bannerStatSearchDTO BannerStatSearchDTO DTO entity
+	 * @author DJ
+	 * @return Collection
+	 */
 	@Override
 	public Collection<Collection<String>> getBannerStatisticReport(BannerStatSearchDTO bannerStatSearchDTO) throws SQLException, Exception {
 		Connection conn = null;
@@ -132,14 +138,13 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 				bannerList.add(resultSet.getString("VIEWDATE"));
 				bannerList.add(resultSet.getString("BANNERHITCOUNT"));
 				allBannerStatsList.add(bannerList);
-			}
-			
+			}			
 			
 		} catch (SQLException sqlException) {
-			log.info("findById() sqlException" + sqlException.toString());
+			log.info("getBannerStatisticReport() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById() Exception" + e.toString());
+			log.info("getBannerStatisticReport() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);

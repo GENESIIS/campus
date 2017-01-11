@@ -11,6 +11,7 @@ import com.genesiis.campus.entity.BannerStatDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.PageDAO;
 import com.genesiis.campus.entity.PageSlotDAO;
+import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
 import com.genesiis.campus.entity.dao.BannerDAOImpl;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
@@ -48,8 +49,7 @@ public class CmdReportBannerStatistics implements ICommand {
 			String commandString = helper.getParameter("CCO");
 			
 			switch (Operation.getOperation(commandString)) {
-			case SEARCH_VIEW_BANNER_STATISTICS:
-				//final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
+			case SEARCH_VIEW_BANNER_STATISTICS:				
 				final Collection<Collection<String>> pageDetails = new BannerDAOImpl().getAllPages();
 		        iView.setCollection(pageDetails);
 				break;
@@ -75,8 +75,12 @@ public class CmdReportBannerStatistics implements ICommand {
 			throw exception;
 		}
 		return iView;
-	}	
-
+	}
+	
+	/** Retrieving page wise page slots.
+	 * @author DJ 
+	 * @param helper IDataHelper object
+	 */
 	private void generatePageWisePageSlots(IDataHelper helper) throws Exception {
 		try {
 			String pageCodeString = helper.getParameter("pageCode");
@@ -94,6 +98,10 @@ public class CmdReportBannerStatistics implements ICommand {
 		}
 	}
 	
+	/** Retrieving page slot wise Banner provider(advertiser).
+	 * @author DJ 
+	 * @param helper IDataHelper object
+	 */
 	private void generatePageSlotWiseAdvertiser(IDataHelper helper) throws Exception{
 		try {
 		String pageSlotCodeString = helper.getParameter("pageSlotCode");
@@ -113,8 +121,7 @@ public class CmdReportBannerStatistics implements ICommand {
 
 	/** Identify input search parameters and retrieve particular  banner statistics result set according to search criteria.
 	 * @author DJ
-	 * @param helper
-	 * @throws Exception
+	 * @param helper IDataHelper object
 	 */
 	private void generateReportResults(IDataHelper helper) throws Exception {
 		List<String> msgList = new ArrayList<String>();
@@ -132,8 +139,8 @@ public class CmdReportBannerStatistics implements ICommand {
 				searchDTO.setBannerProviderCode(Integer.parseInt(bannerProviderCodeString));
 			}
 			
-			if(isReportBannerStatValidate(searchDTO,helper,msgList )){
-				final Collection<Collection<String>> bannerStatDetails = new BannerStatDAO().findById(searchDTO);
+			if(isReportBannerStatValidate(searchDTO,helper,msgList )){				
+				final Collection<Collection<String>> bannerStatDetails = new AdminReportDAOImpl().getBannerStatisticReport(searchDTO);
 				helper.setAttribute("bannerStatDetails", bannerStatDetails);				
 			}else{
 				helper.setAttribute("message", msgList);
@@ -146,11 +153,9 @@ public class CmdReportBannerStatistics implements ICommand {
 	}
 	
 	/**
-	 * Validate mandatory input search parameters.
-	 * 
+	 * Validate mandatory input search parameters. 
 	 * @author DJ
-	 * @param helper
-	 * @throws Exception
+	 * @param helper IDataHelper object	 
 	 */
 	private boolean isReportBannerStatValidate(BannerStatSearchDTO searchDTO,
 			IDataHelper helper, List<String> msgList) throws Exception {
