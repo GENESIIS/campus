@@ -23,12 +23,7 @@ p    {color: blue;}
 
 	<div>
 		<h1>Report Generation</h1><p>Please Select the report type</p>
-	</div>
-	<hr>
-	<div>		
-		<a href="/dist/partials/bannerStatisticsView.jsp"><u>Banner statistics</u></a>
-	</div>
-	<hr>	
+	</div>		
 	<hr>
 	<div>		
 		<a href="dist/partials/reportRegisteredStudents.jsp"><u>Registered Students </u></a>
