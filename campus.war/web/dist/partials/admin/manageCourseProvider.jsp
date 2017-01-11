@@ -569,7 +569,7 @@
 											name="accountStatus" id="accountStatus" value="inactive" />
 										InActive &nbsp; -->
 									
-										<span id="errorAccountStatusValue" class="error-message">${errorAccountStatus }</span>
+										<span id="errorAccountStatus" class="error-message">${errorAccountStatus }</span>
 									</h1>
 								</div>
 							</li>

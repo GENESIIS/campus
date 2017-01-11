@@ -4,6 +4,7 @@
  */
 
     window.prefixFlag = true;
+    window.usernameFlag =true;
     
 /**
  * 
@@ -57,12 +58,14 @@ function providerUsernameValidation() {
 	var userEmail = document.getElementById('providerEmail').value;
 
 	if (!isempty(selectedUsername)) {
-		document.getElementById('errorUsername').innerHTML = "**Username is empty.";
-		if(selectedUsername.length <6){
-			document.getElementById('errorUsername').innerHTML = "**Username should have atleast 6 characters.";
-		}
+		document.getElementById('errorProviderUsername').innerHTML = "**Username is empty.";
 		document.getElementById('providerUsername').focus();
+		return false;
 	} else {
+		 if(selectedUsername.length <6){
+				document.getElementById('errorProviderUsername').innerHTML = "**Username should have atleast 6 characters.";
+				return false;
+			}else{
 
 		$
 				.ajax({
@@ -80,17 +83,17 @@ function providerUsernameValidation() {
 
 						if (response !== undefined && response !== null) {
 							document.getElementById('errorProviderUsername').innerHTML = response.userMessage;
-							window.prefixFlag == response.prefixFlag;
+							window.usernameFlag == response.prefixFlagvalidationFlag;
 							
-							if(window.prefixFlag == true){
+							if(window.usernameFlag == "true"){
 								return true;
-							}else{
-								return false;
+								} else {
+									return false;
+								}
 							}
-						}
-					},
-				});
-
+						},
+					});
+		}
 	}
 }
 
@@ -101,6 +104,7 @@ function providerPrefixValidation() {
 	if (!isempty(selectedPrefix)) {
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
 		document.getElementById('uniquePrefix').focus();
+		return false;
 	} else if (isempty(selectedPrefix)) {
 		document.getElementById('errorUniquePrefix').innerHTML = "";
 
@@ -120,7 +124,7 @@ function providerPrefixValidation() {
 						if (response !== undefined && response !== null) {
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
-							window.prefixFlag == response.prefixFlag;
+							window.prefixFlag == response.validationFlag;
 							
 							if(window.prefixFlag == true){
 								return true;
@@ -141,8 +145,16 @@ function vaidateCourseProviderDeatils(form) {
 
 	var errorMessageList = document.getElementsByClassName('error-message');
 	
+	//clear all previous error messages
 	for (var i = 0; i < errorMessageList.length; i++) { 
 		errorMessageList[i].innerHTML = "";
+	}
+	
+	if(!providerPrefixValidation()){
+		return false;
+	}
+	if( !providerUsernameValidation()){
+		return false;
 	}
 	
 	var courseProvider = $("#courseProvider").val();
@@ -185,12 +197,6 @@ function vaidateCourseProviderDeatils(form) {
 
 	var validateFlag = true;
 	
-	
-	//check whether prefix is valid
-	if(!providerPrefixValidation() || !providerUsernameValidation()){
-		return false;
-	}
-
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
 		document.getElementById('courseProvider').focus();
@@ -394,11 +400,12 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-	if (!$("#accountStatus").is(":checked")) {
-		document.getElementById('errorAccountStatusValue').innerHTML = "**Select the account status.";
-		document.getElementById('accountStatus').focus();
-		flag = false;
-	}
+//	if (!$("#accountStatus").is(":checked")) {
+//		document.getElementById('errorAccountStatus').innerHTML = "**Select the account status.";
+//		document.getElementById('accountStatus').focus();
+//		flag = false;
+//	}
+
 
 	return flag;
 }
