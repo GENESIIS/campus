@@ -17,6 +17,6 @@ public interface BannerICrud extends ICrud {
 	
 	public Collection<Collection<String>> getAllPageSlotByPageCode(int pageCode) throws SQLException,Exception;
 	
-	public Collection<Collection<String>> getBannerByPageSlotCode(int pageSlotCode) throws SQLException,Exception;
+	public Collection<Collection<String>> getBannerProviderByPageSlotCode(int pageSlotCode) throws SQLException,Exception;
 
 }
