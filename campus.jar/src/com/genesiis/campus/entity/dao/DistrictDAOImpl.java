@@ -104,9 +104,7 @@ public class DistrictDAOImpl  implements DistrictICrud{
 				singleDistrictList.add(rs.getString("CODE"));
 				singleDistrictList.add(rs.getString("PROVINCE"));
 				singleDistrictList.add(rs.getString("NAME"));
-
-				final Collection<String> singleDistrictCollection = singleDistrictList;
-				allDistrictList.add(singleDistrictCollection);
+				allDistrictList.add(singleDistrictList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());
