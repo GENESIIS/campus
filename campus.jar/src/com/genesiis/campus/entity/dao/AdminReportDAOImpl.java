@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.dao;
 
 //20170111 DJ c52-report-banner-statistics-MP-dj Initiated AdminReportDAOImpl.java
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getBannerStatisticReport() method.
+//20170111 DJ c52-report-banner-statistics-MP-dj Implemented getRegisteredStudentReport() method.
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
@@ -162,10 +163,72 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 	 * @return Collection of strings
 	 */
 	@Override
-	public Collection<Collection<String>> getRegisteredStudentReport(
-			StudentSearchDTO searchDTO) throws SQLException, Exception {
-		
-		return null;
-	}
+	public Collection<Collection<String>> getRegisteredStudentReport(StudentSearchDTO searchDTO) throws SQLException, Exception {		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;		
+		final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
+			sb.append(" STUDENT.CRTON AS REGISTEREDDATE, STUDENT.LASTLOGGEDINDATE AS LASTLOGGEDINDATE,ISNULL(INTEREST.NAME, ' ') AS INTERESTNAME, TOWN.NAME AS TOWNNAME  FROM CAMPUS.STUDENT STUDENT ");
+			sb.append(" INNER JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = STUDENT.TOWN ");
+		    sb.append(" INNER JOIN [CAMPUS].[DISTRICT] DISTRICT ON DISTRICT.CODE = TOWN.DISTRICT  ");
+		    sb.append(" LEFT JOIN [CAMPUS].[STUDENTINTEREST] STUDENTINTEREST ON STUDENTINTEREST.STUDENT=STUDENT.CODE ");
+		    sb.append(" LEFT JOIN [CAMPUS].[INTEREST]  INTEREST ON STUDENTINTEREST.INTEREST=INTEREST.CODE ");
+			sb.append(" WHERE 1=1 ");
+			if (searchDTO.getAccountType() > 0) {
+				sb.append("AND STUDENT.ACCOUNTTYPE= ");
+				sb.append(searchDTO.getAccountType());
+			}
+			if (searchDTO.getStudentStatus() >= 0) {
+				sb.append("AND	STUDENT.ISACTIVE= ");
+				sb.append(searchDTO.getStudentStatus());
+			}
+			if (searchDTO.getDistrictCode() > 0) {
+				sb.append("AND DISTRICT.CODE = ");
+				sb.append(searchDTO.getDistrictCode());
+			}
+			
+			if ((searchDTO.getFromDate() != null && searchDTO.getFromDate()	.getTime() > 0)	&& (searchDTO.getToDate() != null && searchDTO.getToDate().getTime() > 0)) {
+				sb.append("AND STUDENT.CRTON BETWEEN ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append(" ' AND ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append(" '  ");
+			} else if (searchDTO.getFromDate() != null && searchDTO.getFromDate().getTime() > 0) {
+				sb.append("AND STUDENT.CRTON >= ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append("'");
+			} else if (searchDTO.getToDate() != null	&& searchDTO.getToDate().getTime() > 0) {
+				sb.append("AND STUDENT.CRTON <= ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append("'");			
+			}
+			
+			stmt = conn.prepareStatement(sb.toString());			
+			resultSet= stmt.executeQuery();			
+			while (resultSet.next()) {
+				final ArrayList<String> singleProvider = new ArrayList<String>();
+				singleProvider.add(resultSet.getString("STUDENTCODE"));				
+				singleProvider.add(resultSet.getString("STUDENTNAME"));	
+				singleProvider.add(resultSet.getString("INTERESTNAME"));
+				singleProvider.add(resultSet.getString("TOWNNAME"));
+				singleProvider.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("STUDENTSTATUS")));
+				singleProvider.add(resultSet.getString("REGISTEREDDATE"));
+				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));				
+				registeredStudentList.add(singleProvider);
+			}
 
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return registeredStudentList;
+	}
 }
