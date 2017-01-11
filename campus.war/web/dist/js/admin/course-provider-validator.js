@@ -3,6 +3,8 @@
  * 
  */
 
+    window.prefixFlag = true;
+    
 /**
  * 
  * @param fieldValue
@@ -77,7 +79,14 @@ function providerUsernameValidation() {
 					success : function(response) {
 
 						if (response !== undefined && response !== null) {
-							document.getElementById('errorUsername').innerHTML = response.userMessage;
+							document.getElementById('errorProviderUsername').innerHTML = response.userMessage;
+							window.prefixFlag == response.prefixFlag;
+							
+							if(window.prefixFlag == true){
+								return true;
+							}else{
+								return false;
+							}
 						}
 					},
 				});
@@ -87,7 +96,6 @@ function providerUsernameValidation() {
 
 function providerPrefixValidation() {
 	
-    var prefixFlag = true;
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
 
 	if (!isempty(selectedPrefix)) {
@@ -110,10 +118,15 @@ function providerPrefixValidation() {
 					success : function(response) {
 
 						if (response !== undefined && response !== null) {
-							window.responseErrorPrefix = response.userMessage;
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
-							prefixFlag == false;
+							window.prefixFlag == response.prefixFlag;
+							
+							if(window.prefixFlag == true){
+								return true;
+							}else{
+								return false;
+							}
 						}
 					},
 				});
@@ -171,6 +184,12 @@ function vaidateCourseProviderDeatils(form) {
 	var accountDescription = $("#accountDescription").val();
 
 	var validateFlag = true;
+	
+	
+	//check whether prefix is valid
+	if(!providerPrefixValidation() || !providerUsernameValidation()){
+		return false;
+	}
 
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
@@ -178,6 +197,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerName)) {
+		alert("kdfjskdfjskj");
 		document.getElementById('errorProviderName').innerHTML = "**Give a course provider name.";
 		document.getElementById('providerName').focus();
 		flag = false;
@@ -339,7 +359,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('selectedProviderType').focus();
 		flag = false;
 	}
-	if (!isempty(providerStatus) || (providerStatus ==0)) {
+	if (!$("#providerStatus").is(":checked")) {
 		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 		document.getElementById('providerStatus').focus();
 		flag = false;
@@ -355,7 +375,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerUsername)) {
-		document.getElementById('errorUsername').innerHTML = "**Give a username.";
+		document.getElementById('errorProviderUsername').innerHTML = "**Give a username.";
 		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
@@ -374,11 +394,11 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-//	if (!isempty(accountStatus) ||(accountStatus != 0) ||(accountStatus != 1)) {
-//		document.getElementById('errorAccountStatusValue').innerHTML = "**Give a course provider Unique name.";
-//		document.getElementById('accountStatus').focus();
-//		flag = false;
-//	}
+	if (!$("#accountStatus").is(":checked")) {
+		document.getElementById('errorAccountStatusValue').innerHTML = "**Select the account status.";
+		document.getElementById('accountStatus').focus();
+		flag = false;
+	}
 
 	return flag;
 }
