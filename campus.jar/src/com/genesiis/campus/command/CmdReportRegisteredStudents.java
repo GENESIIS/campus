@@ -4,7 +4,6 @@ package com.genesiis.campus.command;
 //DJ 20170104 c53-report-registered-students-MP-dj Identified command SEARCH_VIEW_REGISTERED_STUDENTS
 
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
 import com.genesiis.campus.entity.dao.DistrictDAOImpl;
@@ -83,22 +82,21 @@ public class CmdReportRegisteredStudents implements ICommand {
 					studentSearchDTO.setDistrictCode(Integer.valueOf(districtCodeString));
 				}
 			}					
-			try {
-				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				if (UtilityHelper.isNotEmpty(startDateString)) {
-					studentSearchDTO.setFromDate(df.parse((startDateString)));
-				}
-				if (UtilityHelper.isNotEmpty(endDateString)) {
-					studentSearchDTO.setToDate(df.parse((endDateString)));
-				}		
 
-			} catch (ParseException parseException) {
-				log.error("generateReportResults() : ParseException "+ parseException.toString());
-				throw parseException;
+			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			if (UtilityHelper.isNotEmpty(startDateString)) {
+				studentSearchDTO.setFromDate(df.parse((startDateString)));
 			}
+			if (UtilityHelper.isNotEmpty(endDateString)) {
+				studentSearchDTO.setToDate(df.parse((endDateString)));
+			}
+
 			final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			helper.setAttribute("registeredStudentList", registeredStudentList);
-		} catch (Exception exception) {
+		}  catch (ParseException parseException) {
+			log.error("generateReportResults() : ParseException "+ parseException.toString());
+			throw parseException;
+		}catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception.toString());
 			throw exception;
 		}
