@@ -8,6 +8,22 @@ theNewScript.src = "../../dist/js/institute/validation/validation.js";
 
 $(document).ready(function() {
 	displayTutorProfileImageAtPageLoad();
+	
+	$('#file-select').on('change', function(event){
+		//$('#file-from').on('submit', function(event){
+		event.stopPropagation(); 
+	    event.preventDefault(); 
+	    var files = event.target.files; 
+	    var data = new FormData();
+	    alert("files"+files[0]);
+	    alert("data"+ data[0]);
+	    $.each(files, function(key, value)
+	    {
+	        data.append(key, value);
+	    });
+	    postFilesData(data); 
+		
+	});
 });
 
 
@@ -33,6 +49,7 @@ function displayTutorProfileImageAtPageLoad(){
 				
 			} else{
 				// if the execution success but logically generated error application vice
+				
 				displayLabelMessage('displayLabel','red',response['message']);
 				}
 			
@@ -76,25 +93,14 @@ function displayLabelMessage(labelid,cssColour,message){
 
 function uploadImage(){
 	jQuery('#upload-button').html("Uploading ...").css({'color':'green','font-weight':'bold'});
-	$('#file-select').on('change', uploadFile);
+
 }
 
-function uploadFile(event){
-	
-	event.stopPropagation(); 
-    event.preventDefault(); 
-    var files = event.target.files; 
-    var data = new FormData();
-    $.each(files, function(key, value)
-    {
-        data.append(key, value);
-    });
-    postFilesData(data); 
- }
 
 
 function postFilesData(data)
 {
+	alert("data"+data);
  $.ajax({
     url: '../../../TutorController',
     type: 'POST',
@@ -110,12 +116,15 @@ function postFilesData(data)
     success:function(response){
 		
 		if(response['successCode']===1){
-			
+			alert("Inside success call");
 			displayLabelMessage('displayLabel','green',response['message']);
-			jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+//			jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+			displayTutorProfileImageAtPageLoad();
+			
 			
 		} else{
 			// if the execution success but logically generated error application vice
+			alert("success but successCode<>1");
 			displayLabelMessage('displayLabel','red',response['message']);
 			}
 		
@@ -143,6 +152,4 @@ function postFilesData(data)
 	
 });
 }
-
-
 
