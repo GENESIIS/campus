@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.dao;
 
 //20170111 DJ c52-report-banner-statistics-MP-dj Initiated BannerDAOImpl.java
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getAllPages() , getAllPageSlotByPageCode() methods.
+//20170111 DJ c52-report-banner-statistics-MP-dj Implemented getBannerProviderByPageSlotCode() methods.
 
 import com.genesiis.campus.command.CmdReportBannerStatistics;
 import com.genesiis.campus.entity.BannerICrud;
@@ -159,12 +160,45 @@ public class BannerDAOImpl implements BannerICrud{
 		}
 		return pageSlotList;
 	}
-
+	/**
+	 * Retrieve Active banner providers by Page Slot.
+	 * 
+	 * @param 
+	 * @author DJ
+	 * @return Collection
+	 */
 	@Override
-	public Collection<Collection<String>> getBannerByPageSlotCode(
-			int pageSlotCode) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Collection<String>> getBannerProviderByPageSlotCode(int pageSlotCode) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		final Collection<Collection<String>> allBannerList = new ArrayList<Collection<String>>();				
+		try {			
+			conn = ConnectionManager.getConnection();
+            final StringBuilder sb = new StringBuilder("SELECT DISTINCT ADVERTISER.CODE ADVERTISERCODE, ADVERTISER.NAME ADVERTISERNAME ");
+            sb.append("FROM [CAMPUS].[BANNER] BANNER INNER JOIN CAMPUS.ADVERTISER ADVERTISER ON BANNER.ADVERTISER=ADVERTISER.CODE WHERE BANNER.PAGESLOT= ? AND BANNER.ISACTIVE= ?");
+			
+			stmt=conn.prepareStatement(sb.toString());
+			stmt.setInt(1, pageSlotCode);
+			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			resultSet= stmt.executeQuery();	
+			while (resultSet.next()) {
+				final ArrayList<String> bannerList = new ArrayList<String>();
+				bannerList.add(resultSet.getString("ADVERTISERCODE"));								
+				bannerList.add(resultSet.getString("ADVERTISERNAME"));								
+				allBannerList.add(bannerList);
+			}	
+
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return allBannerList;
 	}
 
 	
