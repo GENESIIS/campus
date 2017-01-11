@@ -3,7 +3,6 @@ package com.genesiis.campus.command;
 //DJ 20161228 c53-report-registered-students-MP-dj created CmdReportRegisteredStudents.java
 //DJ 20170104 c53-report-registered-students-MP-dj Identified command SEARCH_VIEW_REGISTERED_STUDENTS
 
-import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
@@ -75,30 +74,29 @@ public class CmdReportRegisteredStudents implements ICommand {
 		String endDateString = helper.getParameter("endDate");
 		String studentStatus = helper.getParameter("studentStatus");
 		String districtCodeString = helper.getParameter("districtCode");
-		final StudentSearchDTO student = new StudentSearchDTO();
+		final StudentSearchDTO studentSearchDTO = new StudentSearchDTO();
 		try {
-			student.setStudentStatus(ApplicationStatus.getApplicationStatus(studentStatus));
-			student.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
+			studentSearchDTO.setStudentStatus(ApplicationStatus.getApplicationStatus(studentStatus));
+			studentSearchDTO.setAccountType(StudentAccountType.REGISTERED.getAccountTypeValue());
 			if (UtilityHelper.isNotEmpty(districtCodeString)) {
 				if (UtilityHelper.isInteger(districtCodeString)) {
-					student.setDistrictCode(Integer.valueOf(districtCodeString));
+					studentSearchDTO.setDistrictCode(Integer.valueOf(districtCodeString));
 				}
 			}					
 			try {
 				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				if (UtilityHelper.isNotEmpty(startDateString)) {
-					student.setFromDate(df.parse((startDateString)));
+					studentSearchDTO.setFromDate(df.parse((startDateString)));
 				}
 				if (UtilityHelper.isNotEmpty(endDateString)) {
-					student.setToDate(df.parse((endDateString)));
+					studentSearchDTO.setToDate(df.parse((endDateString)));
 				}		
 
 			} catch (ParseException parseException) {
-				log.error("generateReportResults() : ParseException "
-						+ parseException.toString());
+				log.error("generateReportResults() : ParseException "+ parseException.toString());
 				throw parseException;
 			}
-			final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().findById(student);
+			final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			helper.setAttribute("registeredStudentList", registeredStudentList);
 		} catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception.toString());
