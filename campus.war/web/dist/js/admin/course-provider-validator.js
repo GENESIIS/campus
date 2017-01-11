@@ -197,7 +197,7 @@ function vaidateCourseProviderDeatils(form) {
 	var accountStatus = $("#accountStatus").val();
 	var accountDescription = $("#accountDescription").val();
 
-	var validateFlag = true;
+	var flag = true;
 	
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
@@ -313,42 +313,36 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-// if (!ValidURL(webLink)) {
-// document.getElementById('errorWebLink').innerHTML = "**Give a valid web link
-// URL.";
-// document.getElementById('webLink').focus();
-// flag = false;
-// }
-// if (!ValidURL(facebook)) {
-// document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook
-// URL.";
-// document.getElementById('facebook').focus();
-// flag = false;
-// }
-// if (!ValidURL(linkdedIn)) {
-// document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn
-// URL.";
-// document.getElementById('linkdedIn').focus();
-// flag = false;
-// }
-// if (!ValidURL(twitter)) {
-// document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter
-// URL.";
-// document.getElementById('twitter').focus();
-// flag = false;
-// }
-// if (!ValidURL(instagram)) {
-// document.getElementById('errorInstagram').innerHTML = "**Give a valid
-// Instagram URL.";
-// document.getElementById('instagram').focus();
-// flag = false;
-// }
-// if (!ValidURL(mySpace)) {
-// document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace
-// URL.";
-// document.getElementById('mySpace').focus();
-// flag = false;
-// }
+	if (isempty(webLink) && !ValidURL(webLink)) {
+		document.getElementById('errorWebLink').innerHTML = "**Give a valid web link URL.";
+		document.getElementById('webLink').focus();
+		flag = false;
+	}
+	if (isempty(facebook) && !ValidURL(facebook)) {
+		document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook URL.";
+		document.getElementById('facebook').focus();
+		flag = false;
+	}
+	if (isempty(linkdedIn) && !ValidURL(linkdedIn)) {
+		document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn URL.";
+		document.getElementById('linkdedIn').focus();
+		flag = false;
+	}
+	if (isempty(twitter) && !ValidURL(twitter)) {
+		document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter URL.";
+		document.getElementById('twitter').focus();
+		flag = false;
+	}
+	if (isempty(instagram) && !ValidURL(instagram)) {
+		document.getElementById('errorInstagram').innerHTML = "**Give a valid Instagram URL.";
+		document.getElementById('instagram').focus();
+		flag = false;
+	}
+	if (isempty(mySpace) && !ValidURL(mySpace)) {
+		document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace URL.";
+		document.getElementById('mySpace').focus();
+		flag = false;
+	}
 // if (!isempty(whatsapp)) {
 // document.getElementById('errorWhatsapp').innerHTML = "**Give a valid whatsapp
 // number.";
@@ -413,5 +407,5 @@ function vaidateCourseProviderDeatils(form) {
 //	}
 
 
-	return validateFlag;
+	return flag;
 }
