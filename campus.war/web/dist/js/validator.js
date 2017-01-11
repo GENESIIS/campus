@@ -5,6 +5,7 @@
  * //20161108 CM c9-make-inquiry-for-institute Modified validateInstituteInquiryFileds() function
  * //20161115 CM c9-make-inquiry-for-institute added clearField(elementId) function
  * //20161122 CM c36-add-tutor-information 
+ * //20170111 CW c36-add-tutor-details-Added Viber & WhatsApp validations - CW
  */
 
 /**
@@ -84,18 +85,18 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-/*
+
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
 		flag = false;
 	}
-	if (firstname.length > 100) {
+	if (firstname.length > 20) {
 		document.getElementById('firstNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('firstName').focus();
 		flag = false;
 	}
-	if (middlename.length > 100) {
+	if (middlename.length > 20) {
 		document.getElementById('middleNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('middleName').focus();
 		flag = false;
@@ -105,7 +106,7 @@ function validateTutorFileds() {
 		document.getElementById('lastName').focus();
 		flag = false;
 	}
-	if (lastname.length > 200) {
+	if (lastname.length > 20) {
 		document.getElementById('lastNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -179,7 +180,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	if (mobileNumber.length > 11) {
+	if (mobileNumber.length > 10) {
 		document.getElementById('mobileNumberError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileNumber').focus();
 		flag = false;
@@ -233,7 +234,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	if (landNumber.length > 11) {
+	if (landNumber.length > 10) {
 		document.getElementById('landNumberError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -252,6 +253,12 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
+	if (address1.length > 30) {
+		document.getElementById('address1Error').innerHTML = "**Max length exceeded";
+		document.getElementById('address1').focus();
+		flag = false;
+	}
+	
 	if (isempty(weblink)) {
 		if (!ValidURL(weblink)) {
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
@@ -302,10 +309,26 @@ function validateTutorFileds() {
 			flag = false;
 		}
 	}
+			
+	if (isempty(whatsapp)) {
+		if (whatsapp.length > 20) {
+			document.getElementById('whatsappError').innerHTML = "**Max length exceeded";
+			document.getElementById('whatsapp').focus();
+			flag = false;
+		}
+	}
 	
 	if (isempty(viber)) {
 		if (isNaN(viber)) {
 			document.getElementById('viberError').innerHTML = "**Invalid Viber number";
+			document.getElementById('viber').focus();
+			flag = false;
+		}
+	}
+
+	if (isempty(viber)) {
+		if (viber.length > 20) {
+			document.getElementById('viberError').innerHTML = "**Max length exceeded";
 			document.getElementById('viber').focus();
 			flag = false;
 		}
@@ -329,7 +352,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (username.length > 50) {
+	if (username.length > 20) {
 		document.getElementById('usernameError').innerHTML = "**User Name Max length exceeded.";
 		document.getElementById('username').focus();
 		flag = false;
@@ -376,7 +399,7 @@ function validateTutorFileds() {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
-	}*/
+	}
 	return (flag);
 }
 
