@@ -34,7 +34,8 @@ public enum SystemMessage {
 	MEDICALHISTORYNOID("No Medical History ID obtained."),		
 	MEDICALREPORTDESCRIPTIONNOTVALID("Medical Report Description not valid."),
 	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),
-	MEDICALREPORTNOTVALID("Medical Report not valid");
+	MEDICALREPORTNOTVALID("Medical Report not valid"),
+	INVALIDPAGESELECTION("Please select a page");
 
 	
 	private String message;

@@ -9,11 +9,6 @@
 <!-- Bootstrap & CSS Style-->
 <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="dist/css/style.css" rel="stylesheet">
-
-<!-- W3-Include -->
-    <script src="dist/bower-components/w3/w3data.js"></script>
-    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 	
 <style>
 body {background-color: powderblue;}
@@ -31,9 +26,9 @@ p    {color: blue;}
 	</div>
 	<hr>
 	<div>		
-		<a href="/dist/partials/reportCoursesByCourseProvider.jsp"><u>Courses By
-			Course Provider</u></a>
+		<a href="/dist/partials/bannerStatisticsView.jsp"><u>Banner statistics</u></a>
 	</div>
+	<hr>	
 	<hr>
 	<div>		
 		<a href="dist/partials/reportRegisteredStudents.jsp"><u>Registered Students </u></a>
@@ -46,5 +41,11 @@ p    {color: blue;}
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="dist/js/main.js"></script>
+	
+	
+<!-- W3-Include -->
+    <script src="dist/bower-components/w3/w3data.js"></script>
+    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 </body>
 </html>

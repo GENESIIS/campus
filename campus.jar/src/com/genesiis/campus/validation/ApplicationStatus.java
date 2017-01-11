@@ -3,6 +3,8 @@ package com.genesiis.campus.validation;
 //20161124 JH c7-higher-education-landing-page-MP ApplicationStatus.java created
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -13,9 +15,9 @@ package com.genesiis.campus.validation;
 public enum ApplicationStatus {
 	
 	INACTIVE(0),
-	ACTIVE(1),	
+	ACTIVE(1),
 	PENDING(2),
-	EXPIRED(3);	
+	EXPIRED(3);
 	
 	private final int statusValue;
 
@@ -33,9 +35,8 @@ public enum ApplicationStatus {
 	/**
 	 * Generic method for map the status.Able to call from whole campus application
 	 * @author DJ
-	 * @param statusValue selected status Value string
-	 * @return integer applicationStatus
-	 * @throws Exception
+	 * @param selected status Value string
+	 * @return applicationStatus
 	 */
 	public static int getApplicationStatus(String statusValue){
 		int applicationStatus=0; 	
@@ -58,15 +59,13 @@ public enum ApplicationStatus {
 	}
 	
 	/**
-	 * Generic method for map the status int value with String.Purpose of status view in front end.Able to call from whole campus application
+	 * Generic method for map the status int value with String.Purpose of status vie in front end.Able to call from whole campus application
 	 * @author DJ
-	 * @param statusValue selected int status Value 
-	 * @return String applicationStatus
-	 * @throws Exception
+	 * @param selected int status Value 
+	 * @return applicationStatus	 
 	 */
 	public static String getApplicationStatus(int statusValue){
-		String applicationStatus="";				
-		
+		String applicationStatus="";		
 		if(statusValue ==ACTIVE.statusValue){
 			applicationStatus = "Active";
 		}

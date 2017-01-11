@@ -1,5 +1,11 @@
 package com.genesiis.campus.reportController;
 
+//20161205 DJ c51-report-courses-by-course-provider-MP-dj Initial version of ReportController
+
+import com.genesiis.campus.controller.CampusController;
+
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -7,12 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.genesiis.campus.controller.CampusController;
-
-//20161205 DJ c51-report-courses-by-course-provider-MP-dj Initial version of ReportController
-
-import org.apache.log4j.Logger;
 
 @WebServlet("/ReportController")
 public class ReportController extends CampusController {

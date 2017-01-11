@@ -7,6 +7,8 @@ import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ReportStudentDAO;
 import com.genesiis.campus.entity.View;
+import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
+import com.genesiis.campus.entity.dao.DistrictDAOImpl;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -46,7 +48,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 			
 			switch (Operation.getOperation(cco)) {
 			case SEARCH_VIEW_REGISTERED_STUDENTS:				
-				final Collection<Collection<String>> districtList=new DistrictDAO().getAll();
+				final Collection<Collection<String>> districtList=new DistrictDAOImpl().getAllDistricts();
 				helper.setAttribute("districtList", districtList);
 				break;
 			case REPORT_REGISTERED_STUDENTS:
@@ -96,7 +98,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 						+ parseException.toString());
 				throw parseException;
 			}
-			final Collection<Collection<String>> registeredStudentList = new ReportStudentDAO().findById(student);
+			final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().findById(student);
 			helper.setAttribute("registeredStudentList", registeredStudentList);
 		} catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception.toString());
