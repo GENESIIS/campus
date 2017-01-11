@@ -9,7 +9,7 @@ package com.genesiis.campus.validation;
 //			ACCOUNT_NOT_CREATED,USER_NAME_EXISTS enums
 //20161227 DN CAM 28: added STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT,STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT, RECAPTCHAVERIFICATION enum values.
 //20170110 DN CAM47: upload tutor profile image SUCCESSFULLY_IMAGE_UPLOAD,IMAGE_UPLOADING_FAIL,DOES_NOT_CONTAIN_FILE added
-
+//20170111 DN CAMP47:upload tutor profile image added EXCEED_LIMIT,EXTENSION_MISSMATCH enum
 
 
 public enum SystemMessage {	
@@ -42,7 +42,9 @@ public enum SystemMessage {
 	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
 	SUCCESSFULLY_IMAGE_UPLOAD("Image Uploaded successfully. "),
 	IMAGE_UPLOADING_FAIL("Image Upload Failed. "),
-	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Process."),
+	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Processed."),
+	EXCEED_LIMIT("Limit Is Exceeded"),
+	EXTENSION_MISSMATCH("Wrong File Type Is Passed "),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	
