@@ -11,6 +11,7 @@ window.courseProviderTypes  = null;
 window.accountType = null;
 window.registerId = null;
 window.courseProviderAcoountStatus = null;
+window.responseErrorMessage = null;
 
 $(document).ready(function() {
 	arrangeUI();
@@ -20,6 +21,9 @@ $(document).ready(function() {
 
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
+	if(window.responseErrorMessage == null){
+		document.getElementById("errorMessage").style.display = "none";
+	}
 
 }
 
@@ -293,7 +297,12 @@ function getProviderType() {
 					window.registerId = response.registerId;
 
 				window.responseErrorMessage = response.userMessage;
-				$("#errorMessage").html(response.userMessage);
+				
+				if(window.responseErrorMessage != null){
+					document.getElementById("errorMessage").style.display = "block";
+					$("#errorMessage").html(response.userMessage);
+				}
+
 				
 //				if(window.registerId != 0){
 //					$.ajax({

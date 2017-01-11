@@ -108,10 +108,8 @@
 			<input type="hidden" name="CCO" id="CCO"
 				value="ADD_FEATURED_COURSE_PROVIDER" />
 			<div class="content-holder center-block clearfix">
-				<c:if test="${not empty userMessage}">
 					<div class="alert alert-danger" role="alert" id="errorMessage">
 					</div>
-				</c:if>
 
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel">
