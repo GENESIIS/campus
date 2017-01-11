@@ -1,3 +1,4 @@
+
 package com.genesiis.campus.command;
 
 //20161122 JH c39-add-course-provider CmdAddFeaturedProvider.java command class created
@@ -210,15 +211,15 @@ public class CmdAddFeaturedProvider implements ICommand{
 					courseProvider.setTutorRelated(false);
 								
 					String accountStatus = helper.getParameter("accountStatus");
-					if(accountStatus.equalsIgnoreCase("active")){	
+					if(accountStatus.equalsIgnoreCase("1")){	
 						courseProviderAccount.setActive(true);
 					}
-					if(accountStatus.equalsIgnoreCase("inactive")){	
+					if(accountStatus.equalsIgnoreCase("0")){	
 						courseProviderAccount.setActive(false);
 					}
 
 					courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
-				//	courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 				//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 					courseProviderAccount.setName(helper.getParameter("accountDescription"));
