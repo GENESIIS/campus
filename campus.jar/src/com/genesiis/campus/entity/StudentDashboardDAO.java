@@ -35,6 +35,11 @@ package com.genesiis.campus.entity;
 //				which makes the programme list to be greater than 10 
 //20170105 MM c25-student-create-dashboard-MP-mm Added JavaDoc comment for the findByID(Object) method; 
 //				converted string building query to use a StringBuilder object  
+//20160111 MM c25-student-dashboard-MP-mm Modified code in 
+//				retrieveProgrammesFromResultSet(ResultSet, Collection<Collection<String>>) 
+//				to remove statement that assigned an ArrayList to a Collection, before which that 
+//				collection was passed as the parameter to the "add()" method of another Collection. 
+//				Now directly passing the ArrayList object itself to the "add()" method of the Collection.
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
@@ -225,8 +230,7 @@ public class StudentDashboardDAO implements ICrud {
 			singleProgramme.add(rs.getString("CLASSTYPE")); // 16
 			singleProgramme.add(rs.getString("COURSEPROVIDERSHORTNAME")); // 17
 			singleProgramme.add(rs.getString("COURSEPROVIDERNAME")); // 18
-			final Collection<String> singleProgrammeCollection = singleProgramme;
-			programmeList.add(singleProgrammeCollection);
+			programmeList.add(singleProgramme);
 		}
 	}
 
