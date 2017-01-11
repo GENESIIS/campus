@@ -1,7 +1,9 @@
 //20161227 DJ c52-report-banner-statistics-MP-dj  Banner stat report generation 
 var pageSlotCode = 0;
 $(document).ready(function() {
-	
+	/*
+	 * This ajax call load the initial search interface for banner statistic report generation.
+	 */
 	$.ajax({
 		url : '../../ReportController',
 		data : {
@@ -15,6 +17,10 @@ $(document).ready(function() {
 			errorCodeGeneration(jqXHR, exception);
 		}
 	});
+	
+	/*
+	 * Identify selected page and load page slots for particular page. 
+	 */
 
 	$('#pagelist').bind('change', function(event) {		
 		var pageName = $('#pagelist').val();
@@ -46,6 +52,10 @@ $(document).ready(function() {
 
 	});
 
+
+	/*
+	 * Identify selected page slot and advertisers for particular page slot. 
+	 */
 	$('#pageSlotlist').bind('change', function(event) {	
 		var pageSlotName = $('#pageSlotlist').val();		
 
@@ -75,16 +85,25 @@ $(document).ready(function() {
 
 	});
 	
+	/*
+	 * trigger Search button click. 
+	 */
 	$('#searchList').on('click', function(event) {
 		loadResultSet(event);
 	});
 	
+	/*
+	 * trigger Clear button click. 
+	 */
 	$('#clearParam').on('click', function(event) {
 		clearParameters(event);
 	});	
 
 });
 
+/*
+ * This method loadReportBannerStatisticsView() populate data for  initial search interface for banner statistic report generation.
+ */
 function loadReportBannerStatisticsView(response) {		
 	$('#resultPanel').hide();
 	var htmlstr = "";
@@ -129,6 +148,9 @@ function getPageSlotWiseAdvertiser(response) {
 	$('#bannerProviderName').html(htmlstr);
 }
 
+/*
+ * This method loadResultSet() identify input parameters for report search.
+ */
 function loadResultSet(event){
 	
 	var pageName= $('#pagelist').val();
@@ -218,6 +240,9 @@ function loadResultSet(event){
 		});	
 }
 
+/**
+ * This method populateResultTable() manipulate search data list to a display table.
+ */
 function populateResultTable(response) {
 	$('#displayErrorMessage').show();
 	var errorMessageList = $("#displayErrorMessage");
@@ -262,6 +287,9 @@ function populateResultTable(response) {
 
 }
 
+/**
+ * This method clearParameters() clear load form.
+ */
 function clearParameters(event){
 	$('#resultPanel').hide();
 	$('#pagelist').val(""); 	
@@ -274,7 +302,9 @@ function clearParameters(event){
 	$('#errorToDate').text("");	
 	$('#displayErrorMessage').hide();	
 }
-
+/**
+ * This method errorCodeGeneration() manipulate with errors.
+ */
 function errorCodeGeneration(jqXHR, exception){
 	var msg = '';
 	   if (jqXHR.status === 0) {
