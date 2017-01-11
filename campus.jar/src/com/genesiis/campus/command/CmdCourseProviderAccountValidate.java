@@ -32,6 +32,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 		final String action;
 		SystemMessage message = null;
 		Validator validator = new Validator();
+		boolean prefixFlag = true;
 
 		try {
 			if (!validator.isEmptyString(helper.getParameter("action"))) {
@@ -57,12 +58,15 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProviderAccount);
 						if (usernameCollection.size() != 0) {
 							message = SystemMessage.USERNAME_INVALID;
+							prefixFlag = false;
 
 						} else {
 							message = SystemMessage.USERNAME_VALID;
+							prefixFlag = true;
 						}
 					} else {
 						message = SystemMessage.EMPTY_USERNAME;
+						prefixFlag = false;
 					}
 				} else if (action
 						.equalsIgnoreCase("COURSE_PROVIDER_PREFIX_VALIDATION")) {
@@ -78,19 +82,25 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProvider);
 						if (prefixCollection.size() != 0) {
 							message = SystemMessage.PREFIX_INVALID;
+							prefixFlag = false;
 
 						} else if (prefixCollection.size() == 0) {
 							message = SystemMessage.PREFIX_VALID;
+							prefixFlag = true;
 						}
 					} else {
 						message = SystemMessage.EMPTY_FIELD;
+						prefixFlag = false;
 					}
 				}
 
 			} else {
 				message = SystemMessage.EMPTY_USERNAME;
+				prefixFlag = false;
 			}
 
+			helper.setAttribute("prefixFlag", prefixFlag);
+			
 		} catch (SQLException exception) {
 			message = SystemMessage.ERROR;
 			log.error("execute method SQLException" + exception.toString());
