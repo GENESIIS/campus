@@ -35,11 +35,13 @@ package com.genesiis.campus.entity;
 //				which makes the programme list to be greater than 10 
 //20170105 MM c25-student-create-dashboard-MP-mm Added JavaDoc comment for the findByID(Object) method; 
 //				converted string building query to use a StringBuilder object  
-//20160111 MM c25-student-dashboard-MP-mm Modified code in 
+//20170111 MM c25-student-dashboard-MP-mm Modified code in 
 //				retrieveProgrammesFromResultSet(ResultSet, Collection<Collection<String>>) 
 //				to remove statement that assigned an ArrayList to a Collection, before which that 
 //				collection was passed as the parameter to the "add()" method of another Collection. 
 //				Now directly passing the ArrayList object itself to the "add()" method of the Collection.
+//20170111 MM c25-student-dashboard-MP-mm Moved ResultSet declaration to outside of try clause so it can be closed 
+//				in the finally clause in findById(Object) method in StudentDashboardDAO
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.RecommendedProgrammesSearchDTO;
@@ -103,6 +105,7 @@ public class StudentDashboardDAO implements ICrud {
 		final Collection<Collection<String>> programmeDetailsCollectionList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs  = null;
 
 		try {
 			RecommendedProgrammesSearchDTO recommenedProgrammesSearchDto = (RecommendedProgrammesSearchDTO) code;
@@ -181,7 +184,7 @@ public class StudentDashboardDAO implements ICrud {
 
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 
 			retrieveProgrammesFromResultSet(rs, programmeDetailsCollectionList);
 
@@ -198,6 +201,9 @@ public class StudentDashboardDAO implements ICrud {
 		} finally {
 			if (ps != null) {
 				ps.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 			if (conn != null) {
 				conn.close();
