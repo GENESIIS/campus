@@ -19,7 +19,7 @@
                 <div class="top-menus">
                     <ul class="list-inline">
                         <li><a href="dist/partials/courses.html">All Courses</a></li>
-                        <li><a href="dist/partials/course-providers.html">Course Providers</a></li>
+                        <li><a href="/dist/partials/topCourseProviders.jsp">Course Providers</a></li>
                         <li><a href="dist/partials/about-us.html">About Us</a></li>
                         <li><a href="dist/partials/contact-us.html">Contact Us</a></li>
                         <li><a href="dist/partials/news.html">News</a></li>

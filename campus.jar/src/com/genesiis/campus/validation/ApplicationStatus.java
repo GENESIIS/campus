@@ -3,6 +3,8 @@ package com.genesiis.campus.validation;
 //20161124 JH c7-higher-education-landing-page-MP ApplicationStatus.java created
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
+//20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -11,12 +13,11 @@ package com.genesiis.campus.validation;
 *
 */
 public enum ApplicationStatus {
-
 	
 	INACTIVE(0),
 	ACTIVE(1),
 	PENDING(2),
-	EXPIRED(3);	
+	EXPIRED(3);
 	
 	private final int statusValue;
 
