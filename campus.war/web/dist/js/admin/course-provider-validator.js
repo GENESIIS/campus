@@ -385,17 +385,22 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
-	if (!isempty(providerPassword) || providerPassword.length <6) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Password is empty or weak.";
+	if (!isempty(providerPassword)) {
+		document.getElementById('errorProviderPassword').innerHTML = "**Password is empty.";
+		document.getElementById('providerPassword').focus();
+		flag = false;
+	}if (isempty(providerPassword) || providerPassword.length <6) {
+		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
-	if (!isempty(cProviderPassword)) {
+	if ((isempty(providerPassword) || providerPassword.length <6) && !isempty(cProviderPassword)) {
 		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password is empty.";
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-	if(isempty(cProviderPassword) && (providerPassword != cProviderPassword)){
+	if((isempty(providerPassword) || providerPassword.length <6) && !isempty(cProviderPassword)
+			&& (providerPassword != cProviderPassword)){
 		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
