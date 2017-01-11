@@ -3,12 +3,14 @@ package com.genesiis.campus.command;
 //DJ 20161206 c52-report-banner-statistics-MP-dj created CmdReportBannerStatistics.java
 //DJ 20161231 c52-report-banner-statistics-MP-dj Implement  generateReportResults() method
 //DJ 20170104 c52-report-banner-statistics-MP-dj Implement  isReportBannerStatValidate() method
+//DJ 20170111 c52-report-banner-statistics-MP-dj Implement  generatePageWisePageSlots() method
 
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.BannerStatDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.PageDAO;
 import com.genesiis.campus.entity.PageSlotDAO;
+import com.genesiis.campus.entity.dao.BannerDAOImpl;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Operation;
@@ -46,14 +48,13 @@ public class CmdReportBannerStatistics implements ICommand {
 			
 			switch (Operation.getOperation(commandString)) {
 			case SEARCH_VIEW_BANNER_STATISTICS:
-				final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
+				//final Collection<Collection<String>> pageDetails = new PageDAO().getAll();
+				final Collection<Collection<String>> pageDetails = new BannerDAOImpl().getAllPages();
 		        iView.setCollection(pageDetails);
 				break;
 				
 			case LIST_PAGE_WISE_PAGESLOTS:
-				String pageCode = helper.getParameter("pageCode");
-				final Collection<Collection<String>> pageSlotDetails = new PageSlotDAO().findById(pageCode);
-				helper.setAttribute("pageSlots", pageSlotDetails);					
+				generatePageWisePageSlots(helper);									
 				break;
 				
 			case LIST_PAGESLOT_WISE_ADVERTISER:
@@ -77,6 +78,23 @@ public class CmdReportBannerStatistics implements ICommand {
 		return iView;
 	}
 	
+	private void generatePageWisePageSlots(IDataHelper helper) throws Exception {
+		try {
+			String pageCodeString = helper.getParameter("pageCode");
+			int pageCode = 0;
+			if (UtilityHelper.isNotEmpty(pageCodeString)) {
+				pageCode = Integer.parseInt(pageCodeString);
+			}
+			final Collection<Collection<String>> pageSlotDetails = new BannerDAOImpl().getAllPageSlotByPageCode(pageCode);
+			helper.setAttribute("pageSlots", pageSlotDetails);
+
+		} catch (Exception exception) {
+			log.error("generatePageWisePageSlots() : Exception "
+					+ exception.toString());
+			throw exception;
+		}
+	}
+
 	/** Identify input search parameters and retrieve particular  banner statistics result set according to search criteria.
 	 * @author DJ
 	 * @param helper
