@@ -217,7 +217,7 @@ function displayProviderTownList() {
 	var countryCollection = window.townCollection;
 	var singleTownElement = '';
 
-	singleTownElement += '<select id="selectedTown" name="selectedTown">';
+	singleTownElement += '<select id="selectedTown" name="selectedTown"><option value="">--Default--</option>';
 	if (townCollection !== undefined & townCollection !== null) {
 		$.each(townCollection, function(index, value) {
 			singleTownElement += '<option value="' + value[0] + '">';
@@ -266,37 +266,35 @@ function landPhoneNubmerHelper(){
 }
 function getProviderType() {
 
+	alert(vaidateCourseProviderDeatils());
+	if(vaidateCourseProviderDeatils()){
+		
+		alert("kfjkdsjf");
+		var form = $('#basicForm');
+		var formData = $(form).serialize();
+		$.ajax({
+			url : '/AdminController',
+			method : 'POST',
+			data : formData,
+			dataType : "json",
+			async : false,
+			success : function(response) {
 
-		alert(providerUsernameValidation());
-	
-	//alert(vaidateCourseProviderDeatils());
-//	
-//	if(vaidateCourseProviderDeatils()){
-//		
-//		var form = $('#basicForm');
-//		var formData = $(form).serialize();
-//		$.ajax({
-//			url : '/AdminController',
-//			method : 'POST',
-//			data : formData,
-//			dataType : "json",
-//			async : false,
-//			success : function(response) {
-//
-//				if (response !== undefined && response !== null) {
-//					// message = response.userMessage;
-//					window.registerId = response.registerId;
-//
-//				window.responseErrorMessage = response.userMessage;
-//				$("#errorProviderName").html(response.errorProviderName);
-////					alert(responseErrorMessage);
-////					var userErrorMessage = $("#errorMessage");
-////					userErrorMessage.html("errors");
-//
-//
-//				}
-//			},
-//		});
-//	}
+				if (response !== undefined && response !== null) {
+					// message = response.userMessage;
+					window.registerId = response.registerId;
+
+				window.responseErrorMessage = response.userMessage;
+				alert(response.userMessage);
+				$("#errorMessage").html(response.userMessage);
+//					alert(responseErrorMessage);
+//					var userErrorMessage = $("#errorMessage");
+//					userErrorMessage.html("errors");
+
+
+				}
+			},
+		});
+	}
 	
 }

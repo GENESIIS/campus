@@ -83,13 +83,15 @@ function providerUsernameValidation() {
 
 						if (response !== undefined && response !== null) {
 							document.getElementById('errorProviderUsername').innerHTML = response.userMessage;
-							window.usernameFlag == response.prefixFlagvalidationFlag;
+							window.usernameFlag == response.validationFlag;
 							
-							if(window.usernameFlag == "true"){
-								return true;
-								} else {
-									return false;
-								}
+//							if(window.usernameFlag == true){
+//								return true;
+//								} else {
+//									return false;
+//								}
+							return prefixFlag;
+
 							}
 						},
 					});
@@ -105,7 +107,10 @@ function providerPrefixValidation() {
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
 		document.getElementById('uniquePrefix').focus();
 		return false;
-	} else if (isempty(selectedPrefix)) {
+	} else if (selectedPrefix.length < 2) {
+			document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
+			return false;
+	} else {
 		document.getElementById('errorUniquePrefix').innerHTML = "";
 
 		$
@@ -125,17 +130,14 @@ function providerPrefixValidation() {
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 							window.prefixFlag == response.validationFlag;
-							
-							if(window.prefixFlag == true){
-								return true;
-							}else{
-								return false;
-							}
-						}
-					},
-				});
-	}
+alert(response.validationFlag + ">>>>>>>>>>>>>>>>"+prefixFlag);
+					return prefixFlag;
 
+							}
+						},
+					});
+		}
+	
 }
 
 /**
@@ -150,12 +152,12 @@ function vaidateCourseProviderDeatils(form) {
 		errorMessageList[i].innerHTML = "";
 	}
 	
-	if(!providerPrefixValidation()){
-		return false;
-	}
-	if( !providerUsernameValidation()){
-		return false;
-	}
+//	if(!providerPrefixValidation()){
+//		return false;
+//	}
+//	if( !providerUsernameValidation()){
+//		return false;
+//	}
 	
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
@@ -174,8 +176,8 @@ function vaidateCourseProviderDeatils(form) {
 	var address1 = $("#address1").val();
 	var address2 = $("#address2").val();
 	var address3 = $("#address3").val();
-	var country = $("#country-List").val();
-	var townList = $("#town-List").val();
+	var country = $("#selectedCountry").val();
+	var townList = $("#selectedTown").val();
 	var webLink = $("#webLink").val();
 	var facebook = $("#facebook").val();
 	var linkdedIn = $("#linkdedIn").val();
@@ -203,7 +205,6 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerName)) {
-		alert("kdfjskdfjskj");
 		document.getElementById('errorProviderName').innerHTML = "**Give a course provider name.";
 		document.getElementById('providerName').focus();
 		flag = false;
@@ -302,8 +303,13 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('selectedCountry').focus();
 		flag = false;
 	}
-	if (!isempty(townList)) {
+	if (!isempty(townList) && !isempty(country)) {
 		document.getElementById('errorSelectedTown').innerHTML = "**First select your country.";
+		document.getElementById('errorSelectedTown').focus();
+		flag = false;
+	}
+	if (!isempty(townList) && isempty(country)) {
+		document.getElementById('errorSelectedTown').innerHTML = "**Select your town";
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
@@ -407,5 +413,5 @@ function vaidateCourseProviderDeatils(form) {
 //	}
 
 
-	return flag;
+	return validateFlag;
 }
