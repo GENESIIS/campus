@@ -52,8 +52,11 @@ public class LoginValidator {
 
 			}
 
+		
+			
 		} catch (Exception e) {
 			log.error("validateLogin : " + e);
+		//	message =SystemMessage.EMPTYFIELD.message();
 		}
 
 		return message;
