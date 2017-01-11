@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //DJ 20161231 c52-report-banner-statistics-MP-dj Implement  generateReportResults() method
 //DJ 20170104 c52-report-banner-statistics-MP-dj Implement  isReportBannerStatValidate() method
 //DJ 20170111 c52-report-banner-statistics-MP-dj Implement  generatePageWisePageSlots() method
+//DJ 20170111 c52-report-banner-statistics-MP-dj Implement  generatePageSlotWiseAdvertiser() method
 
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.BannerStatDAO;
@@ -58,9 +59,7 @@ public class CmdReportBannerStatistics implements ICommand {
 				break;
 				
 			case LIST_PAGESLOT_WISE_ADVERTISER:
-				String pageSlotCode = helper.getParameter("pageSlotCode");
-				final Collection<Collection<String>> advertiserDetails = new BannerDAO().findById(pageSlotCode);
-				helper.setAttribute("advertiserDetails", advertiserDetails);	
+				generatePageSlotWiseAdvertiser(helper);				
 				break;
 				
 			case REPORT_BANNER_STATISTICS:				
@@ -76,8 +75,8 @@ public class CmdReportBannerStatistics implements ICommand {
 			throw exception;
 		}
 		return iView;
-	}
-	
+	}	
+
 	private void generatePageWisePageSlots(IDataHelper helper) throws Exception {
 		try {
 			String pageCodeString = helper.getParameter("pageCode");
@@ -90,6 +89,23 @@ public class CmdReportBannerStatistics implements ICommand {
 
 		} catch (Exception exception) {
 			log.error("generatePageWisePageSlots() : Exception "
+					+ exception.toString());
+			throw exception;
+		}
+	}
+	
+	private void generatePageSlotWiseAdvertiser(IDataHelper helper) throws Exception{
+		try {
+		String pageSlotCodeString = helper.getParameter("pageSlotCode");
+		int pageSlotCode = 0;
+		if (UtilityHelper.isNotEmpty(pageSlotCodeString)) {
+			pageSlotCode = Integer.parseInt(pageSlotCodeString);
+		}
+		final Collection<Collection<String>> advertiserDetails = new BannerDAOImpl().getBannerProviderByPageSlotCode(pageSlotCode);
+		helper.setAttribute("advertiserDetails", advertiserDetails);
+		
+		} catch (Exception exception) {
+			log.error("generatePageSlotWiseAdvertiser() : Exception "
 					+ exception.toString());
 			throw exception;
 		}
