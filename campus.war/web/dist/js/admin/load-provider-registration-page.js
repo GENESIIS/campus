@@ -23,6 +23,15 @@ function arrangeUI() {
 
 }
 
+/**
+ * @param clearField 
+ * @param elementId the id of the HTML element
+ */
+
+function clearField(elementId){	
+	 $(document).find('#' + elementId).text('');
+}
+
 function changeRequiredData(typeValue){
 	window.accountType = typeValue ;
 	
@@ -266,10 +275,9 @@ function landPhoneNubmerHelper(){
 }
 function getProviderType() {
 
-	alert(vaidateCourseProviderDeatils());
+	//alert(vaidateCourseProviderDeatils());
 	if(vaidateCourseProviderDeatils()){
-		
-		alert("kfjkdsjf");
+
 		var form = $('#basicForm');
 		var formData = $(form).serialize();
 		$.ajax({
@@ -285,12 +293,15 @@ function getProviderType() {
 					window.registerId = response.registerId;
 
 				window.responseErrorMessage = response.userMessage;
-				alert(response.userMessage);
 				$("#errorMessage").html(response.userMessage);
-//					alert(responseErrorMessage);
-//					var userErrorMessage = $("#errorMessage");
-//					userErrorMessage.html("errors");
-
+				
+//				if(window.registerId != 0){
+//					$.ajax({
+//						url : '/dist/partials/admin/manageCourseProvider.jsp',
+//						method : 'POST',
+//						
+//					});
+//				}
 
 				}
 			},
