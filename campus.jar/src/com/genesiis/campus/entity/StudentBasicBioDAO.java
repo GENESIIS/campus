@@ -5,6 +5,8 @@ package com.genesiis.campus.entity;
 //				(in findById(Object) to select the most recent school attended, the most recent 
 //				higher education qualification and the most recent position held 
 //20160105 MM c25-student-dashboard-MP-mm Added JavaDoc comment for findById(Object) method 
+//20170111 MM c25-student-create-dashboard-MP-mm Moved ResultSet declaration to outside of try clause so it can
+//				be closed in the finally clause
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.entity.model.Student;
@@ -56,6 +58,7 @@ public class StudentBasicBioDAO implements ICrud {
 		final Collection<Collection<String>> studentDetailsCollectionList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
 			Student student = (Student) code;			
@@ -73,7 +76,7 @@ public class StudentBasicBioDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query.toString());
 			
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
 
 		} catch (ClassCastException cce) {
@@ -89,6 +92,9 @@ public class StudentBasicBioDAO implements ICrud {
 		} finally {
 			if (ps != null) {
 				ps.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 			if (conn != null) {
 				conn.close();
