@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
 //20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
 //20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
+//20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,58 +155,4 @@ public class TutorDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	
-	/**
-	 * Check the entered username is already available in the database
-	 * 
-	 * @author Chinthaka
-	 * @param Requested username
-	 * @return boolean - returns true if Requested username is not used by any tutor
-	 */
-	/*
-	public boolean isAvailableUserName(String userName) throws SQLException, Exception {
-		boolean valid = false;
-		
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try { 
-			System.out.println("isAvailableUserName userName ="+userName+"AAAA");
-			conn = ConnectionManager.getConnection();
-			//String query = "SELECT COUNT([USERNAME]) userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
-			String query = "SELECT [USERNAME] userCount FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
-
-		    System.out.println(" @1 "); 
-			stmt = conn.prepareStatement(query);
-			stmt.setString(1, userName);
-			rs = stmt.executeQuery();
-
-			if (!rs.isBeforeFirst() ) {    
-			    System.out.println("No data"); 
-			} 
-			
-			System.out.println("isAvailableUserName count = " + rs.getInt("userCount"));
-			while (rs.next()) {
-				System.out.println("ttttttttt");
-				if (rs.getInt("userCount") == 0 ){
-					valid = true;
-					System.out.println("valid = " + valid);
-				}
-			}
-		} catch (SQLException sqlException) {
-			log.info("isAvailableUserName(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("isAvailableUserName(): Exception " + e.toString());
-			throw e;
-		} finally {
-			DaoHelper.cleanup(conn, stmt, rs);
-		}
-		
-		return valid;
-	}
-	*/
-
 }
