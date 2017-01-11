@@ -85,7 +85,7 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-
+/*
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
@@ -399,7 +399,7 @@ function validateTutorFileds() {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
-	}
+	}*/
 	return (flag);
 }
 

@@ -46,9 +46,9 @@ public class CmdAddTutorProfile implements ICommand {
 			final Validator validator=new Validator();
 		try {
 			message = validator.validateTutorFields(helper);
+			setVariables(helper,tutor);
 			if (message.equalsIgnoreCase("True")) {
 								
-				setVariables(helper,tutor);
 
 				UserTypeDAO typeOfUser = new UserTypeDAO();
 				Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();
@@ -83,7 +83,9 @@ public class CmdAddTutorProfile implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
+			System.out.println("before");
 			helper.setAttribute("tutor", tutor);
+			System.out.println("after");
 		}
 		return view;
 	}
