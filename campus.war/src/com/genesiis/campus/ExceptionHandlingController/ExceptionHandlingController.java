@@ -1,11 +1,11 @@
 package com.genesiis.campus.ExceptionHandlingController;
 
 //20170111 PN CAM-72: INIT ExceptionHandlingController.java servlet. Implemented processError() method. - WIP
-
+//20170111 PN CAM-72: modified processError() method to extend CampusController servlet.
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +20,14 @@ import com.genesiis.campus.controller.CampusController;
 @WebServlet("/ExceptionHandlingController")
 public class ExceptionHandlingController extends CampusController {
 	private static final long serialVersionUID = 1L;
-
+	static Logger log = Logger.getLogger(ExceptionHandlingController.class.getName());
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("CCO", "EHC");
-		super.doGet(request, response);
+		super.doPost(request, response);
 	}
 
 	/**
@@ -37,7 +36,6 @@ public class ExceptionHandlingController extends CampusController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("CCO", "EHC");
 		super.doPost(request, response);
 	}
 
