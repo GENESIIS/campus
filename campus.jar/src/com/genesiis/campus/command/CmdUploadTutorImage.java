@@ -36,20 +36,10 @@ import org.apache.log4j.Logger;
  * @author dushantha DN
  */
 public class CmdUploadTutorImage implements ICommand {
-	
-	/** The Constant log. */
 	static final Logger log = Logger.getLogger(CmdUploadTutorImage.class.getName());
-	
-	/** The success code. */
 	private int successCode=0;
-	
-	/** The message. */
 	private String message = "";
-	
-	/** The file utility. */
 	private FileUtility fileUtility = new FileUtility();
-	
-	/** The files. */
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	private String[] validExtensions = { "jpeg", "jpg", "png", "gif" };
 	
@@ -63,32 +53,35 @@ public class CmdUploadTutorImage implements ICommand {
 		// Variable declaration.
 		JsonArray list = new JsonArray();
 		Gson gson = new Gson();
-		
-		
 		String fileUploadError = "";
 		String fileUploadSuccess = "";
 		Connection con = null;
 		// To store image file path
 		String filePath = "";
-		// Valid file extensions to the user.
-		
-		
 		try{
+			//get the image files from the browser and set field -files are set now
 			files =getImageFileUploadedFromBrowser(helper);
-			
-			Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
-			int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
-			con = ConnectionManager.getConnection();
-			//get the tutor image upload path
-			String tutorProfileImageUploadPath =getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
-			//check if the image is within the allowed size
-			// get the allowable image size
-			
-			//long uploadSizeLimit  = ImageUtility.getAlloawablePictureSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE);
-			
-			
-			
-			
+			if((files.size()==0)|(files==null)){
+				
+				this.message = message +" "+systemMessage(-1); // does not contain a file
+				
+			} else{
+				
+				con = ConnectionManager.getConnection();
+				
+				Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
+				int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
+				
+				//get the tutor image upload path
+				String tutorProfileImageUploadPath =getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
+				
+				
+				fileUtility.setUploadPath(tutorProfileImageUploadPath);
+				boolean isImageAccordanceWithSystemRequirement =  isImageAccordanceWithSystemRequirement(con,helper);
+				
+				// rename the file and in the same time load to the disk
+				isTheImageFileRenamed(fileUtility,tutorCode);
+			}
 		} catch(FileUploadException fle){
 			log.error("execute():FileUploadException"+ fle.toString() );
 			throw fle;			
@@ -98,10 +91,24 @@ public class CmdUploadTutorImage implements ICommand {
 		}finally{
 			DaoHelper.cleanup(con, null, null);
 		}
-		
+		helper.setAttribute("message", message);
 		return view;
 	}
-
+	
+	
+	
+	private boolean isTheImageFileRenamed(FileUtility item, int tutorCode) throws Exception{
+		boolean isTheImageFileRenamed = false;
+		try{
+			String fileName = item.renameIntoOne(tutorCode);
+			isTheImageFileRenamed = (item.renameIntoOne(tutorCode)!="");
+		} catch (Exception exp){
+			log.error("isTheImageFileRenamed(): Exception "+exp.toString());
+			throw exp;
+		}
+		return isTheImageFileRenamed;
+	}
+	
 	/**
 	 * getTutorProfileImageUploadPath provides the Physical location where the 
 	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
@@ -136,10 +143,6 @@ public class CmdUploadTutorImage implements ICommand {
 			// one record from the systemconfig table
 			tutorDefaultImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
 			tutorDefaultImagePath=(tutorDefaultImagePath!=null)?tutorDefaultImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
-			
-			//check if the image is confirmed to allow extensions
-			
-
 			return tutorDefaultImagePath;
 
 		} catch (SQLException exp) {
@@ -170,9 +173,14 @@ public class CmdUploadTutorImage implements ICommand {
 		
 		try{
 			// check image size
-			boolean isFilePassSizeRequirement=isImageWithinSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE,con,requestWrapper);
+			boolean isFilePassSizeRequirement=isImageWithinSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE,con);
 			// check image extension
 			boolean isFilePassExtensionType = isImageHavingTheAcceptedExtension(files.get(0).getName(),validExtensions);
+			
+			//set the messages to be sent to the client side
+			this.message =(!isFilePassSizeRequirement)?this.message + " "+systemMessage(-3):"";
+			this.message =(!isFilePassExtensionType)?this.message + " "+systemMessage(-4):"";
+			return (isFilePassSizeRequirement & isFilePassExtensionType) ;
 			
 		} catch(SQLException exp) {
 			log.error("isImageAccordanceWithSystemRequirement(): SQLException"+exp.toString());
@@ -187,11 +195,6 @@ public class CmdUploadTutorImage implements ICommand {
 			throw exp;
 		}
 		
-		// check image extension
-		
-		
-		return false;
-		
 	}
 	
 	
@@ -205,10 +208,8 @@ public class CmdUploadTutorImage implements ICommand {
 	private boolean isImageHavingTheAcceptedExtension(String fileName, String extensions[]){
 		boolean isImageHavingTheAcceptedExtension = false;
 		if(this.getFileUtility().getFileItem()!=null){
-			getFileUtility().isValidImageFileType(fileName, extensions);
-			isImageHavingTheAcceptedExtension =true;
+			isImageHavingTheAcceptedExtension =	 getFileUtility().isValidImageFileType(fileName, extensions);
 		}
-		
 		return isImageHavingTheAcceptedExtension;
 	}
 	
@@ -226,7 +227,7 @@ public class CmdUploadTutorImage implements ICommand {
 	 * @throws FileUploadException the file upload exception
 	 * @throws Exception the exception
 	 */
-	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con,IDataHelper requestWrapper)throws SQLException,FileUploadException,
+	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con)throws SQLException,FileUploadException,
 	Exception{
 		boolean isFilePassSizeRequirement=false;
 		try{
@@ -246,36 +247,24 @@ public class CmdUploadTutorImage implements ICommand {
 			// internal data structure of FileUtility must be changed or custom class should be created to handle this logic
 			// If there are more than one item in the collection then first item will be chosen.
 			
-			if((files.size()==0)|(files==null)){
-				//############this.message =this.message + systemMessage(-1); should be set from isImageAccordanceWithSystemRequirement()
+			if((files.size()==0)|(files==null)){				
 				isFilePassSizeRequirement= false;
-
 			}else if(files.get(0).getSize()>=tutorDefaultImageSize){
-				this.getFileUtility().setFileItem(files.get(0)); 
 				isFilePassSizeRequirement=true;
 			}
-			
 		}  catch(SQLException exp) {
 			log.error("isImageWithinSize(): SQLException"+exp.toString());
 			throw exp;
-			
 		} catch(FileUploadException fle){
 			log.error("isImageWithinSize():FileUploadException"+ fle.toString() );
 			throw fle;
-			
 		}	catch(Exception exp) {
 			log.error("isImageWithinSize(): SQLException"+exp.toString());
 			throw exp;
-			
 		}
 		
 		return isFilePassSizeRequirement; 
-		
 	}
-	
-	
-	
-	
 
 	
 	/**
@@ -342,7 +331,6 @@ public class CmdUploadTutorImage implements ICommand {
 		switch(status){		
 		case 1:
 			message = SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.message();
-			
 			break;
 		case -1:
 			message = SystemMessage.DOES_NOT_CONTAIN_FILE.message();
@@ -350,6 +338,12 @@ public class CmdUploadTutorImage implements ICommand {
 		case -2:
 			message =SystemMessage.IMAGE_UPLOADING_FAIL.message();
 			break;
+		case -3:
+			message =SystemMessage.EXCEED_LIMIT.message();
+			break;
+		case -4:
+			message =SystemMessage.EXTENSION_MISSMATCH.message();
+			break;	
 		default:			
 			break;
 		}
