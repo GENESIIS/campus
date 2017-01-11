@@ -389,7 +389,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is empty.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
-	}if (isempty(providerPassword) || providerPassword.length <6) {
+	}if (isempty(providerPassword) && providerPassword.length <6) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
 		document.getElementById('providerPassword').focus();
 		flag = false;

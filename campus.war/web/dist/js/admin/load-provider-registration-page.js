@@ -279,7 +279,6 @@ function landPhoneNubmerHelper(){
 }
 function getProviderType() {
 
-	//alert(vaidateCourseProviderDeatils());
 	if(vaidateCourseProviderDeatils()){
 
 		var form = $('#basicForm');
@@ -302,15 +301,6 @@ function getProviderType() {
 					document.getElementById("errorMessage").style.display = "block";
 					$("#errorMessage").html(response.userMessage);
 				}
-
-				
-//				if(window.registerId != 0){
-//					$.ajax({
-//						url : '/dist/partials/admin/manageCourseProvider.jsp',
-//						method : 'POST',
-//						
-//					});
-//				}
 
 				}
 			},
