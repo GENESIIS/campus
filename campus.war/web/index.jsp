@@ -9,11 +9,6 @@
 <!-- Bootstrap & CSS Style-->
 <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="dist/css/style.css" rel="stylesheet">
-
-<!-- W3-Include -->
-    <script src="dist/bower-components/w3/w3data.js"></script>
-    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 	
 <style>
 body {background-color: powderblue;}
@@ -28,17 +23,7 @@ p    {color: blue;}
 
 	<div>
 		<h1>Report Generation</h1><p>Please Select the report type</p>
-	</div>
-	<!-- <hr>
-	<div>		
-		<a href="dist/partials/reportCoursesByCourseProviderOLD.jsp"><u>Courses By
-			Course Provider OLD </u></a>
-	</div> -->
-	<hr>
-	<div>		
-		<a href="/dist/partials/reportCoursesByCourseProvider.jsp"><u>Courses By
-			Course Provider</u></a>
-	</div>
+	</div>	
 	<hr>
 	<div>		
 		<a href="/dist/partials/bannerStatisticsView.jsp"><u>Banner statistics</u></a>
@@ -53,5 +38,11 @@ p    {color: blue;}
 	<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="dist/js/main.js"></script>
+	
+	
+<!-- W3-Include -->
+    <script src="dist/bower-components/w3/w3data.js"></script>
+    <script type="text/javascript" src="dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
 </body>
 </html>

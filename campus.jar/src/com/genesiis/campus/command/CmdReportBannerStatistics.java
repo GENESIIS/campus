@@ -6,11 +6,7 @@ package com.genesiis.campus.command;
 //DJ 20170111 c52-report-banner-statistics-MP-dj Implement  generatePageWisePageSlots() method
 //DJ 20170111 c52-report-banner-statistics-MP-dj Implement  generatePageSlotWiseAdvertiser() method
 
-import com.genesiis.campus.entity.BannerDAO;
-import com.genesiis.campus.entity.BannerStatDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.PageDAO;
-import com.genesiis.campus.entity.PageSlotDAO;
 import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
 import com.genesiis.campus.entity.dao.BannerDAOImpl;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
