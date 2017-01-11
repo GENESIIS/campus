@@ -530,7 +530,7 @@
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
 										onkeyup="providerUsernameValidation();" />
-								<span id="errorUsername" class="error-message">${errorShortName }</span>
+								<span id="errorProviderUsername" class="error-message">${errorProviderUsername }</span>
 								</div>
 							</li>
 							<!-- end -->
