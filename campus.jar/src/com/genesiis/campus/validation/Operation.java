@@ -17,6 +17,7 @@ package com.genesiis.campus.validation;
 //20161217 MM c2-integrate-google-banners Removed LOAD_BANNER_PAGE constant (before 
 //				merging with sprint branch) that was there for testing the banner 
 //				displaying functionality 
+//20170111 PN CAM-72: added ERROR_HANDELING_COMMAND attribute to the Operation class.
 
 /**
  * Operation class facilitate in binding the CCO
@@ -35,7 +36,8 @@ public enum Operation {
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"), 
-	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp");
+	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
+	ERROR_HANDELING_COMMAND("EHC", ResponseType.JSP, "index.jsp");
 
 	private final String commandString;
 	private final ResponseType responseType;
