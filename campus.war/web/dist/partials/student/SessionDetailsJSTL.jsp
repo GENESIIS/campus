@@ -1,7 +1,8 @@
 <%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" --%>
 <%-- 	pageEncoding="ISO-8859-1"%> --%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-
+<!-- 20161228 SessionDetailsJSTL.jsp page created to maintain logged users session details.   -->
+<!-- 20161229 logged Student privilege handling in jstl (interface and button action)  -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,9 +11,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 	checked session already created or not, if not redirect to login.jsp -->
 	<c:if test="${sessionScope.currentSessionUser == null}">
 	<% response.sendRedirect("/dist/partials/login.jsp"); %>
 	</c:if>
+	<!-- logged student details extract from collection of collection and assign to jstl var -->
 		<c:if test="${sessionScope.currentUserData != null}">
 
     	<c:set var="col_stuCode" value="${sessionScope.currentUserData[0][0]}" scope="session" />
@@ -57,7 +60,7 @@
    </c:if>
 
  <c:set var="currentUrl" value="${pageContext.request.requestURI}" ></c:set>
-
+<!-- logged student authenticated listed interfaces iteration -->
 <c:if test="${sessionScope.currentUserData[1] != null }">
 <c:set var="conVal" value="0" /> 
   <c:forEach var="userDataCollection" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="5" step="8">
@@ -70,7 +73,7 @@
 		<c:if test="${conVal == 0}">
  			<% response.sendRedirect("/index.jsp"); %>
 			</c:if>
-
+<!-- iterating user authenticated button actions -->
 			<c:forEach var="userDataCollection2" items="${sessionScope.currentUserData[1]}" varStatus="rowCount" begin="6" step="8">
 				<c:set var="buttionAction" value="${userDataCollection2}" scope="request"/>	
 				<c:set var="action" value="${action},${buttionAction}" scope="request"/>	
