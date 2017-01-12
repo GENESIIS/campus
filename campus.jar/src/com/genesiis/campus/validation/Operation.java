@@ -18,6 +18,7 @@ package com.genesiis.campus.validation;
 //				merging with sprint branch) that was there for testing the banner 
 //				displaying functionality 
 //20170111 PN CAM-72: added ERROR_HANDELING_COMMAND attribute to the Operation class.
+//20170112 PN CAM-72: modified ERROR_HANDELING_COMMAND attribute to display error page using JSP.
 
 /**
  * Operation class facilitate in binding the CCO
@@ -37,7 +38,7 @@ public enum Operation {
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
-	ERROR_HANDELING_COMMAND("EHC", ResponseType.JSP, "index.jsp");
+	ERROR_HANDELING_COMMAND("EHC", ResponseType.JSP, "ErrorPage.jsp");
 
 	private final String commandString;
 	private final ResponseType responseType;
