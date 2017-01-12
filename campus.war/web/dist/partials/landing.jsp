@@ -19,6 +19,10 @@
 					<input class="center-block" type="text"
 						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
 				</div>
+				
+				<input type="radio" name="courseProvider" value="CP"> Course Provider<br>
+                <input type="radio" name="courseProvider" value="P"> Programme<br>
+                <input type="button" name="Search" value="Search">
 			</div>
 			<!-- End Main search bar -->
 
