@@ -63,3 +63,36 @@ function studentLogin() {
 
 	}
 }
+
+
+function studentLogout(){
+	var userId = $("#userCode").val();
+	
+	if(userId != null){
+		var jsonData = {
+				"userId" : code
+				
+			};
+		$
+		.ajax({
+			type : "POST",
+			url : '../../LoginController',
+			data : {
+				jsonData : JSON.stringify(jsonData),
+				CCO : "SLGOUT"
+
+			},
+			dataType : "json",
+			success : function(response) {
+
+				
+
+			},
+			error : function(e) {
+				alert("Error " + e);
+				console.log(e);
+			}
+
+		});
+	}
+}
