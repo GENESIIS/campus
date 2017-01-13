@@ -51,6 +51,7 @@
 					</c:if>
 					<c:if test="${sessionScope.currentSessionUser != null}">
 						<h3>Hi ${sessionScope.user}, Login successful.</h3>
+						<input type="hidden" id="userCode" name="userCode" value="${sessionScope.userCode}"/>
 						<a href="/dist/partials/student/SessionDataLoader.jsp">
 							Session details checker Script lets</a>
 						<br>
@@ -58,6 +59,8 @@
 							Session details checker JSTL</a>
 						<br>
 						<a href="dist/partials/login.jsp">Logout</a>
+						<button class="btn btn-primary btn-block" type="button"
+							name="CCO" id="CCO" value="SLGOUT" onclick="studentLogout()">Logout</button>
 					</c:if>
 				</div>
 			</div>
