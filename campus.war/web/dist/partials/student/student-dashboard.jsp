@@ -20,135 +20,27 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- W3-Include -->
 <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
 <!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="/dist/js/main.js"></script>
-<script src="/dist/js/image-slides.js"></script>
 
 </head>
 
 <body>
-	<%-- <jsp:include page="/dist/partials/student/SessionDetailsJSTL.jsp"></jsp:include> --%>
+	<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
 
-	<c:if test="${sessionScope.currentSessionUser == null}">
-<!-- 	not valid user!! -->
- <c:redirect url="/dist/partials/login.jsp" />
 
-	</c:if>
-
-	<%
-		//allow access only if session exists
-		// 		String currentSessionUser = null;
-		// 		if (session.getAttribute("user") == null) {
-		// 			response.sendRedirect("login.jsp");
-		// 		} else
-		// 			currentSessionUser = (String) session.getAttribute("user");
-		// 		String userName = null;
-		// 		String sessionID = null;
-		// 		Cookie[] cookies = request.getCookies();
-		// 		if (cookies != null) {
-		// 			for (Cookie cookie : cookies) {
-		// 				if (cookie.getName().equals("user"))
-		// 					userName = cookie.getValue();
-		// 				if (cookie.getName().equals("JSESSIONID"))
-		// 					sessionID = cookie.getValue();
-		// 			}
-		// 		}
-	%>
 	<!-- Header-->
-	<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-		<div class="top">
-			<div class="logo-brand">
-				<h1 class="logo-txt">Campus.lk</h1>
-			</div>
-		</div>
-		<div class="bottom">
-			<div class="menu-bar">
-				<div class="home pull-left">
-					<a href="index.jsp" class="btn-home center-block"></a>
-				</div>
-				<!-- End home button -->
-				<div class="menu-tabs clearfix">
-
-					<!-- Main menu tabs -->
-					<div class="top-menus">
-						<ul class="list-inline">
-							<li><a href="">All Courses</a></li>
-							<li><a href="">About Us</a></li>
-							<li><a href="">Contact Us</a></li>
-							<li><a href="dist/partials/student/student-dashboard.html">News</a></li>
-							<li><a href="">F & Q</a></li>
-							<li><a href="">Rss</a></li>
-						</ul>
-					</div>
-					<!-- End Main menu tabs -->
-
-					<!-- Course Category tabs -->
-					<div class="bottom-menus" id="category-list">
-						<ul class="list-inline">
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO" class=""
-										value="LIST_CATEGORY_LANDING_PAGE">Pre School</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">School Education</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO" class=""
-										value="LIST_CATEGORY_LANDING_PAGE">Higher Education</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Corporate Training</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Vocational
-										Training</button>
-								</form>
-							</li>
-							<li>
-								<form action="">
-									<button type="submit" name="CCO" id="CCO"
-										value="LIST_CATEGORY_LANDING_PAGE">Talent & Skill</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-					<!-- End Course Category tabs -->
-				</div>
-				<div class="keyword-search pull-right">
-					<div class="search-bar">
-						<input type="text" placeholder="Keyword Search"> <a
-							href="javascript:" class="colr-white"></a>
-					</div>
-					<!-- End Keyword Search -->
-					<div class="login-link">
-						<a href="javascript:">Logout</a>
-						<h3>Hi ${sessionScope.user}, Login successful.</h3>
-						<a href="/dist/partials/student/SessionDataLoader.jsp">
-							Session details checker </a> <br>
-					</div>
-				</div>
-				<!-- End keyword search -->
-			</div>
-		</div>
+	<header>
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 	</header>
-	<!--< End header -->
+	<!-- End Header -->
 
 	<div class="dashboard">
 		<div class="stud-dashboard clearfix">
@@ -167,7 +59,7 @@
 						<!-- End profile image -->
 
 						<div class="prf-name">
-							<h2>Kalana Perera</h2>
+							<h2>${col_stuCode}</h2>
 						</div>
 						<!-- End profile name -->
 						<div class="follow-me">
@@ -217,6 +109,32 @@
 											simply dummy text of the printing and typesetting industry.</span>
 									</p></td>
 							</tr>
+							<tr>
+				
+								<td><div class="widget-header">
+<!-- 										 This sampal 3 button  added for example of buttion action handling in JSTL  -->
+										<c:forEach var="userDataCollection2"
+											items="${fn:split(action, ',')}">
+
+											<c:if test="${userDataCollection2 == 'stu_dashbord_add'}">
+												<button id="stu_dashbord_add">Student dashboard add</button>
+											</c:if>
+									</div></td>
+								<td><div class="widget-header">
+										<c:if test="${userDataCollection2 == 'stu_dashbord_update'}">
+											<button id="stu_dashbord_addghk">Student dashboard
+												update</button>
+										</c:if>
+									</div></td>
+								<td><div class="widget-header">
+										<c:if test="${userDataCollection2 == 'stu_dashbord_delete'}">
+											<button id="stu_dashbord_addh">Student dashboard
+												delete</button>
+										</c:if>
+										</c:forEach>
+									</div></td>
+
+							</tr>
 							<!-- End Notes -->
 						</table>
 					</div>
@@ -236,11 +154,11 @@
 								<table class="tbl-wgt-about">
 									<tr>
 										<td class="td-name">First Name :</td>
-										<td class="td-value">Kalana</td>
+										<td class="td-value">${col_stuFirstName}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Last Name :</td>
-										<td class="td-value">Perera</td>
+										<td class="td-value">${col_stuLastName}</td>
 									</tr>
 									<tr>
 										<td class="td-name">City :</td>
@@ -248,11 +166,11 @@
 									</tr>
 									<tr>
 										<td class="td-name">Birthday :</td>
-										<td class="td-value">Nov 24,1999</td>
+										<td class="td-value">${col_stuDOB}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Website :</td>
-										<td class="td-value">www.blabla.com</td>
+										<td class="td-value">${col_stuInstagramUrl}</td>
 									</tr>
 								</table>
 							</div>
@@ -262,11 +180,11 @@
 								<table class="tbl-wgt-about">
 									<tr>
 										<td class="td-name">User Name :</td>
-										<td class="td-value">Kala</td>
+										<td class="td-value">${col_stuUsername}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Email :</td>
-										<td class="td-value">jamesbond@gmail.com</td>
+										<td class="td-value">${col_stuEmail}</td>
 									</tr>
 									<tr>
 										<td class="td-name">Country :</td>
@@ -278,7 +196,7 @@
 									</tr>
 									<tr>
 										<td class="td-name">Phone :</td>
-										<td class="td-value">077 555 6666</td>
+										<td class="td-value">${col_stuMobilePhoneCountryCode+col_stuMobilePhoneNetworkCode+col_stuMobilePhoneNo}</td>
 									</tr>
 								</table>
 							</div>

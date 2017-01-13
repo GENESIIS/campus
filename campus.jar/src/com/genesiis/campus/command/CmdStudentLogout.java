@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -18,8 +19,8 @@ public class CmdStudentLogout implements ICommand{
 		
 		try {
 			Student loggedStudent = new Student();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
 			Date loginTime = new Date();
 
@@ -30,7 +31,7 @@ public class CmdStudentLogout implements ICommand{
 			loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime.getTime())
 					.toString());
 
-			
+			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
 			} catch (Exception e) {
 			//	log.error("CmdStudentLogout():  Exception"
 					//	+ e.toString());

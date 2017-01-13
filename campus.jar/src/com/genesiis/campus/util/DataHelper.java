@@ -214,4 +214,10 @@ public class DataHelper implements IDataHelper {
 		return response;
 	}
 
+	@Override
+	public HttpServletRequest getRequest() {
+		// TODO Auto-generated method stub
+		return request;
+	}
+
 }
