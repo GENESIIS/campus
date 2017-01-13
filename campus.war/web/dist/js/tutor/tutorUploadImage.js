@@ -1,4 +1,5 @@
 //20161121 DN c47-tutor-add-tutor-information-upload-image-dn created the tutorUploadImage.js
+//20170112 DN c47-tutor-add-tutor-information-upload-image-dn changed the $(document).ready() function and it's inner logic
 
 
 
@@ -10,20 +11,28 @@ $(document).ready(function() {
 	displayTutorProfileImageAtPageLoad();
 	
 	$('#file-select').on('change', function(event){
-		//$('#file-from').on('submit', function(event){
-		event.stopPropagation(); 
-	    event.preventDefault(); 
-	    var files = event.target.files; 
-	    var data = new FormData();
-	    alert("files"+files[0]);
-	    alert("data"+ data[0]);
-	    $.each(files, function(key, value)
-	    {
-	        data.append(key, value);
-	    });
-	    postFilesData(data); 
+		//
+		if(event!=undefined){
+			
+			event.stopPropagation(); 
+		    event.preventDefault(); 
+		    var files = event.target.files; 
+		    var data = new FormData();
+		    $.each(files, function(key, value)
+		    {
+		        data.append(key, value);
+		    });
+		}
+		
 		
 	});
+	
+	
+	// assign data to globall variable and call from the bellow function else data becomes undefined at the time it's been called
+	$('#file-from').on('submit',function(data){
+		 postFilesData(data);
+});
+	
 });
 
 
@@ -98,23 +107,24 @@ function uploadImage(){
 
 
 
-function postFilesData(data)
+function postFilesData(dataForm)
 {
-	alert("data"+data);
+	alert("data"+dataForm);
  $.ajax({
     url: '../../../TutorController',
     type: 'POST',
-    //data: data,
     data: {
-		CCO:"USTIMG", //UPLOAD SUBMITED TUTOR IMAGE
-		formData:data
+		'CCO': 'USTIMG', //UPLOAD SUBMITED TUTOR IMAGE
+		'formData': dataForm
 	},
-    cache: false,
+//    cache: false,
     dataType: 'json',
-    processData: false, 
-    contentType: false, 
+    processData: true,
+//    processData: false,
+    contentType: 'multipart/form-data',
+//    contentType: false, 
     success:function(response){
-		
+			
 		if(response['successCode']===1){
 			alert("Inside success call");
 			displayLabelMessage('displayLabel','green',response['message']);
