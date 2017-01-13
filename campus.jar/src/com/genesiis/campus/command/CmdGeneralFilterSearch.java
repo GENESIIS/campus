@@ -8,9 +8,12 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.util.IDataHelper;
+
 import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 
 public class CmdGeneralFilterSearch implements ICommand{
@@ -34,7 +37,7 @@ public class CmdGeneralFilterSearch implements ICommand{
 			
 			//TODO:For testing purpose			
 			//Do wild card search on key word
-			List result=courseProviderICrud.wildCardSearchOnCourseProvider();
+			final Set<Integer> result=courseProviderICrud.wildCardSearchOnCourseProvider();
 			
 			//Find particular course providers
 			//find Course providers
