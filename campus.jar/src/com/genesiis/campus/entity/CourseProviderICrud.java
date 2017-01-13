@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170107 c6-list-available-institutes-on-the-view created CourseProviderICrud.java
 //20170108 c6-list-available-institutes-on-the-view Declaring new methods 
+//20170113 20170112 c123-general-filter-search-course-provider-MP-dj Declaring wildCardSearchOnCourseProvider() method 
 
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
@@ -51,6 +52,8 @@ public interface CourseProviderICrud extends ICrud{
 	
 	public List<CourseProviderResultDTO> getCategoryWiseTypes(Integer categoryCode)throws SQLException,Exception;
 	
-	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;	
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;
+
+	public List wildCardSearchOnCourseProvider()throws SQLException,Exception;	
 		
 }
