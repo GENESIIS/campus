@@ -6,13 +6,16 @@ import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.util.IDataHelper;
-
+import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.List;
 
 
 public class CmdGeneralFilterSearch implements ICommand{
+	
+	static Logger log = Logger.getLogger(CmdGeneralFilterSearch.class.getName());
 	
 	/**	 * 
 	 * @author dumani DJ
@@ -29,6 +32,7 @@ public class CmdGeneralFilterSearch implements ICommand{
 			//TODO:Identify radio button click-Course providers
 			String keyWord="icbt";			
 			
+			//TODO:For testing purpose			
 			//Do wild card search on key word
 			List result=courseProviderICrud.wildCardSearchOnCourseProvider();
 			

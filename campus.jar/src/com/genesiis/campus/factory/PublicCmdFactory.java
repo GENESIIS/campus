@@ -11,7 +11,6 @@ package com.genesiis.campus.factory;
 import com.genesiis.campus.command.CmdCourseProviderFilterSearch;
 import com.genesiis.campus.command.CmdGeneralFilterSearch;
 import com.genesiis.campus.command.CmdListCategoryTypes;
-import com.genesiis.campus.command.CmdListMoreCourseProviders;
 import com.genesiis.campus.command.CmdListTopCourseProviders;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -19,11 +18,8 @@ import com.genesiis.campus.validation.Operation;
 public class PublicCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
-	static {				
-		map.put(Operation.LIST_TOP_COURSE_PROVIDERS, new CmdListTopCourseProviders());
-		map.put(Operation.LIST_ALL_COURSE_PROVIDERS, new CmdListMoreCourseProviders());
-		map.put(Operation.LIST_FILTER_SEARCH_COURSE_PROVIDERS, new CmdCourseProviderFilterSearch());
-		map.put(Operation.LIST_FILTER_SEARCH_CATEGORY_TYPES, new CmdListCategoryTypes());
+	static {		
+	
 		map.put(Operation.FILTER_SEARCH_COURSE_PROVIDERS, new CmdGeneralFilterSearch());
 		
 	}
@@ -32,19 +28,7 @@ public class PublicCmdFactory implements ICmdFactory {
 	public ICommand getCommand(String cco) {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
-		switch (o) {		
-		case LIST_TOP_COURSE_PROVIDERS:
-			command = map.get(o);
-			break;
-		case LIST_ALL_COURSE_PROVIDERS:
-			command = map.get(o);
-			break;
-		case LIST_FILTER_SEARCH_COURSE_PROVIDERS:
-			command = map.get(o);
-			break;
-		case LIST_FILTER_SEARCH_CATEGORY_TYPES:
-			command = map.get(o);
-			break;
+		switch (o) {
 		case FILTER_SEARCH_COURSE_PROVIDERS:
 			command = map.get(o);
 			break;

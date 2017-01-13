@@ -22,7 +22,13 @@
 				
 				<input type="radio" name="courseProvider" value="CP"> Course Provider<br>
                 <input type="radio" name="courseProvider" value="P"> Programme<br>
-                <input type="button" name="Search" value="Search">
+              
+                
+                <form action="PublicController" method="POST">
+                 <button type="submit" name="CCO" id="CCO" value="FILTER_SEARCH_COURSE_PROVIDERS"
+								class="pure-button pure-button-primary">Search</button>
+						</form>
+               
 			</div>
 			<!-- End Main search bar -->
 
