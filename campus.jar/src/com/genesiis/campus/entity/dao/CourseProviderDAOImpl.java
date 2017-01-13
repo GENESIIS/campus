@@ -37,6 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -508,19 +509,17 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	}
 
 	@Override
-	public List wildCardSearchOnCourseProvider() throws SQLException, Exception {
+	public Set<Integer> wildCardSearchOnCourseProvider() throws SQLException, Exception {
+		//Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		final Set<Integer> providerCode=new HashSet<Integer>();
 		try {
 			CallableStatement cs = null;
 			Connection con = null;
-			con = ConnectionManager.getConnection();
-			//cs = con.prepareCall("{call CAMPUS.getCourseProvider}");
+			con = ConnectionManager.getConnection();			
 			cs = con.prepareCall("{call campus.sp_getcourseprovider}");
 			ResultSet rs = cs.executeQuery();
-			while(rs.next()){
-				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(rs.getString("CODE"));				
-				singleProvider.add(rs.getString("NAME"));			
-				//allProviderList.add(singleProvider);
+			while(rs.next()){				
+				providerCode.add(Integer.valueOf(rs.getString("CPCODE")));
 			}
 			
 		}  catch (SQLException sqlException) {
@@ -530,7 +529,7 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			log.info("wildCardSearchOnCourseProvider() Exception" + e.toString());
 			throw e;
 		}
-		return null;
+		return providerCode;
 	}
 
 }
