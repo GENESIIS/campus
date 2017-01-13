@@ -30,6 +30,7 @@ import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -504,6 +505,32 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return allProviderList;
+	}
+
+	@Override
+	public List wildCardSearchOnCourseProvider() throws SQLException, Exception {
+		try {
+			CallableStatement cs = null;
+			Connection con = null;
+			con = ConnectionManager.getConnection();
+			//cs = con.prepareCall("{call CAMPUS.getCourseProvider}");
+			cs = con.prepareCall("{call campus.sp_getcourseprovider}");
+			ResultSet rs = cs.executeQuery();
+			while(rs.next()){
+				final ArrayList<String> singleProvider = new ArrayList<String>();
+				singleProvider.add(rs.getString("CODE"));				
+				singleProvider.add(rs.getString("NAME"));			
+				//allProviderList.add(singleProvider);
+			}
+			
+		}  catch (SQLException sqlException) {
+			log.info("wildCardSearchOnCourseProvider() sqlException" + sqlException.toString());
+			throw sqlException;
+		}catch (Exception e) {
+			log.info("wildCardSearchOnCourseProvider() Exception" + e.toString());
+			throw e;
+		}
+		return null;
 	}
 
 }
