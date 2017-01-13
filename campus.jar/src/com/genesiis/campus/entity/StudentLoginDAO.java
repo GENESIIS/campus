@@ -82,7 +82,9 @@ public class StudentLoginDAO implements ICrud {
 		return 0;
 	}
 
-	/**logout data updating 
+	/**
+	 * logout data updating
+	 * 
 	 * @author anuradha
 	 * @param student
 	 *            object
@@ -95,9 +97,10 @@ public class StudentLoginDAO implements ICrud {
 		Connection conn = null;
 		String query = "UPDATE CAMPUS.STUDENT SET  LASTLOGGEDOUTDATE=?, LASTLOGGEDOUTTIME=?  WHERE CODE=? ";
 		PreparedStatement ps = null;
-		Student student = (Student) object;
+
 		int rowInserted = 0;
 		try {
+			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 
@@ -133,6 +136,8 @@ public class StudentLoginDAO implements ICrud {
 	}
 
 	/**
+	 * login data updating
+	 * 
 	 * @author anuradha
 	 * @param student
 	 *            object
@@ -146,7 +151,7 @@ public class StudentLoginDAO implements ICrud {
 		Connection conn = null;
 		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?  WHERE CODE=? ";
 		PreparedStatement ps = null;
-		
+
 		int rowInserted = 0;
 		try {
 			Student student = (Student) object;
@@ -214,7 +219,9 @@ public class StudentLoginDAO implements ICrud {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, student.getUsername());
 			preparedStatement.setString(2, student.getEmail());
-			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement
+					.setString(3, Integer.toString(ApplicationStatus.ACTIVE
+							.getStatusValue()));
 			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
 
