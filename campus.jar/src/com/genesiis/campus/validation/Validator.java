@@ -113,12 +113,13 @@ public class Validator {
 			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
 			errorString.add("Unique Name ");
 			isValid = false;
-		}if(!isEmptyString(helper.getParameter("uniquePrefix"))){
-			if(helper.getParameter("uniquePrefix").length() >5){
+		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() >5)){
 				helper.setAttribute("errorUniquePrefix", "Unique name is too long");
 				isValid = false;
-			}
-		}if(isEmptyString(helper.getParameter("aboutMe"))){
+		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() <2)){
+			helper.setAttribute("errorUniquePrefix", "Unique name is too small");
+			isValid = false;
+	}if(isEmptyString(helper.getParameter("aboutMe"))){
 			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
 			isValid = false;
