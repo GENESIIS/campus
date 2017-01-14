@@ -99,158 +99,169 @@ public class CmdAddFeaturedProvider implements ICommand{
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 					String username = helper.getParameter("providerUsername");
 					courseProviderAccount.setUsername(username);
-					courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 					Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
+					//checks for the username
 					usernameCollection = usernameDAO
 							.findById(courseProviderAccount);
 					if (usernameCollection.size() > 0) {
-					//	message = SystemMessage.USERNAME_INVALID;
-						helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
-					}
-					
-					
-					//valdate prefix
-					
-					String prefix = helper.getParameter("uniquePrefix");
-					if(prefix.length() <5){
-						
+						systemMessage = SystemMessage.USERNAME_INVALID.message();
+						helper.setAttribute("errorProviderUsername", SystemMessage.USERNAME_INVALID.message());
+			
 					}else{
-						ICrud prefixDAO = new CourseProviderPrefixDAO();
-						courseProvider.setUniquePrefix(prefix);
-						Collection<Collection<String>> prefixCollection = prefixDAO
-								.findById(courseProvider);
-						if (prefixCollection.size() != 0) {
-							helper.setAttribute("userMessage",SystemMessage.PREFIX_INVALID.message() );
-
-						} else if (prefixCollection.size() == 0) {
-							helper.setAttribute("userMessage", SystemMessage.PREFIX_VALID.message());
-						}
-					}
-					
-				String expireDate = helper.getParameter("expirationDate");
-				String countryCode = helper.getParameter("selectedCountry");
-				String selectedTown = helper.getParameter("selectedTown");
-				String courseProviderType = helper.getParameter("selectedProviderType");
-				
-				/**
-				 * checks for head office code. if no head office code is provided 
-				 * assign null
-				 */
-				if(validator.isEmptyString(helper.getParameter("headOffice"))){
-					courseProvider.setHeadOffice(0);
-				}else{
-					courseProvider.setHeadOffice(Integer.parseInt("headOffice"));
-				}
 						
-				int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
-				
-				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-				Date parsed = format.parse(expireDate);
-				java.sql.Date sql = new java.sql.Date(parsed.getTime());
-		        
-				//set basic data
-				courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
-				courseProvider.setShortName(helper.getParameter("shortName"));
-				courseProvider.setName(helper.getParameter("providerName"));
-				courseProvider.setDescription(helper.getParameter("aboutMe"));
-				courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
-				courseProvider.setLandPhoneCountryCode(countryCode);
-				courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
-				courseProvider.setLandPhoneNo(helper.getParameter("land1"));
-				courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
-				courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
-				courseProvider.setExpirationDate(sql);
-				courseProvider.setMobilePhoneCountryCode(countryCode);
-				//courseProvider.setHeadOffice(null);
-				
-				courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
-				courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
-				courseProvider.setFaxNo(helper.getParameter("fax"));
-				courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
-				courseProvider.setExpirationDate(sql);
-				courseProvider.setWeblink(helper.getParameter("webLink"));
-				courseProvider.setFacebookURL(helper.getParameter("facebook"));
-				courseProvider.setTwitterURL(helper.getParameter("twitter"));
-				courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
-				courseProvider.setLinkedinURL(helper.getParameter("linkdedIn"));
-				courseProvider.setInstagramURL(helper.getParameter("instagram"));
-				courseProvider.setViberNumber(helper.getParameter("viber"));
-				courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
-				courseProvider.setAddress1(helper.getParameter("address1"));
-				courseProvider.setAddress2(helper.getParameter("address2"));
-				courseProvider.setAddress3(helper.getParameter("address3"));			
-				courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
-				courseProvider.setAdminAllowed(true);
-				courseProvider.setCourseProviderStatus(providerStatus);
-				courseProvider.setCrtBy("admin");//to be update after the session is created
-				courseProvider.setModBy("admin");//to be update after the session is created
+						//checks for the email address
+						courseProviderAccount.setUsername("");
+						courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
+					
+						usernameCollection = usernameDAO
+								.findById(courseProviderAccount);
+						if (usernameCollection.size() > 0){
+							systemMessage = SystemMessage.EMAIL_EXIST.message();
+							helper.setAttribute("errorProviderEmail", SystemMessage.EMAIL_EXIST.message());
+						}else{
+							
+							//valdate prefix							
+							String prefix = helper.getParameter("uniquePrefix");
+			
+								ICrud prefixDAO = new CourseProviderPrefixDAO();
+								courseProvider.setUniquePrefix(prefix);
+								Collection<Collection<String>> prefixCollection = prefixDAO
+										.findById(courseProvider);
+								if (prefixCollection.size() != 0) {
+									helper.setAttribute("userMessage",SystemMessage.PREFIX_INVALID.message() );
 
-				//set course provider town details
-				courseProviderTown.setActive(true);
-				courseProviderTown.setTown(Long.parseLong(selectedTown));
-				courseProviderTown.setAddress1(helper.getParameter("address1"));
-				courseProviderTown.setAddress2(helper.getParameter("address2"));
-				courseProviderTown.setAddress3(helper.getParameter("address3"));
-				
-				courseProviderTown.setCrtBy("admin");
-				courseProviderTown.setModBy("admin");
-				
-				Map map = new HashMap();
-				map.put("provider", courseProvider);
-				map.put("town" , courseProviderTown);
-				
-				int providerType = Integer.parseInt(helper.getParameter("courseProvider"));
-				
-				/**
-				 * select the account type of the course provider. 
-				 * and will call different DAO classes depending on the course provider
-				 * type
-				 */
-				if(providerType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
-					courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
-					courseProvider.setTutorRelated(false);
+								} else if (prefixCollection.size() == 0) {
+									//helper.setAttribute("userMessage", SystemMessage.PREFIX_VALID.message());
+																
+						String expireDate = helper.getParameter("expirationDate");
+						String countryCode = helper.getParameter("selectedCountry");
+						String selectedTown = helper.getParameter("selectedTown");
+						String courseProviderType = helper.getParameter("selectedProviderType");
+						
+						/**
+						 * checks for head office code. if no head office code is provided 
+						 * assign null
+						 */
+						if(validator.isEmptyString(helper.getParameter("headOffice"))){
+							courseProvider.setHeadOffice(0);
+						}else{
+							courseProvider.setHeadOffice(Integer.parseInt("headOffice"));
+						}
 								
-					String accountStatus = helper.getParameter("accountStatus");
-					if(accountStatus.equalsIgnoreCase("1")){	
-						courseProviderAccount.setActive(true);
+						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
+						
+						SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+						Date parsed = format.parse(expireDate);
+						java.sql.Date sql = new java.sql.Date(parsed.getTime());
+				        
+						//set basic data
+						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
+						courseProvider.setShortName(helper.getParameter("shortName"));
+						courseProvider.setName(helper.getParameter("providerName"));
+						courseProvider.setDescription(helper.getParameter("aboutMe"));
+						courseProvider.setCourseInquiryEmail(helper.getParameter("inquiryMail"));
+						courseProvider.setLandPhoneCountryCode(countryCode);
+						courseProvider.setLandPhoneAreaCode(helper.getParameter("areaCode"));
+						courseProvider.setLandPhoneNo(helper.getParameter("land1"));
+						courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
+						courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
+						courseProvider.setExpirationDate(sql);
+						courseProvider.setMobilePhoneCountryCode(countryCode);
+						//courseProvider.setHeadOffice(null);
+						
+						courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
+						courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
+						courseProvider.setFaxNo(helper.getParameter("fax"));
+						courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
+						courseProvider.setExpirationDate(sql);
+						courseProvider.setWeblink(helper.getParameter("webLink"));
+						courseProvider.setFacebookURL(helper.getParameter("facebook"));
+						courseProvider.setTwitterURL(helper.getParameter("twitter"));
+						courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
+						courseProvider.setLinkedinURL(helper.getParameter("linkdedIn"));
+						courseProvider.setInstagramURL(helper.getParameter("instagram"));
+						courseProvider.setViberNumber(helper.getParameter("viber"));
+						courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
+						courseProvider.setAddress1(helper.getParameter("address1"));
+						courseProvider.setAddress2(helper.getParameter("address2"));
+						courseProvider.setAddress3(helper.getParameter("address3"));			
+						courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
+						courseProvider.setAdminAllowed(true);
+						courseProvider.setCourseProviderStatus(providerStatus);
+						courseProvider.setCrtBy("admin");//to be update after the session is created
+						courseProvider.setModBy("admin");//to be update after the session is created
+
+						//set course provider town details
+						courseProviderTown.setActive(true);
+						courseProviderTown.setTown(Long.parseLong(selectedTown));
+						courseProviderTown.setAddress1(helper.getParameter("address1"));
+						courseProviderTown.setAddress2(helper.getParameter("address2"));
+						courseProviderTown.setAddress3(helper.getParameter("address3"));
+						
+						courseProviderTown.setCrtBy("admin");
+						courseProviderTown.setModBy("admin");
+						
+						Map map = new HashMap();
+						map.put("provider", courseProvider);
+						map.put("town" , courseProviderTown);
+						
+						int providerType = Integer.parseInt(helper.getParameter("courseProvider"));
+						
+						/**
+						 * select the account type of the course provider. 
+						 * and will call different DAO classes depending on the course provider
+						 * type
+						 */
+						if(providerType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
+							courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+							courseProvider.setTutorRelated(false);
+										
+							String accountStatus = helper.getParameter("accountStatus");
+							if(accountStatus.equalsIgnoreCase("1")){	
+								courseProviderAccount.setActive(true);
+							}
+							if(accountStatus.equalsIgnoreCase("0")){	
+								courseProviderAccount.setActive(false);
+							}
+
+							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
+						//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
+							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
+							courseProviderAccount.setName(helper.getParameter("accountDescription"));
+							courseProviderAccount.setUserType(userType);
+							courseProviderAccount.setCrtBy("admin");//to be update after the session is created
+							courseProviderAccount.setModBy("admin");//to be update after the session is created
+							
+							ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
+							map.put("account", courseProviderAccount);
+							generatedKey = courseProviderDAO.add(map);
+							
+						}else if(providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()){
+							courseProvider.setTutorRelated(false);
+							courseProvider.setAdminAllowed(false);
+							
+							ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
+							courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
+							generatedKey = oneOffCourseProviderDAO.add(map);
+						}
+						
+
+
+						if (generatedKey >0) {
+							systemMessage = SystemMessage.ADDED.message();
+							helper.setAttribute("registerId", generatedKey);
+						} else if (generatedKey ==0) {
+							systemMessage = SystemMessage.NOTADDED.message();
+						}
+
+							helper.setAttribute("registerId", generatedKey);
+								}
+						
+
+						}
+						
 					}
-					if(accountStatus.equalsIgnoreCase("0")){	
-						courseProviderAccount.setActive(false);
-					}
-
-					courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
-				//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
-					courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-					courseProviderAccount.setName(helper.getParameter("accountDescription"));
-					courseProviderAccount.setUserType(userType);
-					courseProviderAccount.setCrtBy("admin");//to be update after the session is created
-					courseProviderAccount.setModBy("admin");//to be update after the session is created
-					
-					ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
-					map.put("account", courseProviderAccount);
-					generatedKey = courseProviderDAO.add(map);
-					
-				}else if(providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()){
-					courseProvider.setTutorRelated(false);
-					courseProvider.setAdminAllowed(false);
-					
-					ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
-					courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
-					generatedKey = oneOffCourseProviderDAO.add(map);
-				}
-				
-
-
-				if (generatedKey >0) {
-					systemMessage = SystemMessage.ADDED.message();
-					helper.setAttribute("registerId", generatedKey);
-				} else if (generatedKey ==0) {
-					systemMessage = SystemMessage.NOTADDED.message();
-				}
-
-					helper.setAttribute("registerId", generatedKey);
-				
 			}else{
 
 				systemMessage = errorMessages.toString()+ " "+ SystemMessage.EMPTY_FIELD.message();
