@@ -14,6 +14,14 @@ $("#countryDetails").on("change", function(){
 		$("#landCountryCode").val("+" + selected);
 	})
 
+function testing(country) {
+	alert("testing Vountry = " + country);
+   /* if ("c" + "a" + "t" === "cat") {
+        document.writeln("Same");
+    } else {
+        document.writeln("Not same");
+    }*/
+}
 	
 function displayCountryDetails() {
 	
