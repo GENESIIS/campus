@@ -130,7 +130,7 @@ function providerPrefixValidation() {
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 							window.prefixFlag == response.validationFlag;
-alert(response.validationFlag + ">>>>>>>>>>>>>>>>"+prefixFlag);
+
 					return prefixFlag;
 
 							}
