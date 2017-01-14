@@ -88,7 +88,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 							message = SystemMessage.PREFIX_VALID;
 							validationFlag = true;
 						}
-						log.info(validationFlag);
+
 					} else {
 						message = SystemMessage.EMPTY_FIELD;
 						validationFlag = false;
@@ -100,7 +100,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 			}
 
 			helper.setAttribute("validationFlag", validationFlag);
-			log.info(validationFlag);
+
 		} catch (SQLException exception) {
 			message = SystemMessage.ERROR;
 			log.error("execute method SQLException" + exception.toString());

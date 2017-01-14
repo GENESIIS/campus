@@ -279,7 +279,7 @@ function landPhoneNubmerHelper(){
 }
 function getProviderType() {
 
-	if(vaidateCourseProviderDeatils()){
+//	if(vaidateCourseProviderDeatils()){
 
 		var form = $('#basicForm');
 		var formData = $(form).serialize();
@@ -300,11 +300,49 @@ function getProviderType() {
 				if(window.responseErrorMessage != null){
 					document.getElementById("errorMessage").style.display = "block";
 					$("#errorMessage").html(response.userMessage);
+					
+					$("#errorCourseProvider").html(response.errorCourseProvider);
+					$("#errorProviderName").html(response.errorProviderName);
+					$("#errorShortName").html(response.errorShortName);
+					$("#errorUniquePrefix").html(response.errorUniquePrefix);
+					$("#errorAboutMe").html(response.errorAboutMe);
+					$("#errorSpecialFeatures").html(response.errorSpecialFeatures);
+					$("#errorGeneralEmail").html(response.errorGeneralEmail);
+					$("#errorInquiryMail").html(response.errorInquiryMail);
+					$("#errorSelectedCountry").html(response.errorSelectedCountry);
+					$("#errorSelectedTown").html(response.errorSelectedTown);
+					$("#errorAreaCode").html(response.errorAreaCode);
+					$("#errorLand1").html(response.errorLand1);
+					$("#errorLand2").html(response.errorLand2);
+					$("#errorNetworkCode").html(response.errorNetworkCode);
+					$("#errorMobile").html(response.errorMobile);
+					$("#errorAddress1").html(response.errorAddress1);
+					$("#errorWebLink").html(response.errorWebLink);
+					$("#errorFacebook").html(response.errorFacebook);
+					$("#errorLinkedIn").html(response.errorLinkedIn);
+					$("#errorTwitter").html(response.errorTwitter);
+					$("#errorMyspace").html(response.errorMyspace);
+					$("#errorWhatsapp").html(response.errorWhatsapp);
+					$("#errorViber").html(response.errorShortName);
+					
+					
+					alert(JSON.stringify(response));
+					var generatedKey = response.registerId;
+//					if(generatedKey >0){
+//						$ajax({
+//							url :'/dist/partials/admin/courseProviderManagement.jsp',
+//							method : 'POST',
+//							data : {
+//								'generatedKey' : generatedKey,
+//								'userMessage' : 'Upload your images'
+//								}
+//						});
+//					}
 				}
 
 				}
 			},
 		});
-	}
+//	}
 	
 }
