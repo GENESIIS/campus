@@ -22,7 +22,7 @@ $(document).ready(function() {
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
 	if(window.responseErrorMessage == null){
-		document.getElementById("errorMessage").style.display = "none";
+		document.getElementById("userMessage").style.display = "none";
 	}
 
 }
@@ -278,6 +278,15 @@ function landPhoneNubmerHelper(){
 
 }
 function getProviderType() {
+	
+
+	var errorMessageList = document.getElementsByClassName('error-message');
+	
+	//clear all previous error messages
+	for (var i = 0; i < errorMessageList.length; i++) { 
+		errorMessageList[i].innerHTML = "";
+	}
+	
 
 //	if(vaidateCourseProviderDeatils()){
 
@@ -298,35 +307,41 @@ function getProviderType() {
 				window.responseErrorMessage = response.userMessage;
 				
 				if(window.responseErrorMessage != null){
-					document.getElementById("errorMessage").style.display = "block";
-					$("#errorMessage").html(response.userMessage);
-					
-					$("#errorCourseProvider").html(response.errorCourseProvider);
-					$("#errorProviderName").html(response.errorProviderName);
-					$("#errorShortName").html(response.errorShortName);
-					$("#errorUniquePrefix").html(response.errorUniquePrefix);
-					$("#errorAboutMe").html(response.errorAboutMe);
-					$("#errorSpecialFeatures").html(response.errorSpecialFeatures);
-					$("#errorGeneralEmail").html(response.errorGeneralEmail);
-					$("#errorInquiryMail").html(response.errorInquiryMail);
-					$("#errorSelectedCountry").html(response.errorSelectedCountry);
-					$("#errorSelectedTown").html(response.errorSelectedTown);
-					$("#errorAreaCode").html(response.errorAreaCode);
-					$("#errorLand1").html(response.errorLand1);
-					$("#errorLand2").html(response.errorLand2);
-					$("#errorNetworkCode").html(response.errorNetworkCode);
-					$("#errorMobile").html(response.errorMobile);
-					$("#errorAddress1").html(response.errorAddress1);
-					$("#errorWebLink").html(response.errorWebLink);
-					$("#errorFacebook").html(response.errorFacebook);
-					$("#errorLinkedIn").html(response.errorLinkedIn);
-					$("#errorTwitter").html(response.errorTwitter);
-					$("#errorMyspace").html(response.errorMyspace);
-					$("#errorWhatsapp").html(response.errorWhatsapp);
-					$("#errorViber").html(response.errorShortName);
-					
-					
-					alert(JSON.stringify(response));
+//					document.getElementById("errorMessage").style.display = "block";
+//					$("#errorMessage").html(response.userMessage);
+//					
+//					$("#errorCourseProvider").html(response.errorCourseProvider);
+//					$("#errorProviderName").html(response.errorProviderName);
+//					$("#errorShortName").html(response.errorShortName);
+//					$("#errorUniquePrefix").html(response.errorUniquePrefix);
+//					$("#errorAboutMe").html(response.errorAboutMe);
+//					$("#errorSpecialFeatures").html(response.errorSpecialFeatures);
+//					$("#errorGeneralEmail").html(response.errorGeneralEmail);
+//					$("#errorInquiryMail").html(response.errorInquiryMail);
+//					$("#errorSelectedCountry").html(response.errorSelectedCountry);
+//					$("#errorSelectedTown").html(response.errorSelectedTown);
+//					$("#errorAreaCode").html(response.errorAreaCode);
+//					$("#errorLand1").html(response.errorLand1);
+//					$("#errorLand2").html(response.errorLand2);
+//					$("#errorNetworkCode").html(response.errorNetworkCode);
+//					$("#errorMobile").html(response.errorMobile);
+//					$("#errorAddress1").html(response.errorAddress1);
+//					$("#errorWebLink").html(response.errorWebLink);
+//					$("#errorFacebook").html(response.errorFacebook);
+//					$("#errorLinkedIn").html(response.errorLinkedIn);
+//					$("#errorTwitter").html(response.errorTwitter);
+//					$("#errorMyspace").html(response.errorMyspace);
+//					$("#errorWhatsapp").html(response.errorWhatsapp);
+//					$("#errorViber").html(response.errorShortName);
+//					
+//					
+					for (var key in response) {
+						  if (response.hasOwnProperty(key)) {
+						    var val = response[key];
+						    var attributeName = "#" + key;
+						    $(attributeName).html(val);
+						  }
+						}
 					var generatedKey = response.registerId;
 //					if(generatedKey >0){
 //						$ajax({

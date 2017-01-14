@@ -108,7 +108,7 @@
 			<input type="hidden" name="CCO" id="CCO"
 				value="ADD_FEATURED_COURSE_PROVIDER" />
 			<div class="content-holder center-block clearfix">
-					<div class="alert alert-danger" role="alert" id="errorMessage">
+					<div class="alert alert-danger" role="alert" id="userMessage">
 					</div>
 
 				<!-- course filter panel : left side -->
@@ -288,8 +288,8 @@
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="fax" id="fax"
-										size="25px;" /> <span id="errorShortName"
-										class="error-message">${errorShortName }</span>
+										size="25px;" /> <span id="errorFax"
+										class="error-message">${errorFax }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -516,7 +516,7 @@
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
 										id="providerEmail" size="50px;" /> <span
-										id="errorProviderEmail" class="error-message">${errorProviderEmail }</span>
+										id="errorPrivateEmail" class="error-message">${errorProviderEmail }</span>
 								</div>
 							</li>
 							<!-- end -->
@@ -529,7 +529,7 @@
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
 										onkeyup="providerUsernameValidation();" /> <span
-										id="errorProviderUsername" class="error-message">${errorProviderUsername }</span>
+										id="errorUsername" class="error-message">${errorProviderUsername }</span>
 								</div>
 							</li>
 							<!-- end -->
