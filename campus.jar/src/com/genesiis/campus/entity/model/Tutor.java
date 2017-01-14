@@ -320,7 +320,7 @@ public class Tutor {
 	/**
 	 * @return the viberNumber
 	 */
-	public String getViber() {
+	public String getViberNumber() {
 		return viberNumber;
 	}
 	/**

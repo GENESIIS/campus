@@ -81,7 +81,7 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(19, tutor.getMySpaceId()); 
 			preparedStatement.setString(20, tutor.getLinkedInLink());
 			preparedStatement.setString(21, tutor.getInstagramId());
-			preparedStatement.setString(22, tutor.getViber());
+			preparedStatement.setString(22, tutor.getViberNumber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
 			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
 			preparedStatement.setInt(25, tutor.getTutorStatus()); 
