@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
@@ -57,8 +56,11 @@ public class CmdAddFeaturedProvider implements ICommand{
 	}
 	
 	/**
-	 * execute method used to handle the request related to featured course provider 
+	 * execute method used to handle the request related to course provider 
 	 * registration. 
+	 * Details are validated and then username, email and prefix are validated for 
+	 * for existence. Depending on the course provider type it will call between 
+	 * featured course provider and one off course provider DAO classes.
 	 * @author JH
 	 * @param IDataHelper
 	 * @param IView
