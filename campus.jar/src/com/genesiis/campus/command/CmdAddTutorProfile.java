@@ -83,9 +83,7 @@ public class CmdAddTutorProfile implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
-			System.out.println("before");
 			helper.setAttribute("tutor", tutor);
-			System.out.println("after");
 		}
 		return view;
 	}
