@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20161208 JH c39-add-course-provider added USERNAME_VALID, USERNAME_INVALID
 //20161209 JH c39-add-course-provider added EMPTY_USERNAME
 //20161227 JH c39-add-course-provider added PREFIX_INVALID, PREFIX_VALID
+//20170115 JH c39-add-course-provider added EMAIL_EXIST
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -18,7 +19,8 @@ public enum SystemMessage {
 	EMPTY_USERNAME("Please give a username"),
 	EMPTY_FIELD("Empty field(s)"),		
 	PREFIX_INVALID("Prefix is not available"),
-	PREFIX_VALID("Valid prefix");
+	PREFIX_VALID("Valid prefix"),
+	EMAIL_EXIST("Email already exist.");
 	
 	
 	private String message;
