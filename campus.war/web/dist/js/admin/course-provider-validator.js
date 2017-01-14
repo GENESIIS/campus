@@ -145,20 +145,6 @@ function providerPrefixValidation() {
  */
 function vaidateCourseProviderDeatils(form) {
 
-	var errorMessageList = document.getElementsByClassName('error-message');
-	
-	//clear all previous error messages
-	for (var i = 0; i < errorMessageList.length; i++) { 
-		errorMessageList[i].innerHTML = "";
-	}
-	
-//	if(!providerPrefixValidation()){
-//		return false;
-//	}
-//	if( !providerUsernameValidation()){
-//		return false;
-//	}
-	
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
 	var shortName = $("#shortName").val();
@@ -376,13 +362,13 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerEmail)) {
-		document.getElementById('errorProviderEmail').innerHTML = "**Give a private contact email of the course provider.";
+		document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
 		document.getElementById('providerEmail').focus();
 		flag = false;
 	}
 	if (!isempty(providerUsername)) {
 		document.getElementById('errorProviderUsername').innerHTML = "**Give a username.";
-		document.getElementById('providerUsername').focus();
+		document.getElementById('errorUsername').focus();
 		flag = false;
 	}
 	if (!isempty(providerPassword)) {
