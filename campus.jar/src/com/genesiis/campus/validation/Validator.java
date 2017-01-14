@@ -90,13 +90,16 @@ public class Validator {
 		return true;
 	}
 	
+	/**
+	 * @author JH
+	 * @param helper
+	 * @return ArryList of type of String
+	 * 
+	 * used to validate course provider details.
+	 */
 	public static ArrayList<String> validateCourseProvider(IDataHelper helper){
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
-
-		final CourseProvider courseProvider = new CourseProvider();
-		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
-		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		
 		if(isEmptyString(helper.getParameter("courseProvider"))){
 			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
@@ -172,42 +175,15 @@ public class Validator {
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("fax"))|| !isInteger(helper.getParameter("fax"))){
-			courseProvider.setFaxNo("-");
+		}if(!isEmptyString(helper.getParameter("fax")) && !isInteger(helper.getParameter("fax"))){
+			helper.setAttribute("errorFax", "Fax number is invalid");
+			errorString.add("Invalid Fax number");
 		}if(isEmptyString(helper.getParameter("address1"))){
 			helper.setAttribute("errorAddress1", "Empty address");
 			errorString.add("Address Line 1");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("address2"))){
-			courseProvider.setAddress2("-");
-		}if(isEmptyString(helper.getParameter("address3"))){
-			courseProvider.setAddress3("-");
-		}if(isEmptyString(helper.getParameter("accountStatus"))){
-			helper.setAttribute("errorAccountStatusValue", "Select the account status");
-			errorString.add("Account Status");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerPrivateName"))){
-			helper.setAttribute("errorPrivateName", "Give a contact name");
-			errorString.add("Provider Name");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerEmail"))){
-			helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
-			errorString.add("Private Email");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerUsername"))){
-			helper.setAttribute("errorUsername", "Give a usename");
-			errorString.add("Username");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerPassword")) || 
-				isEmptyString(helper.getParameter("cProviderPassword"))){
-			errorString.add("Password fields are empty");
-			isValid = false;
-			courseProviderAccount.setDescription("-");
-		}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
-			helper.setAttribute("errorPassword", "Password fields does not match");
-			errorString.add("Password fields does not match");
-			isValid = false;
-		}if(!validateEmail(helper.getParameter("inquiryMail"))){
+		}
+	if(!validateEmail(helper.getParameter("inquiryMail"))){
 			helper.setAttribute("errorInquiryMail", "Empty or invalid email address");
 			errorString.add("Empty or invalid email address");
 			isValid = false;
@@ -216,6 +192,45 @@ public class Validator {
 			errorString.add("Empty or invalid email address");
 			isValid = false;
 		}
+		if(!isEmptyString(helper.getParameter("courseProvider"))){	
+			int courseProviderType = Integer.parseInt(helper.getParameter("courseProvider"));
+			//validate details related to featured course provider account
+			if(courseProviderType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
+				if(isEmptyString(helper.getParameter("providerPrivateName"))){
+					helper.setAttribute("errorPrivateName", "Give a contact name");
+					errorString.add("Provider Name");
+					isValid = false;
+				}if(isEmptyString(helper.getParameter("providerEmail"))){
+					helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
+					errorString.add("Private Email");
+					isValid = false;
+				}if(isEmptyString(helper.getParameter("providerUsername"))){
+					helper.setAttribute("errorUsername", "Give a usename");
+					errorString.add("Username");
+					isValid = false;
+				}if(isEmptyString(helper.getParameter("providerPassword")) || 
+				isEmptyString(helper.getParameter("cProviderPassword"))){
+					errorString.add("Password fields are empty");
+					helper.setAttribute("errorProviderPassword", "Password Filed(s) are empty");
+					isValid = false;
+				}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
+					helper.setAttribute("errorProviderPassword", "Password fields does not match");
+					errorString.add("Password fields does not match");
+					isValid = false;
+				}if(helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword")) && 
+						helper.getParameter("providerPassword").length() < 6){
+					helper.setAttribute("errorProviderPassword", "Password is weak");
+					errorString.add("Password is weak. Give at lesast 6 characters");
+					isValid = false;
+				}
+				if(isEmptyString(helper.getParameter("accountStatus"))){
+					helper.setAttribute("errorAccountStatusValue", "Select the account status");
+					errorString.add("Account Status");
+					isValid = false;
+				}
+			}
+		}
+
 		return errorString;
 		
 	}
