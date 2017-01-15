@@ -53,17 +53,19 @@ function isPatternMatch(regularExpression, source) {
 }
 
 function providerUsernameValidation() {
+	
+	$("#errorUsername").html = "";
 
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
 
 	if (!isempty(selectedUsername)) {
-		document.getElementById('errorProviderUsername').innerHTML = "**Username is empty.";
+		document.getElementById('errorUsername').innerHTML = "**Username is empty.";
 		document.getElementById('providerUsername').focus();
 		return false;
 	} else {
-		 if(selectedUsername.length <6){
-				document.getElementById('errorProviderUsername').innerHTML = "**Username should have atleast 6 characters.";
+		 if(selectedUsername.length <5){//check whether the username has less than 5 characters
+				document.getElementById('errorUsername').innerHTML = "**Username should have atleast 5 characters.";
 				return false;
 			}else{
 
@@ -82,15 +84,16 @@ function providerUsernameValidation() {
 					success : function(response) {
 
 						if (response !== undefined && response !== null) {
-							document.getElementById('errorProviderUsername').innerHTML = response.userMessage;
+							document.getElementById('errorUsername').innerHTML = response.userMessage;
 							window.usernameFlag == response.validationFlag;
+							alert(window.usernameFlag);
 							
 //							if(window.usernameFlag == true){
 //								return true;
 //								} else {
 //									return false;
 //								}
-							return prefixFlag;
+							return usernameFlag;
 
 							}
 						},
@@ -102,6 +105,7 @@ function providerUsernameValidation() {
 function providerPrefixValidation() {
 	
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
+	document.getElementById('errorUniquePrefix').value = "";
 
 	if (!isempty(selectedPrefix)) {
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
@@ -110,7 +114,10 @@ function providerPrefixValidation() {
 	} else if (selectedPrefix.length < 2) {
 			document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
 			return false;
-	} else {
+	} else if (selectedPrefix.length > 6) {
+		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
+		return false;
+} else {
 		document.getElementById('errorUniquePrefix').innerHTML = "";
 
 		$
@@ -130,7 +137,7 @@ function providerPrefixValidation() {
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 							window.prefixFlag == response.validationFlag;
-
+alert(window.prefixFlag);
 					return prefixFlag;
 
 							}
