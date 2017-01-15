@@ -54,6 +54,6 @@ public interface CourseProviderICrud extends ICrud{
 	
 	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet)throws SQLException,Exception;
 
-	public Set<Integer> wildCardSearchOnCourseProvider()throws SQLException,Exception;	
+	public Set<Integer> wildCardSearchOnCourseProvider(String keyWord)throws SQLException,Exception;	
 		
 }
