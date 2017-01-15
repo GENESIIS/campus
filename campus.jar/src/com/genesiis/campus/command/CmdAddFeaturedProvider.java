@@ -108,7 +108,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 							.findById(courseProviderAccount);
 					if (usernameCollection.size() > 0) {
 						systemMessage = SystemMessage.USERNAME_INVALID.message();
-						helper.setAttribute("errorProviderUsername", SystemMessage.USERNAME_INVALID.message());
+						helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
 			
 					}else{
 						
@@ -116,12 +116,14 @@ public class CmdAddFeaturedProvider implements ICommand{
 						courseProviderAccount.setUsername("");
 						courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
 					
-						usernameCollection = usernameDAO
+						Collection<Collection<String>>	emailCollection = usernameDAO
 								.findById(courseProviderAccount);
-						if (usernameCollection.size() > 0){
+						if (emailCollection.size() > 0){
 							systemMessage = SystemMessage.EMAIL_EXIST.message();
-							helper.setAttribute("errorProviderEmail", SystemMessage.EMAIL_EXIST.message());
+							helper.setAttribute("errorPrivateEmail", SystemMessage.EMAIL_EXIST.message());
 						}else{
+							
+							courseProviderAccount.setUsername(username);
 							
 							//valdate prefix							
 							String prefix = helper.getParameter("uniquePrefix");
@@ -279,6 +281,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		} finally {
 			if (systemMessage != null) {
 				helper.setAttribute("userMessage", systemMessage);
+				log.info(systemMessage);
 			}
 		}
 		

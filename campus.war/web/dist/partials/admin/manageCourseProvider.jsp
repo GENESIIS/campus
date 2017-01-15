@@ -568,7 +568,7 @@
 											name="accountStatus" id="accountStatus" value="inactive" />
 										InActive &nbsp; -->
 
-										<span id="errorAccountStatus" class="error-message">${errorAccountStatus }</span>
+										<span id="errorAccountStatusValue" class="error-message">${errorAccountStatusValue }</span>
 									</h1>
 								</div></li>
 							<!-- end -->
