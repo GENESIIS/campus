@@ -19,6 +19,7 @@ public class CourseProviderSearchDTO {
 	private List<Integer> cpTypeList;
 	private List<Integer> majorList;
 	private List<Integer> levelList;
+	private List<Integer> courseProviderCodeList;
 	
 	public int getCourseProviderCode() {
 		return courseProviderCode;
@@ -68,4 +69,10 @@ public class CourseProviderSearchDTO {
 	public void setLevelList(List<Integer> levelList) {
 		this.levelList = levelList;
 	}
+	public List<Integer> getCourseProviderCodeList() {
+		return courseProviderCodeList;
+	}
+	public void setCourseProviderCodeList(List<Integer> courseProviderCodeList) {
+		this.courseProviderCodeList = courseProviderCodeList;
+	}	
 }
