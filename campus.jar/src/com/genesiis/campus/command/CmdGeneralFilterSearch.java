@@ -6,12 +6,15 @@ import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -33,14 +36,18 @@ public class CmdGeneralFilterSearch implements ICommand{
 		try {
 			CourseProviderICrud courseProviderICrud=new CourseProviderDAOImpl();
 			//TODO:Identify radio button click-Course providers
-			String keyWord="icbt";			
+			String keyWord="%sliit%";			
 			
 			//TODO:For testing purpose			
 			//Do wild card search on key word
-			final Set<Integer> result=courseProviderICrud.wildCardSearchOnCourseProvider();
+			final Set<Integer> cpCodeSet=courseProviderICrud.wildCardSearchOnCourseProvider(keyWord);
 			
 			//Find particular course providers
 			//find Course providers
+			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
+			providerSearchDTO.setCourseProviderCodeList(new ArrayList<Integer>(cpCodeSet));
+			final Collection<Collection<String>> courseProviderSearchResults = courseProviderICrud.getLightAllCourseProviders(providerSearchDTO);
+			view.setCollection(courseProviderSearchResults);
 			
 		} catch (Exception exception) {
 			log.error("execute() :Exception  " + exception);			
