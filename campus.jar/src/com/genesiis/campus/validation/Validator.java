@@ -116,7 +116,7 @@ public class Validator {
 			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
 			errorString.add("Unique Name ");
 			isValid = false;
-		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() >5)){
+		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() >6)){
 				helper.setAttribute("errorUniquePrefix", "Unique name is too long");
 				isValid = false;
 		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() <2)){
@@ -208,6 +208,12 @@ public class Validator {
 					helper.setAttribute("errorUsername", "Give a usename");
 					errorString.add("Username");
 					isValid = false;
+				}if(!isEmptyString(helper.getParameter("providerUsername"))){
+					String username = helper.getParameter("providerUsername");
+					if( username.length() <5){
+						helper.setAttribute("errorUsername", "Username is too small. It should have at least 5 characters");
+						isValid = false;
+					}
 				}if(isEmptyString(helper.getParameter("providerPassword")) || 
 				isEmptyString(helper.getParameter("cProviderPassword"))){
 					errorString.add("Password fields are empty");
