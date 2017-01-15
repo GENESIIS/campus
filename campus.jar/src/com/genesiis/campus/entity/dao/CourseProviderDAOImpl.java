@@ -18,6 +18,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20161124 c17-provider-criteria-based-filter-search Implemented getCategoryWiseTypes() method
 //DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
+//DJ 20170115 c123-general-filter-search-course-provider-MP-dj Implemented wildCardSearchOnCourseProvider()
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
@@ -508,20 +509,25 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 		return allProviderList;
 	}
 
+	/**
+	 * Get course provider code set related to input key word.
+	 * @param keyWord Input string
+	 * @author DJ
+	 * @return providerCode  Integer set
+	 */
 	@Override
-	public Set<Integer> wildCardSearchOnCourseProvider() throws SQLException, Exception {
-		//Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
-		final Set<Integer> providerCode=new HashSet<Integer>();
-		try {
-			CallableStatement cs = null;
-			Connection con = null;
+	public Set<Integer> wildCardSearchOnCourseProvider(String keyWord) throws SQLException, Exception {			
+		CallableStatement callableStatement = null;
+		Connection con = null;
+		final Set<Integer> providerCode=new HashSet<Integer>();		
+		try {			
 			con = ConnectionManager.getConnection();			
-			cs = con.prepareCall("{call campus.sp_getcourseprovider}");
-			ResultSet rs = cs.executeQuery();
+			callableStatement = con.prepareCall("{call campus.sp_getcourseprovider(?)}");			
+			callableStatement.setString(1, keyWord);
+			ResultSet rs = callableStatement.executeQuery();
 			while(rs.next()){				
 				providerCode.add(Integer.valueOf(rs.getString("CPCODE")));
-			}
-			
+			}			
 		}  catch (SQLException sqlException) {
 			log.info("wildCardSearchOnCourseProvider() sqlException" + sqlException.toString());
 			throw sqlException;
