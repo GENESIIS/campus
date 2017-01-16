@@ -28,10 +28,10 @@
 							<!-- <input type="search" name="search" id="search" placeholder="name or info" /> -->
 						</div>
                 
-               <!--  <form action="PublicController" method="POST">
+                <form action="PublicController" method="POST">
                  <button type="submit" name="CCO" id="CCO" value="FILTER_SEARCH_COURSE_PROVIDERS"
 								class="pure-button pure-button-primary">Search</button>
-						</form> -->
+						</form> 
                
 			</div>
 			<!-- End Main search bar -->
