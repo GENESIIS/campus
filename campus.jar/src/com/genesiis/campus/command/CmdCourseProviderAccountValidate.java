@@ -48,10 +48,8 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 							|| !validator.isEmptyString(helper.getParameter("email"))) {
 
 						String username = helper.getParameter("username");
-						String email = helper.getParameter("email");
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 						courseProviderAccount.setUsername(username);
-						courseProviderAccount.setEmail(email);
 						Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
 						usernameCollection = usernameDAO
