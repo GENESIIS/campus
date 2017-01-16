@@ -40,7 +40,6 @@ $(document).ready(function() {
 		var cpCodeList = response.codeList;
 		//if (cpCodeList != null && cpCodeList.length > 0) {
 			
-			var product_id=1;
 			window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?cpCodeList=" + cpCodeList);
 			
 		/*	$.ajax({
