@@ -25,6 +25,7 @@ package com.genesiis.campus.entity;
 //20161126 JH c7-higher-education-landing-page QA modifications: removed retrieving logo image path details from the database
 //20161129 JH c7-higher-education-landing-page QA modifications: findById method modified
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: removed unwanted statements
+//20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,7 +80,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-
+		ResultSet rs = null;
 		final Collection<Collection<String>> courseProviderCollection = new ArrayList<Collection<String>>();
 
 		/**
@@ -116,7 +117,7 @@ public class CategoryCourseProviderDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 
 			int type = programme.getLevel();
-			ResultSet rs = null;
+			
 
 			// get featured course providers
 			if (type == 1) {
@@ -210,7 +211,9 @@ public class CategoryCourseProviderDAO implements ICrud {
 			if(conn != null){
 				conn.close();		
 			}
-
+			if(rs != null){
+				rs.close();		
+			}
 		}
 		return courseProviderCollection;
 	}
