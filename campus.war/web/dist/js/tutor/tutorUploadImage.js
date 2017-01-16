@@ -1,14 +1,20 @@
 //20161121 DN c47-tutor-add-tutor-information-upload-image-dn created the tutorUploadImage.js
 //20170112 DN c47-tutor-add-tutor-information-upload-image-dn changed the $(document).ready() function and it's inner logic
+//20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
 
 
 
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
 theNewScript.src = "../../dist/js/institute/validation/validation.js";
+//var execute=true;
 
 $(document).ready(function() {
-	displayTutorProfileImageAtPageLoad();
+	
+		displayTutorProfileImageAtPageLoad();
+	
+	// disable the upload button
+	$('#upload-button').prop('disabled', true);
 	
 	$('#file-select').on('change', function(event){
 		//
@@ -22,16 +28,23 @@ $(document).ready(function() {
 		    {
 		        data.append(key, value);
 		    });
+		    
+		    $('#upload-button').prop('disabled', false);  
+		    setTimeout( function(){
+		    	alert("Please upload the image");
+		    	$('#file-from').on('submit',function(data){
+					
+		    		alert("NOrmaly it executes");
+		    		postFilesData(data);
+				    execute = false;
+			});	
+		    	
+			}, 2000);
+		
+		    alert("time execceds");
+   
 		}
-		
-		
 	});
-	
-	
-	// assign data to globall variable and call from the bellow function else data becomes undefined at the time it's been called
-	$('#file-from').on('submit',function(data){
-		 postFilesData(data);
-});
 	
 });
 
@@ -58,32 +71,15 @@ function displayTutorProfileImageAtPageLoad(){
 				
 			} else{
 				// if the execution success but logically generated error application vice
-				
 				displayLabelMessage('displayLabel','red',response['message']);
 				}
 			
 		},
 		error:function(response,error,errorThrown) {
-			
-			  var msg = '';
-		        if (response.status === 0) {
-		            msg = 'Not connect.\n Verify Network.';
-		        } else if (response.status == 404) {
-		            msg = 'Requested page not found. [404]';
-		        } else if (response.status == 500) {
-		            msg = 'Internal Server Error [500].';
-		        } else if (error === 'parsererror') {
-		            msg = 'Requested JSON parse failed.';
-		        } else if (error === 'timeout') {
-		            msg = 'Time out error.';
-		        } else if (error === 'abort') {
-		            msg = 'Ajax request aborted.';
-		        } else {
-		            msg = 'Uncaught Error.\n' + response.responseText;
-		        }
-		        displayLabelMessage('displayLabel','red',msg);
-		        }
-		
+			var msg = ajaxErorMessage(response,error,errorThrown);
+		    displayLabelMessage('displayLabel','red',msg);
+		        
+		  }
 	});
 	
 }
@@ -109,28 +105,26 @@ function uploadImage(){
 
 function postFilesData(dataForm)
 {
-	alert("data"+dataForm);
+	alert("dataForm hit the Uploading imagepostFilesData and  "+dataForm);
  $.ajax({
     url: '../../../TutorController',
     type: 'POST',
-    data: {
-		'CCO': 'USTIMG', //UPLOAD SUBMITED TUTOR IMAGE
-		'formData': dataForm
-	},
-//    cache: false,
     dataType: 'json',
-    processData: true,
-//    processData: false,
-    contentType: 'multipart/form-data',
-//    contentType: false, 
-    success:function(response){
+    data: {
+		CCO: "USTIMG" ,//UPLOAD SUBMITED TUTOR IMAGE
+		//'formData':	dataForm
+		'formData':	JSON.stringify(dataForm)
+	},
+   cache: false,
+   processData: true,
+   //contentType: 'multipart/form-data',
+   success:function(response){
 			
 		if(response['successCode']===1){
 			alert("Inside success call");
 			displayLabelMessage('displayLabel','green',response['message']);
 //			jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
 			displayTutorProfileImageAtPageLoad();
-			
 			
 		} else{
 			// if the execution success but logically generated error application vice
@@ -140,26 +134,30 @@ function postFilesData(dataForm)
 		
 	},
 	error:function(response,error,errorThrown) {
-		
-		  var msg = '';
-	        if (response.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (response.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (response.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        } else if (error === 'parsererror') {
-	            msg = 'Requested JSON parse failed.';
-	        } else if (error === 'timeout') {
-	            msg = 'Time out error.';
-	        } else if (error === 'abort') {
-	            msg = 'Ajax request aborted.';
-	        } else {
-	            msg = 'Uncaught Error.\n' + response.responseText;
-	        }
-	        displayLabelMessage('displayLabel','red',msg);
-	        }
-	
+		var msg = ajaxErorMessage(response,error,errorThrown);
+	    displayLabelMessage('displayLabel','red',msg);
+	   }
 });
+}
+
+
+function ajaxErorMessage(response,error,errorThrown){
+	  var msg = '';
+      if (response.status === 0) {
+          msg = 'Not connect.\n Verify Network.';
+      } else if (response.status == 404) {
+          msg = 'Requested page not found. [404]';
+      } else if (response.status == 500) {
+          msg = 'Internal Server Error [500].';
+      } else if (error === 'parsererror') {
+          msg = 'Requested JSON parse failed.';
+      } else if (error === 'timeout') {
+          msg = 'Time out error.';
+      } else if (error === 'abort') {
+          msg = 'Ajax request aborted.';
+      } else {
+          msg = 'Uncaught Error.\n' + response.responseText;
+      }
+      return msg;
 }
 
