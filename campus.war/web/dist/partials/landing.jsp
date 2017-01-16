@@ -10,14 +10,16 @@
 
 <script type="text/javascript">
 
-function searchFunction(){
-	alert("searchFunction");
-	var keyWordString=" ";
+function searchFunction(){	
+	var keyWordString=$("#keyWord").val();	
+	var selectedType= $('input[name=cpRadio]:checked').val()
+	
 	$.ajax({
 		url : '../../PublicController',
 		data : {
-			CCO : 'FILTER_SEARCH_COURSE_PROVIDERS',
-			keyWordString : keyWordString
+			CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
+			keyWordString : keyWordString,
+			selectedType:selectedType
 		},
 		dataType : "json",
 		success : function(response) {
@@ -44,8 +46,7 @@ function searchFunction(){
 
 	function getProviderCodeList(response) {
 			var cpCodeList = response.codeList;
-			if (cpCodeList != null && cpCodeList.length > 0) {
-				var catCode = $("#catCode").val();
+			if (cpCodeList != null && cpCodeList.length > 0) {				
 				$
 						.ajax({
 							url : '../../PublicController',
@@ -87,20 +88,20 @@ function searchFunction(){
 		<div class="search-area clearfix">
 			<div class="main-search-bar center-block clearfix">
 				<div class="bar-holder center-block clearfix">
-					<input class="center-block" type="text"
+					<input class="center-block" type="text" id="keyWord" name="keyWord"
 						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
 					<div align="center">
 					  <div align="center">
-						<input  type="radio" name="courseProvider" value="CP"><span align="left" >Course Provider</span>						
-						<input type="radio" name="courseProvider"	value="P"><span align="left">Programme</span>	
+						<input  type="radio" name="cpRadio" value="CP"><span align="left" >Course Provider</span>						
+						<input type="radio" name="cpRadio"	value="P"><span align="left">Programme</span>	
 						</div>					
 						<button  type="button" id="addSearchData" name="addSearchData"
 								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>													
-						<form action="PublicController" method="POST">
+						<!-- <form action="PublicController" method="POST">
 							<button type="submit" name="CCO" id="CCO"
 								value="FILTER_SEARCH_COURSE_PROVIDERS"
 								class="pure-button pure-button-primary">Search</button>
-						</form>
+						</form> -->
 					</div>
 				</div>
 			</div>

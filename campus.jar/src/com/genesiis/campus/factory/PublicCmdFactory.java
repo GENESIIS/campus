@@ -24,7 +24,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_ALL_COURSE_PROVIDERS, new CmdListMoreCourseProviders());
 		map.put(Operation.LIST_FILTER_SEARCH_COURSE_PROVIDERS, new CmdCourseProviderFilterSearch());
 		map.put(Operation.LIST_FILTER_SEARCH_CATEGORY_TYPES, new CmdListCategoryTypes());
-		map.put(Operation.FILTER_SEARCH_COURSE_PROVIDERS, new CmdGeneralFilterSearch());
+		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROVIDERS, new CmdGeneralFilterSearch());
 		
 	}
 	
@@ -45,7 +45,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		case LIST_FILTER_SEARCH_CATEGORY_TYPES:
 			command = map.get(o);
 			break;
-		case FILTER_SEARCH_COURSE_PROVIDERS:
+		case GENERAL_FILTER_SEARCH_COURSE_PROVIDERS:
 			command = map.get(o);
 			break;
 		default:

@@ -36,7 +36,14 @@ public class CmdGeneralFilterSearch implements ICommand{
 		try {
 			CourseProviderICrud courseProviderICrud=new CourseProviderDAOImpl();
 			//TODO:Identify radio button click-Course providers
-			String keyWord="%sliit%";			
+			final StringBuilder keyWordBuilder=new StringBuilder();
+			String selectedTypeString=helper.getParameter("selectedType");
+			String keyWordString=helper.getParameter("keyWordString");
+			if(keyWordString!=null){
+			keyWordBuilder.append("%").append(keyWordString).append("%");
+			}
+			String keyWord="%sliit%";	
+						
 			
 			//TODO:For testing purpose			
 			//Do wild card search on key word
