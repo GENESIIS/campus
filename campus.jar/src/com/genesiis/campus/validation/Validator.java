@@ -147,19 +147,15 @@ public class Validator {
 			helper.setAttribute("errorProviderStatus", "Select a status");
 			errorString.add("Course Provider status ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("areaCode"))){
-			helper.setAttribute("errorAreaCode", "Give an area code");
+		}if(isEmptyString(helper.getParameter("areaCode")) || !isInteger(helper.getParameter("areaCode")) ){
+			helper.setAttribute("errorAreaCode", "Area code is empty or invalid");
 			errorString.add("Area Code ");
 			isValid = false;
 		}if(isEmptyString(helper.getParameter("land1")) || !isInteger(helper.getParameter("land1"))){
 			helper.setAttribute("errorLand1", "Phone number 1 is empty or invalid");
 			errorString.add("Land number 1 ");
 			isValid = false;
-		}
-//		if(isEmptyString(helper.getParameter("land2"))){
-//			courseProvider.setLandPhpneNo2("-");
-//		}
-		if(!isInteger(helper.getParameter("land2"))){
+		}if(!isInteger(helper.getParameter("land2"))){
 			helper.setAttribute("errorLand2", "Phone number 2 is invalid");
 			errorString.add("land number 2");
 			isValid = false;
