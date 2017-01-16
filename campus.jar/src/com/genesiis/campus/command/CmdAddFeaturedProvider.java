@@ -281,7 +281,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 		} finally {
 			if (systemMessage != null) {
 				helper.setAttribute("userMessage", systemMessage);
-				log.info(systemMessage);
 			}
 		}
 		
