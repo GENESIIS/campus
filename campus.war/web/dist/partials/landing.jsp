@@ -22,12 +22,16 @@
 				
 				<input type="radio" name="courseProvider" value="CP"> Course Provider<br>
                 <input type="radio" name="courseProvider" value="P"> Programme<br>
-              
+              <div id="" class="">
+							<button type="button" id="addSearchData" name="addSearchData"
+								class="btn btn-primary" onclick="">Apply Search</button>
+							<!-- <input type="search" name="search" id="search" placeholder="name or info" /> -->
+						</div>
                 
-                <form action="PublicController" method="POST">
+               <!--  <form action="PublicController" method="POST">
                  <button type="submit" name="CCO" id="CCO" value="FILTER_SEARCH_COURSE_PROVIDERS"
 								class="pure-button pure-button-primary">Search</button>
-						</form>
+						</form> -->
                
 			</div>
 			<!-- End Main search bar -->
@@ -50,3 +54,8 @@
 
 	<div class="banner-panel pull-right clearfix">Advertise Here</div>
 </div>
+<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+	<script src="/dist/js/general-filter-search.js"></script>

@@ -48,7 +48,7 @@ public class CmdGeneralFilterSearch implements ICommand{
 			providerSearchDTO.setCourseProviderCodeList(new ArrayList<Integer>(cpCodeSet));
 			final Collection<Collection<String>> courseProviderSearchResults = courseProviderICrud.getLightAllCourseProviders(providerSearchDTO);
 			view.setCollection(courseProviderSearchResults);
-			
+			/*<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>*/
 		} catch (Exception exception) {
 			log.error("execute() :Exception  " + exception);			
 			throw exception;
