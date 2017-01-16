@@ -32,7 +32,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 		final String action;
 		SystemMessage message = null;
 		Validator validator = new Validator();
-		boolean validationFlag = false;
+		int validationFlag = 0;
 
 		try {
 			if (!validator.isEmptyString(helper.getParameter("action"))) {
@@ -56,15 +56,15 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProviderAccount);
 						if (usernameCollection.size() != 0) {
 							message = SystemMessage.USERNAME_INVALID;
-							validationFlag = false;
+							validationFlag = 0;
 
 						} else {
 							message = SystemMessage.USERNAME_VALID;
-							validationFlag = true;
+							validationFlag = 1;
 						}
 					} else {
 						message = SystemMessage.EMPTY_USERNAME;
-						validationFlag = false;
+						validationFlag = 0;
 					}
 				} else if (action
 						.equalsIgnoreCase("COURSE_PROVIDER_PREFIX_VALIDATION")) {
@@ -80,21 +80,21 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 								.findById(courseProvider);
 						if (prefixCollection.size() != 0) {
 							message = SystemMessage.PREFIX_INVALID;
-							validationFlag = false;
+							validationFlag = 0;
 
 						} else if (prefixCollection.size() == 0) {
 							message = SystemMessage.PREFIX_VALID;
-							validationFlag = true;
+							validationFlag = 1;
 						}
 
 					} else {
 						message = SystemMessage.EMPTY_FIELD;
-						validationFlag = false;
+						validationFlag = 0;
 					}
 				}
 
 			} else {
-				validationFlag = false;
+				validationFlag = 0;
 			}
 
 			helper.setAttribute("validationFlag", validationFlag);
