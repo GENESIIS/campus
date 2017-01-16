@@ -13,6 +13,7 @@ package com.genesiis.campus.entity;
 //20161229 JH c39-add-course-provider added queries to insert data into course provider town table
 //20170102 JH c39-add-course-provider code modified to fix number format exception in course provider town entity
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
+//20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,6 +30,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.UserType;
 
@@ -256,18 +258,11 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			throw exception;
 		} finally {
 			conn.setAutoCommit(true);
-			if(rs != null){
-				rs.close();
-			}if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (preparedStatement2 != null) {
-				preparedStatement2.close();
-			}if(preparedStatement3 != null){
-				preparedStatement3.close();
-			}if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.closeResultSet(rs);
+			DaoHelper.closeStatement(preparedStatement3);
+			DaoHelper.closeStatement(preparedStatement2);
+			DaoHelper.closeStatement(preparedStatement);
+			DaoHelper.closeConnection(conn);
 			
 		}
 		return generatedKey;

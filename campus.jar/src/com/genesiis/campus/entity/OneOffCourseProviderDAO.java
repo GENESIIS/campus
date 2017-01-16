@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161206 JH c39-add-course-provider add missing parameters and remove static values
 //20170103 JH c39-add-course-provider added queries to insert course provider town data
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
+//20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
  
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.AccountType;
 
 public class OneOffCourseProviderDAO implements ICrud{
@@ -123,12 +125,10 @@ public class OneOffCourseProviderDAO implements ICrud{
 				preparedStatement.setString(26, courseProvider.getAddress2());
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
-			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
 				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
 				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
 				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
 				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
-				//preparedStatement.setInt(34, courseProvider.getPrincipal());
 				preparedStatement.setString(33, courseProvider.getCrtBy());
 				preparedStatement.setString(34, courseProvider.getModBy());
 
@@ -165,7 +165,6 @@ public class OneOffCourseProviderDAO implements ICrud{
 				preparedStatement.setString(26, courseProvider.getAddress2());
 				preparedStatement.setString(27, courseProvider.getAddress3());
 				preparedStatement.setInt(28, courseProvider.getAccountType());
-			//    preparedStatement.setInt(29, courseProvider.getHeadOffice());
 				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
 				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
 				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
@@ -198,16 +197,13 @@ public class OneOffCourseProviderDAO implements ICrud{
 			log.error("add method Exception " + exception.toString());
 			conn.rollback();
 			throw exception;
-		}finally{
-			if(conn != null){
-				conn.setAutoCommit(true);
-				conn.close();
-			}
-			if(preparedStatement != null){
-				preparedStatement.close();
-			}if(rs != null){
-				rs.close();
-			}
+		}finally {
+			conn.setAutoCommit(true);
+			DaoHelper.closeResultSet(rs);
+			DaoHelper.closeStatement(preparedStatement2);
+			DaoHelper.closeStatement(preparedStatement);
+			DaoHelper.closeConnection(conn);
+			
 		}
 		return generatedKey;
 	}

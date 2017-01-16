@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161230 JH c39-add-course-provider CourseProviderTypeDAO.java created
 //20161231 JH c39-add-course-provider getAll() method modified
 //20170105 JH c39-add-course-provider getAll() method modified: implement ApplicatonSatatus enum class
+//20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CourseProviderTypeDAO implements ICrud {
@@ -72,13 +74,9 @@ public class CourseProviderTypeDAO implements ICrud {
 			log.error("findById(): Wxcepption" + exp.toString());
 			throw exp;
 		} finally {
-			if(resultSet != null){
-				resultSet.close();
-			}if (preparedStatement != null)
-				preparedStatement.close();
-		}if(conn != null){
-			conn.close();
+			DaoHelper.cleanup(conn, preparedStatement, resultSet);
 		}
+		
 		return providerTypeCollection;
 	}
 
