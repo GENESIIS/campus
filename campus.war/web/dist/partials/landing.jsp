@@ -6,11 +6,12 @@
 <!-- 20161025 TR c1 main search bar - done -->
 <!-- 20161025 TR c1 start styling category search area -->
 <!-- 20161111 PN c1-campus-landing-page modified the UI to load categories from the DB values dynamically. -->
+<!-- 20170112 DJ c123-general-filter-search-course-provider-MP-dj  searchFunction() Implementation. -->
 
 <script type="text/javascript">
 
-function test(){
-	alert("test");
+function searchFunction(){
+	alert("searchFunction");
 	var keyWordString=" ";
 	$.ajax({
 		url : '../../PublicController',
@@ -20,7 +21,7 @@ function test(){
 		},
 		dataType : "json",
 		success : function(response) {
-			loadPage(response);
+			getProviderCodeList(response);
 		},
 		error : function(jqXHR, exception) {			
 			var msg = '';
@@ -39,13 +40,13 @@ function test(){
 		}
 	});
 	
-	function loadPage(response){
+	function getProviderCodeList(response){
 		
 		$.each(response.codeList,	function(index, value) {
 			var res = value;
-			var data = res.split(",");
+			
 		});
-		
+		var catCode = $("#catCode").val();
 		$.ajax({
 			url : '../../PublicController',
 			data : {
@@ -54,7 +55,7 @@ function test(){
 			},
 			dataType : "json",
 			success : function(response) {
-				//getInitialPageResults(catCode,response);
+				getInitialPageResults(catCode,response);
 			},
 			error : function(jqXHR, exception) {			
 				var msg = '';
@@ -95,7 +96,7 @@ function test(){
 						<input type="radio" name="courseProvider"	value="P"><span align="left">Programme</span>	
 						</div>					
 						<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="test()">Apply Search</button>													
+								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>													
 						<form action="PublicController" method="POST">
 							<button type="submit" name="CCO" id="CCO"
 								value="FILTER_SEARCH_COURSE_PROVIDERS"
@@ -129,6 +130,7 @@ function test(){
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 	<script src="/dist/js/general-filter-search.js"></script>
+	<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
 	
 	<!-- W3-Include -->
 	<script src="/dist/bower-components/w3/w3data.js"></script>
