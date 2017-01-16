@@ -3,10 +3,12 @@ package com.genesiis.campus.command;
 //20170109 DN c47-tutor-add-tutor-information-upload-image-dn added getTutorProfileImageUploadPath(), refactor execute() and add doc comments
 //20170109 DN c47-tutor-add-tutor-information-upload-image-dn created isImageWithinSize(), asccessInerLoopSingleElement() created
 //201701010 DN c47-tutor-add-tutor-information-upload-image-dn  isImageWithinSize()/getTutorProfileImageUploadPath()/isImageAccordanceWithSystemRequirement()
+//20170116 DN c47-tutor-add-tutor-information-upload-image-dn  extractDumyObjectFrom() added 
 //     coded wip
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.sql.Connection;
 
 import com.genesiis.campus.entity.ICrud;
@@ -94,6 +96,9 @@ public class CmdUploadTutorImage implements ICommand {
 		helper.setAttribute("message", message);
 		return view;
 	}
+	
+	
+	
 	
 	
 	
@@ -282,6 +287,11 @@ public class CmdUploadTutorImage implements ICommand {
 	private ArrayList<FileItem> getImageFileUploadedFromBrowser(IDataHelper requestWrapper) throws FileUploadException{
 		try{
 			ArrayList<FileItem> tutorImages = new ArrayList<FileItem>(); 
+			
+			String gsonData = requestWrapper.getParameter("formData");  // what is obtained from ajax
+			List<Object> list=(List<Object>) extractDumyObjectFrom(gsonData);
+			
+		//### this should be replaced with json data extract below line might have to commented
 			tutorImages =requestWrapper.getFiles();
 			return tutorImages;
 			
@@ -292,7 +302,29 @@ public class CmdUploadTutorImage implements ICommand {
 		}
 	}
 	
-	
+	/*
+	 * extractDumyObjectFrom helps extract the json data to a
+	 * row object with the same field name similar to the fields json data 
+	 * contains
+	 * @param gsonData
+	 * @return
+	 */
+
+	@SuppressWarnings("unchecked")
+	public Object extractDumyObjectFrom(String gsonData) {
+		Gson gson = new Gson();
+		String message = "";
+		List<Object> listOfRowFiles = null;
+		try {
+			listOfRowFiles = gson.fromJson(gsonData,
+					List.class);
+
+		} catch (Exception exception) {
+			log.error("extractDumyObjectFrom(): " + exception.toString());
+			throw exception;
+		}
+		return listOfRowFiles;
+	}
 
 	/**
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
