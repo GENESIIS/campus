@@ -226,7 +226,7 @@ public class Validator {
 					isValid = false;
 				}
 				if(isEmptyString(helper.getParameter("accountStatus"))){
-					helper.setAttribute("errorAccountStatusValue", "Select the account status");
+					helper.setAttribute("errorStatus", "Select the account status");
 					errorString.add("Account Status");
 					isValid = false;
 				}
