@@ -7,6 +7,77 @@
 <!-- 20161025 TR c1 start styling category search area -->
 <!-- 20161111 PN c1-campus-landing-page modified the UI to load categories from the DB values dynamically. -->
 
+<script type="text/javascript">
+
+function test(){
+	alert("test");
+	var keyWordString=" ";
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			CCO : 'FILTER_SEARCH_COURSE_PROVIDERS',
+			keyWordString : keyWordString
+		},
+		dataType : "json",
+		success : function(response) {
+			loadPage(response);
+		},
+		error : function(jqXHR, exception) {			
+			var msg = '';
+			if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        }  else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else {
+	            msg = 'Internal error is occurred. Please try again.';
+	        }	        
+	        alert(msg);
+		}
+	});
+	
+	function loadPage(response){
+		
+		$.each(response.codeList,	function(index, value) {
+			var res = value;
+			var data = res.split(",");
+		});
+		
+		$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'LIST_ALL_COURSE_PROVIDERS',
+				categoryCode : catCode
+			},
+			dataType : "json",
+			success : function(response) {
+				//getInitialPageResults(catCode,response);
+			},
+			error : function(jqXHR, exception) {			
+				var msg = '';
+				if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        }  else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        } else {
+		            msg = 'Internal error is occurred. Please try again.';
+		        }	        
+		        alert(msg);
+			}
+		});
+		
+	}
+}
+
+</script>
+
 <div class="main-screen clearfix">
 	<div class="content-panel clearfix">
 		<div class="main-slider clearfix">
@@ -18,21 +89,20 @@
 				<div class="bar-holder center-block clearfix">
 					<input class="center-block" type="text"
 						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
-				</div>
-				
-				<input type="radio" name="courseProvider" value="CP"> Course Provider<br>
-                <input type="radio" name="courseProvider" value="P"> Programme<br>
-              <div id="" class="">
-							<button type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="">Apply Search</button>
-							<!-- <input type="search" name="search" id="search" placeholder="name or info" /> -->
-						</div>
-                
-                <form action="PublicController" method="POST">
-                 <button type="submit" name="CCO" id="CCO" value="FILTER_SEARCH_COURSE_PROVIDERS"
+					<div align="center">
+					  <div align="center">
+						<input  type="radio" name="courseProvider" value="CP"><span align="left" >Course Provider</span>						
+						<input type="radio" name="courseProvider"	value="P"><span align="left">Programme</span>	
+						</div>					
+						<button  type="button" id="addSearchData" name="addSearchData"
+								class="btn btn-primary" onclick="test()">Apply Search</button>													
+						<form action="PublicController" method="POST">
+							<button type="submit" name="CCO" id="CCO"
+								value="FILTER_SEARCH_COURSE_PROVIDERS"
 								class="pure-button pure-button-primary">Search</button>
-						</form> 
-               
+						</form>
+					</div>
+				</div>
 			</div>
 			<!-- End Main search bar -->
 
@@ -59,3 +129,6 @@
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 	<script src="/dist/js/general-filter-search.js"></script>
+	
+	<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
