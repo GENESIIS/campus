@@ -475,8 +475,8 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	}
 
 	/**
-	 * Get all course provider light collection
-	 * @param 
+	 * Get all course provider light collection.Basically  course provider code and course provider name.
+	 * @param providerSearchDTO CourseProviderSearchDTO
 	 * @author DJ
 	 * @return Collection 
 	 */
@@ -490,7 +490,20 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.NAME AS CPNAME  FROM [CAMPUS].COURSEPROVIDER PROV WHERE PROV.COURSEPROVIDERSTATUS = ? ");
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.NAME AS CPNAME  FROM [CAMPUS].COURSEPROVIDER PROV WHERE 1=1 AND PROV.COURSEPROVIDERSTATUS = ? ");
+			
+			if (providerSearchDTO.getCourseProviderCodeList() != null && !providerSearchDTO.getCourseProviderCodeList().isEmpty()) {
+				sb.append(" AND PROV.CODE in ( ");
+				boolean doneOne = false;
+				for(Integer code: providerSearchDTO.getCourseProviderCodeList()){
+					if(doneOne){
+			            sb.append(", ");
+			        }
+					sb.append(code);
+					doneOne = true;
+				}
+				sb.append(" ) ");
+			}
 
 			stmt = conn.prepareStatement(sb.toString());
 			stmt.setInt(1, providerSearchDTO.getCourseProviderStatus());
