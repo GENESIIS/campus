@@ -41,13 +41,14 @@ public class CmdGeneralFilterSearch implements ICommand{
 			//TODO:For testing purpose			
 			//Do wild card search on key word
 			final Set<Integer> cpCodeSet=courseProviderICrud.wildCardSearchOnCourseProvider(keyWord);
+			helper.setAttribute("codeList", cpCodeSet);
 			
 			//Find particular course providers
 			//find Course providers
-			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
+			/*final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			providerSearchDTO.setCourseProviderCodeList(new ArrayList<Integer>(cpCodeSet));
 			final Collection<Collection<String>> courseProviderSearchResults = courseProviderICrud.getLightAllCourseProviders(providerSearchDTO);
-			view.setCollection(courseProviderSearchResults);
+			view.setCollection(courseProviderSearchResults);*/
 			/*<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>*/
 		} catch (Exception exception) {
 			log.error("execute() :Exception  " + exception);			
