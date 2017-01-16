@@ -1,11 +1,25 @@
 /**
  * 20161122 CM c36-add-tutor-information INIT tutor-helper.jsp
  * 20161216 CW c36-add-tutor-details Modified displayTownDetails(), getTownData() methods. 
+ * 20160116 CW c36-add-tutor-details Modified loadTutorWithDummyData() method. 
  */
 $(document).ready(function() {
-
+	loadTutorWithDummyData();
 	displayCountryDetails();
 });
+
+function loadTutorWithDummyData() {
+	
+	$.ajax({
+		url : '/TutorController',
+		data : {
+			CCO : 'LOAD_TUTOR_WITH_DUMMY_DATA'
+		},
+		dataType : "json",
+		success : function(response) {
+		}
+	});
+}
 
 $("#countryDetails").on("change", function(){
 		var selected = $(this).val();
@@ -14,14 +28,6 @@ $("#countryDetails").on("change", function(){
 		$("#landCountryCode").val("+" + selected);
 	})
 
-function testing(country) {
-	alert("testing Vountry = " + country);
-   /* if ("c" + "a" + "t" === "cat") {
-        document.writeln("Same");
-    } else {
-        document.writeln("Not same");
-    }*/
-}
 	
 function displayCountryDetails() {
 	
