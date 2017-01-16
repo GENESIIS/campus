@@ -1,8 +1,10 @@
 //DJ 20170116 c123-general-filter-search-course-provider-MP-dj Identify general filter search entities. 
 
 $(document).ready(function() {
+	alert("Test");
 	
 	$('#addSearchData').on('click', function(event) {
+		alert("addSearchData");
 		
 		$(this).val();
 			var keyWordString=" ";
