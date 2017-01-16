@@ -2,14 +2,31 @@
 //20161124 DJ c17-provider-criteria-based-filter-search Identified front end input selections 
 //20161221 DJ c17-provider-criteria-based-filter-search Identified checkbox tick untick on level/major/providertype 
 
-$(document).ready(function() {
+$(document).ready(function() {	
+	
+	var queryString= this.URL.substring( this.URL.indexOf('=') + 1 );
+	
+	//var queryString = window.location.search;	
+	//queryString = queryString.substring(1);
+	
+	 var params = {}, queries, temp, i, l;
+	    // Split into key/value pairs
+	    queries = queryString.split(",");
+	    // Convert the array of strings into an object
+	    for ( i = 0, l = queries.length; i < l; i++ ) {
+	        temp = queries[i].split('=');
+	        params[temp[0]] = temp[1];
+	    }
+
+
 
 	var catCode = $("#catCode").val();
 	$.ajax({
 		url : '../../PublicController',
 		data : {
 			CCO : 'LIST_ALL_COURSE_PROVIDERS',
-			categoryCode : catCode
+			categoryCode : catCode,
+			cpCodeList:params
 		},
 		dataType : "json",
 		success : function(response) {
