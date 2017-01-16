@@ -23,7 +23,7 @@ import com.genesiis.campus.validation.Operation;
 import org.apache.log4j.Logger;
 
 public class CmdCourseProviderAccountValidate implements ICommand {
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CmdCourseProviderAccountValidate.class.getName());
 
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
