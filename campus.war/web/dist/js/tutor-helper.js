@@ -1,25 +1,13 @@
 /**
  * 20161122 CM c36-add-tutor-information INIT tutor-helper.jsp
  * 20161216 CW c36-add-tutor-details Modified displayTownDetails(), getTownData() methods. 
- * 20160116 CW c36-add-tutor-details Modified loadTutorWithDummyData() method. 
+ * 20170116 CW c36-add-tutor-details add loadTutorWithDummyData() method. 
+ * 20170116 CW c36-add-tutor-details removed loadTutorWithDummyData() & add displayTownDefaults() method.
  */
 $(document).ready(function() {
-	loadTutorWithDummyData();
 	displayCountryDetails();
+	displayTownDefaults();
 });
-
-function loadTutorWithDummyData() {
-	
-	$.ajax({
-		url : '/TutorController',
-		data : {
-			CCO : 'LOAD_TUTOR_WITH_DUMMY_DATA'
-		},
-		dataType : "json",
-		success : function(response) {
-		}
-	});
-}
 
 $("#countryDetails").on("change", function(){
 		var selected = $(this).val();
@@ -77,6 +65,7 @@ function getTownData(response, selected) {
 		}
 	});
 }
+
 function getCountryData(response) {
 	var categories = $("#countryDetails");
 	categories.find('option').remove();
@@ -91,4 +80,9 @@ function getCountryData(response) {
 	});
 }
 
+function displayTownDefaults() {
+	var categories = $("#townDetails");
+	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select Country to change the town ---").appendTo(categories);
 
+}

@@ -4,8 +4,8 @@ package com.genesiis.campus.factory;
 //20161121 CM c36-add-tutor-information Modified getCommand() method. 
 //20161122 CM c36-add-tutor-information Modified getCommand() method. 
 //20161123 CM c36-add-tutor-information Modified getCommand() method. 
-//20171123 CM c36-add-tutor-information add getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
-//20171123 CM c36-add-tutor-information removed getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
+//20170123 CM c36-add-tutor-information add getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
+//20170123 CM c36-add-tutor-information removed getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
 
 import com.genesiis.campus.command.CmdAddTutorProfile;
 import com.genesiis.campus.command.CmdCheckUsername;
