@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 //DJ 20161117 c17-provider-criteria-based-filter-search created CourseProviderSearchDTO.java
 //DJ 20161123 c17-provider-criteria-based-filter-search add isGetAllCPTypes,isGetAllMajors,isGetAllLevels,cpTypeList attributes
 //DJ 20161124 c17-provider-criteria-based-filter-search add majorList,levelList attributes
+//DJ 20170116 c123-general-filter-search-course-provider-MP-dj Deprecated courseProviderCode entity.
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ import java.util.List;
  * @author dumani DJ
  *
 */
-public class CourseProviderSearchDTO {	
+public class CourseProviderSearchDTO {
+	@Deprecated
 	private int courseProviderCode;
 	private int category;
 	private int courseProviderStatus;	
@@ -20,10 +22,11 @@ public class CourseProviderSearchDTO {
 	private List<Integer> majorList;
 	private List<Integer> levelList;
 	private List<Integer> courseProviderCodeList;
-	
+	@Deprecated 
 	public int getCourseProviderCode() {
 		return courseProviderCode;
 	}
+	@Deprecated
 	public void setCourseProviderCode(int courseProviderCode) {
 		this.courseProviderCode = courseProviderCode;
 	}
