@@ -64,19 +64,16 @@ function studentLogin() {
 	}
 }
 
-
-function studentLogout(){
+function studentLogout() {
 	var userId = $("#userCode").val();
-	
-	if(userId != null){
+	if (userId != null) {
 		var jsonData = {
-				"userId" : code
-				
-			};
-		$
-		.ajax({
+			"code" : userId
+
+		};
+		$.ajax({
 			type : "POST",
-			url : '../../LoginController',
+			url : '/LoginController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
 				CCO : "SLGOUT"
@@ -85,6 +82,13 @@ function studentLogout(){
 			dataType : "json",
 			success : function(response) {
 
+			
+//				setTimeout( function(){
+//					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login"
+//					}, 7000);
+				alert(response['message']);
+//				$(window).scrollTop(0);
+//				$('#studentPersonalDetailsModal').modal('show');
 				
 
 			},

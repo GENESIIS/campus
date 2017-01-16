@@ -1,4 +1,5 @@
 package com.genesiis.campus.controller;
+
 //20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
 //20161107 DN, JH, DJ, AS, CM, MM public-controller-testing Changed implementation of process()
 //								to support returning JSON as well as JSP as response
@@ -33,10 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
-* Servlet implementation class CampusController
-* extract from XenoController.java * 
-* 
-*/
+ * Servlet implementation class CampusController extract from
+ * XenoController.java *
+ * 
+ */
 @WebServlet("/CampusController")
 public class CampusController extends HttpServlet {
 
@@ -67,49 +68,52 @@ public class CampusController extends HttpServlet {
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
-		helper = new DataHelper(request,response);
+		helper = new DataHelper(request, response);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
 
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
-			
+
 			HttpSession session = request.getSession(false);
-			
-			if(session != null){
+
+			if (session != null) {
 				String name = (String) session.getAttribute("name");
 				session.setMaxInactiveInterval(60 * 60);
- 
-			if (ResponseType.JSP.equals(responseType)) {  
-	
-				request.setAttribute("result", result);
-				request.getRequestDispatcher(helper.getResultPage(cco))
-						.forward(request, response);
-				
-			} else if (ResponseType.JSON.equals(responseType)) {  
 
-				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-				
-				if (result != null && result.getCollection() != null) {					
-					objectMap.put("result", result.getCollection());
-				} else {
-					objectMap.put("result", "NO-DATA");
-				}
-				
-				Enumeration<String> attributeNames = request.getAttributeNames();
+				if (ResponseType.JSP.equals(responseType)) {
 
-				while (attributeNames.hasMoreElements()) {
-					String currentAttributeName = attributeNames.nextElement();
-					Object object = helper.getAttribute(currentAttributeName);
-					objectMap.put(currentAttributeName, object);
+					request.setAttribute("result", result);
+					request.getRequestDispatcher(helper.getResultPage(cco))
+							.forward(request, response);
+
+				} else if (ResponseType.JSON.equals(responseType)) {
+
+					Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
+					if (result != null && result.getCollection() != null) {
+						objectMap.put("result", result.getCollection());
+					} else {
+						objectMap.put("result", "NO-DATA");
+					}
+
+					Enumeration<String> attributeNames = request
+							.getAttributeNames();
+
+					while (attributeNames.hasMoreElements()) {
+						String currentAttributeName = attributeNames
+								.nextElement();
+						Object object = helper
+								.getAttribute(currentAttributeName);
+						objectMap.put(currentAttributeName, object);
+					}
+
+					response.getWriter().write(gson.toJson(objectMap));
+					response.setContentType("application/json");
 				}
-				
-				response.getWriter().write(gson.toJson(objectMap));
-				response.setContentType("application/json");
-			}
-			}else{
-				request.setAttribute("result", SystemMessage.SESSIONEXPIRED.message());
+			} else {
+				request.setAttribute("result",SystemMessage.SESSIONEXPIRED.message());
 				request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
 			}
 		} catch (Exception e) {
