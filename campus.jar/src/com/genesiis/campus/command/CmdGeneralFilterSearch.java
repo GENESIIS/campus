@@ -27,7 +27,7 @@ public class CmdGeneralFilterSearch implements ICommand{
 	 * @author dumani DJ
 	 * @param helper IDataHelper Object
 	 * @param view IView Object
-	 * @return General filter search information.
+	 * @return General filter search command class information.
 	 * @throws Exception
 	 */
 	@Override

@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 
-function searchFunction(){	
+/* function searchFunction(){	
 	var keyWordString=$("#keyWord").val();	
 	var selectedType= $('input[name=cpRadio]:checked').val()
 	
@@ -76,7 +76,7 @@ function searchFunction(){
 						});
 			}
 		}
-	}
+	} */
 </script>
 
 <div class="main-screen clearfix">
@@ -96,7 +96,7 @@ function searchFunction(){
 						<input type="radio" name="cpRadio"	value="P"><span align="left">Programme</span>	
 						</div>					
 						<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>													
+								class="btn btn-primary" onclick="">Apply Search</button>													
 						<!-- <form action="PublicController" method="POST">
 							<button type="submit" name="CCO" id="CCO"
 								value="FILTER_SEARCH_COURSE_PROVIDERS"
@@ -129,7 +129,7 @@ function searchFunction(){
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-	<script src="/dist/js/general-filter-search.js"></script>
+	<script src="/dist/js/filterSearch/general-filter-search.js"></script>
 	<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
 	
 	<!-- W3-Include -->
