@@ -224,14 +224,13 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement3.setString(8, courseProviderTown.getModBy());
 
 			status = preparedStatement.executeUpdate();
-			log.info(".........." + status);
 
 			rs = preparedStatement.getGeneratedKeys();
 
 			if (rs.next()) {
 				generatedKey = rs.getInt(1);
 				status = 1;
-				log.info(">>>>>>>>>>>>>>>    " + generatedKey);
+				
 				preparedStatement2.setInt(6, generatedKey);
 				// preparedStatement2.setInt(7, 2);
 
@@ -256,20 +255,20 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			conn.rollback();
 			throw exception;
 		} finally {
-			if (conn != null) {
-				conn.setAutoCommit(true);
-				conn.close();
-			}
-			if (preparedStatement != null) {
+			conn.setAutoCommit(true);
+			if(rs != null){
+				rs.close();
+			}if (preparedStatement != null) {
 				preparedStatement.close();
 			}
 			if (preparedStatement2 != null) {
 				preparedStatement2.close();
 			}if(preparedStatement3 != null){
 				preparedStatement3.close();
-			}if(rs != null){
-				rs.close();
+			}if (conn != null) {
+				conn.close();
 			}
+			
 		}
 		return generatedKey;
 	}
