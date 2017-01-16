@@ -55,6 +55,7 @@ function isPatternMatch(regularExpression, source) {
 function providerUsernameValidation() {
 	
 	$("#errorUsername").html = "";
+	var flag = false;
 
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
@@ -87,12 +88,14 @@ function providerUsernameValidation() {
 							document.getElementById('errorUsername').innerHTML = response.userMessage;
 							window.usernameFlag == response.validationFlag;
 							
-//							if(window.usernameFlag == true){
-//								return true;
-//								} else {
-//									return false;
-//								}
-							return usernameFlag;
+							if(response['validationFlag']===1){
+								flag = true;
+							}
+							if (response['validationFlag'] === 0) {
+								flag = false;
+							}
+
+							return flag;
 
 							}
 						},
@@ -105,6 +108,7 @@ function providerPrefixValidation() {
 	
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
 	document.getElementById('errorUniquePrefix').value = "";
+	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
@@ -136,14 +140,20 @@ function providerPrefixValidation() {
 
 							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 							window.prefixFlag == response.validationFlag;
-alert(window.prefixFlag);
-					return prefixFlag;
 
+							if(response['validationFlag']===1){
+								flag = true;
 							}
-						},
-					});
-		}
-	
+							if (response['validationFlag'] === 0) {
+								flag = false;
+							}
+
+							return flag;
+						}
+					},
+				});
+	}
+
 }
 
 /**
@@ -373,8 +383,8 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(providerUsername)) {
-		document.getElementById('errorProviderUsername').innerHTML = "**Give a username.";
-		document.getElementById('errorUsername').focus();
+		document.getElementById('errorUsername').innerHTML = "**Give a username.";
+		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
 	if (!isempty(providerPassword)) {
@@ -398,11 +408,10 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 //	if (!$("#accountStatus").is(":checked")) {
-//		document.getElementById('errorAccountStatus').innerHTML = "**Select the account status.";
+//		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
 //		document.getElementById('accountStatus').focus();
 //		flag = false;
 //	}
-
 
 	return flag;
 }
