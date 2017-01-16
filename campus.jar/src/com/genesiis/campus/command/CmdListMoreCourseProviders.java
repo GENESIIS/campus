@@ -48,6 +48,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			int categoryCode = 0;
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("categoryCode");
+			String cpCodeList = helper.getParameter("cpCodeList");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
