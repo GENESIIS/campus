@@ -563,12 +563,7 @@
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<h1 class="pro-name" id="accountStatusList">
-										<!-- 		<input type="radio" name="accountStatus" id="accountStatus"
-											value="active" /> Active &nbsp; <input type="radio"
-											name="accountStatus" id="accountStatus" value="inactive" />
-										InActive &nbsp; -->
-
-										<span id="errorAccountStatusValue" class="error-message">${errorAccountStatusValue }</span>
+										<span id="errorStatus" class="error-message">${errorStatus }</span>
 									</h1>
 								</div></li>
 							<!-- end -->
