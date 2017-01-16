@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170110 CW c36-add-tutor-details Modified setVariables() method - add tutor crtBy & modBy using setter methods  
 //20170110 CW c36-add-tutor-details Modified execute() method - changed the way of calling the findById() method
 //20170116 CW c36-add-tutor-details add fillTutorCollection(), fillTutorDummyCollection() methodS to fill a Collection with data
+//20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,19 +48,19 @@ public class CmdAddTutorProfile implements ICommand {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
 			final Validator validator=new Validator();
-			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
+			Collection<String> tutorCollection= new ArrayList<String>();
 			
 		try {
 			String dfd = helper.getParameter("firstName");
-			if (helper.getParameter("firstName") != null){
 				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
+				fillTutorCollection(tutorCollection, tutor);
+				
 				if (message.equalsIgnoreCase("True")) {								
 	
 					UserTypeDAO typeOfUser = new UserTypeDAO();
 					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();
 					
-					fillTutorCollection(tutorCollection, tutor);
 					
 					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
 					
@@ -81,12 +82,8 @@ public class CmdAddTutorProfile implements ICommand {
 					} else {
 						
 						message = SystemMessage.ERROR.message();
-					}
-					
+					}					
 				}
-			}else{
-				fillTutorCollection(tutorCollection, tutor);
-			}
 		}  catch (SQLException sqle){
 			log.error("execute(): SQLException "+ sqle.toString());
 			throw sqle;
@@ -95,7 +92,7 @@ public class CmdAddTutorProfile implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
-			view.setCollection(tutorCollection);
+			helper.setAttribute("tutorList", tutorCollection);
 		}
 		return view;
 	}
@@ -245,15 +242,15 @@ public class CmdAddTutorProfile implements ICommand {
 	 * 
 	 * @param tutorCollection, tutor
 	 */
-	private void fillTutorCollection(Collection<Collection<String>> tutorCollection, Tutor tutor) throws SQLException, Exception{
-		ArrayList<String> tutorData = new ArrayList<>();
+	private void fillTutorCollection(Collection<String> tutorCollection, Tutor tutor) throws SQLException, Exception{
+		//ArrayList<String> tutorData = new ArrayList<>();
 		
-		tutorData.add(tutor.getFirstName());
-		tutorData.add(tutor.getMiddleName());
-		tutorData.add(tutor.getLastName());
-		tutorData.add(tutor.getGender());
-		tutorData.add(tutor.getExperience());
-		tutorData.add(tutor.getDescription());
+		tutorCollection.add(tutor.getFirstName());
+		tutorCollection.add(tutor.getMiddleName());
+		tutorCollection.add(tutor.getLastName());
+		tutorCollection.add(tutor.getGender());
+		tutorCollection.add(tutor.getExperience());
+		tutorCollection.add(tutor.getDescription());
 		
 		CountryDAO country = new CountryDAO();
 		
@@ -262,7 +259,7 @@ public class CmdAddTutorProfile implements ICommand {
 			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 			
 			for(Collection<String> countryList : countryCollection){
-				tutorData.add(countryList.toArray()[1].toString());				
+				tutorCollection.add(countryList.toArray()[1].toString());				
 			}
 
 		}  catch (SQLException sqle){
@@ -282,7 +279,7 @@ public class CmdAddTutorProfile implements ICommand {
 			
 			for(Collection<String> townList : townCollection){
 				if (townList.toArray()[0].toString().equals(tutor.getTown())){
-					tutorData.add(townList.toArray()[1].toString());		
+					tutorCollection.add(townList.toArray()[1].toString());		
 				}
 			}
 
@@ -295,27 +292,27 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		
 		
-		tutorData.add(tutor.getMobileCountryCode());
-		tutorData.add(tutor.getMobileNetworkCode());
-		tutorData.add(tutor.getMobileNumber());
-		tutorData.add(tutor.getLandCountryCode());
-		tutorData.add(tutor.getLandAreaCode());
-		tutorData.add(tutor.getLandNumber());
-		tutorData.add(tutor.getAddressLine1());
-		tutorData.add(tutor.getAddressLine2());
-		tutorData.add(tutor.getAddressLine3());
-		tutorData.add(tutor.getWebLink());
-		tutorData.add(tutor.getFacebookLink());
-		tutorData.add(tutor.getLinkedInLink());
-		tutorData.add(tutor.getTwitterNumber());
-		tutorData.add(tutor.getInstagramId());
-		tutorData.add(tutor.getMySpaceId());
-		tutorData.add(tutor.getWhatsAppId());
-		tutorData.add(tutor.getViberNumber());
-		tutorData.add(tutor.getEmailAddress());
-		tutorData.add(tutor.getUsername());
+		tutorCollection.add(tutor.getMobileCountryCode());
+		tutorCollection.add(tutor.getMobileNetworkCode());
+		tutorCollection.add(tutor.getMobileNumber());
+		tutorCollection.add(tutor.getLandCountryCode());
+		tutorCollection.add(tutor.getLandAreaCode());
+		tutorCollection.add(tutor.getLandNumber());
+		tutorCollection.add(tutor.getAddressLine1());
+		tutorCollection.add(tutor.getAddressLine2());
+		tutorCollection.add(tutor.getAddressLine3());
+		tutorCollection.add(tutor.getWebLink());
+		tutorCollection.add(tutor.getFacebookLink());
+		tutorCollection.add(tutor.getLinkedInLink());
+		tutorCollection.add(tutor.getTwitterNumber());
+		tutorCollection.add(tutor.getInstagramId());
+		tutorCollection.add(tutor.getMySpaceId());
+		tutorCollection.add(tutor.getWhatsAppId());
+		tutorCollection.add(tutor.getViberNumber());
+		tutorCollection.add(tutor.getEmailAddress());
+		tutorCollection.add(tutor.getUsername());
 		
-		tutorCollection.add(tutorData);
+		//tutorCollection.add(tutorCollection);
 		
 	}
 }
