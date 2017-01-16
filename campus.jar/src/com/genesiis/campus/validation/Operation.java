@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161121 CM c36-add-tutor-information added a new attribute to the enum
 //20161122 CM c36-add-tutor-information added a new attribute to the enum
 //20170116 CM c36-add-tutor-information added a new attribute to the enum
+//20170116 CM c36-add-tutor-information removed an un wanted attribute from the enum
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -14,7 +15,6 @@ public enum Operation {
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
 	LIST_COUNTRY_DATA("LIST_COUNTRY_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
 	CHECK_USERNAME("CHECK_USERNAME", ResponseType.JSON, "addTutorDetails.jsp"),
-	LOAD_TUTOR_WITH_DUMMY_DATA("LOAD_TUTOR_WITH_DUMMY_DATA", ResponseType.JSON, "addTutorDetails.jsp"),
 	ADD_TUTOR_PROFILE_DETAILS("ATPD", ResponseType.JSP,"dist/partials/addTutorDetails.jsp");
 	
 	private final String commandString;
