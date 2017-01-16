@@ -40,43 +40,42 @@ function searchFunction(){
 		}
 	});
 	
-	function getProviderCodeList(response){
-		
-		$.each(response.codeList,	function(index, value) {
-			var res = value;
-			
-		});
-		var catCode = $("#catCode").val();
-		$.ajax({
-			url : '../../PublicController',
-			data : {
-				CCO : 'LIST_ALL_COURSE_PROVIDERS',
-				categoryCode : catCode
-			},
-			dataType : "json",
-			success : function(response) {
-				getInitialPageResults(catCode,response);
-			},
-			error : function(jqXHR, exception) {			
-				var msg = '';
-				if (jqXHR.status === 0) {
-		            msg = 'Not connect.\n Verify Network.';
-		        } else if (jqXHR.status == 404) {
-		            msg = 'Requested page not found. [404]';
-		        } else if (jqXHR.status == 500) {
-		            msg = 'Internal Server Error [500].';
-		        }  else if (exception === 'timeout') {
-		            msg = 'Time out error.';
-		        } else {
-		            msg = 'Internal error is occurred. Please try again.';
-		        }	        
-		        alert(msg);
-			}
-		});
-		
-	}
-}
 
+
+	function getProviderCodeList(response) {
+			var cpCodeList = response.codeList;
+			if (cpCodeList != null && cpCodeList.length > 0) {
+				var catCode = $("#catCode").val();
+				$
+						.ajax({
+							url : '../../PublicController',
+							data : {
+								CCO : 'LIST_ALL_COURSE_PROVIDERS',
+								cpCodeList : cpCodeList
+							},
+							dataType : "json",
+							success : function(response) {
+								getInitialPageResults(cpCodeList, response);
+							},
+							error : function(jqXHR, exception) {
+								var msg = '';
+								if (jqXHR.status === 0) {
+									msg = 'Not connect.\n Verify Network.';
+								} else if (jqXHR.status == 404) {
+									msg = 'Requested page not found. [404]';
+								} else if (jqXHR.status == 500) {
+									msg = 'Internal Server Error [500].';
+								} else if (exception === 'timeout') {
+									msg = 'Time out error.';
+								} else {
+									msg = 'Internal error is occurred. Please try again.';
+								}
+								alert(msg);
+							}
+						});
+			}
+		}
+	}
 </script>
 
 <div class="main-screen clearfix">
