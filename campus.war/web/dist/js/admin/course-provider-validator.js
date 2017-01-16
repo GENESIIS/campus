@@ -86,7 +86,6 @@ function providerUsernameValidation() {
 						if (response !== undefined && response !== null) {
 							document.getElementById('errorUsername').innerHTML = response.userMessage;
 							window.usernameFlag == response.validationFlag;
-							alert(window.usernameFlag);
 							
 //							if(window.usernameFlag == true){
 //								return true;
