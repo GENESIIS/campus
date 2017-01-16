@@ -432,8 +432,14 @@ public class Validator {
 	public boolean isValidWhatsappViber(String number) throws Exception {
 		boolean valid = false;
 		
+		if(!(isNotEmpty(number))){
+			return true;
+		}
+		
 		try{
-			double newNumber = Double.parseDouble(number);
+			if((isNotEmpty(number))){
+				double newNumber = Double.parseDouble(number);
+			}
 		} catch (Exception e){
 			return false;
 		}		
