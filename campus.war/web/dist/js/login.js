@@ -82,19 +82,42 @@ function studentLogout() {
 			dataType : "json",
 			success : function(response) {
 
-			
-//				setTimeout( function(){
-//					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login"
-//					}, 7000);
-				alert(response['message']);
-//				$(window).scrollTop(0);
-//				$('#studentPersonalDetailsModal').modal('show');
+			//	alert(response['message']);
+			//	document.getElementById('popupMessage').innerHTML = response['message'];
+				$(window).scrollTop(0);
+//				 $('.modal-body #popupMessage').val(response['message']);
+//				 $('#myModal').modal();
+				//$modal.find('.modal-body #popupMessag').html(response['message']);
 				
-
+				 $('#myModal').on('show.bs.modal', function(event) {
+				        $("#popupMessage").val(response['message']);
+				    });
+				 
+				setTimeout( function(){
+					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+					}, 5000);
+				
+				
 			},
-			error : function(e) {
-				alert("Error " + e);
-				console.log(e);
+			error : function(response,error,errorThrown) {
+				alert("Error " + error);
+				console.log(error);
+				 var msg = '';
+			      if (response.status === 0) {
+			          msg = 'Not connect.\n Verify Network.';
+			      } else if (response.status == 404) {
+			          msg = 'Requested page not found. [404]';
+			      } else if (response.status == 500) {
+			          msg = 'Internal Server Error [500].';
+			      } else if (error === 'parsererror') {
+			          msg = 'Requested JSON parse failed.';
+			      } else if (error === 'timeout') {
+			          msg = 'Time out error.';
+			      } else if (error === 'abort') {
+			          msg = 'Ajax request aborted.';
+			      } else {
+			          msg = 'Uncaught Error.\n' + response.responseText;
+			      }
 			}
 
 		});
