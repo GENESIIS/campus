@@ -45,13 +45,13 @@
 				</div>
 				<!-- End Keyword Search -->
 				<div class="login-link">
-					<a href="javascript:" class="colr-white">Login</a>
-
+					<a class="btn btn-link colr-white" data-toggle="modal" data-target="#loginPopup">
+						Login
+					</a>					
 				</div>
 			</div>
 			<!-- End keyword search -->
 		</div>
 	</div>
-	
 	<script src="/dist/js/header/ui-populate-helper.js"></script>
 </header>

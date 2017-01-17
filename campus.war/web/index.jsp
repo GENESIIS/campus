@@ -36,6 +36,7 @@
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
+    	<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
         <div class="main-slider clearfix">
             <div class="slider-mask clearfix"></div>
             <!--<ul class="rslides" id="slider1">-->
@@ -76,6 +77,7 @@
             </div>
             <!-- End category boxes area -->
         </div>
+        
     </div>
 
     <div class="banner-panel pull-right clearfix">

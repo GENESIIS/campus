@@ -1,8 +1,7 @@
-@charset "UTF-8";
 /* Base */
 /* http://meyerweb.com/eric/tools/css/reset/
- * v2.0 | 20110126
- * License: none (public domain) */
+   v2.0 | 20110126
+   License: none (public domain) */
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway|Slabo+27px';
@@ -48,7 +47,7 @@ blockquote, q {
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: "";
+  content: '';
   content: none; }
 
 table {
@@ -79,7 +78,7 @@ textarea:focus, input:focus {
   color: white !important; }
 
 .page-topic-t1 {
-  font-family: "Arvo", serif;
+  font-family: 'Arvo', serif;
   font-size: 34px;
   color: #3a3b3c;
   padding-bottom: 30px; }
@@ -92,21 +91,22 @@ textarea:focus, input:focus {
 
 .msg-warning {
   color: #e28a01;
-  font-family: Verdana, sans-serif;
+  font-family: Verdana,sans-serif;
   font-size: 16px; }
 
 .msg-danger {
   color: #E64545;
-  font-family: Verdana, sans-serif;
+  font-family: Verdana,sans-serif;
   font-size: 16px; }
 
-/*Font Face */
+/*Font Face*/
 /* Layout */
 footer .ft-top {
   display: block;
   height: 175px;
   width: 100%;
   background: #193949; }
+
 footer .ft-bottom {
   display: block;
   width: 100%;
@@ -225,7 +225,7 @@ header .header {
               text-decoration: underline !important; }
 
 body, html {
-  font-family: "Raleway", sans-serif; }
+  font-family: 'Raleway', sans-serif; }
   body a, html a {
     text-decoration: none; }
     body a:hover, body a:focus, body a.active, html a:hover, html a:focus, html a.active {
@@ -257,7 +257,7 @@ body, html {
       font-size: 14px;
       padding: 10px 10px 10px 0;
       color: #94979c;
-      font-family: "Roboto", sans-serif; }
+      font-family: 'Roboto', sans-serif; }
   .main-category .content-holder {
     display: block;
     position: relative;
@@ -309,7 +309,7 @@ body, html {
             .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name {
               display: block;
               text-align: center;
-              font-family: "Roboto", sans-serif;
+              font-family: 'Roboto', sans-serif;
               font-size: 20px;
               color: #193949;
               line-height: 30px;
@@ -347,7 +347,7 @@ body, html {
               font-size: 18px; }
               .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location a:before {
                 font-family: FontAwesome;
-                content: "";
+                content: "\f041";
                 padding-right: 10px; }
           .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration {
             display: inline-block;
@@ -380,7 +380,7 @@ body, html {
           .main-category .content-holder .sliding-info-panel .info-slider-holder .slider-heading .topic {
             display: inline-block; }
             .main-category .content-holder .sliding-info-panel .info-slider-holder .slider-heading .topic h2 {
-              font-family: "Oswald", sans-serif;
+              font-family: 'Oswald', sans-serif;
               font-size: 35px;
               color: #8a8a8a;
               padding-left: 8px; }
@@ -419,7 +419,7 @@ body, html {
             padding-right: 25px;
             background: rgba(0, 0, 0, 0.36);
             color: #fff;
-            font-family: "Abel", sans-serif;
+            font-family: 'Abel', sans-serif;
             font-size: 22px;
             line-height: 28px;
             text-align: justify;
@@ -546,7 +546,7 @@ body, html {
               background: #fff;
               display: block;
               width: 100%;
-              font-family: "Slabo 27px", serif;
+              font-family: 'Slabo 27px', serif;
               padding-bottom: 20px;
               transition: all 0.3s;
               border: 8px solid rgba(225, 225, 225, 0.6); }
@@ -558,7 +558,7 @@ body, html {
                 .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name a {
                   font-size: 26px;
                   color: #818181;
-                  font-family: "Slabo 27px", serif; }
+                  font-family: 'Slabo 27px', serif; }
               .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info {
                 display: block; }
                 .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
@@ -629,7 +629,7 @@ body, html {
           width: 100%;
           margin-bottom: 18px;
           padding-left: 18px;
-          font-family: "Roboto", sans-serif; }
+          font-family: 'Roboto', sans-serif; }
         .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form p {
           font-size: 20px;
           color: #cccccc;
@@ -738,86 +738,6 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
-@media only screen and (min-width: 900px) {
-  .login-dialog {
-    width: 900px; } }
-@media only screen and (max-width: 899px) and (min-width: 768px) {
-  .login-dialog {
-    width: 90%; } }
-.modal-header {
-  border-bottom: none; }
-  .modal-header .close {
-    color: #4889F1;
-    font-size: 1.1em;
-    font-weight: normal;
-    opacity: 1; }
-
-.modal-content {
-  border-radius: 0; }
-  .modal-content .modal-body {
-    padding: 0px 50px 50px; }
-    .modal-content .modal-body h5 {
-      color: #8A8B8D;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 1.6em;
-      border-bottom: 1px solid #DCE5EC;
-      padding-bottom: 12px;
-      margin-bottom: 22px; }
-    .modal-content .modal-body label {
-      color: #697C8A;
-      font-size: 0.9em;
-      font-weight: normal; }
-    .modal-content .modal-body .form-user label {
-      padding-bottom: 12px; }
-    .modal-content .modal-body .form-user .btn {
-      font-size: 1em;
-      background: #4889F1;
-      padding: 10px 12px;
-      border-color: none; }
-    .modal-content .modal-body .form-user .forgot-pwd {
-      display: block;
-      font-size: 0.8em; }
-    .modal-content .modal-body .form-user .form-control {
-      height: 42px; }
-    .modal-content .modal-body .form-user input {
-      border: 4px solid #CCDAE7;
-      border-radius: 0; }
-    .modal-content .modal-body .form-user .checkbox {
-      margin-top: 0;
-      padding-top: 0; }
-      .modal-content .modal-body .form-user .checkbox label {
-        color: #91969C;
-        font-size: 0.8em; }
-      .modal-content .modal-body .form-user .checkbox input {
-        margin-top: 0; }
-    .modal-content .modal-body .form-user .new-user {
-      color: #91969C;
-      font-size: 0.8em;
-      line-height: 1.5em; }
-    .modal-content .modal-body .form-social {
-      padding-top: 50px; }
-      .modal-content .modal-body .form-social .btn {
-        color: #fff;
-        padding: 6px 40px;
-        border-radius: 0;
-        margin-bottom: 35px; }
-      .modal-content .modal-body .form-social .btn:hover {
-        opacity: 0.8; }
-      .modal-content .modal-body .form-social .social-ico {
-        display: inline-block;
-        padding-right: 15px; }
-      .modal-content .modal-body .form-social .social-title {
-        position: relative;
-        top: -4px; }
-      .modal-content .modal-body .form-social .facebook {
-        background: #3B5999; }
-      .modal-content .modal-body .form-social .google {
-        background: #DC4437; }
-      .modal-content .modal-body .form-social .linkedin {
-        background: #0177B5; }
-      .modal-content .modal-body .form-social .twitter {
-        background: #43C8F5; }
-
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
@@ -831,9 +751,11 @@ body, html {
     .header .bottom .menu-bar .keyword-search .search-bar input {
       width: 82% !important;
       font-size: 11px !important; } }
+
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .header .top {
     height: 100px !important; } }
+
 @media only screen and (max-device-width: 768px) {
   header .header .bottom .menu-bar .menu-tabs .top-menus {
     font-size: 17px; }
@@ -843,6 +765,7 @@ body, html {
   header .header .bottom .menu-bar .menu-tabs .bottom-menus li {
     padding-left: 12px !important;
     padding-right: 12px !important; } }
+
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .main-screen .content-panel .search-area .main-search-bar .bar-holder {
     padding: 10px; }
@@ -853,12 +776,14 @@ body, html {
     width: 100% !important; }
   .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
     width: 100% !important; } }
+
 @media screen and (max-device-width: 767px) {
   .main-screen .content-panel .search-area .main-search-bar .bar-holder {
     padding: 10px; }
     .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
       font-size: 16px;
       line-height: 42px; } }
+
 /* Modules */
 .btn-home {
   display: block;
@@ -876,7 +801,7 @@ body, html {
   margin-right: auto;
   margin-left: auto; }
   .inner-header .main-topic {
-    font-family: "Nixie One", cursive;
+    font-family: 'Nixie One', cursive;
     display: inline-block;
     width: 70%; }
     .inner-header .main-topic h1 {
@@ -923,7 +848,7 @@ body, html {
   padding-bottom: 30px; }
   .filter-item .item-header {
     display: block;
-    font-family: "Slabo 27px", serif;
+    font-family: 'Slabo 27px', serif;
     padding-bottom: 15px; }
     .filter-item .item-header label {
       font-size: 26px;

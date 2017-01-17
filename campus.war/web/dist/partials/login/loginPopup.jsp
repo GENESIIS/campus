@@ -1,0 +1,85 @@
+<div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="login-dialog modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">Close</span>
+				</button>
+			</div>
+			
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+							
+							<form name="userLogin" class="form-vertical form-user" role="form" method="" action="">
+								
+								<div class="form-group">
+									<h5>Sign In</h5>
+								</div>
+						   
+								<div class="form-group">
+									<label for="username">Username or Email</label>									
+									<input type="text" class="form-control" id="username" >
+								</div>
+								
+								<div class="form-group">
+									<label for="password">Password</label>									
+									<input type="text" class="form-control" id="password" >
+								</div>
+								
+								<div class="form-group">
+									<a class="forgot-pwd text-right" href="#" title="Forgot Password ?">Forgot Password ?</a>
+								</div>
+								
+								<div class="form-group">							
+									<button type="submit" class="btn btn-primary btn-block">
+										Sign In
+									</button>
+								</div>
+								
+								<div class="form-group">
+									<div class="checkbox pull-left">
+										<label><input type="checkbox" value="logged"> Keep me logged in</label>
+									</div>
+									<p class="new-user pull-right">New Here? <a href="#" title="Join Us">Join Us</a></p>
+								</div>
+								
+							</form>
+							
+						</div>
+						<div class="col-sm-5 col-sm-push-1">
+						
+							<form name="socialLogin" class="form-vertical form-social" role="form" method="" action="">
+							
+								<button class="btn btn-block facebook">
+									<span class="social-ico"><i class="fa fa-facebook fa-2x"></i></span>
+									<span class="social-title">Login with Facebook</span>
+								</button>
+								
+								<button class="btn btn-block google">
+									<span class="social-ico"><i class="fa fa-google fa-2x"></i></span>
+									<span class="social-title">Login with Google</span>
+								</button>
+								
+								<button class="btn btn-block linkedin">
+									<span class="social-ico"><i class="fa fa-linkedin fa-2x"></i></span>
+									<span class="social-title">Login with LinkedIn</span>
+								</button>
+								
+								<button class="btn btn-block twitter">
+									<span class="social-ico"><i class="fa fa-twitter fa-2x"></i></span>
+									<span class="social-title">Login with Twitter</span>
+								</button>
+								
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
