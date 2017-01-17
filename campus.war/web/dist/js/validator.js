@@ -6,6 +6,7 @@
  * //20161115 CM c9-make-inquiry-for-institute added clearField(elementId) function
  * //20161122 CM c36-add-tutor-information 
  * //20170111 CW c36-add-tutor-details-Added Viber & WhatsApp validations - CW
+ * //20170117 CW c36-add-tutor-details-Added ValidateEmail() method - cw
  */
 
 /**
@@ -85,7 +86,7 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-/*
+
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
@@ -399,7 +400,14 @@ function validateTutorFileds() {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
-	}*/
+	}
+	
+	var emailExist = ValidateEmail(email);
+	if (emailExist.message == '0') {
+		document.getElementById('emailError').innerHTML = "**Email entered Already exists.";
+		document.getElementById('email').focus();
+		flag = false;
+	}
 	return (flag);
 }
 
