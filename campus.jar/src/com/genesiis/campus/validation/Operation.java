@@ -8,9 +8,9 @@ package com.genesiis.campus.validation;
  */
 public enum Operation {	
 	
-	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
+	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
 	SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER("SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," "),
-	REPORT_COURSES_BY_COURSE_PROVIDER("REPORT_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," ");
+	REPORT_COURSES_BY_COURSE_PROVIDER("REPORT_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," ");	
 			
 	private final String commandString;
 	private final ResponseType responseType;

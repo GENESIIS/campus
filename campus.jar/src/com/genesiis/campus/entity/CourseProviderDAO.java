@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 
+
 //DJ 20161206 c51-report-courses-by-course-provider-MP-dj created CourseProviderDAO.java
 //DJ 20161229 c51-report-courses-by-course-provider-MP-dj Implement findById() method 
 
@@ -20,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * The class {@code CourseProviderDAO} is a form of DAO class.It is  created for the purpose of retrieving data from database, for 
- * courses by course provider report generation. 
- * @author dumani DJ
- *
+* The class {@code CourseProviderDAO} is a form of DAO class.It is  created for the purpose of retrieving data from database, for 
+* courses by course provider report generation. 
+* @author dumani DJ
+*
 */
 public class CourseProviderDAO  implements ICrud{
 	
