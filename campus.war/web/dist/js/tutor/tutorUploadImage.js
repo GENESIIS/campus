@@ -22,12 +22,14 @@ $(document).ready(function() {
 			
 			event.stopPropagation(); 
 		    event.preventDefault(); 
-		    var files = event.target.files; 
-		    var data = new FormData();
-		    $.each(files, function(key, value)
-		    {
-		        data.append(key, value);
-		    });
+		    //var files = event.target.files; 
+		    var form =document.getElementById('file-from'); //**** added 
+		   // var data = new FormData();
+		    var data = new FormData(form);//**** added
+//		    $.each(files, function(key, value)
+//		    {
+//		        data.append(key, value);
+//		    });
 		    
 		    $('#upload-button').prop('disabled', false);  
 		    setTimeout( function(){
@@ -105,19 +107,21 @@ function uploadImage(){
 
 function postFilesData(dataForm)
 {
-	alert("dataForm hit the Uploading imagepostFilesData and  "+dataForm);
+	
  $.ajax({
-    url: '../../../TutorController',
+    url: '../../../TutorController?CCO=USTIMG',
     type: 'POST',
     dataType: 'json',
-    data: {
-		CCO: "USTIMG" ,//UPLOAD SUBMITED TUTOR IMAGE
-		//'formData':	dataForm
-		'formData':	JSON.stringify(dataForm)
-	},
-   cache: false,
-   processData: true,
-   //contentType: 'multipart/form-data',
+    data:dataForm,
+//    data: {
+//		'formData':	dataForm
+//	},
+    cache: false,
+    processData: false,
+   // contentType:false,
+    mimetyep: 'multipart/form-data', //****** added
+    contentType: 'multipart/form-data',
+  // contentType: 'multipart/mixed stream',
    success:function(response){
 			
 		if(response['successCode']===1){
@@ -145,6 +149,7 @@ function ajaxErorMessage(response,error,errorThrown){
 	  var msg = '';
       if (response.status === 0) {
           msg = 'Not connect.\n Verify Network.';
+          
       } else if (response.status == 404) {
           msg = 'Requested page not found. [404]';
       } else if (response.status == 500) {
