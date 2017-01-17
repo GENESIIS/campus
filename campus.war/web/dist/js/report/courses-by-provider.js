@@ -185,7 +185,7 @@ function clearParameters(event){
 	$.each(allproviderListCollection, function(index, value) {		
 		if(value!=null && value.length>0){
 			if(value[2] !=null && value[2]==1){
-			htmlstr += '<option value="' + value[0] + '">' + value[1] + '</option>';
+			htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
 			}
 		}		
 	});	
