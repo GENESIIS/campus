@@ -41,7 +41,7 @@ $(document).ready(function() {
 		//if (cpCodeList != null && cpCodeList.length > 0) {
 			
 			window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?cpCodeList=" + cpCodeList);
-			
+			var formString="<form> "
 		/*	$.ajax({
 						url : '../../PublicController',
 						data : {
