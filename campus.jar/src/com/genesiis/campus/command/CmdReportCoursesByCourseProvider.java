@@ -77,7 +77,6 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 		final CourseProviderSearchDTO couseProvider = new CourseProviderSearchDTO();
 		// couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 		try {
-			//final Collection<Collection<String>> courseProviderList = new CourseProviderDAO().findById(couseProvider);
 			final Collection<Collection<String>> courseProviderList = new CourseProviderDAOImpl().getReportAllCourseProviders(couseProvider);
 			helper.setAttribute("courseProviderList", courseProviderList);
 		} catch (Exception exception) {
@@ -125,11 +124,9 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 				log.error("execute() : ParseException "
 						+ parseException.toString());
 				throw parseException;
-			}
-			//final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO().findById(programme);
+			}			
 			final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAOImpl().getProgrammesForReport(programme);
-			helper.setAttribute("allProgrammeResultList",
-					allProgrammeResultList);		
+			helper.setAttribute("allProgrammeResultList",allProgrammeResultList);		
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception.toString());
 			throw exception;
