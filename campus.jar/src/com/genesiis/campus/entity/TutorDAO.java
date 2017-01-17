@@ -1,7 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
-//20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
+//20170117 JH c133-admin-list-tutors added TutorDAO.java and coding wip
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +11,17 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 
-public class TownDAO implements ICrud {
-	static Logger log = Logger.getLogger(TownDAO.class.getName());
+public class TutorDAO implements ICrud {
+
+	static Logger log = Logger.getLogger(TutorDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		return 0;
+				return 0;
 	}
 
 	@Override
@@ -38,24 +39,21 @@ public class TownDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		int countryCode = (Integer) code;
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		Tutor tutor = (Tutor) code;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DISTRICT] FROM [CAMPUS].[TOWN] WHERE [COUNTRY] = ?;";
+			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
 
 			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, countryCode);
+			stmt.setString(1, tutor.getUsername());
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("CODE"));
-				singleTownList.add(rs.getString("NAME"));
-				singleTownList.add(rs.getString("DISTRICT"));
+				singleTownList.add(rs.getString("USERNAME"));
 
 				final Collection<String> singleTownCollection = singleTownList;
 				allTownList.add(singleTownCollection);
@@ -74,48 +72,15 @@ public class TownDAO implements ICrud {
 				conn.close();
 			}
 		}
-
 		return allTownList;
+
 	}
 
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-
-		try {
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE [ISACTIVE] = 1;";
-
-			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("CODE"));
-				singleTownList.add(rs.getString("NAME"));
-				singleTownList.add(rs.getString("DESCRIPTION"));
-
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
-			}
-		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
-			throw e;
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-		return allTownList;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
