@@ -1,6 +1,6 @@
 //DJ 20170116 c123-general-filter-search-course-provider-MP-dj Identify general filter search entities. 
 
-$(document).ready(function() {
+/*$(document).ready(function() {*/
 	//Identifies the search button action
 	/*$('#addSearchData').on('click', function(event) {	
 		var keyWordString=$("#keyWord").val();	
@@ -36,13 +36,13 @@ $(document).ready(function() {
 	});*/
 	
 	//Populate course provider code List and pass code list for course provider filter search view.
-	function getProviderCodeList(response) {
+	/*function getProviderCodeList(response) {
 		var cpCodeList = response.codeList;
 		//if (cpCodeList != null && cpCodeList.length > 0) {
 			
 			window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?cpCodeList=" + cpCodeList);
 			var formString="<form> "
-		/*	$.ajax({
+			$.ajax({
 						url : '../../PublicController',
 						data : {
 							CCO : 'LIST_ALL_COURSE_PROVIDERS',
@@ -68,8 +68,8 @@ $(document).ready(function() {
 							}
 							alert(msg);
 						}
-					});*/
+					});
 		//}
-	}
+	}*/
 
-});
+/*});*/

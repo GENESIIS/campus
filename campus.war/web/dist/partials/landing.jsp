@@ -135,7 +135,7 @@ function searchFunction(){
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 	<!-- <script src="/dist/js/filterSearch/general-filter-search.js"></script> -->
-	<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
+	<!-- <script src="/dist/js/filterSearch/ui-provider-populate.js"></script> -->
 	
 	<!-- W3-Include -->
 	<script src="/dist/bower-components/w3/w3data.js"></script>
