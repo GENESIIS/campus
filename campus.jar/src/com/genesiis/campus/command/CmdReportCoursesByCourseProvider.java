@@ -3,12 +3,10 @@ package com.genesiis.campus.command;
 //DJ 20161127 c51-report-courses-by-course-provider-MP-dj created CmdReportCoursesByCourseProvider.java
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Identify the selected applicationStatus
 
-import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
-import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
@@ -128,8 +126,8 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 						+ parseException.toString());
 				throw parseException;
 			}
-			final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO()
-					.findById(programme);
+			//final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAO().findById(programme);
+			final Collection<Collection<String>> allProgrammeResultList = new ProgrammeDAOImpl().getProgrammesForReport(programme);
 			helper.setAttribute("allProgrammeResultList",
 					allProgrammeResultList);		
 		} catch (Exception exception) {
