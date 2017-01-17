@@ -18,7 +18,7 @@ $(document).ready(function() {
 	        params[temp[0]] = temp[1];
 	    }*/
 	    
-
+	var cpCodeList="";
 	var keyWordString=" ";
 	var selectedType=" ";
 	var sPageURL = window.location.search.substring(1);
@@ -66,7 +66,7 @@ $(document).ready(function() {
 	});
 	
 	function getProviderCodeList(response) {
-		var cpCodeList = response.codeList;
+		 cpCodeList = response.codeList;
 	}
 	
 	
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		data : {
 			CCO : 'LIST_ALL_COURSE_PROVIDERS',
 			categoryCode : catCode,
-			cpCodeList:params
+			cpCodeList:cpCodeList
 		},
 		dataType : "json",
 		success : function(response) {

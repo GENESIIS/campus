@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 	//Identifies the search button action
-	$('#addSearchData').on('click', function(event) {	
+	/*$('#addSearchData').on('click', function(event) {	
 		var keyWordString=$("#keyWord").val();	
 		var selectedType= $('input[name=cpRadio]:checked').val()
 		
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		        alert(msg);
 			}
 		});
-	});
+	});*/
 	
 	//Populate course provider code List and pass code list for course provider filter search view.
 	function getProviderCodeList(response) {
