@@ -18,9 +18,11 @@ package com.genesiis.campus.entity.dao;
 //DJ 20161124 c17-provider-criteria-based-filter-search Implemented getCategoryWiseTypes() method
 //DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
+//DJ 20170117 c51-report-courses-by-course-provider-MP-dj Implemented getReportAllCourseProviders().
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
@@ -502,6 +504,61 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return allProviderList;
+	}
+	/**
+	 * Get Course Providers.If  CourseProviderStatus is set to particular status result set could return according to the set status. 
+	 * @param provider CourseProviderDTO
+	 * @author dumani DJ
+	 * @return allProviderList -Collections of strings(Retrieve Code,UNIQUEPREFIX,Status )
+	 * @throws SQLException,Exception
+	 */
+	@Override
+	public Collection<Collection<String>> getReportAllCourseProviders(CourseProviderSearchDTO providerSearchDTO) throws SQLException,
+			Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+		try {			
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT PROV.CODE AS CPCODE , PROV.UNIQUEPREFIX AS CPUNIQUEPREFIX, PROV.COURSEPROVIDERSTATUS AS CPSTATUS  FROM [CAMPUS].COURSEPROVIDER PROV WHERE 1=1");
+			if (providerSearchDTO.getCourseProviderStatus() > 0) {
+				sb.append(" AND PROV.COURSEPROVIDERSTATUS = ");
+				sb.append(providerSearchDTO.getCourseProviderStatus());
+			}
+			stmt = conn.prepareStatement(sb.toString());
+
+			resultSet = stmt.executeQuery();
+			allProviderList = getReportCourseProviderResultSet(resultSet,allProviderList);
+
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return allProviderList;
+	}
+	
+	/** Manipulate the result set to a collection of strings.
+	 * @param rs ResultSet
+	 * @param allProviderList Collection of strings
+	 * @author dumani DJ
+	 * @return Collection of strings
+	 * @throws SQLException
+	 */
+	private Collection<Collection<String>> getReportCourseProviderResultSet (ResultSet rs, Collection<Collection<String>> allProviderList) throws SQLException ,Exception{
+		while (rs.next()) {				
+			final ArrayList<String> singleProvider = new ArrayList<String>();
+			singleProvider.add(rs.getString("CPCODE"));				
+			singleProvider.add(rs.getString("CPUNIQUEPREFIX"));			
+			singleProvider.add(rs.getString("CPSTATUS"));			
+			allProviderList.add(singleProvider);
 		}
 		return allProviderList;
 	}
