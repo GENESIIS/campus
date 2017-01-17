@@ -14,74 +14,6 @@ function searchFunction(){
 	var selectedType= $('input[name=cpRadio]:checked').val();
     window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
 }
-
-/* function searchFunction(){	
-	var keyWordString=$("#keyWord").val();	
-	var selectedType= $('input[name=cpRadio]:checked').val()
-	
-	$.ajax({
-		url : '../../PublicController',
-		data : {
-			CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
-			keyWordString : keyWordString,
-			selectedType:selectedType
-		},
-		dataType : "json",
-		success : function(response) {
-			getProviderCodeList(response);
-		},
-		error : function(jqXHR, exception) {			
-			var msg = '';
-			if (jqXHR.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (jqXHR.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (jqXHR.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        }  else if (exception === 'timeout') {
-	            msg = 'Time out error.';
-	        } else {
-	            msg = 'Internal error is occurred. Please try again.';
-	        }	        
-	        alert(msg);
-		}
-	});
-	
-
-
-	function getProviderCodeList(response) {
-			var cpCodeList = response.codeList;
-			if (cpCodeList != null && cpCodeList.length > 0) {				
-				$
-						.ajax({
-							url : '../../PublicController',
-							data : {
-								CCO : 'LIST_ALL_COURSE_PROVIDERS',
-								cpCodeList : cpCodeList
-							},
-							dataType : "json",
-							success : function(response) {
-								getInitialPageResults(cpCodeList, response);
-							},
-							error : function(jqXHR, exception) {
-								var msg = '';
-								if (jqXHR.status === 0) {
-									msg = 'Not connect.\n Verify Network.';
-								} else if (jqXHR.status == 404) {
-									msg = 'Requested page not found. [404]';
-								} else if (jqXHR.status == 500) {
-									msg = 'Internal Server Error [500].';
-								} else if (exception === 'timeout') {
-									msg = 'Time out error.';
-								} else {
-									msg = 'Internal error is occurred. Please try again.';
-								}
-								alert(msg);
-							}
-						});
-			}
-		}
-	} */
 </script>
 
 <div class="main-screen clearfix">
@@ -97,16 +29,11 @@ function searchFunction(){
 						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
 					<div align="center">
 					  <div align="center">
-						<input  type="radio" name="cpRadio" value="CP"><span align="left" >Course Provider</span>						
-						<input type="radio" name="cpRadio"	value="P"><span align="left">Programme</span>	
+						<input  type="radio" name="cpRadio" value="CPROVIDER"><span align="left" >Course Provider</span>						
+						<input type="radio" name="cpRadio"	value="PROGRAMME"><span align="left">Programme</span>	
 						</div>					
 						<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>													
-						<!-- <form action="PublicController" method="POST">
-							<button type="submit" name="CCO" id="CCO"
-								value="FILTER_SEARCH_COURSE_PROVIDERS"
-								class="pure-button pure-button-primary">Search</button>
-						</form> -->
+								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>
 					</div>
 				</div>
 			</div>
