@@ -9,14 +9,68 @@ $(document).ready(function() {
 	//var queryString = window.location.search;	
 	//queryString = queryString.substring(1);
 	
-	 var params = {}, queries, temp, i, l;
+	 /*var params = {}, queries, temp, i, l;
 	    // Split into key/value pairs
 	    queries = queryString.split(",");
 	    // Convert the array of strings into an object
 	    for ( i = 0, l = queries.length; i < l; i++ ) {
 	        temp = queries[i].split('=');
 	        params[temp[0]] = temp[1];
-	    }
+	    }*/
+	    
+
+	var keyWordString=" ";
+	var selectedType=" ";
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) {
+
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == 'keyWord')
+		{
+			keyWordString = sParameterName[1];
+		} else if (sParameterName[0] == 'selectedType') {
+			selectedType == sParameterName[1];
+		}
+	}
+
+	
+	
+	//----------------------------------------------------
+	$.ajax({
+		url : '../../PublicController',
+		data : {
+			CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
+			keyWordString : keyWordString,
+			selectedType:selectedType
+		},
+		dataType : "json",
+		success : function(response) {
+			getProviderCodeList(response);
+		},
+		error : function(jqXHR, exception) {			
+			var msg = '';
+			if (jqXHR.status === 0) {
+	            msg = 'Not connect.\n Verify Network.';
+	        } else if (jqXHR.status == 404) {
+	            msg = 'Requested page not found. [404]';
+	        } else if (jqXHR.status == 500) {
+	            msg = 'Internal Server Error [500].';
+	        }  else if (exception === 'timeout') {
+	            msg = 'Time out error.';
+	        } else {
+	            msg = 'Internal error is occurred. Please try again.';
+	        }	        
+	        alert(msg);
+		}
+	});
+	
+	function getProviderCodeList(response) {
+		var cpCodeList = response.codeList;
+	}
+	
+	
+	//--------------------------------------------------------
 
 
 
