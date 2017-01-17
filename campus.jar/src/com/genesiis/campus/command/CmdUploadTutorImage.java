@@ -65,7 +65,7 @@ public class CmdUploadTutorImage implements ICommand {
 			files =getImageFileUploadedFromBrowser(helper);
 			if((files.size()==0)|(files==null)){
 				
-				this.message = message +" "+systemMessage(-1); // does not contain a file
+				this.message = message +" "+systemMessage(-1)+"\n" +" Please Select a file to Upload."; // does not contain a file
 				
 			} else{
 				
@@ -288,10 +288,6 @@ public class CmdUploadTutorImage implements ICommand {
 		try{
 			ArrayList<FileItem> tutorImages = new ArrayList<FileItem>(); 
 			
-			String gsonData = requestWrapper.getParameter("formData");  // what is obtained from ajax
-			List<Object> list=(List<Object>) extractDumyObjectFrom(gsonData);
-			
-		//### this should be replaced with json data extract below line might have to commented
 			tutorImages =requestWrapper.getFiles();
 			return tutorImages;
 			
@@ -301,30 +297,7 @@ public class CmdUploadTutorImage implements ICommand {
 			
 		}
 	}
-	
-	/*
-	 * extractDumyObjectFrom helps extract the json data to a
-	 * row object with the same field name similar to the fields json data 
-	 * contains
-	 * @param gsonData
-	 * @return
-	 */
 
-	@SuppressWarnings("unchecked")
-	public Object extractDumyObjectFrom(String gsonData) {
-		Gson gson = new Gson();
-		String message = "";
-		List<Object> listOfRowFiles = null;
-		try {
-			listOfRowFiles = gson.fromJson(gsonData,
-					List.class);
-
-		} catch (Exception exception) {
-			log.error("extractDumyObjectFrom(): " + exception.toString());
-			throw exception;
-		}
-		return listOfRowFiles;
-	}
 
 	/**
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
