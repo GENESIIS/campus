@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170117 CW c36-add-tutor-information INIT CmdCheckEmail.java
+//20170117 CW c36-add-tutor-information modified the comments in execute ()method
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,9 +37,9 @@ public class CmdCheckEmail implements ICommand {
 			}
 			
 			if (tutorCollection.isEmpty()) {
-				message = "1"; // user name does not exist
+				message = "1"; // email does not exist
 			} else {
-				message = "0"; // user name Already exists
+				message = "0"; // email Already exists
 			}
 			
 			view.setCollection(tutorCollection);
