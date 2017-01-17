@@ -49,9 +49,9 @@ public class CmdStudentLogout implements ICommand {
 			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
 			
 			if (status > 0) {
-				HttpSession curentSession = helper.getRequest().getSession();
+				HttpSession curentSession = helper.getRequest().getSession(false);
 				curentSession.invalidate();
-				pageURL = "/dist/partials/login.jsp";
+				//pageURL = "/dist/partials/login.jsp";
 				message = SystemMessage.LOGOUTSUCCESSFULL.message();
 				log.info(message + status);
 			}
