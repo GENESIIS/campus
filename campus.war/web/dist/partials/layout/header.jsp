@@ -8,9 +8,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <script src='/dist/js/login.js'></script>
-<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="/dist/js/main.js"></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
@@ -63,7 +65,8 @@
 						<br>
 						<a href="/dist/partials/student/SessionDetailsJSTL.jsp">
 							Session details checker JSTL</a>
-							<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#studentPersonalDetailsModal"></button>
+						<button type="button" class="btn btn-primary btn-lg"
+							data-toggle="modal" data-target="#studentPersonalDetailsModal"></button>
 						<br>
 						<button class="btn btn-primary btn-block" type="button" name="CCO"
 							id="CCO" value="SLGOUT" onclick="studentLogout()">Logout</button>
@@ -74,18 +77,27 @@
 		</div>
 	</div>
 </header>
+
+<!-- popup massage window -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<label class="" id="popupMessage"></label>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
 </body>
 </html>
 
-<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="studentPersonalDetails">School Education</h4>
-      </div>
-      <div class="modal-body">
-      <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
-</div>
-</div>
-</div>
-</div>
+
