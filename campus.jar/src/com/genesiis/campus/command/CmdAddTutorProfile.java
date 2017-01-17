@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170110 CW c36-add-tutor-details Modified execute() method - changed the way of calling the findById() method
 //20170116 CW c36-add-tutor-details add fillTutorCollection(), fillTutorDummyCollection() methodS to fill a Collection with data
 //20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
+//20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +52,6 @@ public class CmdAddTutorProfile implements ICommand {
 			Collection<String> tutorCollection= new ArrayList<String>();
 			
 		try {
-			String dfd = helper.getParameter("firstName");
 				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
 				fillTutorCollection(tutorCollection, tutor);
@@ -59,8 +59,7 @@ public class CmdAddTutorProfile implements ICommand {
 				if (message.equalsIgnoreCase("True")) {								
 	
 					UserTypeDAO typeOfUser = new UserTypeDAO();
-					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();
-					
+					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
 					
 					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
 					
@@ -95,9 +94,7 @@ public class CmdAddTutorProfile implements ICommand {
 			helper.setAttribute("tutorList", tutorCollection);
 		}
 		return view;
-	}
-
-	
+	}	
 
 	/*
 	 * setVariables() method initializes all the instance variable
@@ -114,7 +111,7 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setFirstName(helper.getParameter("firstname"));
 			
 			if (helper.getParameter("middlename").equals("")) {
-				//tutor.setMiddleName("-");
+				tutor.setMiddleName("-");
 			} else {
 				tutor.setMiddleName(helper.getParameter("middlename"));
 			}
@@ -122,10 +119,24 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setLastName(helper.getParameter("lastname"));
 			tutor.setGender(helper.getParameter("gender"));
 			tutor.setEmailAddress(helper.getParameter("email"));
-			tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+			
+			if(Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))){
+				if(Validator.isNotEmpty(helper.getParameter("countryDetails")) && (!(helper.getParameter("countryDetails").equals("0")))){
+					tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+					tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+				}
+				else{
+					tutor.setLandCountryCode(helper.getParameter("mobileCountryCode"));
+					tutor.setMobileCountryCode(helper.getParameter("mobileCountryCode"));
+				}
+					
+			}else{
+				tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+				tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+			}
+			
 			tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
 			tutor.setLandNumber(helper.getParameter("landNumber"));
-			tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
 			
@@ -196,19 +207,29 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setAddressLine1(helper.getParameter("address1"));
 			
 			if (helper.getParameter("address2").equals("")) {
-				//tutor.setAddressLine2("-");
+				tutor.setAddressLine2("-");
 			} else {
 				tutor.setAddressLine2(helper.getParameter("address2"));
 			}
 
 			if (helper.getParameter("address3").equals("")) {
-				//tutor.setAddressLine3("-");
+				tutor.setAddressLine3("-");
 			} else {
 				tutor.setAddressLine3(helper.getParameter("address3"));
 			}
 			
-			tutor.setTown(helper.getParameter("townDetails"));
-			
+			if(Validator.isNotEmpty(helper.getParameter("townHidden"))){
+				if((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0")))){
+					tutor.setTown(helper.getParameter("townDetails"));
+				}
+				else{
+					tutor.setTown(helper.getParameter("townHidden"));
+				}
+					
+			}else{
+				tutor.setTown(helper.getParameter("townDetails"));
+			}
+									
 			tutor.setCrtBy("chathuri");
 			tutor.setModBy("chathuri");
 
@@ -218,22 +239,6 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 	}
 	
-
-	/*
-	 * fillTutorDummyCollection() method assign dummy value into a collection
-	 * 
-	 * @author CW
-	 * 
-	 * @param tutorCollection, tutor
-	 */
-	private void fillTutorDummyCollection(Collection<Collection<String>> tutorCollection, Tutor tutor) throws SQLException, Exception{
-		ArrayList<String> tutorData = new ArrayList<>();
-		
-		tutorData.add("");
-		tutorData.add("sdf");
-		tutorCollection.add(tutorData);
-		
-	}
 	
 	/*
 	 * fillTutorCollection() method assign all the tutor details into a collection
@@ -243,7 +248,6 @@ public class CmdAddTutorProfile implements ICommand {
 	 * @param tutorCollection, tutor
 	 */
 	private void fillTutorCollection(Collection<String> tutorCollection, Tutor tutor) throws SQLException, Exception{
-		//ArrayList<String> tutorData = new ArrayList<>();
 		
 		tutorCollection.add(tutor.getFirstName());
 		tutorCollection.add(tutor.getMiddleName());
@@ -257,7 +261,6 @@ public class CmdAddTutorProfile implements ICommand {
 		try{
 			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
 			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			
 			for(Collection<String> countryList : countryCollection){
 				tutorCollection.add(countryList.toArray()[1].toString());				
 			}
@@ -273,14 +276,18 @@ public class CmdAddTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		try{
 			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
-			int x = Integer.parseInt(tutor.getMobileCountryCode());
-			System.out.println(x);
+			int addCount = 0;
 			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 			
 			for(Collection<String> townList : townCollection){
 				if (townList.toArray()[0].toString().equals(tutor.getTown())){
-					tutorCollection.add(townList.toArray()[1].toString());		
+					tutorCollection.add(townList.toArray()[1].toString());
+					tutorCollection.add(townList.toArray()[0].toString());
+					addCount++;
 				}
+			}
+			if(addCount == 0){
+				tutorCollection.add("0");
 			}
 
 		}  catch (SQLException sqle){
@@ -290,7 +297,6 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("fillTutorCollection() : Exception" + exception.toString());
 			throw exception;
 		}
-		
 		
 		tutorCollection.add(tutor.getMobileCountryCode());
 		tutorCollection.add(tutor.getMobileNetworkCode());
@@ -311,8 +317,6 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getViberNumber());
 		tutorCollection.add(tutor.getEmailAddress());
 		tutorCollection.add(tutor.getUsername());
-		
-		//tutorCollection.add(tutorCollection);
 		
 	}
 }
