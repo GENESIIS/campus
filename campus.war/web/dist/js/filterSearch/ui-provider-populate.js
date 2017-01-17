@@ -2,79 +2,77 @@
 //20161124 DJ c17-provider-criteria-based-filter-search Identified front end input selections 
 //20161221 DJ c17-provider-criteria-based-filter-search Identified checkbox tick untick on level/major/providertype 
 
-$(document).ready(function() {	
+var cpCodeList="";
+var keyWordString="";
+var selectedType="";
+var generalSearchFlag="";
+
+$(document).ready(function() {
+	/*var oldURL = document.referrer;
+	alert(oldURL);*/
 	
-	var queryString= this.URL.substring( this.URL.indexOf('=') + 1 );
-	
-	//var queryString = window.location.search;	
-	//queryString = queryString.substring(1);
-	
-	 /*var params = {}, queries, temp, i, l;
-	    // Split into key/value pairs
-	    queries = queryString.split(",");
-	    // Convert the array of strings into an object
-	    for ( i = 0, l = queries.length; i < l; i++ ) {
-	        temp = queries[i].split('=');
-	        params[temp[0]] = temp[1];
-	    }*/
-	    
-	var cpCodeList="";
-	var keyWordString=" ";
-	var selectedType=" ";
 	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	for (var i = 0; i < sURLVariables.length; i++) {
+	//Get Course provider code list
+	if(sPageURL!=null && sPageURL !=""){
+		var sURLVariables = sPageURL.split('&');
+		for (var i = 0; i < sURLVariables.length; i++) {
 
-		var sParameterName = sURLVariables[i].split('=');
-		if (sParameterName[0] == 'keyWord')
-		{
-			keyWordString = sParameterName[1];
-		} else if (sParameterName[0] == 'selectedType') {
-			selectedType == sParameterName[1];
-		}
+			var sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] == 'keyWord')
+			{
+				keyWordString = sParameterName[1];
+			} else if (sParameterName[0] == 'selectedType') {
+				selectedType = sParameterName[1];
+			}
+		}	
+		
+		//----------------------------------------------------
+		$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
+				keyWordString : keyWordString,
+				selectedType:selectedType
+			},
+			dataType : "json",
+			success : function(response) {
+				 cpCodeList = response.codeList;
+				 generalSearchFlag="TRUE";
+				getProviderCodeList(cpCodeList,generalSearchFlag);
+			},
+			error : function(jqXHR, exception) {			
+				var msg = '';
+				alert("general");
+				if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        }  else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        } else {
+		            msg = 'Internal error is occurred. Please try again.';
+		        }	        
+		        alert(msg);
+			}
+		});
+		
+	}else{
+		cpCodeList="";
+		generalSearchFlag="FALSE";
+		getProviderCodeList(cpCodeList,generalSearchFlag);
 	}
-
 	
 	
-	//----------------------------------------------------
-	$.ajax({
-		url : '../../PublicController',
-		data : {
-			CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
-			keyWordString : keyWordString,
-			selectedType:selectedType
-		},
-		dataType : "json",
-		success : function(response) {
-			getProviderCodeList(response);
-		},
-		error : function(jqXHR, exception) {			
-			var msg = '';
-			if (jqXHR.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (jqXHR.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (jqXHR.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        }  else if (exception === 'timeout') {
-	            msg = 'Time out error.';
-	        } else {
-	            msg = 'Internal error is occurred. Please try again.';
-	        }	        
-	        alert(msg);
-		}
-	});
 	
-	function getProviderCodeList(response) {
-		 cpCodeList = response.codeList;
-	}
 	
 	
 	//--------------------------------------------------------
 
 
 
-	var catCode = $("#catCode").val();
+	/*var catCode = $("#catCode").val();
 	$.ajax({
 		url : '../../PublicController',
 		data : {
@@ -101,8 +99,44 @@ $(document).ready(function() {
 	        }	        
 	        alert(msg);
 		}
-	});
+	});*/
 });
+
+
+function getProviderCodeList(cpCodeList,generalSearchFlag) {	
+	 
+	 var catCode = $("#catCode").val();
+		$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'LIST_ALL_COURSE_PROVIDERS',
+				categoryCode : catCode,
+				cpCodeList:cpCodeList,
+				generalSearchFlag:generalSearchFlag
+			},
+			dataType : "json",
+			success : function(response) {
+				getInitialPageResults(catCode,response);
+			},
+			error : function(jqXHR, exception) {
+				alert("getProviderCodeList");
+				var msg = '';
+				if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        }  else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        } else {
+		            msg = 'Internal error is occurred. Please try again.';
+		        }	        
+		        alert(msg);
+			}
+		});
+}
+
 
 function getInitialPageResults(catCode,response) {
 
