@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161215 PN CAM-28: INIT CmdAddHigherEducationData.java class and implemented execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 //20170110 PN CAM-28: modified execute() method to pass view to the front end with findById() DAO method.
+//20170117 PN CAM-28: dao method call moved into try block.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -37,6 +38,7 @@ public class CmdAddHigherEducationData implements ICommand {
 		HigherEducation data = new HigherEducation();
 		ICrud educationDao = new HigherEducationDAO();
 		Collection<Collection<String>> educationCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> stdHighEduCollection = new ArrayList<Collection<String>>();
 		ArrayList<String> educationData = new ArrayList<>();
 		String message = "";
 		Connection connection = null;
@@ -89,7 +91,7 @@ public class CmdAddHigherEducationData implements ICommand {
 				// Commit if all the updations/additions successfully completed.
 				connection.commit();
 			}
-
+			stdHighEduCollection = educationDao.findById(StudentCode);
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();
@@ -105,7 +107,6 @@ public class CmdAddHigherEducationData implements ICommand {
 				connection.close();
 			}
 		}
-		Collection<Collection<String>> stdHighEduCollection = educationDao.findById(StudentCode);
 		view.setCollection(stdHighEduCollection);
 		helper.setAttribute("saveChangesHigherEduStatus", message);
 		return view;

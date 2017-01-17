@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161204 PN c26-add-student-details: INIT CmdAddStudentPersonlDetails.java class.
 //20161205 PN c26-add-student-details: implementing execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170117 PN CAM-28: dao method call moved into try block.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 		Student data = new Student();
 		ICrud studentDao = new StudentDAO();
 		Collection<Collection<String>> studentDataCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> studentDetails = new ArrayList<Collection<String>>();
 		ArrayList<String> studentData = new ArrayList<>();
 		String message = "";
 		Connection connection = null;
@@ -97,7 +99,7 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 				// Commit if all the updations/additions successfully completed.
 				connection.commit();
 			}
-
+			studentDetails = studentDao.findById(StudentCode);
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();

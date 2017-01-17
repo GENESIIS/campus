@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 
 //20161126 PN c26-add-student-details: implemented execute() method by providing backend validations.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
+//20170117 PN CAM-28: dao method call moved into try block.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,6 +42,7 @@ public class CmdAddSchoolEducationData implements ICommand {
 		ICrud educationDao = new SchoolEducationDAO();
 		ICrud country2dao = new Country2DAO();
 		Collection<Collection<String>> educationCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> educationDetails = new ArrayList<Collection<String>>();
 		ArrayList<String> educationData = new ArrayList<>();
 		String message = "";
 		Connection connection = null;
@@ -92,6 +94,7 @@ public class CmdAddSchoolEducationData implements ICommand {
 				// Commit if all the updations/additions successfully completed.
 				connection.commit();
 			}
+			educationDetails = educationDao.findById(StudentCode);
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();
