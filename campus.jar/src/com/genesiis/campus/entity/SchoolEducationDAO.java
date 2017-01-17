@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.CmdGetStudentData;
 import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;
