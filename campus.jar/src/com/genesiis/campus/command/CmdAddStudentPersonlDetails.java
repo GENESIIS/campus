@@ -99,7 +99,7 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 				// Commit if all the updations/additions successfully completed.
 				connection.commit();
 			}
-			studentDetails = studentDao.findById(StudentCode);
+			studentDetails = studentDao.findById(data);
 		} catch (SQLException sqle) {
 			connection.rollback();
 			message = SystemMessage.ERROR.message();
