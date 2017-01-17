@@ -7,7 +7,9 @@ import com.genesiis.campus.entity.CourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeDAO;
 import com.genesiis.campus.entity.View;
+import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -74,10 +76,11 @@ public class CmdReportCoursesByCourseProvider implements ICommand {
 	 */	
 	private void generateReportSearchView(IDataHelper helper) throws Exception {
 		// TODO: Initiate the couseProvider object for future purposes
-		final CourseProvider couseProvider = new CourseProvider();
+		final CourseProviderSearchDTO couseProvider = new CourseProviderSearchDTO();
 		// couseProvider.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
 		try {
-			final Collection<Collection<String>> courseProviderList = new CourseProviderDAO().findById(couseProvider);
+			//final Collection<Collection<String>> courseProviderList = new CourseProviderDAO().findById(couseProvider);
+			final Collection<Collection<String>> courseProviderList = new CourseProviderDAOImpl().getReportAllCourseProviders(couseProvider);
 			helper.setAttribute("courseProviderList", courseProviderList);
 		} catch (Exception exception) {
 			log.error("generateReportSearchView() : Exception "
