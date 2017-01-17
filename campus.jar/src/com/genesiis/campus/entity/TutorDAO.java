@@ -17,7 +17,7 @@ import com.genesiis.campus.util.DaoHelper;
 
 public class TutorDAO implements ICrud {
 
-	static org.jboss.logging.Logger log = Logger.getLogger(TutorDAO.class.getName());
+	static Logger log = Logger.getLogger(TutorDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -55,7 +55,7 @@ public class TutorDAO implements ICrud {
 			Exception {
 		final String query = "SELECT TOP 1000 TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
 				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
-				+ " TUTORSTATUS,FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TOWN.COUNTRY = COUNTRY2.CODE ";
+				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TOWN.COUNTRY = COUNTRY2.CODE ";
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
@@ -87,8 +87,9 @@ public class TutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("TOWNNAME"));
 				singleTutorList.add(rs.getString("COUNTRY"));
 				singleTutorList.add(rs.getString("TUTORSTATUS"));			
-				
+				tutorCollection.add(singleTutorList);
 			}
+
 			
 			
 		}catch(SQLException SQLException){
@@ -104,7 +105,7 @@ public class TutorDAO implements ICrud {
 			DaoHelper.closeStatement(preparedStatement);
 			DaoHelper.closeConnection(conn);
 		}
-		return null;
+		return tutorCollection;
 	}
 
 	@Override
