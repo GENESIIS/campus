@@ -42,12 +42,12 @@ public class CmdGeneralFilterSearch implements ICommand{
 			if(keyWordString!=null){
 			keyWordBuilder.append("%").append(keyWordString).append("%");
 			}
-			String keyWord="%sliit%";	
+			//String keyWord="%sliit%";	
 						
 			
 			//TODO:For testing purpose			
 			//Do wild card search on key word
-			final Set<Integer> cpCodeSet=courseProviderICrud.wildCardSearchOnCourseProvider(keyWord);
+			final Set<Integer> cpCodeSet=courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
 			helper.setAttribute("codeList", cpCodeSet);
 			
 			//Find particular course providers
