@@ -1,9 +1,5 @@
 package com.genesiis.campus.validation;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -31,7 +27,13 @@ import java.net.URL;
 //20170109 CW c36-add-tutor-details modified validateTutorFields() method
 //20170109 CW c36-add-tutor-details added isValidUserNameLength() method
 //20170111 CW c36-add-tutor-details modified validateTutorFields() method, isValidURL(), isValidWhatsappViber(), isValidUserNameLength() methods added
+//20170117 CW c36-add-tutor-details added validateEmailAvailability() method
 
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -170,20 +172,6 @@ public class Validator {
 		return days;
 	}
 
-	/**
-	 * Check the given mail address is valid email or not
-	 * 
-	 * @author Chathuri
-	 * @param value
-	 * @return boolean to validate email address.
-	 **/
-	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
-				Pattern.CASE_INSENSITIVE);
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-		return matcher.find();
-
-	}
 
 	/**
 	 * Validate Tutor fields before values go to database.
@@ -199,7 +187,7 @@ public class Validator {
 		try {		
 			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
 					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
-					&& (!((helper.getParameter("countryDetails")).equals("0")))
+					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
@@ -246,7 +234,9 @@ public class Validator {
 				message = SystemMessage.WHATSAPPERROR.message();
 			} else if (!isValidWhatsappViber(helper.getParameter("viber"))) {
 				message = SystemMessage.VIBERERROR.message();
-			} else if (!validateEmail(helper.getParameter("email"))) {
+			} else if (!validateEmailAvailability(helper.getParameter("email"))) {
+				message = SystemMessage.EMAIL_USED.message();
+			}  else if (!validateEmail(helper.getParameter("email"))) {
 				message = SystemMessage.EMAILERROR.message();
 			} else if (!isValidUserName(helper)) {
 				message = SystemMessage.USERNAME_EXIST.message();
@@ -406,7 +396,7 @@ public class Validator {
 
 	    URL u = null;
 	    
-	    if ((isNotEmpty(url))){
+	    if ((isNotEmpty(url)) && !(url.equals("-"))){
 		    try {  
 		        u = new URL(url);  
 		    } catch (MalformedURLException e) {  
@@ -448,7 +438,50 @@ public class Validator {
 			valid = true;
 		}
 		return valid;
-	}
+	}		
+
+	/**
+	 * Check the given mail address is valid email or not
+	 * 
+	 * @author Chathuri
+	 * @param value
+	 * @return boolean to validate email address.
+	 **/
+	public static boolean validateEmail(String email) {
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+				Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+		return matcher.find();
+	}	
+	
+	/**
+	 * Check the entered email is already entered one
+	 * 
+	 * @author Chinthaka
+	 * @param email
+	 * @return boolean - Returns true if the requested email is a is not used to create tutor account
+	 */	
+	public boolean validateEmailAvailability(String email) throws Exception{
+		try {
+
+			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
+	
+			if (Validator.isNotEmpty(email)){
+				tutorCollection = new TutorDAO().getAll();		
+			}
+			
+			for(Collection<String> tutorList : tutorCollection){
+				if(tutorList.toArray()[7].equals(email)){
+					return false;
+				}			
+			}
+			
+		} catch (Exception e) {
+			log.error("isValidUserName:  Exception" + e.toString());
+			throw e;
+		}		
+		return true;
+	}	
 	
 	/**
 	 * Check the entered username is a valid one
