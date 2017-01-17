@@ -52,6 +52,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			String categoryCodeString = helper.getParameter("categoryCode");			
 			String [] cpCodeList=helper.getParameterValues("cpCodeList[]");
+			String generalSearchFlag=helper.getParameter("generalSearchFlag");
 			if (UtilityHelper.isNotEmpty(categoryCodeString)) {
 				if (UtilityHelper.isInteger(categoryCodeString)) {
 					categoryCode = Integer.parseInt(categoryCodeString);
@@ -66,9 +67,13 @@ public class CmdListMoreCourseProviders implements ICommand {
 				providerSearchDTO.setCourseProviderCodeList(courseProviderCodeList);				
 			}
 			providerSearchDTO.setCourseProviderStatus(ApplicationStatus.ACTIVE.getStatusValue());
+			
 			final CourseProviderICrud  providerDAO = new CourseProviderDAOImpl();
-			final Collection<Collection<String>> allCourseProviders = providerDAO.getLightAllCourseProviders(providerSearchDTO);
-			iview.setCollection(allCourseProviders);
+			Collection<Collection<String>> allCourseProviders = new ArrayList<Collection<String>>();
+			if(!(providerSearchDTO.getCourseProviderCodeList()==null && generalSearchFlag.equalsIgnoreCase("TRUE"))){
+			   allCourseProviders=providerDAO.getLightAllCourseProviders(providerSearchDTO);
+			   iview.setCollection(allCourseProviders);
+			}			
 
 			//List Category data for the drop down		
 			final Collection<Collection<String>> categoryList=new ProgrammeDAOImpl().getAllCategories();
