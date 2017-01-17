@@ -5,6 +5,15 @@
 <!-- 20161025 TR c1 main menu bar - done -->
 <!-- 20161025 TR c1 main search bar - done -->
 <!-- 20161025 TR c1 start styling category search area -->
+<!-- 20170117 DJ c124-general-filter-search-programme-MP-dj  searchFunction() Implementation. -->
+
+<script type="text/javascript">
+function searchFunction(){
+	var keyWordString=$("#keyWord").val();	
+	var selectedType= $('input[name=cpRadio]:checked').val();
+    window.location.replace("/dist/partials/courses.jsp.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
+}
+</script>
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
@@ -13,12 +22,21 @@
         </div>
         <!-- End Main slider -->
         <div class="search-area clearfix">
-            <div class="main-search-bar center-block clearfix">
-                <div class="bar-holder center-block clearfix">
-                    <input class="center-block" type="text" placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
-                </div>
-            </div>
-            <!-- End Main search bar -->
+			<div class="main-search-bar center-block clearfix">
+				<div class="bar-holder center-block clearfix">
+					<input class="center-block" type="text" id="keyWord" name="keyWord"
+						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
+					<div align="center">
+						<div align="center">
+							<input type="radio" name="cpRadio" value="CPROVIDER"><span	align="left">Course Provider</span> 
+							<input type="radio"	name="cpRadio" value="PROGRAMME"><span align="left">Programme</span>
+						</div>
+						<button type="button" id="addSearchData" name="addSearchData"
+							class="btn btn-primary" onclick="searchFunction()">Apply Search</button>
+					</div>
+				</div>
+			</div>
+			<!-- End Main search bar -->
 
             <div class="filter-boxes clearfix">
                 <div class="box-holder center-block">
@@ -142,3 +160,9 @@
         Advertise Here
     </div>
 </div>
+<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+<!-- W3-Include -->
+	<script src="/dist/bower-components/w3/w3data.js"></script>
