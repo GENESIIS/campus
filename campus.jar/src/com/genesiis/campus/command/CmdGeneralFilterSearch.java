@@ -4,23 +4,22 @@ package com.genesiis.campus.command;
 //DJ 20170117 c123-general-filter-search-course-provider-MP-dj Enhance execute() to support provider general filter search via landing page.
 
 import com.genesiis.campus.entity.CourseProviderICrud;
-import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
-import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
-import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
-
+/**
+ * The class {@code CmdGeneralFilterSearch} is a form of Command class.It is created for the purpose of handling commands of 
+ * general filter search via landing page. 
+ * @author dumani DJ
+ *
+*/
 public class CmdGeneralFilterSearch implements ICommand{
 	
 	static Logger log = Logger.getLogger(CmdGeneralFilterSearch.class.getName());
