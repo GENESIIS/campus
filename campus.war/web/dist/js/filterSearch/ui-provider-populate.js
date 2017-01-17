@@ -1,109 +1,69 @@
 //20161118 DJ c17-provider-criteria-based-filter-search Load the details for the provider filter search
 //20161124 DJ c17-provider-criteria-based-filter-search Identified front end input selections 
 //20161221 DJ c17-provider-criteria-based-filter-search Identified checkbox tick untick on level/major/providertype 
+//20170117 DJ c123-general-filter-search-course-provider-MP-dj Identify general filter search action
 
 var cpCodeList="";
 var keyWordString="";
 var selectedType="";
 var generalSearchFlag="";
 
-$(document).ready(function() {
-	/*var oldURL = document.referrer;
-	alert(oldURL);*/
-	
+$(document).ready(function() {	
+
 	var sPageURL = window.location.search.substring(1);
-	//Get Course provider code list
-	if(sPageURL!=null && sPageURL !=""){
+	// Get input parameters of general filter search.
+	if (sPageURL != null && sPageURL != "") {
 		var sURLVariables = sPageURL.split('&');
 		for (var i = 0; i < sURLVariables.length; i++) {
-
 			var sParameterName = sURLVariables[i].split('=');
-			if (sParameterName[0] == 'keyWord')
-			{
+			if (sParameterName[0] == 'keyWord') {
 				keyWordString = sParameterName[1];
 			} else if (sParameterName[0] == 'selectedType') {
 				selectedType = sParameterName[1];
 			}
-		}	
-		
-		//----------------------------------------------------
+		}
+    //Retrieve course provider code list according to search parameters.
 		$.ajax({
 			url : '../../PublicController',
 			data : {
 				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROVIDERS',
 				keyWordString : keyWordString,
-				selectedType:selectedType
+				selectedType : selectedType
 			},
 			dataType : "json",
 			success : function(response) {
-				 cpCodeList = response.codeList;
-				 generalSearchFlag="TRUE";
-				getProviderCodeList(cpCodeList,generalSearchFlag);
+				cpCodeList = response.codeList;
+				generalSearchFlag = "TRUE";
+				getProviderCodeList(cpCodeList, generalSearchFlag);
 			},
-			error : function(jqXHR, exception) {			
+			error : function(jqXHR, exception) {
 				var msg = '';
 				alert("general");
 				if (jqXHR.status === 0) {
-		            msg = 'Not connect.\n Verify Network.';
-		        } else if (jqXHR.status == 404) {
-		            msg = 'Requested page not found. [404]';
-		        } else if (jqXHR.status == 500) {
-		            msg = 'Internal Server Error [500].';
-		        }  else if (exception === 'timeout') {
-		            msg = 'Time out error.';
-		        } else {
-		            msg = 'Internal error is occurred. Please try again.';
-		        }	        
-		        alert(msg);
+					msg = 'Not connect.\n Verify Network.';
+				} else if (jqXHR.status == 404) {
+					msg = 'Requested page not found. [404]';
+				} else if (jqXHR.status == 500) {
+					msg = 'Internal Server Error [500].';
+				} else if (exception === 'timeout') {
+					msg = 'Time out error.';
+				} else {
+					msg = 'Internal error is occurred. Please try again.';
+				}
+				alert(msg);
 			}
 		});
-		
-	}else{
-		cpCodeList="";
-		generalSearchFlag="FALSE";
-		getProviderCodeList(cpCodeList,generalSearchFlag);
-	}
-	
-	
-	
-	
-	
-	//--------------------------------------------------------
 
-
-
-	/*var catCode = $("#catCode").val();
-	$.ajax({
-		url : '../../PublicController',
-		data : {
-			CCO : 'LIST_ALL_COURSE_PROVIDERS',
-			categoryCode : catCode,
-			cpCodeList:cpCodeList
-		},
-		dataType : "json",
-		success : function(response) {
-			getInitialPageResults(catCode,response);
-		},
-		error : function(jqXHR, exception) {			
-			var msg = '';
-			if (jqXHR.status === 0) {
-	            msg = 'Not connect.\n Verify Network.';
-	        } else if (jqXHR.status == 404) {
-	            msg = 'Requested page not found. [404]';
-	        } else if (jqXHR.status == 500) {
-	            msg = 'Internal Server Error [500].';
-	        }  else if (exception === 'timeout') {
-	            msg = 'Time out error.';
-	        } else {
-	            msg = 'Internal error is occurred. Please try again.';
-	        }	        
-	        alert(msg);
-		}
-	});*/
+	} else {
+		//path-Course provider filter search
+		cpCodeList = "";
+		generalSearchFlag = "FALSE";
+		getProviderCodeList(cpCodeList, generalSearchFlag);
+	}	
 });
 
-
-function getProviderCodeList(cpCodeList,generalSearchFlag) {	
+//Retrieve related course providers for filter search view.
+function getProviderCodeList(cpCodeList,generalSearchFlag) {
 	 
 	 var catCode = $("#catCode").val();
 		$.ajax({
@@ -137,7 +97,7 @@ function getProviderCodeList(cpCodeList,generalSearchFlag) {
 		});
 }
 
-
+//Populating course provider filter search view.
 function getInitialPageResults(catCode,response) {
 
 	var totalCount = 0;
@@ -281,6 +241,7 @@ function getInitialPageResults(catCode,response) {
 
 }
 
+//Populataing course providers.
 function populateFilterSearchResults(response) {	
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
