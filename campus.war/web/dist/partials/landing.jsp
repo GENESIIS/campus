@@ -9,6 +9,11 @@
 <!-- 20170112 DJ c123-general-filter-search-course-provider-MP-dj  searchFunction() Implementation. -->
 
 <script type="text/javascript">
+function searchFunction(){
+	var keyWordString=$("#keyWord").val();	
+	var selectedType= $('input[name=cpRadio]:checked').val();
+    window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
+}
 
 /* function searchFunction(){	
 	var keyWordString=$("#keyWord").val();	
@@ -96,7 +101,7 @@
 						<input type="radio" name="cpRadio"	value="P"><span align="left">Programme</span>	
 						</div>					
 						<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="">Apply Search</button>													
+								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>													
 						<!-- <form action="PublicController" method="POST">
 							<button type="submit" name="CCO" id="CCO"
 								value="FILTER_SEARCH_COURSE_PROVIDERS"
@@ -129,7 +134,7 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-	<script src="/dist/js/filterSearch/general-filter-search.js"></script>
+	<!-- <script src="/dist/js/filterSearch/general-filter-search.js"></script> -->
 	<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
 	
 	<!-- W3-Include -->
