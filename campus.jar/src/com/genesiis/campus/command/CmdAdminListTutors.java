@@ -11,21 +11,17 @@ import org.apache.log4j.Logger;
 
 public class CmdAdminListTutors implements ICommand{
 	
-	static com.sun.media.jfxmedia.logging.Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
+	static Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
 
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
 		
 try{
 
 	
 	
 	
-}catch(SQLException sqlException){
-	log.error("execute(IDataHelper, IView) : SQLException" + sqlException.toString());
-	throw sqlException;
 }catch(Exception exception){
 	log.error("execute(IDataHelper, IView) : Exception" + exception.toString());
 	throw exception;

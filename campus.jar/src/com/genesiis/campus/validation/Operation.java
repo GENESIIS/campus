@@ -25,12 +25,7 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
-	ADD_FEATURED_COURSE_PROVIDER("ADD_FEATURED_COURSE_PROVIDER",  ResponseType.JSON, "" ),
-	ADD_ONE_OFF_COURSE_PROVIDER("ADD_ONE_OFF_COURSE_PROVIDER", ResponseType.JSON, "" ),
-	COURSE_PROVIDER_VALIDATION("COURSE_PROVIDER_VALIDATION", ResponseType.JSON, "" ),
-	LIST_PROVIDER_REGISTRATION_PAGE("LIST_PROVIDER_REGISTRATION_PAGE" , ResponseType.JSON, ""),
-	DISPLAY_TOWN_DATA("DISPLAY_TOWN_DATA", ResponseType.JSON, ""),
-	LIST_COUESE_PROVIDER_TYPES("LIST_COUESE_PROVIDER_TYPES", ResponseType.JSON, "");
+	LIST_TUTORS("LIST_TUTORS", ResponseType.JSON, "");
 	
 	private final String commandString;
 	private final ResponseType responseType;
