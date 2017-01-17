@@ -83,6 +83,7 @@
 					<td>Country *</td>
 					<c:if test = "${tutorList[6] != null }"	>			
 						<td>${tutorList[6]}</td>
+						<td><input type="hidden" name="countryHidden" id="countryHidden" value="${tutorList[6]}" /></td>
 					</c:if>
 					<td><select name="countryDetails" id="countryDetails"
 						onchange="clearField('countryError')">
@@ -93,6 +94,7 @@
 					<td>Town*</td>
 					<c:if test = "${tutorList[7] != null }"	>			
 						<td>${tutorList[7]}</td>
+						<td><input type="hidden" name="townHidden" id="townHidden" value="${tutorList[8]}" /></td>
 					</c:if>
 					<td><select name="townDetails" id="townDetails"
 						onchange="clearField('townError')">
@@ -104,18 +106,18 @@
 					<td><input type="text" name="mobileCountryCode"
 						id="mobileCountryCode" maxlength="5"
 						onchange="clearField('mobileError')" readonly
-						value="${tutorList[8]}" /><span id="mobileError"
+						value="${tutorList[9]}" /><span id="mobileError"
 						style="color: red"></span></td>
 	
 					<td><input type="text" name="mobileNetworkCode"
 						id="mobileNetworkCode" maxlength="10"
 						onchange="clearField('mobileNetworkError')"
-						value="${tutorList[9]}" /><span id="mobileNetworkError"
+						value="${tutorList[10]}" /><span id="mobileNetworkError"
 						style="color: red"></span></td>
 	
 					<td></span> <input type="text" name="mobileNumber" id="mobileNumber"
 						maxlength="11" onchange="clearField('mobileNumberError')"
-						value="${tutorList[10]}" /><span id="mobileNumberError"
+						value="${tutorList[11]}" /><span id="mobileNumberError"
 						style="color: red"></td>
 				</tr>
 				<tr>
@@ -123,88 +125,88 @@
 					<td><input type="text" name="landCountryCode"
 						id="landCountryCode" maxlength="5"
 						onchange="clearField('landError')" readonly
-						value="${tutorList[11]}" /><span id="landError"
+						value="${tutorList[12]}" /><span id="landError"
 						style="color: red"></span></td>
 	
 					<td><input type="text" name="landAreaCode" id="landAreaCode"
 						maxlength="10" onchange="clearField('landAreaCodeError')"
-						value="${tutorList[12]}" /><span id="landAreaCodeError"
+						value="${tutorList[13]}" /><span id="landAreaCodeError"
 						style="color: red"></span></td>
 	
 					<td><input type="text" name="landNumber" id="landNumber"
 						maxlength="10" onchange="clearField('landNumberError')"
-						value="${tutorList[13]}" /><span id="landNumberError"
+						value="${tutorList[14]}" /><span id="landNumberError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Address Line 1 *</td>
 					<td><input type="text" name="address1" id="address1"
 						maxlength="30" onchange="clearField('address1Error')"
-						value="${tutorList[14]}" /><span id="address1Error"
+						value="${tutorList[15]}" /><span id="address1Error"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Address line 2 </span></td>
 					<td><input type="text" name="address2" id="address2"
-						maxlength="30" value="${tutorList[15]}" /></td>
+						maxlength="30" value="${tutorList[16]}" /></td>
 				</tr>
 				<tr>
 					<td>Address line 3 </span></td>
 					<td><input type="text" name="address3" id="address3"
-						maxlength="30" value="${tutorList[16]}" /></td>
+						maxlength="30" value="${tutorList[17]}" /></td>
 				</tr>
 	
 				<tr>
 					<td>Web link</td>
 					<td><input type="text" name="weblink" id="weblink"
-						onchange="clearField('weblinkError')" value="${tutorList[17]}" /><span
+						onchange="clearField('weblinkError')" value="${tutorList[18]}" /><span
 						id="weblinkError" style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Facebook </span></td>
 					<td><input type="text" name="facebook" id="facebook"
 						onchange="clearField('facebookError')"
-						value="${tutorList[18]}" /><span id="facebookError"
+						value="${tutorList[19]}" /><span id="facebookError"
 						style="color: red"></td>
 				</tr>
 				<tr>
 					<td>LinkedIn</td>
 					<td><input type="text" name="linkedin" id="linkedin"
 						onchange="clearField('linkedInError')"
-						value="${tutorList[19]}" /><span id="linkedInError"
+						value="${tutorList[20]}" /><span id="linkedInError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Twitter</td>
 					<td><input type="text" name="twitter" id="twitter"
 						onchange="clearField('twitterError')"
-						value="${tutorList[20]}" /><span id="twitterError"
+						value="${tutorList[21]}" /><span id="twitterError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Instagram</td>
 					<td><input type="text" name="instagram" id="instagram"
 						onchange="clearField('instagramError')"
-						value="${tutorList[21]}" /><span id="instagramError"
+						value="${tutorList[22]}" /><span id="instagramError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Myspace</td>
 					<td><input type="text" name="myspace" id="myspace"
-						onchange="clearField('mySpaceError')" value="${tutorList[22]}" /><span
+						onchange="clearField('mySpaceError')" value="${tutorList[23]}" /><span
 						id="mySpaceError" style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>WhatsApp</td>
 					<td><input type="text" name="whatsapp" id="whatsapp"
 						maxlength="20" onchange="clearField('whatsappError')"
-						value="${tutorList[23]}" /><span id="whatsappError"
+						value="${tutorList[24]}" /><span id="whatsappError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Viber</td>
 					<td><input type="text" name="viber" id="viber" maxlength="20"
-						onchange="clearField('viberError')" value="${tutorList[24]}" /><span
+						onchange="clearField('viberError')" value="${tutorList[25]}" /><span
 						id="viberError" style="color: red"></span></td>
 				</tr>
 				<tr>
@@ -213,14 +215,14 @@
 				<tr>
 					<td>Email *</td>
 					<td><input type="text" name="email" id="email"
-						onchange="clearField('emailError')" value="${tutorList[25]}" /><span
+						onchange="clearField('emailError')" value="${tutorList[26]}" /><span
 						id="emailError" style="color: red"></span></td>
 				</tr>
 				<tr>
 					<td>Username *</td>
 					<td><input type="text" name="username" id="username"
 						maxlength="20" onchange="clearField('usernameError')"
-						value="${tutorList[26]}" /><span id="usernameError"
+						value="${tutorList[27]}" /><span id="usernameError"
 						style="color: red"></span></td>
 				</tr>
 				<tr>

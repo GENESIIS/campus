@@ -425,6 +425,28 @@ function ValidateUsername(username) {
 	return resp;
 }
 
+function ValidateEmail(email) {
+	var resp = null;
+	$.ajax({
+		url : '/TutorController',
+		method : 'POST',
+		async : false,
+		data : {
+			CCO : 'CHECK_EMAIL',
+			EMAIL : email
+		},
+		dataType : "json",
+		success : function(response) {
+			resp = response;
+		},
+		error : function(response) {
+			resp = response;
+		}
+	});
+
+	return resp;
+}
+
 function clearField(elementId) {
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
