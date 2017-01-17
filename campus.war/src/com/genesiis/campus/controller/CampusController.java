@@ -10,7 +10,7 @@ package com.genesiis.campus.controller;
 //20161114 MM public-controller-testing-2 Changed implementation of process() so that even when 
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
-
+//20170117 AS CAM-21-student-logout-clear-session-details-update-logout-data-as Session details invalidation result.getCollection() modified. 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 /**
  * Servlet implementation class CampusController extract from
@@ -78,10 +80,14 @@ public class CampusController extends HttpServlet {
 
 			HttpSession session = request.getSession(false);
 
+			
+			
 			if (session != null) {
 				String name = (String) session.getAttribute("name");
 				session.setMaxInactiveInterval(60 * 60);
-
+				
+				
+				
 				if (ResponseType.JSP.equals(responseType)) {
 
 					request.setAttribute("result", result);
@@ -113,8 +119,36 @@ public class CampusController extends HttpServlet {
 					response.setContentType("application/json");
 				}
 			} else {
-				request.setAttribute("result",SystemMessage.SESSIONEXPIRED.message());
-				request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
+			
+			//	request.setAttribute("message",SystemMessage.SESSIONEXPIRED.message());
+				
+				//request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
+			//	request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
+				
+				//response.sendRedirect("/dist/partials/login.jsp");
+				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
+				if (result != null && result.getCollection() != null) {
+					objectMap.put("result", result.getCollection());
+				} else {
+					objectMap.put("result", "NO-DATA");
+				}
+
+				Enumeration<String> attributeNames = request
+						.getAttributeNames();
+
+				while (attributeNames.hasMoreElements()) {
+					String currentAttributeName = attributeNames
+							.nextElement();
+					Object object = helper
+							.getAttribute(currentAttributeName);
+					objectMap.put(currentAttributeName, object);
+				}
+
+				response.getWriter().write(gson.toJson(objectMap));
+				response.setContentType("application/json");
+				getServletContext().getRequestDispatcher("/dist/partials/login.jsp");
+				//request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
