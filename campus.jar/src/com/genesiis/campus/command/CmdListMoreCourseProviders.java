@@ -71,9 +71,9 @@ public class CmdListMoreCourseProviders implements ICommand {
 			final CourseProviderICrud  providerDAO = new CourseProviderDAOImpl();
 			Collection<Collection<String>> allCourseProviders = new ArrayList<Collection<String>>();
 			if(!(providerSearchDTO.getCourseProviderCodeList()==null && generalSearchFlag.equalsIgnoreCase("TRUE"))){
-			   allCourseProviders=providerDAO.getLightAllCourseProviders(providerSearchDTO);
-			   iview.setCollection(allCourseProviders);
-			}			
+			   allCourseProviders=providerDAO.getLightAllCourseProviders(providerSearchDTO);			   
+			}	
+			iview.setCollection(allCourseProviders);
 
 			//List Category data for the drop down		
 			final Collection<Collection<String>> categoryList=new ProgrammeDAOImpl().getAllCategories();
