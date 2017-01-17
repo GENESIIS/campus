@@ -33,8 +33,8 @@
 </head>
 <body>
 <label id="displayLabel" style="color:#F39C12;" ></label>
-<form  method="post" id="file-from" enctype="multipart/form-data" onsubmit="uploadImage();">
-	  <input type="file" id="file-select" name="file-select" accept="image/gif, image/jpeg, image/png"><br>
+<form  method="post" id="file-from" enctype="multipart/form-data"  > <!--  onsubmit="uploadImage();"-->
+	  <input type="file" id="file-select" name="file-select" accept="image/gif, image/jpeg, image/png"><br><Br>
 	  <button type="submit" id="upload-button" >Upload</button>
 	  <div align="center">
 	  	<img id="profileImage" style="width:200px;hight:auto" src="#"   alt="Profile-Picture">
