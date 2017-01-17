@@ -19,7 +19,7 @@ public enum Operation {
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"),
 	STUDENT_LOGIN("SLOG", ResponseType.JSON, ""),
 	STUDENT_LOGOUT("SLGOUT", ResponseType.JSON, ""),
-	SESSIONEXPIR("EXP",ResponseType.JSP, "/dist/partials/login.jsp"),
+	SESSIONEXPIR("EXP",ResponseType.JSON, ""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
