@@ -4,13 +4,13 @@ package com.genesiis.campus.command;
 //20161207 PN c26-add-student-details: modified execute() method by adding status messages.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 //20170109 PN CAM-28: execute() method code modified to display 'No records to update.' error message when user not selected any Skill from the UI.
+//20170117 PN CAM-28: dao method call moved into try block. helper.getParameter() methods moved into try block.
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -31,13 +31,13 @@ public class CmdAddStudentSkillDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// This needs to be assign from the session.
 		int StudentCode = 1;
-		String[] oldStudentSkills = helper.getParameter("oldStudentSkills").split(",");
-		String[] newStudentSkills = helper.getParameter("newStudentSkills").split(",");
 		String message = "";
 
 		ICrud skillDao = new StudentSkillDAO();
 		Connection connection = null;
 		try {
+			String[] oldStudentSkills = helper.getParameter("oldStudentSkills").split(",");
+			String[] newStudentSkills = helper.getParameter("newStudentSkills").split(",");
 			// Commit false till the updations/additions successfully
 			// completed.
 			connection = ConnectionManager.getConnection();
