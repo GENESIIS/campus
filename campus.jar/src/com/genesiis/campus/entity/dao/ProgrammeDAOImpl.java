@@ -218,6 +218,12 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		return allLevelList;
 	}
 
+	/**
+	 * Get programme code set related to input key word in general filter search.
+	 * @param keyWord Input string
+	 * @author DJ dumani
+	 * @return programmeCodeSet  Integer set
+	 */
 	@Override
 	public Set<Integer> wildCardSearchOnProgrammes(String keyWord)throws SQLException, Exception {
 		Connection conn=null;
@@ -226,7 +232,21 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		final Set<Integer> programmeCodeSet=new HashSet<Integer>();		
 		try {
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb =new StringBuilder("");
+			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
+			sb.append(" ( PROG.NAME LIKE ?");//append("'"+keyWord+"'");
+			sb.append(" OR PROG.DESCRIPTION LIKE ?");//.append("'"+keyWord+"'");
+			sb.append(" OR PROG.EMAIL LIKE ?");//.append("'"+keyWord+"'");			
+			sb.append(" ) AND PROGRAMMESTATUS = ? ");			
+			
+			stmt=conn.prepareStatement(sb.toString());
+			stmt.setString(1, keyWord);
+			stmt.setString(2, keyWord);
+			stmt.setString(3, keyWord);
+			stmt.setInt(4, ApplicationStatus.ACTIVE.getStatusValue());
+		    rs=stmt.executeQuery();
+		    while (rs.next()) {				
+		    	programmeCodeSet.add(Integer.valueOf(rs.getString("PROGCODE")));				
+			}
 		} catch (SQLException sqlException) {
 			log.info("wildCardSearchOnProgrammes() sqlException" + sqlException.toString());
 			throw sqlException;
@@ -235,8 +255,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
-		}
-		
+		}		
 		return programmeCodeSet;	
 	}
 
