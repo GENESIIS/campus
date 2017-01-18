@@ -1,5 +1,6 @@
 package com.genesiis.campus.entity;
 //20161124 PN c26-add-student-details: INIT SchoolEducationDAO.java class.
+
 //20161125 PN c26-add-student-details: implemented findByIdMethod().
 //20161126 PN c26-add-student-details: modified findByIdMethod() method by setting country name to the return collection.
 //20160103 PN CAM-28: added JDBC property closing statements to the finally block.
@@ -7,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+//20170118 PN CAM-28: modified findByIdMethod() method by removing different DB connection to select country name. existing SQL query modified to a JOIN to select Country name using the dame DB connection.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +22,7 @@ import com.genesiis.campus.entity.model.SchoolEducation;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;
 
-public class SchoolEducationDAO implements ICrud{
+public class SchoolEducationDAO implements ICrud {
 	static Logger log = Logger.getLogger(SchoolEducationDAO.class.getName());
 
 	@Override
@@ -42,7 +44,7 @@ public class SchoolEducationDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {		
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		final Collection<Collection<String>> allEducationList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -51,14 +53,15 @@ public class SchoolEducationDAO implements ICrud{
 		try {
 			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], [COUNTRY], [RESULT], "
-					+ "[INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [MEDIUM] "
-					+ "FROM [CAMPUS].[SCHOOLEDUCATION] WHERE [STUDENT] = ? AND ISACTIVE = ?;";
+			String query = "SELECT se.[CODE], [STUDENT], [SCHOOLGRADE], [MAJOR], co.[NAME] AS [COUNTRY] , "
+					+ "[RESULT], [INDEXNO], [SCHOOL], [ACHIVEDON], [DESCRIPTION], [MEDIUM] "
+					+ "FROM [CAMPUS].[SCHOOLEDUCATION] se " + "JOIN [CAMPUS].[COUNTRY2] co ON se.[COUNTRY] = co.[CODE] "
+					+ "WHERE [STUDENT] = ? AND ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
 			stmt.setInt(2, isActive);
-			rs = stmt.executeQuery();	
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleEducationList = new ArrayList<String>();
@@ -66,16 +69,7 @@ public class SchoolEducationDAO implements ICrud{
 				singleEducationList.add(rs.getString("STUDENT"));
 				singleEducationList.add(rs.getString("SCHOOLGRADE"));
 				singleEducationList.add(rs.getString("MAJOR"));
-				
-				//Get country name, if in a case to pass the name to dataList
-				ICrud country2dao = new Country2DAO();
-				String countryName = "";
-				Collection<Collection<String>> country = country2dao.findById(Integer.parseInt(rs.getString("COUNTRY")));			
-				for (Collection<String> collection : country) {
-					Object[] cdata = collection.toArray();
-					countryName = (String) cdata[1];
-				}
-				singleEducationList.add(countryName);
+				singleEducationList.add(rs.getString("COUNTRY"));
 				singleEducationList.add(rs.getString("RESULT"));
 				singleEducationList.add(rs.getString("INDEXNO"));
 				singleEducationList.add(rs.getString("SCHOOL"));
@@ -113,7 +107,7 @@ public class SchoolEducationDAO implements ICrud{
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException, Exception {		
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
@@ -153,14 +147,13 @@ public class SchoolEducationDAO implements ICrud{
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException, Exception {	
+	public int update(Object object, Connection conn) throws SQLException, Exception {
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 
 		String query = "UPDATE [CAMPUS].[SCHOOLEDUCATION] SET "
 				+ "[SCHOOLGRADE]=?, [MAJOR]=?, [COUNTRY]=?, [RESULT]=?, [INDEXNO]=?, [SCHOOL]=?, "
-				+ "[ACHIVEDON]=?, [DESCRIPTION]=?, [MODON]=(getdate()), [MODBY]=?, [MEDIUM]=? "
-				+ "WHERE [STUDENT]=?;";
+				+ "[ACHIVEDON]=?, [DESCRIPTION]=?, [MODON]=(getdate()), [MODBY]=?, [MEDIUM]=? " + "WHERE [STUDENT]=?;";
 		int result = -1;
 
 		try {
