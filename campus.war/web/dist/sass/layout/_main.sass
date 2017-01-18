@@ -359,6 +359,7 @@ body,html
                   top: -6px
 
             .answer
+              //display: block
               p
                 font-size: 18px
                 line-height: 20px
@@ -423,10 +424,29 @@ body,html
 
     .category-image
       display: inline-block
+      float: left   
+      
+      img
+        height: 120px
+        margin-bottom: 10px
+        width: auto  
 
     .category-name
       display: inline-block
       position: relative
+      h1
+        padding-left: 30px 
+        font-family: "Arvo", serif
+        font-size: 48px
+        color: #3a3b3c
+        line-height: 120px
+        margin-top: 0 
+        
+    .category-description
+      font-size: 14px
+      padding: 10px 10px 10px 0 
+      color: #94979c 
+      font-family: 'Roboto', sans-serif
 
   .content-holder
     display: block
@@ -496,34 +516,43 @@ body,html
 
             .pro-logo
               display: block
-              text-align: center
+              text-align: center 
               img
                 width: 75px
-                padding-top: 8px
-
+                height: 100%
+                padding: 6px 
+                margin-bottom: 10px 
+ 
           .col-description
             display: inline-block
             position: relative
             width: 46.8%
+            min-height: 130px 
             float: left
             text-align: center
-            padding-top: 45px
+            padding: 45px 20px 0 20px
             color: #717171
             font-size: 18px
             font-family: Oswald
-            border-right: 1px solid #e1e1e1
+            border-right: 1px solid #e1e1e1 
 
 
           .col-location
             display: inline-block
             width: 20.6%
+            height: 130px
             float: left
-            text-align: center
+            text-align: center 
             padding-top: 50px
             border-right: 1px solid #e1e1e1
             a
               color: #4f7dd9
               font-size: 18px
+              
+              &:before
+                font-family: FontAwesome 
+                content: "\f041" 
+                padding-right: 10px 
 
           .col-duration
             display: inline-block
@@ -537,85 +566,149 @@ body,html
               font-size: 18px
               color: #a6a8ab
               font-family: "Roboto", sans-serif
-              line-height: 35px
+              line-height: 35px 
               font-weight: lighter
-
-//  ------------ Mini-Web -------------------
-// Institute Inquiry form styling
-.inquiry-screen
-  display: block
-  position: relative
-
-  .inquiry-form-holder
-    display: block
-    width: 93%
-    margin-left: auto
-    margin-right: auto
-    background: #3d5265
-    z-index: 99
-    position: relative
-    top: -60px
-
-    .inquiry-form
+    .sliding-info-panel
       display: block
-      padding: 50px 70px 100px
+      position: relative
+      width: 33%
+      float: right
+      padding: 0 8px 25px 12px
 
-      .submit-area
-        position: relative
-        width: 60%
+      .info-slider-holder
+        display: block
+        border: 1px solid #c2c2c2
+        padding: 12px
 
-        .submit-form
-          div > label
-            color: #cccccc
-            font-size: 22px
-            line-height: 50px
-            position: relative
+        .slider-heading
+          display: block
+          border-bottom: 1px solid #e1e1e1
+          padding-bottom: 14px
 
-            span
-              font-size: 45px
-              color: #18a6f0
-              position: absolute
-              top: 28px
-              right: -32px
-              line-height: 20px
+          .topic
+            display: inline-block
+            h2
+              font-family: 'Oswald', sans-serif
+              font-size: 35px
+              color: #8a8a8a
+              padding-left: 8px 
 
-          div > input
-            color: #dff4ff
-            line-height: 54px
-            font-size: 22px
-            border: none
-            background: #506374
-            width: 100%
-            margin-bottom: 18px
-            padding-left: 18px
-            font-family: 'Roboto', sans-serif
+          .move-btn
+            display: inline-block
+            float: right  
+
+        .institute-info
+          display: block
+          padding: 10px 0
+          min-height: 150px  
+
+          .inst-logo
+            display: inline-block
+            padding: 8px
+            float: left
+            width: 30%
+
+            img
+              width: 100% 
+
+          .inst-name
+            display: inline-block 
+            float: left
+            width: 70% 
+            padding-top: 10px
+            padding-left: 20px
+
+        .institute-description
+          height: 290px
+          //background: url("../i/higher-education/slider-bg-1.jpg")
+          background-color: #2f66c1  
+          background-repeat: no-repeat
+          background-position: center
+          background-size: cover
+          text-align: center
 
           p
-            font-size: 20px
-            color: #cccccc
-            line-height: 54px
-            position: relative
-            span
-              font-size: 45px
-              color: #18a6f0
-              position: absolute
-              top: 28px
-              left: -24px
-              line-height: 20px
-
-          .inquiry-message
             display: block
-
-            textarea
-              width: 100%
-              background: #506374
-              border: none
+            height: 100%
+            padding-top: 13% 
+            padding-left: 25px
+            padding-right: 25px
+            background: rgba(0, 0, 0, 0.36)
+            color: #fff
+            font-family: 'Abel', sans-serif  
+            font-size: 22px
+            line-height: 28px 
+            text-align: justify 
+            font-weight: 200
+            text-shadow: 1px 2px 2px #000     
+              
+          .btn-more 
+            position: relative 
+            display: block
+            bottom: 80px 
+            z-index: 99
+            a
+              padding: 8px 20px
               color: #fff
-              padding: 15px
-              line-height: 20px
-              font-weight: 200
+              font-family: "Roboto", sans-serif
+              font-size: 20px
+              background: #555555
+              border-radius: 8px
+              box-shadow: 1px 2px 10px #000
 
-          .re-captcha
-            padding: 50px 0
-            img
-              width: 75%
+      .most-viewed-panel
+        display: block
+        padding-top: 32px
+        h1
+          color: #6b6c6f
+          font-family: "Oswald", sans-serif
+          font-size: 20px
+          line-height: 40px
+
+        .banner-holder
+          display: block
+
+          .banner
+            display: block
+            border: 1px solid #e1e1e1
+            border-radius: 15px
+            margin-top: 20px
+            padding: 8px 10px 
+
+            .logo-image
+              display: inline-block
+              float: left
+              width: 35%
+              padding: 15px 
+              img
+                width: 100%
+
+            .description
+              display: inline-block
+              float: left
+              width: 65%
+
+              a 
+                font-family: "Roboto", sans-serif
+                font-size: 18px
+                color: #3a3b3c
+                font-weight: 600
+                line-height: 22px
+                padding-top: 20px 
+                display: block 
+                transition: all 0.3s 
+                &:hover
+                  text-decoration: underline !important  
+                   
+                span
+                  font-family: Arial
+                  color: #9d9eb3
+                  font-weight: 200
+                  font-size: 15px        
+
+              p
+                color: #717171
+                padding-top: 8px
+                font-family: Arial
+                font-size: 15px
+                line-height: 20px 
