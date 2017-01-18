@@ -120,7 +120,7 @@
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Account Type :</h1>
+									<h1 class="pro-name">Account Type : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<!-- here we selects featured course provider account type as default and all other account
@@ -148,7 +148,7 @@
 							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Course Provider Name:</h1>
+									<h1 class="pro-name">Course Provider Name: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerName"
@@ -160,7 +160,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Short Name:</h1>
+									<h1 class="pro-name">Short Name: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="shortName"
@@ -168,7 +168,7 @@
 										class="error-message">${errorShortName }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Unique Prefix:</h1>
+									<h1 class="pro-name">Unique Prefix: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
@@ -180,7 +180,7 @@
 							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Company Profile:</h1>
+									<h1 class="pro-name">Company Profile: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
@@ -216,7 +216,7 @@
 						<ul class="result-row">
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">General Email :</h1>
+									<h1 class="pro-name">General Email : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="generalEmail"
@@ -224,7 +224,7 @@
 										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Course Inquiry Email :</h1>
+									<h1 class="pro-name">Course Inquiry Email : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="inquiryMail"
@@ -236,7 +236,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Country :</h1>
+									<h1 class="pro-name">Country : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" id="country-List"></div> <span
 								id="errorSelectedCountry" class="error-message">${errorSelectedCountry }</span>
@@ -245,7 +245,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Town :</h1>
+									<h1 class="pro-name">Town : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" id="town-List"></div> <span
 								id="errorSelectedTown" class="error-message">${errorSelectedTown }</span>
@@ -254,7 +254,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Land Phone Area Code :</h1>
+									<h1 class="pro-name">Land Phone Area Code : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="areaCode" id="areaCode"
@@ -262,7 +262,7 @@
 										id="errorAreaCode" class="error-message">${errorAreaCode }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Land Number 1 :</h1>
+									<h1 class="pro-name">Land Number 1 : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
@@ -296,7 +296,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Mobile Phone Network Code :</h1>
+									<h1 class="pro-name">Mobile Phone Network Code : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="networkCode"
@@ -305,7 +305,7 @@
 										id="errorNetworkCode" class="error-message">${errorNetworkCode }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Mobile Number :</h1>
+									<h1 class="pro-name">Mobile Number : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
@@ -322,7 +322,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Address Line 1 :</h1>
+									<h1 class="pro-name">Address Line 1 : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="address1" id="address1"
@@ -457,7 +457,7 @@
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Course Provider Type :</h1>
+									<h1 class="pro-name">Course Provider Type : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" id="providerTypeList"></div> <span
 								id="errorProviderType" class="error-message">${errorProviderStatus }</span>
@@ -466,7 +466,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Course Provider Status :</h1>
+									<h1 class="pro-name">Course Provider Status : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<c:forEach items="${applicationStatusBean.values}"
@@ -499,7 +499,7 @@
 						<ul class="result-row">
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Name:</h1>
+									<h1 class="pro-name">Name: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerPrivateName"
@@ -511,7 +511,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Email:</h1>
+									<h1 class="pro-name">Email: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
@@ -523,7 +523,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Username :</h1>
+									<h1 class="pro-name">Username : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
@@ -536,7 +536,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Password :</h1>
+									<h1 class="pro-name">Password : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="providerPassword"
@@ -548,7 +548,7 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Confirm Password :</h1>
+									<h1 class="pro-name">Confirm Password : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="password" name="cProviderPassword"
@@ -559,7 +559,7 @@
 							<!-- end -->
 
 							<li class="course-info clearfix"><div class="col-name">
-									<h1 class="pro-name">Account status :</h1>
+									<h1 class="pro-name">Account status : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
 									<h1 class="pro-name" id="accountStatusList">
