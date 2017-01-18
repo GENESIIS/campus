@@ -48,6 +48,9 @@ public class CmdGeneralFilterSearch implements ICommand{
 				if (selectedTypeString.equalsIgnoreCase(TYPE_CPROVIDER)) {
 					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
 					helper.setAttribute("codeList", cpCodeSet);
+				}else if(selectedTypeString.equalsIgnoreCase(TYPE_PROGRAMME)){					
+					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
+					helper.setAttribute("programCodeList", cpCodeSet);
 				}
 			}
 
