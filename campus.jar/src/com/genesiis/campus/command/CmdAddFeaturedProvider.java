@@ -268,7 +268,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 					}
 			}else{
 
-				systemMessage = errorMessages.toString()+ " "+ SystemMessage.EMPTY_FIELD.message();
+				systemMessage = SystemMessage.MANDATORYFIELDREQUIRED.message();
 	
 			}
 			
