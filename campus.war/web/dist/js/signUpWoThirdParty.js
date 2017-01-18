@@ -13,6 +13,9 @@
 //         utility methods :extractInternationalPhoneNumber()/resetTheMobileNumberRelatedGlobalVariables().
 //20161217 DN CAMP:18 create a separate method isNotvalidMobileFormat()for reusing the logic on validating phone number.
 //				clearAllFields()created to clear all fields
+//20170118 DN C18-student-signup-without-using-third-party-application-test-dn refactor validateSignUpWoThirdPartyPageEmbedData()
+// to shift country / town code check for null value.
+// include to extend the password constrain to have more than 07 characters
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -229,6 +232,10 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
 		return !validationPass;
+	}else if (!(isFieldFilled(isempty($('#country').val()),"country Field","countryError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled((isempty(selectedTownCode)&isempty($('#town').val())),"Town Field","townError"))) {
+		return !validationPass;
 	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
@@ -236,15 +243,13 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 	} else if(isNotvalidMobileFormat($('#contactNumber').val())){
 		$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
+	}  else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val(),/^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
+	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#passWord').val(),/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ","passWordError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
-		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
+	}else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),"Confirm Password Field","confPassWordError"))){
 		return !validationPass;
@@ -256,7 +261,6 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return validationPass;
 	
 }
-
 
 
 
@@ -429,6 +433,7 @@ function splitPhoneNumber(phoneNumber,length){
  */
 function clearAllFields(){
 	$('input.text-field').val("");
+	$('.validationInputFields').html("");
 }
 
 
