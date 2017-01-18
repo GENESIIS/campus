@@ -266,21 +266,40 @@ function landPhoneNubmerHelper() {
 	var land2 = $("#land2").val();
 	var networkCode = $("#networkCode").val();
 	var mobile = $("#mobile").val();
+	
+	var integerPattern = /^[0-9]+$/;
 
 	if (!isempty(country)) {
+		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
+		document.getElementById('landNumber2').innerHTML = "**Please select your country.";
+		document.getElementById('lastMobileNumber').innerHTML = "**Please select your country.";
+		
+	} else if(isempty(country) && !isPatternMatch(integerPattern, areaCode)){
+
+//		document.getElementById('errorLand1').innerHTML = "Select the country and give the area code.";
+//		document.getElementById('landNumber2').innerHTML = "Select the country and give the area code.";
+//		document.getElementById('faxNumber').innerHTML = "Select the country and give the area code.";
+
+			document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
+			document.getElementById('errorLand1').innerHTML = "";
+			document.getElementById('landNumber1').innerHTML = "**Area code is invalid.";
+			document.getElementById('landNumber2').innerHTML = "**Area code is invalid.";
+
 	} else {
+		
+			var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
+			var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
+			var lastMobilNumber = "+" + country + " " + networkCode + " "
+					+ mobile;
 
-		document.getElementById('errorLand1').innerHTML = "";
-
-		var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
-		var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
-		var lastMobilNumber = "+" + country + " " + networkCode + " " + mobile;
-
-		document.getElementById('landNumber1').innerHTML = lastLandNumber1;
-		document.getElementById('landNumber2').innerHTML = lastLandNumber2;
-		document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-	}
+			document.getElementById('errorAreaCode').innerHTML = "";
+			document.getElementById('errorLand1').innerHTML = "";
+			document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+			document.getElementById('landNumber2').innerHTML = lastLandNumber2;
+			document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+		}
+	
 
 }
 function getProviderType() {
