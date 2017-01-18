@@ -65,7 +65,9 @@ function isPatternMatch(regularExpression, source) {
 
 function providerUsernameValidation() {
 	
-	$("#errorUsername").html = "";
+	document.getElementById('errorUsername').innerHTML = "";
+	document.getElementById('usernameMessage').innerHTML = "";
+
 	var flag = false;
 
 	var selectedUsername = document.getElementById('providerUsername').value;
@@ -121,6 +123,7 @@ function providerPrefixValidation() {
 	
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
 	document.getElementById('errorUniquePrefix').value = "";
+	document.getElementById('prefixMessage').value = "";
 	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
@@ -204,15 +207,15 @@ function vaidateCourseProviderDeatils(form) {
 	var viber = $("#viber").val();
 	var expirationDate = $("#expirationDate").val();
 	var providerType = $("#selectedProviderType").val();
-	var providerStatus = $("#providerStatus").val();
+	var providerStatus = $('input[name=providerStatus]:checked').val();
 	var providerPrivateName = $("#providerPrivateName").val();
 	var providerEmail = $("#providerEmail").val();
 	var providerUsername = $("#providerUsername").val();
 	var providerPassword = $("#providerPassword").val();
 	var cProviderPassword = $("#cProviderPassword").val();
-	var accountStatus = $("#accountStatus").val();
+	var accountStatus = $('input[name=accountStatus]:checked').val();
 	var accountDescription = $("#accountDescription").val();
-	
+
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
 	
@@ -353,8 +356,8 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (isempty(mySpace) && !ValidURL(mySpace)) {
-		document.getElementById('errorMyspace').innerHTML = "**Give a valid MySpace URL.";
-		document.getElementById('mySpace').focus();
+		document.getElementById('errorInstagram').innerHTML = "**Select the account status.";
+		document.getElementById('instagram').focus();
 		flag = false;
 	}
 // if (!isempty(whatsapp)) {
@@ -379,7 +382,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('selectedProviderType').focus();
 		flag = false;
 	}
-	if (!$("#providerStatus").is(":checked")) {
+	if(providerStatus === null || providerStatus === undefined){
 		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 		document.getElementById('providerStatus').focus();
 		flag = false;
@@ -419,11 +422,11 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-//	if (!$("#accountStatus").is(":checked")) {
-//		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
-//		document.getElementById('accountStatus').focus();
-//		flag = false;
-//	}
+	if (accountStatus === null || accountStatus === undefined ) {
+		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
+		document.getElementById('accountStatus').focus();
+		flag = false;
+	}
 	if(accountDescription.length > 4000){
 		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
 		document.getElementById('accountDescription').focus();
