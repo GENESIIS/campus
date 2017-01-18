@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161109 PN c11-criteria-based-filter-search changed ResponseType.JSP into ResponseType.JSON. 
+//20170118 DJ c124-general-filter-search-programme added  GENERAL_FILTER_SEARCH_COURSE_PROVIDERS,GENERAL_FILTER_SEARCH_COURSE_PROGRAMME attributes.
 
 /**
  * Operation class facilitate in binding the CCO
@@ -19,7 +20,9 @@ public enum Operation {
 	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSON, "index.jsp"),
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSON, "index.jsp");
+	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSON, "index.jsp"),
+	GENERAL_FILTER_SEARCH_COURSE_PROVIDERS("GENERAL_FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSON," "),
+	GENERAL_FILTER_SEARCH_COURSE_PROGRAMME("GENERAL_FILTER_SEARCH_COURSE_PROGRAMME",ResponseType.JSON," ");
 			
 	private final String commandString;
 	private final ResponseType responseType;
