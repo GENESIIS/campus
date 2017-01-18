@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20161101 DN c10-contacting-us SystemMessage() modified and added 
 //		FAIL_REQUEST_SUBMISSION,PASS_REQUEST_SUBMISSION.
 //20161116 DN DN c10-contacting-us-page-MP removed unnecessary enum values.
+//20170212 PN CAM-72: added SYSTEM_EXCEPTION, SYSTEM_ERROR, ERROR404 and ERROR500 values to the Enum.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -26,7 +27,11 @@ public enum SystemMessage {
 	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 
 	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
 	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
-	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
+	RECAPTCHAVERIFICATION("Please verify You're not a robot "), 
+	SYSTEM_EXCEPTION("SYSTEM EXCEPTION"),
+	SYSTEM_ERROR("SYSTEM ERROR"),
+	ERROR404("Page Not Found..!!"),
+	ERROR500("Internal Server Error..!!");
 	
 	private String message;
 
