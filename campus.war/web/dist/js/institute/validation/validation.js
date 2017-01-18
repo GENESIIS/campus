@@ -12,6 +12,7 @@
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  *20161202 DN C18-student-signup-without-using-third-party-application-test-dn add isStringHasValiCharsAndLength() method
+ *20170118 DN  isStringHasValiCharsAndLength() signature has been changed it takes a field value and a regular expression as the argument
  */ 
 
  
@@ -128,12 +129,13 @@ function validEmailFormat(){
  * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc
  * @author dushantha DN
  * @param testableInput the sting which is to tested to confirm if it abides the above precondition
+ * @param regex regular expression against which the testableInput will be matched.
  * @returns boolean : true if conditions are met else false.
  */
-function isStringHasValiCharsAndLength(testableInput){
+function isStringHasValiCharsAndLength(testableInput, regex){
 	var validCharAndLength= false;
 	if(testableInput!=""|testableInput!=null){
-		var testableRegularExpression = /^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g;
+		var testableRegularExpression =regex ;
 		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim()); 
 	}
 	return validCharAndLength;
