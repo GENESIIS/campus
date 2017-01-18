@@ -175,6 +175,7 @@
 										id="uniquePrefix" size="30px;"
 										onkeyup="providerPrefixValidation();" /> <span
 										id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
+										<span id="prefixMessage" style="color: blue;"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -290,6 +291,8 @@
 									<input class="input" type="text" name="fax" id="fax"
 										size="25px;" /> <span id="errorFax"
 										class="error-message">${errorFax }</span>
+										<span
+										id="faxNumber" style="color: blue;"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -530,6 +533,7 @@
 										id="providerUsername" size="50px;"
 										onkeyup="providerUsernameValidation();" /> <span
 										id="errorUsername" class="error-message">${errorProviderUsername }</span>
+										<span id="usernameMessage" style="color: blue;"></span>
 								</div>
 							</li>
 							<!-- end -->
