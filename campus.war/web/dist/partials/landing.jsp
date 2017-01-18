@@ -7,13 +7,7 @@
 <!-- 20161025 TR c1 start styling category search area -->
 <!-- 20170117 DJ c124-general-filter-search-programme-MP-dj  searchFunction() Implementation. -->
 
-<script type="text/javascript">
-function searchFunction(){
-	var keyWordString=$("#keyWord").val();	
-	var selectedType= $('input[name=cpRadio]:checked').val();
-    window.location.replace("/dist/partials/courses.jsp.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
-}
-</script>
+
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
@@ -161,8 +155,16 @@ function searchFunction(){
     </div>
 </div>
 <!-- jQuery & Other js -->
+
+<script type="text/javascript">
+function searchFunction(){
+	alert("test");
+	var keyWordString=$("#keyWord").val();	
+	var selectedType= $('input[name=cpRadio]:checked').val();	
+    window.location.replace("/dist/partials/courses.jsp.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
+}
+</script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-<!-- W3-Include -->
-	<script src="/dist/bower-components/w3/w3data.js"></script>
+
