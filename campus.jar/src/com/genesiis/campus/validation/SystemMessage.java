@@ -20,7 +20,8 @@ public enum SystemMessage {
 	EMPTY_FIELD("Empty field(s)"),		
 	PREFIX_INVALID("Prefix is not available"),
 	PREFIX_VALID("Valid prefix"),
-	EMAIL_EXIST("Email already exist.");
+	EMAIL_EXIST("Email already exist."),
+	NO_DATA("No data");
 	
 	
 	private String message;
