@@ -9,6 +9,7 @@ import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.UtilityHelper;
+import com.genesiis.campus.validation.Operation;
 
 import org.apache.log4j.Logger;
 
@@ -45,16 +46,22 @@ public class CmdGeneralFilterSearch implements ICommand{
 			String keyWordString = helper.getParameter("keyWordString");
 			if (UtilityHelper.isNotEmpty(keyWordString)) {
 				// Do wild card search on key word
-				keyWordBuilder.append("%").append(keyWordString).append("%");				
-				if (selectedTypeString.equalsIgnoreCase(TYPE_CPROVIDER)) {
+				keyWordBuilder.append("%").append(keyWordString).append("%");
+
+				String cco = helper.getParameter("CCO");
+				switch (Operation.getOperation(cco)) {
+				case GENERAL_FILTER_SEARCH_COURSE_PROVIDERS:
 					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
 					helper.setAttribute("codeList", cpCodeSet);
-				}else if(selectedTypeString.equalsIgnoreCase(TYPE_PROGRAMME)){					
+					break;
+				case GENERAL_FILTER_SEARCH_COURSE_PROGRAMME:
 					final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());
 					helper.setAttribute("programCodeList", programmeCodeSet);
+					break;
+				default:
+					break;
 				}
 			}
-
 		} catch (Exception exception) {
 			log.error("execute() :Exception  " + exception);
 			throw exception;
