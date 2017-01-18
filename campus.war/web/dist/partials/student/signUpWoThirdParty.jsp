@@ -6,7 +6,8 @@
 <!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
 <!-- 20161206 DN C18-student-signup-without-using-third-party-application-dn town field and other nodes  added -->
 <!-- 20161214 DN CAMP:18 rearranged the fields and add a input box to capture country code -->
-<!-- 20161217 DN CAMP:18 Clear Data button is created-->
+<!-- 20161217 DN CAMP:18 Clear Data button is created, country place holder changed to select country, made country and town fields to be Mandatory-->
+<!-- 20170118 DN CAMP :18 country place holder changed to select country, made country and town fields to be Mandatory, add class="validationInputFields" to error labels-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -162,40 +163,40 @@
 		<label id="displayLabel" style="color:#F39C12;" ></label>
         <div class="input-panel col-md-6 col-lg-6 col-sm-12 clearfix">
             <div class="input-field">
-                <label for="input-firstName" id="firstNameLabel">First Name :<span>*</span></label><label id="firstNameError" style="color:#C70039;"></label><br>
+                <label for="input-firstName" id="firstNameLabel">First Name :<span>*</span></label><label id="firstNameError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <input class="text-field" type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')">
             </div>
             <!-- End first name -->
 
             <div class="input-field">
-                <label for="input-lastName" id="lastNameLabel">Last Name :<span>*</span></label><label id="lastNameError" style="color:#C70039;"></label><br>
+                <label for="input-lastName" id="lastNameLabel">Last Name :<span>*</span></label><label id="lastNameError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <input class="text-field" type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
             </div>
             <!-- End Last name -->
 
             <div class="input-field gender-field col-lg-12 clearfix">
-                <label class="lbl-gender col-lg-4 pull-left" for="input-gender" id ="genderLabel">Gender :</label><label id="genderError" style="color:#C70039;"></label><br>
+                <label class="lbl-gender col-lg-4 pull-left" for="input-gender" id ="genderLabel">Gender :</label><label id="genderError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"  name="gender" value="1" checked ><span>Male</span></div>
                 <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"  name="gender" value="0"><span>Female</span></div>
             </div>
             <!-- End Gender -->
 
             <div class="input-field">
-                <label for="eMail" id="emilAddressLabel" >Email :<span>*</span></label><label id="emailError" style="color:#C70039;"></label></label><br>
+                <label for="eMail" id="emilAddressLabel" >Email :<span>*</span></label><label id="emailError" style="color:#C70039;" class="validationInputFields"></label></label><br>
                 <input class="text-field" type="text" id="emailAddress" name="emailAddress"  onclick="clearField('emailError')">
             </div>
             <!-- End Email -->
 
 		 	<div class="input-field">
-		         <label>Country :</label><label id="countryError" style="color:#C70039;"></label><br><br>
-		         <input list="countryList" id="country" name="country" class="text-field" type="text" placeholder="-- Select City --" onclick="clearField('countryError');" >
+		         <label>Country :<span>*</span></label><label id="countryError" style="color:#C70039;" class="validationInputFields"></label><br><br>
+		         <input list="countryList" id="country" name="country" class="text-field" type="text" placeholder="-- Select Country --" onclick="clearField('countryError');" >
 		          <datalist id="countryList" name="countryist">
 		          </datalist>
 		         </div>
             <!-- End Country -->
             
             <div class="input-field">
-                <label>Town :</label><label id="townError" style="color:#C70039;"></label><br><br>
+                <label>Town :<span>*</span></label><label id="townError" style="color:#C70039;" class="validationInputFields"></label><br><br>
                 <input id="town" name="town" list="townList" class="text-field" type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
                 <datalist id="townList" name="townList">
                 </datalist>
@@ -204,7 +205,7 @@
             <!-- End Town -->
             
             <div class="input-field">
-                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;"></label><br>
+                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <input class="text-field" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly title ="Country Code ,It Automatically Gets Filled Once You Select Your Contry" >
                 <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="Type Your Mobile Numebr Without The Leading Zero e.g 771234567 format" >
             </div>
@@ -216,13 +217,13 @@
             <!-- End phone -->
 
             <div class="input-field">
-                <label id="usernameLabel" >Username :<span>*</span></label><label id="usernameError" style="color:#C70039;"></label><br>
+                <label id="usernameLabel" >Username :<span>*</span></label><label id="usernameError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <input class="text-field" type="text" name="username" id="userName" onclick="clearField('usernameError')">
             </div>
             <!-- End User name -->
 
             <div class="input-field">
-                <label id="passWordLabel">Password :<span>*</span></label><label id="passWordError" style="color:#C70039;"></label><br>
+                <label id="passWordLabel">Password :<span>*</span></label><label id="passWordError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <input class="text-field" type="password" name="psw" id="passWord" onclick="clearField('passWordError')">
                  <input type="hidden"  id="userTypeCode" name="userTypeCode" />
                 <div class="pull-right show-pwrd">
@@ -232,13 +233,13 @@
             <!-- End Password name -->
 
             <div class="input-field">
-                <label id="confPassWordLabel">Confirm Password :<span>*</span></label><label id="confPassWordError" style="color:#C70039;" ></label><br>
+                <label id="confPassWordLabel">Confirm Password :<span>*</span></label><label id="confPassWordError" style="color:#C70039;" class="validationInputFields" ></label><br>
                 <input class="text-field" type="password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')">
             </div>
             <!-- End Confirm password  -->
 
             <div class="input-field">
-            	<label id="policyConfirmError" style="color:#C70039;" ></label><br>
+            	<label id="policyConfirmError" style="color:#C70039;" class="validationInputFields"></label><br>
                 <span class="check-box"><input type="checkbox" id="policyConfirm" onclick="clearField('policyConfirmError');"></span>
                 <p>I have read privacy policy and accept the terms and conditions.</p>
             </div>
