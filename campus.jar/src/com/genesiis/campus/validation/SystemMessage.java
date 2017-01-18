@@ -20,7 +20,8 @@ public enum SystemMessage {
 	EMPTY_FIELD("Empty field(s)"),		
 	PREFIX_INVALID("Prefix is not available"),
 	PREFIX_VALID("Valid prefix"),
-	EMAIL_EXIST("Email already exist.");
+	EMAIL_EXIST("Email already exist."),
+	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), ;
 	
 	
 	private String message;
