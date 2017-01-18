@@ -40,8 +40,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		try {
-			iView=new View();
+		try {			
 			String cco = helper.getParameter("CCO");
 			
 			switch (Operation.getOperation(cco)) {
