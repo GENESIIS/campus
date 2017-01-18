@@ -4,6 +4,11 @@ package com.genesiis.campus.command;
 //20161121 CM c36-add-tutor-information Modified execute()method. 
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
 //20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
+//20170110 CW c36-add-tutor-details Modified setVariables() method - add tutor crtBy & modBy using setter methods  
+//20170110 CW c36-add-tutor-details Modified execute() method - changed the way of calling the findById() method
+//20170116 CW c36-add-tutor-details add fillTutorCollection(), fillTutorDummyCollection() methodS to fill a Collection with data
+//20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
+//20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +16,9 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
@@ -39,39 +46,55 @@ public class CmdAddTutorProfile implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		try {
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
 			final Validator validator=new Validator();
-			message = validator.validateTutorFields(helper);
-			if (message.equalsIgnoreCase("True")) {
-								
+			Collection<String> tutorCollection= new ArrayList<String>();
+			
+		try {
+				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
-
-				UserTypeDAO typeOfUser = new UserTypeDAO();
-
-				tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));   
-
+				fillTutorCollection(tutorCollection, tutor);
+				
+				if (message.equalsIgnoreCase("True")) {								
+	
+					UserTypeDAO typeOfUser = new UserTypeDAO();
+					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
+					
+					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+					
+					int userType = 9999;
+					
+					for(Collection<String> userTypeInnerCollection : userTypeCollection ){
+						Object arr[] = userTypeInnerCollection.toArray();
+						userType = Integer.parseInt(arr[0].toString());
+					} 
+					
+					if (userType != 9999){
+						tutor.setUsertype(userType);
+					}
+	
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {
 						message = SystemMessage.ADDED.message();
-
+	
 					} else {
+						
 						message = SystemMessage.ERROR.message();
-					}
-				
-			}
-		} catch (Exception exception) {
+					}					
+				}
+		}  catch (SQLException sqle){
+			log.error("execute(): SQLException "+ sqle.toString());
+			throw sqle;
+		}  catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
-
+			helper.setAttribute("tutorList", tutorCollection);
 		}
 		return view;
-	}
-
-	
+	}	
 
 	/*
 	 * setVariables() method initializes all the instance variable
@@ -96,10 +119,24 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setLastName(helper.getParameter("lastname"));
 			tutor.setGender(helper.getParameter("gender"));
 			tutor.setEmailAddress(helper.getParameter("email"));
-			tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+			
+			if(Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))){
+				if(Validator.isNotEmpty(helper.getParameter("countryDetails")) && (!(helper.getParameter("countryDetails").equals("0")))){
+					tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+					tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+				}
+				else{
+					tutor.setLandCountryCode(helper.getParameter("mobileCountryCode"));
+					tutor.setMobileCountryCode(helper.getParameter("mobileCountryCode"));
+				}
+					
+			}else{
+				tutor.setLandCountryCode(helper.getParameter("countryDetails"));
+				tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
+			}
+			
 			tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
 			tutor.setLandNumber(helper.getParameter("landNumber"));
-			tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
 			
@@ -152,13 +189,13 @@ public class CmdAddTutorProfile implements ICommand {
 			}
 			
 			if (helper.getParameter("viber").equals("")) {
-				tutor.setViberNumber("-");
+				tutor.setViberNumber("0");
 			} else {
 				tutor.setViberNumber(helper.getParameter("viber"));
 			}
 
 			if (helper.getParameter("whatsapp").equals("")) {
-				tutor.setWhatsAppId("-");
+				tutor.setWhatsAppId("0");
 			} else {
 				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
 			}
@@ -181,11 +218,105 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setAddressLine3(helper.getParameter("address3"));
 			}
 			
-			tutor.setTown(helper.getParameter("townDetails"));
+			if(Validator.isNotEmpty(helper.getParameter("townHidden"))){
+				if((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0")))){
+					tutor.setTown(helper.getParameter("townDetails"));
+				}
+				else{
+					tutor.setTown(helper.getParameter("townHidden"));
+				}
+					
+			}else{
+				tutor.setTown(helper.getParameter("townDetails"));
+			}
+									
+			tutor.setCrtBy("chathuri");
+			tutor.setModBy("chathuri");
 
 		} catch (Exception e) {
 			log.error("setVariables() : Exception" + e.toString());
 			throw e;
 		}
+	}
+	
+	
+	/*
+	 * fillTutorCollection() method assign all the tutor details into a collection
+	 * 
+	 * @author CW
+	 * 
+	 * @param tutorCollection, tutor
+	 */
+	private void fillTutorCollection(Collection<String> tutorCollection, Tutor tutor) throws SQLException, Exception{
+		
+		tutorCollection.add(tutor.getFirstName());
+		tutorCollection.add(tutor.getMiddleName());
+		tutorCollection.add(tutor.getLastName());
+		tutorCollection.add(tutor.getGender());
+		tutorCollection.add(tutor.getExperience());
+		tutorCollection.add(tutor.getDescription());
+		
+		CountryDAO country = new CountryDAO();
+		
+		try{
+			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
+			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			for(Collection<String> countryList : countryCollection){
+				tutorCollection.add(countryList.toArray()[1].toString());				
+			}
+
+		}  catch (SQLException sqle){
+			log.error("fillTutorCollection(): SQLException "+ sqle.toString());
+			throw sqle;
+		}  catch (Exception exception) {
+			log.error("fillTutorCollection() : Exception" + exception.toString());
+			throw exception;
+		}
+		
+		TownDAO town = new TownDAO();
+		try{
+			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
+			int addCount = 0;
+			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			
+			for(Collection<String> townList : townCollection){
+				if (townList.toArray()[0].toString().equals(tutor.getTown())){
+					tutorCollection.add(townList.toArray()[1].toString());
+					tutorCollection.add(townList.toArray()[0].toString());
+					addCount++;
+				}
+			}
+			if(addCount == 0){
+				tutorCollection.add("0");
+			}
+
+		}  catch (SQLException sqle){
+			log.error("fillTutorCollection(): SQLException "+ sqle.toString());
+			throw sqle;
+		}  catch (Exception exception) {
+			log.error("fillTutorCollection() : Exception" + exception.toString());
+			throw exception;
+		}
+		
+		tutorCollection.add(tutor.getMobileCountryCode());
+		tutorCollection.add(tutor.getMobileNetworkCode());
+		tutorCollection.add(tutor.getMobileNumber());
+		tutorCollection.add(tutor.getLandCountryCode());
+		tutorCollection.add(tutor.getLandAreaCode());
+		tutorCollection.add(tutor.getLandNumber());
+		tutorCollection.add(tutor.getAddressLine1());
+		tutorCollection.add(tutor.getAddressLine2());
+		tutorCollection.add(tutor.getAddressLine3());
+		tutorCollection.add(tutor.getWebLink());
+		tutorCollection.add(tutor.getFacebookLink());
+		tutorCollection.add(tutor.getLinkedInLink());
+		tutorCollection.add(tutor.getTwitterNumber());
+		tutorCollection.add(tutor.getInstagramId());
+		tutorCollection.add(tutor.getMySpaceId());
+		tutorCollection.add(tutor.getWhatsAppId());
+		tutorCollection.add(tutor.getViberNumber());
+		tutorCollection.add(tutor.getEmailAddress());
+		tutorCollection.add(tutor.getUsername());
+		
 	}
 }

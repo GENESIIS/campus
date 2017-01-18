@@ -4,8 +4,12 @@ package com.genesiis.campus.factory;
 //20161121 CM c36-add-tutor-information Modified getCommand() method. 
 //20161122 CM c36-add-tutor-information Modified getCommand() method. 
 //20161123 CM c36-add-tutor-information Modified getCommand() method. 
+//20170116 CM c36-add-tutor-information add getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
+//20170116 CM c36-add-tutor-information removed getCommand() add LOAD_TUTOR_WITH_DUMMY_DATA element. 
+//20170117 CM c36-add-tutor-information Modified getCommand() method. 
 
 import com.genesiis.campus.command.CmdAddTutorProfile;
+import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdCheckUsername;
 import com.genesiis.campus.command.CmdLoadCountry;
 import com.genesiis.campus.command.CmdLoadTownDetails;
@@ -22,6 +26,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.CHECK_USERNAME, new CmdCheckUsername());
 		map.put(Operation.VIEW_TUTOR_DETAILS, new CmdViewTutorProfile());
 		map.put(Operation.UPDATE_TUTOR, new CmdUpdateTutorProfile());
+		map.put(Operation.CHECK_EMAIL, new CmdCheckEmail());
 	}
 
 	@Override
@@ -46,6 +51,9 @@ public class TutorCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case UPDATE_TUTOR:
+			command = map.get(o);
+			break;
+		case CHECK_EMAIL:
 			command = map.get(o);
 			break;
 		default:

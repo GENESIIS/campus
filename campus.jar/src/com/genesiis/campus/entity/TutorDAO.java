@@ -3,10 +3,15 @@ package com.genesiis.campus.entity;
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
+//20161221 CW c36-add-tutor-details Removed findById() method.
+//20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
 //20161222 CW c38-view-update-tutor-profile added country name & Town Name detail calling to findById. 
-//20161223 CW c38-view-update-tutor-profile added update() method
+//20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
 //20161227 CW c38-view-update-tutor-profile modified update() method
 //20161229 CW c38-view-update-tutor-profile modified update() method
+//20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
+//20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
+//20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,13 +37,13 @@ public class TutorDAO implements ICrud {
 	/**
 	 * Save tutor details in Database
 	 * 
-	 * @author Chathuri
+	 * @author Chathuri, Chinthaka
 	 * @param object
 	 *            : Tutor object of Object type
 	 * @return int number of success/fail status
 	 */
 	@Override
-public int add(Object object) throws SQLException, Exception {
+	public int add(Object object) throws SQLException, Exception {
 		
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -51,7 +56,7 @@ public int add(Object object) throws SQLException, Exception {
 		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,TUTORSTATUS, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
 		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
 		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
-				
+						
 		try {			
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
@@ -81,7 +86,7 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(19, tutor.getMySpaceId()); 
 			preparedStatement.setString(20, tutor.getLinkedInLink());
 			preparedStatement.setString(21, tutor.getInstagramId());
-			preparedStatement.setString(22, tutor.getViber());
+			preparedStatement.setString(22, tutor.getViberNumber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
 			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
 			preparedStatement.setInt(25, tutor.getTutorStatus()); 
@@ -90,8 +95,8 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(28, tutor.getAddressLine3());
 			preparedStatement.setString(29, tutor.getTown());
 			preparedStatement.setInt(30, tutor.getUsertype());
-			preparedStatement.setString(31, "chathuri");
-			preparedStatement.setString(32, "chathuri");
+			preparedStatement.setString(31, tutor.getCrtBy());
+			preparedStatement.setString(32, tutor.getModBy());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -161,7 +166,7 @@ public int add(Object object) throws SQLException, Exception {
 			preparedStatement.setString(19, tutor.getLinkedInLink());
 			preparedStatement.setString(20, tutor.getInstagramId());
 		
-			preparedStatement.setString(21, tutor.getViber());
+			preparedStatement.setString(21, tutor.getViberNumber());
 			preparedStatement.setString(22, tutor.getWhatsAppId());
 			
 			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
@@ -201,7 +206,6 @@ public int add(Object object) throws SQLException, Exception {
 		return 0;
 	}
 
-	
 	/**
 	 * Returns the Tutor Details
 	 * 
@@ -268,9 +272,10 @@ public int add(Object object) throws SQLException, Exception {
 				singleTutorList.add(rs.getString("ADDRESS3"));
 				
 				if (rs.getString("TOWN") != null) {
-					townCode = Double.parseDouble(rs.getString("TOWN"));
+					countryCode = Integer.parseInt(rs.getString("LANDPHONECOUNTRYCODE"));
 					TownDAO country = new TownDAO();
-					townName = country.findTownByCode(townCode);
+					//townName = country.findById(countryCode);
+					townName = "x";
 				}
 				
 				singleTutorList.add(townName);
@@ -305,7 +310,6 @@ public int add(Object object) throws SQLException, Exception {
 		return allTutorList;
 
 	}
-
 	
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
@@ -313,7 +317,7 @@ public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public int add(Object object, Connection conn) throws SQLException,
 			Exception {

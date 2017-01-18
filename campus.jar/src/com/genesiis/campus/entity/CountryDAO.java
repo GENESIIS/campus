@@ -3,7 +3,9 @@ package com.genesiis.campus.entity;
 //20161123 CM c36-add-tutor-information INIT CountryDAO 
 //20161123 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
+//20161221 CW c36-add-tutor-details Modified getAll() method. 
 //20161222 CW c38-view-update-tutor-profile added findCountryByCode() method. 
+//20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application Country2DAO class
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +48,10 @@ public class CountryDAO implements ICrud{
 		return 0;
 	}
 
-
+/*
+ * @author DN - taken from c18 - student : signup : without using third party application Country2DAO class
+ * @see com.genesiis.campus.entity.ICrud#findById(java.lang.Object)
+ */
 	/**
 	 * Returns the country Name in Database for given country code
 	 * 
@@ -92,12 +97,42 @@ public class CountryDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-		
-	}
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
+		int countryCode = (Integer) code;
+		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1) AND [CODE] = ?;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, countryCode);
+			final ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleCountryList = new ArrayList<String>();
+				singleCountryList.add(rs.getString("CODE"));
+				singleCountryList.add(rs.getString("NAME"));
+				allCountryList.add(singleCountryList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): E " + e.toString());
+			throw e;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return allCountryList;
+}
 
 	/**
 	 * Returns all the country details in Database

@@ -2,6 +2,8 @@ package com.genesiis.campus.entity.model;
 
 //20161121 CM c36-add-tutor-information INIT Tutor.java
 //20161229 CW c38-view-update-tutor-profile removed isActive field & add tutorStatus field
+//20170102 CW c36-add-tutor-information isActive and add tutorStatus
+//20170114 CW c36-add-tutor-information modified the name of the getViber() method to getViberNumber()
 
 import java.sql.Date;
 
@@ -32,7 +34,6 @@ public class Tutor {
 	private String whatsAppId;
 	private String viberNumber; 
 	private String emailAddress;
-	//private String imagePath;
 	private String username;
 	private String password;
 	private String town;
@@ -321,7 +322,7 @@ public class Tutor {
 	/**
 	 * @return the viberNumber
 	 */
-	public String getViber() {
+	public String getViberNumber() {
 		return viberNumber;
 	}
 	/**
@@ -342,21 +343,7 @@ public class Tutor {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
-	/**
-	 * @return the imagePath
-	 */
-/*	public String getImagePath() {
-		return imagePath;
-	}*/
-	
-	/**
-	 * @param imagePath the imagePath to set
-	 */
-/*	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}*/
-	
+		
 	/**
 	 * @return the username
 	 */
@@ -405,19 +392,25 @@ public class Tutor {
 	public void setUsertype(int usertype) {
 		this.usertype = usertype;
 	}
-	/**
-	 * @return the isActive
-	 */
 	public int getTutorStatus() {
 		return tutorStatus;
 	}
-	/**
-	 * @param isActive the isActive to set
-	 */
 	public void setTutorStatus(int tutorStatus) {
 		this.tutorStatus = tutorStatus;
 	}
-	
+	/**
+	 * @return the isActive
+	 */
+/*	public int getIsActive() {
+		return isActive;
+	}*/
+	/**
+	 * @param isActive the isActive to set
+	 */
+/*	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+	*/
 	/**
 	 * @return the isApproved
 	 */
