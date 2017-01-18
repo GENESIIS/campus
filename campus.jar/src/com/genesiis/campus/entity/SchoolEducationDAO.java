@@ -8,7 +8,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
-//20170118 PN CAM-28: modified findByIdMethod() method by removing different DB connection to select country name. existing SQL query modified to a JOIN to select Country name using the dame DB connection.
+//20170118 PN CAM-28: modified findByIdMethod() method by removing different DB connection to select country name. existing SQL query modified to a JOIN to select Country name using the same DB connection.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

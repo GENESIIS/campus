@@ -15,6 +15,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 //20170110 PN CAM-28: SQL query modified inside DAO methods. 
+//20170118 PN CAM-28: modified findByIdMethod() method by removing different DB connection to select JOB INDUSTRY and JOB CATEGORY. existing SQL query modified to a JOIN to select details using the same DB connection.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -91,7 +92,6 @@ public class ProfessionalExperienceDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-
 		final Collection<Collection<String>> allhigherEduList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -100,46 +100,27 @@ public class ProfessionalExperienceDAO implements ICrud {
 		try {
 			int studentCode = (Integer) code;
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE], [ORGANIZATION], [STUDENT], [INDUSTRY], [JOBCATEGORY], "
-					+ "[DESIGNATION], [COMMENCEDON], [COMPLETIONON], [DESCRIPTION] "
-					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] " + "WHERE [STUDENT] = ? AND ISACTIVE = ?;";
+			String query = "SELECT PE.[CODE], [ORGANIZATION], [STUDENT], MJ1.[NAME] AS [INDUSTRY], MJ2.[NAME] AS [JOBCATEGORY], "
+					+ "[DESIGNATION], [COMMENCEDON], [COMPLETIONON], PE.[DESCRIPTION] "
+					+ "FROM [CAMPUS].[PROFESSIONALEXPERIENCE] PE "
+					+ "JOIN [CAMPUS].[MAJOR] MJ1 ON PE.[JOBCATEGORY] = MJ1.[CODE] "
+					+ "JOIN [CAMPUS].[MAJOR] MJ2 ON PE.[INDUSTRY] = MJ2.[CODE] "
+					+ "WHERE [STUDENT] = ? AND PE.[ISACTIVE] = ? AND MJ1.[ISACTIVE] = ? AND MJ2.[ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, studentCode);
 			stmt.setInt(2, isActive);
+			stmt.setInt(3, isActive);
+			stmt.setInt(4, isActive);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singlehigherEduList = new ArrayList<String>();
 				singlehigherEduList.add(rs.getString("CODE"));
 				singlehigherEduList.add(rs.getString("ORGANIZATION"));
-
-				// Get country name, if in a case to pass the name to dataList
-				ICrud majordao = new StdProfMajorDAO();
-				String jobcategoryName = "";
-				String industryName = "";
-
-				Major jcname = new Major();
-				jcname.setCode(Integer.parseInt(rs.getString("JOBCATEGORY")));
-
-				Collection<Collection<String>> industry = majordao.findById(jcname);
-				for (Collection<String> collection : industry) {
-					Object[] cdata = collection.toArray();
-					jobcategoryName = (String) cdata[1];
-				}
-
-				Major indname = new Major();
-				indname.setCode(Integer.parseInt(rs.getString("INDUSTRY")));
-
-				Collection<Collection<String>> jobcaegory = majordao.findById(indname);
-				for (Collection<String> collection : industry) {
-					Object[] cdata = collection.toArray();
-					industryName = (String) cdata[1];
-				}
-
-				singlehigherEduList.add(industryName);
+				singlehigherEduList.add(rs.getString("INDUSTRY"));
 				singlehigherEduList.add(rs.getString("DESIGNATION"));
-				singlehigherEduList.add(jobcategoryName);
+				singlehigherEduList.add(rs.getString("JOBCATEGORY"));
 				singlehigherEduList.add(rs.getString("COMMENCEDON"));
 				singlehigherEduList.add(rs.getString("COMPLETIONON"));
 				singlehigherEduList.add(rs.getString("DESCRIPTION"));
