@@ -21,7 +21,8 @@
 <header w3-include-html="dist/partials/layout/header.jsp"></header>
 
 <!-- Main Container - Landing -->
-<div w3-include-html="dist/partials/landing.jsp"></div>
+<!-- <div w3-include-html="dist/partials/landing.jsp"></div> -->
+<div><jsp:include page="/dist/partials/landing.jsp" /></div>
 
 <!-- Footer -->
 <footer w3-include-html="dist/partials/layout/footer.jsp"></footer>
