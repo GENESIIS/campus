@@ -232,7 +232,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
 						//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
-							courseProviderAccount.setName(helper.getParameter("accountDescription"));
+							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
 							courseProviderAccount.setUserType(userType);
 							courseProviderAccount.setCrtBy("admin");//to be update after the session is created
 							courseProviderAccount.setModBy("admin");//to be update after the session is created
