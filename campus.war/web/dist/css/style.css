@@ -768,7 +768,8 @@ body, html {
       font-size: 0.9em;
       font-weight: normal; }
     .modal-content .modal-body .form-user label {
-      padding-bottom: 12px; }
+      padding-bottom: 12px;
+      width: 100%; }
     .modal-content .modal-body .form-user .btn {
       font-size: 1em;
       background: #4889F1;
@@ -794,6 +795,28 @@ body, html {
       color: #91969C;
       font-size: 0.8em;
       line-height: 1.5em; }
+    .modal-content .modal-body .form-user .error-txt {
+      visibility: hidden !important;
+      font-size: 0.8em;
+      text-align: right;
+      position: relative;
+      top: 0;
+      float: right; }
+    .modal-content .modal-body .form-user .error-msg .error-txt {
+      display: block;
+      float: none;
+      margin: 0;
+      padding: 3px;
+      position: absolute;
+      text-align: center;
+      top: 60px;
+      width: 100%; }
+    .modal-content .modal-body .form-user .has-error label,
+    .modal-content .modal-body .form-user .has-error input {
+      color: #a94442;
+      border-color: #a94442; }
+    .modal-content .modal-body .form-user .has-error .error-txt {
+      visibility: visible !important; }
     .modal-content .modal-body .form-social {
       padding-top: 50px; }
       .modal-content .modal-body .form-social .btn {

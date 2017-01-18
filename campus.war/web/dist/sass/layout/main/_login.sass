@@ -40,6 +40,7 @@
 		
 			label
 				padding-bottom: 12px
+				width: 100%
 		
 			.btn
 				font-size: 1em
@@ -73,6 +74,33 @@
 				color: #91969C
 				font-size: 0.8em
 				line-height: 1.5em
+				
+			.error-txt
+				visibility: hidden!important
+				font-size: 0.8em
+				text-align: right
+				position: relative
+				top: 0
+				float: right
+				
+			.error-msg .error-txt
+				display: block
+				float: none
+				margin: 0
+				padding: 3px
+				position: absolute
+				text-align: center
+				top: 60px
+				width: 100%
+				
+			.has-error label,
+			.has-error input
+				color: #a94442
+				border-color: #a94442
+			
+			.has-error .error-txt
+				visibility: visible!important
+		
 				
 		.form-social				
 			padding-top: 50px

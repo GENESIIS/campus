@@ -1,4 +1,4 @@
-<div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static">
 	<div class="login-dialog modal-dialog" role="document">
 		<div class="modal-content">
 
@@ -15,17 +15,18 @@
 							
 							<form name="userLogin" class="form-vertical form-user" role="form" method="" action="">
 								
-								<div class="form-group">
+								<div class="form-group has-error">
 									<h5>Sign In</h5>
+									<label for="error-msg" class="error-msg"><span class="error-txt">There's no user name with us</span></label>
 								</div>
 						   
 								<div class="form-group">
-									<label for="username">Username or Email</label>									
+									<label for="username">Username or Email <span class="error-txt">There's no user name with us</span></label>							
 									<input type="text" class="form-control" id="username" >
 								</div>
 								
-								<div class="form-group">
-									<label for="password">Password</label>									
+								<div class="form-group has-error">
+									<label for="password">Password <span class="error-txt">There's no user name with us</span></label>								
 									<input type="text" class="form-control" id="password" >
 								</div>
 								

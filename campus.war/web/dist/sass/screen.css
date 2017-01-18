@@ -738,6 +738,88 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
+@media only screen and (min-width: 900px) {
+  .login-dialog {
+    width: 900px; } }
+
+@media only screen and (max-width: 899px) and (min-width: 768px) {
+  .login-dialog {
+    width: 90%; } }
+
+.modal-header {
+  border-bottom: none; }
+  .modal-header .close {
+    color: #4889F1;
+    font-size: 1.1em;
+    font-weight: normal;
+    opacity: 1; }
+
+.modal-content {
+  border-radius: 0; }
+  .modal-content .modal-body {
+    padding: 0px 50px 50px; }
+    .modal-content .modal-body h5 {
+      color: #8A8B8D;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.6em;
+      border-bottom: 1px solid #DCE5EC;
+      padding-bottom: 12px;
+      margin-bottom: 22px; }
+    .modal-content .modal-body label {
+      color: #697C8A;
+      font-size: 0.9em;
+      font-weight: normal; }
+    .modal-content .modal-body .form-user label {
+      padding-bottom: 12px; }
+    .modal-content .modal-body .form-user .btn {
+      font-size: 1em;
+      background: #4889F1;
+      padding: 10px 12px;
+      border-color: none; }
+    .modal-content .modal-body .form-user .forgot-pwd {
+      display: block;
+      font-size: 0.8em; }
+    .modal-content .modal-body .form-user .form-control {
+      height: 42px; }
+    .modal-content .modal-body .form-user input {
+      border: 4px solid #CCDAE7;
+      border-radius: 0; }
+    .modal-content .modal-body .form-user .checkbox {
+      margin-top: 0;
+      padding-top: 0; }
+      .modal-content .modal-body .form-user .checkbox label {
+        color: #91969C;
+        font-size: 0.8em; }
+      .modal-content .modal-body .form-user .checkbox input {
+        margin-top: 0; }
+    .modal-content .modal-body .form-user .new-user {
+      color: #91969C;
+      font-size: 0.8em;
+      line-height: 1.5em; }
+    .modal-content .modal-body .form-social {
+      padding-top: 50px; }
+      .modal-content .modal-body .form-social .btn {
+        color: #fff;
+        padding: 6px 40px;
+        border-radius: 0;
+        margin-bottom: 35px; }
+      .modal-content .modal-body .form-social .btn:hover {
+        opacity: 0.8; }
+      .modal-content .modal-body .form-social .social-ico {
+        display: inline-block;
+        padding-right: 15px; }
+      .modal-content .modal-body .form-social .social-title {
+        position: relative;
+        top: -4px; }
+      .modal-content .modal-body .form-social .facebook {
+        background: #3B5999; }
+      .modal-content .modal-body .form-social .google {
+        background: #DC4437; }
+      .modal-content .modal-body .form-social .linkedin {
+        background: #0177B5; }
+      .modal-content .modal-body .form-social .twitter {
+        background: #43C8F5; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
