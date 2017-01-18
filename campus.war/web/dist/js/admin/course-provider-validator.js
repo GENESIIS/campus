@@ -13,7 +13,18 @@
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == " ") || (fieldValue == null)) ? false : true;
+//	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+//	
+//	return (fieldValue.trim() == "")  ? false : true;
+	
+	if((fieldValue == "") || (fieldValue == null)){
+		return false;
+	}else if(fieldValue.trim() == ""){
+		return false;
+	}
+	else{
+		return true;
+	}
 }
 
 /**
@@ -69,6 +80,7 @@ function providerUsernameValidation() {
 				document.getElementById('errorUsername').innerHTML = "**Username should have atleast 5 characters.";
 				return false;
 			}else{
+				document.getElementById('errorUsername').innerHTML = "";
 
 		$
 				.ajax({
@@ -85,14 +97,15 @@ function providerUsernameValidation() {
 					success : function(response) {
 
 						if (response !== undefined && response !== null) {
-							document.getElementById('errorUsername').innerHTML = response.userMessage;
 							window.usernameFlag == response.validationFlag;
 							
 							if(response['validationFlag']===1){
 								flag = true;
+								document.getElementById('usernameMessage').innerHTML = response.userMessage;
 							}
 							if (response['validationFlag'] === 0) {
 								flag = false;
+								document.getElementById('errorUsername').innerHTML = response.userMessage;
 							}
 
 							return flag;
@@ -138,13 +151,14 @@ function providerPrefixValidation() {
 
 						if (response !== undefined && response !== null) {
 
-							document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 							window.prefixFlag == response.validationFlag;
 
 							if(response['validationFlag']===1){
+								document.getElementById('prefixMessage').innerHTML = response.userMessage;
 								flag = true;
 							}
 							if (response['validationFlag'] === 0) {
+								document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
 								flag = false;
 							}
 
@@ -252,8 +266,13 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('inquiryMail').focus();
 		flag = false;
 	}
-	if (!isempty(land1) !isPatternMatch(integerPattern, land1)) {
+	if (!isempty(land1)) {
 		document.getElementById('errorLand1').innerHTML = "**Land phone number can't be empty.";
+		document.getElementById('land1').focus();
+		flag = false;
+	}
+	if (!isempty(land1) || !isPatternMatch(integerPattern, land1)) {
+		document.getElementById('errorLand1').innerHTML = "**Invalid Land phone number.";
 		document.getElementById('land1').focus();
 		flag = false;
 	}
@@ -262,24 +281,29 @@ function vaidateCourseProviderDeatils(form) {
 		 document.getElementById('fax').focus();
 		 flag = false;
 		 }
-	 if (!isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+	 if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
 		 document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid.";
 		 document.getElementById('land2').focus();
 		 flag = false;
 		 }
-	if (!isempty(areaCode) || !isPatternMatch(integerPattern, areaCode)) {
-		document.getElementById('errorAreaCode').innerHTML = "**Area code is empty or invalid.(Ex:11, 31, 81)";
+	if (isempty(areaCode) && !isPatternMatch(integerPattern, areaCode)) {
+		document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
 		document.getElementById('areaCode').focus();
 		document.getElementById('errorLand1').innerHTML = "**Area code is invalid.";
 		flag = false;
+	}if (!isempty(areaCode)) {
+		document.getElementById('errorAreaCode').innerHTML = "**Area code is empty.(Ex:11, 31, 81)";
+		document.getElementById('areaCode').focus();
+		flag = false;
 	}
-	if (!isempty(networkCode)) {
-		document.getElementById('errorNetworkCode').innerHTML = "**Give the network code.(ex:77,72,71....) ";
+	if (!isempty(networkCode) || !isPatternMatch(integerPattern, networkCode)) {
+		document.getElementById('errorNetworkCode').innerHTML = "**Give a valid network code.(ex:77,72,71....) ";
 		document.getElementById('errorNetworkCode').focus();
 		flag = false;
 	}
-	if (!isempty(mobile)) {
-		document.getElementById('errorMobile').innerHTML = "**Give your mobile phone number.";
+	if (!isempty(mobile) || !isPatternMatch(integerPattern, mobile)) {
+		document.getElementById('errorMobile').innerHTML = "**Give a valid mobile phone number.";
+		document.getElementById('errorNetworkCode').innerHTML = "**Network code is not valid. ";
 		document.getElementById('errorMobile').focus();
 		flag = false;
 	}
