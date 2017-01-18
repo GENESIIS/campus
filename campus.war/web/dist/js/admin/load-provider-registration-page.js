@@ -301,7 +301,7 @@ function getProviderType() {
 	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils) {
+		if (vaidateCourseProviderDeatils() === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();

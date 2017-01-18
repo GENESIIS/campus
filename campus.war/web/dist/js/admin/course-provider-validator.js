@@ -13,7 +13,7 @@
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == "") || (fieldValue == " ") || (fieldValue == null)) ? false : true;
 }
 
 /**
@@ -198,7 +198,8 @@ function vaidateCourseProviderDeatils(form) {
 	var cProviderPassword = $("#cProviderPassword").val();
 	var accountStatus = $("#accountStatus").val();
 	var accountDescription = $("#accountDescription").val();
-
+	
+	var integerPattern = /^[0-9]+$/;
 	var flag = true;
 	
 	if (!isempty(courseProvider)) {
@@ -251,28 +252,27 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('inquiryMail').focus();
 		flag = false;
 	}
-	if (!isempty(areaCode)) {
-		document.getElementById('errorAreaCode').innerHTML = "**Give the area code.(Ex:11, 31, 81)";
-		document.getElementById('areaCode').focus();
-		flag = false;
-	}
-	if (!isempty(land1)) {
+	if (!isempty(land1) !isPatternMatch(integerPattern, land1)) {
 		document.getElementById('errorLand1').innerHTML = "**Land phone number can't be empty.";
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	// if (!isempty(land2)) {
-	// document.getElementById('errorLand2').innerHTML = "**Give a course
-	// provider Unique name.";
-	// document.getElementById('errorLand2').focus();
-	// flag = false;
-	// }
-	// if (!isempty(fax)) {
-	// document.getElementById('errorPrefix').innerHTML = "**Give a course
-	// provider Unique name.";
-	// document.getElementById('errorPrefix').focus();
-	// flag = false;
-	// }
+	 if (isempty(fax) && !isPatternMatch(integerPattern, fax)) {
+		 document.getElementById('errorFax').innerHTML = "**Fax number is not valid.";
+		 document.getElementById('fax').focus();
+		 flag = false;
+		 }
+	 if (!isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+		 document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid.";
+		 document.getElementById('land2').focus();
+		 flag = false;
+		 }
+	if (!isempty(areaCode) || !isPatternMatch(integerPattern, areaCode)) {
+		document.getElementById('errorAreaCode').innerHTML = "**Area code is empty or invalid.(Ex:11, 31, 81)";
+		document.getElementById('areaCode').focus();
+		document.getElementById('errorLand1').innerHTML = "**Area code is invalid.";
+		flag = false;
+	}
 	if (!isempty(networkCode)) {
 		document.getElementById('errorNetworkCode').innerHTML = "**Give the network code.(ex:77,72,71....) ";
 		document.getElementById('errorNetworkCode').focus();
@@ -288,18 +288,6 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorAddress1').focus();
 		flag = false;
 	}
-	// if (!isempty(address2)) {
-	// document.getElementById('errorPrefix').innerHTML = "**Give a course
-	// provider Unique name.";
-	// document.getElementById('errorPrefix').focus();
-	// flag = false;
-	// }
-	// if (!isempty(address3)) {
-	// document.getElementById('errorPrefix').innerHTML = "**Give a course
-	// provider Unique name.";
-	// document.getElementById('errorPrefix').focus();
-	// flag = false;
-	// }
 	if (!isempty(country)) {
 		document.getElementById('errorSelectedCountry').innerHTML = "**Select your country.";
 		document.getElementById('selectedCountry').focus();
@@ -377,7 +365,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
 	}
-	if (!isempty(providerEmail)) {
+	if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail) ) {
 		document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
 		document.getElementById('providerEmail').focus();
 		flag = false;
@@ -412,6 +400,11 @@ function vaidateCourseProviderDeatils(form) {
 //		document.getElementById('accountStatus').focus();
 //		flag = false;
 //	}
+	if(accountDescription.length > 4000){
+		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
+		document.getElementById('accountDescription').focus();
+		
+	}
 
 	return flag;
 }
