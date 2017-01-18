@@ -76,7 +76,7 @@
 .main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
 	{
 	width: 16.66%;
-	text-align: center;
+	text-align: center; 
 	float: left;
 }
 .error-message{
@@ -84,7 +84,7 @@
 }
 </style>
 
-<body onload="getCategoryData();">
+<body>
 	<!-- include Header-->
 	<header class="header"> <jsp:include
 		page="/dist/partials/layout/header.jsp"></jsp:include> </header>

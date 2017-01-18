@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20170102 JH c39-add-course-provider code modified to fix number format exception in course provider town entity
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
+//20170118 JH c39-add-course-provider qa modifications: fixed description not added in course provider account
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -206,9 +207,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement2.setString(2, courseProviderAccount.getUsername());
 			preparedStatement2.setString(3, courseProviderAccount.getPassword());
 			preparedStatement2.setString(4, courseProviderAccount.getEmail());
-			preparedStatement2.setInt(5, courseProviderAccount.getUserType());
-			preparedStatement2.setString(6,courseProviderAccount.getDescription());
-			preparedStatement2.setBoolean(7, courseProviderAccount.isActive());
+			preparedStatement2.setString(5, courseProviderAccount.getDescription());
+			preparedStatement2.setBoolean(6, courseProviderAccount.isActive());
 			preparedStatement2.setInt(8, courseProviderAccount.getUserType());
 			preparedStatement2.setString(9, courseProviderAccount.getCrtBy());
 			preparedStatement2.setString(10, courseProviderAccount.getModBy());
@@ -233,8 +233,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				generatedKey = rs.getInt(1);
 				status = 1;
 				
-				preparedStatement2.setInt(6, generatedKey);
-				// preparedStatement2.setInt(7, 2);
+				preparedStatement2.setInt(7, generatedKey);
 
 				status = preparedStatement2.executeUpdate();
 				
