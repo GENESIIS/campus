@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170107 c6-list-available-institutes-on-the-view Initiated ProgrammeICrud.java
 //20170108 c6-list-available-institutes-on-the-view Declaring new methods
+//DJ 20170118 c124-general-filter-search-programme Declaring wildCardSearchOnProgrammes().
 
 import java.sql.SQLException;
 import java.util.Collection;
