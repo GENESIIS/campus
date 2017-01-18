@@ -233,10 +233,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		try {
 			conn=ConnectionManager.getConnection();			
 			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
-			sb.append(" ( PROG.NAME LIKE ?");//append("'"+keyWord+"'");
-			sb.append(" OR PROG.DESCRIPTION LIKE ?");//.append("'"+keyWord+"'");
-			sb.append(" OR PROG.EMAIL LIKE ?");//.append("'"+keyWord+"'");			
-			sb.append(" ) AND PROGRAMMESTATUS = ? ");			
+			sb.append(" ( PROG.NAME LIKE ?");
+			sb.append(" OR PROG.DESCRIPTION LIKE ?");
+			sb.append(" OR PROG.EMAIL LIKE ? )");			
+			sb.append(" AND PROGRAMMESTATUS = ? ");			
 			
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setString(1, keyWord);
