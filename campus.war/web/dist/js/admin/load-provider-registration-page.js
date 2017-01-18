@@ -334,10 +334,9 @@ function getProviderType() {
 						success : function(response) {
 
 							if (response !== undefined && response !== null) {
-								// message = response.userMessage;
-								window.registerId = response.registerId;
 
 								window.responseErrorMessage = response.userMessage;
+								if (response['registerId'] === 0) {
 
 								if (window.responseErrorMessage != null) {
 									document.getElementById("userMessage").style.display = "block";
@@ -354,15 +353,14 @@ function getProviderType() {
 											$(attributeName).html(val);
 										}
 									}
-									var generatedKey = response.registerId;
-									if (response['registerId'] !== 0) {
+								}else if (response['registerId'] !== 0) {
 										$
 												.ajax({
-													url : '/dist/partials/admin/manageCourseProvider.jsp',
+													url : '/dist/partials/admin/courseProviderManagement.jsp',
 													method : 'POST',
 													data : {
-														'generatedKey' : generatedKey,
-														'userMessage' : 'Upload your images'
+														'generatedKey' : response.registerId,
+														'userMessage' : response.userMessage
 													}
 												});
 

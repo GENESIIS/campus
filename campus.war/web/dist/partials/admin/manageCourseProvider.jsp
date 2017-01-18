@@ -566,9 +566,9 @@
 									<h1 class="pro-name">Account status : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name" id="accountStatusList">
-										<span id="errorStatus" class="error-message">${errorStatus }</span>
+									<h1 class="pro-name" id="accountStatusList">		
 									</h1>
+									<span id="errorStatus" class="error-message">${errorStatus }</span>
 								</div></li>
 							<!-- end -->
 
