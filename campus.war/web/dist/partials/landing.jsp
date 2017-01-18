@@ -177,8 +177,7 @@ function searchFunction(){
 			getProviderCodeList(cpCodeList, generalSearchFlag);
 		},
 		error : function(jqXHR, exception) {
-			var msg = '';
-			alert("general");
+			var msg = '';			
 			if (jqXHR.status === 0) {
 				msg = 'Not connect.\n Verify Network.';
 			} else if (jqXHR.status == 404) {

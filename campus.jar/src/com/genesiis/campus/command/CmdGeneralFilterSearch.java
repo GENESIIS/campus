@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -49,8 +50,8 @@ public class CmdGeneralFilterSearch implements ICommand{
 					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
 					helper.setAttribute("codeList", cpCodeSet);
 				}else if(selectedTypeString.equalsIgnoreCase(TYPE_PROGRAMME)){					
-					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
-					helper.setAttribute("programCodeList", cpCodeSet);
+					final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());
+					helper.setAttribute("programCodeList", programmeCodeSet);
 				}
 			}
 
