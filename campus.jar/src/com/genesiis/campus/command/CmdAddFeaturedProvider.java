@@ -156,8 +156,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
 						
 						SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-						Date parsed = format.parse(expireDate);
-						java.sql.Date sql = new java.sql.Date(parsed.getTime());
+						java.sql.Date sql = java.sql.Date.valueOf(expireDate);;
 				        
 						//set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
