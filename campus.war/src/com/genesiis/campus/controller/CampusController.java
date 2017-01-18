@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 /**
 * Servlet implementation class CampusController
@@ -67,50 +69,116 @@ public class CampusController extends HttpServlet {
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
-		helper = new DataHelper(request,response);
+		helper = new DataHelper(request, response);
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
 
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
-			
-			HttpSession session = request.getSession(false);
-			
-			if(session != null){
-				String name = (String) session.getAttribute("name");
-				session.setMaxInactiveInterval(60 * 60);
- 
-			if (ResponseType.JSP.equals(responseType)) {  
-	
-				request.setAttribute("result", result);
-				request.getRequestDispatcher(helper.getResultPage(cco))
-						.forward(request, response);
-				
-			} else if (ResponseType.JSON.equals(responseType)) {  
 
-				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+			HttpSession session = request.getSession(false);
+
+			
+			//testing WIP
+			// Use the session to get the session context 
+						HttpSessionContext context = session.getSessionContext();
+						// Use the session context to get a list of session IDs
+						Enumeration ids = context.getIds();
+						// Iterate over the session IDs checking for stale sessions
+						while (ids.hasMoreElements()) {
+							String id = (String) ids.nextElement();
+							 session = context.getSession(id);
+							// Invalidate the session if it's more than a day old or has been
+							// inactive for more than an hour.
+							Date dayAgo = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+							Date hourAgo = new Date(System.currentTimeMillis() - 1 * 60 * 1000);
+							Date created = new Date(session.getCreationTime());
+							Date accessed = new Date(session.getLastAccessedTime());
+							if (created.before(dayAgo)) {
+								// out.println("More than a day old, invalidated!");
+								log.info("More than a day old, invalidated!");
+								session.invalidate();
+							} else if (accessed.before(hourAgo)) {
+								// out.println("More than an hour inactive, invalidated!");
+								log.info("More than an hour inactive, invalidated!");
+								session.invalidate();
+							} else {
+								// out.println("Still valid.");
+								log.info("Still valid.");
+							}
+						}
+			
+			
+			//testing WIP
+			
+			if (session != null) {
+				String name = (String) session.getAttribute("name");
+				session.setMaxInactiveInterval(5 * 60);
 				
-				if (result != null && result.getCollection() != null) {					
+				
+				
+				if (ResponseType.JSP.equals(responseType)) {
+
+					request.setAttribute("result", result);
+					request.getRequestDispatcher(helper.getResultPage(cco))
+							.forward(request, response);
+
+				} else if (ResponseType.JSON.equals(responseType)) {
+
+					Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
+					if (result != null && result.getCollection() != null) {
+						objectMap.put("result", result.getCollection());
+					} else {
+						objectMap.put("result", "NO-DATA");
+					}
+
+					Enumeration<String> attributeNames = request
+							.getAttributeNames();
+
+					while (attributeNames.hasMoreElements()) {
+						String currentAttributeName = attributeNames
+								.nextElement();
+						Object object = helper
+								.getAttribute(currentAttributeName);
+						objectMap.put(currentAttributeName, object);
+					}
+
+					response.getWriter().write(gson.toJson(objectMap));
+					response.setContentType("application/json");
+				}
+			} else {
+			
+			//	request.setAttribute("message",SystemMessage.SESSIONEXPIRED.message());
+				
+				//request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
+			//	request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
+				
+				//response.sendRedirect("/dist/partials/login.jsp");
+				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
+				if (result != null && result.getCollection() != null) {
 					objectMap.put("result", result.getCollection());
 				} else {
 					objectMap.put("result", "NO-DATA");
 				}
-				
-				Enumeration<String> attributeNames = request.getAttributeNames();
+
+				Enumeration<String> attributeNames = request
+						.getAttributeNames();
 
 				while (attributeNames.hasMoreElements()) {
-					String currentAttributeName = attributeNames.nextElement();
-					Object object = helper.getAttribute(currentAttributeName);
+					String currentAttributeName = attributeNames
+							.nextElement();
+					Object object = helper
+							.getAttribute(currentAttributeName);
 					objectMap.put(currentAttributeName, object);
 				}
-				
+
 				response.getWriter().write(gson.toJson(objectMap));
 				response.setContentType("application/json");
-			}
-			}else{
-				request.setAttribute("result", SystemMessage.SESSIONEXPIRED.message());
-				request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
+				getServletContext().getRequestDispatcher("/dist/partials/login.jsp");
+				//request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
