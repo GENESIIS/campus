@@ -30,7 +30,7 @@ public enum SystemMessage {
 	MAIL_SUCCESS("Mail successfully submited to your email"),
 	MAIL_UNSUCCESS("Mail Sending failed"),
 	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
-	STUDENT_SUCCESSFULL_CREATTION("Your User account is successfully created. "),
+	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
 	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 
