@@ -31,7 +31,7 @@ public enum SystemMessage {
 	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
 	ACCOUNT_CREATED("User Account Created You Are Good To Go!"),
 	ACCOUNT_NOT_CREATED("User Account Creation Fail"),
-	USER_NAME_EXISTS("Chosen User Name Has Already Taken. Please Choose Another!"),
+	USER_NAME_EXISTS("Chosen User Name Or The Eamil Has been Already Taken. Please Choose Another!"),
 	MAIL_SUCCESS("Mail successfully submited to your email"),
 	MAIL_UNSUCCESS("Mail Sending failed"),
 	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
