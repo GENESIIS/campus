@@ -334,36 +334,40 @@ function getProviderType() {
 
 								window.responseErrorMessage = response.userMessage;
 								if (response['registerId'] === 0) {
+									
+									if (response['userMessage'] !== null) {
+										document.getElementById("userMessage").style.display = "block";
+										$("#userMessage").html(response.userMessage);
 
-								if (response['userMessage'] !== null) {
-									document.getElementById("userMessage").style.display = "block";
-									$("#userMessage")
-											.html(response.userMessage);
-
-									$("#errorAccountStatusValue").html(
-											response.errorAccountStatusValue);
-
-									for ( var key in response) {
-										if (response.hasOwnProperty(key)) {
-											var val = response[key];
-											var attributeName = "#" + key;
-											$(attributeName).html(val);
+										for ( var key in response) {
+											if (response.hasOwnProperty(key)) {
+												var val = response[key];
+												var attributeName = "#" + key;
+												$(attributeName).html(val);
+											}
 										}
 									}
-								}else if (response['registerId'] !== 0) {
-										$
-												.ajax({
-													url : '/dist/partials/admin/courseProviderManagement.jsp',
-													method : 'POST',
-													data : {
-														'generatedKey' : response.registerId,
-														'userMessage' : response.userMessage
-													}
-												});
-
+								} else if (response['registerId'] !== 0) {
+									
+									if (response['userMessage'] !== null) {
+										$("#userMessage").html(response.userMessage);
+									}
+									$( "#basicForm" ).submit();
+									
+									window.location = "/dist/partials/admin/courseProviderManagement.jsp";
+									// $
+									// .ajax({
+									// url :
+									// '/dist/partials/admin/courseProviderManagement.jsp',
+									// method : 'POST',
+									// data : {
+									//														'generatedKey' : response.registerId,
+//														'userMessage' : response.userMessage
+//													}
+//												});
 									
 									}
-								}
+								
 
 							}
 						},
