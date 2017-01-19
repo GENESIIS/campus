@@ -75,6 +75,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		ICrud userTypeDAO = new UserTypeDAO();
 		int userType = 0;
+		int generatedKey = 0;
 		Validator validator = new Validator();
 
 		String systemMessage = null;
@@ -82,7 +83,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 		try {
 
 			int pStatus = 0;
-			int generatedKey = 0;
 			String userTypeString = UserType.FEATURED_COURSE_PROVIDER.getUserType();
 			ArrayList<Collection<String>> userTypeList  = (ArrayList<Collection<String>>) userTypeDAO.findById(userTypeString);
 			
@@ -257,8 +257,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 						} else if (generatedKey ==0) {
 							systemMessage = SystemMessage.NOTADDED.message();
 						}
-
-							helper.setAttribute("registerId", generatedKey);
 								}
 						
 
@@ -278,6 +276,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 			throw exception;
 		} finally {
+			helper.setAttribute("registerId", generatedKey);
 			if (systemMessage != null) {
 				helper.setAttribute("userMessage", systemMessage);
 			}
