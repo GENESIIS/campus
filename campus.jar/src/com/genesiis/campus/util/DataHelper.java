@@ -9,6 +9,7 @@ package com.genesiis.campus.util;
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
 //20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
 // 			due to code review comment by CM
+//20170119 Dn CAMP47 changed the method ArrayList<FileItem> getFiles()  to accept List<FileItem> list insted of List<Objects> list
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -235,7 +236,7 @@ public class DataHelper implements IDataHelper {
 			if (request != null && request.getContentType() != null) {
 				files = new ArrayList<FileItem>();
 				@SuppressWarnings("unchecked")
-				List<Object> list = upload.parseRequest(request);
+				List<FileItem> list = upload.parseRequest(request);
 
 				if (list != null) {
 
