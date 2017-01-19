@@ -63,7 +63,7 @@
 				<tr>
 					<td></td>
 					<td><button class="btn btn-primary btn-block" type="button"
-							name="CCO" id="CCO" value="SLOG" onclick="studentLogin()">Sign
+							name="CCO" id="CCO" value="SLOG" onclick="studentLogin(); resetLoginLabels(); ">Sign
 							in</button></td>
 					<td></td>
 
@@ -87,9 +87,7 @@
 				</tr>
 			</tbody>
 		</table>
-
-
-	</div>
+</div>
 
 	<!-- Footer -->
 	 <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>

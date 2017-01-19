@@ -13,7 +13,7 @@
 <body>
 <!-- 	checked session already created or not, if not redirect to login.jsp -->
 	<c:if test="${sessionScope.currentSessionUser == null}">
-	<% response.sendRedirect("/dist/partials/login.jsp"); %>
+	<% response.sendRedirect("/index.jsp?showLogin=true"); %>
 	</c:if>
 	<!-- logged student details extract from collection of collection and assign to jstl var -->
 		<c:if test="${sessionScope.currentUserData != null}">

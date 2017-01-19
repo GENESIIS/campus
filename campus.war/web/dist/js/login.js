@@ -63,3 +63,9 @@ function studentLogin() {
 
 	}
 }
+
+// reset error message labels 
+function resetLoginLabels() {
+
+	$("#errorMesssage").text("");
+}

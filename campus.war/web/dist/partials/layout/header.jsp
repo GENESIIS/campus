@@ -6,6 +6,7 @@
 <!-- 20161118 JH c7 header page css style changes -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
@@ -17,19 +18,19 @@
 	<div class="bottom">
 		<div class="menu-bar">
 			<div class="home pull-left">
-				<a href="/index.jsp" class="btn-home center-block"></a>
+				<a href="index.jsp" class="btn-home center-block"></a>
 			</div>
 			<!-- End home button -->
 			<div class="menu-tabs clearfix">
 				<!-- Main menu tabs -->
 				<div class="top-menus">
 					<ul class="list-inline">
-						<li><a href="dist/partials/courses.jsp">All Courses</a></li>
-						<li><a href="dist/partials/about-us.jsp">About Us</a></li>
-						<li><a href="dist/partials/contact-us.jsp">Contact Us</a></li>
-						<li><a href="dist/partials/news.jsp">News</a></li>
-						<li><a href="dist/partials/f-and-q.jspl">F & Q</a></li>
-						<li><a href="dist/partials/rss.jsp">Rss</a></li>
+						<li><a href="/dist/partials/courses.jsp">All Courses</a></li>
+						<li><a href="/dist/partials/about-us.jsp">About Us</a></li>
+						<li><a href="/dist/partials/contactUs.jsp">Contact Us</a></li>
+						<li><a href="/dist/partials/news.jsp">News</a></li>
+						<li><a href="/dist/partials/f-and-q.jsp">F & Q</a></li>
+						<li><a href="/dist/partials/rss.jsp">RSS</a></li>
 					</ul>
 				</div>
 				<!-- End Main menu tabs -->
@@ -44,26 +45,20 @@
 						href="javascript:" class="colr-white"></a>
 				</div>
 				<!-- End Keyword Search -->
-				
+
 				<div class="login-link">
 					<c:if test="${sessionScope.currentSessionUser == null}">
-						<a href="dist/partials/login.jsp" class="colr-white">Login</a>
+						<a class="btn btn-link colr-white" data-toggle="modal"
+							data-target="#loginPopup"> Login </a>
 					</c:if>
 					<c:if test="${sessionScope.currentSessionUser != null}">
 						<h3>Hi ${sessionScope.user}, Login successful.</h3>
-						<a href="/dist/partials/student/SessionDataLoader.jsp">
-							Session details checker Script lets</a>
-						<br>
-						<a href="/dist/partials/student/SessionDetailsJSTL.jsp">
-							Session details checker JSTL</a>
-						<br>
-						<a href="dist/partials/login.jsp">Logout</a>
+						<a class="btn btn-link colr-white" href="dist/partials/login.jsp">Logout</a>
 					</c:if>
 				</div>
 			</div>
 			<!-- End keyword search -->
 		</div>
 	</div>
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
 </header>
-</body>
-</html>

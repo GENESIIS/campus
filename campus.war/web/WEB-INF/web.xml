@@ -13,4 +13,7 @@
     <param-name>user</param-name>
     <param-value>25</param-value>
   </context-param>
+  <listener>
+		<listener-class>com.genesiis.campus.util.SessionCounterListener</listener-class>
+	</listener>
 </web-app>
