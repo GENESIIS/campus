@@ -7,7 +7,7 @@
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
 theNewScript.src = "../../dist/js/institute/validation/validation.js";
-//var execute=true;
+var execute=true;
 
 $(document).ready(function() {
 	
@@ -116,11 +116,12 @@ function postFilesData(dataForm)
 //    data: {
 //		'formData':	dataForm
 //	},
+    enctype: 'multipart/form-data',
     cache: false,
     processData: false,
-   // contentType:false,
-    mimetyep: 'multipart/form-data', //****** added
-    contentType: 'multipart/form-data',
+    contentType: false,
+  //mimetyep: 'multipart/form-data', //****** added
+   //contentType: 'multipart/form-data',
   // contentType: 'multipart/mixed stream',
    success:function(response){
 			
