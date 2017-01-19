@@ -250,15 +250,6 @@ function displayProviderTownList() {
 	townNames.html(singleTownElement);
 }
 
-// $(document).ready(function(){
-// $('#basicForm').submit(function (e) {
-// e.preventDefault();
-// // Do something...
-// // $('#weber-form').submit();
-//    
-// });
-// });
-
 function landPhoneNubmerHelper() {
 	var country = $("#country-List :selected").val();
 	var areaCode = $("#areaCode").val();
@@ -277,29 +268,28 @@ function landPhoneNubmerHelper() {
 		
 	} else if(isempty(country) && !isPatternMatch(integerPattern, areaCode)){
 
-//		document.getElementById('errorLand1').innerHTML = "Select the country and give the area code.";
-//		document.getElementById('landNumber2').innerHTML = "Select the country and give the area code.";
-//		document.getElementById('faxNumber').innerHTML = "Select the country and give the area code.";
-
 			document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
 			document.getElementById('errorLand1').innerHTML = "";
 			document.getElementById('landNumber1').innerHTML = "**Area code is invalid.";
 			document.getElementById('landNumber2').innerHTML = "**Area code is invalid.";
 
 	} else {
-		
+		document.getElementById('errorAreaCode').innerHTML = "";
+		if (isPatternMatch(integerPattern, land1)) {
 			var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
-			var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
-			var lastMobilNumber = "+" + country + " " + networkCode + " "
-					+ mobile;
-
-			document.getElementById('errorAreaCode').innerHTML = "";
 			document.getElementById('errorLand1').innerHTML = "";
 			document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+		}
+		if (isPatternMatch(integerPattern, land2)) {
+			var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
 			document.getElementById('landNumber2').innerHTML = lastLandNumber2;
+		}
+		if (isPatternMatch(integerPattern, mobile)) {
+			var lastMobilNumber = "+" + country + " " + networkCode + " "
+					+ mobile;
 			document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
 		}
-	
+	}
 
 }
 function getProviderType() {
