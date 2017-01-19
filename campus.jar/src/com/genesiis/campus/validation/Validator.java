@@ -17,6 +17,7 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
+import com.sun.org.apache.regexp.internal.recompile;
 
 public class Validator {
 
@@ -91,6 +92,22 @@ public class Validator {
 	}
 	
 	/**
+	 * isValidLength method created to validate the length of the parameter
+	 * against the length value passed to the method
+	 * @param parameter
+	 * @param length
+	 * @return boolean true if the length is valid else false
+	 * @author JH
+	 */
+	public static boolean isValidLength(String  parameter, int length){
+		boolean flag = true;
+		if((parameter.length() > length) || parameter.length() == 0){
+			flag = false;
+		}		
+		return flag;
+	}
+	
+	/**
 	 * @author JH
 	 * @param helper
 	 * @return ArryList of type of String
@@ -104,33 +121,37 @@ public class Validator {
 		if(isEmptyString(helper.getParameter("courseProvider"))){
 			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerName"))){
-			helper.setAttribute("errorProviderName", "Name can't be empty");
+		}if(!isValidLength(helper.getParameter("providerName"), 200 )){
+			helper.setAttribute("errorProviderName", "Name is empty or too long");
 			errorString.add("Provider Name ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("shortName"))){
-			helper.setAttribute("errorShortName", "Give a short name");
+		}if(!isValidLength(helper.getParameter("shortName"), 30)){
+			helper.setAttribute("errorShortName", "Short name is empty or too long");
 			errorString.add("Short Name ");
 			isValid = false;
-		}if(isEmptyString(helper.getParameter("uniquePrefix"))){
-			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
-			errorString.add("Unique Name ");
-			isValid = false;
-		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() >6)){
-				helper.setAttribute("errorUniquePrefix", "Unique name is too long");
+		}
+//		if(isEmptyString(helper.getParameter("uniquePrefix"))){
+//			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
+//			errorString.add("Unique Name ");
+//			isValid = false;
+//		}
+		if(!isValidLength(helper.getParameter("uniquePrefix"), 20)){
+				helper.setAttribute("errorUniquePrefix", "Unique name is empty or too long");
 				isValid = false;
-		}if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() <2)){
-			helper.setAttribute("errorUniquePrefix", "Unique name is too small");
-			isValid = false;
-	}if(isEmptyString(helper.getParameter("aboutMe"))){
+		}
+//		if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() <2)){
+//			helper.setAttribute("errorUniquePrefix", "Unique name is too small");
+//			isValid = false;
+//	}
+		if(isEmptyString(helper.getParameter("aboutMe"))){
 			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
 			isValid = false;
+		}if(!isEmptyString(helper.getParameter("specialFeatures")) && helper.getParameter("specialFeatures").length()>100){
+			helper.setAttribute("errorSpecialFeatures", "Description is too long.");
+			errorString.add("About Me ");
+			isValid = false;
 		}
-//		if(isEmptyString(helper.getParameter("specialFeatures"))){
-//			courseProvider.setSpeciality("-");
-//		}if(!isEmptyString(helper.getParameter("specialFeatures"))){
-
 		if(isEmptyString(helper.getParameter("expirationDate"))){
 			helper.setAttribute("errorExpirationDate", "Select an expiration date");
 			errorString.add("Expiration Date ");
