@@ -7,24 +7,13 @@
     window.usernameFlag =true;
     
 /**
- * 
+ * @author JH
  * @param fieldValue
  *            it is the value of a document element
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-//	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
-//	
-//	return (fieldValue.trim() == "")  ? false : true;
-	
-	if((fieldValue == "") || (fieldValue == null)){
-		return false;
-	}else if(fieldValue.trim() == ""){
-		return false;
-	}
-	else{
-		return true;
-	}
+	return ((fieldValue.trim() == "") || (fieldValue == null) )? false : true;
 }
 
 /**
@@ -61,6 +50,16 @@ function isValidEmailFormat(email) {
 function isPatternMatch(regularExpression, source) {
 	return regularExpression.test(source);
 
+}
+
+/**
+ * @author JH
+ * @param parameter
+ * @param length
+ * @returns boolean true if length is valid else falses
+ */
+function isValidLength(parameter, length){
+	return (parameter > length) ? false : true;
 }
 
 function providerUsernameValidation() {
@@ -131,9 +130,10 @@ function providerPrefixValidation() {
 		document.getElementById('uniquePrefix').focus();
 		return false;
 	} else if (selectedPrefix.length < 2) {
+			document.getElementById('prefixMessage').value = "";
 			document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
 			return false;
-	} else if (selectedPrefix.length > 6) {
+	} else if (selectedPrefix.length > 20) {
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
 		return false;
 } else {
@@ -224,18 +224,18 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('courseProvider').focus();
 		flag = false;
 	}
-	if (!isempty(providerName)) {
-		document.getElementById('errorProviderName').innerHTML = "**Give a course provider name.";
+	if (!isempty(providerName) || !isValidLength(providerName, 200)) {
+		document.getElementById('errorProviderName').innerHTML = "**Provider name is empty or too long.";
 		document.getElementById('providerName').focus();
 		flag = false;
 	}
-	if (!isempty(uniquePrefix)) {
-		document.getElementById('errorUniquePrefix').innerHTML = "**Give course provider Unique name.";
+	if (!isempty(uniquePrefix) || isValidLength(uniquePrefix, 20)) {
+		document.getElementById('errorUniquePrefix').innerHTML = "**Empty or too long unique name.";
 		document.getElementById('uniquePrefix').focus();
 		flag = false;
 	}
-	if (!isempty(shortName)) {
-		document.getElementById('errorShortName').innerHTML = "**Give a short name.";
+	if (!isempty(shortName) || shortName.length > 30) {
+		document.getElementById('errorShortName').innerHTML = "**Short name is empty or too long.";
 		document.getElementById('shortName').focus();
 		flag = false;
 	}
@@ -244,13 +244,13 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('aboutMe').focus();
 		flag = false;
 	}
-	if (!isempty(specialFeatures)) {
-		document.getElementById('errorSpecialFeatures').innerHTML = "**Give special features.";
+	if (!isempty(specialFeatures) || isValidLength(specialFeatures, 100)) {
+		document.getElementById('errorSpecialFeatures').innerHTML = "**Only 100 characters allowed.";
 		document.getElementById('specialFeatures').focus();
 		flag = false;
 	}
-	if (!isempty(generalEmail)) {
-		document.getElementById('errorGeneralEmail').innerHTML = "**General email field can't be empty.";
+	if (!isempty(generalEmail) || isValidLength(generalEmail, 255)) {
+		document.getElementById('errorGeneralEmail').innerHTML = "**General email field is empty or too long.";
 		document.getElementById('generalEmail').focus();
 		flag = false;
 	}
@@ -259,8 +259,8 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('generalEmail').focus();
 		flag = false;
 	}
-	if (!isempty(inquiryMail)) {
-		document.getElementById('errorInquiryMail').innerHTML = "**Give an inquiry email.";
+	if (!isempty(inquiryMail) || isValidLength(inquiryMail, 255)) {
+		document.getElementById('errorInquiryMail').innerHTML = "**Empty or too long inquiry mail.";
 		document.getElementById('errorInquiryMail').focus();
 		flag = false;
 	}
