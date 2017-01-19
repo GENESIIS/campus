@@ -260,24 +260,29 @@ function landPhoneNubmerHelper() {
 	
 	var integerPattern = /^[0-9]+$/;
 
+	var errorMessageList = document.getElementsByClassName('number-helper');
+
+	// clear all previous error messages related to phone number
+	for (var i = 0; i < errorMessageList.length; i++) {
+		errorMessageList[i].innerHTML = "";
+	}
 	if (!isempty(country)) {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
 		document.getElementById('landNumber2').innerHTML = "**Please select your country.";
 		document.getElementById('lastMobileNumber').innerHTML = "**Please select your country.";
 		
-	} else if(isempty(country) && !isPatternMatch(integerPattern, areaCode)){
+	} else if(isempty(country) && (!isPatternMatch(integerPattern, areaCode) || !isPatternMatch(integerPattern, networkCode))){
 
 			document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
-			document.getElementById('errorLand1').innerHTML = "";
 			document.getElementById('landNumber1').innerHTML = "**Area code is invalid.";
 			document.getElementById('landNumber2').innerHTML = "**Area code is invalid.";
+			document.getElementById('lastMobileNumber').innerHTML = "**Mobile network code is invalid. Only numbers allowed.";
 
 	} else {
 		document.getElementById('errorAreaCode').innerHTML = "";
 		if (isPatternMatch(integerPattern, land1)) {
 			var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
-			document.getElementById('errorLand1').innerHTML = "";
 			document.getElementById('landNumber1').innerHTML = lastLandNumber1;
 		}
 		if (isPatternMatch(integerPattern, land2)) {
@@ -288,6 +293,8 @@ function landPhoneNubmerHelper() {
 			var lastMobilNumber = "+" + country + " " + networkCode + " "
 					+ mobile;
 			document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+		}else{
+			
 		}
 	}
 
@@ -328,7 +335,7 @@ function getProviderType() {
 								window.responseErrorMessage = response.userMessage;
 								if (response['registerId'] === 0) {
 
-								if (window.responseErrorMessage != null) {
+								if (response['userMessage'] !== null) {
 									document.getElementById("userMessage").style.display = "block";
 									$("#userMessage")
 											.html(response.userMessage);
