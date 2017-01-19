@@ -101,12 +101,10 @@
 			</div>
 		</div>
 		<!-- end inner header -->
-		<form action="/AdminController" method="POST" id="basicForm">
+		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="POST" id="basicForm">
 			<!-- Page content -->
 
-
-			<input type="hidden" name="CCO" id="CCO"
-				value="ADD_FEATURED_COURSE_PROVIDER" />
+				<input type="hidden" name="generatedId" id="generatedId" value=""/>
 			<div class="content-holder center-block clearfix">
 					<div class="alert alert-danger" role="alert" id="userMessage">
 					</div>
@@ -493,7 +491,7 @@
 					<!-- End filter result table -->
 				</div>
 				<!-- End left panel -->
-				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="" />
+				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel" id="accountInfo">
 					<h3 style="color: maroon;">Account Info</h3>

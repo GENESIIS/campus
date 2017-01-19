@@ -102,11 +102,7 @@
 				<!-- Filter result table -->
 				<div class="filter-result-table">
 					<ul class="result-row">
-						<li><form action="/dist/partials/admin/manageCourseProvider.jsp" method="POST">
-								<input type="hidden" name="CCO" id="CCO"
-									value="LIST_PROVIDER_REGISTRATION_PAGE" /> <input
-									type="submit" value="Course Porovider" class="btn btn-info" />
-							</form></li>
+						<li></li>
 					</ul>
 				</div>
 			</div>
