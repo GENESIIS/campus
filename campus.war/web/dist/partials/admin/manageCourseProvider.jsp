@@ -260,29 +260,29 @@
 								<div class="col-name">
 									<input class="input" type="text" name="areaCode" id="areaCode"
 										onkeyup="landPhoneNubmerHelper();" size="25px;" /> <span
-										id="errorAreaCode" class="error-message">${errorAreaCode }</span>
+										id="errorAreaCode" class="error-message number-helper">${errorAreaCode }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Land Number 1 : <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">Land Phone 1 : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land1" id="land1"
 										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand1" class="error-message">${errorLand1 }</span> <span
-										id="landNumber1" style="color: blue;"></span>
+										id="errorLand1" class="error-message number-helper">${errorLand1 }</span> <span
+										id="landNumber1" style="color: blue;" class="number-helper"></span>
 								</div>
 							</li>
 							<!-- end -->
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Land Number 2 :</h1>
+									<h1 class="pro-name">Land Phone 2 :</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="land2" id="land2"
 										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand2" class="error-message">${errorLand2 }</span> <span
-										id="landNumber2" style="color: blue;"></span>
+										id="errorLand2" class="error-message number-helper">${errorLand2 }</span> <span
+										id="landNumber2" style="color: blue;" class="number-helper"></span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Fax Number :</h1>
@@ -290,9 +290,9 @@
 								<div class="col-name">
 									<input class="input" type="text" name="fax" id="fax"
 										size="25px;" /> <span id="errorFax"
-										class="error-message">${errorFax }</span>
+										class="error-message number-helper">${errorFax }</span>
 										<span
-										id="faxNumber" style="color: blue;"></span>
+										id="faxNumber" style="color: blue;" class="number-helper"></span>
 								</div>
 							</li>
 							<!-- end -->
@@ -305,7 +305,7 @@
 									<input class="input" type="text" name="networkCode"
 										id="networkCode" size="25px;"
 										onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorNetworkCode" class="error-message">${errorNetworkCode }</span>
+										id="errorNetworkCode" class="error-message number-helper">${errorNetworkCode }</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Mobile Number : <span style="color: red;">*</span></h1>
@@ -313,8 +313,8 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorMobile" class="error-message">${errorMobile }</span>
-									<span id="lastMobileNumber" style="color: blue;"></span>
+										id="errorMobile" class="error-message number-helper">${errorMobile }</span>
+									<span id="lastMobileNumber" style="color: blue;" class="number-helper"></span>
 								</div>
 
 							</li>
