@@ -387,8 +387,8 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerStatus').focus();
 		flag = false;
 	}
-	if (!isempty(providerPrivateName)) {
-		document.getElementById('errorPrivateName').innerHTML = "**Give a private contact name of the course provider.";
+	if (!isempty(providerPrivateName) || isValidLength(providerPrivateName, 100)) {
+		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
 	}
@@ -397,29 +397,29 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerEmail').focus();
 		flag = false;
 	}
-	if (!isempty(providerUsername)) {
-		document.getElementById('errorUsername').innerHTML = "**Give a username.";
+	if (!isempty(providerUsername) || isValidLength(providerUsername, 100)) {
+		document.getElementById('errorUsername').innerHTML = "** Username is empty or too long.";
 		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
-	if (!isempty(providerPassword)) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Password is empty.";
+	if (!isempty(providerPassword) ||  !isempty(cProviderPassword)) {
+		document.getElementById('errorProviderPassword').innerHTML = "**Password field(s) is empty.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
-	}if (isempty(providerPassword) && providerPassword.length <6) {
+	}if (isempty(providerPassword) && providerPassword.length <6 ) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
 		document.getElementById('providerPassword').focus();
-		flag = false;
-	}
-	if ((isempty(providerPassword) || providerPassword.length <6) && !isempty(cProviderPassword)) {
-		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password is empty.";
-		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
 	if((isempty(providerPassword) || providerPassword.length <6) && !isempty(cProviderPassword)
 			&& (providerPassword != cProviderPassword)){
 		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
 		document.getElementById('cProviderPassword').focus();
+		flag = false;
+	}
+	if (isValidLength(providerPassword, 100) || isValidLength(cProviderPassword, 100)) {
+		document.getElementById('errorProviderPassword').innerHTML = "**Password is too long.";
+		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
 	if (accountStatus === null || accountStatus === undefined ) {
