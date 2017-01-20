@@ -2,8 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:useBean id="applicationStatusBean"
-	class="com.genesiis.campus.validation.ApplicationStatusBean" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -96,7 +95,24 @@
 		
 		<!-- Page content -->
 		<form action="/AdminController" method="POST" id="basicForm">
+			<table class="table">
+			<tr>
+			<th>Code</th>
+			<th>Name</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Land Phone number</th>
+			<th>Mobile phone number</th>
+			<th>Address</th>
+			<th>Town</th>
+			<th>Country Code</th>
+			<th>Country</th>
+			<th>Approval status</th>
+			<th>Status</th>
+			</tr>
 			
+			<tbody   id="tutor-list"></tbody>
+			</table>
 
 		</form>
 
