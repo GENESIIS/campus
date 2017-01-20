@@ -373,9 +373,9 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 
 	/**
 	 * Get all course provider type details by course provider type codes
-	 * @param cpTypeSet
+	 * @param cpTypeSet Set of course provider type code 
 	 * @author DJ
-	 * @return Collection 
+	 * @return Collection of course provider list
 	 */
 	@Override
 	public Collection<Collection<String>> findCPTypesByCPTypeCodes(final Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
@@ -423,9 +423,9 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 
 	/**
 	 * Get all course provider light collection
-	 * @param 
+	 * @param providerSearchDTO
 	 * @author DJ
-	 * @return Collection 
+	 * @return Collection of provider list
 	 */
 	@Override
 	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO) throws SQLException,
