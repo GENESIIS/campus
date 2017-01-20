@@ -34,6 +34,8 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.UserType;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 public class FeaturedCourseProviderDAO implements ICrud {
 
@@ -205,7 +207,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement2 = conn.prepareStatement(account);
 			preparedStatement2.setString(1, courseProviderAccount.getName());
 			preparedStatement2.setString(2, courseProviderAccount.getUsername());
-			preparedStatement2.setString(3, courseProviderAccount.getPassword());
+			Encryptable passwordEncryptor = new TripleDesEncryptor(courseProviderAccount.getPassword());			
+			preparedStatement2.setString(3, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement2.setString(4, courseProviderAccount.getEmail());
 			preparedStatement2.setString(5, courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(6, courseProviderAccount.isActive());
