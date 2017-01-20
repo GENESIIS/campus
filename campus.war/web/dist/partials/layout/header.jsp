@@ -53,7 +53,7 @@
 					</c:if>
 					<c:if test="${sessionScope.currentSessionUser != null}">
 						<h3>Hi ${sessionScope.user}, Login successful.</h3>
-						<a class="btn btn-link colr-white" href="dist/partials/login.jsp">Logout</a>
+						<a class="btn btn-link colr-white" href="/dist/partials/login.jsp">Logout</a>
 					</c:if>
 				</div>
 			</div>
