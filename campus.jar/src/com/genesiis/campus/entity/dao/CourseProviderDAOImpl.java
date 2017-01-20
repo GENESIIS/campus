@@ -75,42 +75,8 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
-		Connection conn = null;
-		PreparedStatement  stmt = null;	
-		ResultSet resultSet =null;
-		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
-		
-		/*try {
-			conn=ConnectionManager.getConnection();
-			int categoryCode=0;
-			if(UtilityHelper.isNotEmptyObject(code)){
-				final CourseProviderSearchDTO cp = (CourseProviderSearchDTO) code;
-				categoryCode = cp.getCategory();
-				}			
-			//categorystatus=1 and courseproviderstatus=1 ; this can be change in future.
-			final StringBuilder sb = new StringBuilder("SELECT DISTINCT PROV.CODE AS CPCODE, PROV.NAME AS CPNAME ");
-			sb.append("FROM [CAMPUS].COURSEPROVIDER PROV  INNER JOIN [CAMPUS].PROGRAMME PROG  ON  PROV.CODE=PROG.COURSEPROVIDER ");
-			sb.append("INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE WHERE ");
-			sb.append("PROG.CATEGORY=CAT.CODE AND PROV.COURSEPROVIDERSTATUS=? ");	
-			sb.append("AND CAT.ISACTIVE=? AND CAT.CODE=?");			
-			 
-			stmt = conn.prepareStatement(sb.toString());
-			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
-			stmt.setInt(3, categoryCode);
-			resultSet= stmt.executeQuery();
-			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
-			
-		} catch (SQLException sqlException) {
-			log.info("findById() sqlException" + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("findById() Exception" + e.toString());
-			throw e;
-		} finally {
-			DaoHelper.cleanup(conn, stmt, resultSet);
-		}*/
-		return allProviderList;
+		// TODO Auto-generated method stub		
+		return null;
 	}
 
 	@Override
@@ -531,15 +497,16 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	@Override
 	public Set<Integer> wildCardSearchOnCourseProvider(String keyWord) throws SQLException, Exception {			
 		CallableStatement callableStatement = null;
-		Connection con = null;
+		Connection conn = null;
+		ResultSet resultSet =null;
 		final Set<Integer> providerCode=new HashSet<Integer>();		
 		try {			
-			con = ConnectionManager.getConnection();			
-			callableStatement = con.prepareCall("{call campus.sp_getcourseprovider(?)}");			
+			conn = ConnectionManager.getConnection();			
+			callableStatement = conn.prepareCall("{call campus.sp_getcourseprovider(?)}");			
 			callableStatement.setString(1, keyWord);
-			ResultSet rs = callableStatement.executeQuery();
-			while(rs.next()){				
-				providerCode.add(Integer.valueOf(rs.getString("CPCODE")));
+			resultSet = callableStatement.executeQuery();
+			while(resultSet.next()){				
+				providerCode.add(Integer.valueOf(resultSet.getString("CPCODE")));
 			}			
 		}  catch (SQLException sqlException) {
 			log.info("wildCardSearchOnCourseProvider() sqlException" + sqlException.toString());
@@ -547,6 +514,8 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 		}catch (Exception e) {
 			log.info("wildCardSearchOnCourseProvider() Exception" + e.toString());
 			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, callableStatement, resultSet);
 		}
 		return providerCode;
 	}
