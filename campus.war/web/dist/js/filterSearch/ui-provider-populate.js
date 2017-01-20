@@ -21,6 +21,10 @@ $(document).ready(function() {
 	});
 });
 
+/*
+ * List down all the retrieved course providers. 
+ * */
+
 function getInitialPageResults(catCode,response) {
 
 	var totalCount = 0;
@@ -37,8 +41,6 @@ function getInitialPageResults(catCode,response) {
 						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "  title="'+ y +'" /></div> </a></div> </li>');
 						
 					});
-
-
 
 	var catCount = 0;
 	var eduCategoryList = $("#select-category");
@@ -70,7 +72,9 @@ function getInitialPageResults(catCode,response) {
 	});		
 	$('#districtName').html(htmlstr);
 
-	
+	/*
+	 * Identify the search button click
+	 * */
 	$('#addSearchData').on('click', function(event) {
 		$(this).val();
 		var cpTypeAll = $('#cpTypeAll').is(':checked');
@@ -152,6 +156,7 @@ function getInitialPageResults(catCode,response) {
 
 }
 
+//Populate search results in the page body
 function populateFilterSearchResults(response) {	
 	var providerChoice = $("#providerList");
 	providerChoice.find('li').remove();
@@ -172,6 +177,7 @@ function populateFilterSearchResults(response) {
 	
 }
 
+//Identify the category click
 function categoryClick(event){
 	
 	var catCode=0;
@@ -201,6 +207,7 @@ function categoryClick(event){
 	});
 }
 
+//Populate category wise provider types,levels and majors
 function populateCategoryWiseTypes(response){
 	
 	$("#cpTypeDiv").hide();
@@ -252,7 +259,7 @@ function populateCategoryWiseTypes(response){
 	});
 	$("#levelCount").text(" " +levelCount);
 	
-	//Course provider type check implementation
+	//Course provider type all check implementation
 	$('#cpTypeAll').on('click', function(event) {
 		var cpTypeObj = $("#select-cpType").find('.cpTypeClass');
 		if ($(this).is(":checked")) {
@@ -266,6 +273,8 @@ function populateCategoryWiseTypes(response){
 			
 		}
 	});
+	
+	//Course provider type check implementation
 	$("#select-cpType").find('.cpTypeClass').on('click', function(event) {
 		if ($(this).is(":checked")){
 			var cpTypeObj = $("#select-cpType").find('.cpTypeClass');
@@ -283,7 +292,7 @@ function populateCategoryWiseTypes(response){
 		}		
 	});
 	
-//Major check implementation	
+//Major all check implementation	
 	$('#majorAll').on('click', function(event) {
 		var majorObj = $("#select-major").find('.majorClass');
 		if ($(this).is(":checked")) {
@@ -298,6 +307,7 @@ function populateCategoryWiseTypes(response){
 		}
 	});
 	
+//Major check Implementation
 	$("#select-major").find('.majorClass').on('click', function(event) {
 		if ($(this).is(":checked")){
 			var majorObj = $("#select-major").find('.majorClass');
@@ -315,7 +325,7 @@ function populateCategoryWiseTypes(response){
 		}		
 	});
 	
-//Level check Implementation
+//Level all check Implementation
 	$('#levelAll').on('click', function(event) {
 		var levelObj = $("#select-level").find('.levelClass');
 		if ($(this).is(":checked")) {
@@ -330,6 +340,7 @@ function populateCategoryWiseTypes(response){
 		}
 	});
 	
+//Level check Implementation
 	$("#select-level").find('.levelClass').on('click', function(event) {
 		if ($(this).is(":checked")){
 			var levelObj = $("#select-level").find('.levelClass');
