@@ -19,6 +19,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20161202 c17-provider-criteria-based-filter-search Add new ApplicationStatus mechanism
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
 //DJ 20170119 c6-list-available-institutes-on-the-view Removed unnecessary initialization in findTopViewedProviders() ,findTopRatedProviders()
+//DJ 20170120 c6-list-available-institutes-on-the-view Changed findCPTypesByCPTypeCodes().
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
@@ -371,22 +372,33 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	}
 
 	/**
-	 * Get all course provider type details
-	 * @param 
+	 * Get all course provider type details by course provider type codes
+	 * @param cpTypeSet
 	 * @author DJ
 	 * @return Collection 
 	 */
 	@Override
-	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(final Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
 			
-			stmt=conn.prepareStatement(sql.toString());
+			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
+			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
+			boolean doneOne = false;
+			for (Integer code : cpTypeCodeSet) {
+				if (doneOne) {
+					sb.append(", ");
+				}
+				sb.append(code);
+				doneOne = true;
+			}
+			sb.append(" ) ");
+			
+			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
