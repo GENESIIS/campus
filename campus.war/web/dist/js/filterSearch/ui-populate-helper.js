@@ -314,6 +314,7 @@ function displayDistricts() {
 
 
 function displayDetailsOnLoad() {
+	alert('test');
 	displayCategory();
 }
 

@@ -161,12 +161,15 @@ function searchFunction(){
 	var keyWordString=$("#keyWord").val();	
 	var selectedType= $('input[name=cpRadio]:checked').val();	
 	if(selectedType=='CPROVIDER'){
-		window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);		
+		window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);		
 	}else if(selectedType=='PROGRAMME'){
+		window.location.assign("/dist/partials/courses.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);	
+		
+		
 		 // window.location.replace("/dist/partials/courses.jsp.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
 		//Retrieve programm code list according to search parameters.
 		//This shoud be moved to programe filter search page.
-		$.ajax({
+	/* 	$.ajax({
 			url : '../../PublicController',
 			data : {
 				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROGRAMME',
@@ -194,7 +197,7 @@ function searchFunction(){
 				}
 				alert(msg);
 			}
-		});  
+		}); */  
 	}	
 	 
 }
