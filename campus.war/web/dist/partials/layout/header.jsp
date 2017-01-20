@@ -11,7 +11,7 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="javascript:" class="btn-home center-block"></a>
+                <a href="/index.jsp" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
