@@ -28,7 +28,6 @@
     <script src="../../js/image-slides.js"></script>
     <script src="/dist/js/institute/validation/validation.js"></script>
 	<script src="/dist/js/tutor/tutorUploadImage.js"></script>
-	
 
 </head>
 <body>

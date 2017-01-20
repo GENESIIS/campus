@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //201701010 DN c47-tutor-add-tutor-information-upload-image-dn  isImageWithinSize()/getTutorProfileImageUploadPath()/isImageAccordanceWithSystemRequirement()
 //20170116 DN c47-tutor-add-tutor-information-upload-image-dn  extractDumyObjectFrom() added 
 //     coded wip
+//20170120 DN c47-tutor-add-tutor-information-upload-image-dn  changed the isImageWithinSize()
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,8 +56,6 @@ public class CmdUploadTutorImage implements ICommand {
 		// Variable declaration.
 		JsonArray list = new JsonArray();
 		Gson gson = new Gson();
-		String fileUploadError = "";
-		String fileUploadSuccess = "";
 		Connection con = null;
 		// To store image file path
 		String filePath = "";
@@ -69,6 +68,7 @@ public class CmdUploadTutorImage implements ICommand {
 				
 			} else{
 				
+				getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
 				con = ConnectionManager.getConnection();
 				
 				Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
@@ -235,11 +235,12 @@ public class CmdUploadTutorImage implements ICommand {
 	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con)throws SQLException,FileUploadException,
 	Exception{
 		boolean isFilePassSizeRequirement=false;
+		String[] tutorProfilePicturecapasity =  {tutorProfilePictureSize.toString()};
 		try{
 			long tutorDefaultImageSize=0;
 			//get the image size from the database.
 			ICrud systemConfigDAO = new SystemConfigDAO();
-			Collection<Collection<String>> allovableImageSizeWrapper = systemConfigDAO.findById(tutorProfilePictureSize, con);
+			Collection<Collection<String>> allovableImageSizeWrapper = systemConfigDAO.findById(tutorProfilePicturecapasity, con);
 			
 		
 			Object JhonDoe = asccessInerLoopSingleElement(allovableImageSizeWrapper);
@@ -254,7 +255,7 @@ public class CmdUploadTutorImage implements ICommand {
 			
 			if((files.size()==0)|(files==null)){				
 				isFilePassSizeRequirement= false;
-			}else if(files.get(0).getSize()>=tutorDefaultImageSize){
+			}else if(files.get(0).getSize()<=tutorDefaultImageSize){
 				isFilePassSizeRequirement=true;
 			}
 		}  catch(SQLException exp) {

@@ -1,59 +1,16 @@
 //20161121 DN c47-tutor-add-tutor-information-upload-image-dn created the tutorUploadImage.js
 //20170112 DN c47-tutor-add-tutor-information-upload-image-dn changed the $(document).ready() function and it's inner logic
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
-
-
-
-var theNewScript = document.createElement("script");
-theNewScript.type = "text/javascript";
-theNewScript.src = "../../dist/js/institute/validation/validation.js";
-var execute=true;
+//20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the 
 
 $(document).ready(function() {
-	
-		displayTutorProfileImageAtPageLoad();
+	displayTutorProfileImageAtPageLoad();
 	
 	// disable the upload button
 	$('#upload-button').prop('disabled', true);
-	
-	$('#file-select').on('change', function(event){
-		//
-		if(event!=undefined){
-			
-			event.stopPropagation(); 
-		    event.preventDefault(); 
-		    //var files = event.target.files; 
-		    var form =document.getElementById('file-from'); //**** added 
-		   // var data = new FormData();
-		    var data = new FormData(form);//**** added
-//		    $.each(files, function(key, value)
-//		    {
-//		        data.append(key, value);
-//		    });
-		    
-		    $('#upload-button').prop('disabled', false);  
-		    setTimeout( function(){
-		    	alert("Please upload the image");
-		    	$('#file-from').on('submit',function(data){
-					
-		    		alert("NOrmaly it executes");
-		    		postFilesData(data);
-				    execute = false;
-			});	
-		    	
-			}, 2000);
-		
-		    alert("time execceds");
-   
-		}
-	});
-	
 });
 
 
-/**
-* 
-*/
 
 function displayTutorProfileImageAtPageLoad(){
 	
@@ -98,72 +55,69 @@ function displayLabelMessage(labelid,cssColour,message){
 }
 
 
-function uploadImage(){
-	jQuery('#upload-button').html("Uploading ...").css({'color':'green','font-weight':'bold'});
 
-}
-
-
-
-function postFilesData(dataForm)
-{
+$(document).on('change','#file-select',function(){	
+	//enabling the 'submit' button once the image selection gets changed
+	$('#upload-button').prop('disabled', false);
 	
- $.ajax({
-    url: '../../../TutorController?CCO=USTIMG',
-    type: 'POST',
-    dataType: 'json',
-    data:dataForm,
-//    data: {
-//		'formData':	dataForm
-//	},
-    enctype: 'multipart/form-data',
-    cache: false,
-    processData: false,
-    contentType: false,
-  //mimetyep: 'multipart/form-data', //****** added
-   //contentType: 'multipart/form-data',
-  // contentType: 'multipart/mixed stream',
-   success:function(response){
-			
-		if(response['successCode']===1){
-			alert("Inside success call");
-			displayLabelMessage('displayLabel','green',response['message']);
-//			jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
-			displayTutorProfileImageAtPageLoad();
-			
-		} else{
-			// if the execution success but logically generated error application vice
-			alert("success but successCode<>1");
-			displayLabelMessage('displayLabel','red',response['message']);
-			}
-		
-	},
-	error:function(response,error,errorThrown) {
-		var msg = ajaxErorMessage(response,error,errorThrown);
-	    displayLabelMessage('displayLabel','red',msg);
-	   }
 });
-}
 
+
+
+
+$(document).on('click','#upload-button',function(){
+
+	var reportUpload = $("#file-select").prop("files")[0];
+	var formData = new FormData();
+	formData.append("file", reportUpload);
+	$.ajax({
+	    url: '../../../TutorController?CCO=USTIMG',
+	    type: 'POST',
+	    dataType : "JSON",
+	    data:formData,
+	    cache : false,
+		contentType : false,
+		processData : false,
+	    success:function(response){
+				
+			if(response['successCode']===1){
+				alert("Inside success call");
+				displayLabelMessage('displayLabel','green',response['message']);
+//				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+				displayTutorProfileImageAtPageLoad();
+				
+			} else{
+				// if the execution success but logically generated error application vice
+				alert("success but successCode<>1");
+				displayLabelMessage('displayLabel','red',response['message']);
+				}
+			
+		},
+		error:function(response,error,errorThrown) {
+			var msg = ajaxErorMessage(response,error,errorThrown);
+		    displayLabelMessage('displayLabel','red',msg);
+		   }
+	});
+	
+});
 
 function ajaxErorMessage(response,error,errorThrown){
 	  var msg = '';
-      if (response.status === 0) {
-          msg = 'Not connect.\n Verify Network.';
-          
-      } else if (response.status == 404) {
-          msg = 'Requested page not found. [404]';
-      } else if (response.status == 500) {
-          msg = 'Internal Server Error [500].';
-      } else if (error === 'parsererror') {
-          msg = 'Requested JSON parse failed.';
-      } else if (error === 'timeout') {
-          msg = 'Time out error.';
-      } else if (error === 'abort') {
-          msg = 'Ajax request aborted.';
-      } else {
-          msg = 'Uncaught Error.\n' + response.responseText;
-      }
-      return msg;
+    if (response.status === 0) {
+        msg = 'Not connect.\n Verify Network.';
+        
+    } else if (response.status == 404) {
+        msg = 'Requested page not found. [404]';
+    } else if (response.status == 500) {
+        msg = 'Internal Server Error [500].';
+    } else if (error === 'parsererror') {
+        msg = 'Requested JSON parse failed.';
+    } else if (error === 'timeout') {
+        msg = 'Time out error.';
+    } else if (error === 'abort') {
+        msg = 'Ajax request aborted.';
+    } else {
+        msg = 'Uncaught Error.\n' + response.responseText;
+    }
+    return msg;
 }
-
