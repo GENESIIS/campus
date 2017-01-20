@@ -8,12 +8,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<title>Insert title here</title>
+<!-- Bootstrap & CSS Style-->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
+<link href="/dist/css/style.css" rel="stylesheet">
+<link href="/dist/css/image-slides.css" rel="stylesheet">
+
+<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/js/main.js"></script>
+<script src="/dist/js/header/ui-populate-helper.js"></script>
+
+<title></title>
 </head>
 <body>
+<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
+<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 <!-- 	checked session already created or not, if not redirect to login.jsp -->
 	<c:if test="${sessionScope.currentSessionUser == null}">
-	<% response.sendRedirect("/index.jsp?showLogin=true"); %>
+		
+		<script>
+	//alert("lolowwwwww");
+		$('#msg-popup').modal('show');
+		setTimeout( function(){
+		//	$('#msg-popup').modal('show');
+			window.location.href = 'http://www.campus.dev:8080/index.jsp?showLogin=true'; //this name may have to change depend on actual location of the page "Student Login or public index page"
+<%-- 			<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>
+//alert("lolowwwwww");
+			
+			}, 6000);
+		//$('#loginPopup').modal('show');
+		</script>
+		
+<%-- 	<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>
 	</c:if>
 	<!-- logged student details extract from collection of collection and assign to jstl var -->
 		<c:if test="${sessionScope.currentUserData != null}">

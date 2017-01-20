@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
-
 <!-- Bootstrap & CSS Style-->
 <link href="dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
@@ -28,6 +27,8 @@
 	<!-- End Header -->
 	<header>
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
+			<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 	</header>
 
 	<!-- End Header -->
@@ -44,13 +45,15 @@
 													        sParameterName = sURLVariables[i].split('=');
 						
 							if (sParameterName[1] === 'true') {
+								
 								$('#loginPopup').modal('show');
+								
 							}}
 						});
 	</script>
 	<div class="main-screen clearfix">
 		<div class="content-panel clearfix">
-			<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
+		
 			<div class="main-slider clearfix">
 				<div class="slider-mask clearfix"></div>
 				<!--<ul class="rslides" id="slider1">-->
