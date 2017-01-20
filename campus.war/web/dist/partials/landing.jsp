@@ -8,14 +8,6 @@
 <!-- 20161111 PN c1-campus-landing-page modified the UI to load categories from the DB values dynamically. -->
 <!-- 20170112 DJ c123-general-filter-search-course-provider-MP-dj  searchFunction() Implementation. -->
 
-<script type="text/javascript">
-function searchFunction(){
-	var keyWordString=$("#keyWord").val();	
-	var selectedType= $('input[name=cpRadio]:checked').val();
-    window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
-}
-</script>
-
 <div class="main-screen clearfix">
 	<div class="content-panel clearfix">
 		<div class="main-slider clearfix">
@@ -43,10 +35,6 @@ function searchFunction(){
 				<div class="box-holder center-block">
 					<ul class="list-inline" name="mainCategoryList"
 						id="mainCategoryList">
-
-
-
-
 					</ul>
 				</div>
 
@@ -58,11 +46,21 @@ function searchFunction(){
 	<div class="banner-panel pull-right clearfix">Advertise Here</div>
 </div>
 <!-- jQuery & Other js -->
-	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
-	<script src="/dist/js/main.js"></script>
-	<!-- <script src="/dist/js/filterSearch/general-filter-search.js"></script> -->
-	<!-- <script src="/dist/js/filterSearch/ui-provider-populate.js"></script> -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
+<script type="text/javascript">
+function searchFunction(){
+	var keyWordString=" ";
+	var selectedType=" ";
+	keyWordString=$("#keyWord").val();
+	selectedType=$('input[name=cpRadio]:checked').val();
 	
-	<!-- W3-Include -->
-	<script src="/dist/bower-components/w3/w3data.js"></script>
+	if(selectedType=='CPROVIDER'){
+		window.location.replace("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);		
+	}else {
+		alert("Will load programes \n will implement in cam-124");
+	}
+}
+</script>
