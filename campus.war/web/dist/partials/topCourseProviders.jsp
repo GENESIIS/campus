@@ -42,12 +42,7 @@
 		<div class="provider-list-holder clearfix">
 			<div class="top-list clearfix">
 				<div class="list-header clearfix">
-					<div class="btn-show-all pull-right">
-						<%-- <form action="PublicController" method="post">
-							<input type="hidden" name="categoryCode" value="${categoryCode}" />
-							<button type="submit" name="CCO"
-								value="LIST_ALL_COURSE_PROVIDERS">Show ALL</button>
-						</form> --%>
+					<div class="btn-show-all pull-right">					
 						<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>
 					</div>
 				</div>
@@ -56,7 +51,6 @@
 					<h1 id="toprate">Top Rated</h1>
 					<div class="providers-grid center-block clearfix">
 						<ul id="tRCProviders" class="list-inline clearfix">
-
 						</ul>
 					</div>
 				</div>				
@@ -64,16 +58,10 @@
 					<h1 id="topview">Top Viewed</h1>
 					<div class="providers-grid center-block clearfix">
 						<ul id="tVCProviders" class="list-inline clearfix">
-
 						</ul>
 					</div>
 				</div>
-				<div class="btn-show-all pull-right">
-					<%-- <form action="PublicController" method="post">
-						<input type="hidden" name="categoryCode" value="${categoryCode}" />
-						<button type="submit" name="CCO" value="LIST_ALL_COURSE_PROVIDERS">Show
-							ALL</button>
-					</form> --%>
+				<div class="btn-show-all pull-right">				
 					<a href="/dist/partials/viewMoreCourseProviders.jsp">Show All</a>
 				</div>
 			</div>
@@ -89,8 +77,6 @@
 	<script src="/dist/js/main.js"></script>
 	<script src="/dist/js/topCourseProvider-helper.js"></script>
 
-	<!-- W3-Include -->
-	<script src="/dist/bower-components/w3/w3data.js"></script>
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />
 	<!-- End Footer -->

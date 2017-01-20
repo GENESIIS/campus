@@ -20,6 +20,9 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findCPTypesByCPTypeCodes()
 //DJ 20170115 c123-general-filter-search-course-provider-MP-dj Implemented wildCardSearchOnCourseProvider()
 
+//DJ 20170119 c6-list-available-institutes-on-the-view Removed unnecessary initialization in findTopViewedProviders() ,findTopRatedProviders()
+//DJ 20170120 c6-list-available-institutes-on-the-view Changed findCPTypesByCPTypeCodes().
+
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.model.CourseProviderResultDTO;
@@ -44,7 +47,7 @@ import java.util.Set;
 
 public class CourseProviderDAOImpl implements CourseProviderICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(CourseProviderDAOImpl.class.getName());
+	static Logger log = Logger.getLogger(CourseProviderDAOImpl.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -62,15 +65,7 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	public int delete(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-	
-	/**
-	 * Get category wise course providers
-	 * which only have programmes
-	 * @param category code
-	 * @author DJ
-	 * @return Collection 
-	 */
+	}	
 
 	@Override
 	public Collection<Collection<String>> findById(Object code)
@@ -122,32 +117,26 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	 * @return Collection 
 	 */
 	@Override
-	public Collection<Collection<String>> findTopViewedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
+	public Collection<Collection<String>> findTopViewedProviders(CourseProviderSearchDTO searchDTO) throws SQLException,Exception{
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
 		 Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
-		try {			
-			CourseProviderSearchDTO cProvider=new CourseProviderSearchDTO();
-			if(UtilityHelper.isNotEmptyObject(provider)){
-				cProvider = (CourseProviderSearchDTO) provider;								
-			}else{
-				return allProviderList;
-			}	
+		try {				
 			conn=ConnectionManager.getConnection();	
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 SUM(NEWTABLE.HITCOUNT) AS TOTAL , PROVIDER.CODE  AS CPCODE, PROVIDER.NAME AS CPNAME  FROM (");
 			sb.append(" SELECT COUNT(*) AS HITCOUNT,	PROG.CODE AS PROGRAMMECODE ,PROG.NAME AS PROGRAMMENAME, PROG.COURSEPROVIDER  ");
 			sb.append(" FROM  [CAMPUS].PROGRAMMESTAT PSTAT");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PSTAT.PROGRAMME=PROG.CODE ");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE ");
-			if (cProvider.getCategory()>0) {
+			if (searchDTO.getCategory()>0) {
 				sb.append(" AND CAT.CODE = ");	
-				sb.append(cProvider.getCategory());
+				sb.append(searchDTO.getCategory());
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.NAME,PROG.COURSEPROVIDER ) NEWTABLE ");
 			sb.append(" INNER JOIN  [CAMPUS].[COURSEPROVIDER] PROVIDER ON NEWTABLE.COURSEPROVIDER=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS=  ");
-			sb.append(cProvider.getCourseProviderStatus());
+			sb.append(searchDTO.getCourseProviderStatus());
 			sb.append(" GROUP BY PROVIDER.CODE ,PROVIDER.NAME ORDER BY TOTAL DESC ");
 			
 			stmt = conn.prepareStatement(sb.toString());			
@@ -176,34 +165,27 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	 * @return Collection 
 	 */
 	@Override
-	public Collection<Collection<String>> findTopRatedProviders(CourseProviderSearchDTO provider) throws SQLException,Exception{
+	public Collection<Collection<String>> findTopRatedProviders(CourseProviderSearchDTO searchDTO) throws SQLException,Exception{
 		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
 		
-		try {			
-			CourseProviderSearchDTO cProvider=new CourseProviderSearchDTO();			
-			if(UtilityHelper.isNotEmptyObject(provider)){
-				cProvider = (CourseProviderSearchDTO) provider;
-			}else{
-				return allProviderList;
-			}	
-			conn=ConnectionManager.getConnection();			
-			
+		try {
+			conn=ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder(" SELECT TOP 10 AVG(ISNULL(NEWTABLE.PROGAVERAGE,0)) AS CPAVERAGE , PROVIDER.CODE AS CPCODE ,PROVIDER.NAME AS CPNAME  FROM ( ");
 			sb.append(" SELECT AVG(ISNULL(RAT.RATINGVALUE,0)) AS PROGAVERAGE ,PROG.CODE AS PROGRAMMECODE, PROG.COURSEPROVIDER AS CPCODE ");
 			sb.append(" FROM  [CAMPUS].RATING RAT INNER JOIN [CAMPUS].PROGRAMME PROG  ON  RAT.PROGRAMME=PROG.CODE");
 			sb.append(" INNER JOIN [CAMPUS].CATEGORY CAT ON PROG.CATEGORY=CAT.CODE AND CAT.ISACTIVE= ");
 			sb.append(ApplicationStatus.ACTIVE.getStatusValue());
-			if (cProvider.getCategory()>0) {
+			if (searchDTO.getCategory()>0) {
 				sb.append(" AND CAT.CODE= ");	
-				sb.append(cProvider.getCategory());
+				sb.append(searchDTO.getCategory());
 			}
 			sb.append(" GROUP BY PROG.CODE,PROG.COURSEPROVIDER,CAT.CODE) NEWTABLE");
 			sb.append(" INNER JOIN [CAMPUS].COURSEPROVIDER PROVIDER ON NEWTABLE.CPCODE=PROVIDER.CODE AND PROVIDER.COURSEPROVIDERSTATUS = ");
-			sb.append(cProvider.getCourseProviderStatus());
+			sb.append(searchDTO.getCourseProviderStatus());
 			sb.append(" GROUP BY PROVIDER.CODE,PROVIDER.NAME ORDER BY CPAVERAGE DESC");
 
 			stmt = conn.prepareStatement(sb.toString());			
@@ -248,22 +230,14 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	 * @return Collection 
 	 */
 
-	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO ) throws SQLException,Exception{		
+	public Collection<Collection<String>> findFilterdCourseProviders(CourseProviderSearchDTO providerSearchDTO) throws SQLException,Exception{		
 		Connection conn = null;
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
 		try {
 			int categoryCode=0;
-			boolean isGetAll=false;
-			CourseProviderSearchDTO searchDTO =null;
-			//TODO: Should set filter values
-			if(UtilityHelper.isNotEmptyObject(providerSearchDTO)){
-				searchDTO = (CourseProviderSearchDTO) providerSearchDTO;
-				categoryCode = searchDTO.getCategory();				
-			}else{
-				return allProviderList;
-			}			
+			boolean isGetAll=false;						
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder(" SELECT  DISTINCT PROVIDER.CODE AS CPCODE , PROVIDER.NAME AS CPNAME FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");
@@ -273,10 +247,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			sb.append(" AND PROVIDER.COURSEPROVIDERSTATUS= ");
 			sb.append( ApplicationStatus.ACTIVE.getStatusValue());
 					
-			if (searchDTO.getCategoryList() != null && !searchDTO.getCategoryList().isEmpty()) {
+			if (providerSearchDTO.getCategoryList() != null && !providerSearchDTO.getCategoryList().isEmpty()) {
 				sb.append(" AND PROG.CATEGORY in ( ");
 				boolean doneOne = false;
-				for(Integer code: searchDTO.getCategoryList()){
+				for(Integer code: providerSearchDTO.getCategoryList()){
 					if(doneOne){
 			            sb.append(", ");
 			        }
@@ -285,10 +259,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 				}
 				sb.append(" ) ");
 			}		
-			if (searchDTO.getCpTypeList() != null && !searchDTO.getCpTypeList().isEmpty()) {
+			if (providerSearchDTO.getCpTypeList() != null && !providerSearchDTO.getCpTypeList().isEmpty()) {
 				sb.append(" AND PROVIDER.COURSEPROVIDERTYPE in ( ");
 				boolean doneOne = false;
-				for(Integer code: searchDTO.getCpTypeList()){
+				for(Integer code: providerSearchDTO.getCpTypeList()){
 					if(doneOne){
 			            sb.append(", ");
 			        }
@@ -297,10 +271,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 				}
 				sb.append(" ) ");
 			}
-			if (searchDTO.getLevelList()!=null && !searchDTO.getLevelList().isEmpty() ) {
+			if (providerSearchDTO.getLevelList()!=null && !providerSearchDTO.getLevelList().isEmpty() ) {
 				sb.append(" AND PROG.LEVEL in ( ");
 				boolean doneOne = false;
-				for(Integer code: searchDTO.getLevelList()){
+				for(Integer code: providerSearchDTO.getLevelList()){
 					if(doneOne){
 			            sb.append(", ");
 			        }
@@ -309,10 +283,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 				}
 				sb.append(" ) ");
 			}
-			if (searchDTO.getMajorList()!=null && !searchDTO.getMajorList().isEmpty() ) {
+			if (providerSearchDTO.getMajorList()!=null && !providerSearchDTO.getMajorList().isEmpty() ) {
 				sb.append(" AND PROG.MAJOR in ( ");
 				boolean doneOne = false;
-				for(Integer code: searchDTO.getMajorList()){
+				for(Integer code: providerSearchDTO.getMajorList()){
 					if(doneOne){
 						sb.append(", ");
 					}
@@ -321,14 +295,14 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 				}
 				sb.append(" ) ");
 			}			
-			if (searchDTO.getDistrict() > 0) {
+			if (providerSearchDTO.getDistrict() > 0) {
 				sb.append(" AND DISTRICT.CODE=? ");
 			}
 
 			stmt = conn.prepareStatement(sb.toString());
 		
-			if (searchDTO.getDistrict() > 0) {
-				stmt.setInt(1, searchDTO.getDistrict());			
+			if (providerSearchDTO.getDistrict() > 0) {
+				stmt.setInt(1, providerSearchDTO.getDistrict());			
 			}			
 			resultSet= stmt.executeQuery();
 			allProviderList=getCourseProviderResultSet(resultSet,allProviderList);
@@ -402,22 +376,33 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	}
 
 	/**
-	 * Get all course provider type details
-	 * @param 
+	 * Get all course provider type details by course provider type codes
+	 * @param cpTypeSet Set of course provider type code 
 	 * @author DJ
-	 * @return Collection 
+	 * @return Collection of course provider list
 	 */
 	@Override
-	public Collection<Collection<String>> findCPTypesByCPTypeCodes(Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
+	public Collection<Collection<String>> findCPTypesByCPTypeCodes(final Set<Integer> cpTypeCodeSet) throws SQLException, Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		final Collection<Collection<String>> allCourseProviderTypeList=new ArrayList<Collection<String>>();
 		try {
 			conn=ConnectionManager.getConnection();
-			String sql="SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE WHERE CPTYPE.ISACTIVE=? ";
 			
-			stmt=conn.prepareStatement(sql.toString());
+			final StringBuilder sb = new StringBuilder(" SELECT CPTYPE.CODE AS CPTYPECODE , CPTYPE.NAME AS CPTYPENAME FROM [CAMPUS].COURSEPROVIDERTYPE CPTYPE ");
+			sb.append("	WHERE CPTYPE.ISACTIVE=? AND CPTYPE.CODE IN (");
+			boolean doneOne = false;
+			for (Integer code : cpTypeCodeSet) {
+				if (doneOne) {
+					sb.append(", ");
+				}
+				sb.append(code);
+				doneOne = true;
+			}
+			sb.append(" ) ");
+			
+			stmt=conn.prepareStatement(sb.toString());
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs=stmt.executeQuery();
 			
@@ -428,10 +413,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 				allCourseProviderTypeList.add(singleCPType);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
+			log.info("findCPTypesByCPTypeCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
+			log.info("findCPTypesByCPTypeCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -444,7 +429,7 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 	 * Get all course provider light collection.Basically  course provider code and course provider name.
 	 * @param providerSearchDTO CourseProviderSearchDTO
 	 * @author DJ
-	 * @return Collection 
+	 * @return Collection of provider list
 	 */
 	@Override
 	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO) throws SQLException,
@@ -477,10 +462,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 
 		} catch (SQLException sqlException) {
-			log.info("findById() sqlException" + sqlException.toString());
+			log.info("getLightAllCourseProviders() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById() Exception" + e.toString());
+			log.info("getLightAllCourseProviders() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);

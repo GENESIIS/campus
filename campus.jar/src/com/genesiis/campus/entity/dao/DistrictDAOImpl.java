@@ -19,7 +19,7 @@ import java.util.Collection;
 
 public class DistrictDAOImpl  implements DistrictICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(DistrictDAOImpl.class.getName());
+	static Logger log = Logger.getLogger(DistrictDAOImpl.class.getName());	
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -45,44 +45,11 @@ public class DistrictDAOImpl  implements DistrictICrud{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/**
-	 * Get all DistrictList details
-	 * @param 
-	 * @author DJ
-	 * @return Collection 
-	 */
+	
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		/*Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		final Collection<Collection<String>> allDistrictList=new ArrayList<Collection<String>>();
-		try {
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[PROVINCE],[NAME] FROM [CAMPUS].[DISTRICT] WHERE CODE NOT IN (-1,31);";
-			stmt = conn.prepareStatement(query);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				final ArrayList<String> singleDistrictList = new ArrayList<String>();
-				singleDistrictList.add(rs.getString("CODE"));
-				singleDistrictList.add(rs.getString("PROVINCE"));
-				singleDistrictList.add(rs.getString("NAME"));
-				final Collection<String> singleDistrictCollection = singleDistrictList;
-				allDistrictList.add(singleDistrictCollection);
-			}
-		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
-			throw e;
-		} finally {
-			DaoHelper.cleanup(conn, stmt, rs);
-		}
-		
-		return allDistrictList;*/
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -139,9 +106,7 @@ public class DistrictDAOImpl  implements DistrictICrud{
 				singleDistrictList.add(rs.getString("CODE"));
 				singleDistrictList.add(rs.getString("PROVINCE"));
 				singleDistrictList.add(rs.getString("NAME"));
-
-				final Collection<String> singleDistrictCollection = singleDistrictList;
-				allDistrictList.add(singleDistrictCollection);
+				allDistrictList.add(singleDistrictList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("getAll() sqlException" + sqlException.toString());

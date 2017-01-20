@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public class ProgrammeDAOImpl implements ProgrammeICrud{
 	
-	static org.apache.log4j.Logger log = Logger.getLogger(ProgrammeDAOImpl.class.getName());
+	static Logger log = Logger.getLogger(ProgrammeDAOImpl.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
