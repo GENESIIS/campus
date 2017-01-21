@@ -10,12 +10,61 @@
 //20161222 PN CAM-116: modified ajax method calls to populate UI elements from DB values.
 //20161223 PN CAM-116: removed alert messages from the code.
 //20170109 PN CAM-116: added character replacement code to replace ',' character.
+//20170121 DJ c124-general-filter-search-programme-MP-dj Identify general filter search action
 
 /**
  * This method id to load category details
  */
 
+var keyWordString="";
+var selectedType="";
+var generalSearchFlag="";
+
 $(document).ready(function() {
+	
+	var sPageURL = window.location.search.substring(1);
+	// Get input parameters of general filter search.
+	if (sPageURL != null && sPageURL != "") {
+		var sURLVariables = sPageURL.split('&');
+		for (var i = 0; i < sURLVariables.length; i++) {
+			var sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] == 'keyWord') {
+				keyWordString = sParameterName[1];
+			} else if (sParameterName[0] == 'selectedType') {
+				selectedType = sParameterName[1];
+			}
+		}
+		
+		//Retrieve programm code list according to search parameters.		
+	 	$.ajax({
+			url : '../../PublicController',
+			data : {
+				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROGRAMME',
+				keyWordString : keyWordString,
+				selectedType : selectedType
+			},
+			dataType : "json",
+			success : function(response) {				
+				generalSearchFlag = "TRUE";				
+			},
+			error : function(jqXHR, exception) {
+				var msg = '';			
+				if (jqXHR.status === 0) {
+					msg = 'Not connect.\n Verify Network.';
+				} else if (jqXHR.status == 404) {
+					msg = 'Requested page not found. [404]';
+				} else if (jqXHR.status == 500) {
+					msg = 'Internal Server Error [500].';
+				} else if (exception === 'timeout') {
+					msg = 'Time out error.';
+				} else {
+					msg = 'Internal error is occurred. Please try again.';
+				}
+				alert(msg);
+			}
+		});  
+	}
+	
 	displayDetails();
 	$('#selectAll').attr('checked', false); // Unchecks it	
 	var t = $('#example').DataTable(); 	
