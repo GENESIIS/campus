@@ -1,3 +1,4 @@
+
 /**
  * 20170108 JH c39-add-course-provider course-provider-validator.js created
  * 
@@ -135,6 +136,7 @@ function providerPrefixValidation() {
 			return false;
 	} else if (selectedPrefix.length > 20) {
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
+		document.getElementById('prefixMessage').value = "";
 		return false;
 } else {
 		document.getElementById('errorUniquePrefix').innerHTML = "";
@@ -229,13 +231,13 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerName').focus();
 		flag = false;
 	}
-	if (!isempty(uniquePrefix) || isValidLength(uniquePrefix, 20)) {
+	if (!isempty(uniquePrefix) || !isValidLength(uniquePrefix, 20)) {
 		document.getElementById('errorUniquePrefix').innerHTML = "**Empty or too long unique name.";
 		document.getElementById('uniquePrefix').focus();
 		flag = false;
 	}
-	if (!isempty(shortName) || shortName.length > 30) {
-		document.getElementById('errorShortName').innerHTML = "**Short name is empty or too long.";
+	if (!isValidLength(shortName , 20)) {
+		document.getElementById('errorShortName').innerHTML = "**Short name is too long.";
 		document.getElementById('shortName').focus();
 		flag = false;
 	}
@@ -244,12 +246,12 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('aboutMe').focus();
 		flag = false;
 	}
-	if (!isempty(specialFeatures) || isValidLength(specialFeatures, 100)) {
+	if (isempty(specialFeatures) && !isValidLength(specialFeatures, 100)) {
 		document.getElementById('errorSpecialFeatures').innerHTML = "**Only 100 characters allowed.";
 		document.getElementById('specialFeatures').focus();
 		flag = false;
 	}
-	if (!isempty(generalEmail) || isValidLength(generalEmail, 255)) {
+	if (!isempty(generalEmail) || !isValidLength(generalEmail, 255)) {
 		document.getElementById('errorGeneralEmail').innerHTML = "**General email field is empty or too long.";
 		document.getElementById('generalEmail').focus();
 		flag = false;
@@ -259,7 +261,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('generalEmail').focus();
 		flag = false;
 	}
-	if (!isempty(inquiryMail) || isValidLength(inquiryMail, 255)) {
+	if (!isempty(inquiryMail) || !isValidLength(inquiryMail, 255)) {
 		document.getElementById('errorInquiryMail').innerHTML = "**Empty or too long inquiry mail.";
 		document.getElementById('errorInquiryMail').focus();
 		flag = false;
@@ -274,7 +276,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	if (!isempty(land1) || !isPatternMatch(integerPattern, land1)) {
+	if ( !isPatternMatch(integerPattern, land1)) {
 		document.getElementById('errorLand1').innerHTML = "**Invalid Land phone number.";
 		document.getElementById('land1').focus();
 		flag = false;
@@ -387,7 +389,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerStatus').focus();
 		flag = false;
 	}
-	if (!isempty(providerPrivateName) || isValidLength(providerPrivateName, 100)) {
+	if (!isempty(providerPrivateName) || !isValidLength(providerPrivateName, 100)) {
 		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
@@ -397,7 +399,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerEmail').focus();
 		flag = false;
 	}
-	if (!isempty(providerUsername) || isValidLength(providerUsername, 100)) {
+	if (!isempty(providerUsername) || !isValidLength(providerUsername, 100)) {
 		document.getElementById('errorUsername').innerHTML = "** Username is empty or too long.";
 		document.getElementById('providerUsername').focus();
 		flag = false;
@@ -417,7 +419,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-	if (isValidLength(providerPassword, 100) || isValidLength(cProviderPassword, 100)) {
+	if (cProviderPassword.length >100) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is too long.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
@@ -427,7 +429,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('accountStatus').focus();
 		flag = false;
 	}
-	if(accountDescription.length > 4000){
+	if(!isValidLength(accountDescription, 4000)){
 		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
 		document.getElementById('accountDescription').focus();
 		
