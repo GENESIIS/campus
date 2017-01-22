@@ -22,6 +22,8 @@ var generalSearchFlag="";
 
 $(document).ready(function() {
 	
+	//START- DJ-General filter search-program filter criteria
+	
 	var sPageURL = window.location.search.substring(1);
 	// Get input parameters of general filter search.
 	if (sPageURL != null && sPageURL != "") {
@@ -34,6 +36,7 @@ $(document).ready(function() {
 				selectedType = sParameterName[1];
 			}
 		}
+		generalSearchFlag = "TRUE";	
 		
 		//Retrieve programm code list according to search parameters.		
 	 	$.ajax({
@@ -41,11 +44,12 @@ $(document).ready(function() {
 			data : {
 				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROGRAMME',
 				keyWordString : keyWordString,
-				selectedType : selectedType
+				selectedType : selectedType,
+				generalSearchFlag:generalSearchFlag
 			},
 			dataType : "json",
 			success : function(response) {				
-				generalSearchFlag = "TRUE";				
+				populateProgramResults();			
 			},
 			error : function(jqXHR, exception) {
 				var msg = '';			
@@ -64,6 +68,7 @@ $(document).ready(function() {
 			}
 		});  
 	}
+	//END- DJ-General filter search-program filter criteria
 	
 	displayDetails();
 	$('#selectAll').attr('checked', false); // Unchecks it	
@@ -434,4 +439,10 @@ function getSelectedData(listname, elementName) {
 	return selectedValue;
 }
 
-
+/**
+ * This method is to populate program details in programe filter search body. 
+ */
+function populateProgramResults(){
+	
+	alert("populateProgramResults");
+}
