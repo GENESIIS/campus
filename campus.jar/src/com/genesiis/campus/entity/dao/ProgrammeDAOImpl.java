@@ -3,8 +3,10 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170108 c6-list-available-institutes-on-the-view created ProgrammeDAO.java
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findMajorsByMajorCodes() and findLevelsByLevelCodes()
 //DJ 20170118 c124-general-filter-search-programme Implemented wildCardSearchOnProgrammes().
+//DJ 20170122 c124-general-filter-search-programme Implemented wildCardSearchOnProgrammes(final ProgrammeSearchDTO searchDTO).
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -257,6 +259,72 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}		
 		return programmeCodeSet;	
+	}
+	
+	/**
+	 * Get programme list  related to input key word in general filter search.
+	 * @param searchDTO ProgrammeSearchDTO
+	 * @author DJ dumani
+	 * @return allProgrammeList Collection<Collection<String>>
+	 */
+	public Collection<Collection<String>> wildCardSearchOnProgrammes(final ProgrammeSearchDTO searchDTO) {
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allProgrammeList=new ArrayList<Collection<String>>();
+		
+		try {
+			conn=ConnectionManager.getConnection();			
+			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
+			sb.append(" ( PROG.NAME LIKE ?");
+			sb.append(" OR PROG.DESCRIPTION LIKE ?");
+			sb.append(" OR PROG.EMAIL LIKE ? )");			
+			sb.append(" AND PROGRAMMESTATUS = ? ");			
+			
+			stmt=conn.prepareStatement(sb.toString());
+			stmt.setString(1, searchDTO.getKeyWordString());
+			stmt.setString(2, searchDTO.getKeyWordString());
+			stmt.setString(3, searchDTO.getKeyWordString());
+			stmt.setInt(4, ApplicationStatus.ACTIVE.getStatusValue());
+		    rs=stmt.executeQuery();
+		    /*while (rs.next()) {				
+		    	programmeCodeSet.add(Integer.valueOf(rs.getString("PROGCODE")));				
+			}*/
+		    
+		    while (rs.next()) {
+				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
+				singleProgrammeList.add(rs.getString("CODE"));
+				singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));		
+				//String description = getSubDescription(rs.getString("DESCRIPTION")).replaceAll(",", "##");				
+				//singleProgrammeList.add(description);
+				singleProgrammeList.add(rs.getString("DURATION"));
+				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
+				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
+				singleProgrammeList.add(rs.getString("EXPIRYDATE"));
+				singleProgrammeList.add(rs.getString("PROGRAMMESTATUS"));
+				singleProgrammeList.add(rs.getString("COURSEPROVIDER").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("MAJOR"));
+				singleProgrammeList.add(rs.getString("CATEGORY"));
+				singleProgrammeList.add(rs.getString("LEVEL"));
+				singleProgrammeList.add(rs.getString("CLASSTYPE"));
+				singleProgrammeList.add(rs.getString("PROVIDER").replaceAll(",", "##"));
+				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
+				singleProgrammeList.add(rs.getString("CPCODE"));
+				singleProgrammeList.add(rs.getString("WEBLINK"));
+				//singleProgrammeList.add(formatDecimal(rs.getString("COST")));				
+				allProgrammeList.add(singleProgrammeList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("wildCardSearchOnProgrammes() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("wildCardSearchOnProgrammes() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}		
+		return allProgrammeList;	
 	}
 
 }
