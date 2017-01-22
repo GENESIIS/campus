@@ -17,7 +17,6 @@ import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
-import com.sun.org.apache.regexp.internal.recompile;
 
 public class Validator {
 
