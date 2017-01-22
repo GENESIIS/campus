@@ -272,33 +272,61 @@ function landPhoneNubmerHelper() {
 		document.getElementById('landNumber2').innerHTML = "**Please select your country.";
 		document.getElementById('lastMobileNumber').innerHTML = "**Please select your country.";
 		
-	} else if(isempty(country) && (!isPatternMatch(integerPattern, areaCode) || !isPatternMatch(integerPattern, networkCode))){
+	}else{
+		 if (!isempty(areaCode)) {
+			document.getElementById('landNumber1').innerHTML = "**Area code is empty.";
+			document.getElementById('landNumber2').innerHTML = "**Area code is empty.";
 
-			document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
-			document.getElementById('landNumber1').innerHTML = "**Area code is invalid.";
-			document.getElementById('landNumber2').innerHTML = "**Area code is invalid.";
-			document.getElementById('lastMobileNumber').innerHTML = "**Mobile network code is invalid. Only numbers allowed.";
+		}if(!isempty(networkCode)){
+			document.getElementById('lastMobileNumber').innerHTML = "**Network code is empty.";
+		
+		} else if (isempty(areaCode)) {
+			if (isPatternMatch(integerPattern, areaCode)) {
+				var lastLandNumber1 = "+" + country + " " + areaCode + " "
+						+ land1;
+				var lastLandNumber2 = "+" + country + " " + areaCode + " "
+						+ land2;
 
-	} else {
-		document.getElementById('errorAreaCode').innerHTML = "";
-		if (isPatternMatch(integerPattern, land1)) {
-			var lastLandNumber1 = "+" + country + " " + areaCode + " " + land1;
-			document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
+
+				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
+					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
+				}
+				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
+
+				}
+			} else {
+				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
+				document.getElementById('errorLand2').innerHTML = "Area code invalid.";
+			}
+
+
+		} if(isempty(networkCode)){
+			 if(!isPatternMatch(integerPattern, networkCode)){
+
+				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.(Ex:11, 31, 81)";
+				document.getElementById('lastMobileNumber').innerHTML = "**Invlide network code.";
+
+							
+			 } else if (isPatternMatch(integerPattern, networkCode)) {
+
+				var lastMobilNumber = "+" + country + " " + networkCode + " "
+						+ mobile;
+
+				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
+					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
+				}
+			}
+
 		}
-		if (isPatternMatch(integerPattern, land2)) {
-			var lastLandNumber2 = "+" + country + " " + areaCode + " " + land2;
-			document.getElementById('landNumber2').innerHTML = lastLandNumber2;
-		}
-		if (isPatternMatch(integerPattern, mobile)) {
-			var lastMobilNumber = "+" + country + " " + networkCode + " "
-					+ mobile;
-			document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-		}else{
-			
-		}
+		
 	}
 
 }
+
 function getProviderType() {
 
 	var errorMessageList = document.getElementsByClassName('error-message');
@@ -354,17 +382,18 @@ function getProviderType() {
 									}
 									$( "#basicForm" ).submit();
 									
-									window.location = "/dist/partials/admin/courseProviderManagement.jsp";
-									// $
-									// .ajax({
-									// url :
-									// '/dist/partials/admin/courseProviderManagement.jsp',
-									// method : 'POST',
-									// data : {
-									//														'generatedKey' : response.registerId,
-//														'userMessage' : response.userMessage
-//													}
-//												});
+									window.responseErrorMessage = response.userMessage;
+									//window.location = "/dist/partials/admin/courseProviderManagement.jsp";
+									 $
+									 .ajax({
+									 url :
+									 '/dist/partials/admin/courseProviderManagement.jsp',
+									 method : 'POST',
+									 data : {
+														'generatedKey' : response.registerId,
+														'userMessage' : response.userMessage
+													}
+												});
 									
 									}
 								
