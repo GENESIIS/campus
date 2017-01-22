@@ -27,7 +27,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_MAJOR_DATA, new CmdListMajors());	
 		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());	
 		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROVIDERS, new CmdGeneralFilterSearch());	
-		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME, new CmdGeneralFilterSearch());	
+		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME, new CmdGetSearchData());	
 	}
 
 	@Override

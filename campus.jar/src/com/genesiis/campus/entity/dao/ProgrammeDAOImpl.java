@@ -267,7 +267,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	 * @author DJ dumani
 	 * @return allProgrammeList Collection<Collection<String>>
 	 */
-	public Collection<Collection<String>> wildCardSearchOnProgrammes(final ProgrammeSearchDTO searchDTO) {
+	public Collection<Collection<String>> wildCardSearchOnProgrammes(final ProgrammeSearchDTO searchDTO)throws SQLException, Exception {
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
