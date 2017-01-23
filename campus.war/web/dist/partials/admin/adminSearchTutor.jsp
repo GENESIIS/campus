@@ -19,6 +19,10 @@
 	<!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -118,7 +122,26 @@
 			<tbody ></tbody>
 			</table> -->
 
-<table id="example" class="display" width="100%"></table>
+			<table id="example" class="display" width="100%">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>First Name</th>
+						<th>Middle Name</th>
+						<th>Last Name</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Land Phone number</th>
+						<th>Mobile phone number</th>
+						<th>Address</th>
+						<th>Town</th>
+						<th>Country</th>
+						<th>Approval status</th>
+						<th>Status</th>
+					</tr>
+					</tr>
+				</thead>
+			</table>
 		</form>
 
 	</div>

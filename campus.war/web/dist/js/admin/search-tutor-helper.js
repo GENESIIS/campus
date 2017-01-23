@@ -22,29 +22,26 @@ function listAllTutors(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
-			    $('#example').DataTable( {
-			        data: window.tutorList,
-			        columns: [
-			            { title: "CODE" },
-			            { title: "FIRSTNAME" },
-			            { title: "MIDDLENAME" },
-			            { title: "LASTNAME." },
-			            { title: "USERNAME" },
-			            { title: "EMAIL" },
-			            { title: "DIALCODE" },
-			            { title: "LANDPHONEAREACODE" },
-			            { title: "LANDPHONENUMBER" },
-			            { title: "MOBILEPHONENETWORKCODE" },
-			            { title: "MOBILEPHONENUMBER" },
-			            { title: "ISAPPROVED" },
-			            { title: "ADDRESS1" },
-			            { title: "ADDRESS2" },
-			            { title: "ADDRESS3" },
-			            { title: "TOWNNAME" },
-			            { title: "COUNTRY" },
-			            { title: "TUTORSTATUS" }
-			        ]
-			    } );
+				    $('#example').DataTable({
+					data : window.tutorList,
+					  columns : [
+				                   {data: 0},
+				                   {data: 1},
+				                   {data: 2},
+				                   {data: 3},
+				                   {data: 4},
+				                   {data: 5},
+				                   {data: 8},
+				                   {data: 10},
+				                   {data: 14},
+				                   {data: 15},
+				                   {data: 16},
+				                   {data: 11},
+				                   {data: 17}            
+				                   
+				                   ]
+
+				});
 			}
 		},
 	});
