@@ -18,7 +18,7 @@
 		</div>
 		<!-- End Main slider -->
 		<div class="search-area clearfix">
-			<div class="main-search-bar center-block clearfix">
+			<!-- <div class="main-search-bar center-block clearfix">
 				<div class="bar-holder center-block clearfix">
 					<input class="center-block" type="text" id="keyWord" name="keyWord"
 						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
@@ -30,8 +30,9 @@
 						<button  type="button" id="addSearchData" name="addSearchData"
 								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>
 					</div>
-				</div>
-				<!-- <div class="bar-holder center-block clearfix">
+				</div> -->
+				
+				 <div class="bar-holder center-block clearfix">
 						<input id="course-search" class="center-block" type="text" placeholder="Search : Program, Course, or Career">
 						<a class="panel-collapse-ico" href="#"><span class="fa fa-angle-down fa-3x rotate"></span></a>
 						
@@ -42,21 +43,21 @@
 									<div class="col-sm-10">		
 										<label class="search-title">Search Options: </label>
 										<label class="radio-inline">
-											<input type="radio" name="courseOpt" value="courseProvider">Course Provider
+											<input type="radio" name="cpRadio" value="CPROVIDER">Course Provider
 										</label>
 										<label class="radio-inline">
-											<input type="radio" name="courseOpt" value="programTitle">Program Title
+											<input type="radio" name="cpRadio" value="PROGRAMME">Program Title
 										</label>
 									</div>
 									<div class="col-sm-2">
-										<button type="submit" class="btn btn-search btn-small btn-block">Search</button>
+										<button type="button" id="addSearchData" name="addSearchData" class="btn btn-search btn-small btn-block" onclick="searchFunction()">Search</button>
 									</div>			
 								</div>
 							</div>
 	
 						</div>
 					</div>
-			</div> -->
+			</div> 
 			<!-- End Main search bar -->
 
 			<div class="filter-boxes clearfix">
