@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170117 CW c36-add-tutor-information INIT TutorEmailDAO.java
 //20170117 CW c36-add-tutor-information modified findById()
+//20170123 CW c36-add-tutor-information removed un-wanted import statement
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
