@@ -7,8 +7,8 @@
 <!-- 20161025 TR c1 start styling category search area -->
 <!-- 20161111 PN c1-campus-landing-page modified the UI to load categories from the DB values dynamically. -->
 <!-- 20170112 DJ c123-general-filter-search-course-provider-MP-dj  searchFunction() Implementation. -->
+<!-- 20170123 DJ c123-general-filter-search-course-provider-MP-dj  UI integration. -->
 <!-- Bootstrap -->
-
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
 	
@@ -104,12 +104,9 @@
 		}
 		.btn-search:hover{
 			color: #fff;
-		}
-
-		
-	</style>
-    
-    
+		}		
+	</style> 
+	
 	<div class="main-screen clearfix">
 		<div class="content-panel clearfix">
 			<div class="main-slider clearfix">
@@ -118,7 +115,7 @@
 			<div class="search-area clearfix">
 				<div class="main-search-bar center-block clearfix">
 					<div class="bar-holder center-block clearfix">
-						<input id="course-search" class="center-block" type="text" placeholder="Search : Program, Course, or Career">
+						<input id="course-search" class="center-block" type="text" name="course-search" placeholder="Search : Program, Course, or Career">
 						<a class="panel-collapse-ico" href="#"><span class="fa fa-angle-down fa-3x rotate"></span></a>
 						<!-- End category boxes area -->
 						<div class="filter-boxes clearfix">
@@ -208,17 +205,20 @@
 		
 	});
 	</script>
+
 <script type="text/javascript">
-function searchFunction(){
-	var keyWordString=" ";
-	var selectedType=" ";
-	keyWordString=$("#keyWord").val();
-	selectedType=$('input[name="courseOpt"]:checked').val();
-	
-	if(selectedType=='CPROVIDER'){
-		window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);		
-	}else {
-		alert("Will load programes \n will implement in cam-124");
+	function searchFunction() {
+		var keyWordString = " ";
+		var selectedType = " ";
+		keyWordString = $("#course-search").val();
+		selectedType = $('input[name="courseOpt"]:checked').val();
+
+		if (selectedType == 'CPROVIDER') {
+			window.location
+					.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="
+							+ keyWordString + "&selectedType=" + selectedType);
+		} else {
+			alert("Will load programes \n will implement in cam-124");
+		}
 	}
-}
 </script>
