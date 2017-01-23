@@ -42,6 +42,20 @@ function listAllTutors(){
 				                   ]
 
 				});
+				    $('#example tbody').on('click', 'tr', function () {
+				    	   var tutorCode = $(this).find("td:first").html();
+				    	   
+				    	   var form = document.createElement('form');
+				    	   form.method = 'get';
+				    	   form.action = '/dist/partials/admin/updateTutorProfile.jsp';
+				    	   var input = document.createElement('input');
+				    	   input.type = 'text';
+				           input.name = 'tutorCode';
+				           input.value = tutorCode;
+				           form.appendChild(input);
+				           form.submit();
+				    	   
+				    });
 			}
 		},
 	});
