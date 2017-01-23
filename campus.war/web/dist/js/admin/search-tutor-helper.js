@@ -55,13 +55,16 @@ function sad(){
 	var tutors = window.tutorList;
 	var rowCount = 0;
 	t.clear().draw();
-	
+
 	if (tutors !== undefined & tutors !== null) {
-		$.each(tutors, function(index, value) {
-			
-var res = value.toString();
-var data = res.split(",");
-rowCount ++;
+		$
+				.each(
+						tutors,
+						function(index, value) {
+
+							var res = value.toString();
+							var data = res.split(",");
+							rowCount++;
 
 t.row.add([
            		'<tr> <td>' + value[0] + '</td>'

@@ -15,6 +15,10 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
+	
+	<!--     Data Table CSS -->
+<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -95,7 +99,7 @@
 		
 		<!-- Page content -->
 		<form action="/AdminController" method="POST" id="basicForm">
-			<table class="table">
+		<!-- 	<table class="table" id="tutor-list">
 			<tr>
 			<th>Code</th>
 			<th>Name</th>
@@ -111,9 +115,10 @@
 			<th>Status</th>
 			</tr>
 			
-			<tbody   id="tutor-list"></tbody>
-			</table>
+			<tbody ></tbody>
+			</table> -->
 
+<table id="example" class="display" width="100%"></table>
 		</form>
 
 	</div>
@@ -136,6 +141,10 @@
 
 	<!-- custom javascript -->
 	<script src="/dist/js/admin/search-tutor-helper.js"></script>
+	<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
 </html>
