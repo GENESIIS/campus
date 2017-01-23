@@ -263,6 +263,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	
 	/**
 	 * Get programme list  related to input key word in general filter search.
+	 * This is related to getAll() in SearchedProgrammeDAO.java to manage consistency.Select parameters are same in particular method. 
 	 * @param searchDTO ProgrammeSearchDTO
 	 * @author DJ dumani
 	 * @return allProgrammeList Collection<Collection<String>>
@@ -288,31 +289,33 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			sb.append(" LEFT JOIN [CAMPUS].[INTAKE] INTAKE ON INTAKE.PROGRAMME=PROG.CODE");
 			sb.append(" WHERE 1=1");
 			if(searchDTO.getProgrammeStatus()>=0){
-				sb.append(" WHERE PROG.PROGRAMMESTATUS = searchDTO.getProgrammeStatus() ");
+				sb.append(" AND  PROG.PROGRAMMESTATUS = ").append(searchDTO.getProgrammeStatus());
+			}
+			if(searchDTO.getKeyWordString()!=null && !searchDTO.getKeyWordString().isEmpty() ){
+				sb.append(" AND ( PROG.NAME LIKE ?");
+				sb.append(" OR PROG.DESCRIPTION LIKE ?");
+				sb.append(" OR PROG.EMAIL LIKE ? )");
+				
 			}
 			sb.append(" GROUP BY PROG.[CODE] ,PROG.[NAME] ,CAST(PROG.[DESCRIPTION] as NVARCHAR(max)) ,PROG.[DURATION] ,PROG.[ENTRYREQUIREMENTS] ,PROG.[COUNSELORNAME] , ");
 			sb.append(" PROG.[COUNSELORPHONE] ,PROG.[DISPLAYSTARTDATE] ,PROG.[EXPIRYDATE] ,PROG.[PROGRAMMESTATUS] ,PROG.[COURSEPROVIDER] ,PROG.[MAJOR] ,PROG.[CATEGORY] ,");
-			sb.append(" PROG.[LEVEL] ,PROG.[CLASSTYPE], PROVIDER.[NAME], PROVIDER.[UNIQUEPREFIX], PROVIDER.[CODE] , PROVIDER.[WEBLINK];");
-		
-			
-			
+			sb.append(" PROG.[LEVEL] ,PROG.[CLASSTYPE], PROVIDER.[NAME], PROVIDER.[UNIQUEPREFIX], PROVIDER.[CODE] , PROVIDER.[WEBLINK]");
 			
 			stmt=conn.prepareStatement(sb.toString());
-			stmt.setString(1, searchDTO.getKeyWordString());
-			stmt.setString(2, searchDTO.getKeyWordString());
-			stmt.setString(3, searchDTO.getKeyWordString());
-			stmt.setInt(4, ApplicationStatus.ACTIVE.getStatusValue());
-		    rs=stmt.executeQuery();
-		    /*while (rs.next()) {				
-		    	programmeCodeSet.add(Integer.valueOf(rs.getString("PROGCODE")));				
-			}*/
+			if (searchDTO.getKeyWordString() != null
+					&& !searchDTO.getKeyWordString().isEmpty()) {
+				stmt.setString(1, searchDTO.getKeyWordString());
+				stmt.setString(2, searchDTO.getKeyWordString());
+				stmt.setString(3, searchDTO.getKeyWordString());
+			}
+		    rs=stmt.executeQuery();		    
 		    
 		    while (rs.next()) {
 				final ArrayList<String> singleProgrammeList = new ArrayList<String>();
 				singleProgrammeList.add(rs.getString("CODE"));
 				singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));		
-				//String description = getSubDescription(rs.getString("DESCRIPTION")).replaceAll(",", "##");				
-				//singleProgrammeList.add(description);
+				String description = DaoHelper.getSubDescription(rs.getString("DESCRIPTION")).replaceAll(",", "##");				
+				singleProgrammeList.add(description);
 				singleProgrammeList.add(rs.getString("DURATION"));
 				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
 				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
