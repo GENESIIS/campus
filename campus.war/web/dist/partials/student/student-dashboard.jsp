@@ -14,21 +14,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!-- Bootstrap & CSS Style-->
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!-- W3-Include -->
-<!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
-<!-- jQuery & Other js -->
-<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
+<script src="/dist/js/header/ui-populate-helper.js"></script>
 
 </head>
 
@@ -39,6 +41,7 @@
 	<!-- Header-->
 	<header>
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 	</header>
 	<!-- End Header -->
 

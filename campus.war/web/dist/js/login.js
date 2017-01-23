@@ -54,14 +54,36 @@ function studentLogin() {
 						}
 
 					},
-					error : function(e) {
-						alert("Error " + e);
-						console.log(e);
+					error : function(response,error,errorThrown) {
+						alert("Error " + error);
+						console.log(error);
+						 var msg = '';
+					      if (response.status === 0) {
+					          msg = 'Not connect.\n Verify Network.';
+					      } else if (response.status == 404) {
+					          msg = 'Requested page not found. [404]';
+					      } else if (response.status == 500) {
+					          msg = 'Internal Server Error [500].';
+					      } else if (error === 'parsererror') {
+					          msg = 'Requested JSON parse failed.';
+					      } else if (error === 'timeout') {
+					          msg = 'Time out error.';
+					      } else if (error === 'abort') {
+					          msg = 'Ajax request aborted.';
+					      } else {
+					          msg = 'Uncaught Error.\n' + response.responseText;
+					      }
 					}
 
 				});
 
 	}
+}
+
+// reset error message labels 
+function resetLoginLabels() {
+
+	$("#errorMesssage").text("");
 }
 
 function studentLogout() {

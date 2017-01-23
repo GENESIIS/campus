@@ -81,10 +81,42 @@ public class CampusController extends HttpServlet {
 			HttpSession session = request.getSession(false);
 
 			
+			//testing WIP
+			// Use the session to get the session context 
+//						HttpSessionContext context = session.getSessionContext();
+//						// Use the session context to get a list of session IDs
+//						Enumeration ids = context.getIds();
+//						// Iterate over the session IDs checking for stale sessions
+//						while (ids.hasMoreElements()) {
+//							String id = (String) ids.nextElement();
+//							 session = context.getSession(id);
+//							 log.info("Session context"+session);
+//							// Invalidate the session if it's more than a day old or has been
+//							// inactive for more than an hour.
+//							Date dayAgo = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+//							Date hourAgo = new Date(System.currentTimeMillis() - 1 * 60 * 1000);
+//							Date created = new Date(session.getCreationTime());
+//							Date accessed = new Date(session.getLastAccessedTime());
+//							if (created.before(dayAgo)) {
+//								// out.println("More than a day old, invalidated!");
+//								log.info("More than a day old, invalidated!");
+//								session.invalidate();
+//							} else if (accessed.before(hourAgo)) {
+//								// out.println("More than an hour inactive, invalidated!");
+//								log.info("More than an hour inactive, invalidated!");
+//								session.invalidate();
+//							} else {
+//								// out.println("Still valid.");
+//								log.info("Still valid.");
+//							}
+//						}
 			
-			if (session != null) {
+			
+			//testing WIP
+			
+			if (session != null && !session.isNew()) {
 				String name = (String) session.getAttribute("name");
-				session.setMaxInactiveInterval(60 * 60);
+				//session.setMaxInactiveInterval(5 * 60);
 				
 				
 				
@@ -149,6 +181,7 @@ public class CampusController extends HttpServlet {
 				response.setContentType("application/json");
 				getServletContext().getRequestDispatcher("/dist/partials/login.jsp");
 				//request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
+				log.info(session.getAttribute("Session null message"+"message"));
 			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
