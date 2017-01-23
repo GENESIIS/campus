@@ -101,6 +101,7 @@
 		</div>
 		<!-- end inner header -->
 		
+		<div class="content-holder center-block clearfix">
 		<!-- Page content -->
 		<form action="/AdminController" method="POST" id="basicForm">
 		<!-- 	<table class="table" id="tutor-list">
@@ -143,6 +144,7 @@
 				</thead>
 			</table>
 		</form>
+		</div>
 
 	</div>
 	<!-- End page content  -->
