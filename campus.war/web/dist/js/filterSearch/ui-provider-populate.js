@@ -2,6 +2,7 @@
 //20161124 DJ c17-provider-criteria-based-filter-search Identified front end input selections 
 //20161221 DJ c17-provider-criteria-based-filter-search Identified checkbox tick untick on level/major/providertype 
 //20170117 DJ c123-general-filter-search-course-provider-MP-dj Identify general filter search action
+//20170123 DJ c123-general-filter-search-course-provider-MP-dj Add courseProviderLogoPath and default image path
 
 var cpCodeList="";
 var keyWordString="";
@@ -75,18 +76,18 @@ function getProviderCodeList(cpCodeList,generalSearchFlag) {
 function getInitialPageResults(catCode,response) {
 
 	var totalCount = 0;
-
+	var courseProviderLogoPathFetched = response.courseProviderLogoPath;
 	var providerChoice = $("#providerList");
-	$.each(response.result,	function(index, value) {
-						var res = value.toString();
-						var data = res.split(",");
-						var x = data[0].toString();
-						var y = data[1].toString();
-						
+	$.each(response.result,	function(index, value) {						
+						var x = value[0].toString();
+						var y = value[1].toString();
+						var providerLogo = "/" + courseProviderLogoPathFetched +"/"+ x + "/"+ x + "_large.jpg";						
+						var defaultLogo ="/" + courseProviderLogoPathFetched +"/"+"default_large.jpg";	
 						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
 						var logo1 = "../../education/provider/logo/default_large.jpg";						
 						//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo +'" onerror="'+ logo1 +'"  title="'+ y +'" /></div> </a></div> </li>');
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' + defaultLogo + '\'"></div> </a></div> </li>');
+						
 						
 					});
 
