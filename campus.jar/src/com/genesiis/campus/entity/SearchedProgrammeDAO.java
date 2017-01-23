@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //		   CAM-116: PN Modified SQL queries inside findById(Object code) and getAll() method by adding GROUP BY clause.
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 //20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
+//20170123 PN CAM-116: findById(Object code) method modified to set values to prepared statement parameters.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ import com.genesiis.campus.validation.ApplicationStatus;
 
 public class SearchedProgrammeDAO implements ICrud {
 	static Logger log = Logger.getLogger(SearchedProgrammeDAO.class.getName());
-
+	IQueryBuilder qbh = new QueryBuildingHelper();
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -78,8 +79,7 @@ public class SearchedProgrammeDAO implements ICrud {
 
 		// This method to be changed with the PROGRAMSTATUS once defined it in
 		// the DML.
-		try {
-			IQueryBuilder qbh = new QueryBuildingHelper();
+		try {		
 			Map<String, String[]> queryMap = qbh.assignMapData(qbh.extractFromJason(searchData));
 
 			String[] districtCode = {};
@@ -101,9 +101,9 @@ public class SearchedProgrammeDAO implements ICrud {
 				conn = ConnectionManager.getConnection();
 
 				stmt = conn.prepareStatement(query);
+				stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());	
 				if (districtCode != null) {
-					stmt.setInt(1, Integer.parseInt(districtCode[0]));
-					stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+					stmt.setInt(2, Integer.parseInt(districtCode[0]));
 				}
 
 				rs = stmt.executeQuery();
@@ -114,7 +114,7 @@ public class SearchedProgrammeDAO implements ICrud {
 					singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));
 					String description = getSubDescription(rs.getString("DESCRIPTION")).replaceAll(",", "##");				
 					singleProgrammeList.add(description);
-					singleProgrammeList.add(rs.getString("DURATION"));
+					singleProgrammeList.add(qbh.getDuration(rs.getString("DURATION")));
 					singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
 					singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 					singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
@@ -185,7 +185,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				singleProgrammeList.add(rs.getString("NAME").replaceAll(",", "##"));		
 				String description = getSubDescription(rs.getString("DESCRIPTION")).replaceAll(",", "##");				
 				singleProgrammeList.add(description);
-				singleProgrammeList.add(rs.getString("DURATION"));
+				singleProgrammeList.add(qbh.getDuration(rs.getString("DURATION")));
 				singleProgrammeList.add(rs.getString("ENTRYREQUIREMENTS").replaceAll(",", "##"));
 				singleProgrammeList.add(rs.getString("COUNSELORNAME"));
 				singleProgrammeList.add(rs.getString("DISPLAYSTARTDATE"));
