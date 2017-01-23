@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20170119 CW CAM-125 create the class SignUpEmailComposer.java to help compose the mailing using CAM-18
+//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted codes & cleaning the code
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +84,6 @@ public class SignUpEmailComposer implements IEmailComposer  {
 		setRecieversEmailAddreses(recieversEmailAddreses);// dummy setting this value will be overridden
 		setMailingSubject(mailSubject);
 		setMailBody(emailBodyText);
-		
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class SignUpEmailComposer implements IEmailComposer  {
 	public void setGeneralEmail(IEmail generalEmail) throws IllegalArgumentException {
 		try{
 			if(generalEmail==null)
-				throw new IllegalArgumentException("generalEmail  is undefined must be set");	
+				throw new IllegalArgumentException("generalEmail is undefined must be set");	
 			this.generalEmail = generalEmail;
 		}catch (IllegalArgumentException ilexp){
 			log.error("setGeneralEmail(): IllegalArgumentException"+ ilexp.toString());
