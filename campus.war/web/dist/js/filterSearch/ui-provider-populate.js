@@ -84,8 +84,9 @@ function getInitialPageResults(catCode,response) {
 						var y = data[1].toString();
 						
 						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
+						var logo1 = "../../education/provider/logo/default_large.jpg";						
 						//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "  title="'+ y +'" /></div> </a></div> </li>');
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo +'" onerror="'+ logo1 +'"  title="'+ y +'" /></div> </a></div> </li>');
 						
 					});
 

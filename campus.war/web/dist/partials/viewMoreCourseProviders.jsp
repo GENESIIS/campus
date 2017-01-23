@@ -200,9 +200,7 @@
 	<script src="/dist/js/main.js"></script>
 
 	<script src="/dist/js/filterSearch/ui-provider-populate.js"></script>
-
-	<!-- W3-Include -->
-	<script src="../bower-components/w3/w3data.js"></script>
+	
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />
 	<!--End  Footer -->
