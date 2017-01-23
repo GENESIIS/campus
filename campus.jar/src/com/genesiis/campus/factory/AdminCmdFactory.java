@@ -1,10 +1,9 @@
 package com.genesiis.campus.factory;
 
-//20161122 JH c39-add-course-provider AdminCmdFactory.java command factory class created
-//20161122 JH c39-add-course-provider implemented ICmdFactory
-//20170117 JH c133-admin-list-tutors added LIST_TUTORS
+//20170123 JH c135-admin-tutor-keyword-search added SEARCH_TUTORS
 
 import com.genesiis.campus.command.CmdAdminListTutors;
+import com.genesiis.campus.command.CmdAdminSearchTutors;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -14,6 +13,7 @@ public class AdminCmdFactory implements ICmdFactory{
 	private ICommand command = null;
 	static {	
 		map.put(Operation.LIST_TUTORS, new CmdAdminListTutors());
+		map.put(Operation.SEARCH_TUTORS, new CmdAdminSearchTutors());
 	}
 
 	@Override
@@ -22,6 +22,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		o = Operation.getOperation(cco);
 		switch (o) {
 		case LIST_TUTORS:
+			command = map.get(o);
+			break;
+		case SEARCH_TUTORS:
 			command = map.get(o);
 			break;
 		default:
