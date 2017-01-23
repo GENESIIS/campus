@@ -280,54 +280,6 @@
     </div>
 </div>
 <!-- jQuery & Other js -->
-
-<script type="text/javascript">
-function searchFunction(){	
-	var keyWordString=$("#keyWord").val();	
-	var selectedType= $('input[name=cpRadio]:checked').val();	
-	if(selectedType=='CPROVIDER'){
-		window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);		
-	}else if(selectedType=='PROGRAMME'){
-		window.location.assign("/dist/partials/courses.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);	
-		
-		
-		 // window.location.replace("/dist/partials/courses.jsp.jsp?keyWord="+keyWordString+"&selectedType="+ selectedType);
-		//Retrieve programm code list according to search parameters.
-		//This shoud be moved to programe filter search page.
-	/* 	$.ajax({
-			url : '../../PublicController',
-			data : {
-				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROGRAMME',
-				keyWordString : keyWordString,
-				selectedType : selectedType
-			},
-			dataType : "json",
-			success : function(response) {
-				cpCodeList = response.codeList;
-				generalSearchFlag = "TRUE";
-				getProviderCodeList(cpCodeList, generalSearchFlag);
-			},
-			error : function(jqXHR, exception) {
-				var msg = '';			
-				if (jqXHR.status === 0) {
-					msg = 'Not connect.\n Verify Network.';
-				} else if (jqXHR.status == 404) {
-					msg = 'Requested page not found. [404]';
-				} else if (jqXHR.status == 500) {
-					msg = 'Internal Server Error [500].';
-				} else if (exception === 'timeout') {
-					msg = 'Time out error.';
-				} else {
-					msg = 'Internal error is occurred. Please try again.';
-				}
-				alert(msg);
-			}
-		}); */  
-	}	
-	 
-}
-</script>
-<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
@@ -384,5 +336,19 @@ function searchFunction(){
 		
 	});
 	</script>
-	
+<script type="text/javascript">
+	function searchFunction() {
+		var keyWordString = " ";
+		var selectedType = " ";
+		keyWordString = $("#course-search").val();
+		selectedType = $('input[name="courseOpt"]:checked').val();
+		
+		if (selectedType == 'CPROVIDER') {
+			window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
+		} else if (selectedType == 'PROGRAMME') {
+			window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
+		}
+	}
+</script>
+
 
