@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20161216 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary variable declarations. 
 //20161221 CW c36-add-tutor-details Modified execute() & setVariables() methods - removed unnecessary code repetitions. 
 //20170105 CW c98-send-email-at-tutor-signup Modified execute() add email sending at tutor signup
+//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,8 +56,7 @@ public class CmdAddTutorProfile implements ICommand {
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {
 						message = SystemMessage.ADDED.message();
-						//ICommand emailSignUp = new CmdGenerateEmailSinUp();
-						ICommand emailSignUp = new CmdGenerateEmailTutorSinUp();
+						ICommand emailSignUp = new CmdGenerateEmailTutorSignUp();
 						emailSignUp.execute(helper, view); //send email
 					} else {
 						message = SystemMessage.ERROR.message();
