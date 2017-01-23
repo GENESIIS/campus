@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //DJ 20161115 c6-list-available-institutes-on-the-view Initiate cleanup method to clean open resources 
+//DJ 20170123 c124-general-filter-search-programme  Add getSubDescription() and formatDecimal().
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -60,5 +61,32 @@ public class DaoHelper {
           }
       }       
   }
+	
+	/**
+	 * @param description
+	 * @author PN
+	 * @return
+	 */
+	public static String getSubDescription(String description){
+		if(description.length() > 500){
+			return description.substring(0, 500)+" ... ";
+		}
+		return description;
+	}
+	
+	/**
+	 * @param number
+	 * @author PN
+	 * @return
+	 */
+	public static String formatDecimal(String number) {
+		  float num = Float.parseFloat(number);	
+		  float epsilon = 0.004f; // 4 tenths of a cent
+		  if (Math.abs(Math.round(num) - num) < epsilon) {
+		     return String.format("%10.0f", num); // sdb
+		  } else {
+		     return String.format("%10.2f", num); // dj_segfault
+		  }
+	}
 
 }
