@@ -83,8 +83,22 @@
 	text-align: center;
 	float: left;
 }
-.error-message{
-	color : red;
+
+.error-message {
+	color: red;
+}
+
+.add-on .input-group-btn>.btn {
+	border-left-width: 0;
+	left: -2px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+/* stop the glowing blue shadow */
+.add-on .form-control:focus {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	border-color: #cccccc;
 }
 </style>
 
@@ -108,8 +122,20 @@
 		
 		<div class="content-holder center-block clearfix">
 		<!-- Page content -->
-		<form action="/AdminController" method="POST" id="basicForm">
-		<!-- 	<table class="table" id="tutor-list">
+			<form action="/AdminController" method="POST" id="tutorSearchForm">
+				<div class="input-group add-on">
+					<div class="form-group">
+						<label for="Search" class="sr-only">Search</label> <input
+							type="text" class="form-control col-md-8" id="searchKeyWord"
+							placeholder="Search">
+							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+					</div>
+					<input type="hidden" name="CCO" id="CCO" value="SEARCH_TUTORS" />
+
+				</div>
+				<br/><br/>
+ 
+				<!-- 	<table class="table" id="tutor-list">
 			<tr>
 			<th>Code</th>
 			<th>Name</th>
@@ -128,27 +154,27 @@
 			<tbody ></tbody>
 			</table> -->
 
-			<table id="example" class="display" width="100%">
-				<thead>
-					<tr>
-						<th>Code</th>
-						<th>First Name</th>
-						<th>Middle Name</th>
-						<th>Last Name</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Land Phone number</th>
-						<th>Mobile phone number</th>
-						<th>Address</th>
-						<th>Town</th>
-						<th>Country</th>
-						<th>Approval status</th>
-						<th>Status</th>
-					</tr>
-					</tr>
-				</thead>
-			</table>
-		</form>
+				<table id="example" class="display" width="100%">
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>First Name</th>
+							<th>Middle Name</th>
+							<th>Last Name</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Land Phone number</th>
+							<th>Mobile phone number</th>
+							<th>Address</th>
+							<th>Town</th>
+							<th>Country</th>
+							<th>Approval status</th>
+							<th>Status</th>
+						</tr>
+						</tr>
+					</thead>
+				</table>
+			</form>
 		</div>
 
 	</div>

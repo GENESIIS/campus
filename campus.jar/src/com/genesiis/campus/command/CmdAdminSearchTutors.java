@@ -6,13 +6,30 @@ import java.sql.SQLException;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
 
 public class CmdAdminSearchTutors implements ICommand{
+	
+	static Logger log = Logger.getLogger(CmdAdminSearchTutors.class.getName());
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
+		
+		SystemMessage systemMessage = SystemMessage.NO_DATA;
+		
+		try{
+			String searchKey = helper.getParameter("searchKeyWord");
+			if(!Validator.isEmptyString(searchKey)){
+				
+			}
+		}catch(Exception exception){
+			log.error("execute() Exception : " + exception.toString());
+			throw exception;
+		}
 		return null;
 	}
 	
