@@ -275,12 +275,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		final Collection<Collection<String>> allProgrammeList=new ArrayList<Collection<String>>();
 		
 		try {
-			conn=ConnectionManager.getConnection();			
-			/*final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
-			sb.append(" ( PROG.NAME LIKE ?");
-			sb.append(" OR PROG.DESCRIPTION LIKE ?");
-			sb.append(" OR PROG.EMAIL LIKE ? )");			
-			sb.append(" AND PROGRAMMESTATUS = ? ");*/	
+			conn=ConnectionManager.getConnection();
 			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE, PROG.NAME, CAST(PROG.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION],PROG.DURATION  ,PROG.[ENTRYREQUIREMENTS] ,PROG.[COUNSELORNAME] ,");
 			sb.append(" PROG.[COUNSELORPHONE] ,PROG.[DISPLAYSTARTDATE] ,PROG.[EXPIRYDATE] ,PROG.[PROGRAMMESTATUS] ,PROG.[COURSEPROVIDER] ,PROG.[MAJOR] ,PROG.[CATEGORY],PROG.[LEVEL] ,PROG.[CLASSTYPE], ");
 			sb.append(" PROVIDER.[NAME] as PROVIDER, PROVIDER.[UNIQUEPREFIX],PROVIDER.[CODE] as [CPCODE] , PROVIDER.[WEBLINK],ISNULL(MIN(INTAKE.[FEE]),0.00) as COST");

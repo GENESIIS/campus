@@ -53,8 +53,7 @@ public class CmdGetSearchData implements ICommand {
 				}
 				searchDTO.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
 				programmeCollection= new ProgrammeDAOImpl().wildCardSearchOnProgrammes(searchDTO);
-				//final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());
-				//helper.setAttribute("programCodeList", programmeCodeSet);	
+				//final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());				
 				//END-DJ-General filter search-program result set implementation. 
 			}else{
 				//If:the instituteCode is set
