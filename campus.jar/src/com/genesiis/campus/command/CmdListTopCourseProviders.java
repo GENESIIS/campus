@@ -40,7 +40,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {								
-		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
+		String courseProviderLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		
 		try {
 			int categoryCode = 0;
@@ -61,7 +61,7 @@ public class CmdListTopCourseProviders implements ICommand   {
 			
 			iview.setCollection(topViewedCourseProviders);
 			helper.setAttribute("tRCProviders", topRatedCourseProviders);
-			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
+			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 		} catch (Exception exception) {
 			log.error("execute() :Exception  " + exception);			
 			throw exception;

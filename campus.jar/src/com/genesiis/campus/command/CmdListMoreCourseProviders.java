@@ -46,7 +46,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 	public IView execute(IDataHelper helper, IView iview) throws SQLException,
 			Exception {
 				
-		String contextDeployLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
+		String courseProviderLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		try {
 			int categoryCode = 0;
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
@@ -83,7 +83,7 @@ public class CmdListMoreCourseProviders implements ICommand {
 			final Collection<Collection<String>> districtList=new DistrictDAOImpl().getAllDistricts();
 			helper.setAttribute("districtList", districtList);			
 			
-			helper.setAttribute("contextDeployLogoPath", contextDeployLogoPath);
+			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);			
 			throw exception;
