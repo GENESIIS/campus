@@ -45,10 +45,11 @@
 
 	<form  id="file-from" >
 		  <input type="file" id="file-select" name="file-select" accept="image/gif, image/jpeg, image/png"><br><Br>
-		  <button type="submit" id="upload-button" >Upload</button>		  
+		  <button type="submit" id="upload-button" >Upload</button>	
+		  <input type="hidden"	value="xyz">
 	</form>
 		<div align="center">
-		  	<img id="profileImage" style="width:200px;hight:auto" src="#"   alt="Profile-Picture">
+		  	<img id="profileImage"  src="#"   alt="Profile-Picture">
 		  	
 		  </div>
 

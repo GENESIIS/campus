@@ -45,6 +45,7 @@ public enum SystemMessage {
 	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Processed."),
 	EXCEED_LIMIT("Limit Is Exceeded"),
 	EXTENSION_MISSMATCH("Wrong File Type Is Passed "),
+	IMAGE_RENAMING_FAIL("Image File did not get renamed properly"),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
 	
 	

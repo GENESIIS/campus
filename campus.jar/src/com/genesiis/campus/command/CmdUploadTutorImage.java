@@ -79,10 +79,12 @@ public class CmdUploadTutorImage implements ICommand {
 				
 				
 				fileUtility.setUploadPath(tutorProfileImageUploadPath);
-				boolean isImageAccordanceWithSystemRequirement =  isImageAccordanceWithSystemRequirement(con,helper);
 				
-				// rename the file and in the same time load to the disk
-				isTheImageFileRenamed(fileUtility,tutorCode);
+				if(!isImageAccordanceWithSystemRequirement(con,helper))
+						return view;
+				
+				if(!isTheImageFileRenamed(fileUtility,tutorCode))
+					return view ;
 			}
 		} catch(FileUploadException fle){
 			log.error("execute():FileUploadException"+ fle.toString() );
@@ -94,6 +96,7 @@ public class CmdUploadTutorImage implements ICommand {
 			DaoHelper.cleanup(con, null, null);
 		}
 		helper.setAttribute("message", message);
+		view= new CmdGetTutorProfileImg().execute(helper, view); 
 		return view;
 	}
 	
@@ -105,8 +108,11 @@ public class CmdUploadTutorImage implements ICommand {
 	private boolean isTheImageFileRenamed(FileUtility item, int tutorCode) throws Exception{
 		boolean isTheImageFileRenamed = false;
 		try{
-			String fileName = item.renameIntoOne(tutorCode);
-			isTheImageFileRenamed = (item.renameIntoOne(tutorCode)!="");
+			//String fileName = item.renameIntoOne(tutorCode);
+			if(!(isTheImageFileRenamed=(item.renameIntoOne(tutorCode)!=""))){
+				this.message = message +" "+systemMessage(-5)+"\n" ; 
+			}
+			
 		} catch (Exception exp){
 			log.error("isTheImageFileRenamed(): Exception "+exp.toString());
 			throw exp;
@@ -136,7 +142,7 @@ public class CmdUploadTutorImage implements ICommand {
 	private String getTutorProfileImageUploadPath(SystemConfig tutorImageProfilePath,int tutorCode,Connection con)throws SQLException,
 	Exception{
 		
-		String tutorDefaultImagePath="";
+		String tutorImagePath="";
 		String[] systemConfigCode = {tutorImageProfilePath.toString()};
 		//access the data base system configuration data related table and retrieve the path
 		ICrud systemConfigDAO = new SystemConfigDAO();
@@ -146,9 +152,9 @@ public class CmdUploadTutorImage implements ICommand {
 					.findById(systemConfigCode, con);
 			// the collection should contains only one collection encapsulated
 			// one record from the systemconfig table
-			tutorDefaultImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
-			tutorDefaultImagePath=(tutorDefaultImagePath!=null)?tutorDefaultImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
-			return tutorDefaultImagePath;
+			tutorImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
+			tutorImagePath=(tutorImagePath!=null)?tutorImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
+			return tutorImagePath;
 
 		} catch (SQLException exp) {
 			log.error("getTutorProfileImageUploadPath(): SQLException"
@@ -349,6 +355,9 @@ public class CmdUploadTutorImage implements ICommand {
 			break;
 		case -4:
 			message =SystemMessage.EXTENSION_MISSMATCH.message();
+			break;	
+		case -5:
+			message =SystemMessage.IMAGE_RENAMING_FAIL.message();
 			break;	
 		default:			
 			break;

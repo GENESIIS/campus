@@ -1,14 +1,14 @@
 //20161121 DN c47-tutor-add-tutor-information-upload-image-dn created the tutorUploadImage.js
 //20170112 DN c47-tutor-add-tutor-information-upload-image-dn changed the $(document).ready() function and it's inner logic
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
-//20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the 
+//20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the displayLabelMessage()
 
-$(document).ready(function() {
-	displayTutorProfileImageAtPageLoad();
-	
-	// disable the upload button
-	$('#upload-button').prop('disabled', true);
-});
+//$(document).ready(function() {
+//	displayTutorProfileImageAtPageLoad();
+//	
+//	// disable the upload button
+//	$('#upload-button').prop('disabled', true);
+//});
 
 
 
@@ -67,7 +67,7 @@ $(document).on('change','#file-select',function(){
 
 $(document).on('click','#upload-button',function(){
 
-	var reportUpload = $("#file-select").prop("files")[0];
+	var reportUpload = $("#file-select").prop("files")[0]; // get the files from file input file
 	var formData = new FormData();
 	formData.append("file", reportUpload);
 	$.ajax({
@@ -83,8 +83,8 @@ $(document).on('click','#upload-button',function(){
 			if(response['successCode']===1){
 				alert("Inside success call");
 				displayLabelMessage('displayLabel','green',response['message']);
-//				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
-				displayTutorProfileImageAtPageLoad();
+				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+				//displayTutorProfileImageAtPageLoad(); // since the onload function has been this is been written 
 				
 			} else{
 				// if the execution success but logically generated error application vice
@@ -120,4 +120,16 @@ function ajaxErorMessage(response,error,errorThrown){
         msg = 'Uncaught Error.\n' + response.responseText;
     }
     return msg;
+}
+
+
+/**
+ * displayLabelMessage(): displays an user define text in the label
+ * designated.
+ * @author dushantha DN
+ * @param cssColour required color theme for the message to be displayed
+ * @param message the required message to be displayed
+ */
+function displayLabelMessage(labelid,cssColour,message){
+	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 }
