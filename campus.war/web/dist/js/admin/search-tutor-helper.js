@@ -22,12 +22,71 @@ function listAllTutors(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
-
-				displayTutotList();
+			    $('#example').DataTable( {
+			        data: window.tutorList,
+			        columns: [
+			            { title: "CODE" },
+			            { title: "FIRSTNAME" },
+			            { title: "MIDDLENAME" },
+			            { title: "LASTNAME." },
+			            { title: "USERNAME" },
+			            { title: "EMAIL" },
+			            { title: "DIALCODE" },
+			            { title: "LANDPHONEAREACODE" },
+			            { title: "LANDPHONENUMBER" },
+			            { title: "MOBILEPHONENETWORKCODE" },
+			            { title: "MOBILEPHONENUMBER" },
+			            { title: "ISAPPROVED" },
+			            { title: "ADDRESS1" },
+			            { title: "ADDRESS2" },
+			            { title: "ADDRESS3" },
+			            { title: "TOWNNAME" },
+			            { title: "COUNTRY" },
+			            { title: "TUTORSTATUS" }
+			        ]
+			    } );
 			}
 		},
 	});
 }
+
+function sad(){
+	var t =  $('#tutor-list').DataTable();
+	var tutors = window.tutorList;
+	var rowCount = 0;
+	t.clear().draw();
+	
+	if (tutors !== undefined & tutors !== null) {
+		$.each(tutors, function(index, value) {
+			
+var res = value.toString();
+var data = res.split(",");
+rowCount ++;
+
+t.row.add([
+           		'<tr> <td>' + value[0] + '</td>'
+           		+ '<td>' + value[1] + value[2] + value[3] + '</td>'
+           		+ '<td>' + value[4] + '</td>'
+           		+ '<td>' + value[5] + '</td>'
+           		+ '<td>' + value[6] + + value[7] + value[8] + '</td>'
+           		+ '<td>' + value[6] + + value[9] + value[10] + '</td>'
+           		+ '<td>' + value[12] + + value[13] + value[14] + '</td>'
+           		+ '<td>' + value[15] + '</td>'
+           		+ '<td>' + value[6] + '</td>' 
+           		+ '<td>' + value[16] + '</td>'
+           		+ '<td>' + value[11] + ' <span class="glyphicon glyphicon-ok"></span></td>'
+           		+ '<td>' + value[11] + ' <span class="glyphicon glyphicon-remove"></span></td>'
+           		+ '<td>' + value[17] + ' <span>Active</span></td>'
+           		+ '<td>' + value[17] + ' <span>Inactive </span></td>'
+           		+ '</tr>'
+           ]).draw(false);
+
+			
+		});
+	}
+	
+}
+
 
 function displayTutotList(){
 	
