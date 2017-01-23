@@ -20,9 +20,14 @@
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 
+	<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+	
+	  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -155,11 +160,6 @@
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
 
-	<!-- jQuery & Other js -->
-	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-	<script src="/dist/js/main.js"></script>
 
 	<!-- W3-Include -->
 	<script src="/dist/bower-components/w3/w3data.js"></script>
