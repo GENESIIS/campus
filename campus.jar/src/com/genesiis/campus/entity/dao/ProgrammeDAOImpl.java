@@ -275,11 +275,27 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		
 		try {
 			conn=ConnectionManager.getConnection();			
-			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
+			/*final StringBuilder sb =new StringBuilder("SELECT PROG.CODE AS PROGCODE  FROM CAMPUS.PROGRAMME PROG WHERE ");
 			sb.append(" ( PROG.NAME LIKE ?");
 			sb.append(" OR PROG.DESCRIPTION LIKE ?");
 			sb.append(" OR PROG.EMAIL LIKE ? )");			
-			sb.append(" AND PROGRAMMESTATUS = ? ");			
+			sb.append(" AND PROGRAMMESTATUS = ? ");*/	
+			final StringBuilder sb =new StringBuilder("SELECT PROG.CODE, PROG.NAME, CAST(PROG.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION],PROG.DURATION  ,PROG.[ENTRYREQUIREMENTS] ,PROG.[COUNSELORNAME] ,");
+			sb.append(" PROG.[COUNSELORPHONE] ,PROG.[DISPLAYSTARTDATE] ,PROG.[EXPIRYDATE] ,PROG.[PROGRAMMESTATUS] ,PROG.[COURSEPROVIDER] ,PROG.[MAJOR] ,PROG.[CATEGORY],PROG.[LEVEL] ,PROG.[CLASSTYPE], ");
+			sb.append(" PROVIDER.[NAME] as PROVIDER, PROVIDER.[UNIQUEPREFIX],PROVIDER.[CODE] as [CPCODE] , PROVIDER.[WEBLINK],ISNULL(MIN(INTAKE.[FEE]),0.00) as COST");
+			sb.append(" FROM CAMPUS.PROGRAMME PROG ");
+			sb.append(" INNER JOIN  CAMPUS.COURSEPROVIDER PROVIDER  ON PROG.COURSEPROVIDER=PROVIDER.CODE");
+			sb.append(" LEFT JOIN [CAMPUS].[INTAKE] INTAKE ON INTAKE.PROGRAMME=PROG.CODE");
+			sb.append(" WHERE 1=1");
+			if(searchDTO.getProgrammeStatus()>=0){
+				sb.append(" WHERE PROG.PROGRAMMESTATUS = searchDTO.getProgrammeStatus() ");
+			}
+			sb.append(" GROUP BY PROG.[CODE] ,PROG.[NAME] ,CAST(PROG.[DESCRIPTION] as NVARCHAR(max)) ,PROG.[DURATION] ,PROG.[ENTRYREQUIREMENTS] ,PROG.[COUNSELORNAME] , ");
+			sb.append(" PROG.[COUNSELORPHONE] ,PROG.[DISPLAYSTARTDATE] ,PROG.[EXPIRYDATE] ,PROG.[PROGRAMMESTATUS] ,PROG.[COURSEPROVIDER] ,PROG.[MAJOR] ,PROG.[CATEGORY] ,");
+			sb.append(" PROG.[LEVEL] ,PROG.[CLASSTYPE], PROVIDER.[NAME], PROVIDER.[UNIQUEPREFIX], PROVIDER.[CODE] , PROVIDER.[WEBLINK];");
+		
+			
+			
 			
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setString(1, searchDTO.getKeyWordString());
