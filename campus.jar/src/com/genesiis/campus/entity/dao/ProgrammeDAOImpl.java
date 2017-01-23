@@ -331,7 +331,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				singleProgrammeList.add(rs.getString("UNIQUEPREFIX"));
 				singleProgrammeList.add(rs.getString("CPCODE"));
 				singleProgrammeList.add(rs.getString("WEBLINK"));
-				//singleProgrammeList.add(formatDecimal(rs.getString("COST")));				
+				singleProgrammeList.add(DaoHelper.formatDecimal(rs.getString("COST")));				
 				allProgrammeList.add(singleProgrammeList);
 			}
 		} catch (SQLException sqlException) {

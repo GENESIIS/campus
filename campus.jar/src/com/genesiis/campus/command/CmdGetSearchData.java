@@ -42,19 +42,9 @@ public class CmdGetSearchData implements ICommand {
 		String generalSearchFlag = helper.getParameter("generalSearchFlag");
 		
 		
-		try {
-			//If:the instituteCode is set
-			if ((searchData != null) && ((!searchData.isEmpty()))) {
-				programmeCollection = programmeDAO.findById(searchData);
-			
-			//else:the instituteCode is not set at the beginning of the page loading
-			} else {
-				programmeCollection = programmeDAO.getAll();
-			}
-			
+		try {			
 			//START-DJ-General filter search-program result set implementation. 
-			if(generalSearchFlag.equalsIgnoreCase("TRUE")){
-				
+			if(generalSearchFlag.equalsIgnoreCase("TRUE")){				
 				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();
 				if (UtilityHelper.isNotEmpty(keyWordString)) {
 					// Do wild card search on key word
@@ -64,10 +54,19 @@ public class CmdGetSearchData implements ICommand {
 				searchDTO.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
 				programmeCollection= new ProgrammeDAOImpl().wildCardSearchOnProgrammes(searchDTO);
 				//final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());
-				//helper.setAttribute("programCodeList", programmeCodeSet);					
+				//helper.setAttribute("programCodeList", programmeCodeSet);	
+				//END-DJ-General filter search-program result set implementation. 
+			}else{
+				//If:the instituteCode is set
+				if ((searchData != null) && ((!searchData.isEmpty()))) {
+					programmeCollection = programmeDAO.findById(searchData);
+				
+				//else:the instituteCode is not set at the beginning of the page loading
+				} else {
+					programmeCollection = programmeDAO.getAll();
+				}
+				
 			}
-			//END-DJ-General filter search-program result set implementation. 
-			
 			if (programmeCollection != null) {
 				view.setCollection(programmeCollection);
 			}
