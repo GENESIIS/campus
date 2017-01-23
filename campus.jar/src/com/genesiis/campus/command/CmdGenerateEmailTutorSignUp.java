@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170105 CW c98-send-email-at-tutor-signup-cw Created the CmdGenerateEmailTutorSinUp.java class to send email at tutor signup.
 //20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
+//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleanning the code
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
-public class CmdGenerateEmailTutorSinUp implements ICommand {
+public class CmdGenerateEmailTutorSignUp implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
 	
@@ -28,13 +29,8 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 		try {
 			IEmailComposer signUpEmailComposer = new SignUpEmailComposer();
 			int status;
-//			String message = "";
-//			String gsonData = helper.getParameter("jsonData");
-//			this.setPartialStudent((RowStudentForJason) extractDumyObjectFrom(gsonData));
-//			String recieversName = partialStudent.getFirstName().concat(" " + partialStudent.getLastName());
-			
 			String recieversName = helper.getParameter("firstname").concat(" " + helper.getParameter("lastname"));
-			String sendersEmailAddress = helper.getParameter("email");
+			String sendersEmailAddress = helper.getParameter("email"); // This will overridden later from the email address in campus.xml file
 			String recieversEmailAddreses = helper.getParameter("email");			
 			
 			signUpEmailComposer.setEnvironment(recieversName, sendersEmailAddress,
@@ -42,13 +38,10 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 					SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATTION.message());
 
-			signUpEmailComposer.setGeneralEmail(signUpEmailComposer.formatEmailInstance(getMailContent()));
+			signUpEmailComposer.formatEmailInstance(getMailContent());
 			status = this.sendMail(signUpEmailComposer);
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 
-		/*} catch (SQLException sexp) {
-			log.error("execute(): SQLException " + sexp.toString());
-			throw sexp;*/
 		} catch (IllegalArgumentException ilexp) {
 			log.error("execute(): IllegalArgumentException" + ilexp.toString());
 			throw ilexp;
@@ -58,8 +51,6 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 		}
 		return view;
 	}
-
-
 	
 	/*
 	 * addSpecificContentToOriginalMailBody() formats the original details with
@@ -79,8 +70,7 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY3.getMailBody());
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemMessage.SUPERADMIN_NAME.message());
-		return result.toString();
-		
+		return result.toString();		
 	}
 	
 	/*
@@ -114,20 +104,19 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 			signUpEmailComposer.getEmailDispenser().emailDispense();
 		} catch (IllegalArgumentException illearg){
 			log.error("sendMail():IllegalArgumentException "+illearg.toString());
-			 MAIL_SENT_STATUS= -3;
+			MAIL_SENT_STATUS= -3;
 		} catch (MessagingException msexp) {
 			log.error("sendMail():MessagingException "+msexp.toString());
-		 MAIL_SENT_STATUS= -3;
+			MAIL_SENT_STATUS= -3;
 		} catch (NullPointerException msexp) {
 			log.error("sendMail():NullPointerException "+msexp.toString());
-		 MAIL_SENT_STATUS= -3;
+			MAIL_SENT_STATUS= -3;
 		} catch(Exception exp){
-			 MAIL_SENT_STATUS= -3;
+			MAIL_SENT_STATUS= -3;
 		}
 		finally{
 			return MAIL_SENT_STATUS;
-		}
-		
+		}		
 	}
 	
 	/*
@@ -153,22 +142,3 @@ public class CmdGenerateEmailTutorSinUp implements ICommand {
 		return message;
 	}
 }
-/*
-
-/**
- * setEnvironment() sets the required fields from the client inputs
- * @param recieversName
- * @param sedersEmailAddress
- * @param recieversEmailAddreses
- * @param mailSubject
- * @param emailBodyText
- * @param restoftheParameters it's a variable argument , it can be omitted as well.
- * if it's set it's users responsibility to set the fields and pass the
- * correct order of the parameters to be set.
- //
-void setEnvironment(String recieversName,
-		String sedersEmailAddress,
-		ArrayList<String> recieversEmailAddreses, 
-		String mailSubject,
-		String emailBodyText,String ... restoftheParameters);
-*/
