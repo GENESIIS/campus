@@ -445,4 +445,35 @@ function getSelectedData(listname, elementName) {
 function populateProgramResults(){
 	
 	alert("populateProgramResults");
+	var t = $('#example').DataTable();
+	var counter = 0;
+	t.clear().draw();
+	$.each(response.result, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		counter++;
+		
+		t.row.add( [
+            '<div class="provider-info">' +
+			'<a href="javascript:">' +
+				'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
+			'</a>' +
+		'</div>',
+		'<div class="result-box clearfix">' +
+			'<div class="course-name">' +
+				'<a href="'+data[18].toString()+'">' + data[1].toString().replace(/##/g , ",") +
+					'<span class="provider-name">' + " @"+ data[15].toString().replace(/##/g , ",") +
+					'</span>' +
+				'</a>' +
+			'</div>' +
+			'<div class="course-info">' +
+				'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
+			'</div>' +
+		'</div>',
+		data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
+		data[18].toString().replace(/##/g , ",")
+		        ] ).draw( false );
+
+	});
+	$("#courseCount").text(" " +pad(counter, 2));
 }
