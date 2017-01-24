@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170116 CW c36-add-tutor-details add fillTutorCollection(), fillTutorDummyCollection() methodS to fill a Collection with data
 //20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
 //20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
+//20170124 CW c36-add-tutor-details modified fillTutorCollection() method according to the 201701201215 DJ crev modification request.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
 
+/**
+ * CmdAddTutorProfile class handles the tutor profile saving
+ * when an tutor account is created.
+ * @author Chinthaka CW
+ */
 public class CmdAddTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
@@ -257,6 +263,7 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getDescription());
 		
 		CountryDAO country = new CountryDAO();
+		TownDAO town = new TownDAO();
 		
 		try{
 			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
@@ -265,16 +272,6 @@ public class CmdAddTutorProfile implements ICommand {
 				tutorCollection.add(countryList.toArray()[1].toString());				
 			}
 
-		}  catch (SQLException sqle){
-			log.error("fillTutorCollection(): SQLException "+ sqle.toString());
-			throw sqle;
-		}  catch (Exception exception) {
-			log.error("fillTutorCollection() : Exception" + exception.toString());
-			throw exception;
-		}
-		
-		TownDAO town = new TownDAO();
-		try{
 			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
 			int addCount = 0;
 			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
