@@ -82,12 +82,10 @@ function getInitialPageResults(catCode,response) {
 						var x = value[0].toString();
 						var y = value[1].toString();
 						var providerLogo = "/" + courseProviderLogoPathFetched + "/" + x + "/" + x + "_large.jpg";						
-				        var defaultLogo = "/" + courseProviderLogoPathFetched + "/default_large.jpg";						
-						//var defaultLogo ="/" + courseProviderLogoPathFetched + "/default_large.jpg";	
-						//var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
-						//var logo1 = "../../education/provider/logo/default_large.jpg";						
+				        var defaultLogo = "/" + courseProviderLogoPathFetched + "/default_large.jpg";
+				        //TODO:Kept for UI styling
 						//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' +defaultLogo+ '\'"></div> </a></div> </li>');
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' +defaultLogo+ '\'" title="'+ y +'" /></div> </a></div> </li>');
 												
 					});
 
@@ -217,10 +215,9 @@ function populateFilterSearchResults(response) {
 			var y = value[1].toString();
 			var providerLogo = "/" + courseProviderLogoPathFetched + "/" + x + "/" + x + "_large.jpg";						
 	        var defaultLogo = "/" + courseProviderLogoPathFetched + "/default_large.jpg";
-			//var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
+	        //TODO:Kept for UI styling	
 			//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-			  //providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ providerLogo + ' "  title="'+ y +'" /></div> </a></div> </li>');
-			  providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' +defaultLogo+ '\'"></div> </a></div> </li>');
+			providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' +defaultLogo+ '\'" title="'+ y +'" /></div> </a></div> </li>');
 						
 		}
 	});
