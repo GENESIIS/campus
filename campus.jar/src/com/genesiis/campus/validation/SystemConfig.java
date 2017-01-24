@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20161113 MM c5-corporate-training-landing-page-MP Initialised file
 //20161118 MM c5-corporate-training-landing-page-MP Added fields value1, 
 //				value2 and value3 to match fields in SystemConfig table
+//DJ 20170124 c123-general-filter-search-course-provider-MP Changed PROVIDER_LOGO_PATH("education/provider/logo", "", ""),
 
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
@@ -23,7 +24,7 @@ package com.genesiis.campus.validation;
 */
 public enum SystemConfig {
 	
-	PROVIDER_LOGO_PATH("education\\provider\\logo", "", ""),
+	PROVIDER_LOGO_PATH("education/provider/logo", "", ""),
 	BANNER_PATH("education\\banner", "", ""),
 	BANNER_LINKED_IMAGE_PATH("","",""),
 	COURSE_IMAGE_PATH("","",""),
