@@ -3,12 +3,19 @@
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the displayLabelMessage()
 
-//$(document).ready(function() {
-//	displayTutorProfileImageAtPageLoad();
-//	
-//	// disable the upload button
-//	$('#upload-button').prop('disabled', true);
-//});
+var globalFlag=true;
+
+$(document).ready(function() {
+	
+	if(globalFlag){
+		
+		displayTutorProfileImageAtPageLoad();
+		// disable the upload button
+		$('#upload-button').prop('disabled', true);
+		globalFlag=false;
+	}
+	
+});
 
 
 
@@ -67,24 +74,29 @@ $(document).on('change','#file-select',function(){
 
 $(document).on('click','#upload-button',function(){
 
-	var reportUpload = $("#file-select").prop("files")[0]; // get the files from file input file
+	//var reportUpload = $("#file-select").prop("files")[0]; // get the files from file input file
+	var reportUpload = $('input[type="file"]')[0].files[0];
+	var unknown = $("#file-select").prop("files");
 	var formData = new FormData();
 	formData.append("file", reportUpload);
+	var boundary1= Math.random().toString().substr(2);
 	$.ajax({
 	    url: '../../../TutorController?CCO=USTIMG',
 	    type: 'POST',
 	    dataType : "JSON",
 	    data:formData,
-	    cache : false,
-		contentType : false,
+	    cache : false ,
+	    contentType : false, //---originally
 		processData : false,
+		//headers:{'Content-Type': 'multipart/form-data; boundary='+boundary1+"'"}, // added
 	    success:function(response){
 				
 			if(response['successCode']===1){
 				alert("Inside success call");
 				displayLabelMessage('displayLabel','green',response['message']);
 				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
-				//displayTutorProfileImageAtPageLoad(); // since the onload function has been this is been written 
+				globalFlag=true;
+				displayTutorProfileImageAtPageLoad(); // since the onload function has been this is been written 
 				
 			} else{
 				// if the execution success but logically generated error application vice
@@ -96,6 +108,7 @@ $(document).on('click','#upload-button',function(){
 		error:function(response,error,errorThrown) {
 			var msg = ajaxErorMessage(response,error,errorThrown);
 		    displayLabelMessage('displayLabel','red',msg);
+		    globalFlag=false;  //do not load the image
 		   }
 	});
 	
@@ -122,14 +135,3 @@ function ajaxErorMessage(response,error,errorThrown){
     return msg;
 }
 
-
-/**
- * displayLabelMessage(): displays an user define text in the label
- * designated.
- * @author dushantha DN
- * @param cssColour required color theme for the message to be displayed
- * @param message the required message to be displayed
- */
-function displayLabelMessage(labelid,cssColour,message){
-	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
-}

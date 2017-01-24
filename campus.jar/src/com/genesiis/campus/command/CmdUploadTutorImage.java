@@ -74,7 +74,7 @@ public class CmdUploadTutorImage implements ICommand {
 				Integer tutorCodeFromSession = (Integer) helper.getSession(false).getAttribute("userid");
 				int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
 				
-				//get the tutor image upload path
+				//get the tutor image upload Absolute path
 				String tutorProfileImageUploadPath =getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
 				
 				
@@ -96,7 +96,9 @@ public class CmdUploadTutorImage implements ICommand {
 			DaoHelper.cleanup(con, null, null);
 		}
 		helper.setAttribute("message", message);
-		view= new CmdGetTutorProfileImg().execute(helper, view); 
+		ICommand cmdLordImage= new CmdGetTutorProfileImg();
+		view=cmdLordImage.execute(helper, view); 
+		
 		return view;
 	}
 	
@@ -112,7 +114,6 @@ public class CmdUploadTutorImage implements ICommand {
 			if(!(isTheImageFileRenamed=(item.renameIntoOne(tutorCode)!=""))){
 				this.message = message +" "+systemMessage(-5)+"\n" ; 
 			}
-			
 		} catch (Exception exp){
 			log.error("isTheImageFileRenamed(): Exception "+exp.toString());
 			throw exp;
