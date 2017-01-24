@@ -3,12 +3,14 @@ package com.genesiis.campus.command;
 //DJ 20161117 c17-provider-criteria-based-filter-search Implement execute() method
 //DJ 20161124 c17-provider-criteria-based-filter-search retrieved input select values to command class
 //DJ 20161216 c17-provider-criteria-based-filter-search Implement getSelectedCodeList() method
+//DJ 20170124 c123-general-filter-search-course-provider-MP-dj Add SystemConfig.PROVIDER_LOGO_PATH.getValue1()
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemConfig;
 
 import org.apache.log4j.Logger;
 
@@ -37,7 +39,8 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();			
+		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
+		String courseProviderLogoPath=SystemConfig.PROVIDER_LOGO_PATH.getValue1();
 		try {
 			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
 			final Map<String, String[]> searchParamCollection = helper.getParameterMap();			
@@ -46,7 +49,8 @@ public class CmdCourseProviderFilterSearch implements ICommand  {
 				populateFilterSearch(providerSearchDTO,searchParamCollection);
 				final Collection<Collection<String>> courseProviderSearchResults = providerDAO.findFilterdCourseProviders(providerSearchDTO);
 				iView.setCollection(courseProviderSearchResults);
-			}			
+			}
+			helper.setAttribute("courseProviderLogoPath", courseProviderLogoPath);
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);			
