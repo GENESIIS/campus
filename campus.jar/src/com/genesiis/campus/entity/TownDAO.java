@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
 //20161221 CW c36-add-tutor-details Modified getAll() method. 
 //20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application TownDAO class
+//20170124 CW c36-add-tutor-details modified findById() method same as findById() in CountryDAO.java class according to the 201701201215 DJ crev modification request.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +49,7 @@ public class TownDAO implements ICrud{
 		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 			conn = ConnectionManager.getConnection();
@@ -55,7 +57,7 @@ public class TownDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, countryCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleTownList = new ArrayList<String>();
@@ -65,18 +67,13 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("findById(Object): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("findById(Object): Exception " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		
 		return allTownList;
