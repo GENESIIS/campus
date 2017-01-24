@@ -7,6 +7,7 @@
  * //20161122 CM c36-add-tutor-information 
  * //20170111 CW c36-add-tutor-details-Added Viber & WhatsApp validations - CW
  * //20170117 CW c36-add-tutor-details-Added ValidateEmail() method - cw
+ * //20170124 CW c36-add-tutor-details modified validateTutorFileds() method - cw
  */
 
 /**
@@ -118,8 +119,8 @@ function validateTutorFileds() {
 		document.getElementById('countryDetails').focus();
 		flag = false;
 	}
-
-	if (country == "--- Select to Change Country ---") {
+	
+	if (country == "--- Select to Change Country ---" && countryHidden == null) {
 		document.getElementById('countryError').innerHTML = "**Please select country.";
 		document.getElementById('countryDetails').focus();
 		flag = false;
@@ -261,41 +262,41 @@ function validateTutorFileds() {
 	}
 	
 	if (isempty(weblink)) {
-		if (!ValidURL(weblink)) {
+		if (!ValidURL(weblink) && (weblink != "-")) {
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
 			document.getElementById('weblink').focus();
 			flag = false;
 		}
 	}
-	if (isempty(facebook)) {
+	if (isempty(facebook) && (facebook != "-")) {
 		if (!ValidURL(facebook)) {
 			document.getElementById('facebookError').innerHTML = "**Please Enter correct Facebook link";
 			document.getElementById('facebook').focus();
 			flag = false;
 		}
 	}
-	if (isempty(linkedin)) {
+	if (isempty(linkedin) && (linkedin != "-")) {
 		if (!ValidURL(linkedin)) {
 			document.getElementById('linkedInError').innerHTML = "**Please Enter correct LinkedIn link";
 			document.getElementById('linkedin').focus();
 			flag = false;
 		}
 	}
-	if (isempty(twitter)) {
+	if (isempty(twitter) && (twitter != "-")) {
 		if (!ValidURL(twitter)) {
 			document.getElementById('twitterError').innerHTML = "**Please Enter correct Twitter link";
 			document.getElementById('twitter').focus();
 			flag = false;
 		}
 	}
-	if (isempty(instagram)) {
+	if (isempty(instagram) && (instagram != "-")) {
 		if (!ValidURL(instagram)) {
 			document.getElementById('instagramError').innerHTML = "**Please Enter correct Instagram link";
 			document.getElementById('instagram').focus();
 			flag = false;
 		}
 	}
-	if (isempty(myspace)) {
+	if (isempty(myspace) && (myspace != "-")) {
 		if (!ValidURL(myspace)) {
 			document.getElementById('mySpaceError').innerHTML = "**Please Enter correct Myspace link";
 			document.getElementById('myspace').focus();
