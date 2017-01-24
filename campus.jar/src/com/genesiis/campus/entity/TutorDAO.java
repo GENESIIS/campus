@@ -1,7 +1,8 @@
 package com.genesiis.campus.entity;
 
 //20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
-//20140117 JH c133-admin-list-tutors getAll() method coding
+//20170117 JH c133-admin-list-tutors getAll() method coding
+//20170124 JH c133-admin-list-tutors getAll() query modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +56,7 @@ public class TutorDAO implements ICrud {
 			Exception {
 		final String query = "SELECT TOP 1000 TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
 				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
-				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TOWN.COUNTRY = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
+				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
@@ -101,9 +102,7 @@ public class TutorDAO implements ICrud {
 			throw exception;
 			
 		}finally{
-			DaoHelper.closeResultSet(rs);
-			DaoHelper.closeStatement(preparedStatement);
-			DaoHelper.closeConnection(conn);
+			DaoHelper.cleanup(conn, preparedStatement, rs);
 		}
 		return tutorCollection;
 	}
