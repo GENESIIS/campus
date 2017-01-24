@@ -71,6 +71,50 @@ function loadResultSet(event) {
 	var startDate = $('#startdate').val();
 	var endDate = $('#enddate').val();
 	var studentStatus = $('input:radio[name=studentStatus]:checked').val();
+	
+	var fromDate = new Date(document.getElementById("startdate").value);
+	var toDate = new Date(document.getElementById("enddate").value);
+	
+   var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+	
+	var fromDate= $('#fromDate').val();    
+    if(!regex.test(fromDate)){
+    	$('#errorFromDate').text("Please enter valid From Date");
+		document.getElementById('errorFromDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorFromDate').text("");
+    }
+    
+    
+    var toDate= $('#toDate').val();
+    if(!regex.test(toDate)){
+    	$('#errorToDate').text("Please enter valid To Date");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorToDate').text("");
+    }    
+   
+	if (fromDate> toDate) {		
+		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+	}
+	
+	
+	
+	fromDate.setMonth(fromDate.getMonth()+1);
+	if(newDate<=toDate){
+		
+	}
+	if(fromDate<=toDate){
+		alert("fromDate<+toDate");
+	}
+	if((fromDate-toDate) !=0)
+	{
+	    alert("Please limit the date range to 1 month.");
+	}
 
 	$.ajax({
 		url : '../../ReportController',
