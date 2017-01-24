@@ -1,8 +1,10 @@
 package com.genesiis.campus.entity;
 
 //20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
-//20140117 JH c133-admin-list-tutors getAll() method coding
+//20170117 JH c133-admin-list-tutors getAll() method coding
+//20170124 JH c135-admin-tutor-keyword-search added tutorKeyWordSearch(Object) method
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,4 +131,33 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * tutorKeyWordSearch(Object) created to support tutor keyword search. 
+	 * @param code
+	 * @return String tutor collection 
+	 * @author JH
+	 */
+	public Collection<Collection<String>> tutorKeyWordSearch(Object code) throws SQLException, Exception{
+		
+		Connection conn = null;
+		CallableStatement statement = null;
+		ResultSet rs = null;
+		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+		
+		String query = "";
+		
+		try{
+			
+			conn = ConnectionManager.getConnection();
+			statement = conn.prepareCall(query);
+			
+			
+		}catch(Exception exception){
+			log.error("tutorKeyWordSearch(Object) Exception : "+ exception.toString());
+			throw exception;
+		}finally{
+			DaoHelper.cleanup(conn, statement, rs);
+		}
+		return null;
+	}
 }
