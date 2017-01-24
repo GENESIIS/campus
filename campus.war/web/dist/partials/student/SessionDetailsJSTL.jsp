@@ -28,20 +28,15 @@
 <body>
 <jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
+
+
 <!-- 	checked session already created or not, if not redirect to login.jsp -->
 	<c:if test="${sessionScope.currentSessionUser == null}">
 		
-		<script>
-	//alert("lolowwwwww");
-		$('#msg-popup').modal('show');
-		setTimeout( function(){
-		//	$('#msg-popup').modal('show');
-			window.location.href = 'http://www.campus.dev:8080/index.jsp?showLogin=true'; //this name may have to change depend on actual location of the page "Student Login or public index page"
-<%-- 			<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>
-//alert("lolowwwwww");
-			
-			}, 6000);
-		//$('#loginPopup').modal('show');
+		<script>	
+	window.location.href = 'http://www.campus.dev:8080/dist/partials/error/error-content.jsp';
+	//	$('#msg-popup').modal('show');
+	
 		</script>
 		
 <%-- 	<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>

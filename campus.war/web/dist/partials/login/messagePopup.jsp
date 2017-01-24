@@ -1,7 +1,5 @@
-
+<!-- 20170120 CAM-20 Session timeout popup message created. -->
 <!-- popup massage window -->
-
-
 
 <div class="modal fade" id="msg-popup" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
 	<div class="login-dialog modal-dialog" role="document">
