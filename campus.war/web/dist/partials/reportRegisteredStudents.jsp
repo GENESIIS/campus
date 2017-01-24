@@ -70,10 +70,12 @@ tr:nth-child(even) {
 							Inactive
 						</div>
 						<div>
-							Start Date : <input type="date" id="startdate" name="search">
+							Start Date : <input type="date" id="startdate" name="startdate"> <label
+								id="errorFromDate" for=""></label>
 						</div>
 						<div>
-							End Date : <input type="date" id="enddate" name="search">
+							End Date : <input type="date" id="enddate" name="enddate"> <label
+								id="errorToDate" for=""></label>
 						</div>
 						<div class="drop-holder">
 							District : <input type="text" name="districtlist" id="districtlist"
