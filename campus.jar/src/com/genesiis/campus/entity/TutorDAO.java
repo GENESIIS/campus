@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
 //20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
 //20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
+//20170124 CW c36-add-tutor-details modified getAll() method according to the 201701201215 DJ crev modification request.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -146,20 +147,6 @@ public class TutorDAO implements ICrud {
 		try {
 			String query = "SELECT * FROM [CAMPUS].[TUTOR]";
 
-/*			String query = "SELECT [CODE],[USERNAME],[PASSWORD],[FIRSTNAME],[MIDDLENAME],[LASTNAME],[GENDER],"
-					+ "[EMAIL],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE],[LANDPHONENUMBER],[MOBILEPHONECOUNTRYCODE],"
-					+ "[MOBILEPHONENETWORKCODE],[MOBILEPHONENUMBER],[DESCRIPTION],[EXPERIENCE],[WEBLINK],[FACEBOOKURL],"
-					+ "[TWITTERURL],[MYSPACEURL],[LINKEDINURL],[INSTAGRAMURL],[VIBERNUMBER],[WHATSAPPNUMBER],[ISAPPROVED],"
-					+ "[TUTORSTATUS],[ADDRESS1],[ADDRESS2],[ADDRESS3],[TOWN],[USERTYPE],[CRTON],[CRTBY],[MODON],[MODBY] "
-					+ "FROM [CAMPUS].[TUTOR] ORDER BY [NAME]";
-		
-			StringBuilder queryBuilder = new StringBuilder("SELECT [CODE],[USERNAME],[PASSWORD],[FIRSTNAME],[MIDDLENAME],[LASTNAME],[GENDER],");
-			queryBuilder.append("[EMAIL],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE],[LANDPHONENUMBER],[MOBILEPHONECOUNTRYCODE],");
-			queryBuilder.append("[MOBILEPHONENETWORKCODE],[MOBILEPHONENUMBER],[DESCRIPTION],[EXPERIENCE],[WEBLINK],[FACEBOOKURL],");
-			queryBuilder.append("[TWITTERURL],[MYSPACEURL],[LINKEDINURL],[INSTAGRAMURL],[VIBERNUMBER],[WHATSAPPNUMBER],[ISAPPROVED],");
-			queryBuilder.append("[TUTORSTATUS],[ADDRESS1],[ADDRESS2],[ADDRESS3],[TOWN],[USERTYPE],[CRTON],[CRTBY],[MODON],[MODBY] ");
-			queryBuilder.append("FROM [CAMPUS].[TUTOR] ORDER BY [NAME]");
-	*/
 			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
