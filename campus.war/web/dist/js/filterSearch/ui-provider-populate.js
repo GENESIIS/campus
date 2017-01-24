@@ -81,14 +81,14 @@ function getInitialPageResults(catCode,response) {
 	$.each(response.result,	function(index, value) {						
 						var x = value[0].toString();
 						var y = value[1].toString();
-						var providerLogo = "/" + courseProviderLogoPathFetched +"/"+ x + "/"+ x + "_large.jpg";						
-						var defaultLogo ="/" + courseProviderLogoPathFetched +"/"+"default_large.jpg";	
-						var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
-						var logo1 = "../../education/provider/logo/default_large.jpg";						
+						var providerLogo = "/" + courseProviderLogoPathFetched + "/" + x + "/" + x + "_large.jpg";						
+				        var providerLogoTest = "/" + courseProviderLogoPathFetched + "/default_large.jpg";						
+						//var defaultLogo ="/" + courseProviderLogoPathFetched + "/default_large.jpg";	
+						//var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";						
+						//var logo1 = "../../education/provider/logo/default_large.jpg";						
 						//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
-						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' + defaultLogo + '\'"></div> </a></div> </li>');
-						
-						
+						providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+providerLogo+'" onerror="this.src = \'' +providerLogoTest+ '\'"></div> </a></div> </li>');
+												
 					});
 
 	var catCount = 0;
@@ -208,12 +208,14 @@ function getInitialPageResults(catCode,response) {
 //Populate search results in the page body
 function populateFilterSearchResults(response) {	
 	var providerChoice = $("#providerList");
+	var courseProviderLogoPathFetched = response.courseProviderLogoPath;
 	providerChoice.find('li').remove();
 	providerChoice.text("");
 	$.each(response.result,	function(index, value) {
 		if(value!=null && value.length>0){
 			var x = value[0].toString();
 			var y = value[1].toString();
+			var providerLogo = "/" + courseProviderLogoPathFetched + "/" + x + "/" + x + "_large.jpg";
 			var logo = "../../education/provider/logo/" + x + "/"+ x + "_large.jpg";	
 			//providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "/></div><div class="provider-name text-center"><h2>'+y+'</h2> </div> </a></div> </li>');
 			  providerChoice.append('<li class="col-md-3 col-lg-3 col-sm-4"><div class="item-holder"><a href="javascript:"><div class="provider-logo text-center"><img height="100" width="100" src="'+ logo + ' "  title="'+ y +'" /></div> </a></div> </li>');
