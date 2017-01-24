@@ -204,9 +204,7 @@
 		});
 		
 	});
-	</script>
 
-<script type="text/javascript">
 	function searchFunction() {
 		var keyWordString = " ";
 		var selectedType = " ";
@@ -218,7 +216,7 @@
 					.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="
 							+ keyWordString + "&selectedType=" + selectedType);
 		} else {
-			alert("Will load programes \n will implement in cam-124");
+			alert("Will load programes \n Will be implemented in cam-124");
 		}
 	}
 </script>
