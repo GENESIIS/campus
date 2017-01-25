@@ -15,6 +15,7 @@ package com.genesiis.campus.entity;
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170118 JH c39-add-course-provider qa modifications: fixed description not added in course provider account
+//20170125 JH c39-add-course-provider assign course provider address details from course provider entity for preparedStatement3
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -222,9 +223,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement3 = conn.prepareStatement(town);
 			preparedStatement3.setBoolean(1, courseProviderTown.isActive());
 			preparedStatement3.setLong(3, courseProviderTown.getTown());
-			preparedStatement3.setString(4, courseProviderTown.getAddress1());
-			preparedStatement3.setString(5, courseProviderTown.getAddress2());
-			preparedStatement3.setString(6, courseProviderTown.getAddress3());
+			preparedStatement3.setString(4, courseProvider.getAddress1());
+			preparedStatement3.setString(5, courseProvider.getAddress2());
+			preparedStatement3.setString(6, courseProvider.getAddress3());
 			preparedStatement3.setString(7, courseProviderTown.getCrtBy());
 			preparedStatement3.setString(8, courseProviderTown.getModBy());
 
