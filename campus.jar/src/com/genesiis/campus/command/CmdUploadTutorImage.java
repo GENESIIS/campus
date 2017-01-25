@@ -6,6 +6,8 @@ package com.genesiis.campus.command;
 //20170116 DN c47-tutor-add-tutor-information-upload-image-dn  extractDumyObjectFrom() added 
 //     coded wip
 //20170120 DN c47-tutor-add-tutor-information-upload-image-dn  changed the isImageWithinSize()
+//20170120 DN c47-tutor-add-tutor-information-upload-image-dn set the successCode,profilePicture,message attributes in execute() method
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +33,8 @@ import org.apache.log4j.Logger;
 
 
 
-// TODO: Auto-generated Javadoc
+
+
 /**
  * CmdUploadTutorImage is responsible for uploading the image that 
  * is been uploaded from the client side to the location define by the SystemConfig enum class.
@@ -39,12 +42,27 @@ import org.apache.log4j.Logger;
  * @author dushantha DN
  */
 public class CmdUploadTutorImage implements ICommand {
+	
+	/** The Constant log. */
 	static final Logger log = Logger.getLogger(CmdUploadTutorImage.class.getName());
+	
+	/** The success code. */
 	private int successCode=0;
+	
+	/** The message. */
 	private String message = "";
+	
+	/** The file utility. */
 	private FileUtility fileUtility = new FileUtility();
+	
+	/** The files. */
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
+	
+	/** The valid extensions. */
 	private String[] validExtensions = { "jpeg", "jpg", "png", "gif" };
+	
+	/** The war file path. */
+	private String warFilePath = "education/";
 	
 	/* (non-Javadoc)
 	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
@@ -95,10 +113,12 @@ public class CmdUploadTutorImage implements ICommand {
 		}finally{
 			DaoHelper.cleanup(con, null, null);
 		}
-		helper.setAttribute("message", message);
-		ICommand cmdLordImage= new CmdGetTutorProfileImg();
-		view=cmdLordImage.execute(helper, view); 
 		
+		this.setMessage(this.systemMessage(1));
+		helper.setAttribute("successCode", getSuccessCode());
+		helper.setAttribute("profilePicture", warFilePath);
+		helper.setAttribute("message", message);
+		log.info("CmdUploadTutorImage#execute() finished executing...");
 		return view;
 	}
 	
@@ -107,12 +127,23 @@ public class CmdUploadTutorImage implements ICommand {
 	
 	
 	
+	/*
+	 * Checks if is the image file renamed.
+	 * @author DN
+	 * @param item the FileUtility
+	 * @param tutorCode the tutor code int
+	 * @return true, if is the image file renamed
+	 * @throws Exception the exception
+	 */
 	private boolean isTheImageFileRenamed(FileUtility item, int tutorCode) throws Exception{
 		boolean isTheImageFileRenamed = false;
 		try{
-			//String fileName = item.renameIntoOne(tutorCode);
-			if(!(isTheImageFileRenamed=(item.renameIntoOne(tutorCode)!=""))){
+			String fileName = item.renameIntoOne(tutorCode);
+			String temwarFilePath =warFilePath;
+			if(!(isTheImageFileRenamed=(fileName!=""))){
 				this.message = message +" "+systemMessage(-5)+"\n" ; 
+			}else{
+				warFilePath=temwarFilePath+fileName; // there is an issue
 			}
 		} catch (Exception exp){
 			log.error("isTheImageFileRenamed(): Exception "+exp.toString());
@@ -121,7 +152,7 @@ public class CmdUploadTutorImage implements ICommand {
 		return isTheImageFileRenamed;
 	}
 	
-	/**
+	/*
 	 * getTutorProfileImageUploadPath provides the Physical location where the 
 	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
 	 * for the given "tutorImageProfilePath" in repository,then ,an empty string will be returned
@@ -172,7 +203,7 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 	
-	/**
+	/*
 	 * Checks if is image accordance with system requirement.
 	 *
 	 * @param con the con
@@ -210,7 +241,7 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 	
-	/**
+	/*
 	 * Checks if is image having the accepted extension types.
 	 *@author dushantha DN
 	 * @param fileName the file name
@@ -226,13 +257,12 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 	
-	/**
+	/*
 	 * Method confirms the image if exists is within the imposed image size.
 	 * If the capasity of the image is accepted the method returns true else false
 	 *
 	 * @param tutorProfilePictureSize the tutor profile picture size
 	 * @param con Connection to the database
-	 * @param requestWrapper the request wrapper
 	 * @return boolean if the image is accordance with the limit , if it's not or the image does not
 	 * exist it returns a false value.
 	 * @throws SQLException the SQL exception
@@ -280,7 +310,7 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 
 	
-	/**
+	/*
 	 * Gets the image file uploaded from browser. The method returns an ArrayList<FileItem>
 	 * In any case where there has no any files been transported from client , then an 
 	 * ArrayList<FileItem> of zero elements will be returned or Null can be returned if the request is null,
@@ -307,7 +337,7 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 
 
-	/**
+	/*
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
 	 * returns the inner collections' stored element as an object.
 	 * 
@@ -332,7 +362,7 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 	
-	/**
+	/*
 	 * System message.
 	 *@author dushantha DN
 	 * @param status the status
