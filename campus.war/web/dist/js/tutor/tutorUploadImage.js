@@ -2,18 +2,15 @@
 //20170112 DN c47-tutor-add-tutor-information-upload-image-dn changed the $(document).ready() function and it's inner logic
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the displayLabelMessage()
+//20170125 DN c47-tutor-add-tutor-information-upload-image-dn add method comments , refactor $(document).on('click') function
 
 var globalFlag=true;
 
 $(document).ready(function() {
 	
-	if(globalFlag){
-		
 		displayTutorProfileImageAtPageLoad();
 		// disable the upload button
 		$('#upload-button').prop('disabled', true);
-		globalFlag=false;
-	}
 	
 });
 
@@ -33,7 +30,8 @@ function displayTutorProfileImageAtPageLoad(){
 			if(response['successCode']===1){
 				
 				displayLabelMessage('displayLabel','green',response['message']);
-				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+				// to remove cash add Math.random() to the end else the image does not get refreshed
+				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());   
 				
 			} else{
 				// if the execution success but logically generated error application vice
@@ -70,40 +68,48 @@ $(document).on('change','#file-select',function(){
 });
 
 
+/**
+ * @author dushantha DN
+ * this function manages the transferring of multi_part form data
+ * to the server side when the onclick event triggers. The uploaded (selected) image will be processed and
+ * will be stored to the physical location given by the system
+ **/
 
-
-$(document).on('click','#upload-button',function(){
-
+$(document).on('click','#upload-button',function(event){
+	
+	event.stopPropagation(); 
+    event.preventDefault(); 
+    
 	//var reportUpload = $("#file-select").prop("files")[0]; // get the files from file input file
 	var reportUpload = $('input[type="file"]')[0].files[0];
-	var unknown = $("#file-select").prop("files");
 	var formData = new FormData();
 	formData.append("file", reportUpload);
-	var boundary1= Math.random().toString().substr(2);
+	
 	$.ajax({
 	    url: '../../../TutorController?CCO=USTIMG',
 	    type: 'POST',
 	    dataType : "JSON",
 	    data:formData,
 	    cache : false ,
-	    contentType : false, //---originally
+	    contentType : false,
 		processData : false,
 		//headers:{'Content-Type': 'multipart/form-data; boundary='+boundary1+"'"}, // added
+		complete:function(){
+			globalFlag=true;
+			displayTutorProfileImageAtPageLoad(); 
+		},
 	    success:function(response){
 				
 			if(response['successCode']===1){
 				alert("Inside success call");
 				displayLabelMessage('displayLabel','green',response['message']);
-				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
-				globalFlag=true;
-				displayTutorProfileImageAtPageLoad(); // since the onload function has been this is been written 
+				//jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
 				
 			} else{
 				// if the execution success but logically generated error application vice
 				alert("success but successCode<>1");
 				displayLabelMessage('displayLabel','red',response['message']);
 				}
-			
 		},
 		error:function(response,error,errorThrown) {
 			var msg = ajaxErorMessage(response,error,errorThrown);
@@ -113,6 +119,14 @@ $(document).on('click','#upload-button',function(){
 	});
 	
 });
+
+/**
+ * ajaxErorMessage
+ * @author DJ
+ * @param response response that comes from the server
+ * @error error  error message comes from the server when ajax call fails
+ * @errorThrown actual error thrown once ajax response fails
+ */
 
 function ajaxErorMessage(response,error,errorThrown){
 	  var msg = '';
