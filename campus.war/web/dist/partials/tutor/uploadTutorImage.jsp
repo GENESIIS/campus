@@ -32,26 +32,14 @@
 </head>
 <body>
 <label id="displayLabel" style="color:#F39C12;" ></label>
-<!-- <form  method="post" id="file-from" enctype="multipart/form-data"  >  onsubmit="uploadImage();" -->
-<!-- 	  <input type="file" id="file-select" name="file-select" accept="image/gif, image/jpeg, image/png"><br><Br> -->
-<!-- 	  <button type="submit" id="upload-button" >Upload</button> -->
-<!-- 	  <div align="center"> -->
-<!-- 	  	<img id="profileImage" style="width:200px;hight:auto" src="#"   alt="Profile-Picture"> -->
-	  	
-<!-- 	  </div> -->
-<!-- </form> -->
-
-
-
 	<form  id="file-from" >
 		  <input type="file" id="file-select" name="file-select" accept="image/gif, image/jpeg, image/png"><br><Br>
 		  <button type="submit" id="upload-button" >Upload</button>	
 		  <input type="hidden"	value="xyz">
 	</form>
 		<div align="center">
-		  	<img id="profileImage"  src="#"   alt="Profile-Picture" style="width:600px;hight:auto">
-		  	<button type ="button" onclick="displayTutorProfileImageAtPageLoad();">view Profile Image</button> <!-- Testing purpose button -->
-		  </div>
+		  	<img id="profileImage"  src="#"   alt="Profile-Picture" style="width:600px;hight:auto"> 
+	  </div>
 
 
 </body>
