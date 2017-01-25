@@ -10,8 +10,8 @@ package com.genesiis.campus.controller;
 //20161114 MM public-controller-testing-2 Changed implementation of process() so that even when 
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
-//20170106 CAM-20 Session attributes handled from process method and null sessions also handled
-//20170125 CAM-20 unwanted loggers and comments removed.
+//20170106 AS CAM-20 Session attributes handled from process method and null sessions also handled
+//20170125 AS CAM-20 unwanted loggers and comments removed.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;

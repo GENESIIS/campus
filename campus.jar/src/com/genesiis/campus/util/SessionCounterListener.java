@@ -1,8 +1,8 @@
 package com.genesiis.campus.util;
-//20170119 CAM-20 SessionCounterListener class created. 
-//20170120 CAM-20 Session timeout Interval set to 1hour. 
-//20170124 CAM-20 SetAplicationScoop to current session and remove from the destroy event.
-//20170125 CAM-20 unwanted loggers removed.
+//20170119 AS CAM-20 SessionCounterListener class created. 
+//20170120 AS CAM-20 Session timeout Interval set to 1hour. 
+//20170124 AS CAM-20 SetAplicationScoop to current session and remove from the destroy event.
+//20170125 AS CAM-20 unwanted loggers removed.
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
