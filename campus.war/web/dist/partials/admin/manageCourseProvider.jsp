@@ -442,7 +442,21 @@
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
+
 							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name"> <span style="color: red;">*</span></h1>
+								</div>
+								<div class="col-name">
+									<input type="radio" name="publishProgram" id="publishProgram"
+											value="1" checked="checked" onclick="publishPrograms();"/> Will Publish Programs
+									<input type="radio" name="publishProgram" id="publishProgram"
+											value="0" onclick="publishPrograms();"/> Will Not publish Programs
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix" id="expire-date">
 								<div class="col-name">
 									<h1 class="pro-name">Expiration Date :</h1>
 								</div>
