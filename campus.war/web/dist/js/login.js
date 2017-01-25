@@ -4,6 +4,8 @@
  * 
  * C19-student-login-without-using-third-party-application-test-as added
  * remember checkbox.
+ * 
+ * CAM-21 AS logout-popup window added to after successful logout.
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -104,17 +106,8 @@ function studentLogout() {
 			},
 			dataType : "json",
 			success : function(response) {
-
-			//	alert(response['message']);
-			//	document.getElementById('popupMessage').innerHTML = response['message'];
 				$(window).scrollTop(0);
-//				 $('.modal-body #popupMessage').val(response['message']);
-//				 $('#myModal').modal();
-				//$modal.find('.modal-body #popupMessag').html(response['message']);
-				
-				 $('#myModal').on('show.bs.modal', function(event) {
-				        $("#popupMessage").val(response['message']);
-				    });
+				$('#logout-popup').modal('show');
 				 
 				setTimeout( function(){
 					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"

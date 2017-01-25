@@ -27,6 +27,7 @@
 
 	</header>
 	<script type="text/javascript">
+		$(window).scrollTop(0);
 		$('#msg-popup').modal('show');
 		setTimeout(
 				function() {
