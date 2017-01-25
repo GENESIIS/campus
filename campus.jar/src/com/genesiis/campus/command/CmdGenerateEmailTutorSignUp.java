@@ -2,7 +2,8 @@ package com.genesiis.campus.command;
 
 //20170105 CW c98-send-email-at-tutor-signup-cw Created the CmdGenerateEmailTutorSinUp.java class to send email at tutor signup.
 //20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
-//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleanning the code
+//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleaning the code
+//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
+/**
+ * CmdGenerateEmailTutorSignUp class handles sending the email to be sent
+ * at the time of tutor signup.
+ * @author Chinthaka CW
+ */
 public class CmdGenerateEmailTutorSignUp implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());

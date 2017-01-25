@@ -1,7 +1,14 @@
 package com.genesiis.campus.validation;
 
 //20170105 CW c98-send-email-at-tutor-signup created the initial SystemMail.java version
+//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Enum - cw
 
+
+/**
+ * SystemMail enum handles the content of the email to be sent
+ * at the time of tutor signup.
+ * @author Chinthaka CW
+ */
 public enum SystemMail {
 
 	SEND_EMAIL_TUTOR_SIGNUP_BODY1("Registration Confirmation", "Dear Sir/Madam", "You have successfully registered with the campus.lk."),

@@ -2,6 +2,7 @@ package com.genesiis.campus.util;
 
 //20170119 CW CAM-125 create the class SignUpEmailComposer.java to help compose the mailing using CAM-18
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted codes & cleaning the code
+//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
 import org.apache.log4j.Logger;
 
+/**
+ * SignUpEmailComposer class handles the composing & formatting the email to be sent
+ * at the time of tutor signup.
+ * @author Chinthaka CW
+ */
 public class SignUpEmailComposer implements IEmailComposer  {
 	static Logger log = Logger.getLogger(SignUpEmailComposer.class.getName());
 	private String recieversName;
