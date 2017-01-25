@@ -30,6 +30,7 @@ package com.genesiis.campus.validation;
 //20170117 CW c36-add-tutor-details added validateEmailAvailability() method
 //20170125 CW c36-add-tutor-details modify isValidUserNameLength().
 //20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
+//20170125 CW c36-add-tutor-details added validateForNull() method
 
 
 import java.net.MalformedURLException;
@@ -174,6 +175,40 @@ public class Validator {
 		return days;
 	}
 
+	/**
+	 * Validate helper fields for null values.
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateForNull(IDataHelper helper) throws Exception {
+
+		String message = "True"; 
+		try {		
+			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
+					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
+					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
+					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
+					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
+					&& (Validator.isNotEmpty(helper.getParameter("address1")))
+					&& (Validator.isNotEmpty(helper.getParameter("email")))
+					&& (Validator.isNotEmpty(helper.getParameter("username")))
+					&& (Validator.isNotEmpty(helper.getParameter("password")))
+					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
+				message = SystemMessage.EMPTYFIELD.message();
+			}
+		} catch (Exception e) {
+			log.error("validateTutorFields: Exception" + e.toString());
+			throw e;
+		}
+		return message;
+	}	
 
 	/**
 	 * Validate Tutor fields before values go to database.
