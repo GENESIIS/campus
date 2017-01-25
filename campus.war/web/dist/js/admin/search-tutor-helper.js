@@ -56,6 +56,15 @@ function listAllTutors(){
 				           form.submit();
 				    	   
 				    });
+				//alert(window.tutorList[0]);	
+//				$.each(window.tutorList, function(index, value) {
+//				$.each(value, function(index, value1) {
+//					alert(value1);
+//				});
+//					alert(value[0]);
+//				});
+//				
+//				tutorDataTable();
 			}
 		},
 	});
@@ -141,4 +150,32 @@ function displayTutotList(){
 	var tableElement = $("#tutor-list");
 	tableElement.html(singleTutorElement);
 	
+}
+
+
+
+function tutorDataTable() {
+
+	var t = $('#example').DataTable();
+
+	var counter = 0;
+	t.clear().draw();
+	$.each(window.tutorList, function(index, value) {
+
+
+		t.row.add(
+				[
+						'<tr>'
+								+ '<td>' + value[0] + '</td>'
+								+ '<td>' + value[1] + value[2] + value[3] + '</td>'
+								+ '<td>' + value[4] + '</td>'
+								+ '<td>' + value[5] + '</td>'
+								+ '<td>' + value[6] + + value[7] + value[8] + '</td>'
+								+ '<td>' + value[6] + + value[9] + value[10] + '</td>'
+								+ '<td>' + value[12] + + value[13] + value[14] + '</td>'
+								+ '<td>' + value[15] + '</td>'
+								+ '<td>' + value[6] + '</td>'
+								+ '<td>' + value[16] + '</td></tr>'
+				]).draw(false);
+		});
 }
