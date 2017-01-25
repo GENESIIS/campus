@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 //20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
 //20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
 //20170124 CW c36-add-tutor-details modified fillTutorCollection() method according to the 201701201215 DJ crev modification request.
+//20170125 CW c36-add-tutor-details validateUserAndEmail() & validateAvailability() methods.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,36 +59,41 @@ public class CmdAddTutorProfile implements ICommand {
 			Collection<String> tutorCollection= new ArrayList<String>();
 			
 		try {
-				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
 				fillTutorCollection(tutorCollection, tutor);
 				
-				if (message.equalsIgnoreCase("True")) {								
-	
-					UserTypeDAO typeOfUser = new UserTypeDAO();
-					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
+				message = validateUserAndEmail(helper);
+				if (message.equalsIgnoreCase("True")) {
+					message = validator.validateTutorFields(helper);
 					
-					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
-					
-					int userType = 9999;
-					
-					for(Collection<String> userTypeInnerCollection : userTypeCollection ){
-						Object arr[] = userTypeInnerCollection.toArray();
-						userType = Integer.parseInt(arr[0].toString());
-					} 
-					
-					if (userType != 9999){
-						tutor.setUsertype(userType);
-					}
-	
-					int result = tutorDAO.add(tutor);
-					if (result > 0) {
-						message = SystemMessage.ADDED.message();
-	
-					} else {
+					if (message.equalsIgnoreCase("True")) {
+													
+		
+						UserTypeDAO typeOfUser = new UserTypeDAO();
+						Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
 						
-						message = SystemMessage.ERROR.message();
-					}					
+						userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+						
+						int userType = 9999;
+						
+						for(Collection<String> userTypeInnerCollection : userTypeCollection ){
+							Object arr[] = userTypeInnerCollection.toArray();
+							userType = Integer.parseInt(arr[0].toString());
+						} 
+						
+						if (userType != 9999){
+							tutor.setUsertype(userType);
+						}
+		
+						int result = tutorDAO.add(tutor);
+						if (result > 0) {
+							message = SystemMessage.ADDED.message();
+		
+						} else {
+							
+							message = SystemMessage.ERROR.message();
+						}					
+					}
 				}
 		}  catch (SQLException sqle){
 			log.error("execute(): SQLException "+ sqle.toString());
@@ -101,6 +107,66 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		return view;
 	}	
+	
+	/**
+	 * Validate Tutor username & email given. 
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateUserAndEmail(IDataHelper helper) throws SQLException, Exception{
+
+		String message = "True"; 
+		try {		
+			if (!((Validator.isNotEmpty(helper.getParameter("email")))
+					&& (Validator.isNotEmpty(helper.getParameter("username"))))) {
+				message = SystemMessage.EMPTYFIELD.message();
+			} else if (!Validator.validateEmail(helper.getParameter("email"))) {
+				message = SystemMessage.EMAILERROR.message();
+			} else if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				message = SystemMessage.USERNAME_LENGTH.message();
+			} else{
+				message = validateAvailability(helper);
+			}
+		} catch (SQLException sqlException) {
+			log.info("validateUserAndEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateUserAndEmail(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
+	
+	/**
+	 * Validate Tutor username & email for availability.
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateAvailability(IDataHelper helper) throws SQLException, Exception {
+
+		String message = "True"; 
+		int type = 0;
+		try {		
+				type = TutorDAO.validateUsernameEmailFields(helper);
+				
+				if(type == 1){
+					message = SystemMessage.USERNAME_EXIST.message();
+				} else if(type == 2){
+					message = SystemMessage.EMAIL_USED.message();
+				}
+		} catch (SQLException sqlException) {
+			log.info("validateAvailability(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateAvailability(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
 
 	/*
 	 * setVariables() method initializes all the instance variable
