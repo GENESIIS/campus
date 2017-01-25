@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20161122 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
 //20161221 CW c36-add-tutor-details Modified getAll() method. 
+//20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application TownDAO class
+//20170124 CW c36-add-tutor-details modified findById() method same as findById() in CountryDAO.java class according to the 201701201215 DJ crev modification request.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,11 +39,46 @@ public class TownDAO implements ICrud{
 		return 0;
 	}
 
+	/*
+	 * @author DN - taken from c18 - student : signup : without using third party application TownDAO class
+	 * @see com.genesiis.campus.entity.ICrud#findById(java.lang.Object)
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		int countryCode  = (Integer) code;
+		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE],[NAME],[DISTRICT] FROM [CAMPUS].[TOWN] WHERE [COUNTRY] = ?;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, countryCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleTownList = new ArrayList<String>();
+				singleTownList.add(rs.getString("CODE"));
+				singleTownList.add(rs.getString("NAME"));
+				singleTownList.add(rs.getString("DISTRICT"));
+				allTownList.add(singleTownList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("findById(Object): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById(Object): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allTownList;
 	}
+
 
 	
 	/**

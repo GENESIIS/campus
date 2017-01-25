@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20161121 CM c36-add-tutor-information INIT Tutor.java
 //20170102 CW c36-add-tutor-information isActive and add tutorStatus
+//20170114 CW c36-add-tutor-information modified the name of the getViber() method to getViberNumber()
 
 import java.sql.Date;
 
@@ -320,7 +321,7 @@ public class Tutor {
 	/**
 	 * @return the viberNumber
 	 */
-	public String getViber() {
+	public String getViberNumber() {
 		return viberNumber;
 	}
 	/**

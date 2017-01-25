@@ -5,6 +5,10 @@ package com.genesiis.campus.entity;
 //20161221 CW c36-add-tutor-details Removed findById() method.
 //20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
 //20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
+//20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
+//20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
+//20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
+//20170124 CW c36-add-tutor-details modified getAll() method according to the 201701201215 DJ crev modification request.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,17 +82,17 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(19, tutor.getMySpaceId()); 
 			preparedStatement.setString(20, tutor.getLinkedInLink());
 			preparedStatement.setString(21, tutor.getInstagramId());
-			preparedStatement.setString(22, tutor.getViber());
+			preparedStatement.setString(22, tutor.getViberNumber());
 			preparedStatement.setString(23, tutor.getWhatsAppId());
-			preparedStatement.setBoolean(24, tutor.getIsApproved()); // initially tutor should be in pending status
-			preparedStatement.setInt(25, ApplicationStatus.PENDING.getStatusValue()); // after table modified this should be Pending
+			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
+			preparedStatement.setInt(25, tutor.getTutorStatus()); 
 			preparedStatement.setString(26, tutor.getAddressLine1());
 			preparedStatement.setString(27, tutor.getAddressLine2());
 			preparedStatement.setString(28, tutor.getAddressLine3());
 			preparedStatement.setString(29, tutor.getTown());
 			preparedStatement.setInt(30, tutor.getUsertype());
-			preparedStatement.setString(31, "chathuri");
-			preparedStatement.setString(32, "chathuri");
+			preparedStatement.setString(31, tutor.getCrtBy());
+			preparedStatement.setString(32, tutor.getModBy());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -125,11 +129,77 @@ public class TutorDAO implements ICrud {
 		return null;
 	}
 
+	/**
+	 * Returns all the town details in Database
+	 * 
+	 * @author Chinthaka
+	 * 
+	 * @return Returns all the tutor details from a collection of collection
+	 */
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Collection<String>> getAll() throws SQLException,	Exception {
+		
+		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT * FROM [CAMPUS].[TUTOR]";
+
+			conn = ConnectionManager.getConnection();
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleTutorList = new ArrayList<String>();
+				singleTutorList.add(rs.getString("CODE"));
+				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(rs.getString("PASSWORD"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("GENDER"));
+				singleTutorList.add(rs.getString("EMAIL"));
+				singleTutorList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("DESCRIPTION"));
+				singleTutorList.add(rs.getString("EXPERIENCE"));
+				singleTutorList.add(rs.getString("WEBLINK"));
+				singleTutorList.add(rs.getString("FACEBOOKURL"));
+				singleTutorList.add(rs.getString("TWITTERURL"));
+				singleTutorList.add(rs.getString("MYSPACEURL"));
+				singleTutorList.add(rs.getString("LINKEDINURL"));
+				singleTutorList.add(rs.getString("INSTAGRAMURL"));
+				singleTutorList.add(rs.getString("VIBERNUMBER"));
+				singleTutorList.add(rs.getString("WHATSAPPNUMBER"));
+				singleTutorList.add(rs.getString("ISAPPROVED"));
+				singleTutorList.add(rs.getString("TUTORSTATUS"));
+				singleTutorList.add(rs.getString("ADDRESS1"));
+				singleTutorList.add(rs.getString("ADDRESS2"));
+				singleTutorList.add(rs.getString("ADDRESS3"));
+				singleTutorList.add(rs.getString("TOWN"));
+				singleTutorList.add(rs.getString("USERTYPE"));
+				singleTutorList.add(rs.getString("CRTON"));
+				singleTutorList.add(rs.getString("CRTBY"));
+				singleTutorList.add(rs.getString("MODON"));
+				singleTutorList.add(rs.getString("MODBY"));
+				allTutorList.add(singleTutorList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allTutorList;
 	}
 
 	@Override
@@ -152,5 +222,4 @@ public class TutorDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

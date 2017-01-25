@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20161123 CM c36-add-tutor-information Modified getAll() method. 
 //20161216 CW c36-add-tutor-details Modified getAll() method. 
 //20161221 CW c36-add-tutor-details Modified getAll() method. 
+//20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application Country2DAO class
+//20170124 CW c36-add-tutor-details modified findById() method according to the 201701201215 DJ crev modification request.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,13 +44,43 @@ public class CountryDAO implements ICrud{
 		return 0;
 	}
 
-
+/*
+ * @author DN - taken from c18 - student : signup : without using third party application Country2DAO class
+ * @see com.genesiis.campus.entity.ICrud#findById(java.lang.Object)
+ */
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
+		int countryCode = (Integer) code;
+		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1) AND [CODE] = ?;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, countryCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleCountryList = new ArrayList<String>();
+				singleCountryList.add(rs.getString("CODE"));
+				singleCountryList.add(rs.getString("NAME"));
+				allCountryList.add(singleCountryList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("findById(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allCountryList;
+}
 
 	/**
 	 * Returns all the country details in Database

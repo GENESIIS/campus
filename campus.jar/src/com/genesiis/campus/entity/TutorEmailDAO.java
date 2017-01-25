@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 
-//20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
+//20170117 CW c36-add-tutor-information INIT TutorEmailDAO.java
+//20170117 CW c36-add-tutor-information modified findById()
+//20170123 CW c36-add-tutor-information removed un-wanted import statement
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,16 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import org.apache.log4j.Logger;
 
-public class TutorUserNameDAO implements ICrud {
+public class TutorEmailDAO implements ICrud {
+	static Logger log = Logger.getLogger(TutorEmailDAO.class.getName());
 
-	static Logger log = Logger.getLogger(TutorUserNameDAO.class.getName());
-	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -35,18 +36,11 @@ public class TutorUserNameDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	/**
-	 * Returns the username in Database for the given Tutor Code
-	 * 
-	 * @author Chathuri, Chinthaka
-	 * 
-	 * @return Returns the username from a collection of collection
-	 */
+
 	@Override
-	public Collection<Collection<String>> findById(Object code)	throws SQLException, Exception {
-		
-		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
+
+		final Collection<Collection<String>> allTutorEmailList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -54,16 +48,16 @@ public class TutorUserNameDAO implements ICrud {
 		try {
 			Tutor tutor = (Tutor) code; 
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
+			String query = "SELECT [EMAIL] FROM [CAMPUS].[TUTOR] WHERE EMAIL=?";
 
 			stmt = conn.prepareStatement(query);
-			stmt.setString(1, tutor.getUsername());
+			stmt.setString(1, tutor.getEmailAddress());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleTutorList = new ArrayList<String>();
-				singleTutorList.add(rs.getString("USERNAME"));
-				allTutorList.add(singleTutorList);
+				final ArrayList<String> singleTutorEmailList = new ArrayList<String>();
+				singleTutorEmailList.add(rs.getString("USERNAME"));
+				allTutorEmailList.add(singleTutorEmailList);
 			}
 		} catch (ClassCastException cce) {
 			log.info("findById(): ClassCastException " + cce.toString());
@@ -77,7 +71,7 @@ public class TutorUserNameDAO implements ICrud {
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-		return allTutorList;
+		return allTutorEmailList;
 
 	}
 
