@@ -96,14 +96,15 @@ $(document).on('click','#upload-button',function(event){
 		//headers:{'Content-Type': 'multipart/form-data; boundary='+boundary1+"'"}, // added
 		complete:function(){
 			globalFlag=true;
-			displayTutorProfileImageAtPageLoad(); 
+			setTimeout(
+			displayTutorProfileImageAtPageLoad(),3000);
 		},
 	    success:function(response){
 				
 			if(response['successCode']===1){
 				alert("Inside success call");
 				displayLabelMessage('displayLabel','green',response['message']);
-				//jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']);
+				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());  
 				
 			} else{
 				// if the execution success but logically generated error application vice
