@@ -1,6 +1,8 @@
 package com.genesiis.campus.util;
 //20170119 CAM-20 SessionCounterListener class created. 
 //20170120 CAM-20 Session timeout Interval set to 1hour. 
+//20170124 CAM-20 SetAplicationScoop to current session and remove from the destroy event.
+//20170125 CAM-20 unwanted loggers removed.
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -15,31 +17,27 @@ public class SessionCounterListener implements HttpSessionListener{
 	
 	ServletContext serveltContext = null;
 	static int totalSession=0, currentSession=0;  
-	 String message = "abcd";
+	 String message = "Message";
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		log.info("Created"+event);
 		totalSession ++;
 		currentSession ++;
 		
 		serveltContext = event.getSession().getServletContext();
-		event.getSession().setMaxInactiveInterval(2 * 60); //session expiration time 
+		event.getSession().setMaxInactiveInterval(60 * 60); //session expiration time 
 		serveltContext.setAttribute("totalUsers", totalSession);
 		serveltContext.setAttribute("curentSession", currentSession);
 		
-		log.info("Created "+totalSession  +"Curent user "+currentSession );
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		log.info("Destroyed : " +event);
 		message = SystemMessage.SESSIONEXPIRED.message();
 		event.getSession().invalidate();
 		currentSession --;
 		serveltContext.setAttribute("curentSession", currentSession);
 		serveltContext.setAttribute("message",message);
 		
-		log.info("Destroyed currentSession : " +currentSession);
 	}
 
 }
