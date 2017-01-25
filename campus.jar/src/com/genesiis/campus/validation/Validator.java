@@ -124,7 +124,7 @@ public class Validator {
 			helper.setAttribute("errorProviderName", "Name is empty or too long");
 			errorString.add("Provider Name ");
 			isValid = false;
-		}if(!isValidLength(helper.getParameter("shortName"), 30, 1)){
+		}if(!isValidLength(helper.getParameter("shortName"), 30, 0)){
 			helper.setAttribute("errorShortName", "Short name is empty or too long");
 			errorString.add("Short Name ");
 			isValid = false;
@@ -147,11 +147,6 @@ public class Validator {
 			errorString.add("About Me ");
 			isValid = false;
 		}
-//		if(!isEmptyString(helper.getParameter("specialFeatures")) && helper.getParameter("specialFeatures").length()>100){
-//			helper.setAttribute("errorSpecialFeatures", "Description is too long.");
-//			errorString.add("About Me ");
-//			isValid = false;
-//		}
 		if(!isValidLength(helper.getParameter("specialFeatures"), 100, 0)){
 			helper.setAttribute("errorSpecialFeatures", "Description is too long.");
 			errorString.add("About Me ");
@@ -231,13 +226,6 @@ public class Validator {
 					errorString.add("Username");
 					isValid = false;
 				}
-//				if(!isEmptyString(helper.getParameter("providerUsername"))){
-//					String username = helper.getParameter("providerUsername");
-//					if( username.length() <5){
-//						helper.setAttribute("errorUsername", "Username is too small. It should have at least 5 characters");
-//						isValid = false;
-//					}
-//				}
 				if(isEmptyString(helper.getParameter("providerPassword")) || 
 				isEmptyString(helper.getParameter("cProviderPassword"))){
 					errorString.add("Password fields are empty");
