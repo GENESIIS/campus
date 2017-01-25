@@ -1,4 +1,5 @@
 <!-- 20170120 CAM-20 Session timeout popup message created. -->
+<!-- 20170123 CAM-20 Set the Static login message -->
 <!-- popup massage window -->
 
 <div class="modal fade" id="msg-popup" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
