@@ -20,11 +20,29 @@ $(document).ready(function() {
 
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
+	publishPrograms();
 	if (window.responseErrorMessage == null) {
 		document.getElementById("userMessage").style.display = "none";
 	}
 
 }
+
+
+/**
+ * this method used to show or hide the expiration date depending on whether the
+ * course provider will publish programs or not.
+ */
+function publishPrograms(){
+	var publishProgram = $('input[name=publishProgram]:checked').val();
+	
+	if(publishProgram == 0){
+		document.getElementById("expire-date").style.display = "block";
+	}else if(publishProgram == 1){
+		document.getElementById("expire-date").style.display = "none";
+		$('#expirationDate').val("00-00-0000");
+	}
+}
+
 
 /**
  * @param clearField
