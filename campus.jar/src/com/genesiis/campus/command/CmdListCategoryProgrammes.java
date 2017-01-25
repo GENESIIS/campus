@@ -38,20 +38,6 @@ package com.genesiis.campus.command;
 //				provider image may be shown when accountType of a provider is one-off.
 
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.CategoryProgrammeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -63,6 +49,20 @@ import com.genesiis.campus.validation.EducationCategory;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 public class CmdListCategoryProgrammes implements ICommand {
 	

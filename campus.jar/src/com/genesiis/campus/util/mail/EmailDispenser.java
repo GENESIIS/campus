@@ -2,13 +2,15 @@ package com.genesiis.campus.util.mail;
 //20161027 c10-contacting-us-page EmailDispenser.java initial version created
 //20161031 c10-contacting-us-page add document and method comments
 
+import org.apache.log4j.Logger;
+
 import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+
 /**
  * EmailDispenser class holds the responsibility of delivering the mail
  * Across recipients

@@ -7,11 +7,10 @@ package com.genesiis.campus.validation;
 //cater more phone number styles with spaces in between.
 //20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
 
+import org.apache.log4j.Logger;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
-import org.apache.log4j.Logger;
 
 /**
  * PrevalentValidation intended to provide general validation and it has provided

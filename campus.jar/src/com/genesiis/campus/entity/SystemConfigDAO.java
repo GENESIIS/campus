@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 // 20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +11,6 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
 
 public class SystemConfigDAO implements ICrud {
 	

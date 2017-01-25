@@ -17,9 +17,6 @@ package com.genesiis.campus.util;
 //20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
 // 			due to code review comment by CM
 
-import java.io.IOException;
-import java.util.Collection;
-
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -27,12 +24,16 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.validation.BannerData;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import com.genesiis.campus.validation.BannerData;
+
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());

@@ -14,13 +14,13 @@ import com.genesiis.campus.validation.BannerData;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.Validator;
 
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
 
 public class CmdAddBannerStat implements ICommand {
 

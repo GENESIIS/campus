@@ -4,15 +4,15 @@ package com.genesiis.campus.command;
 //20170112 PN CAM-72 modified the execute method to pass error/exception details to the front end on Servlet Exception or Error.
 //20170125 PN CAM-72: removed the instantiation of Throwable at declaration of throwable variable.
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CmdErrorHandeling implements ICommand {
 	static Logger log = Logger.getLogger(CmdErrorHandeling.class.getName());

@@ -12,9 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 
 public class ReCaptchaManager {
 

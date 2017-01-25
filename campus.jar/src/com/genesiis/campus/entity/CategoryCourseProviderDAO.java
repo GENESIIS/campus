@@ -26,19 +26,19 @@ package com.genesiis.campus.entity;
 //20161129 JH c7-higher-education-landing-page QA modifications: findById method modified
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: removed unwanted statements
 
+import com.genesiis.campus.entity.model.Programme;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.Programme;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.AccountType;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryCourseProviderDAO implements ICrud {
 

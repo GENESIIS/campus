@@ -18,6 +18,13 @@ package com.genesiis.campus.entity;
 //				to set arguments to status related parameters, and to consider DISPLAYSTARTDATE in query
 //20161127 MM c5-corporate-training-landing-page-MP Removed unused java.sql.Date object.
 
+import com.genesiis.campus.entity.model.Programme;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,12 +34,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.Programme;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.AccountType;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CategoryProgrammeDAO implements ICrud {
 	static Logger Log = Logger.getLogger(CategoryProgrammeDAO.class.getName());

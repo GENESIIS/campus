@@ -10,6 +10,10 @@ package com.genesiis.campus.util.mail;
 //20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
 //				setProperties() method refactor accordingly.
 
+import com.genesiis.campus.util.MailServerManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +25,6 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.MailServerManager;
 
 /**
  * GeneralMail class captures the essence of an email

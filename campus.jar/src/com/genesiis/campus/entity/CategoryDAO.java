@@ -15,17 +15,17 @@ package com.genesiis.campus.entity;
 //20161129 JH c7-higher-education-landing-page-MP QA modifications: findById method finally block modified
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: findById, getAll methods modified
 
+import com.genesiis.campus.entity.model.Category;
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.entity.model.Category;
-import com.genesiis.campus.util.ConnectionManager;
-
-import org.apache.log4j.Logger;
 
 public class CategoryDAO implements ICrud{
 	static Logger log = Logger.getLogger(CategoryDAO.class.getName());
