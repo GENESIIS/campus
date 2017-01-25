@@ -217,6 +217,8 @@ function vaidateCourseProviderDeatils(form) {
 	var cProviderPassword = $("#cProviderPassword").val();
 	var accountStatus = $('input[name=accountStatus]:checked').val();
 	var accountDescription = $("#accountDescription").val();
+	var publishProgram = $('input[name=publishProgram]:checked').val();
+	
 
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
