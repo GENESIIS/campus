@@ -41,6 +41,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**The class  {@code CourseProviderDAOImpl} is a form of DAO class.
+ * The Interface {@code CourseProviderDAOImpl} has precise control over course provider dao level manipulations. 
+ *  @author dumani DJ   
+ */
 public class CourseProviderDAOImpl implements CourseProviderICrud{
 	
 	static Logger log = Logger.getLogger(CourseProviderDAOImpl.class.getName());
@@ -231,9 +235,7 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 		PreparedStatement  stmt = null;
 		ResultSet resultSet =null;
 		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();		
-		try {
-			int categoryCode=0;
-			boolean isGetAll=false;						
+		try {									
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder(" SELECT  DISTINCT PROVIDER.CODE AS CPCODE , PROVIDER.NAME AS CPNAME FROM [CAMPUS].COURSEPROVIDER PROVIDER ");
 			sb.append(" INNER JOIN [CAMPUS].PROGRAMME PROG ON PROVIDER.CODE=PROG.COURSEPROVIDER");

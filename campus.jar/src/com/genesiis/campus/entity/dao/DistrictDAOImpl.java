@@ -17,6 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**The class  {@code DistrictDAOImpl} is a form of DAO class.
+ * The Interface {@code DistrictDAOImpl} has precise control over district and town dao level manipulations. 
+ *  @author dumani DJ   
+ */
 public class DistrictDAOImpl  implements DistrictICrud{
 	
 	static Logger log = Logger.getLogger(DistrictDAOImpl.class.getName());	

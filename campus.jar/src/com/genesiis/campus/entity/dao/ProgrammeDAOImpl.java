@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-/**The class  {@code ProgrammeDAO} is a form of DAO class.
- * The Interface {@code ProgrammeDAO} has precise control over programme dao level manipulations. 
+/**The class  {@code ProgrammeDAOImpl} is a form of DAO class.
+ * The Interface {@code ProgrammeDAOImpl} has precise control over programme dao level manipulations. 
  *  @author dumani DJ   
  */
 public class ProgrammeDAOImpl implements ProgrammeICrud{
