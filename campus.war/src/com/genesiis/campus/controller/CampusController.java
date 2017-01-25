@@ -11,6 +11,9 @@ package com.genesiis.campus.controller;
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
 //20170117 AS CAM-21-student-logout-clear-session-details-update-logout-data-as Session details invalidation result.getCollection() modified. 
+//20170106 AS CAM-20 Session attributes handled from process method and null sessions also handled
+//20170125 AS CAM-20 unwanted loggers and comments removed.
+
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -80,46 +83,9 @@ public class CampusController extends HttpServlet {
 
 			HttpSession session = request.getSession(false);
 
-			
-			//testing WIP
-			// Use the session to get the session context 
-//						HttpSessionContext context = session.getSessionContext();
-//						// Use the session context to get a list of session IDs
-//						Enumeration ids = context.getIds();
-//						// Iterate over the session IDs checking for stale sessions
-//						while (ids.hasMoreElements()) {
-//							String id = (String) ids.nextElement();
-//							 session = context.getSession(id);
-//							 log.info("Session context"+session);
-//							// Invalidate the session if it's more than a day old or has been
-//							// inactive for more than an hour.
-//							Date dayAgo = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
-//							Date hourAgo = new Date(System.currentTimeMillis() - 1 * 60 * 1000);
-//							Date created = new Date(session.getCreationTime());
-//							Date accessed = new Date(session.getLastAccessedTime());
-//							if (created.before(dayAgo)) {
-//								// out.println("More than a day old, invalidated!");
-//								log.info("More than a day old, invalidated!");
-//								session.invalidate();
-//							} else if (accessed.before(hourAgo)) {
-//								// out.println("More than an hour inactive, invalidated!");
-//								log.info("More than an hour inactive, invalidated!");
-//								session.invalidate();
-//							} else {
-//								// out.println("Still valid.");
-//								log.info("Still valid.");
-//							}
-//						}
-			
-			
-			//testing WIP
-			
 			if (session != null && !session.isNew()) {
 				String name = (String) session.getAttribute("name");
-				//session.setMaxInactiveInterval(5 * 60);
-				
-				
-				
+
 				if (ResponseType.JSP.equals(responseType)) {
 
 					request.setAttribute("result", result);
@@ -151,13 +117,7 @@ public class CampusController extends HttpServlet {
 					response.setContentType("application/json");
 				}
 			} else {
-			
-			//	request.setAttribute("message",SystemMessage.SESSIONEXPIRED.message());
-				
-				//request.getRequestDispatcher(helper.getResultPage("EXP")).forward(request, response);
-			//	request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
-				
-				//response.sendRedirect("/dist/partials/login.jsp");
+
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 
 				if (result != null && result.getCollection() != null) {
@@ -170,18 +130,16 @@ public class CampusController extends HttpServlet {
 						.getAttributeNames();
 
 				while (attributeNames.hasMoreElements()) {
-					String currentAttributeName = attributeNames
-							.nextElement();
-					Object object = helper
-							.getAttribute(currentAttributeName);
+					String currentAttributeName = attributeNames.nextElement();
+					Object object = helper.getAttribute(currentAttributeName);
 					objectMap.put(currentAttributeName, object);
 				}
 
 				response.getWriter().write(gson.toJson(objectMap));
 				response.setContentType("application/json");
-				getServletContext().getRequestDispatcher("/dist/partials/login.jsp");
-				//request.getRequestDispatcher("dist/partials/login.jsp").forward(request, response);
-				log.info(session.getAttribute("Session null message"+"message"));
+				getServletContext().getRequestDispatcher(
+						"/dist/partials/login.jsp");
+
 			}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);

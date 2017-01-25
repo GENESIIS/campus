@@ -1,8 +1,10 @@
 <%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" --%>
 <%-- 	pageEncoding="ISO-8859-1"%> --%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-<!-- 20161228 SessionDetailsJSTL.jsp page created to maintain logged users session details.   -->
-<!-- 20161229 logged Student privilege handling in jstl (interface and button action)  -->
+<!-- 20161228 AS CAM-20 SessionDetailsJSTL.jsp page created to maintain logged users session details.   -->
+<!-- 20161229 AS CAM-20 logged Student privilege handling in jstl (interface and button action)  -->
+<!-- 20170124 AS CAM-20 unwanted code comments removed. -->
+<!-- 20170124 AS CAM-20 Popup message and URL redirection handled.  -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -28,20 +30,15 @@
 <body>
 <jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
+
+
 <!-- 	checked session already created or not, if not redirect to login.jsp -->
 	<c:if test="${sessionScope.currentSessionUser == null}">
 		
-		<script>
-	//alert("lolowwwwww");
-		$('#msg-popup').modal('show');
-		setTimeout( function(){
-		//	$('#msg-popup').modal('show');
-			window.location.href = 'http://www.campus.dev:8080/index.jsp?showLogin=true'; //this name may have to change depend on actual location of the page "Student Login or public index page"
-<%-- 			<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>
-//alert("lolowwwwww");
-			
-			}, 6000);
-		//$('#loginPopup').modal('show');
+		<script>	
+	window.location.href = 'http://www.campus.dev:8080/dist/partials/error/error-content.jsp';
+	//	$('#msg-popup').modal('show');
+	
 		</script>
 		
 <%-- 	<% response.sendRedirect("/index.jsp?showLogin=true"); %>  --%>

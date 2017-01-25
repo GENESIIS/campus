@@ -151,8 +151,9 @@ public class StudentLoginDAO implements ICrud {
 		Connection conn = null;
 		String query = "UPDATE CAMPUS.STUDENT SET LASTLOGGEDINUSERAGENT= ?, LASTLOGGEDINSESSIONID= ?, LASTLOGGEDINDATE=?, LASTLOGGEDINTIME=?, LASTLOGGEDINIPADDRESS= ?  WHERE CODE=? ";
 		PreparedStatement ps = null;
+		
+		int rowInserted = -1;
 
-		int rowInserted = 0;
 		try {
 			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();

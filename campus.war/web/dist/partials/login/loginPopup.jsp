@@ -1,3 +1,5 @@
+<!-- 20170120 CAM-20 login popup window integrated -->
+
 <script src='/dist/js/institute/validation/validation.js'></script>
 <script src='/dist/js/login.js'></script>
 
