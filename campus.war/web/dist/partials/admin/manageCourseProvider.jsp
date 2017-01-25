@@ -166,7 +166,7 @@
 										class="error-message">${errorShortName }</span>
 								</div>
 								<div class="col-name">
-									<h1 class="pro-name">Unique Prefix: <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">Unique Name: <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
@@ -494,13 +494,13 @@
 				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
 				<!-- course filter panel : left side -->
 				<div class="course-filter-panel" id="accountInfo">
-					<h3 style="color: maroon;">Account Info</h3>
+					<h3 style="color: maroon;">Account Info | Authorized Person </h3>
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Name: <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">Name : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="providerPrivateName"
@@ -512,7 +512,20 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Email: <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">Contact Number : <span style="color: red;">*</span>
+									</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="providerContactNumber"
+										id="providerContactNumber" size="50px;" /> <span
+										id="errorContactNumber" class="error-message">${errorContactNumber }</span>
+								</div>
+							</li>
+							<!-- end -->
+
+							<li class="course-info clearfix">
+								<div class="col-name">
+									<h1 class="pro-name">Email : <span style="color: red;">*</span></h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="email" name="providerEmail"
