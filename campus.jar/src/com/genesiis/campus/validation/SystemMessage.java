@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20170109 c36-add-tutor-details-added few more enum fields cw
 //20170111 c36-add-tutor-details-added USERNAME_LENGTH, WEBLINKERROR, FACEBOOKERROR, LINKEDINERROR, TWITTERERROR, INSTAGRAMERROR, MYSPACEERROR, WHATSAPPERROR, VIBERERROR cw
 //20170117 c36-add-tutor-details-added EMAIL_USED CW
+//20170125 c125-un-formatted-email-sending-tutor-signup-fixed some errors occured after merging with c36 - cw
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -36,13 +37,12 @@ public enum SystemMessage {
 	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
 	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
 	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
-	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
+	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
 	FIRSTNAMEERROR("Invalid Email Address."),
 	LASTNAMEERROR("First name should not be empty."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
-	MOBILENUMBERERROR("Mobile number error."),
 	LANDCOUNTRYCODEERROR("Land phone country code error."),
 	LANDAREACODEERROR("Land phone area code error."),
 	LANDNUMBERERROR("Land phone number error."),
@@ -55,8 +55,7 @@ public enum SystemMessage {
 	MYSPACEERROR("MySpace link error."),	
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
-	EMAIL_USED("E mail already used to create a tutor profile."),
-	EMPTYFIELD("Please fill required data");
+	EMAIL_USED("E mail already used to create a tutor profile.");
 
 	
 	private String message;
