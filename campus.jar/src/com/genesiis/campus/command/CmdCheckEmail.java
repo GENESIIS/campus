@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170117 CW c36-add-tutor-information INIT CmdCheckEmail.java
 //20170117 CW c36-add-tutor-information modified the comments in execute ()method
+//20170126 CW c36-add-tutor-information modified the execute ()method return value.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class CmdCheckEmail implements ICommand {
 		} finally {
 			helper.setAttribute("message", message);
 		}
-		return null;
+		return view;
 	}
 
 }
