@@ -70,6 +70,7 @@ public class CmdGetTutorProfileImg implements ICommand {
 			log.error("getExistingImageFilePathFromTheStorage(): Exception :"+exp.toString());
 			throw exp;
 		}
+		log.info("CmdUploadTutorImage#getExistingImageFilePathFromTheStorage() finished executing...");
 		return view;
 	}
 
