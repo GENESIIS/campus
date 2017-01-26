@@ -69,12 +69,13 @@ function providerUsernameValidation() {
 	document.getElementById('usernameMessage').innerHTML = "";
 
 	var flag = false;
+	var integerPattern = /^[0-9]+$/;
 
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
 
-	if (!isempty(selectedUsername)) {
-		document.getElementById('errorUsername').innerHTML = "**Username is empty.";
+	if (!isempty(selectedUsername) || isPatternMatch(integerPattern, selectedUsername)) {
+		document.getElementById('errorUsername').innerHTML = "**Username is empty or can't contain only numbers.";
 		document.getElementById('providerUsername').focus();
 		return false;
 	} else {
@@ -180,6 +181,9 @@ function providerPrefixValidation() {
  */
 function vaidateCourseProviderDeatils(form) {
 
+	var integerPattern = /^[0-9]+$/;
+	var flag = true;
+	
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
 	var shortName = $("#shortName").val();
@@ -220,10 +224,18 @@ function vaidateCourseProviderDeatils(form) {
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	var currentDate = new Date();
 	var selectedDate = new Date(expirationDate);
-if(currentDate > selectedDate){alert("sjkdfskd");}
 	
-	var integerPattern = /^[0-9]+$/;
-	var flag = true;
+
+		if (currentDate > selectedDate) {
+			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
+			document.getElementById('expirationDate').focus();
+			flag = false;
+	}
+	if (expirationDate === "" || expirationDate === null) {
+		document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
+		document.getElementById('expirationDate').focus();
+		flag = false;
+	}
 	
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
@@ -378,16 +390,7 @@ if(currentDate > selectedDate){alert("sjkdfskd");}
 // document.getElementById('viber').focus();
 // flag = false;
 // }
-	if (!isempty(expirationDate)) {
-		document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
-		document.getElementById('expirationDate').focus();
-		flag = false;
-	}
-	if(expirationDate < currentDate){
-		document.getElementById('errorExpiration').innerHTML = "**Expiration date is not valid.";
-		document.getElementById('expirationDate').focus();
-		flag = false;
-	}
+		
 	if (!isempty(providerType)) {
 		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
 		document.getElementById('selectedProviderType').focus();
@@ -406,6 +409,11 @@ if(currentDate > selectedDate){alert("sjkdfskd");}
 	if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail) ) {
 		document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
 		document.getElementById('providerEmail').focus();
+		flag = false;
+	}
+	if (isPatternMatch(integerPattern, providerUsername)) {
+		document.getElementById('errorUsername').innerHTML = "** Username can't contain only numbers.";
+		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
 	if (!isempty(providerUsername) || !isValidLength(providerUsername, 100)) {

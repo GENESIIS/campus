@@ -37,6 +37,7 @@ function publishPrograms(){
 	
 	if(publishProgram == 0){
 		document.getElementById("expire-date").style.display = "block";
+
 	}else if(publishProgram == 1){
 		document.getElementById("expire-date").style.display = "none";
 		$('#expirationDate').val("00-00-0000");
