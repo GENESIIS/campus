@@ -132,14 +132,14 @@
 				<thead>
 					<tr>
 						<th>Code</th>
-						<th>First Name</th>
-						<th>Middle Name</th>
-						<th>Last Name</th>
+						<th>Name</th>
 						<th>Username</th>
 						<th>Email</th>
 						<th>Land Phone number</th>
 						<th>Mobile phone number</th>
-						<th>Address</th>
+						<th>Address Line1</th>
+						<th>Address Line2</th>
+						<th>Address Line3</th>
 						<th>Town</th>
 						<th>Country</th>
 						<th>Approval status</th>
