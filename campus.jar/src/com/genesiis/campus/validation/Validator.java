@@ -152,11 +152,14 @@ public class Validator {
 			errorString.add("About Me ");
 			isValid = false;
 		}
-		if(isEmptyString(helper.getParameter("expirationDate"))){
-			helper.setAttribute("errorExpirationDate", "Select an expiration date");
-			errorString.add("Expiration Date ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("selectedCountry"))){
+		if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
+			if(isEmptyString(helper.getParameter("expirationDate"))){
+				helper.setAttribute("errorExpirationDate", "Select an expiration date");
+				errorString.add("Expiration Date ");
+				isValid = false;
+			}
+		}
+		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
 			errorString.add("Country ");
 			isValid = false;
