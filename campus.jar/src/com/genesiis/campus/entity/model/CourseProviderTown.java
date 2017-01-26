@@ -2,7 +2,8 @@ package com.genesiis.campus.entity.model;
 
 //20161229 JH c39-add-course-provider CourseProviderTown.java class created
 //20170102 JH c39-add-course-provider data type string to long for town attribute
-//20170103 JH c39-add-course-provider added new attributes for address field  
+//20170103 JH c39-add-course-provider added new attributes for address field 
+//20170126 JH c39-add-course-provider added new attribute contact number
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class CourseProviderTown {
 	private String address3;
 	private String crtBy;
 	private String modBy;
+	private String contactNumber;
 	
 	private boolean isActive;
 	
@@ -87,6 +89,12 @@ public class CourseProviderTown {
 	}
 	public void setModOn(Date modOn) {
 		this.modOn = modOn;
+	}
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 	
 }
