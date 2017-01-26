@@ -11,6 +11,8 @@ package com.genesiis.campus.command;
 //20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
 //20170124 CW c36-add-tutor-details modified fillTutorCollection() method according to the 201701201215 DJ crev modification request.
 //20170125 CW c36-add-tutor-details validateUserAndEmail() & validateAvailability() methods.
+//20170126 CW c36-add-tutor-details modified execute() method.
+//20170126 CW c36-add-tutor-details modified fillTutorCollection() method & check for null Array Lists
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,10 +71,8 @@ public class CmdAddTutorProfile implements ICommand {
 					if (message.equalsIgnoreCase("True")) {
 													
 		
-						UserTypeDAO typeOfUser = new UserTypeDAO();
-						Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
-						
-						userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+						UserTypeDAO typeOfUser = new UserTypeDAO();					
+						Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
 						
 						int userType = 9999;
 						
@@ -332,21 +332,23 @@ public class CmdAddTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		
 		try{
-			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
-			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			for(Collection<String> countryList : countryCollection){
-				tutorCollection.add(countryList.toArray()[1].toString());				
+			Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			if(!(countryCollection.isEmpty())){
+				for(Collection<String> countryList : countryCollection){
+					tutorCollection.add(countryList.toArray()[1].toString());				
+				}
 			}
 
-			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
 			int addCount = 0;
-			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 			
-			for(Collection<String> townList : townCollection){
-				if (townList.toArray()[0].toString().equals(tutor.getTown())){
-					tutorCollection.add(townList.toArray()[1].toString());
-					tutorCollection.add(townList.toArray()[0].toString());
-					addCount++;
+			if(!(countryCollection.isEmpty())){
+				for(Collection<String> townList : townCollection){
+					if (townList.toArray()[0].toString().equals(tutor.getTown())){
+						tutorCollection.add(townList.toArray()[1].toString());
+						tutorCollection.add(townList.toArray()[0].toString());
+						addCount++;
+					}
 				}
 			}
 			if(addCount == 0){
