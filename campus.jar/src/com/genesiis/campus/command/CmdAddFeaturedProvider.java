@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
 //20161219 JH c39-add-course-provider code review modifications: use generics 
 //20161229 JH c39-add-course-provider code modified to get course provider town data
 //20170102 JH c39-add-course-provider back end code validation 
+//20170126 JH c39-add-course-provider code re-factored to add contact number details of course provider account and town
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -201,7 +202,9 @@ public class CmdAddFeaturedProvider implements ICommand{
 						courseProviderTown.setAddress1(helper.getParameter("address1"));
 						courseProviderTown.setAddress2(helper.getParameter("address2"));
 						courseProviderTown.setAddress3(helper.getParameter("address3"));
-						
+						String phoneNumber = courseProvider.getLandPhoneCountryCode() + courseProvider.getLandPhoneAreaCode() 
+								+ courseProvider.getLandPhoneNo();
+						courseProviderTown.setContactNumber(phoneNumber);						
 						courseProviderTown.setCrtBy("admin");
 						courseProviderTown.setModBy("admin");
 						
@@ -233,6 +236,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
 							courseProviderAccount.setUserType(userType);
+							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
 							courseProviderAccount.setCrtBy("admin");//to be update after the session is created
 							courseProviderAccount.setModBy("admin");//to be update after the session is created
 							
