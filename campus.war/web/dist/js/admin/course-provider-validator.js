@@ -128,19 +128,25 @@ function providerPrefixValidation() {
 	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
+		
+		document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
 		document.getElementById('uniquePrefix').focus();
 		return false;
 	} else if (selectedPrefix.length < 2) {
+
 			document.getElementById('prefixMessage').value = "";
 			document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
 			return false;
 	} else if (selectedPrefix.length > 20) {
+
+		document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
 		document.getElementById('prefixMessage').value = "";
 		return false;
 } else {
-		document.getElementById('errorUniquePrefix').innerHTML = "";
+	document.getElementById('errorUniquePrefix').innerHTML = "";
+	document.getElementById('prefixMessage').innerHTML = "";
 
 		$
 				.ajax({
