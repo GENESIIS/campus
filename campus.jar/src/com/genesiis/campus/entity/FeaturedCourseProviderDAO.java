@@ -106,10 +106,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			 */
 
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, EMAIL, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
-					+ " USERTYPE ,CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+					+ " USERTYPE ,CONTACTNUMBER, CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 			
-			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, ADDRESS1, ADDRESS2, ADDRESS3, CRTON, CRTBY, MODON, MODBY)"
-					+ " VALUES (?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, ADDRESS1, ADDRESS2, ADDRESS3, CONTACTNUMBER, CRTON, CRTBY, MODON, MODBY)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
 			
 			//check whether the course provider has a head office or not
@@ -214,8 +214,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement2.setString(5, courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(6, courseProviderAccount.isActive());
 			preparedStatement2.setInt(8, courseProviderAccount.getUserType());
-			preparedStatement2.setString(9, courseProviderAccount.getCrtBy());
-			preparedStatement2.setString(10, courseProviderAccount.getModBy());
+			preparedStatement2.setString(9, courseProviderAccount.getContactNumber());
+			preparedStatement2.setString(10, courseProviderAccount.getCrtBy());
+			preparedStatement2.setString(11, courseProviderAccount.getModBy());
 			
 			
 			//set course provider town details
@@ -226,8 +227,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement3.setString(4, courseProvider.getAddress1());
 			preparedStatement3.setString(5, courseProvider.getAddress2());
 			preparedStatement3.setString(6, courseProvider.getAddress3());
-			preparedStatement3.setString(7, courseProviderTown.getCrtBy());
-			preparedStatement3.setString(8, courseProviderTown.getModBy());
+			preparedStatement3.setString(7, courseProviderTown.getContactNumber());
+			preparedStatement3.setString(8, courseProviderTown.getCrtBy());
+			preparedStatement3.setString(9, courseProviderTown.getModBy());
 
 			status = preparedStatement.executeUpdate();
 
