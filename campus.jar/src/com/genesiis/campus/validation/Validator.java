@@ -31,7 +31,7 @@ package com.genesiis.campus.validation;
 //20170125 CW c36-add-tutor-details modify isValidUserNameLength().
 //20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
 //20170125 CW c36-add-tutor-details added validateForNull() method
-//20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues()
+//20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
 
 
 import java.net.MalformedURLException;
