@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
 //20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
 //20170124 CW c36-add-tutor-details modified getAll() method according to the 201701201215 DJ crev modification request.
+//20170125 CW c36-add-tutor-details add validateUsernameEmailFields() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.AccountType;
@@ -220,6 +222,48 @@ public class TutorDAO implements ICrud {
 	public int delete(Object object, Connection conn) throws SQLException,
 			Exception {
 		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	/**
+	 * Check the email & username given with already entered username & email in the database 
+	 * @author Chinthaka 
+	 * @return Returns 1 if the username is available in the database, returns 2 if the email is available & 
+	 * 				returns 0 if both are not used to create a tutor profile.
+	 */
+	public static int validateUsernameEmailFields(IDataHelper helper) throws SQLException,	Exception {
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, helper.getParameter("username"));
+			stmt.setString(2, helper.getParameter("email"));
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				System.out.println("rs.getString USERNAME = "+ rs.getString("USERNAME"));
+				System.out.println("rs.getString email = "+ rs.getString("email"));
+				if(rs.getString("USERNAME").equals(helper.getParameter("username"))){
+					return 1;
+				}else if(rs.getString("EMAIL").equals(helper.getParameter("email"))){
+					return 2;
+				}
+			}
+		} catch (SQLException sqlException) {
+			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
 		return 0;
 	}
 }

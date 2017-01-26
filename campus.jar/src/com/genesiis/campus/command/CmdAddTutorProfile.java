@@ -12,6 +12,9 @@ package com.genesiis.campus.command;
 //20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines
 //20170124 CW c36-add-tutor-details modified fillTutorCollection() method according to the 201701201215 DJ crev modification request.
+//20170125 CW c36-add-tutor-details validateUserAndEmail() & validateAvailability() methods.
+//20170126 CW c36-add-tutor-details modified execute() method.
+//20170126 CW c36-add-tutor-details modified fillTutorCollection() method & check for null Array Lists
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,26 +63,38 @@ public class CmdAddTutorProfile implements ICommand {
 			Collection<String> tutorCollection= new ArrayList<String>();
 			
 		try {
-				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
 				fillTutorCollection(tutorCollection, tutor);
 				
-				if (message.equalsIgnoreCase("True")) {								
-	
-					UserTypeDAO typeOfUser = new UserTypeDAO();
-					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
+				message = validateUserAndEmail(helper);
+				if (message.equalsIgnoreCase("True")) {
+					message = validator.validateTutorFields(helper);
 					
-					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
-					
-					int userType = 9999;
-					
-					for(Collection<String> userTypeInnerCollection : userTypeCollection ){
-						Object arr[] = userTypeInnerCollection.toArray();
-						userType = Integer.parseInt(arr[0].toString());
-					} 
-					
-					if (userType != 9999){
-						tutor.setUsertype(userType);
+					if (message.equalsIgnoreCase("True")) {
+													
+		
+						UserTypeDAO typeOfUser = new UserTypeDAO();					
+						Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+						
+						int userType = 9999;
+						
+						for(Collection<String> userTypeInnerCollection : userTypeCollection ){
+							Object arr[] = userTypeInnerCollection.toArray();
+							userType = Integer.parseInt(arr[0].toString());
+						} 
+						
+						if (userType != 9999){
+							tutor.setUsertype(userType);
+						}
+		
+						int result = tutorDAO.add(tutor);
+						if (result > 0) {
+							message = SystemMessage.ADDED.message();
+		
+						} else {
+							
+							message = SystemMessage.ERROR.message();
+						}					
 					}
 	
 					int result = tutorDAO.add(tutor);
@@ -105,6 +120,67 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		return view;
 	}	
+	
+	/**
+	 * Validate Tutor username & email given. 
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateUserAndEmail(IDataHelper helper) throws SQLException, Exception{
+
+		String message = "True"; 
+		try {		
+			if (!((Validator.isNotEmpty(helper.getParameter("email")))
+					&& (Validator.isNotEmpty(helper.getParameter("username"))))) {
+				message = SystemMessage.EMPTYFIELD.message();
+			} else if (!Validator.validateEmail(helper.getParameter("email"))) {
+				message = SystemMessage.EMAILERROR.message();
+			} else if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				message = SystemMessage.USERNAME_LENGTH.message();
+			} else{
+				message = validateAvailability(helper);
+			}
+		} catch (SQLException sqlException) {
+			log.info("validateUserAndEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateUserAndEmail(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
+	
+	/**
+	 * Validate Tutor username & email for availability.
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateAvailability(IDataHelper helper) throws SQLException, Exception {
+
+		String message = "True"; 
+		int type = 0;
+		try {		
+				type = TutorDAO.validateUsernameEmailFields(helper);
+				
+				if(type == 1){
+					message = SystemMessage.USERNAME_EXIST.message();
+				} else if(type == 2){
+					message = SystemMessage.EMAIL_USED.message();
+				}
+		} catch (SQLException sqlException) {
+			log.info("validateAvailability(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateAvailability(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
+
 	/*
 	 * setVariables() method initializes all the instance variable
 	 * 
@@ -269,21 +345,23 @@ public class CmdAddTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		
 		try{
-			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
-			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			for(Collection<String> countryList : countryCollection){
-				tutorCollection.add(countryList.toArray()[1].toString());				
+			Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			if(!(countryCollection.isEmpty())){
+				for(Collection<String> countryList : countryCollection){
+					tutorCollection.add(countryList.toArray()[1].toString());				
+				}
 			}
 
-			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
 			int addCount = 0;
-			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+			Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 			
-			for(Collection<String> townList : townCollection){
-				if (townList.toArray()[0].toString().equals(tutor.getTown())){
-					tutorCollection.add(townList.toArray()[1].toString());
-					tutorCollection.add(townList.toArray()[0].toString());
-					addCount++;
+			if(!(countryCollection.isEmpty())){
+				for(Collection<String> townList : townCollection){
+					if (townList.toArray()[0].toString().equals(tutor.getTown())){
+						tutorCollection.add(townList.toArray()[1].toString());
+						tutorCollection.add(townList.toArray()[0].toString());
+						addCount++;
+					}
 				}
 			}
 			if(addCount == 0){

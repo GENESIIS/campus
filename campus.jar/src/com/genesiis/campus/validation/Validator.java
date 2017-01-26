@@ -28,6 +28,10 @@ package com.genesiis.campus.validation;
 //20170109 CW c36-add-tutor-details added isValidUserNameLength() method
 //20170111 CW c36-add-tutor-details modified validateTutorFields() method, isValidURL(), isValidWhatsappViber(), isValidUserNameLength() methods added
 //20170117 CW c36-add-tutor-details added validateEmailAvailability() method
+//20170125 CW c36-add-tutor-details modify isValidUserNameLength().
+//20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
+//20170125 CW c36-add-tutor-details added validateForNull() method
+//20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
 
 
 import java.net.MalformedURLException;
@@ -172,18 +176,17 @@ public class Validator {
 		return days;
 	}
 
-
 	/**
-	 * Validate Tutor fields before values go to database.
+	 * Validate helper fields for null values.
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * @param helper
-	 * @return String
+	 * @return boolean : Returns true if helper having any null values for required fields
 	 * @throws Exception
 	 */
-	public String validateTutorFields(IDataHelper helper) throws Exception {
+	public boolean isHavingNullValues(IDataHelper helper) throws Exception {
 
-		String message = "True"; 
+		boolean isHavingNull = false; 
 		try {		
 			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
 					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
@@ -199,6 +202,28 @@ public class Validator {
 					&& (Validator.isNotEmpty(helper.getParameter("username")))
 					&& (Validator.isNotEmpty(helper.getParameter("password")))
 					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
+				isHavingNull = true; 
+			}
+		} catch (Exception e) {
+			log.error("isHavingNullValues() : Exception " + e.toString());
+			throw e;
+		}
+		return isHavingNull;
+	}	
+
+	/**
+	 * Validate Tutor fields before values go to database.
+	 * 
+	 * @author Chathuri, Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateTutorFields(IDataHelper helper) throws Exception {
+
+		String message = "True"; 
+		try {		
+			if (isHavingNullValues(helper)) {
 				message = SystemMessage.EMPTYFIELD.message();
 			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
 				message = SystemMessage.FIRSTNAMEERROR.message();
@@ -234,14 +259,6 @@ public class Validator {
 				message = SystemMessage.WHATSAPPERROR.message();
 			} else if (!isValidWhatsappViber(helper.getParameter("viber"))) {
 				message = SystemMessage.VIBERERROR.message();
-			} else if (!validateEmailAvailability(helper.getParameter("email"))) {
-				message = SystemMessage.EMAIL_USED.message();
-			}  else if (!validateEmail(helper.getParameter("email"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!isValidUserName(helper)) {
-				message = SystemMessage.USERNAME_EXIST.message();
-			} else if (!isValidUserNameLength(helper.getParameter("username"))) {
-				message = SystemMessage.USERNAME_LENGTH.message();
 			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
 				message = SystemMessage.PASSWORDERROR.message();
 			} 
@@ -453,69 +470,7 @@ public class Validator {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
 	}	
-	
-	/**
-	 * Check the entered email is already entered one
-	 * 
-	 * @author Chinthaka
-	 * @param email
-	 * @return boolean - Returns true if the requested email is a is not used to create tutor account
-	 */	
-	public boolean validateEmailAvailability(String email) throws Exception{
-		try {
 
-			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
-	
-			if (Validator.isNotEmpty(email)){
-				tutorCollection = new TutorDAO().getAll();		
-			}
-			
-			for(Collection<String> tutorList : tutorCollection){
-				if(tutorList.toArray()[7].equals(email)){
-					return false;
-				}			
-			}
-			
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}		
-		return true;
-	}	
-	
-	/**
-	 * Check the entered username is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param username
-	 * @return boolean - Returns true if the requested username is a valid one
-	 */
-	public boolean isValidUserName(IDataHelper helper) throws Exception {
-		boolean valid = false;
-		try {
-
-			Collection<Collection<String>> tutorCollection= new ArrayList<Collection<String>>();
-	
-			if (Validator.isNotEmpty(helper.getParameter("username"))){
-				final Tutor tutor = new Tutor();
-				tutor.setUsername(helper.getParameter("username"));
-				tutorCollection = new TutorUserNameDAO().findById(tutor);		
-			}
-			
-			if (tutorCollection.isEmpty()) {
-				valid = true; // user name does not exist
-			} else {
-				valid = false; // user name Already exists
-			}
-			
-
-		} catch (Exception e) {
-			log.error("isValidUserName:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
 	/**
 	 * Check the entered user name is having a valid size
 	 * user name should have at least 6 characters & should be not more than 20 characters
@@ -523,7 +478,7 @@ public class Validator {
 	 * @param username
 	 * @return boolean - Returns true if the requested username is having valid lengths
 	 */
-	public boolean isValidUserNameLength(String username) throws Exception {
+	public static boolean isValidUserNameLength(String username) throws Exception {
 		boolean valid = false;
 		try {
 
