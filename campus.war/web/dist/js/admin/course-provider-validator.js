@@ -218,8 +218,10 @@ function vaidateCourseProviderDeatils(form) {
 	var accountStatus = $('input[name=accountStatus]:checked').val();
 	var accountDescription = $("#accountDescription").val();
 	var publishProgram = $('input[name=publishProgram]:checked').val();
+	var currentDate = new Date();
+	var selectedDate = new Date(expirationDate);
+if(currentDate > selectedDate){alert("sjkdfskd");}
 	
-
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
 	
@@ -377,6 +379,11 @@ function vaidateCourseProviderDeatils(form) {
 // flag = false;
 // }
 	if (!isempty(expirationDate)) {
+		document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
+		document.getElementById('expirationDate').focus();
+		flag = false;
+	}
+	if(expirationDate < currentDate){
 		document.getElementById('errorExpiration').innerHTML = "**Expiration date is not valid.";
 		document.getElementById('expirationDate').focus();
 		flag = false;
