@@ -31,6 +31,7 @@ package com.genesiis.campus.validation;
 //20170125 CW c36-add-tutor-details modify isValidUserNameLength().
 //20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
 //20170125 CW c36-add-tutor-details added validateForNull() method
+//20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues()
 
 
 import java.net.MalformedURLException;
@@ -180,12 +181,12 @@ public class Validator {
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * @param helper
-	 * @return String
+	 * @return boolean : Returns true if helper having any null values for required fields
 	 * @throws Exception
 	 */
-	public String validateForNull(IDataHelper helper) throws Exception {
+	public boolean isHavingNullValues(IDataHelper helper) throws Exception {
 
-		String message = "True"; 
+		boolean isHavingNull = false; 
 		try {		
 			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
 					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
@@ -201,13 +202,13 @@ public class Validator {
 					&& (Validator.isNotEmpty(helper.getParameter("username")))
 					&& (Validator.isNotEmpty(helper.getParameter("password")))
 					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
-				message = SystemMessage.EMPTYFIELD.message();
+				isHavingNull = true; 
 			}
 		} catch (Exception e) {
-			log.error("validateTutorFields: Exception" + e.toString());
+			log.error("isHavingNullValues() : Exception " + e.toString());
 			throw e;
 		}
-		return message;
+		return isHavingNull;
 	}	
 
 	/**
@@ -222,20 +223,7 @@ public class Validator {
 
 		String message = "True"; 
 		try {		
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
-					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
-					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("address1")))
-					&& (Validator.isNotEmpty(helper.getParameter("email")))
-					&& (Validator.isNotEmpty(helper.getParameter("username")))
-					&& (Validator.isNotEmpty(helper.getParameter("password")))
-					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
+			if (isHavingNullValues(helper)) {
 				message = SystemMessage.EMPTYFIELD.message();
 			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
 				message = SystemMessage.FIRSTNAMEERROR.message();
