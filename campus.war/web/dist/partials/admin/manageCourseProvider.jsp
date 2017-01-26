@@ -24,6 +24,9 @@
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
+	<script type="text/javascript">
+	var currentDate = new Date();
+		</script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -445,13 +448,19 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name"> <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">
+										<span style="color: red;">*</span>
+									</h1>
 								</div>
 								<div class="col-name">
 									<input type="radio" name="publishProgram" id="publishProgram"
-											value="1" checked="checked" onclick="publishPrograms();"/> Will Publish Programs
+										value="1" checked="checked" onclick="publishPrograms();" />
+									Will Publish Programs
+								</div>
+								<div class="col-name">
 									<input type="radio" name="publishProgram" id="publishProgram"
-											value="0" onclick="publishPrograms();"/> Will Not publish Programs
+										value="0" onclick="publishPrograms();" /> Will Not publish
+									Programs
 								</div>
 							</li>
 							<!-- end -->
