@@ -262,6 +262,7 @@
 									<input class="input" type="text" name="areaCode" id="areaCode"
 										onkeyup="landPhoneNubmerHelper();" size="25px;" /> <span
 										id="errorAreaCode" class="error-message number-helper">${errorAreaCode }</span>
+										<span>Ex: 11, 31, 81, .....</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Land Phone 1 : <span style="color: red;">*</span></h1>
@@ -307,6 +308,7 @@
 										id="networkCode" size="25px;"
 										onkeyup="landPhoneNubmerHelper();" /> <span
 										id="errorNetworkCode" class="error-message number-helper">${errorNetworkCode }</span>
+										<span>Ex: 77, 71, 72, .....</span>
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">Mobile Number : <span style="color: red;">*</span></h1>
