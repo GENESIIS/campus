@@ -24,6 +24,7 @@ function listAllTutors(){
 				window.tutorList = response.result;
 				    $('#example').DataTable({
 					data : window.tutorList,
+
 					  columns : [
 				                   {data: 0},
 				                   {data: 1},
@@ -31,17 +32,17 @@ function listAllTutors(){
 				                   {data: 3},
 				                   {data: 4},
 				                   {data: 5},
+				                   {data: 7},
 				                   {data: 8},
+				                   {data: 9},
 				                   {data: 10},
-				                   {data: 14},
-				                   {data: 15},
-				                   {data: 16},
 				                   {data: 11},
-				                   {data: 17}            
-				                   
+				                   {data: 6},
+				                   {data: 12}  
 				                   ]
 
 				});
+			//	displayTutotList();
 				    $('#example tbody').on('click', 'tr', function () {
 				    	   var tutorCode = $(this).find("td:first").html();
 				    	   
@@ -62,7 +63,7 @@ function listAllTutors(){
 }
 
 function sad(){
-	var t =  $('#tutor-list').DataTable();
+	var t =  $('#example').DataTable();
 	var tutors = window.tutorList;
 	var rowCount = 0;
 	t.clear().draw();
@@ -73,9 +74,9 @@ function sad(){
 						tutors,
 						function(index, value) {
 
-							var res = value.toString();
-							var data = res.split(",");
-							rowCount++;
+//							var res = value.toString();
+//							var data = res.split(",");
+//							rowCount++;
 
 t.row.add([
            		'<tr> <td>' + value[0] + '</td>'
@@ -105,6 +106,7 @@ t.row.add([
 function displayTutotList(){
 	
 	var tutors = window.tutorList;
+	$('#example').DataTable();
 	var singleTutorElement = '';
 
 	if (tutors !== undefined & tutors !== null) {
@@ -138,7 +140,8 @@ function displayTutotList(){
 		});
 	}
 
-	var tableElement = $("#tutor-list");
-	tableElement.html(singleTutorElement);
+	var tableElement = $("#example");
+	tableElement.html(tableElement);
+	
 	
 }
