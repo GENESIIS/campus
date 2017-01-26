@@ -413,7 +413,15 @@ function getProviderType() {
 //													}
 //												});
 									
-									
+									   var form = document.createElement('form');
+							    	   form.method = 'post';
+							    	   form.action = '/dist/partials/admin/courseProviderManagement.jsp';
+							    	   var input = document.createElement('input');
+							    	   input.type = 'text';
+							           input.name = 'courseProviderCode';
+							           input.value = response.registerId;
+							           form.appendChild(input);
+							           form.submit();
 									
 									}
 							}

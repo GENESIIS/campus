@@ -114,9 +114,6 @@
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	</footer>
-<script type="text/javascript">
-document.getElementById().html = response.userMessage;
-</script>
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
