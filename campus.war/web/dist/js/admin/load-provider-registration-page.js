@@ -40,7 +40,7 @@ function publishPrograms(){
 
 	}else if(publishProgram == 1){
 		document.getElementById("expire-date").style.display = "none";
-		$('#expirationDate').val("00-00-0000");
+		$('#expirationDate').val("0000-00-00");
 	}
 }
 
@@ -299,7 +299,7 @@ function landPhoneNubmerHelper() {
 		}if(!isempty(networkCode)){
 			document.getElementById('lastMobileNumber').innerHTML = "**Network code is empty.";
 		
-		} else if (isempty(areaCode)) {
+		} if (isempty(areaCode)) {
 			if (isPatternMatch(integerPattern, areaCode)) {
 				var lastLandNumber1 = "+" + country + " " + areaCode + " "
 						+ land1;
@@ -325,7 +325,7 @@ function landPhoneNubmerHelper() {
 		} if(isempty(networkCode)){
 			 if(!isPatternMatch(integerPattern, networkCode)){
 
-				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.(Ex:11, 31, 81)";
+				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
 				document.getElementById('lastMobileNumber').innerHTML = "**Invlide network code.";
 
 							
