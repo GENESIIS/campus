@@ -402,21 +402,20 @@ function getProviderType() {
 									$( "#basicForm" ).submit();
 									
 									window.responseErrorMessage = response.userMessage;
-									//window.location = "/dist/partials/admin/courseProviderManagement.jsp";
-									 $
-									 .ajax({
-									 url :
-									 '/dist/partials/admin/courseProviderManagement.jsp',
-									 method : 'POST',
-									 data : {
-														'generatedKey' : response.registerId,
-														'userMessage' : response.userMessage
-													}
-												});
+//									 $
+//									 .ajax({
+//									 url :
+//									 '/dist/partials/admin/courseProviderManagement.jsp',
+//									 method : 'POST',
+//									 data : {
+//														'generatedKey' : response.registerId,
+//														'userMessage' : response.userMessage
+//													}
+//												});
+									
+									
 									
 									}
-								
-
 							}
 						},
 					});

@@ -1,12 +1,11 @@
-
 /**
  * 20170108 JH c39-add-course-provider course-provider-validator.js created
  * 
  */
 
-    window.prefixFlag = true;
-    window.usernameFlag =true;
-    
+window.prefixFlag = true;
+window.usernameFlag = true;
+
 /**
  * @author JH
  * @param fieldValue
@@ -14,7 +13,7 @@
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue.trim() == "") || (fieldValue == null) )? false : true;
+	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
 }
 
 /**
@@ -59,12 +58,12 @@ function isPatternMatch(regularExpression, source) {
  * @param length
  * @returns boolean true if length is valid else falses
  */
-function isValidLength(parameter, length){
+function isValidLength(parameter, length) {
 	return (parameter > length) ? false : true;
 }
 
 function providerUsernameValidation() {
-	
+
 	document.getElementById('errorUsername').innerHTML = "";
 	document.getElementById('usernameMessage').innerHTML = "";
 
@@ -74,44 +73,46 @@ function providerUsernameValidation() {
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
 
-	if (!isempty(selectedUsername) || isPatternMatch(integerPattern, selectedUsername)) {
+	if (!isempty(selectedUsername)
+			|| isPatternMatch(integerPattern, selectedUsername)) {
 		document.getElementById('errorUsername').innerHTML = "**Username is empty or can't contain only numbers.";
 		document.getElementById('providerUsername').focus();
 		return false;
 	} else {
-		 if(selectedUsername.length <5){//check whether the username has less than 5 characters
-				document.getElementById('errorUsername').innerHTML = "**Username should have atleast 5 characters.";
-				return false;
-			}else{
-				document.getElementById('errorUsername').innerHTML = "";
+		if (selectedUsername.length < 5) {// check whether the username has
+											// less than 5 characters
+			document.getElementById('errorUsername').innerHTML = "**Username should have atleast 5 characters.";
+			return false;
+		} else {
+			document.getElementById('errorUsername').innerHTML = "";
 
-		$
-				.ajax({
-					url : '/AdminController',
-					method : 'POST',
-					data : {
-						'CCO' : 'COURSE_PROVIDER_VALIDATION',
-						'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
-						'username' : selectedUsername,
-						'email' : userEmail
-					},
-					dataType : "json",
-					async : false,
-					success : function(response) {
+			$
+					.ajax({
+						url : '/AdminController',
+						method : 'POST',
+						data : {
+							'CCO' : 'COURSE_PROVIDER_VALIDATION',
+							'action' : 'COURSE_PROVIDER_USERNAME_VALIDATION',
+							'username' : selectedUsername,
+							'email' : userEmail
+						},
+						dataType : "json",
+						async : false,
+						success : function(response) {
 
-						if (response !== undefined && response !== null) {
-							window.usernameFlag == response.validationFlag;
-							
-							if(response['validationFlag']===1){
-								flag = true;
-								document.getElementById('usernameMessage').innerHTML = response.userMessage;
-							}
-							if (response['validationFlag'] === 0) {
-								flag = false;
-								document.getElementById('errorUsername').innerHTML = response.userMessage;
-							}
+							if (response !== undefined && response !== null) {
+								window.usernameFlag == response.validationFlag;
 
-							return flag;
+								if (response['validationFlag'] === 1) {
+									flag = true;
+									document.getElementById('usernameMessage').innerHTML = response.userMessage;
+								}
+								if (response['validationFlag'] === 0) {
+									flag = false;
+									document.getElementById('errorUsername').innerHTML = response.userMessage;
+								}
+
+								return flag;
 
 							}
 						},
@@ -121,32 +122,32 @@ function providerUsernameValidation() {
 }
 
 function providerPrefixValidation() {
-	
+
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
 	document.getElementById('errorUniquePrefix').value = "";
 	document.getElementById('prefixMessage').value = "";
 	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
-		
+
 		document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
 		document.getElementById('uniquePrefix').focus();
 		return false;
 	} else if (selectedPrefix.length < 2) {
 
-			document.getElementById('prefixMessage').value = "";
-			document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
-			return false;
+		document.getElementById('prefixMessage').value = "";
+		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
+		return false;
 	} else if (selectedPrefix.length > 20) {
 
 		document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
 		document.getElementById('prefixMessage').value = "";
 		return false;
-} else {
-	document.getElementById('errorUniquePrefix').innerHTML = "";
-	document.getElementById('prefixMessage').innerHTML = "";
+	} else {
+		document.getElementById('errorUniquePrefix').innerHTML = "";
+		document.getElementById('prefixMessage').innerHTML = "";
 
 		$
 				.ajax({
@@ -165,7 +166,7 @@ function providerPrefixValidation() {
 
 							window.prefixFlag == response.validationFlag;
 
-							if(response['validationFlag']===1){
+							if (response['validationFlag'] === 1) {
 								document.getElementById('prefixMessage').innerHTML = response.userMessage;
 								flag = true;
 							}
@@ -189,7 +190,7 @@ function vaidateCourseProviderDeatils(form) {
 
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
-	
+
 	var courseProvider = $("#courseProvider").val();
 	var providerName = $("#providerName").val();
 	var shortName = $("#shortName").val();
@@ -230,19 +231,20 @@ function vaidateCourseProviderDeatils(form) {
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	var currentDate = new Date();
 	var selectedDate = new Date(expirationDate);
-	
 
+	if (publishProgram === 0) {
 		if (currentDate > selectedDate) {
 			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
 			document.getElementById('expirationDate').focus();
 			flag = false;
+		}
+		if (expirationDate === "" || expirationDate === null) {
+			document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
+			document.getElementById('expirationDate').focus();
+			flag = false;
+		}
 	}
-	if (expirationDate === "" || expirationDate === null) {
-		document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
-		document.getElementById('expirationDate').focus();
-		flag = false;
-	}
-	
+
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
 		document.getElementById('courseProvider').focus();
@@ -258,7 +260,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('uniquePrefix').focus();
 		flag = false;
 	}
-	if (!isValidLength(shortName , 20)) {
+	if (!isValidLength(shortName, 20)) {
 		document.getElementById('errorShortName').innerHTML = "**Short name is too long.";
 		document.getElementById('shortName').focus();
 		flag = false;
@@ -298,27 +300,28 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	if ( !isPatternMatch(integerPattern, land1)) {
+	if (!isPatternMatch(integerPattern, land1)) {
 		document.getElementById('errorLand1').innerHTML = "**Invalid Land phone number.";
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	 if (isempty(fax) && !isPatternMatch(integerPattern, fax)) {
-		 document.getElementById('errorFax').innerHTML = "**Fax number is not valid.";
-		 document.getElementById('fax').focus();
-		 flag = false;
-		 }
-	 if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
-		 document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid.";
-		 document.getElementById('land2').focus();
-		 flag = false;
-		 }
+	if (isempty(fax) && !isPatternMatch(integerPattern, fax)) {
+		document.getElementById('errorFax').innerHTML = "**Fax number is not valid.";
+		document.getElementById('fax').focus();
+		flag = false;
+	}
+	if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+		document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid.";
+		document.getElementById('land2').focus();
+		flag = false;
+	}
 	if (isempty(areaCode) && !isPatternMatch(integerPattern, areaCode)) {
 		document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
 		document.getElementById('areaCode').focus();
 		document.getElementById('errorLand1').innerHTML = "**Area code is invalid.";
 		flag = false;
-	}if (!isempty(areaCode)) {
+	}
+	if (!isempty(areaCode)) {
 		document.getElementById('errorAreaCode').innerHTML = "**Area code is empty.(Ex:11, 31, 81)";
 		document.getElementById('areaCode').focus();
 		flag = false;
@@ -384,35 +387,37 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('instagram').focus();
 		flag = false;
 	}
-// if (!isempty(whatsapp)) {
-// document.getElementById('errorWhatsapp').innerHTML = "**Give a valid whatsapp
-// number.";
-// document.getElementById('whatsapp').focus();
-// flag = false;
-// }
-// if (!isempty(viber)) {
-// document.getElementById('errorViber').innerHTML = "**Give a valid viber
-// number.";
-// document.getElementById('viber').focus();
-// flag = false;
-// }
-		
+	// if (!isempty(whatsapp)) {
+	// document.getElementById('errorWhatsapp').innerHTML = "**Give a valid
+	// whatsapp
+	// number.";
+	// document.getElementById('whatsapp').focus();
+	// flag = false;
+	// }
+	// if (!isempty(viber)) {
+	// document.getElementById('errorViber').innerHTML = "**Give a valid viber
+	// number.";
+	// document.getElementById('viber').focus();
+	// flag = false;
+	// }
+
 	if (!isempty(providerType)) {
 		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
 		document.getElementById('selectedProviderType').focus();
 		flag = false;
 	}
-	if(providerStatus === null || providerStatus === undefined){
+	if (providerStatus === null || providerStatus === undefined) {
 		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 		document.getElementById('providerStatus').focus();
 		flag = false;
 	}
-	if (!isempty(providerPrivateName) || !isValidLength(providerPrivateName, 100)) {
+	if (!isempty(providerPrivateName)
+			|| !isValidLength(providerPrivateName, 100)) {
 		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
 	}
-	if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail) ) {
+	if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail)) {
 		document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
 		document.getElementById('providerEmail').focus();
 		flag = false;
@@ -427,35 +432,37 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerUsername').focus();
 		flag = false;
 	}
-	if (!isempty(providerPassword) ||  !isempty(cProviderPassword)) {
+	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password field(s) is empty.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
-	}if (isempty(providerPassword) && providerPassword.length <6 ) {
+	}
+	if (isempty(providerPassword) && providerPassword.length < 6) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
-	if((isempty(providerPassword) || providerPassword.length <6) && !isempty(cProviderPassword)
-			&& (providerPassword != cProviderPassword)){
+	if ((isempty(providerPassword) || providerPassword.length < 6)
+			&& !isempty(cProviderPassword)
+			&& (providerPassword != cProviderPassword)) {
 		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
 		document.getElementById('cProviderPassword').focus();
 		flag = false;
 	}
-	if (cProviderPassword.length >100) {
+	if (cProviderPassword.length > 100) {
 		document.getElementById('errorProviderPassword').innerHTML = "**Password is too long.";
 		document.getElementById('providerPassword').focus();
 		flag = false;
 	}
-	if (accountStatus === null || accountStatus === undefined ) {
+	if (accountStatus === null || accountStatus === undefined) {
 		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
 		document.getElementById('accountStatus').focus();
 		flag = false;
 	}
-	if(!isValidLength(accountDescription, 4000)){
+	if (!isValidLength(accountDescription, 4000)) {
 		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
 		document.getElementById('accountDescription').focus();
-		
+		flag = false;
 	}
 
 	return flag;
