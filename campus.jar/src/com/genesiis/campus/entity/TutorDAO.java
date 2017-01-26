@@ -2,7 +2,8 @@ package com.genesiis.campus.entity;
 
 //20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
 //20170117 JH c133-admin-list-tutors getAll() method coding
-//20170124 JH c133-admin-list-tutors getAll() query modified : changed country table inner join constraint
+//20170124 JH c133-admin-list-tutors getAll() query modified
+//20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
