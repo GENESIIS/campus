@@ -10,10 +10,20 @@ window.usernameFlag = true;
  * @author JH
  * @param fieldValue
  *            it is the value of a document element
- * @returns true if has content else false
+ * @returns true if has content else false. (used to validate string values)
  */
 function isempty(fieldValue) {
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+}
+
+
+/**
+ * @author JH
+ * @param fieldValue
+ * @returns true if no value selected. else false
+ */
+function isEmptyValue(fieldValue){
+	return ((fieldValue== "") || (fieldValue == null)) ? false : true;
 }
 
 /**
@@ -231,6 +241,7 @@ function vaidateCourseProviderDeatils(form) {
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	var currentDate = new Date();
 	var selectedDate = new Date(expirationDate);
+	var accountContactNumber = $("#providerContactNumber").val();
 
 	if (publishProgram === 0) {
 		if (currentDate > selectedDate) {
@@ -342,17 +353,17 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorAddress1').focus();
 		flag = false;
 	}
-	if (!isempty(country)) {
+	if (!isEmptyValue(country)) {
 		document.getElementById('errorSelectedCountry').innerHTML = "**Select your country.";
 		document.getElementById('selectedCountry').focus();
 		flag = false;
 	}
-	if (!isempty(townList) && !isempty(country)) {
+	if (!isEmptyValue(townList) && !isempty(country)) {
 		document.getElementById('errorSelectedTown').innerHTML = "**First select your country.";
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-	if (!isempty(townList) && isempty(country)) {
+	if (!isEmptyValue(townList) && isEmptyValue(country)) {
 		document.getElementById('errorSelectedTown').innerHTML = "**Select your town";
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
@@ -401,7 +412,7 @@ function vaidateCourseProviderDeatils(form) {
 	// flag = false;
 	// }
 
-	if (!isempty(providerType)) {
+	if (!isEmptyValue(providerType)) {
 		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
 		document.getElementById('selectedProviderType').focus();
 		flag = false;
@@ -462,6 +473,11 @@ function vaidateCourseProviderDeatils(form) {
 	if (!isValidLength(accountDescription, 4000)) {
 		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
 		document.getElementById('accountDescription').focus();
+		flag = false;
+	}
+	if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
+		document.getElementById('errorContactNumber').innerHTML = "**Invlaid or empty contact number.";
+		document.getElementById('providerContactNumber').focus();
 		flag = false;
 	}
 
