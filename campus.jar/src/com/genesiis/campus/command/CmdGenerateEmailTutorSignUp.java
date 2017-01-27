@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleaning the code
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
+//20170127 Cw c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent().
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 					SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATTION.message());
 
-			signUpEmailComposer.formatEmailInstance(getMailContent());
+			signUpEmailComposer.formatEmailInstance(getMailContent(helper));
 			status = this.sendMail(signUpEmailComposer);
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 
@@ -64,10 +65,8 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 	 * @param originalMailBody String the original message that the user send to
 	 * the SMPT mail server
 	 */
-	private String getMailContent(){
+	private String getMailContent(IDataHelper helper){
 		StringBuilder result = new StringBuilder();		
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getTitle());
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getMailBody());
 		result.append(System.getProperty("line.separator"));
@@ -75,7 +74,13 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY3.getMailBody());
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemMessage.SUPERADMIN_NAME.message());
+		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE1.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE2.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE3.getMailBody());
+		result.append(helper.getParameter("username"));
+		result.append(System.getProperty("line.separator"));
 		return result.toString();		
 	}
 	
