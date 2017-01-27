@@ -17,6 +17,16 @@
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 
+<script type="text/javascript">
+$(document).ready(function() {
+	display();
+});
+
+function display(){
+	var providerAccountStatus = $("#accountStatusList");
+	providerAccountStatus.html(userMessage);
+}
+</script>
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -94,8 +104,9 @@
 		<!-- Page content -->
 
 		<div class="content-holder center-block clearfix">
+		<div class="alert alert-danger" role="alert"> Registered ID : ${courseProviderCode }</div>
 			<c:if test="${not empty userMessage }">
-				<div class="alert alert-danger" role="alert" id="usermessage"></div>
+				<div class="alert alert-danger" role="alert" id="usermessage">${userMessage }</div>
 			</c:if>
 
 			<div class="course-filter-panel">

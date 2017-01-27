@@ -420,7 +420,12 @@ function getProviderType() {
 							    	   input.type = 'text';
 							           input.name = 'courseProviderCode';
 							           input.value = response.registerId;
+							    	   var inputUserMessage = document.createElement('input');
+							    	   input.type = 'hidden';
+							           input.name = 'userMessage';
+							           input.value = response.userMessage;
 							           form.appendChild(input);
+							           form.appendChild(inputUserMessage);
 							           form.submit();
 									
 									}
