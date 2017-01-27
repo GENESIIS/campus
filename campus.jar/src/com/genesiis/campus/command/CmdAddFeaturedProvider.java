@@ -161,7 +161,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 						if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
 							sql = java.sql.Date.valueOf(expireDate);
 							}else{
-								expireDate = "31-12-2040";
+								expireDate = "2040-12-31";
 								sql = java.sql.Date.valueOf(expireDate);
 							}
 
