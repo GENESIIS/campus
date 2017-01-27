@@ -71,9 +71,10 @@ function loadResultSet(event) {
 	//var fromDate = $('#start').val();
 	//var toDate = $('#end').val();
 	var studentStatus = $('input:radio[name=studentStatus]:checked').val();
-	
-	var fromDate = new Date(document.getElementById("startdate").value);
+		
+	var startDate = new Date(document.getElementById("startdate").value);
 	var toDate = new Date(document.getElementById("enddate").value);
+	
 	
    /*var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 	
@@ -95,16 +96,18 @@ function loadResultSet(event) {
     }else{
     	$('#errorToDate').text("");
     }  */
-   
-	if (fromDate> toDate) {		
+	$('#errorToDate').text("");
+	if (startDate> toDate) {		
 		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
 		document.getElementById('errorToDate').style.color = "red";
 		return false;
 	}
 	
-	 fromDate.setDate(fromDate.getDate()+ 30);
+	var tempDate=new Date(document.getElementById("startdate").value);
+	
+	tempDate.setDate(tempDate.getDate()+ 30);
 
-	 if(Date.parse(toDate)>Date.parse(fromDate )){
+	 if(Date.parse(toDate)>Date.parse(tempDate)){
 		 $('#errorToDate').text("Invalid Date Range!Date range should be within 30 days");
 			document.getElementById('errorToDate').style.color = "red";
 			return false;
@@ -116,7 +119,7 @@ function loadResultSet(event) {
 		data : {
 			CCO : 'REPORT_REGISTERED_STUDENTS',
 			startDate : startDate,
-			endDate : endDate,
+			endDate : toDate,
 			studentStatus : studentStatus,
 			districtCode :districtCode
 		},
@@ -151,7 +154,7 @@ function populateResultTable(response) {
 			var crtOn = value[5];
 			var lastLoggedIn = value[6];	
 			
-			var tr = '<tr>' ;
+			var tr = '<tr>';
 			tr += '<td>' + totalResultCount + '</td>';
 			tr += '<td>' + code  + '</td>';
 			tr += '<td>' + name  + '</td>';
