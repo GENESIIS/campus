@@ -3,6 +3,7 @@ package com.genesiis.campus.util;
 //20170119 CW CAM-125 create the class SignUpEmailComposer.java to help compose the mailing using CAM-18
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted codes & cleaning the code
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
+//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified addContentToOriginalMailBody() method 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,7 +76,6 @@ public class SignUpEmailComposer implements IEmailComposer  {
 		result.append(this.getRecieversName());
 		result.append(",");
 		result.append(System.getProperty("line.separator"));
-		result.append(this.getMailBody());
 		result.append(originalMailBody) ;
 		result.append(System.getProperty("line.separator"));
 		this.setMailBody(result.toString());
