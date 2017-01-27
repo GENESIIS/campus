@@ -1,6 +1,5 @@
 package com.genesiis.campus.command;
 
-import java.io.IOException;
 
 //20161121 PN c27-upload-user-image: INIT CmdUploadProfileImg.java class and implemented execute() method.
 //20161122 PN c27-upload-user-image: modified execute() method to create the folder using studentCode to store image.
@@ -10,11 +9,6 @@ import java.io.IOException;
 //		   PN c27-upload-user-image: added more code comments to the execute() method.
 //20161221 PN CAM-27: modified exception handling in execute() method by adding IOException and NullPointerException to the catch block.
 //20161227 PN CAM-27: getUserProfilePicPath(), getPropicSize() and setProfileDetails() methods implemented. Changed execute method coding accordingly.
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -26,12 +20,18 @@ import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.io.IOException;
 
 public class CmdUploadProfileImg implements ICommand {
 	static Logger log = Logger.getLogger(CmdUploadProfileImg.class.getName());

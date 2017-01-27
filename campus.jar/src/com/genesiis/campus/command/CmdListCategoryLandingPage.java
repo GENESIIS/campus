@@ -12,9 +12,6 @@ package com.genesiis.campus.command;
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: error log statement modified, added documentation comments,
 //												  removed unwanted statements
 
-import java.sql.SQLException;
-import java.util.Collection;
-
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CategoryCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -27,6 +24,9 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class CmdListCategoryLandingPage implements ICommand {
 

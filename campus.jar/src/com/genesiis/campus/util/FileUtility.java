@@ -6,6 +6,12 @@ package com.genesiis.campus.util;
 //20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
@@ -15,12 +21,6 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-
-import org.apache.log4j.Logger;
 
 public class FileUtility {
 

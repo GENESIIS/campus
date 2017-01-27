@@ -7,6 +7,10 @@ package com.genesiis.campus.entity;
 //20161115 PN c1-campus-landing-page added functional comments to the methods. formatted the error logs.
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.]
 
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +18,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class InstituteDAO implements ICrud{
 	static Logger log = Logger.getLogger(InstituteDAO.class.getName());

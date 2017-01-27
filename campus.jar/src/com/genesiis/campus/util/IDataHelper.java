@@ -9,18 +9,15 @@ package com.genesiis.campus.util;
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
 //20161121 PN c27-upload-user-image: declared getParameterMap() and getFiles() methods.
 
-import java.util.ArrayList;
-import java.util.Map;
-
-
-
-import javax.servlet.http.HttpSession;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.validation.ResponseType;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.validation.ResponseType;
+import java.util.ArrayList;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 public interface IDataHelper {
 	public String getCommandCode();

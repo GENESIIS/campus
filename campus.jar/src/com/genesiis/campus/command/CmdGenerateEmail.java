@@ -17,16 +17,6 @@ package com.genesiis.campus.command;
 //20161124 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() renamed to setFrontEndViewingDataIfValidationFails() and 
 // code refactor if any validation fails but to diplay data to front end.
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.mail.MessagingException;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
@@ -40,6 +30,15 @@ import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
+
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.mail.MessagingException;
 
 public class CmdGenerateEmail implements ICommand {
 

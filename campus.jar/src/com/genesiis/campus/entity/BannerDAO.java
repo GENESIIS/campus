@@ -18,6 +18,12 @@
 
 package com.genesiis.campus.entity;
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Operation;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,12 +31,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.ApplicationStatus;
-import com.genesiis.campus.validation.Operation;
-
-import org.apache.log4j.Logger;
 
 public class BannerDAO implements ICrud {
 

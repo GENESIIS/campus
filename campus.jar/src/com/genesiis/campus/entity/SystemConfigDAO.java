@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-
 public class SystemConfigDAO implements ICrud {
 	
 	static Logger log = Logger.getLogger(SystemConfigDAO.class.getName());

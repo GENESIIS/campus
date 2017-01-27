@@ -6,15 +6,15 @@ package com.genesiis.campus.util;
 //20161109 CM c9-make-inquiry-for-institute close HttpConnection and BufferReader.
 //20161109 CM c9-make-inquiry-for-institute Renamed  sentRequestToServe() method as sendRequestToServer
 
+import org.apache.log4j.Logger;
+
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.apache.log4j.Logger;
-
-import com.google.gson.Gson;
 
 public class ReCaptchaManager {
 

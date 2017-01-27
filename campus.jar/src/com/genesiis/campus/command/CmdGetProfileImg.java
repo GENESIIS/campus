@@ -5,16 +5,17 @@ package com.genesiis.campus.command;
 //20161130 PN c27-upload-user-image: modified execute() method by setting images to display on Image profile view according to a image existence.
 //20161221 PN CAM-27: modified execute() method by removing DB access method used to take image upload path from DB.
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
-import org.apache.log4j.Logger;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CmdGetProfileImg implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetProfileImg.class.getName());

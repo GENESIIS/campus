@@ -29,6 +29,8 @@ package com.genesiis.campus.validation;
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.util.IDataHelper;
 
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,8 +38,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.log4j.Logger;
 
 public class BannerData {
 

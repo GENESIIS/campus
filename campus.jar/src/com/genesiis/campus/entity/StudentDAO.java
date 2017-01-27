@@ -4,16 +4,17 @@ package com.genesiis.campus.entity;
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
 
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.util.ConnectionManager;
-
-import org.apache.log4j.Logger;
 
 public class StudentDAO implements ICrud {
 

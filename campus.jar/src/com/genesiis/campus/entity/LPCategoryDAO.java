@@ -4,18 +4,18 @@ package com.genesiis.campus.entity;
 //20161227 PN CAM-112: Modified getAll() method implementation.
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.]
 
+import com.genesiis.campus.entity.model.Category;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.entity.model.Category;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.Validator;
-
-import org.apache.log4j.Logger;
 
 public class LPCategoryDAO implements ICrud{
 static Logger log = Logger.getLogger(CategoryDAO.class.getName());
