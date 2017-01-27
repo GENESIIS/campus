@@ -425,7 +425,7 @@ function getProviderType() {
 							           input.name = 'userMessage';
 							           input.value = response.userMessage;
 							           form.appendChild(input);
-							           form.appendChild(inputUserMessage);
+							         //  form.appendChild(inputUserMessage);
 							           form.submit();
 									
 									}
