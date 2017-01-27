@@ -10,17 +10,22 @@ package com.genesiis.campus.controller;
 // 20161114 MM public-controller-testing-2 Changed implementation of process() so that even when 
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
+//20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.entity.View;
+import com.genesiis.campus.factory.FactoryProducer;
+import com.genesiis.campus.factory.ICmdFactory;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,6 +64,7 @@ public class CampusController extends HttpServlet {
 
 		process(request, response);
 	}
+
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

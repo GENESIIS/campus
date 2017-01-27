@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!-- 20161025 TR c1 start style header bottom part -->
 <!-- 20161025 TR c1 landing page layout - done -->
 <!-- 20161025 TR c1 main menu bar - done -->
@@ -6,8 +8,20 @@
 
 <div class="main-screen clearfix">
     <div class="content-panel clearfix">
+
+        <script>
+            $(function() {
+                $(".rslides").responsiveSlides();
+            });
+        </script>
+
         <div class="main-slider clearfix">
-            <img src="dist/i/slide-1.jpg" alt="">
+            <!--<img src="dist/i/slide-1.jpg" alt="">-->
+            <ul class="rslides" id="slider1">
+                <li><img src="dist/i/slider/slide-1.jpg" alt=""></li>
+                <li><img src="dist/i/slider/slide-2.jpg" alt=""></li>
+                <li><img src="dist/i/slider/slide-3.jpg" alt=""></li>
+            </ul>
         </div>
         <!-- End Main slider -->
         <div class="search-area clearfix">

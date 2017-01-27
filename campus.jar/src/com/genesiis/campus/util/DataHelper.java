@@ -16,9 +16,8 @@ package com.genesiis.campus.util;
 //				in getResultView(String) method
 //20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
 // 			due to code review comment by CM
-
-import java.io.IOException;
-import java.util.Collection;
+//20161121 PN c27-upload-user-image: implemented getParameterMap() and getFiles() methods.
+//20161123 PN c27-upload-user-image: modified getFiles() method.
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -27,12 +26,24 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.validation.BannerData;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import com.genesiis.campus.validation.BannerData;
+import javax.servlet.http.Part;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
@@ -65,14 +76,16 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		return o.getPageURL();
 	}
-	
+
 	/**
 	 * getResponseType(String) Returns the response type bound to each Operation
 	 * enum constant.
-	 * @return ResponseType Enum constant of type ResponseType indicating what type
-	 * of response to send to the client
-	 * @param String The value sent by the client as CCO 
-	 */	
+	 * 
+	 * @return ResponseType Enum constant of type ResponseType indicating what
+	 *         type of response to send to the client
+	 * @param String
+	 *            The value sent by the client as CCO
+	 */
 	@Override
 	public ResponseType getResponseType(String cco) {
 		Operation o = Operation.getOperation(cco);
@@ -209,4 +222,57 @@ public class DataHelper implements IDataHelper {
 
 	}
 
+	/**
+	 * getParameterMap() - method is to get an array of parameter map
+	 * 
+	 * @return Map<String, String[]>
+	 * @author pabodha
+	 */
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return request.getParameterMap();
+	}
+
+	/**
+	 * getFiles() - method is to get files inside a specific folder in disk.
+	 * 
+	 * @return ArrayList<FileItem> - contains list of images
+	 * @author pabodha
+	 */
+	@Override
+	public ArrayList<FileItem> getFiles() throws FileUploadException{
+		ArrayList<FileItem> files = null;
+
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+
+		try {
+
+			if (request != null && request.getContentType() != null) {
+				files = new ArrayList<FileItem>();
+				@SuppressWarnings("unchecked")
+				List<Object> list = upload.parseRequest(request);
+
+				if (list != null) {
+
+					for (Object fileItem : list) {
+
+						FileItem item = (FileItem) fileItem;
+						if (!(item.isFormField()))
+							files.add(item);
+
+					}
+
+				}
+
+			}
+		} catch (Exception e) {
+			logger.error("getFiles(): " + e);
+			throw e;
+		}
+
+		return files;
+	}
+
 }
+

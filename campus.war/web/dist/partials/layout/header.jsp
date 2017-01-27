@@ -29,6 +29,7 @@
 						<li><a href="/dist/partials/news.jsp">News</a></li>
 						<li><a href="/dist/partials/f-and-q.jsp">F & Q</a></li>
 						<li><a href="/dist/partials/rss.jsp">RSS</a></li>
+						<li><a href="dist/partials/student/student-dashboard.jsp">Student</a></li>
 					</ul>
 				</div>
 				<!-- End Main menu tabs -->

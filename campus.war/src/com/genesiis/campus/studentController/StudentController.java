@@ -1,35 +1,34 @@
-package com.genesiis.campus.publicController;
-
-//20161024 DN c10-contacting-us-page created the initial version of the Public Controller
-//20161130 PN c27-upload-user-image: removed incorrect import from the class.
-
-import com.genesiis.campus.controller.CampusController;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.util.DataHelper;
-import com.genesiis.campus.util.IDataHelper;
-
-import com.google.gson.Gson;
-import org.apache.log4j.Logger;
+package com.genesiis.campus.studentController;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.genesiis.campus.controller.CampusController;
+import com.genesiis.campus.publicController.PublicController;
+
+import org.apache.log4j.Logger;
+
 /**
- * Servlet implementation class PublicController
+ * Servlet implementation class StudentController
  */
-@WebServlet("/PublicController")
-public class PublicController extends CampusController {
-	static Logger log = Logger.getLogger(PublicController.class.getName());
+@WebServlet("/StudentController")
+public class StudentController extends CampusController {
+	static Logger log = Logger.getLogger(StudentController.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PublicController() {
+	public StudentController() {
 		super();
+	}
+
+	public void init() throws ServletException {
+
 	}
 
 	/**

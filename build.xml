@@ -65,13 +65,14 @@
 		<mkdir dir="${buildDir}/${campus.war.name}/WEB-INF/classes"/>
 		<mkdir dir="${buildDir}/${campus.jar.name}/META-INF"/>
 		<mkdir dir="${buildDir}/${campus.jar.name}/src"/>
-		<mkdir dir="${buildDir}/${campus.war.name}/src"/>
+		<mkdir dir="${buildDir}/${campus.war.name}/src"/>		
 	</target>
 	
 	<!-- Main target  -->
 	<target name="all" depends="deploy" />	
 	
-<target name="campus.jar" depends = "">
+	<!-- target: campus.jar  -->
+	<target name="campus.jar" depends = "">
 		<!-- compilation step -->
 		<javac includeantruntime="false" srcdir="${campus.jar.dir}/src" destdir="${buildDir}/${campus.jar.name}" debug="${javadebug}" includes="**/*.java" fork="${campus.build.fork}" executable="${campus.build.executable}" >
 			<classpath>
@@ -98,7 +99,8 @@
 			<fileset dir="${campus.jar.dir}/src/META-INF" includes="ejb-jar.xml, jboss.xml, persistence.xml" /> 
 		</copy>
 	</target>	
-		
+	
+	<!-- target: campus.war  -->	
 	<target name="campus.war" depends="campus.jar">
 		<!-- Compile Servlet Files -->
 		<javac includeantruntime="false" srcdir="${campus.war.dir}/src" destdir="${buildDir}/${campus.war.name}/WEB-INF/classes" debug="${javadebug}" includes="**/*.java" fork="${campus.build.fork}" executable="${campus.build.executable}" >
@@ -126,38 +128,16 @@
 			<fileset dir="${campus.war.dir}/web" includes="**/*.*" /> 
 		</copy>					
 	</target>
-
-	<target name="campus.ear" depends="campus.jar, campus.war">
-				
-		<javac includeantruntime="false" srcdir="${campus.war.dir}/src" destdir="${buildDir}/${campus.war.name}/WEB-INF/classes" debug="${javadebug}" includes="**/*.java" fork="${campus.build.fork}" executable="${campus.build.executable}" >
-				<classpath>
-					<pathelement path="${buildDir}/${campus.jar.name}"/>
-					<pathelement path="${jbossClientLib}/jboss-client.jar" />
-					<pathelement path="${buildDir}/${sdb_employer.jar.name}"/>
-					<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
-					<pathelement path="${jbossLibDir}/com/google/gson/main/gson-2.2.4.jar" />
-					<pathelement path="${jbossLibDir}/com/lowagie/text/main/itext-1.4.8.jar" />	
-					<pathelement path="${jbossLibDir}/org/apache/commons/io/main/commons-io-1.3.2.jar" />	
-					<pathelement path="${jbossLibDir}/org/apache/commons/lang3/main/commons-lang3-3.1.jar" />					
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/mail/api/main/mail-1.4.5.redhat-2.jar" />
-					<pathelement path="${jbossLibDir}/org/apache/commons/fileupload/main/commons-fileupload-1.2.1.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final-redhat-3.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-2.jar" />
-					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/as/web/main/jbossweb-7.5.10.Final-redhat-1.jar"/>
-					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/log4j/logmanager/main/log4j-jboss-logmanager-1.1.2.Final-redhat-1.jar" />
-					
-				</classpath>
-		</javac>		
+	
+	<!-- target: campus.ear  -->
+	<target name="campus.ear" depends="campus.jar, campus.war">			
 				
 		<!-- ear meta information (sub-deployments)-->
 		<copy todir="${buildDir}/${campus.ear.name}/META-INF">
 			<fileset dir="${campus.ear.dir}/src/META-INF" includes="application.xml" />	
-	<fileset dir="${campus.ear.dir}/src/META-INF" includes="jboss-deployment-structure.xml" />			
+			<fileset dir="${campus.ear.dir}/src/META-INF" includes="jboss-deployment-structure.xml" />			
 		</copy>
 		
-		
-		<!-- COPY SDB.WAR --> 
 		<copy todir="${buildDir}/${campus.ear.name}/${campus.war.name}">
 			<fileset dir="${buildDir}/${campus.war.name}" includes="**/*.*" /> 
 		</copy> 
@@ -165,8 +145,6 @@
 		<jar jarfile="${buildDir}/${campus.ear.name}/${campus.jar.name}" basedir="${buildDir}/${campus.jar.name}" />
 		
 	</target>
-	
-				
 	
 	<target name="redeploy">
 		<copy todir="${jbossDeployDir}/${targetEarName}">
