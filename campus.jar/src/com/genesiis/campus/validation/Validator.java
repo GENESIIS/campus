@@ -243,7 +243,11 @@ public class Validator {
 						helper.setAttribute("errorProviderPassword", "Maximum password length is 100 charaters.");
 					}
 				}
-				
+				if(isEmptyString(helper.getParameter("providerContactNumber")) || !isInteger(helper.getParameter("providerContactNumber"))){
+					helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
+					errorString.add("Empty or invalid contact number.");
+					isValid = false;
+				}
 //				if(helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))) {
 //						if(helper.getParameter("providerPassword").length() < 6){
 //							helper.setAttribute("errorProviderPassword", "Password is weak");
