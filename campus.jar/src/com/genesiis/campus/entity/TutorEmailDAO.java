@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20170117 CW c36-add-tutor-information INIT TutorEmailDAO.java
 //20170117 CW c36-add-tutor-information modified findById()
 //20170123 CW c36-add-tutor-information removed un-wanted import statement
+//20170128 cw c126-formatting-un-formatted-email-tutor-signup-cw modified findById() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class TutorEmailDAO implements ICrud {
 
 			while (rs.next()) {
 				final ArrayList<String> singleTutorEmailList = new ArrayList<String>();
-				singleTutorEmailList.add(rs.getString("USERNAME"));
+				singleTutorEmailList.add(rs.getString("EMAIL"));
 				allTutorEmailList.add(singleTutorEmailList);
 			}
 		} catch (ClassCastException cce) {
