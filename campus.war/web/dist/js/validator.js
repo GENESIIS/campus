@@ -8,6 +8,7 @@
  * //20170111 CW c36-add-tutor-details-Added Viber & WhatsApp validations - CW
  * //20170117 CW c36-add-tutor-details-Added ValidateEmail() method - cw
  * //20170124 CW c36-add-tutor-details modified validateTutorFileds() method - cw
+ * //20170128 CW c126-formatting-un-formatted-email-tutor-signup-cw- modified the places of ValidateUsername(), ValidateEmail() methods
  */
 
 /**
@@ -348,6 +349,13 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
+	var emailExist = ValidateEmail(email);
+	if (emailExist.message == '0') {
+		document.getElementById('emailError').innerHTML = "**Email entered Already exists.";
+		document.getElementById('email').focus();
+		flag = false;
+	}
+	
 	if (!isempty(username)) {
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
@@ -362,6 +370,13 @@ function validateTutorFileds() {
 	
 	if (username.length < 6) {
 		document.getElementById('usernameError').innerHTML = "**Poor Username.";
+		document.getElementById('username').focus();
+		flag = false;
+	}
+
+	var usernameExist = ValidateUsername(username);
+	if (usernameExist.message == '0') {
+		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
 	}
@@ -396,19 +411,6 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	var usernameExist = ValidateUsername(username);
-	if (usernameExist.message == '0') {
-		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
-		document.getElementById('username').focus();
-		flag = false;
-	}
-	
-	var emailExist = ValidateEmail(email);
-	if (emailExist.message == '0') {
-		document.getElementById('emailError').innerHTML = "**Email entered Already exists.";
-		document.getElementById('email').focus();
-		flag = false;
-	}
 	return (flag);
 }
 
@@ -420,7 +422,7 @@ function ValidateUsername(username) {
 		async : false,
 		data : {
 			CCO : 'CHECK_USERNAME',
-			USERNAME : username
+			username : username
 		},
 		dataType : "json",
 		success : function(response) {
@@ -442,7 +444,7 @@ function ValidateEmail(email) {
 		async : false,
 		data : {
 			CCO : 'CHECK_EMAIL',
-			EMAIL : email
+			email : email
 		},
 		dataType : "json",
 		success : function(response) {
