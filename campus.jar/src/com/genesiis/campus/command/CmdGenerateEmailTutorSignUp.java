@@ -4,7 +4,8 @@ package com.genesiis.campus.command;
 //20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleaning the code
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
-//20170127 Cw c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent().
+//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent() method.
+//20170128 CW c126-formatting-un-formatted-email-tutor-signup-cw removed getMailContent() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import com.genesiis.campus.util.RowStudentForJason;
 import com.genesiis.campus.util.SignUpEmailComposer;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.IEmailComposer;
-import com.genesiis.campus.validation.SystemMail;
+import com.genesiis.campus.validation.SystemEmail;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
@@ -42,10 +43,10 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 			
 			signUpEmailComposer.setEnvironment(recieversName, sendersEmailAddress,
 					signUpEmailComposer.composeSingleEmailList(recieversEmailAddreses),
-					SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
+					SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATTION.message());
 
-			signUpEmailComposer.formatEmailInstance(getMailContent(helper));
+			signUpEmailComposer.formatEmailInstance(helper.getParameter("username"));
 			status = this.sendMail(signUpEmailComposer);
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 
@@ -57,31 +58,6 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 			throw exp;
 		}
 		return view;
-	}
-	
-	/*
-	 * addSpecificContentToOriginalMailBody() formats the original details with
-	 * users credentials e.g email, contact number, full name
-	 * @param originalMailBody String the original message that the user send to
-	 * the SMPT mail server
-	 */
-	private String getMailContent(IDataHelper helper){
-		StringBuilder result = new StringBuilder();		
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getMailBody());
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY2.getMailBody());
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_BODY3.getMailBody());
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE1.getMailBody());
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE2.getMailBody());
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemMail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTORY_CLOSE3.getMailBody());
-		result.append(helper.getParameter("username"));
-		result.append(System.getProperty("line.separator"));
-		return result.toString();		
 	}
 	
 	/*
