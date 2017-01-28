@@ -4,16 +4,20 @@ package com.genesiis.campus.util;
 //20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted codes & cleaning the code
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified addContentToOriginalMailBody() method 
+//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw implement EmailContentCreator Interface
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import com.genesiis.campus.util.mail.EmailContentCreator;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
+import com.genesiis.campus.validation.SystemEmail;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -21,7 +25,7 @@ import org.apache.log4j.Logger;
  * at the time of tutor signup.
  * @author Chinthaka CW
  */
-public class SignUpEmailComposer implements IEmailComposer  {
+public class SignUpEmailComposer implements IEmailComposer, EmailContentCreator  {
 	static Logger log = Logger.getLogger(SignUpEmailComposer.class.getName());
 	private String recieversName;
 	private String sendersEmailAddress;
@@ -30,6 +34,7 @@ public class SignUpEmailComposer implements IEmailComposer  {
 	private String mailBody;
 	private IEmail generalEmail;
 	private EmailDispenser emailDispenser;
+
 
 	@Override
 	public IEmail formatEmailInstance(String mailBodyForSpecificMail) throws IllegalArgumentException {
@@ -68,17 +73,59 @@ public class SignUpEmailComposer implements IEmailComposer  {
 	}
 
 	@Override
-	public void addContentToOriginalMailBody(String originalMailBody) {
+	public void addContentToOriginalMailBody(String username) {
 		StringBuilder result = new StringBuilder();
+		
+		result.append(getEmailSubjectBody());
+		result.append(getEmailBody()) ;
+		result.append(getEmailComplementaryClose(username));
+		
+		this.setMailBody(result.toString());
+	}
+
+	@Override
+	public String getEmailSubjectBody() {
+		StringBuilder result = new StringBuilder();
+		
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
 		result.append(System.getProperty("line.separator"));
-		result.append(" Dear ");
+		result.append("Dear ");
 		result.append(this.getRecieversName());
 		result.append(",");
 		result.append(System.getProperty("line.separator"));
-		result.append(originalMailBody) ;
+		
+		return result.toString();
+	}
+
+	@Override
+	public String getEmailBody() {
+		StringBuilder result = new StringBuilder();		
+		
 		result.append(System.getProperty("line.separator"));
-		this.setMailBody(result.toString());
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY2.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY3.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		
+		return result.toString();
+	}
+
+	@Override
+	public String getEmailComplementaryClose(String username) {
+		StringBuilder result = new StringBuilder();	
+		
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE1.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE2.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE3.getMailBody());
+		result.append(username);
+		result.append(System.getProperty("line.separator"));
+		
+		return result.toString();
 	}
 
 	@Override
@@ -166,5 +213,4 @@ public class SignUpEmailComposer implements IEmailComposer  {
 	public void setMailBody(String mailBody) {
 		this.mailBody = mailBody;
 	}
-
 }
