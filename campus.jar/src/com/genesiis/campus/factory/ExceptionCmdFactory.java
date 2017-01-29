@@ -2,7 +2,7 @@ package com.genesiis.campus.factory;
 
 //20170111 PN CAM-72 INIT ExceptionCmdFactory class.
 
-import com.genesiis.campus.command.CmdErrorHandeling;
+import com.genesiis.campus.command.CmdErrorHandling;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -10,7 +10,7 @@ public class ExceptionCmdFactory implements ICmdFactory {
 
 	private ICommand command = null;
 	static {
-		map.put(Operation.ERROR_HANDELING_COMMAND, new CmdErrorHandeling());
+		map.put(Operation.ERROR_HANDELING_COMMAND, new CmdErrorHandling());
 	}
 
 	@Override

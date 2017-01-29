@@ -1,6 +1,6 @@
 package com.genesiis.campus.command;
 
-//20170111 PN CAM-72 INIT CmdErrorHandeling class. Implementing execute() method WIP.
+//20170111 PN CAM-72 INIT CmdErrorHandling class. Implementing execute() method WIP.
 //20170112 PN CAM-72 modified the execute method to pass error/exception details to the front end on Servlet Exception or Error.
 //20170125 PN CAM-72: removed the instantiation of Throwable at declaration of throwable variable.
 
@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CmdErrorHandeling implements ICommand {
-	static Logger log = Logger.getLogger(CmdErrorHandeling.class.getName());
+public class CmdErrorHandling implements ICommand {
+	static Logger log = Logger.getLogger(CmdErrorHandling.class.getName());
 
 	// Variable declarations to hold he error details.
 	private String errorType = "";
@@ -59,8 +59,6 @@ public class CmdErrorHandeling implements ICommand {
 				exceptionMessage = SystemMessage.ERROR500.message() + " " + throwable.getMessage();
 			}
 
-			log.info(errorMessage + " " + errorType + " " + exceptionMessage + " " + exceptionName + " " + requestUri
-					+ " " + servletName);
 			// Send error details to the front page.
 			errorDetails.add(errorType);
 			errorDetails.add(Integer.toString(statusCode));
@@ -71,7 +69,7 @@ public class CmdErrorHandeling implements ICommand {
 			errorDetails.add(exceptionMessage);
 			errorDetailsWrapper.add(errorDetails);
 		} catch (Exception e) {
-			log.info("execute() : Exception " + e.toString());
+			log.error("execute() : Exception " + e.toString());
 			throw e;
 		}
 		view.setCollection(errorDetailsWrapper);
