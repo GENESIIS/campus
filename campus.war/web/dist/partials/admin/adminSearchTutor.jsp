@@ -137,9 +137,9 @@
 						<th>Email</th>
 						<th>Land Phone number</th>
 						<th>Mobile phone number</th>
-						<th>Address Line1</th>
+					<!-- 	<th>Address Line1</th>
 						<th>Address Line2</th>
-						<th>Address Line3</th>
+						<th>Address Line3</th> -->
 						<th>Town</th>
 						<th>Country</th>
 						<th>Approval status</th>
