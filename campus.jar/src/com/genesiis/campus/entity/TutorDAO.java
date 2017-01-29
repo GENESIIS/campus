@@ -72,16 +72,16 @@ public class TutorDAO implements ICrud {
 			while(rs.next()){
 				Collection<String> singleTutorList = new ArrayList<String>();
 				singleTutorList.add(rs.getString("CODE"));
-				singleTutorList.add(rs.getString("FIRSTNAME") +" " + rs.getString("MIDDLENAME") + " " + rs.getString("LASTNAME"));
-			//	singleTutorList.add(rs.getString("MIDDLENAME"));
-			//	singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
 				singleTutorList.add(rs.getString("USERNAME"));
 				singleTutorList.add(rs.getString("EMAIL"));
-				singleTutorList.add(rs.getString("DIALCODE") + rs.getString("LANDPHONEAREACODE") + " " + rs.getString("LANDPHONENUMBER"));
-				//singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
-				//singleTutorList.add(rs.getString("LANDPHONENUMBER"));
-				singleTutorList.add(rs.getString("DIALCODE") + rs.getString("MOBILEPHONENETWORKCODE") + " " + rs.getString("MOBILEPHONENUMBER"));
-			//	singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("DIALCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
 				singleTutorList.add(rs.getString("ISAPPROVED"));
 				singleTutorList.add(rs.getString("ADDRESS1"));
 				singleTutorList.add(rs.getString("ADDRESS2"));
