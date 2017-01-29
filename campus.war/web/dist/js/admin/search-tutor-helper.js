@@ -22,27 +22,8 @@ function listAllTutors(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
-				    $('#example').DataTable({
-					data : window.tutorList,
 
-					  columns : [
-				                   {data: 0},
-				                   {data: 1},
-				                   {data: 2},
-				                   {data: 3},
-				                   {data: 4},
-				                   {data: 5},
-				                   {data: 7},
-				                   {data: 8},
-				                   {data: 9},
-				                   {data: 10},
-				                   {data: 11},
-				                   {data: 6},
-				                   {data: 12}  
-				                   ]
-
-				});
-			//	displayTutotList();
+				tutorDataTable();
 				    $('#example tbody').on('click', 'tr', function () {
 				    	   var tutorCode = $(this).find("td:first").html();
 				    	   
@@ -62,7 +43,7 @@ function listAllTutors(){
 	});
 }
 
-function sad(){
+function tutorDataTable(){
 	var t =  $('#example').DataTable();
 	var tutors = window.tutorList;
 	var rowCount = 0;
@@ -76,25 +57,45 @@ function sad(){
 
 //							var res = value.toString();
 //							var data = res.split(",");
-//							rowCount++;
+							// rowCount++;
+							var value11 = null;
+							if (value[11] == 1) {
+								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;"></span>';
+							} else if (value[11] == 0) {
+								value11 = ' <span class="glyphicon glyphicon-info-sign" style="color:blue;"></span>';
+							} else if (value[11] == 2) {
+								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;"></span>';
+							}
+							
+							var value17 = null; 
+							if( value[17] == 1){
+								value17 = ' <span style="color:green;">Active</span></td>';
+							}else if( value[17] == 0){
+								value17 = ' <span style="color:red;">Inactive </span></td>';
+							}else if( value[17] == 2){
+								value17 = ' <span style="color:blue;">Pending </span></td>';
+							}else if( value[17] == 3){
+								value17 = ' <span style="color:red;">Expired </span></td>';
+							}
+							
+t.row.add(
+									[
 
-t.row.add([
-           		'<tr> <td>' + value[0] + '</td>'
-           		+ '<td>' + value[1] + value[2] + value[3] + '</td>'
-           		+ '<td>' + value[4] + '</td>'
-           		+ '<td>' + value[5] + '</td>'
-           		+ '<td>' + value[6] + + value[7] + value[8] + '</td>'
-           		+ '<td>' + value[6] + + value[9] + value[10] + '</td>'
-           		+ '<td>' + value[12] + + value[13] + value[14] + '</td>'
-           		+ '<td>' + value[15] + '</td>'
-           		+ '<td>' + value[6] + '</td>' 
-           		+ '<td>' + value[16] + '</td>'
-           		+ '<td>' + value[11] + ' <span class="glyphicon glyphicon-ok"></span></td>'
-           		+ '<td>' + value[11] + ' <span class="glyphicon glyphicon-remove"></span></td>'
-           		+ '<td>' + value[17] + ' <span>Active</span></td>'
-           		+ '<td>' + value[17] + ' <span>Inactive </span></td>'
-           		+ '</tr>'
-           ]).draw(false);
+											value[0],
+											value[1] + '&nbsp;' + value[2]
+													+ '&nbsp;' + value[3],
+											value[4],
+											value[5],
+											value[6] + value[7] + '&nbsp;'
+													+ value[8],
+											value[6] + value[9] + '&nbsp;'
+													+ value[10],
+											value[15],
+											value[16],
+											value11,
+											value17
+
+									]).draw(false);
 
 			
 		});
