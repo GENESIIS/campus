@@ -32,24 +32,17 @@ package com.genesiis.campus.validation;
 //20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
 //20170125 CW c36-add-tutor-details added validateForNull() method
 //20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
+//20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
 
+import com.genesiis.campus.util.IDataHelper;
+
+import org.jboss.logging.Logger;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.entity.TutorUserNameDAO;
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 
@@ -71,110 +64,6 @@ public class Validator {
 	}
 
 	int totalDays = 0;
-
-	/**
-	 * Returns the given time duration in years
-	 * 
-	 * @author Chathuri, Chinthaka
-	 * 
-	 * @return the given time duration in years
-	 */
-	public int calculateYears(String duration) throws ArithmeticException, Exception {
-		int years = 0;
-		try {
-
-			float inputAsFloat = Float.parseFloat(duration);
-
-			// the input is an integral day count, with a possible fractional
-			// part representing time as a fraction of one day
-			totalDays = (int) inputAsFloat;
-
-			// ignores leap years
-			years = (int) totalDays / 365;
-			totalDays %= 365;
-
-			// calculateMonth();
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return years;
-	}
-
-	/**
-	 * Calculate number of months in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateMonths() throws ArithmeticException, Exception {
-		int months = 0;
-		try {
-
-			// assumes all months have 30 days
-			months = (int) totalDays / 30;
-			totalDays %= 30;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears: Exception" + e.toString());
-			throw e;
-		}
-		return months;
-
-	}
-
-	/**
-	 * Calculate number of weeks in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateWeeks() throws ArithmeticException, Exception {
-		int weeks = 0;
-		try {
-			weeks = (int) totalDays / 7;
-			totalDays %= 7;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return weeks;
-	}
-
-	/**
-	 * Calculate number of days in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateDates() throws ArithmeticException, Exception {
-		int days = 0;
-		try {
-			days = (int) totalDays;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return days;
-	}
 
 	/**
 	 * Validate helper fields for null values.
