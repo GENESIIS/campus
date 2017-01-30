@@ -128,7 +128,13 @@
 			<tbody ></tbody>
 			</table> -->
 
-			<table id="example" class="display" width="100%">
+				<ul class="nav nav-pills pull-right" role="tablist">
+					<li class="active"><a href="#" onclick="">All</a></li>
+					<li class="active"><a href="#">new</a></li>
+				</ul>
+
+<br/>
+				<table id="example" class="display" width="100%">
 				<thead>
 					<tr>
 						<th>Code</th>
