@@ -43,7 +43,7 @@ public enum SystemMessage {
 	SUCCESSFULLY_IMAGE_UPLOAD("Image Uploaded successfully. "),
 	IMAGE_UPLOADING_FAIL("Image Upload Failed. "),
 	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Processed."),
-	EXCEED_LIMIT("Limit Is Exceeded"),
+	EXCEED_LIMIT("Size Limit Is Exceeded"),
 	EXTENSION_MISSMATCH("Wrong File Type Is Passed "),
 	IMAGE_RENAMING_FAIL("Image File did not get renamed properly"),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot ");
