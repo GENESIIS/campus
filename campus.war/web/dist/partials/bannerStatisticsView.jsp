@@ -93,12 +93,12 @@ ul > li
 						</div>
 						<div>
 							From Date :<font color="red">*</font> <input type="date"
-								id="fromDate" name="fromDate" required> <label
+								id="fromDate" name="fromDate"  onkeydown="return false"> <label
 								id="errorFromDate" for=""></label>
 						</div>
 						<div>
 							To Date :<font color="red">*</font> <input type="date"
-								id="toDate" name="toDate" required> <label
+								id="toDate" name="toDate"  onkeydown="return false"> <label
 								id="errorToDate" for=""></label>
 						</div>
 						<div>
@@ -151,9 +151,12 @@ ul > li
 <script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/report/banner-statistics.js"></script>
+<script type="text/javascript">
+function validateToDate() {
+	
+}
 
-<!-- <!-- W3-Include -->
-<script src="/dist/bower-components/w3/w3data.js"></script> -->
+</script>
 
 </body>
 
