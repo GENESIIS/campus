@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.StudentLoginDAO;
@@ -40,7 +41,7 @@ public class CmdStudentLogin implements ICommand {
 			int attempts = 0;
 			String pageURL = "/dist/partials/login.jsp";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			String messageReturn = new String(message);
+			
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
 
@@ -50,7 +51,8 @@ public class CmdStudentLogin implements ICommand {
 
 			if (validateResult.equalsIgnoreCase("True")) {
 				data = LoginValidator.dataSeparator(data);
-				final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				//final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				ICrud loginDAO = new StudentLoginDAO();
 				dataCollection = loginDAO.findById(data);
 
 				for (Collection<String> collection : dataCollection) {
@@ -84,6 +86,12 @@ public class CmdStudentLogin implements ICommand {
 					session.setAttribute("currentUserData", dataCollection);
 					setStudentLoginDetails(data, helper);
 					int status = StudentLoginDAO.loginDataUpdate(data);
+					
+					if(status>0){
+						message = SystemMessage.VALIDUSER.message();
+					}else{
+						
+					}
 				} else {
 					// login attempts handle in here
 					// after 3 attempts session will blocked user
