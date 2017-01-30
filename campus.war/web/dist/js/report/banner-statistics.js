@@ -1,5 +1,5 @@
 //20161227 DJ c52-report-banner-statistics-MP-dj  Banner stat report generation 
-var pageSlotCode = 0;
+
 $(document).ready(function() {
 	/*
 	 * This ajax call load the initial search interface for banner statistic report generation.
@@ -56,8 +56,9 @@ $(document).ready(function() {
 	/*
 	 * Identify selected page slot and advertisers for particular page slot. 
 	 */
-	$('#pageSlotlist').bind('change', function(event) {	
-		var pageSlotName = $('#pageSlotlist').val();		
+	$('#pageSlotlist').bind('change', function(event) {		
+		var pageSlotName = $('#pageSlotlist').val();
+		var pageSlotCode = 0;
 
 		var option = $('#pageSlotName').find('option');
 		for (var i = 0; i < option.length; i++) {
