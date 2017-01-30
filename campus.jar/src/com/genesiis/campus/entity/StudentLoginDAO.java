@@ -2,7 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as StudentLoginDAO class created.
 //20161214 AS C19-student-login-without-using-third-party-application-test-as findbyId method modified .
-
+//20170130 AS CAM-21 code review issues fixing 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,7 +98,7 @@ public class StudentLoginDAO implements ICrud {
 		String query = "UPDATE CAMPUS.STUDENT SET  LASTLOGGEDOUTDATE=?, LASTLOGGEDOUTTIME=?  WHERE CODE=? ";
 		PreparedStatement ps = null;
 
-		int rowInserted = 0;
+		int rowInserted = -1;
 		try {
 			Student student = (Student) object;
 			conn = ConnectionManager.getConnection();
