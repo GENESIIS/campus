@@ -98,7 +98,7 @@ function tutorDataTable(){
 							if (value[11] == 1) {
 								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;"></span>';
 							} else if (value[11] == 0) {
-								value11 = ' <span class="glyphicon glyphicon-info-sign" style="color:blue;"></span>';
+								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;"></span>';
 							} else if (value[11] == 2) {
 								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;"></span>';
 							}
