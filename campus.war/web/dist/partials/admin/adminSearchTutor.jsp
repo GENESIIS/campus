@@ -105,36 +105,17 @@
 			</div>
 		</div>
 		<!-- end inner header -->
-		
+
 		<div class="content-holder center-block clearfix">
-		<!-- Page content -->
-		<form action="/AdminController" method="POST" id="basicForm">
-		<!-- 	<table class="table" id="tutor-list">
-			<tr>
-			<th>Code</th>
-			<th>Name</th>
-			<th>Username</th>
-			<th>Email</th>
-			<th>Land Phone number</th>
-			<th>Mobile phone number</th>
-			<th>Address</th>
-			<th>Town</th>
-			<th>Country Code</th>
-			<th>Country</th>
-			<th>Approval status</th>
-			<th>Status</th>
-			</tr>
-			
-			<tbody ></tbody>
-			</table> -->
+			<!-- Page content -->
 
-				<ul class="nav nav-pills pull-right" role="tablist">
-					<li class="active"><a onclick="listAllTutors();">All</a></li>
-					<li><a href="#" onclick="listTutorRequests();">new</a></li>
-				</ul>
+			<ul class="nav nav-pills pull-right" role="tablist">
+				<li class="active"><a onclick="listAllTutors();">All</a></li>
+				<li><a onclick="listTutorRequests();">new</a></li>
+			</ul>
 
-<br/>
-				<table id="example" class="display" width="100%">
+			<br />
+			<table id="example" class="display" width="100%">
 				<thead>
 					<tr>
 						<th></th>
@@ -144,7 +125,7 @@
 						<th>Email</th>
 						<th>Land Phone number</th>
 						<th>Mobile phone number</th>
-					<!-- 	<th>Address Line1</th>
+						<!-- 	<th>Address Line1</th>
 						<th>Address Line2</th>
 						<th>Address Line3</th> -->
 						<th>Town</th>
@@ -155,7 +136,6 @@
 					</tr>
 				</thead>
 			</table>
-		</form>
 		</div>
 
 	</div>
