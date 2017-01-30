@@ -114,7 +114,6 @@ $(document).on('click','#upload-button',function(event){
 			if(response['successCode']===1){
 				
 				setTimeout(displayLabelMessage('displayLabel','green',response['message']),3000);
-				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());  
 				
 			} else{
 				// if the execution success but logically generated error application vice
