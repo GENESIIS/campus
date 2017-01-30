@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170117 JH c133-admin-list-tutors getAll() method coding
 //20170124 JH c133-admin-list-tutors getAll() query modified
 //20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
+//20170130 JH c133-admin-list-tutors getAll(): removed the combined columns back to separate array attributes
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +56,7 @@ public class TutorDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		final String query = "SELECT TOP 1000 TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
+		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
 				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
 				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
 		PreparedStatement preparedStatement = null;
