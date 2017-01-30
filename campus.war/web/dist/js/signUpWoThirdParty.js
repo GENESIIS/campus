@@ -16,6 +16,7 @@
 //20170118 DN C18-student-signup-without-using-third-party-application-test-dn refactor validateSignUpWoThirdPartyPageEmbedData()
 // to shift country / town code check for null value.
 // include to extend the password constrain to have more than 07 characters
+//20170130 DN CAMP:18 add check box clearing to clearAllFields()
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -75,6 +76,7 @@ function getPreRequisitPageData(preRequistData){
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(y).text(x).appendTo(countryList);
+		
 	});
 	
 	
@@ -228,11 +230,11 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#lastName').val()),"Last Name Field","lastNameError"))) {
 		return !validationPass;
-	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"gender Field","genderError"))){
+	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"Gender Field","genderError"))){
 		return !validationPass;
 	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
 		return !validationPass;
-	}else if (!(isFieldFilled(isempty($('#country').val()),"country Field","countryError"))) {
+	}else if (!(isFieldFilled(isempty($('#country').val()),"Country Field","countryError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled((isempty(selectedTownCode)&isempty($('#town').val())),"Town Field","townError"))) {
 		return !validationPass;
@@ -255,7 +257,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	} else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
 		return !validationPass;
-	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"policy Check box","policyConfirmError"))) {
+	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"Policy Check box","policyConfirmError"))) {
 		return !validationPass;
 	} 
 		return validationPass;
@@ -434,6 +436,8 @@ function splitPhoneNumber(phoneNumber,length){
 function clearAllFields(){
 	$('input.text-field').val("");
 	$('.validationInputFields').html("");
+	$('#policyConfirm').prop('checked', false);
+	$('#showpasscheckbox').prop('checked', false);
 }
 
 
