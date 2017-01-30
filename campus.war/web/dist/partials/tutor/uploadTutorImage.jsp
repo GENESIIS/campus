@@ -38,7 +38,7 @@
 		  <input type="hidden"	value="xyz">
 	</form>
 		<div align="center">
-		  	<img id="profileImage"  src="#"   alt="Profile-Picture" style="width:600px;hight:auto"> 
+		  	<img id="profileImage"  src="#"   alt="Profile-Picture" style="width:600px;hight:400px"> 
 	  </div>
 
 
