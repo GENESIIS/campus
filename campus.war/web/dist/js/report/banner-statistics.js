@@ -86,6 +86,13 @@ $(document).ready(function() {
 	});
 	
 	/*
+	 * validate toDate>from date
+	 */	
+	$('#toDate').on('click', function(event) {		
+		var fromDate= $('#fromDate').val();		
+		document.getElementById("toDate").setAttribute("min", fromDate);	
+	});
+	/*
 	 * trigger Search button click. 
 	 */
 	$('#searchList').on('click', function(event) {
