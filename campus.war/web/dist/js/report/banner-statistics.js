@@ -152,7 +152,8 @@ function getPageSlotWiseAdvertiser(response) {
  * This method loadResultSet() identify input parameters for report search.
  */
 function loadResultSet(event){
-	
+	//$('#resultSetDiv').hide();
+	$('#resultPanel').hide();
 	var pageName= $('#pagelist').val();
 	var pageCode=0;
 	var option = $('#pageName').find('option');
@@ -294,7 +295,9 @@ function clearParameters(event){
 	$('#resultPanel').hide();
 	$('#pagelist').val(""); 	
 	$('#pageSlotlist').val(""); 	
-	$('#bannerProviderList').val(""); 	
+	$('#bannerProviderList').val(""); 
+	$('#pageSlotlist').prop("disabled", true);
+	$('#bannerProviderList').prop("disabled", true);
 	$('#fromDate').val(" "); 
 	$('#toDate').val(" ");
 	$('#errorPageList').text("");
