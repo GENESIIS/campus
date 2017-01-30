@@ -4,6 +4,7 @@
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the displayLabelMessage()
 //20170125 DN c47-tutor-add-tutor-information-upload-image-dn add method comments , refactor $(document).on('click') function
 //20170130 DN c47-tutor-add-tutor-information-upload-image-dn added delaying function for displaying messages
+// 		   DN c47-tutor-add-tutor-information-upload-image-dn implemented modal window for displaying messages.
 var globalFlag=true;
 
 $(document).ready(function() {
@@ -14,7 +15,12 @@ $(document).ready(function() {
 	
 });
 
-
+/**
+ * displayTutorProfileImageAtPageLoad method displays the 
+ * tutor profile image which has already been uploaded will be displayed
+ * If there is no such a image then default image will be displayed depend on the 
+ * gender 
+ */
 
 function displayTutorProfileImageAtPageLoad(){
 	
@@ -28,8 +34,6 @@ function displayTutorProfileImageAtPageLoad(){
 		success:function(response){
 			
 			if(response['successCode']===1){
-				
-				setTimeout(displayLabelMessage('displayLabel','green',response['message']),3000);
 				// to remove cash add Math.random() to the end else the image does not get refreshed
 				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());   
 				
@@ -49,22 +53,28 @@ function displayTutorProfileImageAtPageLoad(){
 }
 
 /**
- * displayLabelMessage(): displays an user define text in the label
- * designated.
+ * displayLabelMessage(): displays an user define message text in the a modal window
+ * This message either can be an error or success message.
  * @author dushantha DN
  * @param cssColour required color theme for the message to be displayed
  * @param message the required message to be displayed
  */
 function displayLabelMessage(labelid,cssColour,message){
+	$('#messagePopUp').modal('show'); // display the modal window
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
+	
+	
 }
 
 
+/**
+ * this function enables the upload button once 
+ * the file input fires a change event
+ */
 
 $(document).on('change','#file-select',function(){	
 	//enabling the 'submit' button once the image selection gets changed
 	$('#upload-button').prop('disabled', false);
-	
 });
 
 
