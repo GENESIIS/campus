@@ -2,11 +2,10 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created initial version
 //20161025 CM c13-Display course details add VIEW_PROGRAMME enum element related entry
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -15,6 +14,7 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
+import org.apache.log4j.Logger;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());

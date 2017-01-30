@@ -1,5 +1,7 @@
 package com.genesiis.campus.validation;
 
+
+
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -34,15 +36,14 @@ package com.genesiis.campus.validation;
 //20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
 //20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
 
-import com.genesiis.campus.util.IDataHelper;
-
-import org.jboss.logging.Logger;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jboss.logging.Logger;
+import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 

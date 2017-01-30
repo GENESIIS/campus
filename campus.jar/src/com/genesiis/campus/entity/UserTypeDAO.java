@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 
 //20161221 CW c36-add-tutor-details Modified getAll() method.
 //20170110 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application & removed getCode() method.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import org.apache.log4j.Logger;
 
 public class UserTypeDAO implements ICrud {
 

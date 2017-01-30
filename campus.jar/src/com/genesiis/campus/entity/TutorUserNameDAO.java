@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,11 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import org.apache.log4j.Logger;
 
 public class TutorUserNameDAO implements ICrud {
 

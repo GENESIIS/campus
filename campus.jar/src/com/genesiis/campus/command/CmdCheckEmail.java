@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170117 CW c36-add-tutor-information INIT CmdCheckEmail.java
 //20170117 CW c36-add-tutor-information modified the comments in execute ()method
 //20170126 CW c36-add-tutor-information modified the execute ()method return value.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.Collection;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorEmailDAO;
-import com.genesiis.campus.entity.TutorUserNameDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Validator;

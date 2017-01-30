@@ -10,6 +10,8 @@ package com.genesiis.campus.entity;
 //20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
 //20170124 CW c36-add-tutor-details modified getAll() method according to the 201701201215 DJ crev modification request.
 //20170125 CW c36-add-tutor-details add validateUsernameEmailFields() method.
+//20170130 CW c36-add-tutor-details modified validateUsernameEmailFields() method
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,16 +20,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
-import com.genesiis.campus.validation.AccountType;
-import com.genesiis.campus.validation.ApplicationStatus;
+import org.apache.log4j.Logger;
 
 public class TutorDAO implements ICrud {
 
@@ -231,7 +229,7 @@ public class TutorDAO implements ICrud {
 	 * @return Returns 1 if the username is available in the database, returns 2 if the email is available & 
 	 * 				returns 0 if both are not used to create a tutor profile.
 	 */
-	public static int validateUsernameEmailFields(IDataHelper helper) throws SQLException,	Exception {
+	public static int validateUsernameEmailFields(String username, String email) throws SQLException,	Exception {
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -242,16 +240,14 @@ public class TutorDAO implements ICrud {
 			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
 
 			stmt = conn.prepareStatement(query);
-			stmt.setString(1, helper.getParameter("username"));
-			stmt.setString(2, helper.getParameter("email"));
+			stmt.setString(1, username);
+			stmt.setString(2, email);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				System.out.println("rs.getString USERNAME = "+ rs.getString("USERNAME"));
-				System.out.println("rs.getString email = "+ rs.getString("email"));
-				if(rs.getString("USERNAME").equals(helper.getParameter("username"))){
+				if(rs.getString("USERNAME").equals(username)){
 					return 1;
-				}else if(rs.getString("EMAIL").equals(helper.getParameter("email"))){
+				}else if(rs.getString("EMAIL").equals(email)){
 					return 2;
 				}
 			}

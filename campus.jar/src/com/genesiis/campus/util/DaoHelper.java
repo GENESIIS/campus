@@ -1,10 +1,12 @@
 package com.genesiis.campus.util;
 //DJ 20161115 c6-list-available-institutes-on-the-view Initiate cleanup method to clean open resources 
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import org.apache.log4j.Logger;
 
 public class DaoHelper {

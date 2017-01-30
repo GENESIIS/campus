@@ -13,12 +13,13 @@ package com.genesiis.campus.command;
 //20170125 CW c36-add-tutor-details validateUserAndEmail() & validateAvailability() methods.
 //20170126 CW c36-add-tutor-details modified execute() method.
 //20170126 CW c36-add-tutor-details modified fillTutorCollection() method & check for null Array Lists
+//20170130 Cw c36-add-tutor-details modified validateAvailability() method
+//20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -31,6 +32,7 @@ import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
+import org.apache.log4j.Logger;
 
 /**
  * CmdAddTutorProfile class handles the tutor profile saving
@@ -151,7 +153,7 @@ public class CmdAddTutorProfile implements ICommand {
 		String message = "True"; 
 		int type = 0;
 		try {		
-				type = TutorDAO.validateUsernameEmailFields(helper);
+				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
 				
 				if(type == 1){
 					message = SystemMessage.USERNAME_EXIST.message();
