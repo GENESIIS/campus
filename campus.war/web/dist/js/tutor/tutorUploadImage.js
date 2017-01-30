@@ -3,7 +3,7 @@
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn postFilesData() method refactored
 //20170117 DN c47-tutor-add-tutor-information-upload-image-dn refactor the displayLabelMessage()
 //20170125 DN c47-tutor-add-tutor-information-upload-image-dn add method comments , refactor $(document).on('click') function
-
+//20170130 DN c47-tutor-add-tutor-information-upload-image-dn added delaying function for displaying messages
 var globalFlag=true;
 
 $(document).ready(function() {
@@ -29,19 +29,19 @@ function displayTutorProfileImageAtPageLoad(){
 			
 			if(response['successCode']===1){
 				
-				displayLabelMessage('displayLabel','green',response['message']);
+				setTimeout(displayLabelMessage('displayLabel','green',response['message']),3000);
 				// to remove cash add Math.random() to the end else the image does not get refreshed
 				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());   
 				
 			} else{
 				// if the execution success but logically generated error application vice
-				displayLabelMessage('displayLabel','red',response['message']);
+				setTimeout(displayLabelMessage('displayLabel','red',response['message']),3000);
 				}
 			
 		},
 		error:function(response,error,errorThrown) {
 			var msg = ajaxErorMessage(response,error,errorThrown);
-		    displayLabelMessage('displayLabel','red',msg);
+			setTimeout(displayLabelMessage('displayLabel','red',msg),3000);
 		        
 		  }
 	});
@@ -102,19 +102,19 @@ $(document).on('click','#upload-button',function(event){
 	    success:function(response){
 				
 			if(response['successCode']===1){
-				alert("Inside success call");
-				displayLabelMessage('displayLabel','green',response['message']);
+				
+				setTimeout(displayLabelMessage('displayLabel','green',response['message']),3000);
 				jQuery('#profileImage').attr('src',"../../../"+response['profilePicture']+'?'+Math.random());  
 				
 			} else{
 				// if the execution success but logically generated error application vice
-				alert("success but successCode<>1");
-				displayLabelMessage('displayLabel','red',response['message']);
+				setTimeout(displayLabelMessage('displayLabel','red',response['message']),3000);
+				
 				}
 		},
 		error:function(response,error,errorThrown) {
 			var msg = ajaxErorMessage(response,error,errorThrown);
-		    displayLabelMessage('displayLabel','red',msg);
+			setTimeout(displayLabelMessage('displayLabel','red',msg),3000);
 		    globalFlag=false;  //do not load the image
 		   }
 	});
