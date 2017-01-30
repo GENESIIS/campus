@@ -133,7 +133,16 @@ public class ImageUtility {
 	}
 	
 	
-	private Collection<Collection<String>> getSystemConfigRepositoryValues(String[] sysConfigArray,Connection con) throws SQLException,Exception {
+	/**
+	 * getSystemConfigRepositoryValues extract repository records from [CAMPUS].[SYSTEMCONFIG]
+	 * depend on the sysConfigArray which contains system configuration value that comes from the [SYSTEMCONFIGCODE] column  
+	 * @param sysConfigArray type String[]
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public Collection<Collection<String>> getSystemConfigRepositoryValues(String[] sysConfigArray,Connection con) throws SQLException,Exception {
 		ICrud systemConfigDAO = new SystemConfigDAO();
 		try{
 			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO
