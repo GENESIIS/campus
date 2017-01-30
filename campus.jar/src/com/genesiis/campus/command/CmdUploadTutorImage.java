@@ -7,6 +7,8 @@ package com.genesiis.campus.command;
 //     coded wip
 //20170120 DN c47-tutor-add-tutor-information-upload-image-dn  changed the isImageWithinSize()
 //20170120 DN c47-tutor-add-tutor-information-upload-image-dn set the successCode,profilePicture,message attributes in execute() method
+//20170130 Dn c47-tutor-add-tutor-information-upload-image-dn  etTutorProfileImageUploadPath/getSystemConfigRepositoryValues
+//asccessInerLoopSingleElement/isImageWithinSize methods has been shifted to ImageUtility.java
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,6 +66,8 @@ public class CmdUploadTutorImage implements ICommand {
 	/** The war file path. */
 	private String warFilePath = "education/";
 	
+	private ImageUtility imageUtility = new ImageUtility();
+	
 	/* (non-Javadoc)
 	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
 	 */
@@ -77,6 +81,7 @@ public class CmdUploadTutorImage implements ICommand {
 		Connection con = null;
 		// To store image file path
 		String filePath = "";
+		
 		try{
 			//get the image files from the browser and set field -files are set now
 			files =getImageFileUploadedFromBrowser(helper);
@@ -93,7 +98,7 @@ public class CmdUploadTutorImage implements ICommand {
 				int tutorCode = (tutorCodeFromSession!=null)?tutorCodeFromSession:1; //TUTOR CODE HAS TO BE OBTAINED FROM SESSION
 				
 				//get the tutor image upload Absolute path
-				String tutorProfileImageUploadPath =getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
+				String tutorProfileImageUploadPath =imageUtility.getTutorProfileImageUploadPath(SystemConfig.TUTOR_PROFILE_IMAGE_ABSOLUTE_PATH,tutorCode,con);
 				
 				
 				fileUtility.setUploadPath(tutorProfileImageUploadPath);
@@ -103,6 +108,9 @@ public class CmdUploadTutorImage implements ICommand {
 				
 				if(!isTheImageFileRenamed(fileUtility,tutorCode))
 					return view ;
+				
+				
+				
 			}
 		} catch(FileUploadException fle){
 			log.error("execute():FileUploadException"+ fle.toString() );
@@ -113,7 +121,6 @@ public class CmdUploadTutorImage implements ICommand {
 		}finally{
 			DaoHelper.cleanup(con, null, null);
 		}
-		
 		this.setMessage(this.systemMessage(1));
 		helper.setAttribute("successCode", getSuccessCode());
 		helper.setAttribute("profilePicture", warFilePath);
@@ -152,56 +159,56 @@ public class CmdUploadTutorImage implements ICommand {
 		return isTheImageFileRenamed;
 	}
 	
-	/*
-	 * getTutorProfileImageUploadPath provides the Physical location where the 
-	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
-	 * for the given "tutorImageProfilePath" in repository,then ,an empty string will be returned
-	 * according to the agreed business logic path will be ending up with username_+ tutorcode
-	 * e.g. C:/sdb/ctxdeploy/education.war/tutor/pro_image/username_1/
-	 *
-	 * @param tutorImageProfilePath SystemConfig type .
-	 * Always this value must be in sync with the database [CAMPUS].[SYSTEMCONFIG]# column[SYSTEMCONFIGCODE].
-	 * @param tutorCode :int code
-	 * @param con the con
-	 * @return String if the database table contains a due value , then it will be returned,
-	 *  else an empty string will be returned
-	 *  
-	 *  Client of the function must check for empty string. If find so which means the database table is out of sync with the
-	 *  passed SystemConfig tutorImageProfilePath.Hence appropriately the condition should be handled.
-	 * @throws SQLException the SQL exception
-	 * @throws Exception the exception
-	 */
-	private String getTutorProfileImageUploadPath(SystemConfig tutorImageProfilePath,int tutorCode,Connection con)throws SQLException,
-	Exception{
-		
-		String tutorImagePath="";
-		String[] systemConfigCode = {tutorImageProfilePath.toString()};
-		//access the data base system configuration data related table and retrieve the path
-		ICrud systemConfigDAO = new SystemConfigDAO();
-		try {
-
-			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO
-					.findById(systemConfigCode, con);
-			// the collection should contains only one collection encapsulated
-			// one record from the systemconfig table
-			tutorImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
-			tutorImagePath=(tutorImagePath!=null)?tutorImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
-			return tutorImagePath;
-
-		} catch (SQLException exp) {
-			log.error("getTutorProfileImageUploadPath(): SQLException"
-					+ exp.toString());
-			throw exp;
-
-		} catch (Exception exp) {
-			log.error("getTutorProfileImageUploadPath(): SQLException"
-					+ exp.toString());
-			throw exp;
-
-		}
-		
-	}
-	
+//	/*
+//	 * getTutorProfileImageUploadPath provides the Physical location where the 
+//	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
+//	 * for the given "tutorImageProfilePath" in repository,then ,an empty string will be returned
+//	 * according to the agreed business logic path will be ending up with username_+ tutorcode
+//	 * e.g. C:/sdb/ctxdeploy/education.war/tutor/pro_image/username_1/
+//	 *
+//	 * @param tutorImageProfilePath SystemConfig type .
+//	 * Always this value must be in sync with the database [CAMPUS].[SYSTEMCONFIG]# column[SYSTEMCONFIGCODE].
+//	 * @param tutorCode :int code
+//	 * @param con the con
+//	 * @return String if the database table contains a due value , then it will be returned,
+//	 *  else an empty string will be returned
+//	 *  
+//	 *  Client of the function must check for empty string. If find so which means the database table is out of sync with the
+//	 *  passed SystemConfig tutorImageProfilePath.Hence appropriately the condition should be handled.
+//	 * @throws SQLException the SQL exception
+//	 * @throws Exception the exception
+//	 */
+//	private String getTutorProfileImageUploadPath(SystemConfig tutorImageProfilePath,int tutorCode,Connection con)throws SQLException,
+//	Exception{
+//		
+//		String tutorImagePath="";
+//		String[] systemConfigCode = {tutorImageProfilePath.toString()};
+//		//access the data base system configuration data related table and retrieve the path
+//		ICrud systemConfigDAO = new SystemConfigDAO();
+//		try {
+//
+//			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO
+//					.findById(systemConfigCode, con);
+//			// the collection should contains only one collection encapsulated
+//			// one record from the systemconfig table
+//			tutorImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
+//			tutorImagePath=(tutorImagePath!=null)?tutorImagePath+ "/" + "username_" + Integer.toString(tutorCode) + "/":"";
+//			return tutorImagePath;
+//
+//		} catch (SQLException exp) {
+//			log.error("getTutorProfileImageUploadPath(): SQLException"
+//					+ exp.toString());
+//			throw exp;
+//
+//		} catch (Exception exp) {
+//			log.error("getTutorProfileImageUploadPath(): SQLException"
+//					+ exp.toString());
+//			throw exp;
+//
+//		}
+//		
+//	}
+//	
 	
 	/*
 	 * Checks if is image accordance with system requirement.
@@ -215,8 +222,14 @@ public class CmdUploadTutorImage implements ICommand {
 	private boolean isImageAccordanceWithSystemRequirement(Connection con,IDataHelper requestWrapper)throws SQLException,Exception{
 		
 		try{
+			boolean isFilePassSizeRequirement=false;
 			// check image size
-			boolean isFilePassSizeRequirement=isImageWithinSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE,con);
+			if((files.size()==0)|(files==null)){
+				isFilePassSizeRequirement=false;
+			} else{
+				isFilePassSizeRequirement=imageUtility.isImageWithinSize(SystemConfig.TUTOR_PROFILE_IMAGE_SIZE,con,files.get(0));
+			}
+			 
 			// check image extension
 			boolean isFilePassExtensionType = isImageHavingTheAcceptedExtension(files.get(0).getName(),validExtensions);
 			
@@ -257,57 +270,57 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 	
-	/*
-	 * Method confirms the image if exists is within the imposed image size.
-	 * If the capasity of the image is accepted the method returns true else false
-	 *
-	 * @param tutorProfilePictureSize the tutor profile picture size
-	 * @param con Connection to the database
-	 * @return boolean if the image is accordance with the limit , if it's not or the image does not
-	 * exist it returns a false value.
-	 * @throws SQLException the SQL exception
-	 * @throws FileUploadException the file upload exception
-	 * @throws Exception the exception
-	 */
-	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con)throws SQLException,FileUploadException,
-	Exception{
-		boolean isFilePassSizeRequirement=false;
-		String[] tutorProfilePicturecapasity =  {tutorProfilePictureSize.toString()};
-		try{
-			long tutorDefaultImageSize=0;
-			//get the image size from the database.
-			ICrud systemConfigDAO = new SystemConfigDAO();
-			Collection<Collection<String>> allovableImageSizeWrapper = systemConfigDAO.findById(tutorProfilePicturecapasity, con);
-			
-		
-			Object JhonDoe = asccessInerLoopSingleElement(allovableImageSizeWrapper);
-			tutorDefaultImageSize=(long)((JhonDoe!=null)?Long.parseLong((String)JhonDoe)*1024*1024:0.00);
-			
-			
-			//### get the actual image file size which is uploaded to the server
-			//since there is only one file been uploaded no need to iterate through a loop as FileUtility
-			// doesn't have a Collection to store the FileItem instance, in a case where there is a necessity to upload many items,
-			// internal data structure of FileUtility must be changed or custom class should be created to handle this logic
-			// If there are more than one item in the collection then first item will be chosen.
-			
-			if((files.size()==0)|(files==null)){				
-				isFilePassSizeRequirement= false;
-			}else if(files.get(0).getSize()<=tutorDefaultImageSize){
-				isFilePassSizeRequirement=true;
-			}
-		}  catch(SQLException exp) {
-			log.error("isImageWithinSize(): SQLException"+exp.toString());
-			throw exp;
-		} catch(FileUploadException fle){
-			log.error("isImageWithinSize():FileUploadException"+ fle.toString() );
-			throw fle;
-		}	catch(Exception exp) {
-			log.error("isImageWithinSize(): SQLException"+exp.toString());
-			throw exp;
-		}
-		
-		return isFilePassSizeRequirement; 
-	}
+//	/*
+//	 * Method confirms the image if exists is within the imposed image size.
+//	 * If the capasity of the image is accepted the method returns true else false
+//	 *
+//	 * @param tutorProfilePictureSize the tutor profile picture size
+//	 * @param con Connection to the database
+//	 * @return boolean if the image is accordance with the limit , if it's not or the image does not
+//	 * exist it returns a false value.
+//	 * @throws SQLException the SQL exception
+//	 * @throws FileUploadException the file upload exception
+//	 * @throws Exception the exception
+//	 */
+//	private boolean isImageWithinSize(SystemConfig tutorProfilePictureSize,Connection con)throws SQLException,FileUploadException,
+//	Exception{
+//		boolean isFilePassSizeRequirement=false;
+//		String[] tutorProfilePicturecapasity =  {tutorProfilePictureSize.toString()};
+//		try{
+//			long tutorDefaultImageSize=0;
+//			//get the image size from the database.
+//			ICrud systemConfigDAO = new SystemConfigDAO();
+//			Collection<Collection<String>> allovableImageSizeWrapper = systemConfigDAO.findById(tutorProfilePicturecapasity, con);
+//			
+//		
+//			Object JhonDoe = asccessInerLoopSingleElement(allovableImageSizeWrapper);
+//			tutorDefaultImageSize=(long)((JhonDoe!=null)?Long.parseLong((String)JhonDoe)*1024*1024:0.00);
+//			
+//			
+//			//### get the actual image file size which is uploaded to the server
+//			//since there is only one file been uploaded no need to iterate through a loop as FileUtility
+//			// doesn't have a Collection to store the FileItem instance, in a case where there is a necessity to upload many items,
+//			// internal data structure of FileUtility must be changed or custom class should be created to handle this logic
+//			// If there are more than one item in the collection then first item will be chosen.
+//			
+//			if((files.size()==0)|(files==null)){				
+//				isFilePassSizeRequirement= false;
+//			}else if(files.get(0).getSize()<=tutorDefaultImageSize){
+//				isFilePassSizeRequirement=true;
+//			}
+//		}  catch(SQLException exp) {
+//			log.error("isImageWithinSize(): SQLException"+exp.toString());
+//			throw exp;
+//		} catch(FileUploadException fle){
+//			log.error("isImageWithinSize():FileUploadException"+ fle.toString() );
+//			throw fle;
+//		}	catch(Exception exp) {
+//			log.error("isImageWithinSize(): SQLException"+exp.toString());
+//			throw exp;
+//		}
+//		
+//		return isFilePassSizeRequirement; 
+//	}
 
 	
 	/*
@@ -337,29 +350,29 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 
 
-	/*
-	 * Method process accepts a Collection<Collection<String>> as a parameter and
-	 * returns the inner collections' stored element as an object.
-	 * 
-	 * <b>NOTE<b> the precondition of the method is that the outer wrapper (Collection that 
-	 * holds Collection) can only have one element which should NOT be NULL or EMPTY string a Collection of String.
-	 * where the conditions are not met will result a null value to be returned.
-	 *   
-	 * @param wrapper Collection<Collection<String>> 
-	 * @return Object
-	 */
-	private Object asccessInerLoopSingleElement(Collection<Collection<String>> wrapper){
-		Object element=null;
-		if(wrapper.size()==1){
-			for(Collection<String> inner:wrapper){
-				Object[] innerArray = inner.toArray();
-				if((innerArray[0]!=null)&(innerArray[0]!="")){
-					element= innerArray[0];
-				}
-			}	
-		}
-		return element;
-	}
+//	/*
+//	 * Method process accepts a Collection<Collection<String>> as a parameter and
+//	 * returns the inner collections' stored element as an object.
+//	 * 
+//	 * <b>NOTE<b> the precondition of the method is that the outer wrapper (Collection that 
+//	 * holds Collection) can only have one element which should NOT be NULL or EMPTY string a Collection of String.
+//	 * where the conditions are not met will result a null value to be returned.
+//	 *   
+//	 * @param wrapper Collection<Collection<String>> 
+//	 * @return Object
+//	 */
+//	private Object asccessInerLoopSingleElement(Collection<Collection<String>> wrapper){
+//		Object element=null;
+//		if(wrapper.size()==1){
+//			for(Collection<String> inner:wrapper){
+//				Object[] innerArray = inner.toArray();
+//				if((innerArray[0]!=null)&(innerArray[0]!="")){
+//					element= innerArray[0];
+//				}
+//			}	
+//		}
+//		return element;
+//	}
 	
 	
 	/*
@@ -477,5 +490,4 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 }
-
 
