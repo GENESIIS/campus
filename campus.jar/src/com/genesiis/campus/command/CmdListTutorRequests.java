@@ -28,7 +28,7 @@ public class CmdListTutorRequests implements ICommand{
 		SystemMessage systemMessage = SystemMessage.NO_DATA;
 
 		try {
-			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.PENDING.getStatusValue());
+			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.INACTIVE.getStatusValue());
 			 
 			 if(tutorCollection.size() >0){
 					view.setCollection(tutorCollection);
