@@ -130,10 +130,14 @@ function loadReportBannerStatisticsView(response) {
 }
 
 function getPageWisePageSlots(response) {
-	$('#pageSlotlist').prop("disabled", false);
+	$('#pageSlotlist').val(""); 
+	$('#pageSlotlist').prop("disabled", true);
+	$('#bannerProviderList').val(""); 
+	$('#bannerProviderList').prop("disabled", true);
 	$('#errorPageList').text("");
 	var htmlstr = "";
 	$.each(response.pageSlots, function(index, value) {
+		$('#pageSlotlist').prop("disabled", false);
 		if (value != null && value.length > 0) {
 			htmlstr += '<option val="' + value[0] + '">' + value[1]
 					+ '</option>';
@@ -145,9 +149,11 @@ function getPageWisePageSlots(response) {
 
 
 function getPageSlotWiseAdvertiser(response) {
-	$('#bannerProviderList').prop("disabled", false);
+	$('#bannerProviderList').val(""); 
+	$('#bannerProviderList').prop("disabled", true);
 	var htmlstr = "";
 	$.each(response.advertiserDetails, function(index, value) {
+		$('#bannerProviderList').prop("disabled", false);
 		if (value != null && value.length > 0) {
 			htmlstr += '<option val="' + value[0] + '">' + value[1]
 			+ '</option>';
@@ -159,8 +165,7 @@ function getPageSlotWiseAdvertiser(response) {
 /*
  * This method loadResultSet() identify input parameters for report search.
  */
-function loadResultSet(event){
-	//$('#resultSetDiv').hide();
+function loadResultSet(event){	
 	$('#resultPanel').hide();
 	var pageName= $('#pagelist').val();
 	var pageCode=0;
