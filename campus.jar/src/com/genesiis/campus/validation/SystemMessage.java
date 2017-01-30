@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20170109 c36-add-tutor-details-added few more enum fields cw
 //20170111 c36-add-tutor-details-added USERNAME_LENGTH, WEBLINKERROR, FACEBOOKERROR, LINKEDINERROR, TWITTERERROR, INSTAGRAMERROR, MYSPACEERROR, WHATSAPPERROR, VIBERERROR cw
 //20170117 c36-add-tutor-details-added EMAIL_USED CW
+//20170130 c36-add-tutor-details-modified FIRSTNAMEERROR & LASTNAMEERROR messages
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -13,8 +14,8 @@ public enum SystemMessage {
 	ERROR("Unsuccessful."),
 	EMAILERROR("Invalid Email Address."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
-	FIRSTNAMEERROR("Invalid Email Address."),
-	LASTNAMEERROR("First name should not be empty."),
+	FIRSTNAMEERROR("Invalid First Name."),
+	LASTNAMEERROR("Invalid Last Name."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
 	MOBILENUMBERERROR("Mobile number error."),
