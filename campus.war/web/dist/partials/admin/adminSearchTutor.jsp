@@ -129,14 +129,15 @@
 			</table> -->
 
 				<ul class="nav nav-pills pull-right" role="tablist">
-					<li class="active"><a href="#" onclick="">All</a></li>
-					<li class="active"><a href="#">new</a></li>
+					<li class="active"><a onclick="listAllTutors();">All</a></li>
+					<li><a href="#" onclick="listTutorRequests();">new</a></li>
 				</ul>
 
 <br/>
 				<table id="example" class="display" width="100%">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Code</th>
 						<th>Name</th>
 						<th>Username</th>

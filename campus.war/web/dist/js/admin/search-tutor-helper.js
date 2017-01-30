@@ -43,6 +43,42 @@ function listAllTutors(){
 	});
 }
 
+
+
+function listTutorRequests(){
+	$.ajax({
+		url : '/AdminController',
+		method : 'POST',
+		data : {
+			'CCO' : 'LIST_NEW_TUTOR_REQUESTS'
+		},
+		dataType : "json",
+		async : false,
+		success : function(response) {
+
+			if (response !== undefined && response !== null) {
+				window.tutorList = response.result;
+
+				tutorDataTable();
+				    $('#example tbody').on('click', 'tr', function () {
+				    	   var tutorCode = $(this).find("td:first").html();
+				    	   
+				    	   var form = document.createElement('form');
+				    	   form.method = 'post';
+				    	   form.action = '/dist/partials/admin/updateTutorProfile.jsp';
+				    	   var input = document.createElement('input');
+				    	   input.type = 'text';
+				           input.name = 'tutorCode';
+				           input.value = tutorCode;
+				           form.appendChild(input);
+				           form.submit();
+				    	   
+				    });
+			}
+		},
+	});
+}
+
 function tutorDataTable(){
 	var t =  $('#example').DataTable();
 	var tutors = window.tutorList;
@@ -55,9 +91,9 @@ function tutorDataTable(){
 						tutors,
 						function(index, value) {
 
-//							var res = value.toString();
-//							var data = res.split(",");
-							// rowCount++;
+							var res = value.toString();
+							var data = res.split(",");
+							rowCount++;
 							var value11 = null;
 							if (value[11] == 1) {
 								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;"></span>';
@@ -80,7 +116,7 @@ function tutorDataTable(){
 							
 t.row.add(
 									[
-
+									 		rowCount,
 											value[0],
 											value[1] + '&nbsp;' + value[2]
 													+ '&nbsp;' + value[3],
