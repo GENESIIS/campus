@@ -7,8 +7,11 @@ package com.genesiis.campus.command;
 //     coded wip
 //20170120 DN c47-tutor-add-tutor-information-upload-image-dn  changed the isImageWithinSize()
 //20170120 DN c47-tutor-add-tutor-information-upload-image-dn set the successCode,profilePicture,message attributes in execute() method
-//20170130 Dn c47-tutor-add-tutor-information-upload-image-dn  etTutorProfileImageUploadPath/getSystemConfigRepositoryValues
+//20170130 DN c47-tutor-add-tutor-information-upload-image-dn  etTutorProfileImageUploadPath/getSystemConfigRepositoryValues
 //asccessInerLoopSingleElement/isImageWithinSize methods has been shifted to ImageUtility.java
+//20170131 DN c47-tutor-add-tutor-information-upload-image-dn remove hard coded message from execute() and placed it in SystemMessage.java
+//				removed the log comments as per CREV instruction from execute().
+//				systemMessage(int) has been shifted to ImageUtility.java class as a static method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,8 +90,8 @@ public class CmdUploadTutorImage implements ICommand {
 			files =getImageFileUploadedFromBrowser(helper);
 			if((files.size()==0)|(files==null)){
 				
-				this.message = message +" "+systemMessage(-1)+"\n" +" Please Select a file to Upload."; // does not contain a file
-				
+				this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
+				this.setSuccessCode(-1);
 			} else{
 				
 				getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
@@ -117,9 +120,9 @@ public class CmdUploadTutorImage implements ICommand {
 		}finally{
 			DaoHelper.cleanup(con, null, null);
 		}
-		this.setMessage(this.systemMessage(1));
-		setResponseCridentials(helper);
-		log.info("CmdUploadTutorImage#execute() finished executing...");
+		this.setMessage(ImageUtility.systemMessage(1));
+		this.setSuccessCode(1);
+		setResponseCridentials(helper);		
 		return view;
 	}
 	
@@ -148,7 +151,8 @@ public class CmdUploadTutorImage implements ICommand {
 			String fileName = item.renameIntoOne(tutorCode);
 			String temwarFilePath =warFilePath;
 			if(!(isTheImageFileRenamed=(fileName!=""))){
-				this.message = message +" "+systemMessage(-5)+"\n" ; 
+				this.message = message +" "+ImageUtility.systemMessage(-5)+"\n" ;
+				this.setSuccessCode(-5);
 			}else{
 				warFilePath=temwarFilePath+fileName; // there is an issue
 			}
@@ -184,8 +188,10 @@ public class CmdUploadTutorImage implements ICommand {
 			boolean isFilePassExtensionType = isImageHavingTheAcceptedExtension(files.get(0).getName(),validExtensions);
 			
 			//set the messages to be sent to the client side
-			this.message =(!isFilePassSizeRequirement)?this.message + " "+systemMessage(-3):"";
-			this.message =(!isFilePassExtensionType)?this.message + " "+systemMessage(-4):"";
+			this.message =(!isFilePassSizeRequirement)?this.message + " "+ImageUtility.systemMessage(-3):"";
+			setSuccessCode(-3);
+			this.message =(!isFilePassExtensionType)?this.message + " "+ImageUtility.systemMessage(-4):"";
+			setSuccessCode(-4);
 			return (isFilePassSizeRequirement & isFilePassExtensionType) ;
 			
 		} catch(SQLException exp) {
@@ -244,43 +250,6 @@ public class CmdUploadTutorImage implements ICommand {
 			throw fle;
 			
 		}
-	}
-
-	
-	/*
-	 * System message.
-	 *@author dushantha DN
-	 * @param status the status
-	 * @return the string
-	 */
-	private String systemMessage(int status){
-		String message = SystemMessage.UNKNOWN.message();
-		setSuccessCode(status);
-		switch(status){		
-		case 1:
-			message = SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.message();
-			break;
-		case -1:
-			message = SystemMessage.DOES_NOT_CONTAIN_FILE.message();
-			break;
-		case -2:
-			message =SystemMessage.IMAGE_UPLOADING_FAIL.message();
-			break;
-		case -3:
-			message =SystemMessage.EXCEED_LIMIT.message();
-			break;
-		case -4:
-			message =SystemMessage.EXTENSION_MISSMATCH.message();
-			break;	
-		case -5:
-			message =SystemMessage.IMAGE_RENAMING_FAIL.message();
-			break;	
-		default:			
-			break;
-		}
-		
-		return message;
-		
 	}
 
 	/*
