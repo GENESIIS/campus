@@ -3,14 +3,13 @@ package com.genesiis.campus.util;
 //20170120 AS CAM-20 Session timeout Interval set to 1hour. 
 //20170124 AS CAM-20 SetAplicationScoop to current session and remove from the destroy event.
 //20170125 AS CAM-20 unwanted loggers removed.
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.validation.SystemMessage;
-
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 public class SessionCounterListener implements HttpSessionListener{
 	static Logger log = Logger.getLogger(SessionCounterListener.class.getName());

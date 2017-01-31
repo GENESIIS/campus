@@ -1,6 +1,11 @@
 package com.genesiis.campus.entity;
 //20161101 AS C8-inquiry-form-for-course CourseProviderDAO created.
 //20161102 AS C8-inquiry-form-for-course findbyID method  query modified
+import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,12 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
-
-
-import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
-import com.genesiis.campus.util.ConnectionManager;
 
 public class CourseProviderDAO implements ICrud{
 	static Logger log = Logger.getLogger(CourseProviderDAO.class.getName());

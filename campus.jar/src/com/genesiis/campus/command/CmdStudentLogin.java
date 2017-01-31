@@ -2,16 +2,6 @@ package com.genesiis.campus.command;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -26,6 +16,17 @@ import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 public class CmdStudentLogin implements ICommand {
 

@@ -2,14 +2,6 @@ package com.genesiis.campus.command;
 
 //20170118 AS CAM-21 CmdStudentLogout command class created. 
 //20170130 AS CAM-21 code review modification done. 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-
-import javax.jms.Session;
-import javax.servlet.http.HttpSession;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
@@ -18,6 +10,15 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
+
+import javax.jms.Session;
+import javax.servlet.http.HttpSession;
 
 public class CmdStudentLogout implements ICommand {
 	static Logger log = Logger.getLogger(CmdStudentLogout.class.getName());

@@ -4,6 +4,11 @@ package com.genesiis.campus.validation;
 //20161028 CM c9-make-inquiry-for-institute Created validateEmail, validateInquiry, isNotEmpty methods
 //20161028 CM c9-make-inquiry-for-institute Created validateInquiry methods
 //20161031 CM c9-make-inquiry-for-institute Modified validateInquiry methods
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
+import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -15,10 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.log4j.Logger;
-import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.entity.model.StudentProgrammeInquiry;
-import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 	static Logger log = Logger.getLogger(Validator.class.getName());
