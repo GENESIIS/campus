@@ -2,6 +2,8 @@ package com.genesiis.campus.util;
 //20170105 DN c47-tutor-add-tutor-information-upload-image-dn created the ImageUtility.java
 //20170128 Dn c47-tutor-add-tutor-information-upload-image-dn refactor and added getTutorProfileImageUploadPath/getSystemConfigRepositoryValues
 //asccessInerLoopSingleElement/isImageWithinSize methods has been created.
+//20170131 DN c47-tutor-add-tutor-information-upload-image-dn shifted the systemMessage(int) method 
+//              from CmdUploadTutorImage,java in order to encapsulate class responsibilities 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -10,28 +12,33 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemConfig;
+import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * ImageUtility class responsible for supporting a define set of facilities for images
- * Such as getting the uploading path etc
- * @author dushantha DN
+ * Such as getting the uploading path etc.
  *
+ * @author dushantha DN
  */
 public class ImageUtility {
+	
+	/** The Constant log. */
 	static final Logger log = Logger.getLogger(ImageUtility.class.getName());
 	
 	
 	/**
 	 * getImageUploadPath: method provides the image upload path based on the
 	 * SystemConfig enum value.
+	 *
 	 * @author dushantha DN
-	 * @param imageUploadPath
-	 * @return String :path which is the parent directory of the user profile picture resides 
+	 * @param imageUploadPath the image upload path
+	 * @return String :path which is the parent directory of the user profile picture resides
 	 * @throws Exception will be thrown if the SystemConfig enum has not defined such a value given by the parameter
 	 */
 	
@@ -51,7 +58,8 @@ public class ImageUtility {
 	
 	/**
 	 * getAlloawablePictureSize: method provides the allowable size of the image
-	 * if the SystemConfig enum has not defined an exception will be thrown
+	 * if the SystemConfig enum has not defined an exception will be thrown.
+	 *
 	 * @param pictureCategory SystemConfig enum defining the picture category e.g TUTOR_PROFILE_IMAGE_SIZE etc
 	 * @return int :the value of the allowable image size in MB
 	 * @throws Exception will be thrown if the SystemConfig enum has not defined such a value given by the parameter
@@ -70,8 +78,9 @@ public class ImageUtility {
 	}
 	
 	/**
-	 * isNullObject: method provides boolean value if the passed parameter is null or actually defined
-	 * @param nullCheckingObjet
+	 * isNullObject: method provides boolean value if the passed parameter is null or actually defined.
+	 *
+	 * @param nullCheckingObjet the null checking objet
 	 * @return true if the parameter is null else false
 	 */
 	public static boolean isNullObject(Object nullCheckingObjet){
@@ -83,6 +92,16 @@ public class ImageUtility {
 	}	
 	
 	
+	/**
+	 * Gets the tutor profile image upload path.
+	 *
+	 * @param usersProfileImagePath the users profile image path
+	 * @param profileOwnersCode the profile owners code
+	 * @param con the con
+	 * @return the tutor profile image upload path
+	 * @throws SQLException the SQL exception
+	 * @throws Exception the exception
+	 */
 	/*
 	 * getTutorProfileImageUploadPath provides the Physical location where the 
 	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
@@ -136,11 +155,12 @@ public class ImageUtility {
 	/**
 	 * getSystemConfigRepositoryValues extract repository records from [CAMPUS].[SYSTEMCONFIG]
 	 * depend on the sysConfigArray which contains system configuration value that comes from the [SYSTEMCONFIGCODE] column  
+	 *
 	 * @param sysConfigArray type String[]
-	 * @param con
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
+	 * @param con the con
+	 * @return the system config repository values
+	 * @throws SQLException the SQL exception
+	 * @throws Exception the exception
 	 */
 	public Collection<Collection<String>> getSystemConfigRepositoryValues(String[] sysConfigArray,Connection con) throws SQLException,Exception {
 		ICrud systemConfigDAO = new SystemConfigDAO();
@@ -161,6 +181,12 @@ public class ImageUtility {
 	}
 	
 	
+	/**
+	 * Asccess iner loop single element.
+	 *
+	 * @param wrapper the wrapper
+	 * @return the object
+	 */
 	/*
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
 	 * returns the inner collections' stored element as an object.
@@ -186,6 +212,17 @@ public class ImageUtility {
 	}
 	
 	
+	/**
+	 * Checks if is image within size.
+	 *
+	 * @param tutorProfilePictureSize the tutor profile picture size
+	 * @param con the con
+	 * @param fileItem the file item
+	 * @return true, if is image within size
+	 * @throws SQLException the SQL exception
+	 * @throws FileUploadException the file upload exception
+	 * @throws Exception the exception
+	 */
 	/*
 	 * Method confirms the image if exists is within the imposed image size.
 	 * If the capasity of the image is accepted the method returns true else false
@@ -239,6 +276,41 @@ public class ImageUtility {
 	
 	
 	
+	/**
+	 * System message.
+	 *@author dushantha DN
+	 * @param status the status int
+	 * @return the string system message
+	 */
+	public static String systemMessage(int status){
+		String message = SystemMessage.UNKNOWN.message();
+		//setSuccessCode(status);
+		switch(status){		
+		case 1:
+			message = SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.message();
+			break;
+		case -1:
+			message = SystemMessage.DOES_NOT_CONTAIN_FILE.message();
+			break;
+		case -2:
+			message =SystemMessage.IMAGE_UPLOADING_FAIL.message();
+			break;
+		case -3:
+			message =SystemMessage.EXCEED_LIMIT.message();
+			break;
+		case -4:
+			message =SystemMessage.EXTENSION_MISSMATCH.message();
+			break;	
+		case -5:
+			message =SystemMessage.IMAGE_RENAMING_FAIL.message();
+			break;	
+		default:			
+			break;
+		}
+		
+		return message;
+		
+	}
 	
 	
 
