@@ -90,12 +90,12 @@ public class CmdReportRegisteredStudents implements ICommand {
 			}					
 
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			/*if (UtilityHelper.isNotEmpty(startDateString)) {
+			if (UtilityHelper.isNotEmpty(startDateString)) {
 				studentSearchDTO.setFromDate(df.parse((startDateString)));
 			}
 			if (UtilityHelper.isNotEmpty(endDateString)) {
 				studentSearchDTO.setToDate(df.parse((endDateString)));
-			}*/
+			}
 
 			//final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			final List<StudentSearchResultDTO> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
