@@ -22,7 +22,7 @@ $(document).ready(function() {
 	/*
 	 * validate toDate>from date
 	 */	
-	$('#toDate').on('click', function(event) {		
+	$('#enddate').on('click', function(event) {		
 		var fromDate= $('#startdate').val();		
 		document.getElementById("enddate").setAttribute("min", fromDate);	
 	});
@@ -84,7 +84,7 @@ function loadResultSet(event) {
 	var startDate = new Date(document.getElementById("startdate").value);
 	var toDate = new Date(document.getElementById("enddate").value);
 	
-	var fromDate= $('#startdate').val();
+	var fromDateString= $('#startdate').val();
 	var toDateString= $('#enddate').val();
    /*var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 	
@@ -128,8 +128,8 @@ function loadResultSet(event) {
 		url : '../../ReportController',
 		data : {
 			CCO : 'REPORT_REGISTERED_STUDENTS',
-			startDate : startDate,
-			endDate : toDate,
+			startDate : fromDateString,
+			endDate : toDateString,
 			studentStatus : studentStatus,
 			districtCode :districtCode
 		},
