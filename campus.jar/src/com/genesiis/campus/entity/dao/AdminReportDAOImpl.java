@@ -3,10 +3,12 @@ package com.genesiis.campus.entity.dao;
 //20170111 DJ c52-report-banner-statistics-MP-dj Initiated AdminReportDAOImpl.java
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getBannerStatisticReport() method.
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getRegisteredStudentReport() method.
+//20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
+import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -18,8 +20,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 public class AdminReportDAOImpl implements AdminReportICrud{
 	
@@ -161,13 +167,14 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 	 * @param studentSearchDTO StudentSearchDTO
 	 * @author dumani DJ
 	 * @return Collection of strings
-	 */
+	 */	
 	@Override
-	public Collection<Collection<String>> getRegisteredStudentReport(StudentSearchDTO searchDTO) throws SQLException, Exception {		
+	public List <StudentSearchResultDTO> getRegisteredStudentReport(StudentSearchDTO searchDTO) throws SQLException, Exception {		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;		
-		final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
+		final List <StudentSearchResultDTO> registeredStudentList = new ArrayList<StudentSearchResultDTO>();
+		//final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
@@ -209,15 +216,26 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			stmt = conn.prepareStatement(sb.toString());			
 			resultSet= stmt.executeQuery();			
 			while (resultSet.next()) {
-				final ArrayList<String> singleProvider = new ArrayList<String>();
-				singleProvider.add(resultSet.getString("STUDENTCODE"));				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				//final ArrayList<StudentSearchResultDTO> singleProvider = new ArrayList<StudentSearchResultDTO>();
+			/*	singleProvider.sadd(resultSet.getString("STUDENTCODE"));				
 				singleProvider.add(resultSet.getString("STUDENTNAME"));	
 				singleProvider.add(resultSet.getString("INTERESTNAME"));
 				singleProvider.add(resultSet.getString("TOWNNAME"));
 				singleProvider.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("STUDENTSTATUS")));
 				singleProvider.add(resultSet.getString("REGISTEREDDATE"));
 				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));				
-				registeredStudentList.add(singleProvider);
+				registeredStudentList.add(singleProvider);*/
+				final StudentSearchResultDTO resultDTO=new StudentSearchResultDTO();
+				resultDTO.setStudentCode(resultSet.getInt("STUDENTCODE"));
+				resultDTO.setStudentName(resultSet.getString("STUDENTNAME"));
+				resultDTO.setStudentInterest(resultSet.getString("INTERESTNAME"));
+				resultDTO.setTown(resultSet.getString("TOWNNAME"));
+				resultDTO.setStudentStatus(resultSet.getInt("STUDENTSTATUS"));
+				resultDTO.setRegisteredDate(formatter.parse(resultSet.getString("REGISTEREDDATE")));
+				resultDTO.setLastLoginDate(formatter.parse(resultSet.getString("LASTLOGGEDINDATE")));
+				registeredStudentList.add(resultDTO);
+				
 			}
 
 		} catch (SQLException sqlException) {
