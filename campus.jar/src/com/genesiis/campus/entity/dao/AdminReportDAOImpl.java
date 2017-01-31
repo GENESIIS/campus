@@ -173,8 +173,7 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;		
-		final List <StudentSearchResultDTO> registeredStudentList = new ArrayList<StudentSearchResultDTO>();
-		//final Collection<Collection<String>> registeredStudentList = new ArrayList<Collection<String>>();
+		final List <StudentSearchResultDTO> registeredStudentList = new ArrayList<StudentSearchResultDTO>();		
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("SELECT STUDENT.CODE AS STUDENTCODE,  CONCAT(STUDENT.FIRSTNAME,' ' ,STUDENT.MIDDLENAME,' ' ,STUDENT.LASTNAME) AS STUDENTNAME, STUDENT.ISACTIVE AS STUDENTSTATUS,");
@@ -215,16 +214,7 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			
 			stmt = conn.prepareStatement(sb.toString());			
 			resultSet= stmt.executeQuery();			
-			while (resultSet.next()) {				
-				//final ArrayList<StudentSearchResultDTO> singleProvider = new ArrayList<StudentSearchResultDTO>();
-			/*	singleProvider.sadd(resultSet.getString("STUDENTCODE"));				
-				singleProvider.add(resultSet.getString("STUDENTNAME"));	
-				singleProvider.add(resultSet.getString("INTERESTNAME"));
-				singleProvider.add(resultSet.getString("TOWNNAME"));
-				singleProvider.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("STUDENTSTATUS")));
-				singleProvider.add(resultSet.getString("REGISTEREDDATE"));
-				singleProvider.add(resultSet.getString("LASTLOGGEDINDATE"));				
-				registeredStudentList.add(singleProvider);*/
+			while (resultSet.next()) {
 				final StudentSearchResultDTO resultDTO=new StudentSearchResultDTO();
 				resultDTO.setStudentCode(resultSet.getInt("STUDENTCODE"));
 				resultDTO.setStudentName(resultSet.getString("STUDENTNAME"));
@@ -233,8 +223,7 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 				resultDTO.setStudentStatus(resultSet.getInt("STUDENTSTATUS"));
 				resultDTO.setRegisteredDate(resultSet.getDate("REGISTEREDDATE"));
 				resultDTO.setLastLoginDate(resultSet.getDate("LASTLOGGEDINDATE"));
-				registeredStudentList.add(resultDTO);
-				
+				registeredStudentList.add(resultDTO);				
 			}
 
 		} catch (SQLException sqlException) {

@@ -65,6 +65,7 @@ function getStudentSearchData(response){
  * This method loadResultSet() identify input parameters for report search.
  */
 function loadResultSet(event) {
+	$('#resultPanel').hide();
 	var districtName = $('#districtlist').val();
 	var districtCode = 0;
 
@@ -76,60 +77,32 @@ function loadResultSet(event) {
 			break;
 		}
 	}
-
-	//var fromDate = $('#start').val();
-	//var toDate = $('#end').val();
-	var studentStatus = $('input:radio[name=studentStatus]:checked').val();
-		
-	var startDate = new Date(document.getElementById("startdate").value);
-	var toDate = new Date(document.getElementById("enddate").value);
 	
-	var fromDateString= $('#startdate').val();
-	var toDateString= $('#enddate').val();
-   /*var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+	var studentStatus = $('input:radio[name=studentStatus]:checked').val();		
+	var startDate = document.getElementById("startdate").value;
+	var toDate = document.getElementById("enddate").value;	
 	
-	var fromDate= $('#fromDate').val();    
-    if(!regex.test(fromDate)){
-    	$('#errorFromDate').text("Please enter valid From Date");
-		document.getElementById('errorFromDate').style.color = "red";
-		return false;
-    }else{
-    	$('#errorFromDate').text("");
-    }
-    
-    
-    var toDate= $('#toDate').val();
-    if(!regex.test(toDate)){
-    	$('#errorToDate').text("Please enter valid To Date");
-		document.getElementById('errorToDate').style.color = "red";
-		return false;
-    }else{
-    	$('#errorToDate').text("");
-    }  */
 	$('#errorToDate').text("");
-	if (startDate> toDate) {		
+	if (Date.parse(startDate)> Date.parse(toDate)) {		
 		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
 		document.getElementById('errorToDate').style.color = "red";
 		return false;
-	}
-	
-	var tempDate=new Date(document.getElementById("startdate").value);
-	
+	}	
+	var tempDate=new Date(document.getElementById("startdate").value);	
 	tempDate.setDate(tempDate.getDate()+ 30);
 
-	 if(Date.parse(toDate)>Date.parse(tempDate)){
+	 if(Date.parse(toDate)>tempDate){
 		 $('#errorToDate').text("Invalid Date Range!Date range should be within 30 days");
 			document.getElementById('errorToDate').style.color = "red";
 			return false;
-	 }
-	
+	 }	
 
 	$.ajax({
 		url : '../../ReportController',
 		data : {
 			CCO : 'REPORT_REGISTERED_STUDENTS',
-			startDate : fromDateString,
-			endDate : toDateString,
+			startDate : startDate,
+			endDate : toDate,
 			studentStatus : studentStatus,
 			districtCode :districtCode
 		},
@@ -141,7 +114,6 @@ function loadResultSet(event) {
 			errorCodeGeneration(jqXHR, exception);
 		}
 	});
-
 }
 /**
  * This method populateResultTable() manipulate search data list to a display table.
@@ -194,8 +166,8 @@ function populateResultTable(response) {
 function clearParameters(event){	
 	$('#resultPanel').hide();
 	$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').prop('checked', true);
-	$('#start').val(""); 
-	$('#end').val(""); 
+	$('#startdate').val(""); 
+	$('#enddate').val(""); 
 	$('#districtlist').val("");	
 }
 

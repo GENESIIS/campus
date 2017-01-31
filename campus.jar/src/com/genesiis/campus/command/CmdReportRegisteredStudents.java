@@ -96,11 +96,10 @@ public class CmdReportRegisteredStudents implements ICommand {
 			if (UtilityHelper.isNotEmpty(endDateString)) {
 				studentSearchDTO.setToDate(df.parse((endDateString)));
 			}
-
-			//final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
+			
 			final List<StudentSearchResultDTO> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
-			final Map<Integer, ArrayList<String>> studentCodeToInterestMap = new LinkedHashMap<Integer, ArrayList<String>>();
-			final Map<Integer, ArrayList<String>> studentCodeToResultMap = new LinkedHashMap<Integer, ArrayList<String>>();
+			final Map<Integer, ArrayList<String>> studentCodeToInterestMap = new HashMap<Integer, ArrayList<String>>();
+			final Map<Integer, ArrayList<String>> studentCodeToResultMap = new HashMap<Integer, ArrayList<String>>();
 			
 			for (StudentSearchResultDTO dto : registeredStudentList) {
 				if (studentCodeToInterestMap.containsKey(dto.getStudentCode())) {
