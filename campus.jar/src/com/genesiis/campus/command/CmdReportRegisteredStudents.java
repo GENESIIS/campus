@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //DJ 20161228 c53-report-registered-students-MP-dj created CmdReportRegisteredStudents.java
 //DJ 20170104 c53-report-registered-students-MP-dj Identified command SEARCH_VIEW_REGISTERED_STUDENTS
+//DJ 20170131 c53-report-registered-students-MP-dj Filling values to studentCodeToResultMap and studentCodeToInterestMap
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -23,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,19 +99,29 @@ public class CmdReportRegisteredStudents implements ICommand {
 
 			//final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			final List<StudentSearchResultDTO> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
-			final Map<Integer, String> studentCodeToInterestMap = new LinkedHashMap<Integer, String>();
-			final Map<Integer, ArrayList<String>> studentCodeToRecordsMap = new LinkedHashMap<Integer, ArrayList<String>>();
+			final Map<Integer, ArrayList<String>> studentCodeToInterestMap = new LinkedHashMap<Integer, ArrayList<String>>();
+			final Map<Integer, ArrayList<String>> studentCodeToResultMap = new LinkedHashMap<Integer, ArrayList<String>>();
 			
-			for(StudentSearchResultDTO dto:registeredStudentList){
-				studentCodeToInterestMap.put(dto.getStudentCode(), dto.getStudentInterest());
-				
-				final ArrayList<String> reportRecords=new ArrayList<String>();
+			for (StudentSearchResultDTO dto : registeredStudentList) {
+				if (studentCodeToInterestMap.containsKey(dto.getStudentCode())) {
+					final ArrayList<String> interests = studentCodeToInterestMap.get(dto.getStudentCode());
+					interests.add(dto.getStudentInterest());
+					//interests.add(studentCodeToInterestMap.get(dto.getStudentCode()).toString());
+					studentCodeToInterestMap.replace(dto.getStudentCode(), interests);		
+
+				} else {
+					final ArrayList<String> interests = new ArrayList<String>();
+					interests.add(dto.getStudentInterest());
+					studentCodeToInterestMap.put(dto.getStudentCode(),interests);
+				}
+
+				final ArrayList<String> reportRecords = new ArrayList<String>();
 				reportRecords.add(dto.getStudentName());
 				reportRecords.add(dto.getTown());
 				reportRecords.add(ApplicationStatus.getApplicationStatus(dto.getStudentStatus()));
 				reportRecords.add(df.format(dto.getRegisteredDate()));
 				reportRecords.add(df.format(dto.getLastLoginDate()));
-				studentCodeToRecordsMap.put(dto.getStudentCode(), reportRecords);
+				studentCodeToResultMap.put(dto.getStudentCode(), reportRecords);
 			}
 			
 			//helper.setAttribute("registeredStudentList", registeredStudentList);
