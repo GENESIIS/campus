@@ -215,8 +215,7 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			
 			stmt = conn.prepareStatement(sb.toString());			
 			resultSet= stmt.executeQuery();			
-			while (resultSet.next()) {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			while (resultSet.next()) {				
 				//final ArrayList<StudentSearchResultDTO> singleProvider = new ArrayList<StudentSearchResultDTO>();
 			/*	singleProvider.sadd(resultSet.getString("STUDENTCODE"));				
 				singleProvider.add(resultSet.getString("STUDENTNAME"));	
@@ -232,8 +231,8 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 				resultDTO.setStudentInterest(resultSet.getString("INTERESTNAME"));
 				resultDTO.setTown(resultSet.getString("TOWNNAME"));
 				resultDTO.setStudentStatus(resultSet.getInt("STUDENTSTATUS"));
-				resultDTO.setRegisteredDate(formatter.parse(resultSet.getString("REGISTEREDDATE")));
-				resultDTO.setLastLoginDate(formatter.parse(resultSet.getString("LASTLOGGEDINDATE")));
+				resultDTO.setRegisteredDate(resultSet.getDate("REGISTEREDDATE"));
+				resultDTO.setLastLoginDate(resultSet.getDate("LASTLOGGEDINDATE"));
 				registeredStudentList.add(resultDTO);
 				
 			}
