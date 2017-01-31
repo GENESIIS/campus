@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Enumeration;
 
 import javax.jms.Session;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 public class CmdStudentLogout implements ICommand {
@@ -46,12 +47,27 @@ public class CmdStudentLogout implements ICommand {
 			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
 
 			if (status > 0) {
-				HttpSession curentSession = helper.getRequest().getSession(
-						false);
+				Cookie[] cookies = helper.getRequest().getCookies();
+		    	if(cookies != null){
+		    	for(Cookie cookie : cookies){
+		    		if(cookie.getName().equals("JSESSIONID")){
+		    			System.out.println("JSESSIONID="+cookie.getValue());
+		    			break;
+		    		}
+		    	}
+		    	}
+				
+				
+				HttpSession curentSession = helper.getRequest().getSession(false);
+				
+				if(curentSession == null){
+					curentSession.removeAttribute("user");
+					curentSession.removeAttribute("userCode");
+					curentSession.removeAttribute("currentUserData");
 				curentSession.invalidate();
 
 				message = SystemMessage.LOGOUTSUCCESSFULL.message();
-
+				}
 			} else {
 				message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
 			}

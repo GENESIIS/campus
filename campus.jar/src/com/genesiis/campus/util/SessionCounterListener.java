@@ -23,7 +23,7 @@ public class SessionCounterListener implements HttpSessionListener{
 		currentSession ++;
 		
 		serveltContext = event.getSession().getServletContext();
-		event.getSession().setMaxInactiveInterval(60 * 60); //session expiration time 
+		event.getSession().setMaxInactiveInterval(1 * 60); //session expiration time 
 		serveltContext.setAttribute("totalUsers", totalSession);
 		serveltContext.setAttribute("curentSession", currentSession);
 		
@@ -32,6 +32,9 @@ public class SessionCounterListener implements HttpSessionListener{
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
 		message = SystemMessage.SESSIONEXPIRED.message();
+		event.getSession().removeAttribute("user");
+		event.getSession().removeAttribute("userCode");
+		event.getSession().removeAttribute("currentUserData");
 		event.getSession().invalidate();
 		currentSession --;
 		serveltContext.setAttribute("curentSession", currentSession);
