@@ -1,0 +1,40 @@
+// 20161228 TR c1 resolve responsive errors - after merge sp1
+
+// --------------- iPad - portrait -----------------------
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
+  .main-screen
+    .content-panel
+      .search-area
+
+        .main-search-bar
+          .bar-holder
+            padding: 10px
+
+            input
+              font-size: 16px !important
+              line-height: 42px !important
+
+        .filter-boxes
+          .box-holder
+            ul > li
+              .category-box
+                .course-info
+                  .image
+                    width: 100% !important
+
+                  .description
+                    width: 100% !important
+
+@media screen and (max-device-width: 767px)
+  .main-screen
+    .content-panel
+      .search-area
+
+        .main-search-bar
+          .bar-holder
+            padding: 10px
+
+            input
+              font-size: 16px
+              line-height: 42px
