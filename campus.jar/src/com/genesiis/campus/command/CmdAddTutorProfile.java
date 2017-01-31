@@ -14,8 +14,8 @@ package com.genesiis.campus.command;
 //20170126 CW c36-add-tutor-details modified execute() method.
 //20170126 CW c36-add-tutor-details modified fillTutorCollection() method & check for null Array Lists
 //20170130 Cw c36-add-tutor-details modified validateAvailability() method
-//20170130 CW c36-add-tutor-information re-organise the import statements.
-//20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170130 CW c36-add-tutor-information re-organize the import statements.
+//20170131 CW c36-add-tutor-information modify execute() & validateUserAndEmail() methods
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -67,35 +67,30 @@ public class CmdAddTutorProfile implements ICommand {
 				fillTutorCollection(tutorCollection, tutor);
 				
 				message = validateUserAndEmail(helper);
-				if (message.equalsIgnoreCase("True")) {
-					message = validator.validateTutorFields(helper);
+				message = validator.validateTutorFields(helper);
+				
+				if (message.equalsIgnoreCase("True")) {													
+	
+					UserTypeDAO typeOfUser = new UserTypeDAO();					
+					Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
 					
-					if (message.equalsIgnoreCase("True")) {
-													
-		
-						UserTypeDAO typeOfUser = new UserTypeDAO();					
-						Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
-						
-						int userType = 9999;
-						
-						for(Collection<String> userTypeInnerCollection : userTypeCollection ){
-							Object arr[] = userTypeInnerCollection.toArray();
-							userType = Integer.parseInt(arr[0].toString());
-						} 
-						
-						if (userType != 9999){
-							tutor.setUsertype(userType);
-						}
-		
-						int result = tutorDAO.add(tutor);
-						if (result > 0) {
-							message = SystemMessage.ADDED.message();
-		
-						} else {
-							
-							message = SystemMessage.ERROR.message();
-						}					
+					int userType = 9999;
+					
+					for(Collection<String> userTypeInnerCollection : userTypeCollection ){
+						Object arr[] = userTypeInnerCollection.toArray();
+						userType = Integer.parseInt(arr[0].toString());
+					} 
+					
+					if (userType != 9999){
+						tutor.setUsertype(userType);
 					}
+	
+					int result = tutorDAO.add(tutor);
+					if (result > 0) {
+						message = SystemMessage.ADDED.message();	
+					} else {						
+						message = SystemMessage.ERROR.message();
+					}					
 				}
 		}  catch (SQLException sqle){
 			log.error("execute(): SQLException "+ sqle.toString());
@@ -104,6 +99,10 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
+			if(message.equalsIgnoreCase("false")){
+				message = "Something wrong in the data you have entered...";
+			}			
+			
 			helper.setAttribute("message", message);
 			helper.setAttribute("tutorList", tutorCollection);
 		}
@@ -121,16 +120,22 @@ public class CmdAddTutorProfile implements ICommand {
 
 		String message = "True"; 
 		try {		
-			if (!((Validator.isNotEmpty(helper.getParameter("email")))
-					&& (Validator.isNotEmpty(helper.getParameter("username"))))) {
-				message = SystemMessage.EMPTYFIELD.message();
-			} else if (!Validator.validateEmail(helper.getParameter("email"))) {
-				message = SystemMessage.EMAILERROR.message();
-			} else if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
-				message = SystemMessage.USERNAME_LENGTH.message();
-			} else{
-				message = validateAvailability(helper);
+
+			if (!(Validator.isNotEmpty(helper.getParameter("username")))){
+				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
+				message = "False";
 			}
+			
+			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
+				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
+				message = "False";
+			}
+			
+			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
+				message = "False";
+			} 
+			
 		} catch (SQLException sqlException) {
 			log.info("validateUserAndEmail(): SQLException " + sqlException.toString());
 			throw sqlException;
@@ -156,9 +161,11 @@ public class CmdAddTutorProfile implements ICommand {
 				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
 				
 				if(type == 1){
-					message = SystemMessage.USERNAME_EXIST.message();
+					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+					//message = SystemMessage.USERNAME_EXIST.message();
 				} else if(type == 2){
-					message = SystemMessage.EMAIL_USED.message();
+					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+					//message = SystemMessage.EMAIL_USED.message();
 				}
 		} catch (SQLException sqlException) {
 			log.info("validateAvailability(): SQLException " + sqlException.toString());
