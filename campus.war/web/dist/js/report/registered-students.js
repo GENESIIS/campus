@@ -167,6 +167,18 @@ function populateResultTable(response) {
 			studentListTable.append(tr);	
 		}
 	});
+	
+	$.each(response.studentCodeToInterestMap, function(index, value) {
+		if (value != null && value.length > 0) {
+			
+		}
+	});
+	
+	$.each(response.studentCodeToRecordsMap, function(index, value) {
+		if (value != null && value.length > 0) {
+			
+		}
+	});
 	if (totalResultCount > 0) {
 		$('#totalResultsCount').text("Result Count " +totalResultCount);
 	} else {
