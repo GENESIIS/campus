@@ -17,7 +17,15 @@ $(document).ready(function() {
 		error : function(jqXHR, exception) {
 			errorCodeGeneration(jqXHR, exception);
 		}
-	});		
+	});
+	
+	/*
+	 * validate toDate>from date
+	 */	
+	$('#toDate').on('click', function(event) {		
+		var fromDate= $('#startdate').val();		
+		document.getElementById("enddate").setAttribute("min", fromDate);	
+	});
 	
 	/*
 	 * trigger Search button click. 
@@ -76,7 +84,8 @@ function loadResultSet(event) {
 	var startDate = new Date(document.getElementById("startdate").value);
 	var toDate = new Date(document.getElementById("enddate").value);
 	
-	
+	var fromDate= $('#startdate').val();
+	var toDateString= $('#enddate').val();
    /*var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 	
 	var fromDate= $('#fromDate').val();    
