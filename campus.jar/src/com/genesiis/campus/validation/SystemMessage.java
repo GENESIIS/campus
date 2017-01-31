@@ -10,6 +10,7 @@ package com.genesiis.campus.validation;
 //20161227 DN CAM 28: added STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT,STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT, RECAPTCHAVERIFICATION enum values.
 //20170110 DN CAM47: upload tutor profile image SUCCESSFULLY_IMAGE_UPLOAD,IMAGE_UPLOADING_FAIL,DOES_NOT_CONTAIN_FILE added
 //20170111 DN CAMP47:upload tutor profile image added EXCEED_LIMIT,EXTENSION_MISSMATCH enum
+//20170131 DN CAMP47:upload tutor profile image DOES_NOT_CONTAIN_FILE string value has been modified to include 'Please Select a file to Upload'
 
 
 public enum SystemMessage {	
@@ -42,7 +43,7 @@ public enum SystemMessage {
 	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
 	SUCCESSFULLY_IMAGE_UPLOAD("Image Uploaded successfully. "),
 	IMAGE_UPLOADING_FAIL("Image Upload Failed. "),
-	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Processed."),
+	DOES_NOT_CONTAIN_FILE("Doesn't Contain Any File To Be Processed. Please Select a file to Upload"),
 	EXCEED_LIMIT("Size Limit Is Exceeded"),
 	EXTENSION_MISSMATCH("Wrong File Type Is Passed "),
 	IMAGE_RENAMING_FAIL("Image File did not get renamed properly"),
