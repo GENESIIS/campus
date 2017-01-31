@@ -21,8 +21,11 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**The class {@code CmdReportRegisteredStudents} is a form of command handling class.Created for the purpose of handling commands of registered
  * student report generation. 
@@ -64,7 +67,7 @@ public class CmdReportRegisteredStudents implements ICommand {
 	}
 	
 	
-	/** Identify input search parameters and retrieve particular  result set according to search criteria.
+	/** Identify input search parameters and retrieve particular result set according to search criteria.
 	 * @author dumani DJ
 	 * @param helper IDataHelper object
 	 * @throws ParseException, Exception
@@ -85,16 +88,33 @@ public class CmdReportRegisteredStudents implements ICommand {
 			}					
 
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			if (UtilityHelper.isNotEmpty(startDateString)) {
+			/*if (UtilityHelper.isNotEmpty(startDateString)) {
 				studentSearchDTO.setFromDate(df.parse((startDateString)));
 			}
 			if (UtilityHelper.isNotEmpty(endDateString)) {
 				studentSearchDTO.setToDate(df.parse((endDateString)));
-			}
+			}*/
 
 			//final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			final List<StudentSearchResultDTO> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
-			helper.setAttribute("registeredStudentList", registeredStudentList);
+			final Map<Integer, String> studentCodeToInterestMap = new LinkedHashMap<Integer, String>();
+			final Map<Integer, ArrayList<String>> studentCodeToRecordsMap = new LinkedHashMap<Integer, ArrayList<String>>();
+			
+			for(StudentSearchResultDTO dto:registeredStudentList){
+				studentCodeToInterestMap.put(dto.getStudentCode(), dto.getStudentInterest());
+				
+				final ArrayList<String> reportRecords=new ArrayList<String>();
+				reportRecords.add(dto.getStudentName());
+				reportRecords.add(dto.getTown());
+				reportRecords.add(ApplicationStatus.getApplicationStatus(dto.getStudentStatus()));
+				reportRecords.add(df.format(dto.getRegisteredDate()));
+				reportRecords.add(df.format(dto.getLastLoginDate()));
+				studentCodeToRecordsMap.put(dto.getStudentCode(), reportRecords);
+			}
+			
+			//helper.setAttribute("registeredStudentList", registeredStudentList);
+			helper.setAttribute("studentCodeToInterestMap", studentCodeToInterestMap);
+			helper.setAttribute("studentCodeToRecordsMap", studentCodeToRecordsMap);
 		}  catch (ParseException parseException) {
 			log.error("generateReportResults() : ParseException "+ parseException.toString());
 			throw parseException;
