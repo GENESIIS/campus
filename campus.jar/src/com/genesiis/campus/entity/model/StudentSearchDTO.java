@@ -1,10 +1,9 @@
 package com.genesiis.campus.entity.model;
-
-import java.util.Date;
-
 //DJ 20161228 c53-report-registered-students-MP-dj created Student.java
 //DJ 20170102 c53-report-registered-students-MP-dj Renamed as StudentSearchDTO.java
 //DJ 20170104 c53-report-registered-students-MP-dj Add  districtCode entity
+
+import java.util.Date;
 /**
  * The class {@code StudentSearchDTO} is a form of SearchDTO created for the purpose of transfer input parameters to DAO level. 
  * @author dumani DJ

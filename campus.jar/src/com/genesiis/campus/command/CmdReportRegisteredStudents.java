@@ -8,6 +8,7 @@ import com.genesiis.campus.entity.View;
 import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
 import com.genesiis.campus.entity.dao.DistrictDAOImpl;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
+import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
@@ -21,6 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.List;
 
 /**The class {@code CmdReportRegisteredStudents} is a form of command handling class.Created for the purpose of handling commands of registered
  * student report generation. 
@@ -90,7 +92,8 @@ public class CmdReportRegisteredStudents implements ICommand {
 				studentSearchDTO.setToDate(df.parse((endDateString)));
 			}
 
-			final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
+			//final Collection<Collection<String>> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
+			final List<StudentSearchResultDTO> registeredStudentList = new AdminReportDAOImpl().getRegisteredStudentReport(studentSearchDTO);
 			helper.setAttribute("registeredStudentList", registeredStudentList);
 		}  catch (ParseException parseException) {
 			log.error("generateReportResults() : ParseException "+ parseException.toString());
