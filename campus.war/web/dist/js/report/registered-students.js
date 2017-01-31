@@ -1,4 +1,5 @@
-//DJ 20170102 c53-report-registered-students-MP-dj Ajax controls for registered students generation
+//DJ 20170102 c53-report-registered-students-MP-dj Ajax controls for registered students generation.
+//DJ 20170131 c53-report-registered-students-MP-dj Manipulate populateResultTable() with data maps.
 
 $(document).ready(function() {
 	/*
@@ -141,42 +142,33 @@ function populateResultTable(response) {
 	$('#resultSetDiv').hide();
 	var studentListTable = $("#tBody");
 	studentListTable.find('tr').remove();
-	var totalResultCount = 0;
-	$.each(response.registeredStudentList, function(index, value) {
+	var totalResultCount = 0;	
+	var studentCodeToInterestMap=response.studentCodeToInterestMap;	
+	
+	$.each(response.studentCodeToResultMap, function(index, value) {
 		$('#resultSetDiv').show();
 		if (value != null && value.length > 0) {
 			totalResultCount ++;
 			var code = value[0];
-			var name = value[1];
-			var interest = value[2];
-			var townName = value[3];
-			var cStatus = value[4];
-			var crtOn = value[5];
-			var lastLoggedIn = value[6];	
+			var name = value[1];			
+			var townName = value[2];
+			var cStatus = value[3];
+			var crtOn = value[4];
+			var lastLoggedIn = value[5];	
+			
+			var interestList=studentCodeToInterestMap[index];
 			
 			var tr = '<tr>';
 			tr += '<td>' + totalResultCount + '</td>';
 			tr += '<td>' + code  + '</td>';
-			tr += '<td>' + name  + '</td>';
-			tr += '<td>' + interest  + '</td>';
+			tr += '<td>' + name  + '</td>';			
+			tr += '<td>' + interestList  + '</td>';
 			tr += '<td>' + townName  + '</td>';
 			tr += '<td>' + cStatus  + '</td>';	
 			tr += '<td>' + crtOn  + '</td>';
 			tr += '<td>' + lastLoggedIn  + '</td>';
 					
 			studentListTable.append(tr);	
-		}
-	});
-	
-	$.each(response.studentCodeToInterestMap, function(index, value) {
-		if (value != null && value.length > 0) {
-			
-		}
-	});
-	
-	$.each(response.studentCodeToRecordsMap, function(index, value) {
-		if (value != null && value.length > 0) {
-			
 		}
 	});
 	if (totalResultCount > 0) {
