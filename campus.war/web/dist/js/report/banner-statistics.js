@@ -1,4 +1,5 @@
 //20161227 DJ c52-report-banner-statistics-MP-dj  Banner stat report generation 
+//20170130 DJ c52-report-banner-statistics-MP-dj  Validate todate as todate>fromdate (mx-fxes)
 
 $(document).ready(function() {
 	/*
