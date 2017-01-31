@@ -106,7 +106,6 @@ public class CmdReportRegisteredStudents implements ICommand {
 				if (studentCodeToInterestMap.containsKey(dto.getStudentCode())) {
 					final ArrayList<String> interests = studentCodeToInterestMap.get(dto.getStudentCode());
 					interests.add(dto.getStudentInterest());
-					//interests.add(studentCodeToInterestMap.get(dto.getStudentCode()).toString());
 					studentCodeToInterestMap.replace(dto.getStudentCode(), interests);		
 
 				} else {
@@ -115,18 +114,20 @@ public class CmdReportRegisteredStudents implements ICommand {
 					studentCodeToInterestMap.put(dto.getStudentCode(),interests);
 				}
 
-				final ArrayList<String> reportRecords = new ArrayList<String>();
-				reportRecords.add(dto.getStudentName());
-				reportRecords.add(dto.getTown());
-				reportRecords.add(ApplicationStatus.getApplicationStatus(dto.getStudentStatus()));
-				reportRecords.add(df.format(dto.getRegisteredDate()));
-				reportRecords.add(df.format(dto.getLastLoginDate()));
-				studentCodeToResultMap.put(dto.getStudentCode(), reportRecords);
-			}
+				if(!studentCodeToResultMap.containsKey(dto.getStudentCode())){
+					final ArrayList<String> reportRecords = new ArrayList<String>();
+					reportRecords.add(String.valueOf(dto.getStudentCode()));
+					reportRecords.add(dto.getStudentName());
+					reportRecords.add(dto.getTown());
+					reportRecords.add(ApplicationStatus.getApplicationStatus(dto.getStudentStatus()));
+					reportRecords.add(df.format(dto.getRegisteredDate()));
+					reportRecords.add(df.format(dto.getLastLoginDate()));
+					studentCodeToResultMap.put(dto.getStudentCode(), reportRecords);
+				}				
+			}		
 			
-			//helper.setAttribute("registeredStudentList", registeredStudentList);
 			helper.setAttribute("studentCodeToInterestMap", studentCodeToInterestMap);
-			helper.setAttribute("studentCodeToRecordsMap", studentCodeToRecordsMap);
+			helper.setAttribute("studentCodeToResultMap", studentCodeToResultMap);
 		}  catch (ParseException parseException) {
 			log.error("generateReportResults() : ParseException "+ parseException.toString());
 			throw parseException;
