@@ -1,7 +1,5 @@
 package com.genesiis.campus.validation;
 
-
-
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
 //20161201 CW c36-Display-course-details modified method exception log errors
@@ -35,6 +33,7 @@ package com.genesiis.campus.validation;
 //20170125 CW c36-add-tutor-details added validateForNull() method
 //20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
 //20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
+//20170131 CW c36-add-tutor-details add validatePassword() method & modified validateTutorFields() method
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -112,7 +111,97 @@ public class Validator {
 	public String validateTutorFields(IDataHelper helper) throws Exception {
 
 		String message = "True"; 
-		try {		
+		try {	
+			
+			if (isHavingNullValues(helper)) {
+
+				message = SystemMessage.EMPTYFIELD.message();
+			} 
+			if (!isValidFirstname(helper.getParameter("firstname"))) {
+				helper.setAttribute("firstNameError", SystemMessage.FIRSTNAMEERROR.message());
+				message = "False";
+			}
+			if (!isValidLastname(helper.getParameter("lastname"))) {
+				helper.setAttribute("lastNameError", SystemMessage.LASTNAMEERROR.message());
+				message = "False";
+			}
+			if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
+				helper.setAttribute("mobileError", SystemMessage.MOBILECOUNTRYCODEERROR.message());
+				message = "False";
+			}
+			if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
+				helper.setAttribute("mobileNetworkError", SystemMessage.NETWORKCODEERROR.message());
+				message = "False";
+			}
+			if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
+				helper.setAttribute("mobileNumberError", SystemMessage.MOBILENUMBERERROR.message());
+				message = "False";
+			}
+			if (!isValidCountryCode(helper.getParameter("landCountryCode"))) {
+				helper.setAttribute("landError", SystemMessage.LANDCOUNTRYCODEERROR.message());
+				message = "False";
+			}
+			if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
+				helper.setAttribute("landAreaCodeError", SystemMessage.LANDAREACODEERROR.message());
+				message = "False";
+			}
+			if (!isValidContactNumber(helper.getParameter("landNumber"))) {
+				helper.setAttribute("landNumberError", SystemMessage.LANDNUMBERERROR.message());
+				message = "False";
+			}
+			if (!isValidAddressLine1(helper.getParameter("address1"))) {
+				helper.setAttribute("address1Error", SystemMessage.ADDRESSLINE1ERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("weblink"))) {
+				helper.setAttribute("weblinkError", SystemMessage.WEBLINKERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("facebook"))) {
+				helper.setAttribute("facebookError", SystemMessage.FACEBOOKERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("linkedin"))) {
+				helper.setAttribute("linkedInError", SystemMessage.LINKEDINERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("twitter"))) {
+				helper.setAttribute("twitterError", SystemMessage.TWITTERERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("instagram"))) {
+				helper.setAttribute("instagramError", SystemMessage.INSTAGRAMERROR.message());
+				message = "False";
+			}
+			if (!isValidURL(helper.getParameter("myspace"))) {
+				helper.setAttribute("mySpaceError", SystemMessage.MYSPACEERROR.message());
+				message = "False";
+			}
+			if (!isValidWhatsappViber(helper.getParameter("whatsapp"))) {
+				helper.setAttribute("whatsappError", SystemMessage.WHATSAPPERROR.message());
+				message = "False";
+			}
+			if (!isValidWhatsappViber(helper.getParameter("viber"))) {
+				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
+				message = "False";
+			}
+			
+			message = validatePassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper);
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
+			
+			
+			
+			
+			
+			
 			if (isHavingNullValues(helper)) {
 				message = SystemMessage.EMPTYFIELD.message();
 			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
@@ -151,7 +240,7 @@ public class Validator {
 				message = SystemMessage.VIBERERROR.message();
 			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
 				message = SystemMessage.PASSWORDERROR.message();
-			} 
+			} */
 
 		} catch (Exception e) {
 			log.error("validateTutorFields: Exception" + e.toString());
@@ -388,20 +477,39 @@ public class Validator {
 	 * 
 	 * @author Chinthaka
 	 * @param password, confirmPassword
-	 * @return boolean - Returns true if the requested password & confirmPassword are same & valid in lengths
+	 * @return String - Returns String value "False" if the requested password & confirmPassword are same & not valid in lengths
 	 */
-	public boolean isValidPassword(String password, String confirmPassword) throws Exception {
-		boolean valid = false;
+	public String validatePassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
+		int validityNumber = 0; 
+		String message = "True";
 		try {
 
-			if ((isNotEmpty(password)) && (isNotEmpty(confirmPassword)) && (password.length() > 5) && (password.length() < 21) && (password.equals(confirmPassword))) {
-				valid = true;
+			if (!(isNotEmpty(password))){ // check for null fields
+				validityNumber = 1;
+				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
+				message = "False";
+			}
+			
+			if(!(isNotEmpty(confirmPassword))){ // check for null fields
+				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+				message = "False";
+				validityNumber = 2;
+			}
+			
+			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
+				message = "False";
+			}
+			
+			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
+				message = "False";
 			}
 
 		} catch (Exception e) {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return valid;
+		return message;
 	}
 }
