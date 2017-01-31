@@ -3,6 +3,7 @@ package com.genesiis.campus.util.security;
 //20161123 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
 //20161201 DN C18-student-signup-without-using-third-party-application-dn add exception handling as per CREV comments
 //20161202 DN C18-student-signup-without-using-third-party-application-dn add Method comments as per CREV comments
+//20161202 DN C18-student-signup-without-using-third-party-application-dn spelling mistakes were corrected.
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -90,7 +91,7 @@ public class TripleDesEncryptor implements Encryptable{
 	}
 
 	/**
-	 * Deycrypt the value sendd in as a byte[] to a String, the same key value 
+	 * Decrypt the value send in as a byte[] to a String, the same key value 
 	 * should be used to obtain the decrypted password
 	 * @author dushantha DN
 	 * @param byte[] message decryptable value
