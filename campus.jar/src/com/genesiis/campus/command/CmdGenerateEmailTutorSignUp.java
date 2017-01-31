@@ -6,15 +6,10 @@ package com.genesiis.campus.command;
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent() method.
 //20170128 CW c126-formatting-un-formatted-email-tutor-signup-cw removed getMailContent() method.
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import javax.mail.MessagingException;
+//20170131 CW c126-formatting-un-formatted-email-tutor-signup-cw re-organized import statements, Doc Comment added & modified the getLogger class name.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.RowStudentForJason;
 import com.genesiis.campus.util.SignUpEmailComposer;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.IEmailComposer;
@@ -23,6 +18,10 @@ import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
+
+import javax.mail.MessagingException;
+
 /**
  * CmdGenerateEmailTutorSignUp class handles sending the email to be sent
  * at the time of tutor signup.
@@ -30,8 +29,14 @@ import org.apache.log4j.Logger;
  */
 public class CmdGenerateEmailTutorSignUp implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
+	static Logger log = Logger.getLogger(CmdGenerateEmailTutorSignUp.class.getName());
 	
+	/*
+	 * execute() method handles the email sending at the time of tutor signup
+	 * @author CW
+	 * @return view
+	 * @throws IllegalArgumentException & Exception in any case email sending fails
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		try {
