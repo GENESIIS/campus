@@ -17,6 +17,7 @@
 // to shift country / town code check for null value.
 // include to extend the password constrain to have more than 07 characters
 //20170130 DN CAMP:18 add check box clearing to clearAllFields()
+//20170131 DN CAMP:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -226,17 +227,17 @@ function sendSignUpCredentialsToBckEnd() {
 function validateSignUpWoThirdPartyPageEmbedData(){
 	var validationPass = true;
 	
-	if(!(isFieldFilled(isempty($('#firstName').val()),"First Name Field","firstNameError"))){
+	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#firstName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"First Name Field","firstNameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#lastName').val()),"Last Name Field","lastNameError"))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#lastName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"Last Name Field","lastNameError"))) {
 		return !validationPass;
 	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"Gender Field","genderError"))){
 		return !validationPass;
 	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
 		return !validationPass;
-	}else if (!(isFieldFilled(isempty($('#country').val()),"Country Field","countryError"))) {
+	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#country').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Country Field","countryError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled((isempty(selectedTownCode)&isempty($('#town').val())),"Town Field","townError"))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#town').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"Town Field","townError"))) {
 		return !validationPass;
 	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
 		return !validationPass;
@@ -294,7 +295,7 @@ function createJasonObject(){
 
 /**
  * isNotvalidMobileFormat(): checks if the content submited
- * is startswith zero or with "+" sign if so the return valuewill be 
+ * starts with zero or with "+" sign if so the return valuewill be 
  * true else false.
  * @author Dushantha DN
  * @param firstDigit the content passed , method starts
