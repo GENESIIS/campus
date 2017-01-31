@@ -6,13 +6,15 @@
  *20161116 DN c10-contacting-us-page-MP changed the method isFieldFilled() to write content to inner HTML
  *20161116 DN c10-contacting-us-page-MP included clearField() method 
  *20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
- * cater more phone number styles
+ *           cater more phone number styles
  * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  *20161202 DN C18-student-signup-without-using-third-party-application-test-dn add isStringHasValiCharsAndLength() method
- *20170118 DN  isStringHasValiCharsAndLength() signature has been changed it takes a field value and a regular expression as the argument
+ *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() signature has been changed it takes
+ *           a field value and a regular expression as the argument
+ *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() changed the method header comment.
  */ 
 
  
@@ -125,7 +127,8 @@ function validEmailFormat(){
 /**
  * method tests if the supply string consists of alpha numeric characters which is
  * 62 case-sensitive characters (A-Z, a-z and 0-9)and "_" character in such a combination that
- * the string contains more than 5 characters,starts with an alphabetic contains any combination of 
+ * the string contains more than n number of characters defined by regular expression,
+ * starts with an alphabetic contains any combination of 
  * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc
  * @author dushantha DN
  * @param testableInput the sting which is to tested to confirm if it abides the above precondition
