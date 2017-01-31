@@ -5,18 +5,17 @@ package com.genesiis.campus.util;
 //20161228 DN CAM 18 shift getEmailDispenser(),getGeneralEmail(),setGeneralEmail(),setEmailDispenser() methods to interface IEmailComposer.java
 // for code reuse purpose.
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
 
+import org.apache.log4j.Logger;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 /**
  * StudentSignUpEmailComposer.java handles the composing of the email

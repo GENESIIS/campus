@@ -13,12 +13,6 @@ package com.genesiis.campus.command;
 //				removed the log comments as per CREV instruction from execute().
 //				systemMessage(int) has been shifted to ImageUtility.java class as a static method.
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.sql.Connection;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
@@ -36,9 +30,11 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
 
-
-
-
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.sql.Connection;
 
 /**
  * CmdUploadTutorImage is responsible for uploading the image that 

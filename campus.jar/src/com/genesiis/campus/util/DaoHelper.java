@@ -1,11 +1,12 @@
 package com.genesiis.campus.util;
 //DJ 20161115 c6-list-available-institutes-on-the-view Initiate cleanup method to clean open resources 
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.log4j.Logger;
 
 public class DaoHelper {
 	static Logger log = Logger.getLogger(DaoHelper.class.getName());

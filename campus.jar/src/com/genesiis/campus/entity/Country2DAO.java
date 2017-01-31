@@ -3,6 +3,9 @@ package com.genesiis.campus.entity;
 //			  c26-add-student-details: getAll() method SQL query modified.
 //20161126 PN c26-add-student-details: findById() method implemented.
 //20161223 DN CAMP18: remove unnecessary singleCountryCollection initialization
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class Country2DAO implements ICrud{
 	static Logger log = Logger.getLogger(Country2DAO.class.getName());

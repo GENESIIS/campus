@@ -2,8 +2,6 @@ package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 //20170102 DN CAM: 47 added TutorController if else branch
-
-
 import org.apache.log4j.Logger;
 
 

@@ -3,17 +3,15 @@ package com.genesiis.campus.command;
 //20170105 DN c47-tutor-add-tutor-information-upload-image-dn introduced getExistingImageFilePathFromTheStorage()
 //getProfilePictureIfExisitElseDefault()
 //20170105 DN c47 add doc comments for the method
-import java.sql.SQLException;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.ImageUtility;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 
+import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
 /**
  * CmdGetTutorProfileImg handles the profile image which is currently
  * within the system When 

@@ -4,6 +4,8 @@ package com.genesiis.campus.util.security;
 //20161201 DN C18-student-signup-without-using-third-party-application-dn add exception handling as per CREV comments
 //20161202 DN C18-student-signup-without-using-third-party-application-dn add Method comments as per CREV comments
 
+import org.apache.log4j.Logger;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -16,7 +18,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.log4j.Logger;
 /**
  * TripleDesEncryptor provides Triple Data Encryption Algorithm (TDEA or Triple DEA),
  *  It is a symmetric-key block cipher, which applies 

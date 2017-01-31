@@ -2,6 +2,9 @@ package com.genesiis.campus.entity;
 // 20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 //20170109 DN CAM47 refactor the method findById(Object object,Connection con) to include finally block
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +13,6 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.DaoHelper;
 
 public class SystemConfigDAO implements ICrud {
 	

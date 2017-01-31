@@ -4,10 +4,6 @@ package com.genesiis.campus.util;
 //asccessInerLoopSingleElement/isImageWithinSize methods has been created.
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn shifted the systemMessage(int) method 
 //              from CmdUploadTutorImage,java in order to encapsulate class responsibilities 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Collection;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.validation.PrevalentValidation;
@@ -17,6 +13,10 @@ import com.genesiis.campus.validation.SystemMessage;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Collection;
 
 
 // TODO: Auto-generated Javadoc

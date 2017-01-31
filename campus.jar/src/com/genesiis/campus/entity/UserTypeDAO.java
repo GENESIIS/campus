@@ -6,6 +6,10 @@ package com.genesiis.campus.entity;
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
 //20161223 DN CAMP:18 add separate class DaoHelper.java of whose responsibility is to clean up the 
 // database resources.and used cleanup() method.
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
 
 public class UserTypeDAO implements ICrud {
 	

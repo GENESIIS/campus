@@ -3,6 +3,9 @@ package com.genesiis.campus.publicController;
 //20161031 DN c10-contacting-us-page init() implemented
 //20161102 DN c10-contacting-us-page init() implemented and 
 // setSMPTspecificToRequest() removed
+import com.genesiis.campus.controller.CampusController;
+
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -12,10 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.controller.CampusController;
 
 @WebServlet("/PublicController")
 public class PublicController extends CampusController {

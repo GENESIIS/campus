@@ -11,10 +11,13 @@ package com.genesiis.campus.util;
 // 			due to code review comment by CM
 //20170119 Dn CAMP47 changed the method ArrayList<FileItem> getFiles()  to accept List<FileItem> list insted of List<Objects> list
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import com.genesiis.campus.command.ICommand;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.View;
+import com.genesiis.campus.factory.FactoryProducer;
+import com.genesiis.campus.factory.ICmdFactory;
+import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.ResponseType;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -23,13 +26,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.command.ICommand;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.View;
-import com.genesiis.campus.factory.FactoryProducer;
-import com.genesiis.campus.factory.ICmdFactory;
-import com.genesiis.campus.validation.Operation;
-import com.genesiis.campus.validation.ResponseType;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

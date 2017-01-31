@@ -8,21 +8,19 @@ package com.genesiis.campus.entity;
 //20161207 DN C18: add data to town field in Student table from back end in addSignInDataWOThirdPartyAppToRepository() method 
 //20161207 DN C18: add USERTYPE to the data base table STUDENT
 //20161214 DN CAM:18 changed the method addSignInDataWOThirdPartyAppToRepository() to accommodate town code as a Long
-
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class SigningUpStudentDAO implements ICrud {
 	
