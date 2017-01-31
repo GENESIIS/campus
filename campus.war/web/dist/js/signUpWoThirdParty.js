@@ -18,6 +18,7 @@
 // include to extend the password constrain to have more than 07 characters
 //20170130 DN CAMP:18 add check box clearing to clearAllFields()
 //20170131 DN CAMP:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
+//				adds function to refrain entering invalid country and town to input fields
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -95,9 +96,10 @@ function getPreRequisitPageData(preRequistData){
 													return $(this).val();
 												}
 									 		}).text();
+	selectedCountryCode = dValue;
 	//populating the town list 
 	if(status){
-		selectedCountryCode = dValue;
+		
 		$('#mobileCountryCode').val("+"+selectedCountryCode); // set the country code in the none editable field
 		extractRelaventTownList(selectedCountryCode);
 		}
@@ -118,9 +120,10 @@ function getPreRequisitPageData(preRequistData){
 													return $(this).val();
 												}
 									 		}).text();
-	//setting the hidden field with the town value in the input field
-	if(status){
 		selectedTownCode = dValue;
+		//setting the hidden field with the town value in the input field
+	if(status){
+		//selectedTownCode = dValue;
 		$('#sTownCode').val(selectedTownCode);
 	}
 });
@@ -136,6 +139,42 @@ function getPreRequisitPageData(preRequistData){
 			$('#contactNumber').val("");
 		}
 	});
+	
+	
+	/*
+	 * function will triggers when input field gets changed.
+	 * the purpose of the function is to match the users selection
+	 * or the type in text against the list that has already been
+	 * selected by the system. If the value that user entered does not
+	 * confirm to the requirement, then an error message will be displayed,
+	 * and the text will be cleared off.
+	 */
+	$('#town').on("change",function(){
+		if(selectedTownCode ==""){
+			$('#townError').html("Please select a valid Town");
+			$('#town').val("");
+		}
+		
+	});
+
+	/*
+	 * function will triggers when input field gets changed.
+	 * the purpose of the function is to match the users selection
+	 * or the type in text against the list that has already been
+	 * selected by the system. If the value that user entered does not
+	 * confirm to the requirement, then an error message will be displayed,
+	 * and the text will be cleared off.
+	 */
+	
+	$('#country').on("change",function(){
+		if(selectedCountryCode ==""){
+			$('#countryError').html("Please select a valid Country from the populated list");
+			$('#country').val("");
+		}
+		
+		
+	});
+	
 	
 	/*
 	 * this function is available when the document is ready and
@@ -237,7 +276,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 		return !validationPass;
 	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#country').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Country Field","countryError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#town').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"Town Field","townError"))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#town').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Town Field","townError"))) {
 		return !validationPass;
 	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
 		return !validationPass;
