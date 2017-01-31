@@ -6,14 +6,20 @@ package com.genesiis.campus.validation;
 //20170111 c36-add-tutor-details-added USERNAME_LENGTH, WEBLINKERROR, FACEBOOKERROR, LINKEDINERROR, TWITTERERROR, INSTAGRAMERROR, MYSPACEERROR, WHATSAPPERROR, VIBERERROR cw
 //20170117 c36-add-tutor-details-added EMAIL_USED CW
 //20170130 c36-add-tutor-details-modified FIRSTNAMEERROR & LASTNAMEERROR messages
+//20170131 c36-add-tutor-details-added EMPTYEMAIL, EMPTYUSERNAME, PASSWORDLENGTHERROR, EMPTYPASSWORD, PASSWORDCONFIRMERROR, EMPTYCONFIRMPASSWORD, FIRSTNAMEERROR, LASTNAMEERROR message
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	USERNAME_EXIST("Username already exists."),
-	USERNAME_LENGTH("Username should have at least6 characters & shorter than 20 characters."),
+	USERNAME_LENGTH("Username should have at least 6 characters & shorter than 20 characters."),
 	ERROR("Unsuccessful."),
 	EMAILERROR("Invalid Email Address."),
-	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	EMPTYEMAIL("Email Address cannot be empty."),
+	EMPTYUSERNAME("Username cannot be empty."),
+	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
+	EMPTYPASSWORD("Password cannot be empty."),
+	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
 	FIRSTNAMEERROR("Invalid First Name."),
 	LASTNAMEERROR("Invalid Last Name."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
