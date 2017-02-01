@@ -64,6 +64,7 @@ public class CmdAddTutorProfile implements ICommand {
 			
 		try {
 				setVariables(helper,tutor);
+				tutorCollection.clear();
 				fillTutorCollection(tutorCollection, tutor);
 				
 				message = validateUserAndEmail(helper);
@@ -199,7 +200,18 @@ public class CmdAddTutorProfile implements ICommand {
 			
 			tutor.setLastName(helper.getParameter("lastname"));
 			tutor.setGender(helper.getParameter("gender"));
-			tutor.setEmailAddress(helper.getParameter("email"));
+			
+			if (helper.getParameter("experience").equals("")) {
+				tutor.setExperience("-");
+			} else {
+				tutor.setExperience(helper.getParameter("experience"));
+			}
+			
+			if (helper.getParameter("aboutMe").equals("")) {
+				tutor.setDescription("-");
+			} else {
+				tutor.setDescription(helper.getParameter("aboutMe"));
+			}
 			
 			if(Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))){
 				if(Validator.isNotEmpty(helper.getParameter("countryDetails")) && (!(helper.getParameter("countryDetails").equals("0")))){
@@ -220,71 +232,7 @@ public class CmdAddTutorProfile implements ICommand {
 			tutor.setLandNumber(helper.getParameter("landNumber"));
 			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
-			
-			if (helper.getParameter("aboutMe").equals("")) {
-				tutor.setDescription("-");
-			} else {
-				tutor.setDescription(helper.getParameter("aboutMe"));
-			}
 
-			if (helper.getParameter("experience").equals("")) {
-				tutor.setExperience("-");
-			} else {
-				tutor.setExperience(helper.getParameter("experience"));
-			}
-			
-			if (helper.getParameter("weblink").equals("")) {
-				tutor.setWebLink("-");
-			} else {
-				tutor.setWebLink(helper.getParameter("weblink"));
-			}
-
-			if (helper.getParameter("facebook").equals("")) {
-				tutor.setFacebookLink("-");
-			} else {
-				tutor.setFacebookLink(helper.getParameter("facebook"));
-			}
-
-			if (helper.getParameter("twitter").equals("")) {
-				tutor.setTwitterNumber("-");
-			} else {
-				tutor.setTwitterNumber(helper.getParameter("twitter"));
-			}
-
-			if (helper.getParameter("myspace").equals("")) {
-				tutor.setMySpaceId("-");
-			} else {
-				tutor.setMySpaceId(helper.getParameter("myspace"));
-			}
-
-			if (helper.getParameter("linkedin").equals("")) {
-				tutor.setLinkedInLink("-");
-			} else {
-				tutor.setLinkedInLink(helper.getParameter("linkedin"));
-			}
-
-			if (helper.getParameter("instagram").equals("")) {
-				tutor.setInstagramId("-");
-			} else {
-				tutor.setInstagramId(helper.getParameter("instagram"));
-			}
-			
-			if (helper.getParameter("viber").equals("")) {
-				tutor.setViberNumber("0");
-			} else {
-				tutor.setViberNumber(helper.getParameter("viber"));
-			}
-
-			if (helper.getParameter("whatsapp").equals("")) {
-				tutor.setWhatsAppId("0");
-			} else {
-				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
-			}
-
-			tutor.setIsApproved(false);
-			
-			tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
-			
 			tutor.setAddressLine1(helper.getParameter("address1"));
 			
 			if (helper.getParameter("address2").equals("")) {
@@ -298,6 +246,60 @@ public class CmdAddTutorProfile implements ICommand {
 			} else {
 				tutor.setAddressLine3(helper.getParameter("address3"));
 			}
+									
+			if (helper.getParameter("weblink").equals("")) {
+				tutor.setWebLink("-");
+			} else {
+				tutor.setWebLink(helper.getParameter("weblink"));
+			}
+
+			if (helper.getParameter("facebook").equals("")) {
+				tutor.setFacebookLink("-");
+			} else {
+				tutor.setFacebookLink(helper.getParameter("facebook"));
+			}
+
+			if (helper.getParameter("linkedin").equals("")) {
+				tutor.setLinkedInLink("-");
+			} else {
+				tutor.setLinkedInLink(helper.getParameter("linkedin"));
+			}
+
+			if (helper.getParameter("twitter").equals("")) {
+				tutor.setTwitterNumber("-");
+			} else {
+				tutor.setTwitterNumber(helper.getParameter("twitter"));
+			}
+
+			if (helper.getParameter("instagram").equals("")) {
+				tutor.setInstagramId("-");
+			} else {
+				tutor.setInstagramId(helper.getParameter("instagram"));
+			}
+
+			if (helper.getParameter("myspace").equals("")) {
+				tutor.setMySpaceId("-");
+			} else {
+				tutor.setMySpaceId(helper.getParameter("myspace"));
+			}
+
+			if (helper.getParameter("whatsapp").equals("")) {
+				tutor.setWhatsAppId("0");
+			} else {
+				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
+			}
+			
+			if (helper.getParameter("viber").equals("")) {
+				tutor.setViberNumber("0");
+			} else {
+				tutor.setViberNumber(helper.getParameter("viber"));
+			}
+			
+			tutor.setEmailAddress(helper.getParameter("email"));
+
+			tutor.setIsApproved(false);
+			
+			tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
 			
 			if(Validator.isNotEmpty(helper.getParameter("townHidden"))){
 				if((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0")))){
@@ -341,26 +343,32 @@ public class CmdAddTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		
 		try{
+			System.out.println("mob country code = " +Integer.parseInt(tutor.getMobileCountryCode()));
 			Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 			if(!(countryCollection.isEmpty())){
 				for(Collection<String> countryList : countryCollection){
 					tutorCollection.add(countryList.toArray()[1].toString());				
 				}
-			}
+			}/*else{
+				tutorCollection.add("0");
+			}*/
 
 			int addCount = 0;
 			Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			
+
 			if(!(countryCollection.isEmpty())){
 				for(Collection<String> townList : townCollection){
 					if (townList.toArray()[0].toString().equals(tutor.getTown())){
 						tutorCollection.add(townList.toArray()[1].toString());
 						tutorCollection.add(townList.toArray()[0].toString());
+						//tutorCollection.add("x");
+						//tutorCollection.add("y");
 						addCount++;
 					}
 				}
 			}
 			if(addCount == 0){
+				tutorCollection.add("0");
 				tutorCollection.add("0");
 			}
 
@@ -371,19 +379,31 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("fillTutorCollection() : Exception" + exception.toString());
 			throw exception;
 		}
-		
+		System.out.println("tutor.getMobileCountryCode() "+tutor.getMobileCountryCode());
 		tutorCollection.add(tutor.getMobileCountryCode());
+		System.out.println("tutor.getMobileNetworkCode() "+tutor.getMobileNetworkCode());
 		tutorCollection.add(tutor.getMobileNetworkCode());
+		System.out.println("tutor.getMobileNumber() "+tutor.getMobileNumber());
 		tutorCollection.add(tutor.getMobileNumber());
+		System.out.println("tutor.getLandCountryCode() "+tutor.getLandCountryCode());
 		tutorCollection.add(tutor.getLandCountryCode());
+		System.out.println("tutor.getLandAreaCode() "+tutor.getLandAreaCode());
 		tutorCollection.add(tutor.getLandAreaCode());
+		System.out.println("tutor.getLandNumber() "+tutor.getLandNumber());
 		tutorCollection.add(tutor.getLandNumber());
+		System.out.println("tutor.getAddressLine1() "+tutor.getAddressLine1());
 		tutorCollection.add(tutor.getAddressLine1());
+		System.out.println("tutor.getAddressLine2() "+tutor.getAddressLine2());
 		tutorCollection.add(tutor.getAddressLine2());
+		System.out.println("tutor.getAddressLine3() "+tutor.getAddressLine3());
 		tutorCollection.add(tutor.getAddressLine3());
+		System.out.println("tutor.getWebLink() "+tutor.getWebLink());
 		tutorCollection.add(tutor.getWebLink());
+		System.out.println("tutor.getFacebookLink() "+tutor.getFacebookLink());
 		tutorCollection.add(tutor.getFacebookLink());
+		System.out.println("tutor.getLinkedInLink() "+tutor.getLinkedInLink());
 		tutorCollection.add(tutor.getLinkedInLink());
+		System.out.println("tutor.getTwitterNumber() "+tutor.getTwitterNumber());
 		tutorCollection.add(tutor.getTwitterNumber());
 		tutorCollection.add(tutor.getInstagramId());
 		tutorCollection.add(tutor.getMySpaceId());
@@ -392,5 +412,6 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getEmailAddress());
 		tutorCollection.add(tutor.getUsername());
 		
+		System.out.println(tutorCollection);
 	}
 }
