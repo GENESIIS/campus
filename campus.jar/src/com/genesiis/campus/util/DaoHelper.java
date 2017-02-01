@@ -1,7 +1,9 @@
 package com.genesiis.campus.util;
 
 //DJ 20161115 c6-list-available-institutes-on-the-view Initiate cleanup method to clean open resources 
-//20170117 JH c39-add-course-provider added closeConnection(Connection), closeStatement(Statement), closeResultSet(ResultSet) methods 
+//20170117 JH c39-add-course-provider added closeConnection(Connection), closeStatement(Statement), closeResultSet(ResultSet) methods
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170201 JH c39-add-course-provider code modified to throw SQL Exception
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +23,7 @@ public class DaoHelper {
 	 */
 
 	public static void cleanup(Connection conn, Statement statement,
-			ResultSet rs) {
+			ResultSet rs) throws SQLException {
 		if (rs != null) {
 			try {
 				rs.close();
@@ -47,7 +49,7 @@ public class DaoHelper {
 	 * @param conn
 	 * @author JH
 	 */
-	public static void closeConnection(Connection conn) {
+	public static void closeConnection(Connection conn) throws SQLException {
 		if (conn != null) {
 
 			try {
@@ -64,7 +66,7 @@ public class DaoHelper {
 	 * @param statement
 	 * @author JH
 	 */
-	public static void closeStatement(Statement statement) {
+	public static void closeStatement(Statement statement) throws SQLException{
 		if (statement != null) {
 			try {
 				statement.close();
@@ -78,7 +80,7 @@ public class DaoHelper {
 	 * closeResultSet method, closes the result set
 	 * @param result
 	 */
-	public static void closeResultSet(ResultSet result){
+	public static void closeResultSet(ResultSet result)throws SQLException{
 		if (result != null) {
 			try {
 				result.close();
