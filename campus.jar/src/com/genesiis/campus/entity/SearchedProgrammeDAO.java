@@ -14,6 +14,13 @@ package com.genesiis.campus.entity;
 //20170123 PN CAM-116: findById(Object code) method modified to set values to prepared statement parameters.
 //20170201 PN CAM-116: findById(Object code) method query1 modified to add JOIN query for [CAMPUS].[INTAKE] table.
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.IQueryBuilder;
+import com.genesiis.campus.util.QueryBuildingHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +28,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.IQueryBuilder;
-import com.genesiis.campus.util.QueryBuildingHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class SearchedProgrammeDAO implements ICrud {
 	static Logger log = Logger.getLogger(SearchedProgrammeDAO.class.getName());

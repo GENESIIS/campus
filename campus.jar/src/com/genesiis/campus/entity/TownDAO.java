@@ -4,17 +4,17 @@ package com.genesiis.campus.entity;
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 //20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class TownDAO implements ICrud{
 	static Logger log = Logger.getLogger(TownDAO.class.getName());

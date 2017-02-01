@@ -6,6 +6,17 @@ package com.genesiis.campus.controller;
 // 								to support returning JSON as well as JSP as response
 // 20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
 
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.View;
+import com.genesiis.campus.factory.FactoryProducer;
+import com.genesiis.campus.factory.ICmdFactory;
+import com.genesiis.campus.util.DataHelper;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ResponseType;
+import com.google.gson.Gson;
+
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,17 +29,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.View;
-import com.genesiis.campus.factory.FactoryProducer;
-import com.genesiis.campus.factory.ICmdFactory;
-import com.genesiis.campus.util.DataHelper;
-import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.validation.ResponseType;
-import com.google.gson.Gson;
-
-import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class CampusController

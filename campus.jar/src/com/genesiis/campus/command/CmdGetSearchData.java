@@ -6,11 +6,6 @@ package com.genesiis.campus.command;
 //20161102 PN c11-criteria-based-filter-search modified execute() method get searchdata and pass it to ProgramDAO.
 //20161103 PN c11-criteria-based-filter-search modified execute() method to load getAll() method and findById() method accordingly.
 
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -19,6 +14,11 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.QueryBuildingHelper;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CmdGetSearchData implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetSearchData.class.getName());

@@ -6,13 +6,13 @@ package com.genesiis.campus.util;
 //20161103 PN c11-criteria-based-filter-search modified dynamicQuery() methods' string concatenation order.
 //20170123 PN CAM-116: implemented getDuration(String num) method.
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.genesiis.campus.command.CmdGetSearchData;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author pabodha This class is to get help on building dynamic SQL queries.

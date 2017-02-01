@@ -5,16 +5,16 @@ package com.genesiis.campus.entity;
 //20161102 PN c11-criteria-based-filter-search getAll() method implemented.
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class DistrictDAO implements ICrud{
 	static Logger log = Logger.getLogger(DistrictDAO.class.getName());

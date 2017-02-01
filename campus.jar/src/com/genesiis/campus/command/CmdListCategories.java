@@ -3,11 +3,6 @@ package com.genesiis.campus.command;
 //20161028 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
 //20161109 PN c11-criteria-based-filter-search modified execute() to load more than one collection.
 
-import java.sql.SQLException;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.DistrictDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -15,6 +10,11 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
 import com.genesiis.campus.entity.MajorDAO;
 import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class CmdListCategories implements ICommand{
 	static Logger log = Logger.getLogger(CmdListCategories.class.getName());
