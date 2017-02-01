@@ -15,6 +15,8 @@ package com.genesiis.campus.command;
 //20170102 JH c39-add-course-provider back end code validation 
 //20170126 JH c39-add-course-provider code re-factored to add contact number details of course provider account and town
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170202 JH c39-add-course-provider combined username and the email validation methods together and removed database call 
+			//used to select course provider usertype
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -60,7 +62,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 	/**
 	 * execute method used to handle the request related to course provider 
 	 * registration. 
-	 * Details are validated and then username, email and prefix are validated for 
+	 * Details are validated and then username, email and prefix are validated 
 	 * for existence. Depending on the course provider type it will call between 
 	 * featured course provider and one off course provider DAO classes.
 	 * @author JH
@@ -76,7 +78,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		ICrud userTypeDAO = new UserTypeDAO();
-		int userType = 0;
 		int generatedKey = 0;
 		Validator validator = new Validator();
 
@@ -84,15 +85,6 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 		try {
 
-			int pStatus = 0;
-			String userTypeString = UserType.FEATURED_COURSE_PROVIDER.getUserType();
-			ArrayList<Collection<String>> userTypeList  = (ArrayList<Collection<String>>) userTypeDAO.findById(userTypeString);
-			
-			for (Collection<String> collection : userTypeList) {
-				Object[] userTypeData = collection.toArray();
-				String userTypeCode  = (String) userTypeData[0];
-				userType = Integer.parseInt(userTypeCode);
-			}
 			//back end validation for required fields
 
 			ArrayList<String> errorMessages = Validator.validateCourseProvider(helper);
@@ -102,27 +94,33 @@ public class CmdAddFeaturedProvider implements ICommand{
 					//validate username
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 					String username = helper.getParameter("providerUsername");
+					String email = helper.getParameter("providerEmail");
 					courseProviderAccount.setUsername(username);
+					courseProviderAccount.setEmail(email);
 					Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
 					//checks for the username
 					usernameCollection = usernameDAO
 							.findById(courseProviderAccount);
 					if (usernameCollection.size() > 0) {
-						systemMessage = SystemMessage.USERNAME_INVALID.message();
-						helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
-			
-					}else{
+						String accountUsername = null;
+						String accountEmail = null;
 						
-						//checks for the email address
-						courseProviderAccount.setUsername("");
-						courseProviderAccount.setEmail(helper.getParameter("providerEmail"));
-					
-						Collection<Collection<String>>	emailCollection = usernameDAO
-								.findById(courseProviderAccount);
-						if (emailCollection.size() > 0){
+						for(Collection<String> accountCollection : usernameCollection){
+							Object[] accountData = accountCollection.toArray();
+							accountUsername  = (String) accountData[2];
+							accountEmail  = (String) accountData[4];
+						}
+						
+						if(username.equalsIgnoreCase(accountUsername)){
+							
+							systemMessage = SystemMessage.USERNAME_INVALID.message();
+							helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
+						}else if(email.equalsIgnoreCase(accountEmail)){
 							systemMessage = SystemMessage.EMAIL_EXIST.message();
 							helper.setAttribute("errorPrivateEmail", SystemMessage.EMAIL_EXIST.message());
+						}
+
 						}else{
 							
 							courseProviderAccount.setUsername(username);
@@ -162,6 +160,21 @@ public class CmdAddFeaturedProvider implements ICommand{
 						if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
 							sql = java.sql.Date.valueOf(expireDate);
 							}else{
+								
+								/**
+								 * course providers without program publishing functionality will need an
+								 * expiration date. And that date needs to be selected by the admin at the course 
+								 * provider registration. 
+								 * 
+								 * for those who has the full functionality, need not to have an expiration
+								 * date. (The requirements given by the marketing team). Therefore a static value is assigned
+								 * to those course providers. Then it would be easy to select those course providers and perform a
+								 * bulk update. 
+								 * 
+								 * The following '2040-12-31' value is a sample value and it can be changed into 
+								 * any given value within the database column date range.
+								 * 
+								 */
 								expireDate = "2040-12-31";
 								sql = java.sql.Date.valueOf(expireDate);
 							}
@@ -239,10 +252,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 							}
 
 							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
-						//	courseProviderAccount.setUsername(helper.getParameter("providerUsername"));
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
-							courseProviderAccount.setUserType(userType);
 							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
 							courseProviderAccount.setCrtBy("admin");//to be update after the session is created
 							courseProviderAccount.setModBy("admin");//to be update after the session is created
@@ -271,7 +282,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 								}
 						
 
-						}
+//						}
 						
 					}
 			}else{
