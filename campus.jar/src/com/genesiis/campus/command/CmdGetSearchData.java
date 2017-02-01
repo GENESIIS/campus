@@ -6,21 +6,19 @@ package com.genesiis.campus.command;
 //20161102 PN c11-criteria-based-filter-search modified execute() method get searchdata and pass it to ProgramDAO.
 //20161103 PN c11-criteria-based-filter-search modified execute() method to load getAll() method and findById() method accordingly.
 
+import com.genesiis.campus.entity.CategoryDAO;
+import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.SearchedProgrammeDAO;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.QueryBuildingHelper;
+
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.genesiis.campus.entity.CategoryDAO;
-import com.genesiis.campus.entity.ICrud;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.ProgrammeDAO;
-import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.LuceneDemo;
-import com.genesiis.campus.util.LuceneTest;
-import com.genesiis.campus.util.QueryBuildingHelper;
-
-import org.apache.log4j.Logger;
 
 public class CmdGetSearchData implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetSearchData.class.getName());
@@ -29,7 +27,7 @@ public class CmdGetSearchData implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
-		ICrud programmeDAO = new ProgrammeDAO(); 
+		ICrud programmeDAO = new SearchedProgrammeDAO(); 
 		Collection<Collection<String>> programmeCollection = null;
 		String searchData =  helper.getParameter("searchData");
 		
@@ -48,10 +46,10 @@ public class CmdGetSearchData implements ICommand {
 			}
 
 		} catch (SQLException sqle) {
-			log.info("execute() : sqle" + sqle.toString());
+			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			log.info("execute() : e" + e.toString());
+			log.error("execute() : e" + e.toString());
 			throw e;
 		}
 		return view;

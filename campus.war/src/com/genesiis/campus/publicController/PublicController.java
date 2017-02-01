@@ -2,6 +2,13 @@ package com.genesiis.campus.publicController;
 
 //20161101 PN c11-criteria-based-filter-search modified the doPost method with a null validation for IView type object.
 
+import com.genesiis.campus.controller.CampusController;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.Category;
+import com.genesiis.campus.util.DataHelper;
+import com.genesiis.campus.util.IDataHelper;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,16 +19,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.genesiis.campus.controller.CampusController;
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.Category;
-import com.genesiis.campus.util.DataHelper;
-import com.genesiis.campus.util.IDataHelper;
-
-import org.apache.log4j.Logger;
-
-import com.google.gson.Gson;
 
 /**
  * Servlet implementation class PublicController

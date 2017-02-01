@@ -3,6 +3,13 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //		   PN c11-criteria-based-filter-search implemented findById() method. 
 //20161102 PN c11-criteria-based-filter-search modified SQL query inside getAll() method.
+//20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
+//20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class MajorDAO implements ICrud {
 	static Logger log = Logger.getLogger(MajorDAO.class.getName());
@@ -42,18 +45,19 @@ public class MajorDAO implements ICrud {
 		final Collection<Collection<String>> allMajorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT DISTINCT m.CODE, m.NAME, m.DESCRIPTION "
 					+ "FROM [CAMPUS].[MAJOR] m "
 					+ "JOIN [CAMPUS].[PROGRAMME] p ON m.CODE = p.MAJOR "
 					+ "JOIN [CAMPUS].[CATEGORY] c ON c.CODE = p.CATEGORY "
-					+ "WHERE c.CODE = ? AND c.ISACTIVE = 1;";
+					+ "WHERE c.CODE = ? AND c.ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, categoryCode);
-			final ResultSet rs = stmt.executeQuery();	
+			stmt.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
+			rs = stmt.executeQuery();	
 
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
@@ -65,12 +69,15 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLE " + sqlException.toString());
+			log.error("findById(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): E " + e.toString());
+			log.error("findById(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}
@@ -86,13 +93,14 @@ public class MajorDAO implements ICrud {
 		final Collection<Collection<String>> allMajorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION] FROM [CAMPUS].[MAJOR] WHERE [ISACTIVE] = ?;";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
@@ -104,12 +112,15 @@ public class MajorDAO implements ICrud {
 				allMajorList.add(singleMajorCollection);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
+			if (rs != null) {
+				rs.close();
+			}
 			if (stmt != null) {
 				stmt.close();
 			}

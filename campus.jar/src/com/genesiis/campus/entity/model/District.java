@@ -4,13 +4,13 @@ import java.sql.Date;
 
 //20161026 PN c11-criteria-based-filter-search: INIT District.java class
 //20161028 PN c11-criteria-based-filter-search: added class attributes and data access methods.
-
+//20160102 PN CAM-116: added private access modifier to the fields.
 
 public class District {
-	int code;
-	int province;
-	String name;
-	int sort;
+	private int code;
+	private int province;
+	private String name;
+	private int sort;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;

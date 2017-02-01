@@ -1,9 +1,21 @@
+
 package com.genesiis.campus.controller;
 
 // 20161024 DN c10-contacting-us-page created the initial version of the Servlet Controller
 // 20161107 DN, JH, DJ, AS, CM, MM public-controller-testing Changed implementation of process()
 // 								to support returning JSON as well as JSP as response
 // 20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
+
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.View;
+import com.genesiis.campus.factory.FactoryProducer;
+import com.genesiis.campus.factory.ICmdFactory;
+import com.genesiis.campus.util.DataHelper;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ResponseType;
+import com.google.gson.Gson;
+
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,17 +29,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.View;
-import com.genesiis.campus.factory.FactoryProducer;
-import com.genesiis.campus.factory.ICmdFactory;
-import com.genesiis.campus.util.DataHelper;
-import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.validation.ResponseType;
-import com.google.gson.Gson;
-
-import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class CampusController
@@ -94,7 +95,6 @@ public class CampusController extends HttpServlet {
 				}
 				
 				Enumeration<String> attributeNames = request.getAttributeNames();
-
 				while (attributeNames.hasMoreElements()) {
 					String currentAttributeName = attributeNames.nextElement();
 					Object object = helper.getAttribute(currentAttributeName);

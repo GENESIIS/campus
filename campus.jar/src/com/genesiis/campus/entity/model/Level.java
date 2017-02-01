@@ -4,14 +4,14 @@ import java.sql.Date;
 
 //20161026 PN c11-criteria-based-filter-search: INIT Level.java class
 //20161028 PN c11-criteria-based-filter-search: added class attributes and data access methods.
-
+//20160102 PN CAM-116: added private access modifier to the fields.
 
 public class Level {
-	int code;
-	String serialKey;
-	String name;
-	String description;
-	String isActive;
+	private int code;
+	private String serialKey;
+	private String name;
+	private String description;
+	private String isActive;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
