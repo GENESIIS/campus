@@ -120,6 +120,7 @@ function providerUsernameValidation() {
 								if (response['validationFlag'] === 0) {
 									flag = false;
 									document.getElementById('errorUsername').innerHTML = response.userMessage;
+									document.getElementById('providerUsername').focus();
 								}
 
 								return flag;
@@ -182,6 +183,7 @@ function providerPrefixValidation() {
 							}
 							if (response['validationFlag'] === 0) {
 								document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
+								document.getElementById('uniquePrefix').focus();
 								flag = false;
 							}
 
