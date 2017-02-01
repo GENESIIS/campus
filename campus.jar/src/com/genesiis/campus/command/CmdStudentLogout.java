@@ -60,11 +60,11 @@ public class CmdStudentLogout implements ICommand {
 				
 				HttpSession curentSession = helper.getRequest().getSession(false);
 				
-				if(curentSession == null){
+				if(curentSession != null){
 					curentSession.removeAttribute("user");
 					curentSession.removeAttribute("userCode");
 					curentSession.removeAttribute("currentUserData");
-				curentSession.invalidate();
+					curentSession.invalidate();
 
 				message = SystemMessage.LOGOUTSUCCESSFULL.message();
 				}

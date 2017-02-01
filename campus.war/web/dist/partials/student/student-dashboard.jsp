@@ -136,7 +136,7 @@
 										</c:if>
 										</c:forEach>
 									</div></td>
-
+									
 							</tr>
 							<!-- End Notes -->
 						</table>
@@ -148,7 +148,7 @@
 					<div class="widget w-about-me clearfix">
 						<div class="widget-header">
 							<label for="About">About</label>
-							<button>Edit</button>
+							<button >Edit</button>
 						</div>
 						<!-- End widget header -->
 
