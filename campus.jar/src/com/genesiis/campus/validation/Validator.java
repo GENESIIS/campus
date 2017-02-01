@@ -7,16 +7,17 @@ package com.genesiis.campus.validation;
 //20161229 JH c39-add-course-provider isEmpty() method modified
 //20170105 JH c39-add-course-provider added validateCourseProvider(IDataHelper) method
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validator {
 
