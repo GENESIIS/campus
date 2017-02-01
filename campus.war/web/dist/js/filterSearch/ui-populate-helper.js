@@ -22,13 +22,15 @@ var selectedType="";
 var generalSearchFlag="";
 
 $(document).ready(function() {
-	
+	var t = $('#example').DataTable();
 	//START- DJ-General filter search-program filter criteria
+	//Identify the query portion of the URL
+	var urlQueryPortion=window.location.search;
 	
-	var sPageURL = window.location.search.substring(1);
-	// Get input parameters of general filter search.
-	if (sPageURL != null && sPageURL != "") {
-		var sURLVariables = sPageURL.split('&');
+	// Get input parameters of programme general filter search.
+	if (urlQueryPortion != null && urlQueryPortion != "") {
+		var urlQuery = urlQueryPortion.substring(1);
+		var sURLVariables = urlQuery.split('&');
 		for (var i = 0; i < sURLVariables.length; i++) {
 			var sParameterName = sURLVariables[i].split('=');
 			if (sParameterName[0] == 'keyWord') {
@@ -37,9 +39,9 @@ $(document).ready(function() {
 				selectedType = sParameterName[1];
 			}
 		}
-		generalSearchFlag = "TRUE";	
+		generalSearchFlag = "TRUE";			
 		
-		//Retrieve programm code list according to search parameters.		
+		//Retrieve programme code list according to search parameters.		
 	 	$.ajax({
 			url : '../../PublicController',
 			data : {
@@ -70,13 +72,15 @@ $(document).ready(function() {
 		}); 
 	 	//END- DJ-General filter search-program filter criteria
 	}else{
-		displayDetails();
+		// Automatically add a first row of data
+		$('#addRow').click();
 	}
 	
-	
-	
+	//*************************************************************************************************
+	displayDetails();	
+	 	
 	$('#selectAll').attr('checked', false); // Unchecks it	
-	var t = $('#example').DataTable(); 	
+	
 	$('#selectAll').change(function() {
         if ($(this).prop('checked')) {        	
         	//field clear by elementId the id of the HTML elements       
@@ -107,8 +111,7 @@ $(document).ready(function() {
         }
     });
 	
-    $('#example')
-    .on( 'order.dt',  function () { 
+    $('#example').on( 'order.dt',  function () { 
     	var courses = getNumFilteredRows(t); 
     	$("#courseCount").text(" " +pad(courses, 2));
     } ).on( 'search.dt', function () { 
@@ -141,8 +144,7 @@ $('#addRow').on( 'click', function () {
 	});
 } );
 
-// Automatically add a first row of data
-$('#addRow').click();
+
 });
 
 function displayDetails() {
