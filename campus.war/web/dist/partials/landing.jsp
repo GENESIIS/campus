@@ -345,7 +345,7 @@
 		
 		if (selectedType == 'CPROVIDER') {
 			window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
-		} else if (selectedType == 'PROGRAMME') {
+		} else {
 			window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
 		}
 	}

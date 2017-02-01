@@ -54,10 +54,10 @@ public class CmdGeneralFilterSearch implements ICommand{
 					final Set<Integer> cpCodeSet = courseProviderICrud.wildCardSearchOnCourseProvider(keyWordBuilder.toString());
 					helper.setAttribute("codeList", cpCodeSet);
 					break;
-				case GENERAL_FILTER_SEARCH_COURSE_PROGRAMME:
+				/*case GENERAL_FILTER_SEARCH_COURSE_PROGRAMME:
 					final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());
 					helper.setAttribute("programCodeList", programmeCodeSet);
-					break;
+					break;*/
 				default:
 					break;
 				}

@@ -50,7 +50,7 @@ $(document).ready(function() {
 			},
 			dataType : "json",
 			success : function(response) {				
-				populateProgramResults();			
+				populateTableRow(t, response.result);		
 			},
 			error : function(jqXHR, exception) {
 				var msg = '';			
@@ -67,11 +67,14 @@ $(document).ready(function() {
 				}
 				alert(msg);
 			}
-		});  
+		}); 
+	 	//END- DJ-General filter search-program filter criteria
+	}else{
+		displayDetails();
 	}
-	//END- DJ-General filter search-program filter criteria
 	
-	displayDetails();
+	
+	
 	$('#selectAll').attr('checked', false); // Unchecks it	
 	var t = $('#example').DataTable(); 	
 	$('#selectAll').change(function() {

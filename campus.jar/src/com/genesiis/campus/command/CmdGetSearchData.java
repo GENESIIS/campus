@@ -22,6 +22,7 @@ import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.QueryBuildingHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
@@ -45,11 +46,13 @@ public class CmdGetSearchData implements ICommand {
 		String selectedTypeString = helper.getParameter("selectedType");
 		String keyWordString = helper.getParameter("keyWordString");
 		String generalSearchFlag = helper.getParameter("generalSearchFlag");
+		String cco = helper.getParameter("CCO");		
 		
 		
 		try {			
 			//START-DJ-General filter search-program result set implementation. 
-			if(generalSearchFlag.equalsIgnoreCase("TRUE")){				
+			//if(generalSearchFlag.equalsIgnoreCase("TRUE")){				
+			if(Operation.getOperation(cco).equals(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME)){			
 				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();
 				if (UtilityHelper.isNotEmpty(keyWordString)) {
 					// Do wild card search on key word
