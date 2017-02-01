@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //20170104 PN CAM-116: added JDBC connection property close statements into finally blocks.
 //20170109 PN CAM-116: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM.
 //20170123 PN CAM-116: findById(Object code) method modified to set values to prepared statement parameters.
+//20170201 PN CAM-116: findById(Object code) method query1 modified to add JOIN query for [CAMPUS].[INTAKE] table.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,7 +63,7 @@ public class SearchedProgrammeDAO implements ICrud {
 				+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , ISNULL(MIN(itk.[FEE]),0.00) as COST "
 				+ "FROM [CAMPUS].[PROGRAMME] p " + "JOIN [CAMPUS].[PROGRAMMETOWN] pt ON p.CODE = pt.PROGRAMME "
 				+ "JOIN [CAMPUS].[TOWN] t ON t.CODE = pt.TOWN " + "JOIN [CAMPUS].[DISTRICT] d ON d.CODE = t.DISTRICT "
-				+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER " + "WHERE p.PROGRAMMESTATUS = ? ";
+				+ "JOIN [CAMPUS].[COURSEPROVIDER] cp ON cp.CODE = p.COURSEPROVIDER " + "LEFT OUTER JOIN [CAMPUS].[INTAKE] itk ON itk.[PROGRAMME]=p.[CODE]" + "WHERE p.PROGRAMMESTATUS = ? ";
 
 		String query2 = "SELECT p.[CODE] ,p.[NAME] ,CAST(p.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
 				+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
