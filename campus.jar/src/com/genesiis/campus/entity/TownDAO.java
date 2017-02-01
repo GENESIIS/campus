@@ -2,6 +2,11 @@ package com.genesiis.campus.entity;
 
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class TownDAO implements ICrud {
 	static Logger log = Logger.getLogger(TownDAO.class.getName());

@@ -4,6 +4,13 @@ package com.genesiis.campus.entity;
 //20161231 JH c39-add-course-provider getAll() method modified
 //20170105 JH c39-add-course-provider getAll() method modified: implement ApplicatonSatatus enum class
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class CourseProviderTypeDAO implements ICrud {
 	static Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());

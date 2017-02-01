@@ -4,10 +4,7 @@ package com.genesiis.campus.command;
 //20161209 JH c39-add-course-provider class name renamed to CmdCourseProviderAccountValidate
 //20161222 JH c39-add-course-provider code modifications for Username validation 
 //20161223 JH c39-add-course-provider code modified
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -21,6 +18,10 @@ import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.validation.Operation;
 
 import org.apache.log4j.Logger;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 public class CmdCourseProviderAccountValidate implements ICommand {
 	static Logger log = Logger

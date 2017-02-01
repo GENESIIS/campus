@@ -14,15 +14,7 @@ package com.genesiis.campus.command;
 //20161229 JH c39-add-course-provider code modified to get course provider town data
 //20170102 JH c39-add-course-provider back end code validation 
 //20170126 JH c39-add-course-provider code re-factored to add contact number details of course provider account and town
-
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -42,6 +34,15 @@ import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CmdAddFeaturedProvider implements ICommand{
 	static Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());

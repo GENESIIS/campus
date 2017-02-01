@@ -7,7 +7,17 @@ package com.genesiis.campus.entity;
 //20170103 JH c39-add-course-provider added queries to insert course provider town data
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
- 
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+
+import com.genesiis.campus.entity.model.CourseProvider;
+import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.entity.model.CourseProviderTown;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.AccountType;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,15 +26,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.CourseProvider;
-import com.genesiis.campus.entity.model.CourseProviderAccount;
-import com.genesiis.campus.entity.model.CourseProviderTown;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.AccountType;
 
 public class OneOffCourseProviderDAO implements ICrud{
 	

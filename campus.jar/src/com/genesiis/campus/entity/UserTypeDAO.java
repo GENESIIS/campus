@@ -5,6 +5,11 @@ package com.genesiis.campus.entity;
 //20161214 DN CAM:18 added userTypeString to the prepared statement in findById()
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
 //20161229 JH c39-add-course-provider findById(): moved object type casting statement inside the try block, closed resource ResultSet
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+
+import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
 
 public class UserTypeDAO implements ICrud {
 

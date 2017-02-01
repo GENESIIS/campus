@@ -16,17 +16,7 @@ package com.genesiis.campus.entity;
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170118 JH c39-add-course-provider qa modifications: fixed description not added in course provider account
 //20170125 JH c39-add-course-provider assign course provider address details from course provider entity for preparedStatement3
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -37,6 +27,17 @@ import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FeaturedCourseProviderDAO implements ICrud {
 

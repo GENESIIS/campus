@@ -8,6 +8,13 @@ package com.genesiis.campus.entity;
 //20161227 JH c39-add-course-provider findById method query modified
 //20161228 JH c39-add-course-provider findById method modifie: sql exception fixed
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
+//20170201 JH c39-add-course-provider arranged imports according to the style guide
+
+import com.genesiis.campus.entity.model.CourseProviderAccount;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.CourseProviderAccount;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
 
 public class CourseProviderUsernameDAO implements ICrud {
 	static org.apache.log4j.Logger log = Logger
