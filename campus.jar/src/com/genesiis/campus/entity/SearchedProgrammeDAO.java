@@ -58,6 +58,8 @@ public class SearchedProgrammeDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		
+		//This query selection will be happen according to the in coming details.
 		String query1 = "SELECT p.[CODE] ,p.[NAME] ,CAST(p.[DESCRIPTION] as NVARCHAR(max)) AS [DESCRIPTION] ,p.[DURATION] ,p.[ENTRYREQUIREMENTS] ,p.[COUNSELORNAME] ,"
 				+ "p.[COUNSELORPHONE] ,p.[DISPLAYSTARTDATE] ,p.[EXPIRYDATE] ,p.[PROGRAMMESTATUS] ,p.[COURSEPROVIDER] ,p.[MAJOR] ,p.[CATEGORY] ,"
 				+ "p.[LEVEL] ,p.[CLASSTYPE], cp.[NAME] as [PROVIDER], cp.[UNIQUEPREFIX], cp.[CODE] as [CPCODE], cp.[WEBLINK] , ISNULL(MIN(itk.[FEE]),0.00) as COST "
