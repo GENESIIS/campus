@@ -22,6 +22,7 @@ var selectedType="";
 var generalSearchFlag="";
 
 $(document).ready(function() {
+	displayDetails();
 	var t = $('#example').DataTable();
 	//START- DJ-General filter search-program filter criteria
 	//Identify the query portion of the URL
@@ -71,13 +72,13 @@ $(document).ready(function() {
 			}
 		}); 
 	 	//END- DJ-General filter search-program filter criteria
-	}else{
-		// Automatically add a first row of data
+	}else{		
+		/*// Automatically add a first row of data*/
 		$('#addRow').click();
 	}
 	
 	//*************************************************************************************************
-	displayDetails();	
+		
 	 	
 	$('#selectAll').attr('checked', false); // Unchecks it	
 	
@@ -111,7 +112,7 @@ $(document).ready(function() {
         }
     });
 	
-    $('#example').on( 'order.dt',  function () { 
+ $('#example').on( 'order.dt',  function () { 
     	var courses = getNumFilteredRows(t); 
     	$("#courseCount").text(" " +pad(courses, 2));
     } ).on( 'search.dt', function () { 
@@ -143,8 +144,8 @@ $('#addRow').on( 'click', function () {
 		}
 	});
 } );
-
-
+//Automatically add a first row of data
+//$('#addRow').click();
 });
 
 function displayDetails() {
