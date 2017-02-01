@@ -5,12 +5,6 @@ package com.genesiis.campus.util;
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes to getResultPage()
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -23,6 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class DataHelper implements IDataHelper {
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());

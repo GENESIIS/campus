@@ -26,6 +26,11 @@ import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 public class CmdGetSearchData implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetSearchData.class.getName());
 

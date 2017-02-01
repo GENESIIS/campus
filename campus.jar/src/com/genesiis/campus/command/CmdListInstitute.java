@@ -2,15 +2,15 @@ package com.genesiis.campus.command;
 
 //20161101 PN c11-criteria-based-filter-search INIT the class and implemented execute() method.
 
-import java.sql.SQLException;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
 import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class CmdListInstitute implements ICommand{
 	static Logger log = Logger.getLogger(CmdListInstitute.class.getName());

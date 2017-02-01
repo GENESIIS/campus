@@ -11,6 +11,7 @@
 //20161223 PN CAM-116: removed alert messages from the code.
 //20170109 PN CAM-116: added character replacement code to replace ',' character.
 //20170121 DJ c124-general-filter-search-programme-MP-dj Identify general filter search action
+//20170123 PN CAM-116: implemented populateTableRow(table, values) method to populate dynamic table rows with data.
 
 /**
  * This method id to load category details
@@ -90,36 +91,7 @@ $(document).ready(function() {
     			},
     			dataType : "json",
     			success : function(response) {
-    				var counter = 0;
-    				t.clear().draw();
-    				$.each(response.result, function(index, value) {
-    					var res = value.toString();
-    					var data = res.split(",");
-    					counter++;
-    					
-    					t.row.add( [
-    			            '<div class="provider-info">' +
-    						'<a href="javascript:">' +
-    							'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
-    						'</a>' +
-    					'</div>',
-    					'<div class="result-box clearfix">' +
-    						'<div class="course-name">' +
-    							'<a href="'+data[18].toString()+'">' + data[1].toString().replace(/##/g , ",") +
-    								'<span class="provider-name">' + " @"+ data[15].toString().replace(/##/g , ",") +
-    								'</span>' +
-    							'</a>' +
-    						'</div>' +
-    						'<div class="course-info">' +
-    							'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
-    						'</div>' +
-    					'</div>',
-    					data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
-    					data[18].toString().replace(/##/g , ",")
-    					        ] ).draw( false );
-
-    				});
-    				$("#courseCount").text(" " +pad(counter, 2));
+    				populateTableRow(t, response.result);
     			},
     			error : function(response) {
     				alert("Error: "+response);
@@ -158,36 +130,7 @@ $('#addRow').on( 'click', function () {
 		},
 		dataType : "json",
 		success : function(response) {
-			var counter = 0;
-			t.clear().draw();
-			$.each(response.result, function(index, value) {
-				var res = value.toString();
-				var data = res.split(",");
-				counter++;
-				
-				t.row.add( [
-		            '<div class="provider-info">' +
-					'<a href="javascript:">' +
-						'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
-					'</a>' +
-				'</div>',
-				'<div class="result-box clearfix">' +
-					'<div class="course-name">' +
-						'<a href="'+data[18].toString()+'">' + data[1].toString().replace(/##/g , ",") +
-							'<span class="provider-name">' + " @"+ data[15].toString().replace(/##/g , ",") +
-							'</span>' +
-						'</a>' +
-					'</div>' +
-					'<div class="course-info">' +
-						'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
-					'</div>' +
-				'</div>',
-				data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
-				data[18].toString().replace(/##/g , ",")
-				        ] ).draw( false );
-
-			});
-			$("#courseCount").text(" " +pad(counter, 2));
+			populateTableRow(t, response.result);
 		},
 		error : function(response) {
 			alert("Error: "+response);
@@ -440,23 +383,22 @@ function getSelectedData(listname, elementName) {
 }
 
 /**
- * This method is to populate program details in programe filter search body. 
+ * Method to populate dynamic table rows with data.
+ * @param table
+ * @param values
+ * @returns
  */
-function populateProgramResults(){
-	
-	alert("populateProgramResults");
-	var t = $('#example').DataTable();
+function populateTableRow(table, values){
 	var counter = 0;
-	t.clear().draw();
-	$.each(response.result, function(index, value) {
+	table.clear().draw();
+	$.each(values, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
 		counter++;
-		
-		t.row.add( [
+		table.row.add( [
             '<div class="provider-info">' +
 			'<a href="javascript:">' +
-				'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[14].toString() +'" width="200" height="100">' +
+				'<img src="../../education/provider/logo/'+ data[0].toString().trim() +'/'+data[0].toString().trim()+'_small.jpg" alt="'+ data[15].toString().replace(/##/g , ",") +'" width="200" height="100">' +
 			'</a>' +
 		'</div>',
 		'<div class="result-box clearfix">' +
@@ -470,10 +412,12 @@ function populateProgramResults(){
 				'<p>'+ data[2].toString().replace(/##/g , ",") + data[4].toString().replace(/##/g , ",") + '</p>' +
 			'</div>' +
 		'</div>',
-		data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+data[3].toString().replace(/##/g , ","),
+		data[6].toString().replace(/##/g , ",")+' - '+data[7].toString().replace(/##/g , ",")+'<br>'+data[3].toString().replace(/##/g , ","),
 		data[18].toString().replace(/##/g , ",")
 		        ] ).draw( false );
 
 	});
 	$("#courseCount").text(" " +pad(counter, 2));
 }
+
+
