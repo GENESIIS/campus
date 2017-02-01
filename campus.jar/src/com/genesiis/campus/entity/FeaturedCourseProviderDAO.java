@@ -17,6 +17,7 @@ package com.genesiis.campus.entity;
 //20170118 JH c39-add-course-provider qa modifications: fixed description not added in course provider account
 //20170125 JH c39-add-course-provider assign course provider address details from course provider entity for preparedStatement3
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170202 JH c39-add-course-provider query string account modified: select user type code selected inside the insert query
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -107,7 +108,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			 */
 
 			String account = "INSERT INTO [CAMPUS].[COURSEPROVIDERACCOUNT](NAME, USERNAME, PASSWORD, EMAIL, DESCRIPTION, ISACTIVE, COURSEPROVIDER,"
-					+ " USERTYPE ,CONTACTNUMBER, CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
+					+ " USERTYPE ,CONTACTNUMBER, CRTON, CRTBY, MODON, MODBY) VALUES(  ?, ?, ?, ?, ?, ?, ?, (SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE USERTYPESTRING = ?), ?, getDate(), ?, getDate(), ?)";
 			
 			String town = "INSERT INTO [CAMPUS].[COURSEPROVIDERTOWN](ISACTIVE, COURSEPROVIDER, TOWN, ADDRESS1, ADDRESS2, ADDRESS3, CONTACTNUMBER, CRTON, CRTBY, MODON, MODBY)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
@@ -214,7 +215,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			preparedStatement2.setString(4, courseProviderAccount.getEmail());
 			preparedStatement2.setString(5, courseProviderAccount.getDescription());
 			preparedStatement2.setBoolean(6, courseProviderAccount.isActive());
-			preparedStatement2.setInt(8, courseProviderAccount.getUserType());
+			//preparedStatement2.setInt(8, courseProviderAccount.getUserType());
+			preparedStatement2.setString(8, UserType.FEATURED_COURSE_PROVIDER.getUserType());
 			preparedStatement2.setString(9, courseProviderAccount.getContactNumber());
 			preparedStatement2.setString(10, courseProviderAccount.getCrtBy());
 			preparedStatement2.setString(11, courseProviderAccount.getModBy());
