@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 
+
 import java.sql.SQLException;
 
 public interface ICommand {
