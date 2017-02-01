@@ -174,7 +174,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
 										id="uniquePrefix" size="30px;"
-										onkeyup="providerPrefixValidation();" /> <span
+										onblur="providerPrefixValidation();" /> <span
 										id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
 										<span id="prefixMessage" style="color: blue;"></span>
 								</div>
@@ -567,7 +567,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="providerUsername"
 										id="providerUsername" size="50px;"
-										onkeyup="providerUsernameValidation();" /> <span
+										onblur="providerUsernameValidation();" /> <span
 										id="errorUsername" class="error-message">${errorProviderUsername }</span>
 										<span id="usernameMessage" style="color: blue;"></span>
 								</div>
