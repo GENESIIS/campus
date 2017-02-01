@@ -1,7 +1,7 @@
 package com.genesiis.campus.factory;
 //20161024 DN c10-contacting-us create the initial version of ICmdFactory.java
 import com.genesiis.campus.command.ICommand;
-import com.genesiis.campus.validation.Operation;S
+import com.genesiis.campus.validation.Operation;
 
 import java.util.HashMap;
 
