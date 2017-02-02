@@ -738,6 +738,54 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
+/* 20170202 TR CAM-94 INIT for styling error page */
+/* 20170202 TR CAM-94 added error-screen class and styling */
+/* 20170202 TR CAM-94 update all styles in body */
+/* Start: Error Page : 404 */
+.error-screen {
+  display: block;
+  position: relative;
+  background-color: #f7fcff; }
+  .error-screen .error-number {
+    display: block;
+    padding-top: 40px; }
+    .error-screen .error-number h1 {
+      font-family: "Roboto", sans-serif;
+      font-size: 280px;
+      color: #e8f3f8;
+      text-shadow: 14px 14px 0px rgba(0, 0, 0, 0.7);
+      font-weight: 600; }
+      .error-screen .error-number h1 span {
+        color: #b7ced7; }
+  .error-screen .error-image img {
+    width: 155px;
+    margin-top: 25px;
+    margin-bottom: 20px; }
+  .error-screen .default-msg {
+    font-family: "Roboto", sans-serif;
+    font-size: 70px;
+    color: #e4bd06;
+    line-height: 110px; }
+  .error-screen .error-msg {
+    font-family: "Abel", sans-serif;
+    font-size: 45px;
+    color: #7b7e7f; }
+  .error-screen .home-btn {
+    display: block;
+    margin-bottom: 50px; }
+    .error-screen .home-btn button {
+      background-color: #1794c8;
+      border: none;
+      font-family: "Roboto", sans-serif;
+      font-size: 22px;
+      padding: 15px 40px;
+      color: #fff;
+      border-radius: 11px;
+      margin-top: 30px; }
+      .error-screen .home-btn button:hover {
+        background-color: #09729e; }
+
+/* END: Error Page : 404 */
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
