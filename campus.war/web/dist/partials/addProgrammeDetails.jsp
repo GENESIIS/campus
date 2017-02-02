@@ -154,6 +154,7 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
+	<script src="/dist/js/admin/ui-addProgramme-helper.js"></script>
 	
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />

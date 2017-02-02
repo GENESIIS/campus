@@ -30,10 +30,10 @@ public interface CourseProviderICrud extends ICrud{
 	public Collection<Collection<String>> getAllCourseProviders()throws SQLException,Exception;
 	
 	//Retrieve all the fields of course provider table
-	public Collection<Collection<String>> getAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
+	public Collection<Collection<String>> getAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;*/
 	
 	//Retrieve basic fields of course provider table
-	public Collection<Collection<String>> getLightAllCourseProviders()throws SQLException,Exception;*/
+	public Collection<Collection<String>> getLightAllCourseProviders()throws SQLException,Exception;
 	
 	//Retrieve basic fields of course provider table
 	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
