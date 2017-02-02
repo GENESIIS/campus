@@ -5,6 +5,12 @@ package com.genesiis.campus.entity;
 //20170124 JH c133-admin-list-tutors getAll() query modified
 //20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
 //20170130 JH c133-admin-list-tutors getAll(): removed the combined columns back to separate array attributes
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
 
 public class TutorDAO implements ICrud {
 

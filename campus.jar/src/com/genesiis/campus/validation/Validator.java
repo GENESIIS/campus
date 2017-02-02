@@ -8,12 +8,14 @@ package com.genesiis.campus.validation;
 //20170105 JH c39-add-course-provider added validateCourseProvider(IDataHelper) method
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
 
+import com.genesiis.campus.util.IDataHelper;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.genesiis.campus.util.IDataHelper;
+import javax.servlet.http.HttpSession;
 
 public class Validator {
 

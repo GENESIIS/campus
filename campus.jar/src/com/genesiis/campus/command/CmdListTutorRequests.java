@@ -1,12 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170130 JH c134-admin-list-new-tutor-requests INIT CmdListTutorRequests.java
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -15,6 +10,12 @@ import com.genesiis.campus.entity.TutorRequestsDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CmdListTutorRequests implements ICommand{
 

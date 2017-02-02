@@ -2,6 +2,13 @@ package com.genesiis.campus.entity;
 
 //20170130 JH c134-admin-list-new-tutor-requests INIT TutorRequestsDAO.java
 //20170130 JH c134-admin-list-new-tutor-requests findById() method coding 
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
 
 public class TutorRequestsDAO implements ICrud{
 	static Logger log = Logger.getLogger(TutorRequestsDAO.class.getName());
