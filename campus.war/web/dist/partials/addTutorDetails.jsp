@@ -81,14 +81,14 @@
 				</tr>
 				<tr>
 					<td>Country *</td>
-					<c:if test = "${tutorList[6] != null }"	>			
+					<c:if test = "${tutorList[6] != null}"	>			
 						<td>${tutorList[6]}</td>
 						<td><input type="hidden" name="countryHidden" id="countryHidden" value="${tutorList[6]}" /></td>
 					</c:if>
 					<td><select name="countryDetails" id="countryDetails"
 						onchange="clearField('countryError')">
 							<option></option>
-					</select><span id="countryError" style="color: red"></span></td>
+					</select><span id="countryError" style="color: red"> ${countryError} </span></td>
 				</tr>
 				<tr>
 					<td>Town*</td>
