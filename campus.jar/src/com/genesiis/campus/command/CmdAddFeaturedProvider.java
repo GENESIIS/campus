@@ -1,4 +1,3 @@
-
 package com.genesiis.campus.command;
 
 //20161122 JH c39-add-course-provider CmdAddFeaturedProvider.java command class created
@@ -16,7 +15,8 @@ package com.genesiis.campus.command;
 //20170126 JH c39-add-course-provider code re-factored to add contact number details of course provider account and town
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170202 JH c39-add-course-provider combined username and the email validation methods together and removed database call 
-			//used to select course provider usertype
+//used to select course provider usertype
+//20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -24,14 +24,12 @@ import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.OneOffCourseProviderDAO;
-import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
-import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
 import com.genesiis.campus.util.IDataHelper;
 
@@ -46,9 +44,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CmdAddFeaturedProvider implements ICommand{
-	static Logger log = Logger.getLogger(CmdAddFeaturedProvider.class.getName());
-	
+public class CmdAddFeaturedProvider implements ICommand {
+	static Logger log = Logger
+			.getLogger(CmdAddFeaturedProvider.class.getName());
+
 	private IView courseProviderData;
 
 	public CmdAddFeaturedProvider(IView courseProviderData) {
@@ -58,13 +57,14 @@ public class CmdAddFeaturedProvider implements ICommand{
 	public CmdAddFeaturedProvider() {
 
 	}
-	
+
 	/**
-	 * execute method used to handle the request related to course provider 
-	 * registration. 
-	 * Details are validated and then username, email and prefix are validated 
-	 * for existence. Depending on the course provider type it will call between 
-	 * featured course provider and one off course provider DAO classes.
+	 * execute method used to handle the request related to course provider
+	 * registration. Details are validated and then username, email and prefix
+	 * are validated for existence. Depending on the course provider type it
+	 * will call between featured course provider and one off course provider
+	 * DAO classes.
+	 * 
 	 * @author JH
 	 * @param IDataHelper
 	 * @param IView
@@ -77,7 +77,7 @@ public class CmdAddFeaturedProvider implements ICommand{
 		final CourseProvider courseProvider = new CourseProvider();
 		final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
-		ICrud userTypeDAO = new UserTypeDAO();
+		ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
 		int generatedKey = 0;
 		Validator validator = new Validator();
 
@@ -85,101 +85,132 @@ public class CmdAddFeaturedProvider implements ICommand{
 
 		try {
 
-			//back end validation for required fields
+			// back end validation for required fields
 
-			ArrayList<String> errorMessages = Validator.validateCourseProvider(helper);
-			
-			if(errorMessages.size()==0){
-					
-					//validate username
-					ICrud usernameDAO = new CourseProviderUsernameDAO();
-					String username = helper.getParameter("providerUsername");
-					String email = helper.getParameter("providerEmail");
-					courseProviderAccount.setUsername(username);
-					courseProviderAccount.setEmail(email);
-					Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+			ArrayList<String> errorMessages = Validator
+					.validateCourseProvider(helper);
 
-					//checks for the username
-					usernameCollection = usernameDAO
-							.findById(courseProviderAccount);
-					if (usernameCollection.size() > 0) {
-						String accountUsername = null;
-						String accountEmail = null;
-						
-						for(Collection<String> accountCollection : usernameCollection){
+			if (errorMessages.size() == 0) {
+
+				// validate username
+				ICrud usernameDAO = new CourseProviderUsernameDAO();
+				String username = helper.getParameter("providerUsername");
+				String email = helper.getParameter("providerEmail");
+				courseProviderAccount.setUsername(username);
+				courseProviderAccount.setEmail(email);
+				Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+
+				/**
+				 * checks the username availability and email. If the email
+				 * exist,
+				 */
+				usernameCollection = usernameDAO
+						.findById(courseProviderAccount);
+				if (usernameCollection.size() > 0) {
+					String accountUsername = null;
+					String accountEmail = null;
+
+					if (usernameCollection.size() == 1) {
+
+						for (Collection<String> accountCollection : usernameCollection) {
 							Object[] accountData = accountCollection.toArray();
-							accountUsername  = (String) accountData[2];
-							accountEmail  = (String) accountData[4];
+							accountUsername = (String) accountData[2];
+							accountEmail = (String) accountData[4];
 						}
-						
-						if(username.equalsIgnoreCase(accountUsername)){
-							
-							systemMessage = SystemMessage.USERNAME_INVALID.message();
-							helper.setAttribute("errorUsername", SystemMessage.USERNAME_INVALID.message());
-						}else if(email.equalsIgnoreCase(accountEmail)){
+
+						if (username.equalsIgnoreCase(accountUsername)) {
+
+							systemMessage = SystemMessage.USERNAME_INVALID
+									.message();
+							helper.setAttribute("errorUsername",
+									SystemMessage.USERNAME_INVALID.message());
+						} else if (email.equalsIgnoreCase(accountEmail)) {
 							systemMessage = SystemMessage.EMAIL_EXIST.message();
-							helper.setAttribute("errorPrivateEmail", SystemMessage.EMAIL_EXIST.message());
+							helper.setAttribute("errorPrivateEmail",
+									SystemMessage.EMAIL_EXIST.message());
 						}
+					} else {
+						systemMessage = SystemMessage.USERNAME_INVALID
+								.message()
+								+ " and "
+								+ SystemMessage.EMAIL_EXIST.message();
+						helper.setAttribute("errorUsername",
+								SystemMessage.USERNAME_INVALID.message());
+						helper.setAttribute("errorPrivateEmail",
+								SystemMessage.EMAIL_EXIST.message());
+					}
 
-						}else{
-							
-							courseProviderAccount.setUsername(username);
-							
-							//valdate prefix							
-							String prefix = helper.getParameter("uniquePrefix");
-			
-								ICrud prefixDAO = new CourseProviderPrefixDAO();
-								courseProvider.setUniquePrefix(prefix);
-								Collection<Collection<String>> prefixCollection = prefixDAO
-										.findById(courseProvider);
-								if (prefixCollection.size() != 0) {
-									helper.setAttribute("userMessage",SystemMessage.PREFIX_INVALID.message() );
+				} else {
+					// valdate prefix
+					String prefix = helper.getParameter("uniquePrefix");
 
-								} else if (prefixCollection.size() == 0) {
-									//helper.setAttribute("userMessage", SystemMessage.PREFIX_VALID.message());
-																
+					ICrud prefixDAO = new CourseProviderPrefixDAO();
+					courseProvider.setUniquePrefix(prefix);
+					Collection<Collection<String>> prefixCollection = prefixDAO
+							.findById(courseProvider);
+					if (prefixCollection.size() != 0) {
+						helper.setAttribute("userMessage",
+								SystemMessage.PREFIX_INVALID.message());
+
+					} else if (prefixCollection.size() == 0) {
+
 						String expireDate = helper.getParameter("expirationDate");
 						String countryCode = helper.getParameter("selectedCountry");
 						String selectedTown = helper.getParameter("selectedTown");
 						String courseProviderType = helper.getParameter("selectedProviderType");
-						
+
 						/**
-						 * checks for head office code. if no head office code is provided 
-						 * assign null
+						 * checks for head office code. if no head office code
+						 * is provided, it means the course provider is a head office.
+						 * Then assign value '0'. Else get course provider head 
+						 * office town code from the helper. 
+						 * 
+						 * 
 						 */
-						if(validator.isEmptyString(helper.getParameter("headOffice"))){
+						if (validator.isEmptyString(helper.getParameter("headOffice"))) {
 							courseProvider.setHeadOffice(0);
-						}else{
-							courseProvider.setHeadOffice(Integer.parseInt("headOffice"));
+						} else {
+							courseProvider.setHeadOffice(Integer.parseInt(helper.getParameter("headOffice")));
 						}
-								
+
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
 						java.sql.Date sql = null;
-						
-						SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-						if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-							sql = java.sql.Date.valueOf(expireDate);
-							}else{
-								
-								/**
-								 * course providers without program publishing functionality will need an
-								 * expiration date. And that date needs to be selected by the admin at the course 
-								 * provider registration. 
-								 * 
-								 * for those who has the full functionality, need not to have an expiration
-								 * date. (The requirements given by the marketing team). Therefore a static value is assigned
-								 * to those course providers. Then it would be easy to select those course providers and perform a
-								 * bulk update. 
-								 * 
-								 * The following '2040-12-31' value is a sample value and it can be changed into 
-								 * any given value within the database column date range.
-								 * 
-								 */
-								expireDate = "2040-12-31";
-								sql = java.sql.Date.valueOf(expireDate);
-							}
 
-						//set basic data
+						SimpleDateFormat format = new SimpleDateFormat(
+								"dd-MM-yyyy");
+						
+						/**
+						 * publishProgram parameter is used to select whether
+						 * the registered course provider will publish programs or not.
+						 * 
+						 */
+						if (Integer.parseInt(helper.getParameter("publishProgram")) == 0) {
+							sql = java.sql.Date.valueOf(expireDate);
+						} else {
+
+							/**
+							 * course providers without program publishing
+							 * functionality will need an expiration date. And
+							 * that date needs to be selected by the admin at
+							 * the course provider registration.
+							 * 
+							 * for those who has the full functionality, need
+							 * not to have an expiration date. (The requirements
+							 * given by the marketing team). Therefore a static
+							 * value is assigned to those course providers. Then
+							 * it would be easy to select those course providers
+							 * and perform a bulk update.
+							 * 
+							 * The following '2040-12-31' value is a sample
+							 * value and it can be changed into any given value
+							 * within the database column date range.
+							 * 
+							 */
+							expireDate = "2040-12-31";
+							sql = java.sql.Date.valueOf(expireDate);
+						}
+
+						// set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
 						courseProvider.setShortName(helper.getParameter("shortName"));
 						courseProvider.setName(helper.getParameter("providerName"));
@@ -192,8 +223,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 						courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
 						courseProvider.setExpirationDate(sql);
 						courseProvider.setMobilePhoneCountryCode(countryCode);
-						//courseProvider.setHeadOffice(null);
-						
+						// courseProvider.setHeadOffice(null);
+
 						courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
 						courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 						courseProvider.setFaxNo(helper.getParameter("fax"));
@@ -209,45 +240,55 @@ public class CmdAddFeaturedProvider implements ICommand{
 						courseProvider.setWhatsappNumber(helper.getParameter("whatsapp"));
 						courseProvider.setAddress1(helper.getParameter("address1"));
 						courseProvider.setAddress2(helper.getParameter("address2"));
-						courseProvider.setAddress3(helper.getParameter("address3"));			
+						courseProvider.setAddress3(helper.getParameter("address3"));
 						courseProvider.setGeneralEmail(helper.getParameter("generalEmail"));
 						courseProvider.setAdminAllowed(true);
 						courseProvider.setCourseProviderStatus(providerStatus);
-						courseProvider.setCrtBy("admin");//to be update after the session is created
-						courseProvider.setModBy("admin");//to be update after the session is created
+						courseProvider.setCrtBy("admin");// to be update after
+															// the session is
+															// created
+						courseProvider.setModBy("admin");// to be update after
+															// the session is
+															// created
 
-						//set course provider town details
+						// set course provider town details
 						courseProviderTown.setActive(true);
 						courseProviderTown.setTown(Long.parseLong(selectedTown));
 						courseProviderTown.setAddress1(helper.getParameter("address1"));
 						courseProviderTown.setAddress2(helper.getParameter("address2"));
 						courseProviderTown.setAddress3(helper.getParameter("address3"));
-						String phoneNumber = courseProvider.getLandPhoneCountryCode() + courseProvider.getLandPhoneAreaCode() 
+						String phoneNumber = courseProvider.getLandPhoneCountryCode()
+								+ courseProvider.getLandPhoneAreaCode()
 								+ courseProvider.getLandPhoneNo();
-						courseProviderTown.setContactNumber(phoneNumber);						
+						courseProviderTown.setContactNumber(phoneNumber);
 						courseProviderTown.setCrtBy("admin");
 						courseProviderTown.setModBy("admin");
-						
+
 						Map map = new HashMap();
 						map.put("provider", courseProvider);
-						map.put("town" , courseProviderTown);
-						
-						int providerType = Integer.parseInt(helper.getParameter("courseProvider"));
-						
+						map.put("town", courseProviderTown);
+
+						int providerType = Integer.parseInt(helper
+								.getParameter("courseProvider"));
+
 						/**
-						 * select the account type of the course provider. 
-						 * and will call different DAO classes depending on the course provider
-						 * type
+						 * selects the account type of the course provider and
+						 * calls different DAO classes depending on the
+						 * course provider type
 						 */
-						if(providerType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
-							courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER.getTypeValue());
+						if (providerType == AccountType.FEATURED_COURSE_PROVIDER
+								.getTypeValue()) {
+							courseProvider
+									.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
+											.getTypeValue());
 							courseProvider.setTutorRelated(false);
-										
-							String accountStatus = helper.getParameter("accountStatus");
-							if(accountStatus.equalsIgnoreCase("1")){	
+
+							String accountStatus = helper
+									.getParameter("accountStatus");
+							if (accountStatus.equalsIgnoreCase("1")) {
 								courseProviderAccount.setActive(true);
 							}
-							if(accountStatus.equalsIgnoreCase("0")){	
+							if (accountStatus.equalsIgnoreCase("0")) {
 								courseProviderAccount.setActive(false);
 							}
 
@@ -255,43 +296,36 @@ public class CmdAddFeaturedProvider implements ICommand{
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
 							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
-							courseProviderAccount.setCrtBy("admin");//to be update after the session is created
-							courseProviderAccount.setModBy("admin");//to be update after the session is created
-							
-							ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
+							// to be update after the session is created
+							courseProviderAccount.setCrtBy("admin");
+							courseProviderAccount.setModBy("admin");
+
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
-							
-						}else if(providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()){
+
+						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
 							courseProvider.setTutorRelated(false);
 							courseProvider.setAdminAllowed(false);
-							
+
 							ICrud oneOffCourseProviderDAO = new OneOffCourseProviderDAO();
 							courseProvider.setAccountType(AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue());
 							generatedKey = oneOffCourseProviderDAO.add(map);
 						}
-						
 
-
-						if (generatedKey >0) {
+						if (generatedKey > 0) {
 							systemMessage = SystemMessage.ADDED.message();
 							helper.setAttribute("registerId", generatedKey);
-						} else if (generatedKey ==0) {
+						} else if (generatedKey == 0) {
 							systemMessage = SystemMessage.NOTADDED.message();
 						}
-								}
-						
-
-//						}
-						
 					}
-			}else{
+				}
+			} else {
 
 				systemMessage = SystemMessage.MANDATORYFIELDREQUIRED.message();
-	
+
 			}
-			
-			
+
 		} catch (Exception exception) {
 			log.error("execute() : " + exception.toString());
 			systemMessage = SystemMessage.ERROR.message();
@@ -303,9 +337,8 @@ public class CmdAddFeaturedProvider implements ICommand{
 				helper.setAttribute("userMessage", systemMessage);
 			}
 		}
-		
-		
+
 		return view;
 	}
-	
+
 }
