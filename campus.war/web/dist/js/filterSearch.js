@@ -54,19 +54,24 @@
 			}        
 		});
 		
+		$('#addSearchData').click(function(e){
+			
+			var keyWordString = " ";
+			var selectedType = " ";
+			keyWordString = $("#course-search").val();
+			selectedType = $('input[name="courseOpt"]:checked').val();
+
+			if (selectedType == 'CPROVIDER') {
+				window.location
+						.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="
+								+ keyWordString + "&selectedType=" + selectedType);
+			} else {
+				alert("Will load programes \n Will be implemented in cam-124");
+			}
+			
+			e.preventDefault();	
+
+		});
+		
 	});
 
-	function searchFunction() {
-		var keyWordString = " ";
-		var selectedType = " ";
-		keyWordString = $("#course-search").val();
-		selectedType = $('input[name="courseOpt"]:checked').val();
-
-		if (selectedType == 'CPROVIDER') {
-			window.location
-					.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord="
-							+ keyWordString + "&selectedType=" + selectedType);
-		} else {
-			alert("Will load programes \n Will be implemented in cam-124");
-		}
-	}
