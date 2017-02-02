@@ -48,6 +48,9 @@
 				<!-- End Main search bar -->
 			</div>
 		</div>
+		<div>			
+		<a href="/dist/partials/addProgrammeDetails.jsp">Add a Course view</a>	
+		</div>
 	</div> 
 <!-- jQuery & Other js -->
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
