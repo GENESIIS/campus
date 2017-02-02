@@ -147,7 +147,7 @@
 									<div class="col-sm-2">
 										<!-- <button type="submit" class="btn btn-search btn-small btn-block">Search</button> -->
 										<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" onclick="searchFunction()">Apply Search</button>
+								class="btn btn-primary" >Apply Search</button>
 									</div>			
 								</div>
 							</div>
@@ -283,7 +283,8 @@
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
-<script type="text/javascript">
+	<script src="/dist/js/filterSearch.js"></script>
+<!-- <script type="text/javascript">
 	$( document ).ready(function() {	
 		$(".filter-boxes").css({"display": "none", "opacity": "0"}); 
 		
@@ -349,6 +350,6 @@
 			window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
 		}
 	}
-</script>
+</script> -->
 
 
