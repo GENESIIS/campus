@@ -194,6 +194,27 @@ body, html {
     body a:hover, body a:focus, body a.active, html a:hover, html a:focus, html a.active {
       text-decoration: none !important; }
 
+.panel-collapse-ico {
+  color: #bdbdbd;
+  font-size: 2em;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  height: 100%;
+  display: block; }
+  .panel-collapse-ico span {
+    position: relative; }
+
+.rotate {
+  -moz-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear; }
+
+.rotate.down {
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg); }
+
 .main-screen {
   display: block;
   position: relative;
@@ -211,25 +232,42 @@ body, html {
         width: 100%; }
     .main-screen .content-panel .search-area {
       display: block;
-      position: relative; }
+      position: relative;
+      z-index: 10; }
       .main-screen .content-panel .search-area .main-search-bar {
         display: block; }
         .main-screen .content-panel .search-area .main-search-bar .bar-holder {
           display: block;
+          background: rgba(125, 125, 125, 0.5) none repeat scroll 0 0;
           position: relative;
-          top: -42px; }
-          .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
-            width: 80%;
+          padding: 13px;
+          width: 80%;
+          top: -50px; }
+          .main-screen .content-panel .search-area .main-search-bar .bar-holder input#course-search {
+            width: 100%;
             line-height: 64px;
-            border: 12px solid rgba(125, 125, 125, 0.5);
+            border: none;
             font-size: 24px;
             color: #918a8a;
-            padding-left: 30px; }
+            padding-left: 30px;
+            padding-right: 30px; }
       .main-screen .content-panel .search-area .filter-boxes {
         display: block;
-        padding-bottom: 60px; }
+        background: #fff;
+        padding: 0 15px 0; }
         .main-screen .content-panel .search-area .filter-boxes .box-holder {
-          width: 90%; }
+          width: auto !important;
+          padding-top: 15px;
+          padding-bottom: 15;
+          padding-right: 0;
+          border-top: 1px solid #ccdae7; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder input[type="radio"] {
+            width: auto !important; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder button#addSearchData {
+            margin-bottom: 15px;
+            float: right; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder .search-title {
+            padding-right: 35px; }
           .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
             width: 29.5%;
             background: rgba(225, 225, 225, 0.6);
@@ -919,5 +957,3 @@ body, html {
 
 .slideable {
   display: none; }
-
-/*# sourceMappingURL=style.css.map */
