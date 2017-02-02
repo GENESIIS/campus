@@ -3,7 +3,8 @@ package com.genesiis.campus.command;
 //20170111 PN CAM-72 INIT CmdErrorHandling class. Implementing execute() method WIP.
 //20170112 PN CAM-72 modified the execute method to pass error/exception details to the front end on Servlet Exception or Error.
 //20170125 PN CAM-72: removed the instantiation of Throwable at declaration of throwable variable.
-
+//20170125 PN CAM-72: modified details view that passes to the JSP page.
+//20170202 PN CAM-72: modified the values set of view that passes into the JSP page.
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
@@ -34,7 +35,7 @@ public class CmdErrorHandling implements ICommand {
 		Collection<String> errorDetails = new ArrayList<String>();
 
 		try {
-
+			//Get error/exception details from the servlet request headers.
 			throwable = (Throwable) helper.getAttribute("javax.servlet.error.exception");
 			statusCode = (Integer) helper.getAttribute("javax.servlet.error.status_code");
 			servletName = (String) helper.getAttribute("javax.servlet.error.servlet_name");
@@ -60,14 +61,13 @@ public class CmdErrorHandling implements ICommand {
 			}
 
 			// Send error details to the front page.
-			errorDetails.add(errorType);
 			errorDetails.add(Integer.toString(statusCode));
-			errorDetails.add(servletName);
-			errorDetails.add(requestUri);
 			errorDetails.add(errorMessage);
 			errorDetails.add(exceptionName);
 			errorDetails.add(exceptionMessage);
 			errorDetailsWrapper.add(errorDetails);
+			log.info("ERROR: TYPE:" + errorType + " CODE:" + statusCode + " SERVLET:" + servletName + " REQUESTED URI:"
+					+ requestUri + " MESSAGE:" + errorMessage);
 		} catch (Exception e) {
 			log.error("execute() : Exception " + e.toString());
 			throw e;
