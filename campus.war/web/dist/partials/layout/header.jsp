@@ -4,6 +4,7 @@
 <!-- 20161110 JH c7 css styles changes -->
 <!-- 20161117 JH c7 load header categories from json object -->
 <!-- 20161118 JH c7 header page css style changes -->
+<!-- 20170201 DN c131-admin-manage-banner-upload-banner-image-dn add Banner div element to div class="top"  -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -12,6 +13,7 @@
 		<div class="logo-brand">
 			<h1 class="logo-txt">Campus.lk</h1>
 		</div>
+		<div></div> <!-- BANNER HOLDER 768*90 -->
 	</div>
 	<div class="bottom">
 		<div class="menu-bar">
