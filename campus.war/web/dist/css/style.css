@@ -6,9 +6,6 @@
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway|Slabo+27px';
 @import 'https://fonts.googleapis.com/css?family=Roboto';
-@import 'https://fonts.googleapis.com/css?family=Nixie+One';
-@import 'https://fonts.googleapis.com/css?family=Arvo';
-@import 'https://fonts.googleapis.com/css?family=Oswald';
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -74,19 +71,13 @@ textarea:focus, input:focus {
     clear: both; }
 
 .colr-white {
-  color: white !important; }
+  color: white; }
 
 .page-topic-t1 {
   font-family: "Arvo", serif;
-  font-size: 34px;
+  font-size: 30px;
   color: #3a3b3c;
   padding-bottom: 30px; }
-
-.page-topic-t2 {
-  color: #18a6f0;
-  font-family: Oswald;
-  font-size: 32px;
-  line-height: 54px; }
 
 /*Font Face */
 /* Layout */
@@ -193,6 +184,27 @@ body, html {
     body a:hover, body a:focus, body a.active, html a:hover, html a:focus, html a.active {
       text-decoration: none !important; }
 
+.panel-collapse-ico {
+  color: #bdbdbd;
+  font-size: 2em;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  height: 100%;
+  display: block; }
+  .panel-collapse-ico span {
+    position: relative; }
+
+.rotate {
+  -moz-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear; }
+
+.rotate.down {
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg); }
+
 .main-screen {
   display: block;
   position: relative;
@@ -210,71 +222,88 @@ body, html {
         width: 100%; }
     .main-screen .content-panel .search-area {
       display: block;
-      position: relative; }
+      position: relative;
+      z-index: 10; }
       .main-screen .content-panel .search-area .main-search-bar {
         display: block; }
         .main-screen .content-panel .search-area .main-search-bar .bar-holder {
           display: block;
+          background: rgba(125, 125, 125, 0.5) none repeat scroll 0 0;
           position: relative;
-          top: -42px; }
-          .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
-            width: 80%;
+          padding: 13px;
+          width: 80%;
+          top: -50px; }
+          .main-screen .content-panel .search-area .main-search-bar .bar-holder input#course-search {
+            width: 100%;
             line-height: 64px;
-            border: 12px solid rgba(125, 125, 125, 0.5);
+            border: none;
             font-size: 24px;
             color: #918a8a;
-            padding-left: 30px; }
+            padding-left: 30px;
+            padding-right: 30px; }
       .main-screen .content-panel .search-area .filter-boxes {
         display: block;
-        padding-bottom: 60px; }
+        background: #fff;
+        padding: 0 15px 0; }
         .main-screen .content-panel .search-area .filter-boxes .box-holder {
-          width: 90%; }
-          .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
-            width: 29.5%;
-            background: rgba(225, 225, 225, 0.6);
-            padding: 8px;
-            margin-top: 30px;
-            margin-right: 5.5%;
-            transition: all 0.3s; }
-            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li:hover {
-              background: #508ef6; }
-            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li:nth-child(3n) {
-              margin-right: 0;
-              float: right; }
-            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box {
-              background: #fff;
-              display: block;
-              width: 100%;
-              font-family: "Slabo 27px", serif;
-              padding-bottom: 20px; }
-              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name {
-                display: block;
-                padding: 16px; }
-                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name a {
-                  font-size: 26px;
-                  color: #818181;
-                  font-family: "Slabo 27px", serif; }
-              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info {
-                display: block; }
-                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
-                  display: inline-block;
-                  position: relative;
-                  width: 46%; }
-                  .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image img {
-                    width: 90%; }
-                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
-                  display: inline-block;
-                  width: 54%;
-                  position: relative;
-                  font-size: 15px;
-                  color: #919191;
-                  line-height: 16px;
-                  padding-right: 8px;
-                  padding-left: 2px; }
-                  .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description a {
-                    padding-top: 20px;
-                    color: #3a74d6;
-                    font-size: 16px; }
+          width: auto !important;
+          padding-top: 15px;
+          padding-bottom: 15;
+          padding-right: 0;
+          border-top: 1px solid #ccdae7; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder input[type="radio"] {
+            width: auto !important; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder button#addSearchData {
+            margin-bottom: 15px;
+            float: right; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder .search-title {
+            padding-right: 35px; }
+  .main-screen ul.category-list > li {
+    width: 29.5%;
+    background: rgba(225, 225, 225, 0.6);
+    padding: 8px;
+    margin-top: 30px;
+    margin-right: 5.5%;
+    transition: all 0.3s; }
+    .main-screen ul.category-list > li:hover {
+      background: #508ef6; }
+    .main-screen ul.category-list > li:nth-child(3n) {
+      margin-right: 0;
+      float: right; }
+    .main-screen ul.category-list > li .category-box {
+      background: #fff;
+      display: block;
+      width: 100%;
+      font-family: "Slabo 27px", serif;
+      padding-bottom: 20px; }
+      .main-screen ul.category-list > li .category-box .category-name {
+        display: block;
+        padding: 16px; }
+        .main-screen ul.category-list > li .category-box .category-name a {
+          font-size: 26px;
+          color: #818181;
+          font-family: "Slabo 27px", serif; }
+      .main-screen ul.category-list > li .category-box .course-info {
+        display: block; }
+        .main-screen ul.category-list > li .category-box .course-info .image {
+          display: inline-block;
+          position: relative;
+          width: 46%; }
+          .main-screen ul.category-list > li .category-box .course-info .image img {
+            width: 90%; }
+        .main-screen ul.category-list > li .category-box .course-info .description {
+          display: inline-block;
+          width: 54%;
+          position: relative;
+          font-size: 15px;
+          color: #919191;
+          line-height: 16px;
+          padding-right: 8px;
+          padding-left: 2px; }
+          .main-screen ul.category-list > li .category-box .course-info .description a {
+            padding-top: 20px;
+            color: #3a74d6;
+            font-size: 16px; }
   .main-screen .banner-panel {
     width: 17%;
     display: inline-block;
@@ -370,265 +399,6 @@ body, html {
             float: right;
             width: 28%; }
 
-.contact-us-screen {
-  display: block;
-  position: relative; }
-  .contact-us-screen .contact-form-holder {
-    display: block;
-    width: 93%;
-    margin-left: auto;
-    margin-right: auto;
-    background: #3d5265;
-    z-index: 99;
-    position: relative;
-    top: -60px; }
-    .contact-us-screen .contact-form-holder .contact-form {
-      display: block;
-      padding: 50px 70px 100px; }
-      .contact-us-screen .contact-form-holder .contact-form .submit-area {
-        display: inline-block;
-        position: relative;
-        width: 54%;
-        float: left;
-        padding-right: 28px; }
-        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > label {
-          color: #cccccc;
-          font-size: 22px;
-          line-height: 50px;
-          position: relative; }
-          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > label span {
-            font-size: 45px;
-            color: #18a6f0;
-            position: absolute;
-            top: 28px;
-            right: -32px;
-            line-height: 20px; }
-        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form div > input {
-          color: #dff4ff;
-          line-height: 54px;
-          font-size: 22px;
-          border: none;
-          background: #506374;
-          width: 100%;
-          margin-bottom: 18px;
-          padding-left: 18px;
-          font-family: "Roboto", sans-serif; }
-        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form p {
-          font-size: 20px;
-          color: #cccccc;
-          line-height: 54px;
-          position: relative; }
-          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form p span {
-            font-size: 45px;
-            color: #18a6f0;
-            position: absolute;
-            top: 28px;
-            left: -24px;
-            line-height: 20px; }
-        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .user-message textarea {
-          width: 100%;
-          background: #506374;
-          border: none;
-          color: #fff;
-          padding: 15px;
-          line-height: 20px;
-          font-weight: 200; }
-        .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .re-captcha {
-          padding: 50px 0; }
-          .contact-us-screen .contact-form-holder .contact-form .submit-area .submit-form .re-captcha img {
-            width: 75%; }
-      .contact-us-screen .contact-form-holder .contact-form .question-and-info-area {
-        display: inline-block;
-        position: relative;
-        width: 46%;
-        padding-left: 30px; }
-        .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area {
-          display: block; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .heading {
-            display: block;
-            padding-bottom: 40px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .heading p {
-              padding-top: 10px;
-              font-size: 22px;
-              color: #cccccc;
-              line-height: 26px; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions {
-            display: block;
-            border-bottom: 3px solid #506374;
-            padding-bottom: 8px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .question {
-              display: block; }
-              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .question h3 {
-                font-family: Oswald;
-                font-size: 24px;
-                line-height: 60px;
-                color: #fff;
-                position: relative;
-                left: 45px;
-                cursor: pointer; }
-                .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .question h3 span {
-                  color: #18a6f0;
-                  position: absolute;
-                  font-size: 68px;
-                  left: -45px;
-                  top: -6px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer {
-              display: block; }
-              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
-                font-size: 18px;
-                line-height: 20px;
-                color: #6da6de;
-                text-align: justify;
-                padding-bottom: 10px; }
-        .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area {
-          display: block;
-          margin-top: 120px;
-          padding: 30px;
-          border: 2px solid #506374;
-          border-radius: 10px; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .heading {
-            display: block; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .address {
-            display: block;
-            padding-bottom: 35px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .address p {
-              font-size: 24px;
-              font-family: "Roboto", sans-serif;
-              color: #e2e2e2;
-              font-weight: lighter; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .location {
-            display: block;
-            padding-bottom: 50px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .location iframe {
-              border: 0;
-              height: 235px;
-              width: 100%; }
-          .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info {
-            display: block;
-            font-size: 24px;
-            font-family: "Roboto", sans-serif;
-            color: #e2e2e2;
-            font-weight: lighter; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .email {
-              display: block;
-              padding-bottom: 35px;
-              color: #e2e2e2;
-              text-decoration: none; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .tp {
-              display: block;
-              padding-bottom: 35px;
-              line-height: 35px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
-              display: block; }
-
-.main-category {
-  display: block;
-  position: relative; }
-  .main-category .inner-header {
-    background: #fff; }
-    .main-category .inner-header .category-image {
-      display: inline-block; }
-    .main-category .inner-header .category-name {
-      display: inline-block;
-      position: relative; }
-  .main-category .content-holder {
-    display: block;
-    position: relative;
-    width: 98%; }
-    .main-category .content-holder .course-filter-panel {
-      width: 67%;
-      display: block;
-      position: relative;
-      float: left; }
-      .main-category .content-holder .course-filter-panel .filtering-area {
-        display: block;
-        border-bottom: 5px solid #ededed;
-        padding-bottom: 15px; }
-        .main-category .content-holder .course-filter-panel .filtering-area .top {
-          display: block;
-          width: 100%;
-          height: 20px;
-          background: #37474f;
-          margin-bottom: 8px; }
-        .main-category .content-holder .course-filter-panel .filtering-area .bottom {
-          display: block;
-          width: 100%;
-          background: #e98800; }
-          .main-category .content-holder .course-filter-panel .filtering-area .bottom ul > li {
-            width: 16.66%;
-            text-align: center;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            float: left; }
-            .main-category .content-holder .course-filter-panel .filtering-area .bottom ul > li a {
-              color: #fff;
-              font-size: 18px;
-              font-weight: 500;
-              width: 100%; }
-      .main-category .content-holder .course-filter-panel .filter-result-table {
-        display: block;
-        position: relative; }
-        .main-category .content-holder .course-filter-panel .filter-result-table .course-info {
-          display: block;
-          padding-top: 20px;
-          padding-bottom: 20px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info:nth-child(even) {
-            background: rgba(55, 71, 79, 0.07); }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name {
-            display: inline-block;
-            width: 15.2%;
-            float: left;
-            border-right: 1px solid #e1e1e1; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name {
-              display: block;
-              text-align: center;
-              font-family: "Roboto", sans-serif;
-              font-size: 20px;
-              color: #193949;
-              line-height: 30px;
-              font-weight: 600; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo {
-              display: block;
-              text-align: center; }
-              .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-logo img {
-                width: 75px;
-                padding-top: 8px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-description {
-            display: inline-block;
-            position: relative;
-            width: 46.8%;
-            float: left;
-            text-align: center;
-            padding-top: 45px;
-            color: #717171;
-            font-size: 18px;
-            font-family: Oswald;
-            border-right: 1px solid #e1e1e1; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location {
-            display: inline-block;
-            width: 20.6%;
-            float: left;
-            text-align: center;
-            padding-top: 50px;
-            border-right: 1px solid #e1e1e1; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-location a {
-              color: #4f7dd9;
-              font-size: 18px; }
-          .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration {
-            display: inline-block;
-            float: right;
-            width: 17.4%;
-            text-align: center;
-            color: #6b6c6f;
-            font-size: 20px;
-            padding-top: 36px; }
-            .main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-duration span {
-              font-size: 18px;
-              color: #a6a8ab;
-              font-family: "Roboto", sans-serif;
-              line-height: 35px;
-              font-weight: lighter; }
-
 /* Modules */
 .btn-home {
   display: block;
@@ -642,9 +412,7 @@ body, html {
   background: #36474f;
   width: 98%;
   margin-top: 256px;
-  padding: 0 30px;
-  margin-right: auto;
-  margin-left: auto; }
+  padding: 0 30px; }
   .inner-header .main-topic {
     font-family: "Nixie One", cursive;
     display: inline-block;
@@ -653,23 +421,6 @@ body, html {
       font-size: 42px;
       line-height: 88px;
       color: #fff; }
-
-.page-topic {
-  display: block;
-  position: relative;
-  padding-left: 3.8%;
-  padding-top: 30px; }
-
-.inner-image-header {
-  display: block;
-  width: 100%;
-  background: #9dc2ff; }
-  .inner-image-header .bg-image {
-    background: url("../i/contactUs/header-bar-contact.png");
-    background-size: cover;
-    height: 225px;
-    width: 100%;
-    opacity: 0.46; }
 
 .filter-item {
   display: block;
@@ -684,26 +435,11 @@ body, html {
       cursor: pointer; }
       .filter-item .item-header label span {
         color: #3a8af7; }
-  .filter-item .item-container .select-item {
+  .filter-item .item-container {
     display: block; }
-    .filter-item .item-container .select-item label {
-      font-size: 20px;
-      color: #3a3b3c;
-      line-height: 40px; }
-
-.btn-submit {
-  width: 45%;
-  line-height: 70px;
-  background: #3a81f9;
-  border-radius: 10px;
-  border: none;
-  font-family: "Roboto", sans-serif;
-  font-size: 30px;
-  color: #fff; }
-  .btn-submit:hover {
-    background: #3a7be9; }
-
-.slideable {
-  display: none; }
-
-/*# sourceMappingURL=style.css.map */
+    .filter-item .item-container .select-item {
+      display: block; }
+      .filter-item .item-container .select-item label {
+        font-size: 20px;
+        color: #3a3b3c;
+        line-height: 40px; }
