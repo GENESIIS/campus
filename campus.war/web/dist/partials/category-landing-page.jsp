@@ -21,18 +21,29 @@
 <title>Campus.lk</title>
 
 <!-- Bootstrap & CSS Style-->
-
-<!-- <link href="/dist/css/style.css" rel="stylesheet">  -->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
+<link href="/dist/css/image-slides.css" rel="stylesheet">
+
+<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/js/main.js"></script>
+<script src="/dist/js/header/ui-populate-helper.js"></script>
 
 </head>
 
 <body>
 
 	<!-- include Header-->
-		<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
+		<header>
+	<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
+		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	</header>
 	<!-- End Header -->
 
 	<!-- Main Container - Higher-Education -->

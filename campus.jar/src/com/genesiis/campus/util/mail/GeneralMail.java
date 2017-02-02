@@ -8,6 +8,10 @@ package com.genesiis.campus.util.mail;
 //			  	Removed GeneralMail() constructor argument 'mailHost'.
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
 //20161103 AS  C8-inquiry-form-for-course email class methods modified and bug fixed 
+import com.genesiis.campus.util.MailServerManager;
+
+import org.apache.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,9 +26,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import com.genesiis.campus.util.MailServerManager;
 
-import org.apache.log4j.Logger;
 
 /**
  * GeneralMail class captures the essence of an email

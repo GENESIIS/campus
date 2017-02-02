@@ -1,12 +1,13 @@
 package com.genesiis.campus.validation;
 //20161220 as c19-student-login-without-using-third-party-application-as removed unwanted comments and loggers
-import java.text.ParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.genesiis.campus.entity.model.Student;
 
 import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.Student;
+import java.text.ParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginValidator {
 	static Logger log = Logger.getLogger(LoginValidator.class.getName());

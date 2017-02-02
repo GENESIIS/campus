@@ -2,16 +2,7 @@ package com.genesiis.campus.command;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
 import com.genesiis.campus.entity.StudentLoginDAO;
@@ -25,6 +16,17 @@ import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 public class CmdStudentLogin implements ICommand {
 
@@ -40,7 +42,7 @@ public class CmdStudentLogin implements ICommand {
 			int attempts = 0;
 			String pageURL = "/dist/partials/login.jsp";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			String messageReturn = new String(message);
+			
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
 
@@ -50,7 +52,8 @@ public class CmdStudentLogin implements ICommand {
 
 			if (validateResult.equalsIgnoreCase("True")) {
 				data = LoginValidator.dataSeparator(data);
-				final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				//final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				ICrud loginDAO = new StudentLoginDAO();
 				dataCollection = loginDAO.findById(data);
 
 				for (Collection<String> collection : dataCollection) {
@@ -84,6 +87,12 @@ public class CmdStudentLogin implements ICommand {
 					session.setAttribute("currentUserData", dataCollection);
 					setStudentLoginDetails(data, helper);
 					int status = StudentLoginDAO.loginDataUpdate(data);
+					
+					if(status>0){
+						message = SystemMessage.VALIDUSER.message();
+					}else{
+						
+					}
 				} else {
 					// login attempts handle in here
 					// after 3 attempts session will blocked user

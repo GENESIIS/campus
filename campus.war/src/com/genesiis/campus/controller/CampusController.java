@@ -13,7 +13,7 @@ package com.genesiis.campus.controller;
 //20170117 AS CAM-21-student-logout-clear-session-details-update-logout-data-as Session details invalidation result.getCollection() modified. 
 //20170106 AS CAM-20 Session attributes handled from process method and null sessions also handled
 //20170125 AS CAM-20 unwanted loggers and comments removed.
-
+//20170131 AS CAM-20 clear cache data in session null stage.
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -69,7 +69,8 @@ public class CampusController extends HttpServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+ 
+		
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
@@ -117,7 +118,10 @@ public class CampusController extends HttpServlet {
 					response.setContentType("application/json");
 				}
 			} else {
-
+				  response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
+			      response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
+			      response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
+			      response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
 				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
 
 				if (result != null && result.getCollection() != null) {

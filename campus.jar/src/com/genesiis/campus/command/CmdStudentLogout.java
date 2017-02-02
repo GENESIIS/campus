@@ -1,15 +1,7 @@
 package com.genesiis.campus.command;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-
-import javax.jms.Session;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-
+//20170118 AS CAM-21 CmdStudentLogout command class created. 
+//20170130 AS CAM-21 code review modification done. 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
@@ -19,6 +11,16 @@ import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
+
+import javax.jms.Session;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
+
 public class CmdStudentLogout implements ICommand {
 	static Logger log = Logger.getLogger(CmdStudentLogout.class.getName());
 
@@ -27,15 +29,11 @@ public class CmdStudentLogout implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		String message = SystemMessage.LOGOUTSUCCESSFULL.message();
+		String message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
 		String pageURL = "/index.jsp";
 		try {
 			String gsonData = helper.getParameter("jsonData");
 			loggedStudent = getStudentdetails(gsonData);
-
-			// Student loggedStudent = new Student();
-			// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			// SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
 			Date loginTime = new Date();
 
@@ -47,13 +45,31 @@ public class CmdStudentLogout implements ICommand {
 					.getTime()).toString());
 
 			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
-			
+
 			if (status > 0) {
+				Cookie[] cookies = helper.getRequest().getCookies();
+		    	if(cookies != null){
+		    	for(Cookie cookie : cookies){
+		    		if(cookie.getName().equals("JSESSIONID")){
+		    			System.out.println("JSESSIONID="+cookie.getValue());
+		    			break;
+		    		}
+		    	}
+		    	}
+				
+				
 				HttpSession curentSession = helper.getRequest().getSession(false);
-				curentSession.invalidate();
-				//pageURL = "/dist/partials/login.jsp";
+				
+				if(curentSession != null){
+					curentSession.removeAttribute("user");
+					curentSession.removeAttribute("userCode");
+					curentSession.removeAttribute("currentUserData");
+					curentSession.invalidate();
+
 				message = SystemMessage.LOGOUTSUCCESSFULL.message();
-				log.info(message + status);
+				}
+			} else {
+				message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
 			}
 
 		} catch (Exception e) {
@@ -93,7 +109,5 @@ public class CmdStudentLogout implements ICommand {
 		}
 		return student;
 	}
-
-	
 
 }

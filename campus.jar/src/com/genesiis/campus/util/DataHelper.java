@@ -4,12 +4,6 @@ package com.genesiis.campus.util;
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 //20161031 AS C8-inquiry-form-for-course modified getResultPage method
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -17,6 +11,11 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
+
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

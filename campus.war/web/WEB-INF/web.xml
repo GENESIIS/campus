@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>CAMPUS_WEB_APP</display-name>
-  <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <param-name>host</param-name>
-    <param-value>25</param-value>
-  </context-param>
-  <context-param>
-    <param-name>user</param-name>
-    <param-value>25</param-value>
-  </context-param>
-  <listener>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>CAMPUS_WEB_APP</display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>host</param-name>
+		<param-value>25</param-value>
+	</context-param>
+	<context-param>
+		<param-name>user</param-name>
+		<param-value>25</param-value>
+	</context-param>
+	<listener>
 		<listener-class>com.genesiis.campus.util.SessionCounterListener</listener-class>
 	</listener>
+
+	<servlet>
+		<servlet-name>mainController</servlet-name>
+		<servlet-class>CampusController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>mainController</servlet-name>
+		<url-pattern>/CampusController</url-pattern>
+	</servlet-mapping>
+
+<!-- 	<filter> -->
+<!-- 		<filter-name>cacheFilter</filter-name> -->
+<!-- 		<filter-class>NoCacheFilter</filter-class> -->
+<!-- 	</filter> -->
+
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>cacheFilter</filter-name> -->
+<!-- 		<url-pattern>/NoCacheFilter</url-pattern> -->
+<!-- 	</filter-mapping> -->
 </web-app>

@@ -1,10 +1,12 @@
 package com.genesiis.campus.util;
+
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.validation.ResponseType;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.validation.ResponseType;
 
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method

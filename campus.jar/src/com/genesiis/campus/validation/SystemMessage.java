@@ -21,6 +21,7 @@ public enum SystemMessage {
 	LOGINUNSUCCESSFULL("Login Unsuccessfull"),
 	LOGGEDSUCCESSFULL("Logged successfull"),
 	LOGOUTSUCCESSFULL("Logout successfull"),
+	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),

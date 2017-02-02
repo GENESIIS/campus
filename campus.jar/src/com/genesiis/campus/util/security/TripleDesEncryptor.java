@@ -1,6 +1,7 @@
 package com.genesiis.campus.util.security;
 
 //20162223 DN C18-student-signup-without-using-third-party-application-dn created TripleDesEncryptor.java
+import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -14,7 +15,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.log4j.Logger;
 
 /**
  * TripleDesEncryptor provides Triple Data Encryption Algorithm (TDEA or Triple

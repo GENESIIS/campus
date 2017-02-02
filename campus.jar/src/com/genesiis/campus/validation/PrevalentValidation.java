@@ -8,12 +8,10 @@ package com.genesiis.campus.validation;
 //cater more phone number styles with spaces in between.
 //20161124 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
 //20161128 DN isValidPhoneNumber(),validateEmail() and isNotEmpty() methods changed to use trim() on passing parameter.
+import org.apache.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
-import org.apache.log4j.Logger;
 
 /**
 * PrevalentValidation intended to provide general validation and it has provided

@@ -22,9 +22,13 @@
 </head>
 <body>
 	<!-- Header-->
-	<header>
 	<%@ include file="/dist/partials/student/SessionDetailsJSTL.jsp"%>
+
+
+	<!-- Header-->
+	<header>
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+		<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 	</header>
 	<!-- End Header -->
 
