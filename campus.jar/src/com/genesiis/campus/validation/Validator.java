@@ -34,6 +34,7 @@ package com.genesiis.campus.validation;
 //20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
 //20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
 //20170131 CW c36-add-tutor-details add validatePassword() method & modified validateTutorFields() method
+//20170130 CW c36-add-tutor-details modified validateTutorFields() method
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -77,20 +78,20 @@ public class Validator {
 
 		boolean isHavingNull = false; 
 		try {		
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
-					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
+			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") != " ")
 					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
 					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("landNumber") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("landNumber") != " ")
 					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("address1")))
+					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("landNumber") != " ")
 					&& (Validator.isNotEmpty(helper.getParameter("email")))
-					&& (Validator.isNotEmpty(helper.getParameter("username")))
-					&& (Validator.isNotEmpty(helper.getParameter("password")))
-					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
+					&& (Validator.isNotEmpty(helper.getParameter("username"))) || (helper.getParameter("username") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("password")))) || (helper.getParameter("password") != " ")
+					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword")))) {
 				isHavingNull = true; 
 			}
 		} catch (Exception e) {
@@ -127,6 +128,7 @@ public class Validator {
 			}
 			if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
 				helper.setAttribute("mobileError", SystemMessage.MOBILECOUNTRYCODEERROR.message());
+				helper.setAttribute("countryError", SystemMessage.COUNTRYCODEERROR.message());
 				message = "False";
 			}
 			if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
@@ -188,60 +190,6 @@ public class Validator {
 			
 			message = validatePassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper);
 			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			
-			
-			
-			
-			
-			
-			if (isHavingNullValues(helper)) {
-				message = SystemMessage.EMPTYFIELD.message();
-			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
-				message = SystemMessage.FIRSTNAMEERROR.message();
-			} else if (!isValidLastname(helper.getParameter("lastname"))) {
-				message = SystemMessage.LASTNAMEERROR.message();
-			} else if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
-				message = SystemMessage.MOBILECOUNTRYCODEERROR.message();
-			} else if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
-				message = SystemMessage.NETWORKCODEERROR.message();
-			} else if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
-				message = SystemMessage.MOBILENUMBERERROR.message();
-			} else if (!isValidCountryCode(helper.getParameter("landCountryCode"))) {
-				message = SystemMessage.LANDCOUNTRYCODEERROR.message();
-			} else if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
-				message = SystemMessage.LANDAREACODEERROR.message();
-			} else if (!isValidContactNumber(helper.getParameter("landNumber"))) {
-				message = SystemMessage.LANDNUMBERERROR.message();
-			} else if (!isValidAddressLine1(helper.getParameter("address1"))) {
-				message = SystemMessage.ADDRESSLINE1ERROR.message();
-			} else if (!isValidURL(helper.getParameter("weblink"))) {
-				message = SystemMessage.WEBLINKERROR.message();
-			} else if (!isValidURL(helper.getParameter("facebook"))) {
-				message = SystemMessage.FACEBOOKERROR.message();
-			} else if (!isValidURL(helper.getParameter("linkedin"))) {
-				message = SystemMessage.LINKEDINERROR.message();
-			} else if (!isValidURL(helper.getParameter("twitter"))) {
-				message = SystemMessage.TWITTERERROR.message();
-			} else if (!isValidURL(helper.getParameter("instagram"))) {
-				message = SystemMessage.INSTAGRAMERROR.message();
-			} else if (!isValidURL(helper.getParameter("myspace"))) {
-				message = SystemMessage.MYSPACEERROR.message();
-			} else if (!isValidWhatsappViber(helper.getParameter("whatsapp"))) {
-				message = SystemMessage.WHATSAPPERROR.message();
-			} else if (!isValidWhatsappViber(helper.getParameter("viber"))) {
-				message = SystemMessage.VIBERERROR.message();
-			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
-				message = SystemMessage.PASSWORDERROR.message();
-			} */
-
 		} catch (Exception e) {
 			log.error("validateTutorFields: Exception" + e.toString());
 			throw e;
@@ -260,7 +208,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21)) {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName == " ") {
 				valid = true;
 			}
 
@@ -282,7 +230,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21)) {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName == " ") {
 				valid = true;
 			}
 
@@ -304,7 +252,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6)) {
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6) && !(countryCode.equals("0"))) {
 				valid = true;
 			}
 
@@ -326,7 +274,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11)) {
+			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode == " ") {
 				valid = true;
 			}
 
@@ -348,7 +296,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11)) {
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber == " ") {
 				valid = true;
 			}
 
@@ -370,7 +318,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31)) {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 == " ") {
 				valid = true;
 			}
 
