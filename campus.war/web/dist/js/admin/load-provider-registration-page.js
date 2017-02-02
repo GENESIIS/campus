@@ -356,12 +356,12 @@ function getProviderType() {
 		errorMessageList[i].innerHTML = "";
 	}
 
-	if (providerPrefixValidation() === false) {
-		flag = false;
-	}
-	if (providerUsernameValidation() === false) {
-		flag = false;
-	}
+//	if (providerPrefixValidation() === false) {
+//		flag = false;
+//	}
+//	if (providerUsernameValidation() === false) {
+//		flag = false;
+//	}
 
 	if (flag === true) {
 		if (vaidateCourseProviderDeatils() === true) {
@@ -417,7 +417,7 @@ function getProviderType() {
 							    	   form.method = 'post';
 							    	   form.action = '/dist/partials/admin/courseProviderManagement.jsp';
 							    	   var input = document.createElement('input');
-							    	   input.type = 'text';
+							    	   input.type = 'hidden';
 							           input.name = 'courseProviderCode';
 							           input.value = response.registerId;
 							    	   var inputUserMessage = document.createElement('input');
@@ -425,7 +425,7 @@ function getProviderType() {
 							           input.name = 'userMessage';
 							           input.value = response.userMessage;
 							           form.appendChild(input);
-							         //  form.appendChild(inputUserMessage);
+							           form.appendChild(inputUserMessage);
 							           form.submit();
 									
 									}
