@@ -18,6 +18,7 @@ package com.genesiis.campus.entity;
 //20170125 JH c39-add-course-provider assign course provider address details from course provider entity for preparedStatement3
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170202 JH c39-add-course-provider query string account modified: select user type code selected inside the insert query
+//20170202 JH c39-add-course-provider removed repeating statements used to set parameters to preparedStatement
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -117,86 +118,54 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			//check whether the course provider has a head office or not
 			if(courseProvider.getPrincipal()==0){//does not have a head office
 				preparedStatement = conn.prepareStatement(mainCourseProvider,
-						PreparedStatement.RETURN_GENERATED_KEYS);
-				
-				//set course provider basic details
-				preparedStatement.setString(1, courseProvider.getUniquePrefix());
-				preparedStatement.setString(2, courseProvider.getShortName());
-				preparedStatement.setString(3, courseProvider.getName());
-				preparedStatement.setString(4, courseProvider.getDescription());
-				preparedStatement.setString(5, courseProvider.getGeneralEmail());
-				preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
-				preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
-				preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
-				preparedStatement.setString(9, courseProvider.getLandPhoneNo());
-				preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
-				preparedStatement.setString(11, courseProvider.getFaxNo());
-				preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
-				preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
-				preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
-				preparedStatement.setString(15, courseProvider.getSpeciality());
-				preparedStatement.setString(16, courseProvider.getWeblink());
-				preparedStatement.setString(17, courseProvider.getFacebookURL());
-				preparedStatement.setString(18, courseProvider.getTwitterURL());
-				preparedStatement.setString(19, courseProvider.getMyspaceURL());
-				preparedStatement.setString(20, courseProvider.getLinkedinURL());
-				preparedStatement.setString(21, courseProvider.getInstagramURL());
-				preparedStatement.setString(22, courseProvider.getViberNumber());
-				preparedStatement.setString(23, courseProvider.getWhatsappNumber());
-				preparedStatement.setDate(24, courseProvider.getExpirationDate());
-				preparedStatement.setString(25, courseProvider.getAddress1());
-				preparedStatement.setString(26, courseProvider.getAddress2());
-				preparedStatement.setString(27, courseProvider.getAddress3());
-				preparedStatement.setInt(28, courseProvider.getAccountType());
-				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
-				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
-				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
-				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
+						PreparedStatement.RETURN_GENERATED_KEYS);			
+
 				preparedStatement.setString(33, courseProvider.getCrtBy());
 				preparedStatement.setString(34, courseProvider.getModBy());
 
 			}if(courseProvider.getPrincipal() !=0){//has a head office 
 				preparedStatement = conn.prepareStatement(mainCourseProvider,
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				
-				//set course provider basic details
-				preparedStatement.setString(1, courseProvider.getUniquePrefix());
-				preparedStatement.setString(2, courseProvider.getShortName());
-				preparedStatement.setString(3, courseProvider.getName());
-				preparedStatement.setString(4, courseProvider.getDescription());
-				preparedStatement.setString(5, courseProvider.getGeneralEmail());
-				preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
-				preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
-				preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
-				preparedStatement.setString(9, courseProvider.getLandPhoneNo());
-				preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
-				preparedStatement.setString(11, courseProvider.getFaxNo());
-				preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
-				preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
-				preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
-				preparedStatement.setString(15, courseProvider.getSpeciality());
-				preparedStatement.setString(16, courseProvider.getWeblink());
-				preparedStatement.setString(17, courseProvider.getFacebookURL());
-				preparedStatement.setString(18, courseProvider.getTwitterURL());
-				preparedStatement.setString(19, courseProvider.getMyspaceURL());
-				preparedStatement.setString(20, courseProvider.getLinkedinURL());
-				preparedStatement.setString(21, courseProvider.getInstagramURL());
-				preparedStatement.setString(22, courseProvider.getViberNumber());
-				preparedStatement.setString(23, courseProvider.getWhatsappNumber());
-				preparedStatement.setDate(24, courseProvider.getExpirationDate());
-				preparedStatement.setString(25, courseProvider.getAddress1());
-				preparedStatement.setString(26, courseProvider.getAddress2());
-				preparedStatement.setString(27, courseProvider.getAddress3());
-				preparedStatement.setInt(28, courseProvider.getAccountType());
-				preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
-				preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
-				preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
-				preparedStatement.setInt(32, courseProvider.getCourseProviderType());
+
 				preparedStatement.setInt(33, courseProvider.getPrincipal());
 				preparedStatement.setString(34, courseProvider.getCrtBy());
 				preparedStatement.setString(35, courseProvider.getModBy());
 
 			}
+			
+			//set course provider basic details
+			preparedStatement.setString(1, courseProvider.getUniquePrefix());
+			preparedStatement.setString(2, courseProvider.getShortName());
+			preparedStatement.setString(3, courseProvider.getName());
+			preparedStatement.setString(4, courseProvider.getDescription());
+			preparedStatement.setString(5, courseProvider.getGeneralEmail());
+			preparedStatement.setString(6,courseProvider.getCourseInquiryEmail());
+			preparedStatement.setString(7,courseProvider.getLandPhoneCountryCode());
+			preparedStatement.setString(8,courseProvider.getLandPhoneAreaCode());
+			preparedStatement.setString(9, courseProvider.getLandPhoneNo());
+			preparedStatement.setString(10, courseProvider.getLandPhpneNo2());
+			preparedStatement.setString(11, courseProvider.getFaxNo());
+			preparedStatement.setString(12,courseProvider.getMobilePhoneCountryCode());
+			preparedStatement.setString(13,courseProvider.getMobilePhoneNetworkCode());
+			preparedStatement.setString(14,courseProvider.getMobilePhoneNumber());
+			preparedStatement.setString(15, courseProvider.getSpeciality());
+			preparedStatement.setString(16, courseProvider.getWeblink());
+			preparedStatement.setString(17, courseProvider.getFacebookURL());
+			preparedStatement.setString(18, courseProvider.getTwitterURL());
+			preparedStatement.setString(19, courseProvider.getMyspaceURL());
+			preparedStatement.setString(20, courseProvider.getLinkedinURL());
+			preparedStatement.setString(21, courseProvider.getInstagramURL());
+			preparedStatement.setString(22, courseProvider.getViberNumber());
+			preparedStatement.setString(23, courseProvider.getWhatsappNumber());
+			preparedStatement.setDate(24, courseProvider.getExpirationDate());
+			preparedStatement.setString(25, courseProvider.getAddress1());
+			preparedStatement.setString(26, courseProvider.getAddress2());
+			preparedStatement.setString(27, courseProvider.getAddress3());
+			preparedStatement.setInt(28, courseProvider.getAccountType());
+			preparedStatement.setBoolean(29, courseProvider.isTutorRelated());
+			preparedStatement.setBoolean(30, courseProvider.isAdminAllowed());
+			preparedStatement.setInt(31,courseProvider.getCourseProviderStatus());
+			preparedStatement.setInt(32, courseProvider.getCourseProviderType());
 
 
 			/**
