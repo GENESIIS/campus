@@ -18,8 +18,6 @@
  */
 
 var keyWordString="";
-var selectedType="";
-var generalSearchFlag="";
 
 $(document).ready(function() {
 	displayDetails();
@@ -36,9 +34,7 @@ $(document).ready(function() {
 			var sParameterName = sURLVariables[i].split('=');
 			if (sParameterName[0] == 'keyWord') {
 				keyWordString = sParameterName[1];
-			} else if (sParameterName[0] == 'selectedType') {
-				selectedType = sParameterName[1];
-			}
+			} 
 		}
 		generalSearchFlag = "TRUE";			
 		
@@ -47,9 +43,7 @@ $(document).ready(function() {
 			url : '../../PublicController',
 			data : {
 				CCO : 'GENERAL_FILTER_SEARCH_COURSE_PROGRAMME',
-				keyWordString : keyWordString,
-				selectedType : selectedType,
-				generalSearchFlag:generalSearchFlag
+				keyWordString : keyWordString								
 			},
 			dataType : "json",
 			success : function(response) {				

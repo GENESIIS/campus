@@ -42,18 +42,14 @@ public class CmdGetSearchData implements ICommand {
 		ICrud programmeDAO = new SearchedProgrammeDAO(); 
 		Collection<Collection<String>> programmeCollection = null;
 		String searchData =  helper.getParameter("searchData");
-		final StringBuilder keyWordBuilder = new StringBuilder();
-		String selectedTypeString = helper.getParameter("selectedType");
-		String keyWordString = helper.getParameter("keyWordString");
-		String generalSearchFlag = helper.getParameter("generalSearchFlag");
-		String cco = helper.getParameter("CCO");		
-		
-		
+			
+		String keyWordString = helper.getParameter("keyWordString");		
+		String cco = helper.getParameter("CCO");			
 		try {			
-			//START-DJ-General filter search-program result set implementation. 
-			//if(generalSearchFlag.equalsIgnoreCase("TRUE")){				
-			if(Operation.getOperation(cco).equals(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME)){			
+			//START-DJ-General filter search-program result set implementation.							
+			if(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME.getCommandString().equalsIgnoreCase(cco)){			
 				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();
+				final StringBuilder keyWordBuilder = new StringBuilder();	
 				if (UtilityHelper.isNotEmpty(keyWordString)) {
 					// Do wild card search on key word
 					keyWordBuilder.append("%").append(keyWordString).append("%");
@@ -61,7 +57,6 @@ public class CmdGetSearchData implements ICommand {
 				}
 				searchDTO.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
 				programmeCollection= new ProgrammeDAOImpl().wildCardSearchOnProgrammes(searchDTO);
-				//final Set<Integer> programmeCodeSet = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(keyWordBuilder.toString());				
 				//END-DJ-General filter search-program result set implementation. 
 			}else{
 				//If:the instituteCode is set
@@ -71,8 +66,7 @@ public class CmdGetSearchData implements ICommand {
 				//else:the instituteCode is not set at the beginning of the page loading
 				} else {
 					programmeCollection = programmeDAO.getAll();
-				}
-				
+				}				
 			}
 			if (programmeCollection != null) {
 				view.setCollection(programmeCollection);
