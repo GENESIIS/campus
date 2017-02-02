@@ -17,6 +17,59 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 </head>
+<style type="text/css">
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info
+	{
+	display: block;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
+	{
+	display: inline-block;
+	width: 25%;
+	float: left;
+	border-right: 1px solid #e1e1e1;
+}
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
+	{
+	display: block;
+	text-align: center;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: #193949;
+	line-height: 0px;
+	font-weight: 600;
+}
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .input
+	{
+	display: block;
+	text-align: center;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: gray;
+	line-height: 0px;
+	font-style: italic;
+	font-weight: 100;
+}
+.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .textarea
+	{
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: gray;
+	font-style: italic;
+	font-weight: 100;
+}
+.main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
+	{
+	width: 16.66%;
+	text-align: center; 
+	float: left;
+}
+.error-message{
+	color : red;
+}
+</style>
 <body>
 	<!-- Header-->
 	<jsp:include page="/dist/partials/layout/header.jsp" />
@@ -31,18 +84,73 @@
 		<div class="page-topic">
 			<h2 class="page-topic-t1">| Add a Course</h2>
 		</div>
-
 		<!-- image header -->
 		<div class="inner-image-header">
 			<div class="bg-image"></div>
 		</div>
 		<!-- END inner-image-header -->
+		
+		
 
 		<!-- END provider-list-holder -->
 	</div>
 	<!-- End Container - Top Providers list -->
+	
+	<div class="main-category clearfix">
+	<div class="content-holder center-block clearfix">
+	<!-- course filter panel : left side -->
+	<div class="course-filter-panel">
+		<h3>Basic Info</h3>
+		<!-- Filter result table -->
+		<div class="filter-result-table">
+			<ul class="result-row">
+				<li class="course-info clearfix">
+					<div class="col-name">
+						<h1 class="pro-name">
+							Course Provider Name: <span style="color: red;">*</span>
+						</h1>
+					</div>
+					<div class="col-name">
+						<input class="input" type="text" name="providerName"
+							id="providerName" size="50px;" /><span id="errorProviderName"
+							class="error-message">${errorProviderName }</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	</div>
+
+
+	<div>
+		<table>
+			<tr>
+				<td>Course Provider :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Course Name :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Course Details :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Course email :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Course Duration :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+		</table>
+	</div>
+
 
 	<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
