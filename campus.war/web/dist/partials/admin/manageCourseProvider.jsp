@@ -89,8 +89,8 @@
 
 <body>
 	<!-- include Header-->
-	<header class="header"> <jsp:include
-		page="/dist/partials/layout/header.jsp"></jsp:include> </header>
+<header class="header"> <jsp:include
+		page="/dist/partials/layout/header.jsp"></jsp:include> </header> 
 	<!-- End Header -->
 
 
@@ -721,8 +721,8 @@
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 
 	<!-- custom javascript -->
-	<script language="JavaScript" type="text/javascript"
-		src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- 	<script language="JavaScript" type="text/javascript"
+		src="/dist/js/header/ui-populate-helper.js"></script> -->
 		<script type="text/javascript" src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
 

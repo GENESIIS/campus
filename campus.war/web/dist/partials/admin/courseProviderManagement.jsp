@@ -73,9 +73,9 @@
 }
 </style>
 
-<body onload="getCategoryData();">
+<body>
 	<!-- include Header-->
-	<header class="header"> <jsp:include
+	 <header class="header"> <jsp:include
 		page="/dist/partials/layout/header.jsp"></jsp:include> </header>
 	<!-- End Header -->
 
@@ -93,9 +93,9 @@
 		<!-- Page content -->
 
 		<div class="content-holder center-block clearfix">
-		<div class="alert alert-danger" role="alert"> Course provider registered.</div>
-			<c:if test="${not empty userMessage }">
-				<div class="alert alert-danger" role="alert" id="usermessage">${param.userMessage }</div>
+			<c:if test="${not empty param.userMessage }">
+				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage }. Your registered ID : ${param.courseProviderCode }</div>
+
 			</c:if>
 
 			<div class="course-filter-panel">
@@ -125,8 +125,7 @@
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 
 	<!-- custom javascript -->
-	<script language="JavaScript" type="text/javascript"
-		src="/dist/js/header/ui-populate-helper.js"></script>
+
 
 
 </body>
