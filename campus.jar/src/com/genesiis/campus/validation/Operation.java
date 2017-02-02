@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC to the class
 //20161027 AS C8-inquiry-form-for-course add SEND_COURSE_INQUIRY to the class
 //20161123 AS C19-student-login-without-using-third-party-application-test-as add STUDENT_LOGIN to the class
+//20170202 AS C22 forgot password, added EMAIL_VERIFICATION to the class.
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -20,6 +21,7 @@ public enum Operation {
 	STUDENT_LOGIN("SLOG", ResponseType.JSON, ""),
 	STUDENT_LOGOUT("SLGOUT", ResponseType.JSON, ""),
 	SESSIONEXPIR("EXP",ResponseType.JSON, ""),
+	EMAIL_VERIFICATION("EMAILV",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
