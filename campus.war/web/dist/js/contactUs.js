@@ -45,6 +45,5 @@ function validateForm(){
 function isHumanTestPassed(){	
 	var response = grecaptcha.getResponse();
 	return(response.length!=0)?true:false;
-	
-	
 }
+

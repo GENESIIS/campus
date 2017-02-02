@@ -28,6 +28,4 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
         <param-name>password</param-name>
         <param-value>Appleapple123</param-value>
     </context-param>
-  	
-  
 </web-app>

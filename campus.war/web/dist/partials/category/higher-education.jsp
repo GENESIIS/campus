@@ -1,5 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!-- 20161027 TR c11 start styling courses filter result page -->
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,19 +31,19 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="../../../index.html" class="btn-home center-block"></a>
+                <a href="../../../index.jsp" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
                 <!-- Main menu tabs -->
                 <div class="top-menus">
                     <ul class="list-inline">
-                        <li><a href="../courses.html">All Courses</a></li>
-                        <li><a href="../about-us.html">About Us</a></li>
-                        <li><a href="../contact-us.html">Contact Us</a></li>
-                        <li><a href="../news.html">News</a></li>
-                        <li><a href="../f-and-q.html">F & Q</a></li>
-                        <li><a href="../rss.html">Rss</a></li>
+                        <li><a href="../courses.jsp">All Courses</a></li>
+                        <li><a href="../about-us.jsp">About Us</a></li>
+                        <li><a href="../contact-us.jsp">Contact Us</a></li>
+                        <li><a href="../news.jsp">News</a></li>
+                        <li><a href="../f-and-q.jsp">F & Q</a></li>
+                        <li><a href="../rss.jsp">Rss</a></li>
                     </ul>
                 </div>
                 <!-- End Main menu tabs -->
@@ -183,7 +187,7 @@
 <!-- End Main Container -->
 
 <!-- Footer -->
-<footer w3-include-html="layout/footer.html"></footer>
+<footer w3-include-html="layout/footer.jsp"></footer>
 
 <!-- jQuery & Other js -->
 <script src="../../bower-components/jquery/jquery.min.js"></script>

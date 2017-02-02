@@ -7,9 +7,19 @@ package com.genesiis.campus.util;
 //20161031 DN c10-contacting-us-page getAttribute() method implemented
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20161108 DN, JH, DJ, AS, CM, MM Added implementation of getResponseType(String) method
+//20161108 JH Added code to discern an Ajax request from a normal request via checking  
+//				whether 'getHeader("x-requested-with")' returns 'XMLHttpRequest' in 
+//				getResponseType() method			
+//20161108 JH c7-higher-education-landing-page-mp removed unwanted imports
+//20161116 MM c2-integrate-google-banners-MP Added call to BannerData.setBannerDetails(IDatahelper, String) 
+//				in getResultView(String) method
 //20161116 DN c10-contacting-us-page-MP-dn removed the method setContextAttribute(String attributeName,Object value)
 // 			due to code review comment by CM
 //20170119 Dn CAMP47 changed the method ArrayList<FileItem> getFiles()  to accept List<FileItem> list insted of List<Objects> list
+//20161121 PN c27-upload-user-image: implemented getParameterMap() and getFiles() methods.
+//20161123 PN c27-upload-user-image: modified getFiles() method.
+
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -18,30 +28,31 @@ import com.genesiis.campus.factory.FactoryProducer;
 import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.validation.BannerData;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.servlet.ServletException;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import javax.servlet.ServletException;
 
 public class DataHelper implements IDataHelper {
-
 	static Logger logger = Logger.getLogger(DataHelper.class.getName());
 
 	private static HttpServletRequest request;
-	
+
 	private String cco = "";
 	private String commandChoice = "";
 	private String redirectPage = "login.jsp";
@@ -51,7 +62,6 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * @author pabodha
 	 * @return String
 	 * @param request
 	 *            This will pass the CCO (Command Class Code) to the servlet
@@ -69,20 +79,22 @@ public class DataHelper implements IDataHelper {
 		Operation o = Operation.getOperation(cco);
 		return o.getPageURL();
 	}
-	
+
 	/**
 	 * getResponseType(String) Returns the response type bound to each Operation
 	 * enum constant.
-	 * @return ResponseType Enum constant of type ResponseType indicating what type
-	 * of response to send to the client
-	 * @param String The value sent by the client as CCO 
-	 */	
+	 * 
+	 * @return ResponseType Enum constant of type ResponseType indicating what
+	 *         type of response to send to the client
+	 * @param String
+	 *            The value sent by the client as CCO
+	 */
 	@Override
 	public ResponseType getResponseType(String cco) {
 		Operation o = Operation.getOperation(cco);
 		if (Operation.BAD_OPERATION.equals(o)) {
 			String headerValue = getHeader("x-requested-with");
-			if (headerValue !=null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
+			if (headerValue != null && headerValue.equalsIgnoreCase("XMLHttpRequest")) {
 				return ResponseType.JSON;
 			} else {
 				return ResponseType.JSP;
@@ -96,7 +108,6 @@ public class DataHelper implements IDataHelper {
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
 	 * 
-	 * @author PN
 	 * @return String array if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -120,6 +131,7 @@ public class DataHelper implements IDataHelper {
 			final ICommand iCommand = factory.getCommand(cco);
 			if (iCommand != null) {
 				result = iCommand.execute(this, result);
+				BannerData.setBannerDetails(this, getResultPage(cco));
 			}
 		} catch (Exception e) {
 			logger.info("getResultView() : " + e.toString());
@@ -133,7 +145,6 @@ public class DataHelper implements IDataHelper {
 	 * parameter name if exists. If the seeking parameter name is not existing
 	 * method returns null String
 	 * 
-	 * @author DN
 	 * @return String if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -145,7 +156,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * setAttribute() method sets new Attribute to the HttpRequest
 	 * 
-	 * @author DN
 	 * @param String
 	 *            Name of the request attribute
 	 * @param Object
@@ -158,11 +168,23 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
+	 * getAttribute() method retrieves the value of the attribute that has the
+	 * name specified with the "name" parameter, from HttpServletRequest
+	 * 
+	 * @param String
+	 *            Name of the request attribute
+	 * @return Object The current value of the attribute
+	 */
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
+	}
+
+	/**
 	 * getParameterValues() returns the set of parameter values thats bound to
 	 * the passed parameter name if exists. If the seeking parameter name is not
 	 * existing method returns null String array
 	 * 
-	 * @author PN
 	 * @return String array if the parameter exists else null
 	 * @param String
 	 *            parameter name
@@ -175,7 +197,6 @@ public class DataHelper implements IDataHelper {
 	/**
 	 * getSession() returns a HttpSession binded with request
 	 * 
-	 * @author PN
 	 * @return HttpSession
 	 */
 	@Override
@@ -186,7 +207,6 @@ public class DataHelper implements IDataHelper {
 	/*
 	 * getSession() returns an ip address which the request is coming
 	 * 
-	 * @author PN
 	 * @return String
 	 */
 	@Override
@@ -195,8 +215,8 @@ public class DataHelper implements IDataHelper {
 	}
 
 	/**
-	 * getSession() returns User-Agent which is the browser 
-	 * @author PN
+	 * getSession() returns User-Agent which is the browser
+	 * 
 	 * @return String
 	 */
 	@Override
@@ -204,20 +224,18 @@ public class DataHelper implements IDataHelper {
 		return request.getHeader(name);
 
 	}
-	
+
 	/**
-	 * getAttribute method returns the attribute value bound to the
-	 * request instance by attributeName
-	 * @author  DN
-	 * @param attributeName String
-	 * @return Object 
-	 * @since 20161031
+	 * getParameterMap() - method is to get an array of parameter map
+	 * 
+	 * @return Map<String, String[]>
+	 * @author pabodha
 	 */
-	public Object getAttribute(String attributeName){
-		return request.getAttribute(attributeName);
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return request.getParameterMap();
 	}
-	
-	
+
 	/**
 	 * getFiles() - method is to get files inside a specific folder in disk.
 	 * 
@@ -259,5 +277,5 @@ public class DataHelper implements IDataHelper {
 		return files;
 	}
 
-	
 }
+

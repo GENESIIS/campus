@@ -9,6 +9,7 @@ package com.genesiis.campus.util;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

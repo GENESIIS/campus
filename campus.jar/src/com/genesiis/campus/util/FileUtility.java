@@ -7,9 +7,11 @@ package com.genesiis.campus.util;
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 //20170110 DN c47-tutor-add-tutor-information-upload-image-dn getFileItem() method
 
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -119,7 +121,7 @@ public class FileUtility {
 	public FileItem getFileItem() {
 		return item ;
 	}
-	
+
 	public void setUploadPath(String path) {
 		this.uploadPath = path;
 	}
@@ -418,3 +420,4 @@ public class FileUtility {
 		return file;
 	}
 }
+

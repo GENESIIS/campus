@@ -8,12 +8,12 @@ import com.genesiis.campus.controller.CampusController;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.genesiis.campus.publicController.PublicController;
 
 /**
  * Servlet implementation class StudentController
@@ -22,26 +22,24 @@ import javax.servlet.http.HttpServletResponse;
 public class StudentController extends CampusController {
 	private static final long serialVersionUID = 1L;
 	static final Logger log = Logger.getLogger(CampusController.class.getName());
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public StudentController() {
-        super();
-        
-    }
-    
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public StudentController() {
+		super();
+	}
+
 	public void init() throws ServletException {
 
 	}
 
-
-    /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	/**
+	 * @see CampusController#doGet(HttpServletRequest request,
+	 *      HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		super.doGet(request, response);
 	}
 

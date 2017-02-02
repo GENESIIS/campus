@@ -9,14 +9,13 @@ package com.genesiis.campus.validation;
 //20161128 DN C18-student-signup-without-using-third-party-application-test-dn isValidPhoneNumber(),validateEmail() and isNotEmpty()
 //methods changed to use trim() on passing parameter.
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn isStringContainsAlphaNumericAndUnderscore() created
+//20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
+
+import org.apache.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
-
-import org.apache.log4j.Logger;
 
 /**
  * PrevalentValidation intended to provide general validation and it has provided
@@ -107,7 +106,6 @@ public class PrevalentValidation implements Validatory {
 					Matcher matcherLess = VALID_EMAIL_ADDRESS_REGEX_LESS.matcher(spacelessString);
 					validPhoneNumber= (matcherLess.find());
 				}
-				throwCustomError(validPhoneNumber," Phone number Validation Failed!");
 			}
 			return validPhoneNumber;
 	}

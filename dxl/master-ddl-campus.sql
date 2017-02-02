@@ -1,0 +1,2229 @@
+/*
+Source Database       : dev-3
+Source Schema         : campus
+
+Target Server Type    : SQL Server
+
+Date: 2016-10-16
+*/
+
+-- CHANGES --------------------------------------------------------------------------------------
+
+-- v15 - 20161207 - MM 
+-- Added USERTYPE foreign key to STUDENT table
+-- Added USERTYPESTRING varchar column to USERTYPE table
+-- Changed column name IMAGEPATH to just IMAGE in BANNERTABLE
+-- Removed BANNERSTATUS from BANNER table
+-- Added CRTON, CRTBY, MODON, MODBY columns to HIGHERDUCATION table
+-- Added CRTON, CRTBY, MODON, MODBY columns to PROFESSIONALEXPERIENCE table
+-- Increased size of LONGTITLE varchar column in AWARD table to 200 from 20
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+-- ----------------------------
+-- Drop [CAMPUS].[SYSTEMCONFIG] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SYSTEMCONFIG]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SYSTEMCONFIG]
+END
+GO 
+
+-- ----------------------------
+-- Drop [CAMPUS].[APPLICATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[APPLICATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[APPLICATION]
+END
+GO 
+
+-- ----------------------------
+-- Drop [CAMPUS].[PAYMENT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PAYMENT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PAYMENT]
+END
+GO
+
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTPROGRAMINQUIRY] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTPROGRAMINQUIRY]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTPROGRAMINQUIRY]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[TUTORQUALIFICATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[TUTORQUALIFICATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[TUTORQUALIFICATION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PROGRAMMESTAT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PROGRAMMESTAT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PROGRAMMESTAT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[BANNERSTAT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[BANNERSTAT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[BANNERSTAT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[BANNER] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[BANNER]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[BANNER]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PAGESLOT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PAGESLOT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PAGESLOT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PAGE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PAGE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PAGE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[EMPLOYMENT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[EMPLOYMENT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[EMPLOYMENT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[MODULE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[MODULE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[MODULE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[INTAKE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[INTAKE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[INTAKE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[SEMESTER] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SEMESTER]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SEMESTER]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[RATING] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[RATING]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[RATING]
+END 
+GO 
+
+-- ----------------------------
+-- Drop [CAMPUS].[PROGRAMMETOWN] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PROGRAMMETOWN]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PROGRAMMETOWN]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PROGRAMME] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PROGRAMME]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PROGRAMME]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[LOGINHISTORY] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[LOGINHISTORY]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[LOGINHISTORY]
+END
+GO
+
+
+-- ----------------------------
+-- Drop foreign key constraint FK_COURSEPROVIDER_TUTOR from [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------    
+IF (object_id('[CAMPUS].FK_COURSEPROVIDER_TUTOR') IS NOT NULL)
+BEGIN
+    ALTER TABLE [CAMPUS].[COURSEPROVIDER] DROP CONSTRAINT FK_COURSEPROVIDER_TUTOR
+END
+
+
+-- ----------------------------
+-- Drop [CAMPUS].[TUTOR] table
+-- ---------------------------- 
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[TUTOR]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[TUTOR]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[ADVERTISER] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[ADVERTISER]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[ADVERTISER]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTCOURSEPROVIDERCHAT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTCOURSEPROVIDERCHAT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTCOURSEPROVIDERCHAT]
+END
+GO 
+
+
+-- ----------------------------
+-- Drop foreign key constraint FK_COURSEPROVIDER_COURSEPROVIDERTOWN from [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------    
+IF (object_id('[CAMPUS].FK_COURSEPROVIDER_COURSEPROVIDERTOWN') IS NOT NULL)
+BEGIN
+    ALTER TABLE [CAMPUS].[COURSEPROVIDER] DROP CONSTRAINT FK_COURSEPROVIDER_COURSEPROVIDERTOWN
+END
+
+
+-- ----------------------------
+-- Drop [CAMPUS].[COURSEPROVIDERTOWN] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[COURSEPROVIDERTOWN]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[COURSEPROVIDERTOWN]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[COURSEPROVIDERACCOUNT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[COURSEPROVIDERACCOUNT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[COURSEPROVIDERACCOUNT]
+END
+GO
+
+-- ----------------------------
+-- Drop foreign key constraint FK_USERTYPE_COURSEPROVIDER from [CAMPUS].[USERTYPE] table
+-- ----------------------------    
+IF (object_id('[CAMPUS].FK_USERTYPE_COURSEPROVIDER') IS NOT NULL)
+BEGIN
+    ALTER TABLE [CAMPUS].[USERTYPE] DROP CONSTRAINT FK_USERTYPE_COURSEPROVIDER
+END
+
+-- ----------------------------
+-- Drop [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[COURSEPROVIDER]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[COURSEPROVIDER]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTQUALIFICATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTQUALIFICATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTQUALIFICATION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PROFESSIONALEXPERIENCE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PROFESSIONALEXPERIENCE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PROFESSIONALEXPERIENCE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[HIGHERDUCATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[HIGHERDUCATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[HIGHERDUCATION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[SCHOOLEDUCATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SCHOOLEDUCATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SCHOOLEDUCATION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[MEDIUM] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[MEDIUM]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[MEDIUM]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[SCHOOLGRADE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SCHOOLGRADE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SCHOOLGRADE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[AWARD] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[AWARD]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[AWARD]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTSKILL] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTSKILL]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTSKILL]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PRIVILEGE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PRIVILEGE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PRIVILEGE]
+END
+GO
+
+
+-- ----------------------------
+-- Drop [CAMPUS].[MESSAGE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[MESSAGE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[MESSAGE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[CONVERSATION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[CONVERSATION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[CONVERSATION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[INQUIRY] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[INQUIRY]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[INQUIRY]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTINTEREST] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTINTEREST]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTINTEREST]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENTADMINCHAT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENTADMINCHAT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENTADMINCHAT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[STUDENT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[STUDENT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[STUDENT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[MAJORINTEREST] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[MAJORINTEREST]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[MAJORINTEREST]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[INTEREST] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[INTEREST]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[INTEREST]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[MAJOR] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[MAJOR]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[MAJOR]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[SUBSKILL] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SUBSKILL]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SUBSKILL]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[SKILL] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[SKILL]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[SKILL]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[CLASSTYPE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[CLASSTYPE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[CLASSTYPE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[CATEGORY] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[CATEGORY]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[CATEGORY]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[ADMIN] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[ADMIN]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[ADMIN]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[USERTYPE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[USERTYPE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[USERTYPE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[BUTTONACTION] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[BUTTONACTION]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[BUTTONACTION]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[INTERFACE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[INTERFACE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[INTERFACE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[LEVEL] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[LEVEL]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[LEVEL]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[NVQ] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[NVQ]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[NVQ]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[COURSEPROVIDERTYPE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[COURSEPROVIDERTYPE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[COURSEPROVIDERTYPE]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[TOWN] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[TOWN]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[TOWN]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[DSD] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[DSD]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[DSD]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[DISTRICT] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[DISTRICT]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[DISTRICT]
+END
+GO
+
+-- ----------------------------
+-- Drop [CAMPUS].[PROVINCE] table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[CAMPUS].[PROVINCE]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [CAMPUS].[PROVINCE]
+END
+GO
+
+-- ----------------------------
+-- Drop COUNTRY2 table
+-- ----------------------------    
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'[campus].[COUNTRY2]') AND OBJECTPROPERTY(id, N'IsTable') = 1
+)
+BEGIN
+    DROP TABLE [campus].[COUNTRY2]
+END
+GO
+
+-- ----------------------------
+-- Drop CAMPUS schema
+-- ---------------------------- 
+IF EXISTS (
+    SELECT schema_name FROM information_schema.schemata where schema_name = 
+'CAMPUS'
+)
+BEGIN
+    DROP SCHEMA CAMPUS
+END
+GO
+
+---------------------------------
+--- Create [CAMPUS] schema
+---------------------------------
+CREATE SCHEMA  CAMPUS 
+GO
+
+
+--- IMPORTANT ---
+
+---COMMENT OUT THE SECTION THAT SPANS FROM THE START TO THE END OF CREATION OF TOWN RELATED TABLES IF THIS IS RUN ON SDB--- 
+
+---CREATION OF TOWN RELATED TABLES EXTRACTED FROM SDB BEGIN HERE---
+---------------------------------
+--- Create [CAMPUS].[COUNTRY2] table
+---------------------------------
+CREATE TABLE [CAMPUS].[COUNTRY2](
+    [CODE] [smallint] NOT NULL,
+    [DIALCODE] [smallint] NOT NULL,
+    [NAME] [varchar](255) NOT NULL,
+    [SORT] [int] NOT NULL,
+    [CRTON] [varchar](30) NOT NULL,
+    [CRTBY] [varchar](30) NOT NULL,
+    [MODON] [varchar](30) NOT NULL,
+    [MODBY] [varchar](30) NOT NULL,
+    [SYMBOL] [char](4) NOT NULL,
+ CONSTRAINT [PK_COUNTRY2] PRIMARY KEY CLUSTERED 
+(
+    [CODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_CODE]  DEFAULT ((-1)) FOR [CODE]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_COUNTRY2_DIALCODE]  DEFAULT ((-1)) FOR [DIALCODE]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_NAME]  DEFAULT ('') FOR [NAME]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_SORT]  DEFAULT ((0)) FOR [SORT]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_CRTON]  DEFAULT (getdate()) FOR [CRTON]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_CRTBY]  DEFAULT ('') FOR [CRTBY]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_MODON]  DEFAULT (getdate()) FOR [MODON]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_CLASSIFIEDS.COUNTRY_MODBY]  DEFAULT ('') FOR [MODBY]
+GO
+
+ALTER TABLE [CAMPUS].[COUNTRY2] ADD  CONSTRAINT [DF_COUNTRY2_SYMBOL]  DEFAULT ('') FOR [SYMBOL]
+GO
+
+---------------------------------
+--- Create [CAMPUS].[PROVINCE] table
+---------------------------------
+CREATE TABLE [CAMPUS].[PROVINCE](
+    [CODE] [smallint] NOT NULL,
+    [NAME] [varchar](255) NOT NULL,
+    [SORT] [int] NOT NULL,
+    [CRTON] [datetime] NOT NULL,
+    [CRTBY] [varchar](30) NOT NULL,
+    [MODON] [datetime] NOT NULL,
+    [MODBY] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_PROVINCE] PRIMARY KEY CLUSTERED 
+(
+    [CODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_PROVINCECODE]  DEFAULT ((-1)) FOR [CODE]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_DESCRIPTION]  DEFAULT ('') FOR [NAME]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_SORTKEY]  DEFAULT ((0)) FOR [SORT]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_CRTON]  DEFAULT (getdate()) FOR [CRTON]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_CRTBY]  DEFAULT ('') FOR [CRTBY]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_MODON]  DEFAULT (getdate()) FOR [MODON]
+GO
+
+ALTER TABLE [CAMPUS].[PROVINCE] ADD  CONSTRAINT [DF_PROVINCE_MODBY]  DEFAULT ('') FOR [MODBY]
+GO
+
+---------------------------------
+--- Create [CAMPUS].[DISTRICT] table
+---------------------------------
+CREATE TABLE [CAMPUS].[DISTRICT](
+    [CODE] [smallint] NOT NULL,
+    [PROVINCE] [smallint] NOT NULL,
+    [NAME] [varchar](255) NOT NULL,
+    [SORT] [int] NOT NULL,
+    [CRTON] [datetime] NOT NULL,
+    [CRTBY] [varchar](30) NOT NULL,
+    [MODON] [datetime] NOT NULL,
+    [MODBY] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_DISTRICT] PRIMARY KEY CLUSTERED 
+(
+    [CODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_DISTRICTCODE]  DEFAULT ((-1)) FOR [CODE]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_PROVINCECODE]  DEFAULT ((-1)) FOR [PROVINCE]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_DESCRIPTION]  DEFAULT ('') FOR [NAME]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_SORTKEY]  DEFAULT ((0)) FOR [SORT]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_CRTON]  DEFAULT (getdate()) FOR [CRTON]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_CRTBY]  DEFAULT ('') FOR [CRTBY]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_MODON]  DEFAULT (getdate()) FOR [MODON]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] ADD  CONSTRAINT [DF_DISTRICT_MODBY]  DEFAULT ('') FOR [MODBY]
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT]  WITH NOCHECK ADD  CONSTRAINT [FK_DISTRICT_PROVINCE] FOREIGN KEY([PROVINCE])
+REFERENCES [CAMPUS].[PROVINCE] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[DISTRICT] CHECK CONSTRAINT [FK_DISTRICT_PROVINCE]
+GO
+
+---------------------------------
+--- Create [CAMPUS].[DSD] table
+---------------------------------
+CREATE TABLE [CAMPUS].[DSD](
+    [CODE] [smallint] NOT NULL,
+    [PROVINCE] [smallint] NOT NULL,
+    [DISTRICT] [smallint] NOT NULL,
+    [NAME] [varchar](255) NOT NULL,
+    [SORT] [int] NOT NULL,
+    [CRTON] [datetime] NOT NULL,
+    [CRTBY] [varchar](30) NOT NULL,
+    [MODON] [datetime] NOT NULL,
+    [MODBY] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_DSD] PRIMARY KEY CLUSTERED 
+(
+    [CODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_CODE]  DEFAULT ((-1)) FOR [CODE]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_PROVINCE]  DEFAULT ((-1)) FOR [PROVINCE]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_DISTRICT]  DEFAULT ((-1)) FOR [DISTRICT]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_NAME]  DEFAULT ('') FOR [NAME]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_SORT]  DEFAULT ((0)) FOR [SORT]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_CRTON]  DEFAULT (getdate()) FOR [CRTON]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_CRTBY]  DEFAULT ('') FOR [CRTBY]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_MODON]  DEFAULT (getdate()) FOR [MODON]
+GO
+
+ALTER TABLE [CAMPUS].[DSD] ADD  CONSTRAINT [DF_DSD_MODBY]  DEFAULT ('') FOR [MODBY]
+GO
+
+ALTER TABLE [CAMPUS].[DSD]  WITH NOCHECK ADD  CONSTRAINT [FK_DSD_DISTRICT] FOREIGN KEY([DISTRICT])
+REFERENCES [CAMPUS].[DISTRICT] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[DSD] CHECK CONSTRAINT [FK_DSD_DISTRICT]
+GO
+
+ALTER TABLE [CAMPUS].[DSD]  WITH NOCHECK ADD  CONSTRAINT [FK_DSD_PROVINCE] FOREIGN KEY([PROVINCE])
+REFERENCES [CAMPUS].[PROVINCE] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[DSD] CHECK CONSTRAINT [FK_DSD_PROVINCE]
+GO
+
+------------------------------------
+-- Create [CAMPUS].[TOWN] table
+------------------------------------
+CREATE TABLE [CAMPUS].[TOWN](
+    [CODE] [bigint] NOT NULL,
+    [SEQUENCE] [int] NOT NULL,
+    [COUNTRY] [smallint] NOT NULL,
+    [PROVINCE] [smallint] NOT NULL,
+    [DISTRICT] [smallint] NOT NULL,
+    [DSD] [smallint] NOT NULL,
+    [NAME] [varchar](255) NOT NULL,
+    [SORT] [int] NOT NULL,
+    [STATUS] [smallint] NOT NULL,
+    [CRTON] [datetime] NOT NULL,
+    [CRTBY] [varchar](30) NOT NULL,
+    [MODON] [datetime] NOT NULL,
+    [MODBY] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_TOWN] PRIMARY KEY CLUSTERED
+(
+    [CODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UC_SEQUENCE_COUNTRY] UNIQUE NONCLUSTERED
+(
+    [SEQUENCE] ASC,
+    [COUNTRY] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_CODE]  DEFAULT ((-1)) FOR [CODE]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_SEQUENCE]  DEFAULT ((-1)) FOR [SEQUENCE]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_COUNTRY]  DEFAULT ((-1)) FOR [COUNTRY]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_PROVINCE]  DEFAULT ((-1)) FOR [PROVINCE]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_DISTRICT]  DEFAULT ((-1)) FOR [DISTRICT]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_DSD]  DEFAULT ((-1)) FOR [DSD]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_NAME]  DEFAULT ('') FOR [NAME]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_SORT]  DEFAULT ((0)) FOR [SORT]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_STATUS]  DEFAULT ((0)) FOR [STATUS]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_CRTON]  DEFAULT (getdate()) FOR [CRTON]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_CRTBY]  DEFAULT ('') FOR [CRTBY]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_MODON]  DEFAULT (getdate()) FOR [MODON]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] ADD  CONSTRAINT [DF_TOWN_MODBY]  DEFAULT ('') FOR [MODBY]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN]  WITH NOCHECK ADD  CONSTRAINT [FK_TOWN_COUNTRY2] FOREIGN KEY([COUNTRY])
+REFERENCES [CAMPUS].[COUNTRY2] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] CHECK CONSTRAINT [FK_TOWN_COUNTRY2]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN]  WITH NOCHECK ADD  CONSTRAINT [FK_TOWN_DISTRICT] FOREIGN KEY([DISTRICT])
+REFERENCES [CAMPUS].[DISTRICT] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] CHECK CONSTRAINT [FK_TOWN_DISTRICT]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN]  WITH NOCHECK ADD  CONSTRAINT [FK_TOWN_DSD] FOREIGN KEY([DSD])
+REFERENCES [CAMPUS].[DSD] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] CHECK CONSTRAINT [FK_TOWN_DSD]
+GO
+
+ALTER TABLE [CAMPUS].[TOWN]  WITH NOCHECK ADD  CONSTRAINT [FK_TOWN_PROVINCE] FOREIGN KEY([PROVINCE])
+REFERENCES [CAMPUS].[PROVINCE] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[TOWN] CHECK CONSTRAINT [FK_TOWN_PROVINCE]
+GO
+
+---CREATION OF TOWN RELATED TABLES EXTRACTED FROM SDB END HERE---
+
+------------------------------------
+-- Create [CAMPUS].[COURSEPROVIDERTYPE] table
+------------------------------------
+CREATE TABLE [CAMPUS].[COURSEPROVIDERTYPE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERTYPE_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_COURSEPROVIDERTYPE PRIMARY KEY (CODE)
+);
+
+----------------------------------
+-- Create [CAMPUS].[NVQ] table
+----------------------------------
+CREATE TABLE [CAMPUS].[NVQ] (
+    CODE int NOT NULL IDENTITY (1,1),
+    NAME varchar(1000) NOT NULL CONSTRAINT DF_NVQ_NAME DEFAULT ('') ,
+    DESCRIPTION varchar(1000) NOT NULL CONSTRAINT DF_NVQ_DESCRIPTION DEFAULT ('') ,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_NVQ_ISACTIVE DEFAULT 0 ,
+    CRTON date NOT NULL CONSTRAINT DF_NVQ_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_NVQ_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_NVQ_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_NVQ_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_NVQ PRIMARY KEY (CODE)
+); 
+
+----------------------------------
+-- Create [CAMPUS].[LEVEL] table
+----------------------------------
+CREATE TABLE [CAMPUS].[LEVEL] (
+    CODE int NOT NULL IDENTITY (1,1),
+    NAME varchar(1000) NOT NULL CONSTRAINT DF_LEVEL_NAME DEFAULT ('') ,
+    DESCRIPTION varchar(1000) NOT NULL CONSTRAINT DF_LEVEL_DESCRIPTION DEFAULT ('') ,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_LEVEL_ISACTIVE DEFAULT 0 ,
+    NVQ INT NOT NULL,
+    CRTON date NOT NULL CONSTRAINT DF_LEVEL_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_LEVEL_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_LEVEL_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_LEVEL_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_LEVEL PRIMARY KEY (CODE),
+    CONSTRAINT FK_LEVEL_NVQ FOREIGN KEY (NVQ) REFERENCES [CAMPUS].[NVQ]
+); 
+
+------------------------------------
+-- CREATE [CAMPUS].[INTERFACE] Table
+------------------------------------
+CREATE TABLE [CAMPUS].[INTERFACE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    TITLE VARCHAR(100)  NOT NULL CONSTRAINT DF_INTERFACE_TITLE DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_INTERFACE_DESCRIPTION DEFAULT (''),
+    URL VARCHAR(200) NOT NULL CONSTRAINT DF_INTERFACE_URL DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_INTERFACE_ISACTIVE DEFAULT ('1'),
+    CRTON DATE NOT NULL CONSTRAINT DF_INTERFACE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_INTERFACE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_INTERFACE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_INTERFACE_MODBY DEFAULT (''),
+    CONSTRAINT PK_INTERFACE PRIMARY KEY (CODE)
+);
+
+------------------------------------
+-- CREATE [CAMPUS].[BUTTONACTION] Table
+------------------------------------
+CREATE TABLE [CAMPUS].[BUTTONACTION](
+    CODE INT NOT NULL IDENTITY(1,1),
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_BUTTONACTION_DESCRIPTION DEFAULT (''),
+    ACTION VARCHAR(100)  NOT NULL CONSTRAINT DF_BUTTONACTION_TITLE DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_BUTTONACTION_ISACTIVE DEFAULT ('1'),
+    CRTON DATE NOT NULL CONSTRAINT DF_BUTTONACTION_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_BUTTONACTION_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_BUTTONACTION_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_BUTTONACTION_MODBY DEFAULT (''),
+    CONSTRAINT PK_BUTTONACTION PRIMARY KEY (CODE)
+);
+
+------------------------------------
+-- CREATE [CAMPUS].[USERTYPE] Table
+------------------------------------
+CREATE TABLE [CAMPUS].[USERTYPE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_USERTYPE_NAME DEFAULT ('') ,  
+    USERTYPESTRING VARCHAR(30) NOT NULL CONSTRAINT DF_USERTYPE_USERTYPESTRING DEFAULT (''),  
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_USERTYPE_DESCRIPTION DEFAULT (''),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_USERTYPE_COURSEPROVIDER DEFAULT (1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_USERTYPE_ISACTIVE DEFAULT ('1'),
+    CRTON DATE NOT NULL CONSTRAINT DF_USERTYPE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_USERTYPE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_USERTYPE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_USERTYPE_MODBY DEFAULT (''),
+    CONSTRAINT PK_USERTYPE PRIMARY KEY (CODE)
+);
+
+------------------------------------
+-- CREATE [CAMPUS].[ADMIN] Table
+------------------------------------
+CREATE TABLE [CAMPUS].[ADMIN](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_ADMIN_NAME DEFAULT (''),
+    USERNAME VARCHAR(100) NOT NULL CONSTRAINT DF_ADMIN_USERNAME DEFAULT ('') ,    
+    PASSWORD VARCHAR(100) NOT NULL CONSTRAINT DF_ADMIN_PASSWORD DEFAULT (''),    
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_ADMIN_ISACTIVE DEFAULT ('1'),
+    USERTYPE INT NOT NULL,
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_ADMIN_DESCRIPTION DEFAULT (''),
+    CRTON DATE NOT NULL CONSTRAINT DF_ADMIN_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_ADMIN_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_ADMIN_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_ADMIN_MODBY DEFAULT (''),
+    CONSTRAINT PK_ADMIN PRIMARY KEY (CODE),
+    CONSTRAINT FK_ADMIN_USERTYPE FOREIGN KEY (USERTYPE) REFERENCES [CAMPUS].[USERTYPE]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[CATEGORY] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[CATEGORY](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_CATEGORY_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_CATEGORY_DESCRIPTION DEFAULT (''),
+    IMAGE VARCHAR(500) NOT NULL CONSTRAINT DF_CATEGORY_IMAGE DEFAULT (''),
+    CATEGORYSTRING VARCHAR(30) NOT NULL CONSTRAINT DF_CATEGORY_CATEGORYSTRING DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_CATEGORY_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_CATEGORY_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_CATEGORY_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_CATEGORY_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_CATEGORY_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_CATEGORY PRIMARY KEY (CODE)
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[CLASSTYPE] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[CLASSTYPE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_CLASSTYPE_NAME DEFAULT (''),
+    MINPARTICIPANTS INT NOT NULL CONSTRAINT DF_CLASSTYPE_MINPARTICIPANTS DEFAULT ('') ,
+    MAXPARTICIPANTS INT NOT NULL CONSTRAINT DF_CLASSTYPE_MAXPARTICIPANTS DEFAULT ('') ,        
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_CLASSTYPE_ISACTIVE DEFAULT (1),    
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_CLASSTYPE_DESCRIPTION DEFAULT (''),
+    CRTON DATE NOT NULL CONSTRAINT DF_CLASSTYPE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_CLASSTYPE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_CLASSTYPE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_CLASSTYPE_MODBY DEFAULT (''),
+    CONSTRAINT PK_CLASSTYPE PRIMARY KEY (CODE)    
+    );
+
+----------------------
+-- Create [CAMPUS].[SKILL] table
+----------------------
+CREATE TABLE [CAMPUS].[SKILL](
+    CODE INT NOT NULL IDENTITY (1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_SKILL_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(200) NOT NULL CONSTRAINT DF_SKILL_DESCRIPTIOM DEFAULT(''),    
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_SKILL_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_SKILL_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_SKILL_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_SKILL_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_SKILL_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SKILL PRIMARY KEY (CODE)    
+);
+
+----------------------
+-- Create [CAMPUS].[SUBSKILL] table
+----------------------
+CREATE TABLE [CAMPUS].[SUBSKILL](
+    CODE INT NOT NULL IDENTITY (1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_SUBSKILL_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(200) NOT NULL CONSTRAINT DF_SUBSKILL_DESCRIPTIOM DEFAULT(''),    
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_SUBSKILL_ISACTIVE DEFAULT (1),
+    SKILL INT NOT NULL,
+    CRTON DATE NOT NULL CONSTRAINT DF_SUBSKILL_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_SUBSKILL_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_SUBSKILL_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_SUBSKILL_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SUBSKILL PRIMARY KEY (CODE),
+    CONSTRAINT FK_SUBSKILL_SKILL FOREIGN KEY (SKILL) REFERENCES[CAMPUS].[SKILL]    
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[MAJOR] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[MAJOR](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_MAJOR_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_MAJOR_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_MAJOR_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_MAJOR_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_MAJOR_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_MAJOR_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_MAJOR_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_MAJOR PRIMARY KEY (CODE)
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[INTEREST] table
+-- ---------------------------- 
+CREATE TABLE [CAMPUS].[INTEREST](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_INTEREST_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_INTEREST_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_INTEREST_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_INTEREST_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_INTEREST_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_INTEREST_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_INTEREST_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_INTEREST PRIMARY KEY (CODE)
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[MAJORINTEREST] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[MAJORINTEREST](
+    CODE INT NOT NULL IDENTITY(1,1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_MAJORINTEREST_ISACTIVE DEFAULT (1),
+    MAJOR INT NOT NULL CONSTRAINT DF_MAJORINTEREST_MAJOR DEFAULT (1),
+    INTEREST INT NOT NULL CONSTRAINT DF_MAJORINTEREST_INTEREST DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_MAJORINTEREST_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_MAJORINTEREST_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_MAJORINTEREST_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_MAJORINTEREST_MODBY DEFAULT (''),
+    CONSTRAINT PK_MAJORINTEREST PRIMARY KEY (CODE),
+    CONSTRAINT FK_MAJORINTEREST_MAJOR FOREIGN KEY (MAJOR) REFERENCES [CAMPUS].[MAJOR],
+    CONSTRAINT FK_MAJORINTEREST_INTEREST FOREIGN KEY (INTEREST) REFERENCES [CAMPUS].[INTEREST]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENT](
+    CODE INT NOT NULL IDENTITY (1,1),
+    USERNAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_USERNAME DEFAULT (''),
+    PASSWORD VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_PASSWORD DEFAULT (''),
+    INDEXNO VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_INDEXNO DEFAULT (''),
+    FIRSTNAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_FIRSTNAME DEFAULT (''),
+    MIDDLENAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_MIDDLENAME DEFAULT (''),
+    LASTNAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_LASTNAME DEFAULT (''),
+    DATEOFBIRTH DATE NOT NULL CONSTRAINT DF_STUDENT_DATEOFBIRTH DEFAULT (getdate()),
+    GENDER INT NOT NULL CONSTRAINT DF_STUDENT_GENDER DEFAULT 0,
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_STUDENT_EMAIL DEFAULT (''),
+    TYPE VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_TYPE DEFAULT (''),
+    LANDPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_LANDPHONECOUNTRYCODE DEFAULT (''),
+    LANDPHONEAREACODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_LANDPHONEAREACODE DEFAULT (''),
+    LANDPHONENO VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_LANDPHONENO DEFAULT (''),
+    MOBILEPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_MOBILEPHONECOUNTRYCODE DEFAULT (''),
+    MOBILEPHONENETWORKCODE VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENT_MOBILEPHONENETWORKCODE DEFAULT (''),
+    MOBILEPHONENO VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_MOBILEPHONENO DEFAULT (''),
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_STUDENT_DESCRIPTION DEFAULT (''),
+    FACEBOOKURL VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_FACEBOOKURL DEFAULT (''),
+    TWITTERURL VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_TWITTERURL DEFAULT (''),
+    MYSPACEURL VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_MYSPACEURL DEFAULT (''),
+    LINKEDINURL VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_LINKEDINURL DEFAULT (''),
+    INSTAGRAMURL VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_INSTERGRAMURL DEFAULT (''),
+    VIBERNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_VIBERNUMBER DEFAULT (''),
+    WHATSAPPNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_WHATSAPPNUMBER DEFAULT (''),
+    ADDRESS1 VARCHAR(50)  DEFAULT (''),
+    ADDRESS2 VARCHAR(50) DEFAULT(''),
+    ADDRESS3 VARCHAR(50) DEFAULT(''),
+    TOWN BIGINT NOT NULL CONSTRAINT DF_STUDENT_TOWN DEFAULT 1,
+    USERTYPE INT NOT NULL CONSTRAINT DF_STUDENT_USERTYPE DEFAULT (1),
+    ACCOUNTTYPE INT NOT NULL CONSTRAINT DF_STUDENT_ACCOUNTTYPE DEFAULT (1),
+    LASTLOGGEDINUSERAGENT VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDINUSERAGENT DEFAULT (''),
+    LASTLOGGEDINSESSIONID VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDINSESSIONID DEFAULT (''),
+    LASTLOGGEDINDATE DATE NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDINDATE DEFAULT (getdate()),
+    LASTLOGGEDINTIME TIME NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDINTIME DEFAULT (CONVERT (time, GETDATE())),
+    LASTLOGGEDINIPADDRESS VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDINIPADDRESS DEFAULT (''),
+    LASTLOGGEDOUTDATE DATE NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDOUTDATE DEFAULT (getdate()),
+    LASTLOGGEDOUTTIME TIME NOT NULL CONSTRAINT DF_STUDENT_LASTLOGGEDOUTTIME DEFAULT (CONVERT (time, GETDATE())),
+    LASTLOGINAUTHENTICATEDBY VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENT_LASTLOGINAUTHENTICATEDBY DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_STUDENT_ISACTIVE DEFAULT (0),
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENT_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENT_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENT_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_STUDENT  PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENT_TOWN FOREIGN KEY(TOWN) REFERENCES [CAMPUS].[TOWN],
+    CONSTRAINT FK_STUDENT_USERTYPE FOREIGN KEY(USERTYPE) REFERENCES [CAMPUS].[USERTYPE]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTADMINCHAT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTADMINCHAT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    SENTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_SENTBY DEFAULT (''),
+    MESSAGETEXT VARCHAR(1000) NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_MESSAGETEXT DEFAULT ('') ,
+    MESSAGEDATE DATE NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_MESSAGEDATE DEFAULT (getdate()) ,
+    MESSAGETIME TIME NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_MESSAGETIME DEFAULT (CONVERT (time, GETDATE())),
+    VIEWEDDATE DATE NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_VIEWEDDATE DEFAULT (getdate()) ,
+    VIEWEDTIME TIME NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_VIEWEDTIME DEFAULT (CONVERT (time, GETDATE())),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_STUDENT DEFAULT (1),
+    ADMIN INT NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_ADMIN DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_CRTON DEFAULT (getdate()),
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_CRTBY DEFAULT (''),
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_MODON DEFAULT (getdate()),
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTADMINCHAT_MODBY DEFAULT (''),
+    CONSTRAINT PK_STUDENTADMINCHAT PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTADMINCHAT_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_STUDENTADMINCHAT_ADMIN FOREIGN KEY (ADMIN) REFERENCES [CAMPUS].[ADMIN]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTINTEREST] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTINTEREST](
+    CODE INT NOT NULL IDENTITY(1,1),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTINTEREST_STUDENT DEFAULT (1),
+    INTEREST INT NOT NULL CONSTRAINT DF_STUDENTINTEREST_INTEREST DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_STUDENTINTEREST_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_STUDENTINTEREST_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_STUDENTINTEREST_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_STUDENTINTEREST_MODBY DEFAULT (''),
+    CONSTRAINT PK_STUDENTINTEREST PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTINTEREST_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_STUDENTINTEREST_INTEREST FOREIGN KEY (INTEREST) REFERENCES [CAMPUS].[INTEREST]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[INQUIRY] table
+-- ----------------------------    
+CREATE TABLE [CAMPUS].[INQUIRY] (
+    CODE INT NOT NULL IDENTITY (1,1),
+    INQUIRYTITLE VARCHAR(35) NOT NULL CONSTRAINT DF_INQUIRY_INQUIRYTITLE DEFAULT(''),
+    INQUIRYTEXT VARCHAR(8000) NOT NULL CONSTRAINT DF_INQUIRY_INQUIRYTEXT DEFAULT (''),
+    INQUIRYDATE date NOT NULL CONSTRAINT DF_INQUIRY_INQUIRYDATE DEFAULT (getdate()) ,
+    INQUIRYTIME time NOT NULL CONSTRAINT DF_INQUIRY_INQUIRYTIME DEFAULT (CONVERT (time, GETDATE())),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_INQUIRY_ISACTIVE DEFAULT (0),
+    STUDENT INT NOT NULL CONSTRAINT DF_INQUIRY_STUDENT DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_INQUIRY_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_INQUIRY_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_INQUIRY_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_INQUIRY_MODBY DEFAULT (''),
+    CONSTRAINT PK_INQUIRY PRIMARY KEY (CODE),
+    CONSTRAINT FK_INQUIRY_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT]
+);
+
+
+------------------------------------
+-- CREATE [CAMPUS].[PRIVILEGE]Table
+------------------------------------
+CREATE TABLE [CAMPUS].[PRIVILEGE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    USERTYPE INT NOT NULL CONSTRAINT DF_PRIVILEGE_USERTYPE DEFAULT (1 ),    
+    INTERFACE INT NOT NULL CONSTRAINT DF_PRIVILEGE_INTERFACE DEFAULT 1,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_PRIVILEGE_ISACTIVE DEFAULT ('1'),
+	CRTON DATE NOT NULL CONSTRAINT DF_PRIVILEGE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_PRIVILEGE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_PRIVILEGE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_PRIVILEGE_MODBY DEFAULT (''),
+    CONSTRAINT PK_PRIVILEGE PRIMARY KEY (CODE),
+    CONSTRAINT FK_PRIVILEGE_USERTYPE FOREIGN KEY (USERTYPE) REFERENCES [CAMPUS].[USERTYPE],
+    CONSTRAINT FK_PRIVILEGE_INTERFACE FOREIGN KEY (INTERFACE) REFERENCES [CAMPUS].[INTERFACE]
+ );
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTSKILL] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTSKILL](
+    CODE INT NOT NULL IDENTITY (1,1),    
+    STUDENT INT NOT NULL,
+    SKILL INT NOT NULL,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_STUDENTSKILL_ISACTIVE DEFAULT (1),
+    RATING INT NOT NULL CONSTRAINT DF_STUDENTSKILL_RATING DEFAULT 0 ,
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENTSKILL_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTSKILL_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENTSKILL_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTSKILL_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_STUDENTSKILL PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTSKILL_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_STUDENTSKILL_SKILL FOREIGN KEY (SKILL) REFERENCES[CAMPUS].[SKILL]    
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[AWARD] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[AWARD](
+    CODE INT NOT NULL IDENTITY (1,1),   
+    LEVEL INT NOT NULL,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_AWARD_ISACTIVE DEFAULT (1),
+    SHORTTITLE VARCHAR(20) NOT NULL CONSTRAINT DF_AWARD_SHORTTITLE DEFAULT ('') ,
+    LONGTITLE VARCHAR(200) NOT NULL CONSTRAINT DF_AWARD_LONGTITLE DEFAULT ('') ,
+    AWARDSTATUS BIT NOT NULL CONSTRAINT DF_AWARD_AWARDSTATUS DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_AWARD_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_AWARD_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_AWARD_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_AWARD_MODBY DEFAULT (''),
+    CONSTRAINT PK_AWARD PRIMARY KEY (CODE),
+    CONSTRAINT FK_AWARD_LEVEL FOREIGN KEY (LEVEL) REFERENCES [CAMPUS].[LEVEL],
+ ); 
+
+-- ----------------------------
+-- Create [CAMPUS].[SCHOOLGRADE] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[SCHOOLGRADE](
+    CODE INT NOT NULL IDENTITY (1,1),    
+    LEVEL INT NOT NULL,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_SCHOOLGRADE_ISACTIVE DEFAULT (1),
+    TITLE VARCHAR(100) NOT NULL CONSTRAINT DF_SCHOOLGRADE_TITLE DEFAULT ('') ,
+    CRTON DATE NOT NULL CONSTRAINT DF_SCHOOLGRADE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_SCHOOLGRADE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_SCHOOLGRADE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_SCHOOLGRADE_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SCHOOLGRADE PRIMARY KEY (CODE),
+    CONSTRAINT FK_SCHOOLGRADE_LEVEL FOREIGN KEY (LEVEL) REFERENCES [CAMPUS].[LEVEL]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[MEDIUM] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[MEDIUM] (
+	CODE INT NOT NULL IDENTITY (1,1),
+	DESCRIPTION VARCHAR(255) NOT NULL CONSTRAINT DF_MEDIUM_DESCRIPTION DEFAULT ('') ,
+	ISACTIVE BIT NOT NULL CONSTRAINT DF_MEDIUM_ISACTIVE DEFAULT (1),
+	CRTON DATE NOT NULL CONSTRAINT DF_MEDIUM_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_MEDIUM_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_MEDIUM_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_MEDIUM_MODBY DEFAULT ('') ,
+	CONSTRAINT PK_MEDIUM PRIMARY KEY (CODE)
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[SCHOOLEDUCATION] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[SCHOOLEDUCATION](
+    CODE INT NOT NULL IDENTITY (1,1),    
+    STUDENT INT NOT NULL,
+    SCHOOLGRADE INT NOT NULL,
+    MAJOR INT NOT NULL,
+    COUNTRY SMALLINT NOT NULL,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_ISACTIVE DEFAULT (1),
+    RESULT INT NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_RESULT DEFAULT 0 ,
+    INDEXNO VARCHAR(20) NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_INDEXNO DEFAULT ('') ,
+    SCHOOL VARCHAR(100) NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_SCHOOL DEFAULT ('') ,
+    ACHIVEDON DATE NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_ACHIVEDON DEFAULT (getdate()) ,
+    MEDIUM INT NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_MEDIUM DEFAULT 0 ,
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_DESCRIPTION DEFAULT ('') ,
+    CRTON DATE NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_SCHOOLEDUCATION_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SCHOOLEDUCATION PRIMARY KEY (CODE),
+    CONSTRAINT FK_SCHOOLEDUCATION_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_SCHOOLEDUCATION_SCHOOLGRADE FOREIGN KEY (SCHOOLGRADE) REFERENCES[CAMPUS].[SCHOOLGRADE],
+    CONSTRAINT FK_SCHOOLEDUCATION_STREAM FOREIGN KEY (MAJOR) REFERENCES[CAMPUS].[MAJOR],
+    CONSTRAINT FK_SCHOOLEDUCATION_COUNTRY FOREIGN KEY (COUNTRY) REFERENCES[CAMPUS].[COUNTRY2],
+    CONSTRAINT FK_SCHOOLEDUCATION_MEDIUM FOREIGN KEY (MEDIUM) REFERENCES[CAMPUS].[MEDIUM]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[HIGHERDUCATION] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[HIGHERDUCATION](
+    CODE INT NOT NULL IDENTITY (1,1),
+    INSTITUTE VARCHAR(200) NOT NULL CONSTRAINT DF_HIGHERDUCATION_INSTITUTE DEFAULT ('') ,
+    AFFINSTITUTE VARCHAR(200) NOT NULL CONSTRAINT DF_HIGHERDUCATION_AFFINSTITUTE DEFAULT ('') ,
+    STUDENT INT NOT NULL,
+    LEVEL INT NOT NULL,
+    AWARD INT NOT NULL,
+    MAJOR INT NOT NULL,
+    COUNTRY SMALLINT NOT NULL,
+    COMMENCEDON DATE NOT NULL CONSTRAINT DF_HIGHERDUCATION_COMMENCEDON DEFAULT (getdate()) ,
+    COMPLETIONON DATE NOT NULL CONSTRAINT DF_HIGHERDUCATION_COMPLETIONON DEFAULT (getdate()) ,
+    STUDENTID VARCHAR(20) NOT NULL CONSTRAINT DF_HIGHERDUCATION_STUDENTID DEFAULT ('') ,
+    RESULT INT NOT NULL CONSTRAINT DF_HIGHERDUCATION_RESULT DEFAULT 0 ,
+    MEDIUM INT NOT NULL CONSTRAINT DF_HIGHERDUCATION_MEDIUM DEFAULT 0 ,
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_HIGHERDUCATION_DESCRIPTION DEFAULT ('') ,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_HIGHERDUCATION_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_HIGHERDUCATION_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_HIGHERDUCATION_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_HIGHERDUCATION_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_HIGHERDUCATION_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_HIGHERDUCATION PRIMARY KEY (CODE),
+    CONSTRAINT FK_HIGHERDUCATION_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_HIGHERDUCATION_LEVEL FOREIGN KEY (LEVEL) REFERENCES[CAMPUS].[LEVEL],
+    CONSTRAINT FK_HIGHERDUCATION_AWARD FOREIGN KEY (AWARD) REFERENCES[CAMPUS].[AWARD],
+    CONSTRAINT FK_HIGHERDUCATION_MAJOR FOREIGN KEY (MAJOR) REFERENCES[CAMPUS].[MAJOR],  
+    CONSTRAINT FK_HIGHERDUCATION_COUNTRY FOREIGN KEY (COUNTRY) REFERENCES[CAMPUS].[COUNTRY2]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[PROFESSIONALEXPERIENCE] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[PROFESSIONALEXPERIENCE](
+    CODE INT NOT NULL IDENTITY (1,1),
+    ORGANIZATION VARCHAR(20) NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_ORGANIZATION DEFAULT ('') ,
+    STUDENT INT NOT NULL,
+    INDUSTRY INT NOT NULL,
+    JOBCATEGORY INT NOT NULL,
+    DESIGNATION VARCHAR(20) NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_DESIGNATION DEFAULT ('') ,
+    COMMENCEDON DATE NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_COMMENCEDON DEFAULT (getdate()) ,
+    COMPLETIONON DATE NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_COMPLETIONON DEFAULT (getdate()) ,
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_DESCRIPTION DEFAULT ('') ,
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROFESSIONALEXPERIENCE_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_PROFESSIONALEXPERIENCE PRIMARY KEY (CODE),
+    CONSTRAINT FK_PROFESSIONALEXPERIENCE_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_PROFESSIONALEXPERIENCE_INDUSTRY FOREIGN KEY (INDUSTRY) REFERENCES[CAMPUS].[MAJOR],    
+    CONSTRAINT FK_PROFESSIONALEXPERIENCE_JOBCATEGORY FOREIGN KEY (JOBCATEGORY) REFERENCES[CAMPUS].[MAJOR]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTQUALIFICATION] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTQUALIFICATION](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_ISACTIVE DEFAULT (1),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_STUDENT DEFAULT (1),
+    LEVEL INT NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_LEVEL DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTQUALIFICATION_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_STUDENTQUALIFICATION PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTQUALIFICATION_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_STUDENTQUALIFICATION_LEVEL FOREIGN KEY (LEVEL) REFERENCES [CAMPUS].[LEVEL]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[COURSEPROVIDER](
+    CODE INT NOT NULL IDENTITY (1,1),
+    UNIQUEPREFIX VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_UNIQUEPREFIX DEFAULT (''),
+   	SHORTNAME VARCHAR(30) DEFAULT (''),
+    NAME VARCHAR(200) NOT NULL CONSTRAINT DF_COURSEPROVIDER_NAME DEFAULT (''),
+    DESCRIPTION TEXT NOT NULL CONSTRAINT DF_COURSEPROVIDER_DESCRIPTION DEFAULT (''), -- TEXT TYPE IS USED
+    GENERALEMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_COURSEPROVIDER_GENERALEMAIL DEFAULT (''),
+    COURSEINQUIRYEMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_COURSEPROVIDER_COURSEINQUIRYEMAIL DEFAULT (''),
+    LANDPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LANDPHONECOUNTRYCODE DEFAULT (''),
+    LANDPHONEAREACODE VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LANDPHONEAREACODE DEFAULT (''),
+    LANDPHONENO VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LANDPHONENO DEFAULT (''),
+    LANDPHONE2NO VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LANDPHONE2NO DEFAULT (''),
+    FAXNO VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_FAXNO DEFAULT (''),
+    MOBILEPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_MOBILEPHONECOUNTRYCODE DEFAULT (''),
+    MOBILEPHONENETWORKCODE VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_MOBILEPHONEAREACODE DEFAULT (''),
+    MOBILEPHONENO VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_MOBILEPHONENO DEFAULT (''),
+    HEADERIMAGEPATH VARCHAR(200) NOT NULL CONSTRAINT DF_COURSEPROVIDER_HEADERIMAGEPATH DEFAULT (''),
+    LOGOIMAGEPATH VARCHAR(200) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LOGOIMAGEPATH DEFAULT (''),
+    SPECIALITY VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDER_SPECIALITY DEFAULT (''),
+    WEBLINK VARCHAR(200) NOT NULL CONSTRAINT DF_COURSEPROVIDER_WEBLINK DEFAULT (''),
+    FACEBOOKURL VARCHAR(200) NOT NULL CONSTRAINT DF_COURSEPROVIDER_FACEBOOKURL DEFAULT (''),
+    TWITTERURL VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDER_TWITTERURL DEFAULT (''),
+    MYSPACEURL VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDER_MYSPACEURL DEFAULT (''),
+    LINKEDINURL VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDER_LINKEDINURL DEFAULT (''),
+    INSTAGRAMURL VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDER_INSTERGRAMURL DEFAULT (''),
+    VIBERNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_VIBERNUMBER DEFAULT (''),
+    WHATSAPPNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_WHATSAPPNUMBER DEFAULT (''),
+    EXPIRATIONDATE DATE NOT NULL CONSTRAINT DF_COURSEPROVIDER_EXPIRATIONDATE DEFAULT (getdate()),
+    ADDRESS1 VARCHAR(50)  DEFAULT (''),
+    ADDRESS2 VARCHAR(50) DEFAULT(''),
+    ADDRESS3 VARCHAR(50) DEFAULT(''),
+    ACCOUNTTYPE INT NOT NULL CONSTRAINT DF_COURSEPROVIDER_ACCOUNTTYPE DEFAULT (1),
+    HEADOFFICETOWN INT,
+    ISTUTORRELATED BIT NOT NULL CONSTRAINT DF_COURSEPROVIDER_ISTUTORRELATED DEFAULT (0),
+    ISADMINALLOWED BIT NOT NULL CONSTRAINT DF_COURSEPROVIDER_ISADMINALLOWED DEFAULT (0),
+    COURSEPROVIDERSTATUS INT NOT NULL CONSTRAINT DF_COURSEPROVIDER_COURSEPROVIDERSTATUS DEFAULT(1),
+    COURSEPROVIDERTYPE INT NOT NULL CONSTRAINT DF_COURSEPROVIDER_COURSEPROVIDERTYPE DEFAULT(1),
+    PRINCIPAL INT,
+    TUTOR INT,
+    CRTON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDER_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDER_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDER_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_COURSEPROVIDER  PRIMARY KEY (CODE),
+    CONSTRAINT FK_COURSEPROVIDER_COURSEPROVIDERTYPE FOREIGN KEY(COURSEPROVIDERTYPE) REFERENCES [CAMPUS].[COURSEPROVIDERTYPE],
+    CONSTRAINT FK_COURSEPROVIDER_PRINCIPAL FOREIGN KEY(PRINCIPAL) REFERENCES [CAMPUS].[COURSEPROVIDER]
+);
+
+
+-- ----------------------------
+-- Create foreign key constraint on [CAMPUS].[USERTYPE] table
+-- ----------------------------
+ALTER TABLE [CAMPUS].[USERTYPE]  WITH NOCHECK ADD  CONSTRAINT [FK_USERTYPE_COURSEPROVIDER] FOREIGN KEY([COURSEPROVIDER])
+REFERENCES [CAMPUS].[COURSEPROVIDER] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[USERTYPE] CHECK CONSTRAINT [FK_USERTYPE_COURSEPROVIDER]
+GO
+
+
+-- ----------------------------
+-- Create [CAMPUS].[COURSEPROVIDERACCOUNT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[COURSEPROVIDERACCOUNT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_NAME DEFAULT (''),
+    USERNAME VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_USERNAME DEFAULT ('') ,    
+    PASSWORD VARCHAR(100) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_PASSWORD DEFAULT (''),
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_EMAIL DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_ISACTIVE DEFAULT ('1'),
+    COURSEPROVIDER INT NOT NULL,
+    USERTYPE INT NOT NULL,
+    CRTON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERACCOUNT_MODBY DEFAULT (''),
+    CONSTRAINT PK_COURSEPROVIDERACCOUNT PRIMARY KEY (CODE),
+    CONSTRAINT FK_COURSEPROVIDERACCOUNT_COURSEPROVIDER FOREIGN KEY (COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],
+    CONSTRAINT FK_COURSEPROVIDERACCOUNT_USERTYPE FOREIGN KEY (USERTYPE) REFERENCES [CAMPUS].[USERTYPE]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[COURSEPROVIDERTOWN] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[COURSEPROVIDERTOWN](
+    CODE INT NOT NULL IDENTITY(1,1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_ISACTIVE DEFAULT (1),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_COURSEPROVIDER DEFAULT (1),
+    TOWN BIGINT NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_TOWN DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_COURSEPROVIDERTOWN_MODBY DEFAULT (''),
+    CONSTRAINT PK_COURSEPROVIDERTOWN PRIMARY KEY (CODE),
+    CONSTRAINT FK_COURSEPROVIDERTOWN_COURSEPROVIDER FOREIGN KEY (COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],
+    CONSTRAINT FK_COURSEPROVIDERTOWN_TOWN FOREIGN KEY (TOWN) REFERENCES [CAMPUS].[TOWN]
+);
+
+
+-- ----------------------------
+-- Create foreign key constraint on [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------
+ALTER TABLE [CAMPUS].[COURSEPROVIDER] WITH NOCHECK ADD CONSTRAINT [FK_COURSEPROVIDER_COURSEPROVIDERTOWN] FOREIGN KEY([HEADOFFICETOWN])
+REFERENCES [CAMPUS].[COURSEPROVIDERTOWN] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[COURSEPROVIDER] CHECK CONSTRAINT [FK_COURSEPROVIDER_COURSEPROVIDERTOWN]
+GO
+
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTCOURSEPROVIDERCHAT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTCOURSEPROVIDERCHAT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    SENTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_SENTBY DEFAULT (''),
+    MESSAGETEXT VARCHAR(1000) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_MESSAGETEXT DEFAULT ('') ,
+    MESSAGEDATE DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_MESSAGEDATE DEFAULT (getdate()) ,
+    MESSAGETIME TIME NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_MESSAGETIME DEFAULT (CONVERT (time, GETDATE())),
+    VIEWEDDATE DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_VIEWEDDATE DEFAULT (getdate()) ,
+    VIEWEDTIME TIME NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_VIEWEDTIME DEFAULT (CONVERT (time, GETDATE())),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_STUDENT DEFAULT (1),
+    COURSEPROVIDERACCOUNT INT NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_COURSEPROVIDERACCOUNT DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_CRTON DEFAULT (getdate()),
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_CRTBY DEFAULT (''),
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_MODON DEFAULT (getdate()),
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERCHAT_MODBY DEFAULT (''),
+    CONSTRAINT PK_STUDENTCOURSEPROVIDERCHAT PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTCOURSEPROVIDERCHAT_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_STUDENTCOURSEPROVIDERCHAT_COURSEPROVIDERACCOUNT FOREIGN KEY (COURSEPROVIDERACCOUNT) REFERENCES [CAMPUS].[COURSEPROVIDERACCOUNT]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[ADVERTISER] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[ADVERTISER](
+    CODE INT NOT NULL IDENTITY (1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_ADVERTISER_NAME DEFAULT (''),    
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_ADVERTISER_EMAIL DEFAULT(''),
+    LANDPHONECOUNTRYCODE VARCHAR(10) NOT NULL CONSTRAINT DF_ADVERTISER_LANDPHONECOUNTRYCODE DEFAULT (''),
+    LANDPHONEAREACODE VARCHAR(10) NOT NULL CONSTRAINT DF_ADVERTISER_LANDPHONEAREACODE DEFAULT(''),
+    LANDPHONENUM VARCHAR(15) NOT NULL CONSTRAINT DF_ADVERTISER_LANDPHONENUMBER DEFAULT(''),
+    MOBILEPHONECOUNTRYCODE VARCHAR(10) NOT NULL CONSTRAINT DF_ADVERTISER_MOBILEPHONECOUNTRYCODE DEFAULT (''),
+    MOBILEPHONENETWORKCODE VARCHAR(10) NOT NULL CONSTRAINT DF_ADVERTISER_MOBILEPHONEAREACODE DEFAULT (''),
+    MOBILEPHONENUM VARCHAR(15) NOT NULL CONSTRAINT DF_ADVERTISER_MOBILEPHONENO DEFAULT (''),
+    DESCRIPTION VARCHAR(200) NOT NULL CONSTRAINT DF_ADVERTISER_DESCRIPTION DEFAULT (''),
+    ADDRESS1 VARCHAR(50)  DEFAULT (''),
+    ADDRESS2 VARCHAR(50) DEFAULT(''),
+    ADDRESS3 VARCHAR(50) DEFAULT(''),
+    TOWN BIGINT NOT NULL CONSTRAINT DF_ADVERTISER_TOWN DEFAULT (1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_ADVERTISER_ISACTIVE DEFAULT (1),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_ADVERTISER_COURSEPROVIDER DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_ADVERTISER_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_ADVERTISER_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_ADVERTISER_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_ADVERTISER_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_ADVERTISER  PRIMARY KEY (CODE),
+    CONSTRAINT FK_ADVERTISER_TOWN FOREIGN KEY(TOWN) REFERENCES [CAMPUS].[TOWN],
+    CONSTRAINT FK_ADVERTISER_COURSEPROVIDER FOREIGN KEY(COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER]
+    );
+
+
+------------------------------------------
+--Create [CAMPUS].[TUTOR] table
+------------------------------------------
+CREATE TABLE [CAMPUS].[TUTOR](
+    CODE INT NOT NULL IDENTITY (1,1),
+    USERNAME VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_USERNAME DEFAULT ('') ,    
+    PASSWORD VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_PASSWORD DEFAULT (''),
+    FIRSTNAME VARCHAR(35) NOT NULL CONSTRAINT DF_TUTOR_FIRSTNAME DEFAULT (''),
+    MIDDLENAME VARCHAR(35) NOT NULL CONSTRAINT DF_TUTOR_MIDDLENAME DEFAULT(''),
+    LASTNAME VARCHAR(35) NOT NULL CONSTRAINT DF_TUTOR_LASTNAME DEFAULT(''),
+    GENDER INT NOT NULL CONSTRAINT DF_TUTOR_GENDER DEFAULT 0,
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_TUTOR_EMAIL DEFAULT(''),
+    LANDPHONECOUNTRYCODE VARCHAR (10) NOT NULL CONSTRAINT DF_TUTOR_LANDPHONECOUNTRYCODE DEFAULT(''),
+    LANDPHONEAREACODE VARCHAR(10) NOT NULL CONSTRAINT DF_TUTOR_LANDPHONEAREACODE DEFAULT(''),
+    LANDPHONENUMBER VARCHAR(15) NOT NULL CONSTRAINT DF_TUTOR_LANDPHONENUMBER DEFAULT(''),
+    MOBILEPHONECOUNTRYCODE VARCHAR (10) NOT NULL CONSTRAINT DF_TUTOR_MOBILEPHONECOUNTRYCODE DEFAULT(''),
+    MOBILEPHONENETWORKCODE VARCHAR(10) NOT NULL CONSTRAINT DF_TUTOR_MOBILEPHONEAREACODE DEFAULT(''),
+    MOBILEPHONENUMBER VARCHAR(15) NOT NULL CONSTRAINT DF_TUTOR_MOBILEPHONENUMBER DEFAULT(''),
+    DESCRIPTION TEXT NOT NULL CONSTRAINT DF_TUTOR_DESCRIPTION DEFAULT (''), -- TEXT TYPE IS USED
+    EXPERIENCE TEXT NOT NULL CONSTRAINT DF_TUTOR_EXPERIENCE DEFAULT (''), -- TEXT TYPE IS USED
+    WEBLINK VARCHAR(200) NOT NULL CONSTRAINT DF_TUTOR_WEBLINK DEFAULT (''),
+    FACEBOOKURL VARCHAR(200) NOT NULL CONSTRAINT DF_TUTOR_FACEBOOKURL DEFAULT (''),
+    TWITTERURL VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_TWITTERURL DEFAULT (''),
+    MYSPACEURL VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_MYSPACEURL DEFAULT (''),
+    LINKEDINURL VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_LINKEDINURL DEFAULT (''),
+    INSTAGRAMURL VARCHAR(100) NOT NULL CONSTRAINT DF_TUTOR_INSTERGRAMURL DEFAULT (''),
+    VIBERNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_TUTOR_VIBERNUMBER DEFAULT (''),
+    WHATSAPPNUMBER VARCHAR(20) NOT NULL CONSTRAINT DF_TUTOR_WHATSAPPNUMBER DEFAULT (''),
+    ISAPPROVED BIT NOT NULL CONSTRAINT DF_TUTOR_ISAPPROVED DEFAULT(0),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_TUTOR_ISACTIVE DEFAULT(0),
+    ADDRESS1 VARCHAR(50)  DEFAULT (''),
+    ADDRESS2 VARCHAR(50) DEFAULT(''),
+    ADDRESS3 VARCHAR(50) DEFAULT(''),
+    TOWN BIGINT NULL CONSTRAINT DF_TUTOR_TOWN DEFAULT(0),
+    USERTYPE INT NOT NULL CONSTRAINT DF_TUTOR_USERTYPE DEFAULT(0),
+    CRTON DATE NOT NULL CONSTRAINT DF_TUTOR_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_TUTOR_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_TUTOR_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_TUTOR_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_TUTOR PRIMARY KEY(CODE),
+    CONSTRAINT FK_TUTOR_TOWN FOREIGN KEY(TOWN) REFERENCES [CAMPUS].[TOWN],
+    CONSTRAINT FK_TUTOR_USERTYPE FOREIGN KEY(USERTYPE) REFERENCES [CAMPUS].[USERTYPE]
+    );
+
+-- ----------------------------
+-- Create foreign key constraint on [CAMPUS].[COURSEPROVIDER] table
+-- ----------------------------
+ALTER TABLE [CAMPUS].[COURSEPROVIDER]  WITH NOCHECK ADD  CONSTRAINT [FK_COURSEPROVIDER_TUTOR] FOREIGN KEY([TUTOR])
+REFERENCES [CAMPUS].[TUTOR] ([CODE])
+GO
+
+ALTER TABLE [CAMPUS].[COURSEPROVIDER] CHECK CONSTRAINT [FK_COURSEPROVIDER_TUTOR]
+GO
+
+
+-- ----------------------------
+-- Create [CAMPUS].[LOGINHISTORY] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[LOGINHISTORY](
+    CODE INT NOT NULL IDENTITY(1,1),
+    USERAGENT VARCHAR(100) NOT NULL CONSTRAINT DF_LOGINHISTORY_USERAGENT DEFAULT ('') ,
+    SESSIONID VARCHAR(100) NOT NULL CONSTRAINT DF_LOGINHISTORY_SESSIONID DEFAULT ('') ,
+    LOGGEDINDATE DATE NOT NULL CONSTRAINT DF_LOGINHISTORY_LOGGEDINDATE DEFAULT (getdate()),
+    LOGGEDINTIME TIME NOT NULL CONSTRAINT DF_LOGINHISTORY_LOGGEDINTIME DEFAULT (CONVERT (time, GETDATE())),
+    LOGGEDOUTTDATE DATE NOT NULL CONSTRAINT DF_LOGINHISTORY_LOGGEDOUTTDATE DEFAULT (getdate()),
+    LOGGEDOUTTIME TIME NOT NULL CONSTRAINT DF_LOGINHISTORY_LOGGEDOUTTIME DEFAULT (CONVERT (time, GETDATE())),
+    IPADDRESS VARCHAR(50) NOT NULL CONSTRAINT DF_LOGINHISTORY_IPADDRESS DEFAULT (''),
+    AUTHENTICATEDBY VARCHAR(50) NOT NULL CONSTRAINT DF_LOGINHISTORY_AUTHENTICATEDBY DEFAULT (''),
+    LOGINSOURCE VARCHAR(20) NOT NULL CONSTRAINT DF_LOGINHISTORY_LOGINSOURCE DEFAULT (''),
+    ADMIN INT NOT NULL CONSTRAINT DF_LOGINHISTORY_ADMIN DEFAULT (1),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_LOGINHISTORY_COURSEPROVIDER DEFAULT (1),
+    TUTOR INT NOT NULL CONSTRAINT DF_LOGINHISTORY_TUTOR DEFAULT (1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_LOGINHISTORY_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_LOGINHISTORY_CRTON DEFAULT (getdate()),
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_LOGINHISTORY_CRTBY DEFAULT (''),
+    MODON DATE NOT NULL CONSTRAINT DF_LOGINHISTORY_MODON DEFAULT (getdate()),
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_LOGINHISTORY_MODBY DEFAULT (''),
+    CONSTRAINT PK_LOGINHISTORY PRIMARY KEY (CODE),
+    CONSTRAINT FK_LOGINHISTORY_ADMIN FOREIGN KEY (ADMIN) REFERENCES [CAMPUS].[ADMIN],
+    CONSTRAINT FK_LOGINHISTORY_COURSEPROVIDER FOREIGN KEY (COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],
+    CONSTRAINT FK_LOGINHISTORY_TUTOR FOREIGN KEY (TUTOR) REFERENCES [CAMPUS].[TUTOR]
+);
+
+
+------------------------
+--Create [CAMPUS].[PROGRAMME ] table
+------------------------
+CREATE TABLE [CAMPUS].[PROGRAMME](
+    CODE INT NOT NULL IDENTITY (1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_PROGRAMME_NAME DEFAULT ('') , 
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_PROGRAMME_EMAIL DEFAULT(''),   
+    IMAGE varchar(100) NOT NULL CONSTRAINT DF_PROGRAMME_IMAGE DEFAULT (''),
+    DESCRIPTION TEXT NOT NULL CONSTRAINT DF_PROGRAMME_DESCRIPTION DEFAULT (''), -- TEXT TYPE IS USED
+    DURATION FLOAT NOT NULL CONSTRAINT DF_PROGRAMME_DURATION DEFAULT (0.0),
+    ENTRYREQUIREMENTS VARCHAR(2000) NOT NULL CONSTRAINT DF_PROGRAMME_ENTRYREQUIREMENTS DEFAULT('NONE'),
+    COUNSELORNAME VARCHAR(35) NOT NULL CONSTRAINT DF_PROGRAMME_COUNSELORNAME DEFAULT(''),
+    COUNSELORPHONE VARCHAR(15) NOT NULL CONSTRAINT DF_PROGRAMME_COUNSELORPHONE DEFAULT(''),
+    DISPLAYSTARTDATE DATE NOT NULL CONSTRAINT DF_PROGRAMME_DISPLAYSTARTDATE DEFAULT(GETDATE()),
+    EXPIRYDATE DATE NOT NULL CONSTRAINT DF_PROGRAMME_EXPIRYDATE DEFAULT(GETDATE()),
+    PROGRAMMESTATUS TINYINT NOT NULL CONSTRAINT DF_PROGRAMME_PROGRAMMESTATUS DEFAULT (''),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_PROGRAMME_COURSEPROVIDER DEFAULT (''),
+    MAJOR INT NOT NULL CONSTRAINT DF_PROGRAMME_MAJOR DEFAULT (1),
+    CATEGORY INT NOT NULL CONSTRAINT DF_PROGRAMME_CATEGORY DEFAULT (1),
+    LEVEL INT NOT NULL CONSTRAINT DF_PROGRAMME_LEVEL DEFAULT (1),
+    CLASSTYPE INT NOT NULL CONSTRAINT DF_PROGRAMME_CLASSTYPE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_PROGRAMME_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROGRAMME_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_PROGRAMME_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROGRAMME_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_PROGRAMME PRIMARY KEY(CODE),
+    CONSTRAINT FK_PROGRAMME_COURSEPROVIDER FOREIGN KEY(COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],
+    CONSTRAINT FK_PROGRAMME_MAJOR FOREIGN KEY(MAJOR) REFERENCES [CAMPUS].[MAJOR],
+    CONSTRAINT FK_PROGRAMME_CATEGORY FOREIGN KEY(CATEGORY) REFERENCES [CAMPUS].[CATEGORY],
+    CONSTRAINT FK_PROGRAMME_CLASSTYPE FOREIGN KEY(CLASSTYPE) REFERENCES [CAMPUS].[CLASSTYPE],
+    CONSTRAINT FK_PROGRAMME_LEVEL FOREIGN KEY(LEVEL) REFERENCES [CAMPUS].[LEVEL]
+ );
+
+
+-- ----------------------------
+-- Create [CAMPUS].[PROGRAMMETOWN] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[PROGRAMMETOWN](
+    CODE INT NOT NULL IDENTITY(1,1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_PROGRAMMETOWN_ISACTIVE DEFAULT (1),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_PROGRAMMETOWN_PROGRAMME DEFAULT (1),
+    TOWN BIGINT NOT NULL CONSTRAINT DF_PROGRAMMETOWN_TOWN DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_PROGRAMMETOWN_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_PROGRAMMETOWN_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_PROGRAMMETOWN_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_PROGRAMMETOWN_MODBY DEFAULT (''),
+    CONSTRAINT PK_PROGRAMMETOWN PRIMARY KEY (CODE),
+    CONSTRAINT FK_PROGRAMMETOWN_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME],
+    CONSTRAINT FK_PROGRAMMETOWN_TOWN FOREIGN KEY (TOWN) REFERENCES [CAMPUS].[TOWN]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[RATING] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[RATING](
+    CODE INT NOT NULL IDENTITY(1,1),
+    RATINGVALUE INT NOT NULL CONSTRAINT DF_RATING_RATINGVALUE DEFAULT (1),
+    RATEDDATE DATE NOT NULL CONSTRAINT DF_RATING_DATE DEFAULT (getdate()) ,
+    RATEDTIME TIME NOT NULL CONSTRAINT DF_RATING_TIME DEFAULT (CONVERT (time, GETDATE())),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_RATING_ISACTIVE DEFAULT (1),
+    STUDENT INT NOT NULL CONSTRAINT DF_RATING_STUDENT DEFAULT (1),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_RATING_PROGRAMME DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_RATING_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_RATING_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_RATING_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_RATING_MODBY DEFAULT (''),
+    CONSTRAINT PK_RATING PRIMARY KEY (CODE),
+    CONSTRAINT FK_RATING_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_RATING_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[SEMESTER] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[SEMESTER](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_SEMESTER_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_SEMESTER_DESCRIPTION DEFAULT (''),
+    YEARNO INT NOT NULL CONSTRAINT DF_SEMESTER_YEARNO DEFAULT (''),
+    SEMESTERNO INT NOT NULL CONSTRAINT DF_SEMESTER_SEMESTERNO DEFAULT (1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_SEMESTER_ISACTIVE DEFAULT (1),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_SEMESTER_PROGRAMME DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_SEMESTER_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_SEMESTER_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_SEMESTER_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_SEMESTER_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SEMESTER PRIMARY KEY (CODE),
+    CONSTRAINT FK_SEMESTER_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[INTAKE] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[INTAKE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_INTAKE_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_INTAKE_DESCRIPTION DEFAULT (''),
+    OPENINGDATE DATE NOT NULL CONSTRAINT DF_INTAKE_OPENINGDATE DEFAULT (getdate()),
+    CLOSINGDATE DATE NOT NULL CONSTRAINT DF_INTAKE_CLOSINGDATE DEFAULT (getdate()),
+    COMMENCEMENTDATE DATE NOT NULL CONSTRAINT DF_INTAKE_COMMENCEMENTDATE DEFAULT (getdate()),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_INTAKE_PROGRAMME DEFAULT (1),
+    FEE VARCHAR(100) NOT NULL CONSTRAINT DF_INTAKE_FEE DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_INTAKE_ISACTIVE DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_INTAKE_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_INTAKE_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_INTAKE_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_INTAKE_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_INTAKE PRIMARY KEY (CODE),
+    CONSTRAINT FK_INTAKE_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME]
+);
+
+----------------------------------
+-- Create [CAMPUS].[MODULE] table
+----------------------------------
+CREATE TABLE [CAMPUS].[MODULE](
+    CODE INT NOT NULL IDENTITY (1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_MODULE_NAME DEFAULT (''),    
+    DESCRIPTION VARCHAR(8000) NOT NULL CONSTRAINT DF_MODULE_DESCRIPTION DEFAULT(''),
+    INTERNALCODEOFMODULE VARCHAR(30) NOT NULL CONSTRAINT DF_MODULE_INTERNALCODEOFMODULE DEFAULT(''),
+    CREDITVALUE TINYINT NOT NULL CONSTRAINT DF_MODULE_CREDITVALUE DEFAULT(1), -- ALLOWS UP TO 255
+    COMPULSORYSTATUS TINYINT NOT NULL CONSTRAINT DF_MODULE_COMPULSORYSTATUS DEFAULT(1), --0 SELECTIVE 1 COMPULSORY etc
+    TUTOREDBY VARCHAR(100) NOT NULL CONSTRAINT DF_MODULE_TUTOREDBY DEFAULT (''),    
+    SEMESTER INT NOT NULL CONSTRAINT DF_MODULE_SEMESTER DEFAULT(1),
+    ISTUTORRELATED BIT NOT NULL CONSTRAINT DF_MODULE_ISTUTORRELATED DEFAULT (0),
+    TUTOR INT NOT NULL CONSTRAINT DF_MODULE_TUTOR DEFAULT(1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_MODULE_ISACTIVE DEFAULT(1),
+    CRTON DATE NOT NULL CONSTRAINT DF_MODULE_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_MODULE_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_MODULE_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_MODULE_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_MODULE PRIMARY KEY (CODE),
+    CONSTRAINT FK_MODULE_SEMESTER FOREIGN KEY (SEMESTER) REFERENCES [CAMPUS].[SEMESTER],
+    CONSTRAINT FK_MODULE_TUTOR FOREIGN KEY (TUTOR) REFERENCES [CAMPUS].[TUTOR]     
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[EMPLOYMENT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[EMPLOYMENT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    VARIFICATIONSTATUS INT NOT NULL CONSTRAINT DF_EMPLOYMENT_VARIFICATIONSTATUS DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_EMPLOYMENT_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_EMPLOYMENT_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_EMPLOYMENT_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_EMPLOYMENT_MODBY DEFAULT ('') ,
+    TUTOR INT NOT NULL CONSTRAINT DF_EMPLOYMENT_TUTOR DEFAULT (1) ,
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_EMPLOYMENT_COURSEPROVIDER DEFAULT (1) ,
+    CONSTRAINT PK_EMPLOYMENT PRIMARY KEY (CODE),
+    CONSTRAINT FK_EMPLOYMENT_TUTOR FOREIGN KEY (TUTOR) REFERENCES [CAMPUS].[TUTOR],
+    CONSTRAINT FK_EMPLOYMENT_COURSEPROVIDER FOREIGN KEY (COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER]
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[PAGE] table
+-- ---------------------------- 
+CREATE TABLE [CAMPUS].[PAGE](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_PAGE_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_PAGE_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_PAGE_ISACTIVE DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_PAGE_CRTON DEFAULT (getdate()),
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_PAGE_CRTBY DEFAULT (''),
+    MODON DATE NOT NULL CONSTRAINT DF_PAGE_MODON DEFAULT (getdate()),
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_PAGE_MODBY DEFAULT (''),
+    CONSTRAINT PK_PAGE PRIMARY KEY (CODE)
+);
+
+
+-- ----------------------------
+-- Create [CAMPUS].[PAGESLOT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[PAGESLOT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(50) NOT NULL CONSTRAINT DF_PAGESLOT_NAME DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_PAGESLOT_ISACTIVE DEFAULT (1),
+    PAGE INT NOT NULL CONSTRAINT DF_PAGESLOT_PAGE DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_PAGESLOT_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_PAGESLOT_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_PAGESLOT_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_PAGESLOT_MODBY DEFAULT (''),
+    CONSTRAINT PK_PAGESLOT PRIMARY KEY (CODE),
+    CONSTRAINT FK_PAGESLOT_PAGE FOREIGN KEY (PAGE) REFERENCES [CAMPUS].[PAGE]
+);
+
+----------------------------------
+-- Create [CAMPUS].[BANNER] table
+----------------------------------
+CREATE TABLE [CAMPUS].[BANNER] (
+    CODE int NOT NULL IDENTITY (1,1),
+    IMAGE varchar(500) NOT NULL CONSTRAINT DF_BANNER_IMAGE DEFAULT (''),
+    EXPIRATIONDATE date NOT NULL CONSTRAINT DF_BANNER_EXPIRATIONDATE DEFAULT (getdate()),
+    TYPE varchar(500) NOT NULL CONSTRAINT DF_BANNER_TYPE DEFAULT (''),
+    DISPLAYDURATION int NOT NULL CONSTRAINT DF_BANNER_DISPLAYDURATION DEFAULT (1),
+    LINKTYPE int NOT NULL CONSTRAINT DF_BANNER_LINKTYPE DEFAULT (1),
+    URL varchar(500) NOT NULL CONSTRAINT DF_BANNER_URL DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_BANNER_ISACTIVE DEFAULT(1),
+    PAGESLOT INT NOT NULL CONSTRAINT DF_BANNER_PAGESLOT DEFAULT (1),
+    ADVERTISER int NOT NULL CONSTRAINT DF_BANNER_ADVERTISER DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_BANNER_CRTON DEFAULT (getdate()),
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_BANNER_CRTBY DEFAULT (''),
+    MODON date NOT NULL CONSTRAINT DF_BANNER_MODON DEFAULT (getdate()),
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_BANNER_MODBY DEFAULT (''),
+    CONSTRAINT PK_BANNER PRIMARY KEY (CODE),
+    CONSTRAINT FK_BANNER_ADVERTISER FOREIGN KEY (ADVERTISER) REFERENCES [CAMPUS].[ADVERTISER],    
+    CONSTRAINT FK_BANNER_PAGESLOT FOREIGN KEY (PAGESLOT) REFERENCES [CAMPUS].[PAGESLOT]
+);
+
+
+----------------------------------
+-- Create [CAMPUS].[BANNERSTAT] table
+----------------------------------
+CREATE TABLE [CAMPUS].[BANNERSTAT] (
+    CODE int NOT NULL IDENTITY (1,1),
+    CALLERPAGE varchar(500) NOT NULL CONSTRAINT DF_BANNERSTAT_CALLERPAGE DEFAULT ('') ,
+    VIEWDATE date NOT NULL CONSTRAINT DF_BANNERSTAT_VIEWDATE DEFAULT (getdate()) ,
+    VIEWTIME TIME NOT NULL CONSTRAINT DF_BANNERSTAT_VIEWTIME DEFAULT (CONVERT (time, GETDATE())),
+    BANNER int NOT NULL CONSTRAINT DF_BANNERSTAT_BANNER DEFAULT 1 ,
+    CRTON date NOT NULL CONSTRAINT DF_BANNERSTAT_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_BANNERSTAT_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_BANNERSTAT_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_BANNERSTAT_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_BANNERSTAT PRIMARY KEY (CODE),
+    CONSTRAINT FK_BANNERSTAT_BANNER FOREIGN KEY (BANNER) REFERENCES [CAMPUS].[BANNER](CODE)
+);
+
+------------------------------
+-- Create [CAMPUS].[PROGRAMMESTAT] table
+------------------------------
+CREATE TABLE [CAMPUS].[PROGRAMMESTAT](
+    CODE INT NOT NULL IDENTITY (1,1),
+    CALLERPAGE VARCHAR(150) NOT NULL CONSTRAINT DF_PROGRAMMESTAT_CALLERPAGE DEFAULT (''),
+    VIEWDATE DATE NOT NULL CONSTRAINT DF_PROGRAMMESTAT_VIEWDATE DEFAULT (getdate()),
+    VIEWTIME TIME NOT NULL CONSTRAINT DF_PROGRAMMESTAT_VIEWTIME DEFAULT(CONVERT (time, GETDATE())),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_PROGRAMMESTAT_PROGRAMME DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_PROGRAMMESTAT_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROGRAMMESTAT_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_PROGRAMMESTAT_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_PROGRAMMESTAT_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_PROGRAMMESTAT  PRIMARY KEY (CODE),
+    CONSTRAINT FK_PROGRAMMESTAT_PROGRAMME FOREIGN KEY(PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME]    
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[TUTORQUALIFICATION] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[TUTORQUALIFICATION](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_NAME DEFAULT (''),
+    DESCRIPTION VARCHAR(4000) NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_DESCRIPTION DEFAULT (''),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_ISACTIVE DEFAULT (1),
+    TUTOR INT NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_TUTOR DEFAULT (1),
+    LEVEL INT NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_LEVEL DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_CRTON DEFAULT (getdate()),
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_CRTBY DEFAULT (''),
+    MODON DATE NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_MODON DEFAULT (getdate()),
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_TUTORQUALIFICATION_MODBY DEFAULT (''),
+    CONSTRAINT PK_TUTORQUALIFICATION PRIMARY KEY (CODE),
+    CONSTRAINT FK_TUTORQUALIFICATION_TUTOR FOREIGN KEY (TUTOR) REFERENCES [CAMPUS].[TUTOR],
+    CONSTRAINT FK_TUTORQUALIFICATION_LEVEL FOREIGN KEY (LEVEL) REFERENCES [CAMPUS].[LEVEL]
+);
+
+--------------------------------------------
+-- Create [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY] table
+--------------------------------------------
+CREATE TABLE [CAMPUS].[STUDENTCOURSEPROVIDERINQUIRY](
+    CODE INT NOT NULL IDENTITY (1,1),
+    STUDENTNAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_STUDENTNAME DEFAULT (''),
+    STUDENTEMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_STUDENTEMAIL DEFAULT(''),
+    TELEPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_TELEPHONECOUNTRYCODE DEFAULT (''),
+    TELEPHONEAREACODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_TELEPHONEAREACODE DEFAULT (''),
+    TELEPHONENUM VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_TELEPHONENUM DEFAULT (''),
+    INQUIRYTITLE VARCHAR(35) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_INQUIRYTITLE DEFAULT('Mr'),
+    INQUIRYTEXT VARCHAR(8000) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_INQUIRYTEXT DEFAULT (''),
+    INQUIRYDATE DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_INQUIRYDATE DEFAULT (getdate()) ,
+    INQUIRYTIME TIME NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_INQUIRYTIME DEFAULT (CONVERT (time, GETDATE())),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_ISACTIVE DEFAULT (1),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_STUDENT DEFAULT (1),    
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_COURSEPROVIDER DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTCOURSEPROVIDERINQUIRY_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_STUDENTCOURSEPROVIDERINQUIRY  PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTCOURSEPROVIDERINQUIRY_COURSEPROVIDER FOREIGN KEY(COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],    
+    CONSTRAINT FK_STUDENTCOURSEPROVIDERINQUIRY_STUDENT FOREIGN KEY(STUDENT) REFERENCES [CAMPUS].[STUDENT]        
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[STUDENTPROGRAMINQUIRY] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[STUDENTPROGRAMINQUIRY](
+    CODE INT NOT NULL IDENTITY(1,1),
+    NAME VARCHAR(100) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_NAME DEFAULT (''),
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_EMAIL DEFAULT (''),
+    TELEPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_TELEPHONECOUNTRYCODE DEFAULT (''),
+    TELEPHONEAREACODE VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_TELEPHONEAREACODE DEFAULT (''),
+    TELEPHONENUM VARCHAR(20) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_TELEPHONENUM DEFAULT (''),
+    INQUIRYTITLE VARCHAR(200) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_INQUIRYTITLE DEFAULT (''),
+    INQUIRYTEXT VARCHAR(500) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_INQUIRYTEXT DEFAULT (''),
+    INQUIRYDATE DATE NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_INQUIRYDATE DEFAULT (getdate()) ,
+    INQUIRYTIME TIME NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_INQUIRYTIME DEFAULT (CONVERT (time, GETDATE())),
+    STUDENT INT NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_STUDENT DEFAULT (1),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_PROGRAMME DEFAULT (1),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_ISACTIVE DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_STUDENTPROGRAMINQUIRY_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_STUDENTPROGRAMINQUIRY PRIMARY KEY (CODE),
+    CONSTRAINT FK_STUDENTPROGRAMINQUIRY_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME],
+    CONSTRAINT FK_STUDENTPROGRAMINQUIRY_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[PAYMENT] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[PAYMENT](
+    CODE INT NOT NULL IDENTITY(1,1),
+    AMOUNT FLOAT NOT NULL CONSTRAINT DF_TUTOR_AMOUNT DEFAULT (0.0),
+    PAYMENTDATE DATE NOT NULL CONSTRAINT DF_PAYMENT_PAYMENTDATE DEFAULT (getdate()),
+    TYPE VARCHAR(200) NOT NULL CONSTRAINT DF_PAYMENT_TYPE DEFAULT (''),
+    ADDEDON DATE NOT NULL CONSTRAINT DF_PAYMENT_ADDEDON DEFAULT (getdate()),
+    ADDEDBY VARCHAR(20) NOT NULL CONSTRAINT DF_PAYMENT_ADDEDBY DEFAULT (''),
+    VERIFIEDON DATE NOT NULL CONSTRAINT DF_PAYMENT_VERIFIEDON DEFAULT (getdate()),
+    VERIFIEDBY VARCHAR(20) NOT NULL CONSTRAINT DF_PAYMENT_VERIFIEDBY DEFAULT (''),
+    APPROVEDON DATE NOT NULL CONSTRAINT DF_PAYMENT_APPROVEDON DEFAULT (getdate()),
+    APPROVEDBY VARCHAR(20) NOT NULL CONSTRAINT DF_PAYMENT_APPROVEDBY DEFAULT (''),
+    DESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_PAYMENT_DESCRIPTION DEFAULT (''),
+    COURSEPROVIDER INT NOT NULL CONSTRAINT DF_PAYMENT_COURSEPROVIDER DEFAULT (1),
+    PROGRAMME INT NOT NULL CONSTRAINT DF_PAYMENT_PROGRAMME DEFAULT (1),
+    BANNER INT NOT NULL CONSTRAINT DF_PAYMENT_BANNER DEFAULT (1),
+    PAYMENTSTATUS BIT NOT NULL CONSTRAINT DF_PAYMENT_ISACTIVE DEFAULT (1),
+    CRTON date NOT NULL CONSTRAINT DF_PAYMENT_CRTON DEFAULT (getdate()) ,
+    CRTBY varchar(20) NOT NULL CONSTRAINT DF_PAYMENT_CRTBY DEFAULT ('') ,
+    MODON date NOT NULL CONSTRAINT DF_PAYMENT_MODON DEFAULT (getdate()) ,
+    MODBY varchar(20) NOT NULL CONSTRAINT DF_PAYMENT_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_PAYMENT PRIMARY KEY (CODE),
+    CONSTRAINT FK_PAYMENT_COURSEPROVIDER FOREIGN KEY (COURSEPROVIDER) REFERENCES [CAMPUS].[COURSEPROVIDER],
+    CONSTRAINT FK_PAYMENT_PROGRAMME FOREIGN KEY (PROGRAMME) REFERENCES [CAMPUS].[PROGRAMME],
+    CONSTRAINT FK_PAYMENT_BANNER FOREIGN KEY (BANNER) REFERENCES [CAMPUS].[BANNER]
+);
+
+-- ----------------------------
+-- Create [CAMPUS].[APPLICATION] table
+-- ----------------------------
+CREATE TABLE [CAMPUS].[APPLICATION](    
+    CODE INT NOT NULL IDENTITY(1,1),
+    REFNUMBER VARCHAR(50) NOT NULL CONSTRAINT DF_APPLICATION_REFNUMBER DEFAULT (''),
+    NAME VARCHAR(200) NOT NULL CONSTRAINT DF_APPLICATION_NAME DEFAULT (''),
+    EMAIL VARCHAR(255) NOT NULL CONSTRAINT DF_APPLICATION_EMAIL DEFAULT (''),
+    TELEPHONECOUNTRYCODE VARCHAR(20) NOT NULL CONSTRAINT DF_APPLICATION_TELEPHONECOUNTRYCODE DEFAULT (''),
+    TELEPHONEAREACODE VARCHAR(20) NOT NULL CONSTRAINT DF_APPLICATION_TELEPHONEAREACODE DEFAULT (''),
+    TELEPHONENUM VARCHAR(20) NOT NULL CONSTRAINT DF_APPLICATION_TELEPHONENUM DEFAULT (''),
+    ADDRESS1 VARCHAR(50)  DEFAULT (''),
+    ADDRESS2 VARCHAR(50) DEFAULT(''),
+    ADDRESS3 VARCHAR(50) DEFAULT(''),
+    AGE INT NOT NULL CONSTRAINT DF_APPLICATION_AGE DEFAULT 1,
+    HIGHESTQUALNAME  VARCHAR(500) NOT NULL CONSTRAINT DF_APPLICATION_HIGHESTQUALNAME DEFAULT (''),
+    HIGHESTQUALDESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_APPLICATION_HIGHESTQUALDESCRIPTION DEFAULT (''),
+    HIGHESTQUALLEVELNAME VARCHAR(500) NOT NULL CONSTRAINT DF_APPLICATION_HIGHESTQUALLEVELNAME DEFAULT (''),
+    HIGHESTQUALLEVELDESCRIPTION VARCHAR(500) NOT NULL CONSTRAINT DF_APPLICATION_HIGHESTQUALLEVELDESCRIPTION DEFAULT (''),
+    APPLIEDDATE DATE NOT NULL CONSTRAINT DF_APPLICATION_APPLIEDDATE DEFAULT (getdate()),
+    APPLIEDTIME TIME NOT NULL CONSTRAINT DF_APPLICATION_APPLIEDTIME DEFAULT (CONVERT (time, GETDATE())),
+    ISACTIVE BIT NOT NULL CONSTRAINT DF_APPLICATION_ISACTIVE DEFAULT (1),
+    STUDENT INT NOT NULL CONSTRAINT DF_APPLICATION_STUDENT DEFAULT (1),
+    INTAKE INT NOT NULL CONSTRAINT DF_APPLICATION_INTAKE DEFAULT (1),
+    TOWN BIGINT NOT NULL CONSTRAINT DF_APPLICATION_TOWN DEFAULT (1),
+    ATTENDINGLOCATION BIGINT NOT NULL CONSTRAINT DF_APPLICATION_ATTENDINGLOCATION DEFAULT (1),
+    STUDENTQUALIFICATION INT NOT NULL CONSTRAINT DF_APPLICATION_STUDENTQUALIFICATION DEFAULT (1),
+    LEVEL INT NOT NULL CONSTRAINT DF_APPLICATION_LEVEL DEFAULT (1),
+    CRTON DATE NOT NULL CONSTRAINT DF_APPLICATION_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_APPLICATION_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_APPLICATION_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_APPLICATION_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_APPLICATION PRIMARY KEY (CODE),
+    CONSTRAINT FK_APPLICATION_STUDENT FOREIGN KEY (STUDENT) REFERENCES [CAMPUS].[STUDENT],
+    CONSTRAINT FK_APPLICATION_INTAKE FOREIGN KEY (INTAKE) REFERENCES [CAMPUS].[INTAKE],
+    CONSTRAINT FK_APPLICATION_TOWN FOREIGN KEY (TOWN) REFERENCES [CAMPUS].[TOWN],
+    CONSTRAINT FK_APPLICATION_ATTENDINGLOCATION FOREIGN KEY (ATTENDINGLOCATION) REFERENCES [CAMPUS].[TOWN],
+    CONSTRAINT FK_APPLICATION_STUDENTQUALIFICATION FOREIGN KEY (STUDENTQUALIFICATION) REFERENCES [CAMPUS].[STUDENTQUALIFICATION],
+    CONSTRAINT FK_APPLICATION_LEVEL FOREIGN KEY (LEVEL) REFERENCES [CAMPUS].[LEVEL]
+);
+
+------------------------------
+-- Create [CAMPUS].[SYSTEMCONFIG] table
+------------------------------
+CREATE TABLE [CAMPUS].[SYSTEMCONFIG](
+    CODE INT NOT NULL IDENTITY (1,1),
+    SYSTEMCONFIGCODE VARCHAR(20) NOT NULL CONSTRAINT DF_SYSTEMCONFIG_SYSTEMCONFIGCODE DEFAULT (''),
+    DESCRIPTION VARCHAR(255) NULL,
+    VALUE1 VARCHAR(255) NULL,
+    VALUE2 VARCHAR(255) NULL,
+    VALUE3 VARCHAR(255) NULL,
+    SORTKEY INT NOT NULL CONSTRAINT DF_SYSTEMCONFIG_SORTKEY DEFAULT (1) ,
+    CRTON DATE NOT NULL CONSTRAINT DF_SYSTEMCONFIG_CRTON DEFAULT (getdate()) ,
+    CRTBY VARCHAR(20) NOT NULL CONSTRAINT DF_SYSTEMCONFIG_CRTBY DEFAULT ('') ,
+    MODON DATE NOT NULL CONSTRAINT DF_SYSTEMCONFIG_MODON DEFAULT (getdate()) ,
+    MODBY VARCHAR(20) NOT NULL CONSTRAINT DF_SYSTEMCONFIG_MODBY DEFAULT ('') ,
+    CONSTRAINT PK_SYSTEMCONFIG PRIMARY KEY (CODE)
+);
+
+

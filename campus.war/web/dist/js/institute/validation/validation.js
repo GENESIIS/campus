@@ -12,6 +12,7 @@
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  *20161202 DN C18-student-signup-without-using-third-party-application-test-dn add isStringHasValiCharsAndLength() method
+ *20161128 Dn c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  */ 
 
  
@@ -54,6 +55,7 @@ function isFieldFilled(flag, elementName, errorLabelId){
 function isempty(fieldValue) {
 
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+
 }
 
 /**
@@ -138,6 +140,4 @@ function isStringHasValiCharsAndLength(testableInput){
 	}
 	return validCharAndLength;
 }
-
-
 

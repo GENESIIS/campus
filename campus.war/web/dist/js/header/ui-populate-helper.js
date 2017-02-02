@@ -4,15 +4,21 @@
 //20161109 JH c7-higher-education-landing-page-MP ui-populate-helper.js created
 //20161116 JH c7-higher-education-landing-page-MP change displayCategory() method
 //20161117 JH c7-higher-education-landing-page-MP displayCategories() method created
+//20161125 JH c7-higher-education-landing-page-MP solve servlet path error in common header loading error
+//20161205 JH c7-higher-education-landing-page-MP modify javascript function to load category data without onload function
 
 /**
  * This method is to load category details
  */
 
+window.onload = function(){ 
+	getCategoryData();
+};
+
 window.categoryCollection = null;
 
 function getCategoryData() {
-
+	
     $.ajax({
         url : '/PublicController',
         method : 'POST',
@@ -42,7 +48,7 @@ function displayCategories() {
             .each(
                 categoryCollectionList,
                 function(index, value) {
-                    singleCategoryElement += '<li><form action="PublicController" method="POST">';
+                    singleCategoryElement += '<li><form action="/PublicController" method="POST">';
                     singleCategoryElement += '<button type="submit" name="CCO" id="CCO" class="btn btn-info navbar-btn" value="LIST_CATEGORY_LANDING_PAGE">'
                         + value[1] + '</button>';
                     singleCategoryElement += '<input type="hidden" name="categoryId" id="categoryId" value="'
