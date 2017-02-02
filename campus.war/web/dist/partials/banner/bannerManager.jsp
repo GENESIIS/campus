@@ -1,5 +1,5 @@
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn created the initial bannerManager.jsp page -->
-
+<!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn added modal div element to the document -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -24,16 +24,50 @@
 <%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
 	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
 <%-- WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR --%>
-<script src="/dist/bower-components/jquery/jquery.min.js"></script>
-
-
+	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
+    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/image-slides.js"></script>
+    <script src="/dist/js/institute/validation/validation.js"></script>
+	<script src="/dist/partials/banner/bannerManager.jsp"></script>
+	<script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 <body>
 
-	<div align="center">
-		<div>
-			<h1>Add Banner</h1>
+<!--  logout-popup window message -->
+<div class="modal fade" id="messagePopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="login-dialog modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header"> <b>System Message</b>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">Close</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+							<label class="" id="displayLabel"></label> <!-- messages to be displayed -->
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
+</div>
+
+
+
+<div class="panel panel-default">
+      <div class="panel-heading" align="center"><h1>Add Banner</h1></div>
+      <div class="panel-body">Panel Content</div>
+    </div>
+
+	<div align="center">
+		
 
 		<form id="banner-from">
 			<div>
