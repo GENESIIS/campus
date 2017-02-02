@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170107 c6-list-available-institutes-on-the-view Initiated ProgrammeICrud.java
 //20170108 c6-list-available-institutes-on-the-view Declaring new methods
+//20170202 DJ c138-add-basic-programme-MP-dj Initiate getAllClassTypes() method.
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -14,11 +15,13 @@ import java.util.Set;
 public interface ProgrammeICrud extends ICrud {
 	
 	//TODO: Declared for presentation purpose and for Future benefits.
-	/*public Collection<Collection<String>> getAllMajors()throws SQLException,Exception;	
+	public Collection<Collection<String>> getAllMajors()throws SQLException,Exception;	
 	
 	public Collection<Collection<String>> getAllLevels()throws SQLException,Exception;
 	
-	public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
+	public Collection<Collection<String>> getAllClassTypes()throws SQLException,Exception;
+	
+	/*public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
 	
 	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;*/
 	
