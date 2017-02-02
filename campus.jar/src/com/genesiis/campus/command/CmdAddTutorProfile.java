@@ -16,6 +16,7 @@ package com.genesiis.campus.command;
 //20170130 Cw c36-add-tutor-details modified validateAvailability() method
 //20170130 CW c36-add-tutor-information re-organize the import statements.
 //20170131 CW c36-add-tutor-information modify execute() & validateUserAndEmail() methods
+//20170202 CW c36-add-tutor-details modified validateAvailability(), validateUserAndEmail() methods
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class CmdAddTutorProfile implements ICommand {
 		String message = "True"; 
 		try {		
 
-			if (!(Validator.isNotEmpty(helper.getParameter("username")))){
+			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
 				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
 				message = "False";
 			}
@@ -188,19 +189,39 @@ public class CmdAddTutorProfile implements ICommand {
 
 	public void setVariables(IDataHelper helper, Tutor tutor) {
 		try {
-			tutor.setUsername(helper.getParameter("username"));
-			tutor.setPassword(helper.getParameter("password"));
-			tutor.setFirstName(helper.getParameter("firstname"));
+			
+			if (helper.getParameter("username").equals("")) {
+				tutor.setUsername(" ");
+			} else {
+				tutor.setUsername(helper.getParameter("username"));
+			}
+
+			if (helper.getParameter("password").equals("")) {
+				tutor.setPassword(" ");
+			} else {
+				tutor.setPassword(helper.getParameter("password"));
+			}
+
+			if (helper.getParameter("firstname").equals("")) {
+				tutor.setFirstName(" ");
+			} else {
+				tutor.setFirstName(helper.getParameter("firstname"));
+			}
 			
 			if (helper.getParameter("middlename").equals("")) {
 				tutor.setMiddleName("-");
 			} else {
 				tutor.setMiddleName(helper.getParameter("middlename"));
 			}
+
+			if (helper.getParameter("lastname").equals("")) {
+				tutor.setLastName(" ");
+			} else {
+				tutor.setLastName(helper.getParameter("lastname"));
+			}
 			
-			tutor.setLastName(helper.getParameter("lastname"));
 			tutor.setGender(helper.getParameter("gender"));
-			
+
 			if (helper.getParameter("experience").equals("")) {
 				tutor.setExperience("-");
 			} else {
@@ -228,13 +249,36 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 			}
 			
-			tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
-			tutor.setLandNumber(helper.getParameter("landNumber"));
-			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
-			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
+			if (helper.getParameter("landAreaCode").equals("")) {
+				tutor.setLandAreaCode(" ");
+			} else {
+				tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
+			}
 
-			tutor.setAddressLine1(helper.getParameter("address1"));
-			
+			if (helper.getParameter("landNumber").equals("")) {
+				tutor.setLandNumber(" ");
+			} else {
+				tutor.setLandNumber(helper.getParameter("landNumber"));
+			}			
+
+			if (helper.getParameter("mobileNetworkCode").equals("")) {
+				tutor.setMobileNetworkCode(" ");
+			} else {
+				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
+			}
+
+			if (helper.getParameter("mobileNumber").equals("")) {
+				tutor.setMobileNumber(" ");
+			} else {
+				tutor.setMobileNumber(helper.getParameter("mobileNumber"));
+			}
+
+			if (helper.getParameter("address1").equals("")) {
+				tutor.setAddressLine1(" ");
+			} else {
+				tutor.setAddressLine1(helper.getParameter("address1"));
+			}
+						
 			if (helper.getParameter("address2").equals("")) {
 				tutor.setAddressLine2("-");
 			} else {
@@ -293,7 +337,7 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setViberNumber("0");
 			} else {
 				tutor.setViberNumber(helper.getParameter("viber"));
-			}
+			}			
 			
 			tutor.setEmailAddress(helper.getParameter("email"));
 
@@ -343,33 +387,34 @@ public class CmdAddTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		
 		try{
-			System.out.println("mob country code = " +Integer.parseInt(tutor.getMobileCountryCode()));
-			Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			if(!(countryCollection.isEmpty())){
-				for(Collection<String> countryList : countryCollection){
-					tutorCollection.add(countryList.toArray()[1].toString());				
-				}
-			}/*else{
-				tutorCollection.add("0");
-			}*/
 
-			int addCount = 0;
-			Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-
-			if(!(countryCollection.isEmpty())){
-				for(Collection<String> townList : townCollection){
-					if (townList.toArray()[0].toString().equals(tutor.getTown())){
-						tutorCollection.add(townList.toArray()[1].toString());
-						tutorCollection.add(townList.toArray()[0].toString());
-						//tutorCollection.add("x");
-						//tutorCollection.add("y");
-						addCount++;
+			int countryAddCount = 0, townAddCount = 0;
+			if(tutor.getMobileCountryCode() != " "){
+				Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				
+				if(!(countryCollection.isEmpty())){
+					for(Collection<String> countryList : countryCollection){
+						tutorCollection.add(countryList.toArray()[1].toString());	
+						countryAddCount++;			
+					}
+	
+					for(Collection<String> townList : townCollection){
+						if (townList.toArray()[0].toString().equals(tutor.getTown())){
+							tutorCollection.add(townList.toArray()[1].toString());
+							tutorCollection.add(townList.toArray()[0].toString());
+							townAddCount++;
+						}
 					}
 				}
 			}
-			if(addCount == 0){
-				tutorCollection.add("0");
-				tutorCollection.add("0");
+			if(countryAddCount == 0){
+				tutorCollection.add(" ");
+			}
+			
+			if(townAddCount == 0){
+				tutorCollection.add(" ");
+				tutorCollection.add(" ");
 			}
 
 		}  catch (SQLException sqle){
@@ -379,31 +424,19 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("fillTutorCollection() : Exception" + exception.toString());
 			throw exception;
 		}
-		System.out.println("tutor.getMobileCountryCode() "+tutor.getMobileCountryCode());
+
 		tutorCollection.add(tutor.getMobileCountryCode());
-		System.out.println("tutor.getMobileNetworkCode() "+tutor.getMobileNetworkCode());
 		tutorCollection.add(tutor.getMobileNetworkCode());
-		System.out.println("tutor.getMobileNumber() "+tutor.getMobileNumber());
 		tutorCollection.add(tutor.getMobileNumber());
-		System.out.println("tutor.getLandCountryCode() "+tutor.getLandCountryCode());
 		tutorCollection.add(tutor.getLandCountryCode());
-		System.out.println("tutor.getLandAreaCode() "+tutor.getLandAreaCode());
 		tutorCollection.add(tutor.getLandAreaCode());
-		System.out.println("tutor.getLandNumber() "+tutor.getLandNumber());
 		tutorCollection.add(tutor.getLandNumber());
-		System.out.println("tutor.getAddressLine1() "+tutor.getAddressLine1());
 		tutorCollection.add(tutor.getAddressLine1());
-		System.out.println("tutor.getAddressLine2() "+tutor.getAddressLine2());
 		tutorCollection.add(tutor.getAddressLine2());
-		System.out.println("tutor.getAddressLine3() "+tutor.getAddressLine3());
 		tutorCollection.add(tutor.getAddressLine3());
-		System.out.println("tutor.getWebLink() "+tutor.getWebLink());
 		tutorCollection.add(tutor.getWebLink());
-		System.out.println("tutor.getFacebookLink() "+tutor.getFacebookLink());
 		tutorCollection.add(tutor.getFacebookLink());
-		System.out.println("tutor.getLinkedInLink() "+tutor.getLinkedInLink());
 		tutorCollection.add(tutor.getLinkedInLink());
-		System.out.println("tutor.getTwitterNumber() "+tutor.getTwitterNumber());
 		tutorCollection.add(tutor.getTwitterNumber());
 		tutorCollection.add(tutor.getInstagramId());
 		tutorCollection.add(tutor.getMySpaceId());
@@ -412,6 +445,5 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getEmailAddress());
 		tutorCollection.add(tutor.getUsername());
 		
-		System.out.println(tutorCollection);
 	}
 }
