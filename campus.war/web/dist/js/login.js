@@ -142,18 +142,35 @@ function studentLogout() {
 
 //forget password function
 function forgotPassword() {
-	var userEmail = $("#useremail").val();
-	if (userId != null) {
+	var userEmail = $("#verifiemail").val();
+	
+	var emailempty = isempty(userEmail);
+	var valEmail = isValidEmailFormat(userEmail);
+	
+	//email filed validation error messages handling
+	if (!(emailempty)) {
+		document.getElementById('emailtbError').innerHTML = "  ** Email can not be Empty.";
+		flag = false;
+		return false;
+	}
+	if (!(valEmail)) {
+		document.getElementById('emailtbError').innerHTML = "  ** Please Enter valid email address.";
+		flag = false;
+		return false;
+	}
+	
+	if (userEmail != null) {
 		var jsonData = {
 			"studentEmail" : userEmail
-
+			
 		};
+		
 		$.ajax({
 			type : "POST",
 			url : '/LoginController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
-				CCO : "SLGOUT"
+				CCO : "EMAILV"
 
 			},
 			dataType : "json",
