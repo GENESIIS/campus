@@ -80,6 +80,9 @@
 
     <div class="banner-panel pull-right clearfix">
         <!--Advertise Here-->
+        <div></div>		<!-- banner 160*1600 -->
+        <div></div>		<!--banner 180*150 -->
+        <div></div>		<!--banner180*150  -->
     </div>
 </div>
 
