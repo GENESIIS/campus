@@ -55,7 +55,6 @@
 		});
 		
 		$('#addSearchData').click(function(e){
-			alert("Test");
 			var keyWordString = " ";
 			var selectedType = " ";
 			keyWordString = $("#course-search").val();
