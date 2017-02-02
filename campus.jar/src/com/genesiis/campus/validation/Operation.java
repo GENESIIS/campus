@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //20161121 DJ c17-provider-criteria-based-filter-search add  LIST_FILTER_SEARCH_COURSE_PROVIDERS.
 //20161124 DJ c17-provider-criteria-based-filter-search add  LIST_FILTER_SEARCH_CATEGORY_TYPES.
 //20170113 DJ c123-general-filter-search-course-provider-MP-dj add FILTER_SEARCH_COURSE_PROVIDERS.
+//20170202 DJ c138-add-basic-programme-MP-dj Add LIST_PROGRAMME_ADD_VIEW
 
 /**
  * Operation class facilitate in binding the CCO
@@ -16,12 +17,13 @@ package com.genesiis.campus.validation;
 public enum Operation {	
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),	
-	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
+/*	LIST_TOP_COURSE_PROVIDERS("LIST_TOP_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_ALL_COURSE_PROVIDERS("LIST_ALL_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_FILTER_SEARCH_COURSE_PROVIDERS("LIST_FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSON," "),
 	LIST_FILTER_SEARCH_CATEGORY_TYPES("LIST_FILTER_SEARCH_CATEGORY_TYPES",ResponseType.JSON," "),
 	//FILTER_SEARCH_COURSE_PROVIDERS("FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSP,"viewMoreCourseProviders.jsp");
-	GENERAL_FILTER_SEARCH_COURSE_PROVIDERS("GENERAL_FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSON," ");
+	GENERAL_FILTER_SEARCH_COURSE_PROVIDERS("GENERAL_FILTER_SEARCH_COURSE_PROVIDERS",ResponseType.JSON," ");*/
+	LIST_PROGRAMME_ADD_VIEW("LIST_PROGRAMME_ADD_VIEW",ResponseType.JSON," ");
 			
 	private final String commandString;
 	private final ResponseType responseType;
