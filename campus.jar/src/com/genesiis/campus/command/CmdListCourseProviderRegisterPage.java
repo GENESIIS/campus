@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20161229 JH c39-add-course-provider added new switch case LIST_COUESE_PROVIDER_TYPES 
 //20161230 JH c39-add-course-provider case LIST_PROVIDER_REGISTRATION_PAGE modified 
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import
 
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CmdListCourseProviderRegisterPage implements ICommand {
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CmdListCourseProviderRegisterPage.class.getName());
 
 	@Override

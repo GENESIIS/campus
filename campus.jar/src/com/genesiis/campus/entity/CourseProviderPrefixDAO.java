@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20161228 JH c39-add-course-provider removed unwanted codes and loggers
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import, print exception string instead of 
+//the exception in findById()
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CourseProviderPrefixDAO implements ICrud {
-	static org.apache.log4j.Logger log = Logger
+	static Logger log = Logger
 			.getLogger(CourseProviderPrefixDAO.class.getName());
 
 	public int add(Object object) throws SQLException, Exception {

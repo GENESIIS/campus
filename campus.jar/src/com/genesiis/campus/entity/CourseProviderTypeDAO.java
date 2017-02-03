@@ -72,7 +72,7 @@ public class CourseProviderTypeDAO implements ICrud {
 			log.error("findById(): SQLException " + sqle.toString());
 			throw sqle;
 		} catch (Exception exp) {
-			log.error("findById(): Wxcepption" + exp.toString());
+			log.error("findById(): Exception" + exp.toString());
 			throw exp;
 		} finally {
 			DaoHelper.cleanup(conn, preparedStatement, resultSet);
