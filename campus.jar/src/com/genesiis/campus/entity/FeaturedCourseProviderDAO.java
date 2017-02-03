@@ -19,6 +19,7 @@ package com.genesiis.campus.entity;
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170202 JH c39-add-course-provider query string account modified: select user type code selected inside the insert query
 //20170202 JH c39-add-course-provider removed repeating statements used to set parameters to preparedStatement
+//20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -225,12 +226,12 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			conn.commit();
 
 		} catch (SQLException sqlException) {
-			log.error("add method SQL Exception " + sqlException.toString());
+			log.error("add SQL Exception " + sqlException.toString());
 			conn.rollback();
 			throw sqlException;
 
 		} catch (Exception exception) {
-			log.error("add method Exception " + exception.toString());
+			log.error("add Exception " + exception.toString());
 			conn.rollback();
 			throw exception;
 		} finally {

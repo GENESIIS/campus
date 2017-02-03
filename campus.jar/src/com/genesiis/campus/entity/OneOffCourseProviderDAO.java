@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170103 JH c39-add-course-provider town query changed due to course provider town table changes
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -190,12 +191,12 @@ public class OneOffCourseProviderDAO implements ICrud{
 			conn.commit();
 			
 		}catch(SQLException sqlException){
-			log.error("add method SQL Exception " + sqlException.toString());
+			log.error("add SQL Exception " + sqlException.toString());
 			conn.rollback();
 			throw sqlException;
 			
 		}catch (Exception exception) {
-			log.error("add method Exception " + exception.toString());
+			log.error("add Exception " + exception.toString());
 			conn.rollback();
 			throw exception;
 		}finally {
