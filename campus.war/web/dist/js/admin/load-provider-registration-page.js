@@ -15,7 +15,6 @@ window.responseErrorMessage = null;
 
 $(document).ready(function() {
 	arrangeUI();
-	// getCourseProviderTypes();
 });
 
 function arrangeUI() {
@@ -40,7 +39,12 @@ function publishPrograms(){
 
 	}else if(publishProgram == 1){
 		document.getElementById("expire-date").style.display = "none";
-		$('#expirationDate').val("0000-00-00");
+		
+		/**
+		 * this assigned value is not used in the application to save the data. but to avoid the JavaScript 
+		 * warning message of invalid date format.
+		 */
+		$('#expirationDate').val("2040-12-31");
 	}
 }
 
@@ -221,8 +225,9 @@ function getDataOnCountrySelection() {
 
 }
 
-// var selectedCountry = $("#selectedCountry");
-// alert(selectedCountry);
+/**
+ * get course provider town list for the selected country
+ */		
 function getProviderTownListData() {
 	var selectedCountry = document.getElementById('selectedCountry').value;
 
@@ -250,6 +255,9 @@ function getProviderTownListData() {
 	}
 }
 
+/**
+ * display course provider town list
+ */
 function displayProviderTownList() {
 
 	var countryCollection = window.townCollection;
@@ -269,6 +277,10 @@ function displayProviderTownList() {
 	townNames.html(singleTownElement);
 }
 
+/**
+ * landPhoneNubmerHelper() method will show relevant error messages. 
+ * It will display the last telephone number for  compulsory phone number fields. 
+ */
 function landPhoneNubmerHelper() {
 	var country = $("#country-List :selected").val();
 	var areaCode = $("#areaCode").val();
@@ -346,7 +358,10 @@ function landPhoneNubmerHelper() {
 
 }
 
-function getProviderType() {
+/**
+ * 
+ */
+function saveCourseProvider() {
 
 	var errorMessageList = document.getElementsByClassName('error-message');
 	var flag = true;
@@ -356,12 +371,12 @@ function getProviderType() {
 		errorMessageList[i].innerHTML = "";
 	}
 
-//	if (providerPrefixValidation() === false) {
-//		flag = false;
-//	}
-//	if (providerUsernameValidation() === false) {
-//		flag = false;
-//	}
+	if (providerPrefixValidation() === false) {
+		flag = false;
+	}
+	if (providerUsernameValidation() === false) {
+		flag = false;
+	}
 
 	if (flag === true) {
 		if (vaidateCourseProviderDeatils() === true) {
@@ -402,16 +417,6 @@ function getProviderType() {
 									$( "#basicForm" ).submit();
 									
 									window.responseErrorMessage = response.userMessage;
-//									 $
-//									 .ajax({
-//									 url :
-//									 '/dist/partials/admin/courseProviderManagement.jsp',
-//									 method : 'POST',
-//									 data : {
-//														'generatedKey' : response.registerId,
-//														'userMessage' : response.userMessage
-//													}
-//												});
 									
 									   var form = document.createElement('form');
 							    	   form.method = 'post';

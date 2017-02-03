@@ -63,6 +63,26 @@ function isPatternMatch(regularExpression, source) {
 }
 
 /**
+ * validateFormURL created to validate URL's and set error messages 
+ * @author JH
+ * @param url
+ * @param errorElementId
+ * @param foucsElementId
+ * @returns {Boolean}
+ */
+function validateFormURL(url, errorElementId, foucsElementId){
+	var flag = true;
+	if (isempty(url) && !ValidURL(url)) {
+		var message = "**Invalid URL.";		
+		document.getElementById(errorElementId ).innerHTML = message;
+		document.getElementById(foucsElementId).focus();
+		flag = false;
+	}
+	return flag;
+}
+
+
+/**
  * @author JH
  * @param parameter
  * @param length
@@ -370,50 +390,34 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-	if (isempty(webLink) && !ValidURL(webLink)) {
-		document.getElementById('errorWebLink').innerHTML = "**Give a valid web link URL.";
-		document.getElementById('webLink').focus();
+	if(!validateFormURL(webLink, $('#errorWebLink').attr('id'), $('#webLink').attr('id'))){
 		flag = false;
 	}
-	if (isempty(facebook) && !ValidURL(facebook)) {
-		document.getElementById('errorFacebook').innerHTML = "**Give a valid facebook URL.";
-		document.getElementById('facebook').focus();
+	if(!validateFormURL(facebook, $('#errorFacebook').attr('id'), $('#facebook').attr('id'))){
 		flag = false;
 	}
-	if (isempty(linkdedIn) && !ValidURL(linkdedIn)) {
-		document.getElementById('errorLinkedIn').innerHTML = "**Give a valid LinkedIn URL.";
-		document.getElementById('linkdedIn').focus();
+	if(!validateFormURL(facebook, $('#errorLinkedIn').attr('id'), $('#linkdedIn').attr('id'))){
 		flag = false;
 	}
-	if (isempty(twitter) && !ValidURL(twitter)) {
-		document.getElementById('errorTwitter').innerHTML = "**Give a valid Twitter URL.";
-		document.getElementById('twitter').focus();
+	if(!validateFormURL(facebook, $('#errorTwitter').attr('id'), $('#twitter').attr('id'))){
 		flag = false;
 	}
-	if (isempty(instagram) && !ValidURL(instagram)) {
-		document.getElementById('errorInstagram').innerHTML = "**Give a valid Instagram URL.";
-		document.getElementById('instagram').focus();
+	if(!validateFormURL(facebook, $('#errorInstagram').attr('id'), $('#instagram').attr('id'))){
 		flag = false;
 	}
-	if (isempty(mySpace) && !ValidURL(mySpace)) {
-		document.getElementById('errorInstagram').innerHTML = "**Select the account status.";
-		document.getElementById('instagram').focus();
+	if(!validateFormURL(facebook, $('#errorMyspace').attr('id'), $('#mySpace').attr('id'))){
 		flag = false;
 	}
-	// if (!isempty(whatsapp)) {
-	// document.getElementById('errorWhatsapp').innerHTML = "**Give a valid
-	// whatsapp
-	// number.";
-	// document.getElementById('whatsapp').focus();
-	// flag = false;
-	// }
-	// if (!isempty(viber)) {
-	// document.getElementById('errorViber').innerHTML = "**Give a valid viber
-	// number.";
-	// document.getElementById('viber').focus();
-	// flag = false;
-	// }
-
+	 if (isempty(whatsapp) && !isPatternMatch(integerPattern, whatsapp) ) {
+	 document.getElementById('errorWhatsapp').innerHTML = "**Invalid whatsapp number.";
+	 document.getElementById('whatsapp').focus();
+	 flag = false;
+	 }
+	 if (isempty(viber) && !isPatternMatch(integerPattern, whatsapp)) {
+	 document.getElementById('errorViber').innerHTML = "**Invalid viber number.";
+	 document.getElementById('viber').focus();
+	 flag = false;
+	 }
 	if (!isEmptyValue(providerType)) {
 		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
 		document.getElementById('selectedProviderType').focus();
