@@ -2,10 +2,7 @@ package com.genesiis.campus.command;
 
 //20170117 JH c133-admin-list-tutors CmdAdminListTutors.java created
 //20170117 JH c133-admin-list-tutors list tutors and exception handling 
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+//20170203 133-admin-list-tutors arranged imports according to the style guide
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -14,6 +11,10 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CmdAdminListTutors implements ICommand{
 	

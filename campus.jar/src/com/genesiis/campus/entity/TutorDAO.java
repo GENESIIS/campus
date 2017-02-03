@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170117 JH c133-admin-list-tutors getAll() method coding
 //20170124 JH c133-admin-list-tutors getAll() query modified
 //20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
+//20170203 133-admin-list-tutors arranged imports according to the style guide
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

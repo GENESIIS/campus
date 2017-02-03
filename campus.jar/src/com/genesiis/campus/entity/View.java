@@ -1,12 +1,12 @@
 package com.genesiis.campus.entity;
 
 //20161024 DN c10-contacting-us-page created the initial version of view.java
+//20170203 133-admin-list-tutors arranged imports according to the style guide
 
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
 
 /**
  * View class will be use as a wrapper class.
