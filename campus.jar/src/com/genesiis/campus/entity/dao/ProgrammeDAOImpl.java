@@ -4,6 +4,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findMajorsByMajorCodes() and findLevelsByLevelCodes()
 //DJ 20170203 c138-add-basic-programme Implemented getAllMajors() method.
 //DJ 20170203 c138-add-basic-programme Implemented getAllLevels() method.
+//DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.util.ConnectionManager;
@@ -296,12 +297,43 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		}		
 		return allLevelList;
 	}
+	
+	/**
+	 * Get all Active  education class Type list details.	 
+	 * @author DJ
+	 * @return Collection ClassTypeCode,ClassTypeName
+	 */
 
 	@Override
 	public Collection<Collection<String>> getAllClassTypes()
 			throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allClassTypeList=new ArrayList<Collection<String>>();
+		try {
+			conn=ConnectionManager.getConnection();			
+			String sql="SELECT CLASSTYPE.CODE AS CLASSTYPECODE , CLASSTYPE.NAME AS CLASSTYPENAME FROM [CAMPUS].CLASSTYPE CLASSTYPE  WHERE CLASSTYPE.ISACTIVE=? ";			
+			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+		    rs=stmt.executeQuery();
+			
+			while (rs.next()) {				
+				final ArrayList<String> singleClassType = new ArrayList<String>();
+				singleClassType.add(rs.getString("CLASSTYPECODE"));				
+				singleClassType.add(rs.getString("CLASSTYPENAME"));				
+				allClassTypeList.add(singleClassType);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAllClassTypes() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAllClassTypes() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}		
+		return allClassTypeList;
 	}
 
 }
