@@ -65,6 +65,16 @@ function populateProgrammeAddView(response) {
 	});
 	$('#levelName').html(htmlLevelStr);
 	
+	var htmlClassTypeStr = "";
+	$.each(response.allClassTypes, function(index, value) {
+		if (value != null && value.length > 0) {
+			htmlClassTypeStr += '<option val="' + value[0] + '">' + value[1]
+			+ '</option>';
+		}
+		
+	});
+	$('#classTypeName').html(htmlClassTypeStr);
+	
 }
 
 /**
