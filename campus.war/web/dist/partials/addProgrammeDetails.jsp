@@ -200,15 +200,19 @@
 			
 			<tr>
 				<td>Display start Date :</td>
-				<td><input type="text" id="" name="" /></td>
+				<td> <input type="date"
+								id="fromDate" name="fromDate"  onkeydown="return false"> <label
+								id="errorFromDate" for=""></label></td>
 			</tr>
 			<tr>
 				<td>Expiration Date :</td>
-				<td><input type="text" id="" name="" /></td>
+				<td> <input type="date"
+								id="fromDate" name="fromDate"  onkeydown="return false"> <label
+								id="errorFromDate" for=""></label></td>
 			</tr>
 			<tr>
-				<td><input type="button" value="Clear"/></td>
-				<td><input type="button"  value="Add"/></td>
+				<td><button type="submit" id="clearParam">Clear</button></td>
+				<td><button type="submit" id="searchList">Add</button></td>
 			</tr>
 			
 		</table>
