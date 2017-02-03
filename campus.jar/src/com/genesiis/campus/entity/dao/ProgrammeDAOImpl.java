@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170108 c6-list-available-institutes-on-the-view created ProgrammeDAO.java
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findMajorsByMajorCodes() and findLevelsByLevelCodes()
 //DJ 20170203 c138-add-basic-programme Implemented getAllMajors() method.
+//DJ 20170203 c138-add-basic-programme Implemented getAllLevels() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.util.ConnectionManager;
@@ -259,12 +260,41 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		
 		return allMajorList;
 	}
-
+	/**
+	 * Get all Active  education level list details.	 
+	 * @author DJ
+	 * @return Collection LevelCode,LevelName
+	 */
 	@Override
 	public Collection<Collection<String>> getAllLevels() throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allLevelList=new ArrayList<Collection<String>>();
+		try {
+			conn=ConnectionManager.getConnection();			
+			String sql="SELECT LEVEL.CODE AS LEVELCODE , LEVEL.NAME AS LEVELNAME FROM [CAMPUS].LEVEL LEVEL  WHERE LEVEL.ISACTIVE=? ";			
+			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+		    rs=stmt.executeQuery();
+			
+			while (rs.next()) {				
+				final ArrayList<String> singleLevel = new ArrayList<String>();
+				singleLevel.add(rs.getString("LEVELCODE"));				
+				singleLevel.add(rs.getString("LEVELNAME"));				
+				allLevelList.add(singleLevel);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAllLevels() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAllLevels() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}		
+		return allLevelList;
 	}
 
 	@Override
