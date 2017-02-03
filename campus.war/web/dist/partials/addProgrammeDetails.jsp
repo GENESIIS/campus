@@ -89,14 +89,85 @@
 			<div class="bg-image"></div>
 		</div>
 		<!-- END inner-image-header -->
-		
-		
+		<div>
+			<div>
+				<div class="container">
+					<fieldset>
+						<legend align="left">Basic Info </legend>
+						<div>
+							Course Provider Name :<font color="red">*</font><input type="text"
+								name="providerList" id="providerList" list="providerName"
+								placeholder="-- Select Page --" />
+							<datalist id="providerName">
+							</datalist>
+							<label id="errorProviderList" for=""></label>
+						</div>
+						<div>
+							Course Name :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Course Details :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Course email :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Course Duration :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Course Category :<input type="text" name="categoryList" id="categoryList"
+									list="categoryName" placeholder="-- Select Course Category --" />
+								<datalist id="categoryName">
+								</datalist>
+						</div>
+						<div>
+							Course Major :<input type="text" name="majorList" id="majorList"
+									list="majorName" placeholder="-- Select Course Major --" />
+								<datalist id="majorName">
+								</datalist>
+						</div>
+						<div>
+							Course Category :<input type="text" name="levelList" id="levelList"
+									list="levelName" placeholder="-- Select Course Level --" />
+								<datalist id="levelName">
+								</datalist>
+						</div>
+						<div>
+							Course Category :<input type="text" name="classTypelist" id="classTypelist"
+									list="classTypeName" placeholder="-- Select Course Class Type --" />
+								<datalist id="classTypeName">
+								</datalist>
+						</div>
+						<div>
+							Counselor Name  :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Counselor Phone  :<input type="text" id="" name="" />
+						</div>
+						<div>
+							Display Start Date  :<input type="date"
+								id="fromDate" name="fromDate"  onkeydown="return false"> <label
+								id="errorFromDate" for=""></label>
+						</div>
+						<div>
+							Expiration Date  :<input type="date"
+								id="fromDate" name="fromDate"  onkeydown="return false"> <label
+								id="errorFromDate" for=""></label>
+						</div>
+						<div>
+						<button type="submit" id="clearParam">Clear</button>
+				        <button type="submit" id="searchList">Add</button>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
 
 		<!-- END provider-list-holder -->
 	</div>
 	<!-- End Container - Top Providers list -->
 	
-	<div class="main-category clearfix">
+	<%-- <div class="main-category clearfix">
 	<div class="content-holder center-block clearfix">
 	<!-- course filter panel : left side -->
 	<div class="course-filter-panel">
@@ -120,103 +191,7 @@
 		</div>
 	</div>
 	</div>
-	</div>
-
-
-	<div>
-		<table>
-			<tr>
-				<td>Course Provider :</td>				
-				<td><div class="drop-holder">
-								<input type="text" name="providerList" id="providerList"
-									list="providerName" placeholder="-- Select Course Provider --" />
-								<datalist id="providerName">
-								</datalist>
-							</div></td>
-			</tr>
-			<tr>
-				<td>Course Name :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-			<tr>
-				<td>Course Details :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-			<tr>
-				<td>Course email :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-			<tr>
-				<td>Course Duration :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-		   <tr > <td colspan="2"></td></tr>
-			<tr>
-				<td>Course Category :</td>
-				<td><div class="drop-holder">
-								<input type="text" name="categoryList" id="categoryList"
-									list="categoryName" placeholder="-- Select Course Category --" />
-								<datalist id="categoryName">
-								</datalist>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Course Major :</td>
-				<td><div class="drop-holder">
-								<input type="text" name="majorList" id="majorList"
-									list="majorName" placeholder="-- Select Course Major --" />
-								<datalist id="majorName">
-								</datalist>
-							</div>
-							</td>
-			</tr>
-			<tr>
-				<td>Course Level :</td>
-				<td><div class="drop-holder">
-								<input type="text" name="levelList" id="levelList"
-									list="levelName" placeholder="-- Select Course Level --" />
-								<datalist id="levelName">
-								</datalist>
-							</div></td>
-			</tr>
-			<tr>
-				<td>Course Class Type :</td>
-				<td><div class="drop-holder">
-								<input type="text" name="classTypelist" id="classTypelist"
-									list="classTypeName" placeholder="-- Select Course Class Type --" />
-								<datalist id="classTypeName">
-								</datalist>
-							</div></td>
-			</tr>
-			<tr>
-				<td>Counselor Name :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-			<tr>
-				<td>Counselor Phone :</td>
-				<td><input type="text" id="" name="" /></td>
-			</tr>
-			
-			<tr>
-				<td>Display start Date :</td>
-				<td> <input type="date"
-								id="fromDate" name="fromDate"  onkeydown="return false"> <label
-								id="errorFromDate" for=""></label></td>
-			</tr>
-			<tr>
-				<td>Expiration Date :</td>
-				<td> <input type="date"
-								id="fromDate" name="fromDate"  onkeydown="return false"> <label
-								id="errorFromDate" for=""></label></td>
-			</tr>
-			<tr>
-				<td><button type="submit" id="clearParam">Clear</button></td>
-				<td><button type="submit" id="searchList">Add</button></td>
-			</tr>
-			
-		</table>
-	</div>
+	</div> --%>
 
 
 	<!-- jQuery & Other js -->
