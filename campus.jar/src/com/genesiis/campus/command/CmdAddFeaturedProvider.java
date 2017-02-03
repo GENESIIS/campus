@@ -17,6 +17,7 @@ package com.genesiis.campus.command;
 //20170202 JH c39-add-course-provider combined username and the email validation methods together and removed database call 
 //used to select course provider usertype
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
+//20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -27,6 +28,7 @@ import com.genesiis.campus.entity.OneOffCourseProviderDAO;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -201,12 +203,13 @@ public class CmdAddFeaturedProvider implements ICommand {
 							 * it would be easy to select those course providers
 							 * and perform a bulk update.
 							 * 
-							 * The following '2040-12-31' value is a sample
-							 * value and it can be changed into any given value
-							 * within the database column date range.
+							 * Therefore a common expiration date, which is stored in 
+							 * the system configuration enum class is used to support both
+							 * the requirements.
 							 * 
 							 */
-							expireDate = "2040-12-31";
+
+							expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
 							sql = java.sql.Date.valueOf(expireDate);
 						}
 
