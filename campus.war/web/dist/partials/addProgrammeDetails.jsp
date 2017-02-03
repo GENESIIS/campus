@@ -126,8 +126,13 @@
 	<div>
 		<table>
 			<tr>
-				<td>Course Provider :</td>
-				<td><input type="text" id="" name="" /></td>
+				<td>Course Provider :</td>				
+				<td><div class="drop-holder">
+								<input type="text" name="providerList" id="providerList"
+									list="providerName" placeholder="-- Select Course Provider --" />
+								<datalist id="providerName">
+								</datalist>
+							</div></td>
 			</tr>
 			<tr>
 				<td>Course Name :</td>
@@ -145,6 +150,67 @@
 				<td>Course Duration :</td>
 				<td><input type="text" id="" name="" /></td>
 			</tr>
+		   <tr > <td colspan="2"></td></tr>
+			<tr>
+				<td>Course Category :</td>
+				<td><div class="drop-holder">
+								<input type="text" name="categoryList" id="categoryList"
+									list="categoryName" placeholder="-- Select Course Category --" />
+								<datalist id="categoryName">
+								</datalist>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Course Major :</td>
+				<td><div class="drop-holder">
+								<input type="text" name="majorList" id="majorList"
+									list="majorName" placeholder="-- Select Course Major --" />
+								<datalist id="majorName">
+								</datalist>
+							</div>
+							</td>
+			</tr>
+			<tr>
+				<td>Course Level :</td>
+				<td><div class="drop-holder">
+								<input type="text" name="levelList" id="levelList"
+									list="levelName" placeholder="-- Select Course Level --" />
+								<datalist id="levelName">
+								</datalist>
+							</div></td>
+			</tr>
+			<tr>
+				<td>Course Class Type :</td>
+				<td><div class="drop-holder">
+								<input type="text" name="classTypelist" id="classTypelist"
+									list="classTypeName" placeholder="-- Select Course Class Type --" />
+								<datalist id="classTypeName">
+								</datalist>
+							</div></td>
+			</tr>
+			<tr>
+				<td>Counselor Name :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Counselor Phone :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			
+			<tr>
+				<td>Display start Date :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td>Expiration Date :</td>
+				<td><input type="text" id="" name="" /></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="Clear"/></td>
+				<td><input type="button"  value="Add"/></td>
+			</tr>
+			
 		</table>
 	</div>
 
