@@ -26,6 +26,7 @@ package com.genesiis.campus.validation;
 //20161121 PN c27-upload-user-image: added UPLOAD_USER_PROFILE attribute to operation Enum.
 //20161130 PN c27-upload-user-image: GET_USER_PROFILE enum values are changed.
 //20161221 PN CAM-27: modified GET_USER_PROFILE enum values changed.
+//20170203 DN CAM-131 modified DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA enum value
 
 /**
  * Operation class facilitate in binding the CCO
@@ -49,7 +50,8 @@ public enum Operation {
 	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, ""),
 	LIST_CATEGORY_PROGRAMMES("LIST_CATEGORY_PROGRAMMES", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
-	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
+	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"),
+	DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA("DBPDOL",ResponseType.JSON,""),
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
 			
 	private final String commandString;
