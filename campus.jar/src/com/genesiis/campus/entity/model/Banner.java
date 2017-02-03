@@ -2,7 +2,7 @@
 // 20161116 MM c2-integrate-google-banners Moved class inside com.genesiis.campus.entity.model package
 // 20161116 MM c2-integrate-google-banners Added fields crtOn, crtBy, modOn, modBy and their getters & setters
 // 20161218 MM c2-integrate-google-banners Made default fields private
-
+// 20170203 DN c131-admin-manage-banner-upload-banner-image-dn add activationdate field to the class.  
 package com.genesiis.campus.entity.model;
 
 import java.util.Date;
@@ -22,6 +22,14 @@ public class Banner {
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private Date activationdate;
+	
+	public Date getActivationdate() {
+		return activationdate;
+	}
+	public void setActivationdate(Date activationdate) {
+		this.activationdate = activationdate;
+	}
 	
 	public int getCode() {
 		return code;
