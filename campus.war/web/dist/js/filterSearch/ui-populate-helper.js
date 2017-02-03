@@ -44,8 +44,7 @@ $(document).ready(function() {
 			if (sParameterName[0] == 'keyWord') {
 				keyWordString = sParameterName[1];
 			} 
-		}
-		generalSearchFlag = "TRUE";			
+		}				
 		
 		//Retrieve programme code list according to search parameters.		
 	 	$.ajax({
@@ -59,19 +58,7 @@ $(document).ready(function() {
 				populateTableRow(t, response.result);		
 			},
 			error : function(jqXHR, exception) {
-				var msg = '';			
-				if (jqXHR.status === 0) {
-					msg = 'Not connect.\n Verify Network.';
-				} else if (jqXHR.status == 404) {
-					msg = 'Requested page not found. [404]';
-				} else if (jqXHR.status == 500) {
-					msg = 'Internal Server Error [500].';
-				} else if (exception === 'timeout') {
-					msg = 'Time out error.';
-				} else {
-					msg = 'Internal error is occurred. Please try again.';
-				}
-				alert(msg);
+				errorCodeGeneration(jqXHR, exception);
 			}
 		}); 
 	 	//END- DJ-General filter search-program filter criteria
@@ -428,6 +415,24 @@ function populateTableRow(table, values){
 
 	});
 	$("#courseCount").text(" " +pad(counter, 2));
+}
+/**
+ * This method errorCodeGeneration() manipulate with errors.
+ */
+function errorCodeGeneration(jqXHR, exception){
+	var msg = '';
+	   if (jqXHR.status === 0) {
+         msg = 'Not connect.\n Verify Network.';
+     } else if (jqXHR.status == 404) {
+         msg = 'Requested page not found. [404]';
+     } else if (jqXHR.status == 500) {
+         msg = 'Internal Server Error [500].';
+     } else if (exception === 'timeout') {
+         msg = 'Time out error.';
+     }  else {
+         msg = 'Uncaught Error.\n' + jqXHR.responseText;
+     }	        
+ alert(msg);	
 }
 
 
