@@ -45,6 +45,16 @@ function populateProgrammeAddView(response) {
 	});
 	$('#categoryName').html(htmlCategoryStr);
 	
+	var htmlMajorStr = "";
+	$.each(response.allMajors, function(index, value) {
+		if (value != null && value.length > 0) {
+			htmlMajorStr += '<option val="' + value[0] + '">' + value[1]
+					+ '</option>';
+		}
+
+	});
+	$('#majorName').html(htmlMajorStr);
+	
 }
 
 /**
