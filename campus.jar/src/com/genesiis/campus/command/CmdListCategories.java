@@ -9,6 +9,7 @@ import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
+import com.genesiis.campus.util.CategoryCache;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemConfig;
 
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.Collection;
 
-public class CmdListCategories implements ICommand{
+public class CmdListCategories implements ICommand {
 	static Logger log = Logger.getLogger(CmdListCategories.class.getName());
 
 	private IView categoryData;
@@ -27,7 +28,7 @@ public class CmdListCategories implements ICommand{
 	}
 
 	public CmdListCategories() {
-		
+
 	}
 
 	/**
@@ -44,13 +45,15 @@ public class CmdListCategories implements ICommand{
 		ICrud categoryDAO = new CategoryDAO();
 		ICrud instituteDAO = new InstituteDAO();
 		final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
-		
+		// Get the only object available
+		CategoryCache defaultCategories = CategoryCache.getInstance();
 		try {
-			Collection<Collection<String>> categoryCollection = categoryDAO.getAll();
+			Collection<Collection<String>> categoryCollection = defaultCategories.getDefaultCategories();
 			iview.setCollection(categoryCollection);
 			helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
-			
-			//instituteCollection used in c11. But both issues are using the same class. 
+
+			// instituteCollection used in c11. But both issues are using the
+			// same class.
 			Collection<Collection<String>> instituteCollection = instituteDAO.getAll();
 			helper.setAttribute("instituteCollection", instituteCollection);
 		} catch (SQLException sqle) {
