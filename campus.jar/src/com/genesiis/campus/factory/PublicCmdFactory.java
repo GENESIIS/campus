@@ -54,10 +54,7 @@ public class PublicCmdFactory implements ICmdFactory {
 			break;
 		case LIST_INSTITUTE_DATA:
 			command = map.get(o);
-			break;
-		case GENERAL_FILTER_SEARCH_COURSE_PROVIDERS:
-			command = map.get(o);
-			break;
+			break;		
 		case GENERAL_FILTER_SEARCH_COURSE_PROGRAMME:
 			command = map.get(o);
 			break;
