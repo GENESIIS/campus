@@ -1,6 +1,6 @@
 package com.genesiis.campus.validation;
 //20161220 as c19-student-login-without-using-third-party-application-as removed unwanted comments and loggers
-
+//20170202 AS C22 validateEmail(String email) private method changed to public
 import com.genesiis.campus.entity.model.Student;
 
 import org.apache.log4j.Logger;
@@ -17,7 +17,7 @@ public class LoginValidator {
 	 * @param email
 	 * @return boolean (validEmail) email validation method
 	 */
-	private static boolean validateEmail(String email) {
+	public static boolean validateEmail(String email) {
 		boolean validEmail = false;
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 				.compile("^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
