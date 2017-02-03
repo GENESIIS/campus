@@ -94,7 +94,7 @@
 
 		<div class="content-holder center-block clearfix">
 			<c:if test="${not empty param.userMessage }">
-				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage }. Your registered ID : ${param.courseProviderCode }</div>
+				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage }. </div>
 
 			</c:if>
 

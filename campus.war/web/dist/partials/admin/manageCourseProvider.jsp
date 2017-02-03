@@ -161,28 +161,34 @@
 
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Short Name: <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="shortName"
-										id="shortName" size="30px;" /> <span id="errorShortName"
-										class="error-message">${errorShortName }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Unique Name: <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">
+										Unique Name: <span style="color: red;">*</span>
+									</h1>
 								</div>
 								<div class="col-name">
 									<input class="input" type="text" name="uniquePrefix"
 										id="uniquePrefix" size="30px;"
 										onblur="providerPrefixValidation();" /> <span
 										id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
-										<span id="prefixMessage" style="color: blue;"></span>
+									<span id="prefixMessage" style="color: blue;"></span>
+								</div>
+								<div class="col-name">
+									<h1 class="pro-name">
+										Short Name: <span style="color: red;">*</span>
+									</h1>
+								</div>
+								<div class="col-name">
+									<input class="input" type="text" name="shortName"
+										id="shortName" size="30px;" /> <span id="errorShortName"
+										class="error-message">${errorShortName }</span>
 								</div>
 							</li>
 							<!-- end -->
 							<li class="course-info clearfix">
 								<div class="col-name">
-									<h1 class="pro-name">Company Profile: <span style="color: red;">*</span></h1>
+									<h1 class="pro-name">
+										Company Profile: <span style="color: red;">*</span>
+									</h1>
 								</div>
 								<div class="col-name">
 									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
@@ -500,12 +506,6 @@
 										<input type="radio" name="providerStatus" id="providerStatus"
 											value="${applicationStatus.statusValue}" /> ${applicationStatus}
 									 </c:forEach>
-									<!-- 
-										<input type="radio" name="providerStatus" id="providerStatus"
-											value="active" /> Active &nbsp; <input type="radio"
-											name="providerStatus" id="providerStatus" value="inactive" />
-										InActive &nbsp; <input type="radio" name="providerStatus"
-											id="providerStatus" value="pending" /> Pending -->
 									<span id="errorProviderStatus" class="error-message">${errorProviderStatus }</span>
 								</div>
 							</li>
@@ -636,7 +636,7 @@
 							<li class="course-info clearfix">
 								<div class="col-name" style="width: 50%;">
 									<input type="button" id="viewNext" value="Next"
-										class="btn btn-lg btn-info" onclick="getProviderType();" />
+										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
 								</div>
 							</li>
 							<!-- end -->
