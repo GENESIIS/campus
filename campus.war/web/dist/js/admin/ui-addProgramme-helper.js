@@ -24,9 +24,7 @@ $(document).ready(function() {
 });
 
 function populateProgrammeAddView(response) {
-	
-	alert("response");
-	
+		
 	var htmlstr = "";
 	$.each(response.result, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -36,6 +34,16 @@ function populateProgrammeAddView(response) {
 
 	});
 	$('#providerName').html(htmlstr);
+	
+	var htmlCategoryStr = "";
+	$.each(response.allCategories, function(index, value) {
+		if (value != null && value.length > 0) {
+			htmlCategoryStr += '<option val="' + value[0] + '">' + value[1]
+					+ '</option>';
+		}
+
+	});
+	$('#categoryName').html(htmlCategoryStr);
 	
 }
 
