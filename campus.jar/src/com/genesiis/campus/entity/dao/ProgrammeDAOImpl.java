@@ -223,4 +223,25 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		return allLevelList;
 	}
 
+	@Override
+	public Collection<Collection<String>> getAllMajors() throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getAllLevels() throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Collection<String>> getAllClassTypes()
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
