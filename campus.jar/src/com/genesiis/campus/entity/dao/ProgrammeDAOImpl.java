@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.dao;
 
 //DJ 20170108 c6-list-available-institutes-on-the-view created ProgrammeDAO.java
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findMajorsByMajorCodes() and findLevelsByLevelCodes()
+//DJ 20170203 c138-add-basic-programme Implemented getAllMajors() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.util.ConnectionManager;
@@ -87,8 +88,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	}	
 
 	/**
-	 * Get all category details
-	 * @param 
+	 * Get all active category details	  
 	 * @author dumani DJ
 	 * @return Collection 
 	 */
@@ -158,9 +158,8 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			while (rs.next()) {
 				final ArrayList<String> singleMajorList = new ArrayList<String>();
 				singleMajorList.add(rs.getString("MAJORCODE"));
-				singleMajorList.add(rs.getString("MAJORNAME"));
-				final Collection<String> singleMajorCollection = singleMajorList;
-				allMajorList.add(singleMajorCollection);
+				singleMajorList.add(rs.getString("MAJORNAME"));				
+				allMajorList.add(singleMajorList);
 			}
 		} catch (SQLException sqlException) {
 			log.info("findMajorsByMajorCodes() sqlException" + sqlException.toString());
@@ -222,12 +221,43 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		
 		return allLevelList;
 	}
-
+	
+	/**
+	 * Get all active major list details 
+	 * @author DJ
+	 * @return Collection MajorCode,MajorName
+	 */
 	@Override
 	public Collection<Collection<String>> getAllMajors() throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		final Collection<Collection<String>> allMajorList=new ArrayList<Collection<String>>();
+		try {
+			conn = ConnectionManager.getConnection();
+			String sb = "SELECT MAJOR.[CODE] AS MAJORCODE,MAJOR.[NAME] AS MAJORNAME FROM [CAMPUS].[MAJOR] MAJOR  WHERE MAJOR.ISACTIVE = ?";	
+			stmt = conn.prepareStatement(sb);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleMajorList = new ArrayList<String>();
+				singleMajorList.add(rs.getString("MAJORCODE"));
+				singleMajorList.add(rs.getString("MAJORNAME"));				
+				allMajorList.add(singleMajorList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAllMajors() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAllMajors() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allMajorList;
 	}
 
 	@Override
