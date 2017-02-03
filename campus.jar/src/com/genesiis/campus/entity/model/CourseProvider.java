@@ -53,7 +53,10 @@ public class CourseProvider {
 	private int courseProviderType;
 	private int principal;
 	private int tutor;
+	
+	
 
+	
 	/**
 	 * @return the code
 	 */

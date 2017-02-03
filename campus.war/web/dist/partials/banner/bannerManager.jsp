@@ -122,9 +122,9 @@
 			<br>
 			<!-- Form image submit -->
 
-			<label>Upload Banner</label> <input type="file" id="file-select"
-				name="file-select" accept="image/gif, image/jpeg, image/png">
-			&nbsp;
+			<label>Upload Banner</label> 
+			<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
+			<input type="hidden"	value="xyz">
 			<br>
 			<button type="submit" id="uploadBbutton">Upload</button>
 		</form>
