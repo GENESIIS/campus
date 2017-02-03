@@ -6,17 +6,17 @@ package com.genesiis.campus.entity;
 //20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
 //20170203 133-admin-list-tutors arranged imports according to the style guide
 
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
 
 public class TutorDAO implements ICrud {
 
