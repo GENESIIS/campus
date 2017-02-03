@@ -12,6 +12,7 @@
 //20170109 PN CAM-116: added character replacement code to replace ',' character.
 //20170121 DJ c124-general-filter-search-programme-MP-dj Identify general filter search action
 //20170123 PN CAM-116: implemented populateTableRow(table, values) method to populate dynamic table rows with data.
+//20170203 PN CAM-124: method to get course details from the DB to display on datatable
 
 /**
  * This method id to load category details
@@ -22,6 +23,14 @@ var keyWordString="";
 $(document).ready(function() {
 	displayDetails();
 	var t = $('#example').DataTable();
+	
+	//variables to get UI element details
+	var category = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
+	var courseprovider = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
+	var major = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
+	var district = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
+	var searchData = category+courseprovider+major+district;
+	
 	//START- DJ-General filter search-program filter criteria
 	//Identify the query portion of the URL
 	var urlQueryPortion=window.location.search;
@@ -69,6 +78,7 @@ $(document).ready(function() {
 	}else{		
 		/*// Automatically add a first row of data*/
 		$('#addRow').click();
+		getSearchedData(searchData,t);
 	}
 	
 	//*************************************************************************************************
@@ -115,14 +125,17 @@ $(document).ready(function() {
     } ).DataTable();
 
 $('#addRow').on( 'click', function () {
-	
-	var x = 'CATEGORY=' + getSelectedData('categorylist', 'categoryName') + '&';
-	var y = 'COURSEPROVIDER=' + getSelectedData('instituelist', 'institueName')	+ '&';
-	var z = 'MAJOR=' + getValueUsingParentTag('#select-item1 input:checked') + '&';
+	getSearchedData(searchData,t);
+ });
+});
 
-	var a = 'DISTRICT=' + getSelectedData('districtlist', 'districtName');
-	var searchData = x+y+z+a;
-
+/**
+ * Method to get course details from the DB to display on datatable
+ * @param searchData
+ * @param t
+ * @returns
+ */
+function getSearchedData(searchData,t) {
 	$.ajax({
 		url : '../../PublicController',
 		data : {
@@ -137,10 +150,7 @@ $('#addRow').on( 'click', function () {
 			alert("Error: "+response);
 		}
 	});
-} );
-//Automatically add a first row of data
-//$('#addRow').click();
-});
+}
 
 function displayDetails() {
 	$.ajax({
