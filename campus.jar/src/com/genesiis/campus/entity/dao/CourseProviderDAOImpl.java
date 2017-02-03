@@ -22,7 +22,7 @@ package com.genesiis.campus.entity.dao;
 
 //DJ 20170119 c6-list-available-institutes-on-the-view Removed unnecessary initialization in findTopViewedProviders() ,findTopRatedProviders()
 //DJ 20170120 c6-list-available-institutes-on-the-view Changed findCPTypesByCPTypeCodes().
-//DJ 20170202 c138-add-basic-programme Implement getLightAllCourseProviders() method without parameters
+//DJ 20170203 c138-add-basic-programme Implement getLightAllCourseProviders() method without parameters
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
