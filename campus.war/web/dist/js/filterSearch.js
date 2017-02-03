@@ -54,6 +54,11 @@
 			}        
 		});
 		
+		
+		/*
+		 * General Filter search button click action.
+		 * DJ dumani
+		 */
 		$('#addSearchData').click(function(e){
 			var keyWordString = " ";
 			var selectedType = " ";
@@ -61,7 +66,8 @@
 			selectedType = $('input[name="courseOpt"]:checked').val();
 
 			if (selectedType == 'CPROVIDER') {
-				window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
+				alert("Will load course providers \n implemented in cam-123");
+				//window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
 			} else {
 				window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
 			}

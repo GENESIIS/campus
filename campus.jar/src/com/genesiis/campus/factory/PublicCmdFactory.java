@@ -6,7 +6,6 @@ package com.genesiis.campus.factory;
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20170118 DJ c124-general-filter-search-programme added  GENERAL_FILTER_SEARCH_COURSE_PROVIDERS,GENERAL_FILTER_SEARCH_COURSE_PROGRAMME attributes.
 
-import com.genesiis.campus.command.CmdGeneralFilterSearch;
 import com.genesiis.campus.command.CmdGetSearchData;
 import com.genesiis.campus.command.CmdListCategories;
 import com.genesiis.campus.command.CmdListDistricts;
@@ -25,8 +24,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_DISTRICT_DATA, new CmdListDistricts());	
 		map.put(Operation.LIST_LEVEL_DATA, new CmdListLevels());	
 		map.put(Operation.LIST_MAJOR_DATA, new CmdListMajors());	
-		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());	
-		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROVIDERS, new CmdGeneralFilterSearch());	
+		map.put(Operation.LIST_INSTITUTE_DATA, new CmdListInstitute());				
 		map.put(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME, new CmdGetSearchData());	
 	}
 

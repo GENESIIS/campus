@@ -7,20 +7,12 @@ package com.genesiis.campus.command;
 //20161103 PN c11-criteria-based-filter-search modified execute() method to load getAll() method and findById() method accordingly.
 //20170122 DJ c124-general-filter-search-programme-MP-dj Identify general filter search action for programme selection.
 
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SearchedProgrammeDAO;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.QueryBuildingHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.UtilityHelper;
@@ -29,8 +21,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CmdGetSearchData implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetSearchData.class.getName());
@@ -41,16 +31,15 @@ public class CmdGetSearchData implements ICommand {
 
 		ICrud programmeDAO = new SearchedProgrammeDAO(); 
 		Collection<Collection<String>> programmeCollection = null;
-		String searchData =  helper.getParameter("searchData");
-			
+		String searchData =  helper.getParameter("searchData");			
 		String keyWordString = helper.getParameter("keyWordString");		
 		String cco = helper.getParameter("CCO");			
 		try {			
 			//START-DJ-General filter search-program result set implementation.							
 			if(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME.getCommandString().equalsIgnoreCase(cco)){			
-				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();
-				final StringBuilder keyWordBuilder = new StringBuilder();	
+				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();					
 				if (UtilityHelper.isNotEmpty(keyWordString)) {
+					final StringBuilder keyWordBuilder = new StringBuilder();
 					// Do wild card search on key word
 					keyWordBuilder.append("%").append(keyWordString).append("%");
 					searchDTO.setKeyWordString(keyWordBuilder.toString());					
