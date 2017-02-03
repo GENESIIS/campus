@@ -1,3 +1,5 @@
+<!-- 20170203 PN CAM-137: removed a ui-populate-helper.js import from index page. -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -16,10 +18,6 @@
     <script src="dist/bower-components/w3/w3data.js"></script>
     <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="dist/js/image-slides.js"></script>
-    
-    <!-- CAM-1 To load categories. -->
-    <script src="dist/js/landingPage/landing-page-ui-helper.js"></script>
-
 </head>
 <body>
 
