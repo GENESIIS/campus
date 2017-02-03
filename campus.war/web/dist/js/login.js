@@ -161,7 +161,7 @@ function forgotPassword() {
 	
 	if (userEmail != null) {
 		var jsonData = {
-			"studentEmail" : userEmail
+			"email" : userEmail
 			
 		};
 		
