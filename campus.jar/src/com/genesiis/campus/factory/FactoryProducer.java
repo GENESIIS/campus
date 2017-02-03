@@ -22,8 +22,8 @@ public class FactoryProducer {
 	 * @return ICmdFactory
 	 */
 	public static ICmdFactory getFactory(String choice) {
-		if (choice.equalsIgnoreCase("/PublicController")) {
-			return new PublicCmdFactory();
+		if (choice.equalsIgnoreCase("/AdminController")) {
+			return new AdminCmdFactory();
 
 		} 
 
