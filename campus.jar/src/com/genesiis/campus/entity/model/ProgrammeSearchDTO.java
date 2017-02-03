@@ -1,6 +1,5 @@
 package com.genesiis.campus.entity.model;
 
-
 //DJ 20161230 c51-report-courses-by-course-provider-MP-dj renamed as ProgrammeSearchDTO.java
 //DJ 20170122 c124-general-filter-search-programme-MP-dj  Add keyWordString attribute.
 
@@ -11,7 +10,6 @@ import java.util.Date;
 * @author dumani DJ
 *
 */
-
 public class ProgrammeSearchDTO {
 	private int programmeCode;
 	private int courseProviderCode;
