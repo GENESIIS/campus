@@ -22,6 +22,7 @@ package com.genesiis.campus.entity.dao;
 
 //DJ 20170119 c6-list-available-institutes-on-the-view Removed unnecessary initialization in findTopViewedProviders() ,findTopRatedProviders()
 //DJ 20170120 c6-list-available-institutes-on-the-view Changed findCPTypesByCPTypeCodes().
+//DJ 20170202 c138-add-basic-programme Implement getLightAllCourseProviders() method without parameters
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.ICrud;
@@ -462,10 +463,10 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
 
 		} catch (SQLException sqlException) {
-			log.info("getLightAllCourseProviders() sqlException" + sqlException.toString());
+			log.info("getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO) sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getLightAllCourseProviders() Exception" + e.toString());
+			log.info("getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO) Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, resultSet);
@@ -503,6 +504,40 @@ public class CourseProviderDAOImpl implements CourseProviderICrud{
 			DaoHelper.cleanup(conn, callableStatement, resultSet);
 		}
 		return providerCode;
+	}
+
+	/**
+	 * Get all active course provider light collection.Basically  course provider code and course provider name.	 
+	 * @author DJ
+	 * @return Collection of provider list
+	 */
+	@Override
+	public Collection<Collection<String>> getLightAllCourseProviders()
+			throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet =null;
+		Collection<Collection<String>> allProviderList = new ArrayList<Collection<String>>();
+
+		try {
+			conn = ConnectionManager.getConnection();
+			final String sql = "SELECT PROV.CODE AS CPCODE , PROV.NAME AS CPNAME  FROM [CAMPUS].COURSEPROVIDER PROV WHERE 1=1 AND PROV.COURSEPROVIDERSTATUS = ? ";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			resultSet= stmt.executeQuery();
+			allProviderList=getCourseProviderResultSet(resultSet, allProviderList);
+
+		} catch (SQLException sqlException) {
+			log.info("getLightAllCourseProviders() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getLightAllCourseProviders() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return allProviderList;
 	}
 
 }
