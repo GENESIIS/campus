@@ -6,7 +6,6 @@
 
 $(document).ready(function() {
 	
-	alert("Ready");
 	
 	$.ajax({
 		url : '../../AdminController',
@@ -21,6 +20,31 @@ $(document).ready(function() {
 			errorCodeGeneration(jqXHR, exception);
 		}
 	});
+	
+	
+	/*
+	 * Add program button-event handler
+	 */
+	$('#addProgramme').click(function(event){		
+		addProgramme(event);		
+	});
+	
+	/*
+	 * validate toDate>from date
+	 */	
+	$('#toDate').on('click', function(event) {		
+		var fromDate= $('#fromDate').val();		
+		document.getElementById("toDate").setAttribute("min", fromDate);	
+	});
+	
+	
+	/*
+	 * clear button-event handler
+	 */
+	$('#clearParam').click(function(event){		
+		clearParameters(event);
+	});
+
 	
 });
 
@@ -76,60 +100,81 @@ function populateProgrammeAddView(response) {
 	});
 	$('#classTypeName').html(htmlClassTypeStr);
 	
-	
-	/*
-	 * Add program button-event handler
-	 */
-	$('#addProgramme').click(function(){
-		var email= $('#email').val();			
-		if (!isEmpty(email) || !isValidEmailFormat(email)) {
-			document.getElementById('errorEmail').innerHTML = "Invalid email format";
-		}		
-		alert("AddProgramme");
-	});
-	
-	
-	/*
-	 * clear button-event handler
-	 */
-	$('#clearParam').click(function(){
-		
-		alert("Clear");
-	});
-	
-	
-	/**
-	 * @author DJ
-	 * @param fieldValue;  it is the value of a document element
-	 * @returns true if has content else false- string values.
-	 */
-	function isEmpty(fieldValue) {
-		return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
-	}
-	
-	/**
-	 * isValidEmailFormat - validate a email address
-	 * 
-	 * @returns boolean if  email address is a valid, returns true
-	 *          else return false
-	 */
-	function isValidEmailFormat(email) {				
-		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        if (reg.test(email) == false) 
-        {            
-            return false;
-        }
-        return true;		
-	}
-	
-	/*
-	 * validate toDate>from date
-	 */	
-	$('#toDate').on('click', function(event) {		
-		var fromDate= $('#fromDate').val();		
-		document.getElementById("toDate").setAttribute("min", fromDate);	
-	});
+}
 
+/**
+ * This method addProgramme() for adding a course to the system.
+ */
+function addProgramme(){
+	
+	var email= $('#email').val();			
+	if (!isEmpty(email) || !isValidEmailFormat(email)) {
+		document.getElementById('errorEmail').innerHTML = "Invalid email format";
+	}	
+	
+    var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+	var fromDate= $('#fromDate').val();    
+    if(!regex.test(fromDate)){
+    	$('#errorFromDate').text("Please enter valid From Date");
+		document.getElementById('errorFromDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorFromDate').text("");
+    }
+    
+    
+    var toDate= $('#toDate').val();
+    if(!regex.test(toDate)){
+    	$('#errorToDate').text("Please enter valid To Date");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+    }else{
+    	$('#errorToDate').text("");
+    }    
+   
+	if (fromDate> toDate) {		
+		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+	}
+	
+	
+	
+}
+
+/**
+ * This method clearParameters() clear load form.
+ */
+function clearParameters(event){
+	$('#fromDate').val(" "); 
+	$('#toDate').val(" ");	
+	$('#errorFromDate').text("");
+	$('#errorToDate').text("");	
+		
+}
+
+/**
+ * @author DJ
+ * @param fieldValue;  it is the value of a document element
+ * @returns true if has content else false- string values.
+ */
+function isEmpty(fieldValue) {
+	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+}
+
+/**
+ * isValidEmailFormat - validate a email address
+ * 
+ * @returns boolean if  email address is a valid, returns true
+ *          else return false
+ */
+function isValidEmailFormat(email) {				
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (reg.test(email) == false) 
+    {            
+        return false;
+    }
+    return true;		
 }
 
 /**
