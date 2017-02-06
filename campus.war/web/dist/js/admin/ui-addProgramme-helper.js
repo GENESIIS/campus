@@ -101,7 +101,7 @@ function populateProgrammeAddView(response) {
 	/**
 	 * @author DJ
 	 * @param fieldValue;  it is the value of a document element
-	 * @returns true if has content else false. (used to validate string values)
+	 * @returns true if has content else false- string values.
 	 */
 	function isEmpty(fieldValue) {
 		return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
@@ -110,7 +110,7 @@ function populateProgrammeAddView(response) {
 	/**
 	 * isValidEmailFormat - validate a email address
 	 * 
-	 * @returns boolean if testing email address is a valid one then returns true
+	 * @returns boolean if  email address is a valid, returns true
 	 *          else return false
 	 */
 	function isValidEmailFormat(email) {				
@@ -121,6 +121,14 @@ function populateProgrammeAddView(response) {
         }
         return true;		
 	}
+	
+	/*
+	 * validate toDate>from date
+	 */	
+	$('#toDate').on('click', function(event) {		
+		var fromDate= $('#fromDate').val();		
+		document.getElementById("toDate").setAttribute("min", fromDate);	
+	});
 
 }
 

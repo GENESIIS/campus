@@ -59,9 +59,9 @@
 						</div>						
 						<div>
 							Email Address: 
-							<input class="input" type="text" name="generalEmail"
-										id="generalEmail" size="25px" placeholder="Enter a valid email address"/> <span
-										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
+							<input class="input" type="text" name="email"
+										id="email" size="25px" placeholder="Enter a valid email address"/> <span
+										id="errorEmail" class="error-message">${errorEmail }</span>
 						</div>
 						<div>
 							Course Duration :<input type="text" id="" name=""  size="25px"/>
@@ -104,8 +104,8 @@
 								id="errorFromDate" for=""></label>
 						</div>
 						<div>
-							Expiration Date :<input type="date" id="fromDate" name="fromDate"
-								onkeydown="return false"> <label id="errorFromDate"
+							Expiration Date :<input type="date" id="toDate" name="toDate"
+								onkeydown="return false"> <label id="errortoDate"
 								for=""></label>
 						</div>
 						<div>
