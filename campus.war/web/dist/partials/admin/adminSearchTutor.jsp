@@ -1,4 +1,4 @@
-
+<!-- c133-admin-list-tutors removed unwanted commented codes -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -109,25 +109,7 @@
 		<div class="content-holder center-block clearfix">
 		<!-- Page content -->
 		<form action="/AdminController" method="POST" id="basicForm">
-		<!-- 	<table class="table" id="tutor-list">
-			<tr>
-			<th>Code</th>
-			<th>Name</th>
-			<th>Username</th>
-			<th>Email</th>
-			<th>Land Phone number</th>
-			<th>Mobile phone number</th>
-			<th>Address</th>
-			<th>Town</th>
-			<th>Country Code</th>
-			<th>Country</th>
-			<th>Approval status</th>
-			<th>Status</th>
-			</tr>
-			
-			<tbody ></tbody>
-			</table> -->
-
+		
 			<table id="example" class="display" width="100%">
 				<thead>
 					<tr>
@@ -137,9 +119,6 @@
 						<th>Email</th>
 						<th>Land Phone number</th>
 						<th>Mobile phone number</th>
-					<!-- 	<th>Address Line1</th>
-						<th>Address Line2</th>
-						<th>Address Line3</th> -->
 						<th>Town</th>
 						<th>Country</th>
 						<th>Approval status</th>
