@@ -3,7 +3,6 @@ package com.genesiis.campus.factory;
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 //20161130 PN c27-upload-user-image: removed return value for choice - "/PublicController".
 
-import com.genesiis.campus.command.CmdGenerateEmail;
 import org.apache.log4j.Logger;
 
 
