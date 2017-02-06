@@ -44,56 +44,59 @@
 							<legend align="left">Basic Info </legend>
 						</div>
 						<div>
-							Course Provider Name :<font color="red">*</font><input
+							Course Provider Name :<input
 								type="text" name="providerList" id="providerList"
-								list="providerName" placeholder="-- Select Page --" />
+								list="providerName" placeholder="-- Select Page --"   size="25px"/>
 							<datalist id="providerName">
 							</datalist>
 							<label id="errorProviderList" for=""></label>
 						</div>
 						<div>
-							Course Name :<input type="text" id="" name="" />
+							Course Name :<input type="text" id="" name=""   size="25px"/>
 						</div>
 						<div>
-							Course Details :<input type="text" id="" name="" />
+							Course Details :<input type="text" id="" name=""  size="25px" />
+						</div>						
+						<div>
+							Email Address: 
+							<input class="input" type="text" name="generalEmail"
+										id="generalEmail" size="25px" placeholder="Enter a valid email address"/> <span
+										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
 						</div>
 						<div>
-							Course email :<input type="text" id="" name="" />
-						</div>
-						<div>
-							Course Duration :<input type="text" id="" name="" />
+							Course Duration :<input type="text" id="" name=""  size="25px"/>
 						</div>
 						<div>
 							Course Category :<input type="text" name="categoryList"
 								id="categoryList" list="categoryName"
-								placeholder="-- Select Course Category --" />
+								placeholder="-- Select Course Category --"   size="25px"/>
 							<datalist id="categoryName">
 							</datalist>
 						</div>
 						<div>
 							Course Major :<input type="text" name="majorList" id="majorList"
-								list="majorName" placeholder="-- Select Course Major --" />
+								list="majorName" placeholder="-- Select Course Major --"   size="25px"/>
 							<datalist id="majorName">
 							</datalist>
 						</div>
 						<div>
 							Course Level :<input type="text" name="levelList" id="levelList"
-								list="levelName" placeholder="-- Select Course Level --" />
+								list="levelName" placeholder="-- Select Course Level --"   size="25px"/>
 							<datalist id="levelName">
 							</datalist>
 						</div>
 						<div>
 							Course Class Type :<input type="text" name="classTypelist"
 								id="classTypelist" list="classTypeName"
-								placeholder="-- Select Course Class Type --" />
+								placeholder="-- Select Course Class Type --"  size="25px"/>
 							<datalist id="classTypeName">
 							</datalist>
 						</div>
 						<div>
-							Counselor Name :<input type="text" id="" name="" />
+							Counselor Name :<input type="text" id="" name=""  size="25px"/>
 						</div>
 						<div>
-							Counselor Phone :<input type="text" id="" name="" />
+							Counselor Phone :<input type="text" id="" name=""  size="25px" />
 						</div>
 						<div>
 							Display Start Date :<input type="date" id="fromDate"
@@ -107,7 +110,7 @@
 						</div>
 						<div>
 							<button type="submit" id="clearParam">Clear</button>
-							<button type="submit" id="searchList">Add</button>
+							<button type="submit" id="addProgramme">Add</button>
 						</div>
 					</fieldset>
 				</div>
