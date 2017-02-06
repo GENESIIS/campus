@@ -18,6 +18,7 @@ package com.genesiis.campus.command;
 //20170131 CW c36-add-tutor-information modify execute() & validateUserAndEmail() methods
 //20170202 CW c36-add-tutor-details modified validateAvailability(), validateUserAndEmail() methods
 //20170206 CW c36-add-tutor-details modified execute() method.
+//20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,7 +67,6 @@ public class CmdAddTutorProfile implements ICommand {
 			
 		try {
 				setVariables(helper,tutor);
-				//tutorCollection.clear();
 				fillTutorCollection(tutorCollection, tutor);
 				
 				message = validateUserAndEmail(helper);
@@ -165,10 +165,8 @@ public class CmdAddTutorProfile implements ICommand {
 				
 				if(type == 1){
 					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-					//message = SystemMessage.USERNAME_EXIST.message();
 				} else if(type == 2){
 					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-					//message = SystemMessage.EMAIL_USED.message();
 				}
 		} catch (SQLException sqlException) {
 			log.info("validateAvailability(): SQLException " + sqlException.toString());
