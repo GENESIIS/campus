@@ -1,7 +1,7 @@
 package com.genesiis.campus.command;
 
 //20161024 DN c10-contacting-us-page created the initial version of the ICommand.java
-//20170203 133-admin-list-tutors arranged imports according to the style guide
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;

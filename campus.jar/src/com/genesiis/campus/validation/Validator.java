@@ -7,7 +7,7 @@ package com.genesiis.campus.validation;
 //20161229 JH c39-add-course-provider isEmpty() method modified
 //20170105 JH c39-add-course-provider added validateCourseProvider(IDataHelper) method
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
-//20170203 133-admin-list-tutors arranged imports according to the style guide
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
 
 import com.genesiis.campus.util.IDataHelper;
 
