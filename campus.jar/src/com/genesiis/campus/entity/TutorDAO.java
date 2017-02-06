@@ -49,10 +49,9 @@ public class TutorDAO implements ICrud {
 	}
 
 	/**
-	 * getAll() method will list all tutors. It will order the tutor list
-	 * depending on the given order
-	 * 
-	 * Ex: Active 
+	 * getAll() method selects all the records in the tutor table
+	 * with joins to country and the town tables. 
+	 * The data is retrieved to list tutors for super admin functions. 
 	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,

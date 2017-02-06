@@ -2,7 +2,8 @@ package com.genesiis.campus.command;
 
 //20170117 JH c133-admin-list-tutors CmdAdminListTutors.java created
 //20170117 JH c133-admin-list-tutors list tutors and exception handling 
-//20170203 133-admin-list-tutors arranged imports according to the style guide
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
+//20170206 JH c133-admin-list-tutors added doc comments
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -20,6 +21,17 @@ public class CmdAdminListTutors implements ICommand{
 	
 	static Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
 
+	/** 
+	 * @author JH
+	 * @param helper
+	 * @param view
+	 * @return IView
+	 * @author JH
+	 * 
+	 * execute method used to handle data retrieval related to 
+	 * admin tutor listing function. All tutors belongs to any 
+	 * status, need to be listed for this requirement. 
+	 */
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
