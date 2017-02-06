@@ -38,4 +38,6 @@ build.properties
 .gitignore
 
 #ignore the .idea workspace directory
-.idea/
+*/.idea
+/.idea
+.idea
