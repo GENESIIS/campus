@@ -6,6 +6,9 @@
 <!-- 20170109 PN CAM-28: INIT the JSP file  -->
 <!-- 20170109 PN CAM-28: modified textfield length with textfield attribute.  -->
 
+<!-- 20170206 TR CAM-28: modified form html layout - Personal Details edit modal : added div structure  modal-input-field-->
+<!-- 20170206 TR CAM-28: added modal-input-field css class to input field -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -395,33 +398,49 @@
       </div>
       <div class="modal-body">
       <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
-      		<h2>Personal Details</h2>
-      		<div class="well">
-      		First Name <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
-			<span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
-			
-      		Middle Name <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
-			<span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
-			
-      		Last Name <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
-			<span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
-      
-      		Birth Date <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
-			<span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
-			
-			Gender
-			<div class="input-group">
-			<input type="radio" name="gender" value="1"> Male 
-  			<input type="radio" name="gender" value="0"> Female<br>
-  			</div>
-			
-			About <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
-			<span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
-			
+      		<h2 class="sub-title-1">| Personal Details</h2>
+      		<div class="well clearfix">
+      		    <div class="show modal-input-field">
+                    <label>First Name :</label>
+                    <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
+                    <span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
+			    </div>
+
+			    <div class="show modal-input-field">
+			        <label>Middle Name :</label>
+                    <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
+                    <span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
+			    </div>
+
+			    <div class="show modal-input-field">
+			        <label>Last Name :</label>
+                    <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
+                    <span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
+			    </div>
+
+                <div class="show modal-input-field">
+                    <label>Birth Date :</label>
+                    <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
+                    <span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
+                </div>
+
+			    <div class="show modal-input-field">
+			        <label>Gender :</label>
+                    <div class="input-group">
+                        <input type="radio" name="gender" value="1"> Male
+                        <input type="radio" name="gender" value="0"> Female<br>
+                    </div>
+                </div>
+
+			    <div class="show modal-input-field">
+			        <label>About :</label>
+                    <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
+                    <span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
+			    </div>
 			</div>
 			<br>
 			
-			<h2>Contact Details</h2>
+			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
 			
 			Country

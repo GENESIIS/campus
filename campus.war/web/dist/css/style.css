@@ -983,4 +983,22 @@ body, html {
       font-family: "Muli", sans-serif;
       color: #93a1b1; }
 
-/* 20170206 TR CAM-139 init models.sass to style popup windows */
+/* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
+.modal .modal-dialog .modal-content .modal-header {
+  border-bottom: none;
+  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1; }
+  .modal .modal-dialog .modal-content .modal-header .modal-title {
+    font-family: "Roboto", sans-serif;
+    color: #23282d;
+    font-size: 24px;
+    font-weight: 700; }
+.modal .modal-dialog .modal-content .modal-body {
+  background-color: #f2f7f9; }
+
+.sub-title-1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: #23282d;
+  line-height: 40px; }
