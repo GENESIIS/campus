@@ -10,6 +10,7 @@
  * //20170124 CW c36-add-tutor-details modified validateTutorFileds() method - cw
  * //20170129 CW c36-add-tutor-details-cw- modified the places of ValidateUsername(), ValidateEmail() methods calling.
  * //20170129 CW c36-add-tutor-details-cw- modified ValidateUsername(), ValidateEmail() methods.
+ * //20170206 CW c36-add-tutor-details-cw- modified validateTutorFileds() method.
  */
 
 /**
@@ -72,6 +73,7 @@ function validateTutorFileds() {
 	var landCountryCode = $("#landCountryCode").val();
 	var landAreaCode = $("#landAreaCode").val();
 	var landNumber = $("#landNumber").val();
+	var landNumber = $("#landNumber").val();
 	var address1 = $("#address1").val();
 	var weblink = $("#weblink").val();
 	var facebook = $("#facebook").val();
@@ -89,7 +91,7 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-	/*
+	
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
@@ -128,7 +130,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (town == "DEFAULT") {
+	if (town == "--- Select Country before select the town ---") {
 		document.getElementById('townError').innerHTML = "**Please select Town.";
 		document.getElementById('townDetails').focus();
 		flag = false;
@@ -143,6 +145,7 @@ function validateTutorFileds() {
 	
 	if (!isempty(mobileCountryCode)) {
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
+		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
@@ -249,8 +252,8 @@ function validateTutorFileds() {
 		document.getElementById('landNumberError').innerHTML = "**Invalid Phone number";
 		document.getElementById('landNumber').focus();
 		flag = false;
-	}
-
+	}	
+	
 	if (!isempty(address1)) {
 		document.getElementById('address1Error').innerHTML = "**Please Fill Address";
 		document.getElementById('address1').focus();
@@ -411,7 +414,7 @@ function validateTutorFileds() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-*/
+
 	return (flag);
 }
 
