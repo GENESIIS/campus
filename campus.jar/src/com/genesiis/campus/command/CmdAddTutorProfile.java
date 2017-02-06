@@ -9,12 +9,18 @@ package com.genesiis.campus.command;
 //20170116 CW c36-add-tutor-details add fillTutorCollection(), fillTutorDummyCollection() methodS to fill a Collection with data
 //20170116 CW c36-add-tutor-information removed fillTutorDummyCollection & modified execute(), fillTutorDummyCollection()
 //20170117 CW c36-add-tutor-details removed un-wanted commented lines & clean the code & modified fillTutorCollection() method
+//20170124 CW c36-add-tutor-details modified fillTutorCollection() method according to the 201701201215 DJ crev modification request.
+//20170125 CW c36-add-tutor-details validateUserAndEmail() & validateAvailability() methods.
+//20170126 CW c36-add-tutor-details modified execute() method.
+//20170126 CW c36-add-tutor-details modified fillTutorCollection() method & check for null Array Lists
+//20170130 Cw c36-add-tutor-details modified validateAvailability() method
+//20170130 CW c36-add-tutor-information re-organize the import statements.
+//20170131 CW c36-add-tutor-information modify execute() & validateUserAndEmail() methods
+//20170202 CW c36-add-tutor-details modified validateAvailability(), validateUserAndEmail() methods
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -27,7 +33,13 @@ import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
+import org.apache.log4j.Logger;
 
+/**
+ * CmdAddTutorProfile class handles the tutor profile saving
+ * when an tutor account is created.
+ * @author Chinthaka CW
+ */
 public class CmdAddTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdAddTutorProfile.class.getName());
@@ -52,16 +64,17 @@ public class CmdAddTutorProfile implements ICommand {
 			Collection<String> tutorCollection= new ArrayList<String>();
 			
 		try {
-				message = validator.validateTutorFields(helper);
 				setVariables(helper,tutor);
+				tutorCollection.clear();
 				fillTutorCollection(tutorCollection, tutor);
 				
-				if (message.equalsIgnoreCase("True")) {								
+				message = validateUserAndEmail(helper);
+				message = validator.validateTutorFields(helper);
+				
+				if (message.equalsIgnoreCase("True")) {													
 	
-					UserTypeDAO typeOfUser = new UserTypeDAO();
-					Collection<Collection<String>> userTypeCollection= new ArrayList<Collection<String>>();					
-					
-					userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
+					UserTypeDAO typeOfUser = new UserTypeDAO();					
+					Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
 					
 					int userType = 9999;
 					
@@ -76,10 +89,8 @@ public class CmdAddTutorProfile implements ICommand {
 	
 					int result = tutorDAO.add(tutor);
 					if (result > 0) {
-						message = SystemMessage.ADDED.message();
-	
-					} else {
-						
+						message = SystemMessage.ADDED.message();	
+					} else {						
 						message = SystemMessage.ERROR.message();
 					}					
 				}
@@ -90,11 +101,83 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
+			if(message.equalsIgnoreCase("false")){
+				message = "Something wrong in the data you have entered...";
+			}			
+			
 			helper.setAttribute("message", message);
 			helper.setAttribute("tutorList", tutorCollection);
 		}
 		return view;
 	}	
+	
+	/**
+	 * Validate Tutor username & email given. 
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateUserAndEmail(IDataHelper helper) throws SQLException, Exception{
+
+		String message = "True"; 
+		try {		
+
+			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
+				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
+				message = "False";
+			}
+			
+			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
+				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
+				message = "False";
+			}
+			
+			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
+				message = "False";
+			} 
+			
+		} catch (SQLException sqlException) {
+			log.info("validateUserAndEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateUserAndEmail(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
+	
+	/**
+	 * Validate Tutor username & email for availability.
+	 * @author Chinthaka
+	 * @param helper
+	 * @return String
+	 * @throws Exception
+	 */
+	public String validateAvailability(IDataHelper helper) throws SQLException, Exception {
+
+		String message = "True"; 
+		int type = 0;
+		try {		
+				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
+				
+				if(type == 1){
+					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+					//message = SystemMessage.USERNAME_EXIST.message();
+				} else if(type == 2){
+					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+					//message = SystemMessage.EMAIL_USED.message();
+				}
+		} catch (SQLException sqlException) {
+			log.info("validateAvailability(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateAvailability(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
+	}
 
 	/*
 	 * setVariables() method initializes all the instance variable
@@ -106,19 +189,50 @@ public class CmdAddTutorProfile implements ICommand {
 
 	public void setVariables(IDataHelper helper, Tutor tutor) {
 		try {
-			tutor.setUsername(helper.getParameter("username"));
-			tutor.setPassword(helper.getParameter("password"));
-			tutor.setFirstName(helper.getParameter("firstname"));
+			
+			if (helper.getParameter("username").equals("")) {
+				tutor.setUsername(" ");
+			} else {
+				tutor.setUsername(helper.getParameter("username"));
+			}
+
+			if (helper.getParameter("password").equals("")) {
+				tutor.setPassword(" ");
+			} else {
+				tutor.setPassword(helper.getParameter("password"));
+			}
+
+			if (helper.getParameter("firstname").equals("")) {
+				tutor.setFirstName(" ");
+			} else {
+				tutor.setFirstName(helper.getParameter("firstname"));
+			}
 			
 			if (helper.getParameter("middlename").equals("")) {
 				tutor.setMiddleName("-");
 			} else {
 				tutor.setMiddleName(helper.getParameter("middlename"));
 			}
+
+			if (helper.getParameter("lastname").equals("")) {
+				tutor.setLastName(" ");
+			} else {
+				tutor.setLastName(helper.getParameter("lastname"));
+			}
 			
-			tutor.setLastName(helper.getParameter("lastname"));
 			tutor.setGender(helper.getParameter("gender"));
-			tutor.setEmailAddress(helper.getParameter("email"));
+
+			if (helper.getParameter("experience").equals("")) {
+				tutor.setExperience("-");
+			} else {
+				tutor.setExperience(helper.getParameter("experience"));
+			}
+			
+			if (helper.getParameter("aboutMe").equals("")) {
+				tutor.setDescription("-");
+			} else {
+				tutor.setDescription(helper.getParameter("aboutMe"));
+			}
 			
 			if(Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))){
 				if(Validator.isNotEmpty(helper.getParameter("countryDetails")) && (!(helper.getParameter("countryDetails").equals("0")))){
@@ -135,23 +249,48 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 			}
 			
-			tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
-			tutor.setLandNumber(helper.getParameter("landNumber"));
-			tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
-			tutor.setMobileNumber(helper.getParameter("mobileNumber"));
-			
-			if (helper.getParameter("aboutMe").equals("")) {
-				tutor.setDescription("-");
+			if (helper.getParameter("landAreaCode").equals("")) {
+				tutor.setLandAreaCode(" ");
 			} else {
-				tutor.setDescription(helper.getParameter("aboutMe"));
+				tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
 			}
 
-			if (helper.getParameter("experience").equals("")) {
-				tutor.setExperience("-");
+			if (helper.getParameter("landNumber").equals("")) {
+				tutor.setLandNumber(" ");
 			} else {
-				tutor.setExperience(helper.getParameter("experience"));
+				tutor.setLandNumber(helper.getParameter("landNumber"));
+			}			
+
+			if (helper.getParameter("mobileNetworkCode").equals("")) {
+				tutor.setMobileNetworkCode(" ");
+			} else {
+				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));
 			}
-			
+
+			if (helper.getParameter("mobileNumber").equals("")) {
+				tutor.setMobileNumber(" ");
+			} else {
+				tutor.setMobileNumber(helper.getParameter("mobileNumber"));
+			}
+
+			if (helper.getParameter("address1").equals("")) {
+				tutor.setAddressLine1(" ");
+			} else {
+				tutor.setAddressLine1(helper.getParameter("address1"));
+			}
+						
+			if (helper.getParameter("address2").equals("")) {
+				tutor.setAddressLine2("-");
+			} else {
+				tutor.setAddressLine2(helper.getParameter("address2"));
+			}
+
+			if (helper.getParameter("address3").equals("")) {
+				tutor.setAddressLine3("-");
+			} else {
+				tutor.setAddressLine3(helper.getParameter("address3"));
+			}
+									
 			if (helper.getParameter("weblink").equals("")) {
 				tutor.setWebLink("-");
 			} else {
@@ -164,10 +303,22 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setFacebookLink(helper.getParameter("facebook"));
 			}
 
+			if (helper.getParameter("linkedin").equals("")) {
+				tutor.setLinkedInLink("-");
+			} else {
+				tutor.setLinkedInLink(helper.getParameter("linkedin"));
+			}
+
 			if (helper.getParameter("twitter").equals("")) {
 				tutor.setTwitterNumber("-");
 			} else {
 				tutor.setTwitterNumber(helper.getParameter("twitter"));
+			}
+
+			if (helper.getParameter("instagram").equals("")) {
+				tutor.setInstagramId("-");
+			} else {
+				tutor.setInstagramId(helper.getParameter("instagram"));
 			}
 
 			if (helper.getParameter("myspace").equals("")) {
@@ -176,47 +327,23 @@ public class CmdAddTutorProfile implements ICommand {
 				tutor.setMySpaceId(helper.getParameter("myspace"));
 			}
 
-			if (helper.getParameter("linkedin").equals("")) {
-				tutor.setLinkedInLink("-");
+			if (helper.getParameter("whatsapp").equals("")) {
+				tutor.setWhatsAppId("0");
 			} else {
-				tutor.setLinkedInLink(helper.getParameter("linkedin"));
-			}
-
-			if (helper.getParameter("instagram").equals("")) {
-				tutor.setInstagramId("-");
-			} else {
-				tutor.setInstagramId(helper.getParameter("instagram"));
+				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
 			}
 			
 			if (helper.getParameter("viber").equals("")) {
 				tutor.setViberNumber("0");
 			} else {
 				tutor.setViberNumber(helper.getParameter("viber"));
-			}
-
-			if (helper.getParameter("whatsapp").equals("")) {
-				tutor.setWhatsAppId("0");
-			} else {
-				tutor.setWhatsAppId(helper.getParameter("whatsapp"));
-			}
+			}			
+			
+			tutor.setEmailAddress(helper.getParameter("email"));
 
 			tutor.setIsApproved(false);
 			
 			tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
-			
-			tutor.setAddressLine1(helper.getParameter("address1"));
-			
-			if (helper.getParameter("address2").equals("")) {
-				tutor.setAddressLine2("-");
-			} else {
-				tutor.setAddressLine2(helper.getParameter("address2"));
-			}
-
-			if (helper.getParameter("address3").equals("")) {
-				tutor.setAddressLine3("-");
-			} else {
-				tutor.setAddressLine3(helper.getParameter("address3"));
-			}
 			
 			if(Validator.isNotEmpty(helper.getParameter("townHidden"))){
 				if((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0")))){
@@ -257,37 +384,37 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getDescription());
 		
 		CountryDAO country = new CountryDAO();
-		
-		try{
-			Collection<Collection<String>> countryCollection = new ArrayList<Collection<String>>();
-			countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			for(Collection<String> countryList : countryCollection){
-				tutorCollection.add(countryList.toArray()[1].toString());				
-			}
-
-		}  catch (SQLException sqle){
-			log.error("fillTutorCollection(): SQLException "+ sqle.toString());
-			throw sqle;
-		}  catch (Exception exception) {
-			log.error("fillTutorCollection() : Exception" + exception.toString());
-			throw exception;
-		}
-		
 		TownDAO town = new TownDAO();
+		
 		try{
-			Collection<Collection<String>> townCollection = new ArrayList<Collection<String>>();
-			int addCount = 0;
-			townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
-			
-			for(Collection<String> townList : townCollection){
-				if (townList.toArray()[0].toString().equals(tutor.getTown())){
-					tutorCollection.add(townList.toArray()[1].toString());
-					tutorCollection.add(townList.toArray()[0].toString());
-					addCount++;
+
+			int countryAddCount = 0, townAddCount = 0;
+			if(tutor.getMobileCountryCode() != " "){
+				Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				
+				if(!(countryCollection.isEmpty())){
+					for(Collection<String> countryList : countryCollection){
+						tutorCollection.add(countryList.toArray()[1].toString());	
+						countryAddCount++;			
+					}
+	
+					for(Collection<String> townList : townCollection){
+						if (townList.toArray()[0].toString().equals(tutor.getTown())){
+							tutorCollection.add(townList.toArray()[1].toString());
+							tutorCollection.add(townList.toArray()[0].toString());
+							townAddCount++;
+						}
+					}
 				}
 			}
-			if(addCount == 0){
-				tutorCollection.add("0");
+			if(countryAddCount == 0){
+				tutorCollection.add(" ");
+			}
+			
+			if(townAddCount == 0){
+				tutorCollection.add(" ");
+				tutorCollection.add(" ");
 			}
 
 		}  catch (SQLException sqle){
@@ -297,7 +424,7 @@ public class CmdAddTutorProfile implements ICommand {
 			log.error("fillTutorCollection() : Exception" + exception.toString());
 			throw exception;
 		}
-		
+
 		tutorCollection.add(tutor.getMobileCountryCode());
 		tutorCollection.add(tutor.getMobileNetworkCode());
 		tutorCollection.add(tutor.getMobileNumber());

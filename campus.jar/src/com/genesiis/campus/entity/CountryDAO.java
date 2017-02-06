@@ -6,6 +6,8 @@ package com.genesiis.campus.entity;
 //20161221 CW c36-add-tutor-details Modified getAll() method. 
 //20161222 CW c38-view-update-tutor-profile added findCountryByCode() method. 
 //20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application Country2DAO class
+//20170124 CW c36-add-tutor-details modified findById() method according to the 201701201215 DJ crev modification request.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -102,6 +103,7 @@ public class CountryDAO implements ICrud{
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 			conn = ConnectionManager.getConnection();
@@ -109,7 +111,7 @@ public class CountryDAO implements ICrud{
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, countryCode);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
@@ -118,18 +120,13 @@ public class CountryDAO implements ICrud{
 				allCountryList.add(singleCountryList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.info("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.info("findById(): Exception " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return allCountryList;
 }

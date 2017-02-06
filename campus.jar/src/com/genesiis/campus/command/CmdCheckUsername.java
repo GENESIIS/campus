@@ -5,19 +5,18 @@ package com.genesiis.campus.command;
 //20161221 CW c36-add-tutor-information Modified execute()method. 
 //20170106 CW c36-add-tutor-information Modified execute()method & validate the usename. 
 //20170109 CW c36-add-tutor-information Modified execute()method.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.TutorUserNameDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Validator;
+import org.apache.log4j.Logger;
 
 public class CmdCheckUsername implements ICommand {
 	static Logger log = Logger.getLogger(CmdCheckUsername.class.getName());

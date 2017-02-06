@@ -6,19 +6,29 @@ package com.genesiis.campus.validation;
 //20170109 c36-add-tutor-details-added few more enum fields cw
 //20170111 c36-add-tutor-details-added USERNAME_LENGTH, WEBLINKERROR, FACEBOOKERROR, LINKEDINERROR, TWITTERERROR, INSTAGRAMERROR, MYSPACEERROR, WHATSAPPERROR, VIBERERROR cw
 //20170117 c36-add-tutor-details-added EMAIL_USED CW
+//20170130 c36-add-tutor-details-modified FIRSTNAMEERROR & LASTNAMEERROR messages
+//20170131 c36-add-tutor-details-added EMPTYEMAIL, EMPTYUSERNAME, PASSWORDLENGTHERROR, EMPTYPASSWORD, PASSWORDCONFIRMERROR, EMPTYCONFIRMPASSWORD, FIRSTNAMEERROR, LASTNAMEERROR message
+//20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	USERNAME_EXIST("Username already exists."),
-	USERNAME_LENGTH("Username should have at least6 characters & shorter than 20 characters."),
+	USERNAME_LENGTH("Username should have at least 6 characters & shorter than 20 characters."),
 	ERROR("Unsuccessful."),
 	EMAILERROR("Invalid Email Address."),
+	EMPTYEMAIL("Email Address cannot be empty."),
+	EMPTYUSERNAME("Username cannot be empty."),
+	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
+	EMPTYPASSWORD("Password cannot be empty."),
+	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
+	FIRSTNAMEERROR("Invalid First Name."),
+	LASTNAMEERROR("Invalid Last Name."),
 	EMPTYFIELD("Please fill required data"),
 	UPDATED("Details Updated successfully."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
-	FIRSTNAMEERROR("Invalid Email Address."),
-	LASTNAMEERROR("First name should not be empty."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
+	COUNTRYCODEERROR("Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
 	MOBILENUMBERERROR("Mobile number error."),
 	LANDCOUNTRYCODEERROR("Land phone country code error."),
