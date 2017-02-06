@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
 //20170203 JH c133-admin-list-tutors arranged imports according to the style guide
 //20170203 JH c133-admin-list-tutors removed 'TOP 1000' constraint from getAll() method query string 
+//20170206 JH c133-admin-list-tutors replaced String with String Builder implementation to create the query
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -56,9 +57,14 @@ public class TutorDAO implements ICrud {
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
-				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
-				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
+		final StringBuilder query = new StringBuilder();
+
+		query.append("SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE,");
+		query.append(" LANDPHONENUMBER, MOBILEPHONENETWORKCODE, MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3,");
+		query.append("TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY, TUTORSTATUS ");
+		query.append("FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2]");
+		query.append("ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC");
+
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
@@ -66,7 +72,7 @@ public class TutorDAO implements ICrud {
 		
 		try{
 			conn = ConnectionManager.getConnection();
-			preparedStatement = conn.prepareStatement(query);
+			preparedStatement = conn.prepareStatement(query.toString());
 			
 			rs = preparedStatement.executeQuery();
 			
