@@ -1,5 +1,5 @@
 <!-- 20170203 PN CAM-137: removed a ui-populate-helper.js import from index page. -->
-<!-- 20170203 PN CAM-137: error-handling.js import added into index page. -->
+<!-- 20170206 PN CAM-137: error-handling.js import added into index page. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
