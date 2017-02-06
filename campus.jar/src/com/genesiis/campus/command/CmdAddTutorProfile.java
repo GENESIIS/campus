@@ -17,6 +17,7 @@ package com.genesiis.campus.command;
 //20170130 CW c36-add-tutor-information re-organize the import statements.
 //20170131 CW c36-add-tutor-information modify execute() & validateUserAndEmail() methods
 //20170202 CW c36-add-tutor-details modified validateAvailability(), validateUserAndEmail() methods
+//20170206 CW c36-add-tutor-details modified execute() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class CmdAddTutorProfile implements ICommand {
 			
 		try {
 				setVariables(helper,tutor);
-				tutorCollection.clear();
+				//tutorCollection.clear();
 				fillTutorCollection(tutorCollection, tutor);
 				
 				message = validateUserAndEmail(helper);
