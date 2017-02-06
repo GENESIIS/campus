@@ -25,13 +25,23 @@
 				</td>
 			</tr>
 
-				<tr>
-					<td>First Name *</td>
-					<td><input type="text" name="firstname" id="firstName"
+			<tr>
+				<td>First Name *</td>
+				<c:choose>
+					<c:when test="${tutorList[6] == ' '}">
+					   <td><input type="text" name="firstname" id="firstName"
+						maxlength="20" onchange="clearField('firstNameError')"
+						value="" /><span id="firstNameError"
+						style="color: red"> ${firstNameError} </span></td>
+					</c:when>
+					<c:otherwise>
+						<td><input type="text" name="firstname" id="firstName"
 						maxlength="20" onchange="clearField('firstNameError')"
 						value="${tutorList[0]}" /><span id="firstNameError"
 						style="color: red"> ${firstNameError} </span></td>
-				</tr>
+					</c:otherwise>
+				</c:choose>	
+			</tr>
 				<tr>
 					<td>Middle Name</td>
 					<td><input type="text" name="middlename" id="middleName"
@@ -41,11 +51,20 @@
 				</tr>
 				<tr>
 					<td>Last Name *</td>
-					<td><input type="text" name="lastname" id="lastName"
-						maxlength="20" onchange="clearField('lastNameError')"
-						value="${tutorList[2]}" /><span id="lastNameError"
-						style="color: red"> ${lastNameError} </span></td>
-				</tr>
+					<c:choose>
+						<c:when test="${tutorList[6] == ' '}">
+							<td><input type="text" name="lastname" id="lastName"
+								maxlength="20" onchange="clearField('lastNameError')"
+								value="" /><span id="lastNameError"
+								style="color: red"> ${lastNameError} </span></td>
+						</c:when>
+						<c:otherwise>
+							<td><input type="text" name="lastname" id="lastName"
+								maxlength="20" onchange="clearField('lastNameError')"
+								value="${tutorList[2]}" /><span id="lastNameError"
+								style="color: red"> ${lastNameError} </span></td>
+						</c:otherwise>
+					</c:choose>	
 				<tr>
 					<td>Gender *</td>
 					<td><c:choose>
@@ -81,25 +100,30 @@
 				</tr>
 				<tr>
 					<td>Country *</td>
-					<c:if test = "${tutorList[6] != null}"	>			
+					<c:if test = "${tutorList[6] != null && tutorList[6] != ' '}">	
 						<td>${tutorList[6]}</td>
-						<td><input type="hidden" name="countryHidden" id="countryHidden" value="${tutorList[6]}" /></td>
 					</c:if>
 					<td><select name="countryDetails" id="countryDetails"
 						onchange="clearField('countryError')">
 							<option></option>
 					</select><span id="countryError" style="color: red"> ${countryError} </span></td>
+					<c:if test = "${tutorList[6] != null && tutorList[6] != ' '}">	
+						<td><input type="hidden" name="countryHidden" id="countryHidden" value="${tutorList[6]}" /></td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>Town*</td>
-					<c:if test = "${tutorList[7] != null }"	>			
+					<c:if test = "${tutorList[7] != null && tutorList[7] != ' '}"	>			
 						<td>${tutorList[7]}</td>
 						<td><input type="hidden" name="townHidden" id="townHidden" value="${tutorList[8]}" /></td>
 					</c:if>
 					<td><select name="townDetails" id="townDetails"
 						onchange="clearField('townError')">
 							<option></option>
-					</select><span id="townError" style="color: red"></span></td>
+					</select><span id="townError" style="color: red"> ${townError} </span></td>
+					<c:if test = "${tutorList[7] != null && tutorList[7] != ' '}"	>		
+						<td><input type="hidden" name="townHidden" id="townHidden" value="${tutorList[8]}" /></td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>Mobile *</td>
