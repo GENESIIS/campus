@@ -1,6 +1,7 @@
 /**
  * 20170202 DJ c138-add-basic-programme-MP-dj  Load  view form for Program details
  * 20170202 DJ c138-add-basic-programme-MP-dj  Initiated populateProgrammeAddView() method
+ * 20170206 DJ c138-add-basic-programme-MP-dj  Initiated isEmpty(),isValidEmailFormat() methods.
  */
 
 $(document).ready(function() {
@@ -75,6 +76,52 @@ function populateProgrammeAddView(response) {
 	});
 	$('#classTypeName').html(htmlClassTypeStr);
 	
+	
+	/*
+	 * Add program button-event handler
+	 */
+	$('#addProgramme').click(function(){
+		var email= $('#email').val();			
+		if (!isEmpty(email) || !isValidEmailFormat(email)) {
+			document.getElementById('errorEmail').innerHTML = "Invalid email format";
+		}		
+		alert("AddProgramme");
+	});
+	
+	
+	/*
+	 * clear button-event handler
+	 */
+	$('#clearParam').click(function(){
+		
+		alert("Clear");
+	});
+	
+	
+	/**
+	 * @author DJ
+	 * @param fieldValue;  it is the value of a document element
+	 * @returns true if has content else false. (used to validate string values)
+	 */
+	function isEmpty(fieldValue) {
+		return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+	}
+	
+	/**
+	 * isValidEmailFormat - validate a email address
+	 * 
+	 * @returns boolean if testing email address is a valid one then returns true
+	 *          else return false
+	 */
+	function isValidEmailFormat(email) {				
+		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test(email) == false) 
+        {            
+            return false;
+        }
+        return true;		
+	}
+
 }
 
 /**
