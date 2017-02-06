@@ -1,0 +1,68 @@
+package com.genesiis.campus.command;
+
+//20170117 JH c133-admin-list-tutors CmdAdminListTutors.java created
+//20170117 JH c133-admin-list-tutors list tutors and exception handling 
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
+//20170206 JH c133-admin-list-tutors added doc comments
+
+import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class CmdAdminListTutors implements ICommand{
+	
+	static Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
+
+	/** 
+	 * @author JH
+	 * @param helper
+	 * @param view
+	 * @return IView
+	 * @author JH
+	 * 
+	 * execute method used to handle data retrieval related to 
+	 * admin tutor listing function. All tutors belongs to any 
+	 * status, need to be listed for this requirement. 
+	 */
+	public IView execute(IDataHelper helper, IView view) throws SQLException,
+			Exception {
+
+		ICrud tutorDAO = new TutorDAO();
+		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+		SystemMessage systemMessage = SystemMessage.NO_DATA;
+
+		try {
+			 tutorCollection = tutorDAO.getAll();
+			 
+			 if(tutorCollection.size() >0){
+					view.setCollection(tutorCollection);
+			 }else{
+				systemMessage = SystemMessage.NO_DATA; 
+			 }
+
+		}  catch (SQLException sqlException) {
+			log.error("execute(IDataHelper, IView) : Exception"
+					+ sqlException.toString());
+			systemMessage = SystemMessage.ERROR;
+			throw sqlException;
+		}catch (Exception exception) {
+			log.error("execute(IDataHelper, IView) : Exception"
+					+ exception.toString());
+			systemMessage = SystemMessage.ERROR;
+			throw exception;
+		}finally{
+			helper.setAttribute("userMessage", systemMessage.message());
+		}
+
+		return view;
+	}
+
+}

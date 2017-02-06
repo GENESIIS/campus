@@ -8,8 +8,16 @@
 			<module name="org.apache.commons.fileupload" />
 			<module name="org.apache.commons.io" />
 			<module name="org.apache.commons.lang3" />
-	
 			<module name="com.google.gson" />
+		</dependencies>
+	</sub-deployment>
+	<sub-deployment name="campus.jar">
+		<dependencies>
+			<module name="org.apache.commons.fileupload" />
+			<module name="org.apache.commons.io" />
+			<module name="org.apache.commons.lang3" />
+			<module name="com.google.gson" />
+			<module name="org.apache.lucene" />
 		</dependencies>
 	</sub-deployment>
 </jboss-deployment-structure>
