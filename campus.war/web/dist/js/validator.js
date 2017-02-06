@@ -10,7 +10,7 @@
  * //20170124 CW c36-add-tutor-details modified validateTutorFileds() method - cw
  * //20170129 CW c36-add-tutor-details-cw- modified the places of ValidateUsername(), ValidateEmail() methods calling.
  * //20170129 CW c36-add-tutor-details-cw- modified ValidateUsername(), ValidateEmail() methods.
- * //20170206 CW c36-add-tutor-details-cw- modified validateTutorFileds() method.
+ * //20170206 CW c36-add-tutor-details-cw- modified validateTutorFileds() method validate country & town.
  */
 
 /**
