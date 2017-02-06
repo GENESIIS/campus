@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //20170130 c36-add-tutor-details-modified FIRSTNAMEERROR & LASTNAMEERROR messages
 //20170131 c36-add-tutor-details-added EMPTYEMAIL, EMPTYUSERNAME, PASSWORDLENGTHERROR, EMPTYPASSWORD, PASSWORDCONFIRMERROR, EMPTYCONFIRMPASSWORD, FIRSTNAMEERROR, LASTNAMEERROR message
 //20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
+//20170203 c36-add-tutor-details-added TOWNCODEERROR message
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -24,7 +25,8 @@ public enum SystemMessage {
 	FIRSTNAMEERROR("Invalid First Name."),
 	LASTNAMEERROR("Invalid Last Name."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
-	COUNTRYCODEERROR("Country code error."),
+	COUNTRYCODEERROR("Please select Country."),
+	TOWNCODEERROR("Please select Town."),
 	NETWORKCODEERROR("Mobile network code error."),
 	MOBILENUMBERERROR("Mobile number error."),
 	LANDCOUNTRYCODEERROR("Land phone country code error."),
