@@ -36,6 +36,7 @@ package com.genesiis.campus.validation;
 //20170131 CW c36-add-tutor-details add validatePassword() method & modified validateTutorFields() method
 //20170130 CW c36-add-tutor-details modified validateTutorFields() method
 //20170203 CW c36-add-tutor-details modified isHavingNullValues(), validateTutorFields() methods
+//20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -78,83 +79,52 @@ public class Validator {
 	public boolean isHavingNullValues(IDataHelper helper) throws Exception {
 
 		boolean isHavingNull = false; 
-		try {		
-			
-			
-/*			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") != " ")
-					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("landNumber") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("landNumber") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("address1") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("email")))
-					&& (Validator.isNotEmpty(helper.getParameter("username"))) || (helper.getParameter("username") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("password")))) || (helper.getParameter("password") != " ")
-					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword")))) {
-				isHavingNull = true; 
-			}*/
-			
+		try {	
 
-			System.out.println("helper.getParameter(firstname) = "+helper.getParameter("firstname"));
 			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(lastname) = "+helper.getParameter("lastname"));
 			if (!((Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(mobileCountryCode) = "+helper.getParameter("mobileCountryCode"));
 			if (!((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (helper.getParameter("mobileCountryCode") == "0"))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(mobileNetworkCode) = "+helper.getParameter("mobileNetworkCode"));
 			if (!((Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("mobileNetworkCode") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(mobileNumber) = "+helper.getParameter("mobileNumber"));
 			if (!((Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("mobileNumber") == " "))) {
 				isHavingNull = true; 
 			}
 			
-			System.out.println("helper.getParameter(landAreaCode) = "+helper.getParameter("landAreaCode"));
 			if (!((Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(landAreaCode) = "+helper.getParameter("landAreaCode"));
 			if (!((Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(address1) = "+helper.getParameter("address1"));
 			if (!((Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("address1") == " "))) {
 				isHavingNull = true; 
 			}
 			
-			System.out.println("helper.getParameter(email) = "+helper.getParameter("email"));
 			if (!(Validator.isNotEmpty(helper.getParameter("email")))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(username) = "+helper.getParameter("username"));
 			if (!((Validator.isNotEmpty(helper.getParameter("username"))) || (helper.getParameter("username") == " "))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(password) = "+helper.getParameter("password"));
 			if (!(Validator.isNotEmpty(helper.getParameter("password")))) {
 				isHavingNull = true; 
 			}
 
-			System.out.println("helper.getParameter(confirmPassword) = "+helper.getParameter("confirmPassword"));
 			if (!(Validator.isNotEmpty(helper.getParameter("confirmPassword")))) {
 				isHavingNull = true; 
 			}
@@ -183,9 +153,6 @@ public class Validator {
 
 				message = SystemMessage.EMPTYFIELD.message();
 			} 
-			
-			
-			//if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") == " ")))
 			
 			if (!isValidFirstname(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.FIRSTNAMEERROR.message());
@@ -221,7 +188,7 @@ public class Validator {
 				message = "False";
 			}
 			
-			if(!((Validator.isNotEmpty(helper.getParameter("townHidden"))) && (helper.getParameter("townHidden").equals("0")))){
+			if(!((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0"))))){
 				helper.setAttribute("townError", SystemMessage.TOWNCODEERROR.message());
 				message = "False";
 			}
@@ -522,7 +489,7 @@ public class Validator {
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
 				message = "False";
 			}
-			
+
 			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
 				message = "False";
