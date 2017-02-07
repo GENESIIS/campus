@@ -3,6 +3,8 @@
  * 
  */
 
+//20170207 JH c141-add-course-provider-issue-improvements pass generated course provider code with the success message to another jsp
+
 window.countryCollection = null;
 window.countryCode = null;
 window.townCollection = null;
@@ -417,6 +419,7 @@ function saveCourseProvider() {
 									$( "#basicForm" ).submit();
 									
 									window.responseErrorMessage = response.userMessage;
+									var registeredId = response.registerId;
 									
 									   var form = document.createElement('form');
 							    	   form.method = 'post';
@@ -424,11 +427,11 @@ function saveCourseProvider() {
 							    	   var input = document.createElement('input');
 							    	   input.type = 'hidden';
 							           input.name = 'courseProviderCode';
-							           input.value = response.registerId;
+							           input.value = registeredId;
 							    	   var inputUserMessage = document.createElement('input');
-							    	   input.type = 'hidden';
-							           input.name = 'userMessage';
-							           input.value = response.userMessage;
+							    	   inputUserMessage.type = 'hidden';
+							    	   inputUserMessage.name = 'userMessage';
+							    	   inputUserMessage.value = response.userMessage;
 							           form.appendChild(input);
 							           form.appendChild(inputUserMessage);
 							           form.submit();
