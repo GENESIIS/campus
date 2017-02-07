@@ -425,21 +425,20 @@
                 </div>
 
 			    <div class="show modal-input-field">
-			        <label>Gender :</label>
-                    <div class="input-group">
-                        <input type="radio" name="gender" value="1"> Male
-                        <input type="radio" name="gender" value="0"> Female<br>
+			        <label class="pull-left l-h-26">Gender :</label>
+                    <div class="btn-group-radio">
+                        <input type="radio" name="gender" value="1"><span>Male</span>
+                        <input type="radio" name="gender" value="0"><span>Female</span>
                     </div>
                 </div>
 
 			    <div class="show modal-input-field">
-			        <label>About :</label>
+			        <label class="pull-left">About :</label>
                     <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
                     <span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			    </div>
 			</div>
-			<br>
-			
+
 			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
 			
