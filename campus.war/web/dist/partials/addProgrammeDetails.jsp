@@ -93,6 +93,13 @@
 							</datalist>
 						</div>
 						<div>
+							Course Status :<br>
+							<input type="radio" id="counselorStatus" name="counselorStatus" value="ACTIVE"><span>Active</span>
+							<input type="radio" id="counselorStatus" name="counselorStatus" value="INACTIVE"><span>InActive</span>
+							<input type="radio" id="counselorStatus" name="counselorStatus" value="PENDING"><span>Pending</span>
+							<input type="radio" id="counselorStatus" name="counselorStatus" value="ARCHIVE"><span>Archive</span>
+						</div>
+						<div>
 							Counselor Name :<input type="text" id="counselorName" name="counselorName"  size="25px"/>
 						</div>
 						<div>
