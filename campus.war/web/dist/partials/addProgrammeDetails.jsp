@@ -96,7 +96,7 @@
 							Counselor Name :<input type="text" id="counselorName" name="counselorName"  size="25px"/>
 						</div>
 						<div>
-							Counselor Phone :<input type="text" id="counselorPhone" name="counselorPhone"  size="25px" />
+							Counselor Phone :<input type="number" id="counselorPhone" name="counselorPhone"  size="25px" />
 						</div>
 						<div>
 							Display Start Date :<input type="date" id="fromDate"
@@ -120,34 +120,7 @@
 		<!-- END provider-list-holder -->
 	</div>
 	<!-- End Container - Top Providers list -->
-	
-	<%-- <div class="main-category clearfix">
-	<div class="content-holder center-block clearfix">
-	<!-- course filter panel : left side -->
-	<div class="course-filter-panel">
-		<h3>Basic Info</h3>
-		<!-- Filter result table -->
-		<div class="filter-result-table">
-			<ul class="result-row">
-				<li class="course-info clearfix">
-					<div class="col-name">
-						<h1 class="pro-name">
-							Course Provider Name: <span style="color: red;">*</span>
-						</h1>
-					</div>
-					<div class="col-name">
-						<input class="input" type="text" name="providerName"
-							id="providerName" size="50px;" /><span id="errorProviderName"
-							class="error-message">${errorProviderName }</span>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-	</div>
-	</div> --%>
-
-
+		
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
