@@ -120,7 +120,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, getDate(), ?, getDate(), ?)";
 
 			String procedureCallMainBranch = "{call campus.add_featured_course_provider(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
 			//check whether the course provider has a head office or not
 			if(courseProvider.getPrincipal()==0){//does not have a head office
@@ -172,7 +172,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				callableStatement.setLong(42, courseProviderTown.getTown());
 				callableStatement.setString(43, courseProviderTown.getContactNumber());
 				callableStatement.setBoolean(44, courseProviderTown.isActive());
-				callableStatement.registerOutParameter(45, java.sql.Types.INTEGER);
+				callableStatement.setInt(45, courseProvider.getHeadOffice());
+				callableStatement.registerOutParameter(46, java.sql.Types.INTEGER);
+
 	
 				
 			}if(courseProvider.getPrincipal() !=0){//has a head office 
@@ -187,7 +189,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 
 			callableStatement.executeUpdate();
 			
-			generatedKey = callableStatement.getInt(45);			
+			generatedKey = callableStatement.getInt(46);			
 
 			conn.commit();
 
