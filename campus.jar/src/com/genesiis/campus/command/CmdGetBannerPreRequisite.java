@@ -48,7 +48,7 @@ private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLE
 	//try{
 		//toDo level of responsibility abstractions
 		// (1) get the advertiser related collection
-		// (2) get the pages related collection
+		// (2) get the pages related collintermediateection
 		Operation branchSelector = Operation.getOperation(helper.getCommandCode());
 		switch(branchSelector){
 		case DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA :
