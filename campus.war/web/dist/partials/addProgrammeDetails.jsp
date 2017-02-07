@@ -44,7 +44,7 @@
 							<legend align="left">Basic Info </legend>
 						</div>
 						<div>
-							Course Provider Name :<input
+							Course Provider Name :<font color="red">*</font><input
 								type="text" name="providerList" id="providerList"
 								list="providerName" placeholder="-- Select Page --"   size="25px"/>
 							<datalist id="providerName">
@@ -52,35 +52,35 @@
 							<label id="errorProviderList" for=""></label>
 						</div>
 						<div>
-							Course Name :<input type="text" id="courseName" name="courseName"   size="25px"/>
+							Course Name :<font color="red">*</font><input type="text" id="courseName" name="courseName"   size="25px"/>
 						</div>
 						<div>
 							Course Details :<input type="text" id="courseDetails" name="courseDetails"  size="25px" />
 						</div>						
 						<div>
-							Email Address: 
+							Email Address:<font color="red">*</font> 
 							<input class="input" type="text" name="email"
 										id="email" size="25px" placeholder="Enter a valid email address"/> <span
 										id="errorEmail" class="error-message">${errorEmail }</span>
 						</div>
 						<div>
-							Course Duration :<input type="text" id="courseDuration" name="courseDuration"  size="25px"/>
+							Course Duration :<font color="red">*</font><input type="text" id="courseDuration" name="courseDuration"  size="25px"/>
 						</div>
 						<div>
-							Course Category :<input type="text" name="categoryList"
+							Course Category :<font color="red">*</font><input type="text" name="categoryList"
 								id="categoryList" list="categoryName"
 								placeholder="-- Select Course Category --"   size="25px"/>
 							<datalist id="categoryName">
 							</datalist>
 						</div>
 						<div>
-							Course Major :<input type="text" name="majorList" id="majorList"
+							Course Major :<font color="red">*</font><input type="text" name="majorList" id="majorList"
 								list="majorName" placeholder="-- Select Course Major --"   size="25px"/>
 							<datalist id="majorName">
 							</datalist>
 						</div>
 						<div>
-							Course Level :<input type="text" name="levelList" id="levelList"
+							Course Level :<font color="red">*</font><input type="text" name="levelList" id="levelList"
 								list="levelName" placeholder="-- Select Course Level --"   size="25px"/>
 							<datalist id="levelName">
 							</datalist>
@@ -100,10 +100,10 @@
 							<input type="radio" id="counselorStatus" name="counselorStatus" value="ARCHIVE"><span>Archive</span>
 						</div>
 						<div>
-							Counselor Name :<input type="text" id="counselorName" name="counselorName"  size="25px"/>
+							Counselor Name :<font color="red">*</font><input type="text" id="counselorName" name="counselorName"  size="25px"/>
 						</div>
 						<div>
-							Counselor Phone :<input type="number" id="counselorPhone" name="counselorPhone"  size="25px" />
+							Counselor Phone :<font color="red">*</font><input type="number" id="counselorPhone" name="counselorPhone"  size="25px" />
 						</div>
 						<div>
 							Display Start Date :<input type="date" id="fromDate"
