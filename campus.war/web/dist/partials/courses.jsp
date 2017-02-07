@@ -7,6 +7,7 @@
 <!-- 20161116 AS c11-criteria-based-filter-search added a name and id to checkbox near "All" fixed -->
 <!-- 20161124 PN c11-criteria-based-filter-search modified bootstrap-3.3.7.min.js imports. -->
 <!-- 20161222 PN CAM-116: modified DataTable styling -->
+<!-- 20170207 DJ CAM-124: Remove commented lines-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -233,10 +234,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<!-- End Main Container - All-Courses -->
-
-	<!-- Footer -->
-<!-- 	<footer w3-include-html="layout/footer.jsp"></footer> -->
-
 	<footer>
 		<div class="ft-top"></div>
 		<div class="ft-bottom text-center">

@@ -49,7 +49,7 @@ public class CmdGetSearchData implements ICommand {
 				//END-DJ-General filter search-program result set implementation. 
 			}else{
 				//If:the instituteCode is set
-				if ((searchData != null) && ((!searchData.isEmpty()))) {
+				if ((searchData != null) && (!searchData.isEmpty())) {
 					programmeCollection = programmeDAO.findById(searchData);
 				
 				//else:the instituteCode is not set at the beginning of the page loading
