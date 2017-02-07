@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application TownDAO class
 //20170118 CW c38-view-update-tutor-profile - removed findTownByCode() method
 //20170124 CW c36-add-tutor-details modified findById() method same as findById() in CountryDAO.java class according to the 201701201215 DJ crev modification request.
+//20170207 CW c38-view-update-tutor-profile-re organize the import statements.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +16,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import org.apache.log4j.Logger;
 
 public class TownDAO implements ICrud{
 	static Logger log = Logger.getLogger(TownDAO.class.getName());
