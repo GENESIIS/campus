@@ -2,10 +2,18 @@ package com.genesiis.campus.entity.model;
 
 /*
  * 20170203 DN c131-admin-manage-banner-upload-banner-image-dn created the initial class stub
+ * 20140207 DN c131-admin-manage-banner-upload-banner-image-dn implements AdvertiserRole.
  */
 
 
-public class Advertiser {
+/**
+ * BannerAdvertiser.java maps the business requirement in representing 
+ * the type that which advertises a Banner program(s) in the system.
+ * @author dushantha DN
+ *
+ */
+
+public class BannerAdvertiser implements AdvertiserRole {
 	
 
 	private int code;
