@@ -16,22 +16,7 @@
             <img src="dist/i/slide-1.jpg" alt="">
         </div>
         <!-- End Main slider -->
-        <div class="search-area clearfix">
-			<!-- <div class="main-search-bar center-block clearfix">
-				<div class="bar-holder center-block clearfix">
-					<input class="center-block" type="text" id="keyWord" name="keyWord"
-						placeholder="Search : Program, Course, or Career   e.g: accounting, accountant ">
-					<div align="center">
-						<div align="center">
-							<input type="radio" name="cpRadio" value="CPROVIDER"><span	align="left">Course Provider</span> 
-							<input type="radio"	name="cpRadio" value="PROGRAMME"><span align="left">Programme</span>
-						</div>
-						<button type="button" id="addSearchData" name="addSearchData"
-							class="btn btn-primary" onclick="searchFunction()">Apply Search</button>
-					</div>
-				</div>
-			</div> -->
-			<!-- End Main search bar -->
+        <div class="search-area clearfix">			
 			<div class="main-search-bar center-block clearfix">
 					<div class="bar-holder center-block clearfix">
 						<input id="course-search" class="center-block" type="text" name="course-search" placeholder="Search : Program, Course, or Career">
