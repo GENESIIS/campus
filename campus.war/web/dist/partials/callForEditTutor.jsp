@@ -7,7 +7,6 @@
 <title>Tutor Profile</title>
 </head>
 <body>
-	<!-- 	onsubmit="return (validateTutorFileds())" -->
 	<form action="/TutorController" method="post">
 		<table align="center">
 			<tr>
