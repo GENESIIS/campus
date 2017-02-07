@@ -5,6 +5,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170203 c138-add-basic-programme Implemented getAllMajors() method.
 //DJ 20170203 c138-add-basic-programme Implemented getAllLevels() method.
 //DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
+//DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.util.ConnectionManager;
@@ -334,6 +335,29 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			DaoHelper.cleanup(conn, stmt, rs);
 		}		
 		return allClassTypeList;
+	}
+
+	@Override
+	public int addProgrammeDetails() throws SQLException, Exception {
+		Connection conn=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;		
+		try {
+			conn=ConnectionManager.getConnection();			
+			//stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+		    rs=stmt.executeQuery();			
+			
+		} catch (SQLException sqlException) {
+			log.info("addProgrammeDetails() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("addProgrammeDetails() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}		
+		return 0;
 	}
 
 }
