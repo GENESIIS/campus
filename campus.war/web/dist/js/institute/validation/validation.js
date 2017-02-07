@@ -15,6 +15,8 @@
  *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() signature has been changed it takes
  *           a field value and a regular expression as the argument
  *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() changed the method header comment.
+ *20170207 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() has been modified
+ *				 in such a way that the testable string is process by removing any spaces within 
  */ 
 
  
@@ -129,7 +131,8 @@ function validEmailFormat(){
  * 62 case-sensitive characters (A-Z, a-z and 0-9)and "_" character in such a combination that
  * the string contains more than n number of characters defined by regular expression,
  * starts with an alphabetic contains any combination of 
- * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc
+ * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc.
+ * Function removes any spaces within testableInput and trims it before performs the test
  * @author dushantha DN
  * @param testableInput the sting which is to tested to confirm if it abides the above precondition
  * @param regex regular expression against which the testableInput will be matched.
@@ -139,7 +142,7 @@ function isStringHasValiCharsAndLength(testableInput, regex){
 	var validCharAndLength= false;
 	if(testableInput!=""|testableInput!=null){
 		var testableRegularExpression =regex ;
-		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim()); 
+		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim().replace(/\s+/g, '')); 
 	}
 	return validCharAndLength;
 }
