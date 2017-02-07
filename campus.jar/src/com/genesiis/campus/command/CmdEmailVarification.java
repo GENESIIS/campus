@@ -3,10 +3,13 @@ package com.genesiis.campus.command;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
+
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentEmailVerificationDAO;
 import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.scrypt.crypto.HashCodeBuilder;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
@@ -41,6 +44,8 @@ public class CmdEmailVarification implements ICommand {
 				log.info(message+"okkkkkkkk");
 			}else{
 				log.info(dataCollection);
+				HashCodeBuilder hashBuilder = new HashCodeBuilder();
+				hashBuilder.checkHash();
 			}
 		}else{
 			message = SystemMessage.INVALID_EMAIL.message();
