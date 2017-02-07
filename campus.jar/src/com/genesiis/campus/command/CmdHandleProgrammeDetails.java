@@ -9,14 +9,12 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
-import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * The class {@code CmdListProgrammeDetails} is a form of Command class.It is created for the purpose of handling commands of
@@ -40,9 +38,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
 		String ccoString = helper.getParameter("CCO");
 		
-		try {
-			//final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
-			//final Map<String, String[]> searchParamCollection = helper.getParameterMap();		
+		try {				
 			
 			if("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)){				
 			
