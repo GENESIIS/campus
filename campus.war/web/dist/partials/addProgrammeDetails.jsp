@@ -52,10 +52,10 @@
 							<label id="errorProviderList" for=""></label>
 						</div>
 						<div>
-							Course Name :<input type="text" id="" name=""   size="25px"/>
+							Course Name :<input type="text" id="courseName" name="courseName"   size="25px"/>
 						</div>
 						<div>
-							Course Details :<input type="text" id="" name=""  size="25px" />
+							Course Details :<input type="text" id="courseDetails" name="courseDetails"  size="25px" />
 						</div>						
 						<div>
 							Email Address: 
@@ -64,7 +64,7 @@
 										id="errorEmail" class="error-message">${errorEmail }</span>
 						</div>
 						<div>
-							Course Duration :<input type="text" id="" name=""  size="25px"/>
+							Course Duration :<input type="text" id="courseDuration" name="courseDuration"  size="25px"/>
 						</div>
 						<div>
 							Course Category :<input type="text" name="categoryList"
@@ -93,10 +93,10 @@
 							</datalist>
 						</div>
 						<div>
-							Counselor Name :<input type="text" id="" name=""  size="25px"/>
+							Counselor Name :<input type="text" id="counselorName" name="counselorName"  size="25px"/>
 						</div>
 						<div>
-							Counselor Phone :<input type="text" id="" name=""  size="25px" />
+							Counselor Phone :<input type="text" id="counselorPhone" name="counselorPhone"  size="25px" />
 						</div>
 						<div>
 							Display Start Date :<input type="date" id="fromDate"
@@ -105,7 +105,7 @@
 						</div>
 						<div>
 							Expiration Date :<input type="date" id="toDate" name="toDate"
-								onkeydown="return false"> <label id="errortoDate"
+								onkeydown="return false"> <label id="errorToDate"
 								for=""></label>
 						</div>
 						<div>
@@ -154,6 +154,7 @@
 	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 	<script src="/dist/js/admin/ui-addProgramme-helper.js"></script>
+	<script src="/dist/js/admin/ui-programme-validator.js"></script>
 	
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp" />
