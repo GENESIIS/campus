@@ -8,6 +8,8 @@
 
 <!-- 20170206 TR CAM-28: modified form html layout - Personal Details edit modal : added div structure  modal-input-field-->
 <!-- 20170206 TR CAM-28: added modal-input-field css class to input field -->
+<!-- 20170207 TR CAM-28: changed modal-header-title - Personal details into About Me -->
+<!-- 20170207 TR CAM-28: modified html layout on About Me modal:Contact Details area - added div structure -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -394,7 +396,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="studentPersonalDetails"><label>Personal Details</label></h4>
+        <h4 class="modal-title" id="studentPersonalDetails"><label>About Me</label></h4>
       </div>
       <div class="modal-body">
       <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
@@ -438,83 +440,116 @@
                     <span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			    </div>
 			</div>
-
+			<!-- End personal details area -->
+            <br>
 			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
-			
-			Country
-			<input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
-			 	<datalist name="sCountryList" id="sCountryList">
-			 	</datalist>
-			<br/>
-			<input hidden type="text" id="sCountryCode" name="sCountryCode"/>
-			<span id="sCountryError" name="sCountryError" style="color:red"></span><br>
-			
-			Town
-			 <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
-			 	<datalist name="sTownList" id="sTownList">
-			 	</datalist>
-			<br/>
-			<input hidden type="text" id="sTownCode" name="sTownCode"/>
-			<span id="sTownError" name="sTownError" style="color:red"></span><br>			
-			
-			Address<input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
-			<span id="sAddressError" name="sAddressError" style="color:red"></span><br>
-			
-			Mobile Number
-      		<div class="input-group">
-      		<span class="input-group-addon" id="countryCodePrefix">+</span>
-      		<input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
+			    <div class="show modal-input-field">
+                    <label>Country :</label>
+                    <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
+                        <datalist name="sCountryList" id="sCountryList">
+                        </datalist>
+                    <input hidden type="text" id="sCountryCode" name="sCountryCode"/>
+                    <span id="sCountryError" name="sCountryError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field">
+                     <label>Town :</label>
+                     <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
+                     <datalist name="sTownList" id="sTownList"></datalist>
+                </div>
+
+                <div class="show modal-input-field">
+                    <input hidden type="text" id="sTownCode" name="sTownCode"/>
+                    <span id="sTownError" name="sTownError" style="color:red"></span>
+                    <label>Address :</label>
+                    <input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
+                    <span id="sAddressError" name="sAddressError" style="color:red"></span>
+			    </div>
+
+			    <div class="show modal-input-field">
+                    <label>Mobile Number :</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="countryCodePrefix">+</span>
+                        <input class ="phoneNum w-53" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
+                    </div>
+                    <span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
+			    </div>
+
+			    <div class="show modal-input-field">
+                    <label>Home Number :</label>
+                    <div class="input-group">
+                    <span class="input-group-addon" id="countryCodePrefix">+</span>
+                    <input class ="phoneNum w-53" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
+                    <span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
+                    </div>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>Email :</label>
+                    <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
+                    <span id="sEmailError" name="sEmailError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>Facebook URL :</label>
+                    <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200" placeholder="www.facebook.com/username">
+                    <span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>Twitter URL :</label>
+                    <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200" placeholder="www.twitter.com/username">
+                    <span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
+			    </div>
+
+			    <div class="show modal-input-field">
+			        <label>LinkedIn URL :</label>
+                    <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200" placeholder="www.linkedin.com/username">
+                    <span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>Instagram URL :</label>
+                    <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200" placeholder="www.instagram.com/username">
+                    <span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>MySpace :</label>
+                    <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200" placeholder="www.myspace.com/username">
+                    <span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
+			    </div>
+
+			    <div class="show modal-input-field">
+			        <label>WhatsApp :</label>
+                    <div class="input-group">
+                    <span class="input-group-addon" id="countryCodePrefix">+</span>
+                    <input class ="phoneNum w-53" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
+                    </div>
+                </div>
+
+                <div class="show modal-input-field">
+                    <label>Viber :</label>
+                    <div class="input-group">
+                    <span class="input-group-addon" id="countryCodePrefix">+</span>
+                    <input class ="phoneNum w-53" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <span id="sViberError" name="sViberError" style="color:red"></span><br>
+                    </div>
+                </div>
 			</div>
-			<span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span><br>
-			
-			Home Number 
-			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
-			<span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
-			</div>
-			     		  		
-			Email <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
-			<span id="sEmailError" name="sEmailError" style="color:red"></span><br>
-      
-      		Facebook URL <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200">
-			<span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
-      
-      		twitter URL <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200">
-			<span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
-			
-			LinkedIn URL <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200">
-			<span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
-			
-			Instergram URL <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200">
-			<span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
-			
-			mySpace <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200">
-			<span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
-			
-			WhatsApp 
-			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
-			<span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
-			</div>
-			
-			Viber 
-			<div class="input-group">
-			<span class="input-group-addon" id="countryCodePrefix">+</span>
-			<input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
-			<span id="sViberError" name="sViberError" style="color:red"></span><br>
-			</div>
-			
-			</div>
-			<br>			
+			<!-- End Contact details area -->
 	  </div>
-      <div class="modal-footer">    
-      	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-        <button type="button" class="btn btn-primary" id="" name="" onclick="addStudentPersonalDetails()">Save changes</button>
+
+	  <!-- Start Modal Footer -->
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
+        <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+        <button type="button" class="btn btn-modal btn-primary" id="" name="" onclick="addStudentPersonalDetails()">Save changes</button>
       </div>
+      <!-- End Modal Footer -->
+
     </div>
   </div>
 </div>

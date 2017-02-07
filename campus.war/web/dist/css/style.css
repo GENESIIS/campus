@@ -94,6 +94,9 @@ textarea:focus, input:focus {
 .w-50 {
   width: 50%; }
 
+.w-53 {
+  width: 53% !important; }
+
 .w-70 {
   width: 75%; }
 
@@ -960,6 +963,17 @@ body, html {
   .btn-image-change:hover {
     background: rgba(0, 0, 0, 0.4); }
 
+.btn-modal {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  padding: 6px 20px;
+  transition: all 0.3s; }
+
+.btn-close {
+  background-color: #7da7d9; }
+
 .slideable {
   display: none; }
 
@@ -987,9 +1001,11 @@ body, html {
       color: #93a1b1; }
 
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
+/* 20170207 TR CAM-139 added new modal styles for personal details area */
+/* 20170207 TR CAM-139 changed modal-footer styles */
 .modal .modal-dialog .modal-content .modal-header {
   border-bottom: none;
-  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1; }
   .modal .modal-dialog .modal-content .modal-header .modal-title {
@@ -1000,16 +1016,21 @@ body, html {
 .modal .modal-dialog .modal-content .modal-body {
   background-color: #f2f7f9;
   padding: 25px 40px; }
+.modal .modal-dialog .modal-content .modal-footer {
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  position: relative; }
 
 .sub-title-1 {
   font-family: "Roboto", sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   color: #23282d;
   line-height: 40px; }
 
 .well {
   background-color: #ffffff;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   box-shadow: none;
   padding: 20px 40px;
   border: 1px solid #ecf4f7;
@@ -1018,7 +1039,7 @@ body, html {
 .modal-input-field {
   padding: 6px 0; }
   .modal-input-field label {
-    width: 17%;
+    width: 20%;
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     color: #8d8d8d;
@@ -1053,3 +1074,11 @@ body, html {
     font-weight: 500;
     line-height: 26px;
     float: left; }
+
+.input-group-addon {
+  border: 2px solid #ccdae8;
+  background-color: #ecf5fa;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  color: #6e99cd;
+  font-weight: 600; }
