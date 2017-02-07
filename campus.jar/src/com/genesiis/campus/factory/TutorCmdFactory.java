@@ -9,6 +9,7 @@ package com.genesiis.campus.factory;
 //20170117 CM c36-add-tutor-information Modified getCommand() method. 
 //20170116 CM c36-add-tutor-information removed CmdCheckUsername element.
 //20170207 CW c38-view-update-tutor-profile removed CmdCheckUsername element.
+//20170207 CW c38-view-update-tutor-profile removed ADD_TUTOR_PROFILE_DETAILS element
 
 import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdLoadCountry;
@@ -33,9 +34,6 @@ public class TutorCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		/*case ADD_TUTOR_PROFILE_DETAILS:
-			command = map.get(o);
-			break;*/
 		case LIST_TOWN_DATA:
 			command = map.get(o);
 			break;

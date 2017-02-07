@@ -16,6 +16,7 @@ package com.genesiis.campus.entity;
 //20170125 CW c36-add-tutor-details add validateUsernameEmailFields() method.
 //20170130 CW c36-add-tutor-details modified validateUsernameEmailFields() method
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170207 CW c38-view-update-tutor-profile removed add() method from update coding 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +36,12 @@ public class TutorDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(TutorDAO.class.getName());
 
+	@Override
+	public int add(Object object) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	/**
 	 * Save tutor details in Database
 	 * 
@@ -43,7 +50,7 @@ public class TutorDAO implements ICrud {
 	 *            : Tutor object of Object type
 	 * @return int number of success/fail status
 	 */
-	@Override
+/*	@Override
 	public int add(Object object) throws SQLException, Exception {
 		
 		Connection conn = null;
@@ -114,7 +121,7 @@ public class TutorDAO implements ICrud {
 		}
 
 		return status;
-	}
+	}*/
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
@@ -123,7 +130,7 @@ public class TutorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		int status = -1;
-		
+		System.out.println("need to modify com.genesiis.campus.entity.TutorDAO.update(Object) CREV");
 		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
 		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
@@ -380,4 +387,5 @@ public class TutorDAO implements ICrud {
 		}
 		return 0;
 	}
+
 }
