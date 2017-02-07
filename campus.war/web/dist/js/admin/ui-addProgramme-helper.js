@@ -138,7 +138,20 @@ function addProgramme(){
 		return false;
 	}
 	
-	
+	//After pass the validations developer able to add input data to database.
+	$.ajax({
+		url : '../../AdminController',
+		data : {
+			CCO : 'ADD_PROGRAMME_DETAILS'			
+		},
+		dataType : "json",
+		success : function(response) {			
+			alert("Programme add fucntionality will be implemented by another issue");
+		},
+		error : function(jqXHR, exception) {			
+			errorCodeGeneration(jqXHR, exception);
+		}
+	});
 	
 }
 
