@@ -37,7 +37,7 @@ public class CmdGetSearchData implements ICommand {
 		try {			
 			//START-DJ-General filter search-program result set implementation.							
 			if(Operation.GENERAL_FILTER_SEARCH_COURSE_PROGRAMME.getCommandString().equalsIgnoreCase(cco)){			
-				final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();					
+				final ProgrammeSearchDTO searchDTO = new ProgrammeSearchDTO();				
 				if (UtilityHelper.isNotEmpty(keyWordString)) {
 					final StringBuilder keyWordBuilder = new StringBuilder();
 					// Do wild card search on key word
@@ -45,7 +45,7 @@ public class CmdGetSearchData implements ICommand {
 					searchDTO.setKeyWordString(keyWordBuilder.toString());					
 				}
 				searchDTO.setProgrammeStatus(ApplicationStatus.ACTIVE.getStatusValue());
-				programmeCollection= new ProgrammeDAOImpl().wildCardSearchOnProgrammes(searchDTO);
+				programmeCollection = new ProgrammeDAOImpl().wildCardSearchOnProgrammes(searchDTO);
 				//END-DJ-General filter search-program result set implementation. 
 			}else{
 				//If:the instituteCode is set

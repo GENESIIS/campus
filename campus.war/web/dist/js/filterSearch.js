@@ -66,8 +66,7 @@
 			selectedType = $('input[name="courseOpt"]:checked').val();
 
 			if (selectedType == 'CPROVIDER') {
-				alert("Will load course providers \n implemented in cam-123");
-				//window.location.assign("/dist/partials/viewMoreCourseProviders.jsp?keyWord=" + keyWordString + "&selectedType=" + selectedType);
+				alert("Will load course providers \n implemented in cam-123");				
 			} else {
 				window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
 			}
