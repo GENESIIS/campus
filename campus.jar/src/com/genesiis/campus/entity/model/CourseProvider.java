@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.model;
 //20161026 JH c7-higher-education-landing-page CourseProvider.java entity class created
 //20161026 JH c7-higher-education-landing-page create getters and setters
 //20161122 JH c39-add-course-provider remove unused attributes and added new attributes
+//20170207 DN c131-admin-manage-banner-upload-banner-image-dn add AdvertiserRole field and getters and setters.
 
 import java.sql.Date;
 
@@ -53,6 +54,9 @@ public class CourseProvider {
 	private int courseProviderType;
 	private int principal;
 	private int tutor;
+	// if there exists a course provider he implicitly  becomes a course advertiser
+	// depends on his desire to publish banners he could be a banner advertiser too
+	private AdvertiserRole advertiser=  new CourseAdvertiser();
 	
 	
 
@@ -685,6 +689,15 @@ public class CourseProvider {
 	 */
 	public void setTutor(int tutor) {
 		this.tutor = tutor;
+	}
+
+	
+	public AdvertiserRole getAdvertiser() {
+		return advertiser;
+	}
+
+	public void setAdvertiser(AdvertiserRole advertiser) {
+		this.advertiser = advertiser;
 	}
 
 }
