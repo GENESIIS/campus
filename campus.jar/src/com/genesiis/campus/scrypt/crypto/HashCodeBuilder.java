@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 //20170206 AS CAM-22 HashCodeBuilder created for testing purpose. 
 package com.genesiis.campus.scrypt.crypto;
 
@@ -12,6 +8,17 @@ package com.genesiis.campus.scrypt.crypto;
  
 public class HashCodeBuilder {
 	 
+	public void createHash(String firstname, String lastname){
+		 String originalHash = firstname+lastname;
+		 String generatedSecuredHash = SCryptUtil.scrypt(originalHash, 16, 16, 16);
+		 System.out.println(generatedSecuredHash);
+	
+		// boolean matched = SCryptUtil.check("Anuradhasilva", "$s0$41010$ffwJmgi4Kcxgz3LqB1CRIA==$KyiEoXhpNKozpTCD/2Wn31EiHaUgL8qzMCxIjFfNl3U=");
+	    // System.out.println(matched);
+	}
+	
+	
+	
 		 public void checkHash(){
 	        String originalPassword = "password";
 	        String generatedSecuredPasswordHash = SCryptUtil.scrypt(originalPassword, 16, 16, 16);
