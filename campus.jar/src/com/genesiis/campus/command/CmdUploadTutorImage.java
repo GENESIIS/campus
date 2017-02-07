@@ -12,6 +12,8 @@ package com.genesiis.campus.command;
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn remove hard coded message from execute() and placed it in SystemMessage.java
 //				removed the log comments as per CREV instruction from execute().
 //				systemMessage(int) has been shifted to ImageUtility.java class as a static method.
+//20170207 DN c47-tutor-add-tutor-information-upload-image-dn changed the isImageAccordanceWithSystemRequirement() 
+//			  isFilePassSizeRequirement asserting logic to include in an if statement
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -184,10 +186,17 @@ public class CmdUploadTutorImage implements ICommand {
 			boolean isFilePassExtensionType = isImageHavingTheAcceptedExtension(files.get(0).getName(),validExtensions);
 			
 			//set the messages to be sent to the client side
-			this.message =(!isFilePassSizeRequirement)?this.message + " "+ImageUtility.systemMessage(-3):"";
-			setSuccessCode(-3);
-			this.message =(!isFilePassExtensionType)?this.message + " "+ImageUtility.systemMessage(-4):"";
-			setSuccessCode(-4);
+			if(!isFilePassSizeRequirement){
+				this.message =this.message + " "+ImageUtility.systemMessage(-3);
+				setSuccessCode(-3);
+			}
+			
+			if(!isFilePassExtensionType){
+				this.message =this.message + " "+ImageUtility.systemMessage(-4);
+				setSuccessCode(-4);
+			}
+			
+			
 			return (isFilePassSizeRequirement & isFilePassExtensionType) ;
 			
 		} catch(SQLException exp) {
