@@ -7,7 +7,13 @@ package com.genesiis.campus.entity;
 //20161222 CW c38-view-update-tutor-profile added findCountryByCode() method. 
 //20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application Country2DAO class
 //20170124 CW c36-add-tutor-details modified findById() method according to the 201701201215 DJ crev modification request.
-//20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170130 CW c36-add-tutor-information re-organize the import statements.
+//20170207 CW c38-view-update-tutor-profile- modified findCountryByCode() method
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,13 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.util.security.Encryptable;
-import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 public class CountryDAO implements ICrud{
 
@@ -64,7 +63,7 @@ public class CountryDAO implements ICrud{
 	 */
 	public String findCountryByCode(int code)
 			throws SQLException, Exception {
-		
+/*		
 		final Collection<String> allCountryList = new ArrayList<String>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -92,8 +91,8 @@ public class CountryDAO implements ICrud{
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
-		}
-		return countryName;
+		}*/
+		return "need to change com.genesiis.campus.entity.CountryDAO.findCountryByCode(int)";
 		
 	}
 
