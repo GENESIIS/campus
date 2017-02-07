@@ -5,6 +5,7 @@
 //20170125 DN c47-tutor-add-tutor-information-upload-image-dn add method comments , refactor $(document).on('click') function
 //20170130 DN c47-tutor-add-tutor-information-upload-image-dn added delaying function for displaying messages
 // 		   DN c47-tutor-add-tutor-information-upload-image-dn implemented modal window for displaying messages.
+//20170207 DN c47-tutor-add-tutor-information-upload-image-dn add $('#upload-button').prop('disabled', true) once the image has been up loaded ,disabled the upload button
 var globalFlag=true;
 
 $(document).ready(function() {
@@ -108,6 +109,7 @@ $(document).on('click','#upload-button',function(event){
 			globalFlag=true;
 			setTimeout(
 			displayTutorProfileImageAtPageLoad(),3000);
+			$('#upload-button').prop('disabled', true); 
 		},
 	    success:function(response){
 				
