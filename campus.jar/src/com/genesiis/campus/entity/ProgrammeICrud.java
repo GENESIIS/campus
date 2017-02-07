@@ -29,6 +29,8 @@ public interface ProgrammeICrud extends ICrud {
 	
 	public Collection<Collection<String>> findMajorsByMajorCodes(Set<Integer> majorCodeSet)throws SQLException,Exception;
 	
-	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)throws SQLException,Exception;	
+	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)throws SQLException,Exception;
+
+	public int addProgrammeDetails() throws SQLException, Exception;	
 
 }
