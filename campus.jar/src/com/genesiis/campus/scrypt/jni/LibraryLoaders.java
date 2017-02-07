@@ -1,6 +1,6 @@
 // Copyright (C) 2011 - Will Glozer.  All rights reserved.
 
-package com.genesiis.campus.util.jni;
+package com.genesiis.campus.scrypt.jni;
 
 /**
  * {@code LibraryLoaders} will create the appropriate {@link LibraryLoader} for

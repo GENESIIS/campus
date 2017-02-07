@@ -1,6 +1,6 @@
 // Copyright (C) 2013 - Will Glozer.  All rights reserved.
 
-package com.genesiis.campus.util.jni;
+package com.genesiis.campus.scrypt.jni;
 
 /**
  * A native library loader that refuses to load libraries.
