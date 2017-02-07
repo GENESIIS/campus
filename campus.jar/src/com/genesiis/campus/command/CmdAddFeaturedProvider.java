@@ -19,6 +19,7 @@ package com.genesiis.campus.command;
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170207 JH c141-add-course-provider-issue-improvements database stored procedure call implementation wip
+//				changed doc comments and set course provider head office town to '0' by default
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -161,19 +162,26 @@ public class CmdAddFeaturedProvider implements ICommand {
 						String countryCode = helper.getParameter("selectedCountry");
 						String selectedTown = helper.getParameter("selectedTown");
 						String courseProviderType = helper.getParameter("selectedProviderType");
+						
+						/**
+						 * the initial course provider account has the head office town.
+						 * Therefore the initial value of the course provider head office is set to 0
+						 */
+						
+						courseProvider.setHeadOffice(0);
 
 						/**
-						 * checks for head office code. if no head office code
-						 * is provided, it means the course provider is a head office.
-						 * Then assign value '0'. Else get course provider head 
-						 * office town code from the helper. 
+						 * checks for principal office code. if no principal code
+						 * is provided, it means the course provider is a main company (not a subsidiary).
+						 * Then assign value '0'. Else get course provider main company  
+						 * from the helper. 
 						 * 
 						 * 
 						 */
-						if (validator.isEmptyString(helper.getParameter("headOffice"))) {
-							courseProvider.setHeadOffice(0);
+						if (validator.isEmptyString(helper.getParameter("principal"))) {
+							courseProvider.setPrincipal(0);
 						} else {
-							courseProvider.setHeadOffice(Integer.parseInt(helper.getParameter("headOffice")));
+							courseProvider.setPrincipal(Integer.parseInt(helper.getParameter("principal")));
 						}
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
