@@ -18,6 +18,7 @@ package com.genesiis.campus.command;
 //used to select course provider usertype
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
+//20170207 JH c141-add-course-provider-issue-improvements database stored procedure call implementation wip
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -301,10 +302,16 @@ public class CmdAddFeaturedProvider implements ICommand {
 							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
-							courseProviderAccount.setModBy("admin");
 
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
+							
+							if (generatedKey > 0) {
+								systemMessage = SystemMessage.ADDED.message();
+								helper.setAttribute("registerId", generatedKey);
+							} else if (generatedKey == 0) {
+								systemMessage = SystemMessage.NOTADDED.message();
+							}
 
 						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
 							courseProvider.setTutorRelated(false);
@@ -315,12 +322,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 							generatedKey = oneOffCourseProviderDAO.add(map);
 						}
 
-						if (generatedKey > 0) {
-							systemMessage = SystemMessage.ADDED.message();
-							helper.setAttribute("registerId", generatedKey);
-						} else if (generatedKey == 0) {
-							systemMessage = SystemMessage.NOTADDED.message();
-						}
 					}
 				}
 			} else {
