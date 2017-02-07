@@ -16,9 +16,10 @@
 //20170118 DN C18-student-signup-without-using-third-party-application-test-dn refactor validateSignUpWoThirdPartyPageEmbedData()
 // to shift country / town code check for null value.
 // include to extend the password constrain to have more than 07 characters
-//20170130 DN CAMP:18 add check box clearing to clearAllFields()
-//20170131 DN CAMP:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
+//20170130 DN CAM:18 add check box clearing to clearAllFields()
+//20170131 DN CAM:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
 //				adds function to refrain entering invalid country and town to input fields
+//20170207 DN CAM:18 clearAllFields() modified to check the password make visible and depend on the out put make the text field password.
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -478,6 +479,9 @@ function clearAllFields(){
 	$('.validationInputFields').html("");
 	$('#policyConfirm').prop('checked', false);
 	$('#showpasscheckbox').prop('checked', false);
+	var value = $('#showpasscheckbox').is(':checked')?"text":"password";
+	$('#passWord').attr("type",value);
+	$('#confrmpsw').attr("type",value);
 }
 
 
