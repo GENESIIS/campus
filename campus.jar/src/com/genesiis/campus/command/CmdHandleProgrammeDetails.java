@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate CmdListProgrammeDetails.java
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate Dao call for master data view
+//20170207 DJ c138-add-basic-programme-MP-dj Renamed as CmdHandleProgrammeDetails.java
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
@@ -23,8 +24,8 @@ import java.util.Map;
  * @author dumani DJ
  *
 */
-public class CmdListProgrammeDetails  implements ICommand {
-	static Logger log = Logger.getLogger(CmdListProgrammeDetails.class.getName());
+public class CmdHandleProgrammeDetails  implements ICommand {
+	static Logger log = Logger.getLogger(CmdHandleProgrammeDetails.class.getName());
 	/**
 	 * @author DJ
 	 * @param helper
@@ -37,10 +38,13 @@ public class CmdListProgrammeDetails  implements ICommand {
 			Exception {
 		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
+		String ccoString = helper.getParameter("CCO");
 		
 		try {
-			final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
-			final Map<String, String[]> searchParamCollection = helper.getParameterMap();			
+			//final CourseProviderSearchDTO providerSearchDTO = new CourseProviderSearchDTO();
+			//final Map<String, String[]> searchParamCollection = helper.getParameterMap();		
+			
+			if("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)){				
 			
 				final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
 				iView.setCollection(courseProviderSearchResults);
@@ -55,7 +59,13 @@ public class CmdListProgrammeDetails  implements ICommand {
 				helper.setAttribute("allLevels",allLevels);
 				
 				final Collection<Collection<String>> allClassTypes= programmeDAO.getAllClassTypes();
-				helper.setAttribute("allClassTypes",allClassTypes);			
+				helper.setAttribute("allClassTypes",allClassTypes);		
+				
+			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){
+				
+				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
+				int value = programmeDAO.addProgrammeDetails();
+			}
 			
 			
 		} catch (Exception exception) {
