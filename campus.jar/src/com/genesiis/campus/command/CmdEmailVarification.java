@@ -1,12 +1,16 @@
 package com.genesiis.campus.command;
+
 //201700202 AS C22 forgot password, CmdEmailVarification command class created
 import java.sql.SQLException;
 import java.util.Collection;
+
+import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentEmailVerificationDAO;
 import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.scrypt.crypto.HashCodeBuilder;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
@@ -19,37 +23,48 @@ public class CmdEmailVarification implements ICommand {
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
 	String message = SystemMessage.INVALID_EMAIL.message();
-	String result ="";
+	String result = "";
+	String firstName = "";
+	String lastName = "";
+	String email = "";
+	String uname = "";
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 		boolean validEmail = LoginValidator.validateEmail(data.getEmail());
-		if(validEmail){
+		if (validEmail) {
 			ICrud emailVarifyDAO = new StudentEmailVerificationDAO();
 			dataCollection = emailVarifyDAO.findById(data);
-			//log.info(dataCollection);
-			
+			// log.info(dataCollection);
+
 			for (Collection<String> collection : dataCollection) {
 				Object[] array = collection.toArray();
 				result = (String) array[0];
+				firstName = (String) array[0];
+				lastName = (String) array[1];
+				email = (String) array[2];
+				uname = (String) array[3];
 			}
-			
-			if(result.equalsIgnoreCase(SystemMessage.INVALID_EMAIL.message())){
+
+			if (result.equalsIgnoreCase(SystemMessage.INVALID_EMAIL.message())) {
 				message = SystemMessage.INVALID_EMAIL.message();
-				log.info(message+"okkkkkkkk");
-			}else{
-				log.info(dataCollection);
+				log.info(message + "okkkkkkkk");
+			} else {
+				log.info(firstName + " " + lastName);
+
+				HashCodeBuilder hashBuilder = new HashCodeBuilder();
+				hashBuilder.createHash(firstName, lastName);
 			}
-		}else{
+		} else {
 			message = SystemMessage.INVALID_EMAIL.message();
 		}
-			
-		
+
 		return view;
 	}
-	
+
 	/**
 	 * extract data from json object and assign to StudentProgrammeInquiry
 	 * object
@@ -70,7 +85,7 @@ public class CmdEmailVarification implements ICommand {
 		Student student = null;
 		try {
 			student = gson.fromJson(gsonData, Student.class);
-			
+
 		} catch (Exception e) {
 			log.error("extractFromJason(): " + e.toString());
 			throw e;
