@@ -2,6 +2,7 @@
  * 20170202 DJ c138-add-basic-programme-MP-dj  Load  view form for Program details
  * 20170202 DJ c138-add-basic-programme-MP-dj  Initiated populateProgrammeAddView() method
  * 20170206 DJ c138-add-basic-programme-MP-dj  Initiated isEmpty(),isValidEmailFormat() methods.
+ * 20170207 DJ c138-add-basic-programme-MP-dj  clearParameters() method implementation.
  */
 
 $(document).ready(function() {
@@ -110,6 +111,7 @@ function addProgramme(){
 	var email= $('#email').val();			
 	if (!isEmpty(email) || !isValidEmailFormat(email)) {
 		document.getElementById('errorEmail').innerHTML = "Invalid email format";
+		document.getElementById('errorEmail').style.color = "red";
 	}	
 	
     var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
@@ -159,6 +161,17 @@ function addProgramme(){
  * This method clearParameters() clear load form.
  */
 function clearParameters(event){
+	$('#providerList').val(""); 
+	$('#courseName').val(" "); 
+	$('#courseDetails').val(" "); 
+	$('#email').val(" "); 
+	$('#courseDuration').val(" "); 
+	$('#categoryList').val(""); 
+	$('#majorList').val(""); 
+	$('#levelList').val(""); 
+	$('#classTypelist').val(""); 
+	$('#counselorName').val(" "); 
+	$('#counselorPhone').val(" "); 
 	$('#fromDate').val(" "); 
 	$('#toDate').val(" ");	
 	$('#errorFromDate').text("");
