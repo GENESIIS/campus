@@ -56,7 +56,7 @@ public class CourseProvider {
 	private int tutor;
 	// if there exists a course provider he implicitly  becomes a course advertiser
 	// depends on his desire to publish banners he could be a banner advertiser too
-	private AdvertiserRole advertiser=  new CourseAdvertiser();
+	private AdvertiserRole advertiser;
 	
 	
 

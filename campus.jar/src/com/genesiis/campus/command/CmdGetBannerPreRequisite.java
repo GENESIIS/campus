@@ -4,15 +4,20 @@ package com.genesiis.campus.command;
  * 20170203 DN c131-admin-manage-banner-upload-bann c
  * 				the CmdGetBannerPreRequisite.java class
  */
-import java.sql.SQLException;
+
 
 import com.genesiis.campus.entity.BannerDAO;
+import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.PageWithBannersDAO;
+import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Operation;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
 
 /**
  * CmdGetBannerPreRequisit class meant to extract necessary 
@@ -45,16 +50,20 @@ public class CmdGetBannerPreRequisite implements ICommand {
 
 
 private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLException,Exception {
-	//try{
-		//toDo level of responsibility abstractions
-		// (1) get the advertiser related collection
-		// (2) get the pages related collintermediateection
+	try{
+	
 		Operation branchSelector = Operation.getOperation(helper.getCommandCode());
 		switch(branchSelector){
 		case DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA :
-			ICrud bannerDao = new BannerDAO();
+			//get featured course provider Collection wrapper
 			
-			// do how to get the advertisers and pages
+			ICrud featuredCourseProviderDAO = new FeaturedCourseProviderDAO();
+			view.setCollection(featuredCourseProviderDAO.getAll());
+			
+			// get the pages Collection wrapper
+			ICrud PagesWithBannersDAO = new  PageWithBannersDAO();
+			helper.setAttribute("bannerPages", PagesWithBannersDAO.getAll());
+			
 			break;
 		default:
 			break;
@@ -67,13 +76,13 @@ private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLE
 		
 		
 		
-//	} catch(SQLException sqle){
-//		log.error("getBannerPreRequisites(IDataHelper helper, IView view):SQLException"+sqle.toString());
-//		throw sqle;
-//	}catch(Exception exp) {
-//		log.error("getBannerPreRequisites(IDataHelper helper, IView view):Exception"+exp.toString());
-//		throw exp;
-//	}
+	} catch(SQLException sqle){
+		log.error("getBannerPreRequisites(IDataHelper helper, IView view):SQLException"+sqle.toString());
+		throw sqle;
+	}catch(Exception exp) {
+		log.error("getBannerPreRequisites(IDataHelper helper, IView view):Exception"+exp.toString());
+		throw exp;
+	}
 }
 
 
