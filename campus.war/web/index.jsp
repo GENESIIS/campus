@@ -1,3 +1,5 @@
+<%-- 20170209 MM c111-display-banners-on-jsp-load Changed (POST) form to a simple link to load the banner test page --%>  
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,10 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1><a href="#">Click to go to page with banners</a></h1>
-	
-	<form action="PublicController" method="POST">
-		<button type="submit" name="CCO" value="LOAD_BANNER_PAGE">CLICK TO GO TO BANNER TEST PAGE</button>
-	</form>
+	<a href="/bannerTestPageCalledDirectly.jsp">CLICK TO GO TO BANNER TEST PAGE</a>
 </body>
 </html>
