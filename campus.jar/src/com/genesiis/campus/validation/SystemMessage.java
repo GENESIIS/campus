@@ -23,6 +23,8 @@ public enum SystemMessage {
 	LOGGEDSUCCESSFULL("Logged successfull"),
 	LOGOUTSUCCESSFULL("Logout successfull"),
 	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
+	MAIL_SUCCESS("Mail successfully submited to your email"),
+	MAIL_UNSUCCESS("Mail Sending failed"),
 	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
 	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
