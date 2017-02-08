@@ -111,21 +111,21 @@ function addProgramme(){
 	
 	var providerName =$('#providerName').val();
 	var courseName =$('#courseName').val();
-	var courseDetails =$('#courseDetails').val();
+	var courseDetails =$('#course-description').val();
 	var email =$('#email').val();
-	var courseDuration =$('#courseDuration').val();
-	var categoryName =$('#categoryName').val();
+	var courseDuration =$('#course-duration').val();
+	var counselorName =$('#counselor-name').val();
 	
 /*	var params = { courseName:$('#courseName').val(), 
 			courseDetails:$('#courseDetails').val() };*/
 	
 	var email= $('#email').val();			
-	if (!isEmpty(email) || !isValidEmailFormat(email)) {
+	/*if (!isEmpty(email) || !isValidEmailFormat(email)) {
 		document.getElementById('errorEmail').innerHTML = "Invalid email format";
 		document.getElementById('errorEmail').style.color = "red";
-	}	
+	}*/	
 	
-    var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+   /* var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 	var fromDate= $('#fromDate').val();    
     if(!regex.test(fromDate)){
     	$('#errorFromDate').text("Please enter valid From Date");
@@ -149,7 +149,17 @@ function addProgramme(){
 		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
 		document.getElementById('errorToDate').style.color = "red";
 		return false;
+	}*/
+	var fromDate= $('#commencement-date').val();
+    var toDate= $('#expiration-date').val();
+    
+      
+   
+	if (fromDate> toDate) {		
+		$('#error fa fa-times fa-2x').text("Invalid Date Range! From Date cannot be after To Date!");		
+		return false;
 	}
+	
 	
 	//After pass the validations developer able to add input data to database.
 	
