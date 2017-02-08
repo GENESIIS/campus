@@ -1,9 +1,11 @@
 /**
  * 20170202 DN c131-admin-manage-banner-upload-banner-image-dn create the initial file
  * 20170203 DN c131-admin-manage-banner-upload-banner-image-dn getPreRequisitPageData() method created and wip
- * 
+ * 20170208 DN c131-admin-manage-banner-upload-banner-image-dn getPreRequisitPageData() modified by adding code to populate
+ *  page and course provider data list. 
+ * 			
  */
-$(document).redy(function(){
+$(document).ready(function(){
 	displayBannerManagerPrerequistData();
 });
 
