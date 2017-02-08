@@ -10,6 +10,7 @@ $(document).ready(function() {
 	
 	$.ajax({
 		url : '../../AdminController',
+		type: 'POST',
 		data : {
 			CCO : 'LIST_PROGRAMME_ADD_VIEW'			
 		},
@@ -106,7 +107,17 @@ function populateProgrammeAddView(response) {
 /**
  * This method addProgramme() for adding a course to the system.
  */
-function addProgramme(){
+function addProgramme(){	
+	
+	var providerName =$('#providerName').val();
+	var courseName =$('#courseName').val();
+	var courseDetails =$('#courseDetails').val();
+	var email =$('#email').val();
+	var courseDuration =$('#courseDuration').val();
+	var categoryName =$('#categoryName').val();
+	
+	var params = { courseName:$('#courseName').val(), 
+			courseDetails:$('#courseDetails').val() };
 	
 	var email= $('#email').val();			
 	if (!isEmpty(email) || !isValidEmailFormat(email)) {
@@ -143,8 +154,10 @@ function addProgramme(){
 	//After pass the validations developer able to add input data to database.
 	$.ajax({
 		url : '../../AdminController',
+		type: 'POST',
 		data : {
-			CCO : 'ADD_PROGRAMME_DETAILS'			
+			CCO : 'ADD_PROGRAMME_DETAILS',
+			params:params
 		},
 		dataType : "json",
 		success : function(response) {			
