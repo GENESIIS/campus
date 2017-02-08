@@ -39,7 +39,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
 		String ccoString = helper.getParameter("CCO");		
 		String courseName = helper.getParameter("courseName");
-		String[] courseName2 =helper.getParameterValues("formData");
+		String[] formData =helper.getParameterValues("formData");
 		
 		try {				
 			
