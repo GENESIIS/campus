@@ -1,8 +1,10 @@
 package com.genesiis.campus.entity.model;
 
+import java.sql.Date;
+
 //20170208 DJ c138-add-basic-programme-MP-dj Initiate ProgrammeDTO.java
 
-import java.util.Date;
+
 
 public class ProgrammeDTO {
 	
@@ -22,6 +24,7 @@ public class ProgrammeDTO {
 	int major;
 	int category;
 	int level;
+	int classType;
 	int town;
 	private Date crtOn;
 	private String crtBy;
@@ -121,6 +124,12 @@ public class ProgrammeDTO {
 	}
 	public int getLevel() {
 		return level;
+	}	
+	public int getClassType() {
+		return classType;
+	}
+	public void setClassType(int classType) {
+		this.classType = classType;
 	}
 	public void setLevel(int level) {
 		this.level = level;
