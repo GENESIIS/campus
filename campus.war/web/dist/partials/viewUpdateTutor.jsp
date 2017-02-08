@@ -17,46 +17,75 @@
 
 		<c:forEach var="tutorList" items="${result.collection}">
 
-			<c:set var="code" value="${tutorList[0]}" scope="session" />
-			<c:set var="username" value="${tutorList[1]}" scope="session" />
-			<c:set var="password" value="${tutorList[2]}" scope="session" />
-			<c:set var="firstname" value="${tutorList[3]}" scope="session" />
-			<c:set var="middlename" value="${tutorList[4]}" scope="session" />
-			<c:set var="lastname" value="${tutorList[5]}" scope="session" />
-			<c:set var="gender" value="${tutorList[6]}" scope="session" />
-			<c:set var="email" value="${tutorList[7]}" scope="session" />
-			<c:set var="landphonecountrycode" value="${tutorList[8]}"
-				scope="session" />
-			<c:set var="landphoneareacode" value="${tutorList[9]}"
-				scope="session" />
-			<c:set var="landphonenumber" value="${tutorList[10]}" scope="session" />
-			<c:set var="mobilephonecountrycode" value="${tutorList[11]}"
-				scope="session" />
-			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}"
-				scope="session" />
-			<c:set var="mobilephonenumber" value="${tutorList[13]}"
-				scope="session" />
-			<c:set var="description" value="${tutorList[14]}" scope="session" />
-			<c:set var="experience" value="${tutorList[15]}" scope="session" />
-			<c:set var="weblink" value="${tutorList[16]}" scope="session" />
-			<c:set var="facebookurl" value="${tutorList[17]}" scope="session" />
-			<c:set var="twitterurl" value="${tutorList[18]}" scope="session" />
-			<c:set var="myspaceurl" value="${tutorList[19]}" scope="session" />
-			<c:set var="linkedinurl" value="${tutorList[20]}" scope="session" />
-			<c:set var="instagramurl" value="${tutorList[21]}" scope="session" />
-			<c:set var="vibernumber" value="${tutorList[22]}" scope="session" />
-			<c:set var="whatsappnumber" value="${tutorList[23]}" scope="session" />
-			<c:set var="address1" value="${tutorList[24]}" scope="session" />
-			<c:set var="address2" value="${tutorList[25]}" scope="session" />
-			<c:set var="address3" value="${tutorList[26]}" scope="session" />
-			<c:set var="town" value="${tutorList[27]}" scope="session" />
-			<c:set var="towncode" value="${tutorList[28]}" scope="session" />
-			<c:set var="usertype" value="${tutorList[29]}" scope="session" />
-			<c:set var="countryname" value="${tutorList[30]}" scope="session" />
-			<c:set var="isapproved" value="${tutorList[31]}" scope="session" />
-			<c:set var="tutorstatus" value="${tutorList[32]}" scope="session" />
+			<c:set var="code" value="${tutorList[0]}"/>
+			<c:set var="username" value="${tutorList[1]}"/>
+			<c:set var="password" value="${tutorList[2]}"/>
+			<c:set var="firstname" value="${tutorList[3]}"/>
+			<c:set var="middlename" value="${tutorList[4]}"/>
+			<c:set var="lastname" value="${tutorList[5]}"/>
+			<c:set var="gender" value="${tutorList[6]}"/>
+			<c:set var="email" value="${tutorList[7]}"/>
+			<c:set var="landphonecountrycode" value="${tutorList[8]}"/>
+			<c:set var="landphoneareacode" value="${tutorList[9]}"/>
+			<c:set var="landphonenumber" value="${tutorList[10]}"/>
+			<c:set var="mobilephonecountrycode" value="${tutorList[11]}"/>
+			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}"/>
+			<c:set var="mobilephonenumber" value="${tutorList[13]}"/>
+			<c:set var="description" value="${tutorList[14]}"/>
+			<c:set var="experience" value="${tutorList[15]}"/>
+			<c:set var="weblink" value="${tutorList[16]}"/>
+			<c:set var="facebookurl" value="${tutorList[17]}"/>
+			<c:set var="twitterurl" value="${tutorList[18]}"/>
+			<c:set var="myspaceurl" value="${tutorList[19]}"/>
+			<c:set var="linkedinurl" value="${tutorList[20]}"/>
+			<c:set var="instagramurl" value="${tutorList[21]}"/>
+			<c:set var="vibernumber" value="${tutorList[22]}"/>
+			<c:set var="whatsappnumber" value="${tutorList[23]}"/>
+			<c:set var="address1" value="${tutorList[24]}"/>
+			<c:set var="address2" value="${tutorList[25]}"/>
+			<c:set var="address3" value="${tutorList[26]}"/>
+			<c:set var="town" value="${tutorList[27]}"/>
+			<c:set var="towncode" value="${tutorList[28]}"/>
+			<c:set var="usertype" value="${tutorList[29]}"/>
+			<c:set var="countryname" value="${tutorList[30]}"/>
+			<c:set var="isapproved" value="${tutorList[31]}"/>
+			<c:set var="tutorstatus" value="${tutorList[32]}"/>
 
 		</c:forEach>
+		
+		<input type="hidden" name="codeOld" id="codeOld" value="${code}"/>
+		<input type="hidden" name="usernameOld" id="usernameOld" value="${username}"/>
+		<input type="hidden" name="passwordOld" id="passwordOld" value="${password}"/>
+		<input type="hidden" name="firstnameOld" id="firstnameOld" value="${firstname}"/>
+		<input type="hidden" name="middlenameOld" id="middlenameOld" value="${middlename}"/>
+		<input type="hidden" name="lastnameOld" id="lastnameOld" value="${lastname}"/>
+		<input type="hidden" name="genderOld" id="genderOld" value="${gender}"/>
+		<input type="hidden" name="emailOld" id="emailOld" value="${email}"/>
+		<input type="hidden" name="landphonecountrycodeOld" id="landphonecountrycodeOld" value="${landphonecountrycode}"/>
+		<input type="hidden" name="landphoneareacodeOld" id="landphoneareacodeOld" value="${landphoneareacode}"/>
+		<input type="hidden" name="landphonenumberOld" id="landphonenumberOld" value="${landphonenumber}"/>
+		<input type="hidden" name="mobilephonecountrycodeOld" id="mobilephonecountrycodeOld" value="${mobilephonecountrycode}"/>
+		<input type="hidden" name="mobilephonenetworkcodeOld" id="mobilephonenetworkcodeOld" value="${mobilephonenetworkcode}"/>
+		<input type="hidden" name="mobilephonenumberOld" id="mobilephonenumberOld" value="${mobilephonenumber}"/>
+		<input type="hidden" name="descriptionOld" id="descriptionOld" value="${description}"/>
+		<input type="hidden" name="experienceOld" id="experienceOld" value="${experience}"/>
+		<input type="hidden" name="weblinkOld" id="weblinkOld" value="${weblink}"/>
+		<input type="hidden" name="facebookurlOld" id="facebookurlOld" value="${facebookurl}"/>
+		<input type="hidden" name="twitterurlOld" id="twitterurlOld" value="${twitterurl}"/>
+		<input type="hidden" name="myspaceurlOld" id="myspaceurlOld" value="${myspaceurl}"/>
+		<input type="hidden" name="linkedinurlOld" id="linkedinurlOld" value="${linkedinurl}"/>
+		<input type="hidden" name="instagramurlOld" id="instagramurlOld" value="${instagramurl}"/>
+		<input type="hidden" name="vibernumberOld" id="vibernumberOld" value="${vibernumber}"/>
+		<input type="hidden" name="whatsappnumberOld" id="whatsappnumberOld" value="${whatsappnumber}"/>
+		<input type="hidden" name="address1Old" id="address1Old" value="${address1}"/>
+		<input type="hidden" name="address2Old" id="address2Old" value="${address2}"/>
+		<input type="hidden" name="address3Old" id="address3Old" value="${address3}"/>
+		<input type="hidden" name="townOld" id="townOld" value="${town}"/>
+		<input type="hidden" name="towncodeOld" id="towncodeOld" value="${towncode}"/>
+		<input type="hidden" name="usertypeOld" id="usertypeOld" value="${usertype}"/>
+		<input type="hidden" name="countrynameOld" id="countrynameOld" value="${countryname}"/>
+		<input type="hidden" name="isapprovedOld" id="isapprovedOld" value="${isapproved}"/>
+		<input type="hidden" name="tutorstatusOld" id="tutorstatusOld" value="${tutorstatus}"/>
 
 		<table align="center">
 			<tr>
@@ -69,7 +98,7 @@
 					<h2>Basic Info</h2>
 				</td>
 			</tr>
-
+			
 			<tr>
 				<td>First Name <span id="firstNameError"></span></td>
 				<td><input type="text" name="firstname" id="firstName"
@@ -100,13 +129,17 @@
 							checked> Female<br>
 					</c:if></td>
 			</tr>
-			<tr><td>Experience<span id="experienceError"></span>
-			<td><textarea rows="10" cols="26" name="experience" id="experience">
-			<c:out value="${experience}"/></textarea></td></tr>
+			<tr>
+				<td>Experience<span id="experienceError"></span>
+				<td><textarea rows="10" cols="26" name="experience"
+						id="experience">
+			<c:out value="${experience}" /></textarea></td>
+			</tr>
 
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
-				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onclick="clearField('aboutMeError')">
+				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
+						onclick="clearField('aboutMeError')">
 				<c:out value="${description}" /></textarea></td>
 			</tr>
 			<tr>
@@ -226,10 +259,11 @@
 				<td>Approve Status <span id="isApproved"></span></td>
 				<c:if test="${isapproved == 0}">
 					<td><input type="checkbox" name="isApproved" value="1" /></td>
-				</c:if> 
-				<c:if test="${isapproved == 1}">				
-					<td><input type="checkbox" name="isApproved" value="1" checked disabled readonly></td>;
-					<input type="hidden" name="isApproved" id="isApproved" value="1"/>
+				</c:if>
+				<c:if test="${isapproved == 1}">
+					<td><input type="checkbox" name="isApproved" value="1" checked
+						disabled readonly></td>;
+					<input type="hidden" name="isApproved" id="isApproved" value="1" />
 				</c:if>
 			</tr>
 
@@ -237,24 +271,24 @@
 
 				<td>Tutor Status <span id="tutorError"></span></td>
 
-				<td>
-					 <select name="newtutorStatus" id="newtutorStatus" >
-				    		<c:forEach items="${applicationStatusBean.values}" var="applicationStatus">	
-				    			<c:choose>				
-					    			<c:when test="${applicationStatus.statusValue == tutorstatus}">				    		
-					                	<option value="${applicationStatus.statusValue}">${applicationStatus}</option>  
-					                </c:when> 	
-				                </c:choose>			                     
-				            </c:forEach>
-				            <c:forEach items="${applicationStatusBean.values}" var="applicationStatus">
-				    			<c:choose>				
-					    			<c:when test="${applicationStatus.statusValue != tutorstatus}">
-				                		<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
-					                </c:when> 	
-				                </c:choose>	
-				            </c:forEach>
-				        </select> 
-				</td>
+				<td><select name="newtutorStatus" id="newtutorStatus">
+						<c:forEach items="${applicationStatusBean.values}"
+							var="applicationStatus">
+							<c:choose>
+								<c:when test="${applicationStatus.statusValue == tutorstatus}">
+									<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<c:forEach items="${applicationStatusBean.values}"
+							var="applicationStatus">
+							<c:choose>
+								<c:when test="${applicationStatus.statusValue != tutorstatus}">
+									<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+				</select></td>
 			</tr>
 
 			<tr>
@@ -281,7 +315,7 @@
 					onclick="clearField('confirmPasswordError')" value="${password}" /></td>
 			</tr>
 
-			<tr>				
+			<tr>
 				<td>
 					<button type="submit" name="CCO" id="CCO" value="UPDATE_TUTOR"
 						class="btn btn-info navbar-btn">Update</button>
