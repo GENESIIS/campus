@@ -4,6 +4,8 @@ package com.genesiis.campus.util;
 //20161227 DN CAM 18 add override methods to the concrete implementation.
 //20161228 DN CAM 18 shift getEmailDispenser(),getGeneralEmail(),setGeneralEmail(),setEmailDispenser() methods to interface IEmailComposer.java
 // for code reuse purpose.
+//20170208 DN CAM:18 student-signup-without-using-third-party-application-dn add extra spaces tyo format the email as per the comments given by QA
+//				201702061502 CN - Local Test cycle -3 summary.
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,13 +79,16 @@ public class StudentSignUpEmailComposer implements IEmailComposer {
 		StringBuilder result = new StringBuilder();
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
 		result.append(System.getProperty("line.separator"));
+		result.append(System.getProperty("line.separator"));
 		result.append(" Dear ");
 		result.append(this.getRecieversName());
 		result.append(",");
 		result.append(System.getProperty("line.separator"));
+		result.append(System.getProperty("line.separator"));
 		result.append(this.getMailBody());
 		result.append(originalMailBody) ;
 		result.append(System.getProperty("line.separator"));
+		result.append(System.getProperty("line.separator"));	
 		this.setMailBody(result.toString());
 	}
 
