@@ -8,7 +8,7 @@
 //20161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
 //20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
 // 		and the Town within Country
-//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode and avoid leading zero for the phone number field
+//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include user code and avoid leading zero for the phone number field
 //20161215 DN CAMP:18 refactor splitPhoneNumber() introduced new client method managePhoneNumber() and 
 //         utility methods :extractInternationalPhoneNumber()/resetTheMobileNumberRelatedGlobalVariables().
 //20161217 DN CAMP:18 create a separate method isNotvalidMobileFormat()for reusing the logic on validating phone number.

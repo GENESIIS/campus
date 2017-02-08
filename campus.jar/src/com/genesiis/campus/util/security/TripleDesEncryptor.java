@@ -153,7 +153,7 @@ public class TripleDesEncryptor implements Encryptable{
 	}
 
 	/**
-	 * mehod returns the encrypted data in String format
+	 * method returns the encrypted data in String format
 	 * @author dushantha DN
 	 * @return String the encrypted String
 	 * @throws Exception

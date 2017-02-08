@@ -15,7 +15,7 @@ package com.genesiis.campus.command;
 //20161122 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() created and refactor execute() to include view manipulation
 // in a case when validation fails
 //20161124 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() renamed to setFrontEndViewingDataIfValidationFails() and 
-// code refactor if any validation fails but to diplay data to front end.
+// code refactor if any validation fails but to display data to front end.
 //20161222 DN CAMP:18 created accessors and mutators for fields changed the execute()
 //					to introduce the above methods when accessing private fields.
 
@@ -317,7 +317,7 @@ public class CmdGenerateEmail implements ICommand {
 	 * the state of the status passed in
 	 * @return String the message
 	 * @param status 3 request submitted successfully.
-	 * @param status -3 request submition fails.
+	 * @param status -3 request submission fails.
 	 * 
 	 */
 	private String systemMessage(int status){

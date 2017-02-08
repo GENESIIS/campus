@@ -1,10 +1,10 @@
 package com.genesiis.campus.util;
 // 20161227 DN CAM 18 create the class SignUpEmailComposer.java to help compose the mailing 
-// specially when student Sign up to the system.
+// Specially when student Sign up to the system.
 //20161227 DN CAM 18 add override methods to the concrete implementation.
 //20161228 DN CAM 18 shift getEmailDispenser(),getGeneralEmail(),setGeneralEmail(),setEmailDispenser() methods to interface IEmailComposer.java
 // for code reuse purpose.
-//20170208 DN CAM:18 student-signup-without-using-third-party-application-dn add extra spaces tyo format the email as per the comments given by QA
+//20170208 DN CAM:18 student-signup-without-using-third-party-application-dn add extra spaces to format the email as per the comments given by QA
 //				201702061502 CN - Local Test cycle -3 summary.
 
 import java.text.SimpleDateFormat;
