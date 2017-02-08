@@ -10,6 +10,9 @@
     <!-- Bootstrap & CSS Style-->
     <link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/style.css" rel="stylesheet">
+    
+    <!-- FontAwsome Styles-->
+    <link href="dist/bower-components/faw/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- W3-Include -->
     <script src="dist/bower-components/w3/w3data.js"></script>
