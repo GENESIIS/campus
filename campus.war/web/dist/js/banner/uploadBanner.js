@@ -44,21 +44,32 @@ function getPreRequisitPageData(preRequistData){
 	// this brings the collection that contains the Collection<collection<String>>
 	//which sends from the server as an Array, then iterate over, the array gets the form 
 	// {[a,b,..],[a1,b1,..],[a2,b2,..]}
+	
 	$.each(preRequistData.result,function(index,value){  
 		var valueBoundToIndex = value.toString();
 		var innerArrayAsString= valueBoundToIndex.split(",");
 		
-		//suppose to get the advertiser and the advertiser code from the backend
-		
-		var advertiserCode = "";//data[0].toString();
-		var advertiser = "";	//data[1].toString();		
-		$('<option>').val(advertiser).text(advertiserCode).appendTo(countryList);
+		var advertiserCode = innerArrayAsString[0].toString();
+		var advertiser = innerArrayAsString[1].toString();		
+		$('<option>').val(advertiser).text(advertiserCode).appendTo(advertiserList);
 	});
 	
 	/*
-	 * Other logic that goes when the document gets ready goes here
+	 * populate the pages data list with retrieved data from back end
 	 */
 	
+	var pageListContainingTheBanner = $('#pageList');
+	pageListContainingTheBanner.find('option').remove();
+	
+	$.each(preRequistData.bannerPages,function(index,value){
+		var pageToboundIndex = value.toString();
+		var innerArrayAsString= pageToboundIndex.split(",");
+		
+		var codeOfThePageContainingBanner = innerArrayAsString[0].toString();
+		var pageContainingTheBanner = innerArrayAsString[1].toString();
+		$('<option>').val(pageContainingTheBanner).text(codeOfThePageContainingBanner).appendTo(pageListContainingTheBanner);
+		
+	});
 	
 	
 	
