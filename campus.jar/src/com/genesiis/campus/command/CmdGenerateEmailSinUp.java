@@ -5,8 +5,10 @@ package com.genesiis.campus.command;
 //CmdGenerateEmailSinUp
 //20161227 DN CAMP:18 refactor the class to accommodate signUpEmailComposer.java and pushed all remained fields to signUpEmailComposer
 //            for reusing the duplicated code
-//20161228 DN CAMP:18 switched to static declared type to IEmailComposer in execute(), refactor sendMail() signature to acceptIEmailComposer parameter.
-//20161228 DN CAMP:18  move the field signUpEmailComposer to the execute() method to reduce scope of variable to where the variable is used.
+//20161228 DN CAM:18 switched to static declared type to IEmailComposer in execute(), refactor sendMail() signature to acceptIEmailComposer parameter.
+//20161228 DN CAM:18  move the field signUpEmailComposer to the execute() method to reduce scope of variable to where the variable is used.
+//20170208 DN CAM:18 student-signup-without-using-third-party-application-dn add extra spaces tyo format the email as per the comments given by QA
+//              201702061502 CN - Local Test cycle -3 summary.
 
 import java.sql.SQLException;
 
@@ -148,15 +150,19 @@ public class CmdGenerateEmailSinUp implements ICommand {
 	 * the SMPT mail server
 	 */
 	private String addSpecificContentToOriginalMailBody(){
-		StringBuilder result = new StringBuilder();		
+		StringBuilder result = new StringBuilder();	
+		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 		result.append("Account credentials are as follows. ");
 		result.append(System.getProperty("line.separator"));
-		result.append("User Name :"+partialStudent.getUserName());
+		result.append(System.getProperty("line.separator"));
+		result.append("User Name :"+partialStudent.getUserName());		
 		result.append(System.getProperty("line.separator"));
 		result.append("Pass word :"+partialStudent.getPassWord());
 		result.append(System.getProperty("line.separator"));
+		result.append(System.getProperty("line.separator"));
 		result.append("It's so much pleasure to have you with us. Have a good day!");
+		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemMessage.SUPERADMIN_NAME.message());
 		return result.toString();
