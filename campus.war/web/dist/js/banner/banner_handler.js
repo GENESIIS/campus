@@ -20,6 +20,9 @@
  * 				via the parent div tag, instead of the siblings() method, to rectify issue of a 
  * 				banner disappearing when it is the only one loaded for a slot
  * 20161217 MM c2-integrate-google-banners-MP Modified msg displayed when Ajax request results in error
+ * 20170209 MM c111-display-banners-on-jsp-load Defined event handler that makes the Ajax request 
+ 				for banner data; assigned the banner data received from the server to applicable 
+ 				banner slot on the page  
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -109,3 +112,57 @@ function sendBannerStatisticsUpdateRequest(banner) {
 	});
 }
 
+
+//Event handler sending Ajax request to fetch banners 
+$(document).ready(function() {
+	getBanners();
+});
+
+function getBanners() { 
+	
+	var pageName = $('input[type="hidden"]#pageName').val();
+	
+	if (pageName != undefined && pageName != null) {		
+		$.ajax({
+			url : '/PublicController',
+			method : 'POST',
+			data : {
+				'CCO' : 'LIST_BANNERS',
+				'pageName' : pageName
+			},
+			dataType : "json",
+			async : false,
+			success : function(response) {			
+				console.log('Ajax request made to fetch banner images succeeded');
+				setBannersToPageSlots(response, pageName);
+			},
+			error : function(response) {			
+				console.log('Ajax request made to fetch banner images failed.');
+			}
+		});
+	}
+}
+
+// Assign banner content fetched from server to banner slots on the page
+function setBannersToPageSlots(response) {
+	var pageSlots = $('.banner-wrapper');
+	var bannerPath = response.bannerPath;
+	var callerPage = response.callerPage;
+	
+	$.each(pageSlots, function(index, item) {
+		var slotId = $(this).prop('id');
+		
+		var bannerCollectionForSlot = response[slotId];
+		
+		var pageSlotHtml = '';
+		var classList = 'banner rotating-item';
+		var fullClassList = '';
+		$.each(bannerCollectionForSlot, function(count, banner) {
+			fullClassList = (count == 0) ? 'banner-shown ' + classList : classList;
+			pageSlotHtml += '<a href="' + banner[7] + '" target="_blank">';
+			pageSlotHtml += '<img data-timeout="' + banner[5] + '" data-banner-code="' + banner[2] + '" data-caller-page="' + callerPage + '" class="' + fullClassList + '" src="' + bannerPath + '\\' + banner[2] + '\\' + banner[10] + '"/>';
+			pageSlotHtml += '</a>';
+		});
+		$(this).html(pageSlotHtml);
+	});
+}
