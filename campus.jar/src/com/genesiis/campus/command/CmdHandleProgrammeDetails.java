@@ -11,6 +11,7 @@ import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -62,7 +63,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				
 			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){
 				final ProgrammeDTO programmeDTO=new ProgrammeDTO();
-				
+				Validator.validateProgrammeDetails();
 				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
 				int value = programmeDAO.addProgrammeDetails(programmeDTO);
 			}
