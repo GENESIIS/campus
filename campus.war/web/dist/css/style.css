@@ -9,7 +9,10 @@
 @import 'https://fonts.googleapis.com/css?family=Nixie+One';
 @import 'https://fonts.googleapis.com/css?family=Arvo';
 @import 'https://fonts.googleapis.com/css?family=Oswald';
-@import url("https://fonts.googleapis.com/css?family=Signika");
+@import 'https://fonts.googleapis.com/css?family=Signika';
+@import 'https://fonts.googleapis.com/css?family=Lato';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+@import url(../../bower-components/faw/css/font-awesome.min.css);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -858,6 +861,164 @@ body, html {
                 font-family: Arial;
                 font-size: 15px;
                 line-height: 20px; }
+
+body.admin {
+  background: #edf7ff; }
+
+body.admin .header {
+  background: #36474f;
+  margin-bottom: 25px; }
+
+.course-registration {
+  padding-bottom: 50px; }
+  .course-registration h2.form-title {
+    color: #2f66c2;
+    font-family: "Open Sans", sans-serif;
+    font-size: 2em;
+    font-weight: normal;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c8c8c8; }
+    .course-registration h2.form-title .form-intro {
+      color: #556a74;
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.45em;
+      display: block;
+      margin-top: 6px;
+      padding-left: 35px; }
+  .course-registration .form-admin .form-section-title {
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
+    background: #174d72;
+    padding: 12px 15px 12px;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+  .course-registration .form-admin .form-group {
+    position: relative;
+    margin-bottom: 14px; }
+  .course-registration .form-admin input,
+  .course-registration .form-admin textarea,
+  .course-registration .form-admin select,
+  .course-registration .form-admin .form-control::-moz-placeholder {
+    color: #636363;
+    font-size: 0.8em;
+    border-radius: 0;
+    border: 1px solid #c8c8c8; }
+  .course-registration .form-admin textarea {
+    padding-left: 42px; }
+  .course-registration .form-admin .form-control:focus {
+    border-color: #174d72; }
+  .course-registration .form-admin input[type=text],
+  .course-registration .form-admin input[type=email],
+  .course-registration .form-admin input[type=tel],
+  .course-registration .form-admin input[type=date],
+  .course-registration .form-admin select {
+    height: 38px;
+    padding-left: 42px; }
+  .course-registration .form-admin label {
+    color: #677d88;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9em;
+    font-weight: normal;
+    position: relative;
+    display: block;
+    margin-bottom: 10px; }
+  .course-registration .form-admin .btn {
+    color: #fff;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 1.1em;
+    border-radius: 0;
+    background: #174d72;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    width: 172px;
+    clear: both; }
+  .course-registration .form-admin .btn-register {
+    margin-top: 15px;
+    margin-right: 15px; }
+  .course-registration .form-admin .input-wrapper {
+    position: relative; }
+    .course-registration .form-admin .input-wrapper .ico-box {
+      display: block;
+      position: absolute;
+      left: 4px;
+      bottom: 4px;
+      width: 30px;
+      height: 30px; }
+      .course-registration .form-admin .input-wrapper .ico-box span {
+        position: absolute;
+        top: 0;
+        left: 0; }
+      .course-registration .form-admin .input-wrapper .ico-box .normal {
+        color: #bfbebe;
+        font-size: 1.4em;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        top: 5px;
+        left: 2px; }
+      .course-registration .form-admin .input-wrapper .ico-box .error {
+        color: #fff;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        background: #dc2d3d;
+        visibility: hidden; }
+      .course-registration .form-admin .input-wrapper .ico-box .success {
+        color: #fff;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        background: #80a539;
+        visibility: hidden; }
+
+.err-block .ico-box .normal {
+  visibility: hidden; }
+
+.err-block .ico-box .error {
+  visibility: visible; }
+
+.err-block .ico-box .success {
+  visibility: hidden; }
+
+.success-block .ico-box .normal {
+  visibility: hidden; }
+
+.success-block .ico-box .error {
+  visibility: hidden; }
+
+.success-block .ico-box .success {
+  visibility: visible; }
+
+.success-block .ico-box .normal {
+  visibility: hidden; }
+
+.success-block .ico-box .error {
+  visibility: hidden; }
+
+.success-block .ico-box .success {
+  visibility: visible; }
+
+.err-msg {
+  color: #dc2d3d;
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 0.9em;
+  position: absolute;
+  right: 0;
+  top: 8px;
+  visibility: hidden; }
+
+.error-form .err-block input,
+.error-form .err-block select,
+.error-form .err-block textarea {
+  color: #dc2d3d;
+  border-color: #dc2d3d; }
+
+.error-form .err-block .err-msg {
+  visibility: visible; }
 
 /* Modules */
 .btn-submit {
