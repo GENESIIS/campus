@@ -7,6 +7,7 @@ package com.genesiis.campus.validation;
 //20161217 MM c2-integrate-google-banners Removed LOAD_BANNER_PAGE constant (before 
 //				merging with sprint branch) that was there for testing the banner 
 //				displaying functionality 
+//20170208 MM c111-display-banners-on-jsp-load - Added LIST_BANNERS enum
 
 /**
 * Operation class facilitate in binding the CCO
@@ -15,7 +16,8 @@ package com.genesiis.campus.validation;
 public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, "");
+	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, ""),
+	LIST_BANNERS("LIST_BANNERS", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
