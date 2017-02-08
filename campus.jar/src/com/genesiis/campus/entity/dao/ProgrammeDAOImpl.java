@@ -16,6 +16,7 @@ import com.genesiis.campus.validation.ApplicationStatus;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -346,14 +347,33 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[PROGRAMME]");
-			sb.append("([NAME]	 ,[EMAIL]  ,[DESCRIPTION],[DURATION] ,[ENTRYREQUIREMENTS],[COUNSELORNAME],[COUNSELORPHONE] ,[DISPLAYSTARTDATE],[EXPIRYDATE],");
+			sb.append("([NAME]	 ,[EMAIL]  ,[DESCRIPTION], [DURATION] , [ENTRYREQUIREMENTS], [COUNSELORNAME], [COUNSELORPHONE] ,[DISPLAYSTARTDATE],[EXPIRYDATE],");
 			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY],[MODON] ,[MODBY]");
 			sb.append(" VALUES ( ");
-			sb.append(" ");
+			sb.append(" ? , ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,?");
 			sb.append(" ) ");
 
-			// stmt=conn.prepareStatement(sql);
-			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			stmt=conn.prepareStatement(sb.toString());
+			stmt.setString(1, programmeDTO.getName());
+			stmt.setString(2, programmeDTO.getEmail());
+			stmt.setString(3, programmeDTO.getDescription());
+			stmt.setString(4, programmeDTO.getDuration());
+			stmt.setString(5, programmeDTO.getEntryRequiremtns());
+			stmt.setString(6, programmeDTO.getCounselerName());
+			stmt.setString(7, programmeDTO.getCounselerPhone());
+			stmt.setDate(8, programmeDTO.getDisplayDatrtDate());
+			stmt.setDate(9, programmeDTO.getExpirationDate());
+			stmt.setInt(10, programmeDTO.getProgrammeStatus());
+			stmt.setInt(11, programmeDTO.getCourseProvider());
+			stmt.setInt(12, programmeDTO.getMajor());
+			stmt.setInt(13, programmeDTO.getCategory());
+			stmt.setInt(14, programmeDTO.getLevel());
+			stmt.setInt(15, programmeDTO.getClassType());
+			stmt.setDate(16, programmeDTO.getCrtOn());
+			stmt.setString(17, programmeDTO.getCrtBy());
+			stmt.setDate(18, programmeDTO.getModOn());
+			stmt.setString(19, programmeDTO.getModBy());
+			
 			rs = stmt.executeQuery();
 
 		} catch (SQLException sqlException) {
