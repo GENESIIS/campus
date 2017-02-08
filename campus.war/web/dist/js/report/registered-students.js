@@ -19,12 +19,24 @@ $(document).ready(function() {
 		}
 	});
 	
+	
+	/*
+	 * validate fromDate< current date
+	 */	
+	$('#startdate').on('click', function(event) {	
+		var today=getCurrentDate();
+		document.getElementById("startdate").setAttribute("max", today);
+	});
+	
 	/*
 	 * validate toDate>from date
 	 */	
 	$('#enddate').on('click', function(event) {		
 		var fromDate= $('#startdate').val();		
 		document.getElementById("enddate").setAttribute("min", fromDate);	
+		var today=getCurrentDate();
+		document.getElementById("enddate").setAttribute("max", today);	
+		 
 	});
 	
 	/*
@@ -92,7 +104,7 @@ function loadResultSet(event) {
 	tempDate.setDate(tempDate.getDate()+ 30);
 
 	 if(Date.parse(toDate)>tempDate){
-		 $('#errorToDate').text("Invalid Date Range!Date range should be within 30 days");
+		 $('#errorToDate').text("Invalid Date Range! Date range should be within 30 days");
 			document.getElementById('errorToDate').style.color = "red";
 			return false;
 	 }	
@@ -161,6 +173,25 @@ function populateResultTable(response) {
 }
 
 /**
+ * This method getCurrentDate() get current date(format 2017-02-08).
+ */
+function getCurrentDate() {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd
+	}
+	if (mm < 10) {
+		mm = '0' + mm
+	}
+
+	today = yyyy + '-' + mm + '-' + dd;
+	return today;
+}
+
+/**
  * This method clearParameters() clear load form.
  */
 function clearParameters(event){	
@@ -169,6 +200,7 @@ function clearParameters(event){
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 
 	$('#districtlist').val("");	
+	$('#errorToDate').text("");	
 }
 
 /**
