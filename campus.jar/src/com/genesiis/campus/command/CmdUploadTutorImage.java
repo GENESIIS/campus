@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
 //				systemMessage(int) has been shifted to ImageUtility.java class as a static method.
 //20170207 DN c47-tutor-add-tutor-information-upload-image-dn changed the isImageAccordanceWithSystemRequirement() 
 //			  isFilePassSizeRequirement asserting logic to include in an if statement
+//20170208 DN c47-tutor-add-tutor-information-upload-image-dn changed execute() to clear the message field vuia this.setMessage("") call.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -84,6 +85,8 @@ public class CmdUploadTutorImage implements ICommand {
 		String filePath = "";
 		
 		try{
+			// clear the message if it's accumulated.
+			this.setMessage(""); 
 			//get the image files from the browser and set field -files are set now
 			files =getImageFileUploadedFromBrowser(helper);
 			if((files.size()==0)|(files==null)){
