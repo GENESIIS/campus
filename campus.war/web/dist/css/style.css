@@ -127,6 +127,10 @@ textarea:focus, input:focus {
 .pad-r-0 {
   padding-right: 0 !important; }
 
+.l-2-blue {
+  height: 2px;
+  background-color: #5e8ee2; }
+
 /*Font Face */
 /* Layout */
 footer .ft-top {
@@ -966,9 +970,9 @@ body, html {
 .btn-modal {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
-  padding: 6px 20px;
+  padding: 7px 15px;
   transition: all 0.3s; }
 
 .btn-close {
@@ -1003,6 +1007,7 @@ body, html {
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
 /* 20170207 TR CAM-139 changed modal-footer styles */
+/* 20170208 TR CAM-139 added new styles for professional details modal */
 .modal .modal-dialog .modal-content .modal-header {
   border-bottom: none;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
@@ -1037,7 +1042,8 @@ body, html {
   border-radius: 8px; }
 
 .modal-input-field {
-  padding: 6px 0; }
+  padding: 6px 0;
+  width: 100%; }
   .modal-input-field label {
     width: 20%;
     font-family: "Roboto", sans-serif;
@@ -1047,6 +1053,19 @@ body, html {
     float: left;
     line-height: 30px; }
   .modal-input-field input {
+    width: 46%;
+    height: 32px;
+    border: 2px solid #ccdae8;
+    padding: 2px 12px;
+    color: #1b8e92;
+    font-family: "Roboto", sans-serif; }
+  .modal-input-field .input-group {
+    width: 46%; }
+    .modal-input-field .input-group .input-group-addon {
+      width: 80px; }
+    .modal-input-field .input-group input {
+      width: 100%; }
+  .modal-input-field select {
     width: 46%;
     height: 32px;
     border: 2px solid #ccdae8;
@@ -1082,3 +1101,48 @@ body, html {
   font-size: 13px;
   color: #6e99cd;
   font-weight: 600; }
+
+.form-holder {
+  border-top: 2px solid #5e8ee2;
+  margin-top: 15px;
+  padding-top: 20px; }
+  .form-holder .dataTables_wrapper .row {
+    padding: 10px 0; }
+    .form-holder .dataTables_wrapper .row table {
+      font-family: "Roboto", sans-serif;
+      color: #79929e; }
+    .form-holder .dataTables_wrapper .row .table-bordered {
+      border: 1px solid #7da7d9; }
+    .form-holder .dataTables_wrapper .row .dataTables_info {
+      color: #8e8e8e;
+      font-family: "Roboto", sans-serif; }
+    .form-holder .dataTables_wrapper .row .pagination {
+      font-family: "Roboto", sans-serif; }
+      .form-holder .dataTables_wrapper .row .pagination li > a {
+        color: #7da7d9; }
+    .form-holder .dataTables_wrapper .row .table-bordered > thead > tr > th {
+      border-bottom: 1px solid #7da7d9; }
+    .form-holder .dataTables_wrapper .row .table-bordered > tfoot > tr > th {
+      border-top: 1px solid #7da7d9; }
+    .form-holder .dataTables_wrapper .row .dataTables_length label, .form-holder .dataTables_wrapper .row .dataTables_filter label {
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      color: #8d8d8d;
+      font-weight: 600;
+      line-height: 30px; }
+    .form-holder .dataTables_wrapper .row .dataTables_length select, .form-holder .dataTables_wrapper .row .dataTables_length input, .form-holder .dataTables_wrapper .row .dataTables_filter select, .form-holder .dataTables_wrapper .row .dataTables_filter input {
+      height: 32px;
+      border: 2px solid #ccdae8;
+      padding: 2px 12px;
+      color: #1b8e92;
+      font-family: "Roboto", sans-serif;
+      border-radius: 0;
+      margin-left: 15px;
+      box-shadow: none; }
+    .form-holder .dataTables_wrapper .row .dataTables_length select, .form-holder .dataTables_wrapper .row .dataTables_filter select {
+      margin-right: 15px; }
+
+.modal-professional .well {
+  padding: 20px 25px; }
+.modal-professional .modal-input-field label {
+  width: 30%; }

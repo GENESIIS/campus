@@ -10,6 +10,7 @@
 <!-- 20170206 TR CAM-28: added modal-input-field css class to input field -->
 <!-- 20170207 TR CAM-28: changed modal-header-title - Personal details into About Me -->
 <!-- 20170207 TR CAM-28: modified html layout on About Me modal:Contact Details area - added div structure -->
+<!-- 20170208 TR CAM-28: modified html layout on Professional Details modal - added div structure -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -392,7 +393,7 @@
 <!-- End Dashboard  -->
 
 <!-- Personal Details-->
-<div class="modal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+<div class="modal modal-personal fade" id="studentPersonalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -471,7 +472,7 @@
                     <label>Mobile Number :</label>
                     <div class="input-group">
                         <span class="input-group-addon" id="countryCodePrefix">+</span>
-                        <input class ="phoneNum w-53" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
+                        <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
                     </div>
                     <span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
 			    </div>
@@ -480,7 +481,7 @@
                     <label>Home Number :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum w-53" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
+                    <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
                     <span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -525,7 +526,7 @@
 			        <label>WhatsApp :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum w-53" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
                     <span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -534,7 +535,7 @@
                     <label>Viber :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum w-53" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
                     <span id="sViberError" name="sViberError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -717,9 +718,9 @@
 			
 			
 	  </div>
-				 	<button type="button" class="btn btn-secondary" onclick="">Clear</button>
-        			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-        			<button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
+				 	<button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
+        			<button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+        			<button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -733,83 +734,102 @@
 </div>
 
 <!-- Professional Details Modal -->
-<div class="modal fade" id="studentProfessionalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
+<div class="modal modal-professional fade" id="studentProfessionalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="studentProfessionalDetails">Professional Experience</h4>
       </div>
-      <div class="modal-body">			
+      <div class="modal-body">
 			<div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div>
-			Industry of the Organization  
-			<select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
-				<option value="">--Select One--</option>
-			</select> <span id="industryoftheOrganizationError" name="industryoftheOrganizationError" style="color:red"></span>
-			<br/>
-			
-			Organization <input type="text" name="organization" id="organization" onclick="clearField('organizationError')">
-			<span id="organizationError" name="organizationError" style="color:red"></span><br>
-			
-			Job Category  
-			<select id="jobCategory" name = "jobCategory" onchange="clearField('jobCategoryError')">
-				<option value="">--Select One--</option>
-			</select> <span id="jobCategoryError" name="jobCategoryError" style="color:red"></span>
-			<br/>
-			
-			Designation <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
-			<span id="designationError" name="designationError" style="color:red"></span><br>
-			
-			Commenced on <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
-			<span id="commencedOnError" name="commencedOnError" style="color:red"></span><br>
-			
-			Completion on <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
-			<span id="completionOnError" name="completionOnError" style="color:red"></span><br>
-			
-			Description
-			<textarea rows="5" cols="40" name="jobDescription" id="jobDescription" ></textarea>
-			<br/><br/>
-					<form id="frm-example" action="/path/to/your/script" method="POST">
+            <div class="well clearfix">
+                <div class="show modal-input-field clearfix">
+                    <label>Industry of the Organization :</label>
+                    <select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
+                        <option value="">--Select One--</option>
+                    </select>
+                    <span id="industryoftheOrganizationError" name="industryoftheOrganizationError" style="color:red"></span>
+                </div>
 
-						<table id="example"
-							class="table table-striped table-bordered dt-responsive nowrap"
-							cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
-									<th><b>Organization</b></th>
-									<th><b>Industry</b></th>
-									<th><b>Designation</b></th>
-									<th><b>Category</b></th>
-									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
-									<th></th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th><b>Organization</b></th>
-									<th><b>Industry</b></th>
-									<th><b>Designation</b></th>
-									<th><b>Category</b></th>
-									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
-									<th></th>
-								</tr>
-							</tfoot>			
-						</table>
-						<hr>
-						<p>
-							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
-						</p>
-						<pre id="example-console"></pre>
-					</form>
-					<br />
+                <div class="show modal-input-field clearfix">
+                    <label>Organization :</label>
+                    <input type="text" name="organization" id="organization" onclick="clearField('organizationError')">
+                    <span id="organizationError" name="organizationError" style="color:red"></span>
+                </div>
+
+                <div class="show modal-input-field clearfix">
+                    <label>Job Category :</label>
+                    <select id="jobCategory" name = "jobCategory" onchange="clearField('jobCategoryError')">
+                        <option value="">--Select One--</option>
+                    </select> <span id="jobCategoryError" name="jobCategoryError" style="color:red"></span>
+                </div>
+
+                <div class="show modal-input-field clearfix">
+                    <label>Designation :</label>
+                    <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
+                    <span id="designationError" name="designationError" style="color:red"></span><br>
+                </div>
+
+                <div class="show modal-input-field clearfix">
+                    <label>Commenced on :</label>
+                    <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
+                    <span id="commencedOnError" name="commencedOnError" style="color:red"></span>
+                </div>
+
+                <div class="show modal-input-field clearfix">
+                    <label>Completion on :</label>
+                    <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
+                    <span id="completionOnError" name="completionOnError" style="color:red"></span>
+                </div>
+
+                <div class="show modal-input-field clearfix">
+                    <label>Description :</label>
+                    <textarea rows="5" cols="40" name="jobDescription" id="jobDescription" ></textarea>
+                </div>
+                <!-- End Input fields -->
+
+                <div class="form-holder">
+                    <form id="frm-example" action="/path/to/your/script" method="POST">
+                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
+                                    <th><b>Organization</b></th>
+                                    <th><b>Industry</b></th>
+                                    <th><b>Designation</b></th>
+                                    <th><b>Category</b></th>
+                                    <th><b>Duration</b></th>
+                                    <th><b>Description</b></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th><b>Organization</b></th>
+                                    <th><b>Industry</b></th>
+                                    <th><b>Designation</b></th>
+                                    <th><b>Category</b></th>
+                                    <th><b>Duration</b></th>
+                                    <th><b>Description</b></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <hr>
+                        <p>
+                            <button class="btn btn-danger btn-modal"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+                        </p>
+                        <pre id="example-console"></pre>
+                    </form>
+                </div>
+                <br />
+            </div>
 	  </div>					
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="clearProfessionalExpForm()">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearProfessionalExpForm()">Close</button>
-        <button type="button" class="btn btn-primary" id="saveJe" name="saveJe" onclick="addProfessionalExpForm()">Save changes</button>
+        <button type="button" class="btn btn-modal btn-close" onclick="clearProfessionalExpForm()">Clear</button>
+        <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="clearProfessionalExpForm()">Close</button>
+        <button type="button" class="btn btn-modal btn-primary" id="saveJe" name="saveJe" onclick="addProfessionalExpForm()">Save changes</button>
       </div>
    </div>
   </div>

@@ -1,6 +1,7 @@
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
 /* 20170207 TR CAM-139 changed modal-footer styles */
+/* 20170208 TR CAM-139 added new styles for professional details modal */
 
 .modal
   .modal-dialog
@@ -41,8 +42,10 @@
   border: 1px solid #ecf4f7
   border-radius: 8px
 
+
 .modal-input-field
   padding: 6px 0
+  width: 100%
 
   label
     width: 20%
@@ -54,6 +57,23 @@
     line-height: 30px
 
   input
+    width: 46%
+    height: 32px
+    border: 2px solid #ccdae8
+    padding: 2px 12px
+    color: #1b8e92
+    font-family: "Roboto", sans-serif
+
+  .input-group
+    width: 46%
+
+    .input-group-addon
+      width: 80px
+
+    input
+      width: 100%
+
+  select
     width: 46%
     height: 32px
     border: 2px solid #ccdae8
@@ -92,6 +112,71 @@
   font-size: 13px
   color: #6e99cd
   font-weight: 600
+
+.form-holder
+  border-top: 2px solid #5e8ee2
+  margin-top: 15px
+  padding-top: 20px
+
+  .dataTables_wrapper
+    .row
+      padding: 10px 0
+
+      table
+        font-family: "Roboto", sans-serif
+        color: #79929e
+
+      .table-bordered
+        border: 1px solid #7da7d9
+
+      .dataTables_info
+        color: #8e8e8e
+        font-family: "Roboto", sans-serif
+
+      .pagination
+        font-family: "Roboto", sans-serif
+        li > a
+          color: #7da7d9
+
+
+      .table-bordered > thead > tr > th
+        border-bottom: 1px solid #7da7d9
+
+      .table-bordered > tfoot > tr > th
+        border-top: 1px solid #7da7d9
+
+      .dataTables_length, .dataTables_filter
+        label
+          font-family: "Roboto", sans-serif
+          font-size: 16px
+          color: #8d8d8d
+          font-weight: 600
+          line-height: 30px
+
+        select, input
+          height: 32px
+          border: 2px solid #ccdae8
+          padding: 2px 12px
+          color: #1b8e92
+          font-family: "Roboto", sans-serif
+          border-radius: 0
+          margin-left: 15px
+          box-shadow: none
+
+        select
+          margin-right: 15px
+
+
+// Professional Details Modal styles
+
+.modal-professional
+  .well
+    padding: 20px 25px
+
+  .modal-input-field
+    label
+      width: 30%
+
 
 
 
