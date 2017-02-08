@@ -1,38 +1,32 @@
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn created the initial bannerManager.jsp page -->
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn added modal div element to the document -->
+<!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn change the script to include uploadBanner.js -->
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Banner Manager</title>
 
 
 <!-- Bootstrap & CSS Style-->
     <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../bower-components/bootstrap/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/image-slides.css" rel="stylesheet">
-    <link href="../../css/button-effect.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
 <!-- jQuery & Other js -->
-
-<%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
-	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
-<%-- WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR --%>
-	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="/dist/js/header/ui-populate-helper.js"></script>
+    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    
     <script src="../../js/main.js"></script>
     <script src="../../js/image-slides.js"></script>
     <script src="/dist/js/institute/validation/validation.js"></script>
-	<script src="/dist/partials/banner/bannerManager.jsp"></script>
+	<script src="/dist/js/banner/uploadBanner.js"></script>
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 <body>
