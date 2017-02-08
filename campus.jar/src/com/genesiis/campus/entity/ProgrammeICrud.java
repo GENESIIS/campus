@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20170108 c6-list-available-institutes-on-the-view Declaring new methods
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate getAllClassTypes() method.
 
+import com.genesiis.campus.entity.model.ProgrammeDTO;
+
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Set;
@@ -31,6 +33,6 @@ public interface ProgrammeICrud extends ICrud {
 	
 	public Collection<Collection<String>> findLevelsByLevelCodes(Set<Integer> levelCodeSet)throws SQLException,Exception;
 
-	public int addProgrammeDetails() throws SQLException, Exception;	
+	public int addProgrammeDetails(ProgrammeDTO programmeDTO) throws SQLException, Exception;	
 
 }

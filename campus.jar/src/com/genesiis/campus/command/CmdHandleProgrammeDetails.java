@@ -9,6 +9,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
+import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
@@ -37,6 +38,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
 		String ccoString = helper.getParameter("CCO");
+		String params = helper.getParameter("params");
 		
 		try {				
 			
@@ -58,9 +60,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				helper.setAttribute("allClassTypes",allClassTypes);		
 				
 			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){
+				final ProgrammeDTO programmeDTO=new ProgrammeDTO();
 				
 				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
-				int value = programmeDAO.addProgrammeDetails();
+				int value = programmeDAO.addProgrammeDetails(programmeDTO);
 			}
 			
 			

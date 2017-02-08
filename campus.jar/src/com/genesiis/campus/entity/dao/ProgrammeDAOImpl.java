@@ -8,6 +8,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -338,25 +339,33 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	}
 
 	@Override
-	public int addProgrammeDetails() throws SQLException, Exception {
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;		
+	public int addProgrammeDetails(final ProgrammeDTO programmeDTO) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try {
-			conn=ConnectionManager.getConnection();			
-			//stmt=conn.prepareStatement(sql);
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[PROGRAMME]");
+			sb.append("([NAME]	 ,[EMAIL]  ,[DESCRIPTION],[DURATION] ,[ENTRYREQUIREMENTS],[COUNSELORNAME],[COUNSELORPHONE] ,[DISPLAYSTARTDATE],[EXPIRYDATE],");
+			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY],[MODON] ,[MODBY]");
+			sb.append(" VALUES ( ");
+			sb.append(" ");
+			sb.append(" ) ");
+
+			// stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-		    rs=stmt.executeQuery();			
-			
+			rs = stmt.executeQuery();
+
 		} catch (SQLException sqlException) {
-			log.info("addProgrammeDetails() sqlException" + sqlException.toString());
+			log.info("addProgrammeDetails() sqlException"
+					+ sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
 			log.info("addProgrammeDetails() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
-		}		
+		}
 		return 0;
 	}
 
