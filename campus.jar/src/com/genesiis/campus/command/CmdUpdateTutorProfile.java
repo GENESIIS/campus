@@ -1,12 +1,13 @@
 package com.genesiis.campus.command;
 
 //20170207 CW c38-view-update-tutor-profile- modified execute(), setVariables() methods
+//20170208 CW c38-view-update-tutor-profile- modified setVariables() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -87,284 +88,319 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 	public boolean setVariables(IDataHelper helper, Tutor tutor) {
 			boolean updated = false;
-			HttpSession session = helper.getSession(false);
+			//HttpSession session = helper.getSession(false);
 		try {
+
+
+System.out.println("helper.getParameter(codeOld)) 	= " +helper.getParameter("codeOld"));
+System.out.println("helper.getParameter(usernameOld)) 	= " +helper.getParameter("usernameOld"));
+System.out.println("helper.getParameter(passwordOld)) 	= " +helper.getParameter("passwordOld"));
+System.out.println("helper.getParameter(firstnameOld)) 	= " +helper.getParameter("firstnameOld"));
+System.out.println("helper.getParameter(middlenameOld)) 	= " +helper.getParameter("middlenameOld"));
+System.out.println("helper.getParameter(lastnameOld)) 	= " +helper.getParameter("lastnameOld"));
+System.out.println("helper.getParameter(genderOld)) 	= " +helper.getParameter("genderOld"));
+System.out.println("helper.getParameter(emailOld)) 	= " +helper.getParameter("emailOld"));
+System.out.println("helper.getParameter(landphonecountrycodeOld)) 	= " +helper.getParameter("landphonecountrycodeOld"));
+System.out.println("helper.getParameter(landphoneareacodeOld)) 	= " +helper.getParameter("landphoneareacodeOld"));
+System.out.println("helper.getParameter(landphonenumberOld)) 	= " +helper.getParameter("landphonenumberOld"));
+System.out.println("helper.getParameter(mobilephonecountrycodeOld)) 	= " +helper.getParameter("mobilephonecountrycodeOld"));
+System.out.println("helper.getParameter(mobilephonenetworkcodeOld)) 	= " +helper.getParameter("mobilephonenetworkcodeOld"));
+System.out.println("helper.getParameter(mobilephonenumberOld)) 	= " +helper.getParameter("mobilephonenumberOld"));
+System.out.println("helper.getParameter(descriptionOld)) 	= " +helper.getParameter("descriptionOld"));
+System.out.println("helper.getParameter(experienceOld)) 	= " +helper.getParameter("experienceOld"));
+System.out.println("helper.getParameter(weblinkOld)) 	= " +helper.getParameter("weblinkOld"));
+System.out.println("helper.getParameter(facebookurlOld)) 	= " +helper.getParameter("facebookurlOld"));
+System.out.println("helper.getParameter(twitterurlOld)) 	= " +helper.getParameter("twitterurlOld"));
+System.out.println("helper.getParameter(myspaceurlOld)) 	= " +helper.getParameter("myspaceurlOld"));
+System.out.println("helper.getParameter(linkedinurlOld)) 	= " +helper.getParameter("linkedinurlOld"));
+System.out.println("helper.getParameter(instagramurlOld)) 	= " +helper.getParameter("instagramurlOld"));
+System.out.println("helper.getParameter(vibernumberOld)) 	= " +helper.getParameter("vibernumberOld"));
+System.out.println("helper.getParameter(whatsappnumberOld)) 	= " +helper.getParameter("whatsappnumberOld"));
+System.out.println("helper.getParameter(address1Old)) 	= " +helper.getParameter("address1Old"));
+System.out.println("helper.getParameter(address2Old)) 	= " +helper.getParameter("address2Old"));
+System.out.println("helper.getParameter(address3Old)) 	= " +helper.getParameter("address3Old"));
+System.out.println("helper.getParameter(townOld)) 	= " +helper.getParameter("townOld"));
+System.out.println("helper.getParameter(towncodeOld)) 	= " +helper.getParameter("towncodeOld"));
+System.out.println("helper.getParameter(usertypeOld)) 	= " +helper.getParameter("usertypeOld"));
+System.out.println("helper.getParameter(countrynameOld)) 	= " +helper.getParameter("countrynameOld"));
+System.out.println("helper.getParameter(isapprovedOld)) 	= " +helper.getParameter("isapprovedOld"));
+System.out.println("helper.getParameter(tutorstatusOld)) 	= " +helper.getParameter("tutorstatusOld"));
 			
-			tutor.setCode(Integer.parseInt(session.getAttribute("code").toString()));
+			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));
 			
-			tutor.setUsername(helper.getParameter("username"));
+			tutor.setUsername(helper.getParameter("usernameOld"));
 			
-			if(!((helper.getParameter("password")).equals(session.getAttribute("password").toString()))){				
+			if(!((helper.getParameter("password")).equals(helper.getParameter("passwordOld").toString()))){				
 				tutor.setPassword(helper.getParameter("password"));
 				updated = true;
 			}else{
-				tutor.setPassword(session.getAttribute("password").toString());
+				tutor.setPassword(helper.getParameter("passwordOld").toString());
 			}
 			
-			if(!((helper.getParameter("firstname")).equals(session.getAttribute("firstname").toString()))){				
+			if(!((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
 				tutor.setFirstName(helper.getParameter("firstname"));
 				updated = true;
 			}else{
-				tutor.setFirstName(session.getAttribute("firstname").toString());
+				tutor.setFirstName(helper.getParameter("firstnameOld").toString());
 			}
 			
  			if(Validator.isNotEmpty(helper.getParameter("middlename"))){
-				if(!((helper.getParameter("middlename")).equals(session.getAttribute("middlename").toString()))){	
+				if(!((helper.getParameter("middlename")).equals(helper.getParameter("middlenameOld").toString()))){	
 					tutor.setMiddleName(helper.getParameter("middlename"));	
 					updated = true;		
 				}else{
-					tutor.setMiddleName(session.getAttribute("middlename").toString());	
+					tutor.setMiddleName(helper.getParameter("middlenameOld").toString());	
 				}
 			}else{
 				tutor.setMiddleName("-");
-				if(Validator.isNotEmpty(session.getAttribute("middlename").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("middlenameOld").toString())){
 					updated = true;
 				}
 			}
 			
-			if(!((helper.getParameter("lastname")).equals(session.getAttribute("lastname").toString()))){	
+			if(!((helper.getParameter("lastname")).equals(helper.getParameter("lastnameOld").toString()))){	
 				tutor.setLastName(helper.getParameter("lastname"));			
 				updated = true;
 			}else{
-				tutor.setLastName(session.getAttribute("lastname").toString());
+				tutor.setLastName(helper.getParameter("lastnameOld").toString());
 			}
 			
-			if(!((helper.getParameter("gender")).equals(session.getAttribute("gender").toString()))){		
+			if(!((helper.getParameter("gender")).equals(helper.getParameter("genderOld").toString()))){		
 				tutor.setGender(helper.getParameter("gender"));
 				updated = true;
 			}else{		
-				tutor.setGender(session.getAttribute("gender").toString());
+				tutor.setGender(helper.getParameter("genderOld").toString());
 			}
 
-			if(!((helper.getParameter("email")).equals(session.getAttribute("email").toString()))){				
+			if(!((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){				
 				tutor.setEmailAddress(helper.getParameter("email"));
 				updated = true;
 			}else{
-				tutor.setEmailAddress(session.getAttribute("email").toString());
+				tutor.setEmailAddress(helper.getParameter("emailOld").toString());
 			}			
 			
 			if(Integer.parseInt(helper.getParameter("countryDetails")) != 0){
-				if(!((helper.getParameter("countryDetails")).equals(session.getAttribute("landphonecountrycode").toString()))){	
+				if(!((helper.getParameter("countryDetails")).equals(helper.getParameter("landphonecountrycodeOld").toString()))){	
 					tutor.setLandCountryCode(helper.getParameter("countryDetails"));
 					updated = true;
 				}else{
-					tutor.setLandCountryCode(session.getAttribute("landphonecountrycode").toString());
+					tutor.setLandCountryCode(helper.getParameter("landphonecountrycodeOld").toString());
 				}
 			}else{
-				tutor.setLandCountryCode(session.getAttribute("landphonecountrycode").toString());
+				tutor.setLandCountryCode(helper.getParameter("landphonecountrycodeOld").toString());
 			}
 			
-			if(!((helper.getParameter("landAreaCode")).equals(session.getAttribute("landphoneareacode").toString()))){	
+			if(!((helper.getParameter("landAreaCode")).equals(helper.getParameter("landphoneareacodeOld").toString()))){	
 				tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
 				updated = true;
 			}else{			
-				tutor.setLandAreaCode(session.getAttribute("landphoneareacode").toString());
+				tutor.setLandAreaCode(helper.getParameter("landphoneareacodeOld").toString());
 			}
 			
-			if(!((helper.getParameter("landNumber")).equals(session.getAttribute("landphonenumber").toString()))){	
+			if(!((helper.getParameter("landNumber")).equals(helper.getParameter("landphonenumberOld").toString()))){	
 				tutor.setLandNumber(helper.getParameter("landNumber"));
 				updated = true;
 			}else{			
-				tutor.setLandNumber(session.getAttribute("landphonenumber").toString());
+				tutor.setLandNumber(helper.getParameter("landphonenumberOld").toString());
 			}
 
 			if(Integer.parseInt(helper.getParameter("countryDetails")) != 0){
-				if(!((helper.getParameter("countryDetails")).equals(session.getAttribute("mobilephonecountrycode").toString()))){	
+				if(!((helper.getParameter("countryDetails")).equals(helper.getParameter("mobilephonecountrycodeOld").toString()))){	
 					tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 					updated = true;
 				}else{
-					tutor.setMobileCountryCode(session.getAttribute("mobilephonecountrycode").toString());
+					tutor.setMobileCountryCode(helper.getParameter("mobilephonecountrycodeOld").toString());
 				}
 			}else{
-				tutor.setMobileCountryCode(session.getAttribute("mobilephonecountrycode").toString());
+				tutor.setMobileCountryCode(helper.getParameter("mobilephonecountrycodeOld").toString());
 			}
 
 
-			if(!((helper.getParameter("mobileNetworkCode")).equals(session.getAttribute("mobilephonenetworkcode").toString()))){
+			if(!((helper.getParameter("mobileNetworkCode")).equals(helper.getParameter("mobilephonenetworkcodeOld").toString()))){
 				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));		
 				updated = true;
 			}else{		
-				tutor.setMobileNetworkCode(session.getAttribute("mobilephonenetworkcode").toString());
+				tutor.setMobileNetworkCode(helper.getParameter("mobilephonenetworkcodeOld").toString());
 			}
 
-			if(!((helper.getParameter("mobileNumber")).equals(session.getAttribute("mobilephonenumber").toString()))){	
+			if(!((helper.getParameter("mobileNumber")).equals(helper.getParameter("mobilephonenumberOld").toString()))){	
 				tutor.setMobileNumber(helper.getParameter("mobileNumber"));			
 				updated = true;
 			}else{
-				tutor.setMobileNumber(session.getAttribute("mobilephonenumber").toString());
+				tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
 			}
 			
 			if(Validator.isNotEmpty(helper.getParameter("aboutMe"))){
-				if(!((helper.getParameter("aboutMe")).equals(session.getAttribute("description").toString()))){	
+				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
 					tutor.setDescription(helper.getParameter("aboutMe"));	
 					updated = true;		
 				}else{
-					tutor.setDescription(session.getAttribute("description").toString());	
+					tutor.setDescription(helper.getParameter("descriptionOld").toString());	
 				}
 			}else{
 				tutor.setDescription("-");
-				if(Validator.isNotEmpty(session.getAttribute("description").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("descriptionOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("experience"))){
-				if(!((helper.getParameter("experience")).equals(session.getAttribute("experience").toString()))){	
+				if(!((helper.getParameter("experience")).equals(helper.getParameter("experienceOld").toString()))){	
 					tutor.setExperience(helper.getParameter("experience"));	
 					updated = true;		
 				}else{
-					tutor.setExperience(session.getAttribute("experience").toString());	
+					tutor.setExperience(helper.getParameter("experienceOld").toString());	
 				}
 			}else{
 				tutor.setExperience("-");
-				if(Validator.isNotEmpty(session.getAttribute("experience").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("experienceOld").toString())){
 					updated = true;
 				}
 			}			
 
 			if(Validator.isNotEmpty(helper.getParameter("weblink"))){
-				if(!((helper.getParameter("weblink")).equals(session.getAttribute("weblink").toString()))){	
+				if(!((helper.getParameter("weblink")).equals(helper.getParameter("weblinkOld").toString()))){	
 					tutor.setWebLink(helper.getParameter("weblink"));	
 					updated = true;		
 				}else{
-					tutor.setWebLink(session.getAttribute("weblink").toString());	
+					tutor.setWebLink(helper.getParameter("weblinkOld").toString());	
 				}
 			}else{
 				tutor.setWebLink("-");
-				if(Validator.isNotEmpty(session.getAttribute("weblink").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("weblinkOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("facebook"))){
-				if(!((helper.getParameter("facebook")).equals(session.getAttribute("facebookurl").toString()))){	
+				if(!((helper.getParameter("facebook")).equals(helper.getParameter("facebookurlOld").toString()))){	
 					tutor.setFacebookLink(helper.getParameter("facebook"));	
 					updated = true;		
 				}else{
-					tutor.setFacebookLink(session.getAttribute("facebookurl").toString());	
+					tutor.setFacebookLink(helper.getParameter("facebookurlOld").toString());	
 				}
 			}else{
 				tutor.setFacebookLink("-");
-				if(Validator.isNotEmpty(session.getAttribute("facebookurl").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("facebookurlOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("twitter"))){
-				if(!((helper.getParameter("twitter")).equals(session.getAttribute("twitterurl").toString()))){	
+				if(!((helper.getParameter("twitter")).equals(helper.getParameter("twitterurlOld").toString()))){	
 					tutor.setTwitterNumber(helper.getParameter("twitter"));	
 					updated = true;		
 				}else{
-					tutor.setTwitterNumber(session.getAttribute("twitterurl").toString());	
+					tutor.setTwitterNumber(helper.getParameter("twitterurlOld").toString());	
 				}
 			}else{
 					tutor.setTwitterNumber("-");
-				if(Validator.isNotEmpty(session.getAttribute("twitterurl").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("twitterurlOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("myspace"))){
-				if(!((helper.getParameter("myspace")).equals(session.getAttribute("myspaceurl").toString()))){	
+				if(!((helper.getParameter("myspace")).equals(helper.getParameter("myspaceurlOld").toString()))){	
 					tutor.setMySpaceId(helper.getParameter("myspace"));	
 					updated = true;		
 				}else{
-					tutor.setMySpaceId(session.getAttribute("myspaceurl").toString());	
+					tutor.setMySpaceId(helper.getParameter("myspaceurlOld").toString());	
 				}
 			}else{
 				tutor.setMySpaceId("-");
-				if(Validator.isNotEmpty(session.getAttribute("myspaceurl").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("myspaceurlOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("linkedin"))){
-				if(!((helper.getParameter("linkedin")).equals(session.getAttribute("linkedinurl").toString()))){	
+				if(!((helper.getParameter("linkedin")).equals(helper.getParameter("linkedinurlOld").toString()))){	
 					tutor.setLinkedInLink(helper.getParameter("linkedin"));	
 					updated = true;		
 				}else{
-					tutor.setLinkedInLink(session.getAttribute("linkedinurl").toString());	
+					tutor.setLinkedInLink(helper.getParameter("linkedinurlOld").toString());	
 				}
 			}else{
 				tutor.setLinkedInLink("-");
-				if(Validator.isNotEmpty(session.getAttribute("linkedinurl").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("linkedinurlOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("instagram"))){
-				if(!((helper.getParameter("instagram")).equals(session.getAttribute("instagramurl").toString()))){	
+				if(!((helper.getParameter("instagram")).equals(helper.getParameter("instagramurlOld").toString()))){	
 					tutor.setInstagramId(helper.getParameter("instagram"));	
 					updated = true;		
 				}else{
-					tutor.setInstagramId(session.getAttribute("instagramurl").toString());	
+					tutor.setInstagramId(helper.getParameter("instagramurlOld").toString());	
 				}
 			}else{
 				tutor.setInstagramId("-");
-				if(Validator.isNotEmpty(session.getAttribute("instagramurl").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("instagramurlOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("viber"))){
-				if(!((helper.getParameter("viber")).equals(session.getAttribute("vibernumber").toString()))){	
+				if(!((helper.getParameter("viber")).equals(helper.getParameter("vibernumberOld").toString()))){	
 					tutor.setViberNumber(helper.getParameter("viber"));	
 					updated = true;		
 				}else{
-					tutor.setViberNumber(session.getAttribute("vibernumber").toString());	
+					tutor.setViberNumber(helper.getParameter("vibernumberOld").toString());	
 				}
 			}else{
 					tutor.setViberNumber("-");
-				if(Validator.isNotEmpty(session.getAttribute("vibernumber").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("vibernumberOld").toString())){
 					updated = true;
 				}
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("whatsapp"))){
-				if(!((helper.getParameter("whatsapp")).equals(session.getAttribute("whatsappnumber").toString()))){	
+				if(!((helper.getParameter("whatsapp")).equals(helper.getParameter("whatsappnumberOld").toString()))){	
 					tutor.setWhatsAppId(helper.getParameter("whatsapp"));	
 					updated = true;		
 				}else{
-					tutor.setWhatsAppId(session.getAttribute("whatsappnumber").toString());	
+					tutor.setWhatsAppId(helper.getParameter("whatsappnumberOld").toString());	
 				}
 			}else{
 					tutor.setWhatsAppId("-");
-				if(Validator.isNotEmpty(session.getAttribute("whatsappnumber").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("whatsappnumberOld").toString())){
 					updated = true;
 				}
 			}
 
-			if(!((helper.getParameter("address1")).equals(session.getAttribute("address1").toString()))){				
+			if(!((helper.getParameter("address1")).equals(helper.getParameter("address1Old").toString()))){				
 				tutor.setAddressLine1(helper.getParameter("address1"));
 				updated = true;
 			}else{
-				tutor.setAddressLine1(session.getAttribute("address1").toString());
+				tutor.setAddressLine1(helper.getParameter("address1Old").toString());
 			}
 
 			if(Validator.isNotEmpty(helper.getParameter("address2"))){
-				if(!((helper.getParameter("address2")).equals(session.getAttribute("address2").toString()))){	
+				if(!((helper.getParameter("address2")).equals(helper.getParameter("address2Old").toString()))){	
 					tutor.setAddressLine2(helper.getParameter("address2"));	
 					updated = true;		
 				}else{
-					tutor.setAddressLine2(session.getAttribute("address2").toString());	
+					tutor.setAddressLine2(helper.getParameter("address2Old").toString());	
 				}
 			}else{
 				tutor.setAddressLine2("-");
-				if(Validator.isNotEmpty(session.getAttribute("address2").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("address2Old").toString())){
 					updated = true;
 				}
 			}
 			
 			if(Validator.isNotEmpty(helper.getParameter("address3"))){
-				if(!((helper.getParameter("address3")).equals(session.getAttribute("address3").toString()))){	
+				if(!((helper.getParameter("address3")).equals(helper.getParameter("address3Old").toString()))){	
 					tutor.setAddressLine3(helper.getParameter("address3"));	
 					updated = true;		
 				}else{
-					tutor.setAddressLine3(session.getAttribute("address3").toString());	
+					tutor.setAddressLine3(helper.getParameter("address3Old").toString());	
 				}
 			}else{
 				tutor.setAddressLine3("-");
-				if(Validator.isNotEmpty(session.getAttribute("address3").toString())){
+				if(Validator.isNotEmpty(helper.getParameter("address3Old").toString())){
 					updated = true;
 				}
 			}
@@ -376,21 +412,21 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}
 
 			if(Double.parseDouble(helper.getParameter("townDetails")) != 0){
-				if(!((helper.getParameter("townDetails")).equals(session.getAttribute("towncode").toString()))){	
+				if(!((helper.getParameter("townDetails")).equals(helper.getParameter("towncodeOld").toString()))){	
 					tutor.setTown(helper.getParameter("townDetails"));
 					updated = true;
 				}else{
-					tutor.setTown(session.getAttribute("towncode").toString());
+					tutor.setTown(helper.getParameter("towncodeOld").toString());
 				}
 			}else{
-				tutor.setTown(session.getAttribute("towncode").toString());
+				tutor.setTown(helper.getParameter("towncodeOld").toString());
 			}
 			
-			if(!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (Integer.parseInt(session.getAttribute("tutorstatus").toString())))){	
+			if(!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (Integer.parseInt(helper.getParameter("tutorstatusOld").toString())))){	
 				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("newtutorStatus")));
 				updated = true;
 			}else{
-				tutor.setTutorStatus(Integer.parseInt(session.getAttribute("tutorstatus").toString()));
+				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("tutorstatusOld").toString()));
 			}
 			
 		} catch (Exception e) {
