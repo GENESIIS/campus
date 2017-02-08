@@ -39,6 +39,7 @@
 		<div>
 			<div>
 				<div class="container">
+				<form action=" " method="post" id="programmeForm">
 					<fieldset>
 						<div>
 							<legend align="left">Basic Info </legend>
@@ -120,6 +121,7 @@
 							<button type="submit" id="addProgramme">Add</button>
 						</div>
 					</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>

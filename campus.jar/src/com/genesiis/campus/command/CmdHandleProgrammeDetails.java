@@ -37,8 +37,9 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			Exception {
 		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
-		String ccoString = helper.getParameter("CCO");
-		String params = helper.getParameter("params");
+		String ccoString = helper.getParameter("CCO");		
+		String courseName = helper.getParameter("courseName");
+		String[] courseName2 =helper.getParameterValues("formData");
 		
 		try {				
 			

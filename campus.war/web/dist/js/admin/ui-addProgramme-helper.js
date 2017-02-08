@@ -116,8 +116,8 @@ function addProgramme(){
 	var courseDuration =$('#courseDuration').val();
 	var categoryName =$('#categoryName').val();
 	
-	var params = { courseName:$('#courseName').val(), 
-			courseDetails:$('#courseDetails').val() };
+/*	var params = { courseName:$('#courseName').val(), 
+			courseDetails:$('#courseDetails').val() };*/
 	
 	var email= $('#email').val();			
 	if (!isEmpty(email) || !isValidEmailFormat(email)) {
@@ -152,14 +152,19 @@ function addProgramme(){
 	}
 	
 	//After pass the validations developer able to add input data to database.
+	
+	var form = $('#programmeForm');
+	var formData = $(form).serialize();
+	
 	$.ajax({
 		url : '../../AdminController',
 		type: 'POST',
 		data : {
 			CCO : 'ADD_PROGRAMME_DETAILS',
-			params:params
+			formData:formData
 		},
 		dataType : "json",
+		async : false,
 		success : function(response) {			
 			alert("Programme add fucntionality will be implemented by another issue");
 		},
