@@ -1,4 +1,4 @@
-<!-- 20161111 DJ  c6-list-available-institutes-on-the-view view top viewed/top rated course providers -->
+<!-- 20170208 DJ  c138-add-basic-programme-MP-dj  Integrate basic ui with styled UI -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -47,16 +47,12 @@
 							<h4 class="col-xs-12 form-section-title">1. Course Details</h4>
 							<div class="form-group col-sm-4">
 								<label for="course-category">Course Category <span class="err-msg pull-right">Please enter valid information</span></label>
-								<div class="input-wrapper">
-									<select name="courseCategory" id="course-category" class="form-control">
-										<option selected>Choose a category</option>
-										<option value="Pre Education">Pre Education</option>
-										<option value="School Education">School Education</option>
-										<option value="Higher Education">Higher Education</option>
-										<option value="Corporate Training">Corporate Training</option>
-										<option value="Talent & Skills">Talent & Skills</option>
-									</select>
-									<span class="ico-box">
+								<div class="input-wrapper">									
+								<input type="text" name="categoryList" id="categoryList"
+									list="categoryName" placeholder="Choose a category" size="25px" />
+								<datalist id="categoryName">
+								</datalist>
+								<span class="ico-box">
 										<span class="normal fa fa-tags" aria-hidden="true"></span>
 										<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
 										<span class="success fa fa-check fa-2x" aria-hidden="true"></span>										
@@ -66,16 +62,13 @@
 							</div>
 							<div class="form-group col-sm-4">
 								<label for="course-major">Course Major <span class="err-msg pull-right">Please enter valid information</span></label>
-								<div class="input-wrapper">
-									<select name="courseMajor" id="course-major" class="form-control">
-										<option selected>Choose a major</option>
-										<option value="Civil Engineering">Civil Engineering</option>
-										<option value="Information Technology">Information Technology</option>
-										<option value="Safety & Security">Safety & Security</option>
-										<option value="Bio Medical">Bio Medical</option>
-										<option value="Sports Science">Sports Science</option>
-									</select>
-									<span class="ico-box">
+								<div class="input-wrapper">									
+								<input type="text" name="majorList" id="majorList"
+									list="majorName" placeholder="Choose a major"
+									size="25px" />
+								<datalist id="majorName">
+								</datalist>
+								<span class="ico-box">
 										<span class="normal fa fa-bookmark" aria-hidden="true"></span>
 										<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
 										<span class="success fa fa-check fa-2x" aria-hidden="true"></span>										
@@ -84,19 +77,12 @@
 							</div>
 							<div class="form-group col-sm-4">
 								<label for="course-level">Course Level <span class="err-msg pull-right">Please enter valid information</span></label>
-								<div class="input-wrapper">
-									<select name="courseLevel" id="course-level" class="form-control">
-										<option selected>Choose a level</option>
-										<option value="NVQ Level - 1">NVQ Level - 1</option>
-										<option value="NVQ Level - 2">NVQ Level - 2</option>
-										<option value="NVQ Level - 3">NVQ Level - 3</option>
-										<option value="Certificate Level">Certificate Level</option>
-										<option value="Diploma Level">Diploma Level</option>
-										<option value="Associate Degree Level">Associate Degree Level</option>
-										<option value="Degree Level">Degree Level</option>
-										<option value="Masters Level">Masters Level</option>
-									</select>
-									<span class="ico-box">
+								<div class="input-wrapper">									
+								 <input type="text" name="levelList" id="levelList"
+									list="levelName" placeholder="Choose a level" size="25px" />
+								<datalist id="levelName">
+								</datalist>
+								<span class="ico-box">
 										<span class="normal fa fa-industry" aria-hidden="true"></span>
 										<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
 										<span class="success fa fa-check fa-2x" aria-hidden="true"></span>										
@@ -120,7 +106,12 @@
 							<div class="form-group col-sm-4">
 								<label for="course-provider">Course Provider <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
-									<input name="courseProvider" type="text" class="form-control" id="course-provider" placeholder="">
+									<!-- <input name="courseProvider" type="text" class="form-control" id="course-provider" placeholder=""> -->
+									<input type="text" name="providerList"
+									id="providerList" list="providerName"
+									placeholder="Choose a Provider" size="25px" />
+								<datalist id="providerName">
+								</datalist>
 									<span class="ico-box">
 										<span class="normal fa fa-university" aria-hidden="true"></span>
 										<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
@@ -130,12 +121,12 @@
 							</div>
 							<div class="form-group col-sm-4">
 								<label for="class-type">Class Type <span class="err-msg pull-right">Please enter valid information</span></label>
-								<div class="input-wrapper">
-									<select name="classType" id="class-type" class="form-control">
-										<option selected>Choose a class type</option>
-										<option value="Individual">Individual</option>
-										<option value="Group">Group</option>
-									</select>
+								<div class="input-wrapper">									
+									<input type="text" name="classTypelist"
+								id="classTypelist" list="classTypeName"
+								placeholder="Choose a class type"  size="25px"/>
+							<datalist id="classTypeName">
+							</datalist>
 									<span class="ico-box">
 										<span class="normal fa fa-users" aria-hidden="true"></span>
 										<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
@@ -202,22 +193,22 @@
 								<label class="form-check-label">Course Current Status</label>
 								<div class="form-check form-check-inline col-xs-3">
 									<label class="form-check-label">
-										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio1" value="Active"> Active
+										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio1" value="ACTIVE"> Active
 									</label>
 								</div>
 								<div class="form-check form-check-inline col-xs-3">
 									<label class="form-check-label">
-										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="Inactive"> Inactive
+										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="INACTIVE"> Inactive
 									</label>
 								</div>
 								<div class="form-check form-check-inline col-xs-3">
 									<label class="form-check-label">
-										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="Archived"> Archived
+										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="PENDING"> Pending
 									</label>
 								</div>
 								<div class="form-check form-check-inline col-xs-3">
 									<label class="form-check-label">
-										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="Deleted"> Deleted
+										<input class="form-check-input" type="radio" name="courseStatus" id="inlineRadio2" value="ARCHIVE"> Archive
 									</label>
 								</div>
 							</div>
@@ -262,7 +253,7 @@
 						</div>
 						
 						<div class="row clearfix">
-							  <button type="submit" class="btn btn-register pull-right">Add Course</button>
+							  <button type="submit" class="btn btn-register pull-right"  id="addProgramme">Add Course</button>
 						</div>
 						
 					</form>
