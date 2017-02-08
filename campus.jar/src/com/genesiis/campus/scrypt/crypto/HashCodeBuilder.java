@@ -8,13 +8,14 @@ package com.genesiis.campus.scrypt.crypto;
  
 public class HashCodeBuilder {
 	 
-	public void createHash(String firstname, String lastname){
+	public String createHash(String firstname, String lastname){
 		 String originalHash = firstname+lastname;
 		 String generatedSecuredHash = SCryptUtil.scrypt(originalHash, 16, 16, 16);
 		 System.out.println(generatedSecuredHash);
 	
 		// boolean matched = SCryptUtil.check("Anuradhasilva", "$s0$41010$ffwJmgi4Kcxgz3LqB1CRIA==$KyiEoXhpNKozpTCD/2Wn31EiHaUgL8qzMCxIjFfNl3U=");
 	    // System.out.println(matched);
+		 return generatedSecuredHash;
 	}
 	
 	
