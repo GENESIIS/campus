@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.mail.BodyPart;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 
 import org.apache.log4j.Logger;
 
@@ -96,9 +99,18 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	
 	@Override
 	public void addContentToOriginalMailBody(String originalMailBody) {
+		try{
 		StringBuilder result = new StringBuilder();
-
 		
+		 MimeMultipart multipart = new MimeMultipart("related");
+		 
+		BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
+        messageBodyPart.setContent(htmlText, "text/html");
+		
+       
+        multipart.addBodyPart(messageBodyPart);
+        result.append(multipart);
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
@@ -110,9 +122,13 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 		result.append(this.getMailBody());
 		result.append(originalMailBody) ;
 		result.append(System.getProperty("line.separator"));
-		result.append(System.getProperty("line.separator"));
 		result.append("If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.");
+		result.append(System.getProperty("line.separator"));
 		this.setMailBody(result.toString());
+		
+	 } catch (MessagingException e) {
+         throw new RuntimeException(e);
+      }
 		
 	}
 
