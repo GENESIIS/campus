@@ -264,11 +264,11 @@ function vaidateCourseProviderDeatils(form) {
 	var accountDescription = $("#accountDescription").val();
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	var currentDate = new Date();
+	var date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
 	var selectedDate = 	$('#expirationDate').val();
 	var accountContactNumber = $("#providerContactNumber").val();
 
-//	if (publishProgram === 0) {
-		if (currentDate > selectedDate) {
+		if (date > selectedDate) {
 			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
 			document.getElementById('expirationDate').focus();
 			flag = false;
@@ -278,7 +278,6 @@ function vaidateCourseProviderDeatils(form) {
 			document.getElementById('expirationDate').focus();
 			flag = false;
 		}
-//	}
 
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
