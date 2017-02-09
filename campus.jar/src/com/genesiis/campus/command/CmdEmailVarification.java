@@ -37,10 +37,10 @@ public class CmdEmailVarification implements ICommand {
 	String SecuredHash="";
 	private String emailTitle = "Reset password instructions";
 	private ArrayList<String> recieversEmailAddreses;
-	private String sendersEmail = "";
+	private String sendersEmail = "dushantha@genesiis.com";
 	private String emailBody = "Someone has requested a link to change your password. You can do this through the Link below.";
 
-	private IEmail generalEmail;
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -75,6 +75,9 @@ public class CmdEmailVarification implements ICommand {
 				SecuredHash = hashBuilder.createHash(firstName, lastName);
 				
 				resetPasswordEmailComposer.setEnvironment(firstName+" "+lastName, sendersEmail, recieversEmailAddreses, emailTitle, emailBody, SecuredHash);
+				
+				resetPasswordEmailComposer.setGeneralEmail(resetPasswordEmailComposer.formatEmailInstance(
+						 addSpecificContentToOriginalMailBody())); 
 				status=this.sendMail(resetPasswordEmailComposer);
 			//	helper.setAttribute("message", composeOutStatusMessageToClient(status));
 				log.info(status);
@@ -132,19 +135,19 @@ public class CmdEmailVarification implements ICommand {
 	 * @return int -3 fail sending email 3 sent email successfully 
 	 * @throws MessagingException in any case dispensing email fails
 	 */
-	private int sendMail(IEmailComposer signUpEmailComposer)  {
+	private int sendMail(IEmailComposer emailComposer)  {
 		int MAIL_SENT_STATUS=3;
 		try{ 
-			if(signUpEmailComposer.getGeneralEmail()== null){
+			if(emailComposer.getGeneralEmail()== null){
 				Exception exp = new Exception("IEmail is not created ");
 				log.error("sendMail(): Exception"+exp.toString());
 				throw exp;
 			}
 				
-			signUpEmailComposer.setEmailDispenser(
-					new EmailDispenser(signUpEmailComposer.getGeneralEmail())
+			emailComposer.setEmailDispenser(
+					new EmailDispenser(emailComposer.getGeneralEmail())
 					);
-			signUpEmailComposer.getEmailDispenser().emailDispense();
+			emailComposer.getEmailDispenser().emailDispense();
 		} catch (IllegalArgumentException illearg){
 			log.error("sendMail():IllegalArgumentException "+illearg.toString());
 			 MAIL_SENT_STATUS= -3;
