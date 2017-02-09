@@ -45,8 +45,8 @@
 					
 						<div class="row clearfix">
 							<h4 class="col-xs-12 form-section-title">1. Course Details</h4>
-							<div class="form-group col-sm-4">
-								<label for="course-category">Course Category <span class="err-msg pull-right">Please enter valid information</span></label>
+							<div class="form-group block-course-category col-sm-4">
+								<label for="course-category"><span class="compulsary-fld">*</span> Course Category <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">									
 								<input type="text" name="categoryList" id="categoryList"
 									list="categoryName" placeholder="Choose a category" size="25px" />
@@ -60,8 +60,8 @@
 								</div>
 								
 							</div>
-							<div class="form-group col-sm-4">
-								<label for="course-major">Course Major <span class="err-msg pull-right">Please enter valid information</span></label>
+							<div class="form-group block-course-major col-sm-4">
+								<label for="course-major"><span class="compulsary-fld">*</span> Course Major <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">									
 								<input type="text" name="majorList" id="majorList"
 									list="majorName" placeholder="Choose a major"
@@ -75,8 +75,8 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
-								<label for="course-level">Course Level <span class="err-msg pull-right">Please enter valid information</span></label>
+							<div class="form-group block-course-level col-sm-4">
+								<label for="course-level"><span class="compulsary-fld">*</span> Course Level <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">									
 								 <input type="text" name="levelList" id="levelList"
 									list="levelName" placeholder="Choose a level" size="25px" />
@@ -92,8 +92,8 @@
 						</div>
 						
 						<div class="row clearfix">			
-							<div class="form-group col-sm-4">
-								<label for="course-name">Course Name <span class="err-msg pull-right">Please enter valid information</span></label>
+							<div class="form-group block-course-name col-sm-4">
+								<label for="course-name"><span class="compulsary-fld">*</span> Course Name <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="courseName" type="text" class="form-control" id="course-name" placeholder="">
 									<span class="ico-box">
@@ -103,7 +103,7 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
+							<div class="form-group block-course-provider col-sm-4">
 								<label for="course-provider">Course Provider <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<!-- <input name="courseProvider" type="text" class="form-control" id="course-provider" placeholder=""> -->
@@ -119,7 +119,7 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
+							<div class="form-group block-class-type col-sm-4">
 								<label for="class-type">Class Type <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">									
 									<input type="text" name="classTypelist"
@@ -139,7 +139,7 @@
 							
 						<div class="row clearfix">
 							<div class="col-sm-8">
-								<div class="form-group form-block-course-description">
+								<div class="form-group block-course-description">
 									<label for="course-description">Course Description <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<textarea name="courseDescription" class="form-control" id="course-description" rows="9"></textarea>
@@ -152,7 +152,7 @@
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
+								<div class="form-group block-course-duration">
 									<label for="course-duration">Course Duration <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="courseDuration" type="text" class="form-control" id="course-duration" placeholder="">
@@ -163,7 +163,7 @@
 										</span>
 									</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group block-course-commencement">
 									<label for="commencement-date">Commencement Date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="commencementDate" type="date" class="form-control" id="commencement-date" placeholder="">
@@ -174,7 +174,7 @@
 										</span>
 									</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group block-course-expiration">
 									<label for="expiration-date">Expiration date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="expirationDate" type="date" class="form-control" id="expiration-date" placeholder="">
@@ -217,7 +217,7 @@
 						
 						<div class="row clearfix">
 							<h4 class="col-xs-12 form-section-title">2. Counselor Details</h4>
-							<div class="form-group col-sm-4">
+							<div class="form-group block-counselor-name col-sm-4">
 								<label for="counselor-name">Counselor Name <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorName" type="text" class="form-control" id="counselor-name" placeholder="">
@@ -228,7 +228,7 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
+							<div class="form-group block-counselor-tel col-sm-4">
 								<label for="counselor-tel">Counselor Telephone <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorTel" type="tel" class="form-control" id="counselor-tel" placeholder="">
@@ -239,7 +239,7 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
+							<div class="form-group block-counselor-email col-sm-4">
 								<label for="counselor-email">Counselor Email <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorEmail" type="email" class="form-control" id="counselor-email" placeholder="">
