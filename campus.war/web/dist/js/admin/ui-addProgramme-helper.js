@@ -117,7 +117,38 @@ function addProgrammeDetails(){
 	var courseDetails =$('#course-description').val();
 	var email =$('#email').val();
 	var courseDuration =$('#course-duration').val();
+	
 	var counselorName =$('#counselor-name').val();
+	var counselorTel =$('#counselor-tel').val();
+	var counselorEmail =$('#counselor-email').val();
+	var courseName=$('#course-name').val();
+	
+
+	if (courseDuration == 'undefined' || !courseDuration && courseDuration == "") {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-duration").addClass("err-block");
+		$('.block-course-duration .err-msg').text("Please insert course duration !");
+	}
+	if (courseName == 'undefined' || !courseName && courseName == "") {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-name").addClass("err-block");
+		$('.block-course-name .err-msg').text("Please insert course Name!");
+	}
+	if (counselorName == 'undefined' || !counselorName && counselorName == "") {
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-name").addClass("err-block");
+		$('.block-counselor-name .err-msg').text("Please insert counselor name!");
+	}
+	if (counselorTel == 'undefined' || !counselorTel && counselorTel == "") {
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-tel").addClass("err-block");
+		$('.block-counselor-tel .err-msg').text("Please insert counselor telephone!");
+	}
+	if (counselorEmail == 'undefined' || !counselorEmail && counselorEmail == "") {
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-email").addClass("err-block");
+		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
+	}
 	
 	//Validate Course Provider selection
 	var providerName = $('#providerList').val();
@@ -171,6 +202,22 @@ function addProgrammeDetails(){
 		$('.block-course-major .err-msg').text("Please select a course major!");	
 	}
 	
+	//Validate Level selection
+	var levelName = $('#levelList').val();
+	var levelCode=0;
+	var option=$('#levelName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#levelName').find('option')[i].outerHTML;
+		if(option[i].text ==levelName){				
+			levelCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	if(levelCode==0){
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-level").addClass("err-block");
+		$('.block-course-level .err-msg').text("Please select a course level!");	
+	}
 	
 	
 	
