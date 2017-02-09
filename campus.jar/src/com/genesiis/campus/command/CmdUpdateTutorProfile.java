@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170207 CW c38-view-update-tutor-profile- modified execute(), setVariables() methods
 //20170208 CW c38-view-update-tutor-profile- modified setVariables() method.
+//20170209 CW c38-view-update-tutor-profile modified execute() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ import com.genesiis.campus.validation.Validator;
 public class CmdUpdateTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
-
+	private String message = "True";
+	
 	/**
 	 * @author Chathuri, Chinthaka
 	 * @param helepr
@@ -32,16 +34,16 @@ public class CmdUpdateTutorProfile implements ICommand {
 	 * @return View object to servlet
 	 */
 
-	private String message = "True";
-
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
 		try {
 			final Validator validator = new Validator();
-			message = validator.validateTutorFields(helper);
-			if (message.equalsIgnoreCase("True")) {
+			
+		//	message = validator.validateTutorFields(helper);
+			
+			if (validator.validateTutorFields(helper)) {
 				
 				final Tutor tutor = new Tutor();
 				final TutorDAO tutorDAO = new TutorDAO();
@@ -55,6 +57,8 @@ public class CmdUpdateTutorProfile implements ICommand {
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
 					result = tutorDAO.update(tutor);
+				}else{
+					message = SystemMessage.NOMODIFICATIONS.message();
 				}
 				
 				if (result > 0) {
@@ -64,7 +68,9 @@ public class CmdUpdateTutorProfile implements ICommand {
 					view.setCollection(tutorViewCollection);		
 
 				} else {
-					message = SystemMessage.ERROR.message();
+					if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()))){
+						message = SystemMessage.ERROR.message();
+					}
 				}
 				
 			}
@@ -90,41 +96,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 			boolean updated = false;
 			//HttpSession session = helper.getSession(false);
 		try {
-
-
-System.out.println("helper.getParameter(codeOld)) 	= " +helper.getParameter("codeOld"));
-System.out.println("helper.getParameter(usernameOld)) 	= " +helper.getParameter("usernameOld"));
-System.out.println("helper.getParameter(passwordOld)) 	= " +helper.getParameter("passwordOld"));
-System.out.println("helper.getParameter(firstnameOld)) 	= " +helper.getParameter("firstnameOld"));
-System.out.println("helper.getParameter(middlenameOld)) 	= " +helper.getParameter("middlenameOld"));
-System.out.println("helper.getParameter(lastnameOld)) 	= " +helper.getParameter("lastnameOld"));
-System.out.println("helper.getParameter(genderOld)) 	= " +helper.getParameter("genderOld"));
-System.out.println("helper.getParameter(emailOld)) 	= " +helper.getParameter("emailOld"));
-System.out.println("helper.getParameter(landphonecountrycodeOld)) 	= " +helper.getParameter("landphonecountrycodeOld"));
-System.out.println("helper.getParameter(landphoneareacodeOld)) 	= " +helper.getParameter("landphoneareacodeOld"));
-System.out.println("helper.getParameter(landphonenumberOld)) 	= " +helper.getParameter("landphonenumberOld"));
-System.out.println("helper.getParameter(mobilephonecountrycodeOld)) 	= " +helper.getParameter("mobilephonecountrycodeOld"));
-System.out.println("helper.getParameter(mobilephonenetworkcodeOld)) 	= " +helper.getParameter("mobilephonenetworkcodeOld"));
-System.out.println("helper.getParameter(mobilephonenumberOld)) 	= " +helper.getParameter("mobilephonenumberOld"));
-System.out.println("helper.getParameter(descriptionOld)) 	= " +helper.getParameter("descriptionOld"));
-System.out.println("helper.getParameter(experienceOld)) 	= " +helper.getParameter("experienceOld"));
-System.out.println("helper.getParameter(weblinkOld)) 	= " +helper.getParameter("weblinkOld"));
-System.out.println("helper.getParameter(facebookurlOld)) 	= " +helper.getParameter("facebookurlOld"));
-System.out.println("helper.getParameter(twitterurlOld)) 	= " +helper.getParameter("twitterurlOld"));
-System.out.println("helper.getParameter(myspaceurlOld)) 	= " +helper.getParameter("myspaceurlOld"));
-System.out.println("helper.getParameter(linkedinurlOld)) 	= " +helper.getParameter("linkedinurlOld"));
-System.out.println("helper.getParameter(instagramurlOld)) 	= " +helper.getParameter("instagramurlOld"));
-System.out.println("helper.getParameter(vibernumberOld)) 	= " +helper.getParameter("vibernumberOld"));
-System.out.println("helper.getParameter(whatsappnumberOld)) 	= " +helper.getParameter("whatsappnumberOld"));
-System.out.println("helper.getParameter(address1Old)) 	= " +helper.getParameter("address1Old"));
-System.out.println("helper.getParameter(address2Old)) 	= " +helper.getParameter("address2Old"));
-System.out.println("helper.getParameter(address3Old)) 	= " +helper.getParameter("address3Old"));
-System.out.println("helper.getParameter(townOld)) 	= " +helper.getParameter("townOld"));
-System.out.println("helper.getParameter(towncodeOld)) 	= " +helper.getParameter("towncodeOld"));
-System.out.println("helper.getParameter(usertypeOld)) 	= " +helper.getParameter("usertypeOld"));
-System.out.println("helper.getParameter(countrynameOld)) 	= " +helper.getParameter("countrynameOld"));
-System.out.println("helper.getParameter(isapprovedOld)) 	= " +helper.getParameter("isapprovedOld"));
-System.out.println("helper.getParameter(tutorstatusOld)) 	= " +helper.getParameter("tutorstatusOld"));
 			
 			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));
 			
