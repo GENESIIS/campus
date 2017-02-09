@@ -68,7 +68,7 @@
 		<form id="banner-from">
 			<div>
 				Advertiser &nbsp; 
-				<input id="page" name="page"
+				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
 					placeholder="-- Select an Advertiser --">
 				<datalist id="advertiserList" name="advertiserList"> </datalist>
@@ -100,7 +100,7 @@
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
 				type="radio" name="bannerEnable" value="yes"> <label
 				for="bannerEnable">Yes</label> <input type="radio"
-				name="bannerDisable" value="No"> <label
+				name="bannerEnable" value="No"> <label
 				for="bannebannerDisablerEnable">No</label>
 			<div></div>
 			<div>
