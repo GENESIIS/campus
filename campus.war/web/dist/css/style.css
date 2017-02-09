@@ -1020,6 +1020,13 @@ body.admin .header {
 .error-form .err-block .err-msg {
   visibility: visible; }
 
+.compulsary-fld {
+  color: #dc2d3d;
+  font-size: 2em;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
 /* Modules */
 .btn-submit {
   width: 45%;

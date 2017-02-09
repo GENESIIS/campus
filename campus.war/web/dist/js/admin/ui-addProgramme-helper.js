@@ -150,17 +150,25 @@ function addProgramme(){
 		document.getElementById('errorToDate').style.color = "red";
 		return false;
 	}*/
-	var fromDate= $('#commencement-date').val();
-    var toDate= $('#expiration-date').val();
+	var fromDate= $("#commencement-date").val();
+    var toDate= $("#expiration-date").val();
     
       
    
+
 	if (fromDate> toDate) {	
 		$(".err-msg pull-right").text("New text here");
 		//$('#err-msg pull-right').text("Invalid Date Range! From Date cannot be after To Date!");		
 		return false;
 	}
-	
+
+	if(fromDate > toDate){	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-commencement, .block-course-expiration").addClass("err-block");
+		$('.block-course-commencement .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
+		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");
+		alert("test");
+	}
 	
 	//After pass the validations developer able to add input data to database.
 	
