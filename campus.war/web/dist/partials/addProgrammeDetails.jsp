@@ -104,7 +104,7 @@
 								</div>
 							</div>
 							<div class="form-group block-course-provider col-sm-4">
-								<label for="course-provider">Course Provider <span class="err-msg pull-right">Please enter valid information</span></label>
+								<label for="course-provider"><span class="compulsary-fld">*</span>Course Provider <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<!-- <input name="courseProvider" type="text" class="form-control" id="course-provider" placeholder=""> -->
 									<input type="text" name="providerList"
@@ -153,7 +153,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group block-course-duration">
-									<label for="course-duration">Course Duration <span class="err-msg pull-right">Please enter valid information</span></label>
+									<label for="course-duration"><span class="compulsary-fld">*</span>Course Duration <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="courseDuration" type="text" class="form-control" id="course-duration" placeholder="">
 										<span class="ico-box">
@@ -166,7 +166,7 @@
 								<div class="form-group block-course-commencement">
 									<label for="commencement-date">Commencement Date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
-										<input name="commencementDate" type="date" class="form-control" id="commencement-date" placeholder="">
+										<input name="commencementDate" type="date" class="form-control" id="commencement-date"  placeholder="">
 										<span class="ico-box">
 											<span class="normal fa fa-calendar-check-o" aria-hidden="true"></span>
 											<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
@@ -218,7 +218,7 @@
 						<div class="row clearfix">
 							<h4 class="col-xs-12 form-section-title">2. Counselor Details</h4>
 							<div class="form-group block-counselor-name col-sm-4">
-								<label for="counselor-name">Counselor Name <span class="err-msg pull-right">Please enter valid information</span></label>
+								<label for="counselor-name"><span class="compulsary-fld">*</span>Counselor Name <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorName" type="text" class="form-control" id="counselor-name" placeholder="">
 									<span class="ico-box">
@@ -229,7 +229,7 @@
 								</div>
 							</div>
 							<div class="form-group block-counselor-tel col-sm-4">
-								<label for="counselor-tel">Counselor Telephone <span class="err-msg pull-right">Please enter valid information</span></label>
+								<label for="counselor-tel"><span class="compulsary-fld">*</span>Counselor Telephone <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorTel" type="tel" class="form-control" id="counselor-tel" placeholder="">
 									<span class="ico-box">
@@ -240,7 +240,7 @@
 								</div>
 							</div>
 							<div class="form-group block-counselor-email col-sm-4">
-								<label for="counselor-email">Counselor Email <span class="err-msg pull-right">Please enter valid information</span></label>
+								<label for="counselor-email"><span class="compulsary-fld">*</span>Counselor Email <span class="err-msg pull-right">Please enter valid information</span></label>
 								<div class="input-wrapper">
 									<input name="counselorEmail" type="email" class="form-control" id="counselor-email" placeholder="">
 									<span class="ico-box">

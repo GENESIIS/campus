@@ -62,9 +62,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				final ProgrammeDTO programmeDTO=new ProgrammeDTO();
 				FormValidator.validateProgrammeDetails(helper);
 				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
-				int value = programmeDAO.addProgrammeDetails(programmeDTO);
-			}
-			
+				//int value = programmeDAO.addProgrammeDetails(programmeDTO);
+			}	
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);			
