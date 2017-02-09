@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 
 
 import com.genesiis.campus.entity.BannerDAO;
+import com.genesiis.campus.entity.BannerSlotDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -63,19 +64,18 @@ private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLE
 			// get the pages Collection wrapper
 			ICrud PagesWithBannersDAO = new  PageWithBannersDAO();
 			helper.setAttribute("bannerPages", PagesWithBannersDAO.getAll());
-		
+			break;
+		case UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE :
 			
+			String pagecode = helper.getParameter("selectedCodeOfThePage");
+			// get the page slot assign to a particular page
+			ICrud pageSlotDAO= new BannerSlotDAO();
+			view.setCollection(pageSlotDAO.findById(pagecode));
 			break;
 		default:
 			break;
 		}
-
 		return view;
-		// (3) get the page specific collection 
-		
-		
-		
-		
 		
 	} catch(SQLException sqle){
 		log.error("getBannerPreRequisites(IDataHelper helper, IView view):SQLException"+sqle.toString());
