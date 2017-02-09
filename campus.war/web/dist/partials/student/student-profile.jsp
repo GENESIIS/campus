@@ -11,6 +11,10 @@
 <!-- 20170207 TR CAM-28: changed modal-header-title - Personal details into About Me -->
 <!-- 20170207 TR CAM-28: modified html layout on About Me modal:Contact Details area - added div structure -->
 <!-- 20170208 TR CAM-28: modified html layout on Professional Details modal - added div structure -->
+<!-- 20170208 TR CAM-28: modified html layout on Education Details modal: school education tab - added div structure -->
+<!-- 20170209 TR CAM-28: modified html layout on Education Details modal: Higher education tab - added div structure -->
+<!-- 20170209 TR CAM-28: changed modal-footer layout on Education Details modal -->
+<!-- 20170209 TR CAM-28: Added separate footers for school education and higher education tabs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -403,31 +407,31 @@
       <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
       		<h2 class="sub-title-1">| Personal Details</h2>
       		<div class="well clearfix">
-      		    <div class="show modal-input-field">
+      		    <div class="show modal-input-field clearfix">
                     <label>First Name :</label>
                     <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
                     <span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label>Middle Name :</label>
                     <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
                     <span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label>Last Name :</label>
                     <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
                     <span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
 			    </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Birth Date :</label>
                     <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
                     <span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
                 </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left l-h-26">Gender :</label>
                     <div class="btn-group-radio">
                         <input type="radio" name="gender" value="1"><span>Male</span>
@@ -435,7 +439,7 @@
                     </div>
                 </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left">About :</label>
                     <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
                     <span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
@@ -445,7 +449,7 @@
             <br>
 			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
                     <label>Country :</label>
                     <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
                         <datalist name="sCountryList" id="sCountryList">
@@ -454,13 +458,13 @@
                     <span id="sCountryError" name="sCountryError" style="color:red"></span><br>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                      <label>Town :</label>
                      <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <input hidden type="text" id="sTownCode" name="sTownCode"/>
                     <span id="sTownError" name="sTownError" style="color:red"></span>
                     <label>Address :</label>
@@ -468,7 +472,7 @@
                     <span id="sAddressError" name="sAddressError" style="color:red"></span>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
                     <label>Mobile Number :</label>
                     <div class="input-group">
                         <span class="input-group-addon" id="countryCodePrefix">+</span>
@@ -477,7 +481,7 @@
                     <span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
                     <label>Home Number :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
@@ -486,43 +490,43 @@
                     </div>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Email :</label>
                     <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
                     <span id="sEmailError" name="sEmailError" style="color:red"></span><br>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Facebook URL :</label>
                     <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200" placeholder="www.facebook.com/username">
                     <span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Twitter URL :</label>
                     <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200" placeholder="www.twitter.com/username">
                     <span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label>LinkedIn URL :</label>
                     <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200" placeholder="www.linkedin.com/username">
                     <span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Instagram URL :</label>
                     <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200" placeholder="www.instagram.com/username">
                     <span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>MySpace :</label>
                     <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200" placeholder="www.myspace.com/username">
                     <span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
 			    </div>
 
-			    <div class="show modal-input-field">
+			    <div class="show modal-input-field clearfix">
 			        <label>WhatsApp :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
@@ -531,7 +535,7 @@
                     </div>
                 </div>
 
-                <div class="show modal-input-field">
+                <div class="show modal-input-field clearfix">
                     <label>Viber :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix">+</span>
@@ -542,6 +546,7 @@
 			</div>
 			<!-- End Contact details area -->
 	  </div>
+	  <!-- End modal-body -->
 
 	  <!-- Start Modal Footer -->
       <div class="modal-footer">
@@ -554,184 +559,251 @@
     </div>
   </div>
 </div>
+<!-- End personal details modal -->
 
 <!-- School Education -->
 <div class="modal fade" id="studentSchoolEducationModal" tabindex="-1" role="dialog" aria-labelledby="studentSchoolEducation" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
+
       <div class="modal-header">
         <h4 class="modal-title" id="studentSchoolEducation">Education Details</h4>
       </div>
+      <!-- End model header -->
+
       <div class="modal-body">
-      
-	<div id="exTab2" class="">
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#1" data-toggle="tab">School Education</a></li>
-			<li><a href="#2" data-toggle="tab">Higher Education</a></li>
-		</ul>
 
-		<div class="tab-content ">
-			<div class="tab-pane active" id="1">
-			
-			<br>
-			<p>Please add you most highest completed school education details.</p>
-				<div class="">
-      				<div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div>
-			Grade  
-			<select id="sseQualification" name = "sseQualification" onchange="clearField('sseQualificationError')">
-				<option value="">--Select One--</option>
-			</select> <span id="sseQualificationError" name="sseQualificationError" style="color:red"></span>
-			<br/>
-			Subject Stream
-			<select id="sseStream" name = "sseStream" onchange="clearField('sseStreamError')">
-				<option value="">--Select One--</option>
-			</select> <span id="sseStreamError" name="sseStreamError" style="color:red"></span>
-			<br/>
-			Result
-			<select id="sseResult" name = "sseResult" onchange="clearField('sseResultError')">
-				<option value="">--Select One--</option>
-				<option value="1">Pass</option>
-				<option value="0">Fail</option>
-			</select> <span id="sseResultError" name="sseResultError" style="color:red"></span>
-			<br/>
-			Index No <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')" maxlength="20">
-			<span id="sseIndexNoError" name="sseIndexNoError" style="color:red"></span><br>
-			
-			School <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')" maxlength="200">
-			<span id="sseSchoolError" name="sseSchoolError" style="color:red"></span><br>
-			
-			Achieved on <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')">
-			<span id="sseAchievedonError" name="sseAchievedonError" style="color:red"></span><br>
-			
-			Medium
-			<select name="sseMedium" id="sseMedium" onchange="clearField('sseMediumError')">
-				<option value="">--Select One--</option>
-			</select><span name="sseMediumError" id="sseMediumError" style="color:red"></span>
-			<br/>
-			
-			Country
-			 <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --"/>
-			 	<datalist name="sseCountryList" id="sseCountryList">
-			 	</datalist>
-			<br/>
-			
-			Description
-			<textarea rows="5" cols="40" name="sseDescription" id="sseDescription" maxlength="200"></textarea>
-			<br>
-		<button type="button" class="btn btn-secondary" onclick="">Clear</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-        <button type="button" class="btn btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>	
-	  			</div>
-			</div>
-			<div class="tab-pane" id="2">
-				<h3>Higher Education</h3>
-				
-				<div class="">
-      <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
-			Institute of Study  
-			<input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200">
-			<span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
-			<br/>
-			Affiliated Institute  
-			<input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')" maxlength="200">
-			<span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span><br>
-			<br/>
-			
-			Area of study
-			<select id="areaofstudy" name = "areaofstudy" onchange="clearField('areaofstudyError')">
-				<option value="">--Select One--</option>
-			</select> <span id="areaofstudyError" name="areaofstudyError" style="color:red"></span>
-			<br/>
-			Award
-			<select id="award" name = "award" onchange="clearField('awardError')">
-				<option value="">--Select One--</option>
-			</select> <span id="awardError" name="awardError" style="color:red"></span>
-			<br/>
-			Student ID (University Index) <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200">
-			<span id="studentIdError" name="studentIdError" style="color:red"></span><br>
-			
-			GPA/Result <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')" maxlength="2" onkeypress="return isNumber(event)">
-			<span id="gpa" name="gpa" style="color:red"></span><br>
-			
-			Commenced On <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
-			<span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span><br>
-			
-			Completed On <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
-			<span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span><br>
-			
-			Medium
-			<select name="heMedium" id="heMedium" onchange="clearField('heMediumError')">
-				<option value="">--Select One--</option>
-			</select><span name="heMediumError" id="heMediumError" style="color:red"></span>
-			<br/>
-			
-			Country
-			 <input type="text" id="heCountry" name="heCountry" list="heCountryList" placeholder="-- Select Country --"/>
-			 	<datalist name="heCountryList" id="heCountryList">
-			 	</datalist>
-			<br/>
-			<input hidden id="heCountryvalue" name="heCountryvalue"/>
-			
-			Description
-			<textarea rows="5" cols="40" name="heDescription" id="heDescription" maxlength="200" ></textarea>
-			
-						<br/><br/>
-					<form id="frm-hedu" action="/path/to/your/script" method="POST">
+        <div class="well clearfix">
+        <div id="exTab2" class="">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#1" data-toggle="tab">School Education</a></li>
+                <li><a href="#2" data-toggle="tab">Higher Education</a></li>
+            </ul>
 
-						<table id="higherEdutbl"
-							class="table table-striped table-bordered dt-responsive nowrap"
-							cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
-									<th><b>Institute</b></th>
-									<th><b>Certificate</b></th>
-									<th><b>Result</b></th>
-									<th><b>Medium</b></th>
-									<th><b>Country</b></th>
-									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
-									<th></th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th><b>Institute</b></th>
-									<th><b>Certificate</b></th>
-									<th><b>Result</b></th>
-									<th><b>Medium</b></th>
-									<th><b>Country</b></th>
-									<th><b>Duration</b></th>
-									<th><b>Description</b></th>
-									<th></th>
-								</tr>
-							</tfoot>			
-						</table>
-						<hr>
-						<p>
-							<button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
-						</p>
-						<pre id="higherEdu-console"></pre>
-					</form>
-					<br />
-			
-			
+            <div class="tab-content ">
+                <div class="tab-pane active" id="1">
+                    <p class="w-m-1">Please add you most highest completed school education details.</p>
+
+                    <div class="content-body">
+                        <div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Grade :</label>
+                            <select id="sseQualification" name = "sseQualification" onchange="clearField('sseQualificationError')">
+                                <option value="">--Select One--</option>
+                            </select> <span id="sseQualificationError" name="sseQualificationError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Subject Stream :</label>
+                            <select id="sseStream" name = "sseStream" onchange="clearField('sseStreamError')">
+                                <option value="">--Select One--</option>
+                            </select> <span id="sseStreamError" name="sseStreamError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Result :</label>
+                            <select id="sseResult" name = "sseResult" onchange="clearField('sseResultError')">
+                                <option value="">--Select One--</option>
+                                <option value="1">Pass</option>
+                                <option value="0">Fail</option>
+                            </select> <span id="sseResultError" name="sseResultError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Index No :</label>
+                            <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')" maxlength="20">
+                            <span id="sseIndexNoError" name="sseIndexNoError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>School :</label>
+                            <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')" maxlength="200">
+                            <span id="sseSchoolError" name="sseSchoolError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Achieved on :</label>
+                            <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')">
+                            <span id="sseAchievedonError" name="sseAchievedonError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Medium :</label>
+                            <select name="sseMedium" id="sseMedium" onchange="clearField('sseMediumError')">
+                            <option value="">--Select One--</option>
+                            </select><span name="sseMediumError" id="sseMediumError" style="color:red"></span>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Country :</label>
+                            <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --"/>
+                            <datalist name="sseCountryList" id="sseCountryList"></datalist>
+                        </div>
+
+                        <div class="show modal-input-field clearfix">
+                            <label>Description :</label>
+                            <textarea rows="5" cols="40" name="sseDescription" id="sseDescription" maxlength="200"></textarea>
+                        </div>                           
+                    </div>
+                    <!-- End content body: school education -->
+                    
+                    <div class="modal-footer sh-footer">
+	                    <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
+	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+	                    <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
+                    </div>
+                    <!-- End School education footer -->
+                </div>
+
+                <div class="tab-pane" id="2">
+
+	                <!-- <h3>Higher Education</h3>  -->
+	
+	                <div class="content-body">
+	                
+		                <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
+		                
+		                <div class="show modal-input-field clearfix">
+			                <label>Institute of Study :</label>
+			                <input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200">
+			                <span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
+		                </div>
+		                
+		                <div class="show modal-input-field clearfix">
+			                <label>Affiliated Institute :</label>
+			                <input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')" maxlength="200">
+			                <span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span>
+		                </div>
+		
+						<div class="show modal-input-field clearfix">
+			                <label>Area of study :</label>
+			                <select id="areaofstudy" name = "areaofstudy" onchange="clearField('areaofstudyError')">
+			                    <option value="">--Select One--</option>
+			                </select> 
+			                <span id="areaofstudyError" name="areaofstudyError" style="color:red"></span>
+		                </div>
+		               
+		                <div class="show modal-input-field clearfix">
+		                	<label>Award :</label>
+			                <select id="award" name = "award" onchange="clearField('awardError')">
+			                    <option value="">--Select One--</option>
+			                </select> 
+			                <span id="awardError" name="awardError" style="color:red"></span>
+		                </div>
+		                
+		                <div class="show modal-input-field clearfix">
+			                <label>Student ID (University Index) :</label>
+			                <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200">
+			                <span id="studentIdError" name="studentIdError" style="color:red"></span>
+		                </div>
+		                
+		                <div class="show modal-input-field clearfix">
+			                <label>GPA/Result :</label>
+			                <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')" maxlength="2" onkeypress="return isNumber(event)">
+			                <span id="gpa" name="gpa" style="color:red"></span>
+		                </div>
+						
+						<div class="show modal-input-field clearfix">
+			                <label>Commenced On :</label>
+			                <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
+			                <span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span>
+		                </div>
+						
+						<div class="show modal-input-field clearfix">
+			                <label>Completed On :</label>
+			                <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
+			                <span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span>
+		                </div>
+		
+		                <div class="show modal-input-field clearfix">
+			                <label>Medium :</label>
+			                <select name="heMedium" id="heMedium" onchange="clearField('heMediumError')">
+			                    <option value="">--Select One--</option>
+			                </select><span name="heMediumError" id="heMediumError" style="color:red"></span>
+		                </div>
+		
+		                <div class="show modal-input-field clearfix">
+			                <label>Country :</label>
+			                <input type="text" id="heCountry" name="heCountry" list="heCountryList" placeholder="-- Select Country --"/>
+			                <datalist name="heCountryList" id="heCountryList"></datalist>
+			                <input hidden id="heCountryvalue" name="heCountryvalue"/>
+		                </div>
+		
+						<div class="show modal-input-field clearfix">
+			                <label>Description :</label>
+			                <textarea rows="5" cols="40" name="heDescription" id="heDescription" maxlength="200" ></textarea>
+						</div>
+		                <br/><br/>
+		                
+		                <div class="form-holder">
+                        <form id="frm-hedu" action="/path/to/your/script" method="POST">
+
+                            <table id="higherEdutbl"
+                                class="table table-striped table-bordered dt-responsive nowrap"
+                                cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><input name="select_all" id="example-select-all" value="1" type="checkbox"></th>
+                                        <th><b>Institute</b></th>
+                                        <th><b>Certificate</b></th>
+                                        <th><b>Result</b></th>
+                                        <th><b>Medium</b></th>
+                                        <th><b>Country</b></th>
+                                        <th><b>Duration</b></th>
+                                        <th><b>Description</b></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th><b>Institute</b></th>
+                                        <th><b>Certificate</b></th>
+                                        <th><b>Result</b></th>
+                                        <th><b>Medium</b></th>
+                                        <th><b>Country</b></th>
+                                        <th><b>Duration</b></th>
+                                        <th><b>Description</b></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <p>
+                                <button class="btn btn-modal btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+                            </p>
+                            <pre id="higherEdu-console"></pre>
+                        </form>
+                        </div> 
+                        <br />                       	
+		          	</div>
+		          	<!-- End content body : higher education -->
+		          	
+					<div class="modal-footer sh-footer">
+	                    <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
+	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+	                    <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
+                    </div>
+                    <!-- End hogher education footer -->
+                    
+                </div>
+                <!-- End higher education tab pane  -->
+            </div>
+        </div>
 	  </div>
-				 	<button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
-        			<button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
-        			<button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
-			</div>
-		</div>
-	</div>
-     
-      
-	  </div>
-      <div class="modal-footer">
-      </div>
     </div>
+    <!-- End modal-body -->
+    	<!-- 
+    	<div class="modal-footer">
+           <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
+           <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+           <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
+        </div>
+        <!-- End modal footer -->
   </div>
 </div>
+</div> 
+<!-- End education details modal -->
 
 <!-- Professional Details Modal -->
 <div class="modal modal-professional fade" id="studentProfessionalDetailsModal" tabindex="-1" role="dialog" aria-labelledby="studentPersonalDetails" aria-hidden="true">
@@ -834,12 +906,13 @@
    </div>
   </div>
 </div>
+<!-- End prfessional details modal --> 
 
 <!-- Footer -->
 <!--<footer w3-include-html="../layout/footer.jsp"></footer>-->
 <footer>
     <div class="ft-top">
-
+		
     </div>
     <div class="ft-bottom text-center">
         <label for="Copyright">Copyright © Campus.lk</label>

@@ -2,6 +2,7 @@
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
 /* 20170207 TR CAM-139 changed modal-footer styles */
 /* 20170208 TR CAM-139 added new styles for professional details modal */
+/* 20170208 TR CAM-139 added new styles for education details modal */
 
 .modal
   .modal-dialog
@@ -21,6 +22,10 @@
       .modal-body
         background-color: #f2f7f9
         padding: 25px 40px
+        border-radius: 0 0 6px 6px
+
+        .tab-content
+          padding: 15px 0 0
 
       .modal-footer
         border: none
@@ -166,6 +171,24 @@
         select
           margin-right: 15px
 
+.nav-tabs
+  border-bottom: 2px solid #5e8ee2
+  font-family: "Roboto", sans-serif
+  color: #507ac3
+  font-size: 18px
+
+.nav-tabs
+  li > a
+    //border: 2px solid #5e8ee2
+    border-bottom-color: transparent
+    &:active,
+    &:focus,
+    &:hover
+      border: 2px solid #5e8ee2 !important
+      border-bottom-color: transparent !important
+
+.nav-tabs > li.active > a
+  border: 2px solid #5e8ee2 !important
 
 // Professional Details Modal styles
 
@@ -177,6 +200,9 @@
     label
       width: 30%
 
-
+.sh-footer
+  box-shadow: none !important
+  border-top: 1px solid #5e8ee2 !important
+  margin-top: 20px
 
 
