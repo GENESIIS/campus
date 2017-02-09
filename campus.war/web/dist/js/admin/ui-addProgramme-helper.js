@@ -109,6 +109,9 @@ function populateProgrammeAddView(response) {
  */
 function addProgrammeDetails(){	
 	
+	
+	
+	
 	var providerName =$('#providerName').val();
 	var courseName =$('#courseName').val();
 	var courseDetails =$('#course-description').val();
@@ -116,8 +119,61 @@ function addProgrammeDetails(){
 	var courseDuration =$('#course-duration').val();
 	var counselorName =$('#counselor-name').val();
 	
-/*	var params = { courseName:$('#courseName').val(), 
-			courseDetails:$('#courseDetails').val() };*/
+	//Validate Course Provider selection
+	var providerName = $('#providerList').val();
+	var providerCode=0;
+	var option=$('#providerName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#providerName').find('option')[i].outerHTML;
+		if(option[i].text ==providerName){				
+			providerCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	if(providerCode==0){
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-provider").addClass("err-block");
+		$('.block-course-provider .err-msg').text("Please select a course provider!");	
+	}
+	
+	
+	//Validate Category selection
+	var categoryName = $('#categoryList').val();
+	var categoryCode=0;
+	var option=$('#categoryName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#categoryName').find('option')[i].outerHTML;
+		if(option[i].text ==categoryName){				
+			providerCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	if(providerCode==0){
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-category").addClass("err-block");
+		$('.block-course-category .err-msg').text("Please select a course category!");	
+	}
+	
+	//Validate Major selection
+	var majorName = $('#majorList').val();
+	var majorCode=0;
+	var option=$('#majorName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#majorName').find('option')[i].outerHTML;
+		if(option[i].text ==majorName){				
+			majorCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	if(majorCode==0){
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-major").addClass("err-block");
+		$('.block-course-major .err-msg').text("Please select a course major!");	
+	}
+	
+	
+	
+	
 	
 	var email= $('#email').val();			
 	/*if (!isEmpty(email) || !isValidEmailFormat(email)) {
