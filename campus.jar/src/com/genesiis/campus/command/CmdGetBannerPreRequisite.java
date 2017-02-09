@@ -1,7 +1,7 @@
 
 package com.genesiis.campus.command;
 /*
- * 20170203 DN c131-admin-manage-banner-upload-bann c
+ * 20170203 DN c131-admin-manage-banner-upload-bann created
  * 				the CmdGetBannerPreRequisite.java class
  */
 
@@ -63,6 +63,7 @@ private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLE
 			// get the pages Collection wrapper
 			ICrud PagesWithBannersDAO = new  PageWithBannersDAO();
 			helper.setAttribute("bannerPages", PagesWithBannersDAO.getAll());
+		
 			
 			break;
 		default:
