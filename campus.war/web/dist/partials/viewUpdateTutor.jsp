@@ -90,7 +90,7 @@
 		<table align="center">
 			<tr>
 				<td>
-					<h2 id="message">${message}</h2>
+					<h2 id="message" style="color: red">${message}</h2>
 				</td>
 			</tr>
 			<tr>
@@ -102,21 +102,23 @@
 			<tr>
 				<td>First Name <span id="firstNameError"></span></td>
 				<td><input type="text" name="firstname" id="firstName"
-					maxlength="20" onclick="clearField('firstNameError')"
-					value="${firstname}" /></td>
+					maxlength="20" onchange="clearField('firstNameError')"
+					value="${firstname}" /><span id="firstNameError"
+						style="color: red"> ${firstNameError} </span></td>
 			</tr>
 
 			<tr>
 				<td>Middle Name <span id="middleNameError"></span></td>
 				<td><input type="text" name="middlename" id="middleName"
-					maxlength="20" onclick="clearField('middleNameError')"
+					maxlength="20" onchange="clearField('middleNameError')"
 					value="${middlename}" /></td>
 			</tr>
 			<tr>
 				<td>Last Name <span id="lastNameError"></span></td>
 				<td><input type="text" name="lastname" id="lastName"
-					maxlength="20" onclick="clearField('lastNameError')"
-					value="${lastname}" /></td>
+					maxlength="20" onchange="clearField('lastNameError')"
+					value="${lastname}" /><span id="lastNameError"
+					style="color: red"> ${lastNameError} </span></td>
 			</tr>
 			<tr>
 				<td>Gender</td>
@@ -132,15 +134,16 @@
 			<tr>
 				<td>Experience<span id="experienceError"></span>
 				<td><textarea rows="10" cols="26" name="experience"
-						id="experience">
-			<c:out value="${experience}" /></textarea></td>
+						id="experience"><c:out value="${experience}" /></textarea><span
+						id="experienceError" style="color: red"> ${experienceError} </span></td>
 			</tr>
 
 			<tr>
 				<td>About Me <span id="aboutMeError"></span></td>
 				<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
-						onclick="clearField('aboutMeError')">
-				<c:out value="${description}" /></textarea></td>
+						onchange="clearField('aboutMeError')">
+						<c:out value="${description}" /></textarea><span
+						id="aboutMeError" style="color: red"> ${aboutMeError} </span></td>
 			</tr>
 			<tr>
 				<td><h2>Contact Info</h2></td>
@@ -150,55 +153,57 @@
 				<td>${countryname}</td>
 
 				<td><span id="countryError"></span> <select
-					name="countryDetails" id="countryDetails">
+					name="countryDetails" id="countryDetails" onchange="clearField('countryError')">
 						<option></option>
-				</select></td>
+				</select><span id="countryError" style="color: red"> ${countryError} </span></td>
 			</tr>
 			<tr>
 				<td>Town</td>
 
 				<td>${town}</td>
 				<td><span id="townError"></span> <select name="townDetails"
-					id="townDetails">
+					id="townDetails" onchange="clearField('townError')">
 						<option></option>
-				</select></td>
+				</select><span id="townError" style="color: red"> ${townError} </span></td>
 			</tr>
 			<tr>
 				<td>Mobile</td>
 				<td><span id="mobileError"></span> <input type="text"
-					name="mobileCountryCode" id="mobileCountryCode" maxlength="4"
-					onclick="clearField('mobileError')" readonly
-					value="${mobilephonecountrycode}" /></td>
+					name="mobileCountryCode" id="mobileCountryCode" maxlength="5"
+					onchange="clearField('mobileError')" readonly value="${mobilephonecountrycode}" />
+					<span id="mobileError" style="color: red"> ${mobileError} </span></td>
 
 				<td><span id="mobileError"></span> <input type="text"
 					name="mobileNetworkCode" id="mobileNetworkCode" maxlength="10"
-					onclick="clearField('mobileError')"
-					value="${mobilephonenetworkcode}" /></td>
+					onchange="clearField('mobileError')"	value="${mobilephonenetworkcode}" />
+					<span id="mobileNetworkError" style="color: red"> ${mobileNetworkError} </span></td>
 
 				<td><span id="mobileError"></span> <input type="text"
-					name="mobileNumber" id="mobileNumber" maxlength="15"
-					onclick="clearField('mobileError')" value="${mobilephonenumber}" /></td>
+					name="mobileNumber" id="mobileNumber" maxlength="11"
+					onchange="clearField('mobileError')" value="${mobilephonenumber}" />
+					<span id="mobileNumberError" style="color: red"> ${mobileNumberError} </span></td>
 			</tr>
 			<tr>
 				<td>Land</td>
 				<td><span id="landError"></span> <input type="text"
-					name="landCountryCode" id="landCountryCode" maxlength="4"
-					onclick="clearField('mobileError')" readonly
-					value="${landphonecountrycode}" /></td>
+					name="landCountryCode" id="landCountryCode" maxlength="5"
+					onchange="clearField('mobileError')" readonly value="${landphonecountrycode}" />
+					<span id="landError" style="color: red"> ${landError} </span></td>
 
 				<td><span id="landError"></span> <input type="text"
 					name="landAreaCode" id="landAreaCode" maxlength="10"
-					onclick="clearField('mobileError')" value="${landphoneareacode}" /></td>
+					onchange="clearField('mobileError')" value="${landphoneareacode}" />
+					<span id="landAreaCodeError" style="color: red"> ${landAreaCodeError} </span></td>
 
 				<td><input type="text" name="landNumber" id="landNumber"
-					maxlength="15" onclick="clearField('landError')"
-					value="${landphonenumber}" /></td>
+					maxlength="10" onchange="clearField('landError')" value="${landphonenumber}" />
+					<span id="landNumberError" style="color: red"> ${landNumberError} </span></td>
 			</tr>
 			<tr>
 				<td>Address Line 1 <span id="address1Error"></span></td>
 				<td><input type="text" name="address1" id="address1"
-					maxlength="30" onclick="clearField('address1Error')"
-					value="${address1}" /></td>
+					maxlength="30" onchange="clearField('address1Error')" value="${address1}" />
+					<span id="address1Error" style="color: red"> ${address1Error} </span></td>
 			</tr>
 			<tr>
 				<td>Address line 2 <span id="address2Error"></span></td>
@@ -213,43 +218,49 @@
 
 			<tr>
 				<td>Web link <span id="weblinkError"></span></td>
-				<td><input type="text" name="weblink" id="weblink"
-					value="${weblink}" /></td>
+				<td><input type="text" name="weblink" id="weblink" value="${weblink}" />
+				<span id="weblinkError" style="color: red"> ${weblinkError} </span></td>
 			</tr>
 			<tr>
 				<td>Facebook <span id="facebookError"></span></td>
 				<td><input type="text" name="facebook" id="facebook"
-					value="${facebookurl}" /></td>
+					value="${facebookurl}" /><span id="facebookError"
+					style="color: red"> ${facebookError} </span> </td>
 			</tr>
 			<tr>
 				<td>LinkedIn <span id="linkedInError"></span></td>
 				<td><input type="text" name="linkedin" id="linkedin"
-					value="${linkedinurl}" /></td>
+					value="${linkedinurl}" /><span id="linkedInError"
+					style="color: red"> ${linkedInError} </span></td>
 			</tr>
 			<tr>
 				<td>Twitter <span id="twitterError"></span></td>
 				<td><input type="text" name="twitter" id="twitter"
-					value="${twitterurl}" /></td>
+					value="${twitterurl}" /><span id="twitterError"
+					style="color: red"> ${twitterError} </span></td>
 			</tr>
 			<tr>
 				<td>Instagram <span id="instagramError"></span></td>
 				<td><input type="text" name="instagram" id="instagram"
-					value="${instagramurl}" /></td>
+					value="${instagramurl}" /><span id="instagramError"
+					style="color: red"> ${instagramError} </span></td>
 			</tr>
 			<tr>
 				<td>Myspace <span id="mySpaceError"></span></td>
 				<td><input type="text" name="myspace" id="myspace"
-					value="${myspaceurl}" /></td>
+					value="${myspaceurl}" /><span
+					id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
 			</tr>
 			<tr>
 				<td>WhatsApp <span id="whatsappError"></span></td>
 				<td><input type="text" name="whatsapp" id="whatsapp"
-					maxlength="10" value="${whatsappnumber}" /></td>
+					maxlength="10" value="${whatsappnumber}" /><span id="whatsappError"
+						style="color: red"> ${whatsappError} </span></td>
 			</tr>
 			<tr>
 				<td>Viber <span id="viberError"></span></td>
-				<td><input type="text" name="viber" id="viber" maxlength="10"
-					value="${vibernumber}" /></td>
+				<td><input type="text" name="viber" id="viber" maxlength="10" value="${vibernumber}" />
+					<span id="viberError" style="color: red"> ${viberError} </span></td>
 			</tr>
 			<tr>
 				<td><h2>Account Info</h2></td>
@@ -261,8 +272,7 @@
 					<td><input type="checkbox" name="isApproved" value="1" /></td>
 				</c:if>
 				<c:if test="${isapproved == 1}">
-					<td><input type="checkbox" name="isApproved" value="1" checked
-						disabled readonly></td>;
+					<td><input type="checkbox" name="isApproved" value="1" checked disabled readonly></td>;
 					<input type="hidden" name="isApproved" id="isApproved" value="1" />
 				</c:if>
 			</tr>
@@ -294,25 +304,26 @@
 			<tr>
 				<td>Email <span id="emailError"></span></td>
 				<td><input type="text" name="email" id="email"
-					onclick="clearField('emailError')" value="${email}" /></td>
+					onchange="clearField('emailError')" value="${email}" /><span
+					id="emailError" style="color: red"> ${emailError} </span></td>
 			</tr>
 			<tr>
 				<td>Username <span id="usernameError"></span></td>
 				<td><input type="text" name="username" id="username"
-					maxlength="50" onclick="clearField('usernameError')"
-					value="${username}" readonly /></td>
+					maxlength="50" onchange="clearField('usernameError')" value="${username}" readonly />
+					<span id="usernameError" style="color: red"> ${usernameError} </span></td>
 			</tr>
 			<tr>
 				<td>Password <span id="passwordError"></span></td>
 				<td><input type="password" name="password" id="password"
-					maxlength="20" onclick="clearField('passwordError')"
-					value="${password}" /></td>
+					maxlength="20" onchange="clearField('passwordError')" value="${password}" />
+					<span id="passwordError" style="color: red"> ${passwordError} </span></td>
 			</tr>
 			<tr>
 				<td>Confirm Password <span id="confirmPasswordError"></span></td>
-				<td><input type="password" name="confirmPassword"
-					id="confirmPassword" maxlength="20"
-					onclick="clearField('confirmPasswordError')" value="${password}" /></td>
+				<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="20"
+					onchange="clearField('confirmPasswordError')" value="${password}" /><span
+					id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>
 			</tr>
 
 			<tr>
