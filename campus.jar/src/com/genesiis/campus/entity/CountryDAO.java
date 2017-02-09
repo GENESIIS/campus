@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20170124 CW c36-add-tutor-details modified findById() method according to the 201701201215 DJ crev modification request.
 //20170130 CW c36-add-tutor-information re-organize the import statements.
 //20170207 CW c38-view-update-tutor-profile- modified findCountryByCode() method
+//20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -147,7 +148,7 @@ public class CountryDAO implements ICrud{
 
 		try {
 			
-			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [NAME]";
+			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [SORT]";
 			
 			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
