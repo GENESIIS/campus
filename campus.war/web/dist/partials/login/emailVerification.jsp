@@ -33,7 +33,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-6">
-
+				<label for="error-msg" class="error-msg"><span
+										class="error-txt" id="messsage"></span></label>
 				<div class="form-group has-error">
 					<label for="username"> Email <span class="error-txt"
 						id="emailtbError"></span></label> <input type="email" class="form-control"
@@ -73,8 +74,18 @@
 						<div class="col-sm-6">
 
 							<label class="" id="popupMessage">Your email verified  </label>
-
-							
+							<div class="form-group has-error">
+									<label for="username">Please enter the verification code<span
+										class="error-txt" id="emailtbError"></span></label> <input
+										type="text" class="form-control" id="verifyCode"
+										placeholder="Verification Code" required
+										>
+								</div>								
+							<div class="form-group">
+									<button type="button" class="btn btn-primary btn-block"
+										name="CCO" id="CCO" value=""
+										onclick="verifyCode()">Verify</button>
+								</div>
 						</div>
 					</div>
 				</div>
