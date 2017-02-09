@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170118 CW c38-view-update-tutor-profile - removed findTownByCode() method
 //20170124 CW c36-add-tutor-details modified findById() method same as findById() in CountryDAO.java class according to the 201701201215 DJ crev modification request.
 //20170207 CW c38-view-update-tutor-profile-re organize the import statements.
+//20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -117,7 +118,7 @@ public class TownDAO implements ICrud{
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT [CODE],[NAME], [COUNTRY] FROM [CAMPUS].[Town] ORDER BY [NAME]";
+			String query = "SELECT [CODE],[NAME], [COUNTRY] FROM [CAMPUS].[Town] ORDER BY [SORT]";
 
 			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
