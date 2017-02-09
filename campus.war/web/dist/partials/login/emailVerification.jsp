@@ -53,5 +53,34 @@
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
+	
+<!-- 	email verifications popup message -->
+	
+	<div class="modal fade" id="verifications-popup" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="login-dialog modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">Close</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+
+							<label class="" id="popupMessage">Your email verified  </label>
+
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
