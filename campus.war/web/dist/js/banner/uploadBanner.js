@@ -4,8 +4,11 @@
  * 20170208 DN c131-admin-manage-banner-upload-banner-image-dn getPreRequisitPageData() modified by adding code to populate
  *  page and course provider data list. 
  * 	20170209 DN c131-admin-manage-banner-upload-banner-image-dn getPreRequisitPageData() changed to populate course provider/page list,
- * 				and getBannerSlotsMapedToThePAge() method implemented.  	 	
+ * 				and getBannerSlotsMapedToThePAge() method implemented.  
+ *              method populateDataList() implemented and refactor other code to reuse the said method when populating data lists.
+ *              ajaxErorMessage() method refactor to provide better information. 	 	
  */
+
 var selectedPageCode = '';
 var adminControllerUrl = '../../../AdminController';
 
@@ -50,41 +53,41 @@ function displayBannerManagerPrerequistData(){
  */
 function getPreRequisitPageData(preRequistData){
 	
-	//set the advertiser list get all element collection from the data list
-	var advertiserList=$('#advertiserList');
-	
-	// visually remove the <option> from the data list wrapper set
-	advertiserList.find('option').remove();
-	
-	// this brings the collection that contains the Collection<collection<String>>
-	//which sends from the server as an Array, then iterate over, the array gets the form 
-	// {[a,b,..],[a1,b1,..],[a2,b2,..]}
-	
-	$.each(preRequistData.result,function(index,value){  
-		var valueBoundToIndex = value.toString();
-		var innerArrayAsString= valueBoundToIndex.split(",");
-		
-		var advertiserCode = innerArrayAsString[0].toString();
-		var advertiser = innerArrayAsString[1].toString();		
-		$('<option>').val(advertiser).text(advertiserCode).appendTo(advertiserList);
-	});
+	/*
+	 * Initially populate the data list of all the advertisers
+	 * who are featured course providers
+	 * 
+	 */
+	populateDataList(preRequistData.result,'advertiserList');
 	
 	/*
 	 * populate the pages data list with retrieved data from back end
 	 */
+	populateDataList(preRequistData.bannerPages,'pageList');
 	
-	var pageListContainingTheBanner = $('#pageList');
-	pageListContainingTheBanner.find('option').remove();
-	
-	$.each(preRequistData.bannerPages,function(index,value){
-		var pageToboundIndex = value.toString();
-		var innerArrayAsString= pageToboundIndex.split(",");
+	// filter the advertiser on key input
+	$('#advertiser').on('input',function(){
+		var iskeyStrocksCompleted = false;
+		var intrmediateTypedPageName = this.value;
+		var page = $('#advertiserList option').
+								filter(function(){
+									if($(this).val()===intrmediateTypedPageName){
+										iskeyStrocksCompleted = true;
+										return $(this).val();
+									}	
+								}).text();
+		selectedPageCode = page;
 		
-		var codeOfThePageContainingBanner = innerArrayAsString[0].toString();
-		var pageContainingTheBanner = innerArrayAsString[1].toString();
-		$('<option>').val(pageContainingTheBanner).text(codeOfThePageContainingBanner).appendTo(pageListContainingTheBanner);
+		// populating associated page slots for the page
+		
+		if(iskeyStrocksCompleted){
+			// get page code to a hidden field
+			$('#sAdvertiserCode').val(selectedPageCode);
+			
+		}
 		
 	});
+	
 	
 	
 	// get the selected Page code
@@ -105,7 +108,10 @@ function getPreRequisitPageData(preRequistData){
 		if(iskeyStrocksCompleted){
 			// get page code to a hidden field
 			$('#sPageCode').val(selectedPageCode);
+			
+			// load the relevant page slot for page selected.
 			getBannerSlotsMapedToThePAge(selectedPageCode);
+			
 			
 		}
 		
@@ -123,28 +129,58 @@ function getBannerSlotsMapedToThePAge(selectedPageCode){
 	
 	$.ajax({
 		url:adminControllerUrl,
-		dataType:'jason',
+		dataType:"json",
 		data:{
 			CCO:"LSPBSLT", //LOAD SELECTED PAGE'S BANNER SLOTS
-			selectedPageCode:selectedPageCode,			
+			selectedCodeOfThePage : selectedPageCode			
 		},
-		success:function(pageSlots){
-			
-			
+		success: function(pageSlots){
+			alert("INside the success call");
+			populateDataList(pageSlots.result,"slotList");
 			
 		},
-		error:function(pageSlots,error,errorThrown){
-			
+		error: function(pageSlots,error,errorThrown){
 		var msg = ajaxErorMessage(pageSlots,error,errorThrown);
 		displayLabelMessage('displayLabel','red',msg);
+		
 		}
 		
 	});
 	
-	
-	
-	
 };
+
+
+/**
+ * Populates the data list, The data list to be populate must accept a response 
+ * which is of the form {[a,b],[a1,b1],[a2,b2]} where first element being the code which
+ * is the text of the <option> and second 
+ * element being the value of the <option> part of the data list.
+ * @param response what comes as the ajax success call
+ * @param elementId data list 'id'.
+ */
+
+function populateDataList(responseAttribute,elementId){
+	
+	// get the  data list element wrapper set
+	var elementWrapperSet = $('#'+elementId);
+	// visually remove all the option element
+	elementWrapperSet.find('option').remove();
+	
+	/* use the response and process the banner slot list
+	* this brings the collection that contains the Collection<collection<String>>
+	*which sends from the server as an Array, then iterate over, the array gets the form 
+	* {[a,b],[a1,b1],[a2,b2]}
+	*/
+	$.each(responseAttribute,function(index,value){
+		var record= value.toString();
+		var recordArray =record.split(","); // convert the string to an Array
+		
+		var recordCode = recordArray[0].toString();
+		var recordName = recordArray[1].toString();
+		//create option list on the fly and attach to the data list
+		$('<option>').val(recordName).text(recordCode).appendTo(elementWrapperSet);
+	});
+}
 
 /**
  * ajaxErorMessage
@@ -157,22 +193,11 @@ function getBannerSlotsMapedToThePAge(selectedPageCode){
 function ajaxErorMessage(response,error,errorThrown){
 	  var msg = '';
     if (response.status === 0) {
-        msg = 'Not connect.\n Verify Network.';
-        
-    } else if (response.status == 404) {
-        msg = 'Requested page not found. [404]';
-    } else if (response.status == 500) {
-        msg = 'Internal Server Error [500].';
-    } else if (error === 'parsererror') {
-        msg = 'Requested JSON parse failed.';
-    } else if (error === 'timeout') {
-        msg = 'Time out error.';
-    } else if (error === 'abort') {
-        msg = 'Ajax request aborted.';
-    } else {
-        msg = 'Uncaught Error.\n' + response.responseText;
+        msg = 'The XMLHttpRequest client has been created, but the open() method hasn\'t been called yet.';
+    }else{
+    	msg = error +": "+errorThrown;
     }
-    return msg;
+   return msg;
 }
 
 /**
