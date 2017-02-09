@@ -29,14 +29,14 @@ $(document).ready(function() {
 	 */
 	/*$('#addProgramme').click(function(event){		
 		addProgramme(event);		
-	});*/
-	
+	});*/	
+
 	/*
 	 * validate toDate>from date
 	 */	
-	$('#toDate').on('click', function(event) {		
-		var fromDate= $('#fromDate').val();		
-		document.getElementById("toDate").setAttribute("min", fromDate);	
+	$('#expiration-date').on('click', function(event) {		
+		var fromDate= $('#commencement-date').val();		
+		document.getElementById("expiration-date").setAttribute("min", fromDate);	
 	});
 	
 	
@@ -108,16 +108,7 @@ function populateProgrammeAddView(response) {
  * This method addProgramme() for adding a course to the system.
  */
 function addProgrammeDetails(){	
-	
-	
-	
-	
-	var providerName =$('#providerName').val();
-	var courseName =$('#courseName').val();
-	var courseDetails =$('#course-description').val();
-	var email =$('#email').val();
-	var courseDuration =$('#course-duration').val();
-	
+	var courseDuration =$('#course-duration').val();	
 	var counselorName =$('#counselor-name').val();
 	var counselorTel =$('#counselor-tel').val();
 	var counselorEmail =$('#counselor-email').val();

@@ -166,7 +166,7 @@
 								<div class="form-group block-course-commencement">
 									<label for="commencement-date">Commencement Date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
-										<input name="commencementDate" type="date" class="form-control" id="commencement-date"  placeholder="">
+										<input name="commencementDate" type="date" class="form-control" id="commencement-date" onkeydown="return false" placeholder="">
 										<span class="ico-box">
 											<span class="normal fa fa-calendar-check-o" aria-hidden="true"></span>
 											<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
@@ -177,7 +177,7 @@
 								<div class="form-group block-course-expiration">
 									<label for="expiration-date">Expiration date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
-										<input name="expirationDate" type="date" class="form-control" id="expiration-date" placeholder="">
+										<input name="expirationDate" type="date" class="form-control" id="expiration-date" onkeydown="return false" placeholder="">
 										<span class="ico-box">
 											<span class="normal fa fa-calendar-minus-o" aria-hidden="true"></span>
 											<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	
