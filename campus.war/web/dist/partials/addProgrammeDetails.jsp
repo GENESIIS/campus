@@ -41,7 +41,7 @@
 					</div>
 			
 					
-					<form name="addCourseForm" id="programmeForm" class="form form-admin" method="post" action="">
+					<form name="addCourseForm" id="programmeForm" class="form form-admin" method="post" action="ADD_PROGRAMME_DETAILS">
 					
 						<div class="row clearfix">
 							<h4 class="col-xs-12 form-section-title">1. Course Details</h4>

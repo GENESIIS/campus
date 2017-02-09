@@ -155,8 +155,9 @@ function addProgramme(){
     
       
    
-	if (fromDate> toDate) {		
-		$('#error fa fa-times fa-2x').text("Invalid Date Range! From Date cannot be after To Date!");		
+	if (fromDate> toDate) {	
+		$(".err-msg pull-right").text("New text here");
+		//$('#err-msg pull-right').text("Invalid Date Range! From Date cannot be after To Date!");		
 		return false;
 	}
 	
