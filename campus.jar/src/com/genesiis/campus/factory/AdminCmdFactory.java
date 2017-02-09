@@ -11,6 +11,8 @@ package com.genesiis.campus.factory;
 //20170103 JH c39-add-course-provider removed code related to issue c7
 //20170203 DN c131-admin-manage-banner-upload-banner-image-dn add logger field/import statement to the class
 //				enter new map entry related to the DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA
+//20170209 DN c131-admin-manage-banner-upload-banner-image-dn add UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE entry to the map &
+//				getCommand() method.
 
 import com.genesiis.campus.command.CmdGetBannerPreRequisite;
 import com.genesiis.campus.command.ICommand;
@@ -25,8 +27,8 @@ public class AdminCmdFactory implements ICmdFactory{
 	private ICommand command = null;
 	static {	
 		
-		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdGetBannerPreRequisite()); // should be changed to proper command class
-		
+		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdGetBannerPreRequisite()); 
+		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdGetBannerPreRequisite());
 	}
 
 	@Override
@@ -35,6 +37,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		o = Operation.getOperation(cco);
 		switch (o) {
 		case DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA:
+			command = map.get(o);
+			break;
+		case UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE:
 			command = map.get(o);
 			break;
 		
