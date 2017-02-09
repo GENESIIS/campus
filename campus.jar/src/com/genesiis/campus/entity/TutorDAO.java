@@ -19,6 +19,7 @@ package com.genesiis.campus.entity;
 //20170207 CW c38-view-update-tutor-profile removed add() method from update coding 
 //20170208 CW c38-view-update-tutor-profile modified findById()
 //20170208 CW c38-view-update-tutor-profile removed some testing codes in findById() method
+//20170209 CW c38-view-update-tutor-profile modified findById method & removed multiple database calls
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,90 +45,8 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 	
-	/**
-	 * Save tutor details in Database
-	 * 
-	 * @author Chathuri, Chinthaka
-	 * @param object
-	 *            : Tutor object of Object type
-	 * @return int number of success/fail status
-	 */
-/*	@Override
-	public int add(Object object) throws SQLException, Exception {
-		
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		int status = -1;
-		
-		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
-		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
-		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
-		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
-		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,TUTORSTATUS, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
-		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
-		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
-						
-		try {			
-			final Tutor tutor = (Tutor) object;
-			conn = ConnectionManager.getConnection();			
-
-			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
-			
-			preparedStatement = conn.prepareStatement(queryBuilder.toString());
-			preparedStatement.setString(1, tutor.getUsername());			
-			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
-			preparedStatement.setString(3, tutor.getFirstName());
-			preparedStatement.setString(4, tutor.getMiddleName());
-			preparedStatement.setString(5, tutor.getLastName());
-			preparedStatement.setString(6, tutor.getGender());
-			
-			preparedStatement.setString(7, tutor.getEmailAddress());
-			preparedStatement.setString(8, tutor.getLandCountryCode());
-			preparedStatement.setString(9, tutor.getLandAreaCode());
-			preparedStatement.setString(10, tutor.getLandNumber());
-			preparedStatement.setString(11, tutor.getMobileCountryCode());
-			preparedStatement.setString(12, tutor.getMobileNetworkCode());
-			preparedStatement.setString(13, tutor.getMobileNumber());
-			preparedStatement.setString(14, tutor.getDescription());
-			preparedStatement.setString(15, tutor.getExperience());
-			preparedStatement.setString(16, tutor.getWebLink());
-			preparedStatement.setString(17, tutor.getFacebookLink());
-			preparedStatement.setString(18, tutor.getTwitterNumber());
-			preparedStatement.setString(19, tutor.getMySpaceId()); 
-			preparedStatement.setString(20, tutor.getLinkedInLink());
-			preparedStatement.setString(21, tutor.getInstagramId());
-			preparedStatement.setString(22, tutor.getViberNumber());
-			preparedStatement.setString(23, tutor.getWhatsAppId());
-			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
-			preparedStatement.setInt(25, tutor.getTutorStatus()); 
-			preparedStatement.setString(26, tutor.getAddressLine1());
-			preparedStatement.setString(27, tutor.getAddressLine2());
-			preparedStatement.setString(28, tutor.getAddressLine3());
-			preparedStatement.setString(29, tutor.getTown());
-			preparedStatement.setInt(30, tutor.getUsertype());
-			preparedStatement.setString(31, tutor.getCrtBy());
-			preparedStatement.setString(32, tutor.getModBy());
-			status = preparedStatement.executeUpdate();
-
-		} catch (ClassCastException cce) {
-			log.error("add(): ClassCastException " + cce.toString());
-			throw cce;
-		} catch (SQLException exception) {
-			log.error("add(): SQLException " + exception.toString());
-			throw exception;
-		} catch (Exception exception) {
-			log.error("add(): Exception " + exception.toString());
-			throw exception;
-		} finally {
-			DaoHelper.cleanup(conn, preparedStatement, null);
-		}
-
-		return status;
-	}*/
-
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -150,7 +69,7 @@ public class TutorDAO implements ICrud {
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			//preparedStatement.setString(1, tutor.getUsername());			
-			//preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryptor removed
+			//preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryption removed
 			preparedStatement.setString(1, tutor.getPassword());
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
@@ -226,8 +145,8 @@ public class TutorDAO implements ICrud {
 	 * @return Returns the Tutor Details in Database for a given Tutor Code from a collection of collection
 	 */
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object code)	throws SQLException, Exception {
+		
 		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -236,26 +155,22 @@ public class TutorDAO implements ICrud {
 		double townCode = 0;
 		String countryName = null;
 		String townName = null;
-		
+					
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.PASSWORD, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
+		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
+		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
+		queryBuilder.append("FROM [CAMPUS].[TUTOR] T ");
+		queryBuilder.append("JOIN [CAMPUS].[COUNTRY2] C ON C.CODE = T.LANDPHONECOUNTRYCODE ");
+		queryBuilder.append("JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN ");
+		queryBuilder.append("WHERE T.CODE = ?;");
+			
 		try {
+			
 			Tutor tutor = (Tutor) code; 
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT * FROM [CAMPUS].[TUTOR] WHERE CODE=?";
+			conn = ConnectionManager.getConnection();			
 			
-			/*
-			 * 
-			 * SELECT T.CODE, T.USERNAME, T.PASSWORD, T.FIRSTNAME, T.MIDDLENAME, TLASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, 
-T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, T.WEBLINK, TFACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, 
-T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME, C.NAME
-FROM [CAMPUS].[TUTOR] T		
-JOIN [CAMPUS].[COUNTRY2] C ON C.CODE = T.LANDPHONECOUNTRYCODE
-JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN
-WHERE T.CODE = 40
-			 * 
-			 */
-			
-			
-			stmt = conn.prepareStatement(query);
+			stmt = conn.prepareStatement(queryBuilder.toString());
 			stmt.setInt(1, tutor.getCode());
 			rs = stmt.executeQuery();
 
@@ -263,7 +178,6 @@ WHERE T.CODE = 40
 				final ArrayList<String> singleTutorList = new ArrayList<String>();		
 				
 				Encryptable passwordEncryptor = new TripleDesEncryptor();
-
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
@@ -280,8 +194,8 @@ WHERE T.CODE = 40
 				singleTutorList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
 				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
-				singleTutorList.add(rs.getString("DESCRIPTION"));
-				singleTutorList.add(rs.getString("EXPERIENCE"));
+				singleTutorList.add(rs.getString("DESCRIPTION").trim());
+				singleTutorList.add(rs.getString("EXPERIENCE").trim());
 				singleTutorList.add(rs.getString("WEBLINK"));
 				singleTutorList.add(rs.getString("FACEBOOKURL"));
 				singleTutorList.add(rs.getString("TWITTERURL"));
@@ -293,27 +207,10 @@ WHERE T.CODE = 40
 				singleTutorList.add(rs.getString("ADDRESS1"));
 				singleTutorList.add(rs.getString("ADDRESS2"));
 				singleTutorList.add(rs.getString("ADDRESS3"));
-				
-				if (rs.getString("TOWN") != null) {
-					countryCode = Integer.parseInt(rs.getString("LANDPHONECOUNTRYCODE"));
-					TownDAO country = new TownDAO();
-					//townName = country.findById(countryCode);
-					townName = "x";
-				}
-				
-				singleTutorList.add(townName);
+				singleTutorList.add(rs.getString("TOWNNAME"));
 				singleTutorList.add(rs.getString("TOWN"));				
-								
 				singleTutorList.add(rs.getString("USERTYPE"));
-								
-				if (rs.getString("LANDPHONECOUNTRYCODE") != null) {
-					countryCode = Integer.parseInt(rs.getString("LANDPHONECOUNTRYCODE"));
-					CountryDAO country = new CountryDAO();
-					System.out.println("Need to change the com.genesiis.campus.entity.TutorDAO.findById(Object) after MX fixes done ");
-					countryName = country.findCountryByCode(countryCode);
-				}			
-
-				singleTutorList.add(countryName);
+				singleTutorList.add(rs.getString("COUNTRYNAME"));
 				singleTutorList.add(rs.getString("ISAPPROVED"));
 				singleTutorList.add(rs.getString("TUTORSTATUS"));
 
