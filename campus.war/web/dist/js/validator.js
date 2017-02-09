@@ -10,6 +10,7 @@
  * //20170124 CW c36-add-tutor-details modified validateTutorFileds() method - cw
  * //20170129 CW c36-add-tutor-details-cw- modified the places of ValidateUsername(), ValidateEmail() methods calling.
  * //20170129 CW c36-add-tutor-details-cw- modified ValidateUsername(), ValidateEmail() methods.
+ * //20170209 CW c38-view-update-tutor-profile modified validateTutorFileds() method 
  */
 
 /**
@@ -128,7 +129,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (town == "DEFAULT") {
+	if (town == "--- Select Country before select the town ---") {
 		document.getElementById('townError').innerHTML = "**Please select Town.";
 		document.getElementById('townDetails').focus();
 		flag = false;
@@ -143,6 +144,7 @@ function validateTutorFileds() {
 	
 	if (!isempty(mobileCountryCode)) {
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
+		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
