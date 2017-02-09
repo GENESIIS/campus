@@ -27,9 +27,9 @@ $(document).ready(function() {
 	/*
 	 * Add program button-event handler
 	 */
-	$('#addProgramme').click(function(event){		
+	/*$('#addProgramme').click(function(event){		
 		addProgramme(event);		
-	});
+	});*/
 	
 	/*
 	 * validate toDate>from date
@@ -107,7 +107,7 @@ function populateProgrammeAddView(response) {
 /**
  * This method addProgramme() for adding a course to the system.
  */
-function addProgramme(){	
+function addProgrammeDetails(){	
 	
 	var providerName =$('#providerName').val();
 	var courseName =$('#courseName').val();
@@ -157,8 +157,7 @@ function addProgramme(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-commencement, .block-course-expiration").addClass("err-block");
 		//$('.block-course-commencement .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
-		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");
-		alert("test");
+		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");		
 	}
 	
 	//After pass the validations developer able to add input data to database.
@@ -169,10 +168,8 @@ function addProgramme(){
 	$.ajax({
 		url : '../../AdminController',
 		type: 'POST',
-		data : {
-			CCO : 'ADD_PROGRAMME_DETAILS',
-			formData:formData
-		},
+		data :formData ,
+			
 		dataType : "json",
 		async : false,
 		success : function(response) {			
