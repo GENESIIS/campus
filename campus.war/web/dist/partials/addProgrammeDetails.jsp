@@ -41,7 +41,7 @@
 					</div>
 			
 					
-					<form name="addCourseForm" id="programmeForm" class="form form-admin" method="post" action="ADD_PROGRAMME_DETAILS">
+					<form name="addCourseForm" id="programmeForm" class="form form-admin" method="post" action="AdminController">
 					
 						<div class="row clearfix">
 							<h4 class="col-xs-12 form-section-title">1. Course Details</h4>
@@ -251,17 +251,14 @@
 								</div>
 							</div>				
 						</div>
-						
+						<input type="hidden" value="ADD_PROGRAMME_DETAILS" name="CCO" id="CCO">						
 						<div class="row clearfix">
-							  <button type="submit" class="btn btn-register pull-right"  id="addProgramme">Add Course</button>
-						</div>
-						
-					</form>
-				
-				</div>
-			
+							 <!--  <button type="button" class="btn btn-register pull-right"  onclick="addProgramme();" id="addProgramme" >Add Course</button> -->							  
+							  <input type="button" class="btn btn-register pull-right" id="addProgramme" value="ADD" onclick="addProgrammeDetails();" />								
+						</div>						
+					</form>				
+				</div>			
 			</div>
-
 		<!-- END provider-list-holder -->
 	</div>
 	<!-- End Container - Top Providers list -->
