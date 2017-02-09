@@ -21,6 +21,7 @@ package com.genesiis.campus.entity;
 //20170202 JH c39-add-course-provider removed repeating statements used to set parameters to preparedStatement
 //20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 //20170207 JH c141-add-course-provider-issue-improvements DAO class query refactor to implement stored procedure wip
+//20170209 JH c141-add-course-provider-issue-improvements removed unwanted prepared statement variables and imports
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -36,7 +37,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -61,9 +61,6 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	public int add(Object object) throws SQLException, Exception {
 
 		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		PreparedStatement preparedStatement2 = null;
-		PreparedStatement preparedStatement3 = null;
 		
 		CallableStatement callableStatement = null;
 		ResultSet rs = null;
@@ -167,9 +164,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		} finally {
 			conn.setAutoCommit(true);
 			DaoHelper.closeResultSet(rs);
-			DaoHelper.closeStatement(preparedStatement3);
-			DaoHelper.closeStatement(preparedStatement2);
-			DaoHelper.closeStatement(preparedStatement);
+			DaoHelper.closeStatement(callableStatement);
 			DaoHelper.closeConnection(conn);
 			
 		}
