@@ -4,7 +4,8 @@
  */
 
 //20170209 JH c39-add-course-provider fixed to clear unique prefix info message when a unique prefix error occurs,
-//				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message
+//				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message,
+//				landPhoneNubmerHelper() method changed to clear info message on error
 
 window.countryCollection = null;
 window.countryCode = null;
@@ -302,6 +303,7 @@ function landPhoneNubmerHelper() {
 	for (var i = 0; i < errorMessageList.length; i++) {
 		errorMessageList[i].innerHTML = "";
 	}
+	
 	if (!isempty(country)) {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
@@ -327,9 +329,11 @@ function landPhoneNubmerHelper() {
 				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
 
 				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
+					document.getElementById('landNumber1').innerHTML = "";
 					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
 				}
 				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+					document.getElementById('landNumber2').innerHTML = "";
 					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
 
 				}
