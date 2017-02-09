@@ -74,13 +74,13 @@ public class CmdEmailVarification implements ICommand {
 				HashCodeBuilder hashBuilder = new HashCodeBuilder();
 				SecuredHash = hashBuilder.createHash(firstName, lastName);
 				
-				resetPasswordEmailComposer.setEnvironment(firstName+" "+lastName, sendersEmail, recieversEmailAddreses, emailTitle, emailBody, SecuredHash);
+				resetPasswordEmailComposer.setEnvironment(firstName+" "+lastName, sendersEmail, recieversEmailAddreses, emailTitle, emailBody+" "+SecuredHash, SecuredHash);
 				
 				resetPasswordEmailComposer.setGeneralEmail(resetPasswordEmailComposer.formatEmailInstance(
 						 addSpecificContentToOriginalMailBody())); 
 				status=this.sendMail(resetPasswordEmailComposer);
-			//	helper.setAttribute("message", composeOutStatusMessageToClient(status));
-				log.info(status);
+				helper.setAttribute("message", systemMessage(status));
+				
 			}
 		} else {
 			message = SystemMessage.INVALID_EMAIL.message();
@@ -176,7 +176,7 @@ public class CmdEmailVarification implements ICommand {
 		StringBuilder result = new StringBuilder();	
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
-		result.append("Account credentials are as follows. ");
+	//	result.append("Account credentials are as follows. ");
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 //		result.append("User Name :"+partialStudent.getUserName());		
@@ -184,7 +184,7 @@ public class CmdEmailVarification implements ICommand {
 //		result.append("Pass word :"+partialStudent.getPassWord());
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
-		result.append("It's so much pleasure to have you with us. Have a good day!");
+//		result.append("It's so much pleasure to have you with us. Have a good day!");
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 //		result.append(SystemMessage.SUPERADMIN_NAME.message());

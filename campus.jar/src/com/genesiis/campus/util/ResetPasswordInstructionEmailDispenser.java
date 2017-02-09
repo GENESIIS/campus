@@ -99,18 +99,18 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	
 	@Override
 	public void addContentToOriginalMailBody(String originalMailBody) {
-		try{
+//		try{
 		StringBuilder result = new StringBuilder();
 		
-		 MimeMultipart multipart = new MimeMultipart("related");
-		 
-		BodyPart messageBodyPart = new MimeBodyPart();
-        String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
-        messageBodyPart.setContent(htmlText, "text/html");
-		
-       
-        multipart.addBodyPart(messageBodyPart);
-        result.append(multipart);
+//		 MimeMultipart multipart = new MimeMultipart("related");
+//		 
+//		BodyPart messageBodyPart = new MimeBodyPart();
+//        String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
+//        messageBodyPart.setContent(htmlText, "text/html");
+//		
+//       
+//        multipart.addBodyPart(messageBodyPart);
+//        result.append(multipart);
 		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
@@ -126,9 +126,9 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 		result.append(System.getProperty("line.separator"));
 		this.setMailBody(result.toString());
 		
-	 } catch (MessagingException e) {
-         throw new RuntimeException(e);
-      }
+//	 } catch (MessagingException e) {
+//         throw new RuntimeException(e);
+//      }
 		
 	}
 
