@@ -175,7 +175,66 @@ function forgotPassword() {
 			},
 			dataType : "json",
 			success : function(response) {
-				
+				document.getElementById('messsage').innerHTML = response['message'];
+				setTimeout( function(){
+					$('#verifications-popup').modal('show'); 
+					}, 5000);
+			},
+			error : function(response,error,errorThrown) {
+				alert("Error " + error);
+				console.log(error);
+				 var msg = '';
+			      if (response.status === 0) {
+			          msg = 'Not connect.\n Verify Network.';
+			      } else if (response.status == 404) {
+			          msg = 'Requested page not found. [404]';
+			      } else if (response.status == 500) {
+			          msg = 'Internal Server Error [500].';
+			      } else if (error === 'parsererror') {
+			          msg = 'Requested JSON parse failed.';
+			      } else if (error === 'timeout') {
+			          msg = 'Time out error.';
+			      } else if (error === 'abort') {
+			          msg = 'Ajax request aborted.';
+			      } else {
+			          msg = 'Uncaught Error.\n' + response.responseText;
+			      }
+			}
+
+		});
+	}
+}
+// Verify hash code 
+
+function verifyCode() {
+	var code = $("#verifyCode").val();
+	
+	var codeEmpty = isempty(code);
+	
+	//code filed validation error messages handling
+	if (!(codeEmpty)) {
+		document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
+		flag = false;
+		return false;
+	}
+	
+	
+	if (code != null) {
+		var jsonData = {
+			"hashCode" : code
+			
+		};
+		
+		$.ajax({
+			type : "POST",
+			url : '/LoginController',
+			data : {
+				jsonData : JSON.stringify(jsonData),
+				CCO : ""
+
+			},
+			dataType : "json",
+			success : function(response) {
 				
 			},
 			error : function(response,error,errorThrown) {
