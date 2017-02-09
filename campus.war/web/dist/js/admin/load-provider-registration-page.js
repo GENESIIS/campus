@@ -3,6 +3,9 @@
  * 
  */
 
+//20170209 JH c39-add-course-provider fixed to clear unique prefix info message when a unique prefix error occurs,
+//				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message
+
 window.countryCollection = null;
 window.countryCode = null;
 window.townCollection = null;
@@ -35,6 +38,8 @@ function publishPrograms(){
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	
 	if(publishProgram == 0){
+		var d = new Date();
+		$('#expirationDate').val(d);
 		document.getElementById("expire-date").style.display = "block";
 
 	}else if(publishProgram == 1){
