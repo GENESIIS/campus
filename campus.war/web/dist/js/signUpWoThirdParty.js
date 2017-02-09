@@ -8,11 +8,18 @@
 //20161206 DN C18: getPreRequisitPageData(),extractRelaventTownList() added
 //20161207 DN C18:student : signup : without using third party application modified the getPreRequisitPageData() to display country
 // 		and the Town within Country
-//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include usercode and avoid leading zero for the phone number field
+//20161214 DN CAMP:18 changed createJasonObject() method and getPreRequisitPageData() to include user code and avoid leading zero for the phone number field
 //20161215 DN CAMP:18 refactor splitPhoneNumber() introduced new client method managePhoneNumber() and 
 //         utility methods :extractInternationalPhoneNumber()/resetTheMobileNumberRelatedGlobalVariables().
 //20161217 DN CAMP:18 create a separate method isNotvalidMobileFormat()for reusing the logic on validating phone number.
 //				clearAllFields()created to clear all fields
+//20170118 DN C18-student-signup-without-using-third-party-application-test-dn refactor validateSignUpWoThirdPartyPageEmbedData()
+// to shift country / town code check for null value.
+// include to extend the password constrain to have more than 07 characters
+//20170130 DN CAM:18 add check box clearing to clearAllFields()
+//20170131 DN CAM:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
+//				adds function to refrain entering invalid country and town to input fields
+//20170207 DN CAM:18 clearAllFields() modified to check the password make visible and depend on the out put make the text field password.
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -72,6 +79,7 @@ function getPreRequisitPageData(preRequistData){
 		var x = data[0].toString();
 		var y = data[1].toString();
 		$('<option>').val(y).text(x).appendTo(countryList);
+		
 	});
 	
 	
@@ -89,9 +97,10 @@ function getPreRequisitPageData(preRequistData){
 													return $(this).val();
 												}
 									 		}).text();
+	selectedCountryCode = dValue;
 	//populating the town list 
 	if(status){
-		selectedCountryCode = dValue;
+		
 		$('#mobileCountryCode').val("+"+selectedCountryCode); // set the country code in the none editable field
 		extractRelaventTownList(selectedCountryCode);
 		}
@@ -112,9 +121,10 @@ function getPreRequisitPageData(preRequistData){
 													return $(this).val();
 												}
 									 		}).text();
-	//setting the hidden field with the town value in the input field
-	if(status){
 		selectedTownCode = dValue;
+		//setting the hidden field with the town value in the input field
+	if(status){
+		//selectedTownCode = dValue;
 		$('#sTownCode').val(selectedTownCode);
 	}
 });
@@ -130,6 +140,42 @@ function getPreRequisitPageData(preRequistData){
 			$('#contactNumber').val("");
 		}
 	});
+	
+	
+	/*
+	 * function will triggers when input field gets changed.
+	 * the purpose of the function is to match the users selection
+	 * or the type in text against the list that has already been
+	 * selected by the system. If the value that user entered does not
+	 * confirm to the requirement, then an error message will be displayed,
+	 * and the text will be cleared off.
+	 */
+	$('#town').on("change",function(){
+		if(selectedTownCode ==""){
+			$('#townError').html("Please select a valid Town");
+			$('#town').val("");
+		}
+		
+	});
+
+	/*
+	 * function will triggers when input field gets changed.
+	 * the purpose of the function is to match the users selection
+	 * or the type in text against the list that has already been
+	 * selected by the system. If the value that user entered does not
+	 * confirm to the requirement, then an error message will be displayed,
+	 * and the text will be cleared off.
+	 */
+	
+	$('#country').on("change",function(){
+		if(selectedCountryCode ==""){
+			$('#countryError').html("Please select a valid Country from the populated list");
+			$('#country').val("");
+		}
+		
+		
+	});
+	
 	
 	/*
 	 * this function is available when the document is ready and
@@ -221,13 +267,17 @@ function sendSignUpCredentialsToBckEnd() {
 function validateSignUpWoThirdPartyPageEmbedData(){
 	var validationPass = true;
 	
-	if(!(isFieldFilled(isempty($('#firstName').val()),"First Name Field","firstNameError"))){
+	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#firstName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"First Name Field","firstNameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#lastName').val()),"Last Name Field","lastNameError"))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#lastName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"Last Name Field","lastNameError"))) {
 		return !validationPass;
-	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"gender Field","genderError"))){
+	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"Gender Field","genderError"))){
 		return !validationPass;
 	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
+		return !validationPass;
+	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#country').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Country Field","countryError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#town').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Town Field","townError"))) {
 		return !validationPass;
 	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
 		return !validationPass;
@@ -236,27 +286,24 @@ function validateSignUpWoThirdPartyPageEmbedData(){
 	} else if(isNotvalidMobileFormat($('#contactNumber').val())){
 		$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty(selectedCountryCode,"country Field","countryError")))) {
+	}  else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty(selectedTownCode,"Town Field","townError")))) {
+	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val(),/^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
+	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#passWord').val(),/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ","passWordError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val()),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
-		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
+	}else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),"Confirm Password Field","confPassWordError"))){
 		return !validationPass;
 	} else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
 		return !validationPass;
-	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"policy Check box","policyConfirmError"))) {
+	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"Policy Check box","policyConfirmError"))) {
 		return !validationPass;
 	} 
 		return validationPass;
 	
 }
-
 
 
 
@@ -288,7 +335,7 @@ function createJasonObject(){
 
 /**
  * isNotvalidMobileFormat(): checks if the content submited
- * is startswith zero or with "+" sign if so the return valuewill be 
+ * starts with zero or with "+" sign if so the return valuewill be 
  * true else false.
  * @author Dushantha DN
  * @param firstDigit the content passed , method starts
@@ -429,8 +476,10 @@ function splitPhoneNumber(phoneNumber,length){
  */
 function clearAllFields(){
 	$('input.text-field').val("");
+	$('.validationInputFields').html("");
+	$('#policyConfirm').prop('checked', false);
+	$('#showpasscheckbox').prop('checked', false);
+	var value = $('#showpasscheckbox').is(':checked')?"text":"password";
+	$('#passWord').attr("type",value);
+	$('#confrmpsw').attr("type",value);
 }
-
-
-
-

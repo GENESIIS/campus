@@ -1,6 +1,7 @@
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn created the initial bannerManager.jsp page -->
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn added modal div element to the document -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn change the script to include uploadBanner.js -->
+<!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn removed unnecessary script /dist/js/header/ui-populate-helper.js-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -19,7 +20,7 @@
     <link href="../../css/image-slides.css" rel="stylesheet">
 
 <!-- jQuery & Other js -->
-	<script src="/dist/js/header/ui-populate-helper.js"></script>
+	
     <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
     <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     
