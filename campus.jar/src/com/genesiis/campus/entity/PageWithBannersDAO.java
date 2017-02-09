@@ -79,7 +79,7 @@ public class PageWithBannersDAO implements ICrud {
 			while(bannerPagesResultSet.next()){
 				final ArrayList<String>bannerPageRecord = new ArrayList<String>();
 				bannerPageRecord.add(bannerPagesResultSet.getString("CODE"));
-				bannerPageRecord.add(bannerPagesResultSet.getString("SHORTNAME"));
+				bannerPageRecord.add(bannerPagesResultSet.getString("NAME"));
 				outerWrapper.add(bannerPageRecord);
 			}
 			
