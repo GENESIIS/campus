@@ -53,7 +53,7 @@ public enum Operation {
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
 	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"),
 	DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA("DBPDOL",ResponseType.JSON,""),
-	UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE("",ResponseType.JSON,""),
+	UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE("LSPBSLT",ResponseType.JSON,""),
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
 			
 	private final String commandString;
