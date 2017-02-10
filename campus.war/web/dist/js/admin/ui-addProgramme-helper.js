@@ -39,6 +39,23 @@ $(document).ready(function() {
 		document.getElementById("expiration-date").setAttribute("min", fromDate);	
 	});
 	
+	/*
+	 * remove error message on focusout
+	 */	
+	$('#course-name').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-name").removeClass("err-block");
+		$(".block-course-name").addClass("success-block");		
+	});
+	
+	/*
+	 * remove error message description on focusout
+	 */		
+	$('#course-description').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-duration").removeClass("err-block");
+		$(".block-course-duration").addClass("success-block");		
+	});
 	
 	/*
 	 * clear button-event handler
@@ -139,7 +156,13 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
+	}else if(!isValidEmailFormat(counselorEmail)){
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-email").addClass("err-block");
+		$('.block-counselor-email .err-msg').text("Invalid email format!");	
 	}
+	
+	
 	
 	//Validate Course Provider selection
 	var providerName = $('#providerList').val();
