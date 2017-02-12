@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170207 CW c38-view-update-tutor-profile- modified execute(), setVariables() methods
 //20170208 CW c38-view-update-tutor-profile- modified setVariables() method.
 //20170209 CW c38-view-update-tutor-profile modified execute() method.
+//20170212 CW c38-view-update-tutor-profile modified execute() method & setVariables() method name modified into setCompareVariables().
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,17 +41,14 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 		try {
 			final Validator validator = new Validator();
-			
-		//	message = validator.validateTutorFields(helper);
-			
-			if (validator.validateTutorFields(helper)) {
 				
-				final Tutor tutor = new Tutor();
-				final TutorDAO tutorDAO = new TutorDAO();
-				int result = 0;
-				
-				boolean updated = false;				
-				updated = setVariables(helper,tutor); // returns true if updated
+			final Tutor tutor = new Tutor();
+			final TutorDAO tutorDAO = new TutorDAO();
+			int result = 0;
+			boolean updated = false;				
+			updated = setCompareVariables(helper,tutor); // returns true if updated
+			
+			if (validator.validateTutorFields(helper)) {			
 				
 				if( updated)
 				{
@@ -92,7 +90,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 	 * @param helper IDataHelper, Tutor
 	 */
 
-	public boolean setVariables(IDataHelper helper, Tutor tutor) {
+	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) {
 			boolean updated = false;
 			//HttpSession session = helper.getSession(false);
 		try {
