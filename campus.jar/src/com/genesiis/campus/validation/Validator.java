@@ -38,6 +38,7 @@ package com.genesiis.campus.validation;
 //20170209 CW c38-view-update-tutor-profile add validateUserAndEmail() method.
 //20170209 CW c38-view-update-tutor-profile modified isHavingNullValues() method.
 //20170209 CW c38-view-update-tutor-profile modified validatePassword() method name to isValidPassword().
+//20170212 CW c38-view-update-tutor-profile modified isValidNetworkCode(), isValidLastname(), isValidContactNumber(), isValidAddressLine1() methods & validateTutorFields() - modify comment
 
 
 import java.net.MalformedURLException;
@@ -150,7 +151,7 @@ public class Validator {
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * @param helper
-	 * @return boolean
+	 * @return boolean : Returns true if tutor fields are entered correctly
 	 * @throws Exception
 	 */
 	public boolean validateTutorFields(IDataHelper helper) throws Exception {
@@ -232,8 +233,9 @@ public class Validator {
 				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
 				isValid = false;
 			}
-
-			isValid = isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper);
+			if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper)) {
+				isValid = false;
+			}
 
 		} catch (Exception e) {
 			log.error("validateTutorFields: Exception" + e.toString());
@@ -275,7 +277,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName == " ") {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName != " ") {
 				valid = true;
 			}
 
@@ -319,7 +321,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode == " ") {
+			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode != " ") {
 				valid = true;
 			}
 
@@ -341,7 +343,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber == " ") {
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber != " ") {
 				valid = true;
 			}
 
@@ -363,7 +365,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 == " ") {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 != " ") {
 				valid = true;
 			}
 
@@ -470,7 +472,7 @@ public class Validator {
 	 * 
 	 * @author Chinthaka
 	 * @param password, confirmPassword
-	 * @return String - Returns String value "False" if the requested password & confirmPassword are same & not valid in lengths
+	 * @return String - Returns boolean value False if the requested password & confirmPassword are not same & not valid in lengths
 	 */
 	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
 		int validityNumber = 0; 
