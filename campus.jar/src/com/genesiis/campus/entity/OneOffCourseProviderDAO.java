@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 //20170209 JH c141-add-course-provider-issue-improvements code refactore to implement stored procedure call
+//20170212 JH c141-add-course-provider-issue-improvements query changed to call stored procedure 
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -60,8 +61,8 @@ public class OneOffCourseProviderDAO implements ICrud{
 			 * provider query used to insert data into course provider table. 
 			 */
 			
-			String procedureCall = "{call campus.add_featured_provider_main_branch(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+			String procedureCall = "{call campus.add_one_off_provider(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
 			callableStatement = conn.prepareCall(procedureCall);
 
@@ -106,7 +107,7 @@ public class OneOffCourseProviderDAO implements ICrud{
 
 			callableStatement.executeUpdate();
 			
-			generatedKey = callableStatement.getInt(46);
+			generatedKey = callableStatement.getInt(38);
 			
 			conn.commit();
 			
