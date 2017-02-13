@@ -50,6 +50,7 @@
 								<div class="input-wrapper">									
 								<input type="text" name="categoryList" id="categoryList"
 									list="categoryName" placeholder="Choose a category" size="25px" />
+									<input type="hidden" id="selectedCategory" name="selectedCategory"/>
 								<datalist id="categoryName">
 								</datalist>
 								<span class="ico-box">
@@ -66,6 +67,7 @@
 								<input type="text" name="majorList" id="majorList"
 									list="majorName" placeholder="Choose a major"
 									size="25px" />
+									<input type="hidden" id="selectedMajor" name="selectedMajor"/>
 								<datalist id="majorName">
 								</datalist>
 								<span class="ico-box">
@@ -80,6 +82,7 @@
 								<div class="input-wrapper">									
 								 <input type="text" name="levelList" id="levelList"
 									list="levelName" placeholder="Choose a level" size="25px" />
+									<input type="hidden" id="selectedLevel" name="selectedLevel"/>
 								<datalist id="levelName">
 								</datalist>
 								<span class="ico-box">
@@ -110,6 +113,7 @@
 									<input type="text" name="providerList"
 									id="providerList" list="providerName"
 									placeholder="Choose a Provider" size="25px" />
+									<input type="hidden" id="selectedProvider" name="selectedProvider"/>
 								<datalist id="providerName">
 								</datalist>
 									<span class="ico-box">
@@ -125,6 +129,7 @@
 									<input type="text" name="classTypelist"
 								id="classTypelist" list="classTypeName"
 								placeholder="Choose a class type"  size="25px"/>
+								<input type="hidden" id="selectedClassType" name="selectedClassType"/>
 							<datalist id="classTypeName">
 							</datalist>
 									<span class="ico-box">
