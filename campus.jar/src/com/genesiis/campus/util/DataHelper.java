@@ -7,7 +7,10 @@ package com.genesiis.campus.util;
 //				whether 'getHeader("x-requested-with")' returns 'XMLHttpRequest' in 
 //				getResponseType() method			
 //20161116 MM c2-integrate-google-banners-MP Added call to BannerData.setBannerDetails(IDatahelper, String) 
-//				in getResultView(String) method
+//				in getResultView(String) method	
+//20170213 MM c111-display-banners-on-jsp-load Changed code in getResultView(String) method so 
+//				BannerData.setBannerDetails(IDataHelper, String) is prevented from being executed 
+//				when getResultPage(String) returns null/empty (prevents duplicate call in Ajax-request scenario)
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
@@ -104,7 +107,10 @@ public class DataHelper implements IDataHelper {
 			final ICommand iCommand = factory.getCommand(cco);
 			if (iCommand != null) {
 				result = iCommand.execute(this, result);
-				BannerData.setBannerDetails(this, getResultPage(cco));
+				String resultPage = getResultPage(cco);
+				if (resultPage != null && !resultPage.isEmpty()) {
+					BannerData.setBannerDetails(this, resultPage);
+				}
 			}
 		} catch (Exception e) {
 			logger.info("getResultView() : " + e.toString());
