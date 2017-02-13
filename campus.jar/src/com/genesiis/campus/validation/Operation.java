@@ -22,6 +22,7 @@ public enum Operation {
 	STUDENT_LOGOUT("SLGOUT", ResponseType.JSON, ""),
 	SESSIONEXPIR("EXP",ResponseType.JSON, ""),
 	EMAIL_VERIFICATION("EMAILV",ResponseType.JSON,""),
+	HASH_VERIFICATION("HASHV",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
