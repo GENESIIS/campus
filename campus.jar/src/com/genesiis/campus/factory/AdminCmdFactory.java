@@ -14,7 +14,7 @@ package com.genesiis.campus.factory;
 //20170209 DN c131-admin-manage-banner-upload-banner-image-dn add UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE entry to the map &
 //				getCommand() method.
 
-import com.genesiis.campus.command.CmdGetBannerPreRequisite;
+import com.genesiis.campus.command.CmdBannerPreRequisite;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -27,8 +27,8 @@ public class AdminCmdFactory implements ICmdFactory{
 	private ICommand command = null;
 	static {	
 		
-		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdGetBannerPreRequisite()); 
-		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdGetBannerPreRequisite());
+		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdBannerPreRequisite()); 
+		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdBannerPreRequisite());
 	}
 
 	@Override
