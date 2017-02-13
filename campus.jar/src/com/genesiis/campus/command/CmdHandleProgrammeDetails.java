@@ -25,65 +25,81 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * The class {@code CmdListProgrammeDetails} is a form of Command class.It is created for the purpose of handling commands of
- * add programme details. 
+ * The class {@code CmdHandleProgrammeDetails} is a form of Command class.It is created for the purpose of handling commands of
+ * programme details. 
  * @author dumani DJ
  *
 */
 public class CmdHandleProgrammeDetails  implements ICommand {
 	static Logger log = Logger.getLogger(CmdHandleProgrammeDetails.class.getName());
+	final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();
 	/**
-	 * @author DJ
+	 * @author DJ Dumani
 	 * @param helper
 	 * @param view
-	 * @return 
+	 * @return view
 	 * @throws Exception
 	 */
 	@Override
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
-		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
-		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();	
+		
 		String ccoString = helper.getParameter("CCO");
-		try {				
-			
-			if("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)){				
-			
-				final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
-				iView.setCollection(courseProviderSearchResults);
-				
-				final Collection<Collection<String>> allCategories= programmeDAO.getAllCategories();
-				helper.setAttribute("allCategories",allCategories);
-				
-				final Collection<Collection<String>> allMajors= programmeDAO.getAllMajors();
-				helper.setAttribute("allMajors",allMajors);
-				
-				final Collection<Collection<String>> allLevels= programmeDAO.getAllLevels();
-				helper.setAttribute("allLevels",allLevels);
-				
-				final Collection<Collection<String>> allClassTypes= programmeDAO.getAllClassTypes();
-				helper.setAttribute("allClassTypes",allClassTypes);		
-				
-			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){				
-				boolean isOkToSave=FormValidator.validateProgrammeDetails(helper);
-				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
-				//if(isOkToSave){
-					final ProgrammeDTO programmeDTO=new ProgrammeDTO();
-					populateFormData(programmeDTO,helper);
-				    int value = programmeDAO.addProgrammeDetails(programmeDTO);
-				//}
-			}	
-			
+		try {
+			if ("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)) {
+				populateProgrammeInsertionView(helper, iView);
+			} else if ("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)) {				
+				manageProgrammeInsertion(helper);				
+			}
 		} catch (Exception exception) {
-			log.error("execute() : Exception " + exception);			
+			log.error("execute() : Exception " + exception);
 			throw exception;
-		}		
+		}
 		return iView;
 	}
 	
-	
 	/**
-	 * @author DJ
+	 * Populate program insertion interface.Load master data for particular drop downs.
+	 * @author DJ Dumani
+	 * @param helper
+	 * @param iView  	  
+	 */	
+	private void populateProgrammeInsertionView(IDataHelper helper, IView iView) {
+		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
+		
+		final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
+		iView.setCollection(courseProviderSearchResults);
+		
+		final Collection<Collection<String>> allCategories= programmeDAO.getAllCategories();
+		helper.setAttribute("allCategories",allCategories);
+		
+		final Collection<Collection<String>> allMajors= programmeDAO.getAllMajors();
+		helper.setAttribute("allMajors",allMajors);
+		
+		final Collection<Collection<String>> allLevels= programmeDAO.getAllLevels();
+		helper.setAttribute("allLevels",allLevels);
+		
+		final Collection<Collection<String>> allClassTypes= programmeDAO.getAllClassTypes();
+		helper.setAttribute("allClassTypes",allClassTypes);			
+	}
+	
+	
+	/** Manage form data(input values) for database insertion.
+	 * @author DJ dumani
+	 * @param helper 	  
+	 */	
+	private void manageProgrammeInsertion(IDataHelper helper) {
+		boolean isOkToSave = FormValidator.validateProgrammeDetails(helper);
+		if (isOkToSave) {
+			final ProgrammeDTO programmeDTO = new ProgrammeDTO();
+			populateFormData(programmeDTO, helper);
+			int value = programmeDAO.addProgrammeDetails(programmeDTO);
+		}
+	}
+
+
+	/** Populate programmeDTO with form data. 
+	 * @author DJ dumani
 	 * @param helper
 	 * @param programmeDTO	  
 	 */
