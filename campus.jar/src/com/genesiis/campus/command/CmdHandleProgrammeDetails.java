@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate CmdListProgrammeDetails.java
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate Dao call for master data view
 //20170207 DJ c138-add-basic-programme-MP-dj Renamed as CmdHandleProgrammeDetails.java
+//20170213 DJ c138-add-basic-programme-MP-dj Implemented populateFormData() to populate input data
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
@@ -58,11 +59,14 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				final Collection<Collection<String>> allClassTypes= programmeDAO.getAllClassTypes();
 				helper.setAttribute("allClassTypes",allClassTypes);		
 				
-			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){
-				final ProgrammeDTO programmeDTO=new ProgrammeDTO();
-				FormValidator.validateProgrammeDetails(helper);
+			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){				
+				boolean isOkToSave=FormValidator.validateProgrammeDetails(helper);
 				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
-				//int value = programmeDAO.addProgrammeDetails(programmeDTO);
+				if(isOkToSave){
+					final ProgrammeDTO programmeDTO=new ProgrammeDTO();
+					populateFormData(programmeDTO,helper);
+				    int value = programmeDAO.addProgrammeDetails(programmeDTO);
+				}
 			}	
 			
 		} catch (Exception exception) {
@@ -70,6 +74,30 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			throw exception;
 		}		
 		return iView;
+	}
+	
+	
+	/**
+	 * @author DJ
+	 * @param helper
+	 * @param programmeDTO	  
+	 */
+	private void populateFormData(ProgrammeDTO programmeDTO, IDataHelper helper) {		
+		programmeDTO.setCategory(Integer.parseInt(helper.getParameter("categoryName")));
+		programmeDTO.setMajor(Integer.parseInt(helper.getParameter("majorName")));
+		programmeDTO.setLevel(Integer.parseInt(helper.getParameter("levelName")));
+		programmeDTO.setCourseProvider(Integer.parseInt(helper.getParameter("providerName")));
+		programmeDTO.setClassType(Integer.parseInt(helper.getParameter("classTypeName")));
+		programmeDTO.setName(helper.getParameter("courseName"));
+		programmeDTO.setDescription(helper.getParameter("courseDescription"));
+		programmeDTO.setDuration(helper.getParameter("courseDuration"));
+		//programmeDTO.setDisplayDatrtDate(helper.getParameter("commencementDate"));
+		//programmeDTO.setExpirationDate(helper.getParameter("expirationDate"));
+		programmeDTO.setProgrammeStatus(Integer.parseInt(helper.getParameter("courseStatus")));
+		programmeDTO.setCounselerName(helper.getParameter("counselorName"));
+		programmeDTO.setCounselerPhone(helper.getParameter("counselorTel"));
+		programmeDTO.setEmail(helper.getParameter("counselorEmail"));	
+		
 	}
 
 }
