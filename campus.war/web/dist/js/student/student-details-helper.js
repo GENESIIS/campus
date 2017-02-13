@@ -27,15 +27,22 @@
 //20170110 PN CAM-28: modified JavaScript to display School Education details after save them to DB.
 //20170110 PN CAM-28: modified JavaScript to display Higher Education details after save them to DB.
 //20170110 PN CAM-28: modified JavaScript to display Professional Experience details after save them to DB.
+//20170213 PN CAM-28: integrated student personal details model code with UI, expect Clear button coding.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
 
 
 $(document).ready(function() {
-	displayDetails();
+	$('#loading-gif-id').css('display', 'block'); //loading gif appears.
+	$('.editformdatabtn').prop("disabled", true); // edit buttons are now disabled.
+	displayDetails();	
 });
 
+/**
+ * This method will be handle the data displaying functionality.
+ * @returns
+ */
 function displayDetails() {
 	// Array holding selected row IDs
 	$.ajax({
@@ -48,14 +55,13 @@ function displayDetails() {
 			getStudentData(response);
 		},
 		error : function(response) {
-			// alert("Error: " + response);
+			alert("Error: " + response);
 		}
 	});
 }
 
 /**
  * This method populate data into UI elements on page loading.
- * 
  * @param response
  * @returns
  */
@@ -93,11 +99,8 @@ function getStudentData(response) {
 			.each(
 					response.stdExpCollection,
 					function(index, value) {
-						var res = value.toString();
-						var data = res.split(",");
-						
 						if (experienceducount < 4) {
-							experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+							experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
 						}
 
 						experienceducount++;
@@ -105,14 +108,14 @@ function getStudentData(response) {
 						table.row
 								.add(
 										[
-												data[0].toString(),
-												data[1].toString(),
-												data[2].toString(),
-												data[3].toString(),
-												data[4].toString(),
-												data[5].toString() + "<br/>"
-														+ data[6].toString(),
-												data[7].toString(),
+												value[0].toString(),
+												value[1].toString(),
+												value[2].toString(),
+												value[3].toString(),
+												value[4].toString(),
+												value[5].toString() + "<br/>"
+														+ value[6].toString(),
+												value[7].toString(),
 												'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 								.draw(false);
 					});
@@ -250,7 +253,6 @@ function getStudentData(response) {
 					table.row('.selected').remove().draw(false);
 				});
 
-				// FOR DEMONSTRATION ONLY
 				// Output form data to a console
 				$('#example-console').text(rows_selected);
 
@@ -274,11 +276,8 @@ function getStudentData(response) {
 								.each(
 										response.stdExpCollection,
 										function(index, value) {
-											var res = value.toString();
-											var data = res.split(",");
-											
 											if (experienceducount < 4) {
-													experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+													experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
 												}
 
 											experienceducount++;
@@ -286,14 +285,14 @@ function getStudentData(response) {
 											table.row
 													.add(
 															[
-																	data[0].toString(),
-																	data[1].toString(),
-																	data[2].toString(),
-																	data[3].toString(),
-																	data[4].toString(),
-																	data[5].toString() + "<br/>"
-																			+ data[6].toString(),
-																	data[7].toString(),
+																	value[0].toString(),
+																	value[1].toString(),
+																	value[2].toString(),
+																	value[3].toString(),
+																	value[4].toString(),
+																	value[5].toString() + "<br/>"
+																			+ value[6].toString(),
+																	value[7].toString(),
 																	'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 													.draw(false);
 										});
@@ -313,52 +312,50 @@ function getStudentData(response) {
 				e.preventDefault();
 			});
 
-	$.each(response.studentCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-
+	$.each(response.studentCollection, function(index, value) {		
+		$('#fullname-hedding').html(value[4].replace(/##/g, ",") + ' ' + value[5].replace(/##/g, ",") +' '+ value[6].replace(/##/g, ","));
 		$('#td-value-username').html(
-				"<b>" + data[1].replace(/##/g, ",") + "</b>");
+				"<b>" + value[1].replace(/##/g, ",") + "</b>");
 		$('#td-value-fullname').html(
-				data[4].replace(/##/g, ",") + ' ' + data[5].replace(/##/g, ",")
-						+ ' ' + data[6].replace(/##/g, ","));
-		$('#td-value-birthday').html(data[7]);
-		$('#td-value-gender').html(getGenderString(parseInt(data[8])));
-		$('#td-value-email').html(data[9]);
-		$('#td-value-country').html(data[30]);
-		$('#td-value-town').html(data[31]);
-		$('#td-value-address').html(data[19].replace(/##/g, ","));
-		$('#td-value-fbprofile').html(data[18].replace(/##/g, ","));
+				value[4].replace(/##/g, ",") + ' ' + value[5].replace(/##/g, ",")
+						+ ' ' + value[6].replace(/##/g, ","));
+		$('#td-value-birthday').html(value[7]);
+		$('#td-value-gender').html(getGenderString(parseInt(value[8])));
+		$('#td-value-email').html(value[9]);
+		$('#td-value-country').html(value[30]);
+		$('#td-value-town').html(value[31]);
+		$('#td-value-address').html(value[19].replace(/##/g, ","));
+		$('#td-value-fbprofile').html(value[18].replace(/##/g, ","));
 		$('#td-value-mobileno').html(
-				data[11] + '-' + data[16].replace(/##/g, ","));
-		$('#td-value-aboutme').html(data[17].replace(/##/g, ","));
+				value[11] + '-' + value[16].replace(/##/g, ","));
+		$('#td-value-aboutme').html(value[17].replace(/##/g, ","));
 		
-		$('#sFullName').val(data[4].replace(/##/g, ","));
-		$('#sMiddleName').val(data[5].replace(/##/g, ","));
-		$('#sLastName').val(data[6].replace(/##/g, ","));
-		$('#sBirthDate').val(data[7]);
+		$('#sFullName').val(value[4].replace(/##/g, ","));
+		$('#sMiddleName').val(value[5].replace(/##/g, ","));
+		$('#sLastName').val(value[6].replace(/##/g, ","));
+		$('#sBirthDate').val(value[7]);
 		$('input[gender]:checked').val();
-		$('#sEmail').val(data[9]);
-		$('#sCountryCode').val(data[11]);
-		$('#sHomeNumber').val(data[13]);
-		$('#sMobileNumber').val(data[16]);
-		$('#sAddress').val(data[19].replace(/##/g, ","));
-		$('#sFacebookUrl').val(data[18]);
-		$('#stwitterUrl').val(data[19]);
-		$('#smySpace').val(data[20]);
-		$('#sLinkedInUrl').val(data[21]);
-		$('#sInstergramUrl').val(data[22]);
-		$('#sViber').val(data[23]);
-		$('#sWhatsApp').val(data[24]);
-		$('#sAboutMe').val(data[17].replace(/##/g, ","));
-		$('#sTownCode').val(data[28]);
-		$('#sCountry').val(data[30]);
-		$('#sTown').val(data[31]);
-		$("span[class='input-group-addon']").text("+(" + data[11] + ")");
+		$('#sEmail').val(value[9]);
+		$('#sCountryCode').val(value[11]);
+		$('#sHomeNumber').val(value[13]);
+		$('#sMobileNumber').val(value[16]);
+		$('#sAddress').val(value[19].replace(/##/g, ","));
+		$('#sFacebookUrl').val(value[18]);
+		$('#stwitterUrl').val(value[19]);
+		$('#smySpace').val(value[20]);
+		$('#sLinkedInUrl').val(value[21]);
+		$('#sInstergramUrl').val(value[22]);
+		$('#sViber').val(value[23]);
+		$('#sWhatsApp').val(value[24]);
+		$('#sAboutMe').val(value[17].replace(/##/g, ","));
+		$('#sTownCode').val(value[28]);
+		$('#sCountry').val(value[30]);
+		$('#sTown').val(value[31]);
+		$("span[class='input-group-addon']").text("(" + value[11] + ")");
 
-		if (parseInt(data[8]) == 1) {
+		if (parseInt(value[8]) == 1) {
 			radionButtonSelectedValueSet("gender", "1");
-		} else if (parseInt(data[8]) == 0) {
+		} else if (parseInt(value[8]) == 0) {
 			radionButtonSelectedValueSet("gender", "0");
 		}
 
@@ -369,10 +366,8 @@ function getStudentData(response) {
 	sseStream.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(sseStream);
 	$.each(response.majorCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(sseStream);
 	});
 
@@ -381,10 +376,8 @@ function getStudentData(response) {
 	areaofstudy.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(areaofstudy);
 	$.each(response.majorCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(areaofstudy);
 	});
 
@@ -393,10 +386,8 @@ function getStudentData(response) {
 	sseQualification.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(sseQualification);
 	$.each(response.schoolGradeCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(sseQualification);
 	});
 
@@ -405,10 +396,8 @@ function getStudentData(response) {
 	award.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(award);
 	$.each(response.schoolGradeCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(award);
 	});
 
@@ -416,10 +405,8 @@ function getStudentData(response) {
 	var heCountryList = $("#heCountryList");
 	heCountryList.find('option').remove();
 	$.each(response.country2Collection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(y).text(x).appendTo(heCountryList);
 	});
 
@@ -427,10 +414,8 @@ function getStudentData(response) {
 	var sseCountry = $("#sseCountryList");
 	sseCountry.find('option').remove();
 	$.each(response.country2Collection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(y).text(x).appendTo(sseCountry);
 	});
 
@@ -439,10 +424,8 @@ function getStudentData(response) {
 	sseMedium.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(sseMedium);
 	$.each(response.mediumCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(sseMedium);
 	});
 
@@ -451,10 +434,8 @@ function getStudentData(response) {
 	heMedium.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(heMedium);
 	$.each(response.mediumCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(heMedium);
 	});
 
@@ -464,10 +445,8 @@ function getStudentData(response) {
 	$('<option>').val("").text("--Select One--").appendTo(
 			industryoftheOrganization);
 	$.each(response.majorCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(industryoftheOrganization);
 	});
 
@@ -476,10 +455,8 @@ function getStudentData(response) {
 	jobCategory.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(jobCategory);
 	$.each(response.majorCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(jobCategory);
 	});
 
@@ -488,33 +465,29 @@ function getStudentData(response) {
 	award.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(award);
 	$.each(response.awardCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(award);
 	});
 
 	if (response.result) {
 		$.each(response.result, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			$('#sseQualification').val(data[2]);
-			$('#sseStream').val(data[3]);
-			$('#sseResult').val(data[5]);
-			$('#sseMedium').val(data[10]);
-			$('#sseIndexNo').val(data[6]);
-			$('#sseSchool').val(data[7]);
-			$('#sseAchievedon').val(data[8]);
-			$('#sseCountry').val(data[4]);
-			$('#sseDescription').val(data[9]);
+			$('#sseQualification').val(value[2]);
+			$('#sseStream').val(value[3]);
+			$('#sseResult').val(value[5]);
+			$('#sseMedium').val(value[10]);
+			$('#sseIndexNo').val(value[6]);
+			$('#sseSchool').val(value[7]);
+			$('#sseAchievedon').val(value[8]);
+			$('#sseCountry').val(value[4]);
+			$('#sseDescription').val(value[9]);
 
 			var schooledu = $('#li-std-schooledu');
 			schooledu.find('li').remove();
 			schooledu.append('<li>'
 					+ $("#sseQualification option:selected").text()
-					+ ' <span class="drop-at"> at </span> ' + data[7]
-					+ ' <br><span class="drop-time">' + data[8]
+					+ ' <span class="drop-at"> at </span> ' + value[7]
+					+ ' <br><span class="drop-time">' + value[8]
 					+ '</span></li>');
 		});
 	}
@@ -524,10 +497,8 @@ function getStudentData(response) {
 	sCountry.find('option').remove();
 	$('<option>').val("").text("--Select One--").appendTo(sCountry);
 	$.each(response.country2Collection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(sCountry);
 	});
 
@@ -535,10 +506,8 @@ function getStudentData(response) {
 	var sCountryList = $("#sCountryList");
 	sCountryList.find('option').remove();
 	$.each(response.country2Collection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
+		var x = value[0].toString();
+		var y = value[1].toString();
 		$('#sCountryList').append(
 				"<option data-value='" + x + "'>" + y + "</option>");
 	});
@@ -557,12 +526,10 @@ function getStudentData(response) {
 
 	// Get skills assigned with Student
 	$.each(response.stskillCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		extStudentSkills.push(parseInt(data[0]));
+		extStudentSkills.push(parseInt(value[0]));
 		$('#studentSkills').tagsinput('add', {
-			"value" : parseInt(data[0]),
-			"text" : data[1],
+			"value" : parseInt(value[0]),
+			"text" : value[1],
 			"continent" : "A"
 		});
 	});
@@ -581,12 +548,10 @@ function getStudentData(response) {
 
 	// Get interest assigned with Student
 	$.each(response.stinterestCollection, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		extStudentInterests.push(parseInt(data[0]));
+		extStudentInterests.push(parseInt(value[0]));
 		$('#studentInterests').tagsinput('add', {
-			"value" : parseInt(data[0]),
-			"text" : data[1],
+			"value" : parseInt(value[0]),
+			"text" : value[1],
 			"continent" : "A"
 		});
 	});
@@ -599,7 +564,7 @@ function getStudentData(response) {
 		}).data('value');
 		var msg = dValue;
 		if (msg) {
-			$("span[class='input-group-addon']").text("+(" + msg + ")");
+			$("span[class='input-group-addon']").text("(" + msg + ")");
 			$('#sCountryCode').val(msg);
 			getTownDetails(msg);
 		}
@@ -660,21 +625,17 @@ function getStudentData(response) {
 			.each(
 					response.stdHighEduCollection,
 					function(index, value) {
-
-						var res = value.toString();
-						var data = res.split(",");
-
 						if (highereducount < 2) {
 							higheredu
 									.append('<li>'
-											+ data[3].toString()
+											+ value[3].toString()
 											+ '-'
-											+ data[4].toString()
+											+ value[4].toString()
 											+ ' <span class="drop-at"> at </span> '
-											+ data[1].toString()
+											+ value[1].toString()
 											+ ' <br><span class="drop-time"> Duration: '
-											+ data[6].toString() + ' to '
-											+ data[7].toString()
+											+ value[6].toString() + ' to '
+											+ value[7].toString()
 											+ '</span></li>');
 						}
 
@@ -683,19 +644,19 @@ function getStudentData(response) {
 						higherEdutbl.row
 								.add(
 										[
-												data[0].toString(),
-												data[1].toString() + "<br/>"
-														+ data[2].toString(),
-												data[3].toString() + "<br/>"
-														+ data[4].toString(),
-												data[9].toString() + "<br/>"
+											value[0].toString(),
+											value[1].toString() + "<br/>"
+														+ value[2].toString(),
+														value[3].toString() + "<br/>"
+														+ value[4].toString(),
+														value[9].toString() + "<br/>"
 														+ "IndexNo: "
-														+ data[8].toString(),
-												data[11].toString(),
-												data[5].toString(),
-												data[6].toString() + "<br/>"
-														+ data[7].toString(),
-												data[10].toString(),
+														+ value[8].toString(),
+														value[11].toString(),
+														value[5].toString(),
+														value[6].toString() + "<br/>"
+														+ value[7].toString(),
+														value[10].toString(),
 												'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 								.draw(false);
 					});
@@ -884,28 +845,22 @@ function getStudentData(response) {
 												.each(
 														response.result,
 														function(index, value) {
-
-															var res = value
-																	.toString();
-															var data = res
-																	.split(",");
-
 															if (highereducount < 2) {
 																higheredu
 																		.append('<li>'
-																				+ data[3]
+																				+ value[3]
 																						.toString()
 																				+ '-'
-																				+ data[4]
+																				+ value[4]
 																						.toString()
 																				+ ' <span class="drop-at"> at </span> '
-																				+ data[1]
+																				+ value[1]
 																						.toString()
 																				+ ' <br><span class="drop-time"> Duration: '
-																				+ data[6]
+																				+ value[6]
 																						.toString()
 																				+ ' to '
-																				+ data[7]
+																				+ value[7]
 																						.toString()
 																				+ '</span></li>');
 															}
@@ -915,34 +870,34 @@ function getStudentData(response) {
 															higherEdutbl.row
 																	.add(
 																			[
-																					data[0]
+																				value[0]
 																							.toString(),
-																					data[1]
+																							value[1]
 																							.toString()
 																							+ "<br/>"
-																							+ data[2]
+																							+ value[2]
 																									.toString(),
-																					data[3]
+																									value[3]
 																							.toString()
 																							+ "<br/>"
-																							+ data[4]
+																							+ value[4]
 																									.toString(),
-																					data[9]
+																									value[9]
 																							.toString()
 																							+ "<br/>"
 																							+ "IndexNo: "
-																							+ data[8]
+																							+ value[8]
 																									.toString(),
-																					data[11]
+																									value[11]
 																							.toString(),
-																					data[5]
+																							value[5]
 																							.toString(),
-																					data[6]
+																							value[6]
 																							.toString()
 																							+ "<br/>"
-																							+ data[7]
+																							+ value[7]
 																									.toString(),
-																					data[10]
+																									value[10]
 																							.toString(),
 																					'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 																	.draw(false);
@@ -959,12 +914,12 @@ function getStudentData(response) {
 						// Prevent actual form submission
 						e.preventDefault();
 					});
-
+	$('#loading-gif-id').css('display', 'none');
+	$('.editformdatabtn').prop("disabled", false); // edit buttons are now enabled.
 }
 
 /**
  * This method generates a Json object to pass into tag-it input.
- * 
  * @param response
  * @returns
  */
@@ -975,10 +930,8 @@ function createJsonObj(response) {
 	var elements = "";
 
 	$.each(response, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var result = '{ "value": ' + parseInt(data[0]) + ', "text": "'
-				+ data[1] + '" , "continent": "A" },';
+		var result = '{ "value": ' + parseInt(value[0]) + ', "text": "'
+				+ value[1] + '" , "continent": "A" },';
 		elements = elements.concat(result);
 	});
 	startBrc = startBrc.concat(elements.slice(0, -1));
@@ -988,42 +941,7 @@ function createJsonObj(response) {
 }
 
 /**
- * Get town details according to the given country code
- * 
- * @param country
- * @returns
- */
-function getTownDetails(country) {
-	$.ajax({
-		url : '../../../StudentController',
-		data : {
-			country : country,
-			CCO : 'GTD'
-		},
-		dataType : "json",
-		success : function(response) {
-			// Set Country details
-			$("#sTown").val("");
-			var sTownList = $("#sTownList");
-			sTownList.find('option').remove();
-			$.each(response.result, function(index, value) {
-				var res = value.toString();
-				var data = res.split(",");
-				var x = data[0].toString();
-				var y = data[1].toString();
-				$('#sTownList').append(
-						"<option data-value='" + x + "'>" + y + "</option>");
-			});
-		},
-		error : function(response) {
-			// alert("Error: " + response);
-		}
-	});
-}
-
-/**
  * Get data and sent to CmdAddHigherEducationData.java.
- * 
  * @returns
  */
 function addHigherEducationDetails() {
@@ -1066,20 +984,12 @@ function addHigherEducationDetails() {
 					success : function(response) {
 						if (response.saveChangesHigherEduStatus) {
 							if (response.saveChangesHigherEduStatus === "Unsuccessful.") {
-								$("#saveChangesHigherEduStatus").addClass(
-										"alert alert-danger").text(
-										response.saveChangesHigherEduStatus)
-										.fadeIn();
+								//$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text(response.saveChangesHigherEduStatus).fadeIn();
 							} else if (response.saveChangesHigherEduStatus === "Invalid Information") {
-								$("#saveChangesHigherEduStatus").addClass(
-										"alert alert-danger").text(
-										"Invalid Information.").fadeIn();
+								//$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
 							}
 							clearSchoolEducationForm();
-							$("#saveChangesHigherEduStatus").addClass(
-									"alert alert-success").text(
-									response.saveChangesHigherEduStatus)
-									.fadeIn();
+							//$("#saveChangesHigherEduStatus").addClass("alert alert-success").text(response.saveChangesHigherEduStatus).fadeIn();
 							
 							
 							var higherEdutbl = $('#higherEdutbl').DataTable();
@@ -1087,30 +997,25 @@ function addHigherEducationDetails() {
 							var highereducount = 0;
 							var higheredu = $('#li-std-higheredu');
 							higheredu.find('li').remove();
-							$
-									.each(
+							$.each(
 											response.result,
 											function(index, value) {
-
-												var res = value.toString();
-												var data = res.split(",");
-
 												if (highereducount < 2) {
 													higheredu
 															.append('<li>'
-																	+ data[3]
+																	+ value[3]
 																			.toString()
 																	+ '-'
-																	+ data[4]
+																	+ value[4]
 																			.toString()
 																	+ ' <span class="drop-at"> at </span> '
-																	+ data[1]
+																	+ value[1]
 																			.toString()
 																	+ ' <br><span class="drop-time"> Duration: '
-																	+ data[6]
+																	+ value[6]
 																			.toString()
 																	+ ' to '
-																	+ data[7]
+																	+ value[7]
 																			.toString()
 																	+ '</span></li>');
 												}
@@ -1120,34 +1025,34 @@ function addHigherEducationDetails() {
 												higherEdutbl.row
 														.add(
 																[
-																		data[0]
+																		value[0]
 																				.toString(),
-																		data[1]
+																		value[1]
 																				.toString()
 																				+ "<br/>"
-																				+ data[2]
+																				+ value[2]
 																						.toString(),
-																		data[3]
+																		value[3]
 																				.toString()
 																				+ "<br/>"
-																				+ data[4]
+																				+ value[4]
 																						.toString(),
-																		data[9]
+																		value[9]
 																				.toString()
 																				+ "<br/>"
 																				+ "IndexNo: "
-																				+ data[8]
+																				+ value[8]
 																						.toString(),
-																		data[11]
+																		value[11]
 																				.toString(),
-																		data[5]
+																		value[5]
 																				.toString(),
-																		data[6]
+																		value[6]
 																				.toString()
 																				+ "<br/>"
-																				+ data[7]
+																				+ value[7]
 																						.toString(),
-																		data[10]
+																		value[10]
 																				.toString(),
 																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 														.draw(false);
@@ -1166,7 +1071,6 @@ function addHigherEducationDetails() {
 
 /**
  * Validate higher education details form.
- * 
  * @returns
  */
 function validateHigherEducationForm() {
@@ -1195,7 +1099,11 @@ function validateHigherEducationForm() {
 	}
 }
 
-function clearSchoolEducationForm() {
+/**
+ * This is to clear HigherEducation form filled data
+ * @returns
+ */
+function clearHigherEducationForm() {
 	$('#instituteofStudy').val("");
 	$('#affiliatedInstitute').val("");
 	$('#areaofstudy').val("");
@@ -1210,8 +1118,7 @@ function clearSchoolEducationForm() {
 }
 
 /**
- * Get data and sent to CmdAddSchoolEducationData.java.
- * 
+ * This method is to save student SchoolEducationData.
  * @returns
  */
 function addEducationDetails() {
@@ -1238,8 +1145,7 @@ function addEducationDetails() {
 			"description" : description
 		};
 
-		$
-				.ajax({
+		$.ajax({
 					type : "POST",
 					url : '../../../StudentController',
 					data : {
@@ -1250,17 +1156,14 @@ function addEducationDetails() {
 					success : function(data) {
 						if (data.saveChangesStatus) {
 							if (data.saveChangesStatus === "Unsuccessful.") {
-								$("#saveChangesStatus").addClass(
-										"alert alert-danger").text(
-										data.saveChangesStatus).fadeIn();
+								//$("#saveChangesStatus").addClass("alert alert-danger").text(data.saveChangesStatus).fadeIn();
+								alert(data.saveChangesStatus);
 							} else if (data.saveChangesStatus === "Invalid Information") {
-								$("#saveChangesStatus").addClass(
-										"alert alert-danger").text(
-										"Invalid Information.").fadeIn();
+								//$("#saveChangesStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+								alert(data.saveChangesStatus);
 							}
-							$("#saveChangesStatus").addClass(
-									"alert alert-success").text(
-									data.saveChangesStatus).fadeIn();
+							//$("#saveChangesStatus").addClass("alert alert-success").text(data.saveChangesStatus).fadeIn();
+							alert(data.saveChangesStatus);
 							var schooledu = $('#li-std-schooledu');
 							schooledu.find('li').remove();
 							schooledu.append('<li>'
@@ -1270,21 +1173,19 @@ function addEducationDetails() {
 									+ schoolName
 									+ ' <br><span class="drop-time">'
 									+ achievedOn + '</span></li>');
-							$("#saveChangesStatus").fadeOut();
+							//$("#saveChangesStatus").fadeOut();
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
-						$("#saveChangesStatus").addClass("alert alert-warning")
-								.text(e).fadeIn();
+						//$("#saveChangesStatus").addClass("alert alert-warning").text(e).fadeIn();
 					}
 				});
 	}
 }
 
 /**
- * This is to clear form filled data
- * 
+ * This is to clear SchoolEducation form filled data
  * @returns void
  */
 function clearSchoolEducationForm() {
@@ -1302,7 +1203,6 @@ function clearSchoolEducationForm() {
 
 /**
  * Validate School education details form.
- * 
  * @returns
  */
 function validateForm() {
@@ -1334,7 +1234,6 @@ function validateForm() {
 
 /**
  * This is to clear form filled data Professional Education.
- * 
  * @returns void
  */
 function clearProfessionalExpForm() {
@@ -1350,7 +1249,6 @@ function clearProfessionalExpForm() {
 
 /**
  * Validate ProfessionalExp details form.
- * 
  * @returns
  */
 function validateProfessionalExpForm() {
@@ -1381,8 +1279,7 @@ function validateProfessionalExpForm() {
 }
 
 /**
- * Get data and sent to CmdProfessionalExpDetails.java.
- * 
+ * This method is to save student ProfessionalExpDetails.
  * @returns
  */
 function addProfessionalExpForm() {
@@ -1417,20 +1314,16 @@ function addProfessionalExpForm() {
 					success : function(response) {
 						if (response.pesaveChangesStatus) {
 							if (response.pesaveChangesStatus === "Unsuccessful.") {
-								$("#pesaveChangesStatus").addClass(
-										"alert alert-danger").text(
-										response.pesaveChangesStatus).fadeIn();
+								//$("#pesaveChangesStatus").addClass("alert alert-danger").text(response.pesaveChangesStatus).fadeIn();
+								alert(response.pesaveChangesStatus);
+								return;
 							} else if (response.pesaveChangesStatus === "Invalid Information") {
-								$("#pesaveChangesStatus").addClass(
-										"alert alert-danger").text(
-										"Invalid Information.").fadeIn();
+								//$("#pesaveChangesStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+								alert(response.pesaveChangesStatus);
+								return;
 							}
-							clearProfessionalExpForm();
-							$("#pesaveChangesStatus").addClass(
-									"alert alert-success").text(
-									 response.pesaveChangesStatus).fadeIn();
-							
-							
+							//clearProfessionalExpForm();
+							//$("#pesaveChangesStatus").addClass("alert alert-success").text(response.pesaveChangesStatus).fadeIn();														
 							var table = $('#example').DataTable();
 							table.clear().draw();
 
@@ -1438,15 +1331,11 @@ function addProfessionalExpForm() {
 							var experience = $('#li-std-experience');
 							experience.find('li').remove();
 
-							$
-									.each(
+							$.each(
 											response.stdExpCollection,
 											function(index, value) {
-												var res = value.toString();
-												var data = res.split(",");
-												
 												if (experienceducount < 2) {
-														experience.append('<li>'+data[2].toString()+' <span class="drop-at">at</span> '+data[1].toString()+' <br><span class="drop-time"> Duration: '+data[5].toString()+'-'+data[6].toString()+'</span></li>');
+														experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
 													}
 
 												experienceducount++;
@@ -1454,25 +1343,24 @@ function addProfessionalExpForm() {
 												table.row
 														.add(
 																[
-																		data[0].toString(),
-																		data[1].toString(),
-																		data[2].toString(),
-																		data[3].toString(),
-																		data[4].toString(),
-																		data[5].toString() + "<br/>"
-																				+ data[6].toString(),
-																		data[7].toString(),
+																		value[0].toString(),
+																		value[1].toString(),
+																		value[2].toString(),
+																		value[3].toString(),
+																		value[4].toString(),
+																		value[5].toString() + "<br/>"
+																				+ value[6].toString(),
+																		value[7].toString(),
 																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
 														.draw(false);
-											});
-							
-							$("#pesaveChangesStatus").fadeOut();
+											});							
+							//$("#pesaveChangesStatus").fadeOut();
+							alert(response.pesaveChangesStatus);
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
-						$("#pesaveChangesStatus").addClass(
-								"alert alert-warning").text(e).fadeIn();
+						//$("#pesaveChangesStatus").addClass("alert alert-warning").text(e).fadeIn();
 					}
 				});
 
@@ -1480,8 +1368,7 @@ function addProfessionalExpForm() {
 }
 
 /**
- * Get data and sent to CmdAddStudentPersonlDetails.java.
- * 
+ * This method is to save student personal details.
  * @returns
  */
 function addStudentPersonalDetails() {
@@ -1528,8 +1415,7 @@ function addStudentPersonalDetails() {
 			"gender" : gender
 		};
 
-		$
-				.ajax({
+		$.ajax({
 					type : "POST",
 					url : '../../../StudentController',
 					data : {
@@ -1540,49 +1426,46 @@ function addStudentPersonalDetails() {
 					success : function(data) {
 						if (data.studentPersonalStatus) {
 							if (data.studentPersonalStatus === "Unsuccessful.") {
-								$("#studentPersonalStatus").addClass(
-										"alert alert-danger").text(
-										data.pesaveChangesStatus).fadeIn();
-								$("#studentPersonalStatus").fadeOut();
+								//$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).fadeIn();
+								//$("#studentPersonalStatus").fadeOut();
+								alert(data.studentPersonalStatus);
 								return;
 							} else if (data.studentPersonalStatus === "Invalid Information") {
-								$("#studentPersonalStatus").addClass(
-										"alert alert-danger").text(
-										"Invalid Information.").fadeIn();
-								$("#studentPersonalStatus").fadeOut();
+								//$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+								//$("#studentPersonalStatus").fadeOut();
+								alert(data.studentPersonalStatus);
 								return;
 							}
-							$("#studentPersonalStatus").addClass(
-									"alert alert-success").text(
-									data.studentPersonalStatus).fadeIn();
-							$('#td-value-fullname').html(
-									firstName + ' ' + middleName + ' '
-											+ lastName);
+							//$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).fadeIn();
+							$('#fullname-hedding').html(firstName + ' ' + middleName + ' '+ lastName);
+							$('#td-value-fullname').html(firstName + ' ' + middleName + ' '+ lastName);
 							$('#td-value-birthday').html(dateOfBirth);
-							$('#td-value-gender').html(
-									getGenderString(parseInt(gender)));
+							$('#td-value-gender').html(getGenderString(parseInt(gender)));
 							$('#td-value-email').html(email);
 							$('#td-value-country').html($('#sCountry').val());
 							$('#td-value-town').html($('#sTown').val());
 							$('#td-value-address').html(address1);
 							$('#td-value-fbprofile').html(facebookUrl);
-							$('#td-value-mobileno').html(
-									landPhoneCountryCode + '-' + mobilePhoneNo);
+							$('#td-value-mobileno').html(landPhoneCountryCode + '-' + mobilePhoneNo);
 							$('#td-value-aboutme').html(description);
 							
-							$("#studentPersonalStatus").fadeOut();
+							//$("#studentPersonalStatus").fadeOut();
+							alert(data.studentPersonalStatus);
 							return;
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
-						$("#studentPersonalStatus").addClass(
-								"alert alert-warning").text(e).fadeIn();
+						//$("#studentPersonalStatus").addClass("alert alert-warning").text(e).fadeIn();
 					}
 				});
 	}
 }
 
+/**
+ * This method is to validate Personal Details Form data. If all the details are valid returns True, else false.
+ * @returns boolean
+ */
 function validateStudentPersonalDetails() {
 	isDropdownSelected(isemptyDropdown(("sFullName")), "First Name",
 			"sFullNameError");
@@ -1616,6 +1499,10 @@ function validateStudentPersonalDetails() {
 	}
 }
 
+/**
+ * This method is to clear Personal Details Form
+ * @returns
+ */
 function clearPersonalDetailsForm() {
 	$('#sFullName').val("");
 	$('#sMiddleName').val("");
@@ -1644,15 +1531,13 @@ function clearPersonalDetailsForm() {
 
 /**
  * This method is to save student interests into the DB.
- * 
  * @returns
  */
 function addInterestsDetails() {
 	var values = $("#studentInterests").val();
 	var prevalues = extStudentInterests;
 
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				url : '../../../StudentController',
 				data : {
@@ -1664,34 +1549,27 @@ function addInterestsDetails() {
 				success : function(data) {
 					extStudentInterests = [];
 					$.each(data.result, function(index, value) {
-						var res = value.toString();
-						var data = res.split(",");
-						extStudentInterests.push(parseInt(data[0]));
+						extStudentInterests.push(parseInt(value[0]));
 						$('#studentInterests').tagsinput('add', {
-							"value" : parseInt(data[0]),
-							"text" : data[1],
+							"value" : parseInt(value[0]),
+							"text" : value[1],
 							"continent" : "A"
 						});
 					});
 
 					if (data.studentInterestSaveStatus) {
 						if (data.studentInterestSaveStatus === "Unsuccessful.") {
-							$("#studentInterestSaveStatus").addClass(
-									"alert	 alert-danger").text(
-									data.studentSkillSaveStatus).fadeIn();
+							//$("#studentInterestSaveStatus").addClass("alert	 alert-danger").text(data.studentSkillSaveStatus).fadeIn();
+							alert(data.studentSkillSaveStatus);
 							return;
 						} else if (data.studentPersonalStatus === "Invalid Information") {
-							$("#studentInterestSaveStatus").addClass(
-									"alert alert-danger").text(
-									"Invalid Information.").fadeIn();
+							//$("#studentInterestSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+							alert(data.studentSkillSaveStatus);
 							return;
 						}
-						$("#studentInterestSaveStatus").addClass(
-								"alert alert-success").text(
-								data.studentInterestSaveStatus).fadeIn();
-						$("#studentInterestSaveStatus").addClass(
-								"alert alert-success").text(
-								data.studentInterestSaveStatus).fadeOut();
+						//$("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeIn();
+						//$("#studentInterestSaveStatus").addClass("alert alert-success").text(data.studentInterestSaveStatus).fadeOut();
+						alert(data.studentSkillSaveStatus);
 					}
 				},
 				error : function(e) {
@@ -1702,7 +1580,6 @@ function addInterestsDetails() {
 
 /**
  * This method generates a Json object to pass into tag-it input.
- * 
  * @param response
  * @returns
  */
@@ -1713,10 +1590,8 @@ function createJsonObj(response) {
 	var elements = "";
 
 	$.each(response, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var result = '{ "value": ' + parseInt(data[0]) + ', "text": "'
-				+ data[1] + '" , "continent": "A" },';
+		var result = '{ "value": ' + parseInt(value[0]) + ', "text": "'
+				+ value[1] + '" , "continent": "A" },';
 		elements = elements.concat(result);
 	});
 	startBrc = startBrc.concat(elements.slice(0, -1));
@@ -1727,55 +1602,46 @@ function createJsonObj(response) {
 
 /**
  * This method is to save student skills into the DB.
- * 
  * @returns
  */
 function addSkillDetails() {
 	var values = $("#studentSkills").val();
 	var prevalues = extStudentSkills;
 
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				url : '../../../StudentController',
 				data : {
 					oldStudentSkills : prevalues.toString(),
 					newStudentSkills : values,
-					CCO : "ASS"
+					CCO : "ASK"
 				},
 				dataType : "json",
 				success : function(data) {
 					extStudentSkills = [];
 					$.each(data.result, function(index, value) {
-						var res = value.toString();
-						var data = res.split(",");
-						extStudentSkills.push(parseInt(data[0]));
+						extStudentSkills.push(parseInt(value[0]));
 						$('.example_objects_as_tags > > input').tagsinput(
 								'add', {
-									"value" : parseInt(data[0]),
-									"text" : data[1],
+									"value" : parseInt(value[0]),
+									"text" : value[1],
 									"continent" : "A"
 								});
 					});
 
 					if (data.studentSkillSaveStatus) {
 						if (data.studentSkillSaveStatus === "Unsuccessful.") {
-							$("#studentSkillSaveStatus").addClass(
-									"alert alert-danger").text(
-									data.studentSkillSaveStatus).fadeIn();
+							//$("#studentSkillSaveStatus").addClass("alert alert-danger").text(data.studentSkillSaveStatus).fadeIn();
+							alert(data.studentSkillSaveStatus);
 							return;
 						} else if (data.studentSkillSaveStatus === "Invalid Information") {
-							$("#studentSkillSaveStatus").addClass(
-									"alert alert-danger").text(
-									"Invalid Information.").fadeIn();
+							//$("#studentSkillSaveStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+							alert(data.studentSkillSaveStatus);
 							return;
 						}
-						$("#studentSkillSaveStatus").addClass(
-								"alert alert-success").text(
-								data.studentSkillSaveStatus).fadeIn();
-						$("#studentSkillSaveStatus").addClass(
-								"alert alert-success").text(
-								data.studentSkillSaveStatus).fadeOut();
+						//$("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeIn();
+						//$("#studentSkillSaveStatus").addClass("alert alert-success").text(data.studentSkillSaveStatus).fadeOut();
+						alert(data.studentSkillSaveStatus);
 					}
 				},
 				error : function(e) {
@@ -1784,9 +1650,12 @@ function addSkillDetails() {
 			});
 }
 
-//
-// Updates "Select all" control in a data table
-//
+//Below two methods are for maintain update functionality on, 'select all' condition. One single method with parameters giving an error so that method redundant in here.
+/**
+ * Updates "Select all" control in a data table (Experiences Table)
+ * @param table
+ * @returns
+ */
 function updateDataTableSelectAllCtrl(table) {
 	var $table = table.table().node();
 	var $chkbox_all = $('tbody input[type="checkbox"]', $table);
@@ -1816,9 +1685,11 @@ function updateDataTableSelectAllCtrl(table) {
 	}
 }
 
-//
-// Updates "Select all" control in a data table
-//
+/**
+ * Updates "Select all" control in a data table Higher Education.
+ * @param table
+ * @returns
+ */
 function updatehigherEduDataTableSelectAllCtrl(table) {
 	var $table = table.table().node();
 	var $chkbox_all = $('tbody input[type="checkbox"]', $table);
@@ -1847,11 +1718,11 @@ function updatehigherEduDataTableSelectAllCtrl(table) {
 		}
 	}
 }
+//---------------------------------------------------------------------//
 
 /**
  * This method is to set the selected option in a drop-down list using
  * selectedIndex property.
- * 
  * @param selectObj
  * @param valueToSet
  * @returns
@@ -1878,7 +1749,6 @@ function radionButtonSelectedValueSet(name, SelectdValue) {
 
 /**
  * This is to get the string value of gender name.
- * 
  * @param val
  * @returns
  */
