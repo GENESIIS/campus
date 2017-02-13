@@ -208,7 +208,7 @@ function forgotPassword() {
 
 function verifyCode() {
 	var code = $("#verifyCode").val();
-	
+	var email = $("#verifiemail").val();
 	var codeEmpty = isempty(code);
 	
 	//code filed validation error messages handling
@@ -221,8 +221,8 @@ function verifyCode() {
 	
 	if (code != null) {
 		var jsonData = {
-			"hashCode" : code
-			
+			"hashCode" : code,
+			"email":email
 		};
 		
 		$.ajax({
@@ -230,7 +230,7 @@ function verifyCode() {
 			url : '/LoginController',
 			data : {
 				jsonData : JSON.stringify(jsonData),
-				CCO : ""
+				CCO : "HASHV"
 
 			},
 			dataType : "json",
