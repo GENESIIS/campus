@@ -38,7 +38,7 @@ public enum Operation {
 	GET_TOWN_DETAILS("GTD", ResponseType.JSON, "index.jsp"),
 	ADD_STUDENT_DETAILS("APD", ResponseType.JSON, "index.jsp"),
 	GET_SKILL_DETAILS("GSL", ResponseType.JSON, "index.jsp"),
-	ADD_STUDENT_SKILL("ASS", ResponseType.JSON, "index.jsp"),
+	ADD_STUDENT_SKILL("ASK", ResponseType.JSON, "index.jsp"),
 	ADD_STUDENT_INTEREST("ASI", ResponseType.JSON, "index.jsp"),
 	ADD_HIGHER_EDUCATION("AHE", ResponseType.JSON, "index.jsp"),
 	UPDATE_HIGHER_EDUCATION("UHE", ResponseType.JSON, "index.jsp"),
