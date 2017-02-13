@@ -14,22 +14,23 @@ public class FormValidator {
 		boolean isValid = true;
 		//ArrayList<String> errorString = new ArrayList<String>();
 
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) {
+		//if (!UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) {
+			if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedCategory"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a category type");
 			isValid = false;
 		}		
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("majorName"))) {
+		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedMajor"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a course major type");
 			isValid = false;
 		}		
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("levelName"))) {
+		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedLevel"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a course level type");
 			isValid = false;
 		}		
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("providerName"))) {
+		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedProvider"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a course provider");
 			isValid = false;
