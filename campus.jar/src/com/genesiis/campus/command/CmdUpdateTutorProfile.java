@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170209 CW c38-view-update-tutor-profile modified execute() method.
 //20170212 CW c38-view-update-tutor-profile modified execute() method & setVariables() method name modified into setCompareVariables().
 //20170213 CW c38-view-update-tutor-profile modified execute() method & add fillTutorCollection() method.
+//20170213 CW c38-view-update-tutor-profile modified setCompareVariables() method
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -61,7 +62,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 					view.setCollection(tutorViewCollection);	
 					
 					if (result > 0) {
-						view.setCollection(tutorViewCollection);	
+						//view.setCollection(tutorViewCollection);	
 						message = SystemMessage.UPDATED.message();
 					} /*else {
 					}*/
@@ -77,7 +78,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
 			
-			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()))){
+			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()) || message.equals(SystemMessage.UPDATED.message()))){
 				message = SystemMessage.ERROR.message();
 			}
 			
@@ -208,6 +209,9 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}else{
 				tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
 			}
+			
+			System.out.println("!"+helper.getParameter("aboutMe")+"!");
+			System.out.println("!"+helper.getParameter("descriptionOld")+"!");
 			
 			if(Validator.isNotEmpty(helper.getParameter("aboutMe"))){
 				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
