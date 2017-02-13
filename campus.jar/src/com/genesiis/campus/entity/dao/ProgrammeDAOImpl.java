@@ -348,16 +348,16 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[PROGRAMME]");
 			sb.append("([NAME]	 ,[EMAIL]  ,[DESCRIPTION], [DURATION] , [ENTRYREQUIREMENTS], [COUNSELORNAME], [COUNSELORPHONE] ,[DISPLAYSTARTDATE],[EXPIRYDATE],");
-			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY],[MODON] ,[MODBY]");
+			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY],[MODON] ,[MODBY] ) ");
 			sb.append(" VALUES ( ");
-			sb.append(" ? , ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,?");
+			sb.append(" ? , ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? ");
 			sb.append(" ) ");
 
 			stmt=conn.prepareStatement(sb.toString());
 			stmt.setString(1, programmeDTO.getName());
 			stmt.setString(2, programmeDTO.getEmail());
 			stmt.setString(3, programmeDTO.getDescription());
-			stmt.setString(4, programmeDTO.getDuration());
+			stmt.setFloat(4, programmeDTO.getDuration());
 			stmt.setString(5, programmeDTO.getEntryRequiremtns());
 			stmt.setString(6, programmeDTO.getCounselerName());
 			stmt.setString(7, programmeDTO.getCounselerPhone());
