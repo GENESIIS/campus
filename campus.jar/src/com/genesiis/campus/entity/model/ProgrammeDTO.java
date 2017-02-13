@@ -15,7 +15,7 @@ public class ProgrammeDTO {
 	String email;
 	String image;
 	String description;
-	String duration;
+	Float duration;
 	String entryRequiremtns;
 	String counselerName;
 	String counselerPhone;
@@ -63,11 +63,12 @@ public class ProgrammeDTO {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public String getDuration() {
+	}	
+	
+	public Float getDuration() {
 		return duration;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(Float duration) {
 		this.duration = duration;
 	}
 	public String getEntryRequiremtns() {

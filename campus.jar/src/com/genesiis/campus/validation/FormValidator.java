@@ -12,10 +12,8 @@ public class FormValidator {
 	public static boolean  validateProgrammeDetails(IDataHelper helper) {
 		
 		boolean isValid = true;
-		//ArrayList<String> errorString = new ArrayList<String>();
-
-		//if (!UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) {
-			if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedCategory"))) {
+		//ArrayList<String> errorString = new ArrayList<String>();		
+		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedCategory"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a category type");
 			isValid = false;
@@ -35,7 +33,7 @@ public class FormValidator {
 					"Please select a course provider");
 			isValid = false;
 		}		
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("classTypeName"))) {
+		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedClassType"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a classe type");
 			isValid = false;
