@@ -361,17 +361,17 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			stmt.setString(5, programmeDTO.getEntryRequiremtns());
 			stmt.setString(6, programmeDTO.getCounselerName());
 			stmt.setString(7, programmeDTO.getCounselerPhone());
-			stmt.setDate(8, programmeDTO.getDisplayDatrtDate());
-			stmt.setDate(9, programmeDTO.getExpirationDate());
+			stmt.setDate(8, new java.sql.Date(programmeDTO.getDisplayDatrtDate().getTime()));
+			stmt.setDate(9, new java.sql.Date(programmeDTO.getExpirationDate().getTime()));
 			stmt.setInt(10, programmeDTO.getProgrammeStatus());
 			stmt.setInt(11, programmeDTO.getCourseProvider());
 			stmt.setInt(12, programmeDTO.getMajor());
 			stmt.setInt(13, programmeDTO.getCategory());
 			stmt.setInt(14, programmeDTO.getLevel());
 			stmt.setInt(15, programmeDTO.getClassType());
-			stmt.setDate(16, programmeDTO.getCrtOn());
+			stmt.setDate(16, new java.sql.Date(programmeDTO.getCrtOn().getTime()));
 			stmt.setString(17, programmeDTO.getCrtBy());
-			stmt.setDate(18, programmeDTO.getModOn());
+			stmt.setDate(18,  new java.sql.Date(programmeDTO.getModOn().getTime()));
 			stmt.setString(19, programmeDTO.getModBy());
 			
 			rs = stmt.executeQuery();

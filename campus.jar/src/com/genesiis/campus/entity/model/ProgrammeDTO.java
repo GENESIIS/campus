@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity.model;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 //20170208 DJ c138-add-basic-programme-MP-dj Initiate ProgrammeDTO.java
 
