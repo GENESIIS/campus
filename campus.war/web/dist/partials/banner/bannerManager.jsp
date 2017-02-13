@@ -3,6 +3,7 @@
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn change the script to include uploadBanner.js -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn removed unnecessary script /dist/js/header/ui-populate-helper.js-->
 
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
@@ -67,7 +68,7 @@
 
 		<form id="banner-from">
 			<div>
-				Advertiser &nbsp; 
+				Advertiser * &nbsp; 
 				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
 					placeholder="-- Select an Advertiser --">
@@ -77,7 +78,7 @@
 
 			<br>
 			<div>
-				Page &nbsp; 
+				Page * &nbsp; 
 				<input id="page" name="page" list="pageList"
 					class="text-field" type="text" placeholder="-- Select a Page --">
 				<datalist id="pageList" name="pageList"> </datalist>
@@ -85,7 +86,7 @@
 			</div>
 			<br> <br>
 			<div>
-				Advertising slot &nbsp; <input id="slot" name="slot"
+				Advertising slot * &nbsp; <input id="slot" name="slot"
 					list="slotList" class="text-field" type="text"
 					placeholder="-- Select a Slot --">
 				<datalist id="slotList" name="slotList"> </datalist>
@@ -95,34 +96,41 @@
 			<br>
 
 			<div>
-				Duration &nbsp;<input id="duration" type='text'>
+				Duration (Seconds) *&nbsp;<input id="duration" type='text'>
 			</div>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
-				type="radio" name="bannerEnable" value="yes"> <label
+				type="radio" name="bannerEnable" value="enabled" > <label
 				for="bannerEnable">Yes</label> <input type="radio"
-				name="bannerEnable" value="No"> <label
+				name="bannerEnable" value="disabled" > <label
 				for="bannebannerDisablerEnable">No</label>
 			<div></div>
 			<div>
-				<br> Start date &nbsp; <input type="date" name="startDate"
+				<br> Start date* &nbsp; <input type="date" name="startDate"
 					id="startDate">
 			</div>
 			<br>
 			<div>
-				End date &nbsp;<input type="date" name="endtDate" id="endtDate">
+				End date * &nbsp;<input type="date" name="endtDate" id="endtDate">
 			</div>
-			<br>
+			<br><br>
 			<div>
-				URL &nbsp;<input id="advertSlot" type='text'>
+			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
+			URL/Mini Web &nbsp;
+			<input type="radio" name="urlspecifier" value="yes" id ="urlspecifierUrl">
+			Page &nbsp;
+			<input type="radio" name="urlspecifier" value="No" id ="urlspecifierPage">
+			<br><br>			
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text'>
 			</div>
-			<br>
+			<br><br>
 			<!-- Form image submit -->
 
-			<label>Upload Banner</label> 
+			<label><b>Upload Banner<b></b></label> <br>
 			<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
 			<input type="hidden"	value="xyz">
 			<br>
 			<button type="submit" id="uploadBbutton">Upload</button>
+			<button id="bannerPageClearField">Clear</button>
 		</form>
 
 	</div>
