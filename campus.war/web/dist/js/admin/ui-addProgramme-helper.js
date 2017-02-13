@@ -65,7 +65,7 @@ $(document).ready(function() {
 	/*
 	 * remove error message of provider field on focusout
 	 */		
-	$('#providerList').on('focusout', function(event) {	
+	$('#providerList').on('focusout', function(event) {		
 		clearErrorMessage(".block-course-provider");
 	});
 	
@@ -132,6 +132,29 @@ function populateProgrammeAddView(response) {
 	});
 	$('#providerName').html(htmlstr);
 	
+	
+/*	
+	var singleTypeElement = '';
+
+	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" ><option value="">--Default--</option>';
+	//if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
+		$.each(response.result, function(index, value) {
+			singleTypeElement += '<option val="' + value[0] + '">';
+			singleTypeElement += value[1];
+			singleTypeElement += '</option>';
+
+		});
+	//}
+	singleTypeElement += '';
+	var providerTypeNames = $("#providerName");
+	providerTypeNames.html(singleTypeElement);*/
+	
+	
+	
+	//$$$$$$$$$$$$$$$$$$$$$$$$
+	
+	
+	
 	var htmlCategoryStr = "";
 	$.each(response.allCategories, function(index, value) {
 		if (value != null && value.length > 0) {
@@ -139,8 +162,15 @@ function populateProgrammeAddView(response) {
 					+ '</option>';
 		}
 
-	});
-	$('#categoryName').html(htmlCategoryStr);
+	});	
+	$('#categoryName').html(htmlCategoryStr);	
+	
+	
+	
+	
+	
+	
+	
 	
 	var htmlMajorStr = "";
 	$.each(response.allMajors, function(index, value) {
@@ -148,8 +178,8 @@ function populateProgrammeAddView(response) {
 			htmlMajorStr += '<option val="' + value[0] + '">' + value[1]
 					+ '</option>';
 		}
-
 	});
+	
 	$('#majorName').html(htmlMajorStr);
 	
 	var htmlLevelStr = "";
@@ -218,7 +248,7 @@ function addProgrammeDetails(){
 	
 	
 	//Validate Course Provider selection
-	var providerName = $('#providerList').val();
+	var providerName = $('#providerList').val();	
 	var providerCode=0;
 	var option=$('#providerName').find('option');
 	for(var i=0; i<option.length;i++){
@@ -232,6 +262,8 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-provider").addClass("err-block");
 		$('.block-course-provider .err-msg').text("Please select a course provider!");	
+	}else{		
+		$("#selectedProvider").val(providerCode);
 	}
 	
 	
@@ -242,14 +274,16 @@ function addProgrammeDetails(){
 	for(var i=0; i<option.length;i++){
 		$('#categoryName').find('option')[i].outerHTML;
 		if(option[i].text ==categoryName){				
-			providerCode=option[i].attributes[0].value;
+			categoryCode=option[i].attributes[0].value;
 			break;
 		}
 	}	
-	if(providerCode==0){
+	if(categoryCode==0){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-category").addClass("err-block");
 		$('.block-course-category .err-msg').text("Please select a course category!");	
+	}else{		
+		$("#selectedCategory").val(categoryCode);
 	}
 	
 	//Validate Major selection
@@ -267,6 +301,8 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-major").addClass("err-block");
 		$('.block-course-major .err-msg').text("Please select a course major!");	
+	}else{		
+		$("#selectedMajor").val(majorCode);
 	}
 	
 	//Validate Level selection
@@ -284,10 +320,10 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-level").addClass("err-block");
 		$('.block-course-level .err-msg').text("Please select a course level!");	
+	}else{		
+		$("#selectedLevel").val(levelCode);
 	}
-	
-	
-	
+		
 	
 	var email= $('#email').val();			
 	/*if (!isEmpty(email) || !isValidEmailFormat(email)) {
