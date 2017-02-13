@@ -83,7 +83,7 @@
 								</div>								
 							<div class="form-group">
 									<button type="button" class="btn btn-primary btn-block"
-										name="CCO" id="CCO" value=""
+										name="CCO" id="CCO" value="HASHV"
 										onclick="verifyCode()">Verify</button>
 								</div>
 						</div>
