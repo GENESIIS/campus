@@ -4,6 +4,7 @@
  * 20170206 DJ c138-add-basic-programme-MP-dj  Initiated isEmpty(),isValidEmailFormat() methods.
  * 20170207 DJ c138-add-basic-programme-MP-dj  clearParameters() method implementation.
  * 20170213 DJ c138-add-basic-programme-MP-dj  remove error message of input fields on focusout.
+ * 20170213 DJ c138-add-basic-programme-MP-dj  Implemented clearErrorMessage() common method.
  */
 
 $(document).ready(function() {
@@ -41,94 +42,83 @@ $(document).ready(function() {
 	});
 	
 	/*
-	 * remove error message category field on focusout
+	 * remove error message of category field on focusout
 	 */		
-	$('#categoryList').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-category").removeClass("err-block");
-		$(".block-course-category").addClass("success-block");		
+	$('#categoryList').on('focusout', function(event) {		
+		clearErrorMessage(".block-course-category");
 	});
 	/*
-	 * remove error message category field on focusout
+	 * remove error message of major field on focusout
 	 */		
-	$('#majorList').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-major").removeClass("err-block");
-		$(".block-course-major").addClass("success-block");		
+	$('#majorList').on('focusout', function(event) {		
+		clearErrorMessage(".block-course-major");
 	});
+	
 	/*
-	 * remove error message category field on focusout
+	 * remove error message of level field on focusout
 	 */		
 	$('#levelList').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-level").removeClass("err-block");
-		$(".block-course-level").addClass("success-block");		
+	
+		clearErrorMessage(".block-course-level");
 	});
+	
 	/*
-	 * remove error message category field on focusout
+	 * remove error message of provider field on focusout
 	 */		
 	$('#providerList').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-provider").removeClass("err-block");
-		$(".block-course-provider").addClass("success-block");		
+		clearErrorMessage(".block-course-provider");
 	});
 	
+	
 	/*
-	 * remove error message on focusout
+	 * remove error message of course name field on focusout
 	 */	
-	$('#course-name').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-name").removeClass("err-block");
-		$(".block-course-name").addClass("success-block");		
+	$('#course-name').on('focusout', function(event) {		
+		clearErrorMessage(".block-course-name");
 	});
 	
 	/*
-	 * remove error message description on focusout
+	 * remove error message of course duration on focusout
 	 */		
-	$('#course-duration').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-duration").removeClass("err-block");
-		$(".block-course-duration").addClass("success-block");		
+	$('#course-duration').on('focusout', function(event) {			
+		clearErrorMessage(".block-course-duration");
 	});
 	
 	/*
-	 * remove error message description on focusout
+	 * remove error message of counselor name on focusout
 	 */		
-	$('#counselor-name').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-counselor-name").removeClass("err-block");
-		$(".block-counselor-name").addClass("success-block");		
+	$('#counselor-name').on('focusout', function(event) {			
+		clearErrorMessage(".block-counselor-name");
 	});
 	
 	/*
-	 * remove error message description on focusout
+	 * remove error message of counselor telephone on focusout
 	 */		
-	$('#counselor-tel').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-counselor-tel").removeClass("err-block");
-		$(".block-counselor-tel").addClass("success-block");		
-	});
+	$('#counselor-tel').on('focusout', function(event) {		
+		clearErrorMessage(".block-counselor-tel");
+	});	
 	
 	/*
-	 * remove error message description on focusout
+	 * remove error message of counselor email on focusout
 	 */		
 	$('#counselor-email').on('focusout', function(event) {	
-		$("#programmeForm").addClass("error-form");
-		$(".block-counselor-email").removeClass("err-block");
-		$(".block-counselor-email").addClass("success-block");		
-	});
-	
-	
+		clearErrorMessage(".block-counselor-email");	
+	});		
 	
 	/*
 	 * clear button-event handler
 	 */
 	$('#clearParam').click(function(event){		
 		clearParameters(event);
-	});
-
-	
+	});	
 });
+
+//Clear error messages in mandatory input fields on focusout
+function clearErrorMessage(blockName){	
+	$("#programmeForm").addClass("error-form");
+	$(blockName).removeClass("err-block");
+	$(blockName).addClass("success-block");	
+}
 
 function populateProgrammeAddView(response) {
 		
