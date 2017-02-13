@@ -65,7 +65,7 @@ private IView saveBannerPageCredential(IDataHelper helper, IView view) throws SQ
 Exception{
 	
 	// get the jason object and inflate
-	JasonInflator inflatedBannerRowObject = getInflatedObjectFromJason("");
+	
 	
 	// get the banner Image from the back end
 	// check if it confirm to the standards-- pixels this should be stored in the database
