@@ -3,6 +3,8 @@
  * 
  */
 
+//20170209 JH c39-add-course-provider validation methods for expiration date changed
+
 window.prefixFlag = true;
 window.usernameFlag = true;
 
@@ -155,8 +157,8 @@ function providerUsernameValidation() {
 function providerPrefixValidation() {
 
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
-	document.getElementById('errorUniquePrefix').value = "";
-	document.getElementById('prefixMessage').value = "";
+	document.getElementById('errorUniquePrefix').innerHTML = "";
+	document.getElementById('prefixMessage').innerHTML = "";
 	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
@@ -167,18 +169,18 @@ function providerPrefixValidation() {
 		return false;
 	} else if (selectedPrefix.length < 2) {
 
-		document.getElementById('prefixMessage').value = "";
+	//	document.getElementById('prefixMessage').value = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
 		return false;
 	} else if (selectedPrefix.length > 20) {
 
-		document.getElementById('prefixMessage').innerHTML = "";
+	//	document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
 		document.getElementById('prefixMessage').value = "";
 		return false;
 	} else {
-		document.getElementById('errorUniquePrefix').innerHTML = "";
-		document.getElementById('prefixMessage').innerHTML = "";
+		//document.getElementById('errorUniquePrefix').innerHTML = "";
+		//document.getElementById('prefixMessage').innerHTML = "";
 
 		$
 				.ajax({
@@ -262,21 +264,20 @@ function vaidateCourseProviderDeatils(form) {
 	var accountDescription = $("#accountDescription").val();
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	var currentDate = new Date();
-	var selectedDate = new Date(expirationDate);
+	var date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
+	var selectedDate = 	$('#expirationDate').val();
 	var accountContactNumber = $("#providerContactNumber").val();
 
-	if (publishProgram === 0) {
-		if (currentDate > selectedDate) {
+		if (date > selectedDate) {
 			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
 			document.getElementById('expirationDate').focus();
 			flag = false;
 		}
-		if (expirationDate === "" || expirationDate === null) {
+		if (selectedDate === "" || selectedDate===null) {
 			document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
 			document.getElementById('expirationDate').focus();
 			flag = false;
 		}
-	}
 
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
@@ -423,6 +424,8 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('selectedProviderType').focus();
 		flag = false;
 	}
+	
+if(providerType === 1){
 	if (providerStatus === null || providerStatus === undefined) {
 		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 		document.getElementById('providerStatus').focus();
@@ -486,6 +489,8 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerContactNumber').focus();
 		flag = false;
 	}
+}
+
 
 	return flag;
 }

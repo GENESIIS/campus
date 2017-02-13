@@ -3,7 +3,9 @@
  * 
  */
 
-//20170207 JH c141-add-course-provider-issue-improvements pass generated course provider code with the success message to another jsp
+//20170209 JH c39-add-course-provider fixed to clear unique prefix info message when a unique prefix error occurs,
+//				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message,
+//				landPhoneNubmerHelper() method changed to clear info message on error
 
 window.countryCollection = null;
 window.countryCode = null;
@@ -37,6 +39,8 @@ function publishPrograms(){
 	var publishProgram = $('input[name=publishProgram]:checked').val();
 	
 	if(publishProgram == 0){
+		var d = new Date();
+		$('#expirationDate').val(d);
 		document.getElementById("expire-date").style.display = "block";
 
 	}else if(publishProgram == 1){
@@ -299,6 +303,7 @@ function landPhoneNubmerHelper() {
 	for (var i = 0; i < errorMessageList.length; i++) {
 		errorMessageList[i].innerHTML = "";
 	}
+	
 	if (!isempty(country)) {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
@@ -324,9 +329,11 @@ function landPhoneNubmerHelper() {
 				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
 
 				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
+					document.getElementById('landNumber1').innerHTML = "";
 					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
 				}
 				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+					document.getElementById('landNumber2').innerHTML = "";
 					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
 
 				}
@@ -419,7 +426,6 @@ function saveCourseProvider() {
 									$( "#basicForm" ).submit();
 									
 									window.responseErrorMessage = response.userMessage;
-									var registeredId = response.registerId;
 									
 									   var form = document.createElement('form');
 							    	   form.method = 'post';
@@ -427,11 +433,11 @@ function saveCourseProvider() {
 							    	   var input = document.createElement('input');
 							    	   input.type = 'hidden';
 							           input.name = 'courseProviderCode';
-							           input.value = registeredId;
+							           input.value = response.registerId;
 							    	   var inputUserMessage = document.createElement('input');
-							    	   inputUserMessage.type = 'hidden';
-							    	   inputUserMessage.name = 'userMessage';
-							    	   inputUserMessage.value = response.userMessage;
+							    	   input.type = 'hidden';
+							           input.name = 'userMessage';
+							           input.value = response.userMessage;
 							           form.appendChild(input);
 							           form.appendChild(inputUserMessage);
 							           form.submit();
