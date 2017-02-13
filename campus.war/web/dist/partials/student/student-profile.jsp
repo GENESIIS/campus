@@ -15,6 +15,7 @@
 <!-- 20170209 TR CAM-28: modified html layout on Education Details modal: Higher education tab - added div structure -->
 <!-- 20170209 TR CAM-28: changed modal-footer layout on Education Details modal -->
 <!-- 20170209 TR CAM-28: Added separate footers for school education and higher education tabs -->
+<!-- 20170213 PN CAM-28: added data loading gif at the top of the page. added id name into full name header tag. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -158,8 +159,14 @@
 </header>
 <!--< End header -->
 
+
+
 <div class="dashboard">
     <div class="stud-dashboard clearfix">
+    	<!-- CAM-137: Including data loading gif here. -->
+		<div id="loading-gif-id">
+			<img alt="loading..." src="../../i/student/loading.gif">
+		</div>
        <div class="prf-page-header col-md-12 col-lg-12 col-sm-12">
            <h1>| User Profile </h1>
        </div>
@@ -174,7 +181,7 @@
                     <!-- End profile image -->
 
                     <div class="prf-name">
-                        <h2>Kalana Perera</h2>
+                        <h2 id="fullname-hedding"></h2>
                     </div>
                     <!-- End profile name -->
                     <div class="follow-me">
@@ -192,26 +199,6 @@
                         </tr>
                         <!-- End works at -->
 
-<!--                         <tr> -->
-<!--                             <td class="cat-icon">i</td> -->
-<!--                             <td class="field-name"><p>Studied at <span>ICBT Colombo Campus</span></p></td> -->
-<!--                         </tr> -->
-<!--                         End studied at -->
-
-<!--                         <tr> -->
-<!--                             <td class="cat-icon">i</td> -->
-<!--                             <td class="field-name"><p>Lives in <span>Colombo</span></p></td> -->
-<!--                         </tr> -->
-<!--                         End lives in -->
-<!--                         <tr> -->
-<!--                             <td class="cat-icon">i</td> -->
-<!--                             <td class="field-name"><p>From <span>Katugasthota, Kandy</span></p></td> -->
-<!--                         </tr> -->
-<!--                         End from -->
-<!--                         <tr> -->
-<!--                             <td class="cat-icon">i</td> -->
-<!--                             <td class="field-name"><p>Notes <br> <span class="sp-note">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></p></td> -->
-<!--                         </tr> -->
                         <!-- End Notes -->
                     </table>
                 </div>
@@ -222,7 +209,7 @@
                 <div class="widget w-about-me clearfix">
                     <div class="widget-header">
                         <label for="About">About</label>
-                        <button data-toggle="modal" data-target="#studentPersonalDetailsModal">Edit</button>
+                        <button class="editformdatabtn" data-toggle="modal" data-target="#studentPersonalDetailsModal">Edit</button>
                     </div>
                     <!-- End widget header -->
 
@@ -288,7 +275,7 @@
                         <div class="widget w-experience">
                             <div class="widget-header">
                                 <label for="">Experience</label>
-                                <button data-toggle="modal" data-target="#studentProfessionalDetailsModal">Edit</button>
+                                <button class="editformdatabtn" data-toggle="modal" data-target="#studentProfessionalDetailsModal">Edit</button>
                             </div>
 
                             <div class="widget-content">
@@ -303,7 +290,7 @@
                         <div class="widget w-education">
                             <div class="widget-header">
                                 <label for="">Education</label>
-                                <button data-toggle="modal" data-target="#studentSchoolEducationModal">Edit</button>
+                                <button class="editformdatabtn" data-toggle="modal" data-target="#studentSchoolEducationModal">Edit</button>
                             </div>
 							<br>
                             <div class="widget-content">
@@ -319,34 +306,12 @@
                     </div>
                     <!-- End Education Widget -->
 
-<!--                     <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6"> -->
-<!--                         <div class="widget w-activity"> -->
-<!--                             <div class="widget-header"> -->
-<!--                                 <label for="">Activity</label> -->
-<!--                                 <button>Edit</button> -->
-<!--                             </div> -->
-
-<!--                             <div class="widget-content"> -->
-<!--                                 <ul class="ul-activity"> -->
-<!--                                     <li>Change your user profile details <br><span class="act-time">~ March 2012 - Now</span></li> -->
-<!--                                     <li>Added new article <br><span class="act-time">~ March 2012 - Now</span></li> -->
-<!--                                     <li>Change profile picture <br><span class="act-time">~ March 2012 - Now</span></li> -->
-<!--                                     <li>Your setting is updated <br><span class="act-time">~ March 2012 - Now</span></li> -->
-<!--                                 </ul> -->
-<!--                             </div> -->
-
-<!--                             <div class="widget-footer"> -->
-<!--                                 <a href="javascript:">See All Activities >></a> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                     </div> -->
                     <!-- End Activity Widget -->
                     
                       <div class="pad-l-0 col-sm-12 col-md-6 col-lg-6">
                         <div class="widget w-activity">
                             <div class="widget-header">
                                 <label for="">Skills</label>
-<!--                                 <button>Edit</button> -->
                             </div>
 
                             <div class="widget-content">
@@ -368,7 +333,6 @@
                         <div class="widget w-skills">
                             <div class="widget-header">
                                 <label for="">Interest</label>
-<!--                                 <button>Edit</button> -->
                             </div>
 
                             <div class="widget-content">
@@ -475,8 +439,8 @@
 			    <div class="show modal-input-field clearfix">
                     <label>Mobile Number :</label>
                     <div class="input-group">
-                        <span class="input-group-addon" id="countryCodePrefix">+</span>
-                        <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="10">
+                        <span class="input-group-addon" id="countryCodePrefix"></span>
+                        <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="20">
                     </div>
                     <span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
 			    </div>
@@ -484,8 +448,8 @@
 			    <div class="show modal-input-field clearfix">
                     <label>Home Number :</label>
                     <div class="input-group">
-                    <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="10">
+                    <span class="input-group-addon" id="countryCodePrefix"></span>
+                    <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="20">
                     <span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -529,8 +493,8 @@
 			    <div class="show modal-input-field clearfix">
 			        <label>WhatsApp :</label>
                     <div class="input-group">
-                    <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <span class="input-group-addon" id="countryCodePrefix"></span>
+                    <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="20">
                     <span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -538,8 +502,8 @@
                 <div class="show modal-input-field clearfix">
                     <label>Viber :</label>
                     <div class="input-group">
-                    <span class="input-group-addon" id="countryCodePrefix">+</span>
-                    <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="10">
+                    <span class="input-group-addon" id="countryCodePrefix"></span>
+                    <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="20">
                     <span id="sViberError" name="sViberError" style="color:red"></span><br>
                     </div>
                 </div>
@@ -657,9 +621,6 @@
                 </div>
 
                 <div class="tab-pane" id="2">
-
-	                <!-- <h3>Higher Education</h3>  -->
-	
 	                <div class="content-body">
 	                
 		                <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
@@ -793,13 +754,7 @@
 	  </div>
     </div>
     <!-- End modal-body -->
-    	<!-- 
-    	<div class="modal-footer">
-           <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
-           <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
-           <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addHigherEducationDetails()">Save changes</button>
-        </div>
-        <!-- End modal footer -->
+    <!-- End modal footer -->
   </div>
 </div>
 </div> 
@@ -909,13 +864,12 @@
 <!-- End prfessional details modal --> 
 
 <!-- Footer -->
-<!--<footer w3-include-html="../layout/footer.jsp"></footer>-->
 <footer>
     <div class="ft-top">
 		
     </div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright Â© Campus.lk</label>
+        <label for="Copyright">Copyright © Campus.lk</label>
     </div>
 </footer>
 
