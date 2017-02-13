@@ -29,6 +29,8 @@
 //20170110 PN CAM-28: modified JavaScript to display Professional Experience details after save them to DB.
 //20170213 PN CAM-28: integrated student personal details model code with UI, expect Clear button coding.
 //					  variable value names are changed to fix incorrect details loading on data tables. 
+//20170213 PN CAM-28: modified addHigherEducationDetails() and addProfessionalExpForm() method to setting a variable to hold value for record ID.
+		
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -164,28 +166,8 @@ function getStudentData(response) {
 			function() {
 				var data = table.row($(this).parents('tr')).data();
 				if (data) {
-					$('#organization').val(data[1]);
-					$('#designation').val(data[3]);
-
-					var str = data[5];
-					var res = str.split("<br/>");
-
-					$('#commencedOn').val(res[0]);
-					$('#completionOn').val(res[1]);
-					$('#jobDescription').val(data[6]);
-
-					// Get select object
-					var industry = document
-							.getElementById("industryoftheOrganization");
-					// Set selected
-					setSelectedValue(industry, data[2]);
-
-					// Get select object
-					var jobCategory = document.getElementById("jobCategory");
-					// Set selected
-					setSelectedValue(jobCategory, data[4]);
-
-				} else {
+					populateProfExpDetailsForm(data);
+				} else {					
 					var idx = $(this).index(this);
 					if (idx > 0) {
 						var data = $(this).eq(idx - 1).closest('tr');
@@ -193,27 +175,7 @@ function getStudentData(response) {
 						var data = table.row($(this).closest('tr').prev('tr'))
 								.data();
 					}
-
-					$('#organization').val(data[1]);
-					$('#designation').val(data[3]);
-
-					var str = data[5];
-					var res = str.split("<br/>");
-
-					$('#commencedOn').val(res[0]);
-					$('#completionOn').val(res[1]);
-					$('#jobDescription').val(data[6]);
-
-					// Get select object
-					var industry = document
-							.getElementById("industryoftheOrganization");
-					// Set selected
-					setSelectedValue(industry, data[2]);
-
-					// Get select object
-					var jobCategory = document.getElementById("jobCategory");
-					// Set selected
-					setSelectedValue(jobCategory, data[4]);
+					populateProfExpDetailsForm(data);
 				}
 			});
 
@@ -705,38 +667,7 @@ function getStudentData(response) {
 			function() {
 				var data = higherEdutbl.row($(this).parents('tr')).data();
 				if (data) {
-					var institute = data[1];
-					var res1 = institute.split("<br/>");
-
-					$('#instituteofStudy').val(res1[0]);
-					$('#affiliatedInstitute').val(res1[1]);
-
-					var certificate = data[2];
-					var res2 = certificate.split("<br/>");
-
-					var areaofstudy = document.getElementById("areaofstudy");
-					setSelectedValue(areaofstudy, res2[0]);
-
-					var award = document.getElementById("award");
-					setSelectedValue(award, res2[1]);
-
-					var result = data[3];
-					var res3 = result.split("<br/>IndexNo:");
-
-					$('#studentId').val(res3[1]);
-					$('#gpa').val(res3[0]);
-
-					var duration = data[6];
-					var res4 = duration.split("<br/>");
-
-					$('#heCommencedOn').val(res4[0]);
-					$('#heCompletedOn').val(res4[1]);
-
-					var heMedium = document.getElementById("heMedium");
-					setSelectedValue(heMedium, data[4]);
-
-					$('#heCountry').val(data[5]);
-					$('#heDescription').val(data[7]);
+					populateHigherEduDetailsForm(data);
 				} else {
 					var idx = $(this).index(this);
 					if (idx > 0) {
@@ -745,38 +676,7 @@ function getStudentData(response) {
 						var data = higherEdutbl.row(
 								$(this).closest('tr').prev('tr')).data();
 					}
-					var institute = data[1];
-					var res1 = institute.split("<br/>");
-
-					$('#instituteofStudy').val(res1[0]);
-					$('#affiliatedInstitute').val(res1[1]);
-
-					var certificate = data[2];
-					var res2 = certificate.split("<br/>");
-
-					var areaofstudy = document.getElementById("areaofstudy");
-					setSelectedValue(areaofstudy, res2[0]);
-
-					var award = document.getElementById("award");
-					setSelectedValue(award, res2[1]);
-
-					var result = data[3];
-					var res3 = result.split("<br/>");
-
-					$('#studentId').val(res3[1]);
-					$('#gpa').val(res3[0]);
-
-					var duration = data[6];
-					var res4 = duration.split("<br/>");
-
-					$('#heCommencedOn').val(res4[0]);
-					$('#heCompletedOn').val(res4[1]);
-
-					var heMedium = document.getElementById("heMedium");
-					setSelectedValue(heMedium, data[4]);
-
-					$('#heCountry').val(data[5]);
-					$('#heDescription').val(data[7]);
+					populateHigherEduDetailsForm(data);
 				}
 
 			});
@@ -947,6 +847,7 @@ function createJsonObj(response) {
  */
 function addHigherEducationDetails() {
 	if (validateHigherEducationForm()) {
+		var code = $('#highedu-id').val();
 		var instituteofStudy = $('#instituteofStudy').val();
 		var affiliatedInstitute = $('#affiliatedInstitute').val();
 		var areaofstudy = $('#areaofstudy').val();
@@ -960,6 +861,7 @@ function addHigherEducationDetails() {
 		var heDescription = $('#heDescription').val();
 
 		var jsonData = {
+			"code" : code,
 			"institute" : instituteofStudy,
 			"affiliatedInstitute" : affiliatedInstitute,
 			"major" : areaofstudy,
@@ -989,7 +891,7 @@ function addHigherEducationDetails() {
 							} else if (response.saveChangesHigherEduStatus === "Invalid Information") {
 								//$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
 							}
-							clearSchoolEducationForm();
+							//clearSchoolEducationForm();
 							//$("#saveChangesHigherEduStatus").addClass("alert alert-success").text(response.saveChangesHigherEduStatus).fadeIn();
 							
 							
@@ -1285,6 +1187,7 @@ function validateProfessionalExpForm() {
  */
 function addProfessionalExpForm() {
 	if (validateProfessionalExpForm()) {
+		var code = $('#proexp-id').val();
 		var industry = $('#industryoftheOrganization').val();
 		var jobCategoty = $('#jobCategory').val();
 		var organization = $('#organization').val();
@@ -1294,6 +1197,7 @@ function addProfessionalExpForm() {
 		var description = $('#jobDescription').val();
 
 		var jsonData = {
+			"code" : code,
 			"industry" : industry,
 			"jobCategoty" : jobCategoty,
 			"organization" : organization,
@@ -1761,4 +1665,74 @@ function getGenderString(val) {
 	} else if (parseInt(val) == 0) {
 		return "Female";
 	}
+}
+
+/**
+ * Method is to load details on Professional details form on edit button click.
+ * @param data
+ * @returns
+ */
+function populateProfExpDetailsForm(data){
+	$('#proexp-id').val(data[0]);
+	$('#organization').val(data[1]);
+	$('#designation').val(data[3]);
+
+	var str = data[5];
+	var res = str.split("<br/>");
+
+	$('#commencedOn').val(res[0]);
+	$('#completionOn').val(res[1]);
+	$('#jobDescription').val(data[6]);
+
+	// Get select object
+	var industry = document
+			.getElementById("industryoftheOrganization");
+	// Set selected
+	setSelectedValue(industry, data[2]);
+
+	// Get select object
+	var jobCategory = document.getElementById("jobCategory");
+	// Set selected
+	setSelectedValue(jobCategory, data[4]);
+}
+
+/**
+ * Method is to load details on Higher education details form on edit button click.
+ * @param data
+ * @returns
+ */
+function populateHigherEduDetailsForm(data){
+	$('#highedu-id').val(data[0]);
+	var institute = data[1];
+	var res1 = institute.split("<br/>");
+
+	$('#instituteofStudy').val(res1[0]);
+	$('#affiliatedInstitute').val(res1[1]);
+
+	var certificate = data[2];
+	var res2 = certificate.split("<br/>");
+
+	var areaofstudy = document.getElementById("areaofstudy");
+	setSelectedValue(areaofstudy, res2[1]);
+
+	var award = document.getElementById("award");
+	setSelectedValue(award, res2[0]);
+
+	var result = data[3];
+	var res3 = result.split("<br/>IndexNo:");
+
+	$('#studentId').val(res3[1]);
+	$('#gpa').val(res3[0]);
+
+	var duration = data[6];
+	var res4 = duration.split("<br/>");
+
+	$('#heCommencedOn').val(res4[0]);
+	$('#heCompletedOn').val(res4[1]);
+
+	var heMedium = document.getElementById("heMedium");
+	setSelectedValue(heMedium, data[4]);
+
+	$('#heCountry').val(data[5]);
+	$('#heDescription').val(data[7]);
 }
