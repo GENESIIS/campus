@@ -421,15 +421,17 @@ function saveCourseProvider() {
 								} else if (response['registerId'] !== 0) {
 									
 									if (response['userMessage'] !== null) {
-										$("#userMessage").html(response.userMessage);
+										$('#userMessage').val(response.userMessage);
 									}
-									$( "#basicForm" ).submit();
 									
-									window.responseErrorMessage = response.userMessage;
+									$('#generatedId').val(response.registerId);
+//
+//									$( "#basicForm" ).submit();
+
 									
-									   var form = document.createElement('form');
-							    	   form.method = 'post';
-							    	   form.action = '/dist/partials/admin/courseProviderManagement.jsp';
+									   var kjereo = document.createElement('form');
+									   kjereo.method = 'get';
+									   kjereo.action = '/dist/partials/admin/courseProviderManagement.jsp?code='+response.registerId;
 							    	   var input = document.createElement('input');
 							    	   input.type = 'hidden';
 							           input.name = 'courseProviderCode';
@@ -438,9 +440,9 @@ function saveCourseProvider() {
 							    	   input.type = 'hidden';
 							           input.name = 'userMessage';
 							           input.value = response.userMessage;
-							           form.appendChild(input);
-							           form.appendChild(inputUserMessage);
-							           form.submit();
+							           kjereo.appendChild(input);
+							           kjereo.appendChild(inputUserMessage);
+							           kjereo.submit();
 									
 									}
 							}

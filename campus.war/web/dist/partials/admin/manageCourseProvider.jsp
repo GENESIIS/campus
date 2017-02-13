@@ -104,7 +104,7 @@
 			</div>
 		</div>
 		<!-- end inner header -->
-		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="POST" id="basicForm">
+		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="get" id="basicForm">
 			<!-- Page content -->
 
 				<input type="hidden" name="generatedId" id="generatedId" value=""/>
@@ -134,12 +134,12 @@
 									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
 										<c:if test="${accountTypes.typeValue == 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" checked="checked"
+												value="${accountTypes.typeValue}" 
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 										<c:if test="${accountTypes.typeValue != 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" disabled="disabled"
+												value="${accountTypes.typeValue}" 
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 									</c:forEach>
@@ -174,7 +174,7 @@
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">
-										Short Name: <span style="color: red;">*</span>
+										Short Name: 
 									</h1>
 								</div>
 								<div class="col-name">

@@ -94,9 +94,10 @@
 
 		<div class="content-holder center-block clearfix">
 		<div class="alert alert-success" role="alert" id="usermessage">Course provider successfully created.</div>
+		<div class="alert alert-success" role="alert" id="usermessage"> ${generatedId}</div>
 
 			<c:if test="${not empty param.userMessage }">
-				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage } ${param.courseProviderCode }</div>
+				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage } ${param.generatedId }</div>
 
 			</c:if>
 
