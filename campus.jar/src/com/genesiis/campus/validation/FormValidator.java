@@ -9,34 +9,34 @@ import java.util.ArrayList;
 
 public class FormValidator {	
 	
-	public static ArrayList<String>  validateProgrammeDetails(IDataHelper helper) {
+	public static boolean  validateProgrammeDetails(IDataHelper helper) {
 		
 		boolean isValid = true;
-		ArrayList<String> errorString = new ArrayList<String>();
+		//ArrayList<String> errorString = new ArrayList<String>();
 
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please select the category type");
+					"Please select a category type");
 			isValid = false;
 		}		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("majorName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please select the category type");
+					"Please select a course major type");
 			isValid = false;
 		}		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("levelName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please select the category type");
+					"Please select a course level type");
 			isValid = false;
 		}		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("providerName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please select the category type");
+					"Please select a course provider");
 			isValid = false;
 		}		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("classTypeName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please select the category type");
+					"Please select a classe type");
 			isValid = false;
 		}		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("courseName"))) {
@@ -56,35 +56,35 @@ public class FormValidator {
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("commencementDate"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please add course commencement date");
 			isValid = false;
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("expirationDate"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please add expiration date");
 			isValid = false;
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("courseStatus"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please select programme status");
 			isValid = false;
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorName"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please add counselor name");
 			isValid = false;
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorTel"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please add counselor phone");
 			isValid = false;
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorEmail"))) {
 			helper.setAttribute("errorCourseProvider",
-					"Please add course duratioin");
+					"Please add counselor email address");
 			isValid = false;
 		}		
-		return errorString;
+		return isValid;
 	}
 
 
