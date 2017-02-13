@@ -90,31 +90,35 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	private void populateFormData(ProgrammeDTO programmeDTO, IDataHelper helper)
 			throws Exception {
 
-		try {
-
-			// programmeDTO.setCategory(Integer.parseInt(helper.getParameter("categoryName")));
-			programmeDTO.setCategory(Integer.parseInt((UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) ? "0" : helper.getParameter("categoryName")));
-			// programmeDTO.setMajor(Integer.parseInt(helper.getParameter("majorName")));
-			programmeDTO.setMajor(Integer.parseInt(UtilityHelper
-					.isNotEmpty(helper.getParameter("majorName")) ? "0"
-					: helper.getParameter("majorName")));
-			// programmeDTO.setLevel(Integer.parseInt(helper.getParameter("levelName")));
-			programmeDTO.setLevel(Integer.parseInt(UtilityHelper
-					.isNotEmpty(helper.getParameter("levelName")) ? "0"
-					: helper.getParameter("levelName")));
-			// programmeDTO.setCourseProvider(Integer.parseInt(helper.getParameter("providerName")));
-			programmeDTO.setCourseProvider(Integer.parseInt(UtilityHelper
-					.isNotEmpty(helper.getParameter("providerName")) ? "0"
-					: helper.getParameter("providerName")));
-			// programmeDTO.setClassType(Integer.parseInt(helper.getParameter("classTypeName")));
-			programmeDTO.setClassType(Integer.parseInt(UtilityHelper
-					.isNotEmpty(helper.getParameter("classTypeName")) ? "0"
-					: helper.getParameter("classTypeName")));
+		try {			
+			String categoryString = helper.getParameter("selectedCategory");
+			String majorString = helper.getParameter("selectedMajor");
+			String levelString = helper.getParameter("selectedLevel");
+			String providerString = helper.getParameter("selectedProvider");
+			String classTypeString = helper.getParameter("selectedClassType");
+			String durationString = helper.getParameter("courseDuration");
+		
+			if(UtilityHelper.isNotEmpty(categoryString)){
+				programmeDTO.setCategory(Integer.parseInt(categoryString));
+			}			
+			if(UtilityHelper.isNotEmpty(majorString)){
+				programmeDTO.setMajor(Integer.parseInt(majorString));
+			}			
+			if(UtilityHelper.isNotEmpty(levelString)){
+				programmeDTO.setLevel(Integer.parseInt(categoryString));
+			}
+			if(UtilityHelper.isNotEmpty(providerString)){
+				programmeDTO.setCourseProvider(Integer.parseInt(providerString));
+			}
+			if(UtilityHelper.isNotEmpty(classTypeString)){
+				programmeDTO.setClassType(Integer.parseInt(classTypeString));
+			}	
 			programmeDTO.setName(helper.getParameter("courseName"));
 			programmeDTO.setDescription(helper
 					.getParameter("courseDescription"));
-			programmeDTO.setDuration(helper.getParameter("courseDuration"));
-
+			if (UtilityHelper.isNotEmpty(durationString)) {
+				programmeDTO.setDuration(Float.valueOf(durationString));
+			}
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String commencementDateString = helper
 					.getParameter("commencementDate");
@@ -131,6 +135,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			programmeDTO.setCounselerName(helper.getParameter("counselorName"));
 			programmeDTO.setCounselerPhone(helper.getParameter("counselorTel"));
 			programmeDTO.setEmail(helper.getParameter("counselorEmail"));
+			//TODO:Temparory data for EntryRequiremtns
+			programmeDTO.setEntryRequiremtns("entry requirements");
 			programmeDTO.setCrtOn(new Date());
 			programmeDTO.setCrtBy("DJ");			
 			programmeDTO.setModOn(new Date());
