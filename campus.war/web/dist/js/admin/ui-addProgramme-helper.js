@@ -3,6 +3,7 @@
  * 20170202 DJ c138-add-basic-programme-MP-dj  Initiated populateProgrammeAddView() method
  * 20170206 DJ c138-add-basic-programme-MP-dj  Initiated isEmpty(),isValidEmailFormat() methods.
  * 20170207 DJ c138-add-basic-programme-MP-dj  clearParameters() method implementation.
+ * 20170213 DJ c138-add-basic-programme-MP-dj  remove error message of input fields on focusout.
  */
 
 $(document).ready(function() {
@@ -40,6 +41,39 @@ $(document).ready(function() {
 	});
 	
 	/*
+	 * remove error message category field on focusout
+	 */		
+	$('#categoryList').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-category").removeClass("err-block");
+		$(".block-course-category").addClass("success-block");		
+	});
+	/*
+	 * remove error message category field on focusout
+	 */		
+	$('#majorList').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-major").removeClass("err-block");
+		$(".block-course-major").addClass("success-block");		
+	});
+	/*
+	 * remove error message category field on focusout
+	 */		
+	$('#levelList').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-level").removeClass("err-block");
+		$(".block-course-level").addClass("success-block");		
+	});
+	/*
+	 * remove error message category field on focusout
+	 */		
+	$('#providerList').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-provider").removeClass("err-block");
+		$(".block-course-provider").addClass("success-block");		
+	});
+	
+	/*
 	 * remove error message on focusout
 	 */	
 	$('#course-name').on('focusout', function(event) {	
@@ -51,11 +85,40 @@ $(document).ready(function() {
 	/*
 	 * remove error message description on focusout
 	 */		
-	$('#course-description').on('focusout', function(event) {	
+	$('#course-duration').on('focusout', function(event) {	
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-duration").removeClass("err-block");
 		$(".block-course-duration").addClass("success-block");		
 	});
+	
+	/*
+	 * remove error message description on focusout
+	 */		
+	$('#counselor-name').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-name").removeClass("err-block");
+		$(".block-counselor-name").addClass("success-block");		
+	});
+	
+	/*
+	 * remove error message description on focusout
+	 */		
+	$('#counselor-tel').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-tel").removeClass("err-block");
+		$(".block-counselor-tel").addClass("success-block");		
+	});
+	
+	/*
+	 * remove error message description on focusout
+	 */		
+	$('#counselor-email').on('focusout', function(event) {	
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-email").removeClass("err-block");
+		$(".block-counselor-email").addClass("success-block");		
+	});
+	
+	
 	
 	/*
 	 * clear button-event handler
