@@ -28,6 +28,7 @@
 //20170110 PN CAM-28: modified JavaScript to display Higher Education details after save them to DB.
 //20170110 PN CAM-28: modified JavaScript to display Professional Experience details after save them to DB.
 //20170213 PN CAM-28: integrated student personal details model code with UI, expect Clear button coding.
+//					  variable value names are changed to fix incorrect details loading on data tables. 
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -274,7 +275,7 @@ function getStudentData(response) {
 
 						$
 								.each(
-										response.stdExpCollection,
+										response.result,
 										function(index, value) {
 											if (experienceducount < 4) {
 													experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
@@ -720,7 +721,7 @@ function getStudentData(response) {
 					setSelectedValue(award, res2[1]);
 
 					var result = data[3];
-					var res3 = result.split("<br/>");
+					var res3 = result.split("<br/>IndexNo:");
 
 					$('#studentId').val(res3[1]);
 					$('#gpa').val(res3[0]);
@@ -823,7 +824,7 @@ function getStudentData(response) {
 
 						// FOR DEMONSTRATION ONLY
 						// Output form data to a console
-						$('#example-console').text(hEdurowsSelected);
+						$('#higherEdu-console').text(hEdurowsSelected);
 
 						$
 								.ajax({
@@ -1331,29 +1332,31 @@ function addProfessionalExpForm() {
 							var experience = $('#li-std-experience');
 							experience.find('li').remove();
 
-							$.each(
-											response.stdExpCollection,
-											function(index, value) {
-												if (experienceducount < 2) {
-														experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
-													}
+							$
+							.each(
+									response.result,
+									function(index, value) {
+										if (experienceducount < 2) {
+												experience.append('<li>'+value[2].toString()+' <span class="drop-at">at</span> '+value[1].toString()+' <br><span class="drop-time"> Duration: '+value[5].toString()+'-'+value[6].toString()+'</span></li>');
+											}
 
-												experienceducount++;
-																	
-												table.row
-														.add(
-																[
-																		value[0].toString(),
-																		value[1].toString(),
-																		value[2].toString(),
-																		value[3].toString(),
-																		value[4].toString(),
-																		value[5].toString() + "<br/>"
-																				+ value[6].toString(),
+										experienceducount++;
+															
+										table.row
+												.add(
+														[
+																value[0].toString(),
+																value[1].toString(),
+																value[2].toString(),
+																value[3].toString(),
+																value[4].toString(),
+																value[5].toString() + "<br/>"
+																		+ value[6].toString(),
 																		value[7].toString(),
-																		'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
-														.draw(false);
-											});							
+																'<button type="button" class="btn btn-info editstpe"><span class="glyphicon glyphicon-edit"></span></button>' ])
+												.draw(false);
+									});
+										
 							//$("#pesaveChangesStatus").fadeOut();
 							alert(response.pesaveChangesStatus);
 						}
