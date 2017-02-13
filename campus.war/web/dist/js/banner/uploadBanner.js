@@ -264,7 +264,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	var advertiserCode= $('#sAdvertiserCode').val();
 	var codeOfSelectedPage= $('#sPageCode').val();
 	var bannerSlotCode=$('#sSlotCode').val();
-	var dusration= $('#duration').val();
+	var displayDusration= $('#duration').val();
 	var banerToBeActive=$('input:radio[name=bannerEnable]:checked').val(); // validate for 'undefined'
 	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
 	var bannerPublishingEndDate= $('#endtDate').val();
@@ -284,7 +284,7 @@ $(document).on('click','#uploadBbutton', function(event){
 		formData.append('advertiserCode',advertiserCode);
 		formData.append('codeOfSelectedPage',codeOfSelectedPage);
 		formData.append('bannerSlotCode',bannerSlotCode);
-		formData.append("dusration",dusration);
+		formData.append("displayDusration",displayDusration);
 		formData.append("banerToBeActive",banerToBeActive);
 		formData.append("bannerPublishingDate",bannerPublishingDate);
 		formData.append("bannerPublishingEndDate",bannerPublishingEndDate);
@@ -295,7 +295,7 @@ $(document).on('click','#uploadBbutton', function(event){
 		$.ajax({
 			type:"POST",
 			dataType:"JSON",
-			url : adminControllerUrl+"?CCO=UBIMG", //Upload Banner Image
+			url : adminControllerUrl+"?CCO=UBIMGC", //Upload Banner Image Credentials
 			data : formData,
 			cache: false,
 			contentType : false,
