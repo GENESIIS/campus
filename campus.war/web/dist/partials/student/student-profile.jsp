@@ -17,6 +17,7 @@
 <!-- 20170209 TR CAM-28: Added separate footers for school education and higher education tabs -->
 <!-- 20170213 PN CAM-28: added data loading gif at the top of the page. added id name into full name header tag. -->
 <!-- 20170213 PN CAM-28: modified UI element names to fix incorrect data loading on datatables -->
+<!-- 20170213 PN CAM-28: modified Professional Details modal and Higher education tab by setting a hidden field to hold value for record ID. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -625,7 +626,7 @@
 	                <div class="content-body">
 	                
 		                <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
-		                
+		                <input hidden name="highedu-id" id="highedu-id">
 		                <div class="show modal-input-field clearfix">
 			                <label>Institute of Study :</label>
 			                <input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200">
@@ -771,6 +772,7 @@
       <div class="modal-body">
 			<div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div>
             <div class="well clearfix">
+            	<input hidden name="proexp-id" id="proexp-id">
                 <div class="show modal-input-field clearfix">
                     <label>Industry of the Organization :</label>
                     <select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
