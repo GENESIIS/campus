@@ -1,4 +1,5 @@
 package com.genesiis.campus.command;
+
 //201700209 AS C22 forgot password, CmdHashCodeVerification command class created
 import java.sql.SQLException;
 import java.util.Collection;
@@ -10,30 +11,47 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentEmailVerificationDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
-public class CmdHashCodeVerification implements ICommand{
-	static Logger log = Logger.getLogger(CmdHashCodeVerification.class.getName());
+public class CmdHashCodeVerification implements ICommand {
+	static Logger log = Logger.getLogger(CmdHashCodeVerification.class
+			.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
+	String pageURL = "/dist/partials/login/forgotPassword.jsp";
+	String result = "";
+	String message = "";
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		
+
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
 		StudentEmailVerificationDAO studentEmailvarification = new StudentEmailVerificationDAO();
 		dataCollection = studentEmailvarification.verifyHashCode(data);
-		
-		
-		
+
+		for (Collection<String> collection : dataCollection) {
+			Object[] array = collection.toArray();
+			result = (String) array[0];
+		}
+		if (result == SystemMessage.VERIFICATION_CODEEXPIRED.message()) {
+			message = result;
+		}
+		if (result == SystemMessage.INVALID_HASHCODE.message()) {
+			message = result;
+		} else {
+			view.setCollection(dataCollection);
+		}
+		helper.setAttribute("message", message);
+		helper.setAttribute("pageURL", pageURL);
+
 		return view;
 	}
-	
-	
+
 	/**
-	 * extract data from json object and assign to Student object
-	 * object
+	 * extract data from json object and assign to Student object object
 	 * 
 	 * @author anuradha
 	 * @param gsonData

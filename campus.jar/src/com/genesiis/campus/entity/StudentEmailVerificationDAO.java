@@ -160,37 +160,46 @@ public class StudentEmailVerificationDAO implements ICrud {
 
 		ArrayList<String> singleStudent = null;
 		Collection<String> singleStudentCollection = null;
-		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHCODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.STUDENT WHERE EMAIL =? AND ISACTIVE = ?";
+		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.STUDENT WHERE EMAIL =? AND HASHCODE =? AND ISACTIVE = ?";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		String message = SystemMessage.INVALID_HASHCODE.message();
+		String message = SystemMessage.VALIDHASHCODE.message();
+		int minitDiff = 0;
 		try {
 			final Student student = (Student) data;
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			
 			preparedStatement.setString(1, student.getEmail());
-			preparedStatement.setString(2, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
+			preparedStatement.setString(2, student.getHashCode());
+			preparedStatement.setString(3, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
 
 			rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				singleStudent = new ArrayList<String>();
-				singleStudentCollection = singleStudent;
+				
+				minitDiff = rs.getInt("MinuteDiff");
+				if(minitDiff <= 30){
+					singleStudent = new ArrayList<String>();
+					singleStudentCollection = singleStudent;
 
-				singleStudent.add(rs.getString("FIRSTNAME"));
-				singleStudent.add(rs.getString("LASTNAME"));
-				singleStudent.add(rs.getString("EMAIL"));
-				singleStudent.add(rs.getString("USERNAME"));
-				singleStudent.add(rs.getString("CODE"));
-				singleStudent.add(rs.getString("HASHCODE"));
-				singleStudent.add(rs.getString("MinuteDiff"));
+					singleStudent.add(rs.getString("FIRSTNAME"));
+					singleStudent.add(rs.getString("LASTNAME"));
+					singleStudent.add(rs.getString("EMAIL"));
+					singleStudent.add(rs.getString("USERNAME"));
+					singleStudent.add(rs.getString("CODE"));
+					log.info("hariii");
+				}else{
+					message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
+					singleStudent = new ArrayList<String>();
+					singleStudentCollection = singleStudent;
+					singleStudent.add(message);
+				}
 			} else {
 				message = SystemMessage.INVALID_HASHCODE.message();
 				singleStudent = new ArrayList<String>();
 				singleStudentCollection = singleStudent;
 				singleStudent.add(message);
-
 			}
 			
 		} catch (SQLException exception) {
@@ -211,12 +220,10 @@ public class StudentEmailVerificationDAO implements ICrud {
 			if (conn != null) {
 				conn.close();
 			}
-
 		}
-		
+		log.info(message);
 		dataCollection.add(singleStudentCollection);
 		return dataCollection;
-
 	}
 	
 	@Override

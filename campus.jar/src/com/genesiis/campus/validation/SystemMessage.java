@@ -34,8 +34,10 @@ public enum SystemMessage {
 	SESSIONEXPIRED("Session Expired ! Please login again. "),
 	INVALID_EMAIL("Your email address is invalid. Please enter a valid address ! "),
 	INVALID_HASHCODE("Your Varification code is invalid. Please try again ! "),
-	HASHCODES("Hash code updated successfull !!"),
+	HASHCODES("Hash code updated successfull !"),
+	VALIDHASHCODE("Your Verification code valid !"),
 	HASHCODEUNS("Hash code not updated successfull !!"),
+	VERIFICATION_CODEEXPIRED("Verification code has been Expired!"),
 	EMAILERROR("Invalid Email.");
 
 	
