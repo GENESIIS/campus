@@ -16,6 +16,7 @@
 <!-- 20170209 TR CAM-28: changed modal-footer layout on Education Details modal -->
 <!-- 20170209 TR CAM-28: Added separate footers for school education and higher education tabs -->
 <!-- 20170213 PN CAM-28: added data loading gif at the top of the page. added id name into full name header tag. -->
+<!-- 20170213 PN CAM-28: modified UI element names to fix incorrect data loading on datatables -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -743,7 +744,7 @@
 					<div class="modal-footer sh-footer">
 	                    <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
 	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
-	                    <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
+	                    <button type="button" class="btn btn-modal btn-primary" id="saveHe" name="saveHe" onclick="addHigherEducationDetails()">Save changes</button>
                     </div>
                     <!-- End hogher education footer -->
                     
