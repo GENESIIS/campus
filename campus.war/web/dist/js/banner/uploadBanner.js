@@ -6,10 +6,13 @@
  * 	20170209 DN c131-admin-manage-banner-upload-banner-image-dn getPreRequisitPageData() changed to populate course provider/page list,
  * 				and getBannerSlotsMapedToThePAge() method implemented.  
  *              method populateDataList() implemented and refactor other code to reuse the said method when populating data lists.
- *              ajaxErorMessage() method refactor to provide better information. 	 	
+ *              ajaxErorMessage() method refactor to provide better information. 
+ *  20170213 DN c131-admin-manage-banner-upload-banner-image-dn add function to transfer the banner page information to back end 	 	
  */
 
 var selectedPageCode = '';
+var selectedAdvertiserCode ='';
+var selectedBannerSlotCode ='';
 var adminControllerUrl = '../../../AdminController';
 
 $(document).ready(function(){
@@ -24,6 +27,7 @@ $(document).ready(function(){
 function displayBannerManagerPrerequistData(){
 	
 	$.ajax({
+		type:"POST",
 		url:adminControllerUrl,
 		data:{
 			CCO:"DBPDOL", //Display Banner Page Data on Load
@@ -76,13 +80,13 @@ function getPreRequisitPageData(preRequistData){
 										return $(this).val();
 									}	
 								}).text();
-		selectedPageCode = page;
+		selectedAdvertiserCode = page;
 		
 		// populating associated page slots for the page
 		
 		if(iskeyStrocksCompleted){
 			// get page code to a hidden field
-			$('#sAdvertiserCode').val(selectedPageCode);
+			$('#sAdvertiserCode').val(selectedAdvertiserCode);
 			
 		}
 		
@@ -103,13 +107,13 @@ function getPreRequisitPageData(preRequistData){
 								}).text();
 		selectedPageCode = page;
 		
-		// populating associated page slots for the page
+		// populating associated banner slots for the page
 		
 		if(iskeyStrocksCompleted){
 			// get page code to a hidden field
 			$('#sPageCode').val(selectedPageCode);
 			
-			// load the relevant page slot for page selected.
+			// load the relevant page slot for page selected from data base.
 			getBannerSlotsMapedToThePAge(selectedPageCode);
 			
 			
@@ -117,6 +121,28 @@ function getPreRequisitPageData(preRequistData){
 		
 	});
 	
+// filter and display the selected Banner slots when user type in
+	$('#slot').on('input',function(){
+		var iskeyStrocksCompleted = false;
+		var intrmediateTypedSlotName = this.value;
+		var page = $('#slotList option').
+								filter(function(){
+									if($(this).val()===intrmediateTypedSlotName){
+										iskeyStrocksCompleted = true;
+										return $(this).val();
+									}	
+								}).text();
+		selectedBannerSlotCode = page;
+		
+		// once the selection is made assign the code to the hidden field		
+		if(iskeyStrocksCompleted){
+			// get page code to a hidden field
+			$('#sSlotCode').val(selectedBannerSlotCode);
+			
+		}
+		
+	});	
+
 }
 
 /**
@@ -128,6 +154,7 @@ function getPreRequisitPageData(preRequistData){
 function getBannerSlotsMapedToThePAge(selectedPageCode){
 	
 	$.ajax({
+		type:"POST",
 		url:adminControllerUrl,
 		dataType:"json",
 		data:{
@@ -184,7 +211,7 @@ function populateDataList(responseAttribute,elementId){
 
 /**
  * ajaxErorMessage
- * @author DJ
+ * @author DJ,DN re engineered 
  * @param response response that comes from the server
  * @error error  error message comes from the server when ajax call fails
  * @errorThrown actual error thrown once ajax response fails
@@ -213,3 +240,99 @@ function displayLabelMessage(labelid,cssColour,message){
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 	
 }
+
+
+
+/**
+ *  this event gets fired once the <I>upload </I> button of the banner page
+ *  triggers and it collects all the information from the page and
+ *  passes to server. 
+ *  <b>Note:</b> It's a must to fill all the data mentioned specially the 
+ *  radio buttons to retrieve correct selection other than the undefined 
+ *  java script value.
+ *  Method perform the front end validation before it commence the server 
+ *  request ajax call.
+ */
+
+
+$(document).on('click','#uploadBbutton', function(event){
+	
+	var isValidationSuccess = false;
+	/*
+	 * Encapsulated page data
+	 */
+	var advertiserCode= $('#sAdvertiserCode').val();
+	var codeOfSelectedPage= $('#sPageCode').val();
+	var bannerSlotCode=$('#sSlotCode').val();
+	var dusration= $('#duration').val();
+	var banerToBeActive=$('input:radio[name=bannerEnable]:checked').val(); // validate for 'undefined'
+	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
+	var bannerPublishingEndDate= $('#endtDate').val();
+	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
+	var banerImage=$('#file-select').prop('files')[0];
+	
+	// run the validation check here for the page
+	
+	
+	
+	if(isValidationSuccess){
+		
+		//if validation passes then create the form data
+		var formData = new FormData();
+		
+		formData.append("file",banerImage);
+		formData.append('advertiserCode',advertiserCode);
+		formData.append('codeOfSelectedPage',codeOfSelectedPage);
+		formData.append('bannerSlotCode',bannerSlotCode);
+		formData.append("dusration",dusration);
+		formData.append("banerToBeActive",banerToBeActive);
+		formData.append("bannerPublishingDate",bannerPublishingDate);
+		formData.append("bannerPublishingEndDate",bannerPublishingEndDate);
+		formData.append("urlToBeDirectedOnBannerClick",urlToBeDirectedOnBannerClick);
+		
+		// ajax call to transfer data to server end
+		
+		$.ajax({
+			type:"POST",
+			dataType:"JSON",
+			url : adminControllerUrl+"?CCO=UBIMG", //Upload Banner Image
+			data : formData,
+			cache: false,
+			contentType : false,
+			processData : false,
+			success: function(response){
+				var cssColour=(reponse.successCode===1)?'green':'red';
+				displayLabelMessage('displayLabel',cssColour,reponse.message);
+			},
+			error: function(pageSlots,error,errorThrown){
+				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
+				displayLabelMessage('displayLabel','red',msg);
+				
+				}
+		});
+		
+	}
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
