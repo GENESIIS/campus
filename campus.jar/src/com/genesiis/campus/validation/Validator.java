@@ -39,6 +39,7 @@ package com.genesiis.campus.validation;
 //20170209 CW c38-view-update-tutor-profile modified isHavingNullValues() method.
 //20170209 CW c38-view-update-tutor-profile modified validatePassword() method name to isValidPassword().
 //20170212 CW c38-view-update-tutor-profile modified isValidNetworkCode(), isValidLastname(), isValidContactNumber(), isValidAddressLine1() methods & validateTutorFields() - modify comment
+//20170213 CW c38-view-update-tutor-profile modified validateTutorFields(), isValidFirstname() methods & validateUserAndEmail() method name modified to isValidUserAndEmail().
 
 
 import java.net.MalformedURLException;
@@ -158,7 +159,11 @@ public class Validator {
 
 		boolean isValid = true; 
 		try {	
-			isValid = validateUserAndEmail(helper);
+			
+
+			if (!isValidUserAndEmail(helper)) {
+				isValid = false;
+			}
 			
 			if (isHavingNullValues(helper)) {
 				isValid = false;
@@ -255,7 +260,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName == " ") {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName != " ") {
 				valid = true;
 			}
 
@@ -515,7 +520,7 @@ public class Validator {
 	 * @return boolean : return false if user name or email is having an error
 	 * @throws Exception
 	 */
-	public boolean validateUserAndEmail(IDataHelper helper) throws SQLException, Exception{
+	public boolean isValidUserAndEmail(IDataHelper helper) throws SQLException, Exception{
 
 		boolean message = true; 
 		try {		
