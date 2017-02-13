@@ -13,7 +13,10 @@ package com.genesiis.campus.factory;
 //				enter new map entry related to the DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA
 //20170209 DN c131-admin-manage-banner-upload-banner-image-dn add UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE entry to the map &
 //				getCommand() method.
+//20170213 DN c131-admin-manage-banner-upload-banner-image-dn UPLOAD_BANNER_IMAGE_CREDENTIALS map entry added,changed the getCommand()
+//            accordingly.
 
+import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -29,6 +32,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		
 		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdBannerPreRequisite()); 
 		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdBannerPreRequisite());
+		map.put(Operation.UPLOAD_BANNER_IMAGE_CREDENTIALS, new CmdAdminBannerUpload());
 	}
 
 	@Override
@@ -42,6 +46,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		case UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE:
 			command = map.get(o);
 			break;
+		case UPLOAD_BANNER_IMAGE_CREDENTIALS:
+			command = map.get(o);
+			break;	
 		
 		default:
 			break;
