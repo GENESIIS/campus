@@ -5,6 +5,7 @@ package com.genesiis.campus.entity.model;
 //20161129 AS C19-student-login-without-using-third-party-application-test-as added userKey attribute. 
 //20161205 AS C19-student-login-without-using-third-party-application-test-as added valid and remember attributes. 
 //20161214 AS C19-student-login-without-using-third-party-application-test-as added userType attribute. 
+//20170213 AS C22-student-reset-password-and-implement-forgot-password-function-as added new attribute, hashCode. 
 public class Student {
 	private int code;
 	private String username;
@@ -54,6 +55,15 @@ public class Student {
 	private boolean valid;
 	private boolean remember;
 	private String userType;
+	private String hashCode;
+
+	public String getHashCode() {
+		return hashCode;
+	}
+
+	public void setHashCode(String hashCode) {
+		this.hashCode = hashCode;
+	}
 
 	public String getUserType() {
 		return userType;
