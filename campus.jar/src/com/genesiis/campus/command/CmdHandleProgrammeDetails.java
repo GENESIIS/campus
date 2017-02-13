@@ -13,11 +13,16 @@ import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.FormValidator;
+import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * The class {@code CmdListProgrammeDetails} is a form of Command class.It is created for the purpose of handling commands of
@@ -62,11 +67,11 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			}else if("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)){				
 				boolean isOkToSave=FormValidator.validateProgrammeDetails(helper);
 				log.info("execute() ->>>>>>>>>>>>>>>>>>> ADD_PROGRAMME_DETAILS " );	
-				if(isOkToSave){
+				//if(isOkToSave){
 					final ProgrammeDTO programmeDTO=new ProgrammeDTO();
 					populateFormData(programmeDTO,helper);
 				    int value = programmeDAO.addProgrammeDetails(programmeDTO);
-				}
+				//}
 			}	
 			
 		} catch (Exception exception) {
@@ -82,22 +87,61 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	 * @param helper
 	 * @param programmeDTO	  
 	 */
-	private void populateFormData(ProgrammeDTO programmeDTO, IDataHelper helper) {		
-		programmeDTO.setCategory(Integer.parseInt(helper.getParameter("categoryName")));
-		programmeDTO.setMajor(Integer.parseInt(helper.getParameter("majorName")));
-		programmeDTO.setLevel(Integer.parseInt(helper.getParameter("levelName")));
-		programmeDTO.setCourseProvider(Integer.parseInt(helper.getParameter("providerName")));
-		programmeDTO.setClassType(Integer.parseInt(helper.getParameter("classTypeName")));
-		programmeDTO.setName(helper.getParameter("courseName"));
-		programmeDTO.setDescription(helper.getParameter("courseDescription"));
-		programmeDTO.setDuration(helper.getParameter("courseDuration"));
-		//programmeDTO.setDisplayDatrtDate(helper.getParameter("commencementDate"));
-		//programmeDTO.setExpirationDate(helper.getParameter("expirationDate"));
-		programmeDTO.setProgrammeStatus(Integer.parseInt(helper.getParameter("courseStatus")));
-		programmeDTO.setCounselerName(helper.getParameter("counselorName"));
-		programmeDTO.setCounselerPhone(helper.getParameter("counselorTel"));
-		programmeDTO.setEmail(helper.getParameter("counselorEmail"));	
-		
+	private void populateFormData(ProgrammeDTO programmeDTO, IDataHelper helper)
+			throws Exception {
+
+		try {
+
+			// programmeDTO.setCategory(Integer.parseInt(helper.getParameter("categoryName")));
+			programmeDTO.setCategory(Integer.parseInt((UtilityHelper.isNotEmpty(helper.getParameter("categoryName"))) ? "0" : helper.getParameter("categoryName")));
+			// programmeDTO.setMajor(Integer.parseInt(helper.getParameter("majorName")));
+			programmeDTO.setMajor(Integer.parseInt(UtilityHelper
+					.isNotEmpty(helper.getParameter("majorName")) ? "0"
+					: helper.getParameter("majorName")));
+			// programmeDTO.setLevel(Integer.parseInt(helper.getParameter("levelName")));
+			programmeDTO.setLevel(Integer.parseInt(UtilityHelper
+					.isNotEmpty(helper.getParameter("levelName")) ? "0"
+					: helper.getParameter("levelName")));
+			// programmeDTO.setCourseProvider(Integer.parseInt(helper.getParameter("providerName")));
+			programmeDTO.setCourseProvider(Integer.parseInt(UtilityHelper
+					.isNotEmpty(helper.getParameter("providerName")) ? "0"
+					: helper.getParameter("providerName")));
+			// programmeDTO.setClassType(Integer.parseInt(helper.getParameter("classTypeName")));
+			programmeDTO.setClassType(Integer.parseInt(UtilityHelper
+					.isNotEmpty(helper.getParameter("classTypeName")) ? "0"
+					: helper.getParameter("classTypeName")));
+			programmeDTO.setName(helper.getParameter("courseName"));
+			programmeDTO.setDescription(helper
+					.getParameter("courseDescription"));
+			programmeDTO.setDuration(helper.getParameter("courseDuration"));
+
+			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			String commencementDateString = helper
+					.getParameter("commencementDate");
+			String expirationDate = helper.getParameter("expirationDate");
+			if (UtilityHelper.isNotEmpty(commencementDateString)) {
+				programmeDTO.setDisplayDatrtDate(df
+						.parse((commencementDateString)));
+			}
+			if (UtilityHelper.isNotEmpty(expirationDate)) {
+				programmeDTO.setExpirationDate(df.parse((expirationDate)));
+			}
+
+			//programmeDTO.setProgrammeStatus(Integer.parseInt(helper	.getParameter("courseStatus")));
+			programmeDTO.setCounselerName(helper.getParameter("counselorName"));
+			programmeDTO.setCounselerPhone(helper.getParameter("counselorTel"));
+			programmeDTO.setEmail(helper.getParameter("counselorEmail"));
+			programmeDTO.setCrtOn(new Date());
+			programmeDTO.setCrtBy("DJ");			
+			programmeDTO.setModOn(new Date());
+			programmeDTO.setModBy("DJ");
+
+		} catch (ParseException parseException) {
+			log.error("populateFormData() : ParseException "
+					+ parseException.toString());
+			throw parseException;
+		}
+
 	}
 
 }
