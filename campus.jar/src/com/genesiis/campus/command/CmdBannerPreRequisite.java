@@ -1,8 +1,10 @@
 
 package com.genesiis.campus.command;
 /*
- * 20170203 DN c131-admin-manage-banner-upload-bann created
- * 				the CmdGetBannerPreRequisite.java class
+ * 20170203 DN c131-admin-manage-banner-upload-banner-image-dn created
+ * 				 the CmdGetBannerPreRequisite.java class
+ * 20170213 DN c131-admin-manage-banner-upload-banner-image-dn renamed 
+ * 				the class to CmdBannerPreRequisite.java
  */
 
 
@@ -21,16 +23,16 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 
 /**
- * CmdGetBannerPreRequisit class meant to extract necessary 
+ * CmdBannerPreRequisite class meant to extract necessary 
  * the prerequisite information before
  * the Banner view is loaded.
  * @author dushantha DN
  * 
  *
  */
-public class CmdGetBannerPreRequisite implements ICommand {
+public class CmdBannerPreRequisite implements ICommand {
 
-	private static final Logger log = Logger.getLogger(CmdGetBannerPreRequisite.class.getName());
+	private static final Logger log = Logger.getLogger(CmdBannerPreRequisite.class.getName());
 	private int successCode =0;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
