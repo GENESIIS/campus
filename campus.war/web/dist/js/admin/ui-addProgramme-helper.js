@@ -208,6 +208,8 @@ function populateProgrammeAddView(response) {
  * This method addProgramme() for adding a course to the system.
  */
 function addProgrammeDetails(){	
+	var isValidationSucess = true;
+	
 	var courseDuration =$('#course-duration').val();	
 	var counselorName =$('#counselor-name').val();
 	var counselorTel =$('#counselor-tel').val();
@@ -219,30 +221,36 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-duration").addClass("err-block");
 		$('.block-course-duration .err-msg').text("Please insert course duration !");
+		isValidationSucess = false;
 	}
 	if (courseName == 'undefined' || !courseName && courseName == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
 		$('.block-course-name .err-msg').text("Please insert course Name!");
+		isValidationSucess = false;
 	}
 	if (counselorName == 'undefined' || !counselorName && counselorName == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-name").addClass("err-block");
 		$('.block-counselor-name .err-msg').text("Please insert counselor name!");
+		isValidationSucess = false;
 	}
 	if (counselorTel == 'undefined' || !counselorTel && counselorTel == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
 		$('.block-counselor-tel .err-msg').text("Please insert counselor telephone!");
+		isValidationSucess = false;
 	}
 	if (counselorEmail == 'undefined' || !counselorEmail && counselorEmail == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
+		isValidationSucess = false;
 	}else if(!isValidEmailFormat(counselorEmail)){
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Invalid email format!");	
+		isValidationSucess = false;
 	}
 	
 	
@@ -376,8 +384,7 @@ function addProgrammeDetails(){
      
 	if(fromDate > toDate){	
 		$("#programmeForm").addClass("error-form");
-		$(".block-course-commencement, .block-course-expiration").addClass("err-block");
-		//$('.block-course-commencement .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
+		$(".block-course-commencement, .block-course-expiration").addClass("err-block");			
 		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");		
 	}
 	

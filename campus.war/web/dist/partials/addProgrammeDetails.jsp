@@ -160,7 +160,7 @@
 								<div class="form-group block-course-duration">
 									<label for="course-duration"><span class="compulsary-fld">*</span>Course Duration <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
-										<input name="courseDuration" type="text" class="form-control" id="course-duration" placeholder="">
+										<input name="courseDuration" type="number" class="form-control" id="course-duration" placeholder=""  step="0.01">
 										<span class="ico-box">
 											<span class="normal fa fa-clock-o" aria-hidden="true"></span>
 											<span class="error fa fa-times fa-2x" aria-hidden="true"></span>	

@@ -11,8 +11,7 @@ public class FormValidator {
 	
 	public static boolean  validateProgrammeDetails(IDataHelper helper) {
 		
-		boolean isValid = true;
-		//ArrayList<String> errorString = new ArrayList<String>();		
+		boolean isValid = true;				
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedCategory"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a category type");
