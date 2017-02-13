@@ -323,6 +323,21 @@ function addProgrammeDetails(){
 	}else{		
 		$("#selectedLevel").val(levelCode);
 	}
+	
+	//Validate Class type selection
+	var classTypeName = $('#classTypelist').val();
+	var classTypeCode=0;
+	var option=$('#classTypeName').find('option');
+	for(var i=0; i<option.length;i++){
+		$('#classTypeName').find('option')[i].outerHTML;
+		if(option[i].text ==classTypeName){				
+			classTypeCode=option[i].attributes[0].value;
+			break;
+		}
+	}	
+	if(classTypeCode>0){				
+		$("#selectedClassType").val(classTypeCode);
+	}
 		
 	
 	var email= $('#email').val();			
