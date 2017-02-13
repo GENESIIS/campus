@@ -8,13 +8,17 @@ package com.genesiis.campus.validation;
 //20170105 JH c39-add-course-provider added validateCourseProvider(IDataHelper) method
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170209 JH c39-add-course-provider added expiration date back end validation 
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,8 +117,9 @@ public class Validator {
 	 * @return ArryList of type of String
 	 * 
 	 * used to validate course provider details.
+	 * @throws ParseException 
 	 */
-	public static ArrayList<String> validateCourseProvider(IDataHelper helper){
+	public static ArrayList<String> validateCourseProvider(IDataHelper helper) throws ParseException{
 		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
 		
@@ -153,9 +158,22 @@ public class Validator {
 			errorString.add("About Me ");
 			isValid = false;
 		}
+		//if course provider does not need privileges to publish 
 		if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-			if(isEmptyString(helper.getParameter("expirationDate"))){
-				helper.setAttribute("errorExpirationDate", "Select an expiration date");
+			String date = helper.getParameter("expirationDate");
+			
+		       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		        Date date1 = sdf.parse(date);
+		        Date date2 = new Date();
+		        
+		        
+			if(isEmptyString(date)){
+				helper.setAttribute("errorExpiration", "Select an expiration date");
+				errorString.add("Expiration Date ");
+				isValid = false;
+			}
+			else if(date1.before(date2)){
+				helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
 				errorString.add("Expiration Date ");
 				isValid = false;
 			}
