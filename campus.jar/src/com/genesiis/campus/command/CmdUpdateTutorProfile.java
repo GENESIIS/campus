@@ -4,16 +4,11 @@ package com.genesiis.campus.command;
 //20170208 CW c38-view-update-tutor-profile- modified setVariables() method.
 //20170209 CW c38-view-update-tutor-profile modified execute() method.
 //20170212 CW c38-view-update-tutor-profile modified execute() method & setVariables() method name modified into setCompareVariables().
+//20170213 CW c38-view-update-tutor-profile modified execute() method & add fillTutorCollection() method.
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-//import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
-
+import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
@@ -21,6 +16,12 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CmdUpdateTutorProfile implements ICommand {
 
@@ -46,32 +47,41 @@ public class CmdUpdateTutorProfile implements ICommand {
 			final TutorDAO tutorDAO = new TutorDAO();
 			int result = 0;
 			boolean updated = false;				
+			Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
 			updated = setCompareVariables(helper,tutor); // returns true if updated
 			
-			if (validator.validateTutorFields(helper)) {			
-				
-				if( updated)
-				{
+			if(updated){
+				if (validator.validateTutorFields(helper)) {		
+					
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
 					result = tutorDAO.update(tutor);
+							
+					tutorViewCollection = tutorDAO.findById(tutor);
+					view.setCollection(tutorViewCollection);	
+					
+					if (result > 0) {
+						view.setCollection(tutorViewCollection);	
+						message = SystemMessage.UPDATED.message();
+					} /*else {
+					}*/
+					
 				}else{
+					fillTutorCollection(tutorViewCollection, tutor);
+					view.setCollection(tutorViewCollection);	
 					message = SystemMessage.NOMODIFICATIONS.message();
 				}
-				
-				if (result > 0) {
-					message = SystemMessage.UPDATED.message();
-					Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
-					tutorViewCollection = tutorDAO.findById(tutor);
-					view.setCollection(tutorViewCollection);		
-
-				} else {
-					if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()))){
-						message = SystemMessage.ERROR.message();
-					}
-				}
-				
+			}else{
+				/*fillTutorCollection(tutorViewCollection, tutor);
+				view.setCollection(tutorViewCollection);*/	
+				message = SystemMessage.NOMODIFICATIONS.message();
 			}
+			
+			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()))){
+				message = SystemMessage.ERROR.message();
+			}
+			
+	
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
@@ -404,6 +414,99 @@ public class CmdUpdateTutorProfile implements ICommand {
 		}
 		
 		return updated;
+	}
+	
+	/*
+	 * fillTutorCollection() method assign all the tutor details into a collection
+	 * 
+	 * @author CW
+	 * 
+	 * @param tutorCollection, tutor
+	 */
+	private void fillTutorCollection(Collection<Collection<String>> tutorViewCollection, Tutor tutor) throws SQLException, Exception{
+
+		Collection<String> tutorCollection= new ArrayList<String>();
+
+		tutorCollection.add(Integer.toString(tutor.getCode()));	
+		tutorCollection.add(tutor.getUsername());	
+		tutorCollection.add(tutor.getPassword());		
+		tutorCollection.add(tutor.getFirstName());
+		tutorCollection.add(tutor.getMiddleName());
+		tutorCollection.add(tutor.getLastName());
+		tutorCollection.add(tutor.getGender());
+		tutorCollection.add(tutor.getEmailAddress());
+		tutorCollection.add(tutor.getLandCountryCode());
+		tutorCollection.add(tutor.getLandAreaCode());
+		tutorCollection.add(tutor.getLandNumber());
+		tutorCollection.add(tutor.getMobileCountryCode());
+		tutorCollection.add(tutor.getMobileNetworkCode());
+		tutorCollection.add(tutor.getMobileNumber());		
+		tutorCollection.add(tutor.getDescription());
+		tutorCollection.add(tutor.getExperience());
+		tutorCollection.add(tutor.getWebLink());
+		tutorCollection.add(tutor.getFacebookLink());
+		tutorCollection.add(tutor.getTwitterNumber());
+		tutorCollection.add(tutor.getMySpaceId());
+		tutorCollection.add(tutor.getLinkedInLink());
+		tutorCollection.add(tutor.getInstagramId());
+		tutorCollection.add(tutor.getViberNumber());
+		tutorCollection.add(tutor.getWhatsAppId());
+		tutorCollection.add(tutor.getAddressLine1());
+		tutorCollection.add(tutor.getAddressLine2());
+		tutorCollection.add(tutor.getAddressLine3());
+		
+		CountryDAO country = new CountryDAO();
+		TownDAO town = new TownDAO();
+		
+		try{
+
+			int townAddCount = 0;
+			if(tutor.getMobileCountryCode() != " "){
+				Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				
+				for(Collection<String> townList : townCollection){
+					if (townList.toArray()[0].toString().equals(tutor.getTown())){
+						tutorCollection.add(townList.toArray()[1].toString());
+						tutorCollection.add(townList.toArray()[0].toString());
+						townAddCount++;
+					}
+				}
+			}
+			
+			if(townAddCount == 0){
+				tutorCollection.add(" ");
+				tutorCollection.add(" ");
+				tutorCollection.add(Integer.toString(tutor.getUsertype()));
+			}else{
+				tutorCollection.add(Integer.toString(tutor.getUsertype()));
+			}
+			
+			int countryAddCount = 0; 
+			if(tutor.getMobileCountryCode() != " "){
+				Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
+				if(!(countryCollection.isEmpty())){
+					for(Collection<String> countryList : countryCollection){
+						tutorCollection.add(countryList.toArray()[1].toString());	
+						countryAddCount++;			
+					}					
+				}
+			}
+			if(countryAddCount == 0){
+				tutorCollection.add(" ");
+			}
+			
+			tutorCollection.add(Boolean.toString(tutor.getIsApproved()));
+			tutorCollection.add(Integer.toString(tutor.getTutorStatus()));
+
+		}  catch (SQLException sqle){
+			log.error("fillTutorCollection(): SQLException "+ sqle.toString());
+			throw sqle;
+		}  catch (Exception exception) {
+			log.error("fillTutorCollection() : Exception" + exception.toString());
+			throw exception;
+		}
+		
+		tutorViewCollection.add(tutorCollection);
 	}
 
 }
