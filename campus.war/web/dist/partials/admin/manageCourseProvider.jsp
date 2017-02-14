@@ -106,7 +106,7 @@
 
 				<input type="hidden" name="generatedId" id="generatedId" value=""/>
 			<div class="content-holder center-block clearfix">
-					<div class="alert alert-danger" role="alert" id="userMessage">
+					<div class="alert alert-danger" role="alert" id="userMessage" name="userMessage">
 					</div>
 
 				<!-- course filter panel : left side -->

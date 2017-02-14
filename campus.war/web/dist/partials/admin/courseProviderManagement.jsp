@@ -93,10 +93,8 @@
 		<!-- Page content -->
 
 		<div class="content-holder center-block clearfix">
-		<div class="alert alert-success" role="alert" >${generatedId }</div>
-		<div class="alert alert-success" role="alert"  >${param.generatedId }</div>
-			<c:if test="${not empty param.userMessage }">
-				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage }. </div>
+			<c:if test="${not empty param.generatedId }">
+				<div class="alert alert-success" role="alert"  >Course provider registration success.Code is: ${param.generatedId }</div>
 
 			</c:if>
 
