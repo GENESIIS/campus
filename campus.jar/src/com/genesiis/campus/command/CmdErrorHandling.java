@@ -5,9 +5,13 @@ package com.genesiis.campus.command;
 //20170125 PN CAM-72: removed the instantiation of Throwable at declaration of throwable variable.
 //20170125 PN CAM-72: modified details view that passes to the JSP page.
 //20170202 PN CAM-72: modified the values set of view that passes into the JSP page.
+//20170214 PN CAM-72: modified execute function to use Validator.getErrorMessage(statusCode) and Validator.getErrorType(statusCode)
+//					  to return error type and error message. error logging modified.
+
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -35,7 +39,7 @@ public class CmdErrorHandling implements ICommand {
 		Collection<String> errorDetails = new ArrayList<String>();
 
 		try {
-			//Get error/exception details from the servlet request headers.
+			// Get error/exception details from the servlet request headers.
 			throwable = (Throwable) helper.getAttribute("javax.servlet.error.exception");
 			statusCode = (Integer) helper.getAttribute("javax.servlet.error.status_code");
 			servletName = (String) helper.getAttribute("javax.servlet.error.servlet_name");
@@ -51,23 +55,21 @@ public class CmdErrorHandling implements ICommand {
 			// Analyze the servlet exception
 			// This condition checks for the error status code, to show the
 			// different error messages to the user.
-			if (statusCode == 404) {
-				errorType = SystemMessage.SYSTEM_ERROR.message();
-				errorMessage = SystemMessage.ERROR404.message();
-			} else {
-				errorType = SystemMessage.SYSTEM_EXCEPTION.message();
-				exceptionName = throwable.getClass().getName();
-				exceptionMessage = SystemMessage.ERROR500.message() + " " + throwable.getMessage();
-			}
+			errorType = Validator.getErrorType(statusCode);
+			errorMessage = Validator.getErrorMessage(statusCode);
 
+			if (throwable != null) {
+				exceptionName = throwable.getClass().getName();
+				exceptionMessage = throwable.getMessage();
+			}
 			// Send error details to the front page.
 			errorDetails.add(Integer.toString(statusCode));
 			errorDetails.add(errorMessage);
-			errorDetails.add(exceptionName);
-			errorDetails.add(exceptionMessage);
 			errorDetailsWrapper.add(errorDetails);
-			log.info("ERROR: TYPE:" + errorType + " CODE:" + statusCode + " SERVLET:" + servletName + " REQUESTED URI:"
-					+ requestUri + " MESSAGE:" + errorMessage);
+
+			log.info("ERROR DETAILS: TYPE:" + errorType + " CODE:" + statusCode + " SERVLET:" + servletName
+					+ " REQUESTED URI:" + requestUri + " MESSAGE:" + errorMessage + "EXCEPTION: " + exceptionName + " "
+					+ exceptionMessage);
 		} catch (Exception e) {
 			log.error("execute() : Exception " + e.toString());
 			throw e;
