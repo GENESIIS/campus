@@ -104,7 +104,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			populateFormData(programmeDTO, helper);
 			int successStatus = programmeDAO.addProgrammeDetails(programmeDTO);
 			if (successStatus > 0) {
-				helper.setAttribute("successMsg", "success");
+				helper.setAttribute("successMessage", "success");
 			}
 		}
 	}

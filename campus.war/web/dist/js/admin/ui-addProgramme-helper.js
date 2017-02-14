@@ -195,24 +195,24 @@ function populateProgrammeAddView(response) {
  * This method addProgramme() for adding a course to the system.
  */
 function addProgrammeDetails(){	
-	
-	//var flag=validateFormData();	
+	//Front-end validations
+	var isValidationSuccess=validateFormData();	
 	//After pass the validations developer able to add input data to database.
-	//if (flag === true) {
+	if (isValidationSuccess === true) {
 		var form = $('#programmeForm');
 		var formData = $(form).serialize();
 		
 		$.ajax({
 			url : '../../AdminController',
 			type: 'POST',
-			data :formData ,
-				
+			data :formData ,				
 			dataType : "json",
 			async : false,
-			success : function(response) {	
-				var isValidationSucess = displayBackEndValidations(response);
-					if (isValidationSucess === true	&& response.successMessage === "success") {
-						alert("Added Programme details will be dispay will be implemented by another issue");
+			success : function(response) {					
+					if (response.successMessage === "success") {
+						alert("Added Programme details dispay will be implemented by another issue");
+					}else{
+						displayBackEndValidations(response);
 					}				
 			},
 			error : function(jqXHR, exception) {			
@@ -220,56 +220,58 @@ function addProgrammeDetails(){
 			}
 		});	
 		
-	//}	
+	}	
 }
 
+/*
+ * Method displayBackEndValidations() is to display server side validation messages.
+*/
 function displayBackEndValidations(response){
-	var isValidationSucess = true;
+	
 	if(isEmpty(response.errorCategory)){
-		generateServerValidationMessage(response.errorCategory,".block-course-category");
-		isValidationSucess = false;		
-	}
-	if(isEmpty(response.errorMajor)){		
-		generateServerValidationMessage(response.errorMajor,".block-course-major");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorLevel)){		
-		generateServerValidationMessage(response.errorLevel,".block-course-level");
-		isValidationSucess = false;			
-	}
-	if(isEmpty(response.errorCourseProvider)){
-		generateServerValidationMessage(response.errorCourseProvider,".block-course-provider");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorCourseName)){
-		generateServerValidationMessage(response.errorCourseName,".block-course-name");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorcounselorName)){
-		generateServerValidationMessage(response.errorcounselorName,".block-counselor-name");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorcounselorTel)){
-		generateServerValidationMessage(response.errorcounselorTel,".block-counselor-tel");
-		isValidationSucess = false;					
-	}
-	if(isEmpty(response.errorcounselorEmail)){
-		generateServerValidationMessage(response.errorcounselorEmail,".block-counselor-email");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorCourseDuration)){
-		generateServerValidationMessage(response.errorCourseDuration,".block-course-duration");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorcommencementDate)){
-		generateServerValidationMessage(response.errorcommencementDate,".block-course-commencement");
-		isValidationSucess = false;				
-	}
-	if(isEmpty(response.errorexpirationDate)){
-		generateServerValidationMessage(response.errorexpirationDate,".block-course-expiration");
-		isValidationSucess = false;				
+		generateServerValidationMessage(response.errorCategory,".block-course-category");		
 	}
 	
+	if(isEmpty(response.errorMajor)){		
+		generateServerValidationMessage(response.errorMajor,".block-course-major");					
+	}
+	
+	if(isEmpty(response.errorLevel)){		
+		generateServerValidationMessage(response.errorLevel,".block-course-level");				
+	}
+	
+	if(isEmpty(response.errorCourseProvider)){
+		generateServerValidationMessage(response.errorCourseProvider,".block-course-provider");					
+	}
+	
+	if(isEmpty(response.errorCourseName)){
+		generateServerValidationMessage(response.errorCourseName,".block-course-name");					
+	}
+	
+	if(isEmpty(response.errorcounselorName)){
+		generateServerValidationMessage(response.errorcounselorName,".block-counselor-name");					
+	}
+	
+	if(isEmpty(response.errorcounselorTel)){
+		generateServerValidationMessage(response.errorcounselorTel,".block-counselor-tel");				
+	}
+	
+	if(isEmpty(response.errorcounselorEmail)){
+	
+		generateServerValidationMessage(response.errorcounselorEmail,".block-counselor-email");			
+	}
+	if(isEmpty(response.errorCourseDuration)){
+		generateServerValidationMessage(response.errorCourseDuration,".block-course-duration");			
+	}
+	
+	if(isEmpty(response.errorcommencementDate)){
+		generateServerValidationMessage(response.errorcommencementDate,".block-course-commencement");				
+	}
+	
+	if(isEmpty(response.errorexpirationDate)){
+		generateServerValidationMessage(response.errorexpirationDate,".block-course-expiration");			
+	}
+
 }
 
 /**
@@ -282,7 +284,7 @@ function generateServerValidationMessage(message,block){
 }
 
 /**
- * This method validateFormData() for validating input data.
+ * This method validateFormData() for validating input data -front end validations.
  */
 function validateFormData(){	
 
@@ -300,18 +302,21 @@ function validateFormData(){
 		$('.block-course-duration .err-msg').text("Please insert course duration !");
 		isValidationSucess = false;
 	}
+	
 	if (courseName == 'undefined' || courseName == "" || !isValidLength(counselorTel, 100)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
 		$('.block-course-name .err-msg').text("Course Name  is empty or too long!!");
 		isValidationSucess = false;
 	}
+	
 	if (counselorName == 'undefined' ||  counselorName == "" || !isValidLength(counselorTel, 35)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-name").addClass("err-block");
 		$('.block-counselor-name .err-msg').text("Counselor name is empty or too long!");
 		isValidationSucess = false;
 	}
+	
 	if (counselorTel == 'undefined' || counselorTel == ""  || !isValidLength(counselorTel, 15)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
@@ -480,14 +485,13 @@ function isPatternMatch(regularExpression, source) {
 
 }
 
-
 /**
  * @author DJ
  * @param fieldValue;  it is the value of a document element
  * @returns true if has content else false- string values.
  */
 function isEmpty(fieldValue) {
-	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
 }
 
 /**
