@@ -104,6 +104,20 @@ $(document).ready(function() {
 	 */		
 	$('#counselor-email').on('focusout', function(event) {	
 		clearErrorMessage(".block-counselor-email");	
+	});
+		
+	/*
+	 * remove error message of commencement date on focusout
+	 */		
+	$('#commencement-date').on('focusout', function(event) {	
+		clearErrorMessage(".block-course-commencement");
+	});	
+	
+	/*
+	 * remove error message of expiration date on focusout
+	 */		
+	$('#expiration-date').on('focusout', function(event) {	
+		clearErrorMessage(".block-course-expiration");
 	});		
 	
 	/*
@@ -217,7 +231,7 @@ function validateFormData(){
 	var counselorName = $('#counselor-name').val();
 	var counselorTel = $('#counselor-tel').val();
 	var counselorEmail = $('#counselor-email').val();
-	var courseName = $('#course-name').val();	
+	var courseName = $('#course-name').val();		
 
 	if (courseDuration == 'undefined' || !courseDuration && courseDuration == "") {
 		$("#programmeForm").addClass("error-form");
@@ -358,12 +372,29 @@ function validateFormData(){
 		$('.block-counselor-email .err-msg').text("Invalid email format!");
 		isValidationSucess = false;		
 	} 
-	
-	var fromDate= $("#commencement-date").val();
-    var toDate= $("#expiration-date").val();     
-	if(fromDate > toDate){	
+
+	//Validate dates
+	var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");	
+	var commencementDate= $("#commencement-date").val();
+    var expirationDate= $("#expiration-date").val();   	
+    
+    if(!regex.test(commencementDate)){ 		
+    	$("#programmeForm").addClass("error-form");
+		$(".block-course-commencement").addClass("err-block");			
+		$('.block-course-commencement .err-msg').text("Please enter valid commencement Date!");	
+		isValidationSucess = false;
+    }
+    
+    if(!regex.test(expirationDate)){
+    	$("#programmeForm").addClass("error-form");
+		$(".block-course-expiration").addClass("err-block");			
+		$('.block-course-expiration .err-msg').text("Please enter valid expiration Date!");	
+		isValidationSucess = false;
+    }   
+    
+	if((regex.test(commencementDate) && regex.test(expirationDate)) && commencementDate > expirationDate){	
 		$("#programmeForm").addClass("error-form");
-		$(".block-course-commencement, .block-course-expiration").addClass("err-block");			
+		$(".block-course-expiration, .block-course-expiration").addClass("err-block");			
 		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
 		isValidationSucess = false;
 	}	
