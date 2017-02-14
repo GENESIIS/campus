@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170213 CW c38-view-update-tutor-profile modified execute() method & add fillTutorCollection() method.
 //20170213 CW c38-view-update-tutor-profile modified setCompareVariables() method
 //20170213 CW c38-view-update-tutor-profile modified execute() & setCompareVariables() methods to fix errors
+//20170214 CW c38-view-update-tutor-profile modified execute(), fillTutorCollection() & setCompareVariables() methods
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -50,7 +51,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 			int result = 0;
 			boolean updated = false;				
 			Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
-			Collection<Collection<String>> tutorWrongCollection = new ArrayList<Collection<String>>();
 			updated = setCompareVariables(helper,tutor); // returns true if updated
 			
 			if(updated){
@@ -61,29 +61,24 @@ public class CmdUpdateTutorProfile implements ICommand {
 					result = tutorDAO.update(tutor);
 							
 					tutorViewCollection = tutorDAO.findById(tutor);
+
 					view.setCollection(tutorViewCollection);	
 					
 					if (result > 0) {
-						//view.setCollection(tutorViewCollection);	
 						message = SystemMessage.UPDATED.message();
-					} /*else {
-					}*/
+					}
 					
 				}else{
-					fillTutorCollectionttt(tutorWrongCollection, tutor);
-					view.setCollection(tutorWrongCollection);	
-					message = SystemMessage.NOMODIFICATIONS.message();
+					fillTutorCollection(tutorViewCollection, tutor);
+					view.setCollection(tutorViewCollection);	
 				}
 			}else{
-				/*fillTutorCollection(tutorViewCollection, tutor);
-				view.setCollection(tutorViewCollection);*/	
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
 			
 			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()) || message.equals(SystemMessage.UPDATED.message()))){
-				message = SystemMessage.ERROR.message();
+				message = SystemMessage.INCORRECTDATA.message();
 			}
-			
 	
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
@@ -105,7 +100,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) {
 			boolean updated = false;
-			//HttpSession session = helper.getSession(false);
 		try {
 			
 			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));
@@ -211,10 +205,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}else{
 				tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
 			}
-			
-			System.out.println("!"+helper.getParameter("aboutMe")+"!");
-			System.out.println("!"+helper.getParameter("descriptionOld")+"!");
-			
+						
 			if(Validator.isNotEmpty(helper.getParameter("aboutMe"))){
 				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
 					tutor.setDescription(helper.getParameter("aboutMe"));	
@@ -429,7 +420,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 	 * 
 	 * @param tutorCollection, tutor
 	 */
-	private void fillTutorCollectionttt(Collection<Collection<String>> tutorWrongCollection, Tutor tutor) throws SQLException, Exception{
+	private void fillTutorCollection(Collection<Collection<String>> tutorViewCollection, Tutor tutor) throws SQLException, Exception{
 
 		Collection<String> tutorCollection= new ArrayList<String>();
 
@@ -500,8 +491,13 @@ public class CmdUpdateTutorProfile implements ICommand {
 			if(countryAddCount == 0){
 				tutorCollection.add(" ");
 			}
+						
+			if(tutor.getIsApproved() == true){
+				tutorCollection.add("1");
+			}else{
+				tutorCollection.add("0");
+			}
 			
-			tutorCollection.add(Boolean.toString(tutor.getIsApproved()));
 			tutorCollection.add(Integer.toString(tutor.getTutorStatus()));
 
 		}  catch (SQLException sqle){
@@ -512,8 +508,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			throw exception;
 		}
 		
-		tutorWrongCollection.add(tutorCollection);
-		System.out.println("tutorWrongCollection = "+tutorWrongCollection);
+		tutorViewCollection.add(tutorCollection);
 	}
 
 }
