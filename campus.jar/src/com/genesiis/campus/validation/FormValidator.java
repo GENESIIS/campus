@@ -31,18 +31,20 @@ public class FormValidator {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a course provider");
 			isValid = false;
-		}		
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedClassType"))) {
+		}			
+		//TODO: kept for future developments DJ
+		/*if (!UtilityHelper.isNotEmpty(helper.getParameter("selectedClassType"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select a classe type");
 			isValid = false;
-		}		
+		}*/		
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("courseName"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please add Course name");
 			isValid = false;
 		}
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("courseDescription"))) {
+		//TODO: kept for future developments DJ
+		/*if (!UtilityHelper.isNotEmpty(helper.getParameter("courseDescription"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please add course discription");
 			isValid = false;
@@ -61,12 +63,13 @@ public class FormValidator {
 			helper.setAttribute("errorCourseProvider",
 					"Please add expiration date");
 			isValid = false;
-		}
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("courseStatus"))) {
+		}*/
+		//TODO: kept for future developments DJ
+		/*if (!UtilityHelper.isNotEmpty(helper.getParameter("courseStatus"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please select programme status");
 			isValid = false;
-		}
+		}*/
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorName"))) {
 			helper.setAttribute("errorCourseProvider",
 					"Please add counselor name");

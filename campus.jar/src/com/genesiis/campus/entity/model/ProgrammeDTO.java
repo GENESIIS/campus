@@ -19,7 +19,7 @@ public class ProgrammeDTO {
 	String entryRequiremtns;
 	String counselerName;
 	String counselerPhone;
-	Date displayDatrtDate;
+	Date displayStartDate;
 	Date expirationDate;
 	int programmeStatus;
 	int courseProvider;
@@ -90,10 +90,10 @@ public class ProgrammeDTO {
 		this.counselerPhone = counselerPhone;
 	}
 	public Date getDisplayDatrtDate() {
-		return displayDatrtDate;
+		return displayStartDate;
 	}
 	public void setDisplayDatrtDate(Date displayDatrtDate) {
-		this.displayDatrtDate = displayDatrtDate;
+		this.displayStartDate = displayDatrtDate;
 	}
 	public Date getExpirationDate() {
 		return expirationDate;

@@ -12,6 +12,7 @@ import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.FormValidator;
 import com.genesiis.campus.validation.UtilityHelper;
 
@@ -64,23 +65,31 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	 * @param helper
 	 * @param iView  	  
 	 */	
-	private void populateProgrammeInsertionView(IDataHelper helper, IView iView) {
-		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
-		
-		final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
-		iView.setCollection(courseProviderSearchResults);
-		
-		final Collection<Collection<String>> allCategories= programmeDAO.getAllCategories();
-		helper.setAttribute("allCategories",allCategories);
-		
-		final Collection<Collection<String>> allMajors= programmeDAO.getAllMajors();
-		helper.setAttribute("allMajors",allMajors);
-		
-		final Collection<Collection<String>> allLevels= programmeDAO.getAllLevels();
-		helper.setAttribute("allLevels",allLevels);
-		
-		final Collection<Collection<String>> allClassTypes= programmeDAO.getAllClassTypes();
-		helper.setAttribute("allClassTypes",allClassTypes);			
+	private void populateProgrammeInsertionView(IDataHelper helper, IView iView)
+			throws Exception {
+		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
+
+		try {
+			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
+			iView.setCollection(courseProviderSearchResults);
+
+			final Collection<Collection<String>> allCategories = programmeDAO.getAllCategories();
+			helper.setAttribute("allCategories", allCategories);
+
+			final Collection<Collection<String>> allMajors = programmeDAO.getAllMajors();
+			helper.setAttribute("allMajors", allMajors);
+
+			final Collection<Collection<String>> allLevels = programmeDAO.getAllLevels();
+			helper.setAttribute("allLevels", allLevels);
+
+			final Collection<Collection<String>> allClassTypes = programmeDAO.getAllClassTypes();
+			helper.setAttribute("allClassTypes", allClassTypes);
+			
+		} catch (Exception exception) {
+			log.error("populateProgrammeInsertionView() : Exception "
+					+ exception);
+			throw exception;
+		}
 	}
 	
 	
@@ -88,7 +97,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	 * @author DJ dumani
 	 * @param helper 	  
 	 */	
-	private void manageProgrammeInsertion(IDataHelper helper) {
+	private void manageProgrammeInsertion(IDataHelper helper)throws Exception {
 		boolean isOkToSave = FormValidator.validateProgrammeDetails(helper);
 		if (isOkToSave) {
 			final ProgrammeDTO programmeDTO = new ProgrammeDTO();
@@ -112,7 +121,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			String levelString = helper.getParameter("selectedLevel");
 			String providerString = helper.getParameter("selectedProvider");
 			String classTypeString = helper.getParameter("selectedClassType");
-			String durationString = helper.getParameter("courseDuration");
+			String durationString = helper.getParameter("courseDuration");		
 		
 			if(UtilityHelper.isNotEmpty(categoryString)){
 				programmeDTO.setCategory(Integer.parseInt(categoryString));
@@ -146,8 +155,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			if (UtilityHelper.isNotEmpty(expirationDate)) {
 				programmeDTO.setExpirationDate(df.parse((expirationDate)));
 			}
-
-			//programmeDTO.setProgrammeStatus(Integer.parseInt(helper	.getParameter("courseStatus")));
+			
+			programmeDTO.setProgrammeStatus(ApplicationStatus.getApplicationStatus(helper.getParameter("courseStatus")));
 			programmeDTO.setCounselerName(helper.getParameter("counselorName"));
 			programmeDTO.setCounselerPhone(helper.getParameter("counselorTel"));
 			programmeDTO.setEmail(helper.getParameter("counselorEmail"));
@@ -162,6 +171,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			log.error("populateFormData() : ParseException "
 					+ parseException.toString());
 			throw parseException;
+		}catch (Exception exception) {
+			log.error("populateFormData() : Exception "
+					+ exception);
+			throw exception;
 		}
 
 	}
