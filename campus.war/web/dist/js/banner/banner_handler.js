@@ -131,7 +131,7 @@ $(document).ready(function() {
 			}
 		});
 		
-		if (areBannersPresent === true) {
+		if (areBannersPresent === false) {
 			getBanners();
 		}
 	}
