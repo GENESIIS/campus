@@ -61,7 +61,7 @@ public class FormValidator {
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("expirationDate"))) {
 			helper.setAttribute("errorexpirationDate",
-					"Please add expiration date");
+					"Please add course expiration date");
 			isValid = false;
 		}
 		//TODO: kept for future developments DJ
@@ -75,10 +75,21 @@ public class FormValidator {
 					"Please add counselor name");
 			isValid = false;
 		}
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorTel"))) {
+		
+		String counselorTel=helper.getParameter("counselorTel");
+		if (!UtilityHelper.isNotEmpty(counselorTel)) {
 			helper.setAttribute("errorcounselorTel",
 					"Please add counselor phone");
 			isValid = false;
+		}else{
+			//matches numbers only
+			String regexStr = "^[0-9]*$";
+			if (counselorTel.matches(regexStr)){
+				isValid = true;
+			}else{
+				isValid = false;
+			}
+			
 		}
 		if (!UtilityHelper.isNotEmpty(helper.getParameter("counselorEmail"))) {
 			helper.setAttribute("errorcounselorEmail",
