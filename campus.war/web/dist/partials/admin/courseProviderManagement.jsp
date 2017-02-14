@@ -1,5 +1,5 @@
 <!-- 20161208 JH c39-add-course-provider courseProviderManagement.jsp created -->
-<!-- 20170207 JH c141-add-course-provider-issue-improvements display registered course provider code -->
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -93,11 +93,10 @@
 		<!-- Page content -->
 
 		<div class="content-holder center-block clearfix">
-		<div class="alert alert-success" role="alert" id="usermessage">Course provider successfully created.</div>
-		<div class="alert alert-success" role="alert" id="usermessage"> ${generatedId}</div>
-
+		<div class="alert alert-success" role="alert" >${generatedId }</div>
+		<div class="alert alert-success" role="alert"  >${param.generatedId }</div>
 			<c:if test="${not empty param.userMessage }">
-				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage } ${param.generatedId }</div>
+				<div class="alert alert-success" role="alert" id="usermessage">${param.userMessage }. </div>
 
 			</c:if>
 

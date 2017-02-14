@@ -22,11 +22,8 @@
 <!-- Bootstrap & CSS Style-->
 
 <link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-	<script type="text/javascript">
-	var currentDate = new Date();
-		</script>
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <style type="text/css">
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
@@ -104,7 +101,7 @@
 			</div>
 		</div>
 		<!-- end inner header -->
-		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="get" id="basicForm">
+		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="POST" id="basicForm">
 			<!-- Page content -->
 
 				<input type="hidden" name="generatedId" id="generatedId" value=""/>
@@ -134,12 +131,12 @@
 									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
 										<c:if test="${accountTypes.typeValue == 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" 
+												value="${accountTypes.typeValue}" checked="checked"
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 										<c:if test="${accountTypes.typeValue != 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" 
+												value="${accountTypes.typeValue}" disabled="disabled"
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 									</c:forEach>
@@ -174,7 +171,7 @@
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">
-										Short Name: 
+										Short Name: <span style="color: red;">*</span>
 									</h1>
 								</div>
 								<div class="col-name">

@@ -388,7 +388,7 @@ function saveCourseProvider() {
 	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils() === true) {
+//		if (vaidateCourseProviderDeatils() === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -421,17 +421,15 @@ function saveCourseProvider() {
 								} else if (response['registerId'] !== 0) {
 									
 									if (response['userMessage'] !== null) {
-										$('#userMessage').val(response.userMessage);
+										$("#userMessage").html(response.userMessage);
 									}
+									$( "#basicForm" ).submit();
 									
-									$('#generatedId').val(response.registerId);
-//
-//									$( "#basicForm" ).submit();
-
+									window.responseErrorMessage = response.userMessage;
 									
-									   var kjereo = document.createElement('form');
-									   kjereo.method = 'get';
-									   kjereo.action = '/dist/partials/admin/courseProviderManagement.jsp?code='+response.registerId;
+									   var form = document.createElement('form');
+							    	   form.method = 'post';
+							    	   form.action = '/dist/partials/admin/courseProviderManagement.jsp';
 							    	   var input = document.createElement('input');
 							    	   input.type = 'hidden';
 							           input.name = 'courseProviderCode';
@@ -440,14 +438,15 @@ function saveCourseProvider() {
 							    	   input.type = 'hidden';
 							           input.name = 'userMessage';
 							           input.value = response.userMessage;
-							           kjereo.appendChild(input);
-							           kjereo.appendChild(inputUserMessage);
-							           kjereo.submit();
+							           form.appendChild(input);
+							           form.appendChild(inputUserMessage);
+							           form.submit();
 									
 									}
 							}
 						},
 					});
-		}
+//		}
 	}
 }
+	

@@ -276,7 +276,6 @@ public class Validator {
 //					errorString.add("Password is weak. Give at lesast 6 characters");
 //					isValid = false;
 //				}
-				String ferf = helper.getParameter("accountStatus");
 				if(isEmptyString(helper.getParameter("accountStatus"))){
 					helper.setAttribute("errorStatus", "Select the account status");
 					errorString.add("Account Status");

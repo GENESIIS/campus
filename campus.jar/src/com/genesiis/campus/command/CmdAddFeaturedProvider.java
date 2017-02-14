@@ -18,8 +18,6 @@ package com.genesiis.campus.command;
 //used to select course provider usertype
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
-//20170207 JH c141-add-course-provider-issue-improvements database stored procedure call implementation wip
-//				changed doc comments and set course provider head office town to '0' by default
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -162,26 +160,19 @@ public class CmdAddFeaturedProvider implements ICommand {
 						String countryCode = helper.getParameter("selectedCountry");
 						String selectedTown = helper.getParameter("selectedTown");
 						String courseProviderType = helper.getParameter("selectedProviderType");
-						
-						/**
-						 * the initial course provider account has the head office town.
-						 * Therefore the initial value of the course provider head office is set to 0
-						 */
-						
-						courseProvider.setHeadOffice(0);
 
 						/**
-						 * checks for principal office code. if no principal code
-						 * is provided, it means the course provider is a main company (not a subsidiary).
-						 * Then assign value '0'. Else get course provider main company  
-						 * from the helper. 
+						 * checks for head office code. if no head office code
+						 * is provided, it means the course provider is a head office.
+						 * Then assign value '0'. Else get course provider head 
+						 * office town code from the helper. 
 						 * 
 						 * 
 						 */
-						if (validator.isEmptyString(helper.getParameter("principal"))) {
-							courseProvider.setPrincipal(0);
+						if (validator.isEmptyString(helper.getParameter("headOffice"))) {
+							courseProvider.setHeadOffice(0);
 						} else {
-							courseProvider.setPrincipal(Integer.parseInt(helper.getParameter("principal")));
+							courseProvider.setHeadOffice(Integer.parseInt(helper.getParameter("headOffice")));
 						}
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
@@ -310,16 +301,10 @@ public class CmdAddFeaturedProvider implements ICommand {
 							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
+							courseProviderAccount.setModBy("admin");
 
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
-							
-							if (generatedKey > 0) {
-								systemMessage = SystemMessage.ADDED.message();
-								helper.setAttribute("registerId", generatedKey);
-							} else if (generatedKey == 0) {
-								systemMessage = SystemMessage.NOTADDED.message();
-							}
 
 						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
 							courseProvider.setTutorRelated(false);
@@ -330,6 +315,12 @@ public class CmdAddFeaturedProvider implements ICommand {
 							generatedKey = oneOffCourseProviderDAO.add(map);
 						}
 
+						if (generatedKey > 0) {
+							systemMessage = SystemMessage.ADDED.message();
+							helper.setAttribute("registerId", generatedKey);
+						} else if (generatedKey == 0) {
+							systemMessage = SystemMessage.NOTADDED.message();
+						}
 					}
 				}
 			} else {
