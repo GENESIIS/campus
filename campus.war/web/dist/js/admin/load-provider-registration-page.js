@@ -6,6 +6,7 @@
 //20170209 JH c39-add-course-provider fixed to clear unique prefix info message when a unique prefix error occurs,
 //				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message,
 //				landPhoneNubmerHelper() method changed to clear info message on error
+//20170215 JH c141-add-course-provider-issue-improvements send generated course provider code on successful registration
 
 window.countryCollection = null;
 window.countryCode = null;
@@ -423,24 +424,13 @@ function saveCourseProvider() {
 									if (response['userMessage'] !== null) {
 										$("#userMessage").html(response.userMessage);
 									}
-									$( "#basicForm" ).submit();
+								
 									
 									window.responseErrorMessage = response.userMessage;
-									
-									   var form = document.createElement('form');
-							    	   form.method = 'post';
-							    	   form.action = '/dist/partials/admin/courseProviderManagement.jsp';
-							    	   var input = document.createElement('input');
-							    	   input.type = 'hidden';
-							           input.name = 'courseProviderCode';
-							           input.value = response.registerId;
-							    	   var inputUserMessage = document.createElement('input');
-							    	   input.type = 'hidden';
-							           input.name = 'userMessage';
-							           input.value = response.userMessage;
-							           form.appendChild(input);
-							           form.appendChild(inputUserMessage);
-							           form.submit();
+
+									$('#userMessage').val(response.userMessage);
+									$('#generatedId').val(response.registerId);
+							       	$( "#basicForm" ).submit();
 									
 									}
 							}
