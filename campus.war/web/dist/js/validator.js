@@ -11,6 +11,7 @@
  * //20170129 CW c36-add-tutor-details-cw- modified the places of ValidateUsername(), ValidateEmail() methods calling.
  * //20170129 CW c36-add-tutor-details-cw- modified ValidateUsername(), ValidateEmail() methods.
  * //20170209 CW c38-view-update-tutor-profile modified validateTutorFileds() method 
+ * //20170214 CW c38-view-update-tutor-profile modified validateTutorFileds() method & renamed as validateTutorModifications()
  */
 
 /**
@@ -58,7 +59,7 @@ function ValidURL(str) {
 
 }
 
-function validateTutorFileds() {
+function validateTutorModifications() {
 
 	var firstname = $("#firstName").val();
 	var middlename = $("#middleName").val();
@@ -90,7 +91,7 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-	/*
+	
 	if (!isempty(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
@@ -413,7 +414,7 @@ function validateTutorFileds() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-*/
+
 	return (flag);
 }
 
