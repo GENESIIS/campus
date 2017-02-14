@@ -18,7 +18,7 @@
 <!-- 20170213 PN CAM-28: added data loading gif at the top of the page. added id name into full name header tag. -->
 <!-- 20170213 PN CAM-28: modified UI element names to fix incorrect data loading on datatables -->
 <!-- 20170213 PN CAM-28: modified Professional Details modal and Higher education tab by setting a hidden field to hold value for record ID. -->
-
+<!-- 20170214 PN CAM-28: modified close buttons and clear button by adding on click functions to call, clear() methods. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,6 +52,7 @@
     
     <!-- Issue specific JS files. -->
     <script src="../../js/institute/validation/validation.js"></script>
+    <script src="../../js/student/student-details-manipulation-helper.js"></script>
 	<script src="../../js/student/student-details-helper.js"></script>
 	
 	<!-- Data Table JS files -->
@@ -211,7 +212,7 @@
                 <div class="widget w-about-me clearfix">
                     <div class="widget-header">
                         <label for="About">About</label>
-                        <button class="editformdatabtn" data-toggle="modal" data-target="#studentPersonalDetailsModal">Edit</button>
+                        <button class="editformdatabtn" data-toggle="modal" onclick="openPersonalDataModel()">Edit</button>
                     </div>
                     <!-- End widget header -->
 
@@ -277,7 +278,7 @@
                         <div class="widget w-experience">
                             <div class="widget-header">
                                 <label for="">Experience</label>
-                                <button class="editformdatabtn" data-toggle="modal" data-target="#studentProfessionalDetailsModal">Edit</button>
+                                <button class="editformdatabtn" data-toggle="modal" onclick="openProfExpDataModel()">Edit</button>
                             </div>
 
                             <div class="widget-content">
@@ -292,7 +293,7 @@
                         <div class="widget w-education">
                             <div class="widget-header">
                                 <label for="">Education</label>
-                                <button class="editformdatabtn" data-toggle="modal" data-target="#studentSchoolEducationModal">Edit</button>
+                                <button class="editformdatabtn" data-toggle="modal" onclick="openEduDataModel()">Edit</button>
                             </div>
 							<br>
                             <div class="widget-content">
@@ -516,8 +517,8 @@
 
 	  <!-- Start Modal Footer -->
       <div class="modal-footer">
-      	<button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
-        <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+      	<button type="button" class="btn btn-modal btn-close" onclick="clearPersonalDetailsForm()">Clear</button>
+        <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="clearPersonalDetailsForm()">Close</button>
         <button type="button" class="btn btn-modal btn-primary" id="" name="" onclick="addStudentPersonalDetails()">Save changes</button>
       </div>
       <!-- End Modal Footer -->
@@ -615,8 +616,8 @@
                     <!-- End content body: school education -->
                     
                     <div class="modal-footer sh-footer">
-	                    <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
-	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+	                    <button type="button" class="btn btn-modal btn-close" onclick="clearSchoolEducationForm()">Clear</button>
+	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="clearSchoolEducationForm()">Close</button>
 	                    <button type="button" class="btn btn-modal btn-primary" id="saveSse" name="saveSse" onclick="addEducationDetails()">Save changes</button>
                     </div>
                     <!-- End School education footer -->
@@ -743,8 +744,8 @@
 		          	<!-- End content body : higher education -->
 		          	
 					<div class="modal-footer sh-footer">
-	                    <button type="button" class="btn btn-modal btn-close" onclick="">Clear</button>
-	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="">Close</button>
+	                    <button type="button" class="btn btn-modal btn-close" onclick="clearHigherEducationForm()">Clear</button>
+	                    <button type="button" class="btn btn-modal btn-close" data-dismiss="modal" onclick="clearHigherEducationForm()">Close</button>
 	                    <button type="button" class="btn btn-modal btn-primary" id="saveHe" name="saveHe" onclick="addHigherEducationDetails()">Save changes</button>
                     </div>
                     <!-- End hogher education footer -->
