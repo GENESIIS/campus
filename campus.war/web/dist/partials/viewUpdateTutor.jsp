@@ -1,4 +1,6 @@
 <!-- 20170207 c38-view-update-tutor-profile add hidden fields -->
+<!-- 20170214 c38-view-update-tutor-profile add Java script enabled validations -->
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -89,6 +91,11 @@
 		<input type="hidden" name="isapprovedOld" id="isapprovedOld" value="${isapproved}"/>
 		<input type="hidden" name="tutorstatusOld" id="tutorstatusOld" value="${tutorstatus}"/>
 
+		<noscript>
+			<div class="noscriptmsg" style="color:red">
+				<h2>You don't have Javascript enabled.  Please enable Javascript.</h2>
+			</div>
+		</noscript>
 		<table align="center">
 			<tr>
 				<td>
@@ -306,8 +313,8 @@
 			<tr>
 				<td>Email <span id="emailError"></span></td>
 				<td><input type="text" name="email" id="email"
-					onchange="clearField('emailError')" value="${email}" /><span
-					id="emailError" style="color: red"> ${emailError} </span></td>
+					onchange="clearField('emailError')" value="${email}" />
+					<span id="emailError" style="color: red"> ${emailError} </span></td>
 			</tr>
 			<tr>
 				<td>Username <span id="usernameError"></span></td>
@@ -336,7 +343,7 @@
 			</tr>
 
 		</table>
-
+		
 	</form>
 
 
