@@ -11,12 +11,14 @@ package com.genesiis.campus.validation;
 //20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
 //20170202 c36-add-tutor-details-added NOMODIFICATIONS message
 //20170209 c38-view-update-tutor-profile-added EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages
+//20170214 c38-view-update-tutor-profile-added INCORRECTDATA.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	USERNAME_EXIST("Username already exists."),
 	USERNAME_LENGTH("Username should have at least 6 characters & shorter than 20 characters."),
 	ERROR("Unsuccessful."),
+	INCORRECTDATA("Something wrong in the data you have entered..."),
 	EMAILERROR("Invalid Email Address."),
 	EMPTYEMAIL("Email Address cannot be empty."),
 	EMPTYUSERNAME("Username cannot be empty."),
