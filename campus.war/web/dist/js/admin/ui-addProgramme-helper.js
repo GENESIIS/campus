@@ -347,12 +347,15 @@ function addProgrammeDetails(){
 		$("#selectedClassType").val(classTypeCode);
 	}
 		
-	
+	//Validate email
 	var email= $('#email').val();			
-	/*if (!isEmpty(email) || !isValidEmailFormat(email)) {
-		document.getElementById('errorEmail').innerHTML = "Invalid email format";
-		document.getElementById('errorEmail').style.color = "red";
-	}*/	
+	if (!isEmpty(email) || !isValidEmailFormat(email)) {
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-email").addClass("err-block");
+		$('.block-counselor-email .err-msg').text("Invalid email format!");	
+		/*document.getElementById('errorEmail').innerHTML = "Invalid email format";
+		document.getElementById('errorEmail').style.color = "red";*/
+	}
 	
    /* var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 	var fromDate= $('#fromDate').val();    
