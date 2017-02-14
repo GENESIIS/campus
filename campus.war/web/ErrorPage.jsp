@@ -5,6 +5,7 @@
 <!-- 20170202 TR CAM-94 added new error directory to i (i/error): for including all error images and icons -->
 <!-- 20170202 TR CAM-94 added error-404.png to i/error -->
 <!-- 20170202 PN CAM-72 integrated JSTL code into new UI design. -->
+<!-- 20170214 PN CAM-72 implemented 'Back to Home' button. Modified error displaying JSTL coding. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -34,8 +35,6 @@
 		<c:forEach var="errorDetails" items="${result.collection}">
 			<c:set var="statusCode" value="${errorDetails[0]}"></c:set><br>
 			<c:set var="errorMessage" value="${errorDetails[1]}"></c:set><br>
-			<c:set var="exceptionName" value="${errorDetails[2]}"></c:set><br>
-			<c:set var="exceptionMessage" value="${errorDetails[3]}"></c:set><br>
 		</c:forEach>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
             <div class="error-number">
@@ -47,7 +46,7 @@
             <!-- End error number  -->
 
             <div class="error-image text-center">
-                <img src="dist/i/error/error-404.png">
+                 <img src="dist/i/error/error-404.png"> 
             </div>
             <!-- End error image  -->
 
@@ -57,18 +56,14 @@
             <!-- End error image  -->
 
             <div class="error-msg">    	
-				<c:if test="${not empty exceptionMessage && empty errorMessage}">
-    				<h3 class="text-center show"><c:out value="${exceptionName}: ${exceptionMessage}"></c:out></h3>
-				</c:if>
-				<c:if test="${not empty errorMessage && empty exceptionMessage}">
+				<c:if test="${not empty errorMessage}">
     				<h3 class="text-center show"><c:out value="${errorMessage}"></c:out></h3>
 				</c:if>              
             </div>
             <!-- End error image  -->
 
             <div class="home-btn text-center">
-				<!--<button>Back to Home</button> -->
-				<a href="index.jsp"></a>
+				<button onclick="redirectBacktoHome()">Back to Home</button>			
             </div>
             <!-- End error image  -->
 		</div>
@@ -81,5 +76,11 @@
 	
 	<!-- Other js -->
 	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	
+	 <script type="text/javascript">
+			function redirectBacktoHome() {
+				window.location = "/index.jsp";
+			}
+		</script>
 </body>
 </html>
