@@ -22,7 +22,11 @@
  * 20161217 MM c2-integrate-google-banners-MP Modified msg displayed when Ajax request results in error
  * 20170209 MM c111-display-banners-on-jsp-load Defined event handler that makes the Ajax request 
  				for banner data; assigned the banner data received from the server to applicable 
- 				banner slot on the page  
+ 				banner slot on the page 
+ * 20170214 MM c127-display-banners-on-jsp-load-front-end Modified code in $.document.ready(...) to 
+ 				initiate the banner fetching process only in case of all banner slots in the page 
+ 				being without banner images
+ 				
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -113,11 +117,27 @@ function sendBannerStatisticsUpdateRequest(banner) {
 }
 
 
-//Event handler sending Ajax request to fetch banners 
 $(document).ready(function() {
-	getBanners();
+	var pageSlots = $('.banner-wrapper');
+	
+	if (pageSlots.length > 0) {
+		var areBannersPresent = false; 
+		$.each(pageSlots, function(index, item) {
+			var pageSlot = $(this);
+			var banners = pageSlot.find('a > img');
+			if (banners.length > 0) {
+				areBannersPresent = true;
+				return false;
+			}
+		});
+		
+		if (areBannersPresent === true) {
+			getBanners();
+		}
+	}
 });
 
+//Event handler for sending Ajax request to fetch banners 
 function getBanners() { 
 	
 	var pageName = $('input[type="hidden"]#pageName').val();
