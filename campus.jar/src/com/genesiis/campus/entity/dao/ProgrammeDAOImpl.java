@@ -350,7 +350,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	public int addProgrammeDetails(final ProgrammeDTO programmeDTO) throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		int successStatus=0;
 		try {
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[PROGRAMME]");
@@ -381,7 +381,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			stmt.setDate(18,  new java.sql.Date(programmeDTO.getModOn().getTime()));
 			stmt.setString(19, programmeDTO.getModBy());
 			
-			rs = stmt.executeQuery();
+			successStatus= stmt.executeUpdate();
 
 		} catch (SQLException sqlException) {
 			log.info("addProgrammeDetails() sqlException"
@@ -391,9 +391,9 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			log.info("addProgrammeDetails() Exception" + e.toString());
 			throw e;
 		} finally {
-			DaoHelper.cleanup(conn, stmt, rs);
+			DaoHelper.cleanup(conn, stmt, null);
 		}
-		return 0;
+		return successStatus;
 	}
 
 }

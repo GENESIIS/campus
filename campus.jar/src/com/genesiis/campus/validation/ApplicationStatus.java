@@ -55,6 +55,9 @@ public enum ApplicationStatus {
 			if (statusValue.equalsIgnoreCase("EXPIRED")) {
 				applicationStatus = EXPIRED.getStatusValue();
 			}
+			if (statusValue.equalsIgnoreCase("ARCHIVE")) {
+				applicationStatus = ARCHIVE.getStatusValue();
+			}
 		}
 		
 		return applicationStatus;

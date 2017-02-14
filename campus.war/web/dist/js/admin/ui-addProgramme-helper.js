@@ -209,7 +209,7 @@ function addProgrammeDetails(){
 				
 			dataType : "json",
 			async : false,
-			success : function(response) {			
+			success : function(response) {				
 				alert("Added Programme details will be dispay will be implemented by another issue");
 			},
 			error : function(jqXHR, exception) {			
@@ -231,33 +231,53 @@ function validateFormData(){
 	var counselorName = $('#counselor-name').val();
 	var counselorTel = $('#counselor-tel').val();
 	var counselorEmail = $('#counselor-email').val();
-	var courseName = $('#course-name').val();		
+	var courseName = $('#course-name').val();
+	var integerPattern = /^[0-9]+$/;	
 
-	if (courseDuration == 'undefined' || !courseDuration && courseDuration == "") {
+	if (courseDuration == 'undefined' && !courseDuration && courseDuration == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-duration").addClass("err-block");
 		$('.block-course-duration .err-msg').text("Please insert course duration !");
 		isValidationSucess = false;
 	}
-	if (courseName == 'undefined' || !courseName && courseName == "") {
+	if (courseName == 'undefined' && !courseName && courseName == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
 		$('.block-course-name .err-msg').text("Please insert course Name!");
 		isValidationSucess = false;
 	}
-	if (counselorName == 'undefined' || !counselorName && counselorName == "") {
+	if (counselorName == 'undefined' && !counselorName && counselorName == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-name").addClass("err-block");
 		$('.block-counselor-name .err-msg').text("Please insert counselor name!");
 		isValidationSucess = false;
 	}
-	if (counselorTel == 'undefined' || !counselorTel && counselorTel == "") {
+	if (counselorTel == 'undefined' && !counselorTel && counselorTel == "" && isValidLength(counselorTel, 15)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
 		$('.block-counselor-tel .err-msg').text("Please insert counselor telephone!");
 		isValidationSucess = false;
+	}else if(!isPatternMatch(integerPattern,counselorTel)){
+		$("#programmeForm").addClass("error-form");
+		$(".block-counselor-tel").addClass("err-block");
+		$('.block-counselor-tel .err-msg').text("Please insert valid format of counselor telephone!");
+		isValidationSucess = false;
 	}
-	if (counselorEmail == 'undefined' || !counselorEmail && counselorEmail == "") {
+	
+	
+	/*
+	var integerPattern = /^[0-9]+$/;
+	//var phoneReg=new RegExp("/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/");
+	if(!counselorTel.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)){
+		isValidationSucess = false;
+	}
+	if(isempty(counselorTel) && !isPatternMatch(integerPattern,counselorTel)){
+		block-counselor-tel
+		
+		isValidationSucess = false;
+	}
+	*/
+	if (counselorEmail == 'undefined' && !counselorEmail && counselorEmail == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
@@ -397,31 +417,26 @@ function validateFormData(){
 		$(".block-course-expiration, .block-course-expiration").addClass("err-block");			
 		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
 		isValidationSucess = false;
-	}	
+	}
+	
+	//validate phone
+	//var counselorTel= $("#counselor-tel").val();
+	
 	return isValidationSucess;	
 }
 
 /**
- * This method clearParameters() clear load form.
+ * @param regularExpression
+ *            pattern
+ * @param source
+ *            content to act as the source to be matched against the pattern
+ * @returns boolean if matches true else false
  */
-function clearParameters(event){
-	$('#providerList').val(""); 
-	$('#courseName').val(" "); 
-	$('#courseDetails').val(" "); 
-	$('#email').val(" "); 
-	$('#courseDuration').val(" "); 
-	$('#categoryList').val(""); 
-	$('#majorList').val(""); 
-	$('#levelList').val(""); 
-	$('#classTypelist').val(""); 
-	$('#counselorName').val(" "); 
-	$('#counselorPhone').val(" "); 
-	$('#fromDate').val(" "); 
-	$('#toDate').val(" ");	
-	$('#errorFromDate').text("");
-	$('#errorToDate').text("");	
-		
+function isPatternMatch(regularExpression, source) {
+	return regularExpression.test(source);
+
 }
+
 
 /**
  * @author DJ
@@ -445,6 +460,16 @@ function isValidEmailFormat(email) {
         return false;
     }
     return true;		
+}
+
+/**
+ * @author JH
+ * @param parameter
+ * @param length
+ * @returns boolean true if length is valid else falses
+ */
+function isValidLength(parameter, length) {
+	return (parameter > length) ? false : true;
 }
 
 /**

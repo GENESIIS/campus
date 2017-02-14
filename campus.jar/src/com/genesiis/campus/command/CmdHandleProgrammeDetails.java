@@ -102,7 +102,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		if (isOkToSave) {
 			final ProgrammeDTO programmeDTO = new ProgrammeDTO();
 			populateFormData(programmeDTO, helper);
-			int value = programmeDAO.addProgrammeDetails(programmeDTO);
+			int successStatus = programmeDAO.addProgrammeDetails(programmeDTO);
+			if (successStatus > 0) {
+				helper.setAttribute("successMsg", "success");
+			}
 		}
 	}
 
@@ -137,7 +140,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			}
 			if(UtilityHelper.isNotEmpty(classTypeString)){
 				programmeDTO.setClassType(Integer.parseInt(classTypeString));
-			}	
+			}else {
+				//If classtype is not selected save General course as default classtype.
+				programmeDTO.setClassType(1);
+			}
 			programmeDTO.setName(helper.getParameter("courseName"));
 			programmeDTO.setDescription(helper
 					.getParameter("courseDescription"));
