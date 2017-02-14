@@ -52,9 +52,6 @@ public class TutorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		int status = -1;
-
-		System.out.println("... do not CREV this one yet ...");
-		System.out.println("need to modify com.genesiis.campus.entity.TutorDAO.update(Object) CREV");
 		
 		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
@@ -69,12 +66,11 @@ public class TutorDAO implements ICrud {
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
-		//	Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
-			//preparedStatement.setString(1, tutor.getUsername());			
-			//preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryption removed
-			preparedStatement.setString(1, tutor.getPassword());
+			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryption removed
+			//preparedStatement.setString(1, tutor.getPassword());
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
 			preparedStatement.setString(4, tutor.getLastName());
@@ -111,7 +107,7 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(27, tutor.getAddressLine3());
 			preparedStatement.setString(28, tutor.getTown());
 			preparedStatement.setInt(29, tutor.getUsertype());		
-			preparedStatement.setString(30, "chathuri");
+			preparedStatement.setString(30, tutor.getModBy());
 			
 			preparedStatement.setString(31, tutor.getUsername());
 			status = preparedStatement.executeUpdate();
