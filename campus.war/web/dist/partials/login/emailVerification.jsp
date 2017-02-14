@@ -73,7 +73,8 @@
 					<div class="row">
 						<div class="col-sm-6">
 
-							<label class="" id="popupMessage"></label>
+							<label for="error-msg" class="error-msg"><span
+										class="error-txt" id="verifyMesssage"></span></label>
 							<div class="form-group has-error">
 									<label for="username">Please enter the verification code<span
 										class="error-txt" id="emailtbError"></span></label> <input

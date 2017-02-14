@@ -44,7 +44,8 @@ public class CmdHashCodeVerification implements ICommand {
 		} else {
 			view.setCollection(dataCollection);
 		}
-		helper.setAttribute("message", message);
+		log.info(message);
+		helper.setAttribute("errorMessage", message);
 		helper.setAttribute("pageURL", pageURL);
 
 		return view;
