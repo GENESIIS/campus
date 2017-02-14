@@ -8,8 +8,7 @@
  * 20170214 DJ c138-add-basic-programme-MP-dj  Implemented validateFormData() to validate input data.
  */
 
-$(document).ready(function() {
-	
+$(document).ready(function() {	
 	
 	$.ajax({
 		url : '../../AdminController',
@@ -24,15 +23,7 @@ $(document).ready(function() {
 		error : function(jqXHR, exception) {			
 			errorCodeGeneration(jqXHR, exception);
 		}
-	});
-	
-	
-	/*
-	 * Add program button-event handler
-	 */
-	/*$('#addProgramme').click(function(event){		
-		addProgramme(event);		
-	});*/	
+	});	
 
 	/*
 	 * validate toDate>from date
@@ -42,18 +33,21 @@ $(document).ready(function() {
 		document.getElementById("expiration-date").setAttribute("min", fromDate);	
 	});
 	
+	
 	/*
 	 * remove error message of category field on focusout
 	 */		
 	$('#categoryList').on('focusout', function(event) {		
 		clearErrorMessage(".block-course-category");
 	});
+	
 	/*
 	 * remove error message of major field on focusout
 	 */		
 	$('#majorList').on('focusout', function(event) {		
 		clearErrorMessage(".block-course-major");
 	});
+	
 	
 	/*
 	 * remove error message of level field on focusout
@@ -62,6 +56,7 @@ $(document).ready(function() {
 	
 		clearErrorMessage(".block-course-level");
 	});
+	
 	
 	/*
 	 * remove error message of provider field on focusout
@@ -105,6 +100,7 @@ $(document).ready(function() {
 	$('#counselor-email').on('focusout', function(event) {	
 		clearErrorMessage(".block-counselor-email");	
 	});
+	
 		
 	/*
 	 * remove error message of commencement date on focusout
@@ -113,12 +109,14 @@ $(document).ready(function() {
 		clearErrorMessage(".block-course-commencement");
 	});	
 	
+	
 	/*
 	 * remove error message of expiration date on focusout
 	 */		
 	$('#expiration-date').on('focusout', function(event) {	
 		clearErrorMessage(".block-course-expiration");
-	});		
+	});	
+	
 	
 	/*
 	 * clear button-event handler
@@ -126,6 +124,7 @@ $(document).ready(function() {
 	$('#clearParam').click(function(event){		
 		clearParameters(event);
 	});	
+	
 });
 
 //Clear error messages in mandatory input fields on focusout
@@ -135,6 +134,7 @@ function clearErrorMessage(blockName){
 	$(blockName).addClass("success-block");	
 }
 
+//Populate program insertion view 
 function populateProgrammeAddView(response) {
 		
 	var htmlstr = "";
@@ -196,9 +196,9 @@ function populateProgrammeAddView(response) {
  */
 function addProgrammeDetails(){	
 	
-	var flag=validateFormData();	
+	//var flag=validateFormData();	
 	//After pass the validations developer able to add input data to database.
-	if (flag === true) {
+	//if (flag === true) {
 		var form = $('#programmeForm');
 		var formData = $(form).serialize();
 		
@@ -209,18 +209,66 @@ function addProgrammeDetails(){
 				
 			dataType : "json",
 			async : false,
-			success : function(response) {				
-				alert("Added Programme details will be dispay will be implemented by another issue");
+			success : function(response) {	
+				var isValidationSucess = displayBackEndValidations(response);
+					if (isValidationSucess === true	&& response.successMessage === "success") {
+						alert("Added Programme details will be dispay will be implemented by another issue");
+					}				
 			},
 			error : function(jqXHR, exception) {			
 				errorCodeGeneration(jqXHR, exception);
 			}
-		});
+		});	
 		
-		
-	}
-	
+	//}	
 }
+
+function displayBackEndValidations(response){
+	var isValidationSucess = true;
+	if(isEmpty(response.errorCategory)){
+		generateServerValidationMessage(response.errorCategory,".block-course-category");
+		isValidationSucess = false;		
+	}
+	if(isEmpty(response.errorMajor)){		
+		generateServerValidationMessage(response.errorMajor,".block-course-major");
+		isValidationSucess = false;				
+	}
+	if(isEmpty(response.errorLevel)){		
+		generateServerValidationMessage(response.errorLevel,".block-course-level");
+		isValidationSucess = false;			
+	}
+	if(isEmpty(response.errorCourseProvider)){
+		generateServerValidationMessage(response.errorCourseProvider,".block-course-provider");
+		isValidationSucess = false;				
+	}
+	if(isEmpty(response.errorCourseName)){
+		/*generateServerValidationMessage(response.errorCourseName,".block-course-name");
+		isValidationSucess = false;	*/
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-name").addClass("err-block");
+		$('.block-course-name .err-msg').text(response.errorCourseName);		
+	}
+	if(isEmpty(response.errorcounselorName)){
+		generateServerValidationMessage(response.errorcounselorName,".block-counselor-name");
+		isValidationSucess = false;				
+	}
+	if(!isEmpty(response.errorcounselorTel)){
+		generateServerValidationMessage(response.errorcounselorTel,".block-counselor-tel");
+		isValidationSucess = false;					
+	}
+	if(!isEmpty(response.errorcounselorEmail)){
+		generateServerValidationMessage(response.errorcounselorEmail,".block-course-email");
+		isValidationSucess = false;
+				
+	}
+}
+
+function generateServerValidationMessage(message,block){
+	$("#programmeForm").addClass("error-form");
+	$(block).addClass("err-block");
+	$(block).children('.err-msg').text(message);	
+}
+
 /**
  * This method validateFormData() for validating input data.
  */
@@ -234,50 +282,37 @@ function validateFormData(){
 	var courseName = $('#course-name').val();
 	var integerPattern = /^[0-9]+$/;	
 
-	if (courseDuration == 'undefined' && !courseDuration && courseDuration == "") {
+	if (courseDuration == 'undefined' || courseDuration == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-duration").addClass("err-block");
 		$('.block-course-duration .err-msg').text("Please insert course duration !");
 		isValidationSucess = false;
 	}
-	if (courseName == 'undefined' && !courseName && courseName == "") {
+	if (courseName == 'undefined' || courseName == "" || !isValidLength(counselorTel, 100)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
-		$('.block-course-name .err-msg').text("Please insert course Name!");
+		$('.block-course-name .err-msg').text("Course Name  is empty or too long!!");
 		isValidationSucess = false;
 	}
-	if (counselorName == 'undefined' && !counselorName && counselorName == "") {
+	if (counselorName == 'undefined' ||  counselorName == "" || !isValidLength(counselorTel, 35)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-name").addClass("err-block");
-		$('.block-counselor-name .err-msg').text("Please insert counselor name!");
+		$('.block-counselor-name .err-msg').text("Counselor name is empty or too long!");
 		isValidationSucess = false;
 	}
-	if (counselorTel == 'undefined' && !counselorTel && counselorTel == "" && isValidLength(counselorTel, 15)) {
+	if (counselorTel == 'undefined' || counselorTel == ""  || !isValidLength(counselorTel, 15)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
-		$('.block-counselor-tel .err-msg').text("Please insert counselor telephone!");
+		$('.block-counselor-tel .err-msg').text("Counselor telephone is empty or too long!");
 		isValidationSucess = false;
 	}else if(!isPatternMatch(integerPattern,counselorTel)){
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
 		$('.block-counselor-tel .err-msg').text("Please insert valid format of counselor telephone!");
 		isValidationSucess = false;
-	}
-	
-	
-	/*
-	var integerPattern = /^[0-9]+$/;
-	//var phoneReg=new RegExp("/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/");
-	if(!counselorTel.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)){
-		isValidationSucess = false;
-	}
-	if(isempty(counselorTel) && !isPatternMatch(integerPattern,counselorTel)){
-		block-counselor-tel
-		
-		isValidationSucess = false;
-	}
-	*/
-	if (counselorEmail == 'undefined' && !counselorEmail && counselorEmail == "") {
+	}	
+
+	if (counselorEmail == 'undefined' || !counselorEmail && counselorEmail == "") {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
@@ -417,11 +452,7 @@ function validateFormData(){
 		$(".block-course-expiration, .block-course-expiration").addClass("err-block");			
 		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
 		isValidationSucess = false;
-	}
-	
-	//validate phone
-	//var counselorTel= $("#counselor-tel").val();
-	
+	}	
 	return isValidationSucess;	
 }
 
@@ -463,13 +494,13 @@ function isValidEmailFormat(email) {
 }
 
 /**
- * @author JH
+ * @author DJ
  * @param parameter
  * @param length
  * @returns boolean true if length is valid else falses
  */
 function isValidLength(parameter, length) {
-	return (parameter > length) ? false : true;
+	return (parameter.length <= length) ? true : false;
 }
 
 /**
