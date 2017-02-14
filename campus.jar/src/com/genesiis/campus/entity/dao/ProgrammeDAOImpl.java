@@ -339,6 +339,13 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		return allClassTypeList;
 	}
 
+	
+	/**
+	 *Add Programme details to application.Developer able to set properties to programmeDTO and save.	 
+	 * @author DJ
+	 * @param programmeDTO   ProgrammeDTO
+	 * @return int 
+	 */
 	@Override
 	public int addProgrammeDetails(final ProgrammeDTO programmeDTO) throws SQLException, Exception {
 		Connection conn = null;
