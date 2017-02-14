@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170213 CW c38-view-update-tutor-profile modified setCompareVariables() method
 //20170213 CW c38-view-update-tutor-profile modified execute() & setCompareVariables() methods to fix errors
 //20170214 CW c38-view-update-tutor-profile modified execute(), fillTutorCollection() & setCompareVariables() methods
+//20170214 CW c38-view-update-tutor-profile modified setCompareVariables()
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -54,7 +55,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			updated = setCompareVariables(helper,tutor); // returns true if updated
 			
 			if(updated){
-				if (validator.validateTutorFields(helper)) {		
+				/*if (validator.validateTutorFields(helper)) {	*/	//commented for front end validation testing
 					
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
@@ -67,11 +68,11 @@ public class CmdUpdateTutorProfile implements ICommand {
 					if (result > 0) {
 						message = SystemMessage.UPDATED.message();
 					}
-					
+				/*	commented for front end validation testing
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
 					view.setCollection(tutorViewCollection);	
-				}
+				}*/
 			}else{
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
@@ -96,6 +97,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 	 * @author CM, CW
 	 * 
 	 * @param helper IDataHelper, Tutor
+	 * @return Returns true if updated
 	 */
 
 	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) {
@@ -403,6 +405,10 @@ public class CmdUpdateTutorProfile implements ICommand {
 				updated = true;
 			}else{
 				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("tutorstatusOld").toString()));
+			}
+			
+			if(updated){
+				tutor.setModBy("chinthaka");
 			}
 			
 		} catch (Exception e) {
