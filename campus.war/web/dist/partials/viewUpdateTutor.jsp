@@ -1,3 +1,5 @@
+<!-- 20170207 c38-view-update-tutor-profile add hidden fields -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -282,22 +284,22 @@
 				<td>Tutor Status <span id="tutorError"></span></td>
 
 				<td><select name="newtutorStatus" id="newtutorStatus">
-						<c:forEach items="${applicationStatusBean.values}"
-							var="applicationStatus">
-							<c:choose>
-								<c:when test="${applicationStatus.statusValue == tutorstatus}">
-									<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						<c:forEach items="${applicationStatusBean.values}"
-							var="applicationStatus">
-							<c:choose>
-								<c:when test="${applicationStatus.statusValue != tutorstatus}">
-									<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+					<c:forEach items="${applicationStatusBean.values}"
+						var="applicationStatus">
+						<c:choose>
+							<c:when test="${applicationStatus.statusValue == tutorstatus}">
+								<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					<c:forEach items="${applicationStatusBean.values}"
+						var="applicationStatus">
+						<c:choose>
+							<c:when test="${applicationStatus.statusValue != tutorstatus}">
+								<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
+							</c:when>
+						</c:choose>
+					</c:forEach>
 				</select></td>
 			</tr>
 
