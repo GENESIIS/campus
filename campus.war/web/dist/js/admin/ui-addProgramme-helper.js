@@ -242,31 +242,43 @@ function displayBackEndValidations(response){
 		isValidationSucess = false;				
 	}
 	if(isEmpty(response.errorCourseName)){
-		/*generateServerValidationMessage(response.errorCourseName,".block-course-name");
-		isValidationSucess = false;	*/
-		$("#programmeForm").addClass("error-form");
-		$(".block-course-name").addClass("err-block");
-		$('.block-course-name .err-msg').text(response.errorCourseName);		
+		generateServerValidationMessage(response.errorCourseName,".block-course-name");
+		isValidationSucess = false;				
 	}
 	if(isEmpty(response.errorcounselorName)){
 		generateServerValidationMessage(response.errorcounselorName,".block-counselor-name");
 		isValidationSucess = false;				
 	}
-	if(!isEmpty(response.errorcounselorTel)){
+	if(isEmpty(response.errorcounselorTel)){
 		generateServerValidationMessage(response.errorcounselorTel,".block-counselor-tel");
 		isValidationSucess = false;					
 	}
-	if(!isEmpty(response.errorcounselorEmail)){
-		generateServerValidationMessage(response.errorcounselorEmail,".block-course-email");
-		isValidationSucess = false;
-				
+	if(isEmpty(response.errorcounselorEmail)){
+		generateServerValidationMessage(response.errorcounselorEmail,".block-counselor-email");
+		isValidationSucess = false;				
 	}
+	if(isEmpty(response.errorCourseDuration)){
+		generateServerValidationMessage(response.errorCourseDuration,".block-course-duration");
+		isValidationSucess = false;				
+	}
+	if(isEmpty(response.errorcommencementDate)){
+		generateServerValidationMessage(response.errorcommencementDate,".block-course-commencement");
+		isValidationSucess = false;				
+	}
+	if(isEmpty(response.errorexpirationDate)){
+		generateServerValidationMessage(response.errorexpirationDate,".block-course-expiration");
+		isValidationSucess = false;				
+	}
+	
 }
 
+/**
+ * This method generateServerValidationMessage() for displaying back end validation messages.
+ */
 function generateServerValidationMessage(message,block){
 	$("#programmeForm").addClass("error-form");
 	$(block).addClass("err-block");
-	$(block).children('.err-msg').text(message);	
+	$(block).find(".err-msg").html(message);	
 }
 
 /**
