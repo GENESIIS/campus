@@ -20,6 +20,7 @@ package com.genesiis.campus.entity;
 //20170208 CW c38-view-update-tutor-profile modified findById()
 //20170208 CW c38-view-update-tutor-profile removed some testing codes in findById() method
 //20170209 CW c38-view-update-tutor-profile modified findById method & removed multiple database calls
+//20170214 CW c38-view-update-tutor-profile modified update() method
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,7 +52,10 @@ public class TutorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		int status = -1;
+
+		System.out.println("... do not CREV this one yet ...");
 		System.out.println("need to modify com.genesiis.campus.entity.TutorDAO.update(Object) CREV");
+		
 		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
 		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
