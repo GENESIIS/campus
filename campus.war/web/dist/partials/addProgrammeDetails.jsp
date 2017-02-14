@@ -169,7 +169,7 @@
 									</div>
 								</div>
 								<div class="form-group block-course-commencement">
-									<label for="commencement-date">Commencement Date <span class="err-msg pull-right">Please enter valid information</span></label>
+									<label for="commencement-date"><span class="compulsary-fld">*</span>Commencement Date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="commencementDate" type="date" class="form-control" id="commencement-date" onkeydown="return false" placeholder="">
 										<span class="ico-box">
@@ -180,7 +180,7 @@
 									</div>
 								</div>
 								<div class="form-group block-course-expiration">
-									<label for="expiration-date">Expiration date <span class="err-msg pull-right">Please enter valid information</span></label>
+									<label for="expiration-date"><span class="compulsary-fld">*</span>Expiration date <span class="err-msg pull-right">Please enter valid information</span></label>
 									<div class="input-wrapper">
 										<input name="expirationDate" type="date" class="form-control" id="expiration-date" onkeydown="return false" placeholder="">
 										<span class="ico-box">
