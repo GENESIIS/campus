@@ -5,6 +5,7 @@
  * 20170207 DJ c138-add-basic-programme-MP-dj  clearParameters() method implementation.
  * 20170213 DJ c138-add-basic-programme-MP-dj  remove error message of input fields on focusout.
  * 20170213 DJ c138-add-basic-programme-MP-dj  Implemented clearErrorMessage() common method.
+ * 20170214 DJ c138-add-basic-programme-MP-dj  Implemented validateFormData() to validate input data.
  */
 
 $(document).ready(function() {
@@ -131,29 +132,7 @@ function populateProgrammeAddView(response) {
 
 	});
 	$('#providerName').html(htmlstr);
-	
-	
-/*	
-	var singleTypeElement = '';
-
-	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" ><option value="">--Default--</option>';
-	//if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
-		$.each(response.result, function(index, value) {
-			singleTypeElement += '<option val="' + value[0] + '">';
-			singleTypeElement += value[1];
-			singleTypeElement += '</option>';
-
-		});
-	//}
-	singleTypeElement += '';
-	var providerTypeNames = $("#providerName");
-	providerTypeNames.html(singleTypeElement);*/
-	
-	
-	
-	//$$$$$$$$$$$$$$$$$$$$$$$$
-	
-	
+		
 	
 	var htmlCategoryStr = "";
 	$.each(response.allCategories, function(index, value) {
@@ -164,13 +143,7 @@ function populateProgrammeAddView(response) {
 
 	});	
 	$('#categoryName').html(htmlCategoryStr);	
-	
-	
-	
-	
-	
-	
-	
+			
 	
 	var htmlMajorStr = "";
 	$.each(response.allMajors, function(index, value) {
@@ -208,14 +181,43 @@ function populateProgrammeAddView(response) {
  * This method addProgramme() for adding a course to the system.
  */
 function addProgrammeDetails(){	
+	
+	var flag=validateFormData();	
+	//After pass the validations developer able to add input data to database.
+	if (flag === true) {
+		var form = $('#programmeForm');
+		var formData = $(form).serialize();
+		
+		$.ajax({
+			url : '../../AdminController',
+			type: 'POST',
+			data :formData ,
+				
+			dataType : "json",
+			async : false,
+			success : function(response) {			
+				alert("Added Programme details will be dispay will be implemented by another issue");
+			},
+			error : function(jqXHR, exception) {			
+				errorCodeGeneration(jqXHR, exception);
+			}
+		});
+		
+		
+	}
+	
+}
+/**
+ * This method validateFormData() for validating input data.
+ */
+function validateFormData(){	
+
 	var isValidationSucess = true;
-	
-	var courseDuration =$('#course-duration').val();	
-	var counselorName =$('#counselor-name').val();
-	var counselorTel =$('#counselor-tel').val();
-	var counselorEmail =$('#counselor-email').val();
-	var courseName=$('#course-name').val();
-	
+	var courseDuration = $('#course-duration').val();
+	var counselorName = $('#counselor-name').val();
+	var counselorTel = $('#counselor-tel').val();
+	var counselorEmail = $('#counselor-email').val();
+	var courseName = $('#course-name').val();	
 
 	if (courseDuration == 'undefined' || !courseDuration && courseDuration == "") {
 		$("#programmeForm").addClass("error-form");
@@ -253,8 +255,6 @@ function addProgrammeDetails(){
 		isValidationSucess = false;
 	}
 	
-	
-	
 	//Validate Course Provider selection
 	var providerName = $('#providerList').val();	
 	var providerCode=0;
@@ -270,10 +270,10 @@ function addProgrammeDetails(){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-provider").addClass("err-block");
 		$('.block-course-provider .err-msg').text("Please select a course provider!");	
+		isValidationSucess = false;
 	}else{		
 		$("#selectedProvider").val(providerCode);
-	}
-	
+	}	
 	
 	//Validate Category selection
 	var categoryName = $('#categoryList').val();
@@ -289,7 +289,8 @@ function addProgrammeDetails(){
 	if(categoryCode==0){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-category").addClass("err-block");
-		$('.block-course-category .err-msg').text("Please select a course category!");	
+		$('.block-course-category .err-msg').text("Please select a course category!");
+		isValidationSucess = false;
 	}else{		
 		$("#selectedCategory").val(categoryCode);
 	}
@@ -308,7 +309,8 @@ function addProgrammeDetails(){
 	if(majorCode==0){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-major").addClass("err-block");
-		$('.block-course-major .err-msg').text("Please select a course major!");	
+		$('.block-course-major .err-msg').text("Please select a course major!");
+		isValidationSucess = false;
 	}else{		
 		$("#selectedMajor").val(majorCode);
 	}
@@ -327,7 +329,8 @@ function addProgrammeDetails(){
 	if(levelCode==0){
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-level").addClass("err-block");
-		$('.block-course-level .err-msg').text("Please select a course level!");	
+		$('.block-course-level .err-msg').text("Please select a course level!");
+		isValidationSucess = false;
 	}else{		
 		$("#selectedLevel").val(levelCode);
 	}
@@ -348,69 +351,23 @@ function addProgrammeDetails(){
 	}
 		
 	//Validate email
-	var email= $('#email').val();			
+	var email= $('#counselor-email').val();			
 	if (!isEmpty(email) || !isValidEmailFormat(email)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
-		$('.block-counselor-email .err-msg').text("Invalid email format!");	
-		/*document.getElementById('errorEmail').innerHTML = "Invalid email format";
-		document.getElementById('errorEmail').style.color = "red";*/
-	}
+		$('.block-counselor-email .err-msg').text("Invalid email format!");
+		isValidationSucess = false;		
+	} 
 	
-   /* var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
-	var fromDate= $('#fromDate').val();    
-    if(!regex.test(fromDate)){
-    	$('#errorFromDate').text("Please enter valid From Date");
-		document.getElementById('errorFromDate').style.color = "red";
-		return false;
-    }else{
-    	$('#errorFromDate').text("");
-    }
-    
-    
-    var toDate= $('#toDate').val();
-    if(!regex.test(toDate)){
-    	$('#errorToDate').text("Please enter valid To Date");
-		document.getElementById('errorToDate').style.color = "red";
-		return false;
-    }else{
-    	$('#errorToDate').text("");
-    }    
-   
-	if (fromDate> toDate) {		
-		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
-		document.getElementById('errorToDate').style.color = "red";
-		return false;
-	}*/
 	var fromDate= $("#commencement-date").val();
-    var toDate= $("#expiration-date").val();
-     
+    var toDate= $("#expiration-date").val();     
 	if(fromDate > toDate){	
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-commencement, .block-course-expiration").addClass("err-block");			
-		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");		
-	}
-	
-	//After pass the validations developer able to add input data to database.
-	
-	var form = $('#programmeForm');
-	var formData = $(form).serialize();
-	
-	$.ajax({
-		url : '../../AdminController',
-		type: 'POST',
-		data :formData ,
-			
-		dataType : "json",
-		async : false,
-		success : function(response) {			
-			alert("Programme add fucntionality will be implemented by another issue");
-		},
-		error : function(jqXHR, exception) {			
-			errorCodeGeneration(jqXHR, exception);
-		}
-	});
-	
+		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
+		isValidationSucess = false;
+	}	
+	return isValidationSucess;	
 }
 
 /**
