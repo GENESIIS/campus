@@ -1,0 +1,136 @@
+package com.genesiis.campus.command;
+
+//20170105 CW c98-send-email-at-tutor-signup-cw Created the CmdGenerateEmailTutorSinUp.java class to send email at tutor signup.
+//20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
+//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleaning the code
+//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
+//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent() method.
+//20170128 CW c126-formatting-un-formatted-email-tutor-signup-cw removed getMailContent() method.
+//20170131 CW c126-formatting-un-formatted-email-tutor-signup-cw re-organized import statements, Doc Comment added & modified the getLogger class name.
+
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.SignUpEmailComposer;
+import com.genesiis.campus.util.mail.EmailDispenser;
+import com.genesiis.campus.util.mail.IEmailComposer;
+import com.genesiis.campus.validation.SystemEmail;
+import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+
+import javax.mail.MessagingException;
+
+/**
+ * CmdGenerateEmailTutorSignUp class handles sending the email to be sent
+ * at the time of tutor signup.
+ * @author Chinthaka CW
+ */
+public class CmdGenerateEmailTutorSignUp implements ICommand {
+
+	static Logger log = Logger.getLogger(CmdGenerateEmailTutorSignUp.class.getName());
+	
+	/*
+	 * execute() method handles the email sending at the time of tutor signup
+	 * @author CW
+	 * @return view
+	 * @throws IllegalArgumentException & Exception in any case email sending fails
+	 */
+	@Override
+	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+		try {
+			IEmailComposer signUpEmailComposer = new SignUpEmailComposer();
+			int status;
+			String recieversName = helper.getParameter("firstname").concat(" " + helper.getParameter("lastname"));
+			String sendersEmailAddress = helper.getParameter("email"); // This will overridden later from the email address in campus.xml file
+			String recieversEmailAddreses = helper.getParameter("email");			
+			
+			signUpEmailComposer.setEnvironment(recieversName, sendersEmailAddress,
+					signUpEmailComposer.composeSingleEmailList(recieversEmailAddreses),
+					SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
+					SystemMessage.SUCCESSFULL_CREATTION.message());
+
+			signUpEmailComposer.formatEmailInstance(helper.getParameter("username"));
+			status = this.sendMail(signUpEmailComposer);
+			helper.setAttribute("message", composeOutStatusMessageToClient(status));
+
+		} catch (IllegalArgumentException ilexp) {
+			log.error("execute(): IllegalArgumentException" + ilexp.toString());
+			throw ilexp;
+		} catch (Exception exp) {
+			log.error("execute():Exception " + exp.toString());
+			throw exp;
+		}
+		return view;
+	}
+	
+	/*
+	 * composeOutStatusMessageToClient(): composes the system message
+	 * according to the int parameter sent in to the method.
+	 * @author dushantha DN
+	 * @param status int value which maps to a numeric table
+	 * that has a meaning of the successfulness or un_successfulness
+	 * of the the operation. 
+	 */
+	private String composeOutStatusMessageToClient(int status){
+		return systemMessage(status);
+	}
+	
+	/*
+	 * sendMail() method intended to dispense the email
+	 * @author DN
+	 * @return int -3 fail sending email 3 sent email successfully 
+	 * @throws MessagingException in any case dispensing email fails
+	 */
+	private int sendMail(IEmailComposer signUpEmailComposer)  {
+		int MAIL_SENT_STATUS=3;
+		try{ 
+			if(signUpEmailComposer.getGeneralEmail()== null){
+				Exception exp = new Exception("IEmail is not created ");
+				log.error("sendMail(): Exception"+exp.toString());
+				throw exp;
+			}
+				
+			signUpEmailComposer.setEmailDispenser(new EmailDispenser(signUpEmailComposer.getGeneralEmail()));
+			signUpEmailComposer.getEmailDispenser().emailDispense();
+		} catch (IllegalArgumentException illearg){
+			log.error("sendMail():IllegalArgumentException "+illearg.toString());
+			MAIL_SENT_STATUS= -3;
+		} catch (MessagingException msexp) {
+			log.error("sendMail():MessagingException "+msexp.toString());
+			MAIL_SENT_STATUS= -3;
+		} catch (NullPointerException msexp) {
+			log.error("sendMail():NullPointerException "+msexp.toString());
+			MAIL_SENT_STATUS= -3;
+		} catch(Exception exp){
+			MAIL_SENT_STATUS= -3;
+		}
+		finally{
+			return MAIL_SENT_STATUS;
+		}		
+	}
+	
+	/*
+	 * systemMessage() handles the system Messages according to
+	 * the state of the status passed in
+	 * @return String the message
+	 * @param status 3 request submitted successfully.
+	 * @param status -3 request submission fails.
+	 * 
+	 */
+	private String systemMessage(int status){
+		String message = SystemMessage.UNKNOWN.message();
+		switch(status){		
+		case 3:
+			message =SystemMessage.MAIL_SUCCESS.message();
+			break;
+		case -3:
+			message =SystemMessage.MAIL_UNSUCCESS.message();
+			break;
+		default:			
+			break;
+		}
+		return message;
+	}
+}
