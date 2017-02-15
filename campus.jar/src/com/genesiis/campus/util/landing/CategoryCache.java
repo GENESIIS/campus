@@ -20,7 +20,7 @@ public class CategoryCache {
 	 * Create private constructor
 	 */
 	private CategoryCache() {
-		log.info("LPCategoryList: calling private constructor.");
+		log.info("CategoryCache: calling private constructor.");
 	}
 
 	/**
