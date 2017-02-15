@@ -8,9 +8,11 @@ package com.genesiis.campus.command;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.ImageUtility;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -29,6 +31,8 @@ public class CmdAdminBannerUpload implements ICommand {
 	private static final Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
 	
 	private int successCode =0;
+	private ImageUtility imageUtility =new ImageUtility();
+	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	
 	/* (non-Javadoc)
 	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
@@ -64,8 +68,8 @@ public class CmdAdminBannerUpload implements ICommand {
 private IView saveBannerPageCredential(IDataHelper helper, IView view) throws SQLException,
 Exception{
 	
-	// get the jason object and inflate
-	
+	// get the banner
+	files = imageUtility.getImageFileUploadedFromBrowser(helper);
 	
 	// get the banner Image from the back end
 	// check if it confirm to the standards-- pixels this should be stored in the database
