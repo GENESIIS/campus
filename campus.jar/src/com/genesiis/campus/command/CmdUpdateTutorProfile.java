@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170213 CW c38-view-update-tutor-profile modified execute() & setCompareVariables() methods to fix errors
 //20170214 CW c38-view-update-tutor-profile modified execute(), fillTutorCollection() & setCompareVariables() methods
 //20170214 CW c38-view-update-tutor-profile modified setCompareVariables()
+//20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -27,6 +28,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * this class manages all the tutor details update done by the Admin user, 
+ * further it implements ICommand interface
+ * @author CW
+ *
+ */
 public class CmdUpdateTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
@@ -55,7 +62,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			updated = setCompareVariables(helper,tutor); // returns true if updated
 			
 			if(updated){
-				/*if (validator.validateTutorFields(helper)) {	*/	//commented for front end validation testing
+				if (validator.validateTutorFields(helper)) {	
 					
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
@@ -68,11 +75,10 @@ public class CmdUpdateTutorProfile implements ICommand {
 					if (result > 0) {
 						message = SystemMessage.UPDATED.message();
 					}
-				/*	commented for front end validation testing
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
 					view.setCollection(tutorViewCollection);	
-				}*/
+				}
 			}else{
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
@@ -92,7 +98,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 
 	/*
-	 * setVariables() method initializes all the instance variable
+	 * setVariables() method initialises all the instance variable
 	 * 
 	 * @author CM, CW
 	 * 
@@ -412,7 +418,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}
 			
 		} catch (Exception e) {
-			log.error("setVariables() : Exception" + e.toString());
+			log.error("setCompareVariables() : Exception" + e.toString());
 			throw e;
 		}
 		
