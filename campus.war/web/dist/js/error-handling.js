@@ -1,5 +1,6 @@
 /**
  * 20170206 PN CAM-137 INIT file to implement error handling methods
+ * 20170215 PN CAM-137 removed unwanted alert message.
  */
 
 /*This method will format the error message and will display it to the user.
@@ -8,7 +9,6 @@
  * @param error - actual error. 
  */
 function displayErrorMessage(x, status, error) {
-	alert("x: " + x + "status: " + status + "error: " + error);
 	var errorCode = x.status.toString();
 	var startingValue = errorCode.charAt(0).toString();
 	var errorMessage = 'Unexpected error encountered.';
