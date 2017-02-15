@@ -6,10 +6,12 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
-import com.genesiis.campus.command.CmdPasswordChange;
 
+import com.genesiis.campus.command.CmdPasswordChange;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 //20170214 AS C22 password change function for Update method used 
 public class SigningUpStudentDAO implements ICrud{
 	static Logger log = Logger.getLogger(SigningUpStudentDAO.class.getName());
@@ -29,6 +31,11 @@ public class SigningUpStudentDAO implements ICrud{
 
 		try {
 			Student student = (Student) object;
+			Encryptable passwordEncryptor = new TripleDesEncryptor(student
+					.getPassword().trim());
+			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
+					.trim();
+			
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, encryptPassword);

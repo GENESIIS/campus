@@ -5,6 +5,7 @@ package com.genesiis.campus.factory;
 //20170213 AS C22 HASH_VERIFICATION ,  new CmdHashCodeVerification() command added. 
 import com.genesiis.campus.command.CmdEmailVarification;
 import com.genesiis.campus.command.CmdHashCodeVerification;
+import com.genesiis.campus.command.CmdPasswordChange;
 import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.command.CmdStudentLogout;
 import com.genesiis.campus.command.ICommand;
@@ -18,6 +19,7 @@ public class LoginCmdFactory implements ICmdFactory{
 		map.put(Operation.STUDENT_LOGOUT, new CmdStudentLogout());
 		map.put(Operation.EMAIL_VERIFICATION, new CmdEmailVarification());
 		map.put(Operation.HASH_VERIFICATION, new CmdHashCodeVerification());
+		map.put(Operation.CHANGED_PASSWORD, new CmdPasswordChange());
 	}
 	
 	@Override
@@ -37,6 +39,9 @@ public class LoginCmdFactory implements ICmdFactory{
 			break;
 		case HASH_VERIFICATION:
 			command = map.get(o);
+		case CHANGED_PASSWORD:
+			command = map.get(o);
+			
 		default:
 			break;
 		}
