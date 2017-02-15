@@ -95,7 +95,7 @@ public class Validator {
 			return "Access Forbidden.";
 
 		case 404:
-			return "Page Not Found.";
+			return "Requested page Not Found.";
 
 		case 405:
 			return "Method Not Allowed.";
