@@ -13,6 +13,7 @@
  * //20170209 CW c38-view-update-tutor-profile modified validateTutorFileds() method 
  * //20170214 CW c38-view-update-tutor-profile modified validateTutorFileds() method & renamed as validateTutorModifications()
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method
+ * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method modify validations for tutor status & Town details
  */
 
 /**
@@ -96,7 +97,8 @@ function validateTutorModifications() {
 	var confirmPassword = $("#confirmPassword" + "").val();
 	var country = $("#countryDetails :selected").text();
 	var town = $("#townDetails :selected").text();
-
+	var tutorStatus = $("#newtutorStatus :selected").text();
+	
 	var firstnameOld = $("#firstnameOld").val();
 	var middlenameOld = $("#middlenameOld").val();
 	var lastnameOld = $("#lastnameOld").val();
@@ -123,6 +125,7 @@ function validateTutorModifications() {
 	var passwordOld = $("#passwordOld").val();
 	var countrynameOld = $("#countrynameOld").val();
 	var townOld = $("#townOld").val();
+	var tutorstatusOld = $("#tutorstatusOld").val();
 	
 	var flag = true;
 	var isModified = false;
@@ -234,6 +237,11 @@ function validateTutorModifications() {
 	} else{
 		if ((country != countrynameOld) && (country != "--- Select Country ---")) {
 			isModified = true;
+			if(town == "--- Select town ---"){
+				document.getElementById('townError').innerHTML = "**Please select Town.";
+				document.getElementById('townDetails').focus();
+				flag = false;
+			}
 		}
 	}
 		
@@ -554,6 +562,10 @@ function validateTutorModifications() {
 		}
 	}
 
+	if(tutorStatus != tutorstatusOld){
+		isModified = true;
+	}
+	
 	if(emailOld != email){
 		
 		isModified = true;		
