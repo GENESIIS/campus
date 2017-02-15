@@ -1,4 +1,5 @@
- //20170202 DK c124-general-filter-search-programme-MP-dj Implemented general filter search slider.
+//20170202 DK CAM-124: Developed and integrate the UI
+//20170215 DK CAM-124: Fixing UI issues mentioned by HF at MX phase, rtc 201702090950 HF 
 	
 $( document ).ready(function() {
 		
@@ -43,8 +44,8 @@ $( document ).ready(function() {
 			return false;
 		});
 		
-		$(document).click(function(event) { 
-			if(!$(event.target).closest(".search-area").length) {
+		$('.main-screen').click(function(event) { 
+			if(!$(event.target).closest(".bar-holder").length) {
 				if($(".filter-boxes").is(":visible")) {
 					$(".filter-boxes").hideUp("slow");
 					$(".rotate").toggleClass("down")  
