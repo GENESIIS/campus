@@ -1,8 +1,6 @@
-/*
-	Created by Dimuthu Kalyanaratne on 02/02/2017.
-*/
-
-	$( document ).ready(function() {
+ //20170202 DK c124-general-filter-search-programme-MP-dj Implemented general filter search slider.
+	
+$( document ).ready(function() {
 		
 		$(".filter-boxes").css({"display": "none", "opacity": "0"}); 
 		
