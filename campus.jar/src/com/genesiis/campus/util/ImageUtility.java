@@ -5,7 +5,7 @@ package com.genesiis.campus.util;
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn shifted the systemMessage(int) method 
 //              from CmdUploadTutorImage,java in order to encapsulate class responsibilities 
 //20170216 DN getImageFileUploadedFromBrowser() has been created which is a copy of CmdUploadTutorImage#getImageFileUploadedFromBrowser() for 
-//			  better modularity and reusability.
+//			  better modularity and re usability. implemented getImageTeporyUploadPath(SystemConfig usersProfileImagePath,String tempDirectory,Connection con) method
 
 
 import com.genesiis.campus.entity.ICrud;
@@ -142,6 +142,44 @@ public class ImageUtility {
 					+ exp.toString());
 			throw exp;
 
+		}
+		
+	}
+	
+	/**
+	 * getImageTeporyUploadPath returns the temporary image path where the image
+	 * is planned to store
+	 * @param usersProfileImagePath
+	 * @param tempDirectory
+	 * @param con
+	 * @return String temptutorImagePath
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+
+	public String getImageTeporyUploadPath(SystemConfig usersProfileImagePath,String tempDirectory,Connection con)throws SQLException,
+	Exception{
+		try{
+			String temptutorImagePath="";
+			String[] systemConfigCode = {usersProfileImagePath.toString()};
+			//access the data base system configuration data related table and retrieve the path
+			Collection<Collection<String>> turoUploadImageCollection = getSystemConfigRepositoryValues(systemConfigCode,con);
+			// the collection should contains only one collection encapsulated
+			// one record from the systemconfig table
+			temptutorImagePath = (String) asccessInerLoopSingleElement(turoUploadImageCollection);
+			temptutorImagePath=(temptutorImagePath!=null)?temptutorImagePath+ "/" +tempDirectory +"/":"";
+			return temptutorImagePath;
+		
+		} catch (SQLException exp) {
+			log.error("getTutorProfileImageUploadPath(SystemConfig usersProfileImagePath,Connection con): SQLException"
+					+ exp.toString());
+			throw exp;
+	
+		} catch (Exception exp) {
+			log.error("getTutorProfileImageUploadPath(SystemConfig usersProfileImagePath,Connection con): Exception"
+					+ exp.toString());
+			throw exp;
+	
 		}
 		
 	}
