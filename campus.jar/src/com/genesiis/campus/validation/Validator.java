@@ -41,6 +41,7 @@ package com.genesiis.campus.validation;
 //20170212 CW c38-view-update-tutor-profile modified isValidNetworkCode(), isValidLastname(), isValidContactNumber(), isValidAddressLine1() methods & validateTutorFields() - modify comment
 //20170213 CW c38-view-update-tutor-profile modified validateTutorFields(), isValidFirstname() methods & validateUserAndEmail() method name modified to isValidUserAndEmail().
 //20170214 CW c38-view-update-tutor-profile modified isValidCountryCode(), isValidNetworkCode(), isValidContactNumber(), isValidUserAndEmail() & isHavingNullValues() methods
+//20170215 CW c38-view-update-tutor-profile Add class comment
 
 
 import java.net.MalformedURLException;
@@ -55,6 +56,12 @@ import org.jboss.logging.Logger;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
 
+
+/**
+ * this class is used to validate all the tutor fields before update 
+ * @author CW
+ *
+ */
 public class Validator {
 
 	static Logger log = Logger.getLogger(Validator.class.getName());
