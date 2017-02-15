@@ -11,7 +11,7 @@ package com.genesiis.campus.validation;
 //				value3 final.
 //20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
 //20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
-
+//20170216 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_IMAGE_ABSOLUTE_PATH,BANNER_IMAGE__WAR_PATH enum added.
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
 * the String to use to fetch a specific record from the SYSTEMCONFIG DB table. 
@@ -40,7 +40,10 @@ public enum SystemConfig {
 	TUTOR_DEFAULT_PROFILE_IMAGE_WAR_PATH("education/tutor/default","",""),
 	TUTOR_DEFAULT_PROFILE_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/tutor/default","",""),
 	TUTOR_PROFILE_IMAGE_SIZE("2","",""),
+	BANNER_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/banner","",""),
+	BANNER_IMAGE_WAR_PATH("education/banner","",""),
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
+	
 	
 	private String value1;
 	private String value2;
