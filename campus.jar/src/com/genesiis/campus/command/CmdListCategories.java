@@ -4,13 +4,14 @@ package com.genesiis.campus.command;
 //20161117 JH c7-higher-education-landing-page-MP code modifications : mx code review 
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 //20170103 PN CAM-137: modified execute() method by changing LPCategoryDAO instance into CategoryDAO instance.
-//20170215 PN CAM-137: modified execute() method by removing CategoryDAO object.
+//20170215 PN CAM-137: modified execute() method by removing CategoryDAO object. remove code block implemented to get institute list.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.landing.CategoryCache;
+import com.genesiis.campus.util.landing.CategoryList;
 import com.genesiis.campus.validation.SystemConfig;
 
 import org.apache.log4j.Logger;
@@ -47,13 +48,15 @@ public class CmdListCategories implements ICommand {
 		try {
 			// Get the only object available
 			Collection<Collection<String>> categoryCollection = CategoryCache.getInstance().getDefaultCategories();
+			
+			//get and assign the values from static enum if the categoryCollection is null.
+			if(categoryCollection == null){
+				categoryCollection = CategoryList.getEnumAsCollection();
+			}
+
 			iview.setCollection(categoryCollection);
 			helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
 
-			// instituteCollection used in c11. But both issues are using the
-			// same class.
-			Collection<Collection<String>> instituteCollection = instituteDAO.getAll();
-			helper.setAttribute("instituteCollection", instituteCollection);
 		} catch (SQLException sqle) {
 			log.info("execute() : SQL Exception " + sqle.toString());
 			throw sqle;
