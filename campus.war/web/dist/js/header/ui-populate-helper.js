@@ -27,7 +27,7 @@ function getCategoryData() {
 			'CCO' : 'LIST_CATEGORY_DATA'
 		},
 		dataType : "json",
-		async : false,
+		async : true,
 		success : function(response) {
 			if (response !== undefined && response !== null) {
 				window.categoryCollection = response.result;
