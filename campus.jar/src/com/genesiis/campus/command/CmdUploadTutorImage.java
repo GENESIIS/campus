@@ -83,7 +83,7 @@ public class CmdUploadTutorImage implements ICommand {
 		
 		try{
 			//get the image files from the browser and set field -files are set now
-			files =getImageFileUploadedFromBrowser(helper);
+			files =imageUtility.getImageFileUploadedFromBrowser(helper);
 			if((files.size()==0)|(files==null)){
 				
 				this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
