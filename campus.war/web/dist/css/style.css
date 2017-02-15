@@ -98,7 +98,7 @@ textarea:focus, input:focus {
 
 .sub-topic-t1 {
   font-family: "Roboto", sans-serif;
-  font-size: 15px;
+  font-size: 15px !important;
   color: #8d8d8d;
   line-height: 18px; }
 
@@ -861,8 +861,23 @@ body, html {
   margin-left: auto;
   min-height: 750px;
   padding-top: 345px; }
+  .forgot-pwrd-screen .lbl-error {
+    display: block;
+    min-height: 50px; }
+    .forgot-pwrd-screen .lbl-error label {
+      padding-top: 10px;
+      width: 100%; }
+      .forgot-pwrd-screen .lbl-error label span {
+        font-size: 16px;
+        font-family: "Roboto", sans-serif;
+        color: #d67900;
+        display: block;
+        background-color: #ffe0e0;
+        padding: 8px;
+        border-left: 4px solid;
+        line-height: 20px; }
   .forgot-pwrd-screen .input-area {
-    padding-top: 50px; }
+    padding-top: 15px; }
     .forgot-pwrd-screen .input-area [class*="col-"] {
       padding: 0 !important; }
     .forgot-pwrd-screen .input-area label {
@@ -885,6 +900,24 @@ body, html {
       font-family: "Roboto", sans-serif;
       font-weight: 600;
       padding: 8px 50px; }
+
+/* Verify email functional area */
+.modal-content {
+  border-radius: 6px; }
+  .modal-content .verify-modal-container {
+    padding: 0 35px; }
+    .modal-content .verify-modal-container .btn {
+      padding: 9px 12px !important; }
+
+.evm-lbl-1 {
+  margin: 15px 0; }
+
+.evm-email {
+  border: 2px solid #ccdae8;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  width: 100%; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {

@@ -6,6 +6,7 @@
 <!-- 20170214 TR c68 added bootstrap styles to forgot-pwrd-screen -->
 <!-- 20170215 TR c68 added label and heading for main body  -->
 <!-- 20170215 TR c68 updated all styles in forgot-pwrd-screen  -->
+<!-- 20170215 TR c68 specify email verify modal as evm  -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +24,6 @@
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="/dist/js/image-slides.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
@@ -31,6 +31,14 @@
 <script src='/dist/js/login.js'></script>
 </head>
 <body>
+    <script>
+        $( document ).ready(function() {
+            $('#openPop').on('click', function(){
+               //alert("Hello");
+               $('#verifications-popup').modal('show');
+            });
+        });
+    </script>
 	<!-- Header-->
 
 	<header>
@@ -43,9 +51,11 @@
         <div class="col-lg-5 col-sm-12 col-md-6 col-xs-12 clearfix">
             <h2 class="page-topic-t3">Forgot Your Password ?</h2>
             <h3 class="sub-topic-t1">Enter your email address below to reset your password.</h3>
-            <label for="error-msg" class="error-msg">
-                <span class="error-txt" id="messsage"></span>
-            </label>
+            <div class="lbl-error">
+                <label for="error-msg" class="error-msg">
+                    <span class="error-txt" id="messsage"></span>
+                </label>
+            </div>
             <div class="input-area form-group has-error clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <label for="username">Email : <span class="error-txt" id="emailtbError"></span></label>
@@ -56,6 +66,7 @@
             </div>
             <div class="form-group btn-holder">
                 <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
+                <button type="button" class="btn btn-primary" id="openPop">PopUp</button>
             </div>
         </div>
     </div>
@@ -80,16 +91,16 @@
 
 			<div class="modal-body">
 				<div class="container-fluid">
-					<div class="row">
-						<div class="col-sm-6">
+					<div class="row verify-modal-container">
+						<div class="col-sm-12 col-lg-12 col-md-12 ">
 
 							<label class="" id="popupMessage"></label>
 							<div class="form-group has-error">
-									<label for="username">Please enter the verification code<span
-										class="error-txt" id="emailtbError"></span></label> <input
-										type="text" class="form-control" id="verifyCode"
-										placeholder="Verification Code" required
-										>
+							        <label class="evm-lbl-1 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
+									<label for="username">
+									    <span class="error-txt" id="emailtbError"></span>
+									</label>
+									<input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code" required >
 								</div>								
 							<div class="form-group">
 									<button type="button" class="btn btn-primary btn-block"
