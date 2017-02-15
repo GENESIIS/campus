@@ -17,8 +17,10 @@ body,html
   position: absolute
   top: 40px
   right: 40px
-  height: 100%
+  height: auto
   display: block
+  outline: none
+  outline: 0
   
   span
     position: relative
@@ -274,3 +276,17 @@ body,html
             display: inline-block
             float: right
             width: 28%
+            
+
+\:focus, \:active
+  outline: 0!important
+  border: 0!important
+
+\::-moz-focus-inner, 
+\:active, 
+\:focus
+  outline: none!important
+  border: 0!important
+  -moz-outline-style: none!important
+
+
