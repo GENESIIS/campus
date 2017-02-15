@@ -4,7 +4,12 @@ package com.genesiis.campus.util;
 //asccessInerLoopSingleElement/isImageWithinSize methods has been created.
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn shifted the systemMessage(int) method 
 //              from CmdUploadTutorImage,java in order to encapsulate class responsibilities 
+//20170216 DN getImageFileUploadedFromBrowser() has been created which is a copy of CmdUploadTutorImage#getImageFileUploadedFromBrowser() for 
+//			  better modularity and reusability.
+
+
 import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemConfig;
@@ -16,10 +21,10 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * ImageUtility class responsible for supporting a define set of facilities for images
  * Such as getting the uploading path etc.
@@ -92,16 +97,6 @@ public class ImageUtility {
 	}	
 	
 	
-	/**
-	 * Gets the tutor profile image upload path.
-	 *
-	 * @param usersProfileImagePath the users profile image path
-	 * @param profileOwnersCode the profile owners code
-	 * @param con the con
-	 * @return the tutor profile image upload path
-	 * @throws SQLException the SQL exception
-	 * @throws Exception the exception
-	 */
 	/*
 	 * getTutorProfileImageUploadPath provides the Physical location where the 
 	 * image will be stored. If the table SYSTEMCONFIG doesn't have an entry 
@@ -181,12 +176,6 @@ public class ImageUtility {
 	}
 	
 	
-	/**
-	 * Asccess iner loop single element.
-	 *
-	 * @param wrapper the wrapper
-	 * @return the object
-	 */
 	/*
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
 	 * returns the inner collections' stored element as an object.
@@ -211,18 +200,7 @@ public class ImageUtility {
 		return element;
 	}
 	
-	
-	/**
-	 * Checks if is image within size.
-	 *
-	 * @param tutorProfilePictureSize the tutor profile picture size
-	 * @param con the con
-	 * @param fileItem the file item
-	 * @return true, if is image within size
-	 * @throws SQLException the SQL exception
-	 * @throws FileUploadException the file upload exception
-	 * @throws Exception the exception
-	 */
+
 	/*
 	 * Method confirms the image if exists is within the imposed image size.
 	 * If the capasity of the image is accepted the method returns true else false
@@ -312,6 +290,30 @@ public class ImageUtility {
 		
 	}
 	
-	
+	/*
+	 * Gets the image file uploaded from browser. The method returns an ArrayList<FileItem>
+	 * In any case where there has no any files been transported from client , then an 
+	 * ArrayList<FileItem> of zero elements will be returned or Null can be returned if the request is null,
+	 * or Content type is not set.
+	 * The user should check for the length 
+	 * of the returned ArrayList<FileItem> / nullability and acts accordingly.
+	 * @author dushantha DN
+	 * @param requestWrapper the request wrapper IDataHelper
+	 * @return the image file uploaded from browser ArrayList<FileItem>
+	 * @throws FileUploadException the file upload exception
+	 */
+	public ArrayList<FileItem> getImageFileUploadedFromBrowser(IDataHelper requestWrapper) throws FileUploadException{
+		try{
+			ArrayList<FileItem> tutorImages = new ArrayList<FileItem>(); 
+			
+			tutorImages =requestWrapper.getFiles();
+			return tutorImages;
+			
+		} catch(FileUploadException fle){
+			log.error("getImageFileUploadedFromBrowser():FileUploadException"+ fle.toString() );
+			throw fle;
+			
+		}
+	}
 
 }
