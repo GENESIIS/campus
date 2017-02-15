@@ -7,7 +7,11 @@
  * 				and getBannerSlotsMapedToThePAge() method implemented.  
  *              method populateDataList() implemented and refactor other code to reuse the said method when populating data lists.
  *              ajaxErorMessage() method refactor to provide better information. 
- *  20170213 DN c131-admin-manage-banner-upload-banner-image-dn add function to transfer the banner page information to back end 	 	
+ *  20170213 DN c131-admin-manage-banner-upload-banner-image-dn add function to transfer the banner page information to back end
+ *  20170215 DN c131-admin-manage-banner-upload-banner-image-dn Implement the logic to pass banner and banner information
+ *              in 02 ajax calls to the server sendBannerPaageFieldInputs() is implemented
+ *              #openModalUpload in onclick event a modal pops out to up load banner image.
+ *   	 	
  */
 
 var selectedPageCode = '';
@@ -114,7 +118,7 @@ function getPreRequisitPageData(preRequistData){
 			$('#sPageCode').val(selectedPageCode);
 			
 			// load the relevant page slot for page selected from data base.
-			getBannerSlotsMapedToThePAge(selectedPageCode);
+			getBannerSlotsMapedToThePage(selectedPageCode);
 			
 			
 		}
@@ -151,7 +155,7 @@ function getPreRequisitPageData(preRequistData){
  * attached to the selected page
  * @param selectedPageCode code of the selected page.
  */
-function getBannerSlotsMapedToThePAge(selectedPageCode){
+function getBannerSlotsMapedToThePage(selectedPageCode){
 	
 	$.ajax({
 		type:"POST",
@@ -234,14 +238,11 @@ function ajaxErorMessage(response,error,errorThrown){
  * @param cssColour required color theme for the message to be displayed
  * @param message the required message to be displayed
  */
-
 function displayLabelMessage(labelid,cssColour,message){
 	$('#messagePopUp').modal('show'); // display the modal window
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 	
 }
-
-
 
 /**
  *  this event gets fired once the <I>upload </I> button of the banner page
@@ -252,15 +253,22 @@ function displayLabelMessage(labelid,cssColour,message){
  *  java script value.
  *  Method perform the front end validation before it commence the server 
  *  request ajax call.
+ *  @author dushantha DN
  */
-
-
 $(document).on('click','#uploadBbutton', function(event){
 	
 	var isValidationSuccess = false;
+	
+	event.stopPropagation(); 
+    event.preventDefault(); 
+    
+    $('#bannerModalClose').hide();
+   
+	
 	/*
-	 * Encapsulated page data
+	 * Extracting Banner page data
 	 */
+    var banerImage=$('#file-select').prop('files')[0];
 	var advertiserCode= $('#sAdvertiserCode').val();
 	var codeOfSelectedPage= $('#sPageCode').val();
 	var bannerSlotCode=$('#sSlotCode').val();
@@ -269,39 +277,109 @@ $(document).on('click','#uploadBbutton', function(event){
 	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
 	var bannerPublishingEndDate= $('#endtDate').val();
 	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
-	var banerImage=$('#file-select').prop('files')[0];
 	
-	// run the validation check here for the page
+	// adding required  banner <form> fields to an array
+	var BannerFieldInputValues =[];
+	BannerFieldInputValues.push(advertiserCode);
+	BannerFieldInputValues.push(codeOfSelectedPage);
+	BannerFieldInputValues.push(bannerSlotCode);
+	BannerFieldInputValues.push(displayDusration);
+	BannerFieldInputValues.push(banerToBeActive);
+	BannerFieldInputValues.push(bannerPublishingDate);
+	BannerFieldInputValues.push(bannerPublishingEndDate);
+	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
 	
+	//TODO run the validation check here for the page
 	
+	isValidationSuccess=true;
 	
 	if(isValidationSuccess){
 		
 		//if validation passes then create the form data
 		var formData = new FormData();
-		
 		formData.append("file",banerImage);
-		formData.append('advertiserCode',advertiserCode);
-		formData.append('codeOfSelectedPage',codeOfSelectedPage);
-		formData.append('bannerSlotCode',bannerSlotCode);
-		formData.append("displayDusration",displayDusration);
-		formData.append("banerToBeActive",banerToBeActive);
-		formData.append("bannerPublishingDate",bannerPublishingDate);
-		formData.append("bannerPublishingEndDate",bannerPublishingEndDate);
-		formData.append("urlToBeDirectedOnBannerClick",urlToBeDirectedOnBannerClick);
+		
+		// ajax call to transfer banner Image to server end
+		
+		$.ajax({
+			type:"POST",
+			dataType:"JSON",
+			url : adminControllerUrl+"?CCO=UBIMBA", //Upload Banner Image by Admin
+			data : formData,
+			cache: false,
+			contentType : false,
+			processData : false,
+			success: function(response){
+				//var cssColour=(reponse.successCode===1)?'green':'red';
+				//displayLabelMessage('bannerDisplayLabel',cssColour,reponse.message);
+				
+			},
+			error: function(pageSlots,error,errorThrown){
+				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
+				displayLabelMessage('bannerDisplayLabel','red',msg);
+				
+				},
+			complete: function(response,status){ 
+				/*
+				 * the close span will be shown : either fails or success
+				 * user should have the ability to close the modal window
+				 */
+				$('#bannerModalClose').show();
+				if(status="success"& response.successCode===1){
+					//TODO trigger the  rest of the field sending ajax call
+					
+				} else{
+					
+					//TODO  fire the data field clear function
+				}
+				
+			}
+		});
+		
+	}
+	
+	
+});
+
+/**
+ * sendBannerPaageFieldInputs method passes the input field values to server
+ * side.
+ * @param formFieldArray : all the fields which are on the bannerManager.jsp
+ * 		  other than the banner image to be uploaded are contained.
+ * @param elegibleToProceed : a boolean flag which depicts id the operation is safe
+ *  	  to be executed. If false the banner data will not be passed to the back end.
+ * @author dushantha DN
+ * @since 20170216 v 1.0
+ */
+function sendBannerPaageFieldInputs(formFieldArray,elegibleToProceed ){
+	
+if(elegibleToProceed){
+		
+		//if validation passes then create the form data
+		var formData = new FormData();
+		
+		
+		formData.append('advertiserCode',formFieldArray[0]);
+		formData.append('codeOfSelectedPage',formFieldArray[1]);
+		formData.append('bannerSlotCode',formFieldArray[2]);
+		formData.append("displayDusration",formFieldArray[3]);
+		formData.append("banerToBeActive",formFieldArray[4]);
+		formData.append("bannerPublishingDate",formFieldArray[5]);
+		formData.append("bannerPublishingEndDate",formFieldArray[6]);
+		formData.append("urlToBeDirectedOnBannerClick",formFieldArray[7]);
 		
 		// ajax call to transfer data to server end
 		
 		$.ajax({
 			type:"POST",
 			dataType:"JSON",
-			url : adminControllerUrl+"?CCO=UBIMGC", //Upload Banner Image Credentials
+			url : adminControllerUrl+"?CCO=BCR", //Banner Credentials
 			data : formData,
 			cache: false,
 			contentType : false,
 			processData : false,
 			success: function(response){
-				var cssColour=(reponse.successCode===1)?'green':'red';
+				//var cssColour=(reponse.successCode===1)?'green':'red';
 				displayLabelMessage('displayLabel',cssColour,reponse.message);
 			},
 			error: function(pageSlots,error,errorThrown){
@@ -312,16 +390,22 @@ $(document).on('click','#uploadBbutton', function(event){
 		});
 		
 	}
-	
-	
+}
+
+/**
+ * this method fires and opens up the modal window which dedicats for
+ * uploading the banner Image. The functionality has made available once
+ * the document is ready
+ * @author dushantha DN
+ * @since 20170216 v 1.0
+ */
+
+$( document ).ready(function() {	
+	$("#openModalUpload").click(function(e){
+		$('#bannerUploadPopUp').modal('show');
+		e.preventDefault();
+	});
 });
-
-
-
-
-
-
-
 
 
 
