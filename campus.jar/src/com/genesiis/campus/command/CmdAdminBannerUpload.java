@@ -3,20 +3,26 @@ package com.genesiis.campus.command;
  * 20170213 DN c131-admin-manage-banner-upload-banner-image-dn created the initial class stub
  * 				JasonInflator.java inner class and saveBannerPageCredential()/getInflatedObjectFromJason()
  * 				created.
- * 
+ * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn saveBannerPageCredential() method started implemented
  */
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ImageUtility;
+import com.genesiis.campus.validation.SystemConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
 
 /**
@@ -33,6 +39,8 @@ public class CmdAdminBannerUpload implements ICommand {
 	private int successCode =0;
 	private ImageUtility imageUtility =new ImageUtility();
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
+	private String message = "";
+	private FileUtility fileUtility = new FileUtility();
 	
 	/* (non-Javadoc)
 	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
@@ -67,15 +75,39 @@ public class CmdAdminBannerUpload implements ICommand {
  */
 private IView saveBannerPageCredential(IDataHelper helper, IView view) throws SQLException,
 Exception{
+	Connection con = null;
 	
-	// get the banner
-	files = imageUtility.getImageFileUploadedFromBrowser(helper);
-	
-	// get the banner Image from the back end
-	// check if it confirm to the standards-- pixels this should be stored in the database
-	// pass the banner credentials to back end
-	
-	
+	try{		
+		// get the banner
+		files = imageUtility.getImageFileUploadedFromBrowser(helper);
+		if((files.size()==0)|(files==null)){
+			
+			this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
+			this.setSuccessCode(-1);
+		} else{
+			getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
+			con = ConnectionManager.getConnection();
+			//get the banner Absolute upload path
+			String bannerImageUploadPath =imageUtility.getImageTeporyUploadPath(SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,"tempbanner",con);
+			
+			fileUtility.setUploadPath(bannerImageUploadPath);
+			
+			// IMPLEMENT THE BANNER STORING TO THE TEMPERY LOCATION.
+		}
+		
+		// check if it confirm to the standards-- pixels this should be stored in the database
+		// pass the banner credentials to back end
+		
+		
+	} catch(FileUploadException fle){
+		log.error("saveBannerPageCredential():FileUploadException"+ fle.toString() );
+		throw fle;			
+	} catch(Exception exp) {
+		log.error("saveBannerPageCredential(): Exception :"+ exp.toString());
+		throw exp;
+	}finally{
+		DaoHelper.cleanup(con, null, null);
+	}
 	
 	return null;
 	
@@ -84,6 +116,10 @@ Exception{
 	
 	
 	
+
+
+
+
 
 
 private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxException {
@@ -101,7 +137,10 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 /*
  * Getters and setters methods of the containing class goes here
  */
-
+private FileUtility getFileUtility() {
+	// TODO Auto-generated method stub
+	return fileUtility;
+}
 
 /**
  * Gets the success code.
