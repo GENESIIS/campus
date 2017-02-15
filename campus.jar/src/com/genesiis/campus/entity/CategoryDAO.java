@@ -15,9 +15,11 @@ package com.genesiis.campus.entity;
 //20161129 JH c7-higher-education-landing-page-MP QA modifications: findById method finally block modified
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: findById, getAll methods modified
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
+//20170215 PN CAM-137: modified getAll() method exception block get and assign the values from static enum.
 
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.landing.CategoryList;
 
 import org.apache.log4j.Logger;
 
@@ -57,7 +59,7 @@ public class CategoryDAO implements ICrud{
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
-		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -78,9 +80,13 @@ public class CategoryDAO implements ICrud{
 				allCategoryList.add(singleCategoryCollection);
 			}
 		} catch (SQLException sqlException) {
+			//get and assign the values from static enum
+			allCategoryList = CategoryList.getEnumAsCollection();
 			log.error("getAll(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
+			//get and assign the values from static enum
+			allCategoryList = CategoryList.getEnumAsCollection();
 			log.error("getAll(): Exception " + e.toString());
 			throw e;
 		} finally {
@@ -163,7 +169,7 @@ public class CategoryDAO implements ICrud{
 				allCategoryList.add(singleCategoryCollection);
 			}
 
-		} catch (SQLException sqlException) {
+		} catch (SQLException sqlException) {		
 			log.error("findById() : SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception exception) {
