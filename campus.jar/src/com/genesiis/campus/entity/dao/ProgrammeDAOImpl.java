@@ -287,7 +287,8 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			if (searchDTO.getKeyWordString() != null && !searchDTO.getKeyWordString().isEmpty()) {
 				sb.append(" AND ( PROG.NAME LIKE ?");
 				sb.append(" OR PROG.DESCRIPTION LIKE ?");
-				sb.append(" OR PROG.EMAIL LIKE ? )");
+				sb.append(" OR PROG.EMAIL LIKE ? ");
+				sb.append(" OR PROG.ENTRYREQUIREMENTS LIKE ? )");
 				
 			}
 			sb.append(" GROUP BY PROG.[CODE] ,PROG.[NAME] ,CAST(PROG.[DESCRIPTION] as NVARCHAR(max)) ,PROG.[DURATION] ,PROG.[ENTRYREQUIREMENTS] ,PROG.[COUNSELORNAME] , ");
@@ -300,6 +301,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				stmt.setString(1, searchDTO.getKeyWordString());
 				stmt.setString(2, searchDTO.getKeyWordString());
 				stmt.setString(3, searchDTO.getKeyWordString());
+				stmt.setString(4, searchDTO.getKeyWordString());
 			}
 			rs = stmt.executeQuery();	    
 		    
