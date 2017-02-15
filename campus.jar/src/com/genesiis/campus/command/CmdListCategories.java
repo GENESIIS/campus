@@ -45,10 +45,10 @@ public class CmdListCategories implements ICommand {
 		ICrud categoryDAO = new CategoryDAO();
 		ICrud instituteDAO = new InstituteDAO();
 		final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
-		// Get the only object available
-		CategoryCache defaultCategories = CategoryCache.getInstance();
+		
 		try {
-			Collection<Collection<String>> categoryCollection = defaultCategories.getDefaultCategories();
+			// Get the only object available
+			Collection<Collection<String>> categoryCollection = CategoryCache.getInstance().getDefaultCategories();
 			iview.setCollection(categoryCollection);
 			helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
 
