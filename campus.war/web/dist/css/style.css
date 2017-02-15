@@ -90,6 +90,18 @@ textarea:focus, input:focus {
   font-size: 32px;
   line-height: 54px; }
 
+.page-topic-t3 {
+  font-family: "Arvo", serif;
+  font-size: 22px;
+  color: #3a3b3c;
+  line-height: 40px; }
+
+.sub-topic-t1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #8d8d8d;
+  line-height: 18px; }
+
 .msg-warning {
   color: #e28a01;
   font-family: Verdana, sans-serif;
@@ -841,6 +853,39 @@ body, html {
       .modal-content .modal-body .form-social .twitter {
         background: #43C8F5; }
 
+.forgot-pwrd-screen {
+  display: block;
+  width: 80%;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 750px;
+  padding-top: 345px; }
+  .forgot-pwrd-screen .input-area {
+    padding-top: 50px; }
+    .forgot-pwrd-screen .input-area [class*="col-"] {
+      padding: 0 !important; }
+    .forgot-pwrd-screen .input-area label {
+      color: #666666;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      margin-bottom: 6px; }
+    .forgot-pwrd-screen .input-area input {
+      border: none;
+      border-bottom: 1px solid #7da7d9 !important;
+      width: 100%;
+      color: #44a969;
+      padding-bottom: 5px;
+      padding-left: 5px; }
+  .forgot-pwrd-screen .btn-holder {
+    padding-top: 8px;
+    text-align: right; }
+    .forgot-pwrd-screen .btn-holder .email-submit {
+      font-family: "Roboto", sans-serif;
+      font-weight: 600;
+      padding: 8px 50px; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
@@ -882,6 +927,9 @@ body, html {
     .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
       font-size: 16px;
       line-height: 42px; } }
+@media screen and (max-device-width: 767px) {
+  .forgot-pwrd-screen {
+    padding-top: 80px !important; } }
 /* Modules */
 .btn-home {
   display: block;

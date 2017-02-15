@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!--     20170127 AS CAM-22 emailVarification.jsp created -->
+
+<!-- 20170214 TR c68 update page content structure -->
+<!-- 20170214 TR c68 added bootstrap styles to forgot-pwrd-screen -->
+<!-- 20170215 TR c68 added label and heading for main body  -->
+<!-- 20170215 TR c68 updated all styles in forgot-pwrd-screen  -->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
 <!-- Bootstrap & CSS Style-->
 <link href="/dist/bower-components/bootstrap/bootstrap.min.css"
@@ -16,6 +23,7 @@
 <!-- W3-Include -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="/dist/js/image-slides.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
@@ -25,32 +33,34 @@
 <body>
 	<!-- Header-->
 
-	<header> <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
-	<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
-	<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
+	<header>
+        <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+        <jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
+        <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 	</header>
-<div align="center">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-6">
-				<label for="error-msg" class="error-msg"><span
-										class="error-txt" id="messsage"></span></label>
-				<div class="form-group has-error">
-					<label for="username"> Email <span class="error-txt"
-						id="emailtbError"></span></label> <input type="email" class="form-control"
-						id="verifiemail" placeholder="Email address" required
-						onclick="clearField('emailtbError')">
-				</div>
 
-				<div class="form-group">
-					<button type="button" class="btn btn-primary btn-block"
-						onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Email
-						Verification</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+    <div class="forgot-pwrd-screen clearfix">
+        <div class="col-lg-5 col-sm-12 col-md-6 col-xs-12 clearfix">
+            <h2 class="page-topic-t3">Forgot Your Password ?</h2>
+            <h3 class="sub-topic-t1">Enter your email address below to reset your password.</h3>
+            <label for="error-msg" class="error-msg">
+                <span class="error-txt" id="messsage"></span>
+            </label>
+            <div class="input-area form-group has-error clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <label for="username">Email : <span class="error-txt" id="emailtbError"></span></label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                    <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailtbError')">
+                </div>
+            </div>
+            <div class="form-group btn-holder">
+                <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
+            </div>
+        </div>
+    </div>
+    <!-- End forgot-password-screen -->
+
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
