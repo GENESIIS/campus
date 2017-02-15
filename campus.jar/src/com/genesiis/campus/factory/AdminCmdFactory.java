@@ -15,6 +15,8 @@ package com.genesiis.campus.factory;
 //				getCommand() method.
 //20170213 DN c131-admin-manage-banner-upload-banner-image-dn UPLOAD_BANNER_IMAGE_CREDENTIALS map entry added,changed the getCommand()
 //            accordingly.
+//20170216 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_CREDENTIALS  map entry added,changed the getCommand()
+//20170216 DN c131-admin-manage-banner-upload-banner-image-dn UPLOAD_BANNER_IMAGE_CREDENTIALS -->UPLOAD_BANNER_IMAGE_BY_ADMIN
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
@@ -32,7 +34,8 @@ public class AdminCmdFactory implements ICmdFactory{
 		
 		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdBannerPreRequisite()); 
 		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdBannerPreRequisite());
-		map.put(Operation.UPLOAD_BANNER_IMAGE_CREDENTIALS, new CmdAdminBannerUpload());
+		map.put(Operation.UPLOAD_BANNER_IMAGE_BY_ADMIN, new CmdAdminBannerUpload());
+		map.put(Operation.BANNER_CREDENTIALS,new CmdAdminBannerUpload());
 	}
 
 	@Override
@@ -46,10 +49,12 @@ public class AdminCmdFactory implements ICmdFactory{
 		case UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE:
 			command = map.get(o);
 			break;
-		case UPLOAD_BANNER_IMAGE_CREDENTIALS:
+		case UPLOAD_BANNER_IMAGE_BY_ADMIN:
 			command = map.get(o);
 			break;	
-		
+		case BANNER_CREDENTIALS:
+			command = map.get(o);
+			break;
 		default:
 			break;
 		}
