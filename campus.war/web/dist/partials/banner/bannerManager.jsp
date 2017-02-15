@@ -2,7 +2,7 @@
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn added modal div element to the document -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn change the script to include uploadBanner.js -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn removed unnecessary script /dist/js/header/ui-populate-helper.js-->
-
+<!-- 20170216 Dn  c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -56,6 +56,36 @@
 	</div>
 </div>
 
+
+<!--  Banner Upload-pop-up window -->
+<div class="modal fade" id="bannerUploadPopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="login-dialog modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header"> <b>Up Load the Banner</b>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true" id='bannerModalClose'>Close</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+							<label class="" id="bannerDisplayLabel"></label> <!-- messages to be displayed -->
+							<form action="">
+								<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
+								<input type="hidden"	value="xyz">
+								<br>
+								<button type="submit" id="uploadBbutton">Upload</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Banner Upload-pop-up window -->
 
 
 <div class="panel panel-default">
@@ -125,12 +155,9 @@
 			<br><br>
 			<!-- Form image submit -->
 
-			<label><b>Upload Banner<b></b></label> <br>
-			<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
-			<input type="hidden"	value="xyz">
-			<br>
-			<button type="submit" id="uploadBbutton">Upload</button>
-			<button id="bannerPageClearField">Clear</button>
+			<label><b>Upload Banner<b></b></label> <br><br><br>
+			<button  id="openModalUpload" data-target="#bannerUploadPopUp">Upload Banner</button>
+			<button id="bannerPageClearField">Clear Page</button>
 		</form>
 
 	</div>
