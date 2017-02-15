@@ -1,15 +1,10 @@
 package com.genesiis.campus.entity.model;
 
-import java.util.Date;
-
-
-
 //20170208 DJ c138-add-basic-programme-MP-dj Initiate ProgrammeDTO.java
 
+import java.util.Date;
 
-
-public class ProgrammeDTO {
-	
+public class ProgrammeDTO {	
 	int code;
 	String name;
 	String email;
@@ -167,7 +162,4 @@ public class ProgrammeDTO {
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
 	}
-	
-	
-
 }

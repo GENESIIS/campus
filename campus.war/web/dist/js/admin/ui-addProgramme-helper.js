@@ -210,7 +210,7 @@ function addProgrammeDetails(){
 			async : false,
 			success : function(response) {					
 					if (response.successMessage === "success") {
-						alert("Added Programme details dispay will be implemented by another issue");
+						alert("Added Programme details dispay will be implemented by another issue.In order to test added data please check the database");
 					}else{
 						displayBackEndValidations(response);
 					}				
