@@ -355,9 +355,9 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			conn = ConnectionManager.getConnection();
 			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[PROGRAMME]");
 			sb.append("([NAME]	 ,[EMAIL]  ,[DESCRIPTION], [DURATION] , [ENTRYREQUIREMENTS], [COUNSELORNAME], [COUNSELORPHONE] ,[DISPLAYSTARTDATE],[EXPIRYDATE],");
-			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY],[MODON] ,[MODBY] ) ");
+			sb.append(" [PROGRAMMESTATUS] ,[COURSEPROVIDER] ,[MAJOR],[CATEGORY],[LEVEL],[CLASSTYPE] ,[CRTON] ,[CRTBY] ) ");
 			sb.append(" VALUES ( ");
-			sb.append(" ? , ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? ");
+			sb.append(" ? , ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? ");
 			sb.append(" ) ");
 
 			stmt=conn.prepareStatement(sb.toString());
@@ -378,8 +378,8 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			stmt.setInt(15, programmeDTO.getClassType());
 			stmt.setDate(16, new java.sql.Date(programmeDTO.getCrtOn().getTime()));
 			stmt.setString(17, programmeDTO.getCrtBy());
-			stmt.setDate(18,  new java.sql.Date(programmeDTO.getModOn().getTime()));
-			stmt.setString(19, programmeDTO.getModBy());
+			/*stmt.setDate(18,  new java.sql.Date(programmeDTO.getModOn().getTime()));
+			stmt.setString(19, programmeDTO.getModBy());*/
 			
 			successStatus= stmt.executeUpdate();
 

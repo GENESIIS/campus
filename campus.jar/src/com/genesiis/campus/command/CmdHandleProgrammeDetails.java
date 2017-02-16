@@ -71,10 +71,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
 
 		try {
-			/*final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
-			iView.setCollection(courseProviderSearchResults);*/
-			final Collection<Collection<String>> courseProviderSearchResults = new ArrayList<Collection<String>>();
-			iView.setCollection(courseProviderSearchResults);
+			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
+			iView.setCollection(courseProviderSearchResults);		
 
 			final Collection<Collection<String>> allCategories = programmeDAO.getAllCategories();
 			helper.setAttribute("allCategories", allCategories);
@@ -172,9 +170,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			//TODO:Temparory data for EntryRequiremtns
 			programmeDTO.setEntryRequiremtns("entry requirements");
 			programmeDTO.setCrtOn(new Date());
-			programmeDTO.setCrtBy("DJ");			
-			programmeDTO.setModOn(new Date());
-			programmeDTO.setModBy("DJ");
+			//TODO:Shloud add system user as create by.Will add in near future.
+			programmeDTO.setCrtBy("admin");			
+			//programmeDTO.setModOn(new Date());
+			//programmeDTO.setModBy("DJ");
 
 		} catch (ParseException parseException) {
 			log.error("populateFormData() : ParseException "
