@@ -21,6 +21,7 @@ package com.genesiis.campus.entity;
 //20170208 CW c38-view-update-tutor-profile removed some testing codes in findById() method
 //20170209 CW c38-view-update-tutor-profile modified findById method & removed multiple database calls
 //20170214 CW c38-view-update-tutor-profile modified update() method
+//20170216 CW c38-view-update-tutor-profile Add class comment modified findById(), update() methods.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,6 +37,11 @@ import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 import org.apache.log4j.Logger;
 
+/**
+ * this class used to manage the town related data 
+ * further it implements ICrud interface
+ * @author CM
+ */
 public class TutorDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(TutorDAO.class.getName());
@@ -46,6 +52,15 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 	
+	/**
+	 * Updates the Tutor Details
+	 * 
+	 * @author Chinthaka
+	 * 
+	 * @param Object code - A Tutor Object with tutor code
+	 * 
+	 * @return Returns an int value depending on the database executeUpdate() method
+	 */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 
@@ -69,8 +84,7 @@ public class TutorDAO implements ICrud {
 			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
-			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString()); // password encryption removed
-			//preparedStatement.setString(1, tutor.getPassword());
+			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(2, tutor.getFirstName());
 			preparedStatement.setString(3, tutor.getMiddleName());
 			preparedStatement.setString(4, tutor.getLastName());
@@ -99,7 +113,6 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(22, tutor.getWhatsAppId());
 			
 			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
-		//	preparedStatement.setInt(25, ApplicationStatus.INACTIVE.getStatusValue()); // after table modified this should be Pending
 			preparedStatement.setInt(24, tutor.getTutorStatus());			
 			preparedStatement.setString(25, tutor.getAddressLine1());
 			
