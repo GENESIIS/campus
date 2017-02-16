@@ -926,12 +926,49 @@ body, html {
 /* Styling Password Reset screen  */
 .pwrd-reset-screen {
   display: block;
-  width: 80%;
+  width: 70%;
   position: relative;
   margin-right: auto;
   margin-left: auto;
-  min-height: 750px;
+  min-height: 800px;
   padding-top: 345px; }
+  .pwrd-reset-screen .lbl-error {
+    display: block;
+    min-height: 35px; }
+  .pwrd-reset-screen .input-area {
+    display: block; }
+    .pwrd-reset-screen .input-area [class*="col-"] {
+      padding: 0 !important; }
+    .pwrd-reset-screen .input-area input {
+      border: 2px solid #ccdae8;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 20px;
+      width: 100%;
+      margin-bottom: 22px;
+      font-family: "Roboto", sans-serif;
+      font-size: 16px; }
+  .pwrd-reset-screen .btn-holder {
+    display: block; }
+    .pwrd-reset-screen .btn-holder button {
+      font-family: "Roboto", sans-serif;
+      font-weight: 600;
+      padding: 8px 50px;
+      width: 100%; }
+  .pwrd-reset-screen .display-info {
+    padding-top: 100px;
+    text-align: right; }
+    .pwrd-reset-screen .display-info .display-only {
+      margin-bottom: 15px; }
+      .pwrd-reset-screen .display-info .display-only label {
+        width: 12%;
+        text-align: left;
+        color: #6f6f70; }
+      .pwrd-reset-screen .display-info .display-only input {
+        width: 65%;
+        border: none;
+        border-bottom: 1px solid rgba(125, 167, 217, 0.4) !important;
+        background-color: white; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {

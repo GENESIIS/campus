@@ -42,13 +42,26 @@
             <div class="input-area clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <input type="password" class="" placeholder="New Password" required >
-                    <input type="password" class="" placeholder="New Password" required >
+                    <input type="password" class="" placeholder="Confirm Password" required >
                 </div>
             </div>
-            <div class="form-group btn-holder">
-                <button type="button" class="btn btn-primary">PopUp</button>
+            <div class="btn-holder">
+                <button type="button" class="btn btn-primary">Submit</button>
             </div>
         </div>
+        <!-- End passwordReset form -->
+
+        <div class="display-info col-lg-7 col-sm-12 col-md-6 col-xs-12 clearfix">
+            <div class="display-only">
+                <label class="">Name : </label>
+                <input type="text" disabled>
+            </div>
+            <div class="display-only">
+                <label class="">Email : </label>
+                <input type="text" disabled>
+            </div>
+        </div>
+        <!-- End User Info display -->
     </div>
 
 
