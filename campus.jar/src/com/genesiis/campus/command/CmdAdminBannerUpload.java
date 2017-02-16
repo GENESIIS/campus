@@ -5,14 +5,19 @@ package com.genesiis.campus.command;
  * 				created.
  * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn saveBannerPageCredential() method started implemented
  * 				getImageTeporyUploadPath() changed SystemConfig.BANNER_IMAGE_TEMPORARY_PATH -->SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH
+ * 				created the method uploadFullBannerCredentials(), changed the method execute()
  */
 
+import com.genesiis.campus.entity.AdminBannerDAO;
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.model.Banner;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ImageUtility;
+import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -50,8 +55,21 @@ public class CmdAdminBannerUpload implements ICommand {
 			Exception {
 		
 		try{
-			 return saveBannerImageToTempLocation(helper,view);
+			Operation o = Operation.getOperation(helper.getCommandCode());
+			switch (o){
+			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
+				 return saveBannerImageToTempLocation(helper,view);
+				 break;
+			case UPLOAD_FULL_BANNER_CREDENTIALS:
+				 
+				return uploadFullBannerCredentials(helper,view);
+				
+				return view;
+				break;
+		    default:
+		    	return view;
 			
+			}
 		} catch (SQLException sqle) {
 			log.error("execute(IDataHelper helper, IView view):SQLException "+ sqle.toString());
 			throw sqle;
@@ -64,6 +82,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	
 	
 	
+
 /**
  * Save banner image to a temporary location.
  *
@@ -117,7 +136,8 @@ Exception{
 	}finally{
 		DaoHelper.cleanup(con, null, null);
 	}
-	
+	this.setMessage(ImageUtility.systemMessage(1));
+	this.setSuccessCode(1);
 	setResponseCridentials(helper);
 	return view;
 	
@@ -173,13 +193,26 @@ private void setResponseCridentials(IDataHelper helper){
 }
 	
 	
-
-
-
-
-
-
-
+private IView uploadFullBannerCredentials(IDataHelper helper, IView view) {
+		
+try{
+	 // inflate the Gson object
+	 JasonInflator rowBanner= getInflatedObjectFromJason(helper.getParameter("jasondata"));
+	 // want to get the banner code once the update is succedded
+	 int updateSuccessCode = new AdminBannerDAO().update(rowBanner);
+	 
+	// save to the data base table banner 
+	// extract the banner code
+	
+	// store the banner to the permanent location		
+		
+	} catch (JsonSyntaxException jsyexp) {
+		log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
+		throw jsyexp;	
+	}	
+	
+		return null;
+	}
 
 
 
@@ -278,8 +311,6 @@ public void setSuccessCode(int successCode) {
  */
 public class JasonInflator {
 	
-	
-	private FileItem bannerImage;	
 	
 	private String advertiserCode;
 	
