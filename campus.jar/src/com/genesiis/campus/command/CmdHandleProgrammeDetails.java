@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -70,7 +71,9 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
 
 		try {
-			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
+			/*final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
+			iView.setCollection(courseProviderSearchResults);*/
+			final Collection<Collection<String>> courseProviderSearchResults = new ArrayList<Collection<String>>();
 			iView.setCollection(courseProviderSearchResults);
 
 			final Collection<Collection<String>> allCategories = programmeDAO.getAllCategories();
@@ -141,8 +144,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			if(UtilityHelper.isNotEmpty(classTypeString)){
 				programmeDTO.setClassType(Integer.parseInt(classTypeString));
 			}else {
-				//If classtype is not selected save General course as default classtype.
-				programmeDTO.setClassType(1);
+				//If classtype is not selected save Default course as default classtype.
+				programmeDTO.setClassType(-1);
 			}
 			programmeDTO.setName(helper.getParameter("courseName"));
 			programmeDTO.setDescription(helper
