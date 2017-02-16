@@ -7,6 +7,7 @@
 <!-- 20170202 PN CAM-72 integrated JSTL code into new UI design. -->
 <!-- 20170214 PN CAM-72 implemented 'Back to Home' button. Modified error displaying JSTL coding. -->
 <!-- 20170215 PN CAM-72 implemented 'Back to Previous Page' button, JS method redirectIntoPreviousPage()-->
+<!-- 20170216 TR CAM-72 added all styles as internal -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -21,8 +22,8 @@
 <title>Campus.lk</title>
 
 <!-- Bootstrap & CSS Style-->
-<link href="dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<link href="dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="dist/css/style.css" rel="stylesheet">
 <link href="dist/css/image-slides.css" rel="stylesheet">
 
@@ -30,8 +31,94 @@
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/js/image-slides.js"></script>
 
+<style>
+body, html,h1, h2, h3, h4, h5, h6{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+}
+.clearfix {
+  *zoom: 1; }
+  .clearfix:before, .clearfix:after {
+    display: table;
+    content: "";
+    line-height: 0; }
+  .clearfix:after {
+    clear: both; }
+/* Start: Error Page : 404 */
+.error-screen {
+  display: block;
+  position: relative;
+  background-color: #f7fcff;
+  min-height: 850px; }
+  .error-screen .error-container {
+    text-align: center; }
+    .error-screen .error-container .error-number {
+      display: block;
+      padding-top: 40px; }
+      .error-screen .error-container .error-number h1 {
+        margin: 0 !important;
+        font-family: "Roboto", sans-serif;
+        font-size: 280px;
+        color: #e8f3f8;
+        text-shadow: 14px 14px 0px rgba(0, 0, 0, 0.7);
+        font-weight: 600; }
+        .error-screen .error-container .error-number h1 span {
+          color: #b7ced7; }
+    .error-screen .error-container .error-image img {
+      width: 155px;
+      margin-top: 25px;
+      margin-bottom: 20px; }
+    .error-screen .error-container .default-msg {
+      font-family: "Roboto", sans-serif;
+      font-size: 70px;
+      color: #e4bd06;
+      line-height: 110px; }
+    .error-screen .error-container .error-msg {
+      font-family: "Abel", sans-serif;
+      font-size: 45px;
+      color: #7b7e7f; }
+    .error-screen .error-container .home-btn {
+      display: block;
+      margin-bottom: 50px; }
+      .error-screen .error-container .home-btn button {
+        background-color: #1794c8;
+        border: none;
+        font-family: "Roboto", sans-serif;
+        font-size: 22px;
+        padding: 15px 40px;
+        color: #fff;
+        border-radius: 11px;
+        margin-top: 30px; }
+        .error-screen .error-container .home-btn button:hover {
+          background-color: #09729e; }
+
+/* END: Error Page : 404 */
+
+/* Styling Footer */
+footer .ft-top {
+  display: block;
+  height: 175px;
+  width: 100%;
+  background: #193949; }
+footer .ft-bottom {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: #092a3b; }
+  footer .ft-bottom label {
+    font-size: 18px;
+    line-height: 50px;
+    color: #d6d6d6; }
+/* End Footer styling */
+
+</style>
+
 </head>
 <body>
+
 	<!-- start error screen -->
 	<div class="error-screen clearfix">
 		<c:forEach var="errorDetails" items="${result.collection}">
@@ -40,7 +127,7 @@
 			<c:set var="errorMessage" value="${errorDetails[1]}"></c:set>
 			<br>
 		</c:forEach>
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+		<div class="error-container col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
 			<div class="error-number">
 				<h1 class="text-center show">
 					<c:out value="${fn:substring(statusCode, 0, 1)}"></c:out>

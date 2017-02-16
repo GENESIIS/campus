@@ -7,50 +7,59 @@
   display: block
   position: relative
   background-color: #f7fcff
+  min-height: 850px
 
-  .error-number
-    display: block
-    padding-top: 40px
-    h1
+  .error-container
+    text-align: center
+
+    .error-number
+      display: block
+      padding-top: 40px
+      h1
+        margin: 0 !important
+        font-family: "Roboto", sans-serif
+        font-size: 280px
+        color: #e8f3f8
+        text-shadow: 14px 14px 0px rgba(0, 0, 0, 0.7)
+        font-weight: 600
+        span
+          color: #b7ced7
+
+    .error-image
+      //display: block
+      //width: 155px
+      //height: 250px
+      //background: url(#{$assetPath}/error/error-404.png)
+      img
+        width: 155px
+        margin-top: 25px
+        margin-bottom: 20px
+
+    .default-msg
       font-family: "Roboto", sans-serif
-      font-size: 280px
-      color: #e8f3f8
-      text-shadow: 14px 14px 0px rgba(0, 0, 0, 0.7)
-      font-weight: 600
-      span
-        color: #b7ced7
+      font-size: 70px
+      color: #e4bd06
+      line-height: 110px
 
-  .error-image
-    img
-      width: 155px
-      margin-top: 25px
-      margin-bottom: 20px
+    .error-msg
+      font-family: "Abel", sans-serif
+      font-size: 45px
+      color: #7b7e7f
 
-  .default-msg
-    font-family: "Roboto", sans-serif
-    font-size: 70px
-    color: #e4bd06
-    line-height: 110px
+    .home-btn
+      display: block
+      margin-bottom: 50px
+      button
+        background-color: #1794c8
+        border: none
+        font-family: "Roboto", sans-serif
+        font-size: 22px
+        padding: 15px 40px
+        color: #fff
+        border-radius: 11px
+        margin-top: 30px
 
-  .error-msg
-    font-family: "Abel", sans-serif
-    font-size: 45px
-    color: #7b7e7f
-
-  .home-btn
-    display: block
-    margin-bottom: 50px
-    button
-      background-color: #1794c8
-      border: none
-      font-family: "Roboto", sans-serif
-      font-size: 22px
-      padding: 15px 40px
-      color: #fff
-      border-radius: 11px
-      margin-top: 30px
-
-      &:hover
-        background-color: #09729e
+        &:hover
+          background-color: #09729e
 
 /* END: Error Page : 404 */
