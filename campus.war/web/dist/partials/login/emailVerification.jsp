@@ -83,8 +83,7 @@
 		<div class="modal-content">
 
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">Close</span>
 				</button>
 			</div>
@@ -96,10 +95,11 @@
 
 							<label class="" id="popupMessage"></label>
 							<div class="form-group has-error">
-							        <label class="evm-lbl-1 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
+
 									<label for="username">
-									    <span class="error-txt" id="emailtbError"></span>
-									</label>
+									    <span class="error-txt" id="emailtbError">Test Error msg !!!</span>
+									</label><br>
+									<label class="evm-lbl-1 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
 									<input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code" required >
 								</div>								
 							<div class="form-group">

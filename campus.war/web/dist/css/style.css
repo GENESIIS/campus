@@ -853,6 +853,7 @@ body, html {
       .modal-content .modal-body .form-social .twitter {
         background: #43C8F5; }
 
+/* Styling Forgot password screen */
 .forgot-pwrd-screen {
   display: block;
   width: 80%;
@@ -865,16 +866,18 @@ body, html {
     display: block;
     min-height: 50px; }
     .forgot-pwrd-screen .lbl-error label {
-      padding-top: 10px;
-      width: 100%; }
+      margin-top: 10px;
+      width: 100%;
+      color: #d67900;
+      display: block;
+      background-color: #ffe0e0;
+      border-left: 4px solid; }
       .forgot-pwrd-screen .lbl-error label span {
         font-size: 16px;
         font-family: "Roboto", sans-serif;
         color: #d67900;
         display: block;
-        background-color: #ffe0e0;
         padding: 8px;
-        border-left: 4px solid;
         line-height: 20px; }
   .forgot-pwrd-screen .input-area {
     padding-top: 15px; }
@@ -884,7 +887,7 @@ body, html {
       color: #666666;
       font-size: 16px;
       font-weight: 600;
-      line-height: 24px;
+      line-height: 26px;
       margin-bottom: 6px; }
     .forgot-pwrd-screen .input-area input {
       border: none;
@@ -892,7 +895,8 @@ body, html {
       width: 100%;
       color: #44a969;
       padding-bottom: 5px;
-      padding-left: 5px; }
+      padding-left: 5px;
+      height: 30px; }
   .forgot-pwrd-screen .btn-holder {
     padding-top: 8px;
     text-align: right; }
@@ -901,7 +905,7 @@ body, html {
       font-weight: 600;
       padding: 8px 50px; }
 
-/* Verify email functional area */
+/* Styling Verify email functional area */
 .modal-content {
   border-radius: 6px; }
   .modal-content .verify-modal-container {
@@ -918,6 +922,16 @@ body, html {
   line-height: 40px;
   padding: 0 20px;
   width: 100%; }
+
+/* Styling Password Reset screen  */
+.pwrd-reset-screen {
+  display: block;
+  width: 80%;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 750px;
+  padding-top: 345px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
