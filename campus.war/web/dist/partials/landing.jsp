@@ -8,6 +8,7 @@
 <!-- 20170117 DJ c124-general-filter-search-programme-MP-dj  searchFunction() Implementation. -->
 <!-- 20170123 DJ c124-general-filter-search-programme-MP-dj  UI integration. -->
 <!-- 20170216 DK c124-general-filter-search-programme-MP-dj  Enabling browser cache to display previously typed queries -->
+<!-- 20170216 DK c124-general-filter-search-programme-MP-dj  Include onsubmit="return false;" to prevent form's default action of submitting when pressing the "Enter" -->
 <!-- Bootstrap -->
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,7 +20,7 @@
         <!-- End Main slider -->
         <div class="search-area clearfix">
         
-        	<form autocomplete="on">			
+        	<form autocomplete="on" onsubmit="return false;">			
 				<div class="main-search-bar center-block clearfix">
 						<div class="bar-holder center-block clearfix">
 							<input id="course-search" class="center-block" type="text" name="course-search" value="Search : Program, Course, or Career" autocomplete="on">
