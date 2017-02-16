@@ -8,6 +8,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SigningUpStudentDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -15,17 +16,24 @@ public class CmdPasswordChange implements ICommand{
 	static Logger log = Logger.getLogger(CmdPasswordChange.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
+	String message ="";
+	String pageURL = "/index.jsp?showLogin=true";
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String gsonData = helper.getParameter("jsonData");
 		data = getStudentdetails(gsonData);
-		log.info("swwerwerwerwerwerwervwfv werwer");
+		
 		ICrud passwordRest = new SigningUpStudentDAO();
 		int result = passwordRest.update(data);
+		if(result>0){
+			message = SystemMessage.PASSWORD_SUCCESS.message();
+		}else{
+			message = SystemMessage.PASSWORD_UNSUCCESS.message();
+		}
 		
-		
-		
+		helper.setAttribute("message", message);
+		helper.setAttribute("pageURL", pageURL);
 		return view;
 	}
 	/**
