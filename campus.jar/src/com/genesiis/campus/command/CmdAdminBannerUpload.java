@@ -50,7 +50,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			Exception {
 		
 		try{
-			 return saveBannerPageCredential(helper,view);
+			 return saveBannerImageToTempLocation(helper,view);
 			
 		} catch (SQLException sqle) {
 			log.error("execute(IDataHelper helper, IView view):SQLException "+ sqle.toString());
@@ -65,7 +65,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	
 	
 /**
- * Save banner page credential.
+ * Save banner image to a temporary location.
  *
  * @param helper the helper
  * @param view the view
@@ -73,7 +73,7 @@ public class CmdAdminBannerUpload implements ICommand {
  * @throws SQLException the SQL exception
  * @throws Exception the exception
  */
-private IView saveBannerPageCredential(IDataHelper helper, IView view) throws SQLException,
+private IView saveBannerImageToTempLocation(IDataHelper helper, IView view) throws SQLException,
 Exception{
 	Connection con = null;
 	
@@ -88,11 +88,16 @@ Exception{
 			getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
 			con = ConnectionManager.getConnection();
 			//get the banner Absolute upload path
-			String bannerImageUploadPath =imageUtility.getImageTeporyUploadPath(SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,"tempbanner",con);
+			String bannerImageUploadTemporaryPath =imageUtility.getImageTeporyUploadPath(SystemConfig.BANNER_IMAGE_TEMPORARY_PATH,"tempbanner",con);
 			
-			fileUtility.setUploadPath(bannerImageUploadPath);
+			fileUtility.setUploadPath(bannerImageUploadTemporaryPath);
 			
-			// IMPLEMENT THE BANNER STORING TO THE TEMPERY LOCATION.
+			
+			if((!isTheFileMovedTOTemporaryLocation(fileUtility))){
+				setResponseCridentials(helper);
+				return view;
+			}
+			
 		}
 		
 		// check if it confirm to the standards-- pixels this should be stored in the database
@@ -112,10 +117,46 @@ Exception{
 	return null;
 	
 }
+
+/**
+ * 
+ * @param fileUtility
+ * @return
+ */
+private boolean isTheFileMovedTOTemporaryLocation(FileUtility fileUtility) throws Exception {
+	
+	boolean isTheFileMovedTOTemporaryLocation= false;
+	try{
+		
+		
+		
+	} catch (Exception exp) {
+		log.error("isTheFileMovedTOTemporaryLocation(): Exception "+exp.toString());
+		throw exp;
+	}
+	
+	return isTheFileMovedTOTemporaryLocation;
+}
+
+
+
+/*
+ * Method sets the response credentials, It sets the successfulness or the failure code,
+ * amd the message to be dispatched to the view to the response as attributes
+ * @author dushantha DN
+ * setResponseCridentials sets the request attributes
+ * @param helper: It is the request wrapper instance
+ */
+private void setResponseCridentials(IDataHelper helper){
+	helper.setAttribute("successCode", getSuccessCode());
+	helper.setAttribute("message", message);
+}
 	
 	
-	
-	
+
+
+
+
 
 
 
