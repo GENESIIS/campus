@@ -5,6 +5,8 @@ package com.genesiis.campus.command;
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 //20170103 PN CAM-137: modified execute() method by changing LPCategoryDAO instance into CategoryDAO instance.
 //20170215 PN CAM-137: modified execute() method by removing CategoryDAO object. remove code block implemented to get institute list.
+//20170217 PN CAM-137: modified execute() method to get and assign the values from static enum if the categoryCollection is null or empty.
+
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -49,8 +51,8 @@ public class CmdListCategories implements ICommand {
 			// Get the only object available
 			Collection<Collection<String>> categoryCollection = CategoryCache.getInstance().getDefaultCategories();
 			
-			//get and assign the values from static enum if the categoryCollection is null.
-			if(categoryCollection == null){
+			//get and assign the values from static enum if the categoryCollection is null or empty.
+			if((categoryCollection == null) || (categoryCollection.size() == 0)){
 				categoryCollection = CategoryList.getEnumAsCollection();
 			}
 
