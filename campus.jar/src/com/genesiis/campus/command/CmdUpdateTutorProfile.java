@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 //20170214 CW c38-view-update-tutor-profile modified execute(), fillTutorCollection() & setCompareVariables() methods
 //20170214 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
+//20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -80,6 +81,8 @@ public class CmdUpdateTutorProfile implements ICommand {
 					view.setCollection(tutorViewCollection);	
 				}
 			}else{
+				fillTutorCollection(tutorViewCollection, tutor);
+				view.setCollection(tutorViewCollection);	
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
 			
@@ -390,9 +393,13 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}
 			
 			int approved = Integer.parseInt(helper.getParameter("isApproved"));
-			if (approved == 1){
+			int approvedOld = Integer.parseInt(helper.getParameter("isapprovedOld"));
+
+			if ((approvedOld != approved) && approved == 1){
 				tutor.setIsApproved(true);
 				updated = true;
+			}else{
+				tutor.setIsApproved(true);
 			}
 
 			if(Double.parseDouble(helper.getParameter("townDetails")) != 0){
