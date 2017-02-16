@@ -1,6 +1,9 @@
 //20170202 DK CAM-124: Developed and integrate the UI
 //20170215 DK CAM-124: Fixing UI issues mentioned by HF at MX phase, rtc 201702090950 HF 
 //20170216 DK CAM-124: Include JS Autoclear function to clear course search field as placeholder attribute doesn't work on previous versions of IE
+//20170216 DK CAM-124: Modified JS code to focus event of the course search field
+//20170216 DK CAM-124: Modified JS code to submit data on pressing enter key
+//20170216 DK CAM-124: Modified JS code to validate empty strings for the course search input
 
 $( document ).ready(function() {
 	
@@ -37,7 +40,32 @@ $( document ).ready(function() {
 			$(this).show().css('opacity', 1).slideUp(slideOpts).animate({ opacity: 0 }, fadeOpts);
 		};
 		
-		$("#course-search, .panel-collapse-ico").click(function(event){
+		
+		/*
+		 	* Course filter search panel open for the focus event of the course search input
+		 	* DK Dimuthu Kalyanaratne
+		*/		
+		
+		$("#course-search").focus(function(event){
+			if( $(".filter-boxes").is(':visible')){
+
+					$(".filter-boxes").hideUp("slow");
+					$(".rotate").toggleClass("down")  ; 
+	
+			}else{
+				$(".filter-boxes").showDown("slow");
+				$(".rotate").toggleClass("down")  ; 
+			}		
+			return false;
+		});
+		
+		
+		/*
+		 	* Course filter search panel open for the click event of drop down arrow
+		 	* DK Dimuthu Kalyanaratne
+		*/
+		
+		$(".panel-collapse-ico").click(function(event){
 			if( $(".filter-boxes").is(':visible')){
 
 					$(".filter-boxes").hideUp("slow");
@@ -61,24 +89,71 @@ $( document ).ready(function() {
 		
 		
 		/*
-		 * General Filter search button click action.
-		 * DJ dumani
-		 */
+		 	* General Filter search button click action.
+		 	* DJ dumani
+		*/
 		$('#addSearchData').click(function(e){
-			var keyWordString = " ";
-			var selectedType = " ";
-			keyWordString = $("#course-search").val();
-			selectedType = $('input[name="courseOpt"]:checked').val();
-
-			if (selectedType == 'CPROVIDER') {
-				alert("Will load course providers \n implemented in cam-123");				
-			} else {
-				window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
-			}
 			
-			e.preventDefault();	
+			if( $('#course-search').val() == '' || $('#course-search').val() == 'Search : Program, Course, or Career' ){
+							
+				var keyWordString = " ";
+				var selectedType = " ";
+				
+				keyWordString = $("#course-search").val();
+				selectedType = $('input[name="courseOpt"]:checked').val();
+	
+				if (selectedType == 'CPROVIDER') {
+					alert("Will load course providers \n implemented in cam-123");				
+				} else {
+					window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
+				}
+
+				
+			}else{
+					
+				e.preventDefault();
+				return false;
+				
+			}
 
 		});
+		
+		
+		/*
+		 	* Submit form data pn "Enter"
+		 	* DK Dimuthu Kalyanaratne
+		*/
+
+		$("input#course-search").on('keyup', function (e) {
+			
+			if(e.which == 13) {
+				
+				if(!this.value == "" || !this.value == "Search : Program, Course, or Career"){
+					
+					var keyWordString = " ";
+					var selectedType = " ";
+					
+					keyWordString = $("#course-search").val();
+					selectedType = $('input[name="courseOpt"]:checked').val();
+		
+					if (selectedType == 'CPROVIDER') {
+						alert("Will load course providers \n implemented in cam-123");				
+					} else {
+						window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
+					}
+				
+				}else{
+					
+					e.preventDefault();
+				    return false;
+					
+				}	
+				
+			}
+							
+		});
+
+
 		
 
 		/*
