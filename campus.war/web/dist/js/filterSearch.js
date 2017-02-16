@@ -1,7 +1,13 @@
 //20170202 DK CAM-124: Developed and integrate the UI
 //20170215 DK CAM-124: Fixing UI issues mentioned by HF at MX phase, rtc 201702090950 HF 
-	
+//20170216 DK CAM-124: Include JS Autoclear function to clear course search field as placeholder attribute doesn't work on previous versions of IE
+
 $( document ).ready(function() {
+	
+		/*
+		 	* Course search panel related JS
+		 	* DK Dimuthu Kalyanaratne
+		*/
 		
 		$(".filter-boxes").css({"display": "none", "opacity": "0"}); 
 		
@@ -73,5 +79,22 @@ $( document ).ready(function() {
 			e.preventDefault();	
 
 		});
+		
+
+		/*
+		 	* Auto clear for course search field
+		 	* DK Dimuthu Kalyanaratne
+		*/
+		
+		$("input#course-search").focus(function() {		  
+			 if(this.value == "Search : Program, Course, or Career") {
+				 $(this).val("");
+			 }
+		}).blur(function() {
+			if (this.value == "") {
+				$(this).val("Search : Program, Course, or Career");
+			}
+		});
+
 		
 	});
