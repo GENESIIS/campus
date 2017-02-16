@@ -16,6 +16,11 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 
+/**
+ * this class used to view the tutor details for given tutor code 
+ * further it implements ICommand interface
+ * @author CW
+ */
 public class CmdViewTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdViewTutorProfile.class.getName());
