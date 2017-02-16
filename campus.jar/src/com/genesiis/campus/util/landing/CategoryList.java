@@ -1,6 +1,7 @@
 package com.genesiis.campus.util.landing;
 
 //20170215 PN CAM-137: init CategoryList enum class to return categories associated with the landing page, if an error thrown when accessing the DB. 
+//20170216 PN CAM-137: implement getEnumAsCollection(String code) method to select an enum value from the given code and returns the attribute set as a collection.
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,6 +50,25 @@ public enum CategoryList {
 			singleCategoryList.add(list.getName());
 			singleCategoryList.add(list.getDescription());
 			allCategoryList.add(singleCategoryList);
+		}		
+		return allCategoryList;
+	}
+	
+	/**
+	 * Select an enum value from the given code and returns the attribute set as a collection.
+	 * @param code
+	 * @return
+	 */
+	public static Collection<Collection<String>> getEnumAsCollection(String code){
+		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
+		for(CategoryList list: CategoryList.values()){
+			if(list.getCode().trim().equalsIgnoreCase(code)){
+				final ArrayList<String> singleCategoryList = new ArrayList<String>();
+				singleCategoryList.add(list.getCode());
+				singleCategoryList.add(list.getName());
+				singleCategoryList.add(list.getDescription());
+				allCategoryList.add(singleCategoryList);
+			}		
 		}		
 		return allCategoryList;
 	}
