@@ -34,8 +34,8 @@ public class AdminCmdFactory implements ICmdFactory{
 		
 		map.put(Operation.DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA, new CmdBannerPreRequisite()); 
 		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdBannerPreRequisite());
-		map.put(Operation.UPLOAD_BANNER_IMAGE_BY_ADMIN, new CmdAdminBannerUpload());
-		map.put(Operation.BANNER_CREDENTIALS,new CmdAdminBannerUpload());
+		map.put(Operation.UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER, new CmdAdminBannerUpload());
+		map.put(Operation.UPLOAD_FULL_BANNER_CREDENTIALS,new CmdAdminBannerUpload());
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class AdminCmdFactory implements ICmdFactory{
 		case UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE:
 			command = map.get(o);
 			break;
-		case UPLOAD_BANNER_IMAGE_BY_ADMIN:
+		case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER:
 			command = map.get(o);
 			break;	
-		case BANNER_CREDENTIALS:
+		case UPLOAD_FULL_BANNER_CREDENTIALS:
 			command = map.get(o);
 			break;
 		default:
