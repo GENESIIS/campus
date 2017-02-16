@@ -4,12 +4,8 @@ package com.genesiis.campus.command;
  * 				JasonInflator.java inner class and saveBannerPageCredential()/getInflatedObjectFromJason()
  * 				created.
  * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn saveBannerPageCredential() method started implemented
+ * 				getImageTeporyUploadPath() changed SystemConfig.BANNER_IMAGE_TEMPORARY_PATH -->SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH
  */
-
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.ConnectionManager;
@@ -24,6 +20,10 @@ import com.google.gson.JsonSyntaxException;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * CmdAdminBannerUploadManager.java bears the responsibility of processing
@@ -77,7 +77,9 @@ private IView saveBannerImageToTempLocation(IDataHelper helper, IView view) thro
 Exception{
 	Connection con = null;
 	
-	try{		
+	try{	
+		// clear the message if it's accumulated.
+		this.setMessage(""); 
 		// get the banner
 		files = imageUtility.getImageFileUploadedFromBrowser(helper);
 		if((files.size()==0)|(files==null)){
@@ -88,22 +90,24 @@ Exception{
 			getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
 			con = ConnectionManager.getConnection();
 			//get the banner Absolute upload path
-			String bannerImageUploadTemporaryPath =imageUtility.getImageTeporyUploadPath(SystemConfig.BANNER_IMAGE_TEMPORARY_PATH,"tempbanner",con);
+				String bannerImageUploadTemporaryPath = imageUtility
+						.getImageTeporyUploadPath(
+								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
+								"tempbanner", con);
+
+				fileUtility.setUploadPath(bannerImageUploadTemporaryPath);
+
+			// check if it confirm to the standards-- pixels this should be stored in the database
+			// pass the banner credentials to back end
 			
-			fileUtility.setUploadPath(bannerImageUploadTemporaryPath);
-			
-			
-			if((!isTheFileMovedTOTemporaryLocation(fileUtility))){
+			if((!isTheFileMovedTOTemporaryLocation(fileUtility,bannerImageUploadTemporaryPath,true))){
+				this.message = message + " " +ImageUtility.systemMessage(-2);
+				this.setSuccessCode(-2);
 				setResponseCridentials(helper);
 				return view;
 			}
 			
 		}
-		
-		// check if it confirm to the standards-- pixels this should be stored in the database
-		// pass the banner credentials to back end
-		
-		
 	} catch(FileUploadException fle){
 		log.error("saveBannerPageCredential():FileUploadException"+ fle.toString() );
 		throw fle;			
@@ -114,21 +118,37 @@ Exception{
 		DaoHelper.cleanup(con, null, null);
 	}
 	
-	return null;
+	setResponseCridentials(helper);
+	return view;
 	
 }
 
-/**
+/*
+ * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within
+ *  a multipart/form-data POST request and wrapped with by "fileUtility" parameter to a location specified
+ *  by the movingDirectoryPath parameter. This method allows to move the said file to a clean directory
+ *  where there is no any other files or folders but the moving file only. This fact is excreted by specifying
+ *  the boolean parameter <I>shouldDirectoryContentBeRemoved</I> to true
+ *   
+ * @param fileUtility : FileUtility 
  * 
- * @param fileUtility
- * @return
+ * @param movingDirectoryPath : String denotes the absolute path of the directory
+ *                             e.g  C:/sdb/ctxdeploy/education.war/banner/directoryName
+ *                             
+ * @param shouldDirectoryContentBeRemoved : boolean true for deleting files and sub directories within the Directory
+ * 											if directory specified by the path do exist.
+ * 
+ * @return boolean stating if the operation gets successful or fails.
+ * 
+ * @throws Exception
  */
-private boolean isTheFileMovedTOTemporaryLocation(FileUtility fileUtility) throws Exception {
+private boolean isTheFileMovedTOTemporaryLocation(FileUtility fileUtility,
+		String movingDirectoryPath,boolean shouldDirectoryContentBeRemoved) throws Exception {
 	
 	boolean isTheFileMovedTOTemporaryLocation= false;
 	try{
-		
-		
+		isTheFileMovedTOTemporaryLocation= fileUtility.moveFileTODiferentDirectory(movingDirectoryPath,
+				fileUtility.getFileItem(),shouldDirectoryContentBeRemoved );
 		
 	} catch (Exception exp) {
 		log.error("isTheFileMovedTOTemporaryLocation(): Exception "+exp.toString());
@@ -178,10 +198,54 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 /*
  * Getters and setters methods of the containing class goes here
  */
+
+
 private FileUtility getFileUtility() {
 	// TODO Auto-generated method stub
 	return fileUtility;
 }
+
+private ImageUtility getImageUtility() {
+	return imageUtility;
+}
+
+
+
+private void setImageUtility(ImageUtility imageUtility) {
+	this.imageUtility = imageUtility;
+}
+
+
+
+private ArrayList<FileItem> getFiles() {
+	return files;
+}
+
+
+
+private void setFiles(ArrayList<FileItem> files) {
+	this.files = files;
+}
+
+
+
+private String getMessage() {
+	return message;
+}
+
+
+
+private void setMessage(String message) {
+	this.message = message;
+}
+
+
+
+private void setFileUtility(FileUtility fileUtility) {
+	this.fileUtility = fileUtility;
+}
+
+
 
 /**
  * Gets the success code.
