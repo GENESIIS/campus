@@ -237,12 +237,13 @@ body, html {
           top: -50px; }
           .main-screen .content-panel .search-area .main-search-bar .bar-holder input#course-search {
             width: 100%;
-            line-height: 64px;
-            border: none;
+            border: medium none;
             font-size: 24px;
             color: #918a8a;
             padding-left: 30px;
-            padding-right: 30px; }
+            padding-right: 80px;
+            padding-top: 18px;
+            padding-bottom: 18px; }
       .main-screen .content-panel .search-area .filter-boxes {
         display: block;
         background: #fff;
