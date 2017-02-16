@@ -42,7 +42,7 @@ package com.genesiis.campus.validation;
 //20170213 CW c38-view-update-tutor-profile modified validateTutorFields(), isValidFirstname() methods & validateUserAndEmail() method name modified to isValidUserAndEmail().
 //20170214 CW c38-view-update-tutor-profile modified isValidCountryCode(), isValidNetworkCode(), isValidContactNumber(), isValidUserAndEmail() & isHavingNullValues() methods
 //20170215 CW c38-view-update-tutor-profile Add class comment
-
+//20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -436,7 +436,7 @@ public class Validator {
 		}
 		
 		try{
-			if((isNotEmpty(number))){
+			if((isNotEmpty(number)) && !(number.equals("-"))){
 				double newNumber = Double.parseDouble(number);
 			}
 		} catch (Exception e){
