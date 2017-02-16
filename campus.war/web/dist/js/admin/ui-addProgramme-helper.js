@@ -340,28 +340,28 @@ function validateFormData(){
 	var courseName = $('#course-name').val();
 	var integerPattern = /^[0-9]+$/;	
 
-	if (courseDuration == 'undefined' || courseDuration == "") {
+	if (isEmpty(courseDuration)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-duration").addClass("err-block");
 		$('.block-course-duration .err-msg').text("Please insert course duration !");
 		isValidationSucess = false;
 	}
 	
-	if (courseName == 'undefined' || courseName == "" || !isValidLength(counselorTel, 100)) {
+	if (isEmpty(courseName) || !isValidLength(counselorTel, 100)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
 		$('.block-course-name .err-msg').text("Course Name  is empty or too long!!");
 		isValidationSucess = false;
 	}
 	
-	if (counselorName == 'undefined' ||  counselorName == "" || !isValidLength(counselorTel, 35)) {
+	if (isEmpty(counselorName) || !isValidLength(counselorName, 35)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-name").addClass("err-block");
 		$('.block-counselor-name .err-msg').text("Counselor name is empty or too long!");
 		isValidationSucess = false;
 	}
 	
-	if (counselorTel == 'undefined' || counselorTel == ""  || !isValidLength(counselorTel, 15)) {
+	if (isEmpty(counselorTel) || !isValidLength(counselorTel, 15)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-tel").addClass("err-block");
 		$('.block-counselor-tel .err-msg').text("Counselor telephone is empty or too long!");
@@ -373,7 +373,7 @@ function validateFormData(){
 		isValidationSucess = false;
 	}	
 
-	if (counselorEmail == 'undefined' || !counselorEmail && counselorEmail == "") {
+	if (isEmpty(counselorEmail)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Please insert counselor Email address!");
@@ -480,14 +480,14 @@ function validateFormData(){
 		$("#selectedClassType").val(classTypeCode);
 	}
 		
-	//Validate email
+	/*//Validate email
 	var email= $('#counselor-email').val();			
-	if (!isEmpty(email) || !isValidEmailFormat(email)) {
+	if (isEmpty(email) || !isValidEmailFormat(email)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-counselor-email").addClass("err-block");
 		$('.block-counselor-email .err-msg').text("Invalid email format!");
 		isValidationSucess = false;		
-	} 
+	}*/ 
 
 	//Validate dates
 	var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");	
@@ -535,7 +535,7 @@ function isPatternMatch(regularExpression, source) {
  * @returns true if has content else false- string values.
  */
 function isEmpty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == "") || (fieldValue == null)) ?true  : false;
 }
 
 /**
