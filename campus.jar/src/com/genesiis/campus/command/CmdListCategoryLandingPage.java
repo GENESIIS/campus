@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20161126 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 //20161130 JH c7-higher-education-landing-page-MP code review modifications: error log statement modified, added documentation comments,
 //												  removed unwanted statements
+//20170216 PN CAM-137: modified execute() method to get and assign the values from static enum if the categoryDetails Collection is null or empty.
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CategoryCourseProviderDAO;
@@ -19,6 +20,8 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.entity.model.Programme;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.landing.CategoryCache;
+import com.genesiis.campus.util.landing.CategoryList;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
@@ -73,8 +76,11 @@ public class CmdListCategoryLandingPage implements ICommand {
 
 				category.setCode(Integer.parseInt(categoryId));
 
-				final Collection<Collection<String>> categoryDetails = categoryDAO
-						.findById(category);
+				Collection<Collection<String>> categoryDetails = CategoryCache.getInstance().getDefaultCategories(categoryId);
+				
+				if((categoryDetails == null) || (categoryDetails.size() == 0)){					
+					categoryDetails = CategoryList.getEnumAsCollection(categoryId);
+				}
 				view.setCollection(categoryDetails);
 				
 				/**
@@ -90,13 +96,10 @@ public class CmdListCategoryLandingPage implements ICommand {
 				 * who may or may not have program stat
 				 */
 				programme.setLevel(1);
-				final Collection<Collection<String>> featuredCourseProviders = categoryProgrammeDAO
-						.findById(programme);
+				final Collection<Collection<String>> featuredCourseProviders = categoryProgrammeDAO.findById(programme);
 
 				programme.setLevel(0);
-				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO
-						.findById(programme);
-
+				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO.findById(programme);
 				
 				final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
 				final String contextDeploySmallLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
@@ -104,8 +107,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 				helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
 				helper.setAttribute("providerLogoPath", contextDeploySmallLogoPath);
 				
-				helper.setAttribute("featuredInstitutes",
-						featuredCourseProviders);
+				helper.setAttribute("featuredInstitutes", featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
 
 			} catch (Exception exception) {
