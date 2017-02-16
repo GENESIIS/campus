@@ -24,7 +24,26 @@
 </head>
 <body>
 <!-- Header-->
-	
+<!-- URL binded data split and assign to fields   -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+						
+								var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('?'), sParameterName, i;
+								var firstName = "";
+								var lastName = "";
+								var email = "";
+								var scode = "";
+								for (i = 0; i < sURLVariables.length; i++) {
+													        sParameterName = sURLVariables[i].split('&');
+								firstName = sParameterName[1];
+								lastName = sParameterName[2];
+								
+							}
+								alert(firstName+" "+lastName);
+						});
+	</script>
 	<header>
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 		<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
@@ -33,22 +52,14 @@
 	<div align="center">
 	 <div class="input-panel col-md-6 col-lg-6 col-sm-12 clearfix">
             <div class="input-field">
-                <label for="input-firstName" id="firstNameLabel">First Name :<span>*</span></label><label id="firstNameError" style="color:#C70039;" class="validationInputFields"></label><br>
-                <input class="text-field" type="text" id="firstName" name="firstName" disabled="disabled">
+                <label for="input-fullName" id="fullNameLabel">Full Name :<span>*</span></label><label id="firstNameError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label class="text-field" id="fullName" name="fullName"></label>
             </div>
             <!-- End first name -->
 
             <div class="input-field">
-                <label for="input-lastName" id="lastNameLabel">Last Name :<span>*</span></label><label id="lastNameError" style="color:#C70039;" class="validationInputFields"></label><br>
-                <input class="text-field" type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
-            </div>
-            <!-- End Last name -->
-
-          
-
-            <div class="input-field">
                 <label for="eMail" id="emilAddressLabel" >Email :<span>*</span></label><label id="emailError" style="color:#C70039;" class="validationInputFields"></label></label><br>
-                <input class="text-field" type="text" id="emailAddress" name="emailAddress"  onclick="clearField('emailError')">
+                <label class="text-field" id="email" name="email"></label>
             </div>
             <!-- End Email -->
    
