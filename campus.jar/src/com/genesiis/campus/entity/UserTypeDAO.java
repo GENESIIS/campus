@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20161221 CW c36-add-tutor-details Modified getAll() method.
 //20170110 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application & removed getCode() method.
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170216 CW c38-view-update-tutor-profile Add class comment
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -18,10 +19,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
+/**
+ * this class used to manage the user type related data 
+ * further it implements ICrud interface
+ * @author CW
+ */
 public class UserTypeDAO implements ICrud {
 
-	static Logger log = Logger.getLogger(TownDAO.class.getName());
+	static Logger log = Logger.getLogger(UserTypeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
