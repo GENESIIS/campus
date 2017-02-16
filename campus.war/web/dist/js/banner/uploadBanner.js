@@ -166,7 +166,7 @@ function getBannerSlotsMapedToThePage(selectedPageCode){
 			selectedCodeOfThePage : selectedPageCode			
 		},
 		success: function(pageSlots){
-			alert("INside the success call");
+			
 			populateDataList(pageSlots.result,"slotList");
 			
 		},
@@ -258,13 +258,8 @@ function displayLabelMessage(labelid,cssColour,message){
 $(document).on('click','#uploadBbutton', function(event){
 	
 	var isValidationSuccess = false;
-	
-	event.stopPropagation(); 
-    event.preventDefault(); 
     
     $('#bannerModalClose').hide();
-   
-	
 	/*
 	 * Extracting Banner page data
 	 */
@@ -299,19 +294,21 @@ $(document).on('click','#uploadBbutton', function(event){
 		var formData = new FormData();
 		formData.append("file",banerImage);
 		
-		// ajax call to transfer banner Image to server end
+		event.stopPropagation(); 
+	    event.preventDefault(); 
 		
+	 // ajax call to transfer banner Image to server end
 		$.ajax({
 			type:"POST",
 			dataType:"JSON",
-			url : adminControllerUrl+"?CCO=UBIMBA", //Upload Banner Image by Admin
+			url : adminControllerUrl+"?CCO=UBIMBA", //UPLOAD BANNER IMAGE TO TEMP FOLDER
 			data : formData,
 			cache: false,
 			contentType : false,
 			processData : false,
 			success: function(response){
-				//var cssColour=(reponse.successCode===1)?'green':'red';
-				//displayLabelMessage('bannerDisplayLabel',cssColour,reponse.message);
+				var cssColour=(response['successCode']==1)?'green':'red';
+				displayLabelMessage('bannerDisplayLabel',cssColour,response['message']);
 				
 			},
 			error: function(pageSlots,error,errorThrown){
@@ -325,12 +322,13 @@ $(document).on('click','#uploadBbutton', function(event){
 				 * user should have the ability to close the modal window
 				 */
 				$('#bannerModalClose').show();
-				if(status="success"& response.successCode===1){
-					//TODO trigger the  rest of the field sending ajax call
+				if(status=="success"){					
+					sendBannerPaageFieldInputs(BannerFieldInputValues,true);
 					
 				} else{
 					
 					//TODO  fire the data field clear function
+					alert("fire the data field clear function");
 				}
 				
 			}
@@ -373,14 +371,17 @@ if(elegibleToProceed){
 		$.ajax({
 			type:"POST",
 			dataType:"JSON",
-			url : adminControllerUrl+"?CCO=BCR", //Banner Credentials
-			data : formData,
+			url : adminControllerUrl, 
+			data : {
+					CCO:"UFBCR",//UPLOAD FULL BANNER CREDENTIALS
+					jasondata:JSON.stringify(formData),
+			},
 			cache: false,
 			contentType : false,
 			processData : false,
 			success: function(response){
-				//var cssColour=(reponse.successCode===1)?'green':'red';
-				displayLabelMessage('displayLabel',cssColour,reponse.message);
+				var cssColour=(response['successCode']===1)?'green':'red';
+				displayLabelMessage('displayLabel',cssColour,response['message']);
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
