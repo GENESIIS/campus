@@ -188,7 +188,7 @@ public class StudentEmailVerificationDAO implements ICrud {
 					singleStudent.add(rs.getString("EMAIL"));
 					singleStudent.add(rs.getString("USERNAME"));
 					singleStudent.add(rs.getString("CODE"));
-					log.info("hariii");
+					
 				}else{
 					message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
 					singleStudent = new ArrayList<String>();
@@ -221,7 +221,7 @@ public class StudentEmailVerificationDAO implements ICrud {
 				conn.close();
 			}
 		}
-		log.info(message);
+		
 		dataCollection.add(singleStudentCollection);
 		return dataCollection;
 	}
