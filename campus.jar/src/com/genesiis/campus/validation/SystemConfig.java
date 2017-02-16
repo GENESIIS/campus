@@ -42,6 +42,7 @@ public enum SystemConfig {
 	TUTOR_PROFILE_IMAGE_SIZE("2","",""),
 	BANNER_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/banner","",""),
 	BANNER_IMAGE_WAR_PATH("education/banner","",""),
+	BANNER_IMAGE_TEMPORARY_PATH("C:/sdb/ctxdeploy/education.war/banner/tempdeleteable","",""),
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 	
 	
