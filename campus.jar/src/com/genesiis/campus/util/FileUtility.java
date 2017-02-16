@@ -6,16 +6,16 @@ package com.genesiis.campus.util;
 //20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 //20170110 DN c47-tutor-add-tutor-information-upload-image-dn getFileItem() method
-
+//20170216 DN c131-admin-manage-banner-upload-banner-image-dn created the method moveFileTODiferentDirectory(String,FileItem,boolean)
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -418,6 +418,77 @@ public class FileUtility {
 			file = new File(uploadPath + "/(copy)" + fileName);
 		}
 		return file;
+	}
+	
+	/**
+	 * moveFileTODiferentDirectory method moves the file to the directory given
+	 * by movingDirectoryPath,
+	 * @author dushantha DN
+	 * @since 20170216 v1.0
+	 * @param movingDirectoryPath: String typeThe directory and the path
+	 * 							e.g.C:/sdb/ctxdeploy/education.war/banner/tempdeleteable
+	 * 							<b>tempdeleteable</b>: is the physical directory name.
+	 * @param fileItemTOBeMoved : FileItem type, it is the actual file that has to be moved
+	 * 						  This class represents a file or form item that was received 
+	 * 						  within a multipart/form-data POST request.
+	 * @param shouldDirectoryContentBeRemoved : boolean type instructs if the file has to be moved to a cleaned 
+	 * 								  folder, by deleting the content within it (any existing Files and Folders). if true : cleans the folder,
+	 * 								  else the folder is not cleaned prior to move the file.	
+	 * @return boolean if the moving to a given folder is a success the function returns a true else a false.
+	 */
+	public boolean moveFileTODiferentDirectory(String movingDirectoryPath,
+			FileItem fileItemTOBeMoved, boolean shouldDirectoryContentBeRemoved)
+			throws NullPointerException, SecurityException, IOException,
+			Exception {
+		boolean isTheFileMoved = false;
+
+		try {
+			File folderIntendedToMove = new File(movingDirectoryPath);
+			if (!folderIntendedToMove.isDirectory()) {
+				folderIntendedToMove.mkdir();
+			}
+			// remove any content within the folder ,if it is a requirement
+			if (shouldDirectoryContentBeRemoved) {
+				FileUtils.cleanDirectory(folderIntendedToMove);
+			}
+
+			String nameOfTheFileToBeMoved = fileItemTOBeMoved.getName();
+
+			// attach the file to be moved to the directory but physically has
+			// not been created
+			File fileToBeMoved = new File(folderIntendedToMove,
+					nameOfTheFileToBeMoved);
+
+			// move the file to the folder where we hope to move by creating the
+			// file physically.
+			fileToBeMoved.createNewFile();
+
+			// write an uploaded item to disk
+			fileItemTOBeMoved.write(fileToBeMoved);
+			isTheFileMoved = true;
+
+			return isTheFileMoved;
+
+		} catch (NullPointerException npexp) {
+			log.error("moveFileTODiferentDirectory(String,FileItem,boolean): NullPointerException "
+					+ npexp.toString());
+			throw npexp;
+
+		} catch (SecurityException scexp) {
+			log.error("moveFileTODiferentDirectory(String,FileItem,boolean): SecurityException "
+					+ scexp.toString());
+			throw scexp;
+
+		} catch (IOException ioexp) {
+			log.error("moveFileTODiferentDirectory(String,FileItem,boolean): IOException "
+					+ ioexp.toString());
+			throw ioexp;
+		} catch (Exception exp) {
+			log.error("moveFileTODiferentDirectory(String,FileItem,boolean): Exception "
+					+ exp.toString());
+			throw exp;
+		}
+
 	}
 }
 
