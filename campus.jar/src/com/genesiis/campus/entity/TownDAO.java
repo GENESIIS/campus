@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20170124 CW c36-add-tutor-details modified findById() method same as findById() in CountryDAO.java class according to the 201701201215 DJ crev modification request.
 //20170207 CW c38-view-update-tutor-profile-re organize the import statements.
 //20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
+//20170216 CW c38-view-update-tutor-profile Add class comment & removed commented lines
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +22,10 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import org.apache.log4j.Logger;
 
+/**
+ * this class used to manage the town related data 
+ * further it implements ICrud interface
+ */
 public class TownDAO implements ICrud{
 	static Logger log = Logger.getLogger(TownDAO.class.getName());
 	
@@ -81,26 +86,6 @@ public class TownDAO implements ICrud{
 		
 		return allTownList;
 	}
-	
-	/**
-	 * Returns the Town Name in Database for given town code
-	 * 
-	 * @author Chinthaka
-	 * 
-	 * @param Town code as double value
-	 * 
-	 * @return Returns the Town name as a String
-	 */
-/*	public String findTownByCode(double code)
-			throws SQLException, Exception {
-		
-		final Collection<String> allTownList = new ArrayList<String>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String townName = null;
-
-*/
 	
 	/**
 	 * Returns all the town details in Database
