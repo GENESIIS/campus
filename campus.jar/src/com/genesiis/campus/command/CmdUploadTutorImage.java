@@ -12,6 +12,9 @@ package com.genesiis.campus.command;
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn remove hard coded message from execute() and placed it in SystemMessage.java
 //				removed the log comments as per CREV instruction from execute().
 //				systemMessage(int) has been shifted to ImageUtility.java class as a static method.
+//20170207 DN c47-tutor-add-tutor-information-upload-image-dn changed the isImageAccordanceWithSystemRequirement() 
+//			  isFilePassSizeRequirement asserting logic to include in an if statement
+//20170208 DN c47-tutor-add-tutor-information-upload-image-dn changed execute() to clear the message field vuia this.setMessage("") call.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -82,8 +85,10 @@ public class CmdUploadTutorImage implements ICommand {
 		String filePath = "";
 		
 		try{
+			// clear the message if it's accumulated.
+			this.setMessage(""); 
 			//get the image files from the browser and set field -files are set now
-			files =imageUtility.getImageFileUploadedFromBrowser(helper);
+			files =getImageFileUploadedFromBrowser(helper);
 			if((files.size()==0)|(files==null)){
 				
 				this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
@@ -184,10 +189,17 @@ public class CmdUploadTutorImage implements ICommand {
 			boolean isFilePassExtensionType = isImageHavingTheAcceptedExtension(files.get(0).getName(),validExtensions);
 			
 			//set the messages to be sent to the client side
-			this.message =(!isFilePassSizeRequirement)?this.message + " "+ImageUtility.systemMessage(-3):"";
-			setSuccessCode(-3);
-			this.message =(!isFilePassExtensionType)?this.message + " "+ImageUtility.systemMessage(-4):"";
-			setSuccessCode(-4);
+			if(!isFilePassSizeRequirement){
+				this.message =this.message + " "+ImageUtility.systemMessage(-3);
+				setSuccessCode(-3);
+			}
+			
+			if(!isFilePassExtensionType){
+				this.message =this.message + " "+ImageUtility.systemMessage(-4);
+				setSuccessCode(-4);
+			}
+			
+			
 			return (isFilePassSizeRequirement & isFilePassExtensionType) ;
 			
 		} catch(SQLException exp) {
@@ -327,4 +339,3 @@ public class CmdUploadTutorImage implements ICommand {
 	}
 	
 }
-
