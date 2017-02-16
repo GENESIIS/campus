@@ -111,15 +111,15 @@ function studentLogout() {
 
 				setTimeout(function() {
 					window.location.href = response['pageURL']; // this name may
-																// have to
-																// change depend
-																// on actual
-																// location of
-																// the page
-																// "Student
-																// Login or
-																// public index
-																// page"
+					// have to
+					// change depend
+					// on actual
+					// location of
+					// the page
+					// "Student
+					// Login or
+					// public index
+					// page"
 				}, 5000);
 
 			},
@@ -247,7 +247,7 @@ function verifyCode() {
 						var counter = 0;
 						if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! "
 								|| response['errorMessage'] == "Verification code has been Expired!") {
-							alert(response['errorMessage']);
+
 							document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
 						} else if (response['errorMessage'] == "Your Verification code valid !") {
 							window.location.href = response['pageURL'];
@@ -258,23 +258,25 @@ function verifyCode() {
 							var email = "";
 							var scode = "";
 							var resultData = response.result;
-							
+
 							$.each(response.result, function(index, value) {
 								var res = value.toString();
 								var data = res.split(",");
 								counter++;
-								alert(data[4].toString());
+
 								firstName = data[0].toString();
 								lastName = data[1].toString();
 								email = data[2].toString();
 								scode = data[4].toString();
 							});
 							var encode = hashEncode(scode);
-							//var decode = hashDecose(encode);
-							//data binding to URL 
-							var pageURL = firstName+"&"+lastName+"&"+email+"&"+encode;
-						
-							window.location.href = response['pageURL']+"?uData&"+pageURL;
+							// var decode = hashDecose(encode);
+							// data binding to URL
+							var pageURL = firstName + "&" + lastName + "&"
+									+ email + "&" + encode;
+
+							window.location.href = response['pageURL']
+									+ "?uData&" + pageURL;
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -292,6 +294,7 @@ function verifyCode() {
 						} else if (error === 'timeout') {
 							msg = 'Time out error.';
 						} else if (error === 'abort') {
+							F
 							msg = 'Ajax request aborted.';
 						} else {
 							msg = 'Uncaught Error.\n' + response.responseText;
@@ -312,17 +315,17 @@ function hashEncode(data) {
 	return encodedString;
 }
 // String Hash code decode to Sting
-function hashDecose(data) {
+function hashDecode(data) {
 	// Decode the String
 	var decodedString = atob(data);
-	console.log(decodedString); // Outputs: "Hello World!"
+	console.log(decodedString);
 	return decodedString;
 }
 
 // password changed ajax function
 function changedPassword() {
-	var code = $("#verifyCode").val();
-	var password = $("#verifiemail").val();
+	var code = $("#userTypeCode").val();
+	var password = $("#passWord").val();
 	var paaswordEmpty = isempty(password);
 
 	// code filed validation error messages handling
@@ -349,10 +352,12 @@ function changedPassword() {
 					},
 					dataType : "json",
 					success : function(response) {
-						if (response['message'] === "") {
-							window.location.href = response['pageURL'];
-						} else {
-							document.getElementById('errorMesssage').innerHTML = response['message'];
+						document.getElementById('message').innerHTML = response['message'];
+						if (response['message'] === "Password successfully changed.") {
+
+							setTimeout(function() {
+								window.location.href = response['pageURL'];
+							}, 4000);
 						}
 					},
 					error : function(response, error, errorThrown) {
