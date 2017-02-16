@@ -217,7 +217,7 @@ function populateProgrammeAddView(response) {
 	
 
 	// Loading class type drop down list
-	if (response.allClassTypes !== undefined && response.allClassTypes	&& response.allClassTypes.length > 0) {
+	if (isNotEmptyCollection(response.allClassTypes )) {
 		var htmlClassTypeStr = "";
 		$.each(response.allClassTypes, function(index, value) {
 			if (value != null && value.length > 0) {
@@ -226,7 +226,6 @@ function populateProgrammeAddView(response) {
 			}
 		});
 		$('#classTypeName').html(htmlClassTypeStr);
-
 	} else {
 		$("#programmeForm").addClass("error-form");
 		$(".block-class-type").addClass("err-block");
@@ -532,7 +531,7 @@ function isPatternMatch(regularExpression, source) {
 /**
  * @author DJ
  * @param fieldValue;  it is the value of a document element
- * @returns true if has content else false- string values.
+ * @returns false if has content else true- string values.
  */
 function isEmpty(fieldValue) {
 	return ((fieldValue == "") || (fieldValue == null)) ?true  : false;
@@ -561,6 +560,19 @@ function isValidEmailFormat(email) {
  */
 function isValidLength(parameter, length) {
 	return (parameter.length <= length) ? true : false;
+}
+
+/**
+ * @author DJ
+ * @param responseCollection Collection of objects  
+ * @returns boolean true if collection is not empty else falses
+ */
+function isNotEmptyCollection(responseCollection){
+	if(responseCollection !== undefined && responseCollection	&& responseCollection.length > 0){
+		return true;
+	}else {
+		return false;
+	}
 }
 
 /**
