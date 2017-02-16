@@ -11,7 +11,7 @@ public class ProgrammeDTO {
 	String image;
 	String description;
 	Float duration;
-	String entryRequiremtns;
+	String entryRequirements;
 	String counselerName;
 	String counselerPhone;
 	Date displayStartDate;
@@ -67,10 +67,10 @@ public class ProgrammeDTO {
 		this.duration = duration;
 	}
 	public String getEntryRequiremtns() {
-		return entryRequiremtns;
+		return entryRequirements;
 	}
 	public void setEntryRequiremtns(String entryRequiremtns) {
-		this.entryRequiremtns = entryRequiremtns;
+		this.entryRequirements = entryRequiremtns;
 	}
 	public String getCounselerName() {
 		return counselerName;
