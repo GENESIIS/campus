@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
 //20170207 CW c36-add-tutor-information re-organize the import statements.
+//20170216 CW c38-view-update-tutor-profile Add class comment.
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -16,6 +17,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * this class used to manage the tutor username details
+ * further it implements ICrud interface
+ * @author CW
+ */
 public class TutorUserNameDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(TutorUserNameDAO.class.getName());
