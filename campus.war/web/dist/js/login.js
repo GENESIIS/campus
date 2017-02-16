@@ -235,12 +235,21 @@ function verifyCode() {
 			},
 			dataType : "json",
 			success : function(response) {
-				
+				var counter = 0;
 				if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! " || response['errorMessage'] == "Verification code has been Expired!") {
 					alert(response['errorMessage']);
 					document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
 				} else if(response['errorMessage'] == "Your Verification code valid !") {
 					window.location.href = response['pageURL'];
+				}else{
+					
+					var resultData = response.result;
+					alert(resultData);
+					$.each(response.result, function(index, value) {
+    					var res = value.toString();
+    					var data = res.split(",");
+    					counter++;});
+					alert(data[1].toString());
 				}
 			},
 			error : function(response,error,errorThrown) {
