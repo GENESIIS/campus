@@ -136,28 +136,41 @@ function clearErrorMessage(blockName){
 
 //Populate program insertion view 
 function populateProgrammeAddView(response) {
-		
-	var htmlstr = "";
-	$.each(response.result, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlstr += '<option val="' + value[0] + '">' + value[1]
-					+ '</option>';
-		}
-
-	});
-	$('#providerName').html(htmlstr);
-		
 	
-	var htmlCategoryStr = "";
-	$.each(response.allCategories, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlCategoryStr += '<option val="' + value[0] + '">' + value[1]
-					+ '</option>';
-		}
+//Loading course provider drop down list
+	if (response.result !== undefined && response.result && response.result.length > 0) {
+		var htmlstr = "";
+		$.each(response.result, function(index, value) {
+			if (value != null && value.length > 0) {
+				htmlstr += '<option val="' + value[0] + '">' + value[1]
+						+ '</option>';
+			}
 
-	});	
-	$('#categoryName').html(htmlCategoryStr);	
-			
+		});
+		$('#providerName').html(htmlstr);
+	} else {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-provider").addClass("err-block");
+		$('.block-course-provider .err-msg').text("No course provider master data!");
+	}	
+	
+
+	//Loading category drop down list
+	if (response.allCategories !== undefined && response.allCategories	&& response.allCategories.length > 0) {
+		var htmlCategoryStr = "";
+		$.each(response.allCategories, function(index, value) {
+			if (value != null && value.length > 0) {
+				htmlCategoryStr += '<option val="' + value[0] + '">' + value[1]
+						+ '</option>';
+			}
+
+		});
+		$('#categoryName').html(htmlCategoryStr);
+	} else {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-category").addClass("err-block");
+		$('.block-course-category .err-msg').text("No course category master data!");
+	}
 	
 	var htmlMajorStr = "";
 	$.each(response.allMajors, function(index, value) {
