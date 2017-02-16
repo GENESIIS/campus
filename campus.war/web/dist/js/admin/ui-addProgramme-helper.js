@@ -115,15 +115,14 @@ $(document).ready(function() {
 	 */		
 	$('#expiration-date').on('focusout', function(event) {	
 		clearErrorMessage(".block-course-expiration");
-	});	
-	
+	});
 	
 	/*
-	 * clear button-event handler
-	 */
-	$('#clearParam').click(function(event){		
-		clearParameters(event);
-	});	
+	 * remove error message of class type on focusout
+	 */		
+	$('#classTypelist').on('focusout', function(event) {	
+		clearErrorMessage(".block-class-type");
+	});		
 	
 });
 
