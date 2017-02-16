@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20170123 CW c36-add-tutor-information removed un-wanted import statement
 //20170129 CW c36-add-tutor-information modified findById()
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170216 CW c38-view-update-tutor-profile Add class comment & method comment.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,12 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import org.apache.log4j.Logger;
 
+
+/**
+ * this class used to manage the tutor email details
+ * further it implements ICrud interface
+ * @author Cw
+ */
 public class TutorEmailDAO implements ICrud {
 	static Logger log = Logger.getLogger(TutorEmailDAO.class.getName());
 
@@ -39,6 +46,13 @@ public class TutorEmailDAO implements ICrud {
 		return 0;
 	}
 
+	/*
+	 * findById() method assign all the tutor emails in the database into a collection which equal to given email
+	 * 
+	 * @author CW
+	 * 
+	 * @param tutorCollection, tutor
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 
