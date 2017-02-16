@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20170130 CW c36-add-tutor-information re-organize the import statements.
 //20170207 CW c38-view-update-tutor-profile- modified findCountryByCode() method
 //20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
+//20170216 CW c38-view-update-tutor-profile Add class comment & removed  findCountryByCode() method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -23,6 +24,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * this class used to manage the country related data 
+ * further it implements ICrud interface
+ */
 public class CountryDAO implements ICrud{
 
 	private static final Collection<Collection<String>> NULL = null;
@@ -49,54 +54,11 @@ public class CountryDAO implements ICrud{
 		return 0;
 	}
 
-/*
- * @author DN - taken from c18 - student : signup : without using third party application Country2DAO class
- * @see com.genesiis.campus.entity.ICrud#findById(java.lang.Object)
- */
+
 	/**
-	 * Returns the country Name in Database for given country code
-	 * 
-	 * @author Chinthaka
-	 * 
-	 * @param Country code as int value
-	 * 
-	 * @return Returns the country name as a String
+	 * @author DN - taken from c18 - student : signup : without using third party application Country2DAO class
+	 * @see com.genesiis.campus.entity.ICrud#findById(java.lang.Object)
 	 */
-	public String findCountryByCode(int code)
-			throws SQLException, Exception {
-/*		
-		final Collection<String> allCountryList = new ArrayList<String>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String countryName = null;
-
-		try {
-						
-			String query = "SELECT [NAME] FROM [CAMPUS].[COUNTRY2] WHERE CODE=?";
-			
-			conn = ConnectionManager.getConnection();
-			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, code);
-			rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				countryName = rs.getString("NAME");
-			}
-			
-		} catch (SQLException sqlException) {
-			log.info("findCountryByCode(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("findCountryByCode(): Exception " + e.toString());
-			throw e;
-		} finally {
-			DaoHelper.cleanup(conn, stmt, rs);
-		}*/
-		return "need to change com.genesiis.campus.entity.CountryDAO.findCountryByCode(int)";
-		
-	}
-
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		int countryCode = (Integer) code;
