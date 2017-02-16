@@ -127,14 +127,19 @@ $(document).ready(function() {
 	
 });
 
-//Clear error messages in mandatory input fields on focusout
+/*
+ * Clear error messages in mandatory input fields on focusout
+*/
 function clearErrorMessage(blockName){	
 	$("#programmeForm").addClass("error-form");
 	$(blockName).removeClass("err-block");
 	$(blockName).addClass("success-block");	
 }
 
-//Populate program insertion view 
+
+/*
+ * Populate program insertion view 
+*/
 function populateProgrammeAddView(response) {
 	
 //Loading course provider drop down list
@@ -172,35 +177,62 @@ function populateProgrammeAddView(response) {
 		$('.block-course-category .err-msg').text("No course category master data!");
 	}
 	
-	var htmlMajorStr = "";
-	$.each(response.allMajors, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlMajorStr += '<option val="' + value[0] + '">' + value[1]
-					+ '</option>';
-		}
-	});
+
+	// Loading major drop down list
+	if (response.allMajors !== undefined && response.allMajors	&& response.allMajors.length > 0) {
+		var htmlMajorStr = "";
+		$.each(response.allMajors, function(index, value) {
+			if (value != null && value.length > 0) {
+				htmlMajorStr += '<option val="' + value[0] + '">' + value[1]
+						+ '</option>';
+			}
+		});
+
+		$('#majorName').html(htmlMajorStr);
+
+	} else {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-major").addClass("err-block");
+		$('.block-course-major .err-msg').text("No course major master data!");
+	}
 	
-	$('#majorName').html(htmlMajorStr);
 	
-	var htmlLevelStr = "";
-	$.each(response.allLevels, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlLevelStr += '<option val="' + value[0] + '">' + value[1]
-			+ '</option>';
-		}
-		
-	});
-	$('#levelName').html(htmlLevelStr);
+
+		// Loading level drop down list
+	if (response.allLevels !== undefined && response.allLevels	&& response.allLevels.length > 0) {
+		var htmlLevelStr = "";
+		$.each(response.allLevels, function(index, value) {
+			if (value != null && value.length > 0) {
+				htmlLevelStr += '<option val="' + value[0] + '">' + value[1]
+						+ '</option>';
+			}
+
+		});
+		$('#levelName').html(htmlLevelStr);
+	} else {
+		$("#programmeForm").addClass("error-form");
+		$(".block-course-level").addClass("err-block");
+		$('.block-course-level .err-msg').text("No course level master data!");
+	}
 	
-	var htmlClassTypeStr = "";
-	$.each(response.allClassTypes, function(index, value) {
-		if (value != null && value.length > 0) {
-			htmlClassTypeStr += '<option val="' + value[0] + '">' + value[1]
-			+ '</option>';
-		}
-		
-	});
-	$('#classTypeName').html(htmlClassTypeStr);
+	
+
+	// Loading class type drop down list
+	if (response.allClassTypes !== undefined && response.allClassTypes	&& response.allClassTypes.length > 0) {
+		var htmlClassTypeStr = "";
+		$.each(response.allClassTypes, function(index, value) {
+			if (value != null && value.length > 0) {
+				htmlClassTypeStr += '<option val="' + value[0] + '">'
+						+ value[1] + '</option>';
+			}
+		});
+		$('#classTypeName').html(htmlClassTypeStr);
+
+	} else {
+		$("#programmeForm").addClass("error-form");
+		$(".block-class-type").addClass("err-block");
+		$('.block-class-type .err-msg').text("No class type master data!");
+	}
 	
 }
 
