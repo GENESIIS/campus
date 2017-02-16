@@ -7,6 +7,7 @@
 <!-- 20161025 TR c1 start styling category search area -->
 <!-- 20170117 DJ c124-general-filter-search-programme-MP-dj  searchFunction() Implementation. -->
 <!-- 20170123 DJ c124-general-filter-search-programme-MP-dj  UI integration. -->
+<!-- 20170216 DK c124-general-filter-search-programme-MP-dj  Enabling browser cache to display previously typed queries -->
 <!-- Bootstrap -->
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,36 +17,40 @@
             <img src="dist/i/slide-1.jpg" alt="">
         </div>
         <!-- End Main slider -->
-        <div class="search-area clearfix">			
-			<div class="main-search-bar center-block clearfix">
-					<div class="bar-holder center-block clearfix">
-						<input id="course-search" class="center-block" type="text" name="course-search" placeholder="Search : Program, Course, or Career">
-						<a class="panel-collapse-ico" href="#"><span class="glyphicon glyphicon-menu-down rotate"></span></a>
-						<!-- End category boxes area -->
-						<div class="filter-boxes clearfix">
-				
-							<div class="box-holder container-fluid center-block">
-								<div class="row list-inline" name="mainCategoryList" id="mainCategoryList">	
-									<div class="col-sm-10">		
-										<label class="search-title">Search Options: </label>
-										<label class="radio-inline">
-											<input type="radio" name="courseOpt" value="CPROVIDER">Course Provider
-										</label>
-										<label class="radio-inline">
-											<input type="radio" name="courseOpt" value="PROGRAMME">Program Title
-										</label>
+        <div class="search-area clearfix">
+        
+        	<form autocomplete="on">			
+				<div class="main-search-bar center-block clearfix">
+						<div class="bar-holder center-block clearfix">
+							<input id="course-search" class="center-block" type="text" name="course-search" value="Search : Program, Course, or Career" autocomplete="on">
+							<a class="panel-collapse-ico" href="#"><span class="glyphicon glyphicon-menu-down rotate"></span></a>
+							<!-- End category boxes area -->
+							<div class="filter-boxes clearfix">
+					
+								<div class="box-holder container-fluid center-block">
+									<div class="row list-inline" name="mainCategoryList" id="mainCategoryList">	
+										<div class="col-sm-10">		
+											<label class="search-title">Search Options: </label>
+											<label class="radio-inline">
+												<input type="radio" name="courseOpt" value="CPROVIDER">Course Provider
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="courseOpt" value="PROGRAMME">Program Title
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<!-- <button type="submit" class="btn btn-search btn-small btn-block">Search</button> -->
+											<button  type="button" id="addSearchData" name="addSearchData"
+									class="btn btn-primary" >Apply Search</button>
+										</div>			
 									</div>
-									<div class="col-sm-2">
-										<!-- <button type="submit" class="btn btn-search btn-small btn-block">Search</button> -->
-										<button  type="button" id="addSearchData" name="addSearchData"
-								class="btn btn-primary" >Apply Search</button>
-									</div>			
 								</div>
+		
 							</div>
-	
 						</div>
 					</div>
-				</div>
+				</form>
+				
 				<!-- End Main search bar -->
 
             <div class="education-categories clearfix">
