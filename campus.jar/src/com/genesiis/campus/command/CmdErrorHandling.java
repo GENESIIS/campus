@@ -67,8 +67,8 @@ public class CmdErrorHandling implements ICommand {
 			errorDetails.add(errorMessage);
 			errorDetailsWrapper.add(errorDetails);
 
-			log.info("ERROR DETAILS: TYPE:" + errorType + " CODE:" + statusCode + " SERVLET:" + servletName
-					+ " REQUESTED URI:" + requestUri + " MESSAGE:" + errorMessage + "EXCEPTION: " + exceptionName + " "
+			log.info("ERROR DETAILS: TYPE:" + errorType + " ERROR_CODE:" + statusCode + " SERVLET:" + servletName
+					+ " REQUESTED URI:" + requestUri + " MESSAGE:" + errorMessage + " EXCEPTION: " + exceptionName + " "
 					+ exceptionMessage);
 		} catch (Exception e) {
 			log.error("execute() : Exception " + e.toString());
