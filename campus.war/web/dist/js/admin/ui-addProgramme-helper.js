@@ -142,7 +142,7 @@ function clearErrorMessage(blockName){
 function populateProgrammeAddView(response) {
 	
 //Loading course provider drop down list
-	if (response.result !== undefined && response.result && response.result.length > 0) {
+	if (isNotEmptyCollection(response.result)) {
 		var htmlstr = "";
 		$.each(response.result, function(index, value) {
 			if (value != null && value.length > 0) {
@@ -160,7 +160,7 @@ function populateProgrammeAddView(response) {
 	
 
 	//Loading category drop down list
-	if (response.allCategories !== undefined && response.allCategories	&& response.allCategories.length > 0) {
+	if (isNotEmptyCollection(response.allCategories)) {
 		var htmlCategoryStr = "";
 		$.each(response.allCategories, function(index, value) {
 			if (value != null && value.length > 0) {
@@ -178,7 +178,7 @@ function populateProgrammeAddView(response) {
 	
 
 	// Loading major drop down list
-	if (response.allMajors !== undefined && response.allMajors	&& response.allMajors.length > 0) {
+	if (isNotEmptyCollection(response.allMajors)) {
 		var htmlMajorStr = "";
 		$.each(response.allMajors, function(index, value) {
 			if (value != null && value.length > 0) {
@@ -198,7 +198,7 @@ function populateProgrammeAddView(response) {
 	
 
 		// Loading level drop down list
-	if (response.allLevels !== undefined && response.allLevels	&& response.allLevels.length > 0) {
+	if (isNotEmptyCollection(response.allLevels)) {
 		var htmlLevelStr = "";
 		$.each(response.allLevels, function(index, value) {
 			if (value != null && value.length > 0) {
@@ -346,7 +346,7 @@ function validateFormData(){
 		isValidationSucess = false;
 	}
 	
-	if (isEmpty(courseName) || !isValidLength(counselorTel, 100)) {
+	if (isEmpty(courseName) || !isValidLength(courseName, 100)) {
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-name").addClass("err-block");
 		$('.block-course-name .err-msg').text("Course Name  is empty or too long!!");
