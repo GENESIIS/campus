@@ -11,13 +11,14 @@
  *  20170215 DN c131-admin-manage-banner-upload-banner-image-dn Implement the logic to pass banner and banner information
  *              in 02 ajax calls to the server sendBannerPaageFieldInputs() is implemented
  *              #openModalUpload in onclick event a modal pops out to up load banner image.
- *   	 	
+ *   20170217 DN add variable urlMiniWebOrPage to the onclick event to dispatch the banner image	 	
  */
 
 var selectedPageCode = '';
 var selectedAdvertiserCode ='';
 var selectedBannerSlotCode ='';
 var adminControllerUrl = '../../../AdminController';
+var bannerImageName="";
 
 $(document).ready(function(){
 	displayBannerManagerPrerequistData();
@@ -271,6 +272,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	var banerToBeActive=$('input:radio[name=bannerEnable]:checked').val(); // validate for 'undefined'
 	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
 	var bannerPublishingEndDate= $('#endtDate').val();
+	var urlMiniWebOrPage = $('input:radio[name=urlspecifier]:checked').val();
 	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
 	
 	// adding required  banner <form> fields to an array
@@ -282,6 +284,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	BannerFieldInputValues.push(banerToBeActive);
 	BannerFieldInputValues.push(bannerPublishingDate);
 	BannerFieldInputValues.push(bannerPublishingEndDate);
+	BannerFieldInputValues.push(urlMiniWebOrPage);
 	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
 	
 	//TODO run the validation check here for the page
@@ -307,7 +310,11 @@ $(document).on('click','#uploadBbutton', function(event){
 			contentType : false,
 			processData : false,
 			success: function(response){
-				var cssColour=(response['successCode']==1)?'green':'red';
+				var cssColour='red';
+				if(response['successCode']==1){
+					BannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name
+					cssColour='green';
+				}
 				displayLabelMessage('bannerDisplayLabel',cssColour,response['message']);
 				
 			},
@@ -322,7 +329,8 @@ $(document).on('click','#uploadBbutton', function(event){
 				 * user should have the ability to close the modal window
 				 */
 				$('#bannerModalClose').show();
-				if(status=="success"){					
+				if(status=="success"){	
+					
 					sendBannerPaageFieldInputs(BannerFieldInputValues,true);
 					
 				} else{
