@@ -477,16 +477,7 @@ function validateFormData(){
 	}	
 	if(classTypeCode>0){				
 		$("#selectedClassType").val(classTypeCode);
-	}
-		
-	/*//Validate email
-	var email= $('#counselor-email').val();			
-	if (isEmpty(email) || !isValidEmailFormat(email)) {
-		$("#programmeForm").addClass("error-form");
-		$(".block-counselor-email").addClass("err-block");
-		$('.block-counselor-email .err-msg').text("Invalid email format!");
-		isValidationSucess = false;		
-	}*/ 
+	}	 
 
 	//Validate dates
 	var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");	
@@ -531,10 +522,10 @@ function isPatternMatch(regularExpression, source) {
 /**
  * @author DJ
  * @param fieldValue;  it is the value of a document element
- * @returns false if has content else true- string values.
+ * @returns true if no content else false- string values.
  */
 function isEmpty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ?true  : false;
+	return ((fieldValue == "") || (fieldValue == null)) ? true  : false;
 }
 
 /**
@@ -565,7 +556,7 @@ function isValidLength(parameter, length) {
 /**
  * @author DJ
  * @param responseCollection Collection of objects  
- * @returns boolean true if collection is not empty else falses
+ * @returns boolean true if collection is not empty else false.
  */
 function isNotEmptyCollection(responseCollection){
 	if(responseCollection !== undefined && responseCollection	&& responseCollection.length > 0){
