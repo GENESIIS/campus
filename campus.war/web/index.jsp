@@ -13,8 +13,7 @@
 <link href="dist/css/image-slides.css" rel="stylesheet">
 
 <script src="/dist/js/header/ui-populate-helper.js"></script>
-<!-- W3-Include -->
-<script src="dist/bower-components/w3/w3data.js"></script>
+<!-- jquery and other js -->
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="dist/js/image-slides.js"></script>
 

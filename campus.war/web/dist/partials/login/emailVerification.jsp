@@ -7,11 +7,17 @@
 <!-- 20170215 TR c68 added label and heading for main body  -->
 <!-- 20170215 TR c68 updated all styles in forgot-pwrd-screen  -->
 <!-- 20170215 TR c68 specify email verify modal as evm  -->
+<!-- 20170217 TR c68 changed forgot-pwrd-screen layout -->
+<!-- 20170217 TR c68 changed email verify modal layout -->
+<!-- 20170217 TR c68 added common error msg class  -->
+<!-- 20170217 TR c68 validated error msg label hide and show  -->
+<!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
 <!-- Bootstrap & CSS Style-->
@@ -21,7 +27,7 @@
 <link href="/dist/css/image-slides.css" rel="stylesheet">
 
 <script src="/dist/js/header/ui-populate-helper.js"></script>
-<!-- W3-Include -->
+<!-- jquery and other js -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 <script src="/dist/js/image-slides.js"></script>
@@ -34,10 +40,13 @@
     <script>
         $( document ).ready(function() {
             $('#openPop').on('click', function(){
-               //alert("Hello");
                $('#verifications-popup').modal('show');
             });
+
+            // if span empty, hide the parent label
+            $('.fp-msg span:empty').parent().hide()
         });
+
     </script>
 	<!-- Header-->
 
@@ -48,14 +57,18 @@
 	</header>
 
     <div class="forgot-pwrd-screen clearfix">
-        <div class="col-lg-5 col-sm-12 col-md-6 col-xs-12 clearfix">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 clearfix">
             <h2 class="page-topic-t3">Forgot Your Password ?</h2>
             <h3 class="sub-topic-t1">Enter your email address below to reset your password.</h3>
-            <div class="lbl-error">
+            <div class="fp-msg fp-msg-error">
                 <label for="error-msg" class="error-msg">
                     <span class="error-txt" id="messsage"></span>
                 </label>
             </div>
+        </div>
+        <!-- End page topic and error msg block -->
+
+        <div class="col-lg-6 col-sm-12 col-md-8 col-xs-12 clearfix">
             <div class="input-area form-group has-error clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <label for="username">Email : <span class="error-txt" id="emailtbError"></span></label>
@@ -66,7 +79,7 @@
             </div>
             <div class="form-group btn-holder">
                 <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
-                <button type="button" class="btn btn-primary" id="openPop">PopUp</button>
+                <!--<button type="button" class="btn btn-primary email-submit" id="openPop">PopUp</button>-->
             </div>
         </div>
     </div>
@@ -79,40 +92,40 @@
 <!-- 	email verifications popup message -->
 	
 	<div class="modal fade" id="verifications-popup" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-	<div class="login-dialog modal-dialog" role="document">
-		<div class="modal-content">
+        <div class="login-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">Close</span>
+                    </button>
+                </div>
 
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">Close</span>
-				</button>
-			</div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row verify-modal-container">
+                            <div class="col-sm-12 col-lg-12 col-md-12 ">
 
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row verify-modal-container">
-						<div class="col-sm-12 col-lg-12 col-md-12 ">
-
-							<label class="" id="popupMessage"></label>
-							<div class="form-group has-error">
-
-									<label for="username">
-									    <span class="error-txt" id="emailtbError">Test Error msg !!!</span>
-									</label><br>
-									<label class="evm-lbl-1 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
-									<input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code" required >
-								</div>								
-							<div class="form-group">
-									<button type="button" class="btn btn-primary btn-block"
-										name="CCO" id="CCO" value="HASHV"
-										onclick="verifyCode()">Verify</button>
-								</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                                <label class="" id="popupMessage"></label>
+                                <div class="form-group has-error ">
+                                    <div class="fp-msg fp-msg-success">
+                                        <label for="username">
+                                            <span class="error-txt" id="emailtbError"></span>
+                                        </label>
+                                    </div>
+                                    <label class="evm-lbl-1 m-t-0 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
+                                    <input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code" required >
+                                </div>
+                                <div class="form-group">
+                                        <button type="button" class="btn btn-primary btn-block"
+                                            name="CCO" id="CCO" value="HASHV"
+                                            onclick="verifyCode()">Verify</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
