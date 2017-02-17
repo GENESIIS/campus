@@ -2,7 +2,8 @@
 <!-- 20170202 DN c131-admin-manage-banner-upload-banner-image-dn added modal div element to the document -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn change the script to include uploadBanner.js -->
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn removed unnecessary script /dist/js/header/ui-populate-helper.js-->
-<!-- 20170216 Dn  c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
+<!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
+<!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn add extra radio button to select link types-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -129,9 +130,9 @@
 				Duration (Seconds) *&nbsp;<input id="duration" type='text'>
 			</div>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
-				type="radio" name="bannerEnable" value="enabled" > <label
+				type="radio" name="bannerEnable" value="true" checked="checked"> <label
 				for="bannerEnable">Yes</label> <input type="radio"
-				name="bannerEnable" value="disabled" > <label
+				name="bannerEnable" value="false" > <label
 				for="bannebannerDisablerEnable">No</label>
 			<div></div>
 			<div>
@@ -145,10 +146,12 @@
 			<br><br>
 			<div>
 			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
-			URL/Mini Web &nbsp;
-			<input type="radio" name="urlspecifier" value="yes" id ="urlspecifierUrl">
-			Page &nbsp;
-			<input type="radio" name="urlspecifier" value="No" id ="urlspecifierPage">
+			URL : &nbsp;&nbsp;
+			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl" checked="checked">
+			Mini Web : &nbsp;&nbsp;
+			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb">
+			Page : &nbsp;&nbsp;
+			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
 			<br><br>			
 				URL &nbsp;<input id="bannerDispatchingUrl" type='text'>
 			</div>
