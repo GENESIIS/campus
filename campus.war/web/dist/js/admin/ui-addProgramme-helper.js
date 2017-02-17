@@ -484,7 +484,7 @@ function validateFormData(){
 	var commencementDate= $("#commencement-date").val();
     var expirationDate= $("#expiration-date").val();   	
     
-    /*if(!regex.test(commencementDate)){ 		
+    if(!regex.test(commencementDate)){ 		
     	$("#programmeForm").addClass("error-form");
 		$(".block-course-commencement").addClass("err-block");			
 		$('.block-course-commencement .err-msg').text("Please enter valid commencement Date!");	
@@ -501,9 +501,9 @@ function validateFormData(){
 	if((regex.test(commencementDate) && regex.test(expirationDate)) && commencementDate > expirationDate){	
 		$("#programmeForm").addClass("error-form");
 		$(".block-course-expiration, .block-course-expiration").addClass("err-block");			
-		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
+		$('.block-course-expiration .err-msg').text("Invalid Date Range! Commencement Date cannot be after Expiration Date!");	
 		isValidationSucess = false;
-	}	*/
+	}	
 	return isValidationSucess;	
 }
 
