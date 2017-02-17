@@ -4,6 +4,7 @@
 //20170216 DK CAM-124: Modified JS code to focus event of the course search field
 //20170216 DK CAM-124: Modified JS code to submit data on pressing enter key
 //20170216 DK CAM-124: Modified JS code to validate empty strings for the course search input
+//20170217 DK CAM-124: Modified JS code to clear text field and assign default placeholder text when click outside of the textbox
 
 $( document ).ready(function() {
 	
@@ -80,6 +81,7 @@ $( document ).ready(function() {
 		
 		$('.main-screen').click(function(event) { 
 			if(!$(event.target).closest(".bar-holder").length) {
+				$("#course-search").val('Search : Program, Course, or Career');  
 				if($(".filter-boxes").is(":visible")) {
 					$(".filter-boxes").hideUp("slow");
 					$(".rotate").toggleClass("down")  
@@ -94,7 +96,9 @@ $( document ).ready(function() {
 		*/
 		$('#addSearchData').click(function(e){
 			
-			if( $('#course-search').val() == '' || $('#course-search').val() == 'Search : Program, Course, or Career' ){
+			var courseSearchTxt = $("#course-search").val();
+			
+			if( courseSearchTxt != "Search : Program, Course, or Career"){
 							
 				var keyWordString = " ";
 				var selectedType = " ";
