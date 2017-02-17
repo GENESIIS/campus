@@ -5,9 +5,14 @@ package com.genesiis.campus.validation;
 
 import com.genesiis.campus.util.IDataHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class FormValidator {	
+public class FormValidator {
+	
+	static String dateFormat="yyyy-MM-dd";
 	
 	public static boolean  validateProgrammeDetails(IDataHelper helper) {
 		
@@ -56,16 +61,52 @@ public class FormValidator {
 					"Please add course duratioin");
 			isValid = false;
 		}
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("commencementDate"))) {
+		
+		String commencementDate=helper.getParameter("commencementDate");
+		String expirationDate=helper.getParameter("expirationDate");
+		
+		
+		if (!UtilityHelper.isNotEmpty(commencementDate)) {
 			helper.setAttribute("errorcommencementDate",
-					"Please add course commencement date");
+					"BACKEND-Please add course commencement date ");
+			isValid = false;
+		} else if (!isThisDateValid(commencementDate, dateFormat)) {
+			helper.setAttribute("errorcommencementDate",
+					"BACKEND Commencement date is invalid format");
 			isValid = false;
 		}
-		if (!UtilityHelper.isNotEmpty(helper.getParameter("expirationDate"))) {
+		
+
+		if (!UtilityHelper.isNotEmpty(expirationDate)) {
 			helper.setAttribute("errorexpirationDate",
-					"Please add course expiration date");
+					"BACKEND-Please add course expiration date");
+			isValid = false;
+		} else if (!isThisDateValid(expirationDate, dateFormat)) {
+			helper.setAttribute("errorexpirationDate",
+					"BACKEND Expiration date is invalid format");
 			isValid = false;
 		}
+	
+	
+		if(UtilityHelper.isNotEmpty(commencementDate) && isThisDateValid(commencementDate,dateFormat) && UtilityHelper.isNotEmpty(expirationDate)&& isThisDateValid(expirationDate,dateFormat)){
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+			sdf.setLenient(false);
+
+			try {
+				//if not valid, it will throw ParseException
+				Date commencement = sdf.parse(commencementDate);
+				Date expiration = sdf.parse(expirationDate);
+				
+				if(expiration.getTime() > commencement.getTime()){
+					helper.setAttribute("errorexpirationDate","BACKEND-Invalid Date Range! From Date cannot be after To Date!");
+					isValid = false;
+				}
+
+			} catch (ParseException e) {				
+				isValid = false;
+			}
+		}
+		
 		//TODO: kept for future developments DJ
 		/*if (!UtilityHelper.isNotEmpty(helper.getParameter("courseStatus"))) {
 			helper.setAttribute("errorCourseProvider",
@@ -108,6 +149,31 @@ public class FormValidator {
 	private static boolean isValidEmailFormat(String email) {				
 		String reg = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";		
 		return isPatternMatch(email,reg);	    
+	}
+	
+	private static boolean isThisDateValid(String dateToValidate, String dateFromat) {
+
+		/*if(dateToValidate == null){
+			return false;
+		}*/
+
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFromat);
+		sdf.setLenient(false);
+
+		try {
+
+			//if not valid, it will throw ParseException
+			Date date = sdf.parse(dateToValidate);
+			System.out.println(date);
+
+		} catch (ParseException e) {
+			
+			System.out.println("&&&&&&&&&&&&&&&&&&" +e.toString());		
+			
+			return false;
+		}
+
+		return true;
 	}
 
 }
