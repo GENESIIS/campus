@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 
 /*
  * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn intial class stub has been created
+ * 20170217 DN c131-admin-manage-banner-upload-banner-image-dn initial method
+ * 			   addBannerRecordInOneTransAction()has been created 
  * 
  */
 
@@ -71,4 +73,10 @@ public class AdminBannerDAO implements ICrud {
 		return null;
 	}
 
+	public int addBannerRecordInOneTransAction() throws SQLException, Exception{
+		
+		
+		
+		 return 0;
+	}
 }
