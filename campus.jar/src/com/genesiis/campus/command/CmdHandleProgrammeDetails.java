@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -51,7 +50,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			if ("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)) {
 				populateProgrammeInsertionView(helper, iView);
 			} else if ("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)) {				
-				manageProgrammeInsertion(helper);				
+				manageProgrammeInsertion(helper ,iView);				
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
@@ -97,8 +96,9 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	/** Manage form data(input values) for database insertion.
 	 * @author DJ dumani
 	 * @param helper 	  
+	 * @param iView 
 	 */	
-	private void manageProgrammeInsertion(IDataHelper helper)throws Exception {
+	private void manageProgrammeInsertion(IDataHelper helper, IView iView)throws Exception {
 		boolean isOkToSave = FormValidator.validateProgrammeDetails(helper);
 		if (isOkToSave) {
 			final ProgrammeDTO programmeDTO = new ProgrammeDTO();
@@ -171,10 +171,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			programmeDTO.setEntryRequiremtns("entry requirements");
 			programmeDTO.setCrtOn(new Date());
 			//TODO:Shloud add system user as create by.Will add in near future.
-			programmeDTO.setCrtBy("admin");			
-			//programmeDTO.setModOn(new Date());
-			//programmeDTO.setModBy("DJ");
-
+			programmeDTO.setCrtBy("admin");
+			
 		} catch (ParseException parseException) {
 			log.error("populateFormData() : ParseException "
 					+ parseException.toString());
