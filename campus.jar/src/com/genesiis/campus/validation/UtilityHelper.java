@@ -61,16 +61,21 @@ public class UtilityHelper {
 		return true;
 	}
 	
-	public static boolean isFromDateAfterTodate(String commencementDate,
-			String expirationDate) throws ParseException {
+	/**
+	 * @author DJ dumani
+	 * @param fromDateString
+	 * @param toDateString
+	 * @return if fromDate is after ToDate method returns true, else false.
+	 * **/	
+	public static boolean isFromDateAfterTodate(String fromDateString, String toDateString) throws ParseException {
 		final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		sdf.setLenient(false);
 		try {
 			// if not valid, it will throw ParseException
-			final Date commencement = sdf.parse(commencementDate);
-			final Date expiration = sdf.parse(expirationDate);
+			final Date fromDate = sdf.parse(fromDateString);
+			final Date toDate = sdf.parse(toDateString);
 
-			if (commencement.after(expiration)) {
+			if (fromDate.after(toDate)) {
 				 return true;
 			}
 
@@ -81,23 +86,38 @@ public class UtilityHelper {
 		return false;
 	}
 
-	public static boolean isPatternMatch(String sourceString,String regularExpression) {
-		return (sourceString.matches(regularExpression)?true:false);
+	/**
+	 * @author DJ dumani
+	 * @param sourceString
+	 * @param regularExpression
+	 * @return if pattern match with the source returns true else returns false.
+	 * **/
+	public static boolean isPatternMatch(String sourceString, String regularExpression) {
+		return (sourceString.matches(regularExpression) ? true : false);
 	}
 
-	
+	/**
+	 * @author DJ dumani
+	 * @param email	 
+	 * @return if email is a valid email returns true else returns false.
+	 * **/	
 	public static boolean isValidEmailFormat(String email) {				
 		String reg = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";		
 		return isPatternMatch(email,reg);	    
 	}
 	
-	public static boolean isThisDateValid(String dateToValidate) {		
+	/**
+	 * @author DJ dumani
+	 * @param dateString	 
+	 * @return if the date is valid returns true else returns false.
+	 * **/
+	public static boolean isThisDateValid(String dateString) {		
 		final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		sdf.setLenient(false);
 		
 		try {
 			// if not valid, it will throw ParseException
-			final Date date = sdf.parse(dateToValidate);			
+			final Date date = sdf.parse(dateString);			
 
 		} catch (ParseException e) {
 			log.error("isThisDateValid() : ParseException " + e.toString());
