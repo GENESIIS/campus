@@ -6,6 +6,8 @@ package com.genesiis.campus.command;
  * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn saveBannerPageCredential() method started implemented
  * 				getImageTeporyUploadPath() changed SystemConfig.BANNER_IMAGE_TEMPORARY_PATH -->SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH
  * 				created the method uploadFullBannerCredentials(), changed the method execute()
+ * 20170217 DN c131-admin-manage-banner-upload-banner-image-dn urlMiniWebOrPage field added and refactor the methods uploadFullBannerCredentials.execute and
+ * 				inner class JasonInflator.java
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -110,7 +112,7 @@ Exception{
 								"tempbanner", con);
 
 				fileUtility.setUploadPath(bannerImageUploadTemporaryPath);
-
+				
 			// check if it confirm to the standards-- pixels this should be stored in the database
 			// pass the banner credentials to back end
 			
@@ -185,6 +187,7 @@ private boolean isTheFileMovedTOTemporaryLocation(FileUtility fileUtility,
 private void setResponseCridentials(IDataHelper helper){
 	helper.setAttribute("successCode", getSuccessCode());
 	helper.setAttribute("message", message);
+	helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
 }
 	
 	
@@ -193,8 +196,13 @@ private IView uploadFullBannerCredentials(IDataHelper helper, IView view)throws 
 try{
 	 // inflate the Gson object
 	 JasonInflator rowBanner= getInflatedObjectFromJason(helper.getParameter("jasondata"));
-	 // want to get the banner code once the update is succedded
-	 int updateSuccessCode = new AdminBannerDAO().update(rowBanner);
+	 //log.info(""+);
+	 
+	 
+	 String extension =rowBanner.getBannerImageName().split(".")[1];
+	 // want to get the banner code once the update is succeeded
+	 int updateSuccessCode = new AdminBannerDAO().
+			 addBannerRecordInOneTransAction(rowBanner,extension);
 	 
 	// save to the data base table banner 
 	// extract the banner code
@@ -327,9 +335,38 @@ public class JasonInflator {
 
 	private String bannerPublishingEndDate;	
 	
+	private String urlMiniWebOrPage;
+	
 	private String urlToBeDirectedOnBannerClick;
 	
+	private String bannerImageName;
 	
+	
+	public String getUrlMiniWebOrPage() {
+		return urlMiniWebOrPage;
+	}
+
+	public void setUrlMiniWebOrPage(String urlMiniWebOrPage) {
+		this.urlMiniWebOrPage = urlMiniWebOrPage;
+	}
+
+	
+	public String getDisplayDusration() {
+		return displayDusration;
+	}
+
+	public void setDisplayDusration(String displayDusration) {
+		this.displayDusration = displayDusration;
+	}
+
+	public String getBannerImageName() {
+		return bannerImageName;
+	}
+
+	public void setBannerImageName(String bannerImageName) {
+		this.bannerImageName = bannerImageName;
+	}
+
 	/**
 	 * Gets the advertiser code.
 	 *
