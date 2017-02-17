@@ -377,9 +377,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			stmt.setInt(14, programmeDTO.getLevel());
 			stmt.setInt(15, programmeDTO.getClassType());
 			stmt.setDate(16, new java.sql.Date(programmeDTO.getCrtOn().getTime()));
-			stmt.setString(17, programmeDTO.getCrtBy());
-			/*stmt.setDate(18,  new java.sql.Date(programmeDTO.getModOn().getTime()));
-			stmt.setString(19, programmeDTO.getModBy());*/
+			stmt.setString(17, programmeDTO.getCrtBy());	
 			
 			successStatus= stmt.executeUpdate();
 
