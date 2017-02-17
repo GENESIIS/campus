@@ -271,47 +271,47 @@ function addProgrammeDetails(){
 */
 function displayBackEndValidations(response){
 	
-	if(isEmpty(response.errorCategory)){
+	if(!isEmpty(response.errorCategory)){
 		generateServerValidationMessage(response.errorCategory,".block-course-category");		
 	}
 	
-	if(isEmpty(response.errorMajor)){		
+	if(!isEmpty(response.errorMajor)){		
 		generateServerValidationMessage(response.errorMajor,".block-course-major");					
 	}
 	
-	if(isEmpty(response.errorLevel)){		
+	if(!isEmpty(response.errorLevel)){		
 		generateServerValidationMessage(response.errorLevel,".block-course-level");				
 	}
 	
-	if(isEmpty(response.errorCourseProvider)){
+	if(!isEmpty(response.errorCourseProvider)){
 		generateServerValidationMessage(response.errorCourseProvider,".block-course-provider");					
 	}
 	
-	if(isEmpty(response.errorCourseName)){
+	if(!isEmpty(response.errorCourseName)){
 		generateServerValidationMessage(response.errorCourseName,".block-course-name");					
 	}
 	
-	if(isEmpty(response.errorcounselorName)){
+	if(!isEmpty(response.errorcounselorName)){
 		generateServerValidationMessage(response.errorcounselorName,".block-counselor-name");					
 	}
 	
-	if(isEmpty(response.errorcounselorTel)){
+	if(!isEmpty(response.errorcounselorTel)){
 		generateServerValidationMessage(response.errorcounselorTel,".block-counselor-tel");				
 	}
 	
-	if(isEmpty(response.errorcounselorEmail)){
+	if(!isEmpty(response.errorcounselorEmail)){
 	
 		generateServerValidationMessage(response.errorcounselorEmail,".block-counselor-email");			
 	}
-	if(isEmpty(response.errorCourseDuration)){
+	if(!isEmpty(response.errorCourseDuration)){
 		generateServerValidationMessage(response.errorCourseDuration,".block-course-duration");			
 	}
 	
-	if(isEmpty(response.errorcommencementDate)){
+	if(!isEmpty(response.errorcommencementDate)){
 		generateServerValidationMessage(response.errorcommencementDate,".block-course-commencement");				
 	}
 	
-	if(isEmpty(response.errorexpirationDate)){
+	if(!isEmpty(response.errorexpirationDate)){
 		generateServerValidationMessage(response.errorexpirationDate,".block-course-expiration");			
 	}
 
@@ -484,7 +484,7 @@ function validateFormData(){
 	var commencementDate= $("#commencement-date").val();
     var expirationDate= $("#expiration-date").val();   	
     
-    if(!regex.test(commencementDate)){ 		
+    /*if(!regex.test(commencementDate)){ 		
     	$("#programmeForm").addClass("error-form");
 		$(".block-course-commencement").addClass("err-block");			
 		$('.block-course-commencement .err-msg').text("Please enter valid commencement Date!");	
@@ -503,7 +503,7 @@ function validateFormData(){
 		$(".block-course-expiration, .block-course-expiration").addClass("err-block");			
 		$('.block-course-expiration .err-msg').text("Invalid Date Range! From Date cannot be after To Date!");	
 		isValidationSucess = false;
-	}	
+	}	*/
 	return isValidationSucess;	
 }
 
