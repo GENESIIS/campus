@@ -58,14 +58,9 @@ public class CmdAdminBannerUpload implements ICommand {
 			Operation o = Operation.getOperation(helper.getCommandCode());
 			switch (o){
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
-				 return saveBannerImageToTempLocation(helper,view);
-				 break;
+				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
-				 
-				return uploadFullBannerCredentials(helper,view);
-				
-				return view;
-				break;
+				return uploadFullBannerCredentials(helper,view);				
 		    default:
 		    	return view;
 			
@@ -185,7 +180,7 @@ private boolean isTheFileMovedTOTemporaryLocation(FileUtility fileUtility,
  * amd the message to be dispatched to the view to the response as attributes
  * @author dushantha DN
  * setResponseCridentials sets the request attributes
- * @param helper: It is the request wrapper instance
+ * @param helper: It is the HttpServletrequest wrapper instance.
  */
 private void setResponseCridentials(IDataHelper helper){
 	helper.setAttribute("successCode", getSuccessCode());
@@ -193,7 +188,7 @@ private void setResponseCridentials(IDataHelper helper){
 }
 	
 	
-private IView uploadFullBannerCredentials(IDataHelper helper, IView view) {
+private IView uploadFullBannerCredentials(IDataHelper helper, IView view)throws Exception{
 		
 try{
 	 // inflate the Gson object
@@ -209,6 +204,12 @@ try{
 	} catch (JsonSyntaxException jsyexp) {
 		log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
 		throw jsyexp;	
+	}catch (SQLException sqle) {
+		log.error("uploadFullBannerCredentials(IDataHelper,IView):SQLException "+ sqle.toString());
+		throw sqle;
+	} catch (Exception exp) {
+		log.error("uploadFullBannerCredentials(IDataHelper,IView):Exception "+ exp.toString());
+		throw exp;
 	}	
 	
 		return null;
