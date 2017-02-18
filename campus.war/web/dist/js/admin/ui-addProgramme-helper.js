@@ -466,18 +466,22 @@ function validateFormData(){
 	
 	//Validate Class type selection
 	var classTypeName = $('#classTypelist').val();
-	var classTypeCode=0;
-	var option=$('#classTypeName').find('option');
-	for(var i=0; i<option.length;i++){
-		$('#classTypeName').find('option')[i].outerHTML;
-		if(option[i].text ==classTypeName){				
-			classTypeCode=option[i].attributes[0].value;
-			break;
+	var classTypeCode = 0;
+	if (classTypeName === "" || classTypeName === null) {
+		$("#selectedClassType").val("-1");
+	} else {
+		var option = $('#classTypeName').find('option');
+		for (var i = 0; i < option.length; i++) {
+			$('#classTypeName').find('option')[i].outerHTML;
+			if (option[i].text == classTypeName) {
+				classTypeCode = option[i].attributes[0].value;
+				break;
+			}
 		}
-	}	
-	if(classTypeCode>0){				
-		$("#selectedClassType").val(classTypeCode);
-	}	 
+		if (classTypeCode > 0) {
+			$("#selectedClassType").val(classTypeCode);
+		}
+	}
 
 	//Validate dates
 	var regex=new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");	

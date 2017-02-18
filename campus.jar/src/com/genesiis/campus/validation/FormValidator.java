@@ -74,13 +74,13 @@ public class FormValidator {
 
 			if (!UtilityHelper.isNotEmpty(commencementDate)	|| !UtilityHelper.isThisDateValid(commencementDate)) {
 				helper.setAttribute("errorcommencementDate",
-						"BACKEND-Please enter valid commencement Date! ");
+						"Please enter valid commencement Date! ");
 				isValid = false;
 			}
 
 			if (!UtilityHelper.isNotEmpty(expirationDate) || !UtilityHelper.isThisDateValid(expirationDate)) {
 				helper.setAttribute("errorexpirationDate",
-						"BACKEND-Please enter valid expiration Date!");
+						"Please enter valid expiration Date!");
 				isValid = false;
 			}
 
@@ -94,7 +94,7 @@ public class FormValidator {
 				if (isFromDateAfterTodate) {
 					helper.setAttribute(
 							"errorexpirationDate",
-							"BACKEND-Invalid Date Range! Commencement Date cannot be after Expiration Date!");
+							"Invalid Date Range! Commencement Date cannot be after Expiration Date!");
 					isValid = false;
 				}
 
