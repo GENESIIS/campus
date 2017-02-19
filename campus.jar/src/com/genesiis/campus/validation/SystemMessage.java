@@ -57,7 +57,12 @@ public enum SystemMessage {
 	MYSPACEERROR("MySpace link error."),	
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
+	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
+	MAIL_SUCCESS("Mail successfully submited to your email"),
+	MAIL_UNSUCCESS("Mail Sending failed"),
+	UNKNOWN(""),
 	EMAIL_USED("E mail already used to create a tutor profile.");
+	
 
 	
 	private String message;
