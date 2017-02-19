@@ -98,7 +98,8 @@ $( document ).ready(function() {
 			
 			var courseSearchTxt = $("#course-search").val();
 			
-			if( courseSearchTxt != "Search : Program, Course, or Career"){
+			//if( courseSearchTxt != "Search : Program, Course, or Career"){
+			if( $("#searchFcuntion").val() != "filterSearch"){
 							
 				var keyWordString = " ";
 				var selectedType = " ";
@@ -174,6 +175,10 @@ $( document ).ready(function() {
 				$(this).val("Search : Program, Course, or Career");
 			}
 		});
+		
+		
+		//Set default check as programme title 
+		$("input[name=courseOpt][value='PROGRAMME']").prop("checked",true);
 
 		
 	});
