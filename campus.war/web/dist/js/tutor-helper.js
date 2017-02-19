@@ -8,6 +8,7 @@
 $(document).ready(function() {
 	displayCountryDetails();
 	displayTownDefaults();
+	displayTownDefaults();
 });
 
 $("#countryDetails").on("change", function(){
@@ -55,6 +56,7 @@ function displayTownDetails(selected) {
 function getTownData(response, selected) {
 	var categories = $("#townDetails");
 	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select town ---").appendTo(categories);
 	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");

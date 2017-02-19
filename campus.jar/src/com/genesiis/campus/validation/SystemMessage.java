@@ -2,47 +2,49 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20161027 CW c38-view-update-tutor-profile-cw 
 //20170109 c36-add-tutor-details-added few more enum fields cw
 //20170111 c36-add-tutor-details-added USERNAME_LENGTH, WEBLINKERROR, FACEBOOKERROR, LINKEDINERROR, TWITTERERROR, INSTAGRAMERROR, MYSPACEERROR, WHATSAPPERROR, VIBERERROR cw
 //20170117 c36-add-tutor-details-added EMAIL_USED CW
-//20170125 c125-un-formatted-email-sending-tutor-signup-fixed some errors occured after merging with c36 - cw
+//20170130 c36-add-tutor-details-modified FIRSTNAMEERROR & LASTNAMEERROR messages
+//20170131 c36-add-tutor-details-added EMPTYEMAIL, EMPTYUSERNAME, PASSWORDLENGTHERROR, EMPTYPASSWORD, PASSWORDCONFIRMERROR, EMPTYCONFIRMPASSWORD, FIRSTNAMEERROR, LASTNAMEERROR message
+//20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
+//20170202 c36-add-tutor-details-added NOMODIFICATIONS message
+//20170209 c38-view-update-tutor-profile-added EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages
+//20170214 c38-view-update-tutor-profile-added INCORRECTDATA.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	USERNAME_EXIST("Username already exists."),
-	USERNAME_LENGTH("Username should have at least6 characters & shorter than 20 characters."),
+	USERNAME_LENGTH("Username should have at least 6 characters & shorter than 20 characters."),
 	ERROR("Unsuccessful."),
+	INCORRECTDATA("Something wrong in the data you have entered..."),
 	EMAILERROR("Invalid Email Address."),
+	EMPTYEMAIL("Email Address cannot be empty."),
+	EMPTYUSERNAME("Username cannot be empty."),
+	EMPTYFIRSTNAME("Username cannot be empty."),
+	EMPTYLASTNAME("Username cannot be empty."),
+	EMPTYMOBILECOUNTRYCODE("Username cannot be empty."),
+	EMPTYMOBILENETWORKCODE("Username cannot be empty."),
+	EMPTYMOBILENUMBER("Username cannot be empty."),
+	EMPTYLANDCOUNTRYCODE("Username cannot be empty."),
+	EMPTYLANDAREACODE("Username cannot be empty."),
+	EMPTYLANDNUMBER("Username cannot be empty."),
+	EMPTYADDRESS1("Username cannot be empty."),
+	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
+	EMPTYPASSWORD("Password cannot be empty."),
+	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
+	FIRSTNAMEERROR("Invalid First Name."),
+	LASTNAMEERROR("Invalid Last Name."),
 	EMPTYFIELD("Please fill required data"),
-	UPDATED("Details updated successfully."), 
-	DELETED("Details deleted successfully."), 
-	IDFOUND("ID found."), 
-	IDNOTFOUND("ID not found."), 
-	UNKNOWN(""),
-	SUCCESS("Successfull"),
-	PHONENUMBERERROR("Invalid Telephone Number."),
-	MOBILENUMBERERROR("Invalid Mobile Number."),
-	INVALIDDATE("Invalid DateFormat."),
-	EMPTYVALUES("Empty data Fields."),
-	NOTADDED("Problem when inserting data."), 	
-	NOTUPDATED("Problem when updating data."), 	
-	MANDATORYFIELDREQUIRED("Fields marked with asterisk (*) are required"), 
-	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
-	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
-	ACCOUNT_CREATED("User Account Created You Are Good To Go!"),
-	ACCOUNT_NOT_CREATED("User Account Creation Fail"),
-	USER_NAME_EXISTS("Chosen User Name Has Allready Taken. Please Choose Another!"),
-	MAIL_SUCCESS("Mail successfully submited to your email"),
-	MAIL_UNSUCCESS("Mail Sending failed"),
-	STUDENT_ACCOUNT_CREATE_MAIL_SUBJECT("STUDENT ACCOUNT CREATION"),
-	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
-	SUPERADMIN_NAME("Administrator ,Campus.lk."), // THIS HAS TO CHANGE 
-	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
+	UPDATED("Details Updated successfully."),
+	NOMODIFICATIONS("You haven't done any changes."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
-	FIRSTNAMEERROR("Invalid Email Address."),
-	LASTNAMEERROR("First name should not be empty."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
+	COUNTRYCODEERROR("Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
+	MOBILENUMBERERROR("Mobile number error."),
 	LANDCOUNTRYCODEERROR("Land phone country code error."),
 	LANDAREACODEERROR("Land phone area code error."),
 	LANDNUMBERERROR("Land phone number error."),

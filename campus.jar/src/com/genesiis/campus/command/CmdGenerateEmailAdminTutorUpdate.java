@@ -1,16 +1,10 @@
 package com.genesiis.campus.command;
 
-//20170105 CW c98-send-email-at-tutor-signup-cw Created the CmdGenerateEmailTutorSinUp.java class to send email at tutor signup.
-//20170119 CW c125-un-formatted-email-sending-tutor-signup-Add codes from CAM-18 to send dummy email - cw
-//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted commented lines & cleaning the code
-//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
-//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified getMailContent() method.
-//20170128 CW c126-formatting-un-formatted-email-tutor-signup-cw removed getMailContent() method.
-//20170131 CW c126-formatting-un-formatted-email-tutor-signup-cw re-organized import statements, Doc Comment added & modified the getLogger class name.
+//20170219 CW c103-send-email-tutor-status-change-cw Created the CmdGenerateEmailAdminTutorUpdate.java class to send email at tutor details update by Admin.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.util.SignUpEmailComposer;
+import com.genesiis.campus.util.TutorUpdateEmailComposer;
 import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.IEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -23,16 +17,16 @@ import java.sql.SQLException;
 import javax.mail.MessagingException;
 
 /**
- * CmdGenerateEmailTutorSignUp class handles sending the email to be sent
- * at the time of tutor signup.
+ * CmdGenerateEmailAdminTutorUpdate class handles sending the email to be sent
+ * at the time of tutor details update by Admin.
  * @author Chinthaka CW
  */
-public class CmdGenerateEmailTutorSignUp implements ICommand {
+public class CmdGenerateEmailAdminTutorUpdate implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdGenerateEmailTutorSignUp.class.getName());
+	static Logger log = Logger.getLogger(CmdGenerateEmailAdminTutorUpdate.class.getName());
 	
 	/*
-	 * execute() method handles the email sending at the time of tutor signup
+	 * execute() method handles the email sending at the time of tutor details update by Admin.
 	 * @author CW
 	 * @return view
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
@@ -40,19 +34,19 @@ public class CmdGenerateEmailTutorSignUp implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		try {
-			IEmailComposer signUpEmailComposer = new SignUpEmailComposer();
+			IEmailComposer tutorUpdateEmailComposer = new TutorUpdateEmailComposer(helper);
 			int status;
 			String recieversName = helper.getParameter("firstname").concat(" " + helper.getParameter("lastname"));
 			String sendersEmailAddress = helper.getParameter("email"); // This will overridden later from the email address in campus.xml file
 			String recieversEmailAddreses = helper.getParameter("email");			
 			
-			signUpEmailComposer.setEnvironment(recieversName, sendersEmailAddress,
-					signUpEmailComposer.composeSingleEmailList(recieversEmailAddreses),
-					SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getSubject(),
+			tutorUpdateEmailComposer.setEnvironment(recieversName, sendersEmailAddress,
+					tutorUpdateEmailComposer.composeSingleEmailList(recieversEmailAddreses),
+					SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATTION.message());
 
-			signUpEmailComposer.formatEmailInstance(helper.getParameter("username"));
-			status = this.sendMail(signUpEmailComposer);
+			tutorUpdateEmailComposer.formatEmailInstance(helper.getParameter("username"));
+			status = this.sendMail(tutorUpdateEmailComposer);
 			helper.setAttribute("message", composeOutStatusMessageToClient(status));
 
 		} catch (IllegalArgumentException ilexp) {

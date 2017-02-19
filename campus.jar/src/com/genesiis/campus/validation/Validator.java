@@ -32,25 +32,36 @@ package com.genesiis.campus.validation;
 //20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
 //20170125 CW c36-add-tutor-details added validateForNull() method
 //20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
-
+//20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
+//20170131 CW c36-add-tutor-details add validatePassword() method & modified validateTutorFields() method
+//20170130 CW c36-add-tutor-details modified validateTutorFields() method
+//20170209 CW c38-view-update-tutor-profile add validateUserAndEmail() method.
+//20170209 CW c38-view-update-tutor-profile modified isHavingNullValues() method.
+//20170209 CW c38-view-update-tutor-profile modified validatePassword() method name to isValidPassword().
+//20170212 CW c38-view-update-tutor-profile modified isValidNetworkCode(), isValidLastname(), isValidContactNumber(), isValidAddressLine1() methods & validateTutorFields() - modify comment
+//20170213 CW c38-view-update-tutor-profile modified validateTutorFields(), isValidFirstname() methods & validateUserAndEmail() method name modified to isValidUserAndEmail().
+//20170214 CW c38-view-update-tutor-profile modified isValidCountryCode(), isValidNetworkCode(), isValidContactNumber(), isValidUserAndEmail() & isHavingNullValues() methods
+//20170215 CW c38-view-update-tutor-profile Add class comment
+//20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 
 import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.entity.TutorUserNameDAO;
-import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 
+
+/**
+ * this class is used to validate all the tutor fields before update 
+ * @author CW
+ *
+ */
 public class Validator {
 
 	static Logger log = Logger.getLogger(Validator.class.getName());
@@ -60,8 +71,8 @@ public class Validator {
 	 * 
 	 * @author Chathuri
 	 * @param value
-	 * @return boolean returns true if the text contains some value.
-	 **/
+	 * @return boolean to validate is given string contains a null value. Returns true if String is not empty.
+	 * **/
 	public static boolean isNotEmpty(String text) {
 		boolean status = false;
 		if ((text != null) && (text.isEmpty() == false)) {
@@ -73,137 +84,63 @@ public class Validator {
 	int totalDays = 0;
 
 	/**
-	 * Returns the given time duration in years
-	 * 
-	 * @author Chathuri, Chinthaka
-	 * 
-	 * @return the given time duration in years
-	 */
-	public int calculateYears(String duration) throws ArithmeticException, Exception {
-		int years = 0;
-		try {
-
-			float inputAsFloat = Float.parseFloat(duration);
-
-			// the input is an integral day count, with a possible fractional
-			// part representing time as a fraction of one day
-			totalDays = (int) inputAsFloat;
-
-			// ignores leap years
-			years = (int) totalDays / 365;
-			totalDays %= 365;
-
-			// calculateMonth();
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return years;
-	}
-
-	/**
-	 * Calculate number of months in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateMonths() throws ArithmeticException, Exception {
-		int months = 0;
-		try {
-
-			// assumes all months have 30 days
-			months = (int) totalDays / 30;
-			totalDays %= 30;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears: Exception" + e.toString());
-			throw e;
-		}
-		return months;
-
-	}
-
-	/**
-	 * Calculate number of weeks in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateWeeks() throws ArithmeticException, Exception {
-		int weeks = 0;
-		try {
-			weeks = (int) totalDays / 7;
-			totalDays %= 7;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return weeks;
-	}
-
-	/**
-	 * Calculate number of days in the Duration
-	 * 
-	 * @author Chathuri
-	 * @param duration
-	 * @return int
-	 */
-	public int calculateDates() throws ArithmeticException, Exception {
-		int days = 0;
-		try {
-			days = (int) totalDays;
-
-		} catch (ArithmeticException arithmeticException) {
-			log.error("calculateYears:  arithmeticException" + arithmeticException.toString());
-			throw arithmeticException;
-		} catch (Exception e) {
-			log.error("calculateYears:  Exception" + e.toString());
-			throw e;
-		}
-		return days;
-	}
-
-	/**
 	 * Validate helper fields for null values.
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * @param helper
-	 * @return boolean : Returns true if helper having any null values for required fields
+	 * @return boolean : Returns true if helper is having any null values for required fields
 	 * @throws Exception
 	 */
 	public boolean isHavingNullValues(IDataHelper helper) throws Exception {
 
 		boolean isHavingNull = false; 
 		try {		
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname")))
-					&& (Validator.isNotEmpty(helper.getParameter("lastname")))
-					&& ((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (!((helper.getParameter("countryDetails")).equals("0"))))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNetworkCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("mobileNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("landCountryCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landAreaCode")))
-					&& (Validator.isNotEmpty(helper.getParameter("landNumber")))
-					&& (Validator.isNotEmpty(helper.getParameter("address1")))
-					&& (Validator.isNotEmpty(helper.getParameter("email")))
-					&& (Validator.isNotEmpty(helper.getParameter("username")))
-					&& (Validator.isNotEmpty(helper.getParameter("password")))
-					&& (Validator.isNotEmpty(helper.getParameter("confirmPassword"))))) {
+			
+			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") == " "))) {
+				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") == " "))) {
+				helper.setAttribute("lastNameError", SystemMessage.EMPTYLASTNAME.message());
+				isHavingNull = true; 
+			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (helper.getParameter("mobileCountryCode") == "0"))) {
+				helper.setAttribute("mobileError", SystemMessage.EMPTYMOBILECOUNTRYCODE.message());
+				isHavingNull = true; 
+			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("mobileNetworkCode") == " "))) {
+				helper.setAttribute("mobileNetworkError", SystemMessage.EMPTYMOBILENETWORKCODE.message());
+				isHavingNull = true; 
+			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("mobileNumber") == " "))) {
+				helper.setAttribute("mobileNumberError", SystemMessage.EMPTYMOBILENUMBER.message());
+				isHavingNull = true; 
+			}
+			
+			if (!((Validator.isNotEmpty(helper.getParameter("landCountryCode"))) || (helper.getParameter("landCountryCode") == " "))) {
+				helper.setAttribute("landError", SystemMessage.EMPTYLANDCOUNTRYCODE.message());
+				isHavingNull = true; 
+			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") == " "))) {
+				helper.setAttribute("landAreaCodeError", SystemMessage.EMPTYLANDAREACODE.message());
+				isHavingNull = true; 
+			}
+			
+			if (!((Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") == " "))) {
+				helper.setAttribute("landNumberError", SystemMessage.EMPTYLANDNUMBER.message());
+				isHavingNull = true; 
+			}
+
+			if (!((Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("address1") == " "))) {
+				helper.setAttribute("address1Error", SystemMessage.EMPTYADDRESS1.message());
+				isHavingNull = true; 
+			}
+			
 		} catch (Exception e) {
 			log.error("isHavingNullValues() : Exception " + e.toString());
 			throw e;
@@ -216,58 +153,101 @@ public class Validator {
 	 * 
 	 * @author Chathuri, Chinthaka
 	 * @param helper
-	 * @return String
+	 * @return boolean : Returns true if tutor fields are entered correctly
 	 * @throws Exception
 	 */
-	public String validateTutorFields(IDataHelper helper) throws Exception {
+	public boolean validateTutorFields(IDataHelper helper) throws Exception {
 
-		String message = "True"; 
-		try {		
+		boolean isValid = true; 
+		try {	
+			
+
+			if (!isValidUserAndEmail(helper)) {
+				isValid = false;
+			}
+			
 			if (isHavingNullValues(helper)) {
-				message = SystemMessage.EMPTYFIELD.message();
-			} else if (!isValidFirstname(helper.getParameter("firstname"))) {
-				message = SystemMessage.FIRSTNAMEERROR.message();
-			} else if (!isValidLastname(helper.getParameter("lastname"))) {
-				message = SystemMessage.LASTNAMEERROR.message();
-			} else if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
-				message = SystemMessage.MOBILECOUNTRYCODEERROR.message();
-			} else if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
-				message = SystemMessage.NETWORKCODEERROR.message();
-			} else if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
-				message = SystemMessage.MOBILENUMBERERROR.message();
-			} else if (!isValidCountryCode(helper.getParameter("landCountryCode"))) {
-				message = SystemMessage.LANDCOUNTRYCODEERROR.message();
-			} else if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
-				message = SystemMessage.LANDAREACODEERROR.message();
-			} else if (!isValidContactNumber(helper.getParameter("landNumber"))) {
-				message = SystemMessage.LANDNUMBERERROR.message();
-			} else if (!isValidAddressLine1(helper.getParameter("address1"))) {
-				message = SystemMessage.ADDRESSLINE1ERROR.message();
-			} else if (!isValidURL(helper.getParameter("weblink"))) {
-				message = SystemMessage.WEBLINKERROR.message();
-			} else if (!isValidURL(helper.getParameter("facebook"))) {
-				message = SystemMessage.FACEBOOKERROR.message();
-			} else if (!isValidURL(helper.getParameter("linkedin"))) {
-				message = SystemMessage.LINKEDINERROR.message();
-			} else if (!isValidURL(helper.getParameter("twitter"))) {
-				message = SystemMessage.TWITTERERROR.message();
-			} else if (!isValidURL(helper.getParameter("instagram"))) {
-				message = SystemMessage.INSTAGRAMERROR.message();
-			} else if (!isValidURL(helper.getParameter("myspace"))) {
-				message = SystemMessage.MYSPACEERROR.message();
-			} else if (!isValidWhatsappViber(helper.getParameter("whatsapp"))) {
-				message = SystemMessage.WHATSAPPERROR.message();
-			} else if (!isValidWhatsappViber(helper.getParameter("viber"))) {
-				message = SystemMessage.VIBERERROR.message();
-			} else if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"))) {
-				message = SystemMessage.PASSWORDERROR.message();
-			} 
+				isValid = false;
+			} 			
+			
+			if (!isValidFirstname(helper.getParameter("firstname"))) {
+				helper.setAttribute("firstNameError", SystemMessage.FIRSTNAMEERROR.message());
+				isValid = false;
+			}
+			if (!isValidLastname(helper.getParameter("lastname"))) {
+				helper.setAttribute("lastNameError", SystemMessage.LASTNAMEERROR.message());
+				isValid = false;
+			}
+			if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
+				helper.setAttribute("mobileError", SystemMessage.MOBILECOUNTRYCODEERROR.message());
+				helper.setAttribute("countryError", SystemMessage.COUNTRYCODEERROR.message());
+				isValid = false;
+			}
+			if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
+				helper.setAttribute("mobileNetworkError", SystemMessage.NETWORKCODEERROR.message());
+				isValid = false;
+			}
+			if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
+				helper.setAttribute("mobileNumberError", SystemMessage.MOBILENUMBERERROR.message());
+				isValid = false;
+			}
+			if (!isValidCountryCode(helper.getParameter("landCountryCode"))) {
+				helper.setAttribute("landError", SystemMessage.LANDCOUNTRYCODEERROR.message());
+				isValid = false;
+			}
+			if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
+				helper.setAttribute("landAreaCodeError", SystemMessage.LANDAREACODEERROR.message());
+				isValid = false;
+			}
+			if (!isValidContactNumber(helper.getParameter("landNumber"))) {
+				helper.setAttribute("landNumberError", SystemMessage.LANDNUMBERERROR.message());
+				isValid = false;
+			}
+			if (!isValidAddressLine1(helper.getParameter("address1"))) {
+				helper.setAttribute("address1Error", SystemMessage.ADDRESSLINE1ERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("weblink"))) {
+				helper.setAttribute("weblinkError", SystemMessage.WEBLINKERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("facebook"))) {
+				helper.setAttribute("facebookError", SystemMessage.FACEBOOKERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("linkedin"))) {
+				helper.setAttribute("linkedInError", SystemMessage.LINKEDINERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("twitter"))) {
+				helper.setAttribute("twitterError", SystemMessage.TWITTERERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("instagram"))) {
+				helper.setAttribute("instagramError", SystemMessage.INSTAGRAMERROR.message());
+				isValid = false;
+			}
+			if (!isValidURL(helper.getParameter("myspace"))) {
+				helper.setAttribute("mySpaceError", SystemMessage.MYSPACEERROR.message());
+				isValid = false;
+			}
+			if (!isValidWhatsappViber(helper.getParameter("whatsapp"))) {
+				helper.setAttribute("whatsappError", SystemMessage.WHATSAPPERROR.message());
+				isValid = false;
+			}
+			if (!isValidWhatsappViber(helper.getParameter("viber"))) {
+				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
+				isValid = false;
+			}
+			if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper)) {
+				isValid = false;
+			}
 
 		} catch (Exception e) {
 			log.error("validateTutorFields: Exception" + e.toString());
 			throw e;
 		}
-		return message;
+		return isValid;
 	}	
 	
 	/**
@@ -281,7 +261,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21)) {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName != " ") {
 				valid = true;
 			}
 
@@ -303,7 +283,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21)) {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName != " ") {
 				valid = true;
 			}
 
@@ -324,11 +304,15 @@ public class Validator {
 	public boolean isValidCountryCode(String countryCode) throws Exception {
 		boolean valid = false;
 		try {
-
-			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6)) {
+			
+			int code = Integer.parseInt(countryCode);
+			
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6) && !(countryCode.equals("0"))) {
 				valid = true;
 			}
 
+		} catch (NumberFormatException e) {
+			valid = false;
 		} catch (Exception e) {
 			log.error("isValidCountryCode:  Exception" + e.toString());
 			throw e;
@@ -347,11 +331,15 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11)) {
+			int code = Integer.parseInt(networkCode);
+			
+			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode != " ") {
 				valid = true;
 			}
 
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+			valid = false;
+		}  catch (Exception e) {
 			log.error("isValidNetworkCode:  Exception" + e.toString());
 			throw e;
 		}
@@ -369,11 +357,15 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11)) {
+			int code = Integer.parseInt(contactNumber);
+			
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber != " ") {
 				valid = true;
 			}
 
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+			valid = false;
+		}   catch (Exception e) {
 			log.error("isValidContactNumber:  Exception" + e.toString());
 			throw e;
 		}
@@ -391,7 +383,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31)) {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 != " ") {
 				valid = true;
 			}
 
@@ -444,7 +436,7 @@ public class Validator {
 		}
 		
 		try{
-			if((isNotEmpty(number))){
+			if((isNotEmpty(number)) && !(number.equals("-"))){
 				double newNumber = Double.parseDouble(number);
 			}
 		} catch (Exception e){
@@ -498,20 +490,92 @@ public class Validator {
 	 * 
 	 * @author Chinthaka
 	 * @param password, confirmPassword
-	 * @return boolean - Returns true if the requested password & confirmPassword are same & valid in lengths
+	 * @return String - Returns boolean value False if the requested password & confirmPassword are not same & not valid in lengths
 	 */
-	public boolean isValidPassword(String password, String confirmPassword) throws Exception {
-		boolean valid = false;
+	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
+		int validityNumber = 0; 
+		boolean message = true;
 		try {
 
-			if ((isNotEmpty(password)) && (isNotEmpty(confirmPassword)) && (password.length() > 5) && (password.length() < 21) && (password.equals(confirmPassword))) {
-				valid = true;
+			if (!(isNotEmpty(password))){ // check for null fields
+				validityNumber = 1;
+				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
+				message = false;
+			}
+			
+			if(!(isNotEmpty(confirmPassword))){ // check for null fields
+				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+				message = false;
+				validityNumber = 2;
+			}
+			
+			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
+				message = false;
+			}
+			
+			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
+				message = false;
 			}
 
 		} catch (Exception e) {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return valid;
+		return message;
+	}
+	
+	/**
+	 * Validate Tutor username & email given. 
+	 * @author Chinthaka
+	 * @param helper
+	 * @return boolean : return false if user name or email is having an error
+	 * @throws Exception
+	 */
+	public boolean isValidUserAndEmail(IDataHelper helper) throws SQLException, Exception{
+
+		boolean message = true; 
+		int type = 0;
+		try {		
+
+			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
+				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
+				message = false;
+			}
+			
+			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
+				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
+				message = false;
+			}
+			
+			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
+				message = false;
+			} 
+			
+			if(!((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){		
+				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
+			
+				// Commented this code to use later if the username validations required. - CW
+/*				if(type == 1){
+					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+					message = false;
+				} */
+				
+				if(type == 2){
+					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+					message = false;
+				}
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("isValidUserAndEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("isValidUserAndEmail(): Exception " + e.toString());
+			throw e;
+		} 
+		return message;
 	}
 }

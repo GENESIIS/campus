@@ -4,6 +4,13 @@ package com.genesiis.campus.entity;
 
 //20161221 CW c36-add-tutor-details Modified getAll() method.
 //20170110 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application & removed getCode() method.
+//20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170216 CW c38-view-update-tutor-profile Add class comment
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,14 +18,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.log4j.Logger;
 
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-
+/**
+ * this class used to manage the user type related data 
+ * further it implements ICrud interface
+ * @author CW
+ */
 public class UserTypeDAO implements ICrud {
 
-	static Logger log = Logger.getLogger(TownDAO.class.getName());
+	static Logger log = Logger.getLogger(UserTypeDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -106,4 +114,43 @@ public class UserTypeDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	/**
+	 * Returns the code of the user type for given name
+	 * 
+	 * @author CW
+	 * @param  name : String
+	 * @return int value containing the code of the user type for given name 
+	 * @throws SQLException, Exception
+	 */
+	public int getCode(String name) throws SQLException, Exception {
+		int code = 0;
+		ResultSet res = null;		
+		PreparedStatement preparedStatement = null;
+		Connection conn = ConnectionManager.getConnection();
+
+		try{
+			
+			String sql = "SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE [NAME] =? ";
+	
+			preparedStatement  = conn.prepareStatement(sql);
+			preparedStatement.setString(1, name);// set the name parameter to the prepared statement
+			
+			res= preparedStatement.executeQuery();
+			
+			while (res.next()) {
+				code = res.getInt("CODE");
+			} 
+		} catch (SQLException sqle) {
+			log.info("getCode() : SQLException :"+ sqle.getErrorCode()+ ": "+sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			log.info("getCode() : Exception :"+ ex.toString());
+		} finally {			
+			DaoHelper.cleanup(conn, preparedStatement, res);
+		}
+		return code;
+	}
+
 }

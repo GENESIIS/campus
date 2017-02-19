@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20161121 CM c36-add-tutor-information INIT Tutor.java
+//20161229 CW c38-view-update-tutor-profile removed isActive field & add tutorStatus field
 //20170102 CW c36-add-tutor-information isActive and add tutorStatus
 //20170114 CW c36-add-tutor-information modified the name of the getViber() method to getViberNumber()
 

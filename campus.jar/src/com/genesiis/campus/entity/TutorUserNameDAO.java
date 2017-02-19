@@ -1,6 +1,14 @@
 package com.genesiis.campus.entity;
 
 //20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
+//20170207 CW c36-add-tutor-information re-organize the import statements.
+//20170216 CW c38-view-update-tutor-profile Add class comment.
+
+import com.genesiis.campus.entity.model.Tutor;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,12 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.log4j.Logger;
 
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-
+/**
+ * this class used to manage the tutor username details
+ * further it implements ICrud interface
+ * @author CW
+ */
 public class TutorUserNameDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(TutorUserNameDAO.class.getName());
@@ -59,7 +67,7 @@ public class TutorUserNameDAO implements ICrud {
 			stmt = conn.prepareStatement(query);
 			stmt.setString(1, tutor.getUsername());
 			rs = stmt.executeQuery();
-
+ 
 			while (rs.next()) {
 				final ArrayList<String> singleTutorList = new ArrayList<String>();
 				singleTutorList.add(rs.getString("USERNAME"));
