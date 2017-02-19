@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20170214 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
+//20170219 CW c103-send-email-tutor-status-change-cw modified execute() to send email at the time of tutor update by Admin
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -75,6 +76,8 @@ public class CmdUpdateTutorProfile implements ICommand {
 					
 					if (result > 0) {
 						message = SystemMessage.UPDATED.message();
+						ICommand emailSignUp = new CmdGenerateEmailAdminTutorUpdate(); //CmdGenerateEmailTutorSignUp();
+						emailSignUp.execute(helper, view); //send email
 					}
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
