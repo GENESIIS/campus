@@ -5,6 +5,7 @@ package com.genesiis.campus.util;
 //20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified addContentToOriginalMailBody() method 
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw implement EmailContentCreator Interface
+//20170219 CW c103-send-email-tutor-status-change-cw Create the constructors & modified getEmailBody() method
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import com.genesiis.campus.util.mail.EmailDispenser;
 import com.genesiis.campus.util.mail.GeneralMail;
 import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemEmail;
 
 import org.apache.log4j.Logger;
@@ -25,8 +27,8 @@ import org.apache.log4j.Logger;
  * at the time of tutor signup.
  * @author Chinthaka CW
  */
-public class SignUpEmailComposer implements IEmailComposer, EmailContentCreator  {
-	static Logger log = Logger.getLogger(SignUpEmailComposer.class.getName());
+public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCreator  {
+	static Logger log = Logger.getLogger(TutorUpdateEmailComposer.class.getName());
 	private String recieversName;
 	private String sendersEmailAddress;
 	private ArrayList<String> recieversEmailAddreses;
@@ -34,7 +36,23 @@ public class SignUpEmailComposer implements IEmailComposer, EmailContentCreator 
 	private String mailBody;
 	private IEmail generalEmail;
 	private EmailDispenser emailDispenser;
+	private String tutorStatus;
+	
+/**
+ * No Argument Constructor for the class
+ * @author CHINTHAKA
+ */
+	public TutorUpdateEmailComposer(){
+		
+	}
 
+/**
+ * Single Argument Constructor for the class
+ * @author CHINTHAKA
+ */
+	public TutorUpdateEmailComposer(IDataHelper helper){
+		tutorStatus = ApplicationStatus.valueOf(helper.getParameter("newtutorStatus")).toString();
+	}
 
 	@Override
 	public IEmail formatEmailInstance(String mailBodyForSpecificMail) throws IllegalArgumentException {
@@ -102,11 +120,11 @@ public class SignUpEmailComposer implements IEmailComposer, EmailContentCreator 
 		StringBuilder result = new StringBuilder();		
 		
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY1.getMailBody());
+		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY2.getMailBody());
+		result.append(" "+tutorStatus+" ");
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_BODY3.getMailBody());
+		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();
@@ -165,7 +183,7 @@ public class SignUpEmailComposer implements IEmailComposer, EmailContentCreator 
 	public void setEmailDispenser(EmailDispenser emailDispenser) throws IllegalArgumentException {
 		try{
 			if(emailDispenser==null)
-				throw new IllegalArgumentException("emailDispenser  is undefined must be set");	
+				throw new IllegalArgumentException("emailDispenser is undefined must be set");	
 			this.emailDispenser = emailDispenser;
 		}catch (IllegalArgumentException ilexp){
 			log.error("setEmailDispenser(): IllegalArgumentException"+ ilexp.toString());
