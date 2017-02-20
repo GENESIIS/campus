@@ -1,10 +1,6 @@
 package com.genesiis.campus.util;
 
-//20170119 CW CAM-125 create the class SignUpEmailComposer.java to help compose the mailing using CAM-18
-//20170123 CW c125-un-formatted-email-sending-tutor-signup-removing un-wanted codes & cleaning the code
-//20170125 CW c125-un-formatted-email-sending-tutor-signup-add comments to the Class - cw
-//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified addContentToOriginalMailBody() method 
-//20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw implement EmailContentCreator Interface
+//20170219 CW c103-send-email-tutor-status-change-cw create the class TutorUpdateEmailComposer.java to help compose the mailing using CAM-126
 //20170219 CW c103-send-email-tutor-status-change-cw Create the constructors & modified getEmailBody() method
 //20170220 CW c103-send-email-tutor-status-change-cw modified single argument constructor & getEmailBody() method.
 
