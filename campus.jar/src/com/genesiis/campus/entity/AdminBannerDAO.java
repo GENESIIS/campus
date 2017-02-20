@@ -4,7 +4,8 @@ package com.genesiis.campus.entity;
  * 20170216 DN c131-admin-manage-banner-upload-banner-image-dn intial class stub has been created
  * 20170217 DN c131-admin-manage-banner-upload-banner-image-dn initial methods
  * 			   addBannerRecordInOneTransAction()/getTheURLType()/formADate() have been created 
- * 
+ * 20170220 DN c131-admin-manage-banner-upload-banner-image-dn addBannerRecordInOneTransAction() re factor and
+ * 			   add doc comments
  */
 
 import org.apache.log4j.Logger; 
@@ -94,12 +95,23 @@ public class AdminBannerDAO implements ICrud {
 		return null;
 	}
 
-	public int addBannerRecordInOneTransAction(Object banner, String bannerImageExtension) throws SQLException, Exception{
+	/**
+	 * addBannerRecordInOneTransAction Method insert a record to table banner 
+	 * when a Banner is added to the System.
+	 * @param banner : JasonInflator instance wrapped as an Object
+	 * @param bannerImageExtension : extension of the banner eg. jpg,jpg,ping etc.
+	 * @param userName : user name of the user who fires the method eg."admin" etc
+	 * @return int : 
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public int addBannerRecordInOneTransAction(Object banner, String bannerImageExtension,String userName) throws SQLException, Exception{
 		Connection con =null;
 		PreparedStatement prepareStatement = null;
 		ResultSet result = null;
 		String bannerImageExtenion= bannerImageExtension; // assign the image extension
 		CmdAdminBannerUpload.JasonInflator innerBannerInflator = (CmdAdminBannerUpload.JasonInflator)banner;
+		String modByAndCrtBy =userName;
 		
 		
 		
@@ -111,7 +123,8 @@ public class AdminBannerDAO implements ICrud {
 		
 		updateBannerSQL.append("BEGIN TRANSACTION ");
 		
-		updateBannerSQL.append("INSERT INTO [CAMPUS].[BANNER]([IMAGE],[EXPIRATIONDATE],[TYPE],[DISPLAYDURATION],[LINKTYPE], ");
+		updateBannerSQL.append("INSERT INTO [CAMPUS].[BANNER]([IMAGE],[EXPIRATIONDATE],[TYPE],"); 
+				updateBannerSQL.append( "[DISPLAYDURATION],[LINKTYPE], ");
 		updateBannerSQL.append("[URL],[ISACTIVE],[PAGESLOT],[ADVERTISER],[CRTON],[CRTBY],[MODON],[MODBY],[ACTIVATIONDATE]) ");
 		updateBannerSQL.append("VALUES ");
 		updateBannerSQL.append("('default.gif' ,?,?,?,?,?,?,?,?, "); //('default.gif' ,getdate()+4,1,5 ,1,'www.topjobs.lk' ,'1',1,1,
@@ -165,10 +178,11 @@ public class AdminBannerDAO implements ICrud {
 	}
 	
 	/**
-	 * formADate creates a java sql date
-	 * @param dateFormat
-	 * @param date
-	 * @return
+	 * formADate creates a java sql date from the passed in parameter date.
+	 * @param dateFormat: the format we required the return value to be in. 
+	 * 						e.g.  "dd/MM/yyyy, dd-MM-yyyy, MM/dd/yyyy, yyyy-MM-dd."
+	 * @param date : String date in the format e.g "2017-02-14" "
+	 * @return java.sql.Date 
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws Exception
@@ -205,11 +219,11 @@ public class AdminBannerDAO implements ICrud {
 	 * @return
 	 */
 	private LinkType getTheURLType(String urlType){
-		if(urlType=="1"){
+		if(urlType.equals("1")){
 			return LinkType.WEB_LINK;
-		} else if(urlType=="2"){
+		} else if(urlType.equals("2")){
 			return LinkType.MINI_WEB_LINK;
-		}else if(urlType=="0"){
+		}else if(urlType.equals("0")){
 			return LinkType.PAGE_LINK;
 		}
 		return LinkType.BAD_LINK;
