@@ -1,6 +1,8 @@
 <%-- 20170209 MM c111-display-banners-on-jsp-load - Created file based on the bannerTest.jsp that 
 				was available under c2-integrate-google-banners-MP --%>
 <%-- 20170209 MM c111-display-banners-on-jsp-load - Added id html attribute to banner-slot divs --%>
+<%-- 20170220 MM c127-display-banners-on-jsp-load-front-end - Changed the way JSP name is obtained 
+				to use ${pageScope['javax.servlet.jsp.jspPage']} --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -92,7 +94,8 @@
 	</div>
 	
 <!-- 	The name of the current page; this is required to be specified with the following mark-up -->
-	<input type="hidden" id="pageName" value="bannerTestPageCalledDirectly.jsp">
+<!-- 	<input type="hidden" id="pageName" value="bannerTestPageCalledDirectly.jsp"> -->
+	<input type="hidden" id="pageName" value="<c:out value="${pageScope['javax.servlet.jsp.jspPage']}"/>">
 	
 <%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
 	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
