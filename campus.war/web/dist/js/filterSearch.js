@@ -129,7 +129,7 @@ $( document ).ready(function() {
 		 	* DK Dimuthu Kalyanaratne
 		*/
 
-		$("input#course-search").on('keyup', function (e) {
+		$("form#course-search-form input").on('keyup', function (e) {
 			
 			if(e.which == 13) {
 				

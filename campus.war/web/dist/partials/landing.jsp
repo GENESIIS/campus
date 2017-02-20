@@ -20,7 +20,7 @@
         <!-- End Main slider -->
         <div class="search-area clearfix">
         
-        	<form autocomplete="on" onsubmit="return false;">			
+        	<form id="course-search-form" autocomplete="on" onsubmit="return false;">			
 				<div class="main-search-bar center-block clearfix">
 						<div class="bar-holder center-block clearfix">
 							<input id="course-search" class="center-block" type="text" name="course-search" value="Search : Program, Course, or Career" autocomplete="on">
