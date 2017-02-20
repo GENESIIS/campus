@@ -6,6 +6,7 @@ package com.genesiis.campus.util;
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw modified addContentToOriginalMailBody() method 
 //20170127 CW c126-formatting-un-formatted-email-tutor-signup-cw implement EmailContentCreator Interface
 //20170219 CW c103-send-email-tutor-status-change-cw Create the constructors & modified getEmailBody() method
+//20170220 CW c103-send-email-tutor-status-change-cw modified single argument constructor & getEmailBody() method.
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,11 +48,13 @@ public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCre
 	}
 
 /**
- * Single Argument Constructor for the class
+ * Single Argument Constructor for the class TutorUpdateEmailComposer
+ * this will assign the tutor status in order to use later to send the email
  * @author CHINTHAKA
  */
 	public TutorUpdateEmailComposer(IDataHelper helper){
-		tutorStatus = ApplicationStatus.valueOf(helper.getParameter("newtutorStatus")).toString();
+		ApplicationStatus[] applicationStatus = ApplicationStatus.values();
+		tutorStatus = applicationStatus[Integer.parseInt(helper.getParameter("newtutorStatus"))].toString().toLowerCase();
 	}
 
 	@Override
@@ -121,10 +124,8 @@ public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCre
 		
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
-		result.append(System.getProperty("line.separator"));
 		result.append(" "+tutorStatus+" ");
-		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
+		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2.getMailBody());
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();
