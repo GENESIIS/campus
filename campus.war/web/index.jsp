@@ -5,6 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- to clear cache data -->
+<meta Http-Equiv="Cache-Control" Content="no-cache">
+<meta Http-Equiv="Pragma" Content="no-cache">
+<meta Http-Equiv="Expires" Content="0"> 
+
+
+<!-- clears browser history and redirects url -->
+<SCRIPT> 
+{  
+     var Backlen=history.length;   
+     history.go(-Backlen);   
+     window.location.href=''; 
+}
+</SCRIPT> 
 <title>Campus.lk</title>
 <!-- Bootstrap & CSS Style-->
 <link href="dist/bower-components/bootstrap/bootstrap.min.css"
