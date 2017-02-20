@@ -9,6 +9,7 @@ package com.genesiis.campus.validation;
 //20170131 c36-add-tutor-details-added EMPTYEMAIL, EMPTYUSERNAME, PASSWORDLENGTHERROR, EMPTYPASSWORD, PASSWORDCONFIRMERROR, EMPTYCONFIRMPASSWORD, FIRSTNAMEERROR, LASTNAMEERROR message
 //20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
 //20170203 c36-add-tutor-details-added TOWNCODEERROR message
+//20170220 c36-add-tutor-details-added some messages from c38-view-update-tutor-profile
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -42,8 +43,20 @@ public enum SystemMessage {
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
 	EMAIL_USED("E mail already used to create a tutor profile."),
-	EMPTYFIELD("Please fill required data");
-
+	EMPTYFIELD("Please fill required data"),
+	INCORRECTDATA("Something wrong in the data you have entered..."),
+	EMPTYFIRSTNAME("Username cannot be empty."),
+	EMPTYLASTNAME("Username cannot be empty."),
+	EMPTYMOBILECOUNTRYCODE("Username cannot be empty."),
+	EMPTYMOBILENETWORKCODE("Username cannot be empty."),
+	EMPTYMOBILENUMBER("Username cannot be empty."),
+	EMPTYLANDCOUNTRYCODE("Username cannot be empty."),
+	EMPTYLANDAREACODE("Username cannot be empty."),
+	EMPTYLANDNUMBER("Username cannot be empty."),
+	EMPTYADDRESS1("Username cannot be empty."),
+	UPDATED("Details Updated successfully."),
+	NOMODIFICATIONS("You haven't done any changes."),
+	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters.");
 	
 	private String message;
 
