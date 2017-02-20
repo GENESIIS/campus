@@ -5,6 +5,7 @@
 //20170216 DK CAM-124: Modified JS code to submit data on pressing enter key
 //20170216 DK CAM-124: Modified JS code to validate empty strings for the course search input
 //20170217 DK CAM-124: Modified JS code to clear text field and assign default placeholder text when click outside of the textbox
+//20170220 DJ CAM-124: Implemented generalSearchFunction() method.
 
 $( document ).ready(function() {
 	
@@ -96,30 +97,7 @@ $( document ).ready(function() {
 		*/
 		$('#addSearchData').click(function(e){
 			
-			var courseSearchTxt = $("#course-search").val();
-			
-			//if( courseSearchTxt != "Search : Program, Course, or Career"){
-			if( $("#searchFcuntion").val() != "filterSearch"){
-							
-				var keyWordString = " ";
-				var selectedType = " ";
-				
-				keyWordString = $("#course-search").val();
-				selectedType = $('input[name="courseOpt"]:checked').val();
-	
-				if (selectedType == 'CPROVIDER') {
-					alert("Will load course providers \n implemented in cam-123");				
-				} else {
-					window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
-				}
-
-				
-			}else{
-					
-				e.preventDefault();
-				return false;
-				
-			}
+			generalSearchFunction(e);	
 
 		});
 		
@@ -133,30 +111,30 @@ $( document ).ready(function() {
 			
 			if(e.which == 13) {
 				
-				if(!this.value == "" || !this.value == "Search : Program, Course, or Career"){
-					
-					var keyWordString = " ";
-					var selectedType = " ";
-					
-					keyWordString = $("#course-search").val();
-					selectedType = $('input[name="courseOpt"]:checked').val();
-		
-					if (selectedType == 'CPROVIDER') {
-						alert("Will load course providers \n implemented in cam-123");				
-					} else {
-						window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
-					}
-				
-				}else{
-					
-					e.preventDefault();
-				    return false;
-					
-				}	
+				generalSearchFunction(e);			
 				
 			}
 							
 		});
+		
+/**
+ * DJ
+ * Identify the search action and redirect to particular workflow
+*/	
+function generalSearchFunction(e){
+	
+	var keyWordString = " ";
+	var selectedType = " ";
+	
+	keyWordString = $("#course-search").val();
+	selectedType = $('input[name="courseOpt"]:checked').val();
+
+	if (selectedType == 'CPROVIDER') {
+		alert("Will load course providers \n implemented in cam-123");				
+	} else {
+		window.location.assign("/dist/partials/courses.jsp?keyWord=" + keyWordString);
+	}
+}
 
 
 		
