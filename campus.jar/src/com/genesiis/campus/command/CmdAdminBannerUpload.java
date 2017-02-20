@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
  * 20170217 DN c131-admin-manage-banner-upload-banner-image-dn urlMiniWebOrPage field added and refactor the methods uploadFullBannerCredentials.execute and
  * 				inner class JasonInflator.java
  * 20170220 DN c131-admin-manage-banner-upload-banner-image-dn getSessionProperty() method created and add doc comments
+ * 				removed the inner class JasonInflator.java and placed as a stand alone class.
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -20,6 +21,7 @@ import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ImageUtility;
+import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.UserType;
@@ -43,7 +45,7 @@ import java.util.ArrayList;
 public class CmdAdminBannerUpload implements ICommand {
 
 	
-	private static final org.jboss.resteasy.logging.Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
+	private static final Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
 	
 	private int successCode =0;
 	private ImageUtility imageUtility =new ImageUtility();
@@ -65,6 +67,8 @@ public class CmdAdminBannerUpload implements ICommand {
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
 				
+				// clear the message if it's accumulated.
+				this.setMessage(""); 
 				String userName = (String) getSessionProperty("usenName",helper);
 				/*
 				 * ########################################################################################
@@ -75,9 +79,9 @@ public class CmdAdminBannerUpload implements ICommand {
 				 * 			2017-02-20 09:02h
 				 * ########################################################################################
 				 */				
-				userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				
-				return uploadFullBannerCredentials(getInflatedObjectFromJason(helper.getParameter("jasondata")),view,userName);				
+				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+				return uploadFullBannerCredentials(jsn,view,userName);				
 		    default:
 		    	return view;
 			}
@@ -106,7 +110,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	 */
 	private Object getSessionProperty(String userProperty, IDataHelper helper) throws IllegalArgumentException {
 		try {
-			if (userProperty.equals(null)||userProperty.trim().equals(""))
+			if ((userProperty==null)||userProperty.trim().equals(""))
 				throw new IllegalArgumentException();
 			
 			Object userSessionProperty = helper.getSession(false).getAttribute(userProperty);
@@ -252,10 +256,10 @@ private IView uploadFullBannerCredentials(JasonInflator rowBanner, IView view,St
 		
 try{
 	 
-	 String extension =rowBanner.getBannerImageName().split(".")[1];
+	 String[] extension =rowBanner.getBannerImageName().split("\\.");
 	 // want to get the banner code once the update is succeeded
 	 int updateSuccessCode = new AdminBannerDAO().
-			 addBannerRecordInOneTransAction(rowBanner,extension,userName);
+			 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
 	 
 	// save to the data base table banner 
 	// extract the banner code
@@ -286,13 +290,15 @@ try{
  */
 private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxException {
 	Gson gson = new Gson();
+	JasonInflator rowbanner = null;
 	try{
-		return gson.fromJson(data, JasonInflator.class);
+		rowbanner= (JasonInflator)gson.fromJson(data, JasonInflator.class);
 		
 	} catch (JsonSyntaxException jsyexp) {
 		log.error("getInflatedObjectFromJason():JsonSyntaxException "+ jsyexp.toString());
 		throw jsyexp;	
-	}	
+	}
+	return rowbanner;
 }
 
 
@@ -368,208 +374,5 @@ public void setSuccessCode(int successCode) {
 	this.successCode = successCode;
 }
 
-
-
-/**
- * JasonInflator inner class that inflates the jason data in to a
- * dummy object which bears the properties 
- * which have been sent from the client.
- *
- * @author dushantha DN
- */
-public class JasonInflator {
-	
-	
-	private String advertiserCode;
-	
-	private String codeOfSelectedPage;
-	
-	private String bannerSlotCode;	
-	
-	private String displayDusration;	
-	
-	private String banerToBeActive;
-	
-	private String bannerPublishingDate;
-
-	private String bannerPublishingEndDate;	
-	
-	private String urlMiniWebOrPage;
-	
-	private String urlToBeDirectedOnBannerClick;
-	
-	private String bannerImageName;
-	
-	
-	public String getUrlMiniWebOrPage() {
-		return urlMiniWebOrPage;
-	}
-
-	public void setUrlMiniWebOrPage(String urlMiniWebOrPage) {
-		this.urlMiniWebOrPage = urlMiniWebOrPage;
-	}
-
-	
-	public String getDisplayDusration() {
-		return displayDusration;
-	}
-
-	public void setDisplayDusration(String displayDusration) {
-		this.displayDusration = displayDusration;
-	}
-
-	public String getBannerImageName() {
-		return bannerImageName;
-	}
-
-	public void setBannerImageName(String bannerImageName) {
-		this.bannerImageName = bannerImageName;
-	}
-
-	/**
-	 * Gets the advertiser code.
-	 *
-	 * @return the advertiser code
-	 */
-	public String getAdvertiserCode() {
-		return advertiserCode;
-	}
-	
-	/**
-	 * Sets the advertiser code.
-	 *
-	 * @param advertiserCode the new advertiser code
-	 */
-	public void setAdvertiserCode(String advertiserCode) {
-		this.advertiserCode = advertiserCode;
-	}
-	
-	/**
-	 * Gets the code of selected page.
-	 *
-	 * @return the code of selected page
-	 */
-	public String getCodeOfSelectedPage() {
-		return codeOfSelectedPage;
-	}
-	
-	/**
-	 * Sets the code of selected page.
-	 *
-	 * @param codeOfSelectedPage the new code of selected page
-	 */
-	public void setCodeOfSelectedPage(String codeOfSelectedPage) {
-		this.codeOfSelectedPage = codeOfSelectedPage;
-	}
-	
-	/**
-	 * Gets the banner slot code.
-	 *
-	 * @return the banner slot code
-	 */
-	public String getBannerSlotCode() {
-		return bannerSlotCode;
-	}
-	
-	/**
-	 * Sets the banner slot code.
-	 *
-	 * @param bannerSlotCode the new banner slot code
-	 */
-	public void setBannerSlotCode(String bannerSlotCode) {
-		this.bannerSlotCode = bannerSlotCode;
-	}
-	
-	/**
-	 * Gets the dusration.
-	 *
-	 * @return the dusration
-	 */
-	public String getDusration() {
-		return displayDusration;
-	}
-	
-	/**
-	 * Sets the dusration.
-	 *
-	 * @param dusration the new dusration
-	 */
-	public void setDusration(String dusration) {
-		this.displayDusration = dusration;
-	}
-	
-	/**
-	 * Gets the baner to be active.
-	 *
-	 * @return the baner to be active
-	 */
-	public String getBanerToBeActive() {
-		return banerToBeActive;
-	}
-	
-	/**
-	 * Sets the baner to be active.
-	 *
-	 * @param banerToBeActive the new baner to be active
-	 */
-	public void setBanerToBeActive(String banerToBeActive) {
-		this.banerToBeActive = banerToBeActive;
-	}
-	
-	/**
-	 * Gets the banner publishing date.
-	 *
-	 * @return the banner publishing date
-	 */
-	public String getBannerPublishingDate() {
-		return bannerPublishingDate;
-	}
-	
-	/**
-	 * Sets the banner publishing date.
-	 *
-	 * @param bannerPublishingDate the new banner publishing date
-	 */
-	public void setBannerPublishingDate(String bannerPublishingDate) {
-		this.bannerPublishingDate = bannerPublishingDate;
-	}
-	
-	/**
-	 * Gets the banner publishing end date.
-	 *
-	 * @return the banner publishing end date
-	 */
-	public String getBannerPublishingEndDate() {
-		return bannerPublishingEndDate;
-	}
-	
-	/**
-	 * Sets the banner publishing end date.
-	 *
-	 * @param bannerPublishingEndDate the new banner publishing end date
-	 */
-	public void setBannerPublishingEndDate(String bannerPublishingEndDate) {
-		this.bannerPublishingEndDate = bannerPublishingEndDate;
-	}
-	
-	/**
-	 * Gets the url to be directed on banner click.
-	 *
-	 * @return the url to be directed on banner click
-	 */
-	public String getUrlToBeDirectedOnBannerClick() {
-		return urlToBeDirectedOnBannerClick;
-	}
-	
-	/**
-	 * Sets the url to be directed on banner click.
-	 *
-	 * @param urlToBeDirectedOnBannerClick the new url to be directed on banner click
-	 */
-	public void setUrlToBeDirectedOnBannerClick(String urlToBeDirectedOnBannerClick) {
-		this.urlToBeDirectedOnBannerClick = urlToBeDirectedOnBannerClick;
-	}
-	
-}
 
 }
