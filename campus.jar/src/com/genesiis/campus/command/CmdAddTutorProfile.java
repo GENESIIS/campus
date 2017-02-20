@@ -19,6 +19,7 @@ package com.genesiis.campus.command;
 //20170202 CW c36-add-tutor-details modified validateAvailability(), validateUserAndEmail() methods
 //20170206 CW c36-add-tutor-details modified execute() method.
 //20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
+//20170220 CW c36-add-tutor-details modified execute() for INCORRECTDATA message.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,11 +69,8 @@ public class CmdAddTutorProfile implements ICommand {
 		try {
 				setVariables(helper,tutor);
 				fillTutorCollection(tutorCollection, tutor);
-				
-				message = validateUserAndEmail(helper);
-				message = validator.validateTutorFields(helper);
-				
-				if (message.equalsIgnoreCase("True")) {													
+								
+				if (validator.validateTutorFields(helper)) {													
 	
 					UserTypeDAO typeOfUser = new UserTypeDAO();					
 					Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
@@ -95,17 +93,17 @@ public class CmdAddTutorProfile implements ICommand {
 						message = SystemMessage.ERROR.message();
 					}					
 				}
+				
+				if(!(message.equals(SystemMessage.ADDED.message()) || message.equals(SystemMessage.ERROR.message()))){
+					message = SystemMessage.INCORRECTDATA.message();
+				}
 		}  catch (SQLException sqle){
 			log.error("execute(): SQLException "+ sqle.toString());
 			throw sqle;
 		}  catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
-		} finally {
-			if(message.equalsIgnoreCase("false")){
-				message = "Something wrong in the data you have entered...";
-			}			
-			
+		} finally {			
 			helper.setAttribute("message", message);
 			helper.setAttribute("tutorList", tutorCollection);
 		}
