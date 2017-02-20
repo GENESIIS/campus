@@ -361,32 +361,32 @@ function sendBannerPaageFieldInputs(formFieldArray,elegibleToProceed ){
 	
 if(elegibleToProceed){
 		
-		//if validation passes then create the form data
-		var formData = new FormData();
-		
-		
-		formData.append('advertiserCode',formFieldArray[0]);
-		formData.append('codeOfSelectedPage',formFieldArray[1]);
-		formData.append('bannerSlotCode',formFieldArray[2]);
-		formData.append("displayDusration",formFieldArray[3]);
-		formData.append("banerToBeActive",formFieldArray[4]);
-		formData.append("bannerPublishingDate",formFieldArray[5]);
-		formData.append("bannerPublishingEndDate",formFieldArray[6]);
-		formData.append("urlToBeDirectedOnBannerClick",formFieldArray[7]);
-		
+		//if validation passes then create the form data		
+		var jasonBanner = {
+				'advertiserCode' :	formFieldArray[0],
+				'codeOfSelectedPage':formFieldArray[1],
+				'bannerSlotCode':formFieldArray[2],
+				"displayDusration":formFieldArray[3],
+				"banerToBeActive":formFieldArray[4],
+				"bannerPublishingDate":formFieldArray[5],		
+				"bannerPublishingEndDate":formFieldArray[6]	,
+				"urlMiniWebOrPage" :formFieldArray[7],
+				"urlToBeDirectedOnBannerClick":formFieldArray[8],
+				"bannerImageName":formFieldArray[9]
+		};
 		// ajax call to transfer data to server end
 		
 		$.ajax({
 			type:"POST",
-			dataType:"JSON",
+			dataType:"json",
 			url : adminControllerUrl, 
 			data : {
 					CCO:"UFBCR",//UPLOAD FULL BANNER CREDENTIALS
-					jasondata:JSON.stringify(formData),
+				jsonData:JSON.stringify(jasonBanner)
 			},
-			cache: false,
-			contentType : false,
-			processData : false,
+			//cache: false,
+			//contentType : false,
+			//processData : false,
 			success: function(response){
 				var cssColour=(response['successCode']===1)?'green':'red';
 				displayLabelMessage('displayLabel',cssColour,response['message']);
