@@ -25,52 +25,63 @@ public class CmdStudentLogout implements ICommand {
 	static Logger log = Logger.getLogger(CmdStudentLogout.class.getName());
 
 	private Student loggedStudent;
-
+	String pageURL = "/index.jsp";
+	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		HttpSession  curentSession = helper.getRequest().getSession(false);
 		String message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
-		String pageURL = "/index.jsp";
+		
 		try {
-			String gsonData = helper.getParameter("jsonData");
-			loggedStudent = getStudentdetails(gsonData);
-
-			Date loginTime = new Date();
-
-			java.util.Date utilDate = new java.util.Date();
-			java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
-
-			loggedStudent.setLastLoggedOutDate(loginDate.toString());
-			loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime
-					.getTime()).toString());
-
-			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
-
-			if (status > 0) {
-				Cookie[] cookies = helper.getRequest().getCookies();
-		    	if(cookies != null){
-		    	for(Cookie cookie : cookies){
-		    		if(cookie.getName().equals("JSESSIONID")){
-		    			System.out.println("JSESSIONID="+cookie.getValue());
-		    			break;
-		    		}
-		    	}
-		    	}
-				
-				
-				HttpSession curentSession = helper.getRequest().getSession(false);
-				
-				if(curentSession != null){
-					curentSession.removeAttribute("user");
-					curentSession.removeAttribute("userCode");
-					curentSession.removeAttribute("currentUserData");
-					curentSession.invalidate();
-
-				message = SystemMessage.LOGOUTSUCCESSFULL.message();
-				}
+			if (curentSession == null) {
+				log.info("allready logout");
+				pageURL = "/index.jsp";
 			} else {
-				message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
+
+				log.info("not logout yet");
+				String gsonData = helper.getParameter("jsonData");
+				loggedStudent = getStudentdetails(gsonData);
+
+				Date loginTime = new Date();
+
+				java.util.Date utilDate = new java.util.Date();
+				java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
+
+				loggedStudent.setLastLoggedOutDate(loginDate.toString());
+				loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime
+						.getTime()).toString());
+
+				int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
+
+				if (status > 0) {
+					Cookie[] cookies = helper.getRequest().getCookies();
+					if (cookies != null) {
+						for (Cookie cookie : cookies) {
+							if (cookie.getName().equals("JSESSIONID")) {
+								System.out.println("JSESSIONID="
+										+ cookie.getValue());
+								break;
+							}
+						}
+					}
+
+					
+
+					if (curentSession != null) {
+						curentSession.removeAttribute("user");
+						curentSession.removeAttribute("userCode");
+						curentSession.removeAttribute("currentUserData");
+						curentSession.invalidate();
+
+						message = SystemMessage.LOGOUTSUCCESSFULL.message();
+					}
+				} else {
+					message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
+				}
 			}
+
+			
 
 		} catch (Exception e) {
 			log.error("CmdStudentLogout():  Exception" + e.toString());
