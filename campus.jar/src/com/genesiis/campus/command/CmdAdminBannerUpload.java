@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
  * 				created the method uploadFullBannerCredentials(), changed the method execute()
  * 20170217 DN c131-admin-manage-banner-upload-banner-image-dn urlMiniWebOrPage field added and refactor the methods uploadFullBannerCredentials.execute and
  * 				inner class JasonInflator.java
+ * 20170220 DN c131-admin-manage-banner-upload-banner-image-dn getSessionProperty() method created and add doc comments
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -21,6 +22,7 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ImageUtility;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemConfig;
+import com.genesiis.campus.validation.UserType;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 public class CmdAdminBannerUpload implements ICommand {
 
 	
-	private static final Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
+	private static final org.jboss.resteasy.logging.Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
 	
 	private int successCode =0;
 	private ImageUtility imageUtility =new ImageUtility();
@@ -62,10 +64,22 @@ public class CmdAdminBannerUpload implements ICommand {
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
-				return uploadFullBannerCredentials(helper,view);				
+				
+				String userName = (String) getSessionProperty("usenName",helper);
+				/*
+				 * ########################################################################################
+				 * WARNING: The code --> 
+				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				 * 			has to be commented out once proper user name is obtained via
+				 * 			the HttpSession. This implementation is only valid till integration.
+				 * 			2017-02-20 09:02h
+				 * ########################################################################################
+				 */				
+				userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				
+				return uploadFullBannerCredentials(getInflatedObjectFromJason(helper.getParameter("jasondata")),view,userName);				
 		    default:
 		    	return view;
-			
 			}
 		} catch (SQLException sqle) {
 			log.error("execute(IDataHelper helper, IView view):SQLException "+ sqle.toString());
@@ -77,12 +91,43 @@ public class CmdAdminBannerUpload implements ICommand {
 		
 	}
 	
+
+	/*
+	 * getSessionProperty provide session associated attribute
+	 * @param userProperty
+	 * @param helper  : Helper wraps the HttpRequest object and
+	 * 					facilitating manipulating a limited set of properties
+	 * 					bound to the request
+	 * 					@see IDataHelper.
+	 * @return Object : the session property which is a object and 
+	 * 					the client who uses the method should cast 
+	 * 					to the appropriate Object type.
+	 *  @throws IllegalArgumentException
+	 */
+	private Object getSessionProperty(String userProperty, IDataHelper helper) throws IllegalArgumentException {
+		try {
+			if (userProperty.equals(null)||userProperty.trim().equals(""))
+				throw new IllegalArgumentException();
+			
+			Object userSessionProperty = helper.getSession(false).getAttribute(userProperty);
+			return userSessionProperty;
+			
+		} catch (IllegalArgumentException ilearg) {
+			log.error("getUserProperty(String,IDataHelper) NullPointerException"
+					+ userProperty
+					+ "request parameter is Not Set : "
+					+ ilearg.toString());
+			throw ilearg;
+		}
+
+		
+	}
 	
 	
 
-/**
- * Save banner image to a temporary location.
- *
+/*
+ * Save banner image to a temporary location. This method stores the image 
+ * to a temporary location in the physical disk which is agreed by the system 
  * @param helper the helper
  * @param view the view
  * @return the i view
@@ -190,19 +235,27 @@ private void setResponseCridentials(IDataHelper helper){
 	helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
 }
 	
-	
-private IView uploadFullBannerCredentials(IDataHelper helper, IView view)throws Exception{
+
+/*
+ * uploadFullBannerCredentials Uploads the information of the banner
+ * passed with rowBanner instance to the table Banner
+ * @param rowBanner: JasonInflator type, it is the basic banner
+ * 					 information passed to the method
+ * @param view : it is IViewand captures the Collection to send  
+ * 				 to the client for displaying purposes
+ * @param userName : The user name of the person who logs with 
+ * @return IView :captures the Collection to send to the client 
+ * 				  the current session for displaying purposes
+ * @throws Exception
+ */
+private IView uploadFullBannerCredentials(JasonInflator rowBanner, IView view,String userName)throws Exception{
 		
 try{
-	 // inflate the Gson object
-	 JasonInflator rowBanner= getInflatedObjectFromJason(helper.getParameter("jasondata"));
-	 //log.info(""+);
-	 
 	 
 	 String extension =rowBanner.getBannerImageName().split(".")[1];
 	 // want to get the banner code once the update is succeeded
 	 int updateSuccessCode = new AdminBannerDAO().
-			 addBannerRecordInOneTransAction(rowBanner,extension);
+			 addBannerRecordInOneTransAction(rowBanner,extension,userName);
 	 
 	// save to the data base table banner 
 	// extract the banner code
@@ -224,7 +277,13 @@ try{
 	}
 
 
-
+/*
+ * getInflatedObjectFromJason de serialized the flattened jason data in to an object
+ * @param data String type which is the flatten Jason object state (serialized object)
+ * sent from the server attached as a servlettRequest parameter IMPORTANT : String must not be  null
+ * @return JasonInflator which is the inflated object with the client side informations sent in.
+ * @throws JsonSyntaxException.
+ */
 private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxException {
 	Gson gson = new Gson();
 	try{
@@ -312,7 +371,7 @@ public void setSuccessCode(int successCode) {
 
 
 /**
- * JasonInflator inner class inflate the jason data in to a
+ * JasonInflator inner class that inflates the jason data in to a
  * dummy object which bears the properties 
  * which have been sent from the client.
  *
