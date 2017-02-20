@@ -34,11 +34,16 @@ public class CmdStudentLogin implements ICommand {
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-
+	HttpSession session;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try {
+			if(session != null){
+				log.info("old user");
+			}else{
+				log.info("new user");
+			}
 			int attempts = 0;
 			String pageURL = "/dist/partials/login.jsp";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
@@ -77,7 +82,7 @@ public class CmdStudentLogin implements ICommand {
 						pageURL = "/dist/partials/student/student-dashboard.jsp";
 					}
 
-					HttpSession session = helper.getSession(true);
+					 session = helper.getSession(true);
 					String sessionID = session.getId();
 					data.setLastLoggedInSessionid(sessionID);
 					session.setAttribute("currentSessionUser",
