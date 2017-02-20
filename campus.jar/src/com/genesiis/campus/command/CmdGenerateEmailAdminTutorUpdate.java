@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170219 CW c103-send-email-tutor-status-change-cw Created the CmdGenerateEmailAdminTutorUpdate.java class to send email at tutor details update by Admin.
+//20170220 CW c103-send-email-tutor-status-change-cw modified execute method.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
@@ -32,7 +33,7 @@ public class CmdGenerateEmailAdminTutorUpdate implements ICommand {
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
 	@Override
-	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+	public IView execute(IDataHelper helper, IView view) throws IllegalArgumentException, Exception {
 		try {
 			IEmailComposer tutorUpdateEmailComposer = new TutorUpdateEmailComposer(helper);
 			int status;
