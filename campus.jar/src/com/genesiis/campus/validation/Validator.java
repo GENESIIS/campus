@@ -38,6 +38,7 @@ package com.genesiis.campus.validation;
 //20170203 CW c36-add-tutor-details modified isHavingNullValues(), validateTutorFields() methods
 //20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 //20170220 CW c36-add-tutor-details modified isHavingNullValues(), validateTutorFields(), changed the name of validatePassword() to isValidPassword() & Add isValidUserAndEmailBeforeAddTutor()
+//20170220 CW c36-add-tutor-details add isNotHavingSpace().
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -54,6 +55,7 @@ import com.genesiis.campus.util.IDataHelper;
 public class Validator {
 
 	static Logger log = Logger.getLogger(Validator.class.getName());
+	int totalDays = 0;
 
 	/**
 	 * Check the given value is empty or not empty
@@ -69,8 +71,20 @@ public class Validator {
 		}
 		return status;
 	}
-
-	int totalDays = 0;
+	
+	/**
+	 * Check the given value is not having only a space
+	 * @author Chinthaka
+	 * @param value
+	 * @return boolean returns true if the text does not contains a space value.
+	 **/
+	public static boolean isNotHavingSpace(String text) {
+		boolean status = true;
+		if (text.equals(" ")) {
+			status = false;
+		}
+		return status;
+	}
 
 	/**
 	 * Validate helper fields for null values.
@@ -85,19 +99,19 @@ public class Validator {
 		boolean isHavingNull = false; 
 		try {	
 
-			if(Validator.isNotEmpty(helper.getParameter("firstname"))){
+			if(isNotHavingSpace(helper.getParameter("firstname"))){
 				System.out.println("helper.getParameter(firstname) ="+helper.getParameter("firstname")+"=");
 			}
-			
+	/*			
 			if(helper.getParameter("firstname") == " "){
 				System.out.println(" == ");
 			}
 
 			if(helper.getParameter("firstname").equals(" ")){
 				System.out.println(" equals ");
-			}
+			}*/
 			
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") == " "))) {
+			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (isNotHavingSpace(helper.getParameter("firstname"))))) {
 				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
