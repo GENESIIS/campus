@@ -27,7 +27,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 public class CmdStudentLogin implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdStudentLogin.class.getName());
@@ -35,79 +34,83 @@ public class CmdStudentLogin implements ICommand {
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
 	HttpSession session;
+	String pageURL;
+	String message;
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try {
-			if(session != null){
-				log.info("old user");
-			}else{
-				log.info("new user");
-			}
-			int attempts = 0;
-			String pageURL = "/dist/partials/login.jsp";
-			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			
-			String gsonData = helper.getParameter("jsonData");
-			data = getStudentdetails(gsonData);
-
-			String validateResult = LoginValidator.validateLogin(data);
-
-			boolean rememberMe = data.isRemember();
-
-			if (validateResult.equalsIgnoreCase("True")) {
-				data = LoginValidator.dataSeparator(data);
-				//final StudentLoginDAO loginDAO = new StudentLoginDAO();
-				ICrud loginDAO = new StudentLoginDAO();
-				dataCollection = loginDAO.findById(data);
-
-				for (Collection<String> collection : dataCollection) {
-					Object[] array = collection.toArray();
-					message = (String) array[0];
-
-				}
-
-				if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
-
-					if (rememberMe == true) {
-						helper.setAttribute("student", data);
-						CookieHandler.addCookie(helper.getResponse(),
-								"userIdendificationKey", data.getUserKey(),
-								2592000);
-					}
-
-					if (data.getLastLoggedInSessionid().equalsIgnoreCase("")) {
-						pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
-					} else {
-						pageURL = "/dist/partials/student/student-dashboard.jsp";
-					}
-
-					 session = helper.getSession(true);
-					String sessionID = session.getId();
-					data.setLastLoggedInSessionid(sessionID);
-					session.setAttribute("currentSessionUser",
-							data.getUsername());
-					session.setAttribute("user", data.getFirstName());
-					session.setAttribute("userCode", data.getCode());
-					session.setAttribute("currentUserData", dataCollection);
-					setStudentLoginDetails(data, helper);
-					int status = StudentLoginDAO.loginDataUpdate(data);
-					
-					if(status>0){
-						message = SystemMessage.VALIDUSER.message();
-					}else{
-						
-					}
-				} else {
-					// login attempts handle in here
-					// after 3 attempts session will blocked user
-				}
-
+			if (session != null) {
+			pageURL = "/index.jsp";
 			} else {
+
+				int attempts = 0;
+				pageURL = "/dist/partials/login.jsp";
 				message = SystemMessage.LOGINUNSUCCESSFULL.message();
 
-			}
+				String gsonData = helper.getParameter("jsonData");
+				data = getStudentdetails(gsonData);
 
+				String validateResult = LoginValidator.validateLogin(data);
+
+				boolean rememberMe = data.isRemember();
+
+				if (validateResult.equalsIgnoreCase("True")) {
+					data = LoginValidator.dataSeparator(data);
+					// final StudentLoginDAO loginDAO = new StudentLoginDAO();
+					ICrud loginDAO = new StudentLoginDAO();
+					dataCollection = loginDAO.findById(data);
+
+					for (Collection<String> collection : dataCollection) {
+						Object[] array = collection.toArray();
+						message = (String) array[0];
+
+					}
+
+					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER
+							.message())) {
+
+						if (rememberMe == true) {
+							helper.setAttribute("student", data);
+							CookieHandler.addCookie(helper.getResponse(),
+									"userIdendificationKey", data.getUserKey(),
+									2592000);
+						}
+
+						if (data.getLastLoggedInSessionid()
+								.equalsIgnoreCase("")) {
+							pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
+						} else {
+							pageURL = "/dist/partials/student/student-dashboard.jsp";
+						}
+
+						session = helper.getSession(true);
+						String sessionID = session.getId();
+						data.setLastLoggedInSessionid(sessionID);
+						session.setAttribute("currentSessionUser",
+								data.getUsername());
+						session.setAttribute("user", data.getFirstName());
+						session.setAttribute("userCode", data.getCode());
+						session.setAttribute("currentUserData", dataCollection);
+						setStudentLoginDetails(data, helper);
+						int status = StudentLoginDAO.loginDataUpdate(data);
+
+						if (status > 0) {
+							message = SystemMessage.VALIDUSER.message();
+						} else {
+
+						}
+					} else {
+						// login attempts handle in here
+						// after 3 attempts session will blocked user
+					}
+
+				} else {
+					message = SystemMessage.LOGINUNSUCCESSFULL.message();
+
+				}
+			}
 			helper.setAttribute("message", message);
 			helper.setAttribute("pageURL", pageURL);
 			view.setCollection(dataCollection);
@@ -133,7 +136,7 @@ public class CmdStudentLogin implements ICommand {
 	 */
 
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
-		
+
 		try {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
