@@ -9,6 +9,8 @@
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
+
+<!-- cache data clear -->
 <%
 response.setHeader("Cache-Control", "no-cache");
 response.setHeader("Cache-Control", "no-store");
@@ -18,8 +20,6 @@ response.setDateHeader("Expires", 0);
 // {
 //     out.println("<script>parent.location.href='http://www.campus.dev:8080/dist/partials/error/error-content.jsp'</script>");
 // }
-
- 
 %>
 	<div class="top">
 		<div class="logo-brand">
