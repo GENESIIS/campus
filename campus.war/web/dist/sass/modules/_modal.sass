@@ -1,0 +1,209 @@
+/* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
+/* 20170207 TR CAM-139 added new modal styles for personal details area */
+/* 20170207 TR CAM-139 changed modal-footer styles */
+/* 20170208 TR CAM-139 added new styles for professional details modal */
+/* 20170208 TR CAM-139 added new styles for education details modal */
+/* 20170208 TR CAM-139 added new styles for education details modal */
+
+.modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        border-bottom: none
+        box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2)
+        position: relative
+        z-index: 1
+
+        .modal-title
+          font-family: "Roboto", sans-serif
+          color: #23282d
+          font-size: 24px
+          font-weight: 700
+
+      .modal-body
+        background-color: #f2f7f9
+        padding: 25px 40px
+        border-radius: 0 0 6px 6px
+
+        .tab-content
+          padding: 15px 0 0
+
+      .modal-footer
+        border: none
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+        z-index: 1
+        position: relative
+
+.sub-title-1
+  font-family: "Roboto", sans-serif
+  font-size: 20px
+  color: #23282d
+  line-height: 40px
+
+.well
+  background-color: #ffffff
+  margin-bottom: 0
+  box-shadow: none
+  padding: 20px 40px
+  border: 1px solid #ecf4f7
+  border-radius: 8px
+
+
+.modal-input-field
+  padding: 6px 0
+  width: 100%
+
+  label
+    width: 20%
+    font-family: "Roboto", sans-serif
+    font-size: 16px
+    color: #8d8d8d
+    font-weight: 600
+    float: left
+    line-height: 30px
+
+  input
+    width: 46%
+    height: 32px
+    border: 2px solid #ccdae8
+    padding: 2px 12px
+    color: #1b8e92
+    font-family: "Roboto", sans-serif
+
+  .input-group
+    width: 46%
+
+    .input-group-addon
+      width: 80px
+
+    input
+      width: 100%
+
+  select
+    width: 46%
+    height: 32px
+    border: 2px solid #ccdae8
+    padding: 2px 12px
+    color: #1b8e92
+    font-family: "Roboto", sans-serif
+
+  textarea
+    min-height: 95px
+    border: 2px solid #ccdae8
+    width: 46%
+
+.btn-group-radio
+  display: inline-block
+
+  input
+    width: 16px
+    height: 16px
+    margin-right: 15px
+    float: left
+    color: #8981bd
+
+  span
+    margin-right: 45px
+    font-family: "Roboto", sans-serif
+    font-size: 16px
+    color: #8d8d8d
+    font-weight: 500
+    line-height: 26px
+    float: left
+
+.input-group-addon
+  border: 2px solid #ccdae8
+  background-color: #ecf5fa
+  font-family: "Roboto", sans-serif
+  font-size: 13px
+  color: #6e99cd
+  font-weight: 600
+
+.form-holder
+  border-top: 2px solid #5e8ee2
+  margin-top: 15px
+  padding-top: 20px
+
+  .dataTables_wrapper
+    .row
+      padding: 10px 0
+
+      table
+        font-family: "Roboto", sans-serif
+        color: #79929e
+
+      .table-bordered
+        border: 1px solid #7da7d9
+
+      .dataTables_info
+        color: #8e8e8e
+        font-family: "Roboto", sans-serif
+
+      .pagination
+        font-family: "Roboto", sans-serif
+        li > a
+          color: #7da7d9
+
+
+      .table-bordered > thead > tr > th
+        border-bottom: 1px solid #7da7d9
+
+      .table-bordered > tfoot > tr > th
+        border-top: 1px solid #7da7d9
+
+      .dataTables_length, .dataTables_filter
+        label
+          font-family: "Roboto", sans-serif
+          font-size: 16px
+          color: #8d8d8d
+          font-weight: 600
+          line-height: 30px
+
+        select, input
+          height: 32px
+          border: 2px solid #ccdae8
+          padding: 2px 12px
+          color: #1b8e92
+          font-family: "Roboto", sans-serif
+          border-radius: 0
+          margin-left: 15px
+          box-shadow: none
+
+        select
+          margin-right: 15px
+
+.nav-tabs
+  border-bottom: 2px solid #5e8ee2
+  font-family: "Roboto", sans-serif
+  color: #507ac3
+  font-size: 18px
+
+.nav-tabs
+  li > a
+    //border: 2px solid #5e8ee2
+    border-bottom-color: transparent
+    &:active,
+    &:focus,
+    &:hover
+      border: 2px solid #5e8ee2 !important
+      border-bottom-color: transparent !important
+
+.nav-tabs > li.active > a
+  border: 2px solid #5e8ee2 !important
+
+// Professional Details Modal styles
+
+.modal-professional
+  .well
+    padding: 20px 25px
+
+  .modal-input-field
+    label
+      width: 30%
+
+.sh-footer
+  box-shadow: none !important
+  border-top: 1px solid #5e8ee2 !important
+  margin-top: 20px
+
+
