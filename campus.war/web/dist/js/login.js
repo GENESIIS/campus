@@ -90,6 +90,7 @@ function resetLoginLabels() {
 }
 
 function studentLogout() {
+	CheckingSeassion();
 	var userId = $("#userCode").val();
 	if (userId != null) {
 		var jsonData = {
@@ -137,5 +138,14 @@ function studentLogout() {
 			}
 
 		});
+	}
+}
+// testing purpose CheckingSeassion() created and WIP 
+function CheckingSeassion() {
+	var name = '${currentSessionUser}"';
+	if(name == null){
+		alert("nooo user ");
+	}else{
+		alert(name +" hari");
 	}
 }
