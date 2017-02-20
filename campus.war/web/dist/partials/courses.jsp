@@ -8,6 +8,7 @@
 <!-- 20161124 PN c11-criteria-based-filter-search modified bootstrap-3.3.7.min.js imports. -->
 <!-- 20161222 PN CAM-116: modified DataTable styling -->
 <!-- 20170207 DJ CAM-124: Remove commented lines-->
+<!-- 20170220 DJ CAM-124: Courses/ All label in programme filter search view-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -168,9 +169,7 @@ $(document).ready(function() {
 				<!-- Panel Header -->
 				<div class="panel-header clearfix">
 					<div class="filter-path">
-						<ol class="list-inline">
-							<li>Courses</li>
-							<li>/ All</li>
+						<ol class="list-inline">							
 						</ol>
 					</div>
 
