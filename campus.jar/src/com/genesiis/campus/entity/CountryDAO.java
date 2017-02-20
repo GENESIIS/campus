@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170109 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application Country2DAO class
 //20170124 CW c36-add-tutor-details modified findById() method according to the 201701201215 DJ crev modification request.
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170220 CW c36-add-tutor-information modified getAll() method query to order by sort
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -99,7 +100,7 @@ public class CountryDAO implements ICrud{
 
 		try {
 			
-			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [NAME]";
+			String query = "SELECT [DIALCODE],[NAME] FROM [CAMPUS].[COUNTRY2] ORDER BY [SORT]";
 			
 			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(query);
