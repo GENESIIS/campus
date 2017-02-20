@@ -26,7 +26,9 @@
  * 20170214 MM c127-display-banners-on-jsp-load-front-end Modified code in $.document.ready(...) to 
  				initiate the banner fetching process only in case of all banner slots in the page 
  				being without banner images
- 				
+ * 20170220 MM c127-display-banners-on-jsp-load-front-end Added function to extract JSP name considering
+ * 				it is present in a hidden field in the form as returned by JSTL code: 
+ * 				${pageScope['javax.servlet.jsp.jspPage']} 				
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -88,7 +90,8 @@ $('.banner').on('click', function(e) {
 function sendBannerStatisticsUpdateRequest(banner) { 
 	
 	var bannerCode = banner.attr('data-banner-code');
-	var callerPage = banner.attr('data-caller-page');
+//	var callerPage = banner.attr('data-caller-page');
+	var callerPage = getPageName();
 	
 	$.ajax({
 		url : '/PublicController',
@@ -140,7 +143,7 @@ $(document).ready(function() {
 //Event handler for sending Ajax request to fetch banners 
 function getBanners() { 
 	
-	var pageName = $('input[type="hidden"]#pageName').val();
+	var pageName = getPageName();
 	
 	if (pageName != undefined && pageName != null) {		
 		$.ajax({
@@ -167,7 +170,7 @@ function getBanners() {
 function setBannersToPageSlots(response) {
 	var pageSlots = $('.banner-wrapper');
 	var bannerPath = response.bannerPath;
-	var callerPage = response.callerPage;
+	var callerPage = getPageName();
 	
 	$.each(pageSlots, function(index, item) {
 		var slotId = $(this).prop('id');
@@ -185,4 +188,16 @@ function setBannersToPageSlots(response) {
 		});
 		$(this).html(pageSlotHtml);
 	});
+}
+
+// Get the current JSP page name
+function getPageName() {
+	
+	var pageNameExtracted = $('input[type="hidden"]#pageName').val();
+	var pageNameTokens = pageNameExtracted.split('.');
+	var pageName = pageNameTokens[pageNameTokens.length - 1];
+	pageNameTokens = pageName.split('_jsp@');
+	pageName = pageNameTokens[0] + '.jsp';
+	
+	return pageName;
 }
