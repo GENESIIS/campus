@@ -6,19 +6,25 @@
 <!-- 20170109 PN CAM-28: INIT the JSP file  -->
 <!-- 20170109 PN CAM-28: modified textfield length with textfield attribute.  -->
 
-<!-- 20170206 TR CAM-28: modified form html layout - Personal Details edit modal : added div structure  modal-input-field-->
-<!-- 20170206 TR CAM-28: added modal-input-field css class to input field -->
-<!-- 20170207 TR CAM-28: changed modal-header-title - Personal details into About Me -->
-<!-- 20170207 TR CAM-28: modified html layout on About Me modal:Contact Details area - added div structure -->
-<!-- 20170208 TR CAM-28: modified html layout on Professional Details modal - added div structure -->
-<!-- 20170208 TR CAM-28: modified html layout on Education Details modal: school education tab - added div structure -->
-<!-- 20170209 TR CAM-28: modified html layout on Education Details modal: Higher education tab - added div structure -->
-<!-- 20170209 TR CAM-28: changed modal-footer layout on Education Details modal -->
-<!-- 20170209 TR CAM-28: Added separate footers for school education and higher education tabs -->
+<!-- 20170206 TR CAM-139: modified form html layout - Personal Details edit modal : added div structure  modal-input-field-->
+<!-- 20170206 TR CAM-139: added modal-input-field css class to input field -->
+<!-- 20170207 TR CAM-139: changed modal-header-title - Personal details into About Me -->
+<!-- 20170207 TR CAM-139: modified html layout on About Me modal:Contact Details area - added div structure -->
+<!-- 20170208 TR CAM-139: modified html layout on Professional Details modal - added div structure -->
+<!-- 20170208 TR CAM-139: modified html layout on Education Details modal: school education tab - added div structure -->
+<!-- 20170209 TR CAM-139: modified html layout on Education Details modal: Higher education tab - added div structure -->
+<!-- 20170209 TR CAM-139: changed modal-footer layout on Education Details modal -->
+<!-- 20170209 TR CAM-139: Added separate footers for school education and higher education tabs -->
 <!-- 20170213 PN CAM-28: added data loading gif at the top of the page. added id name into full name header tag. -->
 <!-- 20170213 PN CAM-28: modified UI element names to fix incorrect data loading on datatables -->
 <!-- 20170213 PN CAM-28: modified Professional Details modal and Higher education tab by setting a hidden field to hold value for record ID. -->
 <!-- 20170214 PN CAM-28: modified close buttons and clear button by adding on click functions to call, clear() methods. -->
+<!-- 20170220 TR CAM-139: added jquery to fix modal scrolling issue -->
+<!-- 20170220 TR CAM-139: Dropped all alert div into comment tag -->
+<!-- 20170220 TR CAM-139: added new loading gif into page top (i/student/loading-1.gif) -->
+<!-- 20170220 TR CAM-139: added new styles to gif loading area  -->
+<!-- 20170220 TR CAM-139: modified styles in skills and interest widget  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +60,8 @@
     <script src="../../js/institute/validation/validation.js"></script>
     <script src="../../js/student/student-details-manipulation-helper.js"></script>
 	<script src="../../js/student/student-details-helper.js"></script>
-	
+	<script src="../../js/student/ui-controller.js"></script>
+
 	<!-- Data Table JS files -->
 	<script src="../../datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
@@ -71,11 +78,6 @@
     <script src="../../tagit/bootstrap-tagsinput.min.js"></script>
     <script src="../../tagit/bootstrap-tagsinput-angular.min.js"></script>
    
-<style type="text/css">
-.alert{
-    display: none;
-}
-</style>    
 </head>
 
 <body>
@@ -162,14 +164,12 @@
 </header>
 <!--< End header -->
 
-
-
 <div class="dashboard">
     <div class="stud-dashboard clearfix">
-    	<!-- CAM-137: Including data loading gif here. -->
-		<div id="loading-gif-id">
-			<img alt="loading..." src="../../i/student/loading.gif">
-		</div>
+        <!-- CAM-137: Including data loading gif here. -->
+        <div class="loading-gif" id="loading-gif-id">
+            <img alt="" src="../../i/student/loading-1.gif">
+        </div>
        <div class="prf-page-header col-md-12 col-lg-12 col-sm-12">
            <h1>| User Profile </h1>
        </div>
@@ -297,11 +297,11 @@
                             </div>
 							<br>
                             <div class="widget-content">
-                            	<span style="color:#6187c7">School Education</span>
+                            	<span class="sub-top">- School Education</span>
                                 <ul class="ul-education" id="li-std-schooledu">
                                 </ul>
                                 <br>
-                                <span style="color:#6187c7">Higher Education</span>
+                                <span class="sub-top">- Higher Education</span>
                                 <ul class="ul-education" id="li-std-higheredu">
                                 </ul>
                             </div>
@@ -316,14 +316,14 @@
                             <div class="widget-header">
                                 <label for="">Skills</label>
                             </div>
-
+                            <br>
                             <div class="widget-content">
-                            <div id="studentSkillSaveStatus" name="studentSkillSaveStatus" class="alert alert-success"></div>
-                                <div class="example example_objects_as_tags">
-									<div class="bs-docs-example">
-										<input type="text" id="studentSkills" name="studentSkills" />
+                            <!--<div id="studentSkillSaveStatus" name="studentSkillSaveStatus" class="alert alert-success"></div>-->
+                                <div class="tagit-holder">
+									<div class="tagit-block">
+										<input type="text" class="tagit-in" id="studentSkills" name="studentSkills" placeholder="Type here"/>
 									</div>
-									<button onclick="addSkillDetails()">Save Changes</button>
+									<button class="btn btn-primary" onclick="addSkillDetails()">Save Changes</button>
 								</div>
                             </div>
 
@@ -337,14 +337,14 @@
                             <div class="widget-header">
                                 <label for="">Interest</label>
                             </div>
-
+                            <br>
                             <div class="widget-content">
-                            <div id="studentInterestSaveStatus" name="studentInterestSaveStatus" class="alert alert-success"></div>
-								<div class="example example_objects_as_tags">
-									<div class="bs-docs-example">
-										<input type="text" id="studentInterests" name="studentInterests" />
+                            <!--<div id="studentInterestSaveStatus" name="studentInterestSaveStatus" class="alert alert-success"></div>-->
+								<div class="tagit-holder">
+									<div class="tagit-block">
+										<input type="text" class="tagit-in" id="studentInterests" name="studentInterests" placeholder="Type here"/>
 									</div>
-									<button onclick="addInterestsDetails()">Save Changes</button>
+									<button class="btn btn-primary" onclick="addInterestsDetails()">Save Changes</button>
 								</div>
                             </div>
 
@@ -371,7 +371,7 @@
         <h4 class="modal-title" id="studentPersonalDetails"><label>About Me</label></h4>
       </div>
       <div class="modal-body">
-      <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div>
+      <!-- <div id="studentPersonalStatus" name="studentPersonalStatus" class="alert alert-success"></div> -->
       		<h2 class="sub-title-1">| Personal Details</h2>
       		<div class="well clearfix">
       		    <div class="show modal-input-field clearfix">
@@ -413,6 +413,7 @@
 			    </div>
 			</div>
 			<!-- End personal details area -->
+
             <br>
 			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
@@ -552,7 +553,7 @@
                     <p class="w-m-1">Please add you most highest completed school education details.</p>
 
                     <div class="content-body">
-                        <div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div>
+                        <!-- <div id="saveChangesStatus" name="saveChangesStatus" class="alert alert-success"></div> -->
 
                         <div class="show modal-input-field clearfix">
                             <label>Grade :</label>
@@ -626,7 +627,7 @@
                 <div class="tab-pane" id="2">
 	                <div class="content-body">
 	                
-		                <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div>
+		                <!-- <div id="saveChangesHigherEduStatus" name="saveChangesHigherEduStatus" class="alert alert-success"></div> -->
 		                <input hidden name="highedu-id" id="highedu-id">
 		                <div class="show modal-input-field clearfix">
 			                <label>Institute of Study :</label>
@@ -771,7 +772,7 @@
         <h4 class="modal-title" id="studentProfessionalDetails">Professional Experience</h4>
       </div>
       <div class="modal-body">
-			<div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div>
+			<!-- <div id="pesaveChangesStatus" name="pesaveChangesStatus" class="alert alert-success"></div> -->
             <div class="well clearfix">
             	<input hidden name="proexp-id" id="proexp-id">
                 <div class="show modal-input-field clearfix">
@@ -873,7 +874,7 @@
 		
     </div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright © Campus.lk</label>
+        <label for="Copyright">Copyright ï¿½ Campus.lk</label>
     </div>
 </footer>
 

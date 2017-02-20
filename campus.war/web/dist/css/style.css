@@ -718,6 +718,8 @@ body, html {
               line-height: 35px;
               font-weight: lighter; }
 
+/**
+ *20170220 TR CAM-139: INIT new sass file to style student-profile page  */
 .dashboard {
   background: #edf7ff; }
 
@@ -814,6 +816,11 @@ body, html {
         .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills {
           padding: 16px 20px;
           margin-top: 22px; }
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .sub-top, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .sub-top, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .sub-top, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .sub-top {
+            color: #6187c7;
+            font-family: "Roboto", sans-serif;
+            font-size: 17px;
+            font-weight: 600; }
           .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .widget-content .ul-education li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-experience li, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .widget-content .ul-education li {
             font-family: "Roboto", sans-serif;
             font-size: 16px;
@@ -852,6 +859,37 @@ body, html {
               height: 14px;
               margin-top: 10px;
               margin-bottom: 15px; }
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .tagit-holder .tagit-block, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .tagit-holder .tagit-block, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .tagit-holder .tagit-block, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .tagit-holder .tagit-block {
+            margin-bottom: 8px; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .tagit-holder .tagit-block .label-info, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .tagit-holder .tagit-block .label-info, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .tagit-holder .tagit-block .label-info, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .tagit-holder .tagit-block .label-info {
+              background-color: #17aab7 !important;
+              line-height: 38px;
+              font-size: 14px;
+              padding: 5px;
+              letter-spacing: 1px; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .tagit-holder .tagit-block input, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .tagit-holder .tagit-block input, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .tagit-holder .tagit-block input, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .tagit-holder .tagit-block input {
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid rgba(106, 156, 241, 0.5);
+              padding: 3px 12px;
+              margin-bottom: 10px;
+              height: 35px; }
+          .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .tagit-holder button, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .tagit-holder button, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .tagit-holder button, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .tagit-holder button {
+            background-color: #6187c7;
+            border-color: #6187c7;
+            transition: all 0.3s; }
+            .stud-dashboard .prf-page-container .right-side .widgets-e .w-experience .tagit-holder button:hover, .stud-dashboard .prf-page-container .right-side .widgets-e .w-education .tagit-holder button:hover, .stud-dashboard .prf-page-container .right-side .widgets-e .w-activity .tagit-holder button:hover, .stud-dashboard .prf-page-container .right-side .widgets-e .w-skills .tagit-holder button:hover {
+              background-color: #355892; }
+
+/* loading gif */
+.loading-gif {
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0, 0.96, 1, 1); }
+  .loading-gif img {
+    padding-top: 30px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
@@ -1015,6 +1053,7 @@ body, html {
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
 /* 20170207 TR CAM-139 changed modal-footer styles */
 /* 20170208 TR CAM-139 added new styles for professional details modal */
+/* 20170208 TR CAM-139 added new styles for education details modal */
 /* 20170208 TR CAM-139 added new styles for education details modal */
 .modal .modal-dialog .modal-content .modal-header {
   border-bottom: none;
