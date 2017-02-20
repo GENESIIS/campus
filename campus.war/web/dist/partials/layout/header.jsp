@@ -9,7 +9,18 @@
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
+<%
+response.setHeader("Cache-Control", "no-cache");
+response.setHeader("Cache-Control", "no-store");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+// if(session.getAttribute("currentSessionUser")==null)
+// {
+//     out.println("<script>parent.location.href='http://www.campus.dev:8080/dist/partials/error/error-content.jsp'</script>");
+// }
 
+ 
+%>
 	<div class="top">
 		<div class="logo-brand">
 			<h1 class="logo-txt">Campus.lk</h1>
