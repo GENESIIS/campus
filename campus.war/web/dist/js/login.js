@@ -90,7 +90,7 @@ function resetLoginLabels() {
 }
 
 function studentLogout() {
-	CheckingSeassion();
+	
 	var userId = $("#userCode").val();
 	if (userId != null) {
 		var jsonData = {
