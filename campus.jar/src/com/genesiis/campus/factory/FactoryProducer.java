@@ -2,6 +2,7 @@ package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 //20161130 PN c27-upload-user-image: removed return value for choice - "/PublicController".
+//20170221 PN CAM-48: added return value for choice - '/AdminController'.
 
 import org.apache.log4j.Logger;
 
@@ -26,6 +27,8 @@ public class FactoryProducer {
 			return new PublicCmdFactory();
 		} else if (choice.equalsIgnoreCase("/StudentController")) {
 			return new StudentCmdFactory();
+		}else if (choice.equalsIgnoreCase("/AdminController")) {
+			return new AdminCmdFactory();
 		}
 		return null;
 	}
