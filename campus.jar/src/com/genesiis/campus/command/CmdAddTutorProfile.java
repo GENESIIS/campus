@@ -20,6 +20,7 @@ package com.genesiis.campus.command;
 //20170206 CW c36-add-tutor-details modified execute() method.
 //20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 //20170220 CW c36-add-tutor-details modified execute() for INCORRECTDATA message.
+//20170221 CW c36-add-tutor-details removed validateUserAndEmail() method.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -109,43 +110,7 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		return view;
 	}	
-	
-	/**
-	 * Validate Tutor username & email given. 
-	 * @author Chinthaka
-	 * @param helper
-	 * @return String
-	 * @throws Exception
-	 */
-	public String validateUserAndEmail(IDataHelper helper) throws SQLException, Exception{
 
-		String message = "True"; 
-		try {		
-
-			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
-				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
-				message = "False";
-			}
-			
-			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
-				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
-				message = "False";
-			}
-			
-			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
-				message = "False";
-			} 
-			
-		} catch (SQLException sqlException) {
-			log.info("validateUserAndEmail(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("validateUserAndEmail(): Exception " + e.toString());
-			throw e;
-		} 
-		return message;
-	}
 	
 	/**
 	 * Validate Tutor username & email for availability.
