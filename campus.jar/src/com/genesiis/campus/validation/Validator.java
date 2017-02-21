@@ -6,9 +6,10 @@ package com.genesiis.campus.validation;
 //20161115 JH c7-higher-education-landing-page add method comments
 //20161116 MM c5-corporate-training-landing-page-MP Added isNumber(CharSequence) method
 //20170214 PN CAM-72: implemented getErrorType(int status) and getErrorMessage(int status) static methods.
-import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 
 public class Validator {
 	static Logger log = Logger.getLogger(Validator.class.getName());
