@@ -19,7 +19,7 @@ public class CmdHashCodeVerification implements ICommand {
 			.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	String pageURL = "/dist/partials/login/forgotPassword.jsp";
+	String pageURL = "/dist/partials/login/passwordReset.jsp";
 	String result = "";
 	String message = "";
 
