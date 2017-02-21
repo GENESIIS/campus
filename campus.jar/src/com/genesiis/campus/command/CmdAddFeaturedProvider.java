@@ -18,6 +18,7 @@ package com.genesiis.campus.command;
 //used to select course provider usertype
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
+//20170221 JH c141-add-course-provider-issue-improvements
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -81,7 +82,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 		final CourseProviderTown courseProviderTown = new CourseProviderTown();
 		ICrud courseProviderDAO = new FeaturedCourseProviderDAO();
 		int generatedKey = 0;
-		Validator validator = new Validator();
 
 		String systemMessage = null;
 
@@ -169,7 +169,7 @@ public class CmdAddFeaturedProvider implements ICommand {
 						 * 
 						 * 
 						 */
-						if (validator.isEmptyString(helper.getParameter("headOffice"))) {
+						if (Validator.isEmptyString(helper.getParameter("headOffice"))) {
 							courseProvider.setHeadOffice(0);
 						} else {
 							courseProvider.setHeadOffice(Integer.parseInt(helper.getParameter("headOffice")));
@@ -226,7 +226,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 						courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
 						courseProvider.setExpirationDate(sql);
 						courseProvider.setMobilePhoneCountryCode(countryCode);
-						// courseProvider.setHeadOffice(null);
 
 						courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
 						courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
