@@ -5,9 +5,14 @@ package com.genesiis.campus.command;
  * 				 the CmdGetBannerPreRequisite.java class
  * 20170213 DN c131-admin-manage-banner-upload-banner-image-dn renamed 
  * 				the class to CmdBannerPreRequisite.java
+ * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn refactor  getBannerPreRequisites() 
+ * 			   DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA  case option to call AdvertiserDAO#getAll()
+ * 			  instead of FeaturedCourseProviderDAO#getAll()
+ * 		
  */
 
 
+import com.genesiis.campus.entity.AdvertiserDAO;
 import com.genesiis.campus.entity.BannerDAO;
 import com.genesiis.campus.entity.BannerSlotDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -60,8 +65,8 @@ private IView getBannerPreRequisites(IDataHelper helper, IView view) throws SQLE
 		case DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA :
 			//get featured course provider Collection wrapper
 			
-			ICrud featuredCourseProviderDAO = new FeaturedCourseProviderDAO();
-			view.setCollection(featuredCourseProviderDAO.getAll());
+			ICrud registeredActivatedAdverTiser = new AdvertiserDAO();
+			view.setCollection(registeredActivatedAdverTiser.getAll());
 			
 			// get the pages Collection wrapper
 			ICrud PagesWithBannersDAO = new  PageWithBannersDAO();
