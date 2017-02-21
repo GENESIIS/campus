@@ -1,13 +1,11 @@
 package com.genesiis.campus.command;
 
-//201700202 AS C22 forgot password, CmdEmailVarification command class created
+//20170202 AS C22 forgot password, CmdEmailVarification command class created
+//20170221 AS C22 status attribute take out from try block and setAttribut() calls out of try block
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.mail.MessagingException;
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
-
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentEmailVerificationDAO;
@@ -44,8 +42,9 @@ public class CmdEmailVarification implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		int status = -3;
 		try {
-			int status = -3;
+	
 			IEmailComposer resetPasswordEmailComposer = new ResetPasswordInstructionEmailDispenser();
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
@@ -53,8 +52,7 @@ public class CmdEmailVarification implements ICommand {
 			if (validEmail) {
 				ICrud emailVarifyDAO = new StudentEmailVerificationDAO();
 				dataCollection = emailVarifyDAO.findById(data);
-				// log.info(dataCollection);
-
+				
 				for (Collection<String> collection : dataCollection) {
 					Object[] array = collection.toArray();
 					result = (String) array[0];
@@ -68,7 +66,7 @@ public class CmdEmailVarification implements ICommand {
 				if (result.equalsIgnoreCase(SystemMessage.INVALID_EMAIL
 						.message())) {
 					message = SystemMessage.INVALID_EMAIL.message();
-					log.info(message + "okkkkkkkk");
+					
 				} else {
 					data.setFirstName(firstName);
 					data.setLastName(lastName);
@@ -98,8 +96,8 @@ public class CmdEmailVarification implements ICommand {
 						 message = SystemMessage.HASHCODEUNS.message();
 					 }
 					 
+					message = systemMessage(status);
 					
-					helper.setAttribute("message", systemMessage(status));
 
 				}
 			} else {
@@ -115,7 +113,7 @@ public class CmdEmailVarification implements ICommand {
 			log.error("execute():Exception " + exp.toString());
 			throw exp;
 		}
-
+		helper.setAttribute("message", message);
 		return view;
 	}
 
