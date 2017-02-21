@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
-//20170221 c145-add-enhanced-programme created DistrictICrud.java
+//20170221 DJ c145-add-enhanced-programme created DistrictICrud.java
+//20170221 DJ c145-add-enhanced-programme Add method getCourseProviderTown(int providerCode).
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -13,5 +14,7 @@ import java.util.Collection;
  *  @author dumani DJ   
  */
 public interface DistrictICrud extends ICrud {
-	//public Collection<Collection<String>> getAllDistricts() throws SQLException,Exception;
+
+	public Collection<Collection<String>> getCourseProviderTown(int providerCode)throws SQLException,Exception;
+	
 }
