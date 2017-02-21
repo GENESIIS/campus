@@ -34,8 +34,6 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	private String mailingSubject = "Reset password instructions";
 	private String mailBody = "Someone has requested a link to change your password. You can do this through the Link below.";
 
-
-
 	/*
 	 * formatEmailInstance() creates an IEmail with email receiver and sender
 	 * addresses, host ,SMTP host, subject, mailBody bounded
@@ -47,21 +45,24 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 		try {
 			addContentToOriginalMailBody(mailBodyForSpecificMail);
 
-			if(getRecieversEmailAddreses()==null||getRecieversEmailAddreses().size()==0){
-				throw new IllegalArgumentException("genRecieversEmailAddreses list is empty or undefined");
-			} else{
-				IEmail generalEmail = new GeneralMail(getRecieversEmailAddreses(),
-						getSendersEmailAddress(),
-						getMailingSubject(),getMailBody());
+			if (getRecieversEmailAddreses() == null
+					|| getRecieversEmailAddreses().size() == 0) {
+				throw new IllegalArgumentException(
+						"genRecieversEmailAddreses list is empty or undefined");
+			} else {
+				IEmail generalEmail = new GeneralMail(
+						getRecieversEmailAddreses(), getSendersEmailAddress(),
+						getMailingSubject(), getMailBody());
 				this.setGeneralEmail(generalEmail);
 			}
-		} catch (IllegalArgumentException ilexp){
-			log.error("formatEmailInstance(): IllegalArgumentException"+ ilexp.toString());
+		} catch (IllegalArgumentException ilexp) {
+			log.error("formatEmailInstance(): IllegalArgumentException"
+					+ ilexp.toString());
 			throw ilexp;
 		}
 		return generalEmail;
 	}
-	
+
 	/*
 	 * composeSingleEmailList() adds up all the email structured in Collection
 	 * of Collections to a monolithic Collection<String>
@@ -74,7 +75,8 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	 */
 
 	@Override
-	public ArrayList<String> composeSingleEmailList(Collection<Collection<String>> outer) {
+	public ArrayList<String> composeSingleEmailList(
+			Collection<Collection<String>> outer) {
 		ArrayList<String> monoList = new ArrayList<String>();
 		for (Collection<String> emailAddressList : outer) {
 			monoList.addAll(emailAddressList);
@@ -96,22 +98,23 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	 * @param originalMailBody String the original message that the user send to
 	 * the SMPT mail server
 	 */
-	
+
 	@Override
 	public void addContentToOriginalMailBody(String originalMailBody) {
-//		try{
+		// try{
 		StringBuilder result = new StringBuilder();
-		
-//		 MimeMultipart multipart = new MimeMultipart("related");
-//		 
-//		BodyPart messageBodyPart = new MimeBodyPart();
-//        String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
-//        messageBodyPart.setContent(htmlText, "text/html");
-//		
-//       
-//        multipart.addBodyPart(messageBodyPart);
-//        result.append(multipart);
-		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date()));
+
+		// MimeMultipart multipart = new MimeMultipart("related");
+		//
+		// BodyPart messageBodyPart = new MimeBodyPart();
+		// String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
+		// messageBodyPart.setContent(htmlText, "text/html");
+		//
+		//
+		// multipart.addBodyPart(messageBodyPart);
+		// result.append(multipart);
+		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss")
+				.format(new Date()));
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 		result.append(" Dear ");
@@ -120,16 +123,16 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
 		result.append(this.getMailBody());
-		result.append(originalMailBody) ;
+		result.append(originalMailBody);
 		result.append(System.getProperty("line.separator"));
 		result.append("If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.");
 		result.append(System.getProperty("line.separator"));
 		this.setMailBody(result.toString());
-		
-//	 } catch (MessagingException e) {
-//         throw new RuntimeException(e);
-//      }
-		
+
+		// } catch (MessagingException e) {
+		// throw new RuntimeException(e);
+		// }
+
 	}
 
 	@Override
@@ -138,27 +141,31 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 			String emailBodyText, String... restoftheParameters) {
 		setRecieversName(recieversName);
 		setSendersEmailAddress(sedersEmailAddress);
-		setRecieversEmailAddreses(recieversEmailAddreses);// dummy setting this value will be overridden
+		setRecieversEmailAddreses(recieversEmailAddreses);// dummy setting this
+															// value will be
+															// overridden
 		setMailingSubject(mailSubject);
-		setMailBody(emailBodyText +"   "+restoftheParameters);
+		setMailBody(emailBodyText + "   " + restoftheParameters);
 
 	}
 
 	@Override
 	public IEmail getGeneralEmail() {
-		
+
 		return generalEmail;
 	}
 
 	@Override
 	public void setGeneralEmail(IEmail generalEmail)
 			throws IllegalArgumentException {
-		try{
-			if(generalEmail==null)
-				throw new IllegalArgumentException("generalEmail  is undefined must be set");	
+		try {
+			if (generalEmail == null)
+				throw new IllegalArgumentException(
+						"generalEmail  is undefined must be set");
 			this.generalEmail = generalEmail;
-		}catch (IllegalArgumentException ilexp){
-			log.error("setGeneralEmail(): IllegalArgumentException"+ ilexp.toString());
+		} catch (IllegalArgumentException ilexp) {
+			log.error("setGeneralEmail(): IllegalArgumentException"
+					+ ilexp.toString());
 			throw ilexp;
 		}
 
@@ -173,55 +180,59 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 	@Override
 	public void setEmailDispenser(EmailDispenser emailDispenser)
 			throws IllegalArgumentException {
-		try{
-			if(emailDispenser==null)
-				throw new IllegalArgumentException("emailDispenser  is undefined must be set");	
+		try {
+			if (emailDispenser == null)
+				throw new IllegalArgumentException(
+						"emailDispenser  is undefined must be set");
 			this.emailDispenser = emailDispenser;
-		}catch (IllegalArgumentException ilexp){
-			log.error("setEmailDispenser(): IllegalArgumentException"+ ilexp.toString());
+		} catch (IllegalArgumentException ilexp) {
+			log.error("setEmailDispenser(): IllegalArgumentException"
+					+ ilexp.toString());
 			throw ilexp;
 		}
 
 	}
-	
+
 	// getters and setters of the private fields
-		public String getRecieversName() {
-			return recieversName;
-		}
+	public String getRecieversName() {
+		return recieversName;
+	}
 
-		public void setRecieversName(String recieversName) {
-			this.recieversName = recieversName;
-		}
+	public void setRecieversName(String recieversName) {
+		this.recieversName = recieversName;
+	}
 
-		public String getSendersEmailAddress() {
-			return sendersEmailAddress;
-		}
+	public String getSendersEmailAddress() {
+		return sendersEmailAddress;
+	}
 
-		public void setSendersEmailAddress(String sendersEmailAddress) {
-			this.sendersEmailAddress = sendersEmailAddress;
-		}
+	public void setSendersEmailAddress(String sendersEmailAddress) {
+		this.sendersEmailAddress = sendersEmailAddress;
+	}
 
-		public ArrayList<String> getRecieversEmailAddreses() {
-			return recieversEmailAddreses;
-		}
+	public ArrayList<String> getRecieversEmailAddreses() {
+		return recieversEmailAddreses;
+	}
 
-		public void setRecieversEmailAddreses(ArrayList<String> recieversEmailAddreses) {
-			this.recieversEmailAddreses = recieversEmailAddreses;
-		}
-		public String getMailingSubject() {
-			return mailingSubject;
-		}
+	public void setRecieversEmailAddreses(
+			ArrayList<String> recieversEmailAddreses) {
+		this.recieversEmailAddreses = recieversEmailAddreses;
+	}
 
-		public void setMailingSubject(String mailingSubject) {
-			this.mailingSubject = mailingSubject;
-		}
+	public String getMailingSubject() {
+		return mailingSubject;
+	}
 
-		public String getMailBody() {
-			return mailBody;
-		}
+	public void setMailingSubject(String mailingSubject) {
+		this.mailingSubject = mailingSubject;
+	}
 
-		public void setMailBody(String mailBody) {
-			this.mailBody = mailBody;
-		}
+	public String getMailBody() {
+		return mailBody;
+	}
+
+	public void setMailBody(String mailBody) {
+		this.mailBody = mailBody;
+	}
 
 }
