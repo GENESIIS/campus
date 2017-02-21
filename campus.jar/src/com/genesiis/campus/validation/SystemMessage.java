@@ -10,6 +10,7 @@ package com.genesiis.campus.validation;
 //20170202 c36-add-tutor-details-added COUNTRYCODEERROR message
 //20170203 c36-add-tutor-details-added TOWNCODEERROR message
 //20170220 c36-add-tutor-details-added some messages from c38-view-update-tutor-profile
+//20170221 c36-add-tutor-details-modified some messages.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -45,15 +46,15 @@ public enum SystemMessage {
 	EMAIL_USED("E mail already used to create a tutor profile."),
 	EMPTYFIELD("Please fill required data"),
 	INCORRECTDATA("Something wrong in the data you have entered..."),
-	EMPTYFIRSTNAME("Username cannot be empty."),
-	EMPTYLASTNAME("Username cannot be empty."),
-	EMPTYMOBILECOUNTRYCODE("Username cannot be empty."),
-	EMPTYMOBILENETWORKCODE("Username cannot be empty."),
-	EMPTYMOBILENUMBER("Username cannot be empty."),
-	EMPTYLANDCOUNTRYCODE("Username cannot be empty."),
-	EMPTYLANDAREACODE("Username cannot be empty."),
-	EMPTYLANDNUMBER("Username cannot be empty."),
-	EMPTYADDRESS1("Username cannot be empty."),
+	EMPTYFIRSTNAME("First name cannot be empty."),
+	EMPTYLASTNAME("Last name cannot be empty."),
+	EMPTYMOBILECOUNTRYCODE("Mobile Country code cannot be empty."),
+	EMPTYMOBILENETWORKCODE("Mobile network code cannot be empty."),
+	EMPTYMOBILENUMBER("Mobile number cannot be empty."),
+	EMPTYLANDCOUNTRYCODE("Land country code cannot be empty."),
+	EMPTYLANDAREACODE("Land area code cannot be empty."),
+	EMPTYLANDNUMBER("Land number cannot be empty."),
+	EMPTYADDRESS1("Address Line 1 cannot be empty."),
 	UPDATED("Details Updated successfully."),
 	NOMODIFICATIONS("You haven't done any changes."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters.");
