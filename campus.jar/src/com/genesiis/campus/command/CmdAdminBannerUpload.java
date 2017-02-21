@@ -35,6 +35,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * CmdAdminBannerUploadManager.java bears the responsibility of processing
@@ -257,9 +258,10 @@ private IView uploadFullBannerCredentials(JasonInflator rowBanner, IView view,St
 try{
 	 
 	 String[] extension =rowBanner.getBannerImageName().split("\\.");
-	 // want to get the banner code once the update is succeeded
-	 int updateSuccessCode = new AdminBannerDAO().
+	 // want to get the banner code and bannerName once the update is succeeded
+	 Collection<Collection<String>> banners = new AdminBannerDAO().
 			 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
+	 view.setCollection(banners);
 	 
 	// save to the data base table banner 
 	// extract the banner code
@@ -277,7 +279,7 @@ try{
 		throw exp;
 	}	
 	
-		return null;
+		return view;
 	}
 
 
