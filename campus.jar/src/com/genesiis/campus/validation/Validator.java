@@ -41,6 +41,7 @@ package com.genesiis.campus.validation;
 //20170220 CW c36-add-tutor-details add isNotHavingSpace().
 //20170221 CW c36-add-tutor-details modified isNotHavingSpace method name to isEmptyOrHavingSpace() & used to validate for null values & spaces.
 //20170221 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to use isEmptyOrHavingSpace method
+//20170221 CW c36-add-tutor-details modified variable message into valid in isValidUserAndEmailBeforeAddTutor, isValidPassword methods
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -490,36 +491,36 @@ public class Validator {
 	 */
 	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
 		int validityNumber = 0; 
-		boolean message = true;
+		boolean valid = true;
 		try {
 
 			if (!(isNotEmpty(password))){ // check for null fields
 				validityNumber = 1;
 				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
-				message = false;
+				valid = false;
 			}
 			
 			if(!(isNotEmpty(confirmPassword))){ // check for null fields
 				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
-				message = false;
+				valid = false;
 				validityNumber = 2;
 			}
 			
 			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
-				message = false;
+				valid = false;
 			}
 
 			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
-				message = false;
+				valid = false;
 			}
 
 		} catch (Exception e) {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return message;
+		return valid;
 	}
 	
 	/**
@@ -531,35 +532,35 @@ public class Validator {
 	 */
 	public boolean isValidUserAndEmailBeforeAddTutor(IDataHelper helper) throws SQLException, Exception{
 
-		boolean message = true; 
+		boolean valid = true; 
 		int type = 0;
 		try {		
 			
 			if(isEmptyOrHavingSpace(helper.getParameter("username"))){
 				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
-				message = false;
+				valid = false;
 			}
 
 			if(isEmptyOrHavingSpace(helper.getParameter("email"))){
 				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
-				message = false;
+				valid = false;
 			}
 			
 			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
-				message = false;
+				valid = false;
 			} 
 	
 			type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
 		
 			if(type == 1){
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				message = false;
+				valid = false;
 			} 
 			
 			if(type == 2){
 				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				message = false;
+				valid = false;
 			}
 			
 		} catch (SQLException sqlException) {
@@ -569,6 +570,6 @@ public class Validator {
 			log.info("isValidUserAndEmailBeforeAddTutor(): Exception " + e.toString());
 			throw e;
 		} 
-		return message;
+		return valid;
 	}
 }
