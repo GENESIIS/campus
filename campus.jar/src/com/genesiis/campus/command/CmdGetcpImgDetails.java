@@ -20,16 +20,17 @@ import com.genesiis.campus.util.IDataHelper;
  */
 public class CmdGetcpImgDetails implements ICommand {
 	static Logger log = Logger.getLogger(CmdGetcpImgDetails.class.getName());
-	int courseProviderCode = 1; // This needs to be assign from the request
-								// later.
+	
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+		int courseProviderCode = 1; // This needs to be assign from the request later.
 		ICrud sysConf = new SystemConfigDAO();
 		Collection<Collection<String>> sysConfCollection = new ArrayList<Collection<String>>();
 		try {
 			sysConfCollection = sysConf.getAll();
 			view.setCollection(sysConfCollection);
+			helper.setAttribute("courseProviderCode", courseProviderCode);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
