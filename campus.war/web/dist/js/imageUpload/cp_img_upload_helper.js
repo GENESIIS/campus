@@ -4,7 +4,7 @@
  */
 
 var dataSet = null;
-
+var courseProviderCode = null;
 // A $( document ).ready() block.
 $(document).ready(function() {
 	displayImgDetails();
@@ -24,8 +24,11 @@ function displayImgDetails() {
 		},
 		dataType : "json",
 		success : function(response) {
-			dataSet = response;
-			setCPImgData(response);
+			if(respose && response.result != "NO-DATA"){
+				dataSet = response;
+				courseProviderCode = response.courseProviderCode;			
+				setCPImgData(response);
+			}	
 		},
 		error : function(response) {
 			alert("Error: " + response);
