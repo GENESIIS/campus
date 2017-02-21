@@ -8,14 +8,21 @@ package com.genesiis.campus.entity;
  * 			   add doc comments.
  * restructured the addBannerRecordInOneTransAction() sql query to be a stored proc alike.
  * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn addBannerRecordInOneTransAction() and add 
- * in line variables instead of setting via setxxx() jDBC methods to set '?' values in insertUpdateBannerTableSQL query
+ * 				in line variables instead of setting via setxxx() jDBC methods to set '?' values
+ * 				in insertUpdateBannerTableSQL query.
+ * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn add lines to manage the auto commit option
+ * 			   manually in addBannerRecordInOneTransAction(). changed the return type from int to
+ * 			   Collection<Collection<String>>.
+ * 
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.LinkType;
+
 import org.apache.log4j.Logger; 
 
 import java.sql.Connection;
@@ -24,6 +31,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -94,28 +102,28 @@ public class AdminBannerDAO implements ICrud {
 
 	/**
 	 * addBannerRecordInOneTransAction Method insert a record to table banner 
-	 * when a Banner is added to the System.
+	 * when a Banner is added to the System, and if the inital operation
+	 * reported success then the method returns the banner code and the
+	 * Banner Image name from the data base in a collection wrapped within a collection.
+	 * 
 	 * @param banner : JasonInflator instance wrapped as an Object
 	 * @param bannerImageExtension : extension of the banner eg. jpg,jpg,ping etc.
 	 * @param userName : user name of the user who fires the method eg."admin" etc
-	 * @return int : 
+	 * @return Collection<Collection<String>> : Single record is wrapped within 
+	 * another collection eg. {{x,y},{s,d},..}
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public int addBannerRecordInOneTransAction(Object banner, String bannerImageExtension,String userName) throws SQLException, Exception{
+	public Collection<Collection<String>> addBannerRecordInOneTransAction(Object banner, String bannerImageExtension,String userName) throws SQLException, Exception{
 		Connection conn =null;
 		PreparedStatement insertAndUpdateBannerTabelStatement = null;
 		PreparedStatement retrieveBannerImageStatement = null;
 		ResultSet result = null;
 		String bannerImageExtenion= bannerImageExtension; // assign the image extension
-		//CmdAdminBannerUpload.JasonInflator innerBannerInflator = (CmdAdminBannerUpload.JasonInflator)banner;
 		JasonInflator innerBannerInflator = (JasonInflator)banner;
 		String modByAndCrtBy =userName;
 		
-		
-		
-		String insertUpdateBannerTableSQL = "";
-		 insertUpdateBannerTableSQL = "DECLARE @sqlString nvarchar(MAX);"
+		String insertUpdateBannerTableSQL = "DECLARE @sqlString nvarchar(MAX);"
 				+"SET @sqlString =' "
 				+"BEGIN "
 				+"DECLARE @HasErrors int;"
@@ -150,40 +158,58 @@ public class AdminBannerDAO implements ICrud {
 				+"	IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
 
-				+"	UPDATE campus.BANNER SET [IMAGE]= @BannerName+''."+bannerImageExtenion+"'' WHERE code = @MaxBannerCode;"
-				
+				+"	UPDATE campus.BANNER SET [IMAGE]= @BannerName+''."+bannerImageExtenion+"'' WHERE code = @MaxBannerCode;"				
 				+"	IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
-
+				
 				+"	IF @HasErrors>0"
 				+"		ROLLBACK TRANSACTION;"
+				
 				+"	ELSE"
 				+"		COMMIT TRANSACTION;"
 				+"END'"
 				+"EXECUTE sp_executesql @sqlString;";
+				
 		
-		StringBuilder bannerImageSQL = new StringBuilder("select [IMAGE] FROM campus.BANNER where code = (select MAX(CODE)  FROM campus.BANNER);");
-		
+		String bannerImageSQL = "select [IMAGE],[CODE] FROM campus.BANNER where code = (select MAX(CODE)  FROM campus.BANNER);";
+		Collection<Collection<String>> outerWrapper =null;
 		try{
 			conn = ConnectionManager.getConnection();
 			
-			//conn.setAutoCommit(false);
-			insertAndUpdateBannerTabelStatement =	conn.prepareStatement(insertUpdateBannerTableSQL.toString());
-			//retrieveBannerImageStatement = conn.prepareStatement(bannerImageSQL.toString());
-			
-			
+			outerWrapper = new ArrayList<Collection<String>>();
+			conn.setAutoCommit(false);
+			insertAndUpdateBannerTabelStatement =	conn.prepareStatement(insertUpdateBannerTableSQL);
+			retrieveBannerImageStatement = conn.prepareStatement(bannerImageSQL.toString());
 			int status = insertAndUpdateBannerTabelStatement.executeUpdate();
-			return status;
-			
+		
+			if(status >0){
+				result = retrieveBannerImageStatement.executeQuery();				
+				while(result.next()){
+					Collection<String> bannerArray = new ArrayList<String>();
+					bannerArray.add(result.getString("IMAGE"));
+					bannerArray.add(result.getString("CODE"));
+					outerWrapper.add(bannerArray);
+				}
+				
+				conn.commit();
+			}else{
+				conn.rollback();
+			}
 		} catch (SQLException sqle) {
+			conn.rollback();
 			Log.error("addBannerRecordInOneTransAction(Object,String): SQLException"+sqle.toString());
 			throw sqle;
 			
 		} catch (Exception exp) {
+			conn.rollback();
 			Log.error("addBannerRecordInOneTransAction(Object,String): Exception"+exp.toString());
 			throw exp;
+		} finally{
+			conn.setAutoCommit(true);
+			DaoHelper.cleanup(conn, insertAndUpdateBannerTabelStatement, result);
+			DaoHelper.closeStatement(retrieveBannerImageStatement);
 		}
-		 
+		return outerWrapper; 
 	}
 	
 	/*
