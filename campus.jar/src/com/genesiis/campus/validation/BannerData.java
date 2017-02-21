@@ -23,6 +23,10 @@
 //20161217 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
 //				statements in catch clauses
 //20161217 MM c2-integrate-google-banners Cleaned up imports
+//20170220 MM c127-display-banners-on-jsp-load-front-end Added request attribute 
+//				'areBannersDeliveredWithPage' to help ascertain whether banners in JQuery code 
+//				in the front-end whether banners are delivered along with JSP, so if they are not, 
+//				Ajax call to look for banners could be sent from there 
 
 package com.genesiis.campus.validation;
 
@@ -185,7 +189,7 @@ public class BannerData {
 //					}
 				}
 				helper.setAttribute("bannerPath", bannerPath);
-				helper.setAttribute("callerPage", pageName);
+				helper.setAttribute("areBannersDeliveredWithPage", true);
 
 			} catch (SQLException sqle) {
 				Log.error("getBannerData(Operation): SQLException: "
