@@ -6,6 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Upload Course Provider images</title>
+
+<!-- jQuery & Other js -->
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/js/imageUpload/cp_img_upload_helper.js" type="text/javascript"></script>
+
 </head>
 <body>
 	<select id="cp_img_type" name="cp_img_type">
