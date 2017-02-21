@@ -9,6 +9,7 @@
 <!-- 20170215 PN CAM-72 implemented 'Back to Previous Page' button, JS method redirectIntoPreviousPage()-->
 <!-- 20170216 TR CAM-72 added all styles as internal -->
 <!-- 20170216 PN CAM-72 error image path modified to load from C:\sdb\ctxdeploy\education.war\general\error\error-404.png. -->
+<!-- 20170221 PN CAM-72 removed all unwaned JS file imports from the JSP file. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -21,18 +22,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
-
-<!-- Bootstrap & CSS Style-->
-<link href="dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-<link href="../bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-<link href="dist/css/style.css" rel="stylesheet">
-<link href="dist/css/image-slides.css" rel="stylesheet">
-
-<!-- jQuery -->
-<script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-<script src="dist/js/image-slides.js"></script>
 
 <style>
 body, html, h1, h2, h3, h4, h5, h6 {
@@ -208,9 +197,6 @@ footer .ft-bottom label {
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
-
-	<!-- Other js -->
-	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 
 	<!-- CAM-72: Below scripts are to handle page redirections after an error -->
 	<script type="text/javascript">
