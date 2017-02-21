@@ -35,10 +35,10 @@ $(document).ready(function() {
 		    url: '/AdminController?CCO=UCPI',
 		    type: 'POST',
 		    dataType: 'json',
+		    data:formData,
             processData: false,
             cache : false ,
     	    contentType : false,
-		    data:formData,
 		    success:function(response){
 		    	alert("Success");
 			},

@@ -70,7 +70,7 @@ public class CmdcpImgUpload implements ICommand {
 						|| !utility.isValidImageFileType(item.getName(), validExtensions)) {
 					fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
 				} else {
-					filePath = utility.remvoeOldAndUploadNew(uploadPathConf);
+					//filePath = utility.remvoeOldAndUploadNew(uploadPathConf);
 					response.addProperty("path", war + "/" + filePath);
 					response.addProperty("name", utility.getNewName());
 					fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
