@@ -27,6 +27,7 @@ package com.genesiis.campus.validation;
 //20161121 PN c27-upload-user-image: added UPLOAD_USER_PROFILE attribute to operation Enum.
 //20161130 PN c27-upload-user-image: GET_USER_PROFILE enum values are changed.
 //20161221 PN CAM-27: modified GET_USER_PROFILE enum values changed.
+//20170221 PN CAM-48: modified ENUM class by adding attributes to fulfill upload course provider image usecase.
 
 /**
  * Operation class facilitate in binding the CCO
@@ -51,7 +52,10 @@ public enum Operation {
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
-	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
+	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp"), 
+	GET_CP_IMAGE("GCPI", ResponseType.JSON, ""),
+	UPLOAD_CP_IMAGE("UCPI", ResponseType.JSON, ""),
+	GET_CP_IMAGE_DETAILS("GCPID", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
