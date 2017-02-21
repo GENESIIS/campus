@@ -18,7 +18,7 @@ package com.genesiis.campus.command;
 //used to select course provider usertype
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
-//20170221 JH c141-add-course-provider-issue-improvements
+//20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
