@@ -9,7 +9,10 @@ package com.genesiis.campus.validation;
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170209 JH c39-add-course-provider added expiration date back end validation 
+//20170221 JH c141-add-course-provider created separate featuredAccountValidation() method to validate featured course provider account details,
+// 			removed unwanted comments with code review fixes
 
+import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
@@ -120,171 +123,196 @@ public class Validator {
 	 * @throws ParseException 
 	 */
 	public static ArrayList<String> validateCourseProvider(IDataHelper helper) throws ParseException{
-		boolean isValid = true;
 		ArrayList<String> errorString = new ArrayList<String>();
 		
 		if(isEmptyString(helper.getParameter("courseProvider"))){
 			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
-			isValid = false;
-		}if(!isValidLength(helper.getParameter("providerName"), 200, 1 )){
+		}
+		
+		if(!isValidLength(helper.getParameter("providerName"), 200, 1 )){
 			helper.setAttribute("errorProviderName", "Name is empty or too long");
 			errorString.add("Provider Name ");
-			isValid = false;
-		}if(!isValidLength(helper.getParameter("shortName"), 30, 0)){
+		}
+		
+		if(!isValidLength(helper.getParameter("shortName"), 30, 0)){
 			helper.setAttribute("errorShortName", "Short name is empty or too long");
 			errorString.add("Short Name ");
-			isValid = false;
-		}
-//		if(isEmptyString(helper.getParameter("uniquePrefix"))){
-//			helper.setAttribute("errorUniquePrefix", "Unique name cannot be empty");
-//			errorString.add("Unique Name ");
-//			isValid = false;
-//		}
+		}	
+		
 		if(!isValidLength(helper.getParameter("uniquePrefix"), 20, 2)){
 				helper.setAttribute("errorUniquePrefix", "Unique name is empty or too long");
-				isValid = false;
 		}
-//		if(!isEmptyString(helper.getParameter("uniquePrefix")) && (helper.getParameter("uniquePrefix").length() <2)){
-//			helper.setAttribute("errorUniquePrefix", "Unique name is too small");
-//			isValid = false;
-//	}
+		
 		if(isEmptyString(helper.getParameter("aboutMe"))){
 			helper.setAttribute("errorAboutMe", "Say something about you");
 			errorString.add("About Me ");
-			isValid = false;
 		}
+		
 		if(!isValidLength(helper.getParameter("specialFeatures"), 100, 0)){
 			helper.setAttribute("errorSpecialFeatures", "Description is too long.");
 			errorString.add("About Me ");
-			isValid = false;
 		}
-		//if course provider does not need privileges to publish 
+		
+		/*
+		 * if course provider does not need privileges to publish programs, it is indicated
+		 * by the value '0'. Therefore the validations which belongs to that category
+		 * is carried out 
+		 */
+
 		if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
 			String date = helper.getParameter("expirationDate");
-			
-		       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		        Date date1 = sdf.parse(date);
-		        Date date2 = new Date();
-		        
+       
 		        
 			if(isEmptyString(date)){
 				helper.setAttribute("errorExpiration", "Select an expiration date");
 				errorString.add("Expiration Date ");
-				isValid = false;
+			}else{
+			       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			        Date date1 = sdf.parse(date);
+			        Date date2 = new Date();
+			        
+			        if(date1.before(date2)){
+						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
+						errorString.add("Expiration Date ");
+					}
 			}
-			else if(date1.before(date2)){
-				helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
-				errorString.add("Expiration Date ");
-				isValid = false;
-			}
-		}
+		}	
+		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
 			errorString.add("Country ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("selectedTown"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("selectedTown"))){
 			helper.setAttribute("errorSelectedTown", "Select a town");
 			errorString.add("Town ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("providerStatus"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("providerStatus"))){
 			helper.setAttribute("errorProviderStatus", "Select a status");
 			errorString.add("Course Provider status ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("areaCode")) || !isInteger(helper.getParameter("areaCode")) ){
+		}
+		
+		if(isEmptyString(helper.getParameter("areaCode")) || !isInteger(helper.getParameter("areaCode")) ){
 			helper.setAttribute("errorAreaCode", "Area code is empty or invalid");
 			errorString.add("Area Code ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("land1")) || !isInteger(helper.getParameter("land1"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("land1")) || !isInteger(helper.getParameter("land1"))){
 			helper.setAttribute("errorLand1", "Phone number 1 is empty or invalid");
 			errorString.add("Land number 1 ");
-			isValid = false;
-		}if(!isInteger(helper.getParameter("land2"))){
+		}
+		
+		if(!isInteger(helper.getParameter("land2"))){
 			helper.setAttribute("errorLand2", "Phone number 2 is invalid");
 			errorString.add("land number 2");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("networkCode")) || !isInteger(helper.getParameter("networkCode"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("networkCode")) || !isInteger(helper.getParameter("networkCode"))){
 			helper.setAttribute("errorNetworkCode", "Network code is empty or invalid");
 			errorString.add("Network code ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("mobile")) || !isInteger(helper.getParameter("mobile"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("mobile")) || !isInteger(helper.getParameter("mobile"))){
 			helper.setAttribute("errorMobile", "Mobile number is empty or invalid");
 			errorString.add("Mobile code ");
-			isValid = false;
-		}if(isEmptyString(helper.getParameter("selectedProviderType"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("selectedProviderType"))){
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
-			isValid = false;
-		}if(!isEmptyString(helper.getParameter("fax")) && !isInteger(helper.getParameter("fax"))){
+		}
+		
+		if(!isEmptyString(helper.getParameter("fax")) && !isInteger(helper.getParameter("fax"))){
 			helper.setAttribute("errorFax", "Fax number is invalid");
 			errorString.add("Invalid Fax number");
-		}if(isEmptyString(helper.getParameter("address1"))){
+		}
+		
+		if(isEmptyString(helper.getParameter("address1"))){
 			helper.setAttribute("errorAddress1", "Empty address");
 			errorString.add("Address Line 1");
-			isValid = false;
 		}
-	if(!validateEmail(helper.getParameter("inquiryMail"))){
+		
+		if(!validateEmail(helper.getParameter("inquiryMail"))){
 			helper.setAttribute("errorInquiryMail", "Empty or invalid email address");
 			errorString.add("Empty or invalid email address");
-			isValid = false;
 		}if(!validateEmail(helper.getParameter("generalEmail"))){
 			helper.setAttribute("errorGeneralEmail", "Empty or invalid email address");
 			errorString.add("Empty or invalid email address");
-			isValid = false;
 		}
+		
+		
+		/*
+		 * The course provider account validation needs only for the featured course provider
+		 * type. Therefore, depending on the course provider type it will relevant validations
+		 */
 		if(!isEmptyString(helper.getParameter("courseProvider"))){	
 			int courseProviderType = Integer.parseInt(helper.getParameter("courseProvider"));
+			
 			//validate details related to featured course provider account
 			if(courseProviderType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
-				if(!isValidLength(helper.getParameter("providerPrivateName"), 100, 1)){
-					helper.setAttribute("errorPrivateName", "Contact name is empty or too long. (only 20 characters).");
-					errorString.add("Provider Name");
-					isValid = false;
-				}if(isEmptyString(helper.getParameter("providerEmail"))){
-					helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
-					errorString.add("Private Email");
-					isValid = false;
-				}if(!isValidLength(helper.getParameter("providerUsername"), 100, 5)){
-					helper.setAttribute("errorUsername", "Username too small or exceed the max length. It should have at least 5 characters");
-					errorString.add("Username");
-					isValid = false;
-				}
-				if(isEmptyString(helper.getParameter("providerPassword")) || 
-				isEmptyString(helper.getParameter("cProviderPassword"))){
-					errorString.add("Password fields are empty");
-					helper.setAttribute("errorProviderPassword", "Password Filed(s) are empty");
-					isValid = false;
-				}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
-					helper.setAttribute("errorProviderPassword", "Password fields does not match");
-					errorString.add("Password fields does not match");
-					isValid = false;
-				}if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
-					if(!isValidLength(helper.getParameter("providerPassword"), 100, 6)){
-						helper.setAttribute("errorProviderPassword", "Maximum password length is 100 charaters.");
-					}
-				}
-				if(isEmptyString(helper.getParameter("providerContactNumber")) || !isInteger(helper.getParameter("providerContactNumber"))){
-					helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
-					errorString.add("Empty or invalid contact number.");
-					isValid = false;
-				}
-//				if(helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))) {
-//						if(helper.getParameter("providerPassword").length() < 6){
-//							helper.setAttribute("errorProviderPassword", "Password is weak");
-//						}else if(helper.getParameter("providerPassword").length() < 6){
-//							helper.setAttribute("errorProviderPassword", "Password is too long.");
-//						}
-//					errorString.add("Password is weak. Give at lesast 6 characters");
-//					isValid = false;
-//				}
-				if(isEmptyString(helper.getParameter("accountStatus"))){
-					helper.setAttribute("errorStatus", "Select the account status");
-					errorString.add("Account Status");
-					isValid = false;
-				}
+				
+				errorString = featuredAccountValidation(helper, errorString);
 			}
 		}
-
+	
 		return errorString;
 		
 	}
+	
+	
+	/**
+	 * Used to validate featured course provider account details
+	 * @param helper
+	 * @param errorString
+	 * @return
+	 * @author JH
+	 */
+	public static ArrayList<String> featuredAccountValidation(IDataHelper helper, ArrayList<String> errorString){
+		
+		if(!isValidLength(helper.getParameter("providerPrivateName"), 100, 1)){
+			helper.setAttribute("errorPrivateName", "Contact name is empty or too long. (only 20 characters).");
+			errorString.add("Provider Name");
+		}
+		
+		if(isEmptyString(helper.getParameter("providerEmail"))){
+			helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
+			errorString.add("Private Email");
+		}
+		
+		if(!isValidLength(helper.getParameter("providerUsername"), 100, 5)){
+			helper.setAttribute("errorUsername", "Username too small or exceed the max length. It should have at least 5 characters");
+			errorString.add("Username");
+		}
+		
+		if(isEmptyString(helper.getParameter("providerPassword")) || 
+		isEmptyString(helper.getParameter("cProviderPassword"))){
+			errorString.add("Password fields are empty");
+			helper.setAttribute("errorProviderPassword", "Password Filed(s) are empty");
+		}
+		
+		if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
+			helper.setAttribute("errorProviderPassword", "Password fields does not match");
+			errorString.add("Password fields does not match");
+		}
+		
+		if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
+			if(!isValidLength(helper.getParameter("providerPassword"), 100, 6)){
+				helper.setAttribute("errorProviderPassword", "Maximum password length is 100 charaters.");
+			}
+		}
+			
+		if(isEmptyString(helper.getParameter("providerContactNumber")) || !isInteger(helper.getParameter("providerContactNumber"))){
+			helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
+			errorString.add("Empty or invalid contact number.");
+		}
+		
+		if(isEmptyString(helper.getParameter("accountStatus"))){
+			helper.setAttribute("errorStatus", "Select the account status");
+			errorString.add("Account Status");
+		}
+		
+		return errorString;
+	}
+	
 }
