@@ -1,18 +1,19 @@
+package com.genesiis.campus.command;
+
 /**
  * 20170221 PN CAM-48: INIT CmdGetcpImgDetails.java class and implementing execute() method to get cp images related config data.
  */
-package com.genesiis.campus.command;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Pabodha Narmadani
