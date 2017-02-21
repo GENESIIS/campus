@@ -39,6 +39,7 @@ package com.genesiis.campus.validation;
 //20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 //20170220 CW c36-add-tutor-details modified isHavingNullValues(), validateTutorFields(), changed the name of validatePassword() to isValidPassword() & Add isValidUserAndEmailBeforeAddTutor()
 //20170220 CW c36-add-tutor-details add isNotHavingSpace().
+//20170221 CW c36-add-tutor-details modified isNotHavingSpace method name to isEmptyOrHavingSpace() & used to validate for null values & spaces.
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -76,13 +77,15 @@ public class Validator {
 	 * Check the given value is not having only a space
 	 * @author Chinthaka
 	 * @param value
-	 * @return boolean returns true if the text does not contains a space value.
+	 * @return boolean returns true if the text is empty or not contains a space value.
 	 **/
-	public static boolean isNotHavingSpace(String text) {
-		boolean status = true;
-		if (text.equals(" ")) {
-			status = false;
+	public static boolean isEmptyOrHavingSpace(String text) {
+		boolean status = false;
+		
+		if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+			status = true;
 		}
+		
 		return status;
 	}
 
@@ -99,8 +102,8 @@ public class Validator {
 		boolean isHavingNull = false; 
 		try {	
 
-			if(isNotHavingSpace(helper.getParameter("firstname"))){
-				System.out.println("helper.getParameter(firstname) ="+helper.getParameter("firstname")+"=");
+			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))){
+				System.out.println(" firstname is empty or having space ");
 			}
 	/*			
 			if(helper.getParameter("firstname") == " "){
@@ -111,11 +114,16 @@ public class Validator {
 				System.out.println(" equals ");
 			}*/
 			
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (isNotHavingSpace(helper.getParameter("firstname"))))) {
+/*			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (isEmptyOrHavingSpace(helper.getParameter("firstname"))))) {
+				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
+				isHavingNull = true; 
+			}*/
+			
+			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
-
+			
 			if (!((Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") == " "))) {
 				helper.setAttribute("lastNameError", SystemMessage.EMPTYLASTNAME.message());
 				isHavingNull = true; 
