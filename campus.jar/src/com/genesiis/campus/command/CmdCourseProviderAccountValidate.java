@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20161222 JH c39-add-course-provider code modifications for Username validation 
 //20161223 JH c39-add-course-provider code modified
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way  
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -32,11 +33,10 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 		final String action;
 		SystemMessage message = null;
-		Validator validator = new Validator();
 		int validationFlag = 0;
 
 		try {
-			if (!validator.isEmptyString(helper.getParameter("action"))) {
+			if (!Validator.isEmptyString(helper.getParameter("action"))) {
 
 				action = helper.getParameter("action");
 
@@ -45,8 +45,8 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 
-					if (!validator.isEmptyString(helper.getParameter("username"))
-							|| !validator.isEmptyString(helper.getParameter("email"))) {
+					if (!Validator.isEmptyString(helper.getParameter("username"))
+							|| !Validator.isEmptyString(helper.getParameter("email"))) {
 
 						String username = helper.getParameter("username");
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();
@@ -72,7 +72,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud prefixDAO = new CourseProviderPrefixDAO();
 
-					if (!validator.isEmptyString(helper.getParameter("prefix"))) {
+					if (!Validator.isEmptyString(helper.getParameter("prefix"))) {
 						String prefix = helper.getParameter("prefix");
 
 						final CourseProvider courseProvider = new CourseProvider();
