@@ -2,6 +2,7 @@ package com.genesiis.campus.factory;
 
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate AdminCmdFactory.java
 //20170206 DJ c138-add-basic-programme-MP-dj Add  ADD_PROGRAMME_DETAILS.
+//20170221 DJ c145-add-enhanced-programme Add LIST_COURSE_PROVIDER_TOWN enum property.
 
 import com.genesiis.campus.command.CmdHandleProgrammeDetails;
 import com.genesiis.campus.command.ICommand;
@@ -14,6 +15,7 @@ public class AdminCmdFactory implements ICmdFactory {
 	static {	
 		map.put(Operation.LIST_PROGRAMME_ADD_VIEW, new CmdHandleProgrammeDetails());		
 		map.put(Operation.ADD_PROGRAMME_DETAILS, new CmdHandleProgrammeDetails());		
+		map.put(Operation.LIST_COURSE_PROVIDER_TOWN, new CmdHandleProgrammeDetails());		
 	}
 
 	@Override
