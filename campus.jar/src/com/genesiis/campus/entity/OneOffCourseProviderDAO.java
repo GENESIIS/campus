@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 //20170209 JH c141-add-course-provider-issue-improvements code refactore to implement stored procedure call
 //20170212 JH c141-add-course-provider-issue-improvements query changed to call stored procedure 
+//20170221 JH c141-add-course-provider-issue-improvements added comments and in add(): modified to useDaoHelper.cleanup()
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -31,6 +32,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * OneOffCourseProviderDAO class used to handle basic operations
+ * of one off course provider
+ * @author Madu
+ *
+ */
 public class OneOffCourseProviderDAO implements ICrud{
 	
 	static Logger log = Logger.getLogger(OneOffCourseProviderDAO.class.getName());
@@ -57,8 +64,11 @@ public class OneOffCourseProviderDAO implements ICrud{
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
 			
-			/**
-			 * provider query used to insert data into course provider table. 
+			/*
+			 * procedureCall query used to insert data into course provider table. 
+			 * The stored procedure campus.add_one_off_provider will minimize the multiple 
+			 * database queries used to insert a single course provider record in CAM-39.
+			 * It will return the generated course provider code on successful completion.
 			 */
 			
 			String procedureCall = "{call campus.add_one_off_provider(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
@@ -122,10 +132,7 @@ public class OneOffCourseProviderDAO implements ICrud{
 			throw exception;
 		}finally {
 			conn.setAutoCommit(true);
-			DaoHelper.closeResultSet(rs);
-			DaoHelper.closeStatement(callableStatement);
-			DaoHelper.closeConnection(conn);
-			
+			DaoHelper.cleanup(conn, callableStatement, rs);
 		}
 		return generatedKey;
 	}
