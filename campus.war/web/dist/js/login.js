@@ -222,7 +222,7 @@ function verifyCode() {
 
 	// code filed validation error messages handling
 	if (!(codeEmpty)) {
-		document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
+		document.getElementById('codetbError').innerHTML = "  ** Verify Code can not be Empty.";
 		flag = false;
 		return false;
 	}
