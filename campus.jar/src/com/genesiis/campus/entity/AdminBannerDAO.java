@@ -7,6 +7,8 @@ package com.genesiis.campus.entity;
  * 20170220 DN c131-admin-manage-banner-upload-banner-image-dn addBannerRecordInOneTransAction() re factor and
  * 			   add doc comments.
  * restructured the addBannerRecordInOneTransAction() sql query to be a stored proc alike.
+ * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn addBannerRecordInOneTransAction() and add 
+ * in line variables instead of setting via setxxx() jDBC methods to set '?' values in insertUpdateBannerTableSQL query
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -125,21 +127,31 @@ public class AdminBannerDAO implements ICrud {
 				+"          ,[URL],[ISACTIVE],[PAGESLOT],[ADVERTISER],[CRTON],[CRTBY]"
 				+"          ,[MODON],[MODBY],[ACTIVATIONDATE])"
 				+"  VALUES"
-				+"         (''default.gif'' ,getdate()+4,1,5 ,1,''www.topjobs.lk'' ,''1'',1,1"
-				+"        ,getdate(),''admin'',getdate(),''admin'',getdate());"
+				+"         (''default."+bannerImageExtenion+"'' ,''"+java.sql.Date.valueOf(innerBannerInflator.getBannerPublishingEndDate())+"'',"+"1"+","
+				+	Integer.parseInt(innerBannerInflator.getDisplayDusration())+","
+				+	getTheURLType(innerBannerInflator.getUrlMiniWebOrPage()).getMappingInt()+",''"
+				+	innerBannerInflator.getUrlToBeDirectedOnBannerClick()+"'',"
+				+	ApplicationStatus.ACTIVE.getStatusValue()+","
+				+	Integer.parseInt(innerBannerInflator.getBannerSlotCode())+","
+				+	Integer.parseInt(innerBannerInflator.getAdvertiserCode())+"," //('default.gif' ,getdate()+4,1,5 ,1,'www.topjobs.lk' ,'1',1,1,
+				+	"getdate(),''"
+				+	modByAndCrtBy+"'',getdate(),''"
+				+	modByAndCrtBy +"'',''"
+				+  java.sql.Date.valueOf(innerBannerInflator.getBannerPublishingDate())
+				+"'');"      //getdate(),'admin',getdate(),'admin',getdate());
 				+"IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
 
 				+"	select @MaxBannerCode = MAX(CODE)  FROM campus.BANNER;"
 				+"	IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
-				+"	 select * from campus.BANNER;"
+				
 				+"	set @BannerName= @MaxBannerCode;"
 				+"	IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
 
-				+"	UPDATE campus.BANNER SET [IMAGE]= @BannerName+''.jpg'' WHERE code = @MaxBannerCode;"
-				+"	select * from campus.BANNER;"
+				+"	UPDATE campus.BANNER SET [IMAGE]= @BannerName+''."+bannerImageExtenion+"'' WHERE code = @MaxBannerCode;"
+				
 				+"	IF(@@ERROR !=0)"
 				+"	SET @HasErrors = 1;"
 
@@ -156,21 +168,9 @@ public class AdminBannerDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			
 			//conn.setAutoCommit(false);
-			
 			insertAndUpdateBannerTabelStatement =	conn.prepareStatement(insertUpdateBannerTableSQL.toString());
-			retrieveBannerImageStatement = conn.prepareStatement(bannerImageSQL.toString());
-			//populating the query with data
-			insertAndUpdateBannerTabelStatement.setDate(1,formADate("yyyy-M-dd",innerBannerInflator.getBannerPublishingEndDate()));
-			insertAndUpdateBannerTabelStatement.setString(2, "1"); //type ***
-			insertAndUpdateBannerTabelStatement.setInt(3, Integer.parseInt(innerBannerInflator.getDisplayDusration())); //DisplayDuration
-			insertAndUpdateBannerTabelStatement.setInt(4,getTheURLType(innerBannerInflator.getUrlMiniWebOrPage()).getMappingInt()); //LinkType 
-			insertAndUpdateBannerTabelStatement.setString(5,innerBannerInflator.getUrlToBeDirectedOnBannerClick()); //URL
-			insertAndUpdateBannerTabelStatement.setInt(6,  ApplicationStatus.ACTIVE.getStatusValue());//ISACTIVE
-			insertAndUpdateBannerTabelStatement.setInt(7, Integer.parseInt(innerBannerInflator.getBannerSlotCode()));//PAGESLOT
-			insertAndUpdateBannerTabelStatement.setInt(8, Integer.parseInt(innerBannerInflator.getAdvertiserCode())); //ADVERTISER
-			insertAndUpdateBannerTabelStatement.setString(9,modByAndCrtBy); //crtby
-			insertAndUpdateBannerTabelStatement.setString(10,modByAndCrtBy); //modby
-			insertAndUpdateBannerTabelStatement.setDate(11,formADate("yyyy-M-dd",innerBannerInflator.getBannerPublishingDate()));//ACTIVATIONDATE
+			//retrieveBannerImageStatement = conn.prepareStatement(bannerImageSQL.toString());
+			
 			
 			int status = insertAndUpdateBannerTabelStatement.executeUpdate();
 			return status;
