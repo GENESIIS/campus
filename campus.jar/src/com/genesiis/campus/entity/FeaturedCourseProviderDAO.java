@@ -22,6 +22,7 @@ package com.genesiis.campus.entity;
 //20170203 JH c39-add-course-provider mx fixes: modified the error log statement
 //20170207 JH c141-add-course-provider-issue-improvements DAO class query refactor to implement stored procedure wip
 //20170209 JH c141-add-course-provider-issue-improvements removed unwanted prepared statement variables and imports
+//20170221 JH c141-add-course-provider-issue-improvements add(): added method comments and finally block modified to use DaoHelper.cleanup()
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -44,6 +45,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * FeaturedCourseProviderDAO class used to handle basic operations of the featured
+ * course provider
+ * @author JH
+ *
+ */
 public class FeaturedCourseProviderDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(FeaturedCourseProviderDAO.class
@@ -77,10 +84,23 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			conn.setAutoCommit(false);
 
-			
+			/*
+			 * procedureCallMainBranch will insert data of a course provider main branch. 
+			 * This will insert data into course provider table, course provider account table
+			 * and course provider town table. 
+			 * 
+			 * This will not insert data into principal column
+			 */
 			String procedureCallMainBranch = "{call campus.add_featured_provider_main_branch(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
+			/*
+			 * procedureCallMainBranch will creates a course provider sub branch account.
+			 * This will insert data into course provider table, course provider account table
+			 * and course provider town table
+			 * 
+			 * This will insert data into principal column
+			 */
 			String procedureCallSubBranch = "{call campus.add_featured_provider_sub_branch(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
@@ -163,9 +183,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			throw exception;
 		} finally {
 			conn.setAutoCommit(true);
-			DaoHelper.closeResultSet(rs);
-			DaoHelper.closeStatement(callableStatement);
-			DaoHelper.closeConnection(conn);
+			DaoHelper.cleanup(conn, callableStatement, rs);
 			
 		}
 		return generatedKey;
