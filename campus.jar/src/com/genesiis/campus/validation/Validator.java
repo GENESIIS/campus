@@ -159,24 +159,26 @@ public class Validator {
 		 * is carried out 
 		 */
 
-		if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-			String date = helper.getParameter("expirationDate");
+		if(!isEmptyString(helper.getParameter("publishProgram"))){
+			if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
+				String date = helper.getParameter("expirationDate");
        
 		        
-			if(isEmptyString(date)){
-				helper.setAttribute("errorExpiration", "Select an expiration date");
-				errorString.add("Expiration Date ");
-			}else{
-			       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			        Date date1 = sdf.parse(date);
+				if(isEmptyString(date)){
+					helper.setAttribute("errorExpiration", "Select an expiration date");
+					errorString.add("Expiration Date ");
+				}else{
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date date1 = sdf.parse(date);
 			        Date date2 = new Date();
 			        
 			        if(date1.before(date2)){
 						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
 						errorString.add("Expiration Date ");
 					}
-			}
-		}	
+				}
+			}	
+		}
 		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
