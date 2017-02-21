@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
-//201700209 AS C22 forgot password, CmdHashCodeVerification command class created
+//20170209 AS C22 forgot password, CmdHashCodeVerification command class created
+//20170221 AS C22 execute() method body implemented a try-catch block
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -26,25 +27,35 @@ public class CmdHashCodeVerification implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		try {
+			String gsonData = helper.getParameter("jsonData");
+			data = getStudentdetails(gsonData);
+			StudentEmailVerificationDAO studentEmailvarification = new StudentEmailVerificationDAO();
+			dataCollection = studentEmailvarification.verifyHashCode(data);
 
-		String gsonData = helper.getParameter("jsonData");
-		data = getStudentdetails(gsonData);
-		StudentEmailVerificationDAO studentEmailvarification = new StudentEmailVerificationDAO();
-		dataCollection = studentEmailvarification.verifyHashCode(data);
+			for (Collection<String> collection : dataCollection) {
+				Object[] array = collection.toArray();
+				result = (String) array[0];
+			}
+			if (result == SystemMessage.VERIFICATION_CODEEXPIRED.message()) {
+				message = result;
+			}
+			if (result == SystemMessage.INVALID_HASHCODE.message()) {
+				message = result;
+			} else {
+				view.setCollection(dataCollection);
+			}
+		} catch (SQLException sexp) {
+			log.error("execute(): SQLException " + sexp.toString());
+			throw sexp;
+		} catch (IllegalArgumentException ilexp) {
+			log.error("execute(): IllegalArgumentException" + ilexp.toString());
+			throw ilexp;
+		} catch (Exception exp) {
+			log.error("execute():Exception " + exp.toString());
+			throw exp;
+		}
 
-		for (Collection<String> collection : dataCollection) {
-			Object[] array = collection.toArray();
-			result = (String) array[0];
-		}
-		if (result == SystemMessage.VERIFICATION_CODEEXPIRED.message()) {
-			message = result;
-		}
-		if (result == SystemMessage.INVALID_HASHCODE.message()) {
-			message = result;
-		} else {
-			view.setCollection(dataCollection);
-		}
-		
 		helper.setAttribute("errorMessage", message);
 		helper.setAttribute("pageURL", pageURL);
 
