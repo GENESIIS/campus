@@ -16,6 +16,11 @@ import com.genesiis.campus.command.CmdListCourseProviderRegisterPage;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
+/**
+ * command factory for the adimn functions
+ * @author JH
+ *
+ */
 public class AdminCmdFactory implements ICmdFactory{
 
 

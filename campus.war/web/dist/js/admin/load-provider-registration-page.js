@@ -389,7 +389,7 @@ function saveCourseProvider() {
 	}
 
 	if (flag === true) {
-//		if (vaidateCourseProviderDeatils() === true) {
+		if (vaidateCourseProviderDeatils() === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -436,7 +436,7 @@ function saveCourseProvider() {
 							}
 						},
 					});
-//		}
+		}
 	}
 }
 	

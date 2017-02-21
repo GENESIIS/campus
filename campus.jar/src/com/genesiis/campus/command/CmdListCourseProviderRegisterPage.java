@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161230 JH c39-add-course-provider case LIST_PROVIDER_REGISTRATION_PAGE modified 
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments
 
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
@@ -23,6 +24,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * CmdListCourseProviderRegisterPage used to load data to the course provider
+ * registration page
+ * @author Madu
+ *
+ */
 public class CmdListCourseProviderRegisterPage implements ICommand {
 	static Logger log = Logger
 			.getLogger(CmdListCourseProviderRegisterPage.class.getName());

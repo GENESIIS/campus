@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import, print exception string instead of 
 //the exception in findById()
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments 
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -21,6 +22,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * CourseProviderPrefixDAO handles basic DRUD operations of course provider prefix
+ * @author JH
+ *
+ */
 public class CourseProviderPrefixDAO implements ICrud {
 	static Logger log = Logger
 			.getLogger(CourseProviderPrefixDAO.class.getName());

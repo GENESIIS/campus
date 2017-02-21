@@ -4,7 +4,7 @@ package com.genesiis.campus.entity;
 //			  c26-add-student-details: getAll() method SQL query modified.
 //20161126 PN c26-add-student-details: findById() method implemented.
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
-//20170221 JH c141-add-course-provider-issue-improvements: findById(Object), getAll() method modified to close result set object
+//20170221 JH c141-add-course-provider-issue-improvements:added doc comments, findById(Object), getAll() methods modified to close result set object
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -18,6 +18,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Country2DAO used for basic operations of country
+ * @author PN
+ *
+ */
 public class Country2DAO implements ICrud {
 	static Logger log = Logger.getLogger(Country2DAO.class.getName());
 
@@ -39,6 +44,12 @@ public class Country2DAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * findById method used to load country details using the cournty code
+	 * @param object code
+	 * @return String collection of collection 
+	 * @author PN
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -76,6 +87,12 @@ public class Country2DAO implements ICrud {
 		return allCountryList;
 	}
 
+	/**
+	 * getAll method used to load all countries except defaults
+	 * @param object code
+	 * @return String collection of collection 
+	 * @author PN
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {

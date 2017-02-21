@@ -5,7 +5,8 @@ package com.genesiis.campus.command;
 //20161222 JH c39-add-course-provider code modifications for Username validation 
 //20161223 JH c39-add-course-provider code modified
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
-//20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way  
+//20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way 
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -23,7 +24,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
+/**
+ * CmdCourseProviderAccountValidate used to validate course provider username and the
+ * unique prefix validations
+ * @author JH
+ *
+ */
 public class CmdCourseProviderAccountValidate implements ICommand {
 	static Logger log = Logger
 			.getLogger(CmdCourseProviderAccountValidate.class.getName());

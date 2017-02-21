@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20161222 DN CAMP:18 introduced methods for closing connection and creating the database Connection.
 //20161229 JH c39-add-course-provider findById(): moved object type casting statement inside the try block, closed resource ResultSet
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments 
 
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -18,6 +19,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * UserTypeDAO used to handle basic CRUD operations of the user type entity
+ * @author DN
+ *
+ */
 public class UserTypeDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(UserTypeDAO.class.getName());
@@ -40,6 +46,10 @@ public class UserTypeDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * findById method used to get the user type details by the user type string 
+	 * @author DN
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {

@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161029 PN c11-criteria-based-filter-search implemented getAll() method for retrieve existing details
 //20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments 
 
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -15,6 +16,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * TownDAO used to basic CURD operations related to town
+ * @author PN
+ *
+ */
 public class TownDAO implements ICrud {
 	static Logger log = Logger.getLogger(TownDAO.class.getName());
 
@@ -36,6 +42,10 @@ public class TownDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * findById method used to retrieve town details using the country code
+	 * @author JH
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {
@@ -79,6 +89,10 @@ public class TownDAO implements ICrud {
 		return allTownList;
 	}
 
+	/**
+	 * getAll method used to load all towns
+	 * @author PN
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {

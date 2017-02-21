@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import, print exception string instead of the exception in findById()
+//20170221 JH c141-add-course-provider-issue-improvements added doc comments 
 
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.util.ConnectionManager;

@@ -5,7 +5,7 @@ package com.genesiis.campus.entity;
 //20170105 JH c39-add-course-provider getAll() method modified: implement ApplicatonSatatus enum class
 //20170117 JH c39-add-course-provider implemented DaoHelper class to close resources
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
-//20140221 JH c141-add-course-provider-issue-improvements added method comments and changed logger statements
+//20140221 JH c141-add-course-provider-issue-improvements added doc comments and changed logger statements
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -20,6 +20,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Handles basic operations of course provider types
+ * @author JH
+ *
+ */
 public class CourseProviderTypeDAO implements ICrud {
 	static Logger log = Logger.getLogger(CourseProviderTypeDAO.class.getName());
 
@@ -44,7 +49,7 @@ public class CourseProviderTypeDAO implements ICrud {
 	}
 
 	/**
-	 * getAll() method returns all the course provider records with acitve status
+	 * getAll() method returns all the course provider records with active status
 	 * @return collection of course provider types
 	 * @author JH
 	 */
