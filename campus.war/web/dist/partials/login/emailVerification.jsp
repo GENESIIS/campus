@@ -44,7 +44,7 @@
             });
 
             // if span empty, hide the parent label
-            $('.fp-msg span:empty').parent().hide()
+            $('.fp-msg span:empty').parent().hide();
         });
 
     </script>
@@ -71,7 +71,7 @@
         <div class="col-lg-6 col-sm-12 col-md-8 col-xs-12 clearfix">
             <div class="input-area form-group has-error clearfix">
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <label for="username">Email : <span class="error-txt" id="emailtbError"></span></label>
+                    <label for="username">Email : <span class="error-txt" id=emailtbError></span></label>
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                     <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailtbError')">
@@ -79,7 +79,7 @@
             </div>
             <div class="form-group btn-holder">
                 <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
-                <!--<button type="button" class="btn btn-primary email-submit" id="openPop">PopUp</button>-->
+               
             </div>
         </div>
     </div>
@@ -105,11 +105,11 @@
                         <div class="row verify-modal-container">
                             <div class="col-sm-12 col-lg-12 col-md-12 ">
 
-                                <label class="" id="popupMessage"></label>
+                                <label class="" id="verifyMesssage"></label>
                                 <div class="form-group has-error ">
                                     <div class="fp-msg fp-msg-success">
                                         <label for="username">
-                                            <span class="error-txt" id="emailtbError"></span>
+                                            <span class="error-txt" id="codetbError"></span>
                                         </label>
                                     </div>
                                     <label class="evm-lbl-1 m-t-0 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
