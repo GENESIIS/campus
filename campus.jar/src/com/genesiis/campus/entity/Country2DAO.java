@@ -4,8 +4,10 @@ package com.genesiis.campus.entity;
 //			  c26-add-student-details: getAll() method SQL query modified.
 //20161126 PN c26-add-student-details: findById() method implemented.
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
+//20170221 JH c141-add-course-provider-issue-improvements: findById(Object), getAll() method modified to close result set object
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 
 import org.apache.log4j.Logger;
 
@@ -44,6 +46,7 @@ public class Country2DAO implements ICrud {
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 			conn = ConnectionManager.getConnection();
@@ -51,7 +54,7 @@ public class Country2DAO implements ICrud {
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, countryCode);
-			final ResultSet rs = stmt.executeQuery();
+			 rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
@@ -68,12 +71,7 @@ public class Country2DAO implements ICrud {
 			log.info("getAll(): E " + e.toString());
 			throw e;
 		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+		DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return allCountryList;
 	}
@@ -84,13 +82,14 @@ public class Country2DAO implements ICrud {
 		final Collection<Collection<String>> allCountryList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[NAME] FROM [CAMPUS].[COUNTRY2] WHERE [CODE] NOT IN (-1);";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleCountryList = new ArrayList<String>();
