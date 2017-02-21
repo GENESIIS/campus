@@ -16,10 +16,38 @@ $(document).ready(function() {
 		$.each(dataSet.result, function(index, val) {
 			if (val[0] === sysConfCode) {
 				$('#cp_img_desc').html(val[2]);
-				Console.log($("#cp_img_desc option:selected").text());;
+				//Console.log($("#cp_img_desc option:selected").text());;
 			}
 		});
 	})
+	
+	$(document).on('click','#cp_img_upload_btn',function(event){		
+		event.stopPropagation(); 
+	    event.preventDefault(); 
+	    
+		var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file
+		var formData = new FormData();
+		formData.append("file", cpImgUpload);
+		formData.append('courseProviderCode', '1');
+		//formData.append('uploadPathConf', $("#cp_img_desc option:selected").text());
+		
+		$.ajax({
+		    url: '/AdminController?CCO=UCPI',
+		    type: 'POST',
+		    dataType: 'json',
+            processData: false,
+            cache : false ,
+    	    contentType : false,
+		    data:formData,
+		    success:function(response){
+		    	alert("Success");
+			},
+			error:function(response,error,errorThrown) {
+				alert("Error");
+			}
+		});
+		
+	});
 
 });
 
@@ -53,7 +81,7 @@ function displayImgDetails() {
 function setCPImgData(response) {
 	var cp_img_type = $("#cp_img_type");
 	cp_img_type.find('option').remove();
-	$('<option>').val("").text("--Select One--").appendTo(cp_img_type);
+	$('<option>').val("").text("--Select Type--").appendTo(cp_img_type);
 	$.each(response.result, function(index, value) {
 		if (value[4] == 'cp_img') {
 			var x = value[0].toString();

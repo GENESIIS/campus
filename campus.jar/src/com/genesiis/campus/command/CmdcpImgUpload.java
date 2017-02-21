@@ -97,7 +97,7 @@ public class CmdcpImgUpload implements ICommand {
 	 * 
 	 * @param key
 	 * @param index
-	 * @return SystemConfig table values.
+	 * @return
 	 * @throws SQLException
 	 * @throws Exception
 	 */

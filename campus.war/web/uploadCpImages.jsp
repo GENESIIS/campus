@@ -21,7 +21,7 @@
 
 	<input type="file" id="cp_img_upload" name="cp_img_upload"
 		accept="image/*">
-	<input type="submit">
+	<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn">
 
 	<img id="cp_img_display" name="cp_img_display" src="" alt="" width=""
 		height="">
