@@ -40,6 +40,7 @@ package com.genesiis.campus.validation;
 //20170220 CW c36-add-tutor-details modified isHavingNullValues(), validateTutorFields(), changed the name of validatePassword() to isValidPassword() & Add isValidUserAndEmailBeforeAddTutor()
 //20170220 CW c36-add-tutor-details add isNotHavingSpace().
 //20170221 CW c36-add-tutor-details modified isNotHavingSpace method name to isEmptyOrHavingSpace() & used to validate for null values & spaces.
+//20170221 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to use isEmptyOrHavingSpace method
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -101,60 +102,43 @@ public class Validator {
 
 		boolean isHavingNull = false; 
 		try {	
-
-			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))){
-				System.out.println(" firstname is empty or having space ");
-			}
-	/*			
-			if(helper.getParameter("firstname") == " "){
-				System.out.println(" == ");
-			}
-
-			if(helper.getParameter("firstname").equals(" ")){
-				System.out.println(" equals ");
-			}*/
-			
-/*			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (isEmptyOrHavingSpace(helper.getParameter("firstname"))))) {
-				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
-				isHavingNull = true; 
-			}*/
 			
 			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
 			
-			if (!((Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("lastname"))){
 				helper.setAttribute("lastNameError", SystemMessage.EMPTYLASTNAME.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (helper.getParameter("mobileCountryCode") == "0"))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileCountryCode"))){
 				helper.setAttribute("mobileError", SystemMessage.EMPTYMOBILECOUNTRYCODE.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("mobileNetworkCode") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode"))){
 				helper.setAttribute("mobileNetworkError", SystemMessage.EMPTYMOBILENETWORKCODE.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("mobileNumber") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileNumber"))){
 				helper.setAttribute("mobileNumberError", SystemMessage.EMPTYMOBILENUMBER.message());
 				isHavingNull = true; 
 			}
 			
-			if (!((Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("landNumber"))){
 				helper.setAttribute("landNumberError", SystemMessage.EMPTYLANDNUMBER.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("landAreaCode"))){
 				helper.setAttribute("landAreaCodeError", SystemMessage.EMPTYLANDAREACODE.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("address1") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("address1"))){
 				helper.setAttribute("address1Error", SystemMessage.EMPTYADDRESS1.message());
 				isHavingNull = true; 
 			}
@@ -550,13 +534,13 @@ public class Validator {
 		boolean message = true; 
 		int type = 0;
 		try {		
-
-			if (!((Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " "))){
+			
+			if(isEmptyOrHavingSpace(helper.getParameter("username"))){
 				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
 				message = false;
 			}
-			
-			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
+
+			if(isEmptyOrHavingSpace(helper.getParameter("email"))){
 				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
 				message = false;
 			}
