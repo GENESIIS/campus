@@ -3,6 +3,9 @@
 <%-- 20170209 MM c111-display-banners-on-jsp-load - Added id html attribute to banner-slot divs --%>
 <%-- 20170220 MM c127-display-banners-on-jsp-load-front-end - Changed the way JSP name is obtained 
 				to use ${pageScope['javax.servlet.jsp.jspPage']} --%>
+<%-- 20170220 MM c127-display-banners-on-jsp-load-front-end - Added hidden field 
+				'areBannersDeliveredWithPage' to help determine by JQuery code whether to send an 
+				Ajax call to fetch banners if the slots remain empty after page load --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -48,7 +51,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_1}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
@@ -68,7 +71,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_2}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
@@ -85,7 +88,7 @@
 			<c:otherwise>			
 				<c:forEach var="banner" items="${SLOT_BANNER_TEST_3}" varStatus="vs">
 					<a href="${banner[7]}" target="_blank">
-						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" data-caller-page="${callerPage}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
+						<img data-timeout="${banner[5]}" data-banner-code="${banner[2]}" class="<c:if test="${vs.index == 0}">banner-shown</c:if> banner rotating-item" src="${bannerPath}\<c:out value="${banner[2]}"/>\<c:out value="${banner[10]}"/>"/>
 					</a>
 				</c:forEach>
 			</c:otherwise>
@@ -94,8 +97,26 @@
 	</div>
 	
 <!-- 	The name of the current page; this is required to be specified with the following mark-up -->
-<!-- 	<input type="hidden" id="pageName" value="bannerTestPageCalledDirectly.jsp"> -->
 	<input type="hidden" id="pageName" value="<c:out value="${pageScope['javax.servlet.jsp.jspPage']}"/>">
+	
+<!-- 	A hidden input to hold a "flag" to indicate whether banner images were attempted to be loaded
+		into this page via a DB call when the JSP page was being loaded -->
+	<c:choose>
+		<c:when test="${not empty areBannersDeliveredWithPage}">
+			<c:choose>
+				<c:when test="${areBannersDeliveredWithPage == true}">
+					<c:set var="bannerLoadStatus" value="true"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="bannerLoadStatus" value="false"/>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			<c:set var="bannerLoadStatus" value="false"/>
+		</c:otherwise>
+	</c:choose>
+	<input type="hidden" id="areBannersDeliveredWithPage" value="<c:out value="${bannerLoadStatus}"/>">
 	
 <%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
 	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
