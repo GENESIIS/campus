@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20170208 DJ c138-add-basic-programme-MP-dj Initiate ProgrammeDTO.java
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ProgrammeDTO {	
@@ -27,6 +28,7 @@ public class ProgrammeDTO {
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private ArrayList<IntakeDTO> intakeList;
 	
 	
 	public int getCode() {
@@ -162,4 +164,11 @@ public class ProgrammeDTO {
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
 	}
+	public ArrayList<IntakeDTO> getIntakeList() {
+		return intakeList;
+	}
+	public void setIntakeList(ArrayList<IntakeDTO> intakeList) {
+		this.intakeList = intakeList;
+	}
+	
 }
