@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170202 PN CAM-72: modified the values set of view that passes into the JSP page.
 //20170214 PN CAM-72: modified execute function to use Validator.getErrorMessage(statusCode) and Validator.getErrorType(statusCode)
 //					  to return error type and error message. error logging modified.
+//20170221 PN CAM-72: added method comments into the execute() method. logger statement changed.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
@@ -32,6 +33,15 @@ public class CmdErrorHandling implements ICommand {
 	private String exceptionName = "";
 	private String exceptionMessage = "";
 
+	/**
+	 * HTTP response status codes indicate whether a specific HTTP request has been successfully completed. 
+	 * Responses are grouped in five classes: informational responses, successful responses, redirects, client errors, and servers errors. 
+	 * From all of the above, this execute method has been implemented to handle client errors and servers errors. 
+	 * If the application has resulted into a error state user will see this error page other than waiting on a blank screen.
+	 * 
+	 * @param helper - wrapper class object which contains the HTTPServletRequest object.
+	 * @param view - wrapper class object to hold data that is passing to the JSP page.
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
@@ -67,7 +77,7 @@ public class CmdErrorHandling implements ICommand {
 			errorDetails.add(errorMessage);
 			errorDetailsWrapper.add(errorDetails);
 
-			log.info("ERROR DETAILS: TYPE:" + errorType + " ERROR_CODE:" + statusCode + " SERVLET:" + servletName
+			log.error("ERROR DETAILS: TYPE:" + errorType + " ERROR_CODE:" + statusCode + " SERVLET:" + servletName
 					+ " REQUESTED URI:" + requestUri + " MESSAGE:" + errorMessage + " EXCEPTION: " + exceptionName + " "
 					+ exceptionMessage);
 		} catch (Exception e) {
