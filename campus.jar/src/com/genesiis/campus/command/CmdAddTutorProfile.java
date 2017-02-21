@@ -21,6 +21,7 @@ package com.genesiis.campus.command;
 //20170206 CW c36-add-tutor-details cleaning the code by removing commented lines.
 //20170220 CW c36-add-tutor-details modified execute() for INCORRECTDATA message.
 //20170221 CW c36-add-tutor-details removed validateUserAndEmail() method.
+//20170221 CW c36-add-tutor-details modified execute() method to stop view entered data if successfully added into the database.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -106,7 +107,10 @@ public class CmdAddTutorProfile implements ICommand {
 			throw exception;
 		} finally {			
 			helper.setAttribute("message", message);
-			helper.setAttribute("tutorList", tutorCollection);
+			
+			if(!(message.equals(SystemMessage.ADDED.message()))){
+				helper.setAttribute("tutorList", tutorCollection);
+			}
 		}
 		return view;
 	}	
