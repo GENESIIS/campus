@@ -4,11 +4,14 @@ package com.genesiis.campus.command;
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate Dao call for master data view
 //20170207 DJ c138-add-basic-programme-MP-dj Renamed as CmdHandleProgrammeDetails.java
 //20170213 DJ c138-add-basic-programme-MP-dj Implemented populateFormData() to populate input data
+//20170221 DJ c145-add-enhanced-programme Add method retrieveProviderTown(IDataHelper helper, IView iView).
 
 import com.genesiis.campus.entity.CourseProviderICrud;
+import com.genesiis.campus.entity.DistrictICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
+import com.genesiis.campus.entity.dao.DistrictDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.util.IDataHelper;
@@ -49,8 +52,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		try {
 			if ("LIST_PROGRAMME_ADD_VIEW".equalsIgnoreCase(ccoString)) {
 				populateProgrammeInsertionView(helper, iView);
-			} else if ("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)) {				
-				manageProgrammeInsertion(helper ,iView);				
+			} else if ("LIST_COURSE_PROVIDER_TOWN".equalsIgnoreCase(ccoString)) {
+				retrieveProviderTown(helper, iView);
+			} else if ("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)) {
+				manageProgrammeInsertion(helper, iView);
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
@@ -59,6 +64,19 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		return iView;
 	}
 	
+	private void retrieveProviderTown(IDataHelper helper, IView iView) {
+		final DistrictICrud districtDAO=new DistrictDAOImpl();
+		try {
+			int providerCode=0;
+			final Collection<Collection<String>> allClassTypes = districtDAO.getCourseProviderTown(providerCode);
+			/*helper.setAttribute("allClassTypes", allClassTypes);*/
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
 	/**
 	 * Populate program insertion interface.Load master data for particular drop downs.
 	 * @author DJ Dumani
@@ -67,7 +85,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 	 */	
 	private void populateProgrammeInsertionView(IDataHelper helper, IView iView)
 			throws Exception {
-		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();
+		final CourseProviderICrud providerDAO = new CourseProviderDAOImpl();	
 
 		try {
 			final Collection<Collection<String>> courseProviderSearchResults = providerDAO.getLightAllCourseProviders();
@@ -83,7 +101,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			helper.setAttribute("allLevels", allLevels);
 
 			final Collection<Collection<String>> allClassTypes = programmeDAO.getAllClassTypes();
-			helper.setAttribute("allClassTypes", allClassTypes);
+			helper.setAttribute("allClassTypes", allClassTypes);			
 			
 		} catch (Exception exception) {
 			log.error("populateProgrammeInsertionView() : Exception "

@@ -1,12 +1,14 @@
 package com.genesiis.campus.entity.dao;
 
+//20170221 DJ c145-add-enhanced-programme created DistrictDAOImpl.java
+
 import com.genesiis.campus.entity.DistrictICrud;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
-//20170221 DJ c145-add-enhanced-programme created DistrictDAOImpl.java
+
 
 /**The class  {@code DistrictDAOImpl} is a form of DAO class.
  * The Interface {@code DistrictDAOImpl} has precise control over district and town dao level manipulations. 
@@ -72,6 +74,14 @@ public class DistrictDAOImpl  implements DistrictICrud{
 			Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}	
+	}
 
+	@Override
+	public Collection<Collection<String>> getCourseProviderTown(int providerCode)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
