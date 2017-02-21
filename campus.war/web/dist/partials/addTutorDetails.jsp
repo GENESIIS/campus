@@ -1,3 +1,4 @@
+<!-- 20170221 CW CAM-36 modify page to view early entered space characters as null & validations to check the javascript enable -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -12,7 +13,14 @@
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorFileds())">
 
-
+		<noscript>
+			<div class="noscriptmsg" style="color:red">
+				<h2>You don't have Javascript enabled.  Please enable Javascript.</h2>
+				<td><input type="hidden" name="jsnotenabled" id="jsnotenabled" value="false" /></td>
+			</div>
+		</noscript>
+<c:choose>
+	<c:when test="${jsnotenabled != 'false'}">		
 		<table align="center">
 			<tr>
 				<td>
@@ -28,7 +36,7 @@
 			<tr>
 				<td>First Name *</td>
 				<c:choose>
-					<c:when test="${tutorList[6] == ' '}">
+					<c:when test="${tutorList[0] == ' '}">
 					   <td><input type="text" name="firstname" id="firstName"
 						maxlength="20" onchange="clearField('firstNameError')"
 						value="" /><span id="firstNameError"
@@ -42,17 +50,28 @@
 					</c:otherwise>
 				</c:choose>	
 			</tr>
-				<tr>
-					<td>Middle Name</td>
-					<td><input type="text" name="middlename" id="middleName"
-						maxlength="20" onchange="clearField('middleNameError')"
-						value="${tutorList[1]}" /><span id="middleNameError"
-						style="color: red"> ${middleNameError} </span></td>
-				</tr>
+			<tr>
+				<td>Middle Name</td>
+				
+				<c:choose>
+					<c:when test="${tutorList[1] == ' '}">
+						<td><input type="text" name="middlename" id="middleName"
+							maxlength="20" onchange="clearField('middleNameError')"
+							value="" /><span id="middleNameError"
+							style="color: red"> ${middleNameError} </span></td>
+					</c:when>
+					<c:otherwise>
+						<td><input type="text" name="middlename" id="middleName"
+							maxlength="20" onchange="clearField('middleNameError')"
+							value="${tutorList[1]}" /><span id="middleNameError"
+							style="color: red"> ${middleNameError} </span></td>
+					</c:otherwise>
+				</c:choose>	
+			</tr>
 				<tr>
 					<td>Last Name *</td>
 					<c:choose>
-						<c:when test="${tutorList[6] == ' '}">
+						<c:when test="${tutorList[2] == ' '}">
 							<td><input type="text" name="lastname" id="lastName"
 								maxlength="20" onchange="clearField('lastNameError')"
 								value="" /><span id="lastNameError"
@@ -104,7 +123,7 @@
 						<td>${tutorList[6]}</td>
 					</c:if>
 					<td><select name="countryDetails" id="countryDetails"
-						onchange="clearField('countryError')">
+						onchange="clearField('countryError')" >
 							<option></option>
 					</select><span id="countryError" style="color: red"> ${countryError} </span></td>
 					<c:if test = "${tutorList[6] != null && tutorList[6] != ' '}">	
@@ -290,9 +309,18 @@
 				</tr>
 				<tr>
 					<td>Email *</td>
-					<td><input type="text" name="email" id="email"
-						onchange="clearField('emailError')" value="${tutorList[26]}" /><span
-						id="emailError" style="color: red"> ${emailError} </span></td>
+					<c:choose>
+						<c:when test="${tutorList[26] == ' '}">		
+							<td><input type="text" name="email" id="email"
+							onchange="clearField('emailError')" value="" /><span
+							id="emailError" style="color: red"> ${emailError} </span></td>
+						</c:when>
+						<c:otherwise>
+							<td><input type="text" name="email" id="email"
+							onchange="clearField('emailError')" value="${tutorList[26]}" /><span
+							id="emailError" style="color: red"> ${emailError} </span></td>
+						</c:otherwise>
+					</c:choose>	
 				</tr>
 				<tr>
 					<td>Username *</td>
@@ -333,7 +361,8 @@
 				</tr>
 				
 		</table>
-
+</c:when>
+</c:choose>
 	</form>
 
 
