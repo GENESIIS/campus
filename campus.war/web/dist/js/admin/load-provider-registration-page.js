@@ -7,21 +7,25 @@
 //				default expiration start date set to current date. (as it was getting the default dummy value assigned to avoid the JavaScript warning message,
 //				landPhoneNubmerHelper() method changed to clear info message on error
 //20170215 JH c141-add-course-provider-issue-improvements send generated course provider code on successful registration
+//20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
+
 
 window.countryCollection = null;
-window.countryCode = null;
-window.townCollection = null;
-window.usernameValidation = true;
 window.courseProviderTypes = null;
 window.accountType = null;
-window.registerId = null;
 window.courseProviderAcoountStatus = null;
 window.responseErrorMessage = null;
 
+/**
+ * load data, arrange elements when the doucment is ready
+ */
 $(document).ready(function() {
 	arrangeUI();
 });
 
+/*
+ * hides the logo panel and clear the user message
+ */
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
 	publishPrograms();
@@ -101,10 +105,16 @@ function changeRequiredData(typeValue) {
 	}
 }
 
+/**
+ * load page data, on page load
+ */
 window.onload = function() {
 	getProviderPageLoadData();
 };
 
+/**
+ * load course provider types
+ */
 function getCourseProviderTypes() {
 	$.ajax({
 		url : '/AdminController',
@@ -123,6 +133,9 @@ function getCourseProviderTypes() {
 	});
 }
 
+/**
+ * display course provider types
+ */
 function displayProviderTypes() {
 	var providerTypeCollection = window.courseProviderTypes;
 	var singleTypeElement = '';
@@ -142,6 +155,9 @@ function displayProviderTypes() {
 
 }
 
+/**
+ * display account status lists
+ */
 function displayAccountStatusList() {
 	var accountList = courseProviderAcoountStatus;
 	var singleTypeElement = '';
@@ -165,6 +181,11 @@ function displayAccountStatusList() {
 
 }
 
+/**
+ * get course provider registration page details
+ * This includes displaying course provider types, town data list
+ * and course provider account status list 
+ */
 function getProviderPageLoadData() {
 
 	$
@@ -369,7 +390,7 @@ function landPhoneNubmerHelper() {
 }
 
 /**
- * 
+ * save course provider details into database on course provider username and prefix validation
  */
 function saveCourseProvider() {
 

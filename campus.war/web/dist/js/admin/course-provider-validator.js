@@ -4,6 +4,7 @@
  */
 
 //20170209 JH c39-add-course-provider validation methods for expiration date changed
+//20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -169,18 +170,14 @@ function providerPrefixValidation() {
 		return false;
 	} else if (selectedPrefix.length < 2) {
 
-	//	document.getElementById('prefixMessage').value = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
 		return false;
 	} else if (selectedPrefix.length > 20) {
 
-	//	document.getElementById('prefixMessage').innerHTML = "";
 		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
 		document.getElementById('prefixMessage').value = "";
 		return false;
 	} else {
-		//document.getElementById('errorUniquePrefix').innerHTML = "";
-		//document.getElementById('prefixMessage').innerHTML = "";
 
 		$
 				.ajax({
@@ -429,6 +426,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('providerStatus').focus();
 		flag = false;
 	}
+	
 	if (!isempty(providerPrivateName)
 			|| !isValidLength(providerPrivateName, 100)) {
 		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
