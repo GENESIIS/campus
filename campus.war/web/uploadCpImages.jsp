@@ -16,6 +16,8 @@
 	<select id="cp_img_type" name="cp_img_type">
 		<option value="">--Select Type--</option>
 	</select>
+	
+	<span id="cp_img_desc" name="cp_img_desc"></span>
 
 	<input type="file" id="cp_img_upload" name="cp_img_upload"
 		accept="image/*">
