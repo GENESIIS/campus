@@ -1,5 +1,7 @@
 package com.genesiis.campus.command;
+
 //20170214 AS CAM-130 for Password change to created CmdPasswordChange command class.
+//20170221 AS C22 execute() method body implemented a try-catch block
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -12,30 +14,44 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
-public class CmdPasswordChange implements ICommand{
+
+public class CmdPasswordChange implements ICommand {
 	static Logger log = Logger.getLogger(CmdPasswordChange.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	String message ="";
+	String message = "";
 	String pageURL = "/index.jsp?showLogin=true";
+
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		String gsonData = helper.getParameter("jsonData");
-		data = getStudentdetails(gsonData);
-		
-		ICrud passwordRest = new SigningUpStudentDAO();
-		int result = passwordRest.update(data);
-		if(result>0){
-			message = SystemMessage.PASSWORD_SUCCESS.message();
-		}else{
-			message = SystemMessage.PASSWORD_UNSUCCESS.message();
+		try {
+			String gsonData = helper.getParameter("jsonData");
+			data = getStudentdetails(gsonData);
+
+			ICrud passwordRest = new SigningUpStudentDAO();
+			int result = passwordRest.update(data);
+			if (result > 0) {
+				message = SystemMessage.PASSWORD_SUCCESS.message();
+			} else {
+				message = SystemMessage.PASSWORD_UNSUCCESS.message();
+			}
+		} catch (SQLException sexp) {
+			log.error("execute(): SQLException " + sexp.toString());
+			throw sexp;
+		} catch (IllegalArgumentException ilexp) {
+			log.error("execute(): IllegalArgumentException" + ilexp.toString());
+			throw ilexp;
+		} catch (Exception exp) {
+			log.error("execute():Exception " + exp.toString());
+			throw exp;
 		}
-		
+
 		helper.setAttribute("message", message);
 		helper.setAttribute("pageURL", pageURL);
 		return view;
 	}
+
 	/**
 	 * extract data from json object and assign to StudentProgrammeInquiry
 	 * object
