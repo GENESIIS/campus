@@ -28,7 +28,10 @@
  				being without banner images
  * 20170220 MM c127-display-banners-on-jsp-load-front-end Added function to extract JSP name considering
  * 				it is present in a hidden field in the form as returned by JSTL code: 
- * 				${pageScope['javax.servlet.jsp.jspPage']} 				
+ * 				${pageScope['javax.servlet.jsp.jspPage']} 	
+ * 20170221 MM c127-display-banners-on-jsp-load-front-end Changed logic related to determining whether to
+ * 				to send the Ajax request to fetch banners to use hidden field with id 
+ * 				'areBannersDeliveredWithPage'			
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -77,7 +80,7 @@ $.each(bannerSlotTimers, function(index, value) {
 	value(index);
 });
 
-// Binding event handler to elements
+// Binding event handler for click event to banner elements
 $('.banner').on('click', function(e) {
 	e.preventDefault();
 	var url = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
@@ -121,22 +124,13 @@ function sendBannerStatisticsUpdateRequest(banner) {
 
 
 $(document).ready(function() {
-	var pageSlots = $('.banner-wrapper');
 	
-	if (pageSlots.length > 0) {
-		var areBannersPresent = false; 
-		$.each(pageSlots, function(index, item) {
-			var pageSlot = $(this);
-			var banners = pageSlot.find('a > img');
-			if (banners.length > 0) {
-				areBannersPresent = true;
-				return false;
-			}
-		});
-		
-		if (areBannersPresent === false) {
-			getBanners();
-		}
+	var bannerLoadingStatusIndicator = $('#areBannersDeliveredWithPage');	
+	var areBannersLoadedWithPage = bannerLoadingStatusIndicator.val();
+	
+	
+	if (areBannersLoadedWithPage == null || areBannersLoadedWithPage == 'false') {
+		getBanners();
 	}
 });
 
@@ -170,7 +164,6 @@ function getBanners() {
 function setBannersToPageSlots(response) {
 	var pageSlots = $('.banner-wrapper');
 	var bannerPath = response.bannerPath;
-	var callerPage = getPageName();
 	
 	$.each(pageSlots, function(index, item) {
 		var slotId = $(this).prop('id');
@@ -183,7 +176,7 @@ function setBannersToPageSlots(response) {
 		$.each(bannerCollectionForSlot, function(count, banner) {
 			fullClassList = (count == 0) ? 'banner-shown ' + classList : classList;
 			pageSlotHtml += '<a href="' + banner[7] + '" target="_blank">';
-			pageSlotHtml += '<img data-timeout="' + banner[5] + '" data-banner-code="' + banner[2] + '" data-caller-page="' + callerPage + '" class="' + fullClassList + '" src="' + bannerPath + '\\' + banner[2] + '\\' + banner[10] + '"/>';
+			pageSlotHtml += '<img data-timeout="' + banner[5] + '" data-banner-code="' + banner[2] + '" class="' + fullClassList + '" src="' + bannerPath + '\\' + banner[2] + '\\' + banner[10] + '"/>';
 			pageSlotHtml += '</a>';
 		});
 		$(this).html(pageSlotHtml);
@@ -201,3 +194,4 @@ function getPageName() {
 	
 	return pageName;
 }
+
