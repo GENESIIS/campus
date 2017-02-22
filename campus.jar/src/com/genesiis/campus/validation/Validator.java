@@ -42,6 +42,9 @@ package com.genesiis.campus.validation;
 //20170221 CW c36-add-tutor-details modified isNotHavingSpace method name to isEmptyOrHavingSpace() & used to validate for null values & spaces.
 //20170221 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to use isEmptyOrHavingSpace method
 //20170221 CW c36-add-tutor-details modified variable message into valid in isValidUserAndEmailBeforeAddTutor, isValidPassword methods
+//20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to validate errors in both email & username
+//20170222 CW c36-add-tutor-details modified validateTutorFields() to validate townDetails correctly
+//20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor to give proper email & username error messages
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -206,10 +209,13 @@ public class Validator {
 				helper.setAttribute("landNumberError", SystemMessage.LANDNUMBERERROR.message());
 				isValid = false;
 			}
-			
-			if(!((Validator.isNotEmpty(helper.getParameter("townDetails"))) && (!(helper.getParameter("townDetails").equals("0"))))){
-				helper.setAttribute("townError", SystemMessage.TOWNCODEERROR.message());
-				isValid = false;
+
+			if(!Validator.isNotEmpty(helper.getParameter("townHidden"))){ // true if town hidden is empty
+				if(!Validator.isNotEmpty(helper.getParameter("townDetails")) || helper.getParameter("townDetails").equals("0")){
+					helper.setAttribute("townError", SystemMessage.TOWNCODEERROR.message());
+					isValid = false;
+				}
+				
 			}
 			
 			if (!isValidAddressLine1(helper.getParameter("address1"))) {
@@ -555,10 +561,16 @@ public class Validator {
 		
 			if(type == 1){
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
 				valid = false;
 			} 
 			
 			if(type == 2){
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+				valid = false;
+			} 
+			
+			if(type == 3){
 				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
 				valid = false;
 			}
