@@ -4,8 +4,11 @@ package com.genesiis.campus.util;
 //asccessInerLoopSingleElement/isImageWithinSize methods has been created.
 //20170131 DN c47-tutor-add-tutor-information-upload-image-dn shifted the systemMessage(int) method 
 //              from CmdUploadTutorImage,java in order to encapsulate class responsibilities 
-//20170216 DN getImageFileUploadedFromBrowser() has been created which is a copy of CmdUploadTutorImage#getImageFileUploadedFromBrowser() for 
-//			  better modularity and re usability. implemented getImageTeporyUploadPath(SystemConfig usersProfileImagePath,String tempDirectory,Connection con) method
+//20170216 DN c131-admin-manage-banner-upload-banner-image-dn getImageFileUploadedFromBrowser() has been created which
+//			    is a copy of CmdUploadTutorImage#getImageFileUploadedFromBrowser() for better modularity and re usability. 
+//			   implemented getImageTeporyUploadPath(SystemConfig usersProfileImagePath,String tempDirectory,Connection con) method
+//20170222 DN c131-admin-manage-banner-upload-banner-image-dn create a field to hold  validExtensions: valid image extensions and 
+//				getters and setters method are implemented.
 
 
 import com.genesiis.campus.entity.ICrud;
@@ -28,19 +31,17 @@ import java.util.Collection;
 /**
  * ImageUtility class responsible for supporting a define set of facilities for images
  * Such as getting the uploading path etc.
- *
  * @author dushantha DN
  */
 public class ImageUtility {
 	
 	/** The Constant log. */
 	static final Logger log = Logger.getLogger(ImageUtility.class.getName());
-	
-	
+	private String[] validExtensions = { "jpeg", "jpg", "png", "gif" };
+
 	/**
 	 * getImageUploadPath: method provides the image upload path based on the
 	 * SystemConfig enum value.
-	 *
 	 * @author dushantha DN
 	 * @param imageUploadPath the image upload path
 	 * @return String :path which is the parent directory of the user profile picture resides
@@ -64,7 +65,7 @@ public class ImageUtility {
 	/**
 	 * getAlloawablePictureSize: method provides the allowable size of the image
 	 * if the SystemConfig enum has not defined an exception will be thrown.
-	 *
+	 * @author dushantha DN
 	 * @param pictureCategory SystemConfig enum defining the picture category e.g TUTOR_PROFILE_IMAGE_SIZE etc
 	 * @return int :the value of the allowable image size in MB
 	 * @throws Exception will be thrown if the SystemConfig enum has not defined such a value given by the parameter
@@ -84,7 +85,7 @@ public class ImageUtility {
 	
 	/**
 	 * isNullObject: method provides boolean value if the passed parameter is null or actually defined.
-	 *
+	 * @author dushantha DN
 	 * @param nullCheckingObjet the null checking objet
 	 * @return true if the parameter is null else false
 	 */
@@ -103,7 +104,7 @@ public class ImageUtility {
 	 * for the given "tutorImageProfilePath" in repository,then ,an empty string will be returned
 	 * according to the agreed business logic path will be ending up with username_+ tutorcode
 	 * e.g. C:/sdb/ctxdeploy/education.war/tutor/pro_image/username_1/
-	 *
+	 * @author Dushantha DN
 	 * @param usersProfileImagePath SystemConfig type .
 	 * Always this value must be in sync with the database [CAMPUS].[SYSTEMCONFIG]# column[SYSTEMCONFIGCODE].
 	 * @param profileOwnersCode :int code
@@ -149,6 +150,7 @@ public class ImageUtility {
 	/**
 	 * getImageTeporyUploadPath returns the temporary image path where the image
 	 * is planned to store
+	 * @author dushantha DN
 	 * @param usersProfileImagePath
 	 * @param tempDirectory
 	 * @param con
@@ -188,7 +190,7 @@ public class ImageUtility {
 	/**
 	 * getSystemConfigRepositoryValues extract repository records from [CAMPUS].[SYSTEMCONFIG]
 	 * depend on the sysConfigArray which contains system configuration value that comes from the [SYSTEMCONFIGCODE] column  
-	 *
+	 * @author dushantha DN
 	 * @param sysConfigArray type String[]
 	 * @param con the con
 	 * @return the system config repository values
@@ -198,9 +200,9 @@ public class ImageUtility {
 	public Collection<Collection<String>> getSystemConfigRepositoryValues(String[] sysConfigArray,Connection con) throws SQLException,Exception {
 		ICrud systemConfigDAO = new SystemConfigDAO();
 		try{
-			Collection<Collection<String>> turoUploadImageCollection = systemConfigDAO
+			Collection<Collection<String>> getSystemConfigConstraints = systemConfigDAO
 					.findById(sysConfigArray, con);
-			return turoUploadImageCollection;
+			return getSystemConfigConstraints;
 		} catch(SQLException exp) {
 			log.error("getSystemConfigRepositoryValues(): SQLException"
 					+ exp.toString());
@@ -217,7 +219,7 @@ public class ImageUtility {
 	/*
 	 * Method process accepts a Collection<Collection<String>> as a parameter and
 	 * returns the inner collections' stored element as an object.
-	 * 
+	 * @author dushantha DN
 	 * <b>NOTE<b> the precondition of the method is that the outer wrapper (Collection that 
 	 * holds Collection) can only have one element which should NOT be NULL or EMPTY string a Collection of String.
 	 * where the conditions are not met will result a null value to be returned.
@@ -242,8 +244,8 @@ public class ImageUtility {
 	/*
 	 * Method confirms the image if exists is within the imposed image size.
 	 * If the capasity of the image is accepted the method returns true else false
-	 *
-	 * @param tutorProfilePictureSize the tutor profile picture size
+	 * @author dushantha DN
+	 * @param tutorProfilePictureSize the tutor profile picture size in MB
 	 * @param con Connection to the database
 	 * @param fileItem the file item of which the size has to be measured and compared with the size constraint
 	 * @return boolean if the image is accordance with the limit , if it's not or the image does not
@@ -294,14 +296,17 @@ public class ImageUtility {
 	
 	/**
 	 * System message.
-	 *@author dushantha DN
+	 * @author dushantha DN
 	 * @param status the status int
 	 * @return the string system message
 	 */
 	public static String systemMessage(int status){
 		String message = SystemMessage.UNKNOWN.message();
 		//setSuccessCode(status);
-		switch(status){		
+		switch(status){
+		case 0:
+			message = SystemMessage.PROCESSING.message();
+			break;
 		case 1:
 			message = SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.message();
 			break;
@@ -352,6 +357,16 @@ public class ImageUtility {
 			throw fle;
 			
 		}
+	}	
+	
+	
+// Getters and Setters for the class ImageUtility.java
+	
+	public String[] getValidExtensions() {
+		return validExtensions;
 	}
 
+	public void setValidExtensions(String[] validExtensions) {
+		this.validExtensions = validExtensions;
+	}
 }
