@@ -61,8 +61,8 @@
             <h2 class="page-topic-t3">Forgot Your Password ?</h2>
             <h3 class="sub-topic-t1">Enter your email address below to reset your password.</h3>
             <div class="fp-msg fp-msg-error">
-                <label for="error-msg" class="error-msg">
-                    <span class="error-txt" id="messsage"></span>
+                <label for="error-msg" class="error-msg" id="emailveryMessage">
+                    <span class="error-txt" id="emailveryMessage"></span>
                 </label>
             </div>
         </div>
