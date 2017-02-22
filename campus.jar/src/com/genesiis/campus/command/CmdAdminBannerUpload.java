@@ -10,6 +10,8 @@ package com.genesiis.campus.command;
  * 				inner class JasonInflator.java
  * 20170220 DN c131-admin-manage-banner-upload-banner-image-dn getSessionProperty() method created and add doc comments
  * 				removed the inner class JasonInflator.java and placed as a stand alone class.
+ * 20170222 DN c131-admin-manage-banner-upload-banner-image-dn code the confirmation of the capacity of banner image in
+ * 				isImageAccordanceWithSystemRequirement(). 
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -146,27 +148,31 @@ Exception{
 	try{	
 		// clear the message if it's accumulated.
 		this.setMessage(""); 
-		// get the banner
+		// get the banner from the browser(client) and set field -files are set now
 		files = imageUtility.getImageFileUploadedFromBrowser(helper);
 		if((files.size()==0)|(files==null)){
-			
 			this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
 			this.setSuccessCode(-1);
 		} else{
+			
 			getFileUtility().setFileItem(files.get(0)); //setting the file Item in the FileUtility
 			con = ConnectionManager.getConnection();
+			
 			//get the banner Absolute upload path
-				String bannerImageUploadTemporaryPath = imageUtility
+			String bannerImageTemporaryUploadPath = imageUtility
 						.getImageTeporyUploadPath(
 								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
 								"tempbanner", con);
-
-				fileUtility.setUploadPath(bannerImageUploadTemporaryPath);
-				
-			// check if it confirm to the standards-- pixels this should be stored in the database
-			// pass the banner credentials to back end
 			
-			if((!isTheFileMovedTOTemporaryLocation(fileUtility,bannerImageUploadTemporaryPath,true))){
+			// check if it confirm to the standards
+			if(!isImageAccordanceWithSystemRequirement(con,helper)){
+				setResponseCridentials(helper);
+				return view;
+			}
+			
+			fileUtility.setUploadPath(bannerImageTemporaryUploadPath);
+
+			if((!isTheFileMovedTOTemporaryLocation(fileUtility,bannerImageTemporaryUploadPath,true))){
 				this.message = message + " " +ImageUtility.systemMessage(-2);
 				this.setSuccessCode(-2);
 				setResponseCridentials(helper);
@@ -183,12 +189,52 @@ Exception{
 	}finally{
 		DaoHelper.cleanup(con, null, null);
 	}
-	this.setMessage(ImageUtility.systemMessage(1));
+	this.setMessage(ImageUtility.systemMessage(0));
 	this.setSuccessCode(1);
 	setResponseCridentials(helper);
 	return view;
 	
 }
+
+	/**
+	 * Checks if is image accordance with system requirement.
+	 * <b>Note</b> the file to be tested must not be null
+	 * @param con
+	 * @param requestWrapper
+	 * @return boolean true if the Banner image matches the set system constraints
+	 * 			else return false.
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	private boolean isImageAccordanceWithSystemRequirement(Connection con,
+			IDataHelper requestWrapper) throws SQLException, Exception {
+		
+		boolean isFilePassSizeRequirement=false;
+		try{
+			if((files.size()==0)|(files==null))
+				return	isFilePassSizeRequirement=false;
+			
+			isFilePassSizeRequirement = imageUtility.isImageWithinSize(
+					SystemConfig.BANNER_IMAGE_SIZE, con, files.get(0));
+			
+		} catch(SQLException exp) {
+			log.error("isImageAccordanceWithSystemRequirement(): SQLException"+exp.toString());
+			throw exp;
+			
+		} catch(FileUploadException fle){
+			log.error("isImageAccordanceWithSystemRequirement():FileUploadException"+ fle.toString() );
+			throw fle;
+			
+		}	catch(Exception exp) {
+			log.error("isImageAccordanceWithSystemRequirement(): SQLException"+exp.toString());
+			throw exp;
+		}
+		
+		return isFilePassSizeRequirement;
+	}
+
+
+
 
 /*
  * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within
