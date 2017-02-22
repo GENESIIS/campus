@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //20170125 CW c36-add-tutor-details add validateUsernameEmailFields() method.
 //20170130 CW c36-add-tutor-details modified validateUsernameEmailFields() method
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170222 CW c36-add-tutor-details modified validateUsernameEmailFields() to add validations to check both email & username
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeSet;
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -226,8 +228,8 @@ public class TutorDAO implements ICrud {
 	/**
 	 * Check the email & username given with already entered username & email in the database 
 	 * @author Chinthaka 
-	 * @return Returns 1 if the username is available in the database, returns 2 if the email is available & 
-	 * 				returns 0 if both are not used to create a tutor profile.
+	 * @return Returns 1 if both username & email are available in the database, returns 1 if the username is available in the database, 
+	 * 				returns 2 if the email is available & returns 0 if both are not used to create a tutor profile.
 	 */
 	public static int validateUsernameEmailFields(String username, String email) throws SQLException,	Exception {
 		
@@ -244,13 +246,46 @@ public class TutorDAO implements ICrud {
 			stmt.setString(2, email);
 			rs = stmt.executeQuery();
 
+			//final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
+			//final Collection<Integer> listOfData = new ArrayList<>();
+
+			final TreeSet<Integer> treeOfData = new TreeSet<Integer>();
+
 			while (rs.next()) {
-				if(rs.getString("USERNAME").equals(username)){
-					return 1;
+				if(rs.getString("USERNAME").equals(username) && rs.getString("EMAIL").equals(email)){
+					treeOfData.add(1);
+					//return 1;					
+				}else if(rs.getString("USERNAME").equals(username)){
+
+					treeOfData.add(2);
+					//return 2;
 				}else if(rs.getString("EMAIL").equals(email)){
-					return 2;
+					treeOfData.add(3);
+					//return 3;
 				}
 			}
+			
+			boolean containEmail = false;
+			boolean containUsername = false;
+			if(treeOfData.contains(1) || (treeOfData.contains(2) & treeOfData.contains(3))){
+				System.out.println("both");
+			}else{
+				if(treeOfData.contains(2) & !treeOfData.contains(3)){
+					System.out.println("username");
+					containEmail = true;
+				}
+				if(!treeOfData.contains(2) & treeOfData.contains(3)){
+					System.out.println("email");
+					containUsername = true;
+				}
+				if(containEmail & containUsername){
+					System.out.println("both");
+				}
+			}
+			/*if(tree.contains(2) & tree.contains(3)){
+				System.out.println("both");
+			}*/
+			
 		} catch (SQLException sqlException) {
 			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
 			throw sqlException;
