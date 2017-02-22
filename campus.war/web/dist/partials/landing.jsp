@@ -24,7 +24,6 @@
 				<div class="main-search-bar center-block clearfix">
 						<div class="bar-holder center-block clearfix">
 							<input id="course-search" class="center-block" type="text" name="course-search" value="Search : Program, Course, or Career" autocomplete="on">
-							<input type="hidden" id="searchFcuntion" value="filterSearch" />
 							<a class="panel-collapse-ico" href="#"><span class="glyphicon glyphicon-menu-down rotate"></span></a>
 							<!-- End category boxes area -->
 							<div class="filter-boxes clearfix">
