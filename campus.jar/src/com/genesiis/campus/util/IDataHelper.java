@@ -8,6 +8,7 @@ package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
 //20161121 PN c27-upload-user-image: declared getParameterMap() and getFiles() methods.
+//20170222 PN CAM-48: declared getFormFields() method.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.validation.ResponseType;
@@ -15,8 +16,11 @@ import com.genesiis.campus.validation.ResponseType;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 public interface IDataHelper {
@@ -49,5 +53,7 @@ public interface IDataHelper {
 	public Map<String, String[]> getParameterMap();
 
 	public ArrayList<FileItem> getFiles() throws FileUploadException;
+
+	public Map<String,String>  getFormFields() throws FileUploadException;
 }
 

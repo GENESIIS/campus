@@ -20,6 +20,7 @@ package com.genesiis.campus.util;
 // 			due to code review comment by CM
 //20161121 PN c27-upload-user-image: implemented getParameterMap() and getFiles() methods.
 //20161123 PN c27-upload-user-image: modified getFiles() method.
+//20170222 PN CAM-48: declared getFormFields() method implemented.
 
 import java.util.Map;
 
@@ -34,17 +35,25 @@ import com.genesiis.campus.validation.BannerData;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import org.apache.log4j.Logger;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
@@ -264,7 +273,6 @@ public class DataHelper implements IDataHelper {
 						FileItem item = (FileItem) fileItem;
 						if (!(item.isFormField()))
 							files.add(item);
-
 					}
 
 				}
@@ -277,6 +285,40 @@ public class DataHelper implements IDataHelper {
 
 		return files;
 	}
+	
+	/**
+	 * getFormFields() - Searches for form fields in the request and puts them in the resulting map with the key parameter name and value. When a form field is
+	 * found, you can access form field values by it's name.
+	 * @return Map<String,String> - contains a map with parameter name and value.
+	 * @author pabodha
+	 */
+	@Override
+	public Map<String,String> getFormFields() throws FileUploadException{
+		Map<String,String> formFields = null;
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		try {
+			if (request != null && request.getContentType() != null) {
+				formFields = new HashMap<String,String>();
+				@SuppressWarnings("unchecked")
+				List<Object> list = upload.parseRequest(request);
 
+				if (list != null) {
+					for (Object fileItem : list) {
+						FileItem item = (FileItem) fileItem;
+						if (item.isFormField()){
+							String name = item.getFieldName(); 
+						    String value = item.getString(); 
+						    formFields.put(name, value);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("getFormFields()(): " + e);
+			throw e;
+		}
+		return formFields;
+	}
 }
 
