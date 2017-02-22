@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 /**
  * 20170221 PN CAM-48: INIT CmdcpImgUpload.java class and implementing execute() method to complete cp image uploading functionality.
  * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
+ * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -18,11 +19,16 @@ import com.google.gson.JsonObject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class CmdcpImgUpload implements ICommand {
 	static Logger log = Logger.getLogger(CmdcpImgUpload.class.getName());
@@ -62,23 +68,23 @@ public class CmdcpImgUpload implements ICommand {
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
 			String uploadPath = getImageUploadConfigs(uploadPathConf,2);
 
-			// get the number of bytes of the valid upload size. Taken the size from SYSTEMCONFIG table.
-			String uploadSizeParam = getImageUploadConfigs(uploadPathConf,2);
-
-			
+			// Take the dimensional values from SYSTEMCONFIG table.(Width, Height, Size)
+			String uploadSizeParam = getImageUploadConfigs(uploadPathConf,4);
+		
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
 
-				utility.setFileItem(file);
-//				if (item.getSize() > 1) {
-//					fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message();
-//				} else if ((item.getName().lastIndexOf(".") == -1)
-//						|| !utility.isValidImageFileType(item.getName(), validExtensions)) {
-//					fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
-//				} else {
-					filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf,courseProviderCode));
-					fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
-//				}
+			utility.setFileItem(file);
+			
+			//Validate image and upload.
+			if(!isValidFileType(file, validExtensions, utility)){
+				fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
+			}else if(!isValidFileSize(file, uploadSizeParam).isEmpty()){
+				fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message() + isValidFileSize(file, uploadSizeParam);
+			}else{
+				filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf,courseProviderCode));
+				fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
+			}
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -103,13 +109,13 @@ public class CmdcpImgUpload implements ICommand {
 	 * @throws Exception
 	 */
 	private String getImageUploadConfigs(String key, int index) throws SQLException, Exception {
-		String uploadPath = "";
+		String value = "";
 		try {
 			ICrud sysconfigDAO = new SystemConfigDAO();
 			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById(key);
 			for (Collection<String> collection : picUploaDpath) {
 				Object[] config = collection.toArray();
-				uploadPath = (String) config[index];
+				value = (String) config[index];
 			}
 		} catch (SQLException sqle) {
 			log.error("getImageUploadConfigs(): SQLException " + sqle.toString());
@@ -119,11 +125,11 @@ public class CmdcpImgUpload implements ICommand {
 			log.error("getImageUploadConfigs(): Exception " + e.toString());
 			throw e;
 		}
-		return uploadPath;
+		return value;
 	}
 
 	/**
-	 * 
+	 * Rename uploaded image according to the format given.
 	 * @param uploadPathConf - type of the uploaded image (small logo, large logo etc)
 	 * @param courseProviderCode - course provider ID.
 	 * @return
@@ -139,5 +145,58 @@ public class CmdcpImgUpload implements ICommand {
 			throw ex;
 		}
 		return newFileName;
+	}
+	
+	/**
+	 * This method will validate the file extension.
+	 * @param item - file
+	 * @param validExtensions - uploaded possible file types array
+	 * @param utility - FileUtility class
+	 * @return true if file type is valid, else false.
+	 */
+	private boolean isValidFileType(FileItem item, String validExtensions[], FileUtility utility){
+		if((item.getName().lastIndexOf(".") == -1)|| !utility.isValidImageFileType(item.getName(), validExtensions)){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Method will validate file dimensions and size.
+	 * @param item - uploaded file item.
+	 * @param uploadSizeParam - valid file dimension details.
+	 * @return error detailed message.
+	 */
+	private String isValidFileSize(FileItem item, String uploadSizeParam) {
+		String[] values = uploadSizeParam.split(",");
+		long height = 0;
+		long width = 0;
+		long size = 0;
+		String errorMsg = "";
+
+		try {
+			InputStream is = item.getInputStream();
+			is = new BufferedInputStream(item.getInputStream());
+			BufferedImage image = ImageIO.read(is);
+
+			if (values.length == 3) {
+				height = Long.parseLong(values[0].trim());
+				width = Long.parseLong(values[1].trim());
+				size = Long.parseLong(values[2].trim());
+				if (item.getSize() > size) {
+					errorMsg.concat("Size: " + size + " ");
+				}
+				if (image.getWidth() > width) {
+					errorMsg.concat("Width: " + width + " ");
+				}
+				if (image.getHeight() > height) {
+					errorMsg.concat("Height: " + height + " ");
+				}
+			}
+		} catch (Exception ex) {
+			log.error("isValidFileSize(): Exception " + ex.toString());
+			throw ex;
+		}
+		return errorMsg;
 	}
 }
