@@ -12,6 +12,7 @@ package com.genesiis.campus.command;
 //20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170219 CW c103-send-email-tutor-status-change-cw modified execute() to send email at the time of tutor update by Admin
+//20170222 CW c103-send-email-tutor-status-change-cw modified execute method to send email using sendAdminTutorUpdateEmail method in GenerateEmail class
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -20,6 +21,7 @@ import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.mail.GenerateEmail;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
@@ -40,6 +42,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
 	private String message = "True";
+	private String emailMessage = "Email Sending Unsuccessful ...";
 	
 	/**
 	 * @author Chathuri, Chinthaka
@@ -76,8 +79,14 @@ public class CmdUpdateTutorProfile implements ICommand {
 					
 					if (result > 0) {
 						message = SystemMessage.UPDATED.message();
-						ICommand emailSignUp = new CmdGenerateEmailAdminTutorUpdate(); //CmdGenerateEmailTutorSignUp();
-						emailSignUp.execute(helper, view); //send email
+						GenerateEmail emailAtUpdate = new GenerateEmail(); //CmdGenerateEmailTutorSignUp();
+						
+						int appStatus = 0;
+						
+						if (Validator.isNotEmpty(helper.getParameter("newtutorStatus"))){
+							appStatus = Integer.parseInt(helper.getParameter("newtutorStatus"));
+						}
+						emailMessage = emailAtUpdate.sendAdminTutorUpdateEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), helper.getParameter("email"), helper.getParameter("username"), appStatus); //send email
 					}
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
@@ -98,6 +107,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
+			helper.setAttribute("emailmessage", emailMessage);
 		}
 		return view;
 	}
