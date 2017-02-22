@@ -3,6 +3,7 @@ package com.genesiis.campus.util;
 //20170219 CW c103-send-email-tutor-status-change-cw create the class TutorUpdateEmailComposer.java to help compose the mailing using CAM-126
 //20170219 CW c103-send-email-tutor-status-change-cw Create the constructors & modified getEmailBody() method
 //20170220 CW c103-send-email-tutor-status-change-cw modified single argument constructor & getEmailBody() method.
+//20170222 CW c103-send-email-tutor-status-change-cw modified TutorUpdateEmailComposer single argument constructor to use an int value as a parameter instead of IDataHelper object
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,9 +49,9 @@ public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCre
  * this will assign the tutor status in order to use later to send the email
  * @author CHINTHAKA
  */
-	public TutorUpdateEmailComposer(IDataHelper helper){
+	public TutorUpdateEmailComposer(int appStatus){
 		ApplicationStatus[] applicationStatus = ApplicationStatus.values();
-		tutorStatus = applicationStatus[Integer.parseInt(helper.getParameter("newtutorStatus"))].toString().toLowerCase();
+		tutorStatus = applicationStatus[appStatus].toString().toLowerCase();
 	}
 
 	@Override
