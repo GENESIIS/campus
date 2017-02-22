@@ -293,13 +293,13 @@ public class DataHelper implements IDataHelper {
 	 * @author pabodha
 	 */
 	@Override
-	public Map<String,String> getFormFields() throws FileUploadException{
-		Map<String,String> formFields = null;
+	public Map<String,Object> getFormFields() throws FileUploadException{
+		Map<String,Object> formFields = null;
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		try {
 			if (request != null && request.getContentType() != null) {
-				formFields = new HashMap<String,String>();
+				formFields = new HashMap<String,Object>();
 				@SuppressWarnings("unchecked")
 				List<Object> list = upload.parseRequest(request);
 
@@ -310,6 +310,8 @@ public class DataHelper implements IDataHelper {
 							String name = item.getFieldName(); 
 						    String value = item.getString(); 
 						    formFields.put(name, value);
+						}else{
+							formFields.put("cp_img", item);
 						}
 					}
 				}

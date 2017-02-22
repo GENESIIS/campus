@@ -54,6 +54,6 @@ public interface IDataHelper {
 
 	public ArrayList<FileItem> getFiles() throws FileUploadException;
 
-	public Map<String,String>  getFormFields() throws FileUploadException;
+	public Map<String,Object>  getFormFields() throws FileUploadException;
 }
 
