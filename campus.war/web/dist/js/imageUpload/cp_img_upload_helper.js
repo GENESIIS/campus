@@ -2,6 +2,7 @@
  * 20170221 PN CAM-48: INIT file to implement the javascript helping methods to cp image uploading functionality. 
  *             CAM-48: implemented setCPImgData(response) method to populate cp_img_type dropdown with DB values.
  *             CAM-48: implemented a jquery for cp_img_desc dropdown onchange method.
+ * 20170222 PN CAM-48: modified ajax method call by setting values to pass into the backend.
  */
 
 var dataSet = null;
@@ -16,7 +17,8 @@ $(document).ready(function() {
 		$.each(dataSet.result, function(index, val) {
 			if (val[0] === sysConfCode) {
 				$('#cp_img_desc').html(val[2]);
-				//Console.log($("#cp_img_desc option:selected").text());;
+				var cp_img_type = $("#cp_img_type option:selected").text();
+				alert(cp_img_type);
 			}
 		});
 	})
@@ -25,11 +27,13 @@ $(document).ready(function() {
 		event.stopPropagation(); 
 	    event.preventDefault(); 
 	    
+	    var courseProviderCode = 1;//This will be get assigned from UI element later.
+	    var uploadPathConf = $("#cp_img_type option:selected").text();
 		var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file
 		var formData = new FormData();
 		formData.append("file", cpImgUpload);
-		formData.append('courseProviderCode', '1');
-		//formData.append('uploadPathConf', $("#cp_img_desc option:selected").text());
+		formData.append("courseProviderCode", courseProviderCode);
+		formData.append("uploadPathConf", uploadPathConf);
 		
 		$.ajax({
 		    url: '/AdminController?CCO=UCPI',
