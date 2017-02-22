@@ -4,8 +4,10 @@ package com.genesiis.campus.entity;
 //20161205 PN c26-add-student-details: implemented findById() method for retrieve towns for given country code.
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170221 JH c141-add-course-provider-issue-improvements added doc comments 
+//20170222 JH c141-add-course-provider-issue-improvements removed static value in the query for ISACTIVE field in getAll()
 
 import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -102,9 +104,10 @@ public class TownDAO implements ICrud {
 
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE [ISACTIVE] = 1;";
+			String query = "SELECT [CODE],[NAME],[DESCRIPTION],[IMAGE],[ISACTIVE] FROM [CAMPUS].[Town] WHERE ISACTIVE = ?;";
 
 			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			final ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
