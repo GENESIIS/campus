@@ -101,37 +101,39 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 
 	@Override
 	public void addContentToOriginalMailBody(String originalMailBody) {
-		// try{
-		StringBuilder result = new StringBuilder();
+		try {
+			StringBuilder result = new StringBuilder();
 
-		// MimeMultipart multipart = new MimeMultipart("related");
-		//
-		// BodyPart messageBodyPart = new MimeBodyPart();
-		// String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
-		// messageBodyPart.setContent(htmlText, "text/html");
-		//
-		//
-		// multipart.addBodyPart(messageBodyPart);
-		// result.append(multipart);
-		result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss")
-				.format(new Date()));
-		result.append(System.getProperty("line.separator"));
-		result.append(System.getProperty("line.separator"));
-		result.append(" Dear ");
-		result.append(this.getRecieversName());
-		result.append(",");
-		result.append(System.getProperty("line.separator"));
-		result.append(System.getProperty("line.separator"));
-		result.append(this.getMailBody());
-		result.append(originalMailBody);
-		result.append(System.getProperty("line.separator"));
-		result.append("If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.");
-		result.append(System.getProperty("line.separator"));
-		this.setMailBody(result.toString());
+			// MimeMultipart multipart = new MimeMultipart("related");
+			//
+			// BodyPart messageBodyPart = new MimeBodyPart();
+			// String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
+			// messageBodyPart.setContent(htmlText, "text/html");
+			//
+			//
+			// multipart.addBodyPart(messageBodyPart);
+			// result.append(multipart);
+			result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss")
+					.format(new Date()));
+			result.append(System.getProperty("line.separator"));
+			result.append(System.getProperty("line.separator"));
+			result.append(" Dear ");
+			result.append(this.getRecieversName());
+			result.append(",");
+			result.append(System.getProperty("line.separator"));
+			result.append(System.getProperty("line.separator"));
+			result.append(this.getMailBody());
+			result.append(originalMailBody);
+			result.append(System.getProperty("line.separator"));
+			result.append("If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.");
+			result.append(System.getProperty("line.separator"));
+			this.setMailBody(result.toString());
 
-		// } catch (MessagingException e) {
-		// throw new RuntimeException(e);
-		// }
+		} catch (Exception e) {
+			log.error("addContentToOriginalMailBody(String originalMailBody): Exception"
+					+ e.toString());
+			throw e;
+		}
 
 	}
 
