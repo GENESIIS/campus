@@ -12,6 +12,8 @@ package com.genesiis.campus.validation;
 //20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
 //20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_IMAGE_ABSOLUTE_PATH,BANNER_IMAGE__WAR_PATH enum added.
+//20170222 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_IMAGE_SIZE,HRZNTL_BNR1_760_90,HRZNTL_BNR1_670_100,
+//            HRZNTL_BNR1_468_60,VRTICL_BNR1_180_150,VRTICL_BNR2_180_150  enum values are added
 /**
 * SystemConfig enum is intended to be used for the purpose of identifying 
 * the String to use to fetch a specific record from the SYSTEMCONFIG DB table. 
@@ -43,6 +45,14 @@ public enum SystemConfig {
 	BANNER_IMAGE_ABSOLUTE_PATH("C:/sdb/ctxdeploy/education.war/banner","",""),
 	BANNER_IMAGE_WAR_PATH("education/banner","",""),
 	BANNER_IMAGE_TEMPORARY_PATH("C:/sdb/ctxdeploy/education.war/banner/tempdeleteable","",""),
+	HRZNTL_BNR1_760_90("760","90",""),
+	HRZNTL_BNR1_670_100("670","100",""),
+	HRZNTL_BNR1_468_60("468","60",""),
+	VRTICL_BNR1_160_1600("160","1600",""),
+	VRTICL_BNR1_180_150("180","150",""),
+	VRTICL_BNR2_180_150("180","150",""),
+	BANNER_IMAGE_SIZE("3","",""),
+	
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 	
 	
