@@ -22,6 +22,7 @@ package com.genesiis.campus.command;
 //20170220 CW c36-add-tutor-details modified execute() for INCORRECTDATA message.
 //20170221 CW c36-add-tutor-details removed validateUserAndEmail() method.
 //20170221 CW c36-add-tutor-details modified execute() method to stop view entered data if successfully added into the database.
+//20170222 CW c36-add-tutor-details modified execute() method to to stop message error
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,12 +58,12 @@ public class CmdAddTutorProfile implements ICommand {
 	 * @return View object to servlet
 	 */
 
-	private String message = "True";
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 
+			String message = "True";
 			final TutorDAO tutorDAO = new TutorDAO();
 			final Tutor tutor = new Tutor();
 			final Validator validator=new Validator();
