@@ -1,4 +1,4 @@
-// Copyright (C) 2011 - Will Glozer.  All rights reserved.
+//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
 
 package com.genesiis.campus.scrypt.crypto;
 
@@ -11,7 +11,7 @@ import static java.lang.System.arraycopy;
  * An implementation of the Password-Based Key Derivation Function as specified
  * in RFC 2898.
  *
- * @author  Will Glozer
+ * 
  */
 public class PBKDF {
     /**

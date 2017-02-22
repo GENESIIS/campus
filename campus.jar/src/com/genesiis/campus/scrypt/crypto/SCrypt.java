@@ -1,4 +1,4 @@
-// Copyright (C) 2011 - Will Glozer.  All rights reserved.
+//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
 
 package com.genesiis.campus.scrypt.crypto;
 
@@ -18,7 +18,7 @@ import static java.lang.System.arraycopy;
  * <a href="http://www.tarsnap.com/scrypt.html">http://www.tarsnap.com/scrypt.html<a> and
  * fall back to the pure Java version if that fails.
  *
- * @author  Will Glozer
+ * 
  */
 public class SCrypt {
     private static final boolean native_library_loaded;

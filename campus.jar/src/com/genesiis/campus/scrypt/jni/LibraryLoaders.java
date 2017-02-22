@@ -1,4 +1,4 @@
-// Copyright (C) 2011 - Will Glozer.  All rights reserved.
+//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
 
 package com.genesiis.campus.scrypt.jni;
 
@@ -10,7 +10,7 @@ package com.genesiis.campus.scrypt.jni;
  * loader auto-detection, or to disable loading native libraries entirely via use
  * of the nil loader.
  *
- * @author Will Glozer
+ * //20170202 AS CAM-22 implemented Scrypt encode decode plugging classes. 
  */
 public class LibraryLoaders {
     /**

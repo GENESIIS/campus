@@ -1,4 +1,4 @@
-// Copyright (C) 2011 - Will Glozer.  All rights reserved.
+//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
 
 package com.genesiis.campus.scrypt.crypto;
 
@@ -25,7 +25,7 @@ import static com.genesiis.campus.scrypt.codec.Base64.*;
  *
  * <code>s0</code> identifies version 0 of the scrypt format, using a 128-bit salt and 256-bit derived key.
  *
- * @author  Will Glozer
+ * 
  */
 public class SCryptUtil {
     /**

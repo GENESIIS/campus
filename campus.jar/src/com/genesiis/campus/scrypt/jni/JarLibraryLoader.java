@@ -1,4 +1,4 @@
-// Copyright (C) 2011 - Will Glozer.  All rights reserved.
+//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
 
 package com.genesiis.campus.scrypt.jni;
 
@@ -17,7 +17,7 @@ import java.util.jar.JarFile;
  * Given a library path and name this loader looks for a native library with path
  * [libraryPath]/[arch]/[os]/lib[name].[ext]
  *
- * @author Will Glozer
+ *
  */
 public class JarLibraryLoader implements LibraryLoader {
     private final CodeSource codeSource;
