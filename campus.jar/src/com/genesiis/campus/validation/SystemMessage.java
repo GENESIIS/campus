@@ -14,6 +14,7 @@ package com.genesiis.campus.validation;
 //20161116 DN DN c10-contacting-us-page-MP removed unnecessary enum values.
 //20161122 PN c27-upload-user-image: added new attributes to the Enum
 //20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
+//20170222 DN c131-admin-manage-banner-upload-banner-image-dn PROCESSING enum value added
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -130,7 +131,8 @@ public enum SystemMessage {
 	AUTO_COMPLETE_ERR("autoCompleteError"),
 	REPORT_GENERATION_FAILED("reportGenerationFailed"),
 	NOT_AVAILABLE("notAvailable"), 
-	FILE_UPLOAD_FAILED("FILE UPLOAD FAILED"), 
+	FILE_UPLOAD_FAILED("File Uplpad Failed"), 
+	PROCESSING ("Processing..."),
 	INVALID_INFORMATION("Invalid Information");
 
 	private String message;
