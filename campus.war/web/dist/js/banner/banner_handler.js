@@ -31,7 +31,10 @@
  * 				${pageScope['javax.servlet.jsp.jspPage']} 	
  * 20170221 MM c127-display-banners-on-jsp-load-front-end Changed logic related to determining whether to
  * 				to send the Ajax request to fetch banners to use hidden field with id 
- * 				'areBannersDeliveredWithPage'			
+ * 				'areBannersDeliveredWithPage'	
+ * 20170222 MM c127-display-banners-on-jsp-load-front-end Moved code that binds an event-handler to 'click' 
+ * 				event of banner image elements to within document.ready(...). Made Ajax calls to fetch 
+ * 				banner images and add banner statistics to have async = true. 				
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -80,20 +83,11 @@ $.each(bannerSlotTimers, function(index, value) {
 	value(index);
 });
 
-// Binding event handler for click event to banner elements
-$('.banner').on('click', function(e) {
-	e.preventDefault();
-	var url = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
-	sendBannerStatisticsUpdateRequest($(this));
-	window.open(url, '_blank');
-}); 
-
 
 // Event handler for sending DB add operation upon clicking of a banner
 function sendBannerStatisticsUpdateRequest(banner) { 
 	
 	var bannerCode = banner.attr('data-banner-code');
-//	var callerPage = banner.attr('data-caller-page');
 	var callerPage = getPageName();
 	
 	$.ajax({
@@ -105,7 +99,7 @@ function sendBannerStatisticsUpdateRequest(banner) {
 			'callerPage' : callerPage
 		},
 		dataType : "json",
-		async : false,
+		async : true,
 		success : function(response) {			
 			var operationStatus = response.operationStatus; 			
 			if(operationStatus != undefined && operationStatus != null) {
@@ -148,7 +142,7 @@ function getBanners() {
 				'pageName' : pageName
 			},
 			dataType : "json",
-			async : false,
+			async : true,
 			success : function(response) {			
 				console.log('Ajax request made to fetch banner images succeeded');
 				setBannersToPageSlots(response, pageName);
@@ -181,6 +175,14 @@ function setBannersToPageSlots(response) {
 		});
 		$(this).html(pageSlotHtml);
 	});
+
+	// Bind event handler for click event to banner elements
+	$('.banner').on('click', function(e) {
+		e.preventDefault();
+		var url = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
+		sendBannerStatisticsUpdateRequest($(this));
+		window.open(url, '_blank');
+	}); 
 }
 
 // Get the current JSP page name
