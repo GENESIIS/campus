@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 /**
  * 20170221 PN CAM-48: INIT CmdcpImgUpload.java class and implementing execute() method to complete cp image uploading functionality.
+ * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -29,10 +30,9 @@ public class CmdcpImgUpload implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// Variable declaration.
-		JsonArray list = new JsonArray();
 		Gson gson = new Gson();
 		FileUtility utility = new FileUtility();
-		ArrayList<FileItem> files = new ArrayList<FileItem>();
+		FileItem file = null;
 
 		String fileUploadError = "";
 		String fileUploadSuccess = "";
@@ -47,45 +47,38 @@ public class CmdcpImgUpload implements ICommand {
 		String validExtensions[] = { "jpeg", "jpg", "png", "gif" };
 		
 		try {
+			Map<String, Object> formFielsd = helper.getFormFields();
 			//Get form fields data from the request.
-			Map<String, String> formFielsd = helper.getFormFields();
+			
 			if(!formFielsd.isEmpty()){
-				courseProviderCode = Integer.parseInt(formFielsd.get("courseProviderCode"));
-				uploadPathConf = formFielsd.get("uploadPathConf");
+				courseProviderCode = Integer.parseInt((String) formFielsd.get("courseProviderCode"));
+				uploadPathConf = (String) formFielsd.get("uploadPathConf");
 			}
+			// Here it's only one file is coming from the Uploader. But it has
+			// assigned to a ArrayList<FileItem> because of the reuseability of
+			// helper.getFiles() method.
+			file =  (FileItem) formFielsd.get("cp_img");
 			
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
 			String uploadPath = getImageUploadConfigs(uploadPathConf,2);
 
 			// get the number of bytes of the valid upload size. Taken the size from SYSTEMCONFIG table.
-			String uploadSizeParam = getImageUploadConfigs(uploadPathConf,3);
+			String uploadSizeParam = getImageUploadConfigs(uploadPathConf,2);
 
-			// Here it's only one file is coming from the Uploader. But it has
-			// assigned to a ArrayList<FileItem> because of the reuseability of
-			// helper.getFiles() method.
-			files = (ArrayList<FileItem>) helper.getFiles();
 			
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
 
-			for (FileItem item : files) {
-				utility.setFileItem(item);
-				JsonObject response = new JsonObject();
-
-				if (item.getSize() > 1) {
-					fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message();
-				} else if ((item.getName().lastIndexOf(".") == -1)
-						|| !utility.isValidImageFileType(item.getName(), validExtensions)) {
-					fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
-				} else {
-					//filePath = utility.remvoeOldAndUploadNew(uploadPathConf);
-					response.addProperty("path", war + "/" + filePath);
-					response.addProperty("name", utility.getNewName());
+				utility.setFileItem(file);
+//				if (item.getSize() > 1) {
+//					fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message();
+//				} else if ((item.getName().lastIndexOf(".") == -1)
+//						|| !utility.isValidImageFileType(item.getName(), validExtensions)) {
+//					fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
+//				} else {
+					filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf,courseProviderCode));
 					fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
-				}
-				response.addProperty("size", item.getSize());
-				list.add(response);
-			}
+//				}
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -102,10 +95,10 @@ public class CmdcpImgUpload implements ICommand {
 	}
 	
 	/**
-	 * 
-	 * @param key
-	 * @param index
-	 * @return
+	 * This method is to get values from the [CAMPUS].[SYSTEMCONFIG] table where it passes the [SYSTEMCONFIGCODE] value and required field as index. (VALUE1, VALUE2, VALUE3)
+	 * @param key - SYSTEMCONFIGCODE value.
+	 * @param index - value number
+	 * @return String -  physical path to upload the image.
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -129,4 +122,22 @@ public class CmdcpImgUpload implements ICommand {
 		return uploadPath;
 	}
 
+	/**
+	 * 
+	 * @param uploadPathConf - type of the uploaded image (small logo, large logo etc)
+	 * @param courseProviderCode - course provider ID.
+	 * @return
+	 */
+	private String createFileName(String uploadPathConf, int courseProviderCode) {
+		String subName = "";
+		String newFileName = "";
+		try {
+			subName = uploadPathConf.toLowerCase().substring(3, uploadPathConf.length());
+			newFileName = Integer.toString(courseProviderCode) + "_" + uploadPathConf;
+		} catch (Exception ex) {
+			log.error("createFileName(): Exception " + ex.toString());
+			throw ex;
+		}
+		return newFileName;
+	}
 }
