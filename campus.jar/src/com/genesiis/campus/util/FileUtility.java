@@ -7,6 +7,7 @@ package com.genesiis.campus.util;
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 //20170110 DN c47-tutor-add-tutor-information-upload-image-dn getFileItem() method
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn created the method moveFileTODiferentDirectory(String,FileItem,boolean)
+//20170222 DN c131-admin-manage-banner-upload-banner-image-dn implement the method deleteDirectory(String)
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -436,7 +437,7 @@ public class FileUtility {
 	 * 								  else the folder is not cleaned prior to move the file.	
 	 * @return boolean if the moving to a given folder is a success the function returns a true else a false.
 	 */
-	public boolean moveFileTODiferentDirectory(String movingDirectoryPath,
+	public boolean moveFileToDiferentDirectory(String movingDirectoryPath,
 			FileItem fileItemTOBeMoved, boolean shouldDirectoryContentBeRemoved)
 			throws NullPointerException, SecurityException, IOException,
 			Exception {
@@ -490,5 +491,37 @@ public class FileUtility {
 		}
 
 	}
+	
+	/**
+	 * deleteDirectory() method deletes a directory in the given
+	 * path if and only if it exists.
+	 * @param deletableDirectoryPath String , the path of the folder to be deleted
+	 * e.g C:\eclipse\plugins\org.apache.axis_1.4.0.v201005080400
+	 * @return true if the folder is deleted and else false
+	 * @throws NullPointerException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public boolean deleteDirectory(String deletableDirectoryPath) throws NullPointerException,
+	FileNotFoundException,IOException{
+		boolean isDirectoryDeleted = false;
+		try {
+			 File directory =new File(deletableDirectoryPath);
+			 if(directory.isDirectory()){
+				FileUtils.forceDelete(directory);
+				return directory.isDirectory();
+			}
+		} catch (NullPointerException npexp) {
+			log.error("deleteDirectory(String): NullPointerException "+ npexp.toString());
+		} catch (FileNotFoundException fnfexp) {
+			log.error("deleteDirectory(String): FileNotFoundException "+ fnfexp.toString());
+		} catch (IOException ioexp) {
+			log.error("deleteDirectory(String): IOException "
+					+ ioexp.toString());
+			throw ioexp;
+		} 
+		return isDirectoryDeleted;
+	}
+	
 }
 
