@@ -5,6 +5,7 @@ package com.genesiis.campus.util;
 //20161124 PN c27-upload-user-image: implemented isValidImageFileType() method.
 //20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
+//20170222 PN CAM-48: implement remvoeOldAndUploadNew(String imgName) method to rename and save course provider related images.
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -412,5 +413,71 @@ public class FileUtility {
 			file = new File(uploadPath + "/(copy)" + fileName);
 		}
 		return file;
+	}
+
+	/**
+	 * This method is to rename the image and save it to the course provider images folder.
+	 * @param imgName - image name to save the image file.
+	 * @return String -  image saved path.  (Absolute)
+	 * @throws Exception
+	 */
+	public String remvoeOldAndUploadNew(String imgName) throws Exception  {
+		String savePath = "";
+		try {
+			this.uploaded = false;
+			File uploadLocation = new File(this.uploadPath);
+
+			if (!uploadLocation.isDirectory()){
+				uploadLocation.mkdirs();
+			}
+			String fileName = this.item.getName();
+
+			this.file = isFileExistsEndofUP(this.uploadPath, fileName, this.file);	
+			this.file = createCopyofFile(this.uploadPath, fileName, this.file);
+			
+			this.item.write(this.file);
+			this.uploaded = true;
+
+			File folder = new File(this.getFile().getParent());
+			String newfileName = "";
+			String ext = "";
+
+			ext = FilenameUtils.getExtension(this.getUploadedFilePath());
+			// rename the file using student code
+			newfileName = imgName + "." + ext;
+
+			// create a copy of file
+			savePath = folder.getAbsoluteFile() + "/" + newfileName;
+			savePath = savePath.substring(savePath.lastIndexOf(".war\\") + 5).replace("\\", "/");
+	
+			//Delete all the files has same name as studentCode
+			File[] listOfFiles = new File(folder.getAbsoluteFile() + "/").listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				// Check if the content inside folder is a file (not a directory)
+				if (listOfFiles[i].isFile()) {
+					String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
+					if (imgName.equals(fileNameWithOutExt)) {
+						FileUtils.forceDelete(new File(folder.getAbsoluteFile() + "/" + listOfFiles[i].getName()));
+					}
+				}
+			}
+		
+			// save the created copy of file
+			FileUtils.copyFile(this.file.getAbsoluteFile(), new File(folder.getAbsoluteFile() + "/" + newfileName));
+			// delete the original file
+			FileUtils.forceDelete(this.file);
+
+			this.renamedTo = newfileName;
+		} catch (FileNotFoundException fne) {
+			log.error("renameIntoOne():  IGNORE THIS: " + fne.toString());
+			this.uploaded = false;
+			throw fne;
+		} catch (Exception e) {
+			log.error("renameIntoOne(): " + e.toString());
+			this.uploaded = false;
+			throw e;
+		} 
+
+		return savePath;
 	}
 }
