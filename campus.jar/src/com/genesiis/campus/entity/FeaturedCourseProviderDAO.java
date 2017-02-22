@@ -23,6 +23,7 @@ package com.genesiis.campus.entity;
 //20170207 JH c141-add-course-provider-issue-improvements DAO class query refactor to implement stored procedure wip
 //20170209 JH c141-add-course-provider-issue-improvements removed unwanted prepared statement variables and imports
 //20170221 JH c141-add-course-provider-issue-improvements add(): added method comments and finally block modified to use DaoHelper.cleanup()
+//20170222 JH c141-add-course-provider-issue-improvements add(): queries updated to match stored procedure changes: check user type before inserting data
 
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
@@ -92,7 +93,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			 * This will not insert data into principal column
 			 */
 			String procedureCallMainBranch = "{call campus.add_featured_provider_main_branch(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
 			/*
 			 * procedureCallMainBranch will creates a course provider sub branch account.
@@ -102,7 +103,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			 * This will insert data into principal column
 			 */
 			String procedureCallSubBranch = "{call campus.add_featured_provider_sub_branch(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+					+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 			
 			//check whether the course provider has a head office or not
 			if(courseProvider.getPrincipal()==0){//does not have a head office
@@ -112,7 +113,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			if (courseProvider.getPrincipal() != 0) {// has a head office
 				callableStatement = conn.prepareCall(procedureCallSubBranch);
 
-				callableStatement.setInt(47, courseProvider.getPrincipal());
+				callableStatement.setInt(48, courseProvider.getPrincipal());
 			}
 
 			// set common parameter values to the callable statement
@@ -164,11 +165,12 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			callableStatement.setString(43, courseProviderTown.getContactNumber());
 			callableStatement.setBoolean(44, courseProviderTown.isActive());
 			callableStatement.setInt(45, courseProvider.getHeadOffice());
-			callableStatement.registerOutParameter(46, java.sql.Types.INTEGER);
+			callableStatement.setInt(46, 0);
+			callableStatement.registerOutParameter(47, java.sql.Types.INTEGER);
 
 			callableStatement.executeUpdate();
 			
-			generatedKey = callableStatement.getInt(46);			
+			generatedKey = callableStatement.getInt(47);			
 
 			conn.commit();
 
