@@ -184,10 +184,15 @@ function forgotPassword() {
 					},
 					dataType : "json",
 					success : function(response) {
-						document.getElementById('messsage').innerHTML = response['message'];
-						setTimeout(function() {
-							$('#verifications-popup').modal('show');
-						}, 5000);
+						if(response['message']=== 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. '){
+							document.getElementById('emailveryMessage').innerHTML = response['message'];
+							setTimeout(function() {
+								$('#verifications-popup').modal('show');
+							}, 5000);
+						}else{
+							document.getElementById('emailveryMessage').innerHTML = response['message'];
+							
+						}
 					},
 					error : function(response, error, errorThrown) {
 						alert("Error " + error);
