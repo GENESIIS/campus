@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 public class CmdcpImgUpload implements ICommand {
 	static Logger log = Logger.getLogger(CmdcpImgUpload.class.getName());
@@ -46,6 +47,13 @@ public class CmdcpImgUpload implements ICommand {
 		String validExtensions[] = { "jpeg", "jpg", "png", "gif" };
 		
 		try {
+			//Get form fields data from the request.
+			Map<String, String> formFielsd = helper.getFormFields();
+			if(!formFielsd.isEmpty()){
+				courseProviderCode = Integer.parseInt(formFielsd.get("courseProviderCode"));
+				uploadPathConf = formFielsd.get("uploadPathConf");
+			}
+			
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
 			String uploadPath = getImageUploadConfigs(uploadPathConf,2);
 
@@ -56,7 +64,7 @@ public class CmdcpImgUpload implements ICommand {
 			// assigned to a ArrayList<FileItem> because of the reuseability of
 			// helper.getFiles() method.
 			files = (ArrayList<FileItem>) helper.getFiles();
-
+			
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
 
