@@ -26,13 +26,7 @@ public class CmdEmailVarification implements ICommand {
 	static Logger log = Logger.getLogger(CmdEmailVarification.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	String message = SystemMessage.INVALID_EMAIL.message();
-	String result = "";
-	String firstName = "";
-	String lastName = "";
-	String email = "";
-	String uname = "";
-	String code ="";
+	
 	String securedHash = "";
 	private String emailTitle = "Reset password instructions";
 	private ArrayList<String> recieversEmailAddreses;
@@ -43,8 +37,15 @@ public class CmdEmailVarification implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		int status = -3;
+		String message = SystemMessage.INVALID_EMAIL.message();
+		String result = "";
+		String firstName = "";
+		String lastName = "";
+		String email = "";
+		String uname = "";
+		String code = "";
 		try {
-	
+
 			IEmailComposer resetPasswordEmailComposer = new ResetPasswordInstructionEmailDispenser();
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
@@ -52,52 +53,55 @@ public class CmdEmailVarification implements ICommand {
 			if (validEmail) {
 				ICrud emailVarifyDAO = new StudentEmailVerificationDAO();
 				dataCollection = emailVarifyDAO.findById(data);
-				
+
 				for (Collection<String> collection : dataCollection) {
 					Object[] array = collection.toArray();
-					result = (String) array[0];
-					firstName = (String) array[0];
-					lastName = (String) array[1];
-					email = (String) array[2];
-					uname = (String) array[3];
-					code = (String) array[4] ;
+					if (array[0].equals(SystemMessage.INVALID_EMAIL.message())) {
+						result = (String) array[0];
+					} else {
+
+						firstName = (String) array[0];
+						lastName = (String) array[1];
+						email = (String) array[2];
+						uname = (String) array[3];
+						code = (String) array[4];
+					}
 				}
 
 				if (result.equalsIgnoreCase(SystemMessage.INVALID_EMAIL
 						.message())) {
 					message = SystemMessage.INVALID_EMAIL.message();
-					
+
 				} else {
 					data.setFirstName(firstName);
 					data.setLastName(lastName);
 					data.setEmail(email);
 					data.setCode(Integer.parseInt(code));
-					
+
 					recieversEmailAddreses = new ArrayList<String>();
 					recieversEmailAddreses.add(email);
 					HashCodeBuilder hashBuilder = new HashCodeBuilder();
 					securedHash = hashBuilder.createHash(firstName, lastName);
 					data.setHashCode(securedHash);
-					
-					int updateData = emailVarifyDAO.update(data);
-					 if(updateData >0){
-						 message = SystemMessage.HASHCODES.message();
-						 resetPasswordEmailComposer.setEnvironment(firstName + " "
-									+ lastName, sendersEmail, recieversEmailAddreses,
-									emailTitle, emailBody + " " + securedHash,
-									securedHash);
 
-							resetPasswordEmailComposer
-									.setGeneralEmail(resetPasswordEmailComposer
-											.formatEmailInstance(addSpecificContentToOriginalMailBody()));
-							status = this.sendMail(resetPasswordEmailComposer);
-						 
-					 }else{
-						 message = SystemMessage.HASHCODEUNS.message();
-					 }
-					 
+					int updateData = emailVarifyDAO.update(data);
+					if (updateData > 0) {
+						message = SystemMessage.HASHCODES.message();
+						resetPasswordEmailComposer.setEnvironment(firstName
+								+ " " + lastName, sendersEmail,
+								recieversEmailAddreses, emailTitle, emailBody
+										+ " " + securedHash, securedHash);
+
+						resetPasswordEmailComposer
+								.setGeneralEmail(resetPasswordEmailComposer
+										.formatEmailInstance(addSpecificContentToOriginalMailBody()));
+						status = this.sendMail(resetPasswordEmailComposer);
+
+					} else {
+						message = SystemMessage.HASHCODEUNS.message();
+					}
+
 					message = systemMessage(status);
-					
 
 				}
 			} else {
@@ -118,8 +122,7 @@ public class CmdEmailVarification implements ICommand {
 	}
 
 	/**
-	 * extract data from json object and assign to Student object
-	 * object
+	 * extract data from json object and assign to Student object object
 	 * 
 	 * @author anuradha
 	 * @param gsonData
