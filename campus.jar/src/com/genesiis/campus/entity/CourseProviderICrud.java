@@ -37,6 +37,9 @@ public interface CourseProviderICrud extends ICrud{
 	//Retrieve basic fields of course provider table
 	public Collection<Collection<String>> getLightAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
 	
+	//Retrieve Code,UNIQUEPREFIX,Status basic fields of course provider table
+	public Collection<Collection<String>> getReportAllCourseProviders(CourseProviderSearchDTO providerSearchDTO)throws SQLException,Exception;
+	
 	//Retrieve a course provider details by course provider code
 	public Collection<Collection<String>> getCourseProviderById(Integer courseProviderCode)throws SQLException,Exception;
 	

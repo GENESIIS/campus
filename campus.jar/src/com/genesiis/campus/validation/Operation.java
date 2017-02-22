@@ -1,4 +1,6 @@
 package com.genesiis.campus.validation;
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj add SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER 
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj add REPORT_COURSES_BY_COURSE_PROVIDER entry 
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC to the class
@@ -51,7 +53,9 @@ public enum Operation {
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
-	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
+	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp"),
+    SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER("SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," "),
+	REPORT_COURSES_BY_COURSE_PROVIDER("REPORT_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," ");	
 			
 	private final String commandString;
 	private final ResponseType responseType;

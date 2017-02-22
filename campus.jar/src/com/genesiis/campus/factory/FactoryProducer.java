@@ -2,6 +2,7 @@ package com.genesiis.campus.factory;
 
 //20161025 DN c10-contacting-us create the initial version of FactoryProducer.java
 //20161130 PN c27-upload-user-image: removed return value for choice - "/PublicController".
+//20161205 DJ  c51-report-courses-by-course-provider-MP-dj initiate the ReportController factory
 
 import org.apache.log4j.Logger;
 
@@ -27,6 +28,10 @@ public class FactoryProducer {
 		} else if (choice.equalsIgnoreCase("/StudentController")) {
 			return new StudentCmdFactory();
 		}
+		if (choice.equalsIgnoreCase("/ReportController")) {
+			return new ReportCmdFactory();
+			
+		} 
 		return null;
 	}
 }

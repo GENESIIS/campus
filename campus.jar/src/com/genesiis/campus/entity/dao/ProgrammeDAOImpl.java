@@ -2,11 +2,14 @@ package com.genesiis.campus.entity.dao;
 
 //DJ 20170108 c6-list-available-institutes-on-the-view created ProgrammeDAO.java
 //DJ 20170108 c6-list-available-institutes-on-the-view Implemented findMajorsByMajorCodes() and findLevelsByLevelCodes()
+//DJ 20170117 c51-report-courses-by-course-provider-MP-dj Implemented getReportAllCourseProviders().
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
@@ -222,5 +225,75 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		
 		return allLevelList;
 	}
+	
+	/**
+	 * Retrieve Programme details against course provider.Developer able to re use the query by adding conditions to the query builder by setting
+	 * parameters to ProgrammeSearchDTO
+	 * @param programmeDTO ProgrammeSearchDTO
+	 * @author dumani DJ
+	 * @return Collection of strings
+	 */
+	@Override
+	public Collection<Collection<String>> getProgrammesForReport(final ProgrammeSearchDTO programmeSearchDTO) throws SQLException,
+			Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		final Collection<Collection<String>> programmeList = new ArrayList<Collection<String>>();
+		try {			
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME ,  PROG.DESCRIPTION AS PROGDESCRIPTION ,PROV.NAME AS CPNAME , ");
+			sb.append(" PROG.PROGRAMMESTATUS AS PROSTATUS, PROG.DISPLAYSTARTDATE AS PROGSTARTDATE, PROG.EXPIRYDATE AS PROGEXPIRYDATE ");
+			sb.append(" FROM [CAMPUS].PROGRAMME PROG INNER JOIN  [CAMPUS].COURSEPROVIDER PROV ON PROG.COURSEPROVIDER=PROV.CODE WHERE 1=1 ");
+			if (programmeSearchDTO.getProviderStatus() >= 0) {
+				sb.append(" AND  PROV.COURSEPROVIDERSTATUS =  ");
+				sb.append(programmeSearchDTO.getProviderStatus());
+			}
+			if (programmeSearchDTO.getCourseProvider() > 0) {
+				sb.append(" AND PROG.COURSEPROVIDER =  ");
+				sb.append(programmeSearchDTO.getCourseProvider());
+			}
+			if (programmeSearchDTO.getDisplayStartDate() != null	&& programmeSearchDTO.getDisplayStartDate().getTime() > 0) {
+				sb.append("AND PROG.DISPLAYSTARTDATE >= ' ");
+				sb.append(new java.sql.Date(programmeSearchDTO.getDisplayStartDate().getTime()));
+				sb.append(" ' ");
+			}
+			if (programmeSearchDTO.getExpiryDate() != null	&& programmeSearchDTO.getExpiryDate().getTime() > 0) {
+				sb.append("AND PROG.EXPIRYDATE <= '");
+				sb.append(new java.sql.Date(programmeSearchDTO.getExpiryDate().getTime()));
+				sb.append(" ' ");
+			}
+			if (programmeSearchDTO.getProgrammeStatus() >=0) {
+				sb.append(" AND PROG.PROGRAMMESTATUS =  ");
+				sb.append(programmeSearchDTO.getProgrammeStatus());
+			}
+
+			stmt = conn.prepareStatement(sb.toString());
+			resultSet= stmt.executeQuery();			
+			while (resultSet.next()) {
+				final ArrayList<String> singleProgramme = new ArrayList<String>();
+				singleProgramme.add(resultSet.getString("PROGCODE"));
+				singleProgramme.add(resultSet.getString("PROGNAME"));				
+				singleProgramme.add(resultSet.getString("PROGDESCRIPTION"));				
+				singleProgramme.add(resultSet.getString("CPNAME"));				
+				singleProgramme.add(ApplicationStatus.getApplicationStatus(resultSet.getInt("PROSTATUS")));				
+				singleProgramme.add(resultSet.getString("PROGSTARTDATE"));				
+				singleProgramme.add(resultSet.getString("PROGEXPIRYDATE"));				
+				programmeList.add(singleProgramme);
+			}
+
+		} catch (SQLException sqlException) {
+			log.info("findById() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("findById() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}
+		return programmeList;
+	}
+
+	
 
 }

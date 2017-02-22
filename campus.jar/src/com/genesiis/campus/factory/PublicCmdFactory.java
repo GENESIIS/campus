@@ -3,6 +3,8 @@ package com.genesiis.campus.factory;
 //20161025 PN c11-criteria-based-filter-search INIT PublicCmdFactory.java
 //20161026 DN c10-contacting-us-page amended by inserting CONTACT_US_PUBLC entry to the map
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj by inserting SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER entry to the map
+//20161127 DJ c51-report-courses-by-course-provider-MP-dj by inserting REPORT_COURSES_BY_COURSE_PROVIDER entry to the map
 //20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
 //20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
 //20161116 MM c2-integrate-google-banners Added map element with key LIST_GOOGLE_ADVERTS enum
@@ -43,6 +45,7 @@ public class PublicCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_ALL_COURSE_PROVIDERS, new CmdListMoreCourseProviders());
 		map.put(Operation.LIST_FILTER_SEARCH_COURSE_PROVIDERS, new CmdCourseProviderFilterSearch());
 		map.put(Operation.LIST_FILTER_SEARCH_CATEGORY_TYPES, new CmdListCategoryTypes());
+		
 		map.put(Operation.CONTACT_US_PUBLC, new CmdGenerateEmail());
 	}
 	
