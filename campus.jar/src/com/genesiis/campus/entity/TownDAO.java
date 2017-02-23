@@ -10,6 +10,12 @@ package com.genesiis.campus.entity;
 //20170207 CW c38-view-update-tutor-profile-re organize the import statements.
 //20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
 //20170216 CW c38-view-update-tutor-profile Add class comment & removed commented lines
+//20170223 CW c36-add-tutor-information re-organise the import statements.
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +23,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import org.apache.log4j.Logger;
 
 /**
  * this class used to manage the town related data 
