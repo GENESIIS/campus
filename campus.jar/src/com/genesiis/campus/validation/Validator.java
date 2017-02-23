@@ -43,6 +43,12 @@ package com.genesiis.campus.validation;
 //20170214 CW c38-view-update-tutor-profile modified isValidCountryCode(), isValidNetworkCode(), isValidContactNumber(), isValidUserAndEmail() & isHavingNullValues() methods
 //20170215 CW c38-view-update-tutor-profile Add class comment
 //20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
+//20170223 CW c36-add-tutor-information re-organise the import statements
+
+import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.util.IDataHelper;
+
+import org.jboss.logging.Logger;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -50,11 +56,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.jboss.logging.Logger;
-
-import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.util.IDataHelper;
 
 
 /**
