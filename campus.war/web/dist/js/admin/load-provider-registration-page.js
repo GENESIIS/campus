@@ -8,7 +8,7 @@
 //				landPhoneNubmerHelper() method changed to clear info message on error
 //20170215 JH c141-add-course-provider-issue-improvements send generated course provider code on successful registration
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
-
+//20170223 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): change hints to error messages when they show errors 
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -334,11 +334,11 @@ function landPhoneNubmerHelper() {
 		
 	}else{
 		 if (!isempty(areaCode)) {
-			document.getElementById('landNumber1').innerHTML = "**Area code is empty.";
-			document.getElementById('landNumber2').innerHTML = "**Area code is empty.";
+			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
+			document.getElementById('errorLand2').innerHTML = "**Area code is empty.";
 
 		}if(!isempty(networkCode)){
-			document.getElementById('lastMobileNumber').innerHTML = "**Network code is empty.";
+			document.getElementById('errorMobile').innerHTML = "**Network code is empty.";
 		
 		} if (isempty(areaCode)) {
 			if (isPatternMatch(integerPattern, areaCode)) {
