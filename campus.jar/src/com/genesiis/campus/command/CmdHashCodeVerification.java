@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170209 AS C22 forgot password, CmdHashCodeVerification command class created
 //20170221 AS C22 execute() method body implemented a try-catch block
+//20170223 AS C22 result,pageURL,message,data added inside try-block 
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -18,15 +19,16 @@ import com.google.gson.Gson;
 public class CmdHashCodeVerification implements ICommand {
 	static Logger log = Logger.getLogger(CmdHashCodeVerification.class
 			.getName());
-	private Student data;
-	private Collection<Collection<String>> dataCollection = null;
-	String pageURL = "/dist/partials/login/passwordReset.jsp";
-	String result = "";
-	String message = "";
+	
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		String pageURL = "/dist/partials/login/emailVerification.jsp";
+		String result = "";
+		String message = "";
+		Student data;
+		Collection<Collection<String>> dataCollection = null;
 		try {
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
@@ -44,6 +46,8 @@ public class CmdHashCodeVerification implements ICommand {
 				message = result;
 			} else {
 				view.setCollection(dataCollection);
+				pageURL = "/dist/partials/login/passwordReset.jsp";
+				message = result;
 			}
 		} catch (SQLException sexp) {
 			log.error("execute(): SQLException " + sexp.toString());
