@@ -11,6 +11,7 @@ package com.genesiis.campus.validation;
 //20170209 JH c39-add-course-provider added expiration date back end validation 
 //20170221 JH c141-add-course-provider created separate featuredAccountValidation() method to validate featured course provider account details,
 // 			removed unwanted comments with code review fixes
+//20170223 JH  featuredAccountValidation(): username length error message changed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -283,7 +284,7 @@ public class Validator {
 		}
 		
 		if(!isValidLength(helper.getParameter("providerUsername"), 100, 5)){
-			helper.setAttribute("errorUsername", "Username too small or exceed the max length. It should have at least 5 characters");
+			helper.setAttribute("errorUsername", "Username too small or exceed the max length. It must have min 5 and max 100 characters");
 			errorString.add("Username");
 		}
 		
