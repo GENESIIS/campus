@@ -1,7 +1,7 @@
 package com.genesiis.campus.command;
 
 /**
- * 20170221 PN CAM-48: INIT CmdcpImgUpload.java class and implementing execute() method to complete cp image uploading functionality.
+ * 20170221 PN CAM-48: INIT CmdUploadCPImg.java class and implementing execute() method to complete cp image uploading functionality.
  * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
  * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
  */
@@ -30,8 +30,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class CmdcpImgUpload implements ICommand {
-	static Logger log = Logger.getLogger(CmdcpImgUpload.class.getName());
+public class CmdUploadCPImg implements ICommand {
+	static Logger log = Logger.getLogger(CmdUploadCPImg.class.getName());
 	
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
