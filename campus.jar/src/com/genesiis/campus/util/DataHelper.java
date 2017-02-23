@@ -144,7 +144,7 @@ public class DataHelper implements IDataHelper {
 				BannerData.setBannerDetails(this, getResultPage(cco));
 			}
 		} catch (Exception e) {
-			logger.info("getResultView() : " + e.toString());
+			logger.error("getResultView() : " + e.toString());
 			throw e;
 		}
 		return result;
