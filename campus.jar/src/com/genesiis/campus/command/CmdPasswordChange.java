@@ -1,7 +1,8 @@
 package com.genesiis.campus.command;
 
-//20170214 AS CAM-130 for Password change to created CmdPasswordChange command class.
-//20170221 AS C22 execute() method body implemented a try-catch block
+//20170214 AS CAM-22 for Password change to created CmdPasswordChange command class.
+//20170221 AS CAM-22 execute() method body implemented a try-catch block
+//20170223 AS CAM-22 message and page string added inside try-catch block 
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -19,12 +20,13 @@ public class CmdPasswordChange implements ICommand {
 	static Logger log = Logger.getLogger(CmdPasswordChange.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	String message = "";
-	String pageURL = "/index.jsp?showLogin=true";
+	
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		String message = "";
+		String pageURL = "/index.jsp";
 		try {
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
@@ -33,6 +35,7 @@ public class CmdPasswordChange implements ICommand {
 			int result = passwordRest.update(data);
 			if (result > 0) {
 				message = SystemMessage.PASSWORD_SUCCESS.message();
+				pageURL = "/index.jsp?showLogin=true";
 			} else {
 				message = SystemMessage.PASSWORD_UNSUCCESS.message();
 			}
