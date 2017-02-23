@@ -12,11 +12,13 @@ var dataSet = null;
 var courseProviderCode = null;
 // array with allowed extensions
 var extensions = [ "jpeg", "jpg", "png", "gif", "GPEG", "JPG", "PNG", "GIF" ];
+// array with file names list.
+var listOfFiles = [];
 
 // A $( document ).ready() block.
 $(document).ready(function() {
 	displayImgDetails();
-
+	
 	// According to the selection of drop box, image description will be appear.
 	$('#cp_img_type').on('change', function() {
 		document.getElementById("cp_img_upload_btn").disabled = false;
@@ -109,6 +111,7 @@ function displayImgDetails() {
 			if (response && response.result != "NO-DATA") {
 				dataSet = response;
 				courseProviderCode = response.courseProviderCode;
+				listOfFiles = response.listOfFiles;
 				setCPImgData(response);
 			}
 		},

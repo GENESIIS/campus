@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -479,5 +480,26 @@ public class FileUtility {
 		} 
 
 		return savePath;
+	}
+	
+	/**
+	 * 
+	 * @param folder
+	 * @return
+	 * @throws IOException
+	 */
+	public static String[] getFileNames(String folder) throws IOException {
+		File file = null;
+		String[] paths;
+
+		try {
+			// create new file
+			file = new File(folder);
+			// array of files and directory
+			paths = file.list();
+		} catch (Exception e) {
+			log.error("getFileNames(): " + e.toString());
+			throw e;
+		}
 	}
 }

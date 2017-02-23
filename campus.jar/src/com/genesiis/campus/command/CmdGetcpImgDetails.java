@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.SystemConfigDAO;
+import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
@@ -25,13 +26,18 @@ public class CmdGetcpImgDetails implements ICommand {
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
+		
+		String[] listOfFiles;
+		
 		int courseProviderCode = 1; // This needs to be assign from the request later.
 		ICrud sysConf = new SystemConfigDAO();
 		Collection<Collection<String>> sysConfCollection = new ArrayList<Collection<String>>();
 		try {
+			listOfFiles = FileUtility.getFileNames("/education/provider/logo");
 			sysConfCollection = sysConf.getAll();
 			view.setCollection(sysConfCollection);
 			helper.setAttribute("courseProviderCode", courseProviderCode);
+			helper.setAttribute("listOfFiles", listOfFiles);
 		} catch (SQLException sqle) {
 			log.info("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -41,5 +47,7 @@ public class CmdGetcpImgDetails implements ICommand {
 		}
 		return view;
 	}
+	
+
 
 }
