@@ -4,7 +4,7 @@ package com.genesiis.campus.command;
  * 20170221 PN CAM-48: INIT CmdUploadCPImg.java class and implementing execute() method to complete cp image uploading functionality.
  * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
  * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
- * 20170223 PN CAM-48: implemented getFileUploadError() method implemented.
+ * 20170223 PN CAM-48: implemented getFileUploadError() method implemented. modified execute method to fix incorrect validations in backend.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -138,8 +138,9 @@ public class CmdUploadCPImg implements ICommand {
 		String subName = "";
 		String newFileName = "";
 		try {
-			subName = uploadPathConf.toLowerCase().substring(3, uploadPathConf.length());
-			newFileName = Integer.toString(courseProviderCode) + "_" + uploadPathConf;
+			String[] uploadConfigs = uploadPathConf.split("_");
+			subName = uploadConfigs[1].toLowerCase();
+			newFileName = Integer.toString(courseProviderCode) + "_" + subName;
 		} catch (Exception ex) {
 			log.error("createFileName(): Exception " + ex.toString());
 			throw ex;
@@ -183,6 +184,9 @@ public class CmdUploadCPImg implements ICommand {
 				height = Long.parseLong(values[0].trim());
 				width = Long.parseLong(values[1].trim());
 				size = Long.parseLong(values[2].trim());
+				//Convert into bytes.
+				size = size * 1024 * 1024;
+				
 				if (item.getSize() > size) {
 					errorMsg.concat("Size: " + size + " ");
 				}
@@ -208,12 +212,21 @@ public class CmdUploadCPImg implements ICommand {
 	 * @param uploadSizeParam - valid file dimension details.
 	 * @return String - error message;
 	 */
-	private String getFileUploadError(FileItem file, String validExtensions[], FileUtility utility, String uploadSizeParam){
+	private String getFileUploadError(FileItem file, String validExtensions[], FileUtility utility, String uploadSizeParam) throws IOException{
 		String fileUploadError = "";
-		if(!isValidFileType(file, validExtensions, utility)){
-			fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
-		}else if(!isValidFileSize(file, uploadSizeParam).isEmpty()){
-			fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message() +" "+ isValidFileSize(file, uploadSizeParam);
+		try {
+			if (!isValidFileType(file, validExtensions, utility)) {
+				fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
+			} else if (!isValidFileSize(file, uploadSizeParam).isEmpty()) {
+				fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message() + " "
+						+ isValidFileSize(file, uploadSizeParam);
+			}
+		} catch (IOException ioe) {
+			log.error("getFileUploadError(): IOException " + ioe.toString());
+			throw ioe;
+		} catch (Exception ex) {
+			log.error("getFileUploadError(): Exception " + ex.toString());
+			throw ex;
 		}
 		return fileUploadError;
 	}
