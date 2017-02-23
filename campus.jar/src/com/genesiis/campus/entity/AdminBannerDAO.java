@@ -13,7 +13,8 @@ package com.genesiis.campus.entity;
  * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn add lines to manage the auto commit option
  * 			   manually in addBannerRecordInOneTransAction(). changed the return type from int to
  * 			   Collection<Collection<String>>.
- * 
+ * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn commented the [TYPE] field as the field is deprecated in future use
+         from [CAMPUS].[BAANER] table.
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -131,11 +132,13 @@ public class AdminBannerDAO implements ICrud {
 				+"	DECLARE @BannerName varchar(20);"
 				+"BEGIN TRANSACTION"
 				+"	INSERT INTO [CAMPUS].[BANNER]"
-				+"          ([IMAGE],[EXPIRATIONDATE],[TYPE],[DISPLAYDURATION],[LINKTYPE]"
+				+"          ([IMAGE],[EXPIRATIONDATE],"
+				//+ "[TYPE],"
+				+ "[DISPLAYDURATION],[LINKTYPE]"
 				+"          ,[URL],[ISACTIVE],[PAGESLOT],[ADVERTISER],[CRTON],[CRTBY]"
 				+"          ,[MODON],[MODBY],[ACTIVATIONDATE])"
 				+"  VALUES"
-				+"         (''default."+bannerImageExtenion+"'' ,''"+java.sql.Date.valueOf(innerBannerInflator.getBannerPublishingEndDate())+"'',"+"1"+","
+				+"         (''default."+bannerImageExtenion+"'' ,''"+java.sql.Date.valueOf(innerBannerInflator.getBannerPublishingEndDate())+"'',"//+"1"+","
 				+	Integer.parseInt(innerBannerInflator.getDisplayDusration())+","
 				+	getTheURLType(innerBannerInflator.getUrlMiniWebOrPage()).getMappingInt()+",''"
 				+	innerBannerInflator.getUrlToBeDirectedOnBannerClick()+"'',"
