@@ -1,3 +1,6 @@
+#20161118 PN C27-user-image-upload :INIT campus_student.war and campus_student.jar projects to handle 'student' module.
+#20161201 PN C27-user-image-upload :removed campus_student.war and campus_student.jar projects to handle 'student' module.
+
 ## RENAME THIS FILE TO BUILD.PROPERTIES.  CUSTOMISE BUILD.PROPERTIES TO SUIT YOU.
 		
 # these are the names of the JEE modules 
