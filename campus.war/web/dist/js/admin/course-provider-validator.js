@@ -5,6 +5,7 @@
 
 //20170209 JH c39-add-course-provider validation methods for expiration date changed
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
+//20170223 JH c141-add-course-provider-issue-improvements providerUsernameValidation():checked for username>100 and error messages changed
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -112,9 +113,9 @@ function providerUsernameValidation() {
 		document.getElementById('providerUsername').focus();
 		return false;
 	} else {
-		if (selectedUsername.length < 5) {// check whether the username has
+		if (selectedUsername.length < 5 || selectedUsername.length >100) {// check whether the username has
 											// less than 5 characters
-			document.getElementById('errorUsername').innerHTML = "**Username should have atleast 5 characters.";
+			document.getElementById('errorUsername').innerHTML = "**Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
 			return false;
 		} else {
 			document.getElementById('errorUsername').innerHTML = "";

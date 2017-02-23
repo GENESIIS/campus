@@ -9,9 +9,9 @@ package com.genesiis.campus.validation;
 //20170106 JH c39-add-course-provider modified isEmpty() method to a static method and renamed as isEmptyString()
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170209 JH c39-add-course-provider added expiration date back end validation 
-//20170221 JH c141-add-course-provider created separate featuredAccountValidation() method to validate featured course provider account details,
+//20170221 JH c141-add-course-provider-issue-improvements created separate featuredAccountValidation() method to validate featured course provider account details,
 // 			removed unwanted comments with code review fixes
-//20170223 JH  featuredAccountValidation(): username length error message changed
+//20170223 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): username length error message changed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
