@@ -6,6 +6,13 @@ package com.genesiis.campus.entity;
 //20170129 CW c36-add-tutor-information modified findById()
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment & method comment.
+//20170223 CW c36-add-tutor-information re-organise the import statements.
+
+import com.genesiis.campus.entity.model.Tutor;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import org.apache.log4j.Logger;
 
 
 /**
