@@ -8,6 +8,7 @@ package com.genesiis.campus.util;
 //20170110 DN c47-tutor-add-tutor-information-upload-image-dn getFileItem() method
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn created the method moveFileTODiferentDirectory(String,FileItem,boolean)
 //20170222 DN c131-admin-manage-banner-upload-banner-image-dn implement the method deleteDirectory(String)
+//20170223 DN c131-admin-manage-banner-upload-banner-image-dn copyFile() is introduced.
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -363,6 +364,7 @@ public class FileUtility {
 	
 	/**
 	 * This method check if the uploaded file has correct extensions.
+	 * @author dushantha DN
 	 * @param fileName
 	 * @param extensions - array of valid extensions
 	 * @return true if valid
@@ -495,6 +497,7 @@ public class FileUtility {
 	/**
 	 * deleteDirectory() method deletes a directory in the given
 	 * path if and only if it exists.
+	 * @author dushantha DN
 	 * @param deletableDirectoryPath String , the path of the folder to be deleted
 	 * e.g C:\eclipse\plugins\org.apache.axis_1.4.0.v201005080400
 	 * @return true if the folder is deleted and else false
@@ -521,6 +524,49 @@ public class FileUtility {
 			throw ioexp;
 		} 
 		return isDirectoryDeleted;
+	}
+	
+	/**
+	 * coppyFile method copies the source file to the destination file
+	 * @author dushantha DN
+	 * @param sourceFileName filename fully qualified file name
+	 * @param destinationFileName fully qualified file name
+	 * @param deleteSorcefileAfterCoppying if it is required to delete the source file 
+	 * after the copying process
+	 * @return true if the file copy succeeded else false.
+	 *  if the deleteSorcefileAfterCoppying set to true. then the return true if and 
+	 *  only if the file gets copied and deletion gets succeeded.Else returns false
+	 *  @exception 	NullPointerException,
+	 *  			IOException,
+	 *  			SecurityException
+	 */
+	
+	public boolean copyFile(String sourceFileName,
+			String destinationFileName,boolean deleteSorcefileAfterCoppying) 
+					throws NullPointerException,IOException,SecurityException{
+		boolean isCoppyingFileSuccess= false;
+		try {
+			File sourceFile = new File(sourceFileName);
+			File destinationFile = new File(destinationFileName);
+			
+			FileUtils.copyFile(sourceFile, destinationFile);
+			isCoppyingFileSuccess= destinationFile.exists();
+			
+			if(isCoppyingFileSuccess && deleteSorcefileAfterCoppying){
+				isCoppyingFileSuccess=sourceFile.delete();
+			}			
+		} catch (NullPointerException npexp) {
+			log.error("coppyFile() NullPointerException : " +npexp.toString());
+			throw npexp;
+		} catch (IOException ioexp) {
+			log.error("coppyFile() IOException : "+ ioexp.toString());
+			throw ioexp;
+		} catch (SecurityException sexp){
+			log.error("coppyFile() SecurityException : "+ sexp.toString());
+			throw sexp;
+		}
+		
+		return isCoppyingFileSuccess;
 	}
 	
 }
