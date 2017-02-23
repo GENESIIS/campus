@@ -13,6 +13,7 @@ package com.genesiis.campus.entity;
 //20170130 CW c36-add-tutor-details modified validateUsernameEmailFields() method
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170222 CW c36-add-tutor-details modified validateUsernameEmailFields() to add validations to check both email & username
+//20170223 CW c36-add-tutor-details modified validateUsernameEmailFields method to validate email & username separately
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -231,11 +232,12 @@ public class TutorDAO implements ICrud {
 	 * @return Returns 1 if both username & email are available in the database, returns 1 if the username is available in the database, 
 	 * 				returns 2 if the email is available & returns 0 if both are not used to create a tutor profile.
 	 */
-	public static int validateUsernameEmailFields(String username, String email) throws SQLException,	Exception {
+	public static int validateUsernameEmailFields(String username, String email) throws SQLException, Exception {
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int validStatus = 0;
 		
 		try {
 			conn = ConnectionManager.getConnection();
@@ -246,45 +248,31 @@ public class TutorDAO implements ICrud {
 			stmt.setString(2, email);
 			rs = stmt.executeQuery();
 
-			//final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
-			//final Collection<Integer> listOfData = new ArrayList<>();
-
 			final TreeSet<Integer> treeOfData = new TreeSet<Integer>();
 
 			while (rs.next()) {
 				if(rs.getString("USERNAME").equals(username) && rs.getString("EMAIL").equals(email)){
 					treeOfData.add(1);
-					//return 1;					
 				}else if(rs.getString("USERNAME").equals(username)){
-
 					treeOfData.add(2);
-					//return 2;
 				}else if(rs.getString("EMAIL").equals(email)){
 					treeOfData.add(3);
-					//return 3;
 				}
 			}
-			
-			boolean containEmail = false;
-			boolean containUsername = false;
+
 			if(treeOfData.contains(1) || (treeOfData.contains(2) & treeOfData.contains(3))){
 				System.out.println("both");
+				validStatus = 1;
 			}else{
 				if(treeOfData.contains(2) & !treeOfData.contains(3)){
 					System.out.println("username");
-					containEmail = true;
+					validStatus = 2;
 				}
 				if(!treeOfData.contains(2) & treeOfData.contains(3)){
 					System.out.println("email");
-					containUsername = true;
-				}
-				if(containEmail & containUsername){
-					System.out.println("both");
+					validStatus = 3;
 				}
 			}
-			/*if(tree.contains(2) & tree.contains(3)){
-				System.out.println("both");
-			}*/
 			
 		} catch (SQLException sqlException) {
 			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
@@ -295,6 +283,6 @@ public class TutorDAO implements ICrud {
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-		return 0;
+		return validStatus;
 	}
 }
