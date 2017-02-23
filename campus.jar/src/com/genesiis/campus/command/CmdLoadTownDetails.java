@@ -4,14 +4,16 @@ package com.genesiis.campus.command;
 //20161122 CM c36-add-tutor-information Modified execute()method. 
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170215 CW c38-view-update-tutor-profile Add class comment 
-
-import java.sql.SQLException;
-import java.util.Collection;
+//20170223 CW c36-add-tutor-information re-organise the import statements.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.util.IDataHelper;
+
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * this class is used to get the list of towns in the database, 
