@@ -22,6 +22,15 @@ package com.genesiis.campus.entity;
 //20170209 CW c38-view-update-tutor-profile modified findById method & removed multiple database calls
 //20170214 CW c38-view-update-tutor-profile modified update() method
 //20170216 CW c38-view-update-tutor-profile Add class comment modified findById(), update() methods.
+//20170223 CW c36-add-tutor-information re-organise the import statements.
+
+import com.genesiis.campus.entity.model.Tutor;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,13 +38,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.util.security.Encryptable;
-import com.genesiis.campus.util.security.TripleDesEncryptor;
-import org.apache.log4j.Logger;
 
 /**
  * this class used to manage the town related data 
