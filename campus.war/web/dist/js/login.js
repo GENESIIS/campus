@@ -157,12 +157,14 @@ function forgotPassword() {
 
 	// email filed validation error messages handling
 	if (!(emailempty)) {
-		document.getElementById('emailtbError').innerHTML = "  ** Email can not be Empty.";
+	//	document.getElementById('emailveryMessage').innerHTML = "  ** Email can not be Empty.";
+		jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html('** Email can not be Empty.');
 		flag = false;
 		return false;
 	}
 	if (!(valEmail)) {
-		document.getElementById('emailtbError').innerHTML = "  ** Please Enter valid email address.";
+	//	document.getElementById('emailveryMessage').innerHTML = "  ** Please Enter valid email address.";
+		jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html('  ** Please Enter valid email address.');
 		flag = false;
 		return false;
 	}
@@ -185,13 +187,14 @@ function forgotPassword() {
 					dataType : "json",
 					success : function(response) {
 						if(response['message']=== 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. '){
-							document.getElementById('emailveryMessage').innerHTML = response['message'];
+						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
+							jQuery('#emailveryMessage').css({'color':'green'}).html(response['message']);
 							setTimeout(function() {
 								$('#verifications-popup').modal('show');
 							}, 5000);
 						}else{
-							document.getElementById('emailveryMessage').innerHTML = response['message'];
-							
+						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
+							jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html(response['message']);
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -224,14 +227,16 @@ function verifyCode() {
 	var code = $("#verifyCode").val();
 	var email = $("#verifiemail").val();
 	var codeEmpty = isempty(code);
+	
 
 	// code filed validation error messages handling
 	if (!(codeEmpty)) {
-		document.getElementById('codetbError').innerHTML = "  ** Verify Code can not be Empty.";
+	//	document.getElementById('verifyMesssage').innerHTML = "  ** Verify Code can not be Empty.";
+		jQuery('#verifyMesssage').css({'color':'red','font-weight':'bold'}).html('  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
-
+	
 	if (code != null) {
 		var jsonData = {
 			"hashCode" : code,
@@ -253,11 +258,38 @@ function verifyCode() {
 						if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! "
 								|| response['errorMessage'] == "Verification code has been Expired!") {
 
-							document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
-						} else if (response['errorMessage'] == "Your Verification code valid !") {
-							window.location.href = response['pageURL'];
+							//document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
+							jQuery('#verifyMesssage').css({'color':'red','font-weight':'bold'}).html(response['errorMessage']);
+//						} else if (response['errorMessage'] == "Your Verification code valid !") {
+//							//window.location.href = response['pageURL'];
+//							jQuery('#verifyMesssage').css({'color':'green','font-weight':'bold'}).html(response['errorMessage']);
+//							var firstName = "";
+//							var lastName = "";
+//							var email = "";
+//							var scode = "";
+//							var resultData = response.result;
+//
+//							$.each(response.result, function(index, value) {
+//								var res = value.toString();
+//								var data = res.split(",");
+//								counter++;
+//
+//								firstName = data[0].toString();
+//								lastName = data[1].toString();
+//								email = data[2].toString();
+//								scode = data[4].toString();
+//							});
+//							var encode = hashEncode(scode);
+//							// var decode = hashDecose(encode);
+//							// data binding to URL
+//							var pageURL = firstName + "&" + lastName + "&"
+//									+ email + "&" + encode;
+//
+//							window.location.href = response['pageURL']
+//									+ "?uData&" + pageURL;
+//						}
 						} else {
-
+							jQuery('#verifyMesssage').css({'color':'green','font-weight':'bold'}).html(response['errorMessage']);
 							var firstName = "";
 							var lastName = "";
 							var email = "";
@@ -316,14 +348,14 @@ function hashEncode(data) {
 
 	// Encode the String
 	var encodedString = btoa(string);
-	console.log(encodedString);
+	
 	return encodedString;
 }
 // String Hash code decode to Sting
 function hashDecode(data) {
 	// Decode the String
 	var decodedString = atob(data);
-	console.log(decodedString);
+	
 	return decodedString;
 }
 
@@ -331,16 +363,19 @@ function hashDecode(data) {
 function changedPassword() {
 	var code = $("#userTypeCode").val();
 	var password = $("#passWord").val();
+	var confirmpassword = $("#confrmpsw").val();
 	var paaswordEmpty = isempty(password);
-
+	var validation = validatePasswordResetData();
+	var passvadidation = passwordAndConfirmPassword(password,confirmpassword);
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
-		document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
+	//	document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
+		jQuery('#passWordError').css({'color':'red','font-weight':'bold'}).html('  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
 
-	if (code != null) {
+	if (code != null && validation && passvadidation) {
 		var jsonData = {
 			"code" : code,
 			"password" : password
@@ -357,12 +392,15 @@ function changedPassword() {
 					},
 					dataType : "json",
 					success : function(response) {
-						document.getElementById('message').innerHTML = response['message'];
+					
 						if (response['message'] === "Password successfully changed.") {
-
+							jQuery('#message').css({'color':'green','font-weight':'bold'}).html(response['message']);
 							setTimeout(function() {
 								window.location.href = response['pageURL'];
 							}, 4000);
+						}
+						else{
+							jQuery('#message').css({'color':'red','font-weight':'bold'}).html(response['message']);
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -395,7 +433,7 @@ function changedPassword() {
  * fields placed on /dist/partials/signUpWoThirdParty.jsp page. It's the custom
  * field validator dedicated for the page above.
  * 
- * @author dushantha DN
+ * @author anuradha
  * @returns {Boolean}
  */
 function validatePasswordResetData() {
@@ -417,6 +455,8 @@ function validatePasswordResetData() {
 			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
 			"confPassWordError"))) {
 		return !validationPass;
+	}else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
+		return !validationPass;
 	}
 	return validationPass;
 
@@ -425,7 +465,7 @@ function validatePasswordResetData() {
 /**
  * convertPassWordToString() method displays the pass word to text
  * 
- * @author dushantha DN
+ * @author anuradha
  * @param checkboxId
  *            check box id which used to toggle the command
  * @param passWordElementId
@@ -451,4 +491,22 @@ function clearAllFields() {
 	var value = $('#showpasscheckbox').is(':checked') ? "text" : "password";
 	$('#passWord').attr("type", value);
 	$('#confrmpsw').attr("type", value);
+}
+
+/**
+ * Here the method confirms if both fields contain logically
+ * equal string values.
+ * @author anuradha
+ * @param password password field element id
+ * @param reconfirmPassWord confirming field element id
+ * @returns {Boolean} if the both fields are logically equal, then,
+ * returns true else false.
+ */
+function passwordAndConfirmPassword(password, reconfirmPassWord){
+	var passwordTrimed = password.trim();
+	var isBothValueAreIdentical= false;
+	if(passwordTrimed!=null|passwordTrimed !=""){
+		isBothValueAreIdentical= (passwordTrimed === reconfirmPassWord.trim()) ;
+	}
+	return isBothValueAreIdentical;
 }
