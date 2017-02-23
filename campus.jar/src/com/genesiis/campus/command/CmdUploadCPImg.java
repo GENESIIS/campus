@@ -97,6 +97,8 @@ public class CmdUploadCPImg implements ICommand {
 			log.error("execute() : e" + e.toString());
 			throw e;
 		}
+		helper.setAttribute("fileUploadSuccess", fileUploadSuccess);
+		helper.setAttribute("fileUploadError", fileUploadError);
 		return view;
 	}
 	

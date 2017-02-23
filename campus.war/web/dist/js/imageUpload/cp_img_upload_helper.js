@@ -5,6 +5,7 @@
  *             CAM-48: implemented a jquery for cp_img_desc dropdown onchange method. 
  * 20170222 PN CAM-48: modified ajax method call by setting values to pass into the backend.
  * 20170223 PN CAM-48: implemented checkFileSize() method, checkFileType() method and validateFile() method. modified cp_img_upload_btn click function to perform client side validations.
+ *			PN CAM-48: createFileName() implemented for format new file name from the selected values. modified cp_img_upload_btn click function to display uploaded image.
  */
 
 var dataSet = null;
@@ -18,6 +19,7 @@ $(document).ready(function() {
 
 	// According to the selection of drop box, image description will be appear.
 	$('#cp_img_type').on('change', function() {
+		document.getElementById("cp_img_upload_btn").disabled = false;
 		var sysConfCode = this.value;
 		$.each(dataSet.result, function(index, val) {
 			if (val[0] === sysConfCode) {
@@ -34,6 +36,9 @@ $(document).ready(function() {
 	    var courseProviderCode = 1;// This will be get assigned from UI element later.
 	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
 	    var uploadPathConfId = $("#cp_img_type").val();
+	    
+	    var name = $("#cp_img_upload").val();
+		var fileExt = name.split('.');
 	    
 		var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file
 		var formData = new FormData();
@@ -61,6 +66,10 @@ $(document).ready(function() {
 			    		$('#cp_img_type').find('option:first').attr('selected', 'selected');
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
 			    		$('#cp_img_err').css('color', 'green');
+			    		
+			    		//Display uploaded image on img tag.
+			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
+			    		$('#cp_img_display').attr("src","/education/provider/logo/"+courseProviderCode+"/"+newName+"?"+Math.random());
 			    	}
 				},
 				error:function(response,error,errorThrown) {
@@ -226,4 +235,18 @@ function checkFileSize(fileuploadelm, to, submitbtn){
 		errorMessage = " file type is invalid. Please upload a file with valid file type.";
 	}	
 	return errorMessage;
+}
+
+/**
+ * Format new file name from the selected values.
+ * @param courseProviderCode -
+ *            course provider code.
+ * @param uploadPathConf -
+ *            uploaded image type.
+ * @returns String - new file name without extension.
+ */
+function createFileName(courseProviderCode,uploadPathConf){
+	var fileTypes = uploadPathConf.split("_");
+	var newName = [courseProviderCode.toString() ,fileTypes[1].toString()];
+	return newName.join("_").toLowerCase(); 
 }
