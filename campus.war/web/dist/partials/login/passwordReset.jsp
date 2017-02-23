@@ -30,7 +30,7 @@
 <script>
     $( document ).ready(function() {
         // if span empty, hide the parent label
-        $('.fp-msg span:empty').parent().hide()
+     //   $('.fp-msg span:empty').parent().hide()
         
         var sPageURL = decodeURIComponent(window.location.search
 									.substring(1)), sURLVariables = sPageURL
@@ -97,10 +97,12 @@
             </div>
             <div class="input-area clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                 <label for="username"> <span class="error-txt" id="passWordError"></span> </label>
                     <input type="password" class="" placeholder="New Password" name="psw" id="passWord"
 					onclick="clearField('passWordError')" onkeypress="validatePasswordResetData()" required >
+					 <label for="username"> <span class="error-txt" id="confPassWordError"></span> </label>
                     <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw"
-					onclick="clearField('confPassWordError')" required >
+					onclick="clearField('confPassWordError')"  required >
                 </div>
                 <div class="pull-right show-pwrd">
 					<span class="check-box"><input type="checkbox"
