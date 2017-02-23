@@ -37,17 +37,17 @@
 <script src='/dist/js/login.js'></script>
 </head>
 <body>
-    <script>
-        $( document ).ready(function() {
-            $('#openPop').on('click', function(){
-               $('#verifications-popup').modal('show');
-            });
+<!--     <script> -->
+<!--          $( document ).ready(function() { -->
+<!--              $('#openPop').on('click', function(){ -->
+<!--                 $('#verifications-popup').modal('show'); -->
+<!--              }); -->
 
-            // if span empty, hide the parent label
-            $('.fp-msg span:empty').parent().hide();
-        });
+<!--              // if span empty, hide the parent label -->
+<!--              $('.fp-msg span:empty').parent().hide(); -->
+<!--          }); -->
 
-    </script>
+<!--     </script> -->
 	<!-- Header-->
 
 	<header>
@@ -70,11 +70,11 @@
 
         <div class="col-lg-6 col-sm-12 col-md-8 col-xs-12 clearfix">
             <div class="input-area form-group has-error clearfix">
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <label for="username">Email : <span class="error-txt" id=emailtbError></span></label>
-                </div>
+<!--                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> -->
+<!--                     <label for="username">Email : <span class="error-txt" id=emailtbError></span></label> -->
+<!--                 </div> -->
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                    <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailtbError')">
+                    <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
                 </div>
             </div>
             <div class="form-group btn-holder">
@@ -105,20 +105,20 @@
                         <div class="row verify-modal-container">
                             <div class="col-sm-12 col-lg-12 col-md-12 ">
 
-                                <label class="" id="verifyMesssage"></label>
+
                                 <div class="form-group has-error ">
                                     <div class="fp-msg fp-msg-success">
                                         <label for="username">
-                                            <span class="error-txt" id="codetbError"></span>
+                                            <span class="error-txt" id="verifyMesssage"></span>
                                         </label>
                                     </div>
                                     <label class="evm-lbl-1 m-t-0 sub-topic-t1">We have sent verification code to your email.please check your inbox to continue.</label>
-                                    <input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code" required >
+                                    <input type="text" class="evm-email" id="verifyCode" placeholder="Verification Code"  onclick="clearField('verifyMesssage')" required >
                                 </div>
                                 <div class="form-group">
                                         <button type="button" class="btn btn-primary btn-block"
                                             name="CCO" id="CCO" value="HASHV"
-                                            onclick="verifyCode()">Verify</button>
+                                            onclick="verifyCode(); clearField('verifyMesssage')">Verify</button>
                                     </div>
                             </div>
                         </div>
