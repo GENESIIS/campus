@@ -1,8 +1,9 @@
 package com.genesiis.campus.entity;
 
-//20161123 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
+//20161223 CW c36-add-tutor-details- Changed the name of the Class from  TutorUserName to TutorUserNameDAO 
 //20170207 CW c36-add-tutor-information re-organize the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment.
+//20170223 CW c38-view-update-tutor-profile header comment date changed
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
