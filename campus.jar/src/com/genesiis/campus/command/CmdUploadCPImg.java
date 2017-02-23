@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
  * 20170221 PN CAM-48: INIT CmdUploadCPImg.java class and implementing execute() method to complete cp image uploading functionality.
  * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
  * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
+ * 20170223 PN CAM-48: implemented getFileUploadError() method implemented.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -77,24 +78,23 @@ public class CmdUploadCPImg implements ICommand {
 			utility.setFileItem(file);
 			
 			//Validate image and upload.
-			if(!isValidFileType(file, validExtensions, utility)){
-				fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
-			}else if(!isValidFileSize(file, uploadSizeParam).isEmpty()){
-				fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message() + isValidFileSize(file, uploadSizeParam);
-			}else{
-				filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf,courseProviderCode));
+			fileUploadError = getFileUploadError(file, validExtensions, utility, uploadSizeParam);
+			if (!fileUploadError.isEmpty() && fileUploadError != "") {
+				fileUploadError = getFileUploadError(file, validExtensions, utility, uploadSizeParam);
+			} else {
+				filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf, courseProviderCode));
 				fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
 			}
 		} catch (SQLException sqle) {
-			log.info("execute() : sqle" + sqle.toString());
+			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
 		} catch (IOException ioe) {
-			log.info("execute() : ioe - more than one users accessing the same image. Course Provider Code: " + courseProviderCode);
+			log.error("execute() : ioe - more than one users accessing the same image. Course Provider Code: " + courseProviderCode);
 		} catch (NullPointerException npx) {
-			log.info(
+			log.error(
 					"execute() : npx: ignore this NPX due to second POST request.");
 		} catch (Exception e) {
-			log.info("execute() : e" + e.toString());
+			log.error("execute() : e" + e.toString());
 			throw e;
 		}
 		return view;
@@ -167,7 +167,7 @@ public class CmdUploadCPImg implements ICommand {
 	 * @param uploadSizeParam - valid file dimension details.
 	 * @return error detailed message.
 	 */
-	private String isValidFileSize(FileItem item, String uploadSizeParam) {
+	private String isValidFileSize(FileItem item, String uploadSizeParam) throws IOException{
 		String[] values = uploadSizeParam.split(",");
 		long height = 0;
 		long width = 0;
@@ -198,5 +198,23 @@ public class CmdUploadCPImg implements ICommand {
 			throw ex;
 		}
 		return errorMsg;
+	}
+	
+	/**
+	 * Validate image and returns an error message for invalid images.
+	 * @param item - file
+	 * @param validExtensions - uploaded possible file types array
+	 * @param utility - FileUtility class
+	 * @param uploadSizeParam - valid file dimension details.
+	 * @return String - error message;
+	 */
+	private String getFileUploadError(FileItem file, String validExtensions[], FileUtility utility, String uploadSizeParam){
+		String fileUploadError = "";
+		if(!isValidFileType(file, validExtensions, utility)){
+			fileUploadError = SystemMessage.INVALID_FILE_TYPE.message();
+		}else if(!isValidFileSize(file, uploadSizeParam).isEmpty()){
+			fileUploadError = SystemMessage.FILE_SIZE_EXCEEDED.message() +" "+ isValidFileSize(file, uploadSizeParam);
+		}
+		return fileUploadError;
 	}
 }
