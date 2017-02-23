@@ -1,5 +1,5 @@
 <!-- 20170221 PN CAM-48: INIT test JSP page to implement CP image upload function. -->
-<!-- 20170223 PN CAM-48: modifingy UI elements to add front end validations.. -->
+<!-- 20170223 PN CAM-48: modifingy UI elements to add front end validations. no script tag added to the JSP page.. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -15,13 +15,15 @@
 
 </head>
 <body>
-	<select id="cp_img_type" name="cp_img_type">
+<noscript><b>Sorry, your browser does not support JavaScript!</b></noscript>
+
+	<select id="cp_img_type" name="cp_img_type" required>
 		<option value="">--Select Type--</option>
 	</select>
 	
 	<span id="cp_img_desc" name="cp_img_desc"></span>
 
-	<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="checkFilename(this, 'cp_img_upload', 'cp_img_upload_btn')">
+	<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="validateFile(this, 'cp_img_upload', 'cp_img_upload_btn')">
 	<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn">
 	<br>
 	<span id="cp_img_err" name="cp_img_err"></span>
