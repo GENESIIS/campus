@@ -12,7 +12,8 @@ package com.genesiis.campus.command;
  * 				removed the inner class JasonInflator.java and placed as a stand alone class.
  * 20170222 DN c131-admin-manage-banner-upload-banner-image-dn code the confirmation of the capacity of banner image in
  * 				isImageAccordanceWithSystemRequirement(). changed FileUtility to static field deleteTempFolder()/getElementFromCollection()/moveFileToPhysicalLocation() implemented
-				uploadFullBannerCredentials() refactored
+				uploadFullBannerCredentials() refactored.
+ * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn getFileReNamedTo() implemented
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -27,12 +28,14 @@ import com.genesiis.campus.util.ImageUtility;
 import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.SystemConfig;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;
@@ -162,7 +165,7 @@ Exception{
 			getFileUtility().setFileItem(files.get(0)); //Setting the file Item in the FileUtility
 			con = ConnectionManager.getConnection();
 			
-			//get the banner Absolute upload path
+			//get the banner Absolute temporary upload path
 			String bannerImageTemporaryUploadPath = imageUtility
 						.getImageTeporyUploadPath(
 								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
@@ -361,25 +364,17 @@ private Object getElementFromCollection(Collection<Collection<String>> banners, 
 /*
  * moveFileToPhysicalLocation() will move the banner file to the 
  * physical location agreed by the SystemCofig table or the enum,
- * 
- * @param con
- * @param bannerCode banner code extracted from the database table BANNER
- * e.g '23.gif'
+ * @param bannerImagePhysicalUploadPath 
  * @return boolean true if the file is written to the location given by the 
  * physical path. else false
  */
-private boolean moveFileToPhysicalLocation(Connection con, String bannerCode) throws Exception{
+private boolean moveFileToPhysicalLocation(	String bannerImagePhysicalUploadPath) throws Exception{
+	
 	//### MOVE THE BANNER TO THE PHYSICAL LOCATION ####
 	boolean isTheFileMovedToPhysicalLocation = false;
-  
-	String bannerImagePhysicalUploadPath = imageUtility
-			.getImageTeporyUploadPath(
-					SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
-					bannerCode, con);
  
   // move the image to the correct physical location
-	isTheFileMovedToPhysicalLocation = fileUtility
-				.moveFileToDiferentDirectory(bannerImagePhysicalUploadPath,
+	isTheFileMovedToPhysicalLocation = fileUtility.moveFileToDiferentDirectory(bannerImagePhysicalUploadPath,
 						fileUtility.getFileItem(), true);
 	
 	return isTheFileMovedToPhysicalLocation;
@@ -396,16 +391,19 @@ private boolean moveFileToPhysicalLocation(Connection con, String bannerCode) th
  * @return IView :captures the Collection to send to the client 
  * 				  the current session for displaying purposes
  * @throws Exception
+ * 		   SQLException	
  */
 private IView uploadFullBannerCredentials(JasonInflator rowBanner,
-		IView view,String userName) throws Exception{
+		IView view,String userName) throws SQLException,Exception{
 	Connection con = null;
 try{
 	 
 	 String[] extension =rowBanner.getBannerImageName().split("\\.");
 	 
-	 // want to get the banner code and bannerName once the update is succeeded
-	 // and save to the data base table banne
+	 /*
+	  * want to get the banner code and bannerName once the update is succeeded
+	  * and save to the data base table banner
+	  */
 	 Collection<Collection<String>> banners = new AdminBannerDAO().
 			 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
 	 
@@ -414,17 +412,30 @@ try{
 	 
 	 con = ConnectionManager.getConnection();
 	 
-	 boolean isTheFileMovedToPhysicalLocation = moveFileToPhysicalLocation(con, bannerCode);
+	// get the banner absolute
+	//path for storing in 
+	//physical location 
 	 
-	 //get the banner Absolute upload path
+	String bannerImagePhysicalUploadPath = imageUtility
+			.getImageTeporyUploadPath(
+					SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
+					bannerCode, con);
+		
+	 boolean isTheFileMovedToPhysicalLocation = moveFileToPhysicalLocation(bannerImagePhysicalUploadPath);
+//	 boolean isFileRenamedToBannerCode = getFileReNamedTo(bannerCode,fileUtility,
+//			 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName());
+	 
+	 //get the banner Absolute upload path for temporary folder
 		String bannerImageTemporaryUploadPath = imageUtility
 					.getImageTeporyUploadPath(
 							SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
 							"tempbanner", con);
 		
 	// if file moved delete the temporary folder created	
-		if(isTheFileMovedToPhysicalLocation){
+		if(isTheFileMovedToPhysicalLocation && getFileReNamedTo(bannerCode,fileUtility,
+				 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName()) ){
 			this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
+			//CHECK FOR THE OLD DIRECTORY DELETION AND PROVIDE THE USER MESSAGE
 		}
 		
 	 view.setCollection(banners);
@@ -444,6 +455,71 @@ try{
 	
 		return view;
 	}
+
+/*
+ * getFileReNamedTo rename the currentFilenameWithExtension
+ *  to newFileNameWithoutExtension and deletes the source file once the coping
+ *  process is succeeded.
+ *  
+ * @param newFileNameWithoutExtension : filename to be renamed to without the 
+ * 										the extension e.g. 'account123'
+ * @param fileUtility : FileUtility type instance 
+ * @param fileLocatedPath: String the fully qualified path
+ * 						 e.g.C:/sdb/ctxdeploy/education.war/banner
+ * @param currentFilenameWithExtension : String source file name with extension
+ * 									    "image0123.jpg".
+ * @return true if the file copy succeeded else false.
+ *  if the deleteSorcefileAfterCoppying set to true. then the return true if and 
+ *  only if the file gets copied and deletion gets succeeded.Else returns false
+ */
+private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility fileUtility,
+		String fileLocatedPath,String currentFilenameWithExtension) throws NullPointerException,
+		IOException,SecurityException {
+	
+	
+	boolean isFileRenamedToNewFileName = false;
+	
+	try {
+		String[] extension =currentFilenameWithExtension.split("\\.");
+		String oldFileNameWithoutExtension = extension[0];
+		String fileExtension =extension[1];
+		String sourceFileName=fileLocatedPath+"/"+currentFilenameWithExtension;
+		String destinationFileName =fileLocatedPath+"/"+newFileNameWithoutExtension+"."+fileExtension;
+		
+		//check if the file exists by given name
+		if(fileUtility.isFileExists(fileLocatedPath, oldFileNameWithoutExtension)){	
+			/*
+			 * if file exist, then 
+			 * rename to the given name.
+			 */
+			if(!(isFileRenamedToNewFileName=fileUtility.copyFile(sourceFileName, destinationFileName,true))){
+				this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED;
+				setSuccessCode(-2);
+				log.info("getFileReNamedTo() failed --> : Image Name:"
+						+sourceFileName+" has not get coppied to :"
+						+destinationFileName);
+			}
+			
+		} else{
+			this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED;
+			setSuccessCode(-2);
+			log.info("getFileReNamedTo() failed --> : Image Name:"
+						+oldFileNameWithoutExtension+'.'+fileExtension
+						+"located at :"+fileLocatedPath+" has not get renamed to :"
+						+newFileNameWithoutExtension+'.'+fileExtension);
+		}
+	}  catch (NullPointerException npexp) {
+		log.error("getFileReNamedTo() NullPointerException : " +npexp.toString());
+		throw npexp;
+	} catch (IOException ioexp) {
+		log.error("getFileReNamedTo() IOException : "+ ioexp.toString());
+		throw ioexp;
+	} catch (SecurityException sexp){
+		log.error("getFileReNamedTo() SecurityException : "+ sexp.toString());
+		throw sexp;
+	}
+	return isFileRenamedToNewFileName;
+}
 
 
 /*
