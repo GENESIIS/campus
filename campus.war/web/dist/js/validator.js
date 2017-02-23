@@ -11,16 +11,23 @@
  * //20170129 CW c36-add-tutor-details-cw- modified the places of ValidateUsername(), ValidateEmail() methods calling.
  * //20170129 CW c36-add-tutor-details-cw- modified ValidateUsername(), ValidateEmail() methods.
  * //20170206 CW c36-add-tutor-details-cw- modified validateTutorFileds() method validate country & town.
+ * //20170223 CW c36-add-tutor-details-cw- removed isempty() method & add isEmptyOrHavingSpace() method to validate for space values
  */
 
 /**
- * 
- * @param fieldValue
- *            it is the value of a document element
- * @returns true if has content else false
- */
-function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+ * Check the given value is not having only a space
+ * @author Chinthaka
+ * @param value
+ * @return boolean returns true if the text is empty or not contains a space value.
+ **/
+function isEmptyOrHavingSpace(text) {
+	boolean status = false;
+	
+	if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+		status = true;
+	}
+	
+	return status;
 }
 
 /**
@@ -91,8 +98,8 @@ function validateTutorFileds() {
 	var town = $("#townDetails :selected").text();
 
 	var flag = true;
-	/*
-	if (!isempty(firstname)) {
+	
+	if (!isEmptyOrHavingSpace(firstname)) {
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
 		flag = false;
@@ -107,7 +114,7 @@ function validateTutorFileds() {
 		document.getElementById('middleName').focus();
 		flag = false;
 	}
-	if (!isempty(lastname)) {
+	if (!isEmptyOrHavingSpace(lastname)) {
 		document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -143,7 +150,7 @@ function validateTutorFileds() {
 	}
 	
 	
-	if (!isempty(mobileCountryCode)) {
+	if (!isEmptyOrHavingSpace(mobileCountryCode)) {
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
@@ -163,7 +170,7 @@ function validateTutorFileds() {
 	}
 	
 
-	if (!isempty(mobileNetworkCode)) {
+	if (!isEmptyOrHavingSpace(mobileNetworkCode)) {
 		document.getElementById('mobileNetworkError').innerHTML = "**Mobile Network Code cannot be empty.";
 		document.getElementById('mobileNetworkCode').focus();
 		flag = false;
@@ -181,7 +188,7 @@ function validateTutorFileds() {
 		flag = false;
 	}	
 	
-	if (!isempty(mobileNumber)) {
+	if (!isEmptyOrHavingSpace(mobileNumber)) {
 		document.getElementById('mobileNumberError').innerHTML = "**Mobile Number cannot be empty.";
 		document.getElementById('mobileNumber').focus();
 		flag = false;
@@ -199,7 +206,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 		
-	if (!isempty(landCountryCode)) {
+	if (!isEmptyOrHavingSpace(landCountryCode)) {
 		document.getElementById('landError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
@@ -217,7 +224,7 @@ function validateTutorFileds() {
 		flag = false;
 	}	
 	
-	if (!isempty(landAreaCode)) {
+	if (!isEmptyOrHavingSpace(landAreaCode)) {
 		document.getElementById('landAreaCodeError').innerHTML = "**Landphone Area code cannot be empty.";
 		document.getElementById('landAreaCode').focus();
 		flag = false;
@@ -235,7 +242,7 @@ function validateTutorFileds() {
 		flag = false;
 	}	
 	
-	if (!isempty(landNumber)) {
+	if (!isEmptyOrHavingSpace(landNumber)) {
 		document.getElementById('landNumberError').innerHTML = "**Landphone number cannot be empty.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -254,7 +261,7 @@ function validateTutorFileds() {
 		flag = false;
 	}	
 	
-	if (!isempty(address1)) {
+	if (!isEmptyOrHavingSpace(address1)) {
 		document.getElementById('address1Error').innerHTML = "**Please Fill Address";
 		document.getElementById('address1').focus();
 		flag = false;
@@ -266,42 +273,42 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (isempty(weblink)) {
+	if (isEmptyOrHavingSpace(weblink)) {
 		if (!ValidURL(weblink) && (weblink != "-")) {
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
 			document.getElementById('weblink').focus();
 			flag = false;
 		}
 	}
-	if (isempty(facebook) && (facebook != "-")) {
+	if (isEmptyOrHavingSpace(facebook) && (facebook != "-")) {
 		if (!ValidURL(facebook)) {
 			document.getElementById('facebookError').innerHTML = "**Please Enter correct Facebook link";
 			document.getElementById('facebook').focus();
 			flag = false;
 		}
 	}
-	if (isempty(linkedin) && (linkedin != "-")) {
+	if (isEmptyOrHavingSpace(linkedin) && (linkedin != "-")) {
 		if (!ValidURL(linkedin)) {
 			document.getElementById('linkedInError').innerHTML = "**Please Enter correct LinkedIn link";
 			document.getElementById('linkedin').focus();
 			flag = false;
 		}
 	}
-	if (isempty(twitter) && (twitter != "-")) {
+	if (isEmptyOrHavingSpace(twitter) && (twitter != "-")) {
 		if (!ValidURL(twitter)) {
 			document.getElementById('twitterError').innerHTML = "**Please Enter correct Twitter link";
 			document.getElementById('twitter').focus();
 			flag = false;
 		}
 	}
-	if (isempty(instagram) && (instagram != "-")) {
+	if (isEmptyOrHavingSpace(instagram) && (instagram != "-")) {
 		if (!ValidURL(instagram)) {
 			document.getElementById('instagramError').innerHTML = "**Please Enter correct Instagram link";
 			document.getElementById('instagram').focus();
 			flag = false;
 		}
 	}
-	if (isempty(myspace) && (myspace != "-")) {
+	if (isEmptyOrHavingSpace(myspace) && (myspace != "-")) {
 		if (!ValidURL(myspace)) {
 			document.getElementById('mySpaceError').innerHTML = "**Please Enter correct Myspace link";
 			document.getElementById('myspace').focus();
@@ -309,7 +316,7 @@ function validateTutorFileds() {
 		}
 	}
 		
-	if (isempty(whatsapp)) {
+	if (isEmptyOrHavingSpace(whatsapp)) {
 		if (isNaN(whatsapp)) {
 			document.getElementById('whatsappError').innerHTML = "**Invalid whatsapp number";
 			document.getElementById('whatsapp').focus();
@@ -317,7 +324,7 @@ function validateTutorFileds() {
 		}
 	}
 			
-	if (isempty(whatsapp)) {
+	if (isEmptyOrHavingSpace(whatsapp)) {
 		if (whatsapp.length > 20) {
 			document.getElementById('whatsappError').innerHTML = "**Max length exceeded";
 			document.getElementById('whatsapp').focus();
@@ -325,7 +332,7 @@ function validateTutorFileds() {
 		}
 	}
 	
-	if (isempty(viber)) {
+	if (isEmptyOrHavingSpace(viber)) {
 		if (isNaN(viber)) {
 			document.getElementById('viberError').innerHTML = "**Invalid Viber number";
 			document.getElementById('viber').focus();
@@ -333,7 +340,7 @@ function validateTutorFileds() {
 		}
 	}
 
-	if (isempty(viber)) {
+	if (isEmptyOrHavingSpace(viber)) {
 		if (viber.length > 20) {
 			document.getElementById('viberError').innerHTML = "**Max length exceeded";
 			document.getElementById('viber').focus();
@@ -341,7 +348,7 @@ function validateTutorFileds() {
 		}
 	}
 
-	if (!isempty(email)) {
+	if (!isEmptyOrHavingSpace(email)) {
 		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		document.getElementById('email').focus();
 		flag = false;
@@ -360,7 +367,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (!isempty(username)) {
+	if (!isEmptyOrHavingSpace(username)) {
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
 		flag = false;
@@ -385,7 +392,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (!isempty(password)) {
+	if (!isEmptyOrHavingSpace(password)) {
 		document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
 		document.getElementById('password').focus();
 		flag = false;
@@ -403,7 +410,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (!isempty(confirmPassword)) {
+	if (!isEmptyOrHavingSpace(confirmPassword)) {
 		document.getElementById('confirmPasswordError').innerHTML = "**Please confirm your password";
 		document.getElementById('confirmPassword').focus();
 		flag = false;
@@ -414,7 +421,11 @@ function validateTutorFileds() {
 		document.getElementById('confirmPassword').focus();
 		flag = false;
 	}
-*/
+	
+	if (flag == false){
+		document.getElementById('message').innerHTML = "**Something wrong in the data you have entered...";
+	}
+
 	return (flag);
 }
 
