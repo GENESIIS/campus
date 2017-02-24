@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
+
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -13,8 +14,8 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -26,7 +27,6 @@ import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 public class CmdStudentLogin implements ICommand {
 
@@ -42,7 +42,7 @@ public class CmdStudentLogin implements ICommand {
 			int attempts = 0;
 			String pageURL = "/dist/partials/login.jsp";
 			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			
+
 			String gsonData = helper.getParameter("jsonData");
 			data = getStudentdetails(gsonData);
 
@@ -52,7 +52,7 @@ public class CmdStudentLogin implements ICommand {
 
 			if (validateResult.equalsIgnoreCase("True")) {
 				data = LoginValidator.dataSeparator(data);
-				//final StudentLoginDAO loginDAO = new StudentLoginDAO();
+				// final StudentLoginDAO loginDAO = new StudentLoginDAO();
 				ICrud loginDAO = new StudentLoginDAO();
 				dataCollection = loginDAO.findById(data);
 
@@ -87,11 +87,11 @@ public class CmdStudentLogin implements ICommand {
 					session.setAttribute("currentUserData", dataCollection);
 					setStudentLoginDetails(data, helper);
 					int status = StudentLoginDAO.loginDataUpdate(data);
-					
-					if(status>0){
+
+					if (status > 0) {
 						message = SystemMessage.VALIDUSER.message();
-					}else{
-						
+					} else {
+
 					}
 				} else {
 					// login attempts handle in here
@@ -128,7 +128,7 @@ public class CmdStudentLogin implements ICommand {
 	 */
 
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
-		
+
 		try {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
