@@ -319,7 +319,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorMobile" class="error-message number-helper">${errorMobile }</span>
+										id="errorLastMobileNumber" class="error-message number-helper">${errorMobile }</span>
 									<span id="lastMobileNumber" style="color: blue;" class="number-helper"></span>
 								</div>
 
