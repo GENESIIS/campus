@@ -1,12 +1,14 @@
-//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
+//20170206 AS CAM-22 this class implemented from Scrypt encode decode plugging classes
 
 package com.genesiis.campus.scrypt.crypto;
+
+import static com.genesiis.campus.scrypt.codec.Base64.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
-import static com.genesiis.campus.scrypt.codec.Base64.*;
+
 
 /**
  * Simple {@link SCrypt} interface for hashing passwords using the
