@@ -1,6 +1,16 @@
 package com.genesiis.campus.entity;
 //20170202 AS C22 StudentEmailVerificationDAO class created
 //20170213 AS C22 Student Generated Hash code update in update method.
+//20170224 AS C22 Changed imports oder. 
+
+import com.genesiis.campus.command.CmdEmailVarification;
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,14 +19,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.command.CmdEmailVarification;
-import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.ApplicationStatus;
-import com.genesiis.campus.validation.SystemMessage;
 
 public class StudentEmailVerificationDAO implements ICrud {
 	static Logger log = Logger.getLogger(StudentEmailVerificationDAO.class
@@ -83,6 +85,7 @@ public class StudentEmailVerificationDAO implements ICrud {
 		return 0;
 	}
 
+	//email verification 
 	@Override
 	public Collection<Collection<String>> findById(Object data)
 			throws SQLException, Exception {
@@ -148,7 +151,8 @@ public class StudentEmailVerificationDAO implements ICrud {
 
 	
 	/**
-	 * to verify hash code user enter 
+	 * to verify hash code and user entered 
+	 * if verification code only valid 30 min, if it is more than 30 min, fire the error message. 
 	 * @param Student Object
 	 * @return Collection<Collection<String>> 
 	 * @throws SQLException
