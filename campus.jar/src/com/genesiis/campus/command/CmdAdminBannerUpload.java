@@ -15,6 +15,7 @@ package com.genesiis.campus.command;
 				uploadFullBannerCredentials() refactored.
  * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn getFileReNamedTo() implemented
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn SystemMessage[ENUM].toString() is called when using the systemMessages
+ * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -91,7 +92,7 @@ public class CmdAdminBannerUpload implements ICommand {
 				 */				
 				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
 				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-				return uploadFullBannerCredentials(jsn,view,userName);				
+				return uploadFullBannerCredentials(jsn,view,userName,helper);				
 		    default:
 		    	return view;
 			}
@@ -187,10 +188,10 @@ public class CmdAdminBannerUpload implements ICommand {
 				
 			}
 		} catch(FileUploadException fle){
-			log.error("saveBannerPageCredential():FileUploadException"+ fle.toString() );
+			log.error("saveBannerImageToTempLocation():FileUploadException"+ fle.toString() );
 			throw fle;			
 		} catch(Exception exp) {
-			log.error("saveBannerPageCredential(): Exception :"+ exp.toString());
+			log.error("saveBannerImageToTempLocation(): Exception :"+ exp.toString());
 			throw exp;
 		}finally{
 			DaoHelper.cleanup(con, null, null);
@@ -387,13 +388,14 @@ public class CmdAdminBannerUpload implements ICommand {
 	 * @param view : it is IViewand captures the Collection to send  
 	 * 				 to the client for displaying purposes
 	 * @param userName : The user name of the person who logs with 
+	 * @param helper : IDatahelper
 	 * @return IView :captures the Collection to send to the client 
 	 * 				  the current session for displaying purposes
 	 * @throws Exception
 	 * 		   SQLException	
 	 */
 	private IView uploadFullBannerCredentials(JasonInflator rowBanner,
-			IView view,String userName) throws SQLException,Exception{
+			IView view,String userName,IDataHelper helper) throws SQLException,Exception{
 		Connection con = null;
 	try{
 		 
@@ -453,7 +455,9 @@ public class CmdAdminBannerUpload implements ICommand {
 			throw exp;
 		}	
 		
-			return view;
+	 	setResponseCridentials(helper); 
+	 	this.setFileUtility(null); // clear the static class field on completion.
+	 	return view;
 	}
 
 /*
