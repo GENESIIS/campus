@@ -3,8 +3,8 @@
 <!-- 20170217 TR c68 added common error msg class  -->
 <!-- 20170217 TR c68 validated error msg label hide and show  -->
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
-
-
+<!-- 20170221 AS c22 UI intigrated -->
+<!-- 20170223 AS c22 modify messages span and validation messages -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -51,7 +51,7 @@
 							decode = hashDecode(scode);
 							document.getElementById("fullName").value = firstName
 									+ " " + lastName;
-							document.getElementById("emailaddress").innerHTML = emailAdd;
+							document.getElementById("emailaddress").value = emailAdd;
 							document.getElementById("userTypeCode").value = decode;
 							
 
