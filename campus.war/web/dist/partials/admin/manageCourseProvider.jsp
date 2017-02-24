@@ -4,6 +4,7 @@
 <!-- 20161202 JH c39-add-course-provider added missing input fields -->
 <!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
+<!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -319,7 +320,7 @@
 								<div class="col-name">
 									<input class="input" type="text" name="mobile" id="mobile"
 										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorMobile" class="error-message number-helper">${errorMobile }</span>
+										id="errorLastMobileNumber" class="error-message number-helper">${errorMobile }</span>
 									<span id="lastMobileNumber" style="color: blue;" class="number-helper"></span>
 								</div>
 
