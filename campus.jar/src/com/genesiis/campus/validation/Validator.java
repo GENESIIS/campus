@@ -13,12 +13,14 @@ package com.genesiis.campus.validation;
 // 			removed unwanted comments with code review fixes
 //20170223 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): username length error message changed, validate
 //			fields with database length
+//20170224 JH c141-add-course-provider-issue-improvements courseProviderURLValidation(): created to validate course provider URL's
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
 import com.genesiis.campus.entity.model.CourseProviderAccount;
 import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
+import com.sun.org.apache.regexp.internal.recompile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -270,6 +272,7 @@ public class Validator {
 			}
 		}
 	
+	
 		return errorString;
 		
 	}
@@ -289,14 +292,28 @@ public class Validator {
 			errorString.add("Provider Name");
 		}
 		
-		if(isEmptyString(helper.getParameter("providerEmail"))){
-			helper.setAttribute("errorPrivateEmail", "Give a contact Email address");
+		// validate course provider private email
+		if (isValidLength(helper.getParameter("providerEmail"), 255, 1)) {
+			if (validateEmail(helper.getParameter("providerEmail"))) {
+				helper.setAttribute("errorPrivateEmail", "Invalid contact Email address");
+				errorString.add("Private Email");
+			}
+
+		} else {
+			helper.setAttribute("errorPrivateEmail", "Email address is empty of too long (Only 255 characters allowed). ");
 			errorString.add("Private Email");
 		}
 		
+		//validate  username of the course provider
 		if(!isValidLength(helper.getParameter("providerUsername"), 100, 5)){
 			helper.setAttribute("errorUsername", "Username too small or exceed the max length. It must have min 5 and max 100 characters");
 			errorString.add("Username");
+		}else{
+			//check if the username has only numbers
+			if(!isInteger(helper.getParameter("providerUsername"))){
+				helper.setAttribute("errorUsername", "Only numbers are not allowed for username. ");
+				errorString.add("Username");				
+			}
 		}
 		
 		if(isEmptyString(helper.getParameter("providerPassword")) || 
@@ -324,6 +341,25 @@ public class Validator {
 		if(isEmptyString(helper.getParameter("accountStatus"))){
 			helper.setAttribute("errorStatus", "Select the account status");
 			errorString.add("Account Status");
+		}
+		
+		return errorString;
+	}
+	
+	
+	/**
+	 * Used to validate URL's related to course provider form URLs
+	 * @param helper
+	 * @param errorString
+	 * @return error string
+	 * @author JH
+	 */
+	public static ArrayList<String> courseProviderURLValidation(IDataHelper helper, ArrayList<String> errorString,
+			int maxLength, int minLength, String element, String errorElement){
+		
+		if(!isValidLength(helper.getParameter(element), maxLength, minLength)){
+			helper.setAttribute( errorElement, "URL exceeds the maximum length. Only " + minLength +" to " + maxLength + " characters allowed");
+			errorString.add( element + " URL invalid.");
 		}
 		
 		return errorString;
