@@ -2,10 +2,8 @@ package com.genesiis.campus.command;
 
 //20170202 AS C22 forgot password, CmdEmailVarification command class created
 //20170221 AS C22 status attribute take out from try block and setAttribut() calls out of try block
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.mail.MessagingException;
+//20170224 AS C22 Changed imports oder. 
+
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentEmailVerificationDAO;
@@ -18,15 +16,21 @@ import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.mail.MessagingException;
 
 public class CmdEmailVarification implements ICommand {
 	static Logger log = Logger.getLogger(CmdEmailVarification.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	
+
 	String securedHash = "";
 	private String emailTitle = "Reset password instructions";
 	private ArrayList<String> recieversEmailAddreses;
@@ -198,18 +202,18 @@ public class CmdEmailVarification implements ICommand {
 		StringBuilder result = new StringBuilder();
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
-		// result.append("Account credentials are as follows. ");
+
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
-		// result.append("User Name :"+partialStudent.getUserName());
+
 		result.append(System.getProperty("line.separator"));
-		// result.append("Pass word :"+partialStudent.getPassWord());
-		result.append(System.getProperty("line.separator"));
-		result.append(System.getProperty("line.separator"));
-		// result.append("It's so much pleasure to have you with us. Have a good day!");
+
 		result.append(System.getProperty("line.separator"));
 		result.append(System.getProperty("line.separator"));
-		// result.append(SystemMessage.SUPERADMIN_NAME.message());
+
+		result.append(System.getProperty("line.separator"));
+		result.append(System.getProperty("line.separator"));
+
 		return result.toString();
 
 	}
