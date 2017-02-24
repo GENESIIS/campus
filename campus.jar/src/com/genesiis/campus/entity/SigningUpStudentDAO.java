@@ -1,26 +1,35 @@
 package com.genesiis.campus.entity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
+//20170214 AS C22 password change function for Update method used
+//20170224 AS C22 Changed imports oder. 
 
 import com.genesiis.campus.command.CmdPasswordChange;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
-//20170214 AS C22 password change function for Update method used 
-public class SigningUpStudentDAO implements ICrud{
+
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Collection;
+
+public class SigningUpStudentDAO implements ICrud {
 	static Logger log = Logger.getLogger(SigningUpStudentDAO.class.getName());
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	 
+	/**
+	 * forget password function, update new password.
+	 * @author Anuradha
+	 */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		Connection conn = null;
@@ -31,16 +40,17 @@ public class SigningUpStudentDAO implements ICrud{
 
 		try {
 			Student student = (Student) object;
+			//password encryption 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(student
 					.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
 					.trim();
-			
+
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, encryptPassword);
 			ps.setInt(2, student.getCode());
-			
+
 			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
