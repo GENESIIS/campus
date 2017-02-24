@@ -14,7 +14,9 @@ package com.genesiis.campus.entity;
  * 			   manually in addBannerRecordInOneTransAction(). changed the return type from int to
  * 			   Collection<Collection<String>>.
  * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn commented the [TYPE] field as the field is deprecated in future use
-         from [CAMPUS].[BAANER] table.
+               from [CAMPUS].[BAANER] table.
+ * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn The Order of the retrieving statements 
+ *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed.        
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -188,9 +190,9 @@ public class AdminBannerDAO implements ICrud {
 			if(status >0){
 				result = retrieveBannerImageStatement.executeQuery();				
 				while(result.next()){
-					Collection<String> bannerArray = new ArrayList<String>();
-					bannerArray.add(result.getString("IMAGE"));
+					Collection<String> bannerArray = new ArrayList<String>();					
 					bannerArray.add(result.getString("CODE"));
+					bannerArray.add(result.getString("IMAGE"));
 					outerWrapper.add(bannerArray);
 				}
 				
