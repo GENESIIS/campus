@@ -1,11 +1,13 @@
-//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
+//20170206 AS CAM-22 this class implemented from Scrypt encode decode plugging classes
 
 package com.genesiis.campus.scrypt.crypto;
+
+import static java.lang.System.arraycopy;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.GeneralSecurityException;
-import static java.lang.System.arraycopy;
+
 
 /**
  * An implementation of the Password-Based Key Derivation Function as specified
