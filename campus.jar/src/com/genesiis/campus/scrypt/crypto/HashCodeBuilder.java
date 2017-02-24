@@ -1,15 +1,17 @@
 //20170206 AS CAM-22 HashCodeBuilder created for testing purpose. 
+//20170206 AS CAM-22 this class use for String encode to hash code.
 package com.genesiis.campus.scrypt.crypto;
 
-import org.apache.log4j.Logger;
 import com.genesiis.campus.util.ResetPasswordInstructionEmailDispenser;
+
+import org.apache.log4j.Logger;
 
 public class HashCodeBuilder {
 	static Logger log = Logger.getLogger(HashCodeBuilder.class.getName());
 
 	/**
 	 * Pass the users first name and last name and encode to one string.
-	 * 
+	 * this hash code generates 10 times, 10 different hash cods returns in 10 times.
 	 * @param string
 	 * @param string
 	 * @return string (generated hash code )
