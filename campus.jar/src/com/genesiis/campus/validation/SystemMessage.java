@@ -12,6 +12,8 @@ package com.genesiis.campus.validation;
 //20170202 c36-add-tutor-details-added NOMODIFICATIONS message
 //20170209 c38-view-update-tutor-profile-added EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages
 //20170214 c38-view-update-tutor-profile-added INCORRECTDATA.
+//20170224 CW c103-send-email-tutor-status-change-modified EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages &
+				//modified MAIL_SUCCESS message to MAIL_SUCCESS_TUTOR & it's content.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -22,15 +24,15 @@ public enum SystemMessage {
 	EMAILERROR("Invalid Email Address."),
 	EMPTYEMAIL("Email Address cannot be empty."),
 	EMPTYUSERNAME("Username cannot be empty."),
-	EMPTYFIRSTNAME("Username cannot be empty."),
-	EMPTYLASTNAME("Username cannot be empty."),
-	EMPTYMOBILECOUNTRYCODE("Username cannot be empty."),
-	EMPTYMOBILENETWORKCODE("Username cannot be empty."),
-	EMPTYMOBILENUMBER("Username cannot be empty."),
-	EMPTYLANDCOUNTRYCODE("Username cannot be empty."),
-	EMPTYLANDAREACODE("Username cannot be empty."),
-	EMPTYLANDNUMBER("Username cannot be empty."),
-	EMPTYADDRESS1("Username cannot be empty."),
+	EMPTYFIRSTNAME("First name cannot be empty."),
+	EMPTYLASTNAME("Last name cannot be empty."),
+	EMPTYMOBILECOUNTRYCODE("Mobile Country code cannot be empty."),
+	EMPTYMOBILENETWORKCODE("Mobile network code cannot be empty."),
+	EMPTYMOBILENUMBER("Mobile number cannot be empty."),
+	EMPTYLANDCOUNTRYCODE("Land country code cannot be empty."),
+	EMPTYLANDAREACODE("Land area code cannot be empty."),
+	EMPTYLANDNUMBER("Land number cannot be empty."),
+	EMPTYADDRESS1("Address Line 1 cannot be empty."),
 	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
@@ -58,12 +60,10 @@ public enum SystemMessage {
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
 	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
-	MAIL_SUCCESS("Mail successfully submited to your email"),
+	MAIL_SUCCESS_TUTOR("Mail successfully submited to Tutor's Email..."),
 	MAIL_UNSUCCESS("Mail Sending failed"),
 	UNKNOWN(""),
 	EMAIL_USED("E mail already used to create a tutor profile.");
-	
-
 	
 	private String message;
 
