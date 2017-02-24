@@ -6,6 +6,8 @@
  * remember checkbox.
  * 
  * CAM-21 AS logout-popup window added to after successful logout.
+ * 20170206 CAM-22 password reset ajax functions coded
+ * 20170223 CAM-22 password validation function added
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -260,60 +262,38 @@ function verifyCode() {
 
 							//document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
 							jQuery('#verifyMesssage').css({'color':'red','font-weight':'bold'}).html(response['errorMessage']);
-//						} else if (response['errorMessage'] == "Your Verification code valid !") {
-//							//window.location.href = response['pageURL'];
-//							jQuery('#verifyMesssage').css({'color':'green','font-weight':'bold'}).html(response['errorMessage']);
-//							var firstName = "";
-//							var lastName = "";
-//							var email = "";
-//							var scode = "";
-//							var resultData = response.result;
-//
-//							$.each(response.result, function(index, value) {
-//								var res = value.toString();
-//								var data = res.split(",");
-//								counter++;
-//
-//								firstName = data[0].toString();
-//								lastName = data[1].toString();
-//								email = data[2].toString();
-//								scode = data[4].toString();
-//							});
-//							var encode = hashEncode(scode);
-//							// var decode = hashDecose(encode);
-//							// data binding to URL
-//							var pageURL = firstName + "&" + lastName + "&"
-//									+ email + "&" + encode;
-//
-//							window.location.href = response['pageURL']
-//									+ "?uData&" + pageURL;
-//						}
+
 						} else {
 							jQuery('#verifyMesssage').css({'color':'green','font-weight':'bold'}).html(response['errorMessage']);
-							var firstName = "";
-							var lastName = "";
-							var email = "";
-							var scode = "";
-							var resultData = response.result;
+							setTimeout(function() {
+								
+								var firstName = "";
+								var lastName = "";
+								var email = "";
+								var scode = "";
+								var resultData = response.result;
 
-							$.each(response.result, function(index, value) {
-								var res = value.toString();
-								var data = res.split(",");
-								counter++;
+								$.each(response.result, function(index, value) {
+									var res = value.toString();
+									var data = res.split(",");
+									counter++;
 
-								firstName = data[0].toString();
-								lastName = data[1].toString();
-								email = data[2].toString();
-								scode = data[4].toString();
-							});
-							var encode = hashEncode(scode);
-							// var decode = hashDecose(encode);
-							// data binding to URL
-							var pageURL = firstName + "&" + lastName + "&"
-									+ email + "&" + encode;
+									firstName = data[0].toString();
+									lastName = data[1].toString();
+									email = data[2].toString();
+									scode = data[4].toString();
+								});
+								var encode = hashEncode(scode);
+								// var decode = hashDecose(encode);
+								// data binding to URL
+								var pageURL = firstName + "&" + lastName + "&"
+										+ email + "&" + encode;
 
-							window.location.href = response['pageURL']
-									+ "?uData&" + pageURL;
+								window.location.href = response['pageURL']
+										+ "?uData&" + pageURL;
+							}, 4000);
+							
+							
 						}
 					},
 					error : function(response, error, errorThrown) {
