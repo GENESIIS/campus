@@ -1,4 +1,4 @@
-//20170206 AS CAM-22 implemented Scrypt encode decode plugging classes. 
+//20170206 AS CAM-22 this class implemented from Scrypt encode decode plugging classes
 
 package com.genesiis.campus.scrypt.crypto;
 
