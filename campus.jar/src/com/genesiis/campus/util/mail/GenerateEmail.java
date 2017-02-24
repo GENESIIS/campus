@@ -2,6 +2,7 @@ package com.genesiis.campus.util.mail;
 
 //20170222 CW c103-send-email-tutor-status-change-cw Created the GenerateEmail class instead of CmdGenerateEmailAdminTutorUpdate.java class to send email
 //20170222 CW c103-send-email-tutor-status-change-cw created sendAdminTutorUpdateEmail() to send email at tutor details update by Admin.
+//20170224 CW c103-send-email-tutor-status-change - modified systemMessage() method to return MAIL_SUCCESS_TUTOR message
 
 import com.genesiis.campus.util.TutorUpdateEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -66,7 +67,7 @@ public class GenerateEmail {
 		String message = SystemMessage.UNKNOWN.message();
 		switch(status){		
 		case 3:
-			message =SystemMessage.MAIL_SUCCESS.message();
+			message =SystemMessage.MAIL_SUCCESS_TUTOR.message();
 			break;
 		case -3:
 			message =SystemMessage.MAIL_UNSUCCESS.message();
