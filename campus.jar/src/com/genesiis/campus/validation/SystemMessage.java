@@ -14,6 +14,7 @@ package com.genesiis.campus.validation;
 //20170214 c38-view-update-tutor-profile-added INCORRECTDATA.
 //20170224 CW c103-send-email-tutor-status-change-modified EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages &
 				//modified MAIL_SUCCESS message to MAIL_SUCCESS_TUTOR & it's content.
+//20170224 cw c103-send-email-tutor-status-change- added UPDATED_BUT_MAIL_UNSUCCESS message.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -60,8 +61,9 @@ public enum SystemMessage {
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
 	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
-	MAIL_SUCCESS_TUTOR("Mail successfully submited to Tutor's Email..."),
+	MAIL_SUCCESS_TUTOR("Mail successfully submitted to Tutor's Email..."),
 	MAIL_UNSUCCESS("Mail Sending failed"),
+	UPDATED_BUT_MAIL_UNSUCCESS("Successfully updated, but email Sending failed..."),
 	UNKNOWN(""),
 	EMAIL_USED("E mail already used to create a tutor profile.");
 	
