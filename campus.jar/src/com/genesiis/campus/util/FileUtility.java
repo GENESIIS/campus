@@ -6,6 +6,7 @@ package com.genesiis.campus.util;
 //20161202 PN c27-upload-user-image: expressions arranged within if() statement and for() loop body ,is enclosed within the "{" "}".
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 //20170222 PN CAM-48: implement remvoeOldAndUploadNew(String imgName) method to rename and save course provider related images.
+//20170224 PN CAM-48: non static logger variable changed into static.
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -26,7 +27,7 @@ import java.util.regex.PatternSyntaxException;
 
 public class FileUtility {
 
-	private Logger log = Logger.getLogger(FileUtility.class.getName());
+	private static Logger log = Logger.getLogger(FileUtility.class.getName());
 
 	private File file;
 	private FileItem item;
@@ -501,5 +502,6 @@ public class FileUtility {
 			log.error("getFileNames(): " + e.toString());
 			throw e;
 		}
+		return paths;
 	}
 }
