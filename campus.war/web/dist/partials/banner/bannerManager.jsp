@@ -73,6 +73,7 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<label class="" id="bannerDisplayLabel"></label> <!-- messages to be displayed -->
+							<br><br>
 							<form action="">
 								<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
 								<input type="hidden"	value="xyz">
