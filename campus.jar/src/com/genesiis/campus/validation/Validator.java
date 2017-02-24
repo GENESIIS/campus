@@ -256,7 +256,24 @@ public class Validator {
 			helper.setAttribute("errorGeneralEmail", "Empty or invalid email address");
 			errorString.add("Empty or invalid email address");
 		}
-		
+
+		//validte course provider url's
+		errorString = courseProviderURLValidation(helper, errorString, 200, 0, "webLink", "errorWebLink");
+		errorString = courseProviderURLValidation(helper, errorString, 200, 0, "facebook", "errorFacebook");
+		errorString = courseProviderURLValidation(helper, errorString, 100, 0, "twitter", "errorTwitter");
+		errorString = courseProviderURLValidation(helper, errorString, 100, 0, "linkdedIn", "errorLinkedIn");
+		errorString = courseProviderURLValidation(helper, errorString, 100, 0, "instagram", "errorInstagram");
+		errorString = courseProviderURLValidation(helper, errorString, 100, 0, "mySpace", "errorMyspace");
+
+		//viber and whatsapp validations
+		if(!isValidLength(helper.getParameter("whatsapp"), 20, 0) || !isInteger(helper.getParameter("whatsapp"))){
+			helper.setAttribute("errorWhatsapp", "Maximum length exceed or invalid.");
+			errorString.add("Whatsapp ");
+		}
+		if(!isValidLength(helper.getParameter("viber"), 20, 0) || !isInteger(helper.getParameter("viber"))){
+			helper.setAttribute("errorWhatsapp", "Maximum length exceed or invalid.");
+			errorString.add("Viber ");
+		}
 		
 		/*
 		 * The course provider account validation needs only for the featured course provider
