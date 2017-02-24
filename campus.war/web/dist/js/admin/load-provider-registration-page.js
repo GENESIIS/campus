@@ -331,7 +331,7 @@ function landPhoneNubmerHelper() {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
 		document.getElementById('errorLand2').innerHTML = "**Please select your country.";
-		document.getElementById('lastMobileNumber').innerHTML = "**Please select your country.";
+		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
 		
 	}else{
 		 if (!isempty(areaCode)) {
