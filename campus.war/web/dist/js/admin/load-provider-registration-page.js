@@ -9,6 +9,7 @@
 //20170215 JH c141-add-course-provider-issue-improvements send generated course provider code on successful registration
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
 //20170223 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): change hints to error messages when they show errors 
+//20170224 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): show error messages on error
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -17,7 +18,7 @@ window.courseProviderAcoountStatus = null;
 window.responseErrorMessage = null;
 
 /**
- * load data, arrange elements when the doucment is ready
+ * load data, arrange elements when the document is ready
  */
 $(document).ready(function() {
 	arrangeUI();
@@ -329,7 +330,7 @@ function landPhoneNubmerHelper() {
 	if (!isempty(country)) {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
-		document.getElementById('landNumber2').innerHTML = "**Please select your country.";
+		document.getElementById('errorLand2').innerHTML = "**Please select your country.";
 		document.getElementById('lastMobileNumber').innerHTML = "**Please select your country.";
 		
 	}else{
@@ -338,7 +339,8 @@ function landPhoneNubmerHelper() {
 			document.getElementById('errorLand2').innerHTML = "**Area code is empty.";
 
 		}if(!isempty(networkCode)){
-			document.getElementById('errorMobile').innerHTML = "**Network code is empty.";
+			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
+			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
 		
 		} if (isempty(areaCode)) {
 			if (isPatternMatch(integerPattern, areaCode)) {
@@ -369,7 +371,7 @@ function landPhoneNubmerHelper() {
 			 if(!isPatternMatch(integerPattern, networkCode)){
 
 				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
-				document.getElementById('lastMobileNumber').innerHTML = "**Invlide network code.";
+				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
 
 							
 			 } else if (isPatternMatch(integerPattern, networkCode)) {
