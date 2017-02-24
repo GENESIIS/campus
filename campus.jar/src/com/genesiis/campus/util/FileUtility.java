@@ -9,7 +9,7 @@ package com.genesiis.campus.util;
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn created the method moveFileTODiferentDirectory(String,FileItem,boolean)
 //20170222 DN c131-admin-manage-banner-upload-banner-image-dn implement the method deleteDirectory(String)
 //20170223 DN c131-admin-manage-banner-upload-banner-image-dn copyFile() is introduced.
-
+//20170224 DN c131-admin-manage-banner-upload-banner-image-dn moveFileToDiferentDirectory() doc comment modified.
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -380,13 +380,13 @@ public class FileUtility {
 					return true;
 			}
 		} catch (NullPointerException npe) {
-			log.error("isValidcvfiletype(): " + fileName + npe.toString());
+			log.error("isValidImageFileType(): NullPointerException " + fileName + npe.toString());
 			throw npe;
 		} catch (StringIndexOutOfBoundsException siobe) {
-			log.error("isValidcvfiletype(): " + fileName + siobe.toString());
+			log.error("isValidImageFileType(): StringIndexOutOfBoundsException " + fileName + siobe.toString());
 			throw siobe;
 		} catch (Exception e) {
-			log.error("isValidcvfiletype(): " + fileName + e.toString());
+			log.error("isValidImageFileType(): Exception " + fileName + e.toString());
 			throw e;
 		}
 
@@ -429,7 +429,7 @@ public class FileUtility {
 	 * @author dushantha DN
 	 * @since 20170216 v1.0
 	 * @param movingDirectoryPath: String typeThe directory and the path
-	 * 							e.g.C:/sdb/ctxdeploy/education.war/banner/tempdeleteable
+	 * 							e.g.C:/sdb/ctxdeploy/education.war/banner/tempdeleteable/
 	 * 							<b>tempdeleteable</b>: is the physical directory name.
 	 * @param fileItemTOBeMoved : FileItem type, it is the actual file that has to be moved
 	 * 						  This class represents a file or form item that was received 
