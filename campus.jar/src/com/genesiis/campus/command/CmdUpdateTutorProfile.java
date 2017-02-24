@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170219 CW c103-send-email-tutor-status-change-cw modified execute() to send email at the time of tutor update by Admin
 //20170222 CW c103-send-email-tutor-status-change-cw modified execute method to send email using sendAdminTutorUpdateEmail method in GenerateEmail class
+//20170224 Cw c103-send-email-tutor-status-change- added message validations to view UPDATED_BUT_MAIL_UNSUCCESS messages.
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -40,9 +41,9 @@ import java.util.Collection;
  */
 public class CmdUpdateTutorProfile implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
+	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());/*
 	private String message = "True";
-	private String emailMessage = "Email Sending Unsuccessful ...";
+	private String emailMessage = "Email Sending Unsuccessful ...";*/
 	
 	/**
 	 * @author Chathuri, Chinthaka
@@ -55,6 +56,9 @@ public class CmdUpdateTutorProfile implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		
+			String message = "True";
+			String emailMessage = "";
 
 		try {
 			final Validator validator = new Validator();
@@ -100,6 +104,12 @@ public class CmdUpdateTutorProfile implements ICommand {
 			
 			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()) || message.equals(SystemMessage.UPDATED.message()))){
 				message = SystemMessage.INCORRECTDATA.message();
+			}
+			
+			if(message.equals(SystemMessage.UPDATED.message()) & emailMessage.equals(SystemMessage.MAIL_UNSUCCESS.message())){
+
+				message = SystemMessage.UPDATED_BUT_MAIL_UNSUCCESS.message(); 
+				emailMessage = "";
 			}
 	
 		} catch (Exception exception) {
