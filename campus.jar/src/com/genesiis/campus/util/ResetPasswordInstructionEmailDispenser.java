@@ -1,6 +1,17 @@
 package com.genesiis.campus.util;
 
 //20170207 AS CAM-22 ResetPasswordInstructionEmailDispenser created, to send Instructions via email
+//20170224 AS C22 Changed imports oder and removed unwanted comments. 
+
+import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.mail.EmailDispenser;
+import com.genesiis.campus.util.mail.GeneralMail;
+import com.genesiis.campus.util.mail.IEmail;
+import com.genesiis.campus.util.mail.IEmailComposer;
+import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,15 +22,6 @@ import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.Student;
-import com.genesiis.campus.util.mail.EmailDispenser;
-import com.genesiis.campus.util.mail.GeneralMail;
-import com.genesiis.campus.util.mail.IEmail;
-import com.genesiis.campus.util.mail.IEmailComposer;
-import com.genesiis.campus.validation.SystemMessage;
 
 public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 
@@ -104,15 +106,6 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 		try {
 			StringBuilder result = new StringBuilder();
 
-			// MimeMultipart multipart = new MimeMultipart("related");
-			//
-			// BodyPart messageBodyPart = new MimeBodyPart();
-			// String htmlText = "<H1>Hello</H1><img src=\"cid:image\">";
-			// messageBodyPart.setContent(htmlText, "text/html");
-			//
-			//
-			// multipart.addBodyPart(messageBodyPart);
-			// result.append(multipart);
 			result.append(new SimpleDateFormat("dd/MM/yy HH:mm:ss")
 					.format(new Date()));
 			result.append(System.getProperty("line.separator"));
