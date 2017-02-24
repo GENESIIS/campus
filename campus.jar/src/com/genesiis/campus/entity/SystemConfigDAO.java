@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 //20170109 DN CAM47 refactor the method findById(Object object,Connection con) to include finally block
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
+//20170224 DN CAM-131 removed the extra connection,prepared statement and result set recourse calls from finally block
 
 import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.ConnectionManager;
@@ -208,17 +209,7 @@ public class SystemConfigDAO implements ICrud {
 			log.error("findById(Object object,Connection conn):SQLException :" +sqle.toString());
 			throw sqle;	
 		} finally{
-			
 			DaoHelper.cleanup(null, prstmtFind, resultSet); // connection will be closed from where it has been created
-			if (prstmtFind != null) {
-				prstmtFind.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-			if (resultSet != null) {
-				resultSet.close();
-			}
 		} 
 		return outerCollection;
 	}
