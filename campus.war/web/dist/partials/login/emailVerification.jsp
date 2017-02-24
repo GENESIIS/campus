@@ -12,7 +12,7 @@
 <!-- 20170217 TR c68 added common error msg class  -->
 <!-- 20170217 TR c68 validated error msg label hide and show  -->
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
-
+<!-- 20170223 AS CAM-22 modify messages span and validation messages -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,17 +37,22 @@
 <script src='/dist/js/login.js'></script>
 </head>
 <body>
-<!--     <script> -->
-<!--          $( document ).ready(function() { -->
+   <script> 
+          $( document ).ready(function() {
+        	  clearField('verifyMesssage');
+        	  clearField('verifyCode'); 
+        	  clearField('verifiemail'); 
+        	  clearField('verifiemail');
+        	  
 <!--              $('#openPop').on('click', function(){ -->
 <!--                 $('#verifications-popup').modal('show'); -->
 <!--              }); -->
 
 <!--              // if span empty, hide the parent label -->
 <!--              $('.fp-msg span:empty').parent().hide(); -->
-<!--          }); -->
+          }); 
 
-<!--     </script> -->
+    </script> 
 	<!-- Header-->
 
 	<header>
@@ -118,7 +123,7 @@
                                 <div class="form-group">
                                         <button type="button" class="btn btn-primary btn-block"
                                             name="CCO" id="CCO" value="HASHV"
-                                            onclick="verifyCode(); clearField('verifyMesssage')">Verify</button>
+                                            onclick="verifyCode(); clearField('verifyCode')">Verify</button>
                                     </div>
                             </div>
                         </div>
