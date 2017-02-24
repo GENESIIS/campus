@@ -1,6 +1,7 @@
 <!-- 20161119 DN C18-student-signup-without-using-third-party-application-dn  created the page SignUpWoThirdParty.jsp -->
 <!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn /dist/js/jsonDataExchanger.js included to the page -->
 <!-- 20161123 DN C18-student-signup-without-using-third-party-application-dn tool tip information for mobile number introduced -->
+<!-- 20161130 TR c18 added header and page content  -->
 <!-- 20161201 DN C18-student-signup-without-using-third-party-application-dn add a tool tip to mobile number field -->
 <!-- 20161204 DN C18-student-signup-without-using-third-party-application-dn integrated with GUI complete 60% -->
 <!-- 20161205 DN C18-student-signup-without-using-third-party-application-dn Country field added -->
@@ -8,6 +9,10 @@
 <!-- 20161214 DN CAMP:18 rearranged the fields and add a input box to capture country code -->
 <!-- 20161217 DN CAMP:18 Clear Data button is created, country place holder changed to select country, made country and town fields to be Mandatory-->
 <!-- 20170118 DN CAMP :18 country place holder changed to select country, made country and town fields to be Mandatory, add class="validationInputFields" to error labels-->
+<!-- 20170224 TR CAM-62: Replaced #displayLabel label -->
+<!-- 20170224 TR CAM-62: added lbl-wm-top css class (wm: warning-massages -->
+<!-- 20170224 TR CAM-62: removed inline styles and added external css -->
+<!-- 20170224 TR CAM-62: removed inline styles from all warning labels and added lbl-error-msg css class -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -27,9 +32,6 @@
     <link href="../../css/image-slides.css" rel="stylesheet">
     <link href="../../css/button-effect.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
-
-    <!-- W3-Include -->
-    <!--<script src="../../bower-components/w3/w3data.js"></script> -->
 
     <!-- jQuery & Other js -->
     <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
@@ -133,6 +135,11 @@
     </div>
     <!-- End inner header -->
 
+    <div class="lbl-wm-top col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <label id="displayLabel"></label>
+    </div>
+    <!-- End warning massage label -->
+
     <div class="page-content col-md-12 col-lg-12 col-sm-12 clearfix">
 
         <div class="social-link-panel col-md-6 col-lg-6 col-sm-12 clearfix">
@@ -160,35 +167,40 @@
 
         </div>
         <!-- End Sign-up : with social media -->
-		<label id="displayLabel" style="color:#F39C12;" ></label>
+
         <div class="input-panel col-md-6 col-lg-6 col-sm-12 clearfix">
             <div class="input-field">
-                <label for="input-firstName" id="firstNameLabel">First Name :<span>*</span></label><label id="firstNameError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label for="input-firstName" id="firstNameLabel">First Name :<span>*</span></label>
+                <label id="firstNameError" class="validationInputFields lbl-error-msg"></label><br>
                 <input class="text-field" type="text" id="firstName" name="firstName" onclick="clearField('firstNameError')">
             </div>
             <!-- End first name -->
 
             <div class="input-field">
-                <label for="input-lastName" id="lastNameLabel">Last Name :<span>*</span></label><label id="lastNameError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label for="input-lastName" id="lastNameLabel">Last Name :<span>*</span></label>
+                <label id="lastNameError" class="validationInputFields lbl-error-msg"></label><br>
                 <input class="text-field" type="text" id="lastName" name="lastName" onclick="clearField('lastNameError')" >
             </div>
             <!-- End Last name -->
 
             <div class="input-field gender-field col-lg-12 clearfix">
-                <label class="lbl-gender col-lg-4 pull-left" for="input-gender" id ="genderLabel">Gender :</label><label id="genderError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label class="lbl-gender col-lg-4 pull-left" for="input-gender" id ="genderLabel">Gender :</label>
+                <label id="genderError" class="validationInputFields lbl-error-msg"></label><br>
                 <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"  name="gender" value="1" checked ><span>Male</span></div>
                 <div class="col-lg-4 pull-left"><input class="btn-radio" type="radio"  name="gender" value="0"><span>Female</span></div>
             </div>
             <!-- End Gender -->
 
             <div class="input-field">
-                <label for="eMail" id="emilAddressLabel" >Email :<span>*</span></label><label id="emailError" style="color:#C70039;" class="validationInputFields"></label></label><br>
+                <label for="eMail" id="emilAddressLabel" >Email :<span>*</span></label>
+                <label id="emailError" class="validationInputFields lbl-error-msg"></label></label><br>
                 <input class="text-field" type="text" id="emailAddress" name="emailAddress"  onclick="clearField('emailError')">
             </div>
             <!-- End Email -->
 
 		 	<div class="input-field">
-		         <label>Country :<span>*</span></label><label id="countryError" style="color:#C70039;" class="validationInputFields"></label><br><br>
+		         <label>Country :<span>*</span></label>
+		         <label id="countryError" class="validationInputFields lbl-error-msg"></label><br><br>
 		         <input list="countryList" id="country" name="country" class="text-field" type="text" placeholder="-- Select Country --" onclick="clearField('countryError');" >
 		          <datalist id="countryList" name="countryist">
 		          </datalist>
@@ -196,7 +208,7 @@
             <!-- End Country -->
             
             <div class="input-field">
-                <label>Town :<span>*</span></label><label id="townError" style="color:#C70039;" class="validationInputFields"></label><br><br>
+                <label>Town :<span>*</span></label><label id="townError" class="validationInputFields lbl-error-msg"></label><br><br>
                 <input id="town" name="town" list="townList" class="text-field" type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
                 <datalist id="townList" name="townList">
                 </datalist>
@@ -205,9 +217,10 @@
             <!-- End Town -->
             
             <div class="input-field">
-                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label><label id="phoneError" style="color:#C70039;" class="validationInputFields"></label><br>
-                <input class="text-field" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly title ="Country Code ,It Automatically Gets Filled Once You Select Your Contry" >
-                <input class="text-field" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="Type Your Mobile Numebr Without The Leading Zero e.g 771234567 format" >
+                <label for="input-phoneNumber" id="contactNumberLabel">Mobile :<span>*</span></label>
+                <label id="phoneError" class="validationInputFields lbl-error-msg"></label><br>
+                <input class="text-field c-code" type="text" id="mobileCountryCode" name="mobileCountryCode"  onclick="clearField('phoneError')" readonly title ="Country Code ,It Automatically Gets Filled Once You Select Your Contry" >
+                <input class="text-field p-number" type="text" id="contactNumber" name="contactNumber"  onclick="clearField('phoneError')" data-toggle="tooltip" title="Type Your Mobile Numebr Without The Leading Zero e.g 771234567 format" >
             </div>
             <script>
 				$(document).ready(function(){
@@ -217,15 +230,17 @@
             <!-- End phone -->
 
             <div class="input-field">
-                <label id="usernameLabel" >Username :<span>*</span></label><label id="usernameError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label id="usernameLabel" >Username :<span>*</span></label>
+                <label id="usernameError" class="validationInputFields lbl-error-msg"></label><br>
                 <input class="text-field" type="text" name="username" id="userName" onclick="clearField('usernameError')">
             </div>
             <!-- End User name -->
 
             <div class="input-field">
-                <label id="passWordLabel">Password :<span>*</span></label><label id="passWordError" style="color:#C70039;" class="validationInputFields"></label><br>
+                <label id="passWordLabel">Password :<span>*</span></label>
+                <label id="passWordError" class="validationInputFields lbl-error-msg"></label><br>
                 <input class="text-field" type="password" name="psw" id="passWord" onclick="clearField('passWordError')">
-                 <input type="hidden"  id="userTypeCode" name="userTypeCode" />
+                <input type="hidden"  id="userTypeCode" name="userTypeCode" />
                 <div class="pull-right show-pwrd">
                     <span class="check-box"><input type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')" ></span>Show Password
                 </div>
@@ -233,13 +248,14 @@
             <!-- End Password name -->
 
             <div class="input-field">
-                <label id="confPassWordLabel">Confirm Password :<span>*</span></label><label id="confPassWordError" style="color:#C70039;" class="validationInputFields" ></label><br>
+                <label id="confPassWordLabel">Confirm Password :<span>*</span></label>
+                <label id="confPassWordError" class="validationInputFields lbl-error-msg" ></label><br>
                 <input class="text-field" type="password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')">
             </div>
             <!-- End Confirm password  -->
 
             <div class="input-field">
-            	<label id="policyConfirmError" style="color:#C70039;" class="validationInputFields"></label><br>
+            	<label id="policyConfirmError" class="validationInputFields lbl-error-msg"></label><br>
                 <span class="check-box"><input type="checkbox" id="policyConfirm" onclick="clearField('policyConfirmError');"></span>
                 <p>I have read privacy policy and accept the terms and conditions.</p>
             </div>

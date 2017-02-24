@@ -540,14 +540,12 @@ body, html {
                   font-size: 68px;
                   left: -45px;
                   top: -6px; }
-            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer {
-              display: block; }
-              .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
-                font-size: 18px;
-                line-height: 20px;
-                color: #6da6de;
-                text-align: justify;
-                padding-bottom: 10px; }
+            .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .question-area .number-of-questions .answer p {
+              font-size: 18px;
+              line-height: 20px;
+              color: #6da6de;
+              text-align: justify;
+              padding-bottom: 10px; }
         .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area {
           display: block;
           margin-top: 120px;
@@ -855,10 +853,13 @@ body, html {
     font-size: 20px;
     line-height: 52px;
     padding-left: 6px; }
+  .sign-up-screen .lbl-wm-top label {
+    color: #f38d0b;
+    line-height: 20px;
+    padding-left: 6px; }
   .sign-up-screen .page-content .input-panel {
     float: left;
     position: relative;
-    padding-top: 25px;
     padding-bottom: 150px; }
     .sign-up-screen .page-content .input-panel .gender-field {
       padding-left: 0;
@@ -866,12 +867,25 @@ body, html {
     .sign-up-screen .page-content .input-panel .input-field {
       padding-top: 35px;
       padding-right: 18%; }
+      .sign-up-screen .page-content .input-panel .input-field .c-code {
+        width: 28% !important;
+        float: left; }
+      .sign-up-screen .page-content .input-panel .input-field .p-number {
+        width: 72% !important; }
+      .sign-up-screen .page-content .input-panel .input-field .lbl-error-msg {
+        color: #f75252;
+        padding: 5px 0;
+        margin-bottom: 2px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400; }
       .sign-up-screen .page-content .input-panel .input-field label {
         font-family: "Roboto", sans-serif;
         font-size: 18px;
         color: #677d88;
         line-height: 35px;
-        padding-right: 50px; }
+        padding-right: 50px;
+        width: 100%; }
       .sign-up-screen .page-content .input-panel .input-field .lbl-gender {
         padding-left: 0; }
       .sign-up-screen .page-content .input-panel .input-field .text-field {
@@ -880,7 +894,7 @@ body, html {
         width: 100%;
         color: #626e83;
         font-family: "Muli", sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         padding-left: 15px; }
       .sign-up-screen .page-content .input-panel .input-field select {
@@ -970,6 +984,32 @@ body, html {
   header .header .bottom .menu-bar .menu-tabs .bottom-menus li {
     padding-left: 12px !important;
     padding-right: 12px !important; } }
+@media only screen and (max-width: 768px) {
+  .sign-up-screen .page-content .social-link-panel {
+    width: 100% !important;
+    padding-top: 0 !important; }
+    .sign-up-screen .page-content .social-link-panel .lbl-or {
+      top: 106%;
+      left: 46%; }
+    .sign-up-screen .page-content .social-link-panel .signup-btn {
+      padding-left: 0;
+      margin-top: 50px; }
+  .sign-up-screen .page-content .input-panel {
+    padding-top: 50px; }
+    .sign-up-screen .page-content .input-panel .input-field {
+      padding-right: 0; } }
+@media only screen and (max-width: 992px) {
+  .sign-up-screen .page-content .social-link-panel {
+    padding-top: 0; }
+    .sign-up-screen .page-content .social-link-panel .lbl-or {
+      top: 106%;
+      left: 45%; }
+    .sign-up-screen .page-content .social-link-panel .signup-btn {
+      padding-left: 0 !important; } }
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .sign-up-screen .page-content .input-panel .input-field button {
+    width: 100%;
+    margin-bottom: 12px; } }
 /* Modules */
 .btn-home {
   display: block;
@@ -1025,14 +1065,12 @@ body, html {
       cursor: pointer; }
       .filter-item .item-header label span {
         color: #3a8af7; }
-  .filter-item .item-container {
+  .filter-item .item-container .select-item {
     display: block; }
-    .filter-item .item-container .select-item {
-      display: block; }
-      .filter-item .item-container .select-item label {
-        font-size: 20px;
-        color: #3a3b3c;
-        line-height: 40px; }
+    .filter-item .item-container .select-item label {
+      font-size: 20px;
+      color: #3a3b3c;
+      line-height: 40px; }
 
 .btn-submit {
   width: 45%;
