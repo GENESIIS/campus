@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
  * 				isImageAccordanceWithSystemRequirement(). changed FileUtility to static field deleteTempFolder()/getElementFromCollection()/moveFileToPhysicalLocation() implemented
 				uploadFullBannerCredentials() refactored.
  * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn getFileReNamedTo() implemented
+ * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn SystemMessage[ENUM].toString() is called when using the systemMessages
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -54,8 +55,7 @@ import java.util.Collection;
 public class CmdAdminBannerUpload implements ICommand {
 
 	
-	private static final Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());	
-	
+	private static final Logger log = Logger.getLogger(CmdAdminBannerUpload.class.getName());
 	private int successCode =0;
 	private ImageUtility imageUtility =new ImageUtility();
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
@@ -133,108 +133,106 @@ public class CmdAdminBannerUpload implements ICommand {
 					+ ilearg.toString());
 			throw ilearg;
 		}
-
 		
 	}
 	
-	
 
-/*
- * Save banner image to a temporary location. This method stores the image 
- * to a temporary location in the physical disk which is agreed by the system 
- * @param helper the helper
- * @param view the view
- * @return the i view
- * @throws SQLException the SQL exception
- * @throws Exception the exception
- */
-private IView saveBannerImageToTempLocation(IDataHelper helper, IView view) throws SQLException,
-Exception{
-	Connection con = null;
+	/*
+	 * Save banner image to a temporary location. This method stores the image 
+	 * to a temporary location in the physical disk which is agreed by the system 
+	 * @param helper the helper
+	 * @param view the view
+	 * @return the i view
+	 * @throws SQLException the SQL exception
+	 * @throws Exception the exception
+	 */
+	private IView saveBannerImageToTempLocation(IDataHelper helper, IView view) throws SQLException,
+	Exception{
+		Connection con = null;
+		
+		try{	
+			// clear the message if it's accumulated.
+			this.setMessage(""); 
+			// get the banner from the browser(client) and set field -files are set now
+			files = imageUtility.getImageFileUploadedFromBrowser(helper);
+			if((files.size()==0)|(files==null)){
+				this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
+				this.setSuccessCode(-1);
+			} else{
+				
+				getFileUtility().setFileItem(files.get(0)); //Setting the file Item in the FileUtility
+				con = ConnectionManager.getConnection();
+				
+				//get the banner Absolute temporary upload path
+				String bannerImageTemporaryUploadPath = imageUtility
+							.getImageTeporyUploadPath(
+									SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
+									"tempbanner", con);
+				
+				// check if it confirm to the standards
+				if(!isImageAccordanceWithSystemRequirement(con,helper)){
+					setResponseCridentials(helper);
+					return view;
+				}
+				
+				fileUtility.setUploadPath(bannerImageTemporaryUploadPath);
 	
-	try{	
-		// clear the message if it's accumulated.
-		this.setMessage(""); 
-		// get the banner from the browser(client) and set field -files are set now
-		files = imageUtility.getImageFileUploadedFromBrowser(helper);
-		if((files.size()==0)|(files==null)){
-			this.message = message +" "+ImageUtility.systemMessage(-1); // does not contain a file
-			this.setSuccessCode(-1);
-		} else{
-			
-			getFileUtility().setFileItem(files.get(0)); //Setting the file Item in the FileUtility
-			con = ConnectionManager.getConnection();
-			
-			//get the banner Absolute temporary upload path
-			String bannerImageTemporaryUploadPath = imageUtility
-						.getImageTeporyUploadPath(
-								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
-								"tempbanner", con);
-			
-			// check if it confirm to the standards
-			if(!isImageAccordanceWithSystemRequirement(con,helper)){
-				setResponseCridentials(helper);
-				return view;
+				if((!isTheFileMovedToTemporaryLocation(fileUtility,bannerImageTemporaryUploadPath,true))){
+					 deleteTempFolder(fileUtility,bannerImageTemporaryUploadPath); // temporary folder deleted if moving failed
+					this.message = message + " " +ImageUtility.systemMessage(-2); //upload fail
+					this.setSuccessCode(-2);
+					setResponseCridentials(helper);
+					return view;
+				}
+				
 			}
-			
-			fileUtility.setUploadPath(bannerImageTemporaryUploadPath);
-
-			if((!isTheFileMovedToTemporaryLocation(fileUtility,bannerImageTemporaryUploadPath,true))){
-				 deleteTempFolder(fileUtility,bannerImageTemporaryUploadPath); // temporary folder deleted
-				this.message = message + " " +ImageUtility.systemMessage(-2); //upload fail
-				this.setSuccessCode(-2);
-				setResponseCridentials(helper);
-				return view;
-			}
-			
+		} catch(FileUploadException fle){
+			log.error("saveBannerPageCredential():FileUploadException"+ fle.toString() );
+			throw fle;			
+		} catch(Exception exp) {
+			log.error("saveBannerPageCredential(): Exception :"+ exp.toString());
+			throw exp;
+		}finally{
+			DaoHelper.cleanup(con, null, null);
 		}
-	} catch(FileUploadException fle){
-		log.error("saveBannerPageCredential():FileUploadException"+ fle.toString() );
-		throw fle;			
-	} catch(Exception exp) {
-		log.error("saveBannerPageCredential(): Exception :"+ exp.toString());
-		throw exp;
-	}finally{
-		DaoHelper.cleanup(con, null, null);
-	}
-	this.setMessage(ImageUtility.systemMessage(0)); //processing...
-	this.setSuccessCode(1);
-	setResponseCridentials(helper);
-	return view;
-	
-}
-
-/*
- * deleteTempFolder() method deletes a directory in the given
- * path if and only if it exists.
- * @author dushantha DN
- * @param fileUtility2 FileUtility
- * @param directoryPathToBeDeleted String , the path of the folder to be deleted
- * e.g C:\eclipse\plugins\org.apache.axis_1.4.0.v201005080400
- * @return true if the folder is deleted and else false
- * @throws NullPointerException
- * @throws FileNotFoundException
- * @throws IOException
- */
-	private void deleteTempFolder(FileUtility fileUtility2,String directoryPathToBeDeleted) 
-			throws NullPointerException,FileNotFoundException,IOException {
 		
-		try {
-			 fileUtility2.deleteDirectory(directoryPathToBeDeleted);
+		this.setMessage(ImageUtility.systemMessage(0)); //processing...
+		this.setSuccessCode(1);
+		setResponseCridentials(helper);
+		return view;
+	}
+
+	/*
+	 * deleteTempFolder() method deletes a directory in the given
+	 * path if and only if it exists.
+	 * @author dushantha DN
+	 * @param fileUtility2 FileUtility
+	 * @param directoryPathToBeDeleted String , the path of the folder to be deleted
+	 * e.g C:\eclipse\plugins\org.apache.axis_1.4.0.v201005080400
+	 * @return true if the folder is deleted and else false
+	 * @throws NullPointerException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+		private void deleteTempFolder(FileUtility fileUtility2,String directoryPathToBeDeleted) 
+				throws NullPointerException,FileNotFoundException,IOException {
 			
-		} catch (NullPointerException npexp) {
-			log.error("deleteTempFolder(String,String): NullPointerException "+ npexp.toString());
-		} catch (FileNotFoundException fnfexp) {
-			log.error("deleteTempFolder(String,String): FileNotFoundException "+ fnfexp.toString());
-		} catch (IOException ioexp) {
-			log.error("deleteTempFolder(String,String): IOException "
-					+ ioexp.toString());
-			throw ioexp;
-		} 
-}
+			try {
+				 fileUtility2.deleteDirectory(directoryPathToBeDeleted);
+				
+			} catch (NullPointerException npexp) {
+				log.error("deleteTempFolder(String,String): NullPointerException "+ npexp.toString());
+			} catch (FileNotFoundException fnfexp) {
+				log.error("deleteTempFolder(String,String): FileNotFoundException "+ fnfexp.toString());
+			} catch (IOException ioexp) {
+				log.error("deleteTempFolder(String,String): IOException "
+						+ ioexp.toString());
+				throw ioexp;
+			} 
+	}
 
 
-	/**
+	/*
 	 * Checks if is image accordance with system requirement.
 	 * <b>Note</b> the file to be tested must not be null
 	 * @param con
@@ -261,7 +259,7 @@ Exception{
 					SystemConfig.BANNER_IMAGE_SIZE, con, files.get(0));
 			
 			isBannerWithCorrectExtension = fileUtility.isValidImageFileType(
-					fileUtility.getImageName(),
+					fileUtility.getFileItem().getName(),
 					imageUtility.getValidExtensions());
 			
 			//set the messages to be sent to the client side
@@ -289,171 +287,173 @@ Exception{
 		}
 		return (isFilePassSizeRequirement & isBannerWithCorrectExtension);
 	}
-
-
-
-
-/*
- * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within
- *  a multipart/form-data POST request and wrapped with by "fileUtility" parameter to a location specified
- *  by the movingDirectoryPath parameter. This method allows to move the said file to a clean directory
- *  where there is no any other files or folders but the moving file only. This fact is excreted by specifying
- *  the boolean parameter <I>shouldDirectoryContentBeRemoved</I> to true
- *   
- * @param fileUtility : FileUtility 
- * 
- * @param movingDirectoryPath : String denotes the absolute path of the directory
- *                             e.g  C:/sdb/ctxdeploy/education.war/banner/directoryName
- *                             
- * @param shouldDirectoryContentBeRemoved : boolean true for deleting files and sub directories within the Directory
- * 											if directory specified by the path do exist.
- * 
- * @return boolean stating if the operation gets successful or fails.
- * 
- * @throws Exception
- */
-private boolean isTheFileMovedToTemporaryLocation(FileUtility fileUtility,
-		String movingDirectoryPath,boolean shouldDirectoryContentBeRemoved) throws Exception {
 	
-	boolean isTheFileMovedToTemporaryLocation= false;
-	try{
-		isTheFileMovedToTemporaryLocation= fileUtility.moveFileToDiferentDirectory(movingDirectoryPath,
-				fileUtility.getFileItem(),shouldDirectoryContentBeRemoved );
+	
+	/*
+	 * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within
+	 *  a multipart/form-data POST request and wrapped with by "fileUtility" parameter to a location specified
+	 *  by the movingDirectoryPath parameter. This method allows to move the said file to a clean directory
+	 *  where there is no any other files or folders but the moving file only. This fact is excreted by specifying
+	 *  the boolean parameter <I>shouldDirectoryContentBeRemoved</I> to true
+	 *   
+	 * @param fileUtility : FileUtility 
+	 * 
+	 * @param movingDirectoryPath : String denotes the absolute path of the directory
+	 *                             e.g  C:/sdb/ctxdeploy/education.war/banner/directoryName
+	 *                             
+	 * @param shouldDirectoryContentBeRemoved : boolean true for deleting files and sub directories within the Directory
+	 * 											if directory specified by the path do exist.
+	 * 
+	 * @return boolean stating if the operation gets successful or fails.
+	 * 
+	 * @throws Exception
+	 */
+	private boolean isTheFileMovedToTemporaryLocation(FileUtility fileUtility,
+			String movingDirectoryPath,boolean shouldDirectoryContentBeRemoved) throws Exception {
 		
-	} catch (Exception exp) {
-		log.error("isTheFileMovedTOTemporaryLocation(): Exception "+exp.toString());
-		throw exp;
-	}
-	
-	return isTheFileMovedToTemporaryLocation;
-}
-
-
-
-/*
- * Method sets the response credentials, It sets the successfulness or the failure code,
- * amd the message to be dispatched to the view to the response as attributes
- * @author dushantha DN
- * setResponseCridentials sets the request attributes
- * @param helper: It is the HttpServletrequest wrapper instance.
- */
-private void setResponseCridentials(IDataHelper helper){
-	helper.setAttribute("successCode", getSuccessCode());
-	helper.setAttribute("message", message);
-	helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
-}
-	
-
-/*
- * getElementFromCollection() method unwraps the inner Collection<String>
- * and retrieves the element at given index wrapped in an Object
- * @param banners Collection<Collection<String>>
- * @param indexOfTheElement the index of the required element of Collection<String>
- * i.e in the inner Collection
- * @return string wrapped in a Object type
- */
-private Object getElementFromCollection(Collection<Collection<String>> banners, int indexOfTheElement){
-	Object element = null;
-	for(Collection<String> innerWrapper:banners){
-		 Object[] objectArray=innerWrapper.toArray();
-		 element = objectArray[indexOfTheElement];
-	 }
-	return element;
-}
-
-/*
- * moveFileToPhysicalLocation() will move the banner file to the 
- * physical location agreed by the SystemCofig table or the enum,
- * @param bannerImagePhysicalUploadPath 
- * @return boolean true if the file is written to the location given by the 
- * physical path. else false
- */
-private boolean moveFileToPhysicalLocation(	String bannerImagePhysicalUploadPath) throws Exception{
-	
-	//### MOVE THE BANNER TO THE PHYSICAL LOCATION ####
-	boolean isTheFileMovedToPhysicalLocation = false;
- 
-  // move the image to the correct physical location
-	isTheFileMovedToPhysicalLocation = fileUtility.moveFileToDiferentDirectory(bannerImagePhysicalUploadPath,
-						fileUtility.getFileItem(), true);
-	
-	return isTheFileMovedToPhysicalLocation;
-}
-
-/*
- * uploadFullBannerCredentials Uploads the information of the banner
- * passed with rowBanner instance to the table Banner
- * @param rowBanner: JasonInflator type, it is the basic banner
- * 					 information passed to the method
- * @param view : it is IViewand captures the Collection to send  
- * 				 to the client for displaying purposes
- * @param userName : The user name of the person who logs with 
- * @return IView :captures the Collection to send to the client 
- * 				  the current session for displaying purposes
- * @throws Exception
- * 		   SQLException	
- */
-private IView uploadFullBannerCredentials(JasonInflator rowBanner,
-		IView view,String userName) throws SQLException,Exception{
-	Connection con = null;
-try{
-	 
-	 String[] extension =rowBanner.getBannerImageName().split("\\.");
-	 
-	 /*
-	  * want to get the banner code and bannerName once the update is succeeded
-	  * and save to the data base table banner
-	  */
-	 Collection<Collection<String>> banners = new AdminBannerDAO().
-			 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
-	 
-	 String bannerCode = (String) getElementFromCollection(banners,0);
-	 String bannerNamer = (String) getElementFromCollection(banners,1);
-	 
-	 con = ConnectionManager.getConnection();
-	 
-	// get the banner absolute
-	//path for storing in 
-	//physical location 
-	 
-	String bannerImagePhysicalUploadPath = imageUtility
-			.getImageTeporyUploadPath(
-					SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
-					bannerCode, con);
-		
-	 boolean isTheFileMovedToPhysicalLocation = moveFileToPhysicalLocation(bannerImagePhysicalUploadPath);
-//	 boolean isFileRenamedToBannerCode = getFileReNamedTo(bannerCode,fileUtility,
-//			 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName());
-	 
-	 //get the banner Absolute upload path for temporary folder
-		String bannerImageTemporaryUploadPath = imageUtility
-					.getImageTeporyUploadPath(
-							SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
-							"tempbanner", con);
-		
-	// if file moved delete the temporary folder created	
-		if(isTheFileMovedToPhysicalLocation && getFileReNamedTo(bannerCode,fileUtility,
-				 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName()) ){
-			this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
-			//CHECK FOR THE OLD DIRECTORY DELETION AND PROVIDE THE USER MESSAGE
+		boolean isTheFileMovedToTemporaryLocation= false;
+		try{
+			isTheFileMovedToTemporaryLocation= fileUtility.moveFileToDiferentDirectory(movingDirectoryPath,
+					fileUtility.getFileItem(),shouldDirectoryContentBeRemoved );
+			
+		} catch (Exception exp) {
+			log.error("isTheFileMovedTOTemporaryLocation(): Exception "+exp.toString());
+			throw exp;
 		}
 		
-	 view.setCollection(banners);
-	
-	// store the banner to the permanent location		
+		return isTheFileMovedToTemporaryLocation;
+	}
+
+
+	/*
+	 * Method sets the response credentials, It sets the successfulness or the failure code,
+	 * amd the message to be dispatched to the view to the response as attributes
+	 * @author dushantha DN
+	 * setResponseCridentials sets the request attributes
+	 * @param helper: It is the HttpServletrequest wrapper instance.
+	 */
+	private void setResponseCridentials(IDataHelper helper){
+		helper.setAttribute("successCode", getSuccessCode());
+		helper.setAttribute("message", message);
+		helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
+	}
 		
-	} catch (JsonSyntaxException jsyexp) {
-		log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
-		throw jsyexp;	
-	}catch (SQLException sqle) {
-		log.error("uploadFullBannerCredentials(IDataHelper,IView):SQLException "+ sqle.toString());
-		throw sqle;
-	} catch (Exception exp) {
-		log.error("uploadFullBannerCredentials(IDataHelper,IView):Exception "+ exp.toString());
-		throw exp;
-	}	
 	
-		return view;
+	/*
+	 * getElementFromCollection() method unwraps the inner Collection<String>
+	 * and retrieves the element at given index wrapped in an Object
+	 * @param banners Collection<Collection<String>>
+	 * @param indexOfTheElement the index of the required element of Collection<String>
+	 * i.e in the inner Collection
+	 * @return string wrapped in a Object type
+	 */
+	private Object getElementFromCollection(Collection<Collection<String>> banners, int indexOfTheElement){
+		Object element = null;
+		for(Collection<String> innerWrapper:banners){
+			 Object[] objectArray=innerWrapper.toArray();
+			 element = objectArray[indexOfTheElement];
+		 }
+		return element;
+	}
+
+	/*
+	 * moveFileToPhysicalLocation() will move the banner file to the 
+	 * physical location agreed by the SystemCofig table or the enum,
+	 * By default if the folder path given by bannerImagePhysicalUploadPath contains any files
+	 * those files will be deleted.
+	 * @param bannerImagePhysicalUploadPath 
+	 * @return boolean true if the file is written to the location given by the 
+	 * physical path. else false
+	 */
+	private boolean moveFileToPhysicalLocation(	String bannerImagePhysicalUploadPath) throws Exception{
+		
+		//### MOVE THE BANNER TO THE PHYSICAL LOCATION ####
+		boolean isTheFileMovedToPhysicalLocation = false;
+	 
+	/*
+	 *   move the image to the correct physical location and if the destination
+	 *   contains any files those will be deleted prior to move.
+	 */
+		isTheFileMovedToPhysicalLocation = fileUtility.moveFileToDiferentDirectory(bannerImagePhysicalUploadPath,
+							fileUtility.getFileItem(), true);
+		return isTheFileMovedToPhysicalLocation;
+	}
+	
+	/*
+	 * uploadFullBannerCredentials Uploads the information of the banner
+	 * passed with rowBanner instance to the table Banner
+	 * @param rowBanner: JasonInflator type, it is the basic banner
+	 * 					 information passed to the method
+	 * @param view : it is IViewand captures the Collection to send  
+	 * 				 to the client for displaying purposes
+	 * @param userName : The user name of the person who logs with 
+	 * @return IView :captures the Collection to send to the client 
+	 * 				  the current session for displaying purposes
+	 * @throws Exception
+	 * 		   SQLException	
+	 */
+	private IView uploadFullBannerCredentials(JasonInflator rowBanner,
+			IView view,String userName) throws SQLException,Exception{
+		Connection con = null;
+	try{
+		 
+		 String[] extension =rowBanner.getBannerImageName().split("\\.");
+		 
+		 /*
+		  * want to get the banner code and bannerName once the update is succeeded
+		  * and save to the data base table banner
+		  */
+		 Collection<Collection<String>> banners = new AdminBannerDAO().
+				 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
+		 
+		 String bannerCode = (String) getElementFromCollection(banners,0);
+		 String bannerNamer = (String) getElementFromCollection(banners,1);
+		 
+		 con = ConnectionManager.getConnection();
+		 
+		
+		// get the banner absolute path for physical location to store the image 
+		 
+		String bannerImagePhysicalUploadPath = imageUtility
+				.getImageTeporyUploadPath(
+						SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
+						bannerCode, con);
+		
+		// store the banner to the permanent location	
+		 boolean isTheFileMovedToPhysicalLocation = moveFileToPhysicalLocation(bannerImagePhysicalUploadPath);
+		 
+		 //get the banner Absolute upload path for temporary folder
+		String bannerImageTemporaryUploadPath = imageUtility
+						.getImageTeporyUploadPath(
+								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
+								"tempbanner", con);
+			
+	
+		// if only the file is moved ,delete the temporary folder which is created before	
+		 
+			if(isTheFileMovedToPhysicalLocation && getFileReNamedTo(bannerCode,fileUtility,
+					 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName()) ){
+				
+				this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
+				this.message =this.message + " "+SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.toString();
+				this.setSuccessCode(1);
+				log.info("uploadFullBannerCredentials(JasonInflator.IView,String) completed --> :"
+						+ "Banner Credentials are written to the rpository and image is uploaded");
+				
+			}
+			
+		} catch (JsonSyntaxException jsyexp) {
+			log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
+			throw jsyexp;	
+		}catch (SQLException sqle) {
+			log.error("uploadFullBannerCredentials(IDataHelper,IView):SQLException "+ sqle.toString());
+			throw sqle;
+		} catch (Exception exp) {
+			log.error("uploadFullBannerCredentials(IDataHelper,IView):Exception "+ exp.toString());
+			throw exp;
+		}	
+		
+			return view;
 	}
 
 /*
@@ -474,7 +474,7 @@ try{
  */
 private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility fileUtility,
 		String fileLocatedPath,String currentFilenameWithExtension) throws NullPointerException,
-		IOException,SecurityException {
+		IOException,SecurityException,Exception {
 	
 	
 	boolean isFileRenamedToNewFileName = false;
@@ -483,8 +483,8 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 		String[] extension =currentFilenameWithExtension.split("\\.");
 		String oldFileNameWithoutExtension = extension[0];
 		String fileExtension =extension[1];
-		String sourceFileName=fileLocatedPath+"/"+currentFilenameWithExtension;
-		String destinationFileName =fileLocatedPath+"/"+newFileNameWithoutExtension+"."+fileExtension;
+		String sourceFileName=fileLocatedPath+currentFilenameWithExtension;
+		String destinationFileName =fileLocatedPath+newFileNameWithoutExtension+"."+fileExtension;
 		
 		//check if the file exists by given name
 		if(fileUtility.isFileExists(fileLocatedPath, oldFileNameWithoutExtension)){	
@@ -493,15 +493,15 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 			 * rename to the given name.
 			 */
 			if(!(isFileRenamedToNewFileName=fileUtility.copyFile(sourceFileName, destinationFileName,true))){
-				this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED;
+				this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED.toString();
 				setSuccessCode(-2);
-				log.info("getFileReNamedTo() failed --> : Image Name:"
-						+sourceFileName+" has not get coppied to :"
-						+destinationFileName);
-			}
-			
+				log.info("getFileReNamedTo() failed --> : Image Name:"+sourceFileName
+						+" has not get copied to :"+destinationFileName);
+			} 
+			log.info("getFileReNamedTo() completed --> : Image Name:"+sourceFileName
+					+" has copied to :"+destinationFileName);
 		} else{
-			this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED;
+			this.message =this.message + " "+SystemMessage.FILE_UPLOAD_FAILED.toString();
 			setSuccessCode(-2);
 			log.info("getFileReNamedTo() failed --> : Image Name:"
 						+oldFileNameWithoutExtension+'.'+fileExtension
@@ -517,6 +517,9 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 	} catch (SecurityException sexp){
 		log.error("getFileReNamedTo() SecurityException : "+ sexp.toString());
 		throw sexp;
+	} catch (Exception exp){
+		log.error("getFileReNamedTo() Exception : "+ exp.toString());
+		throw exp;
 	}
 	return isFileRenamedToNewFileName;
 }
@@ -543,77 +546,66 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 }
 
 
-/*
- * Getters and setters methods of the containing class goes here
- */
-
-
-private FileUtility getFileUtility() {
-	// TODO Auto-generated method stub
-	return fileUtility;
-}
-
-private ImageUtility getImageUtility() {
-	return imageUtility;
-}
-
-
-
-private void setImageUtility(ImageUtility imageUtility) {
-	this.imageUtility = imageUtility;
-}
-
-
-
-private ArrayList<FileItem> getFiles() {
-	return files;
-}
-
-
-
-private void setFiles(ArrayList<FileItem> files) {
-	this.files = files;
-}
-
-
-
-private String getMessage() {
-	return message;
-}
-
-
-
-private void setMessage(String message) {
-	this.message = message;
-}
-
-
-
-private void setFileUtility(FileUtility fileUtility) {
-	this.fileUtility = fileUtility;
-}
-
-
-
-/**
- * Gets the success code.
- *
- * @return the success code
- */
-public int getSuccessCode() {
-	return successCode;
-}
-
-
-
-/**
- * Sets the success code.
- *
- * @param successCode the new success code
- */
-public void setSuccessCode(int successCode) {
-	this.successCode = successCode;
-}
-
+	/*
+	 * Getters and setters methods of the containing class goes here
+	 */
+	
+	
+	private FileUtility getFileUtility() {
+		return fileUtility;
+	}
+	
+	private ImageUtility getImageUtility() {
+		return imageUtility;
+	}
+	
+	
+	private void setImageUtility(ImageUtility imageUtility) {
+		this.imageUtility = imageUtility;
+	}
+	
+	
+	private ArrayList<FileItem> getFiles() {
+		return files;
+	}
+	
+	
+	private void setFiles(ArrayList<FileItem> files) {
+		this.files = files;
+	}
+	
+	
+	private String getMessage() {
+		return message;
+	}
+	
+	
+	private void setMessage(String message) {
+		this.message = message;
+	}
+	
+	private void setFileUtility(FileUtility fileUtility) {
+		CmdAdminBannerUpload.fileUtility = fileUtility;
+	}
+	
+	/**
+	 * Gets the success code.
+	 *
+	 * @return the success code
+	 */
+	public int getSuccessCode() {
+		return successCode;
+	}
+	
+	
+	/**
+	 * Sets the success code.
+	 *
+	 * @param successCode the new success code
+	 */
+	public void setSuccessCode(int successCode) {
+		this.successCode = successCode;
+	}
+	
 
 }
