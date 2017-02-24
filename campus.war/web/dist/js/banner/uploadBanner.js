@@ -11,7 +11,9 @@
  *  20170215 DN c131-admin-manage-banner-upload-banner-image-dn Implement the logic to pass banner and banner information
  *              in 02 ajax calls to the server sendBannerPaageFieldInputs() is implemented
  *              #openModalUpload in onclick event a modal pops out to up load banner image.
- *   20170217 DN add variable urlMiniWebOrPage to the onclick event to dispatch the banner image	 	
+ *   20170217 DN c131-admin-manage-banner-upload-banner-image-dn add variable urlMiniWebOrPage to the onclick event to dispatch the banner image	
+ *   20170224 DN c131-admin-manage-banner-upload-banner-image-dn displayLabelMessage() method signature has been changed 
+ *   			total message (error/success) displaying sequence changed in all ajax request calls.
  */
 
 var selectedPageCode = '';
@@ -43,7 +45,7 @@ function displayBannerManagerPrerequistData(){
 		},
 		error:function(preRequistData,error,errorThrown){
 			var msg = ajaxErorMessage(preRequistData,error,errorThrown);
-			displayLabelMessage('displayLabel','red',msg);
+			displayLabelMessage('messagePopUp','displayLabel','red',msg);
 		},
 		complete:function(){
 			
@@ -173,7 +175,7 @@ function getBannerSlotsMapedToThePage(selectedPageCode){
 		},
 		error: function(pageSlots,error,errorThrown){
 		var msg = ajaxErorMessage(pageSlots,error,errorThrown);
-		displayLabelMessage('displayLabel','red',msg);
+		displayLabelMessage('messagePopUp','displayLabel','red',msg);
 		
 		}
 		
@@ -236,11 +238,12 @@ function ajaxErorMessage(response,error,errorThrown){
  * displayLabelMessage(): displays an user define message text in the a modal window
  * This message either can be an error or success message.
  * @author dushantha DN
+ * @param messagePopUpId the id of the modal popUp where the label is embedded.
  * @param cssColour required color theme for the message to be displayed
  * @param message the required message to be displayed
  */
-function displayLabelMessage(labelid,cssColour,message){
-	$('#messagePopUp').modal('show'); // display the modal window
+function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
+	$('#'+messagePopUpId).modal('show'); // display the modal window
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 	
 }
@@ -261,6 +264,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	var isValidationSuccess = false;
     
     $('#bannerModalClose').hide();
+    
 	/*
 	 * Extracting Banner page data
 	 */
@@ -315,12 +319,18 @@ $(document).on('click','#uploadBbutton', function(event){
 					BannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name
 					cssColour='green';
 				}
-				displayLabelMessage('bannerDisplayLabel',cssColour,response['message']);
+				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
 				
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
-				displayLabelMessage('bannerDisplayLabel','red',msg);
+				/*
+				 * close the image uploading modal and opens the 
+				 * message pop up modal and display the error
+				 */
+		
+				$('#bannerUploadPopUp').modal('hide');
+				displayLabelMessage('messagePopUp','displayLabel','red',msg);
 				
 				},
 			complete: function(response,status){ 
@@ -329,14 +339,14 @@ $(document).on('click','#uploadBbutton', function(event){
 				 * user should have the ability to close the modal window
 				 */
 				$('#bannerModalClose').show();
-				if(status=="success"){	
-					
+				if(status=="success"){
+					$('#uploadBbutton').prop('disabled',true);
 					sendBannerPaageFieldInputs(BannerFieldInputValues,true);
-					
 				} else{
 					
-					//TODO  fire the data field clear function
+					// fire the data field clear function
 					alert("fire the data field clear function");
+					$(':input').val('');
 				}
 				
 			}
@@ -346,6 +356,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	
 	
 });
+
 
 /**
  * sendBannerPaageFieldInputs method passes the input field values to server
@@ -388,12 +399,18 @@ if(elegibleToProceed){
 			//contentType : false,
 			//processData : false,
 			success: function(response){
-				var cssColour=(response['successCode']===1)?'green':'red';
-				displayLabelMessage('displayLabel',cssColour,response['message']);
+				var cssColour='red';
+				if(response['successCode']==1){
+					cssColour='green';
+				}
+				$('#bannerUploadPopUp').modal('hide');
+				displayLabelMessage('messagePopUp','displayLabel',cssColour,response['message']);	
+				
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
-				displayLabelMessage('displayLabel','red',msg);
+				$('#bannerUploadPopUp').modal('hide');
+				displayLabelMessage('messagePopUp','displayLabel','red',msg);
 				
 				}
 		});
@@ -411,13 +428,22 @@ if(elegibleToProceed){
 
 $( document ).ready(function() {	
 	$("#openModalUpload").click(function(e){
+		$('#uploadBbutton').prop('disabled',false); // if dissabled make the button enabled
 		$('#bannerUploadPopUp').modal('show');
+		$('#bannerDisplayLabel').html(""); // clear message label content
 		e.preventDefault();
 	});
+	
+	
 });
 
-
-
+/**
+ * this method clears the input field data 
+ * placed on the current page
+ */
+$('#bannerPageClearField').on('click',function(){
+	$(':input').val('');
+});
 
 
 
