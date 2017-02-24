@@ -3,8 +3,8 @@ package com.genesiis.campus.command;
 //20170214 AS CAM-22 for Password change to created CmdPasswordChange command class.
 //20170221 AS CAM-22 execute() method body implemented a try-catch block
 //20170223 AS CAM-22 message and page string added inside try-catch block 
-import java.sql.SQLException;
-import java.util.Collection;
+//20170224 AS C22 Changed imports oder. 
+
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -12,15 +12,17 @@ import com.genesiis.campus.entity.SigningUpStudentDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class CmdPasswordChange implements ICommand {
 	static Logger log = Logger.getLogger(CmdPasswordChange.class.getName());
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
