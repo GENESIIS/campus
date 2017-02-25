@@ -44,6 +44,7 @@ package com.genesiis.campus.validation;
 //20170215 CW c38-view-update-tutor-profile Add class comment
 //20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
 //20170223 CW c36-add-tutor-information re-organise the import statements
+//20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -238,9 +239,6 @@ public class Validator {
 			}
 			if (!isValidWhatsappViber(helper.getParameter("viber"))) {
 				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
-				isValid = false;
-			}
-			if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper)) {
 				isValid = false;
 			}
 
@@ -484,47 +482,6 @@ public class Validator {
 			throw e;
 		}
 		return valid;
-	}
-	
-	/**
-	 * Check the entered password is a valid one & is it same with confirmPassword value
-	 * 
-	 * @author Chinthaka
-	 * @param password, confirmPassword
-	 * @return String - Returns boolean value False if the requested password & confirmPassword are not same & not valid in lengths
-	 */
-	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
-		int validityNumber = 0; 
-		boolean message = true;
-		try {
-
-			if (!(isNotEmpty(password))){ // check for null fields
-				validityNumber = 1;
-				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
-				message = false;
-			}
-			
-			if(!(isNotEmpty(confirmPassword))){ // check for null fields
-				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
-				message = false;
-				validityNumber = 2;
-			}
-			
-			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
-				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
-				message = false;
-			}
-			
-			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
-				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
-				message = false;
-			}
-
-		} catch (Exception e) {
-			log.error("isValidPassword:  Exception" + e.toString());
-			throw e;
-		}
-		return message;
 	}
 	
 	/**
