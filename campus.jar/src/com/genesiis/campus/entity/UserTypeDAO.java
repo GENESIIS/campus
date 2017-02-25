@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20170110 CW c36-add-tutor-details add findById() method from c18 - student : signup : without using third party application & removed getCode() method.
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment
+//20170225 CW c38-view-update-tutor-profile modified getCode method to use USERTYPESTRING instead of NAME column in the query 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -132,7 +133,7 @@ public class UserTypeDAO implements ICrud {
 
 		try{
 			
-			String sql = "SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE [NAME] =? ";
+			String sql = "SELECT CODE FROM [CAMPUS].[USERTYPE] WHERE [USERTYPESTRING] =? ";
 	
 			preparedStatement  = conn.prepareStatement(sql);
 			preparedStatement.setString(1, name);// set the name parameter to the prepared statement
