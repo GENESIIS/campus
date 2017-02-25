@@ -1,5 +1,6 @@
 package com.genesiis.campus.command;
 
+//20170207 CW c38-view-update-tutor-profile- created CmdUpdateTutorProfile class using C36-add-tutor-profile CmdAddTutorProfile class
 //20170207 CW c38-view-update-tutor-profile- modified execute(), setVariables() methods
 //20170208 CW c38-view-update-tutor-profile- modified setVariables() method.
 //20170209 CW c38-view-update-tutor-profile modified execute() method.
@@ -11,6 +12,7 @@ package com.genesiis.campus.command;
 //20170214 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
+//20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -116,13 +118,6 @@ public class CmdUpdateTutorProfile implements ICommand {
 			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
-			
-			if(!((helper.getParameter("password")).equals(helper.getParameter("passwordOld").toString()))){				
-				tutor.setPassword(helper.getParameter("password"));
-				updated = true;
-			}else{
-				tutor.setPassword(helper.getParameter("passwordOld").toString());
-			}
 			
 			if(!((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
 				tutor.setFirstName(helper.getParameter("firstname"));
@@ -444,8 +439,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 		Collection<String> tutorCollection= new ArrayList<String>();
 
 		tutorCollection.add(Integer.toString(tutor.getCode()));	
-		tutorCollection.add(tutor.getUsername());	
-		tutorCollection.add(tutor.getPassword());		
+		tutorCollection.add(tutor.getUsername());		
 		tutorCollection.add(tutor.getFirstName());
 		tutorCollection.add(tutor.getMiddleName());
 		tutorCollection.add(tutor.getLastName());
