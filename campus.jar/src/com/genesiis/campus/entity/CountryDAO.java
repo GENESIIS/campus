@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20170207 CW c38-view-update-tutor-profile- modified findCountryByCode() method
 //20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
 //20170216 CW c38-view-update-tutor-profile Add class comment & removed  findCountryByCode() method
+//20170225 CW c38-view-update-tutor-profile removed not required variable declarations.
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -30,7 +31,6 @@ import java.util.Collection;
  */
 public class CountryDAO implements ICrud{
 
-	private static final Collection<Collection<String>> NULL = null;
 	static Logger log = Logger.getLogger(CountryDAO.class.getName());
 
 
