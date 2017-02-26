@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
  * 20170222 PN CAM-48: modifying execute() method by assigning values to courseProviderCode, uploadPathConf. implemented createFileName(String uploadPathConf, int courseProviderCode) method.
  * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
  * 20170223 PN CAM-48: implemented getFileUploadError() method implemented. modified execute method to fix incorrect validations in backend.
+ * 20170226 PN CAM-48: getImageUploadConfigs() implementation changed. modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -39,7 +40,9 @@ public class CmdUploadCPImg implements ICommand {
 		// Variable declaration.
 		Gson gson = new Gson();
 		FileUtility utility = new FileUtility();
+		ICrud sysconfigDAO = new SystemConfigDAO();
 		FileItem file = null;
+		String listOfFiles[] = null;
 
 		String fileUploadError = "";
 		String fileUploadSuccess = "";
@@ -66,11 +69,13 @@ public class CmdUploadCPImg implements ICommand {
 			// helper.getFiles() method.
 			file =  (FileItem) formFielsd.get("cp_img");
 			
+			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById(uploadPathConf);
+
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
-			String uploadPath = getImageUploadConfigs(uploadPathConf,2);
+			String uploadPath = getImageUploadConfigs(2, picUploaDpath);
 
 			// Take the dimensional values from SYSTEMCONFIG table.(Width, Height, Size)
-			String uploadSizeParam = getImageUploadConfigs(uploadPathConf,4);
+			String uploadSizeParam = getImageUploadConfigs(4, picUploaDpath);
 		
 			String war = uploadPath;
 			utility.setUploadPath(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
@@ -85,6 +90,8 @@ public class CmdUploadCPImg implements ICommand {
 				filePath = utility.remvoeOldAndUploadNew(createFileName(uploadPathConf, courseProviderCode));
 				fileUploadSuccess = SystemMessage.FILEUPLOADED.message();
 			}
+			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
+			listOfFiles = FileUtility.getFileNames(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
 		} catch (SQLException sqle) {
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -99,30 +106,24 @@ public class CmdUploadCPImg implements ICommand {
 		}
 		helper.setAttribute("fileUploadSuccess", fileUploadSuccess);
 		helper.setAttribute("fileUploadError", fileUploadError);
+		helper.setAttribute("listOfFiles", listOfFiles);
 		return view;
 	}
 	
 	/**
 	 * This method is to get values from the [CAMPUS].[SYSTEMCONFIG] table where it passes the [SYSTEMCONFIGCODE] value and required field as index. (VALUE1, VALUE2, VALUE3)
-	 * @param key - SYSTEMCONFIGCODE value.
 	 * @param index - value number
 	 * @return String -  physical path to upload the image.
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	private String getImageUploadConfigs(String key, int index) throws SQLException, Exception {
+	private String getImageUploadConfigs(int index, Collection<Collection<String>> picUploaDpath) throws SQLException, Exception {
 		String value = "";
 		try {
-			ICrud sysconfigDAO = new SystemConfigDAO();
-			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById(key);
 			for (Collection<String> collection : picUploaDpath) {
 				Object[] config = collection.toArray();
 				value = (String) config[index];
 			}
-		} catch (SQLException sqle) {
-			log.error("getImageUploadConfigs(): SQLException " + sqle.toString());
-			throw sqle;
-
 		} catch (Exception e) {
 			log.error("getImageUploadConfigs(): Exception " + e.toString());
 			throw e;
