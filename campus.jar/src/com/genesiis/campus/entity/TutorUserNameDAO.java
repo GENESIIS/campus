@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170207 CW c36-add-tutor-information re-organize the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment.
 //20170223 CW c38-view-update-tutor-profile header comment date changed
+//20170226 CW c38-view-update-tutor-profile modify class comment
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -21,7 +22,7 @@ import java.util.Collection;
 /**
  * this class used to manage the tutor username details
  * further it implements ICrud interface
- * @author CW
+ * @author CM, CW
  */
 public class TutorUserNameDAO implements ICrud {
 
