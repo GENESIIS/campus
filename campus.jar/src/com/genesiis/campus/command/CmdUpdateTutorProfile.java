@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
 //20170215 CW c38-view-update-tutor-profile modified setCompareVariables() method & Add class comment
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
+//20170226 CW c38-view-update-tutor-profile modified fillTutorCollection method to use Validator.isEmptyOrHavingSpace()
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -471,7 +472,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 		try{
 
 			int townAddCount = 0;
-			if(tutor.getMobileCountryCode() != " "){
+			if(!Validator.isEmptyOrHavingSpace(tutor.getMobileCountryCode())){
 				Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 				
 				for(Collection<String> townList : townCollection){
@@ -492,7 +493,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 			}
 			
 			int countryAddCount = 0; 
-			if(tutor.getMobileCountryCode() != " "){
+			if(!Validator.isEmptyOrHavingSpace(tutor.getMobileCountryCode())){
 				Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 				if(!(countryCollection.isEmpty())){
 					for(Collection<String> countryList : countryCollection){
