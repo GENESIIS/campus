@@ -7,7 +7,7 @@ package com.genesiis.campus.util;
 //		   PN c27-upload-user-image: implemented isFileExistsEndofUP() and createCopyofFile() methods.
 //20170222 PN CAM-48: implement remvoeOldAndUploadNew(String imgName) method to rename and save course provider related images.
 //20170224 PN CAM-48: non static logger variable changed into static.
-
+//20170226 PN CAM-48: implemented deleteFile(String folder, String imgName) method to delete cp image from the disk.
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -484,9 +484,9 @@ public class FileUtility {
 	}
 	
 	/**
-	 * 
-	 * @param folder
-	 * @return
+	 * This method is to get all the files given folder.
+	 * @param folder - disk path name
+	 * @return String[] - file names inside given folder.
 	 * @throws IOException
 	 */
 	public static String[] getFileNames(String folder) throws IOException {
@@ -503,5 +503,36 @@ public class FileUtility {
 			throw e;
 		}
 		return paths;
+	}
+	
+	/**
+	 * This method is to delete files from given name, from given folder.
+	 * @param folder - disk path name
+	 * @param imgName - image name to be deleted.
+	 * @return true, if image deleted, else false
+	 */
+	public boolean deleteFile(String folder, String imgName) throws IOException {
+		// Delete all the files has same name as studentCode
+		try {
+			File[] listOfFiles = new File(folder).listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				// Check if the content inside folder is a file (not a
+				// directory)
+				if (listOfFiles[i].isFile()) {
+					String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
+					if (imgName.equals(fileNameWithOutExt)) {
+						FileUtils.forceDelete(new File(folder + listOfFiles[i].getName()));
+						return true;
+					}
+				}
+			}
+		} catch (IOException e) {
+			log.error("deleteFile(): E" + e.toString());
+			throw e;
+		} catch (Exception ioe) {
+			log.error("deleteFile(): IOE" + ioe.toString());
+			throw ioe;
+		}
+		return false;
 	}
 }
