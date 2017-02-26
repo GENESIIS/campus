@@ -45,6 +45,8 @@ package com.genesiis.campus.validation;
 //20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
 //20170223 CW c36-add-tutor-information re-organise the import statements
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
+//20170226 CW Copied isEmptyOrHavingSpace() from c36-add-tutor-information.
+//20170226 CW c38-view-update-tutor-profile modified isHavingNullValues() to use isEmptyOrHavingSpace method
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -67,7 +69,8 @@ import java.util.regex.Pattern;
 public class Validator {
 
 	static Logger log = Logger.getLogger(Validator.class.getName());
-
+	int totalDays = 0;
+	
 	/**
 	 * Check the given value is empty or not empty
 	 * 
@@ -82,8 +85,22 @@ public class Validator {
 		}
 		return status;
 	}
-
-	int totalDays = 0;
+	
+	/**
+	 * Check the given value is not having only a space
+	 * @author Chinthaka
+	 * @param value
+	 * @return boolean returns true if the text is empty or contains only a space value.
+	 **/
+	public static boolean isEmptyOrHavingSpace(String text) {
+		boolean status = false;
+		
+		if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+			status = true;
+		}
+		
+		return status;
+}
 
 	/**
 	 * Validate helper fields for null values.
@@ -97,48 +114,43 @@ public class Validator {
 
 		boolean isHavingNull = false; 
 		try {		
-			
-			if (!((Validator.isNotEmpty(helper.getParameter("firstname"))) || (helper.getParameter("firstname") == " "))) {
+						
+			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("lastname"))) || (helper.getParameter("lastname") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("lastname"))){
 				helper.setAttribute("lastNameError", SystemMessage.EMPTYLASTNAME.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileCountryCode"))) || (helper.getParameter("mobileCountryCode") == "0"))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileCountryCode"))){
 				helper.setAttribute("mobileError", SystemMessage.EMPTYMOBILECOUNTRYCODE.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileNetworkCode"))) || (helper.getParameter("mobileNetworkCode") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode"))){
 				helper.setAttribute("mobileNetworkError", SystemMessage.EMPTYMOBILENETWORKCODE.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("mobileNumber"))) || (helper.getParameter("mobileNumber") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("mobileNumber"))){
 				helper.setAttribute("mobileNumberError", SystemMessage.EMPTYMOBILENUMBER.message());
 				isHavingNull = true; 
 			}
 			
-			if (!((Validator.isNotEmpty(helper.getParameter("landCountryCode"))) || (helper.getParameter("landCountryCode") == " "))) {
-				helper.setAttribute("landError", SystemMessage.EMPTYLANDCOUNTRYCODE.message());
-				isHavingNull = true; 
-			}
-
-			if (!((Validator.isNotEmpty(helper.getParameter("landAreaCode"))) || (helper.getParameter("landAreaCode") == " "))) {
-				helper.setAttribute("landAreaCodeError", SystemMessage.EMPTYLANDAREACODE.message());
-				isHavingNull = true; 
-			}
-			
-			if (!((Validator.isNotEmpty(helper.getParameter("landNumber"))) || (helper.getParameter("landNumber") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("landNumber"))){
 				helper.setAttribute("landNumberError", SystemMessage.EMPTYLANDNUMBER.message());
 				isHavingNull = true; 
 			}
 
-			if (!((Validator.isNotEmpty(helper.getParameter("address1"))) || (helper.getParameter("address1") == " "))) {
+			if(isEmptyOrHavingSpace(helper.getParameter("landAreaCode"))){
+				helper.setAttribute("landAreaCodeError", SystemMessage.EMPTYLANDAREACODE.message());
+				isHavingNull = true; 
+			}
+
+			if(isEmptyOrHavingSpace(helper.getParameter("address1"))){
 				helper.setAttribute("address1Error", SystemMessage.EMPTYADDRESS1.message());
 				isHavingNull = true; 
 			}
