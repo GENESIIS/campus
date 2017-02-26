@@ -24,8 +24,8 @@
 	<span id="cp_img_desc" name="cp_img_desc"></span>
 
 	<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="validateFile(this, 'cp_img_upload', 'cp_img_upload_btn')">
-	<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn">
-	<input type="submit" id="cp_img_delete_btn" name="cp_img_delete_btn">
+	<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn" value="Upload Image">
+	<input type="submit" id="cp_img_delete_btn" name="cp_img_delete_btn" value="Delete Image">
 	<br>
 	<span id="cp_img_err" name="cp_img_err"></span>
 	<img id="cp_img_display" name="cp_img_display" src="" alt="" width="" height="">
