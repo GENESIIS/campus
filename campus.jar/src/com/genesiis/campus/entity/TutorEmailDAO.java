@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment & method comment.
 //20170223 CW c36-add-tutor-information re-organise the import statements.
+//20170226 CW c36-add-tutor-information modify DOC comments in findById().
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -49,11 +50,10 @@ public class TutorEmailDAO implements ICrud {
 	}
 
 	/*
-	 * findById() method assign all the tutor emails in the database into a collection which equal to given email
+	 * findById() method assign all the tutor mails in the database into a collection which equal to given email
 	 * 
 	 * @author CW
-	 * 
-	 * @param tutorCollection, tutor
+	 * @param code An Object containing tutor code
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
