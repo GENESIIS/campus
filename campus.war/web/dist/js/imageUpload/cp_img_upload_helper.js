@@ -6,7 +6,8 @@
  * 20170222 PN CAM-48: modified ajax method call by setting values to pass into the backend.
  * 20170223 PN CAM-48: implemented checkFileSize() method, checkFileType() method and validateFile() method. modified cp_img_upload_btn click function to perform client side validations.
  *			PN CAM-48: createFileName() implemented for format new file name from the selected values. modified cp_img_upload_btn click function to display uploaded image.
- * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. cp_img_delete_btn button onclick function implemented. 
+ * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. 
+ * cp_img_delete_btn button onclick function implemented. changed the code to disable cp_img_delete_btn button if there's no image to delete in the disk. 
  */
 
 var dataSet = null;
@@ -34,6 +35,7 @@ $(document).ready(function() {
 	$('#cp_img_type').on('change', function() {
 		$('#cp_img_err').html("");
 		document.getElementById("cp_img_upload_btn").disabled = false;
+		document.getElementById("cp_img_delete_btn").disabled = false;
 		var sysConfCode = this.value;
 		var cp_img_type = "";
 		var courseProviderCode = 1; // ToBe assigned later.
@@ -47,6 +49,7 @@ $(document).ready(function() {
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
 				}else{
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/default_logo.PNG?"+Math.random());
+					document.getElementById("cp_img_delete_btn").disabled = true;
 					$('#cp_img_err').html(noImagetoDisplayErr);
 					$('#cp_img_err').css('color', 'red');
 				}			
@@ -124,7 +127,8 @@ $(document).ready(function() {
 	    var courseProviderCode = 1;// This will be get assigned from UI element later.
 	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
 	    var uploadPathConfId = $("#cp_img_type").val();
-		
+	    document.getElementById("cp_img_delete_btn").disabled = true;
+	    
 	    if((courseProviderCode != "") && (uploadPathConfId != "")){
 	    	var delete_cp_img = createFileName(courseProviderCode,uploadPathConf);
 		    var formData = new FormData();    
