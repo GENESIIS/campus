@@ -6,7 +6,7 @@
  * 20170222 PN CAM-48: modified ajax method call by setting values to pass into the backend.
  * 20170223 PN CAM-48: implemented checkFileSize() method, checkFileType() method and validateFile() method. modified cp_img_upload_btn click function to perform client side validations.
  *			PN CAM-48: createFileName() implemented for format new file name from the selected values. modified cp_img_upload_btn click function to display uploaded image.
- * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. 
+ * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. cp_img_delete_btn button onclick function implemented. 
  */
 
 var dataSet = null;
@@ -54,10 +54,11 @@ $(document).ready(function() {
 		});
 	})
 	
+	// Handle image upload button click.
 	$(document).on('click','#cp_img_upload_btn',function(event){		
 		event.stopPropagation(); 
 	    event.preventDefault(); 
-	    
+	    var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file		
 	    var courseProviderCode = 1;// This will be get assigned from UI element later.
 	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
 	    var uploadPathConfId = $("#cp_img_type").val();
@@ -65,13 +66,13 @@ $(document).ready(function() {
 	    var name = $("#cp_img_upload").val();
 		var fileExt = name.split('.');
 	    
-		var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file
-		var formData = new FormData();
-		formData.append("file", cpImgUpload);
-		formData.append("courseProviderCode", courseProviderCode);
-		formData.append("uploadPathConf", uploadPathConf);
 		document.getElementById("cp_img_upload_btn").disabled = true;
 		if((courseProviderCode != "") && (uploadPathConfId != "") && (cpImgUpload != null) && (cpImgUpload != "") && (cpImgUpload != undefined)){
+			var formData = new FormData();
+			formData.append("file", cpImgUpload);
+			formData.append("courseProviderCode", courseProviderCode);
+			formData.append("uploadPathConf", uploadPathConf);
+			
 			$.ajax({
 			    url: '/AdminController?CCO=UCPI',
 			    type: 'POST',
@@ -81,11 +82,12 @@ $(document).ready(function() {
 	            cache : false ,
 	    	    contentType : false,
 			    success:function(response){
+			    	listOfFiles = response.listOfFiles;
 			    	if(response.fileUploadError != ""){
 			    		$('#cp_img_err').html(response.fileUploadError);
 			    		$('#cp_img_err').css('color', 'red');
 			    	}else if(response.fileUploadSuccess != ""){
-			    		alert(response.fileUploadSuccess);
+			    		alert(response.fileUploadSuccess);  		
 			    		$('#cp_img_upload').val('');
 			    		$('#cp_img_type').find('option:first').attr('selected', 'selected');
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
@@ -93,7 +95,7 @@ $(document).ready(function() {
 			    		
 			    		//Display uploaded image on img tag.
 			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
-			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
+			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());	
 			    	}
 				},
 				error:function(response,error,errorThrown) {
@@ -112,6 +114,61 @@ $(document).ready(function() {
 	    		$('#cp_img_err').css('color', 'red');
 			}
 		}
+	});
+	
+	// Handle image delete button click.
+	$(document).on('click','#cp_img_delete_btn',function(event){	
+		event.stopPropagation(); 
+	    event.preventDefault(); 
+	    
+	    var courseProviderCode = 1;// This will be get assigned from UI element later.
+	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
+	    var uploadPathConfId = $("#cp_img_type").val();
+		
+	    if((courseProviderCode != "") && (uploadPathConfId != "")){
+	    	var delete_cp_img = createFileName(courseProviderCode,uploadPathConf);
+		    var formData = new FormData();    
+			formData.append("delete_cp_img", delete_cp_img);
+			formData.append("courseProviderCode", courseProviderCode);
+			formData.append("uploadPathConf", uploadPathConf);
+			
+			$.ajax({
+			    url: '/AdminController?CCO=DCPI',
+			    type: 'POST',
+			    dataType: 'json',
+			    data: formData,
+	            processData: false,
+	            cache : false ,
+	    	    contentType : false,
+			    success:function(response){
+			    	listOfFiles = response.listOfFiles;
+			    	alert(listOfFiles);
+			    	if(response.fileDeleteError != ""){
+			    		$('#cp_img_err').html(response.fileDeleteError);
+			    		$('#cp_img_err').css('color', 'red');
+			    	}else if(response.fileDeleteSuccess != ""){
+			    		$('#cp_img_type').find('option:first').attr('selected', 'selected');
+			    		$('#cp_img_err').html(response.fileDeleteSuccess);
+			    		$('#cp_img_err').css('color', 'green');
+			    		
+			    		//Display uploaded image on img tag.  		
+			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/default_logo.PNG?"+Math.random());	
+			    	}
+				},
+				error:function(response,error,errorThrown) {
+					alert("Error");
+				}
+			});
+		}else{
+			if((uploadPathConfId == "")||(uploadPathConfId == null)){
+				$('#cp_img_err').html(fileTypeNotSelectedErr);
+	    		$('#cp_img_err').css('color', 'red');
+			}else if((courseProviderCode == "")||(courseProviderCode == null)){
+				$('#cp_img_err').html(invalidCourseProviderCode);
+	    		$('#cp_img_err').css('color', 'red');
+			}
+		}
+	    
 	});
 
 });
