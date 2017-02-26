@@ -2,6 +2,7 @@
 <!-- 20170214 c38-view-update-tutor-profile add Java script enabled validations -->
 <!-- 20170215 c38-view-update-tutor-profile modify the way errors display  -->
 <!-- 20170225 c38-view-update-tutor-profile removed Password & confirm Password  -->
+<!-- 20170226 added c103-send-email-tutor-status-modify the way Approve Status view  -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -273,14 +274,9 @@
 			</tr>
 
 			<tr>
-				<td>Approve Status <span id="isApproved"></span></td>
-				<c:if test="${isapproved == 0}">
-					<td><input type="checkbox" name="isApproved" value="1" /></td>
-				</c:if>
-				<c:if test="${isapproved == 1}">
-					<td><input type="checkbox" name="isApproved" value="1" checked disabled readonly></td>;
-					<input type="hidden" name="isApproved" id="isApproved" value="1" />
-				</c:if>
+					<td>Approve Status <span id="isApproved"></span></td>
+					<td><input type="checkbox" name="isApproved" value="1" checked disabled readonly>
+					<input type="hidden" name="isApproved" id="isApproved" value="1" /></td>
 			</tr>
 
 			<tr>
