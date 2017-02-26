@@ -55,7 +55,8 @@ public enum Operation {
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp"), 
 	GET_CP_IMAGE("GCPI", ResponseType.JSON, ""),
 	UPLOAD_CP_IMAGE("UCPI", ResponseType.JSON, ""),
-	GET_CP_IMAGE_DETAILS("GCPID", ResponseType.JSON, "");
+	GET_CP_IMAGE_DETAILS("GCPID", ResponseType.JSON, ""),
+	DELETE_CP_IMAGE("DCPI", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
