@@ -7,6 +7,7 @@ package com.genesiis.campus.validation;
 //20161116 DN DN c10-contacting-us-page-MP removed unnecessary enum values.
 //20161122 PN c27-upload-user-image: added new attributes to the Enum
 //20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
+//20170226 PN CAM-48: declared FILEDELETEFAILED attribute.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -16,6 +17,7 @@ public enum SystemMessage {
 	FILEUPDATED("File updated successfully."), 
 	FILEDELETED("File deleted successfully."),
 	FILEUPLOADED("File uploaded successfully."),
+	FILEDELETEFAILED("File delete faild."),
 	IDFOUND("ID found."), 
 	IDNOTFOUND("ID not found."), 
 	ERROR("Unsuccessful."), 	
