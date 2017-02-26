@@ -13,7 +13,8 @@ package com.genesiis.campus.command;
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170219 CW c103-send-email-tutor-status-change-cw modified execute() to send email at the time of tutor update by Admin
 //20170222 CW c103-send-email-tutor-status-change-cw modified execute method to send email using sendAdminTutorUpdateEmail method in GenerateEmail class
-//20170224 Cw c103-send-email-tutor-status-change- added message validations to view UPDATED_BUT_MAIL_UNSUCCESS messages.
+//20170224 CW c103-send-email-tutor-status-change- added message validations to view UPDATED_BUT_MAIL_UNSUCCESS messages.
+//20170226 CW c103-send-email-tutor-status-change- modified execute method to add Short circuit '&&' instead of Bit wise '&'
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -106,8 +107,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 				message = SystemMessage.INCORRECTDATA.message();
 			}
 			
-			if(message.equals(SystemMessage.UPDATED.message()) & emailMessage.equals(SystemMessage.MAIL_UNSUCCESS.message())){
-
+			if(message.equals(SystemMessage.UPDATED.message()) && emailMessage.equals(SystemMessage.MAIL_UNSUCCESS.message())){
 				message = SystemMessage.UPDATED_BUT_MAIL_UNSUCCESS.message(); 
 				emailMessage = "";
 			}
