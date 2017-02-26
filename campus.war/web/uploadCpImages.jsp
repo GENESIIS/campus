@@ -1,6 +1,6 @@
 <!-- 20170221 PN CAM-48: INIT test JSP page to implement CP image upload function. -->
 <!-- 20170223 PN CAM-48: modifingy UI elements to add front end validations. no script tag added to the JSP page.. -->
-<!-- 20170226 PN CAM-48: modified UI elements to display images on change event of cp_img_type dropdown. -->
+<!-- 20170226 PN CAM-48: modified UI elements to display images on change event of cp_img_type dropdown. delete button created.-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,6 +25,7 @@
 
 	<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="validateFile(this, 'cp_img_upload', 'cp_img_upload_btn')">
 	<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn">
+	<input type="submit" id="cp_img_delete_btn" name="cp_img_delete_btn">
 	<br>
 	<span id="cp_img_err" name="cp_img_err"></span>
 	<img id="cp_img_display" name="cp_img_display" src="" alt="" width="" height="">
