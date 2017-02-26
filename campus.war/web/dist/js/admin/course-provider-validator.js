@@ -6,6 +6,7 @@
 //20170209 JH c39-add-course-provider validation methods for expiration date changed
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
 //20170223 JH c141-add-course-provider-issue-improvements providerUsernameValidation():checked for username>100 and error messages changed
+//20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -90,12 +91,32 @@ function validateFormURL(url, errorElementId, foucsElementId){
  * @author JH
  * @param parameter
  * @param length
- * @returns boolean true if length is valid else falses
+ * @returns boolean true if length is valid else false
  */
 function isValidLength(parameter, length) {
 	return (parameter > length) ? false : true;
 }
 
+
+/**
+ * isValidMinMaxLength method used to validate parameter
+ * @param parameter
+ * @param min
+ * @param max
+ * @returns boolean true if the length is valid, else return false
+ * @author JH
+ */
+function isValidMinMaxLength(parameter, min, max) {
+	parameter = parameter.trim();
+	return ((parameter > max) || (parameter < min)) ? false : true;
+}
+
+
+/**
+ * providerUsernameValidation() used to validate the course provider username
+ * @returns {Boolean}
+ * @author JH
+ */
 function providerUsernameValidation() {
 
 	document.getElementById('errorUsername').innerHTML = "";
@@ -156,6 +177,11 @@ function providerUsernameValidation() {
 	}
 }
 
+/**
+ * providerPrefixValidation() used to validate the course provider unique prefix
+ * @returns {Boolean}
+ * @author JH
+ */
 function providerPrefixValidation() {
 
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
@@ -216,7 +242,8 @@ function providerPrefixValidation() {
 }
 
 /**
- * created to validate course provider details before submit
+ * created to validate course provider details before submit	
+ * @author JH
  */
 function vaidateCourseProviderDeatils(form) {
 
