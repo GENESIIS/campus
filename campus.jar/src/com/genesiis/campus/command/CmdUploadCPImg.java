@@ -14,9 +14,6 @@ import com.genesiis.campus.entity.SystemConfigDAO;
 import com.genesiis.campus.util.FileUtility;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
@@ -38,7 +35,6 @@ public class CmdUploadCPImg implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 		// Variable declaration.
-		Gson gson = new Gson();
 		FileUtility utility = new FileUtility();
 		ICrud sysconfigDAO = new SystemConfigDAO();
 		FileItem file = null;
