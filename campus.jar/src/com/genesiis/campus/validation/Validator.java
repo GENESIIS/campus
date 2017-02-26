@@ -14,6 +14,7 @@ package com.genesiis.campus.validation;
 //20170223 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): username length error message changed, validate
 //			fields with database length
 //20170224 JH c141-add-course-provider-issue-improvements courseProviderURLValidation(): created to validate course provider URL's
+//20170226 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): password validation methods changed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -249,14 +250,14 @@ public class Validator {
 			errorString.add("Address Line 3");
 		}
 		
-		if(!validateEmail(helper.getParameter("inquiryMail"))){
-			helper.setAttribute("errorInquiryMail", "Empty or invalid email address");
+		if(!isValidLength(helper.getParameter("inquiryMail"), 50, 1) || !validateEmail(helper.getParameter("inquiryMail"))){
+			helper.setAttribute("errorInquiryMail", "Empty or invalid email address. (only 255 characters allowed)");
 			errorString.add("Empty or invalid email address");
-		}if(!validateEmail(helper.getParameter("generalEmail"))){
-			helper.setAttribute("errorGeneralEmail", "Empty or invalid email address");
+		}if(!isValidLength(helper.getParameter("generalEmail"), 50, 1) || !validateEmail(helper.getParameter("generalEmail"))){
+			helper.setAttribute("errorGeneralEmail", "Empty or invalid email address. (only 255 characters allowed)");
 			errorString.add("Empty or invalid email address");
 		}
-
+		
 		//validte course provider url's
 		errorString = courseProviderURLValidation(helper, errorString, 200, 0, "webLink", "errorWebLink");
 		errorString = courseProviderURLValidation(helper, errorString, 200, 0, "facebook", "errorFacebook");
@@ -333,24 +334,22 @@ public class Validator {
 			}
 		}
 		
-		if(isEmptyString(helper.getParameter("providerPassword")) || 
-		isEmptyString(helper.getParameter("cProviderPassword"))){
+		//validate password
+		if(!isValidLength(helper.getParameter("providerPassword"), 100, 6) || 
+				!isValidLength(helper.getParameter("cProviderPassword"), 100, 6)){ 	
+				
 			errorString.add("Password fields are empty");
-			helper.setAttribute("errorProviderPassword", "Password Filed(s) are empty");
-		}
-		
-		if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
-			helper.setAttribute("errorProviderPassword", "Password fields does not match");
-			errorString.add("Password fields does not match");
-		}
-		
-		if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
-			if(!isValidLength(helper.getParameter("providerPassword"), 100, 6)){
-				helper.setAttribute("errorProviderPassword", "Maximum password length is 100 charaters.");
+			helper.setAttribute("errorProviderPassword", "Password filed should be with in 6 to 100 characters.");
+		}else{
+			if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
+				helper.setAttribute("errorProviderPassword", "Password fields does not match");
+				errorString.add("Password fields does not match");
+			}else{
+				
 			}
 		}
 			
-		if(isEmptyString(helper.getParameter("providerContactNumber")) || !isInteger(helper.getParameter("providerContactNumber"))){
+		if(!isValidLength(helper.getParameter("providerContactNumber"), 30, 0)  || !isInteger(helper.getParameter("providerContactNumber"))){
 			helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
 			errorString.add("Empty or invalid contact number.");
 		}
