@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.ICrud;
 
 /**
- * 201702261 PN CAM-48: INIT CmdDeleteCPImg.java class and implementing execute() method to delete cp image from disk.
+ * 201702261 PN CAM-48: INIT CmdDeleteCPImg.java class and implementing execute() method to delete cp image from disk.modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
  */
 
 import com.genesiis.campus.entity.IView;
@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class CmdDeleteCPImg implements ICommand{
 	static Logger log = Logger.getLogger(CmdDeleteCPImg.class.getName());
+	
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
@@ -32,13 +33,24 @@ public class CmdDeleteCPImg implements ICommand{
 		// To store image file path
 		String filePath = "";
 		String[] listOfFiles;
-		
+
 		// Below values needs to be assign from the request later.
 		int courseProviderCode = 1;
 		String uploadPathConf = "";
+		String fileToDelete = "";
 		
 		try {
-			String fileToDelete = helper.getParameter("delete_cp_img");
+			helper.getParameter("delete_cp_img");
+			
+			Map<String, Object> formFielsd = helper.getFormFields();
+			//Get form fields data from the request.
+			
+			if(!formFielsd.isEmpty()){
+				courseProviderCode = Integer.parseInt((String) formFielsd.get("courseProviderCode"));
+				uploadPathConf = (String) formFielsd.get("uploadPathConf");
+				fileToDelete = (String) formFielsd.get("delete_cp_img");
+			}
+			log.info("fileToDelete"+fileToDelete);
 			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById(uploadPathConf);
 
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
@@ -53,7 +65,7 @@ public class CmdDeleteCPImg implements ICommand{
 				fileDeleteError = SystemMessage.FILEDELETEFAILED.message();
 			}
 			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
-			listOfFiles = FileUtility.getFileNames(deletePath + "/" + Integer.toString(courseProviderCode) + "/");
+			listOfFiles = FileUtility.getFileNames(deletePath);
 		} catch (Exception e) {
 			log.error("execute() : e" + e.toString());
 			throw e;
