@@ -6,6 +6,7 @@
  * 20170222 PN CAM-48: modified ajax method call by setting values to pass into the backend.
  * 20170223 PN CAM-48: implemented checkFileSize() method, checkFileType() method and validateFile() method. modified cp_img_upload_btn click function to perform client side validations.
  *			PN CAM-48: createFileName() implemented for format new file name from the selected values. modified cp_img_upload_btn click function to display uploaded image.
+ * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. 
  */
 
 var dataSet = null;
@@ -14,6 +15,16 @@ var courseProviderCode = null;
 var extensions = [ "jpeg", "jpg", "png", "gif", "GPEG", "JPG", "PNG", "GIF" ];
 // array with file names list.
 var listOfFiles = [];
+//Physical path of the images.
+var diskImgPath = "/education/provider/logo/";
+//Error messages to display. 
+var noImagetoDisplayErr = "No image found to display.";
+var sizeExceededErr = " file size exceeded. Please upload a file with size less than %size.";
+var invalidFileTypeErr = " file type is invalid. Please upload a file with valid file type.";
+var invalidFileExtErr = " file has no extension. Please upload a file with valid file type.";
+var fileNotSelectedErr = "Please choose a file to upload.";
+var fileTypeNotSelectedErr = "Please select image file type to upload.";
+var invalidCourseProviderCode = "Invalid Course provider code.";
 
 // A $( document ).ready() block.
 $(document).ready(function() {
@@ -21,12 +32,24 @@ $(document).ready(function() {
 	
 	// According to the selection of drop box, image description will be appear.
 	$('#cp_img_type').on('change', function() {
+		$('#cp_img_err').html("");
 		document.getElementById("cp_img_upload_btn").disabled = false;
 		var sysConfCode = this.value;
+		var cp_img_type = "";
+		var courseProviderCode = 1; // ToBe assigned later.
 		$.each(dataSet.result, function(index, val) {
 			if (val[0] === sysConfCode) {
 				$('#cp_img_desc').html(val[2]);
-				var cp_img_type = $("#cp_img_type option:selected").text();
+				cp_img_type = $("#cp_img_type option:selected").text();
+				var fileName = createFileName(courseProviderCode,cp_img_type);
+				var actFileName = getActualFileName(listOfFiles,fileName);
+				if(actFileName != noImagetoDisplayErr){
+					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+				}else{
+					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/default_logo.PNG?"+Math.random());
+					$('#cp_img_err').html(noImagetoDisplayErr);
+					$('#cp_img_err').css('color', 'red');
+				}			
 			}
 		});
 	})
@@ -58,7 +81,6 @@ $(document).ready(function() {
 	            cache : false ,
 	    	    contentType : false,
 			    success:function(response){
-			    	alert("Success");
 			    	if(response.fileUploadError != ""){
 			    		$('#cp_img_err').html(response.fileUploadError);
 			    		$('#cp_img_err').css('color', 'red');
@@ -71,7 +93,7 @@ $(document).ready(function() {
 			    		
 			    		//Display uploaded image on img tag.
 			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
-			    		$('#cp_img_display').attr("src","/education/provider/logo/"+courseProviderCode+"/"+newName+"?"+Math.random());
+			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
 			    	}
 				},
 				error:function(response,error,errorThrown) {
@@ -80,13 +102,13 @@ $(document).ready(function() {
 			});
 		}else{
 			if((cpImgUpload == null) || (cpImgUpload == "") || (cpImgUpload == undefined)){
-				$('#cp_img_err').html("Please choose a file to upload.");
+				$('#cp_img_err').html(fileNotSelectedErr);
 	    		$('#cp_img_err').css('color', 'red');
 			}else if((uploadPathConfId == "")||(uploadPathConfId == null)){
-				$('#cp_img_err').html("Please select file type.");
+				$('#cp_img_err').html(fileTypeNotSelectedErr);
 	    		$('#cp_img_err').css('color', 'red');
 			}else if((courseProviderCode == "")||(courseProviderCode == null)){
-				$('#cp_img_err').html("Invalid Course provider code.");
+				$('#cp_img_err').html(invalidCourseProviderCode);
 	    		$('#cp_img_err').css('color', 'red');
 			}
 		}
@@ -208,9 +230,9 @@ function checkFileType(fileuploadelm, to, submitbtn) {
 	} else {
 		// Check if the file with 'no extension' or 'invalid extension'.	
 		if (fileExt.length > 1) {
-			errorMessage = " file type is invalid. Please upload a file with valid file type.";
+			errorMessage = invalidFileTypeErr;
 		} else {
-			errorMessage = " file has no extension. Please upload a file with valid file type.";
+			errorMessage = invalidFileExtErr;
 		}	
 	}
 	return errorMessage;
@@ -235,7 +257,7 @@ function checkFileSize(fileuploadelm, to, submitbtn){
 	// Check if the file exceeds the valid file size.
 	var errorMessage = "";
 	if(fileSize > validFileSize){
-		errorMessage = " file type is invalid. Please upload a file with valid file type.";
+		errorMessage = sizeExceededErr.replace("%size",validFileSize+"MB");
 	}	
 	return errorMessage;
 }
@@ -252,4 +274,26 @@ function createFileName(courseProviderCode,uploadPathConf){
 	var fileTypes = uploadPathConf.split("_");
 	var newName = [courseProviderCode.toString() ,fileTypes[1].toString()];
 	return newName.join("_").toLowerCase(); 
+}
+
+/**
+ * This method only to use in display image according to the dropdown selection.
+ * It check's for file name existence in disk.
+ * 
+ * @param valuesrr
+ * @param nameToCheck
+ * @returns
+ */
+function getActualFileName(valuesArr,nameToCheck) {
+	if(valuesArr.length != 0 && valuesArr != null){
+		for (var int = 0; int < valuesArr.length; int++) {
+			var nameOnly = valuesArr[int].toString().split(".");
+			if(nameOnly[0]===nameToCheck){
+				return valuesArr[int].toString();
+			}
+		}
+	}else{
+		return noImagetoDisplayErr;
+	}
+	return noImagetoDisplayErr;
 }
