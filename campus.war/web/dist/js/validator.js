@@ -14,7 +14,7 @@
  * //20170214 CW c38-view-update-tutor-profile modified validateTutorFileds() method & renamed as validateTutorModifications()
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method modify validations for tutor status & Town details
- * //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password validations
+ * //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
  */
 
 /**
@@ -94,6 +94,8 @@ function validateTutorModifications() {
 	var viber = $("#viber").val();
 	var email = $("#email").val();
 	var username = $("#username").val();
+	var password = $("#password").val();
+	var confirmPassword = $("#confirmPassword" + "").val();
 	var country = $("#countryDetails :selected").text();
 	var town = $("#townDetails :selected").text();
 	var tutorStatus = $("#newtutorStatus :selected").text();
@@ -121,6 +123,7 @@ function validateTutorModifications() {
 	var vibernumberOld = $("#vibernumberOld").val();
 	var emailOld = $("#emailOld").val();
 	var usernameOld = $("#usernameOld").val();
+	var passwordOld = $("#passwordOld").val();
 	var countrynameOld = $("#countrynameOld").val();
 	var townOld = $("#townOld").val();
 	var tutorstatusOld = $("#tutorstatusOld").val();
@@ -622,6 +625,41 @@ function validateTutorModifications() {
 			flag = false;
 		}	
 	}
+	
+	if(password != passwordOld){
+		
+		isModified = true;		
+		if (!isempty(password)) {
+			document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
+			document.getElementById('password').focus();
+			flag = false;
+		}
+		
+		if (password.length > 20) {
+			document.getElementById('passwordError').innerHTML = "**Password Max length exceeded.";
+			document.getElementById('password').focus();
+			flag = false;
+		}
+		
+		if (password.length < 6) {
+			document.getElementById('passwordError').innerHTML = "**Password should have at least 6 characters.";
+			document.getElementById('password').focus();
+			flag = false;
+		}
+		
+		if (!isempty(confirmPassword)) {
+			document.getElementById('confirmPasswordError').innerHTML = "**Please confirm your password";
+			document.getElementById('confirmPassword').focus();
+			flag = false;
+		}
+		
+		if (password != confirmPassword) {
+			document.getElementById('confirmPasswordError').innerHTML = "**Password didn't match";
+			document.getElementById('confirmPassword').focus();
+			flag = false;
+		}
+	}
+	
 	
 	if (isModified == false){
 		document.getElementById('message').innerHTML = "**You haven't done any changes.";
