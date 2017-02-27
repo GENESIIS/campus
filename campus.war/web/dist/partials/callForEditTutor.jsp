@@ -17,7 +17,7 @@
 
 			<tr>
 				<td>
-					<button type="submit" name="CCO" id="CCO" value="VIEW_TUTOR_DETAILS"
+					<button type="submit" name="CCO" id="CCO" value="VIEW_TUTOR_UPDATE_TUTOR_DETAILS"
 						class="btn btn-info navbar-btn">View Tutor</button>
 				</td>
 			</tr>
