@@ -6,6 +6,7 @@
  * remember checkbox.
  * 
  * CAM-21 AS logout-popup window added to after successful logout.
+ * CAM-21 AS getJSessionId added, to check session id from JS. 
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -16,7 +17,7 @@ function studentLogin() {
 	var username = $("#email").val();
 	var password = $("#password").val();
 	var remember = $("#remember").prop('checked');
-
+	getJSessionId();
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
 
@@ -52,6 +53,7 @@ function studentLogin() {
 
 						if (response['message'] === "valid Username and Password.") {
 							window.location.href = response['pageURL'];
+							getJSessionId();
 						} else {
 							document.getElementById('errorMesssage').innerHTML = response['message'];
 						}
@@ -82,6 +84,19 @@ function studentLogin() {
 
 	}
 }
+//checking sessionID
+function getJSessionId(){
+    var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+    if(jsId != null) {
+        if (jsId instanceof Array)
+            jsId = jsId[0].substring(11);
+        else
+            jsId = jsId.substring(11);
+    }
+    alert(jsId);
+    return jsId;
+}
+
 
 // reset error message labels 
 function resetLoginLabels() {
