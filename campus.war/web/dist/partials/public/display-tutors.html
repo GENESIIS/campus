@@ -1,5 +1,6 @@
 <!-- 20170227 TR c95 INIT display-tutors -->
 <!-- 20170227 TR c95 Added header and import all bower-components -->
+<!-- 20170227 TR c95 Added page container -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,6 @@
 
     <!-- jQuery & Other js -->
     <script type="text/javascript" src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../js/filterSearch/ui-populate-helper.js"></script>
     <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     <script src="../../bower-components/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../bower-components/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
@@ -38,7 +38,7 @@
     <div class="bottom">
         <div class="menu-bar">
             <div class="home pull-left">
-                <a href="../../index.jsp" class="btn-home center-block"></a>
+                <a href="../../../index.jsp" class="btn-home center-block"></a>
             </div>
             <!-- End home button -->
             <div class="menu-tabs clearfix">
@@ -85,6 +85,40 @@
 </header>
 <!-- End Header -->
 
-<h1>Dispaly Tutors HTML</h1>
+<div class="tutors-screen clearfix">
+    <!-- Page Inner Header -->
+    <div class="inner-header center-block">
+        <div class="main-topic">
+            <h1>Choose your path</h1>
+        </div>
+    </div>
+
+    <!-- End inner header -->
+    <div class="screen-container clearfix">
+        <div class="col-md-3 col-lg-3">
+            <h1 class="page-topic-t1">| All Tutors</h1>
+        </div>
+        <div class="col-md-9 col-lg-9">
+            <div class="filter-path">
+                <ol class="list-inline">
+                    <li>Tutors</li>
+                    <li>/ All</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- End All-tutors screen -->
+
+<!-- Footer -->
+<footer>
+    <div class="ft-top"></div>
+    <div class="ft-bottom text-center">
+        <label for="Copyright">Copyright � Campus.lk</label>
+    </div>
+</footer>
+<!-- End Footer -->
 </body>
 </html>
