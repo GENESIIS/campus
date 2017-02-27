@@ -4,6 +4,7 @@
 <!-- 20170208 DN c131-admin-manage-banner-upload-banner-image-dn removed unnecessary script /dist/js/header/ui-populate-helper.js-->
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn add extra radio button to select link types-->
+<!-- 20170227 DN c131-admin-manage-banner-upload-banner-image-dn add error <div> tags-->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -28,9 +29,9 @@
     
     <script src="../../js/main.js"></script>
     <script src="../../js/image-slides.js"></script>
+	<script src="/dist/bower-components/w3/w3data.js"></script>
     <script src="/dist/js/institute/validation/validation.js"></script>
 	<script src="/dist/js/banner/uploadBanner.js"></script>
-	<script src="/dist/bower-components/w3/w3data.js"></script>
 </head>
 <body>
 
@@ -101,6 +102,7 @@
 		<form id="banner-from">
 			<div>
 				Advertiser * &nbsp; 
+				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
 					placeholder="-- Select an Advertiser --">
@@ -111,6 +113,7 @@
 			<br>
 			<div>
 				Page * &nbsp; 
+				<div id="pageInfor" style ="color:#C70039;"></div><br>
 				<input id="page" name="page" list="pageList"
 					class="text-field" type="text" placeholder="-- Select a Page --">
 				<datalist id="pageList" name="pageList"> </datalist>
@@ -118,7 +121,9 @@
 			</div>
 			<br> <br>
 			<div>
-				Advertising slot * &nbsp; <input id="slot" name="slot"
+				Advertising slot * &nbsp; 
+				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
+				<input id="slot" name="slot"
 					list="slotList" class="text-field" type="text"
 					placeholder="-- Select a Slot --">
 				<datalist id="slotList" name="slotList"> </datalist>
@@ -128,7 +133,9 @@
 			<br>
 
 			<div>
-				Duration (Seconds) *&nbsp;<input id="duration" type='text'>
+				Duration (Seconds) *&nbsp;
+				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
+				<input id="duration" type='text'>
 			</div>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
 				type="radio" name="bannerEnable" value="true" checked="checked"> <label
