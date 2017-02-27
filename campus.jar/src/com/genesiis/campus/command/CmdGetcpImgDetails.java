@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * This class handles the displaying of an image onChange even of cp logo type drop down.
  * @author Pabodha Narmadani
  *
  */
