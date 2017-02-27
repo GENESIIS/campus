@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
+//20170226 PN CAM-48: logger state changed INFO into ERROR.
 
 import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.ConnectionManager;
