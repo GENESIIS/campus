@@ -7,6 +7,7 @@
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
 //20170223 JH c141-add-course-provider-issue-improvements providerUsernameValidation():checked for username>100 and error messages changed
 //20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
+//20170227 JH c141-add-course-provider-issue-improvements validateFormURL(): modified to validate URL maximum length
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -77,8 +78,15 @@ function isPatternMatch(regularExpression, source) {
  */
 function validateFormURL(url, errorElementId, foucsElementId){
 	var flag = true;
-	if (isempty(url) && !ValidURL(url)) {
+	if (!ValidURL(url)) {
 		var message = "**Invalid URL.";		
+		document.getElementById(errorElementId ).innerHTML = message;
+		document.getElementById(foucsElementId).focus();
+		flag = false;
+	}
+	
+	if(!isValidMinMaxLength(url, 0,  255)){
+		var message = "**URL is too long.";	
 		document.getElementById(errorElementId ).innerHTML = message;
 		document.getElementById(foucsElementId).focus();
 		flag = false;
@@ -309,17 +317,17 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('courseProvider').focus();
 		flag = false;
 	}
-	if (!isempty(providerName) || !isValidLength(providerName, 200)) {
+	if (!isValidMinMaxLength(providerName, 1, 200)) {
 		document.getElementById('errorProviderName').innerHTML = "**Provider name is empty or too long.";
 		document.getElementById('providerName').focus();
 		flag = false;
 	}
-	if (!isempty(uniquePrefix) || !isValidLength(uniquePrefix, 20)) {
-		document.getElementById('errorUniquePrefix').innerHTML = "**Empty or too long unique name.";
+	if (!isValidMinMaxLength(uniquePrefix, 2, 20)) {
+		document.getElementById('errorUniquePrefix').innerHTML = "**Invalid unique name. Requires 2 to 20 characters";
 		document.getElementById('uniquePrefix').focus();
 		flag = false;
 	}
-	if (!isValidLength(shortName, 20)) {
+	if (!isValidMinMaxLength(shortName, 0,  20)) {
 		document.getElementById('errorShortName').innerHTML = "**Short name is too long.";
 		document.getElementById('shortName').focus();
 		flag = false;
@@ -329,12 +337,12 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('aboutMe').focus();
 		flag = false;
 	}
-	if (isempty(specialFeatures) && !isValidLength(specialFeatures, 100)) {
+	if (!isValidMinMaxLength(specialFeatures, 0, 100)) {
 		document.getElementById('errorSpecialFeatures').innerHTML = "**Only 100 characters allowed.";
 		document.getElementById('specialFeatures').focus();
 		flag = false;
 	}
-	if (!isempty(generalEmail) || !isValidLength(generalEmail, 255)) {
+	if (!isValidMinMaxLength(generalEmail, 1,  255)) {
 		document.getElementById('errorGeneralEmail').innerHTML = "**General email field is empty or too long.";
 		document.getElementById('generalEmail').focus();
 		flag = false;
@@ -344,9 +352,9 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('generalEmail').focus();
 		flag = false;
 	}
-	if (!isempty(inquiryMail) || !isValidLength(inquiryMail, 255)) {
+	if (!isValidMinMaxLength(inquiryMail, 1, 255)) {
 		document.getElementById('errorInquiryMail').innerHTML = "**Empty or too long inquiry mail.";
-		document.getElementById('errorInquiryMail').focus();
+		document.getElementById('inquiryMail').focus();
 		flag = false;
 	}
 	if (!isValidEmailFormat(inquiryMail)) {
@@ -354,8 +362,8 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('inquiryMail').focus();
 		flag = false;
 	}
-	if (!isempty(land1)) {
-		document.getElementById('errorLand1').innerHTML = "**Land phone number can't be empty.";
+	if (!isValidMinMaxLength(land1, 1, 20)) {
+		document.getElementById('errorLand1').innerHTML = "**Land phone number can't be empty (maximum 20 characters).";
 		document.getElementById('land1').focus();
 		flag = false;
 	}
@@ -364,40 +372,35 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	if (isempty(fax) && !isPatternMatch(integerPattern, fax)) {
-		document.getElementById('errorFax').innerHTML = "**Fax number is not valid.";
+	if (!isValidMinMaxLength(fax, 0, 20) || !isPatternMatch(integerPattern, fax)) {
+		document.getElementById('errorFax').innerHTML = "**Fax number invalid or exceed the length (maximum 20 characters)";
 		document.getElementById('fax').focus();
 		flag = false;
 	}
-	if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
-		document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid.";
+	if (!isValidMinMaxLength(land2, 0, 20) || !isPatternMatch(integerPattern, land2)) {
+		document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid or exceed the length (maximum 20 chracters).";
 		document.getElementById('land2').focus();
 		flag = false;
 	}
-	if (isempty(areaCode) && !isPatternMatch(integerPattern, areaCode)) {
-		document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid. Only numbers allowed.(Ex:11, 31, 81)";
+	if (!isValidMinMaxLength(areaCode, 0, 20) && !isPatternMatch(integerPattern, areaCode)) {
+		document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid or exceed the length (maximum 20 chracters). ";
 		document.getElementById('areaCode').focus();
 		document.getElementById('errorLand1').innerHTML = "**Area code is invalid.";
 		flag = false;
 	}
-	if (!isempty(areaCode)) {
-		document.getElementById('errorAreaCode').innerHTML = "**Area code is empty.(Ex:11, 31, 81)";
-		document.getElementById('areaCode').focus();
+	if (!isValidMinMaxLength(networkCode, 1, 20) || !isPatternMatch(integerPattern, networkCode)) {
+		document.getElementById('errorNetworkCode').innerHTML = "**Invalid or too long network code. Maximum 20 characters.";
+		document.getElementById('networkCode').focus();
 		flag = false;
 	}
-	if (!isempty(networkCode) || !isPatternMatch(integerPattern, networkCode)) {
-		document.getElementById('errorNetworkCode').innerHTML = "**Give a valid network code.(ex:77,72,71....) ";
-		document.getElementById('errorNetworkCode').focus();
-		flag = false;
-	}
-	if (!isempty(mobile) || !isPatternMatch(integerPattern, mobile)) {
-		document.getElementById('errorMobile').innerHTML = "**Give a valid mobile phone number.";
+	if (!isValidMinMaxLength(mobile, 1, 20) || !isPatternMatch(integerPattern, mobile)) {
+		document.getElementById('errorLastMobileNumber').innerHTML = "**Give a valid mobile phone number.";
 		document.getElementById('errorNetworkCode').innerHTML = "**Network code is not valid. ";
-		document.getElementById('errorMobile').focus();
+		document.getElementById('mobile').focus();
 		flag = false;
 	}
-	if (!isempty(address1)) {
-		document.getElementById('errorAddress1').innerHTML = "**Give your permenant address.";
+	if (!isValidMinMaxLength(address1, 1, 50)) {
+		document.getElementById('errorAddress1').innerHTML = "**Give your permenant address. (50 characters allowed)";
 		document.getElementById('errorAddress1').focus();
 		flag = false;
 	}
