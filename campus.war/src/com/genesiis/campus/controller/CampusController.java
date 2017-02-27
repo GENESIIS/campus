@@ -82,10 +82,10 @@ public class CampusController extends HttpServlet {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
 
-			HttpSession session = request.getSession(false);
+			//HttpSession session = request.getSession(false);
 
-			if (session != null && !session.isNew()) {
-				String name = (String) session.getAttribute("name");
+//			if (session != null && !session.isNew()) {
+//				String name = (String) session.getAttribute("name");
 
 				if (ResponseType.JSP.equals(responseType)) {
 
@@ -117,34 +117,34 @@ public class CampusController extends HttpServlet {
 					response.getWriter().write(gson.toJson(objectMap));
 					response.setContentType("application/json");
 				}
-			} else {
+		//	} else {
 				  response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
 			      response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
 			      response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
 			      response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
-				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+//				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+//
+//				if (result != null && result.getCollection() != null) {
+//					objectMap.put("result", result.getCollection());
+//				} else {
+//					objectMap.put("result", "NO-DATA");
+//				}
+//
+//				Enumeration<String> attributeNames = request
+//						.getAttributeNames();
+//
+//				while (attributeNames.hasMoreElements()) {
+//					String currentAttributeName = attributeNames.nextElement();
+//					Object object = helper.getAttribute(currentAttributeName);
+//					objectMap.put(currentAttributeName, object);
+//				}
+//
+//				response.getWriter().write(gson.toJson(objectMap));
+//				response.setContentType("application/json");
+//				getServletContext().getRequestDispatcher(
+//						"/dist/partials/login.jsp");
 
-				if (result != null && result.getCollection() != null) {
-					objectMap.put("result", result.getCollection());
-				} else {
-					objectMap.put("result", "NO-DATA");
-				}
-
-				Enumeration<String> attributeNames = request
-						.getAttributeNames();
-
-				while (attributeNames.hasMoreElements()) {
-					String currentAttributeName = attributeNames.nextElement();
-					Object object = helper.getAttribute(currentAttributeName);
-					objectMap.put(currentAttributeName, object);
-				}
-
-				response.getWriter().write(gson.toJson(objectMap));
-				response.setContentType("application/json");
-				getServletContext().getRequestDispatcher(
-						"/dist/partials/login.jsp");
-
-			}
+			//}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
