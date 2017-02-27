@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
+//20170227 AS C22-checking Session null condition removed
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -33,7 +34,7 @@ public class CmdStudentLogin implements ICommand {
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	HttpSession session;
+	 HttpSession session;
 	String pageURL;
 	String message;
 
@@ -41,9 +42,7 @@ public class CmdStudentLogin implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		try {
-			if (session != null) {
-			pageURL = "/index.jsp";
-			} else {
+
 
 				int attempts = 0;
 				pageURL = "/dist/partials/login.jsp";
@@ -58,7 +57,7 @@ public class CmdStudentLogin implements ICommand {
 
 				if (validateResult.equalsIgnoreCase("True")) {
 					data = LoginValidator.dataSeparator(data);
-					// final StudentLoginDAO loginDAO = new StudentLoginDAO();
+					
 					ICrud loginDAO = new StudentLoginDAO();
 					dataCollection = loginDAO.findById(data);
 
@@ -110,7 +109,7 @@ public class CmdStudentLogin implements ICommand {
 					message = SystemMessage.LOGINUNSUCCESSFULL.message();
 
 				}
-			}
+		
 			helper.setAttribute("message", message);
 			helper.setAttribute("pageURL", pageURL);
 			view.setCollection(dataCollection);
