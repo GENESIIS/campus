@@ -1,4 +1,6 @@
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - created using CAM-38 sample jsp file -->
+<!-- 20170227 c37-tutor-update-tutor-profile-cw - removed tutor status details, add Javascript validations-->
+<!-- 20170227 c37-tutor-update-tutor-profile-cw - modified password change items-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -15,7 +17,6 @@
 <body>
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorModifications())">
-
 
 		<c:forEach var="tutorList" items="${result.collection}">
 
@@ -91,243 +92,233 @@
 
 		<noscript>
 			<div class="noscriptmsg" style="color:red">
-				<h2>You don't have Javascript enabled.  Please enable Javascript.</h2>
+				<h2>You don't have Javascript enabled. Please enable Javascript.</h2>
+				
+				<style type="text/css">
+					#main-content { display:none; }
+				</style>
 			</div>
 		</noscript>
-		<table align="center">
-			<tr>
-				<td>
-					<h2 id="message" style="color: red">${message}</h2>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h2>Basic Info</h2>
-				</td>
-			</tr>
-			
-			<tr>
-				<td>First Name </td>
-				<td><input type="text" name="firstname" id="firstName"
-					maxlength="20" onchange="clearField('firstNameError')"
-					value="${firstname}" /><span id="firstNameError"
-						style="color: red"> ${firstNameError} </span></td>
-			</tr>
-
-			<tr>
-				<td>Middle Name </td>
-				<td><input type="text" name="middlename" id="middleName"
-					maxlength="20" onchange="clearField('middleNameError')" value="${middlename}" />
-					<span id="middleNameError" style="color: red"> ${middleNameError} </span></td>
-			</tr>
-			<tr>
-				<td>Last Name </td>
-				<td><input type="text" name="lastname" id="lastName"
-					maxlength="20" onchange="clearField('lastNameError')"
-					value="${lastname}" /><span id="lastNameError"
-					style="color: red"> ${lastNameError} </span></td>
-			</tr>
-			<tr>
-				<td>Gender</td>
-				<td><c:if test="${gender == 1}">
-						<input type="radio" name="gender" value="1" id="radioMale" checked> Male<br>
-						<input type="radio" name="gender" value="2" id="radioFemale"> Female<br>
-					</c:if> <c:if test="${gender == 2}">
-						<input type="radio" name="gender" value="1" id="radioMale"> Male<br>
-						<input type="radio" name="gender" value="2" id="radioFemale"
-							checked> Female<br>
-					</c:if></td>
-			</tr>
-			<tr>
-				<td>Experience</td>
-				<td><textarea rows="10" cols="26" name="experience"
-						id="experience"><c:out value="${experience}" /></textarea><span
-						id="experienceError" style="color: red"> ${experienceError} </span></td>
-			</tr>
-			<tr>
-				<td>About Me </td>
-				<td><textarea rows="10" cols="26" name="aboutMe" 
-				id="aboutMe"><c:out value="${description}"/></textarea><span
-				id="aboutMeError" style="color: red"> ${aboutMeError} </span></td>
-			</tr>
-			<tr>
-				<td><h2>Contact Info</h2></td>
-			</tr>
-			<tr>
-				<td>Country</td>
-				<td>${countryname}</td>
-
-				<td><span id="countryError"></span> <select
-					name="countryDetails" id="countryDetails" onchange="clearField('countryError')">
-						<option></option>
-				</select><span id="countryError" style="color: red"> ${countryError} </span></td>
-			</tr>
-			<tr>
-				<td>Town</td>
-
-				<td>${town}</td>
-				<td><select name="townDetails"
-					id="townDetails" onchange="clearField('townError')">
-						<option></option>
-				</select><span id="townError" style="color: red"> ${townError} </span></td>
-			</tr>
-			<tr>
-				<td>Mobile</td>
-				<td><input type="text"
-					name="mobileCountryCode" id="mobileCountryCode" maxlength="5"
-					onchange="clearField('mobileError')" readonly value="${mobilephonecountrycode}" />
-					<span id="mobileError" style="color: red"> ${mobileError} </span></td>
-
-				<td><input type="text"
-					name="mobileNetworkCode" id="mobileNetworkCode" maxlength="10"
-					onchange="clearField('mobileNetworkError')"	value="${mobilephonenetworkcode}" />
-					<span id="mobileNetworkError" style="color: red"> ${mobileNetworkError} </span></td>
-
-				<td><input type="text"
-					name="mobileNumber" id="mobileNumber" maxlength="11"
-					onchange="clearField('mobileNumberError')" value="${mobilephonenumber}" />
-					<span id="mobileNumberError" style="color: red"> ${mobileNumberError} </span></td>
-			</tr>
-			<tr>
-				<td>Land</td>
-				<td><input type="text"
-					name="landCountryCode" id="landCountryCode" maxlength="5"
-					onchange="clearField('landError')" readonly value="${landphonecountrycode}" />
-					<span id="landError" style="color: red"> ${landError} </span></td>
-
-				<td><input type="text"
-					name="landAreaCode" id="landAreaCode" maxlength="10"
-					onchange="clearField('landAreaCodeError')" value="${landphoneareacode}" />
-					<span id="landAreaCodeError" style="color: red"> ${landAreaCodeError} </span></td>
-
-				<td><input type="text" name="landNumber" id="landNumber"
-					maxlength="10" onchange="clearField('landNumberError')" value="${landphonenumber}" />
-					<span id="landNumberError" style="color: red"> ${landNumberError} </span></td>
-			</tr>
-			<tr>
-				<td>Address Line 1 </td>
-				<td><input type="text" name="address1" id="address1"
-					maxlength="30" onchange="clearField('address1Error')" value="${address1}" />
-					<span id="address1Error" style="color: red"> ${address1Error} </span></td>
-			</tr>
-			<tr>
-				<td>Address line 2 </td>
-				<td><input type="text" name="address2" id="address2"
-					maxlength="30" value="${address2}" /></td>
-			</tr>
-			<tr>
-				<td>Address line 3 </td>
-				<td><input type="text" name="address3" id="address3"
-					maxlength="30" value="${address3}" /></td>
-			</tr>
-
-			<tr>
-				<td>Web link </td>
-				<td><input type="text" name="weblink" id="weblink" value="${weblink}" />
-				<span id="weblinkError" style="color: red"> ${weblinkError} </span></td>
-			</tr>
-			<tr>
-				<td>Facebook </td>
-				<td><input type="text" name="facebook" id="facebook"
-					value="${facebookurl}" /><span id="facebookError"
-					style="color: red"> ${facebookError} </span> </td>
-			</tr>
-			<tr>
-				<td>LinkedIn </td>
-				<td><input type="text" name="linkedin" id="linkedin"
-					value="${linkedinurl}" /><span id="linkedInError"
-					style="color: red"> ${linkedInError} </span></td>
-			</tr>
-			<tr>
-				<td>Twitter </td>
-				<td><input type="text" name="twitter" id="twitter"
-					value="${twitterurl}" /><span id="twitterError"
-					style="color: red"> ${twitterError} </span></td>
-			</tr>
-			<tr>
-				<td>Instagram </td>
-				<td><input type="text" name="instagram" id="instagram"
-					value="${instagramurl}" /><span id="instagramError"
-					style="color: red"> ${instagramError} </span></td>
-			</tr>
-			<tr>
-				<td>Myspace </td>
-				<td><input type="text" name="myspace" id="myspace"
-					value="${myspaceurl}" /><span
-					id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
-			</tr>
-			<tr>
-				<td>WhatsApp </td>
-				<td><input type="text" name="whatsapp" id="whatsapp"
-					maxlength="10" value="${whatsappnumber}" /><span id="whatsappError"
-						style="color: red"> ${whatsappError} </span></td>
-			</tr>
-			<tr>
-				<td>Viber </td>
-				<td><input type="text" name="viber" id="viber" maxlength="10" value="${vibernumber}" />
-					<span id="viberError" style="color: red"> ${viberError} </span></td>
-			</tr>
-			<tr>
-				<td><h2>Account Info</h2></td>
-			</tr>
-
-			<tr>
-
-				<td>Tutor Status <span id="tutorError"></span></td>
-
-				<td><select name="newtutorStatus" id="newtutorStatus">
-					<c:forEach items="${applicationStatusBean.values}"
-						var="applicationStatus">
-						<c:choose>
-							<c:when test="${applicationStatus.statusValue == tutorstatus}">
-								<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-					<c:forEach items="${applicationStatusBean.values}"
-						var="applicationStatus">
-						<c:choose>
-							<c:when test="${applicationStatus.statusValue != tutorstatus}">
-								<option value="${applicationStatus.statusValue}">${applicationStatus}</option>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-				</select></td>
-			</tr>
-
-			<tr>
-				<td>Email </td>
-				<td><input type="text" name="email" id="email"
-					onchange="clearField('emailError')" value="${email}" />
-					<span id="emailError" style="color: red"> ${emailError} </span></td>
-			</tr>
-			<tr>
-				<td>Username </td>
-				<td><input type="text" name="username" id="username"
-					maxlength="50" onchange="clearField('usernameError')" value="${username}" readonly />
-					<span id="usernameError" style="color: red"> ${usernameError} </span></td>
-			</tr>
-			<tr>
-				<td>Password </td>
-				<td><input type="password" name="password" id="password"
-					maxlength="20" onchange="clearField('passwordError')" value="${password}" />
-					<span id="passwordError" style="color: red"> ${passwordError} </span></td>
-			</tr>
-			<tr>
-				<td>Confirm Password </td>
-				<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="20"
-					onchange="clearField('confirmPasswordError')" value="${password}" /><span
-					id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>
-			</tr>
-
-			<tr>
-				<td>
-					<button type="submit" name="CCO" id="CCO" value="TUTOR_UPDATE_TUTOR"
-						class="btn btn-info navbar-btn">Update</button>
-				</td>
-			</tr>
-
-		</table>
+		
+		<div id="main-content">
+			<table align="center">
+				<tr>
+					<td>
+						<h2 id="message" style="color: red">${message}</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>Basic Info</h2>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>First Name </td>
+					<td><input type="text" name="firstname" id="firstName"
+						maxlength="20" onchange="clearField('firstNameError')"
+						value="${firstname}" /><span id="firstNameError"
+							style="color: red"> ${firstNameError} </span></td>
+				</tr>
+	
+				<tr>
+					<td>Middle Name </td>
+					<td><input type="text" name="middlename" id="middleName"
+						maxlength="20" onchange="clearField('middleNameError')" value="${middlename}" />
+						<span id="middleNameError" style="color: red"> ${middleNameError} </span></td>
+				</tr>
+				<tr>
+					<td>Last Name </td>
+					<td><input type="text" name="lastname" id="lastName"
+						maxlength="20" onchange="clearField('lastNameError')"
+						value="${lastname}" /><span id="lastNameError"
+						style="color: red"> ${lastNameError} </span></td>
+				</tr>
+				<tr>
+					<td>Gender</td>
+					<td><c:if test="${gender == 1}">
+							<input type="radio" name="gender" value="1" id="radioMale" checked> Male<br>
+							<input type="radio" name="gender" value="2" id="radioFemale"> Female<br>
+						</c:if> <c:if test="${gender == 2}">
+							<input type="radio" name="gender" value="1" id="radioMale"> Male<br>
+							<input type="radio" name="gender" value="2" id="radioFemale"
+								checked> Female<br>
+						</c:if></td>
+				</tr>
+				<tr>
+					<td>Experience</td>
+					<td><textarea rows="10" cols="26" name="experience"
+							id="experience"><c:out value="${experience}" /></textarea><span
+							id="experienceError" style="color: red"> ${experienceError} </span></td>
+				</tr>
+				<tr>
+					<td>About Me </td>
+					<td><textarea rows="10" cols="26" name="aboutMe" 
+					id="aboutMe"><c:out value="${description}"/></textarea><span
+					id="aboutMeError" style="color: red"> ${aboutMeError} </span></td>
+				</tr>
+				<tr>
+					<td><h2>Contact Info</h2></td>
+				</tr>
+				<tr>
+					<td>Country</td>
+					<td>${countryname}</td>
+	
+					<td><span id="countryError"></span> <select
+						name="countryDetails" id="countryDetails" onchange="clearField('countryError')">
+							<option></option>
+					</select><span id="countryError" style="color: red"> ${countryError} </span></td>
+				</tr>
+				<tr>
+					<td>Town</td>
+	
+					<td>${town}</td>
+					<td><select name="townDetails"
+						id="townDetails" onchange="clearField('townError')">
+							<option></option>
+					</select><span id="townError" style="color: red"> ${townError} </span></td>
+				</tr>
+				<tr>
+					<td>Mobile</td>
+					<td><input type="text"
+						name="mobileCountryCode" id="mobileCountryCode" maxlength="5"
+						onchange="clearField('mobileError')" readonly value="${mobilephonecountrycode}" />
+						<span id="mobileError" style="color: red"> ${mobileError} </span></td>
+	
+					<td><input type="text"
+						name="mobileNetworkCode" id="mobileNetworkCode" maxlength="10"
+						onchange="clearField('mobileNetworkError')"	value="${mobilephonenetworkcode}" />
+						<span id="mobileNetworkError" style="color: red"> ${mobileNetworkError} </span></td>
+	
+					<td><input type="text"
+						name="mobileNumber" id="mobileNumber" maxlength="11"
+						onchange="clearField('mobileNumberError')" value="${mobilephonenumber}" />
+						<span id="mobileNumberError" style="color: red"> ${mobileNumberError} </span></td>
+				</tr>
+				<tr>
+					<td>Land</td>
+					<td><input type="text"
+						name="landCountryCode" id="landCountryCode" maxlength="5"
+						onchange="clearField('landError')" readonly value="${landphonecountrycode}" />
+						<span id="landError" style="color: red"> ${landError} </span></td>
+	
+					<td><input type="text"
+						name="landAreaCode" id="landAreaCode" maxlength="10"
+						onchange="clearField('landAreaCodeError')" value="${landphoneareacode}" />
+						<span id="landAreaCodeError" style="color: red"> ${landAreaCodeError} </span></td>
+	
+					<td><input type="text" name="landNumber" id="landNumber"
+						maxlength="10" onchange="clearField('landNumberError')" value="${landphonenumber}" />
+						<span id="landNumberError" style="color: red"> ${landNumberError} </span></td>
+				</tr>
+				<tr>
+					<td>Address Line 1 </td>
+					<td><input type="text" name="address1" id="address1"
+						maxlength="30" onchange="clearField('address1Error')" value="${address1}" />
+						<span id="address1Error" style="color: red"> ${address1Error} </span></td>
+				</tr>
+				<tr>
+					<td>Address line 2 </td>
+					<td><input type="text" name="address2" id="address2"
+						maxlength="30" value="${address2}" /></td>
+				</tr>
+				<tr>
+					<td>Address line 3 </td>
+					<td><input type="text" name="address3" id="address3"
+						maxlength="30" value="${address3}" /></td>
+				</tr>
+	
+				<tr>
+					<td>Web link </td>
+					<td><input type="text" name="weblink" id="weblink" value="${weblink}" />
+					<span id="weblinkError" style="color: red"> ${weblinkError} </span></td>
+				</tr>
+				<tr>
+					<td>Facebook </td>
+					<td><input type="text" name="facebook" id="facebook"
+						value="${facebookurl}" /><span id="facebookError"
+						style="color: red"> ${facebookError} </span> </td>
+				</tr>
+				<tr>
+					<td>LinkedIn </td>
+					<td><input type="text" name="linkedin" id="linkedin"
+						value="${linkedinurl}" /><span id="linkedInError"
+						style="color: red"> ${linkedInError} </span></td>
+				</tr>
+				<tr>
+					<td>Twitter </td>
+					<td><input type="text" name="twitter" id="twitter"
+						value="${twitterurl}" /><span id="twitterError"
+						style="color: red"> ${twitterError} </span></td>
+				</tr>
+				<tr>
+					<td>Instagram </td>
+					<td><input type="text" name="instagram" id="instagram"
+						value="${instagramurl}" /><span id="instagramError"
+						style="color: red"> ${instagramError} </span></td>
+				</tr>
+				<tr>
+					<td>Myspace </td>
+					<td><input type="text" name="myspace" id="myspace"
+						value="${myspaceurl}" /><span
+						id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
+				</tr>
+				<tr>
+					<td>WhatsApp </td>
+					<td><input type="text" name="whatsapp" id="whatsapp"
+						maxlength="10" value="${whatsappnumber}" /><span id="whatsappError"
+							style="color: red"> ${whatsappError} </span></td>
+				</tr>
+				<tr>
+					<td>Viber </td>
+					<td><input type="text" name="viber" id="viber" maxlength="10" value="${vibernumber}" />
+						<span id="viberError" style="color: red"> ${viberError} </span></td>
+				</tr>
+				<tr>
+					<td><h2>Account Info</h2></td>
+				</tr>
+	
+				<tr>
+					<td>Email </td>
+					<td><input type="text" name="email" id="email"
+						onchange="clearField('emailError')" value="${email}" />
+						<span id="emailError" style="color: red"> ${emailError} </span></td>
+				</tr>
+				<tr>
+					<td>Username </td>
+					<td><input type="text" name="username" id="username"
+						maxlength="50" onchange="clearField('usernameError')" value="${username}" readonly />
+						<span id="usernameError" style="color: red"> ${usernameError} </span></td>
+				</tr>
+				<tr>
+					<td>Old Password </td>
+					<td><input type="password" name="oldPassword" id="oldPassword"
+						maxlength="20" onchange="clearField('oldPasswordError')"/>
+						<span id="oldPasswordError" style="color: red"> ${oldPasswordError} </span></td>
+				</tr>
+				
+				<tr>
+					<td>New Password </td>
+					<td><input type="password" name="newPassword" id="newPassword"
+						maxlength="20" onchange="clearField('newPasswordError')"/>
+						<span id="newPasswordError" style="color: red"> ${newPasswordError} </span></td>
+				</tr>
+				<tr>
+					<td>Confirm New Password </td>
+					<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="20"
+						onchange="clearField('confirmPasswordError')"/><span
+						id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>
+				</tr>
+	
+				<tr>
+					<td>
+						<button type="submit" name="CCO" id="CCO" value="TUTOR_UPDATE_TUTOR"
+							class="btn btn-info navbar-btn">Update</button>
+					</td>
+				</tr>
+	
+			</table>
+		</div>
 		
 	</form>
 
