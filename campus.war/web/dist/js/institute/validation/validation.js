@@ -6,13 +6,18 @@
  *20161116 DN c10-contacting-us-page-MP changed the method isFieldFilled() to write content to inner HTML
  *20161116 DN c10-contacting-us-page-MP included clearField() method 
  *20161122 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
- * cater more phone number styles
+ *           cater more phone number styles
  * 20161123 DN c10-contacting-us-page-MP isValidPhoneNumber() regular expression changed to 
  *cater more phone number styles with spaces in between.
  *20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
  *20161128 DN c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
  *20161202 DN C18-student-signup-without-using-third-party-application-test-dn add isStringHasValiCharsAndLength() method
- *20161128 Dn c10-contacting-us-page-MP isempty() changed to validate any field submitting spaces.
+ *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() signature has been changed it takes
+ *           a field value and a regular expression as the argument
+ *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() changed the method header comment.
+ *20170207 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() has been modified
+ *				 in such a way that the testable string is process by removing any spaces within 
+ *20170227 DN CAM131 urlTest() implemented for url validations
  */ 
 
  
@@ -55,7 +60,6 @@ function isFieldFilled(flag, elementName, errorLabelId){
 function isempty(fieldValue) {
 
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
-
 }
 
 /**
@@ -126,18 +130,68 @@ function validEmailFormat(){
 /**
  * method tests if the supply string consists of alpha numeric characters which is
  * 62 case-sensitive characters (A-Z, a-z and 0-9)and "_" character in such a combination that
- * the string contains more than 5 characters,starts with an alphabetic contains any combination of 
- * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc
+ * the string contains more than n number of characters defined by regular expression,
+ * starts with an alphabetic contains any combination of 
+ * alphanumeric and _. Further testableInput should not contains any special characters such as "@,#%$" etc.
+ * Function removes any spaces within testableInput and trims it before performs the test
  * @author dushantha DN
  * @param testableInput the sting which is to tested to confirm if it abides the above precondition
+ * @param regex regular expression against which the testableInput will be matched.
  * @returns boolean : true if conditions are met else false.
  */
-function isStringHasValiCharsAndLength(testableInput){
+function isStringHasValiCharsAndLength(testableInput, regex){
 	var validCharAndLength= false;
 	if(testableInput!=""|testableInput!=null){
-		var testableRegularExpression = /^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g;
-		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim()); 
+		var testableRegularExpression =regex ;
+		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim().replace(/\s+/g, '')); 
 	}
 	return validCharAndLength;
 }
 
+
+
+/**
+ * this method test if the url entered is a correct one,
+ * test is minimally conducted as the url validation involves complex
+ * considerations.
+ * this method tests bellow formats of URL with https/http/ftp
+ * e.g
+ * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*
+ * https://www.google.lk
+ * www.google.lk
+ 
+ * @param inputValue
+ * @param urlInputTextid
+ */
+function urlTest(inputValue,urlInputTextid){
+	var urlText = $('#'+urlInputTextid).val();
+	var validUrl = false;
+	if(urlText==""|urlText==null){
+		return validUrl;
+	}
+	var urlInputFirstText = urlText.trim().charAt(0);	
+	var urlPatern = /^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z‌​\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	if(urlInputFirstText!="."){
+		validUrl= isPatternMatch(urlPatern,urlInputText);
+	}
+	return validUrl;
+}
+
+///*
+// * function will triggers when input field gets changed.
+// * the purpose of the function is to match the users selection
+// * or the type in text against the list that has already been
+// * selected by the system. If the value that user entered does not
+// * confirm to the requirement, then an error message will be displayed,
+// * and the text will be cleared off.
+// */
+//function onChangeEvent(idElement,fieldVarTobeTested,errorDisplayId,userInfromation){
+//	
+//	$('#'+idElement).on("change",function(){
+//		if(fieldVarTobeTested ==""){
+//			$('#'+errorDisplayId).html(userInfromation);
+//			$('#'+idElement).val("");
+//		}
+//	});
+//
+//}

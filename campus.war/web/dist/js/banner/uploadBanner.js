@@ -14,7 +14,15 @@
  *   20170217 DN c131-admin-manage-banner-upload-banner-image-dn add variable urlMiniWebOrPage to the onclick event to dispatch the banner image	
  *   20170224 DN c131-admin-manage-banner-upload-banner-image-dn displayLabelMessage() method signature has been changed 
  *   			total message (error/success) displaying sequence changed in all ajax request calls.
+ *   20170227 DN c131-admin-manage-banner-upload-banner-image-dn validateUploadBannerEmbedData() is created.
  */
+
+/*
+ * Include the validation.js to the uploadBanners.js
+ */
+var theNewScript = document.createElement("script");
+theNewScript.type = "text/javascript";
+theNewScript.src = "../../dist/js/institute/validation/validation.js";
 
 var selectedPageCode = '';
 var selectedAdvertiserCode ='';
@@ -356,6 +364,24 @@ $(document).on('click','#uploadBbutton', function(event){
 	
 	
 });
+
+function validateUploadBannerEmbedData(){
+	var validationPass =false;
+	
+	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#advertiser').val(),
+			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "Advertiser Field",
+			"advertiserInfor")))
+		return validationPass;
+	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#page').val(),
+			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "page Field", "pageInfor")))
+		return validationPass;
+	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#slot').val(),
+			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "page Field", "advertizingSlotInfor")))
+		return validationPass;
+	if(!(isFieldFilled(isStringHasValiCharsAndLength(),/^[0-9]+$/g,"displayDurationInfor")))
+		return validationPass;
+	
+}
 
 
 /**
