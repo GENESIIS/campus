@@ -3,9 +3,12 @@ package com.genesiis.campus.validation;
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
 //20170227 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to add validations for empty values
+//20170227 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields(), isValidPassword() to validate password fields
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 
 import org.jboss.logging.Logger;
 
@@ -129,8 +132,7 @@ public class Validator {
 	public boolean validateTutorFields(IDataHelper helper) throws Exception {
 
 		boolean isValid = true; 
-		try {	
-			
+		try {				
 
 			if (!isValidUserAndEmail(helper)) {
 				isValid = false;
@@ -209,7 +211,7 @@ public class Validator {
 				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
 				isValid = false;
 			}
-			if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper)) {
+			if (!isValidPassword(helper)) {
 				isValid = false;
 			}
 
@@ -457,25 +459,44 @@ public class Validator {
 	
 	
 	/**
-	 * Check the entered password is a valid one & is it same with confirmPassword value
+	 * Check the entered old password is a valid one & new password is same with confirmPassword value & lengths are acceptable
 	 * 
 	 * @author Chinthaka
 	 * @param password, confirmPassword
-	 * @return String - Returns boolean value False if the requested password & confirmPassword are not same & not valid in lengths
+	 * @return boolean - Returns boolean value False if the old Password is not same as the database value or requested new password & confirmPassword are not same & not valid in lengths
 	 */
-	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
+	public boolean isValidPassword(IDataHelper helper) throws Exception {
 		int validityNumber = 0; 
 		boolean message = true;
+		
+		String oldPassword = helper.getParameter("oldPassword");
+		String newPassword = helper.getParameter("newPassword");
+		String confirmPassword = helper.getParameter("confirmPassword");
+
+		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword);
+		
 		try {
 
-			if (!(isNotEmpty(password))){ // check for null fields
+			if (isEmptyOrHavingSpace(oldPassword)){ // check for null fields
 				validityNumber = 1;
-				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
+				helper.setAttribute("oldPasswordError", SystemMessage.EMPTYPASSWORD.message());
 				message = false;
 			}
 			
-			if(!(isNotEmpty(confirmPassword))){ // check for null fields
-				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+			if(!(isEmptyOrHavingSpace(oldPassword)) && !(helper.getParameter("password").equals(passwordEncryptor.encryptSensitiveDataToString()))){
+				validityNumber = 1;
+				helper.setAttribute("oldPasswordError", SystemMessage.INCORREST_PASSWORD.message());
+				message = false;
+			}
+
+			if (!(isEmptyOrHavingSpace(newPassword))){ // check for null fields
+				validityNumber = 1;
+				helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
+				message = false;
+			}
+			
+			if(!(isEmptyOrHavingSpace(confirmPassword))){ // check for null fields
+				helper.setAttribute("confirmPasswordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
 				message = false;
 				validityNumber = 2;
 			}
