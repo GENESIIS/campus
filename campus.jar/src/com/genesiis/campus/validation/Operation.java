@@ -1,10 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
-//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
-//20161029 PN c11-criteria-based-filter-search: added LIST_LEVEL_DATA,LIST_TOWN_DATA,LIST_MAJOR_DATA,LIST_DISTRICT_DATA attributes
-//20161101 PN c11-criteria-based-filter-search: added LIST_INSTITUTE_DATA attribute.
-//20161109 PN c11-criteria-based-filter-search changed ResponseType.JSP into ResponseType.JSON. 
+
 
 /**
  * Operation class facilitate in binding the CCO
@@ -12,14 +9,7 @@ package com.genesiis.campus.validation;
  */
 public enum Operation {
 	
-	GET_SEARCH_DATA("GET_SEARCH_DATA", ResponseType.JSON, "index.jsp"),
-	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
-	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
-	LIST_LEVEL_DATA("LIST_LEVEL_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_TOWN_DATA("LIST_TOWN_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSON, "index.jsp"),
-	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSON, "index.jsp");
+	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
