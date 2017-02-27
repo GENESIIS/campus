@@ -93,7 +93,7 @@ function getJSessionId(){
         else
             jsId = jsId.substring(11);
     }
-    alert(jsId);
+   
     return jsId;
 }
 
@@ -107,6 +107,10 @@ function resetLoginLabels() {
 function studentLogout() {
 	
 	var userId = $("#userCode").val();
+	var sessionID = getJSessionId();
+	if(sessionID ==null){
+		alert(sessionID);
+	}
 	if (userId != null) {
 		var jsonData = {
 			"code" : userId
