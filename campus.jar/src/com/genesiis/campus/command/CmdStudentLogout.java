@@ -73,6 +73,7 @@ public class CmdStudentLogout implements ICommand {
 						curentSession.removeAttribute("userCode");
 						curentSession.removeAttribute("currentUserData");
 						curentSession.invalidate();
+						
 
 						message = SystemMessage.LOGOUTSUCCESSFULL.message();
 					}
