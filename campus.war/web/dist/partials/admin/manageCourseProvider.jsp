@@ -5,6 +5,7 @@
 <!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
+<!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -172,7 +173,7 @@
 								</div>
 								<div class="col-name">
 									<h1 class="pro-name">
-										Short Name: <span style="color: red;">*</span>
+										Short Name:
 									</h1>
 								</div>
 								<div class="col-name">
