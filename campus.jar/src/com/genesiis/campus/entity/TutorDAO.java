@@ -25,6 +25,7 @@ package com.genesiis.campus.entity;
 //20170223 CW c36-add-tutor-information re-organise the import statements.
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
 //20170227 CW c37-tutor-update-tutor-profile-cw removed un wanted commented lines
+//20170227 CW c37-tutor-update-tutor-profile-cw modified update method to create the query dynamically & update password if available
 
 
 import com.genesiis.campus.entity.model.Tutor;
@@ -32,6 +33,7 @@ import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -73,61 +75,68 @@ public class TutorDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		int status = -1;
 		
-		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
-		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
-		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
-		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
-		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
-		queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
-		queryBuilder.append("MODBY = ? ");
-		queryBuilder.append("WHERE USERNAME = ?;");
-				
-		try {			
+		try {
+			StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
+			queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
+			queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
+			queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
+			queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
+			queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
+			queryBuilder.append("MODBY = ? ");	
+					
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
-			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString());
-			preparedStatement.setString(2, tutor.getFirstName());
-			preparedStatement.setString(3, tutor.getMiddleName());
-			preparedStatement.setString(4, tutor.getLastName());
+			preparedStatement.setString(1, tutor.getFirstName());
+			preparedStatement.setString(2, tutor.getMiddleName());
+			preparedStatement.setString(3, tutor.getLastName());
 			
-			preparedStatement.setString(5, tutor.getGender());
+			preparedStatement.setString(4, tutor.getGender());
 			
-			preparedStatement.setString(6, tutor.getEmailAddress());
-			preparedStatement.setString(7, tutor.getLandCountryCode());
-			preparedStatement.setString(8, tutor.getLandAreaCode());
-			preparedStatement.setString(9, tutor.getLandNumber());
-			preparedStatement.setString(10, tutor.getMobileCountryCode());
+			preparedStatement.setString(5, tutor.getEmailAddress());
+			preparedStatement.setString(6, tutor.getLandCountryCode());
+			preparedStatement.setString(7, tutor.getLandAreaCode());
+			preparedStatement.setString(8, tutor.getLandNumber());
+			preparedStatement.setString(9, tutor.getMobileCountryCode());
 			
-			preparedStatement.setString(11, tutor.getMobileNetworkCode());
-			preparedStatement.setString(12, tutor.getMobileNumber());
-			preparedStatement.setString(13, tutor.getDescription());
-			preparedStatement.setString(14, tutor.getExperience());
-			preparedStatement.setString(15, tutor.getWebLink());
+			preparedStatement.setString(10, tutor.getMobileNetworkCode());
+			preparedStatement.setString(11, tutor.getMobileNumber());
+			preparedStatement.setString(12, tutor.getDescription());
+			preparedStatement.setString(13, tutor.getExperience());
+			preparedStatement.setString(14, tutor.getWebLink());
 		
-			preparedStatement.setString(16, tutor.getFacebookLink());
-			preparedStatement.setString(17, tutor.getTwitterNumber());
-			preparedStatement.setString(18, tutor.getMySpaceId()); 
-			preparedStatement.setString(19, tutor.getLinkedInLink());
-			preparedStatement.setString(20, tutor.getInstagramId());
+			preparedStatement.setString(15, tutor.getFacebookLink());
+			preparedStatement.setString(16, tutor.getTwitterNumber());
+			preparedStatement.setString(17, tutor.getMySpaceId()); 
+			preparedStatement.setString(18, tutor.getLinkedInLink());
+			preparedStatement.setString(19, tutor.getInstagramId());
 		
-			preparedStatement.setString(21, tutor.getViberNumber());
-			preparedStatement.setString(22, tutor.getWhatsAppId());
+			preparedStatement.setString(20, tutor.getViberNumber());
+			preparedStatement.setString(21, tutor.getWhatsAppId());
 			
-			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
-			preparedStatement.setInt(24, tutor.getTutorStatus());			
-			preparedStatement.setString(25, tutor.getAddressLine1());
+			preparedStatement.setBoolean(22, tutor.getIsApproved()); 
+			preparedStatement.setInt(23, tutor.getTutorStatus());			
+			preparedStatement.setString(24, tutor.getAddressLine1());
 			
-			preparedStatement.setString(26, tutor.getAddressLine2());
-			preparedStatement.setString(27, tutor.getAddressLine3());
-			preparedStatement.setString(28, tutor.getTown());
-			preparedStatement.setInt(29, tutor.getUsertype());		
-			preparedStatement.setString(30, tutor.getModBy());
+			preparedStatement.setString(25, tutor.getAddressLine2());
+			preparedStatement.setString(26, tutor.getAddressLine3());
+			preparedStatement.setString(27, tutor.getTown());
+			preparedStatement.setInt(28, tutor.getUsertype());		
+			preparedStatement.setString(29, tutor.getModBy());			
 			
-			preparedStatement.setString(31, tutor.getUsername());
+			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
+				queryBuilder.append("PASSWORD = ? ");	
+				queryBuilder.append("WHERE USERNAME = ?;");
+				preparedStatement.setString(30, passwordEncryptor.encryptSensitiveDataToString());
+				preparedStatement.setString(31, tutor.getUsername());
+			}else{
+				queryBuilder.append("WHERE USERNAME = ?;");
+				preparedStatement.setString(30, tutor.getUsername());
+			}
+			
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -199,7 +208,7 @@ public class TutorDAO implements ICrud {
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
-				singleTutorList.add("PASSWORD");
+				singleTutorList.add(rs.getString("PASSWORD"));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
