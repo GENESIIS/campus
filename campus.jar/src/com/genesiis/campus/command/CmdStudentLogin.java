@@ -34,7 +34,7 @@ public class CmdStudentLogin implements ICommand {
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	 HttpSession session;
+	// HttpSession session;
 	String pageURL;
 	String message;
 
@@ -84,8 +84,9 @@ public class CmdStudentLogin implements ICommand {
 							pageURL = "/dist/partials/student/student-dashboard.jsp";
 						}
 
-						session = helper.getSession(true);
+					HttpSession	session = helper.getSession(true);
 						String sessionID = session.getId();
+						log.info("JSESSIONID = "+sessionID);
 						data.setLastLoggedInSessionid(sessionID);
 						session.setAttribute("currentSessionUser",
 								data.getUsername());
