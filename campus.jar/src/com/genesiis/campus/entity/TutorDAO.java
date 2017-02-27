@@ -23,7 +23,8 @@ package com.genesiis.campus.entity;
 //20170214 CW c38-view-update-tutor-profile modified update() method
 //20170216 CW c38-view-update-tutor-profile Add class comment modified findById(), update() methods.
 //20170223 CW c36-add-tutor-information re-organise the import statements.
-//20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
+//20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
+
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -71,7 +72,7 @@ public class TutorDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		int status = -1;
 		
-		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
+		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET PASSWORD = ? , FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
 		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
 		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
@@ -83,46 +84,49 @@ public class TutorDAO implements ICrud {
 		try {			
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
+
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
-			preparedStatement.setString(1, tutor.getFirstName());
-			preparedStatement.setString(2, tutor.getMiddleName());
-			preparedStatement.setString(3, tutor.getLastName());
+			preparedStatement.setString(1, passwordEncryptor.encryptSensitiveDataToString());
+			preparedStatement.setString(2, tutor.getFirstName());
+			preparedStatement.setString(3, tutor.getMiddleName());
+			preparedStatement.setString(4, tutor.getLastName());
 			
-			preparedStatement.setString(4, tutor.getGender());
+			preparedStatement.setString(5, tutor.getGender());
 			
-			preparedStatement.setString(5, tutor.getEmailAddress());
-			preparedStatement.setString(6, tutor.getLandCountryCode());
-			preparedStatement.setString(7, tutor.getLandAreaCode());
-			preparedStatement.setString(8, tutor.getLandNumber());
-			preparedStatement.setString(9, tutor.getMobileCountryCode());
+			preparedStatement.setString(6, tutor.getEmailAddress());
+			preparedStatement.setString(7, tutor.getLandCountryCode());
+			preparedStatement.setString(8, tutor.getLandAreaCode());
+			preparedStatement.setString(9, tutor.getLandNumber());
+			preparedStatement.setString(10, tutor.getMobileCountryCode());
 			
-			preparedStatement.setString(10, tutor.getMobileNetworkCode());
-			preparedStatement.setString(11, tutor.getMobileNumber());
-			preparedStatement.setString(12, tutor.getDescription());
-			preparedStatement.setString(13, tutor.getExperience());
-			preparedStatement.setString(14, tutor.getWebLink());
+			preparedStatement.setString(11, tutor.getMobileNetworkCode());
+			preparedStatement.setString(12, tutor.getMobileNumber());
+			preparedStatement.setString(13, tutor.getDescription());
+			preparedStatement.setString(14, tutor.getExperience());
+			preparedStatement.setString(15, tutor.getWebLink());
 		
-			preparedStatement.setString(15, tutor.getFacebookLink());
-			preparedStatement.setString(16, tutor.getTwitterNumber());
-			preparedStatement.setString(17, tutor.getMySpaceId()); 
-			preparedStatement.setString(18, tutor.getLinkedInLink());
-			preparedStatement.setString(19, tutor.getInstagramId());
+			preparedStatement.setString(16, tutor.getFacebookLink());
+			preparedStatement.setString(17, tutor.getTwitterNumber());
+			preparedStatement.setString(18, tutor.getMySpaceId()); 
+			preparedStatement.setString(19, tutor.getLinkedInLink());
+			preparedStatement.setString(20, tutor.getInstagramId());
 		
-			preparedStatement.setString(20, tutor.getViberNumber());
-			preparedStatement.setString(21, tutor.getWhatsAppId());
+			preparedStatement.setString(21, tutor.getViberNumber());
+			preparedStatement.setString(22, tutor.getWhatsAppId());
 			
-			preparedStatement.setBoolean(22, tutor.getIsApproved()); 
-			preparedStatement.setInt(23, tutor.getTutorStatus());			
-			preparedStatement.setString(24, tutor.getAddressLine1());
+			preparedStatement.setBoolean(23, tutor.getIsApproved()); 
+			preparedStatement.setInt(24, tutor.getTutorStatus());			
+			preparedStatement.setString(25, tutor.getAddressLine1());
 			
-			preparedStatement.setString(25, tutor.getAddressLine2());
-			preparedStatement.setString(26, tutor.getAddressLine3());
-			preparedStatement.setString(27, tutor.getTown());
-			preparedStatement.setInt(28, tutor.getUsertype());		
-			preparedStatement.setString(29, tutor.getModBy());
+			preparedStatement.setString(26, tutor.getAddressLine2());
+			preparedStatement.setString(27, tutor.getAddressLine3());
+			preparedStatement.setString(28, tutor.getTown());
+			preparedStatement.setInt(29, tutor.getUsertype());		
+			preparedStatement.setString(30, tutor.getModBy());
 			
-			preparedStatement.setString(30, tutor.getUsername());
+			preparedStatement.setString(31, tutor.getUsername());
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -169,7 +173,7 @@ public class TutorDAO implements ICrud {
 		String countryName = null;
 		String townName = null;
 					
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.PASSWORD, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
 		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
 		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
 		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
@@ -190,9 +194,12 @@ public class TutorDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleTutorList = new ArrayList<String>();		
 				
+				Encryptable passwordEncryptor = new TripleDesEncryptor();
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
+				//singleTutorList.add(passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD"))); // commented until password Encryption error fixed
+				singleTutorList.add("PASSWORD");
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
