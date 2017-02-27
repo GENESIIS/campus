@@ -1,52 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161028 CM c13-Display-course-details INIT Validator.java
-//20161115 CM c13-Display-course-details added calculateYears(String duration),calculateMonths() ,calculateWeeks(),calculateDays() methods.
-//20161201 CW c36-Display-course-details modified method exception log errors
-//20161201 CW c36-Display-course-details removed un wanted comments
-//20170106 CW c36-add-tutor-details Added isValidUserName() method
-//20170108 CW c36-add-tutor-details Added isValidFirstname() method
-//20170108 CW c36-add-tutor-details Added isValidLastname() method
-//20170108 CW c36-add-tutor-details Added isValidMobileCountryCode() method
-//20170108 CW c36-add-tutor-details Added isValidMobileNetworkCode() method
-//20170108 CW c36-add-tutor-details Added isValidMobileNumber() method
-//20170108 CW c36-add-tutor-details Added isValidLandCountryCode() method
-//20170108 CW c36-add-tutor-details Added isValidLandAreaCode() method
-//20170108 CW c36-add-tutor-details Added isValidLandNumber() method
-//20170108 CW c36-add-tutor-details Added isValidAddressLine1() method
-//20170109 CW c36-add-tutor-details modified isValidUserName() method
-//20170109 CW c36-add-tutor-details modified isValidFirstname() method
-//20170109 CW c36-add-tutor-details modified isValidLastname() method
-//20170109 CW c36-add-tutor-details modified isValidMobileCountryCode() method
-//20170109 CW c36-add-tutor-details modified isValidMobileNetworkCode() method
-//20170109 CW c36-add-tutor-details modified isValidMobileNumber() method
-//20170109 CW c36-add-tutor-details modified isValidLandCountryCode() method
-//20170109 CW c36-add-tutor-details modified isValidLandAreaCode() method
-//20170109 CW c36-add-tutor-details modified isValidLandNumber() method
-//20170109 CW c36-add-tutor-details modified isValidAddressLine1() method
-//20170109 CW c36-add-tutor-details modified validateTutorFields() method
-//20170109 CW c36-add-tutor-details added isValidUserNameLength() method
-//20170111 CW c36-add-tutor-details modified validateTutorFields() method, isValidURL(), isValidWhatsappViber(), isValidUserNameLength() methods added
-//20170117 CW c36-add-tutor-details added validateEmailAvailability() method
-//20170125 CW c36-add-tutor-details modify isValidUserNameLength().
-//20170125 CW c36-add-tutor-details removed validateEmailAvailability(), isValidUserName() methods.
-//20170125 CW c36-add-tutor-details added validateForNull() method
-//20170126 CW c36-add-tutor-details changed the name of validateForNull() method to isHavingNullValues() & modified validateTutorFields
-//20170130 CW c36-add-tutor-details modified import statements & removed un-used methods
-//20170131 CW c36-add-tutor-details add validatePassword() method & modified validateTutorFields() method
-//20170130 CW c36-add-tutor-details modified validateTutorFields() method
-//20170209 CW c38-view-update-tutor-profile add validateUserAndEmail() method.
-//20170209 CW c38-view-update-tutor-profile modified isHavingNullValues() method.
-//20170209 CW c38-view-update-tutor-profile modified validatePassword() method name to isValidPassword().
-//20170212 CW c38-view-update-tutor-profile modified isValidNetworkCode(), isValidLastname(), isValidContactNumber(), isValidAddressLine1() methods & validateTutorFields() - modify comment
-//20170213 CW c38-view-update-tutor-profile modified validateTutorFields(), isValidFirstname() methods & validateUserAndEmail() method name modified to isValidUserAndEmail().
-//20170214 CW c38-view-update-tutor-profile modified isValidCountryCode(), isValidNetworkCode(), isValidContactNumber(), isValidUserAndEmail() & isHavingNullValues() methods
-//20170215 CW c38-view-update-tutor-profile Add class comment
-//20170216 CW c38-view-update-tutor-profile modified isValidWhatsappViber() method 
-//20170223 CW c36-add-tutor-information re-organise the import statements
-//20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
-//20170226 CW Copied isEmptyOrHavingSpace() from c36-add-tutor-information.
-//20170226 CW c38-view-update-tutor-profile modified isHavingNullValues() to use isEmptyOrHavingSpace method
+//20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -251,6 +206,9 @@ public class Validator {
 			}
 			if (!isValidWhatsappViber(helper.getParameter("viber"))) {
 				helper.setAttribute("viberError", SystemMessage.VIBERERROR.message());
+				isValid = false;
+			}
+			if (!isValidPassword(helper.getParameter("password"), helper.getParameter("confirmPassword"), helper)) {
 				isValid = false;
 			}
 
@@ -495,6 +453,49 @@ public class Validator {
 		}
 		return valid;
 	}
+	
+	
+	/**
+	 * Check the entered password is a valid one & is it same with confirmPassword value
+	 * 
+	 * @author Chinthaka
+	 * @param password, confirmPassword
+	 * @return String - Returns boolean value False if the requested password & confirmPassword are not same & not valid in lengths
+	 */
+	public boolean isValidPassword(String password, String confirmPassword, IDataHelper helper) throws Exception {
+		int validityNumber = 0; 
+		boolean message = true;
+		try {
+
+			if (!(isNotEmpty(password))){ // check for null fields
+				validityNumber = 1;
+				helper.setAttribute("passwordError", SystemMessage.EMPTYPASSWORD.message());
+				message = false;
+			}
+			
+			if(!(isNotEmpty(confirmPassword))){ // check for null fields
+				helper.setAttribute("passwordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+				message = false;
+				validityNumber = 2;
+			}
+			
+			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
+				message = false;
+			}
+			
+			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
+				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
+				message = false;
+			}
+
+		} catch (Exception e) {
+			log.error("isValidPassword:  Exception" + e.toString());
+			throw e;
+		}
+		return message;
+	}
+	
 	
 	/**
 	 * Validate Tutor username & email given. 
