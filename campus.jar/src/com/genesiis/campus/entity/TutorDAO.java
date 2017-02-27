@@ -24,6 +24,7 @@ package com.genesiis.campus.entity;
 //20170216 CW c38-view-update-tutor-profile Add class comment modified findById(), update() methods.
 //20170223 CW c36-add-tutor-information re-organise the import statements.
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
+//20170227 CW c37-tutor-update-tutor-profile-cw removed un wanted commented lines
 
 
 import com.genesiis.campus.entity.model.Tutor;
@@ -198,7 +199,6 @@ public class TutorDAO implements ICrud {
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
-				//singleTutorList.add(passwordEncryptor.decryptSensitiveDataToString(rs.getString("PASSWORD"))); // commented until password Encryption error fixed
 				singleTutorList.add("PASSWORD");
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
