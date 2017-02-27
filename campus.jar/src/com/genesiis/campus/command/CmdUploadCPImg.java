@@ -29,6 +29,11 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+/**
+ * This class handles the uploading functionality of the cp logo/image.
+ * @author pabodha
+ *
+ */
 public class CmdUploadCPImg implements ICommand {
 	static Logger log = Logger.getLogger(CmdUploadCPImg.class.getName());
 	
@@ -131,7 +136,7 @@ public class CmdUploadCPImg implements ICommand {
 	 * Rename uploaded image according to the format given.
 	 * @param uploadPathConf - type of the uploaded image (small logo, large logo etc)
 	 * @param courseProviderCode - course provider ID.
-	 * @return
+	 * @return String : formatted file name.
 	 */
 	private String createFileName(String uploadPathConf, int courseProviderCode) {
 		String subName = "";
