@@ -2,7 +2,7 @@ package com.genesiis.campus.entity;
 //20161026 Dn c10-contacting-us-page created the initial version of SystemConfigDAO.java
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
-//20170226 PN CAM-48: logger state changed INFO into ERROR.
+//20170226 PN CAM-48: logger state changed INFO into ERROR. Method doc comments added. findById(Object object,Connection conn) method, exception handling catch blocks are modified.
 
 import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.ConnectionManager;
@@ -101,6 +101,10 @@ public class SystemConfigDAO implements ICrud {
 		return valueCollection;
 	}
 
+	/**
+	 * Returns all the records in SYSTEMCONFIG table 
+	 * @return Collection<Collection<String>> A Collection wrapping the values fetched from DB. 
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		final Collection<Collection<String>> allConfigList = new ArrayList<Collection<String>>();
@@ -162,6 +166,20 @@ public class SystemConfigDAO implements ICrud {
 		return 0;
 	}
 	
+	/**
+	 * Returns the record in SYSTEMCONFIG table, whose value for SYSTEMCONFIGCODE column matches 
+	 * the String accepted as the parameter to the method.	 * 
+	 * 
+	 * @param code An Object, whose actual value is expected to be of type String, that the 
+	 * record to be selected must contain as the value for its SYSTEMCONFIGCODE column
+	 * 
+	 * @param Shared connection from another method.
+	 * 
+	 * @return Collection<Collection<String>> A Collection wrapping the values fetched from DB. 
+	 * Although Collection of Collection<String> is returned, there will almost always actually 
+	 * be data of only one record. 
+	 *  
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object object,
 			Connection conn) throws SQLException, Exception {
@@ -208,12 +226,12 @@ public class SystemConfigDAO implements ICrud {
 		} catch (SQLException sqle){
 			log.error("findById(Object object,Connection conn):SQLException :" +sqle.toString());
 			throw sqle;	
+		}catch (Exception e){
+			log.error("findById(Object object,Connection conn):Exception :" +e.toString());
+			throw e;	
 		} finally {
 			if (prstmtFind != null) {
 				prstmtFind.close();
-			}
-			if (conn != null) {
-				conn.close();
 			}
 			if (resultSet != null) {
 				resultSet.close();
