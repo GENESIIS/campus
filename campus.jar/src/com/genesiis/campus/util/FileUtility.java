@@ -25,6 +25,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+/**
+ * This file handles all the file related tasks Cut, copy, paste, rename, save and delete relevant to cp image/logo uploading.
+ * @author pabodha
+ *
+ */
 public class FileUtility {
 
 	private static Logger log = Logger.getLogger(FileUtility.class.getName());
@@ -408,7 +413,7 @@ public class FileUtility {
 	 * @param uploadPath
 	 * @param fileName
 	 * @param file
-	 * @return
+	 * @return File - copt of given file to upload.
 	 */
 	public File createCopyofFile(String uploadPath, String fileName, File file){
 		if (file.exists()){
