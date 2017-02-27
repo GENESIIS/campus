@@ -368,10 +368,78 @@ body, html {
   .tutors-screen .screen-container {
     padding-top: 36px;
     display: block;
-    width: 90%;
+    width: 92%;
     position: relative;
     margin-right: auto;
     margin-left: auto; }
+    .tutors-screen .screen-container .filter-path ol {
+      font-size: 20px;
+      line-height: 35px; }
+    .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar {
+      display: block;
+      background: #2f66c2;
+      width: 100%; }
+      .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar .drop-holder {
+        line-height: 66px; }
+        .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar .drop-holder input {
+          height: 40px;
+          background: #4065a4;
+          border: 1px solid #96b3e4;
+          padding-left: 18px;
+          width: 100%;
+          color: #fff; }
+    .tutors-screen .screen-container .result-panel .search-result-view table thead th {
+      text-align: center;
+      color: #313131;
+      font-size: 18px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .tutor-prof-image {
+      text-align: center;
+      padding-top: 25px;
+      display: block; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .tutor-prof-image img {
+        width: 100px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details {
+      display: block;
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details a {
+        color: #3a8af7;
+        font-size: 18px;
+        font-family: "Slabo 27px", serif;
+        padding-bottom: 5px;
+        display: block; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details a:hover {
+          text-decoration: underline !important; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details h3 {
+        color: #3b434c;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 26px; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details h3 span {
+          color: #7d7d7d;
+          font-family: Arial;
+          font-size: 14px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-subjects {
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-subjects ul li {
+        color: #7e7e7e;
+        font-family: Arial;
+        font-size: 15px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications {
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications label {
+        color: #3b434c;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications ul {
+        margin-bottom: 18px; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications ul li {
+          color: #7e7e7e;
+          font-family: Arial;
+          font-size: 15px;
+          line-height: 26px; }
 
 /* Modules */
 .btn-home {

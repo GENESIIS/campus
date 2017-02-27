@@ -240,7 +240,7 @@ $(document).ready(function() {
 	<footer>
 		<div class="ft-top"></div>
 		<div class="ft-bottom text-center">
-			<label for="Copyright">Copyright © Campus.lk</label>
+			<label for="Copyright">Copyright ï¿½ Campus.lk</label>
 		</div>
 	</footer>
 </body>
