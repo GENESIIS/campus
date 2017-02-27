@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20161028 CM c13-Display-course-details INIT Validator.java
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
+//20170227 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to add validations for empty values
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -479,12 +480,12 @@ public class Validator {
 				validityNumber = 2;
 			}
 			
-			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
+			if (validityNumber != 1 && !isEmptyOrHavingSpace(password) && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
 				message = false;
 			}
 			
-			if (validityNumber != 1 && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
+			if (validityNumber != 1 && !isEmptyOrHavingSpace(password) && !isEmptyOrHavingSpace(confirmPassword) && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
 				message = false;
 			}
