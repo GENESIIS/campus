@@ -36,7 +36,7 @@ public class CmdStudentLogout implements ICommand {
 		try {
 			if (curentSession == null) {
 				log.info("allready logout");
-				pageURL = "/index.jsp";
+				pageURL = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
 			} else {
 
 				log.info("not logout yet");
