@@ -21,8 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
 <!-- Bootstrap & CSS Style-->
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
 
@@ -65,8 +64,8 @@
         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 clearfix">
             <h2 class="page-topic-t3">Forgot Your Password ?</h2>
             <h3 class="sub-topic-t1">Enter your email address below to reset your password.</h3>
-            <div class="fp-msg fp-msg-error">
-                <label for="error-msg" class="error-msg" id="emailveryMessage">
+            <div class="fp-msg">
+                <label for="error-msg" class="error-msg">
                     <span class="error-txt" id="emailveryMessage"></span>
                 </label>
             </div>
@@ -112,7 +111,7 @@
 
 
                                 <div class="form-group has-error ">
-                                    <div class="fp-msg fp-msg-success">
+                                    <div class="fp-msg">
                                         <label for="username">
                                             <span class="error-txt" id="verifyMesssage"></span>
                                         </label>

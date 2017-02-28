@@ -753,12 +753,7 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
-@media only screen and (min-width: 900px) {
-  .login-dialog {
-    width: 900px; } }
-@media only screen and (max-width: 899px) and (min-width: 768px) {
-  .login-dialog {
-    width: 90%; } }
+/* Login Screen */
 .modal-header {
   border-bottom: none; }
   .modal-header .close {
@@ -789,7 +784,7 @@ body, html {
       font-size: 1em;
       background: #4889F1;
       padding: 10px 12px;
-      border-color: none; }
+      border: none; }
     .modal-content .modal-body .form-user .forgot-pwd {
       display: block;
       font-size: 0.8em; }
@@ -963,43 +958,34 @@ body, html {
         color: #8eabc3; }
 
 /* Common error msgs to forgot password page : fp - forgot password */
-.fp-msg-error {
+.fp-msg {
   display: block;
   min-height: 30px;
   margin-bottom: 15px; }
-  .fp-msg-error label {
+  .fp-msg label {
     margin-top: 10px;
     width: 100%;
-    color: #d67900;
-    display: block;
-    background-color: #ffe0e0;
-    border-left: 4px solid #d67900; }
-    .fp-msg-error label span {
-      font-size: 16px;
-      font-family: "Roboto", sans-serif;
-      color: #d67900;
-      display: block;
-      padding: 8px;
-      line-height: 20px; }
+    display: block; }
+
+.fp-msg-error {
+  background-color: #ffe0e0;
+  border-left: 4px solid #d67900;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #d67900;
+  display: block;
+  padding: 8px;
+  line-height: 20px; }
 
 .fp-msg-success {
+  background-color: #c5eebf;
+  border-left: 4px solid #3cb878;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #2b9862;
   display: block;
-  min-height: 30px;
-  margin-bottom: 15px; }
-  .fp-msg-success label {
-    margin-top: 10px;
-    width: 100%;
-    color: #3a6634;
-    display: block;
-    background-color: #c5eebf;
-    border-left: 4px solid #3cb878; }
-    .fp-msg-success label span {
-      font-size: 16px;
-      font-family: "Roboto", sans-serif;
-      color: #2b9862;
-      display: block;
-      padding: 8px;
-      line-height: 20px; }
+  padding: 8px;
+  line-height: 20px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
@@ -1063,6 +1049,13 @@ body, html {
 @media only screen and (min-width: 992px) and (max-width: 1024px) {
   .pwrd-reset-screen {
     width: 85% !important; } }
+/* Media Queries for login */
+@media only screen and (min-width: 900px) {
+  .login-dialog {
+    width: 900px; } }
+@media only screen and (max-width: 899px) and (min-width: 768px) {
+  .login-dialog {
+    width: 90%; } }
 /* Modules */
 .btn-home {
   display: block;

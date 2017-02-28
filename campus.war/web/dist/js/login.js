@@ -160,13 +160,13 @@ function forgotPassword() {
 	// email filed validation error messages handling
 	if (!(emailempty)) {
 	//	document.getElementById('emailveryMessage').innerHTML = "  ** Email can not be Empty.";
-		jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html('** Email can not be Empty.');
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html('** Email can not be Empty.');
 		flag = false;
 		return false;
 	}
 	if (!(valEmail)) {
 	//	document.getElementById('emailveryMessage').innerHTML = "  ** Please Enter valid email address.";
-		jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html('  ** Please Enter valid email address.');
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html('  ** Please Enter valid email address.');
 		flag = false;
 		return false;
 	}
@@ -190,13 +190,13 @@ function forgotPassword() {
 					success : function(response) {
 						if(response['message']=== 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. '){
 						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
-							jQuery('#emailveryMessage').css({'color':'green'}).html(response['message']);
+							jQuery('#emailveryMessage').addClass("fp-msg-success").html(response['message']);
 							setTimeout(function() {
 								$('#verifications-popup').modal('show');
 							}, 5000);
 						}else{
 						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
-							jQuery('#emailveryMessage').css({'color':'red','font-weight':'bold'}).html(response['message']);
+							jQuery('#emailveryMessage').addClass("fp-msg-error").html(response['message']);
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -234,7 +234,7 @@ function verifyCode() {
 	// code filed validation error messages handling
 	if (!(codeEmpty)) {
 	//	document.getElementById('verifyMesssage').innerHTML = "  ** Verify Code can not be Empty.";
-		jQuery('#verifyMesssage').css({'color':'red','font-weight':'bold'}).html('  ** Verify Code can not be Empty.');
+		jQuery('#verifyMesssage').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
@@ -261,10 +261,10 @@ function verifyCode() {
 								|| response['errorMessage'] == "Verification code has been Expired!") {
 
 							//document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
-							jQuery('#verifyMesssage').css({'color':'red','font-weight':'bold'}).html(response['errorMessage']);
+							jQuery('#verifyMesssage').addClass("fp-msg-error").html(response['errorMessage']);
 
 						} else {
-							jQuery('#verifyMesssage').css({'color':'green','font-weight':'bold'}).html(response['errorMessage']);
+							jQuery('#verifyMesssage').addClass("fp-msg-success").html(response['errorMessage']);
 							setTimeout(function() {
 								
 								var firstName = "";
@@ -350,7 +350,7 @@ function changedPassword() {
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
 	//	document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
-		jQuery('#passWordError').css({'color':'red','font-weight':'bold'}).html('  ** Verify Code can not be Empty.');
+		jQuery('#passWordError').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
@@ -374,13 +374,13 @@ function changedPassword() {
 					success : function(response) {
 					
 						if (response['message'] === "Password successfully changed.") {
-							jQuery('#message').css({'color':'green','font-weight':'bold'}).html(response['message']);
+							jQuery('#message').addClass("fp-msg-success").html(response['message']);
 							setTimeout(function() {
 								window.location.href = response['pageURL'];
 							}, 4000);
 						}
 						else{
-							jQuery('#message').css({'color':'red','font-weight':'bold'}).html(response['message']);
+							jQuery('#message').addClass("fp-msg-error").html(response['message']);
 						}
 					},
 					error : function(response, error, errorThrown) {

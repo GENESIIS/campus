@@ -1,7 +1,8 @@
 /**
  * 
  * //20161027 AS C8-inquiry-form-for-course validation.js  created.
- * 
+ * 20170228 TR C22 added .removeClass jquery line into clearField function 
+ *
  */ 
  
 
@@ -76,6 +77,7 @@ function isPatternMatch(regularExpression, source) {
  */
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
+	$('#emailveryMessage').removeClass("fp-msg-error");
 }
 
 
