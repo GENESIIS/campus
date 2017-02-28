@@ -23,10 +23,9 @@ package com.genesiis.campus.command;
 //20170221 CW c36-add-tutor-details removed validateUserAndEmail() method.
 //20170221 CW c36-add-tutor-details modified execute() method to stop view entered data if successfully added into the database.
 //20170222 CW c36-add-tutor-details modified execute() method to to stop message error
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+//20170228 CW c36-add-tutor-details removed validateAvailability() since it's not using anymore.
+//20170228 CW c36-add-tutor-details add validateUsernameEmailFields(), isValidUserAndEmailBeforeAddTutor() method to validate the user entered usename & email availability in the database.
+				// modified execute() to call isValidUserAndEmailBeforeAddTutor()
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -39,7 +38,14 @@ import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
+
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.TreeSet;
+
 
 /**
  * CmdAddTutorProfile class handles the tutor profile saving
@@ -72,8 +78,8 @@ public class CmdAddTutorProfile implements ICommand {
 		try {
 				setVariables(helper,tutor);
 				fillTutorCollection(tutorCollection, tutor);
-								
-				if (validator.validateTutorFields(helper)) {													
+											
+				if (validator.validateTutorFields(helper) && isValidUserAndEmailBeforeAddTutor(helper)) {													
 	
 					UserTypeDAO typeOfUser = new UserTypeDAO();					
 					Collection<Collection<String>> userTypeCollection = typeOfUser.findById(UserType.TUTOR_ROLE.name());
@@ -115,36 +121,6 @@ public class CmdAddTutorProfile implements ICommand {
 		}
 		return view;
 	}	
-
-	
-	/**
-	 * Validate Tutor username & email for availability.
-	 * @author Chinthaka
-	 * @param helper
-	 * @return String
-	 * @throws Exception
-	 */
-	public String validateAvailability(IDataHelper helper) throws SQLException, Exception {
-
-		String message = "True"; 
-		int type = 0;
-		try {		
-				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
-				
-				if(type == 1){
-					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				} else if(type == 2){
-					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				}
-		} catch (SQLException sqlException) {
-			log.info("validateAvailability(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("validateAvailability(): Exception " + e.toString());
-			throw e;
-		} 
-		return message;
-	}
 
 	/*
 	 * setVariables() method initializes all the instance variable
@@ -412,5 +388,108 @@ public class CmdAddTutorProfile implements ICommand {
 		tutorCollection.add(tutor.getEmailAddress());
 		tutorCollection.add(tutor.getUsername());
 		
+	}	
+
+	/**
+	 * Validate Tutor username & email given before save tutor details to database. 
+	 * @author Chinthaka
+	 * @param helper
+	 * @return boolean : return false if user name or email is having an error
+	 * @throws Exception
+	 */
+	public boolean isValidUserAndEmailBeforeAddTutor(IDataHelper helper) throws SQLException, Exception{
+
+		boolean valid = true; 
+		int type = 0;
+		try {		
+			
+			if(Validator.isEmptyOrHavingSpace(helper.getParameter("username"))){
+				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
+				valid = false;
+			}
+
+			if(Validator.isEmptyOrHavingSpace(helper.getParameter("email"))){
+				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
+				valid = false;
+			}
+			
+			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
+				valid = false;
+			} 
+	
+			type = validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
+		
+			if(type == 1){
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+				valid = false;
+			} 
+			
+			if(type == 2){
+				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+				valid = false;
+			} 
+			
+			if(type == 3){
+				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+				valid = false;
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("isValidUserAndEmailBeforeAddTutor(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("isValidUserAndEmailBeforeAddTutor(): Exception " + e.toString());
+			throw e;
+		} 
+		return valid;
+	}
+	
+	/**
+	 * Check the email & username given with already entered username & email in the database 
+	 * @author Chinthaka 
+	 * @return Returns 1 if both username & email are available in the database, returns 1 if the username is available in the database, 
+	 * 				returns 2 if the email is available & returns 0 if both are not used to create a tutor profile.
+	 */
+	public static int validateUsernameEmailFields(String username, String email) throws SQLException, Exception {		
+
+		Collection<Collection<String>> allUsernameEmailList = new ArrayList<Collection<String>>();
+		int validStatus = 0;
+		
+		try {
+			allUsernameEmailList = TutorDAO.getListOfUsernameEmail(username, email);
+
+			final TreeSet<Integer> treeOfData = new TreeSet<Integer>();
+			
+			for (Collection<String>usernameEmailList : allUsernameEmailList){
+				if(usernameEmailList.toArray()[0].toString().equals(username) && usernameEmailList.toArray()[1].toString().equals(email)){
+					treeOfData.add(1);
+				}else if(usernameEmailList.toArray()[0].toString().equals(username)){
+					treeOfData.add(2);
+				}else if(usernameEmailList.toArray()[1].toString().equals(email)){
+					treeOfData.add(3);
+				}
+			}
+
+			if(treeOfData.contains(1) || (treeOfData.contains(2) && treeOfData.contains(3))){
+				validStatus = 1;
+			}else{
+				if(treeOfData.contains(2) && !treeOfData.contains(3)){
+					validStatus = 2;
+				}
+				if(!treeOfData.contains(2) && treeOfData.contains(3)){
+					validStatus = 3;
+				}
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			throw e;
+		}
+		return validStatus;
 	}
 }
