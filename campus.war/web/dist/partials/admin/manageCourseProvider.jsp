@@ -6,6 +6,7 @@
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
+<!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions  -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -138,7 +139,7 @@
 										</c:if>
 										<c:if test="${accountTypes.typeValue != 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" disabled="disabled"
+												value="${accountTypes.typeValue}" 
 												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
 										</c:if>
 									</c:forEach>
