@@ -27,7 +27,7 @@ package com.genesiis.campus.entity;
 //20170227 CW c37-tutor-update-tutor-profile-cw removed un wanted commented lines
 //20170227 CW c37-tutor-update-tutor-profile-cw modified update method to create the query dynamically & update password if available
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method & changed the variable declaration position
-
+//20170228 CW c37-tutor-update-tutor-profile-cw modified update method update method to fix The index 30 is out of range.
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -77,6 +77,8 @@ public class TutorDAO implements ICrud {
 		int status = -1;
 		
 		try {
+			final Tutor tutor = (Tutor) object;
+			
 			StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 			queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
 			queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
@@ -84,11 +86,16 @@ public class TutorDAO implements ICrud {
 			queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
 			queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
 			queryBuilder.append("MODBY = ? ");	
+			
+			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
+				queryBuilder.append("PASSWORD = ? ");	
+				queryBuilder.append("WHERE USERNAME = ?;");
+			}else{
+				queryBuilder.append("WHERE USERNAME = ?;");
+			}
 					
-			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
-			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, tutor.getFirstName());
 			preparedStatement.setString(2, tutor.getMiddleName());
@@ -129,12 +136,9 @@ public class TutorDAO implements ICrud {
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
 				Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
-				queryBuilder.append("PASSWORD = ? ");	
-				queryBuilder.append("WHERE USERNAME = ?;");
 				preparedStatement.setString(30, passwordEncryptor.encryptSensitiveDataToString());
 				preparedStatement.setString(31, tutor.getUsername());
 			}else{
-				queryBuilder.append("WHERE USERNAME = ?;");
 				preparedStatement.setString(30, tutor.getUsername());
 			}
 			
