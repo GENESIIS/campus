@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20170227 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields(), isValidPassword() to validate password fields
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to check for Old Password, New Password & Confirm Password 
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() & remove oldPassword null checking
+//20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to work with encrypted passwords
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -475,11 +476,12 @@ public class Validator {
 		String confirmPassword = helper.getParameter("confirmPassword");
 
 		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword);
+		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
 		
 		try {
 			
 			// Old Password is empty means tutor do not need to change the password
-			if(!(isEmptyOrHavingSpace(oldPassword)) && !(helper.getParameter("password").equals(passwordEncryptor.encryptSensitiveDataToString()))){
+			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("password")))  && !(helper.getParameter("password").equals(encryptedOldPassword))){
 				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
 				isValid = false;
 			}else{
