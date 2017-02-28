@@ -18,7 +18,7 @@
  *20170207 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() has been modified
  *				 in such a way that the testable string is process by removing any spaces within 
  *20170227 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() implemented for url validations
- *20170228 DN c131-admin-manage-banner-upload-banner-image-dn onChangeEvent() has been initialized, changed urlTest() method.
+ *20170228 DN c131-admin-manage-banner-upload-banner-image-dn  changed urlTest() method.
  *
  */ 
 

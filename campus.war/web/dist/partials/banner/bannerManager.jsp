@@ -105,17 +105,17 @@
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
-					placeholder="-- Select an Advertiser --">
+					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor')">
 				<datalist id="advertiserList" name="advertiserList"> </datalist>
 				<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
 			</div>
-
 			<br>
+			
 			<div>
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
 				<input id="page" name="page" list="pageList"
-					class="text-field" type="text" placeholder="-- Select a Page --">
+					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor')">
 				<datalist id="pageList" name="pageList"> </datalist>
 				<input type="hidden" id="sPageCode" name="sPageCode" />
 			</div>
@@ -125,18 +125,17 @@
 				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
 				<input id="slot" name="slot"
 					list="slotList" class="text-field" type="text"
-					placeholder="-- Select a Slot --">
+					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor')">
 				<datalist id="slotList" name="slotList"> </datalist>
 				<input type="hidden" id="sSlotCode" name="sSlotCode" />
 			</div>
-
 			<br>
-
 			<div>
 				Duration (Seconds) *&nbsp;
 				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
-				<input id="duration" type='text'>
+				<input id="duration" type='text' onclick="clearField('displayDurationInfor')">
 			</div>
+			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
 				type="radio" name="bannerEnable" value="true" checked="checked"> <label
 				for="bannerEnable">Yes</label> <input type="radio"
@@ -144,24 +143,29 @@
 				for="bannebannerDisablerEnable">No</label>
 			<div></div>
 			<div>
+			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
 				<br> Start date* &nbsp; <input type="date" name="startDate"
 					id="startDate">
 			</div>
 			<br>
 			<div>
+			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
 				End date * &nbsp;<input type="date" name="endtDate" id="endtDate">
 			</div>
 			<br><br>
 			<div>
 			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
 			URL : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl" checked="checked">
+			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl" checked="checked" >
+			&nbsp;&nbsp;
 			Mini Web : &nbsp;&nbsp;
 			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb">
 			Page : &nbsp;&nbsp;
+			&nbsp;&nbsp;
 			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
-			<br><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text'>
+			<br><br>
+			<div id="urlInfor" style ="color:#C70039;"></div><br>			
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor')">
 			</div>
 			<br><br>
 			<!-- Form image submit -->
