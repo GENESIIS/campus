@@ -53,7 +53,16 @@ function studentLogin() {
 
 						if (response['message'] === "valid Username and Password.") {
 							window.location.href = response['pageURL'];
-							getJSessionId();
+						}if(response['message'] === "User Already Logged In"){
+							
+							
+							$(window).scrollTop(0);
+							$('#loginPopup').modal('hide');
+							$('#alreadyLogged-popup').modal('show');
+							setTimeout( function(){
+								window.location.href = response['pageURL'];
+								}, 2000);
+							
 						} else {
 							document.getElementById('errorMesssage').innerHTML = response['message'];
 						}
@@ -126,14 +135,21 @@ function studentLogout() {
 			},
 			dataType : "json",
 			success : function(response) {
-				$(window).scrollTop(0);
-				$('#logout-popup').modal('show');
+				if(response['message'] === 'Logout successfull'){
+					$(window).scrollTop(0);
+					$('#logout-popup').modal('show');
+					
+					setTimeout( function(){
+						window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+						}, 5000);
+				}else{
+				
 				 
 				setTimeout( function(){
 					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
 					}, 5000);
 				
-				
+				}
 			},
 			error : function(response,error,errorThrown) {
 				alert("Error " + error);
