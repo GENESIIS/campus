@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
 //20170227 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to add validations for empty values
 //20170227 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields(), isValidPassword() to validate password fields
+//20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to check for Old Password, New Password & Confirm Password 
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -462,12 +463,11 @@ public class Validator {
 	 * Check the entered old password is a valid one & new password is same with confirmPassword value & lengths are acceptable
 	 * 
 	 * @author Chinthaka
-	 * @param password, confirmPassword
+	 * @param IDataHelper helper
 	 * @return boolean - Returns boolean value False if the old Password is not same as the database value or requested new password & confirmPassword are not same & not valid in lengths
 	 */
 	public boolean isValidPassword(IDataHelper helper) throws Exception {
-		int validityNumber = 0; 
-		boolean message = true;
+		boolean isValid = true;
 		
 		String oldPassword = helper.getParameter("oldPassword");
 		String newPassword = helper.getParameter("newPassword");
@@ -478,44 +478,43 @@ public class Validator {
 		try {
 
 			if (isEmptyOrHavingSpace(oldPassword)){ // check for null fields
-				validityNumber = 1;
 				helper.setAttribute("oldPasswordError", SystemMessage.EMPTYPASSWORD.message());
-				message = false;
+				isValid = false;
 			}
 			
 			if(!(isEmptyOrHavingSpace(oldPassword)) && !(helper.getParameter("password").equals(passwordEncryptor.encryptSensitiveDataToString()))){
-				validityNumber = 1;
-				helper.setAttribute("oldPasswordError", SystemMessage.INCORREST_PASSWORD.message());
-				message = false;
-			}
-
-			if (!(isEmptyOrHavingSpace(newPassword))){ // check for null fields
-				validityNumber = 1;
-				helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
-				message = false;
-			}
-			
-			if(!(isEmptyOrHavingSpace(confirmPassword))){ // check for null fields
-				helper.setAttribute("confirmPasswordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
-				message = false;
-				validityNumber = 2;
-			}
-			
-			if (validityNumber != 1 && !isEmptyOrHavingSpace(password) && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
-				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
-				message = false;
-			}
-			
-			if (validityNumber != 1 && !isEmptyOrHavingSpace(password) && !isEmptyOrHavingSpace(confirmPassword) && validityNumber != 2 && !(password.equals(confirmPassword))){ // Compare password & confirm password fields
-				helper.setAttribute("passwordError", SystemMessage.PASSWORDCONFIRMERROR.message());
-				message = false;
+				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
+				isValid = false;
+			}else{
+	
+				if (!(isEmptyOrHavingSpace(newPassword))){ // check for null fields
+					helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
+					isValid = false;
+				}
+				
+				if(!(isEmptyOrHavingSpace(confirmPassword))){ // check for null fields
+					helper.setAttribute("confirmPasswordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+					isValid = false;
+				}
+				
+				//check for the length of the newPassword
+				if (!isEmptyOrHavingSpace(newPassword) && (newPassword.length() < 5) && (newPassword.length() > 21)){ 
+					helper.setAttribute("newPasswordError", SystemMessage.PASSWORDLENGTHERROR.message());
+					isValid = false;
+				}
+				
+				// Compare password & confirm password fields
+				if (!isEmptyOrHavingSpace(newPassword) && !isEmptyOrHavingSpace(confirmPassword) && !(newPassword.equals(confirmPassword))){ 
+					helper.setAttribute("confirmPasswordError", SystemMessage.PASSWORDCONFIRMERROR.message());
+					isValid = false;
+				}
 			}
 
 		} catch (Exception e) {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return message;
+		return isValid;
 	}
 	
 	
