@@ -17,7 +17,9 @@
  *20170118 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() changed the method header comment.
  *20170207 DN C18-student-signup-without-using-third-party-application-test-dn isStringHasValiCharsAndLength() has been modified
  *				 in such a way that the testable string is process by removing any spaces within 
- *20170227 DN CAM131 urlTest() implemented for url validations
+ *20170227 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() implemented for url validations
+ *20170228 DN c131-admin-manage-banner-upload-banner-image-dn onChangeEvent() has been initialized, changed urlTest() method.
+ *
  */ 
 
  
@@ -159,39 +161,45 @@ function isStringHasValiCharsAndLength(testableInput, regex){
  * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*
  * https://www.google.lk
  * www.google.lk
- 
- * @param inputValue
+ * method does not validate urls having ":" in between e.g http://www.campus.dev:8080
+ * @author dushantha DN
  * @param urlInputTextid
  */
-function urlTest(inputValue,urlInputTextid){
-	var urlText = $('#'+urlInputTextid).val();
+function urlTest(urlInputTextid){
+	var urlInputText = $('#'+urlInputTextid).val();
 	var validUrl = false;
-	if(urlText==""|urlText==null){
+	if(urlInputText==""|urlInputText==null){
 		return validUrl;
 	}
-	var urlInputFirstText = urlText.trim().charAt(0);	
+	urlInputText.replace(/\s+/g, ""); // remove spaces between the context
 	var urlPatern = /^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z‌​\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
-	if(urlInputFirstText!="."){
-		validUrl= isPatternMatch(urlPatern,urlInputText);
-	}
+	var urltestingPattern =/^[\p{N}\p{Sm}\p{Z}\p{P} ]+/g;
+	var urlStartPattern = /(http(s)?|ftp)/g;
+	var urlSplitedArray=null;
+	
+		if( isPatternMatch(urlPatern,urlInputText)){ 
+			
+			if(!isPatternMatch(urltestingPattern,urlInputText)){ 
+				
+				
+			/* test for characters placed at the beginning
+			 * e.g :!@%~
+			 * \p{N} matches any kind of numeric character in any script
+			 * \p{Sm} matches any mathematical symbol
+			 * \p{Z} matches any kind of whitespace or invisible separator
+			 * \p{P} matches any kind of punctuation character
+			*/
+				urlSplitedArray = urlInputText.split(':');
+				if((urlSplitedArray.length >1)&(isPatternMatch(urlStartPattern,urlSplitedArray[0]))){
+					
+					//exclude https:genesiis.hipchat.com option
+					validUrl=(urlSplitedArray[1].substring(0,2)=="//");
+				}
+			}
+		}
+		
 	return validUrl;
 }
 
-///*
-// * function will triggers when input field gets changed.
-// * the purpose of the function is to match the users selection
-// * or the type in text against the list that has already been
-// * selected by the system. If the value that user entered does not
-// * confirm to the requirement, then an error message will be displayed,
-// * and the text will be cleared off.
-// */
-//function onChangeEvent(idElement,fieldVarTobeTested,errorDisplayId,userInfromation){
-//	
-//	$('#'+idElement).on("change",function(){
-//		if(fieldVarTobeTested ==""){
-//			$('#'+errorDisplayId).html(userInfromation);
-//			$('#'+idElement).val("");
-//		}
-//	});
-//
-//}
+
+
