@@ -14,6 +14,7 @@ package com.genesiis.campus.controller;
 //20170106 AS CAM-20 Session attributes handled from process method and null sessions also handled
 //20170125 AS CAM-20 unwanted loggers and comments removed.
 //20170131 AS CAM-20 clear cache data in session null stage.
+//20170228 AS CAM-21 Session null checker and result.getCollection() methods removed. 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -82,11 +83,6 @@ public class CampusController extends HttpServlet {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();
 
-			//HttpSession session = request.getSession(false);
-
-//			if (session != null && !session.isNew()) {
-//				String name = (String) session.getAttribute("name");
-
 				if (ResponseType.JSP.equals(responseType)) {
 
 					request.setAttribute("result", result);
@@ -117,34 +113,12 @@ public class CampusController extends HttpServlet {
 					response.getWriter().write(gson.toJson(objectMap));
 					response.setContentType("application/json");
 				}
-		//	} else {
+	
 				  response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
 			      response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
 			      response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
 			      response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
-//				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-//
-//				if (result != null && result.getCollection() != null) {
-//					objectMap.put("result", result.getCollection());
-//				} else {
-//					objectMap.put("result", "NO-DATA");
-//				}
-//
-//				Enumeration<String> attributeNames = request
-//						.getAttributeNames();
-//
-//				while (attributeNames.hasMoreElements()) {
-//					String currentAttributeName = attributeNames.nextElement();
-//					Object object = helper.getAttribute(currentAttributeName);
-//					objectMap.put(currentAttributeName, object);
-//				}
-//
-//				response.getWriter().write(gson.toJson(objectMap));
-//				response.setContentType("application/json");
-//				getServletContext().getRequestDispatcher(
-//						"/dist/partials/login.jsp");
 
-			//}
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
