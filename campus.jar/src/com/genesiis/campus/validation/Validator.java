@@ -45,18 +45,19 @@ package com.genesiis.campus.validation;
 //20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to validate errors in both email & username
 //20170222 CW c36-add-tutor-details modified validateTutorFields() to validate townDetails correctly
 //20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor to give proper email & username error messages
+//20170228 CW c36-add-tutor-details modified validateTutorFields() & removed calling isValidUserAndEmailBeforeAddTutor() & removed isValidUserAndEmailBeforeAddTutor()& validateUsernameEmailFields() methods 
+
+
+import com.genesiis.campus.util.IDataHelper;
+
+import org.apache.log4j.Logger;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jboss.logging.Logger;
-
-import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.util.IDataHelper;
 
 public class Validator {
 
@@ -168,9 +169,7 @@ public class Validator {
 		
 		try {
 			
-			if (!isValidUserAndEmailBeforeAddTutor(helper)) {
-				isValid = false;
-			}
+
 			
 			if (isHavingNullValues(helper)) {
 				isValid = false;
@@ -526,62 +525,6 @@ public class Validator {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return valid;
-	}
-	
-	/**
-	 * Validate Tutor username & email given before save tutor details to database. 
-	 * @author Chinthaka
-	 * @param helper
-	 * @return boolean : return false if user name or email is having an error
-	 * @throws Exception
-	 */
-	public boolean isValidUserAndEmailBeforeAddTutor(IDataHelper helper) throws SQLException, Exception{
-
-		boolean valid = true; 
-		int type = 0;
-		try {		
-			
-			if(isEmptyOrHavingSpace(helper.getParameter("username"))){
-				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
-				valid = false;
-			}
-
-			if(isEmptyOrHavingSpace(helper.getParameter("email"))){
-				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
-				valid = false;
-			}
-			
-			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
-				valid = false;
-			} 
-	
-			type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
-		
-			if(type == 1){
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				valid = false;
-			} 
-			
-			if(type == 2){
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				valid = false;
-			} 
-			
-			if(type == 3){
-				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				valid = false;
-			}
-			
-		} catch (SQLException sqlException) {
-			log.info("isValidUserAndEmailBeforeAddTutor(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("isValidUserAndEmailBeforeAddTutor(): Exception " + e.toString());
-			throw e;
-		} 
 		return valid;
 	}
 }
