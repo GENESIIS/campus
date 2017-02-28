@@ -13,7 +13,8 @@ package com.genesiis.campus.validation;
 //20170209 c38-view-update-tutor-profile-added EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages
 //20170214 c38-view-update-tutor-profile-added INCORRECTDATA.
 //20170223 c38-view-update-tutor-profile-modified EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages.
-//20170227 c37-tutor-update-tutor-profile-cw-added INCORREST_PASSWORD
+//20170227 c37-tutor-update-tutor-profile-cw-added INCORRECT_PASSWORD
+//20170228 c37-tutor-update-tutor-profile-cw-fixed INCORRECT_PASSWORD spelling mistake
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -44,7 +45,7 @@ public enum SystemMessage {
 	UPDATED("Details Updated successfully."),
 	NOMODIFICATIONS("You haven't done any changes."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
-	INCORREST_PASSWORD("Incorrect Old Password ..."),
+	INCORRECT_PASSWORD("Incorrect Old Password ..."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
 	COUNTRYCODEERROR("Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
