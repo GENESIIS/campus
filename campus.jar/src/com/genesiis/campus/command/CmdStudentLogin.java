@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
 //20170227 AS C22-checking Session null condition removed
+//20170228 AS C22- currentSessionUser checked and is there already logged, account redirect to index page.
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -41,12 +42,16 @@ public class CmdStudentLogin implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		HttpSession session;
 		try {
 
-
-				int attempts = 0;
-				pageURL = "/dist/partials/login.jsp";
-				message = SystemMessage.LOGINUNSUCCESSFULL.message();
+			int attempts = 0;
+			pageURL = "/dist/partials/login.jsp";
+			message = SystemMessage.LOGINUNSUCCESSFULL.message();
+			session = helper.getRequest().getSession(false);
+			String currentSessionUser = (String) session.getAttribute("currentSessionUser");
+			log.info(currentSessionUser);
+			if (currentSessionUser == null) {
 
 				String gsonData = helper.getParameter("jsonData");
 				data = getStudentdetails(gsonData);
@@ -57,7 +62,7 @@ public class CmdStudentLogin implements ICommand {
 
 				if (validateResult.equalsIgnoreCase("True")) {
 					data = LoginValidator.dataSeparator(data);
-					
+
 					ICrud loginDAO = new StudentLoginDAO();
 					dataCollection = loginDAO.findById(data);
 
@@ -84,9 +89,9 @@ public class CmdStudentLogin implements ICommand {
 							pageURL = "/dist/partials/student/student-dashboard.jsp";
 						}
 
-					HttpSession	session = helper.getSession(true);
+						session = helper.getSession(true);
 						String sessionID = session.getId();
-						log.info("JSESSIONID = "+sessionID);
+						log.info("JSESSIONID = " + sessionID);
 						data.setLastLoggedInSessionid(sessionID);
 						session.setAttribute("currentSessionUser",
 								data.getUsername());
@@ -108,9 +113,13 @@ public class CmdStudentLogin implements ICommand {
 
 				} else {
 					message = SystemMessage.LOGINUNSUCCESSFULL.message();
-
 				}
-		
+
+			} else {
+				message = SystemMessage.LOGGEDALLREADY.message();
+				pageURL = "/index.jsp";
+			}
+
 			helper.setAttribute("message", message);
 			helper.setAttribute("pageURL", pageURL);
 			view.setCollection(dataCollection);
