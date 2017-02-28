@@ -26,6 +26,7 @@ package com.genesiis.campus.entity;
 //20170227 CW c37-tutor-update-tutor-profile-cw add Password & confirm Password from old CAM-38
 //20170227 CW c37-tutor-update-tutor-profile-cw removed un wanted commented lines
 //20170227 CW c37-tutor-update-tutor-profile-cw modified update method to create the query dynamically & update password if available
+//20170228 CW c37-tutor-update-tutor-profile-cw modified update method & changed the variable declaration position
 
 
 import com.genesiis.campus.entity.model.Tutor;
@@ -87,7 +88,6 @@ public class TutorDAO implements ICrud {
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 
-			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 			
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, tutor.getFirstName());
@@ -128,6 +128,7 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(29, tutor.getModBy());			
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
+				Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 				queryBuilder.append("PASSWORD = ? ");	
 				queryBuilder.append("WHERE USERNAME = ?;");
 				preparedStatement.setString(30, passwordEncryptor.encryptSensitiveDataToString());
