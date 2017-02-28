@@ -8,7 +8,7 @@
 //20170223 JH c141-add-course-provider-issue-improvements providerUsernameValidation():checked for username>100 and error messages changed
 //20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
 //20170227 JH c141-add-course-provider-issue-improvements validateFormURL(): modified to validate URL maximum length
-//20170228 JH c141-add-course-provider-issue-improvements URL validations
+//20170228 JH c141-add-course-provider-issue-improvements isValidMinMaxLength() modified, front end validation method changed due to one off course provider implementation
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -79,16 +79,16 @@ function isPatternMatch(regularExpression, source) {
  */
 function validateFormURL(url, errorElementId, foucsElementId){
 	var flag = true;
-	if (isempty(url) && !ValidURL(url)) {
-		var message = "**Invalid URL.";		
-		document.getElementById(errorElementId ).innerHTML = message;
-		document.getElementById(foucsElementId).focus();
-		flag = false;
-	}
+	
 	
 	if(!isValidMinMaxLength(url, 0,  255)){
-		var message = "**URL is too long.";	
-		document.getElementById(errorElementId ).innerHTML = message;
+		var message2 = "**URL is too long.";	
+		document.getElementById(errorElementId ).innerHTML = message2;
+		document.getElementById(foucsElementId).focus();
+		flag = false;
+	}else if (isempty(url) && !ValidURL(url)) {
+		var message1 = "**Invalid URL.";		
+		document.getElementById(errorElementId ).innerHTML = message1;
 		document.getElementById(foucsElementId).focus();
 		flag = false;
 	}
@@ -117,7 +117,7 @@ function isValidLength(parameter, length) {
  */
 function isValidMinMaxLength(parameter, min, max) {
 	parameter = parameter.trim();
-	return ((parameter > max) || (parameter < min)) ? false : true;
+	return ((parameter.length > max) || (parameter.length < min)) ? false : true;
 }
 
 
@@ -296,28 +296,33 @@ function vaidateCourseProviderDeatils(form) {
 	var cProviderPassword = $("#cProviderPassword").val();
 	var accountStatus = $('input[name=accountStatus]:checked').val();
 	var accountDescription = $("#accountDescription").val();
-	var publishProgram = $('input[name=publishProgram]:checked').val();
-	var currentDate = new Date();
-	var date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
-	var selectedDate = 	$('#expirationDate').val();
-	var accountContactNumber = $("#providerContactNumber").val();
+	
+	//commented until the one off provider feature is implemented
+//	var publishProgram = $('input[name=publishProgram]:checked').val();
+//	var currentDate = new Date();
+//	var date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
+//	var selectedDate = 	$('#expirationDate').val();
+	
 
-		if (date > selectedDate) {
-			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
-			document.getElementById('expirationDate').focus();
-			flag = false;
-		}
-		if (selectedDate === "" || selectedDate===null) {
-			document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
-			document.getElementById('expirationDate').focus();
-			flag = false;
-		}
+//		if (date > selectedDate) {
+//			document.getElementById('errorExpiration').innerHTML = "**Invlid date (Date should be greater than today's date.";
+//			document.getElementById('expirationDate').focus();
+//			flag = false;
+//		}
+//		if (selectedDate === "" || selectedDate===null) {
+//			document.getElementById('errorExpiration').innerHTML = "**Select the expiration date.";
+//			document.getElementById('expirationDate').focus();
+//			flag = false;
+//		}
+	
+	var accountContactNumber = $("#providerContactNumber").val();
 
 	if (!isempty(courseProvider)) {
 		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
 		document.getElementById('courseProvider').focus();
 		flag = false;
 	}
+
 	if (!isValidMinMaxLength(providerName, 1, 200)) {
 		document.getElementById('errorProviderName').innerHTML = "**Provider name is empty or too long.";
 		document.getElementById('providerName').focus();
@@ -368,7 +373,7 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('land1').focus();
 		flag = false;
 	}
-	if (!isPatternMatch(integerPattern, land1)) {
+	if (isempty(courseProvider) && !isPatternMatch(integerPattern, land1)) {
 		document.getElementById('errorLand1').innerHTML = "**Invalid Land phone number.";
 		document.getElementById('land1').focus();
 		flag = false;
@@ -456,64 +461,69 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	
-	if (!isempty(providerPrivateName)
-			|| !isValidLength(providerPrivateName, 100)) {
-		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
-		document.getElementById('providerPrivateName').focus();
-		flag = false;
+	
+	// following validations are only for featured course providers
+	if(courseProvider === 1){
+		if (!isempty(providerPrivateName)
+				|| !isValidLength(providerPrivateName, 100)) {
+			document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
+			document.getElementById('providerPrivateName').focus();
+			flag = false;
+		}
+		if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail)) {
+			document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
+			document.getElementById('providerEmail').focus();
+			flag = false;
+		}
+		if (isPatternMatch(integerPattern, providerUsername)) {
+			document.getElementById('errorUsername').innerHTML = "** Username can't contain only numbers.";
+			document.getElementById('providerUsername').focus();
+			flag = false;
+		}
+		if (!isempty(providerUsername) || !isValidLength(providerUsername, 100)) {
+			document.getElementById('errorUsername').innerHTML = "** Username is empty or too long.";
+			document.getElementById('providerUsername').focus();
+			flag = false;
+		}
+		if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
+			document.getElementById('errorProviderPassword').innerHTML = "**Password field(s) is empty.";
+			document.getElementById('providerPassword').focus();
+			flag = false;
+		}
+		if (isempty(providerPassword) && providerPassword.length < 6) {
+			document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
+			document.getElementById('providerPassword').focus();
+			flag = false;
+		}
+		if ((isempty(providerPassword) || providerPassword.length < 6)
+				&& !isempty(cProviderPassword)
+				&& (providerPassword != cProviderPassword)) {
+			document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
+			document.getElementById('cProviderPassword').focus();
+			flag = false;
+		}
+		if (cProviderPassword.length > 100) {
+			document.getElementById('errorProviderPassword').innerHTML = "**Password is too long.";
+			document.getElementById('providerPassword').focus();
+			flag = false;
+		}
+		if (accountStatus === null || accountStatus === undefined) {
+			document.getElementById('errorStatus').innerHTML = "**Select the account status.";
+			document.getElementById('accountStatus').focus();
+			flag = false;
+		}
+		if (!isValidLength(accountDescription, 4000)) {
+			document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
+			document.getElementById('accountDescription').focus();
+			flag = false;
+		}
+		if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
+			document.getElementById('errorContactNumber').innerHTML = "**Invlaid or empty contact number.";
+			document.getElementById('providerContactNumber').focus();
+			flag = false;
+		}
 	}
-	if (!isempty(providerEmail) || !isValidEmailFormat(providerEmail)) {
-		document.getElementById('errorPrivateEmail').innerHTML = "**Give a private contact email of the course provider.";
-		document.getElementById('providerEmail').focus();
-		flag = false;
-	}
-	if (isPatternMatch(integerPattern, providerUsername)) {
-		document.getElementById('errorUsername').innerHTML = "** Username can't contain only numbers.";
-		document.getElementById('providerUsername').focus();
-		flag = false;
-	}
-	if (!isempty(providerUsername) || !isValidLength(providerUsername, 100)) {
-		document.getElementById('errorUsername').innerHTML = "** Username is empty or too long.";
-		document.getElementById('providerUsername').focus();
-		flag = false;
-	}
-	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Password field(s) is empty.";
-		document.getElementById('providerPassword').focus();
-		flag = false;
-	}
-	if (isempty(providerPassword) && providerPassword.length < 6) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
-		document.getElementById('providerPassword').focus();
-		flag = false;
-	}
-	if ((isempty(providerPassword) || providerPassword.length < 6)
-			&& !isempty(cProviderPassword)
-			&& (providerPassword != cProviderPassword)) {
-		document.getElementById('errorCProviderPassword').innerHTML = "**Confirm password does not match.";
-		document.getElementById('cProviderPassword').focus();
-		flag = false;
-	}
-	if (cProviderPassword.length > 100) {
-		document.getElementById('errorProviderPassword').innerHTML = "**Password is too long.";
-		document.getElementById('providerPassword').focus();
-		flag = false;
-	}
-	if (accountStatus === null || accountStatus === undefined) {
-		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
-		document.getElementById('accountStatus').focus();
-		flag = false;
-	}
-	if (!isValidLength(accountDescription, 4000)) {
-		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
-		document.getElementById('accountDescription').focus();
-		flag = false;
-	}
-	if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
-		document.getElementById('errorContactNumber').innerHTML = "**Invlaid or empty contact number.";
-		document.getElementById('providerContactNumber').focus();
-		flag = false;
-	}
+
 
 	return flag;
 }

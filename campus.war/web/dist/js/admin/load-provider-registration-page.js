@@ -81,6 +81,7 @@ function changeRequiredData(typeValue) {
 	if (window.accountType == 1) {
 
 		$('#providerPrivateName').val("");
+		$('#providerContactNumber').val("");
 		$('#providerEmail').val("");
 		$('#providerUsername').val("");
 		$('#providerPassword').val("");
@@ -96,6 +97,7 @@ function changeRequiredData(typeValue) {
 		document.getElementById("accountInfo").style.display = "none";
 
 		$('#providerPrivateName').val("common name");
+		$('#providerContactNumber').val("common contact number");
 		$('#providerEmail').val("common");
 		$('#providerUsername').val("common");
 		$('#providerPassword').val("common");
@@ -330,13 +332,11 @@ function landPhoneNubmerHelper() {
 	if (!isempty(country)) {
 		
 		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
-		document.getElementById('errorLand2').innerHTML = "**Please select your country.";
 		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
 		
 	}else{
 		 if (!isempty(areaCode)) {
 			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
-			document.getElementById('errorLand2').innerHTML = "**Area code is empty.";
 
 		}if(!isempty(networkCode)){
 			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
@@ -363,7 +363,6 @@ function landPhoneNubmerHelper() {
 				}
 			} else {
 				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
-				document.getElementById('errorLand2').innerHTML = "Area code invalid.";
 			}
 
 
