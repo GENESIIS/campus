@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161026 Dn c10-contacting-us-page findById(Object object,Connection conn) created
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 //20170226 PN CAM-48: logger state changed INFO into ERROR. Method doc comments added. findById(Object object,Connection conn) method, exception handling catch blocks are modified.
+//20170228 PN CAM-48: ResultSet JDBC recourse closed in getAll() method and findById() method.
 
 import com.genesiis.campus.entity.model.SystemConfiguration;
 import com.genesiis.campus.util.ConnectionManager;
@@ -57,7 +58,7 @@ public class SystemConfigDAO implements ICrud {
 		final Collection<Collection<String>> valueCollection = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+		ResultSet rs = null;
 		try {
 			String systemConfigCode = (String) code;
 			
@@ -68,7 +69,7 @@ public class SystemConfigDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, systemConfigCode);
-			ResultSet rs = ps.executeQuery();			
+			rs = ps.executeQuery();			
 
 			while (rs.next()) {
 				final ArrayList<String> singleRecord = new ArrayList<String>();
@@ -96,6 +97,9 @@ public class SystemConfigDAO implements ICrud {
 			if (conn != null) {
 				conn.close();
 			}
+			if (rs != null) {
+				rs.close();
+			}
 		}
 		
 		return valueCollection;
@@ -110,13 +114,13 @@ public class SystemConfigDAO implements ICrud {
 		final Collection<Collection<String>> allConfigList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [CODE],[SYSTEMCONFIGCODE],[DESCRIPTION],[VALUE1],[VALUE2],[VALUE3],[SORTKEY] FROM [CAMPUS].[SYSTEMCONFIG];";
 
 			stmt = conn.prepareStatement(query);
-			final ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				final ArrayList<String> singleConfigList = new ArrayList<String>();
@@ -143,6 +147,9 @@ public class SystemConfigDAO implements ICrud {
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rs != null) {
+				rs.close();
 			}
 		}
 		return allConfigList;
