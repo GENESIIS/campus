@@ -15,6 +15,7 @@ package com.genesiis.campus.validation;
 //			fields with database length
 //20170224 JH c141-add-course-provider-issue-improvements courseProviderURLValidation(): created to validate course provider URL's
 //20170226 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): password validation methods changed
+//20170228 JH c141-add-course-provider-issue-improvements commented implementation until one off course provider implementation completed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -158,32 +159,33 @@ public class Validator {
 			errorString.add("About Me ");
 		}
 		
+		//following code is commented until one off course provider feature implemented
 		/*
 		 * if course provider does not need privileges to publish programs, it is indicated
 		 * by the value '0'. Therefore the validations which belongs to that category
 		 * is carried out 
 		 */
 
-		if(!isEmptyString(helper.getParameter("publishProgram"))){
-			if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-				String date = helper.getParameter("expirationDate");
-       
-		        
-				if(isEmptyString(date)){
-					helper.setAttribute("errorExpiration", "Select an expiration date");
-					errorString.add("Expiration Date ");
-				}else{
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					Date date1 = sdf.parse(date);
-			        Date date2 = new Date();
-			        
-			        if(date1.before(date2)){
-						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
-						errorString.add("Expiration Date ");
-					}
-				}
-			}	
-		}
+//		if(!isEmptyString(helper.getParameter("publishProgram"))){
+//			if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
+//				String date = helper.getParameter("expirationDate");
+//       
+//		        
+//				if(isEmptyString(date)){
+//					helper.setAttribute("errorExpiration", "Select an expiration date");
+//					errorString.add("Expiration Date ");
+//				}else{
+//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//					Date date1 = sdf.parse(date);
+//			        Date date2 = new Date();
+//			        
+//			        if(date1.before(date2)){
+//						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
+//						errorString.add("Expiration Date ");
+//					}
+//				}
+//			}	
+//		}
 		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
@@ -312,7 +314,7 @@ public class Validator {
 		
 		// validate course provider private email
 		if (isValidLength(helper.getParameter("providerEmail"), 255, 1)) {
-			if (validateEmail(helper.getParameter("providerEmail"))) {
+			if (!validateEmail(helper.getParameter("providerEmail"))) {
 				helper.setAttribute("errorPrivateEmail", "Invalid contact Email address");
 				errorString.add("Private Email");
 			}
