@@ -8,6 +8,7 @@
 //20170223 JH c141-add-course-provider-issue-improvements providerUsernameValidation():checked for username>100 and error messages changed
 //20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
 //20170227 JH c141-add-course-provider-issue-improvements validateFormURL(): modified to validate URL maximum length
+//20170228 JH c141-add-course-provider-issue-improvements URL validations
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -78,7 +79,7 @@ function isPatternMatch(regularExpression, source) {
  */
 function validateFormURL(url, errorElementId, foucsElementId){
 	var flag = true;
-	if (!ValidURL(url)) {
+	if (isempty(url) && !ValidURL(url)) {
 		var message = "**Invalid URL.";		
 		document.getElementById(errorElementId ).innerHTML = message;
 		document.getElementById(foucsElementId).focus();
@@ -328,7 +329,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isValidMinMaxLength(shortName, 0,  20)) {
-		document.getElementById('errorShortName').innerHTML = "**Short name is too long.";
+		document.getElementById('errorShortName').innerHTML = "**Short name should be less than 20 characters.";
 		document.getElementById('shortName').focus();
 		flag = false;
 	}
@@ -419,24 +420,21 @@ function vaidateCourseProviderDeatils(form) {
 		document.getElementById('errorSelectedTown').focus();
 		flag = false;
 	}
-	if(!validateFormURL(webLink, $('#errorWebLink').attr('id'), $('#webLink').attr('id'))){
-		flag = false;
-	}
-	if(!validateFormURL(facebook, $('#errorFacebook').attr('id'), $('#facebook').attr('id'))){
-		flag = false;
-	}
-	if(!validateFormURL(facebook, $('#errorLinkedIn').attr('id'), $('#linkdedIn').attr('id'))){
-		flag = false;
-	}
-	if(!validateFormURL(facebook, $('#errorTwitter').attr('id'), $('#twitter').attr('id'))){
-		flag = false;
-	}
-	if(!validateFormURL(facebook, $('#errorInstagram').attr('id'), $('#instagram').attr('id'))){
-		flag = false;
-	}
-	if(!validateFormURL(facebook, $('#errorMyspace').attr('id'), $('#mySpace').attr('id'))){
-		flag = false;
-	}
+
+	flag  = validateFormURL(webLink, $('#errorWebLink').attr('id'), $('#webLink')
+			.attr('id'));
+	flag  = validateFormURL(facebook, $('#errorFacebook').attr('id'), $(
+			'#facebook').attr('id'));
+	flag  = validateFormURL(linkdedIn, $('#errorLinkedIn').attr('id'), $(
+			'#linkdedIn').attr('id'));
+	flag = validateFormURL(twitter, $('#errorTwitter').attr('id'), $('#twitter')
+			.attr('id'));
+	flag =  validateFormURL(instagram, $('#errorInstagram').attr('id'), $(
+			'#instagram').attr('id'));
+	flag = validateFormURL(mySpace, $('#errorMyspace').attr('id'), $('#mySpace')
+			.attr('id'));
+	
+	
 	 if (isempty(whatsapp) && !isPatternMatch(integerPattern, whatsapp) ) {
 	 document.getElementById('errorWhatsapp').innerHTML = "**Invalid whatsapp number.";
 	 document.getElementById('whatsapp').focus();
