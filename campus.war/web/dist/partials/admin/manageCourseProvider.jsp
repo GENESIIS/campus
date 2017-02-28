@@ -6,7 +6,7 @@
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
-<!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions  -->
+<!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -453,38 +453,6 @@
 					<!-- Filter result table -->
 					<div class="filter-result-table">
 						<ul class="result-row">
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										<span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<input type="radio" name="publishProgram" id="publishProgram"
-										value="1" checked="checked" onclick="publishPrograms();" />
-									Will Publish Programs
-								</div>
-								<div class="col-name">
-									<input type="radio" name="publishProgram" id="publishProgram"
-										value="0" onclick="publishPrograms();" /> Will Not publish
-									Programs
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix" id="expire-date">
-								<div class="col-name">
-									<h1 class="pro-name">Expiration Date :</h1>
-								</div>
-								<div class="col-name">
-									<input class="textarea" type="Date" name="expirationDate"
-										id="expirationDate" size="50px;" /> <span
-										id="errorExpiration" class="error-message">${errorExpiration }</span>
-								</div>
-							</li>
-							<!-- end -->
-
 
 							<!-- select the course provider type -->
 							<li class="course-info clearfix">
