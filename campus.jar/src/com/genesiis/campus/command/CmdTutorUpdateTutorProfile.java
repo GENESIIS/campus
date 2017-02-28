@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170227 CW c37-tutor-update-tutor-profile-cw INIT CmdTutorUpdateTutorProfile.java
 //20170227 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to add validations for empty values
 //20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to work with password correctly
+//20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to fix password errors
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -11,6 +12,8 @@ import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.UserTypeDAO;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
@@ -101,7 +104,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	 * @return Returns true if updated
 	 */
 
-	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) {
+	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) throws Exception {
 			boolean updated = false;
 		try {
 			
@@ -109,7 +112,19 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !((helper.getParameter("oldPassword")).equals(helper.getParameter("password").toString()))){				
+			System.out.println("helper.getParameter(password) ="+ helper.getParameter("password"));
+			System.out.println("helper.getParameter(oldPassword) ="+ helper.getParameter("oldPassword"));
+			
+
+			Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("oldPassword"));
+			String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
+			
+			/*if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("password")))  && !(helper.getParameter("password").equals(encryptedOldPassword))){
+				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
+				isValid = false;*/
+			//if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !((helper.getParameter("oldPassword")).equals(helper.getParameter("password")))){
+			
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("password"))) && !((helper.getParameter("password")).equals(encryptedOldPassword))){				
 				tutor.setPassword(helper.getParameter("newPassword"));
 				updated = true;
 			}else{
