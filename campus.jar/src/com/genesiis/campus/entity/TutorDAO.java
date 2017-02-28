@@ -14,6 +14,16 @@ package com.genesiis.campus.entity;
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170222 CW c36-add-tutor-details modified validateUsernameEmailFields() to add validations to check both email & username
 //20170223 CW c36-add-tutor-details modified validateUsernameEmailFields method to validate email & username separately
+//20170228 CW c36-add-tutor-details modified validateUsernameEmailFields removed testing messages & add short circuit & operator
+//									moved validateUsernameEmailFields method into Validator.java & add getListOfUsernameEmail method
+
+import com.genesiis.campus.entity.model.Tutor;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,13 +32,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
-
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.util.security.Encryptable;
-import com.genesiis.campus.util.security.TripleDesEncryptor;
-import org.apache.log4j.Logger;
 
 public class TutorDAO implements ICrud {
 
@@ -226,20 +229,20 @@ public class TutorDAO implements ICrud {
 		return 0;
 	}
 	
+	
 	/**
-	 * Check the email & username given with already entered username & email in the database 
+	 * @param String values containing username & email entered by the user
 	 * @author Chinthaka 
-	 * @return Returns 1 if both username & email are available in the database, returns 1 if the username is available in the database, 
-	 * 				returns 2 if the email is available & returns 0 if both are not used to create a tutor profile.
+	 * @return all the matching email & username list already entered into the database for the given username & email
 	 */
-	public static int validateUsernameEmailFields(String username, String email) throws SQLException, Exception {
-		
+	public static Collection<Collection<String>> getListOfUsernameEmail(String username, String email) throws SQLException, Exception{
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int validStatus = 0;
+		final Collection<Collection<String>> allUsernameEmailList = new ArrayList<Collection<String>>();
 		
-		try {
+		try{
 			conn = ConnectionManager.getConnection();
 			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
 
@@ -247,42 +250,24 @@ public class TutorDAO implements ICrud {
 			stmt.setString(1, username);
 			stmt.setString(2, email);
 			rs = stmt.executeQuery();
-
-			final TreeSet<Integer> treeOfData = new TreeSet<Integer>();
-
+			
 			while (rs.next()) {
-				if(rs.getString("USERNAME").equals(username) && rs.getString("EMAIL").equals(email)){
-					treeOfData.add(1);
-				}else if(rs.getString("USERNAME").equals(username)){
-					treeOfData.add(2);
-				}else if(rs.getString("EMAIL").equals(email)){
-					treeOfData.add(3);
-				}
-			}
-
-			if(treeOfData.contains(1) || (treeOfData.contains(2) & treeOfData.contains(3))){
-				System.out.println("both");
-				validStatus = 1;
-			}else{
-				if(treeOfData.contains(2) & !treeOfData.contains(3)){
-					System.out.println("username");
-					validStatus = 2;
-				}
-				if(!treeOfData.contains(2) & treeOfData.contains(3)){
-					System.out.println("email");
-					validStatus = 3;
-				}
+				final ArrayList<String> usernameEmailList = new ArrayList<String>();
+				usernameEmailList.add(rs.getString("USERNAME"));
+				usernameEmailList.add(rs.getString("EMAIL"));
+				allUsernameEmailList.add(usernameEmailList);
 			}
 			
 		} catch (SQLException sqlException) {
-			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			log.info("getListOfUsernameEmail(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			log.info("getListOfUsernameEmail(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
-		return validStatus;
+		
+		return allUsernameEmailList;
 	}
 }
