@@ -5,6 +5,7 @@ package com.genesiis.campus.util;
 //20170124 AS CAM-20 SetAplicationScoop to current session and remove from the destroy event.
 //20170125 AS CAM-20 unwanted loggers removed.
 //20170227 AS CAM-21 Session attribute added final modifier 
+//20170228 AS CAM-21 removed Session attribute in destroyed method 
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
@@ -38,7 +39,7 @@ public class SessionCounterListener implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
 		message = SystemMessage.SESSIONEXPIRED.message();
-		final HttpSession session = event.getSession();
+	
 		event.getSession().removeAttribute("user");
 		event.getSession().removeAttribute("userCode");
 		event.getSession().removeAttribute("currentUserData");
