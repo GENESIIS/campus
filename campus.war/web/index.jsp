@@ -12,7 +12,8 @@
 <link href="dist/css/style.css" rel="stylesheet">
 <link href="dist/css/image-slides.css" rel="stylesheet">
 
-<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- <script src="/dist/js/header/ui-populate-helper.js"></script>   -->
+
 <!-- W3-Include -->
 <script src="dist/bower-components/w3/w3data.js"></script>
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
@@ -28,7 +29,7 @@
 	<header>
 		<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 		<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
-			<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
+		<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 	</header>
 
 	<!-- End Header -->
@@ -39,21 +40,24 @@
 		$(document)
 				.ready(
 						function() {
-						
-								var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('?'), sParameterName, i;
-								 for (i = 0; i < sURLVariables.length; i++) {
-													        sParameterName = sURLVariables[i].split('=');
-						
-							if (sParameterName[1] === 'true') {
-								
-								$('#loginPopup').modal('show');
-								
-							}}
+
+							var sPageURL = decodeURIComponent(window.location.search
+									.substring(1)), sURLVariables = sPageURL
+									.split('?'), sParameterName, i;
+							for (i = 0; i < sURLVariables.length; i++) {
+								sParameterName = sURLVariables[i].split('=');
+
+								if (sParameterName[1] === 'true') {
+
+									$('#loginPopup').modal('show');
+
+								}
+							}
 						});
 	</script>
 	<div class="main-screen clearfix">
 		<div class="content-panel clearfix">
-		
+
 			<div class="main-slider clearfix">
 				<div class="slider-mask clearfix"></div>
 				<!--<ul class="rslides" id="slider1">-->
