@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170227 CW c37-tutor-update-tutor-profile-cw INIT CmdTutorUpdateTutorProfile.java
 //20170227 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to add validations for empty values
+//20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to work with password correctly
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -108,11 +109,11 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("password"))) && !((helper.getParameter("password")).equals(helper.getParameter("passwordOld").toString()))){				
-				tutor.setPassword(helper.getParameter("password"));
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !((helper.getParameter("oldPassword")).equals(helper.getParameter("password").toString()))){				
+				tutor.setPassword(helper.getParameter("newPassword"));
 				updated = true;
 			}else{
-				tutor.setPassword(helper.getParameter("passwordOld").toString());
+				tutor.setPassword("");
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname"))) && !((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
