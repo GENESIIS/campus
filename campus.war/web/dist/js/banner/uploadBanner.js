@@ -15,6 +15,7 @@
  *   20170224 DN c131-admin-manage-banner-upload-banner-image-dn displayLabelMessage() method signature has been changed 
  *   			total message (error/success) displaying sequence changed in all ajax request calls.
  *   20170227 DN c131-admin-manage-banner-upload-banner-image-dn validateUploadBannerEmbedData() is created.
+ *   20170228 DN c131-admin-manage-banner-upload-banner-image-dn onChangeEvent() has been initialized, validation code has been modified
  */
 
 /*
@@ -32,6 +33,14 @@ var bannerImageName="";
 
 $(document).ready(function(){
 	displayBannerManagerPrerequistData();
+	
+	$('#bannerDispatchingUrl').on("change",function(){
+		if(!urlTest('bannerDispatchingUrl')){
+			$('#urlInfor').html("Please provide a valid url");
+			$('#bannerDispatchingUrl').val("");
+		}
+		
+	});
 });
 
 /**
@@ -108,6 +117,14 @@ function getPreRequisitPageData(preRequistData){
 	});
 	
 	
+	$('#advertiser').on("change",function(){
+		if(selectedAdvertiserCode ==""){
+			$('#advertiserInfor').html("Please select a valid advertiser from the populated list");
+			$('#advertiser').val("");
+		}
+		
+	});
+
 	
 	// get the selected Page code
 	$('#page').on('input',function(){
@@ -130,12 +147,18 @@ function getPreRequisitPageData(preRequistData){
 			
 			// load the relevant page slot for page selected from data base.
 			getBannerSlotsMapedToThePage(selectedPageCode);
-			
-			
 		}
 		
 	});
 	
+	$('#page').on("change",function(){
+		if(selectedPageCode ==""){
+			$('#pageInfor').html("Please select a valid page from the populated list");
+			$('#page').val("");
+		}
+		
+	});	
+
 // filter and display the selected Banner slots when user type in
 	$('#slot').on('input',function(){
 		var iskeyStrocksCompleted = false;
@@ -158,6 +181,13 @@ function getPreRequisitPageData(preRequistData){
 		
 	});	
 
+	$('#slot').on("change",function(){
+		if(selectedBannerSlotCode ==""){
+			$('#advertizingSlotInfor').html("Please select a valid slot from the populated list");
+			$('#slot').val("");
+		}
+		
+	});
 }
 
 /**
@@ -378,9 +408,11 @@ function validateUploadBannerEmbedData(){
 	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#slot').val(),
 			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "page Field", "advertizingSlotInfor")))
 		return validationPass;
-	if(!(isFieldFilled(isStringHasValiCharsAndLength(),/^[0-9]+$/g,"displayDurationInfor")))
+	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#duration').val(),
+			/^[0-9]+$/g),"display duration","displayDurationInfor")))
 		return validationPass;
-	
+	if(!(isFieldFilled(urlTest('bannerDispatchingUrl'), elementName, errorLabelId)))
+		return validationPass;
 }
 
 
@@ -460,8 +492,27 @@ $( document ).ready(function() {
 		e.preventDefault();
 	});
 	
+/*
+ * onchange events for the data list 
+ */
+//	var tempAdvertiserCode = selectedAdvertiserCode;
+//	onChangeEvent('advertiser', 'advertiserInfor',tempAdvertiserCode,
+//		"Please select a valid advertiser from the populated list");
+	
+//	onChangeEvent('page', 'pageInfor',
+//			selectedPageCode,
+//			"Please select a valid page from the populated list");	
+//	
+//	onChangeEvent('slot', 'advertizingSlotInfor',
+//			selectedBannerSlotCode,
+//			"Please select a valid slot from the populated list");	
+	
+	
 	
 });
+
+
+
 
 /**
  * this method clears the input field data 
@@ -473,7 +524,34 @@ $('#bannerPageClearField').on('click',function(){
 
 
 
+/**
+ * function will triggers when input field gets changed.
+ * the purpose of the function is to match the users selection
+ * or the "typed in text" against the input field
+ * confirm to the requirement, then an error message will be displayed,
+ * and the text will be cleared off.
+ * @author dushantha DN
+ * @param idElement : id of the element e.g. &gt input type = 'text' &lt
+ * @param errorDisplayId : id of the error/dedicated information displaying element
+ * 	must be a 'div','label' or anything where html content is accepted.
+ * @param fieldVarTobeTested : this is the value of the field to be tested
+ * 								more precisely the field value that the user
+ * 								enters. There should be a mechanism to get the 
+ * 								changing value, once the user has entered the
+ * 								content to the field.
+ * @param userInfromation : string error or the information that the user is provided
+ * 							with.
+ */
+function onChangeEvent(idElement,errorDisplayId,fieldVarTobeTested,userInfromation){
+	
+	$('#'+idElement).on("change",function(){
+		if(fieldVarTobeTested ==""){
+			$('#'+errorDisplayId).html(userInfromation);
+			$('#'+idElement).val("");
+		}
+	});
 
+}
 
 
 
