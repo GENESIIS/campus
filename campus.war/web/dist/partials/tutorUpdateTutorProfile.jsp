@@ -1,6 +1,7 @@
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - created using CAM-38 sample jsp file -->
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - removed tutor status details, add Javascript validations-->
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - modified password change items-->
+<!-- 20170301 c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -58,7 +59,7 @@
 		
 		<input type="hidden" name="codeOld" id="codeOld" value="${code}"/>
 		<input type="hidden" name="usernameOld" id="usernameOld" value="${username}"/>
-		<input type="hidden" name="passwordOld" id="passwordOld" value="${password}"/>
+		<input type="hidden" name="passwordFromDb" id="passwordFromDb" value="${password}"/>
 		<input type="hidden" name="firstnameOld" id="firstnameOld" value="${firstname}"/>
 		<input type="hidden" name="middlenameOld" id="middlenameOld" value="${middlename}"/>
 		<input type="hidden" name="lastnameOld" id="lastnameOld" value="${lastname}"/>
