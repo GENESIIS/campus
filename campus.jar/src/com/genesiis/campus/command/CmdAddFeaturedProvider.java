@@ -19,6 +19,7 @@ package com.genesiis.campus.command;
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
+//20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -181,43 +182,59 @@ public class CmdAddFeaturedProvider implements ICommand {
 						}
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
+						
+						//commented the following code until the actual implementation (one off provider) confirms
+						
+//						java.sql.Date sql = null;
+//
+//						SimpleDateFormat format = new SimpleDateFormat(
+//								"dd-MM-yyyy");
+//						
+//						/**
+//						 * publishProgram parameter is used to select whether
+//						 * the registered course provider will publish programs or not.
+//						 * 
+//						 */
+//						if (Integer.parseInt(helper.getParameter("publishProgram")) == 0) {
+//							sql = java.sql.Date.valueOf(expireDate);
+//						} else {
+//
+//							/**
+//							 * course providers without program publishing
+//							 * functionality will need an expiration date. And
+//							 * that date needs to be selected by the admin at
+//							 * the course provider registration.
+//							 * 
+//							 * for those who has the full functionality, need
+//							 * not to have an expiration date. (The requirements
+//							 * given by the marketing team). Therefore a static
+//							 * value is assigned to those course providers. Then
+//							 * it would be easy to select those course providers
+//							 * and perform a bulk update.
+//							 * 
+//							 * Therefore a common expiration date, which is stored in 
+//							 * the system configuration enum class is used to support both
+//							 * the requirements.
+//							 * 
+//							 */
+//
+//							expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
+//							sql = java.sql.Date.valueOf(expireDate);
+//						}
+
+						
+						/*
+						 * Course provider expiration date is related and will depend on their payments. 
+						 * Until the payment module is implemented an expiration date from the 
+						 * systemConfig enum will be used as the expiration date of the course provider.
+						 * By using a one expiration date until the actual payment module implementation 
+						 * will help to retrieve all previous records
+						 */
 						java.sql.Date sql = null;
 
-						SimpleDateFormat format = new SimpleDateFormat(
-								"dd-MM-yyyy");
+						expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
+						sql = java.sql.Date.valueOf(expireDate);
 						
-						/**
-						 * publishProgram parameter is used to select whether
-						 * the registered course provider will publish programs or not.
-						 * 
-						 */
-						if (Integer.parseInt(helper.getParameter("publishProgram")) == 0) {
-							sql = java.sql.Date.valueOf(expireDate);
-						} else {
-
-							/**
-							 * course providers without program publishing
-							 * functionality will need an expiration date. And
-							 * that date needs to be selected by the admin at
-							 * the course provider registration.
-							 * 
-							 * for those who has the full functionality, need
-							 * not to have an expiration date. (The requirements
-							 * given by the marketing team). Therefore a static
-							 * value is assigned to those course providers. Then
-							 * it would be easy to select those course providers
-							 * and perform a bulk update.
-							 * 
-							 * Therefore a common expiration date, which is stored in 
-							 * the system configuration enum class is used to support both
-							 * the requirements.
-							 * 
-							 */
-
-							expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
-							sql = java.sql.Date.valueOf(expireDate);
-						}
-
 						// set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
 						courseProvider.setShortName(helper.getParameter("shortName"));
