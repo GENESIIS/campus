@@ -13,6 +13,7 @@ package com.genesiis.campus.validation;
 //20170301 CW c37-tutor-update-tutor-profile-cw modified isValidUserAndEmail method message variable to isValid
 //20170301 CW c37-tutor-update-tutor-profile-cw unit testing & modified isValidPassword() to remove log info messages & commented lines 
 //20170301 CW c37-tutor-update-tutor-profile-cw unit testing & add validations to country codes WIP
+//20170301 CW c37-tutor-update-tutor-profile-cw unit testing & add validations to validateTutorFields() method country codes & Town codes completed
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -161,38 +162,19 @@ public class Validator {
 			}
 			
 			if(!(isEmptyOrHavingSpace(helper.getParameter("landphonecountrycodeOld")))){
-				if(!(isEmptyOrHavingSpace(helper.getParameter("countryDetails"))) && !(helper.getParameter("countryDetails").equals("--- Select Country ---"))){
-					
-				}
-			}
-			
-/*				if(countrynameOld == ""){
-					if (country == "--- Select Country ---") {
-						document.getElementById('countryError').innerHTML = "**Please select country.";
-						document.getElementById('countryDetails').focus();
-						flag = false;
-					} else{
-						isModified = true;
-					}
-				} else{
-					if ((country != countrynameOld) && (country != "--- Select Country ---")) {
-						isModified = true;
-						if(town == "--- Select town ---"){
-							document.getElementById('townError').innerHTML = "**Please select Town.";
-							document.getElementById('townDetails').focus();
-							flag = false;
+				//landphonecountrycodeOld is not null
+				if(!helper.getParameter("countryDetails").equals("0")){
+					// Country details are changed
+					if(!(helper.getParameter("landphonecountrycodeOld").equals(helper.getParameter("countryDetails")))){
+						// old & new country codes are different
+						if(!(helper.getParameter("towncodeOld").equals(helper.getParameter("townDetails")))){
+							// town codes are same i.e. town details are not changed
+							helper.setAttribute("townError", SystemMessage.TOWN_CODE_NOT_CHANGED.message());
+							isValid = false;
 						}
 					}
 				}
-			*/
-			
-			
-			
-			
-			
-			
-			
-			
+			}
 			
 			if (!isValidCountryCode(helper.getParameter("mobileCountryCode"))) {
 				helper.setAttribute("mobileError", SystemMessage.MOBILECOUNTRYCODEERROR.message());
