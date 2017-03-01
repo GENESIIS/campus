@@ -16,6 +16,8 @@ package com.genesiis.campus.validation;
 //20170227 c37-tutor-update-tutor-profile-cw-added INCORRECT_PASSWORD
 //20170228 c37-tutor-update-tutor-profile-cw-fixed INCORRECT_PASSWORD spelling mistake
 //20170301 c37-tutor-update-tutor-profile-cw-added OLD_NEW_PASSWORD_SAME & NEW_CONFIRM_PASSWORD_NOTSAME
+//20170301 c37-tutor-update-tutor-profile-cw-added TOWN_CODE_NOT_CHANGED
+
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -36,6 +38,7 @@ public enum SystemMessage {
 	EMPTYLANDAREACODE("Land area code cannot be empty."),
 	EMPTYLANDNUMBER("Land number cannot be empty."),
 	EMPTYADDRESS1("Address Line 1 cannot be empty."),
+	TOWN_CODE_NOT_CHANGED("Please change the town code ... "),
 	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
