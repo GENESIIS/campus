@@ -7,6 +7,7 @@ package com.genesiis.campus.validation;
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to check for Old Password, New Password & Confirm Password 
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() & remove oldPassword null checking
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to work with encrypted passwords
+//20170301 CW c37-tutor-update-tutor-profile-cw modified isValidPassword to fix some errors
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -478,20 +479,23 @@ public class Validator {
 		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword);
 		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
 		
+		log.info("encryptedOldPassword:" + encryptedOldPassword);
+		log.info("helper.getParameter(passwordOld):" + helper.getParameter("passwordOld"));
+				
 		try {
 			
 			// Old Password is empty means tutor do not need to change the password
-			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("password")))  && !(helper.getParameter("password").equals(encryptedOldPassword))){
+			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("passwordOld")))  && !(helper.getParameter("passwordOld").equals(encryptedOldPassword))){
 				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
 				isValid = false;
 			}else{
 	
-				if (!(isEmptyOrHavingSpace(newPassword))){ // check for null fields
+				if (isEmptyOrHavingSpace(newPassword)){ // check for null fields
 					helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
 					isValid = false;
 				}
 				
-				if(!(isEmptyOrHavingSpace(confirmPassword))){ // check for null fields
+				if(isEmptyOrHavingSpace(confirmPassword)){ // check for null fields
 					helper.setAttribute("confirmPasswordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
 					isValid = false;
 				}
