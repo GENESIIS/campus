@@ -28,6 +28,7 @@ package com.genesiis.campus.entity;
 //20170227 CW c37-tutor-update-tutor-profile-cw modified update method to create the query dynamically & update password if available
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method & changed the variable declaration position
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method update method to fix The index 30 is out of range.
+//20170301 CW c37-tutor-update-tutor-profile-cw modified update method to fix query error
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -88,7 +89,7 @@ public class TutorDAO implements ICrud {
 			queryBuilder.append("MODBY = ? ");	
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
-				queryBuilder.append("PASSWORD = ? ");	
+				queryBuilder.append(", PASSWORD = ? ");	
 				queryBuilder.append("WHERE USERNAME = ?;");
 			}else{
 				queryBuilder.append("WHERE USERNAME = ?;");
