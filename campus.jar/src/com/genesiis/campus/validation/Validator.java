@@ -10,6 +10,7 @@ package com.genesiis.campus.validation;
 //20170301 CW c37-tutor-update-tutor-profile-cw modified isValidPassword to fix some errors
 //20170301 CW c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb
 //20170301 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & create validations again
+//20170301 CW c37-tutor-update-tutor-profile-cw modified isValidUserAndEmail method message variable to isValid
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -591,23 +592,23 @@ public class Validator {
 	 */
 	public boolean isValidUserAndEmail(IDataHelper helper) throws SQLException, Exception{
 
-		boolean message = true; 
+		boolean isValid = true; 
 		int type = 0;
 		try {		
 
 			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
 				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
-				message = false;
+				isValid = false;
 			}
 			
 			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
 				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
-				message = false;
+				isValid = false;
 			}
 			
 			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
-				message = false;
+				isValid = false;
 			} 
 			
 			if(!((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){		
@@ -616,12 +617,12 @@ public class Validator {
 				// Commented this code to use later if the username validations required. - CW
 /*				if(type == 1){
 					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-					message = false;
+					isValid = false;
 				} */
 				
 				if(type == 2){
 					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-					message = false;
+					isValid = false;
 				}
 			}
 			
@@ -632,6 +633,6 @@ public class Validator {
 			log.info("isValidUserAndEmail(): Exception " + e.toString());
 			throw e;
 		} 
-		return message;
+		return isValid;
 	}
 }
