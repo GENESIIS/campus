@@ -16,6 +16,7 @@ package com.genesiis.campus.validation;
 //20170224 JH c141-add-course-provider-issue-improvements courseProviderURLValidation(): created to validate course provider URL's
 //20170226 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): password validation methods changed
 //20170228 JH c141-add-course-provider-issue-improvements commented implementation until one off course provider implementation completed
+//20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -269,12 +270,12 @@ public class Validator {
 		errorString = courseProviderURLValidation(helper, errorString, 100, 0, "mySpace", "errorMyspace");
 
 		//viber and whatsapp validations
-		if(!isValidLength(helper.getParameter("whatsapp"), 20, 0) || !isInteger(helper.getParameter("whatsapp"))){
+		if(!isValidLength(helper.getParameter("whatsapp"), 20, 0) ){
 			helper.setAttribute("errorWhatsapp", "Maximum length exceed or invalid.");
 			errorString.add("Whatsapp ");
 		}
-		if(!isValidLength(helper.getParameter("viber"), 20, 0) || !isInteger(helper.getParameter("viber"))){
-			helper.setAttribute("errorWhatsapp", "Maximum length exceed or invalid.");
+		if(!isValidLength(helper.getParameter("viber"), 20, 0)){
+			helper.setAttribute("errorViber", "Maximum length exceed or invalid.");
 			errorString.add("Viber ");
 		}
 		
@@ -330,7 +331,7 @@ public class Validator {
 			errorString.add("Username");
 		}else{
 			//check if the username has only numbers
-			if(!isInteger(helper.getParameter("providerUsername"))){
+			if(isInteger(helper.getParameter("providerUsername"))){
 				helper.setAttribute("errorUsername", "Only numbers are not allowed for username. ");
 				errorString.add("Username");				
 			}
