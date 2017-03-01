@@ -183,7 +183,9 @@ public class CmdAddFeaturedProvider implements ICommand {
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
 						
-						//commented the following code until the actual implementation (one off provider) confirms
+						/*
+						 * commented the following code until the actual implementation (one off provider) confirms
+						 */
 						
 //						java.sql.Date sql = null;
 //
