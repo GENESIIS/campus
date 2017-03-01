@@ -6,7 +6,8 @@
  * remember checkbox.
  * 
  * CAM-21 AS logout-popup window added to after successful logout.
- * CAM-21 AS getJSessionId added, to check session id from JS. 
+ * CAM-21 AS getJSessionId added, to check session id from JS.
+ * CAM-21 AS removed unwanted functions - CheckingSeassion() 
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -17,7 +18,7 @@ function studentLogin() {
 	var username = $("#email").val();
 	var password = $("#password").val();
 	var remember = $("#remember").prop('checked');
-	getJSessionId();
+	
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
 
@@ -54,7 +55,6 @@ function studentLogin() {
 						if (response['message'] === "valid Username and Password.") {
 							window.location.href = response['pageURL'];
 						}if(response['message'] === "User Already Logged In"){
-							
 							
 							$(window).scrollTop(0);
 							$('#loginPopup').modal('hide');
@@ -116,10 +116,7 @@ function resetLoginLabels() {
 function studentLogout() {
 	
 	var userId = $("#userCode").val();
-	var sessionID = getJSessionId();
-	if(sessionID ==null){
-		alert(sessionID);
-	}
+	
 	if (userId != null) {
 		var jsonData = {
 			"code" : userId
@@ -143,7 +140,6 @@ function studentLogout() {
 						window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
 						}, 5000);
 				}else{
-				
 				 
 				setTimeout( function(){
 					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
@@ -175,12 +171,4 @@ function studentLogout() {
 		});
 	}
 }
-// testing purpose CheckingSeassion() created and WIP 
-function CheckingSeassion() {
-	var name = '${currentSessionUser}"';
-	if(name == null){
-		alert("nooo user ");
-	}else{
-		alert(name +" hari");
-	}
-}
+
