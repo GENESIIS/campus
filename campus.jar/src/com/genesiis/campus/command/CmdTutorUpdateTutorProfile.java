@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170227 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to add validations for empty values
 //20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to work with password correctly
 //20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to fix password errors
+//20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables to fix some errors caused by password
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -112,7 +113,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 			
-			System.out.println("helper.getParameter(password) ="+ helper.getParameter("password"));
+			System.out.println("helper.getParameter(passwordOld) ="+ helper.getParameter("passwordOld"));
 			System.out.println("helper.getParameter(oldPassword) ="+ helper.getParameter("oldPassword"));
 			
 
@@ -124,7 +125,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				isValid = false;*/
 			//if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !((helper.getParameter("oldPassword")).equals(helper.getParameter("password")))){
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("password"))) && !((helper.getParameter("password")).equals(encryptedOldPassword))){				
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("passwordOld"))) && !((helper.getParameter("passwordOld")).equals(encryptedOldPassword))){				
 				tutor.setPassword(helper.getParameter("newPassword"));
 				updated = true;
 			}else{
