@@ -10,6 +10,7 @@
 //20170221 JH c141-add-course-provider-issue-improvements removed commented front end validation part, added method comments,removed unwanted codes
 //20170223 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): change hints to error messages when they show errors 
 //20170224 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): show error messages on error
+//20170301 JH c141-add-course-provider-issue-improvements saveCourseProvider(): AJAX error handling, show error message on error
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -133,6 +134,11 @@ function getCourseProviderTypes() {
 				window.courseProviderTypes = response.providerTypes;
 			}
 		},
+		error : function(x, status, error) {
+			var err = displayErrorMessage(x, status, error);
+			document.getElementById("userMessage").style.display = "block";
+			$("#userMessage").html(err);
+		}
 	});
 }
 
@@ -212,6 +218,11 @@ function getProviderPageLoadData() {
 						displayAccountStatusList();
 					}
 				},
+				error : function(x, status, error) {
+					var err = displayErrorMessage(x, status, error);
+					document.getElementById("userMessage").style.display = "block";
+					$("#userMessage").html(err);
+				}
 			});
 }
 
@@ -282,6 +293,11 @@ function getProviderTownListData() {
 					displayProviderTownList();
 				}
 			},
+			error : function(x, status, error) {
+				var err = displayErrorMessage(x, status, error);
+				document.getElementById("userMessage").style.display = "block";
+				$("#userMessage").html(err);
+			}
 		});
 	}
 }
@@ -457,6 +473,11 @@ function saveCourseProvider() {
 									}
 							}
 						},
+						error : function(x, status, error) {
+							var err = displayErrorMessage(x, status, error);
+							document.getElementById("userMessage").style.display = "block";
+							$("#userMessage").html(err);
+						}
 					});
 		}
 	}
