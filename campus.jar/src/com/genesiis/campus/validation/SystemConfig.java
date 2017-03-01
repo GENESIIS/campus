@@ -7,7 +7,8 @@ package com.genesiis.campus.validation;
 //				value3 final.
 //20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
 //20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
-//20170203 JH c39-add-course-provider addded COURSE_PROVIDER_EXPIRATION_DATE enum to store common course provider expiration date
+//20170203 JH c39-add-course-provider added COURSE_PROVIDER_EXPIRATION_DATE enum to store common course provider expiration date
+//20170301 JH c141-add-course-provider-issue-improvements changed the COURSE_PROVIDER_EXPIRATION_DATE value 1 to sql maximum date allowed
 
 /**
  * SystemConfig enum is intended to be used for the purpose of identifying the
@@ -35,7 +36,7 @@ public enum SystemConfig {
 	STUDENT_PROFILE_IMAGE_PATH("", "", ""),
 	TUTOR_PROFILE_IMAGE_PATH("", "", ""),
 	CATEGORY_LOGO_PATH("education/general/category/logo","",""),
-	COURSE_PROVIDER_EXPIRATION_DATE("2040-12-31", "", "");
+	COURSE_PROVIDER_EXPIRATION_DATE("9999-12-31", "", "");
 
 	private String value1;
 	private String value2;
