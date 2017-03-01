@@ -7,6 +7,7 @@
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
 <!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
+<!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -693,6 +694,7 @@
 		src="/dist/js/header/ui-populate-helper.js"></script> -->
 		<script type="text/javascript" src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
+		<script src="/dist/js/error-handling.js"></script>
 
 </body>
 </html>
