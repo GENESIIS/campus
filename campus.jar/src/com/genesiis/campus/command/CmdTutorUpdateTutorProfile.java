@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables to fix some errors caused by password
 //20170301 CW c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables password validations
+//20170301 CW c37-tutor-update-tutor-profile-cw modified execute method & moved message declaration inside the method, modified a message & modified setCompareVariables method to add null value check for the mandatory fields
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -36,7 +37,6 @@ import java.util.Collection;
 public class CmdTutorUpdateTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdTutorUpdateTutorProfile.class.getName());
-	private String message = "True";
 	
 	/**
 	 * @author Chathuri, Chinthaka
@@ -49,6 +49,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		String message = "True";
 
 		try {
 			final Validator validator = new Validator();
@@ -62,7 +63,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			if(updated){
 				if (validator.validateTutorFields(helper)) {	
-					
+
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
 					result = tutorDAO.update(tutor);
@@ -77,6 +78,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
 					view.setCollection(tutorViewCollection);	
+					message = SystemMessage.INCORRECTDATA.message();
 				}
 			}else{
 				fillTutorCollection(tutorViewCollection, tutor);
@@ -142,12 +144,15 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				tutor.setPassword("");
 			}
 			
-			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname"))) && !((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
-				tutor.setFirstName(helper.getParameter("firstname"));
-				updated = true;
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname"))) && !((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
+					tutor.setFirstName(helper.getParameter("firstname"));
+					updated = true;
+				}else{
+					tutor.setFirstName(helper.getParameter("firstnameOld").toString());
+				}
 			}else{
-				tutor.setFirstName(helper.getParameter("firstnameOld").toString());
+				updated = true;
 			}
 			
  			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("middlename")))){
@@ -164,11 +169,15 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				}
 			}
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("lastname"))) && !((helper.getParameter("lastname")).equals(helper.getParameter("lastnameOld").toString()))){	
-				tutor.setLastName(helper.getParameter("lastname"));			
-				updated = true;
+ 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("lastname")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("lastname"))) && !((helper.getParameter("lastname")).equals(helper.getParameter("lastnameOld").toString()))){	
+					tutor.setLastName(helper.getParameter("lastname"));			
+					updated = true;
+				}else{
+					tutor.setLastName(helper.getParameter("lastnameOld").toString());
+				}
 			}else{
-				tutor.setLastName(helper.getParameter("lastnameOld").toString());
+				updated = true;
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("gender"))) && !((helper.getParameter("gender")).equals(helper.getParameter("genderOld").toString()))){		
@@ -178,12 +187,16 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				tutor.setGender(helper.getParameter("genderOld").toString());
 			}
 
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("email"))) && !((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){				
-				tutor.setEmailAddress(helper.getParameter("email"));
-				updated = true;
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("email")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("email"))) && !((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){				
+					tutor.setEmailAddress(helper.getParameter("email"));
+					updated = true;
+				}else{
+					tutor.setEmailAddress(helper.getParameter("emailOld").toString());
+				}			
 			}else{
-				tutor.setEmailAddress(helper.getParameter("emailOld").toString());
-			}			
+				updated = true;
+			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("countryDetails"))) && Integer.parseInt(helper.getParameter("countryDetails")) != 0){
 				if(!((helper.getParameter("countryDetails")).equals(helper.getParameter("landphonecountrycodeOld").toString()))){	
@@ -196,18 +209,26 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				tutor.setLandCountryCode(helper.getParameter("landphonecountrycodeOld").toString());
 			}
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landAreaCode"))) && !((helper.getParameter("landAreaCode")).equals(helper.getParameter("landphoneareacodeOld").toString()))){	
-				tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landAreaCode")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landAreaCode"))) && !((helper.getParameter("landAreaCode")).equals(helper.getParameter("landphoneareacodeOld").toString()))){	
+					tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
+					updated = true;
+				}else{			
+					tutor.setLandAreaCode(helper.getParameter("landphoneareacodeOld").toString());
+				}		
+			}else{
 				updated = true;
-			}else{			
-				tutor.setLandAreaCode(helper.getParameter("landphoneareacodeOld").toString());
 			}
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landNumber"))) && !((helper.getParameter("landNumber")).equals(helper.getParameter("landphonenumberOld").toString()))){	
-				tutor.setLandNumber(helper.getParameter("landNumber"));
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landNumber")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landNumber"))) && !((helper.getParameter("landNumber")).equals(helper.getParameter("landphonenumberOld").toString()))){	
+					tutor.setLandNumber(helper.getParameter("landNumber"));
+					updated = true;
+				}else{			
+					tutor.setLandNumber(helper.getParameter("landphonenumberOld").toString());
+				}	
+			}else{
 				updated = true;
-			}else{			
-				tutor.setLandNumber(helper.getParameter("landphonenumberOld").toString());
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("countryDetails"))) && Integer.parseInt(helper.getParameter("countryDetails")) != 0){
@@ -221,20 +242,28 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				tutor.setMobileCountryCode(helper.getParameter("mobilephonecountrycodeOld").toString());
 			}
 
-
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode"))) && !((helper.getParameter("mobileNetworkCode")).equals(helper.getParameter("mobilephonenetworkcodeOld").toString()))){
-				tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));		
-				updated = true;
-			}else{		
-				tutor.setMobileNetworkCode(helper.getParameter("mobilephonenetworkcodeOld").toString());
-			}
-
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNumber"))) && !((helper.getParameter("mobileNumber")).equals(helper.getParameter("mobilephonenumberOld").toString()))){	
-				tutor.setMobileNumber(helper.getParameter("mobileNumber"));			
-				updated = true;
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode"))) && !((helper.getParameter("mobileNetworkCode")).equals(helper.getParameter("mobilephonenetworkcodeOld").toString()))){
+					tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));		
+					updated = true;
+				}else{		
+					tutor.setMobileNetworkCode(helper.getParameter("mobilephonenetworkcodeOld").toString());
+				}
 			}else{
-				tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
+				updated = true;
 			}
+
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNumber")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNumber"))) && !((helper.getParameter("mobileNumber")).equals(helper.getParameter("mobilephonenumberOld").toString()))){	
+					tutor.setMobileNumber(helper.getParameter("mobileNumber"));			
+					updated = true;
+				}else{
+					tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
+				}
+			}else{
+				updated = true;
+			}
+				
 						
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("aboutMe")))){
 				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
@@ -376,12 +405,17 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				}
 			}
 
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address1"))) && !((helper.getParameter("address1")).equals(helper.getParameter("address1Old").toString()))){				
-				tutor.setAddressLine1(helper.getParameter("address1"));
-				updated = true;
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address1")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address1"))) && !((helper.getParameter("address1")).equals(helper.getParameter("address1Old").toString()))){				
+					tutor.setAddressLine1(helper.getParameter("address1"));
+					updated = true;
+				}else{
+					tutor.setAddressLine1(helper.getParameter("address1Old").toString());
+				}
 			}else{
-				tutor.setAddressLine1(helper.getParameter("address1Old").toString());
+				updated = true;
 			}
+			
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address2")))){
 				if(!((helper.getParameter("address2")).equals(helper.getParameter("address2Old").toString()))){	
@@ -413,15 +447,19 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 				tutor.setIsApproved(true);			
 
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("townDetails"))) && Double.parseDouble(helper.getParameter("townDetails")) != 0){
-				if(!((helper.getParameter("townDetails")).equals(helper.getParameter("towncodeOld").toString()))){	
-					tutor.setTown(helper.getParameter("townDetails"));
-					updated = true;
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("townDetails")))){
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("townDetails"))) && Double.parseDouble(helper.getParameter("townDetails")) != 0){
+					if(!((helper.getParameter("townDetails")).equals(helper.getParameter("towncodeOld").toString()))){	
+						tutor.setTown(helper.getParameter("townDetails"));
+						updated = true;
+					}else{
+						tutor.setTown(helper.getParameter("towncodeOld").toString());
+					}
 				}else{
 					tutor.setTown(helper.getParameter("towncodeOld").toString());
 				}
 			}else{
-				tutor.setTown(helper.getParameter("towncodeOld").toString());
+				updated = true;
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newtutorStatus"))) && !(Validator.isEmptyOrHavingSpace(helper.getParameter("newtutorStatus"))) 
