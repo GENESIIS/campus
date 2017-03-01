@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
 //20170227 AS C22-checking Session null condition removed
 //20170228 AS C22- currentSessionUser checked and is there already logged, account redirect to index page.
+//20170301 AS C22-removed unwanted comments 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -35,7 +36,6 @@ public class CmdStudentLogin implements ICommand {
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	// HttpSession session;
 	String pageURL;
 	String message;
 
@@ -50,7 +50,7 @@ public class CmdStudentLogin implements ICommand {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			session = helper.getRequest().getSession(false);
 			String currentSessionUser = (String) session.getAttribute("currentSessionUser");
-			log.info(currentSessionUser);
+		
 			if (currentSessionUser == null) {
 
 				String gsonData = helper.getParameter("jsonData");
@@ -91,7 +91,6 @@ public class CmdStudentLogin implements ICommand {
 
 						session = helper.getSession(true);
 						String sessionID = session.getId();
-						log.info("JSESSIONID = " + sessionID);
 						data.setLastLoggedInSessionid(sessionID);
 						session.setAttribute("currentSessionUser",
 								data.getUsername());
