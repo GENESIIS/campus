@@ -30,9 +30,15 @@ $(document).ready(function() {
  */
 function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
+	
 	publishPrograms();
-	if (window.responseErrorMessage == null) {
+	
+	var message =	$('#userMessage').val();
+	
+	if (!isempty(message)) {
 		document.getElementById("userMessage").style.display = "none";
+	}else{
+		document.getElementById("userMessage").style.display = "block";
 	}
 
 }
@@ -222,7 +228,7 @@ function getProviderPageLoadData() {
 					var err = displayErrorMessage(x, status, error);
 					document.getElementById("userMessage").style.display = "block";
 					$("#userMessage").html(err);
-				}
+				},
 			});
 }
 
