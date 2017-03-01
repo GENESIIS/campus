@@ -15,6 +15,7 @@ package com.genesiis.campus.validation;
 //20170223 c38-view-update-tutor-profile-modified EMPTYFIRSTNAME, EMPTYLASTNAME, EMPTYMOBILECOUNTRYCODE, EMPTYMOBILENETWORKCODE, EMPTYMOBILENUMBER, EMPTYLANDCOUNTRYCODE, EMPTYLANDAREACODE, EMPTYLANDNUMBER, EMPTYADDRESS1 messages.
 //20170227 c37-tutor-update-tutor-profile-cw-added INCORRECT_PASSWORD
 //20170228 c37-tutor-update-tutor-profile-cw-fixed INCORRECT_PASSWORD spelling mistake
+//20170301 c37-tutor-update-tutor-profile-cw-added OLD_NEW_PASSWORD_SAME & NEW_CONFIRM_PASSWORD_NOTSAME
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -39,6 +40,8 @@ public enum SystemMessage {
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
 	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
+	OLD_NEW_PASSWORD_SAME("Old & new passwords cannot be same ... "),
+	NEW_CONFIRM_PASSWORD_NOTSAME("new password and confirm password are not same ... "),
 	FIRSTNAMEERROR("Invalid First Name."),
 	LASTNAMEERROR("Invalid Last Name."),
 	EMPTYFIELD("Please fill required data"),
