@@ -11,6 +11,7 @@
 <!-- 20161129 JH c7-higher-education-lanidng-page-MP QA improvement: remove header and footer tags, move script tags to the bottom of the code -->
 <!-- 20161205 JH c7-higher-education-lanidng-page-MP QA improvement: load default logo image for provider -->
 <!-- 20161205 JH c7-higher-education-lanidng-page-MP QA improvement: load default colour for slider background -->
+<!-- 20170216 PN CAM-137 added a JSTL validations for the page inner header foreach block. -->
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -50,6 +51,8 @@
 		<c:set var="defaultSmallLogo" value="${providerLogoPath}${slash }${logoCommon }${ smallLogo}"/>
 
 		<!-- page inner header -->
+		
+		<c:if test="${not empty result.collection}">
 		<div class="inner-header">
 			<c:forEach items="${result.collection}" var="category">
 				<div class="category-image">
@@ -67,12 +70,13 @@
 				<c:set var="categoryIdentifier" value="${category[4] }"></c:set>
 			</c:forEach>
 		</div>
-		<!-- end inner header -->
-
 		<input type="hidden" name="categoryCode" id="categoryCode"
 			value="${code}" /> <input type="hidden"
 			name="categoryIdentifierString" id="categoryIdentifierString"
 			value="${categoryIdentifier}" />
+		</c:if>
+		<!-- end inner header -->
+		
 		<!-- Page content -->
 		<div class="content-holder center-block clearfix">
 			<!-- course filter panel : left side -->
