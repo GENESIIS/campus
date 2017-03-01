@@ -8,6 +8,8 @@ package com.genesiis.campus.validation;
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() & remove oldPassword null checking
 //20170228 CW c37-tutor-update-tutor-profile-cw modified isValidPassword() to work with encrypted passwords
 //20170301 CW c37-tutor-update-tutor-profile-cw modified isValidPassword to fix some errors
+//20170301 CW c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb
+//20170301 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & create validations again
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -480,12 +482,71 @@ public class Validator {
 		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
 		
 		log.info("encryptedOldPassword:" + encryptedOldPassword);
-		log.info("helper.getParameter(passwordOld):" + helper.getParameter("passwordOld"));
+		log.info("helper.getParameter(passwordFromDb):" + helper.getParameter("passwordFromDb"));
 				
 		try {
 			
+			if(!(isEmptyOrHavingSpace(oldPassword))){
+				// Need to change the password
+				if(!(isEmptyOrHavingSpace(oldPassword)) && (encryptedOldPassword.equals(helper.getParameter("passwordFromDb")))){
+					// encryptedOldPassword & passwordFromDb are same
+					if(!(oldPassword.equals(newPassword))){
+						// old password & new password are not same
+						if((isEmptyOrHavingSpace(newPassword)) && !(newPassword.equals(confirmPassword))){
+							//New password & confirm password are not same
+							helper.setAttribute("newPasswordError", SystemMessage.NEW_CONFIRM_PASSWORD_NOTSAME.message());
+							helper.setAttribute("confirmPasswordError", SystemMessage.NEW_CONFIRM_PASSWORD_NOTSAME.message());
+							isValid = false;
+						}else{
+							if (isEmptyOrHavingSpace(newPassword)){ // check for null fields
+								helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
+								isValid = false;
+							}
+							
+							if(isEmptyOrHavingSpace(confirmPassword)){ // check for null fields
+								helper.setAttribute("confirmPasswordError", SystemMessage.EMPTYCONFIRMPASSWORD.message());
+								isValid = false;
+							}
+							
+							//check for the length of the newPassword
+							if (!isEmptyOrHavingSpace(newPassword) && (newPassword.length() < 5) && (newPassword.length() > 21)){ 
+								helper.setAttribute("newPasswordError", SystemMessage.PASSWORDLENGTHERROR.message());
+								isValid = false;
+							}
+							
+							// Compare password & confirm password fields
+							if (!isEmptyOrHavingSpace(newPassword) && !isEmptyOrHavingSpace(confirmPassword) && !(newPassword.equals(confirmPassword))){ 
+								helper.setAttribute("confirmPasswordError", SystemMessage.PASSWORDCONFIRMERROR.message());
+								isValid = false;
+							}
+						}
+					}else{						
+						// old password & new password are same
+						//OLD_NEW_PASSWORD_SAME
+						helper.setAttribute("oldPasswordError", SystemMessage.OLD_NEW_PASSWORD_SAME.message());
+						helper.setAttribute("newPasswordError", SystemMessage.OLD_NEW_PASSWORD_SAME.message());
+						isValid = false;
+					}
+				}else{
+					// encryptedOldPassword & passwordFromDb are not same - Old password error
+					helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
+					isValid = false;
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+/*			
+			
 			// Old Password is empty means tutor do not need to change the password
-			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("passwordOld")))  && !(helper.getParameter("passwordOld").equals(encryptedOldPassword))){
+			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("passwordFromDb")))  && !(helper.getParameter("passwordFromDb").equals(encryptedOldPassword))){
 				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
 				isValid = false;
 			}else{
@@ -511,7 +572,7 @@ public class Validator {
 					helper.setAttribute("confirmPasswordError", SystemMessage.PASSWORDCONFIRMERROR.message());
 					isValid = false;
 				}
-			}
+			}*/
 
 		} catch (Exception e) {
 			log.error("isValidPassword:  Exception" + e.toString());
