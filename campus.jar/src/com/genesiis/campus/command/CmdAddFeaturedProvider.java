@@ -19,7 +19,7 @@ package com.genesiis.campus.command;
 //20170202 JH c39-add-course-provider removed unwanted imports and code refactored
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
-//20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end
+//20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -273,9 +273,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 						courseProvider.setCrtBy("admin");// to be update after
 															// the session is
 															// created
-						courseProvider.setModBy("admin");// to be update after
-															// the session is
-															// created
 
 						// set course provider town details
 						courseProviderTown.setActive(true);
@@ -288,7 +285,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 								+ courseProvider.getLandPhoneNo();
 						courseProviderTown.setContactNumber(phoneNumber);
 						courseProviderTown.setCrtBy("admin");
-						courseProviderTown.setModBy("admin");
 
 						Map map = new HashMap();
 						map.put("provider", courseProvider);
@@ -311,10 +307,12 @@ public class CmdAddFeaturedProvider implements ICommand {
 
 							String accountStatus = helper
 									.getParameter("accountStatus");
-							if (accountStatus.equalsIgnoreCase("1")) {
+							
+							//compare account status with enum class values
+							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.ACTIVE)) {
 								courseProviderAccount.setActive(true);
 							}
-							if (accountStatus.equalsIgnoreCase("0")) {
+							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.INACTIVE)) {
 								courseProviderAccount.setActive(false);
 							}
 
@@ -324,7 +322,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
-							courseProviderAccount.setModBy("admin");
 
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
