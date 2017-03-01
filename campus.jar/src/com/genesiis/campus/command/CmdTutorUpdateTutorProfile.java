@@ -5,6 +5,8 @@ package com.genesiis.campus.command;
 //20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to work with password correctly
 //20170228 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method to fix password errors
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables to fix some errors caused by password
+//20170301 CW c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb
+//20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables password validations
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -113,24 +115,33 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 			
-			System.out.println("helper.getParameter(passwordOld) ="+ helper.getParameter("passwordOld"));
-			System.out.println("helper.getParameter(oldPassword) ="+ helper.getParameter("oldPassword"));
-			
-
-			Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("oldPassword"));
+		/*	Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("oldPassword"));
 			String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
-			
-			/*if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("password")))  && !(helper.getParameter("password").equals(encryptedOldPassword))){
+			*/
+			/*
+			 * // Old Password is empty means tutor do not need to change the password
+			if(!(isEmptyOrHavingSpace(encryptedOldPassword)) && !(isEmptyOrHavingSpace(helper.getParameter("passwordFromDb")))  && !(helper.getParameter("passwordFromDb").equals(encryptedOldPassword))){
 				helper.setAttribute("oldPasswordError", SystemMessage.INCORRECT_PASSWORD.message());
-				isValid = false;*/
-			//if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !((helper.getParameter("oldPassword")).equals(helper.getParameter("password")))){
-			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("passwordOld"))) && !((helper.getParameter("passwordOld")).equals(encryptedOldPassword))){				
+				isValid = false;
+			}
+			 */
+	/*		if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword"))) && !(Validator.isEmptyOrHavingSpace(helper.getParameter("passwordFromDb"))) && !((helper.getParameter("passwordFromDb")).equals(encryptedOldPassword))){				
 				tutor.setPassword(helper.getParameter("newPassword"));
 				updated = true;
 			}else{
 				tutor.setPassword("");
+			}*/
+			
+			
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
+				// need to change the password
+				tutor.setPassword(helper.getParameter("newPassword"));
+				updated = true;
+			}else{
+				// no need to change the password
+				tutor.setPassword("");
 			}
+			
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname"))) && !((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
 				tutor.setFirstName(helper.getParameter("firstname"));
