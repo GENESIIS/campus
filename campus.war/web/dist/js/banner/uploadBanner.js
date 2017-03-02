@@ -16,6 +16,9 @@
  *   			total message (error/success) displaying sequence changed in all ajax request calls.
  *   20170227 DN c131-admin-manage-banner-upload-banner-image-dn validateUploadBannerEmbedData() is created.
  *   20170228 DN c131-admin-manage-banner-upload-banner-image-dn onChangeEvent() has been initialized, validation code has been modified
+ *   20170302 DN c131-admin-manage-banner-upload-banner-image-dn validateUploadBannerEmbedData() regex has been changed to handle validations
+ *               of the bannerManger.jsp page fields, compareDates() function implemented.$(document).on('click','#uploadBbutton') modified
+ *               to validate if user select upload button without selecting an image.
  */
 
 /*
@@ -39,7 +42,6 @@ $(document).ready(function(){
 			$('#urlInfor').html("Please provide a valid url");
 			$('#bannerDispatchingUrl').val("");
 		}
-		
 	});
 });
 
@@ -185,8 +187,7 @@ function getPreRequisitPageData(preRequistData){
 		if(selectedBannerSlotCode ==""){
 			$('#advertizingSlotInfor').html("Please select a valid slot from the populated list");
 			$('#slot').val("");
-		}
-		
+		}		
 	});
 }
 
@@ -297,16 +298,21 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
  *  request ajax call.
  *  @author dushantha DN
  */
+ 
 $(document).on('click','#uploadBbutton', function(event){
 	
-	var isValidationSuccess = false;
-    
-    $('#bannerModalClose').hide();
-    
-	/*
+    /*
 	 * Extracting Banner page data
 	 */
+	
     var banerImage=$('#file-select').prop('files')[0];
+    
+    if(banerImage===undefined){
+    	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
+    	return;
+	}
+   
+    $('#bannerModalClose').hide();
 	var advertiserCode= $('#sAdvertiserCode').val();
 	var codeOfSelectedPage= $('#sPageCode').val();
 	var bannerSlotCode=$('#sSlotCode').val();
@@ -328,19 +334,13 @@ $(document).on('click','#uploadBbutton', function(event){
 	BannerFieldInputValues.push(bannerPublishingEndDate);
 	BannerFieldInputValues.push(urlMiniWebOrPage);
 	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
-	
-	//TODO run the validation check here for the page
-	
-	isValidationSuccess=true;
-	
-	if(isValidationSuccess){
 		
-		//if validation passes then create the form data
-		var formData = new FormData();
-		formData.append("file",banerImage);
 		
-		event.stopPropagation(); 
-	    event.preventDefault(); 
+	var formData = new FormData();
+	formData.append("file",banerImage);
+		
+	event.stopPropagation(); 
+    event.preventDefault(); 
 		
 	 // ajax call to transfer banner Image to server end
 		$.ajax({
@@ -386,33 +386,80 @@ $(document).on('click','#uploadBbutton', function(event){
 					alert("fire the data field clear function");
 					$(':input').val('');
 				}
-				
 			}
 		});
-		
-	}
-	
-	
+
 });
 
+/**
+ * this event gets triggerred once the Upload 
+ * abnnner button gets fired
+ */
+$(document).on('click','#openModalUpload', function(event){
+	if(!validateUploadBannerEmbedData()){
+		displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Error !");
+		setTimeout($('#bannerUploadPopUp').modal('hide'),5000);
+	
+	} 
+});
+
+
+/**
+ * validateUploadBannerEmbedData() validates the input fields of
+ * bannerManger.js and returns false if any one of the fields are not confirming
+ * to the requirement
+ * @returns {Boolean}
+ */
 function validateUploadBannerEmbedData(){
 	var validationPass =false;
-	
+
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#advertiser').val(),
-			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "Advertiser Field",
-			"advertiserInfor")))
+		/^([a-zA-Z]+)([a-zA-Za-zA-Z0-9\._]+){0,}$/g), "Advertiser Field",
+		"advertiserInfor")))
 		return validationPass;
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#page').val(),
-			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "page Field", "pageInfor")))
+			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "page Field", "pageInfor")))
 		return validationPass;
-	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#slot').val(),
-			/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g), "page Field", "advertizingSlotInfor")))
+	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#slot').val(),
+			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "slot Field",
+			"advertizingSlotInfor")))
 		return validationPass;
 	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#duration').val(),
 			/^[0-9]+$/g),"display duration","displayDurationInfor")))
 		return validationPass;
-	if(!(isFieldFilled(urlTest('bannerDispatchingUrl'), elementName, errorLabelId)))
+	if(!isFieldFilled($('#startDate').val(),'Start date','startDateInfor'))
 		return validationPass;
+	if(!isFieldFilled($('#endtDate').val(),'End date','endtDateInfor'))
+		return validationPass;
+	if(!isFieldFilled(
+			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
+		return validationPass;
+	return !validationPass;
+}
+
+/**
+ * compareDates() accept two string dates which seperated by given 
+ * delemeter , compares those and returns 
+ * date1 > date2 --> 1
+ * date1 == date2 --> 0
+ * date1 < date2 --> -1
+ * @param firstDateString
+ * @param secondDateString
+ * @returns {Number}
+ */
+function compareDates(firstDateString,secondDateString,delimeter){
+	
+	var dateSplitArray = firstDateString.split(delimeter); //2017-02-14
+	var firstDate = new Date(dateSplitArray[0],(dateSplitArray[1]-1),dateSplitArray[2]);
+	dateSplitArray = secondDateString.split(delimeter); 
+	var secondDate = new Date(secondDateString[0],(secondDateString[1]-1),secondDateString[2]);
+	if(firstDate.getTime()>secondDate.getTime()){
+		return 1;
+	}else if (firstDate.getTime()<secondDate.getTime()){
+		return -1;
+	} else {
+		return 0;
+	}
 }
 
 
@@ -488,25 +535,26 @@ $( document ).ready(function() {
 	$("#openModalUpload").click(function(e){
 		$('#uploadBbutton').prop('disabled',false); // if dissabled make the button enabled
 		$('#bannerUploadPopUp').modal('show');
+		$('#file-select').prop('files')[0]="";
 		$('#bannerDisplayLabel').html(""); // clear message label content
 		e.preventDefault();
 	});
 	
+	
 /*
  * onchange events for the data list 
  */
-//	var tempAdvertiserCode = selectedAdvertiserCode;
-//	onChangeEvent('advertiser', 'advertiserInfor',tempAdvertiserCode,
-//		"Please select a valid advertiser from the populated list");
+
+function onChangeEvent(idElement,errorDisplayId,fieldVarTobeTested,userInfromation){
 	
-//	onChangeEvent('page', 'pageInfor',
-//			selectedPageCode,
-//			"Please select a valid page from the populated list");	
-//	
-//	onChangeEvent('slot', 'advertizingSlotInfor',
-//			selectedBannerSlotCode,
-//			"Please select a valid slot from the populated list");	
-	
+	$('#'+idElement).on("change",function(){
+		if(fieldVarTobeTested ==""){
+			$('#'+errorDisplayId).html(userInfromation);
+			$('#'+idElement).val("");
+		}
+	});
+
+}
 	
 	
 });
