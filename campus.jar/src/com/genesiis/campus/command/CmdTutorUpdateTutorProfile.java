@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables password validations
 //20170301 CW c37-tutor-update-tutor-profile-cw modified execute method & moved message declaration inside the method, modified a message & modified setCompareVariables method to add null value check for the mandatory fields
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method & add password encryption to new password & removed un required commented lines 
+//20170302 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method to use Validator.isEmptyOrHavingSpace()
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -247,8 +248,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				}
 			}else{
 				updated = true;
-			}
-				
+			}				
 						
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("aboutMe")))){
 				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
@@ -510,9 +510,8 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 		TownDAO town = new TownDAO();
 		
 		try{
-
 			int townAddCount = 0;
-			if(tutor.getMobileCountryCode() != " "){
+			if(!(Validator.isEmptyOrHavingSpace(tutor.getMobileCountryCode()))){
 				Collection<Collection<String>> townCollection = town.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 				
 				for(Collection<String> townList : townCollection){
@@ -533,7 +532,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 			int countryAddCount = 0; 
-			if(tutor.getMobileCountryCode() != " "){
+			if(!(Validator.isEmptyOrHavingSpace(tutor.getMobileCountryCode()))){
 				Collection<Collection<String>> countryCollection = country.findById(Integer.parseInt(tutor.getMobileCountryCode()));
 				if(!(countryCollection.isEmpty())){
 					for(Collection<String> countryList : countryCollection){
