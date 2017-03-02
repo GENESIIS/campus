@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
  * 20170209 DN c131-admin-manage-banner-upload-banner-image-dn cretaed the initial class stub
  * 				of BannerSlotDAO.java
  * 				the method findById(Object code) has been overriden in oder to get the banner slots.
+ * 20170302 DN c131-admin-manage-banner-upload-banner-image-dn changed the sql query in  findById(Object code) 
+ * 				to include group by clause and the filter conditions.
  */
 
 
@@ -73,11 +75,11 @@ public class BannerSlotDAO implements ICrud {
 		ResultSet resultSlot = null;
 		try{
 			int pageCode =Integer.parseInt((String)code);
-			StringBuilder bannerSlotSql = new StringBuilder("SELECT PSLT.CODE,PSLT.NAME FROM [CAMPUS].[PAGESLOT]  PSLT ");
+			StringBuilder bannerSlotSql = new StringBuilder("SELECT PSLT.NAME FROM [CAMPUS].[PAGESLOT]  PSLT ");
 			bannerSlotSql.append(" INNER JOIN [CAMPUS].[PAGE] PGE ");
-			bannerSlotSql.append("ON PGE.CODE=PSLT.CODE ");
+			bannerSlotSql.append("ON PGE.CODE=PSLT.PAGE ");
 			bannerSlotSql.append(" WHERE PGE.ISACTIVE = 1 AND PSLT.[ISACTIVE] =1 AND PSLT.PAGE=? ");
-			
+			bannerSlotSql.append(" GROUP BY PSLT.NAME");
 			con = ConnectionManager.getConnection();
 			prep = con.prepareStatement(bannerSlotSql.toString());
 			prep.setInt(1, pageCode);
@@ -86,7 +88,8 @@ public class BannerSlotDAO implements ICrud {
 			
 			while(resultSlot.next()){
 				ArrayList<String> bannerSlots = new ArrayList<String>();
-				bannerSlots.add(resultSlot.getString("CODE"));
+				//bannerSlots.add(resultSlot.getString("CODE"));
+				bannerSlots.add("1"); //ADDING A DUMMY RECORD TO THE COLLECTION
 				bannerSlots.add(resultSlot.getString("NAME"));
 				outerWrapper.add(bannerSlots);
 				
