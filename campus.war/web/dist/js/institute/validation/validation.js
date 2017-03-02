@@ -151,7 +151,6 @@ function isStringHasValiCharsAndLength(testableInput, regex){
 }
 
 
-
 /**
  * this method test if the url entered is a correct one,
  * test is minimally conducted as the url validation involves complex
@@ -161,42 +160,49 @@ function isStringHasValiCharsAndLength(testableInput, regex){
  * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*
  * https://www.google.lk
  * www.google.lk
+ * <b>NOTE</b>: but this validation returns false for URLs which contains "/" at the end.
+ * Hence 'https://www.google.lk/' results an invalid url.
  * method does not validate urls having ":" in between e.g http://www.campus.dev:8080
  * @author dushantha DN
  * @param urlInputTextid
  */
 function urlTest(urlInputTextid){
-	var urlInputText = $('#'+urlInputTextid).val();
 	var validUrl = false;
-	if(urlInputText==""|urlInputText==null){
+	var urlInputText = $('#'+urlInputTextid).val();	
+	if(urlInputText===""|urlInputText===null){
 		return validUrl;
 	}
-	urlInputText.replace(/\s+/g, ""); // remove spaces between the context
-	var urlPatern = /^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z‌​\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	//urlInputText.replace(/\s+/g, ""); // remove spaces between the context
+	var urlPatern =/^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	
+
+	/* test for characters placed at the beginning
+	 * e.g :!@%~
+	 * \p{N} matches any kind of numeric character in any script
+	 * \p{Sm} matches any mathematical symbol
+	 * \p{Z} matches any kind of whitespace or invisible separator
+	 * \p{P} matches any kind of punctuation character
+	*/
 	var urltestingPattern =/^[\p{N}\p{Sm}\p{Z}\p{P} ]+/g;
-	var urlStartPattern = /(http(s)?|ftp)/g;
+	var urlStartWWWPattern = /^(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z‌​\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
 	var urlSplitedArray=null;
 	
 		if( isPatternMatch(urlPatern,urlInputText)){ 
+			urlSplitedArray = urlInputText.split('://');
 			
-			if(!isPatternMatch(urltestingPattern,urlInputText)){ 
-				
-				
-			/* test for characters placed at the beginning
-			 * e.g :!@%~
-			 * \p{N} matches any kind of numeric character in any script
-			 * \p{Sm} matches any mathematical symbol
-			 * \p{Z} matches any kind of whitespace or invisible separator
-			 * \p{P} matches any kind of punctuation character
-			*/
-				urlSplitedArray = urlInputText.split(':');
-				if((urlSplitedArray.length >1)&(isPatternMatch(urlStartPattern,urlSplitedArray[0]))){
-					
-					//exclude https:genesiis.hipchat.com option
-					validUrl=(urlSplitedArray[1].substring(0,2)=="//");
-				}
-			}
-		}
+			/*
+			 *excluding for  https://56@genesiis.atlassian.net/secure/Dashboard.jspa?selectPageId=11900 
+			 *pattern
+			 */
+			validUrl=isPatternMatch(urltestingPattern,urlSplitedArray[1]);	
+	  } else if(isPatternMatch(urlStartWWWPattern,urlInputText)){  // does url start with 
+			urlSplitedArray = urlInputText.split('.');
+			validUrl = !isPatternMatch(urltestingPattern,urlSplitedArray[1]);
+	 } else {
+			validUrl = isPatternMatch(urltestingPattern,urlInputText);
+	}
+			
+		
 		
 	return validUrl;
 }
