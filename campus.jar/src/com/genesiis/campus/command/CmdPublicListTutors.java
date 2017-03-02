@@ -6,6 +6,7 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.PublicTutorDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
@@ -24,10 +25,15 @@ public class CmdPublicListTutors implements ICommand{
 			Exception {
 	
 		final ICrud publicTutorDAO = new PublicTutorDAO();
+		SystemMessage message = SystemMessage.UNKNOWN;
 		
 		try{
 			
 			final Collection<Collection<String>> tutorCollection = publicTutorDAO.getAll();
+			
+			if(tutorCollection.size() == 0 ){
+				message = SystemMessage.NODATA;
+			}
 			view.setCollection(tutorCollection);
 			
 			
@@ -38,7 +44,7 @@ public class CmdPublicListTutors implements ICommand{
 			log.error("execute() Exception : "+ exception.toString());
 			throw exception;
 		}finally{
-			
+			helper.setAttribute("userMessage", message.toString());
 		}
 		
 		
