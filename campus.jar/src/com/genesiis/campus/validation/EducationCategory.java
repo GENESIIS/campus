@@ -1,7 +1,14 @@
 package com.genesiis.campus.validation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 //20161114 MM c5-corporate-training-landing-page-MP Initialised file
 //20161115 MM c5-corporate-training-landing-page-MP Added PRE_EDUCATION constant
+
+//20170302 PN CAM-137: init CategoryList enum class to return categories associated with the landing page, if an error thrown when accessing the DB. 
+//			           implemented getEnumAsCollection(String code) method to select an enum value from the given code and returns the attribute set as a collection.
+//					   modified Enum by adding category string value into it.
 
 /**
 * EducationCategory enum is for the purpose of making the connection between 
@@ -38,9 +45,72 @@ package com.genesiis.campus.validation;
 
 public enum EducationCategory {
 	
-	PRE_EDUCATION,
-	SCHOOL_EDUCATION,
-	HIGHER_EDUCATION,
-	CORPORATE_TRAINING;
+	PRE_EDUCATION("1","School Education","Education in Sri Lanka has a long history that dates back two millennia. The Constitution of Sri Lanka provides for education as a fundamental right. Sri Lanka's population had an adult literacy rate of 92.63% in 2015, which is above average by world and regional standards.[note 1] Education plays a major part in the life and culture of the country and dates back to 543 BC. Sri Lanka's modern educational system was brought about by its integration into the British Empire in the 19th century. Education currently falls under the control of both the Central Government and the Provincial Councils, with some responsibilities lying with the Central Government and the Provincial Council having autonomy for others.","SCHOOL_EDUCATION"),
+	SCHOOL_EDUCATION("2","Higher Education","Higher Education Description","HIGHER_EDUCATION"),
+	HIGHER_EDUCATION("3","Corporate Training","Corporate Training Education Description","CORPORATE_TRAINING"),
+	CORPORATE_TRAINING("4","Pre Education","Pre Education Description","PRE_EDUCATION");
+	
+	private final String code;
+	private final String name;
+	private final String description;
+	private final String categoryString;
+	
+	private EducationCategory(String code, String name, String description, String categoryString) {
+		this.code = code;
+		this.name = name;
+		this.description = description;
+		this.categoryString = categoryString;
+	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getCategoryString() {
+		return categoryString;
+	}
+
+	/**
+	 * CategoryList emun values will convert into Collection<Collection<String>> and returns
+	 * @return
+	 */
+	public static Collection<Collection<String>> getEnumAsCollection(){
+		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
+		for(EducationCategory list: EducationCategory.values()){
+			final ArrayList<String> singleCategoryList = new ArrayList<String>();
+			singleCategoryList.add(list.getCode());
+			singleCategoryList.add(list.getName());
+			singleCategoryList.add(list.getDescription());
+			singleCategoryList.add(list.getCategoryString());
+			allCategoryList.add(singleCategoryList);
+		}		
+		return allCategoryList;
+	}
+	
+	/**
+	 * Select an enum value from the given code and returns the attribute set as a collection.
+	 * @param code
+	 * @return
+	 */
+	public static Collection<Collection<String>> getEnumAsCollection(String code){
+		final Collection<Collection<String>> allCategoryList = new ArrayList<Collection<String>>();
+		for(EducationCategory list: EducationCategory.values()){
+			if(list.getCode().trim().equalsIgnoreCase(code)){
+				final ArrayList<String> singleCategoryList = new ArrayList<String>();
+				singleCategoryList.add(list.getCode());
+				singleCategoryList.add(list.getName());
+				singleCategoryList.add(list.getDescription());
+				allCategoryList.add(singleCategoryList);
+			}		
+		}		
+		return allCategoryList;
+	}
 }
