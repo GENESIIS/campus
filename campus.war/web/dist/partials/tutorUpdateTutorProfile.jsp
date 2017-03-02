@@ -2,6 +2,7 @@
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - removed tutor status details, add Javascript validations-->
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - modified password change items-->
 <!-- 20170301 c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb -->
+<!-- 20170302 CW c37-tutor-update-tutor-profile-cw modified validateTutorModifications method to validateTutorModificationsByTutor -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -17,7 +18,7 @@
 </head>
 <body>
 	<form action="/TutorController" method="post"
-		onsubmit="return (validateTutorModifications())">
+		onsubmit="return (validateTutorModificationsByTutor())">
 
 		<c:forEach var="tutorList" items="${result.collection}">
 
