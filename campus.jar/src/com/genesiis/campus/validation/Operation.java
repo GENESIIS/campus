@@ -1,7 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
-
+//20170302 JH c96-public-list-all-tutors added PUBLIC_LIST_ALL_TUTORS enum
 
 /**
  * Operation class facilitate in binding the CCO
@@ -9,7 +9,8 @@ package com.genesiis.campus.validation;
  */
 public enum Operation {
 	
-	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp");
+	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
+	PUBLIC_LIST_ALL_TUTORS("PUBLIC_LIST_ALL_TUTORS", ResponseType.JSON, "/dist/public/display-tutors.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
