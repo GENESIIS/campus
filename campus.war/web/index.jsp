@@ -12,13 +12,13 @@
 
 
 <!-- clears browser history and redirects url -->
-<SCRIPT> 
-{  
-     var Backlen=history.length;   
-     history.go(-Backlen);   
-     window.location.href=''; 
-}
-</SCRIPT> 
+
+<script type="text/javascript">
+//Check if a new cache is available on page load.
+ window.history.forward();
+    function noBack() { window.history.forward(); }
+</script>
+
 <title>Campus.lk</title>
 <!-- Bootstrap & CSS Style-->
 <link href="dist/bower-components/bootstrap/bootstrap.min.css"
@@ -36,7 +36,7 @@
 <!-- <script src="dist/js/landingPage/landing-page-ui-helper.js"></script> -->
 
 </head>
-<body>
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 	<!-- Header-->
 	<!-- End Header -->
 	<header>
@@ -49,11 +49,12 @@
 
 	<!-- Main Container - Landing -->
 	<!--<div w3-include-html="dist/partials/landing.jsp"></div>-->
+
 	<script>
 		$(document)
 				.ready(
 						function() {
-						
+							
 								var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('?'), sParameterName, i;
 								 for (i = 0; i < sURLVariables.length; i++) {
 													        sParameterName = sURLVariables[i].split('=');
