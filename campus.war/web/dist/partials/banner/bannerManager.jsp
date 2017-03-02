@@ -79,7 +79,7 @@
 								<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
 								<input type="hidden"	value="xyz">
 								<br>
-								<button type="submit" id="uploadBbutton">Upload</button>
+								<button type="submit" id="uploadBbutton" disabled >Upload</button>
 							</form>
 						</div>
 					</div>
@@ -145,12 +145,12 @@
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
 				<br> Start date* &nbsp; <input type="date" name="startDate"
-					id="startDate">
+					id="startDate" onclick="clearField('startDateInfor')">
 			</div>
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				End date * &nbsp;<input type="date" name="endtDate" id="endtDate">
+				End date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
 			</div>
 			<br><br>
 			<div>
@@ -170,8 +170,9 @@
 			<br><br>
 			<!-- Form image submit -->
 
-			<label><b>Upload Banner<b></b></label> <br><br><br>
-			<button  id="openModalUpload" data-target="#bannerUploadPopUp">Upload Banner</button>
+			<label><b>Upload Banner</b></label> <br><br><br>
+<!-- 			<button  id="openModalUpload" data-target="#bannerUploadPopUp" >Upload Banner</button> -->
+			<button  id="openModalUpload" >Upload Banner</button>
 			<button id="bannerPageClearField">Clear Page</button>
 		</form>
 
