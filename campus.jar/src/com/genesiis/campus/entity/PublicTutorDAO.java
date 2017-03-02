@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20170228 JH c96-public-list-all-tutors PublicTutorDAO.java created
+//20170302 JH c96-public-list-all-tutors getAll() method coding 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
