@@ -14,6 +14,9 @@ package com.genesiis.campus.validation;
 //20170301 CW c37-tutor-update-tutor-profile-cw unit testing & modified isValidPassword() to remove log info messages & commented lines 
 //20170301 CW c37-tutor-update-tutor-profile-cw unit testing & add validations to country codes WIP
 //20170301 CW c37-tutor-update-tutor-profile-cw unit testing & add validations to validateTutorFields() method country codes & Town codes completed
+//20170302 CW c37-tutor-update-tutor-profile-cw modified isValidFirstname, isValidLastname methods to validate for numbers
+				//removed isValidLastname & modified isValidFirstname method to isValidName & Change the validateTutorFields method to use isValidName method
+				//removed isValidContactNumber & modified isValidNetworkCode method to isValidNetworkOrContactCode & Change the validateTutorFields method to use isValidNetworkOrContactCode method
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -152,11 +155,11 @@ public class Validator {
 				isValid = false;
 			} 			
 			
-			if (!isValidFirstname(helper.getParameter("firstname"))) {
+			if (!isValidName(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.FIRSTNAMEERROR.message());
 				isValid = false;
 			}
-			if (!isValidLastname(helper.getParameter("lastname"))) {
+			if (!isValidName(helper.getParameter("lastname"))) {
 				helper.setAttribute("lastNameError", SystemMessage.LASTNAMEERROR.message());
 				isValid = false;
 			}
@@ -181,11 +184,11 @@ public class Validator {
 				helper.setAttribute("countryError", SystemMessage.COUNTRYCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
+			if (!isValidNetworkOrContactCode(helper.getParameter("mobileNetworkCode"))) {
 				helper.setAttribute("mobileNetworkError", SystemMessage.NETWORKCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidContactNumber(helper.getParameter("mobileNumber"))) {
+			if (!isValidNetworkOrContactCode(helper.getParameter("mobileNumber"))) {
 				helper.setAttribute("mobileNumberError", SystemMessage.MOBILENUMBERERROR.message());
 				isValid = false;
 			}
@@ -193,11 +196,11 @@ public class Validator {
 				helper.setAttribute("landError", SystemMessage.LANDCOUNTRYCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
+			if (!isValidNetworkOrContactCode(helper.getParameter("landAreaCode"))) {
 				helper.setAttribute("landAreaCodeError", SystemMessage.LANDAREACODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidContactNumber(helper.getParameter("landNumber"))) {
+			if (!isValidNetworkOrContactCode(helper.getParameter("landNumber"))) {
 				helper.setAttribute("landNumberError", SystemMessage.LANDNUMBERERROR.message());
 				isValid = false;
 			}
@@ -249,44 +252,20 @@ public class Validator {
 	}	
 	
 	/**
-	 * Check the entered firstName is a valid one
+	 * Check the entered name is a valid one
 	 * 
 	 * @author Chinthaka
-	 * @param firstName
-	 * @return boolean - Returns true if the requested firstName is a valid one
+	 * @param name
+	 * @return boolean - Returns true if the requested name is a valid one
 	 */
-	public boolean isValidFirstname(String firstName) throws Exception {
+	public boolean isValidName(String name) throws Exception {
 		boolean valid = false;
 		try {
-
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName != " ") {
+			if(!isEmptyOrHavingSpace(name) && (name.length() < 21) && name.matches( "[a-zA-Z][a-zA-Z]*" )) {
 				valid = true;
 			}
-
 		} catch (Exception e) {
-			log.error("isValidFirstname:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered lastName is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param lastName
-	 * @return boolean - Returns true if the requested lastName is a valid one
-	 */
-	public boolean isValidLastname(String lastName) throws Exception {
-		boolean valid = false;
-		try {
-
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName != " ") {
-				valid = true;
-			}
-
-		} catch (Exception e) {
-			log.error("isValidLastname:  Exception" + e.toString());
+			log.error("isValidName:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
@@ -325,46 +304,20 @@ public class Validator {
 	 * @param networkCode
 	 * @return boolean - Returns true if the requested networkCode is a valid one
 	 */
-	public boolean isValidNetworkCode(String networkCode) throws Exception {
+	public boolean isValidNetworkOrContactCode(String code) throws Exception {
 		boolean valid = false;
 		try {
 
-			int code = Integer.parseInt(networkCode);
+			int val = Integer.parseInt(code);
 			
-			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode != " ") {
+			if (!isEmptyOrHavingSpace(code) && (code.length() < 11)) {
 				valid = true;
 			}
 
 		} catch (NumberFormatException e) {
 			valid = false;
 		}  catch (Exception e) {
-			log.error("isValidNetworkCode:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered contactNumber is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param contactNumber
-	 * @return boolean - Returns true if the requested contactNumber is a valid one
-	 */
-	public boolean isValidContactNumber(String contactNumber) throws Exception {
-		boolean valid = false;
-		try {
-
-			int code = Integer.parseInt(contactNumber);
-			
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber != " ") {
-				valid = true;
-			}
-
-		} catch (NumberFormatException e) {
-			valid = false;
-		}   catch (Exception e) {
-			log.error("isValidContactNumber:  Exception" + e.toString());
+			log.error("isValidNetworkOrContactCode:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
