@@ -17,10 +17,10 @@ package com.genesiis.campus.entity;
 //20170102 PN CAM-112: added ResultSet close statement into finally blocks in DAO methods.
 //20170215 PN CAM-137: modified getAll() method exception block get and assign the values from static enum.
 //20170215 PN CAM-137: modified getAll() method exception block by removing get and assign the values from static enum.
+//20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
 
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.util.landing.CategoryList;
 
 import org.apache.log4j.Logger;
 
