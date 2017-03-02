@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20170302 JH c96-public-list-all-tutors added enum NODATA
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -34,6 +35,7 @@ public enum SystemMessage {
 	MEDICALHISTORYNOID("No Medical History ID obtained."),		
 	MEDICALREPORTDESCRIPTIONNOTVALID("Medical Report Description not valid."),
 	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),
+	NODATA("No records found"),
 	MEDICALREPORTNOTVALID("Medical Report not valid");
 
 	
