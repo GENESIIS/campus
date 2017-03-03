@@ -13,6 +13,7 @@ package com.genesiis.campus.validation;
 //20170303 DN c131-admin-manage-banner-upload-banner-image-dn compareDates() method implemented. and copied all the doc comments
 //		   from interface Validatory.java to the concrete implementation
 //         isUrlValid() method implemented.
+//		   implemented newly introduced methods with string error message parameter.
 
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -185,14 +186,11 @@ public class PrevalentValidation implements Validatory {
 	 * @throws Exception 
 	 */
 	@Override
-	public int compareDates(Date date, Date otherDate) throws Exception {
-		try {
-			return date.compareTo(otherDate);
-		} catch (NullPointerException npexp) {
-			log.error("compareDates(java.util.Date,java.util.Date): NullPointerException "+ npexp.toString());
-			throw npexp;
-		}
-	
+	public int compareDates(Date date, Date otherDate,String errorMessage) throws Exception {
+		Integer outPut= date.compareTo(otherDate);
+		boolean success =  (outPut instanceof Integer);
+		throwCustomError(success, errorMessage);
+		return (int)outPut;
 	}
 	
 	/**
@@ -213,18 +211,110 @@ public class PrevalentValidation implements Validatory {
 	 * @throws Exception
 	 */
 	@Override
-	public boolean isUrlValid(String url,long options) throws Exception{
+	public boolean isUrlValid(String url,long options,String errorMessage) throws Exception{
 		boolean isValidUrl =  false;
-		
-		try {
-			UrlValidator urlValidator = new UrlValidator(options);
-			isValidUrl = urlValidator.isValid(url);
-		} catch (Exception exp) {
-			log.error("isUrlValid() : Exception"+ exp.toString());
-			throw exp;
-		}
+		UrlValidator urlValidator = new UrlValidator(options);
+		isValidUrl = urlValidator.isValid(url);
+		throwCustomError(isValidUrl, errorMessage);
 		return isValidUrl;
 	}
+	
+	/**
+	 * isNotEmpty  method validate if the passed String is
+	 * null or empty.
+	 * @author DN
+	 * @param text to be tested for null or empty
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return boolean if "text" contains an alpha numeric value
+	 * method returns true else false. 
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isNotEmpty(String text, String errorMessage)
+			throws Exception {
+
+		boolean status = false;
+		if ((text != null) & (text.trim().isEmpty() == false)) {
+			status = true;
+		}
+		throwCustomError(status,errorMessage);
+		return status;
+	}
+	
+	/**
+	 * validateEmail method test for known email patterns.
+	 * If the argument in test is confirm to valid email
+	 * format ,method successfully passes the test
+	 * @author DN
+	 * @param email String 
+	 * @return boolean if email confirms to the email format
+	 * return true else false.
+	 * @throws Exception
+	 */
+	@Override
+	public boolean validateEmail(String email, String errorMessage)
+			throws Exception {
+		boolean validEmail = false;
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
+				"^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email.trim());
+		validEmail = matcher.find();
+		throwCustomError(validEmail,errorMessage);
+		return validEmail;
+	}
+
+	/**
+	 * isInteger() tests if the passed parameter is an Integer
+	 * @author DN
+	 * @param value String value representing the Integer and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Integer
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isInteger(String value, String errorMessage)
+			throws Exception {
+		boolean isTestPassed = false;
+		try {
+			Integer.parseInt(value);
+			isTestPassed = true;
+		} catch (NumberFormatException e) {
+			isTestPassed= false;
+		} catch (NullPointerException e) {
+			isTestPassed= false;
+		} finally {
+			throwCustomError(isTestPassed,errorMessage);
+			return isTestPassed;
+		}
+	}
+
+	/**
+	 * isFloat() tests if the passed parameter is an Float
+	 * @author DN
+	 * @param value String value representing the Float and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Float
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isFloat(String value, String errorMessage) throws Exception {
+		boolean isTestPassed = false;
+		try {
+			Float.parseFloat(value);
+			isTestPassed = true;
+		} catch (NumberFormatException e) {
+			isTestPassed= false;
+		} catch (NullPointerException e) {
+			isTestPassed= false;
+		} finally {
+			throwCustomError(isTestPassed,errorMessage);
+			return isTestPassed;
+		}
+	}
+
+	
 	
 	/*
 	 * throwCustomError class accepts two parameters and based on the test falsity Exception
@@ -262,6 +352,7 @@ public class PrevalentValidation implements Validatory {
 	  }
 	}
 
+	
 	
 
 }
