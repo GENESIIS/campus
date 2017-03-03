@@ -14,6 +14,7 @@
  * //20170214 CW c38-view-update-tutor-profile modified validateTutorFileds() method & renamed as validateTutorModifications()
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method modify validations for tutor status & Town details
+ * //20170303 CW  c38-view-update-tutor-profile modified clearField() & add emailmessage clearing function
  */
 
 /**
@@ -714,4 +715,5 @@ function ValidateEmail(email) {
 function clearField(elementId) {
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
+	$(document).find('#emailmessage').text('');
 }
