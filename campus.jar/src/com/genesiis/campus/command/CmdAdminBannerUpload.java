@@ -16,6 +16,7 @@ package com.genesiis.campus.command;
  * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn getFileReNamedTo() implemented
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn SystemMessage[ENUM].toString() is called when using the systemMessages
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
+ * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -29,15 +30,19 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.ImageUtility;
 import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.PrevalentValidation;
+import com.genesiis.campus.validation.PrevalentValidation.FailedValidationException;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
+import com.genesiis.campus.validation.Validatory;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;
@@ -93,7 +98,15 @@ public class CmdAdminBannerUpload implements ICommand {
 				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
 				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
 				
-				return uploadFullBannerCredentials(jsn,view,userName,helper);				
+				if(isClientInputAccordanceWithValidation(jsn)){
+					return uploadFullBannerCredentials(jsn,view,userName,helper);
+				}
+				
+				//return uploadFullBannerCredentials(jsn,view,userName,helper);	
+				// if validation fails
+				setResponseCridentials(helper);
+				return view;
+				
 		    default:
 		    	return view;
 			}
@@ -107,6 +120,56 @@ public class CmdAdminBannerUpload implements ICommand {
 		
 	}
 	
+
+	private boolean isClientInputAccordanceWithValidation(JasonInflator jason) throws Exception {
+		boolean isvalidationSuccess = false;
+		if(jason==null){
+			log.info("isClientInputAccordanceWithValidation (): --> JasonInflator object is null ");
+			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL;
+			return false;
+		}
+		
+		String advertiserCode 		= jason.getAdvertiserCode();
+		String codeOfSelectedPage   = jason.getCodeOfSelectedPage();	
+	    String bannerSlotCode 		= jason.getBannerSlotCode();	
+		String displayDusration		= jason.getDisplayDusration();
+		String banerToBeActive      = jason.getBanerToBeActive();
+		String bannerPublishingDate = jason.getBannerPublishingDate(); //"2017-02-14"
+		String bannerPublishingEndDate = jason.getBannerPublishingDate();		
+		String urlMiniWebOrPage        = jason.getUrlMiniWebOrPage();	//"Page:0","URL: 1" or "Mini Web:2"
+		String urlToBeDirectedOnBannerClick = jason.getUrlToBeDirectedOnBannerClick();	
+		String bannerImageName     = jason.getBannerImageName();
+		
+		
+		try {
+			    Validatory clientInputValidator = new PrevalentValidation();
+			    clientInputValidator.isNotEmpty(advertiserCode," Advertiser field is empty !");
+				clientInputValidator.isInteger(advertiserCode," Choose Advertiser from the list");
+				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
+				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
+				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
+				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
+				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
+				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
+				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
+				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+				clientInputValidator.isInteger(urlMiniWebOrPage);
+				clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES, "Url provided is not a valid URL");
+				isvalidationSuccess=true;
+				
+		} catch (FailedValidationException fvexp) {
+			this.message = message +" "+ fvexp.toString();
+			this.setSuccessCode(-2); 
+			return false;
+		} catch(Exception exp){
+			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
+			throw exp;
+		}
+		
+		return isvalidationSuccess;
+		
+	}
+
 
 	/*
 	 * getSessionProperty provide session associated attribute
