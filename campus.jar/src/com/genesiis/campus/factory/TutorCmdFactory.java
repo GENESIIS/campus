@@ -11,11 +11,13 @@ package com.genesiis.campus.factory;
 //20170207 CW c38-view-update-tutor-profile removed CmdCheckUsername element.
 //20170207 CW c38-view-update-tutor-profile removed ADD_TUTOR_PROFILE_DETAILS element
 //20170227 CW c37-tutor-update-tutor-profile-cw add VIEW_TUTOR_UPDATE_TUTOR_DETAILS & TUTOR_UPDATE_TUTOR element
+//20170303 CW c37-tutor-update-tutor-profile-cw add CHECK_PASSWORDS
 
 import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdLoadCountry;
 import com.genesiis.campus.command.CmdLoadTownDetails;
 import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
+import com.genesiis.campus.command.CmdValidatePasswords;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.command.CmdViewTutorProfile;
@@ -27,6 +29,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.CHECK_EMAIL, new CmdCheckEmail());
 		map.put(Operation.VIEW_TUTOR_UPDATE_TUTOR_DETAILS, new CmdViewTutorProfile());
 		map.put(Operation.TUTOR_UPDATE_TUTOR, new CmdTutorUpdateTutorProfile());
+		map.put(Operation.CHECK_PASSWORDS, new CmdValidatePasswords());
 	}
 	
 	@Override
@@ -48,6 +51,9 @@ public class TutorCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case CHECK_EMAIL:
+			command = map.get(o);
+			break;
+		case CHECK_PASSWORDS:
 			command = map.get(o);
 			break;
 		case VIEW_TUTOR_UPDATE_TUTOR_DETAILS:
