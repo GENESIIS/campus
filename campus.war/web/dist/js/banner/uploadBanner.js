@@ -19,6 +19,8 @@
  *   20170302 DN c131-admin-manage-banner-upload-banner-image-dn validateUploadBannerEmbedData() regex has been changed to handle validations
  *               of the bannerManger.jsp page fields, compareDates() function implemented.$(document).on('click','#uploadBbutton') modified
  *               to validate if user select upload button without selecting an image.
+ *   20170303 DN c131-admin-manage-banner-upload-banner-image-dn shift the compareDates() method to
+ *               /campus.war/web/dist/js/institute/validation/validation.js.
  */
 
 /*
@@ -438,32 +440,6 @@ function validateUploadBannerEmbedData(){
 }
 
 /**
- * compareDates() accept two string dates which seperated by given 
- * delemeter , compares those and returns 
- * date1 > date2 --> 1
- * date1 == date2 --> 0
- * date1 < date2 --> -1
- * @param firstDateString
- * @param secondDateString
- * @returns {Number}
- */
-function compareDates(firstDateString,secondDateString,delimeter){
-	
-	var dateSplitArray = firstDateString.split(delimeter); //2017-02-14
-	var firstDate = new Date(dateSplitArray[0],(dateSplitArray[1]-1),dateSplitArray[2]);
-	dateSplitArray = secondDateString.split(delimeter); 
-	var secondDate = new Date(secondDateString[0],(secondDateString[1]-1),secondDateString[2]);
-	if(firstDate.getTime()>secondDate.getTime()){
-		return 1;
-	}else if (firstDate.getTime()<secondDate.getTime()){
-		return -1;
-	} else {
-		return 0;
-	}
-}
-
-
-/**
  * sendBannerPaageFieldInputs method passes the input field values to server
  * side.
  * @param formFieldArray : all the fields which are on the bannerManager.jsp
@@ -539,28 +515,8 @@ $( document ).ready(function() {
 		$('#bannerDisplayLabel').html(""); // clear message label content
 		e.preventDefault();
 	});
-	
-	
-/*
- * onchange events for the data list 
- */
 
-function onChangeEvent(idElement,errorDisplayId,fieldVarTobeTested,userInfromation){
-	
-	$('#'+idElement).on("change",function(){
-		if(fieldVarTobeTested ==""){
-			$('#'+errorDisplayId).html(userInfromation);
-			$('#'+idElement).val("");
-		}
-	});
-
-}
-	
-	
 });
-
-
-
 
 /**
  * this method clears the input field data 
