@@ -10,9 +10,12 @@ package com.genesiis.campus.validation;
 //methods changed to use trim() on passing parameter.
 //20161202 DN C18-student-signup-without-using-third-party-application-test-dn isStringContainsAlphaNumericAndUnderscore() created
 //20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
+//20170303 DN c131-admin-manage-banner-upload-banner-image-dn compareDates() method implemented. and copied all the doc comments
+//		   from interface Validatory.java to the concrete implementation
 
 import org.apache.log4j.Logger;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,11 +23,21 @@ import java.util.regex.Pattern;
 /**
  * PrevalentValidation intended to provide general validation and it has provided
  * the implementation for the Validatory interface.
- * @author dushantha
+ * @author dushantha DN
  *
  */
 public class PrevalentValidation implements Validatory {
 	static Logger log = Logger.getLogger(PrevalentValidation.class.getName());
+	
+	/**
+	 * isNotEmpty  method validate if the passed String is
+	 * null or empty.
+	 * @author DN
+	 * @param text to be tested for null or empty
+	 * @return boolean if "text" contains an alpha numeric value
+	 * method returns true else false. 
+	 * @throws Exception
+	 */
 	@Override
 	public boolean isNotEmpty(String text) throws Exception{
 		boolean status = false;
@@ -35,6 +48,16 @@ public class PrevalentValidation implements Validatory {
 		return status;
 	}
 	
+	/**
+	 * validateEmail method test for known email patterns.
+	 * If the argument in test is confirm to valid email
+	 * format ,method successfully passes the test
+	 * @author DN
+	 * @param email String 
+	 * @return boolean if email confirms to the email format
+	 * return true else false.
+	 * @throws Exception
+	 */
 	@Override
 	 public boolean validateEmail(String email) throws Exception {
 		boolean validEmail = false;
@@ -46,6 +69,14 @@ public class PrevalentValidation implements Validatory {
 		return validEmail;
 	}
 
+	/**
+	 * isInteger() tests if the passed parameter is an Integer
+	 * @author DN
+	 * @param value String value representing the Integer and
+	 * required to validate
+	 * @return true if the parameter passed in is an Integer
+	 * @throws Exception
+	 */
 	@Override
 	public boolean isInteger(String value ) throws Exception {
 		boolean isTestPassed = false;
@@ -60,10 +91,16 @@ public class PrevalentValidation implements Validatory {
 			throwCustomError(isTestPassed,"integer validation of input Failed");
 			return isTestPassed;
 		}
-		
-	
 	}
-
+	
+	/**
+	 * isFloat() tests if the passed parameter is an Float
+	 * @author DN
+	 * @param value String value representing the Float and
+	 * required to validate
+	 * @return true if the parameter passed in is an Float
+	 * @throws Exception
+	 */
 	@Override
 	public boolean isFloat(String value) throws Exception {
 		boolean isTestPassed = false;
@@ -133,6 +170,28 @@ public class PrevalentValidation implements Validatory {
 		return isValidString;
 	}
 	
+	/**
+	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>
+	 *  and returns an integer based on the comparison 
+	 * date > otherDate  then , returns +ve int
+	 * date < otherDate then , returns -ve int
+	 * date == otherDate then, returns 0
+	 * @param date : java.util.Date the initial date
+	 * @param otherDate : java.util.Date the secondary date 
+	 * @return int value as explained above
+	 * @throws Exception 
+	 */
+	@Override
+	public int compareDates(Date date, Date otherDate) throws Exception {
+		try {
+			return date.compareTo(otherDate);
+		} catch (NullPointerException npexp) {
+			log.error("compareDates(java.util.Date,java.util.Date): NullPointerException "+ npexp.toString());
+			throw npexp;
+		}
+	
+	}
+	
 	
 	/*
 	 * throwCustomError class accepts two parameters and based on the test falsity Exception
@@ -169,5 +228,7 @@ public class PrevalentValidation implements Validatory {
 	    super(message);
 	  }
 	}
+
+	
 
 }
