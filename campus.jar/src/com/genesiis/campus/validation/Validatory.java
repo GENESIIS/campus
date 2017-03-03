@@ -99,4 +99,24 @@ public interface Validatory {
 	 */
 	public int compareDates(Date date,Date otherDate) throws Exception;
 	
+	/**
+	 * isUrlValid() expects a url string and a long option
+	 * and if the url is accordance with the validity, the method provides a true,
+	 * else false
+	 * @param url : String url
+	 * @param options : long value  
+	 * 			ALLOW_2_SLASHES - [FALSE] Allows double '/' characters in the path component.
+	 * 			NO_FRAGMENT- [FALSE] By default fragments are allowed, if this option is included then fragments are flagged as illegal.
+	 * 			ALLOW_ALL_SCHEMES - [FALSE] By default only http, https, and ftp are considered valid schemes. Enabling this option will
+	 * 			let any scheme pass validation
+	 * 			 To set multiple options you simply add them together. For example, ALLOW_2_SLASHES + NO_FRAGMENTS enables both of those options.
+	 * options are used from org.apache.commons.validator.routines.UrlValidator. Thus should be used with the name qualifier such as 
+	 * UrlValidator.NO_FRAGMENT,UrlValidator.ALLOW_ALL_SCHEMES etc
+	 * 
+	 * @return boolean true if the url accordance with the set requirement by the option, else returns false.
+	 * @throws Exception
+	 */
+	public boolean isUrlValid(String url,long options) throws Exception;
+		
+	
 }
