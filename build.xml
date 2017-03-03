@@ -83,6 +83,7 @@
 				<pathelement path="${jbossLibDir}/org/apache/commons/lang3/main/commons-lang3-3.1.jar" />
 				<pathelement path="${jbossLibDir}/system/layers/base/javax/mail/api/main/mail-1.4.5.redhat-2.jar" />
 				<pathelement path="${jbossLibDir}/org/apache/commons/fileupload/main/commons-fileupload-1.2.1.jar" />
+				<pathelement path="${jbossLibDir}/org/apache/commons/validator/main/commons-validator-1.6.jar" />
 				<pathelement path="${jbossLibDir}/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.redhat-1.jar" />
 				<pathelement path="${jbossLibDir}/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final-redhat-3.jar" />	
 				<pathelement path="${jbossLibDir}/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-2.jar" />
