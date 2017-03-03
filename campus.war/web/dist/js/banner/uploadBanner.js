@@ -21,6 +21,7 @@
  *               to validate if user select upload button without selecting an image.
  *   20170303 DN c131-admin-manage-banner-upload-banner-image-dn shift the compareDates() method to
  *               /campus.war/web/dist/js/institute/validation/validation.js.
+ *               include a start date and end date validation with respect to current date.
  */
 
 /*
@@ -431,11 +432,24 @@ function validateUploadBannerEmbedData(){
 		return validationPass;
 	if(!isFieldFilled(isempty($('#startDate').val()),'Start date','startDateInfor'))
 		return validationPass;
+	
+	//comparing the date with the current date if the out come =0 twodates are equal
+	//or <0 --> i.e todays < startDate  then the result is as expected.
+	//else the start date is in the past than todays date then it s illegal
+	var todaysDate = new Date().toJSON().slice(0,10);
+	if(!isFieldFilled(
+			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
+		return validationPass;
+	
 	if(!isFieldFilled(isempty($('#endtDate').val()),'End date','endtDateInfor'))
 		return validationPass;
+	
+	// startDate must be == endtDate
+	//or startDate < endtDate
 	if(!isFieldFilled(
 			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
 		return validationPass;
+	
 	return !validationPass;
 }
 
