@@ -1,5 +1,7 @@
 package com.genesiis.campus.util;
 
+
+
 public class JasonInflator {
 	
 	
@@ -7,10 +9,10 @@ public class JasonInflator {
 	private String codeOfSelectedPage;	
 	private String bannerSlotCode;	
 	private String displayDusration;	
-	private String banerToBeActive;
-	private String bannerPublishingDate;
+	private String banerToBeActive; //"true"
+	private String bannerPublishingDate; //"2017-02-14"
 	private String bannerPublishingEndDate;		
-	private String urlMiniWebOrPage;	
+	private String urlMiniWebOrPage;	//"Page:0","URL: 1" or "Mini Web:2"
 	private String urlToBeDirectedOnBannerClick;	
 	private String bannerImageName;
 	
