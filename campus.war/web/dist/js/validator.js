@@ -19,6 +19,10 @@
  * 				//	isValidLandCountryCode, isValidLandAreaCode, isValidAddress1, isValidWeblink, isValidFacebook, isValidLinkedin, isValidTwitter, 
  * 				//	isValidInstagram, isValidMyspace, isValidWhatsapp, isValidViber, isValidEmail, isValidUsername, isValidPassword, isValidLandNumber, methods using 
  * 				//	the validations in validateTutorModificationsByTutor method & modified validateTutorModificationsByTutor() to use new methods
+ * //20170303 CW c37-tutor-update-tutor-profile-cw add isHavingOnlySpaces method & modified isempty method to use isHavingOnlySpaces method, 
+ * 				// 	modified the methods to set fields null if they space in isValidFirstname, isValidMiddlename, isValidLastname, isValidMobileCountryCode, 
+ * 				//	isValidMobileNetworkCode, isValidMobileNumber, isValidLandCountryCode, isValidLandAreaCode, isValidLandNumber, isValidAddress1, isValidWeblink, 
+ * 				//	isValidFacebook, isValidLinkedin, isValidTwitter, isValidInstagram, isValidMyspace, isValidWhatsapp, isValidViber, isValidEmail, isValidUsername 
  */
 
 /**
@@ -28,7 +32,7 @@
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == "") || (fieldValue == null) || isHavingOnlySpaces(fieldValue)) ? false : true;
 }
 
 /**
@@ -40,6 +44,20 @@ function isempty(fieldValue) {
  */
 function isPatternMatch(regularExpression, source) {
 	return regularExpression.test(source);
+}
+
+/**
+ * isHavingOnlySpaces method validate a string value to have only one or more spaces
+ * @author Chinthaka
+ * @returns boolean : returns true if given string value is having only spaces
+ */
+function isHavingOnlySpaces(strValue) {
+	
+	if (!strValue.replace(/\s/g, '').length) {
+	    // string only contained whitespace (ie. spaces, tabs or line breaks)
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -313,8 +331,8 @@ function validateTutorModificationsByTutor() {
 function isValidFirstname(firstname) {
 	var flag = true;
 	
-	if ((!isempty(firstname)) || firstname == " ") {
-		
+	if (!isempty(firstname)) {
+		firstName.value = '';
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
 		flag = false;
@@ -344,8 +362,8 @@ function isValidMiddlename(middlename) {
 	var flag = true;
 	
 	if (isempty(middlename)){
-		if (middlename == " ") {
-			
+		if (isHavingOnlySpaces(middlename)) {
+			middleName.value = '';
 			document.getElementById('middleNameError').innerHTML = "**Middle name cannot be empty.";
 			document.getElementById('middleName').focus();
 			flag = false;
@@ -375,8 +393,8 @@ function isValidMiddlename(middlename) {
 function isValidLastname(lastname) {
 	var flag = true;
 	
-	if ((!isempty(lastname)) || lastname == " ") {
-		
+	if (!isempty(lastname)) {
+		lastName.value = '';		
 		document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -406,6 +424,7 @@ function isValidMobileCountryCode(mobileCountryCode) {
 	var flag = true;
 	
 	if (!isempty(mobileCountryCode)) {
+		mobileCountryCode.value = '';
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
@@ -436,6 +455,7 @@ function isValidMobileNetworkCode(mobileNetworkCode) {
 	var flag = true;	
 		
 		if (!isempty(mobileNetworkCode)) {
+			mobileNetworkCode.value = '';
 			document.getElementById('mobileNetworkError').innerHTML = "**Mobile Network Code cannot be empty.";
 			document.getElementById('mobileNetworkCode').focus();
 			flag = false;
@@ -465,6 +485,7 @@ function isValidMobileNumber(mobileNumber) {
 	var flag = true;	
 	
 		if (!isempty(mobileNumber)) {
+			mobileNumber.value = '';
 			document.getElementById('mobileNumberError').innerHTML = "**Mobile Number cannot be empty.";
 			document.getElementById('mobileNumber').focus();
 			flag = false;
@@ -494,6 +515,7 @@ function isValidLandCountryCode(landCountryCode) {
 	var flag = true;	
 		
 	if (!isempty(landCountryCode)) {
+		landCountryCode.value = '';
 		document.getElementById('landError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('landCountryCode').focus();
 		flag = false;
@@ -522,6 +544,7 @@ function isValidLandAreaCode(landAreaCode) {
 	var flag = true;	
 		
 	if (!isempty(landAreaCode)) {
+		landAreaCode.value = '';
 		document.getElementById('landAreaCodeError').innerHTML = "**Landphone Area code cannot be empty.";
 		document.getElementById('landAreaCode').focus();
 		flag = false;
@@ -549,6 +572,7 @@ function isValidLandAreaCode(landAreaCode) {
 function isValidLandNumber(landNumber) {
 	var flag = true;	
 	if (!isempty(landNumber)) {
+		landNumber.value = '';
 		document.getElementById('landNumberError').innerHTML = "**Landphone number cannot be empty.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -576,6 +600,7 @@ function isValidLandNumber(landNumber) {
 function isValidAddress1(address1) {
 	var flag = true;	
 	if (!isempty(address1)) {
+		address1.value = '';
 		document.getElementById('address1Error').innerHTML = "**Please Fill Address";
 		document.getElementById('address1').focus();
 		flag = false;
@@ -597,6 +622,9 @@ function isValidWeblink(weblink) {
 	var flag = true;	
 	if (isempty(weblink)) {
 		if (!ValidURL(weblink) && (weblink != "-")) {
+			if(isHavingOnlySpaces(weblink)){
+				weblink.value = '';
+			}
 			document.getElementById('weblinkError').innerHTML = "**Please Enter correct weblink";
 			document.getElementById('weblink').focus();
 			flag = false;
@@ -619,6 +647,9 @@ function isValidWeblink(weblink) {
 function isValidFacebook(facebook) {
 	var flag = true;	
 	if (isempty(facebook) && (facebook != "-")) {
+		if(isHavingOnlySpaces(facebook)){
+			facebook.value = '';
+		}
 		if (!ValidURL(facebook)) {
 			document.getElementById('facebookError').innerHTML = "**Please Enter correct Facebook link";
 			document.getElementById('facebook').focus();
@@ -643,6 +674,9 @@ function isValidLinkedin(linkedin) {
 	var flag = true;	
 	if (isempty(linkedin) && (linkedin != "-")) {
 		if (!ValidURL(linkedin)) {
+			if(isHavingOnlySpaces(linkedin)){
+				linkedin.value = '';
+			}
 			document.getElementById('linkedInError').innerHTML = "**Please Enter correct LinkedIn link";
 			document.getElementById('linkedin').focus();
 			flag = false;
@@ -666,6 +700,9 @@ function isValidTwitter(twitter) {
 	var flag = true;	
 	if (isempty(twitter) && (twitter != "-")) {
 		if (!ValidURL(twitter)) {
+			if(isHavingOnlySpaces(twitter)){
+				twitter.value = '';
+			}
 			document.getElementById('twitterError').innerHTML = "**Please Enter correct Twitter link";
 			document.getElementById('twitter').focus();
 			flag = false;
@@ -689,6 +726,9 @@ function isValidInstagram(instagram) {
 	var flag = true;
 	if (isempty(instagram) && (instagram != "-")) {
 		if (!ValidURL(instagram)) {
+			if(isHavingOnlySpaces(instagram)){
+				instagram.value = '';
+			}
 			document.getElementById('instagramError').innerHTML = "**Please Enter correct Instagram link";
 			document.getElementById('instagram').focus();
 			flag = false;
@@ -712,6 +752,9 @@ function isValidMyspace(myspace) {
 	var flag = true;	
 	if (isempty(myspace) && (myspace != "-")) {
 		if (!ValidURL(myspace)) {
+			if(isHavingOnlySpaces(myspace)){
+				myspace.value = '';
+			}
 			document.getElementById('mySpaceError').innerHTML = "**Please Enter correct Myspace link";
 			document.getElementById('myspace').focus();
 			flag = false;
@@ -735,6 +778,9 @@ function isValidWhatsapp(whatsapp) {
 	var flag = true;			
 	if (isempty(whatsapp)) {
 		if (isNaN(whatsapp)) {
+			if(isHavingOnlySpaces(whatsapp)){
+				whatsapp.value = '';
+			}
 			document.getElementById('whatsappError').innerHTML = "**Invalid whatsapp number";
 			document.getElementById('whatsapp').focus();
 			flag = false;
@@ -760,6 +806,9 @@ function isValidViber(viber) {
 	var flag = true;			
 		if (isempty(viber)) {
 			if (isNaN(viber)) {
+				if(viber == " "){
+					viber.value = '';
+				}
 				document.getElementById('viberError').innerHTML = "**Invalid Viber number";
 				document.getElementById('viber').focus();
 				flag = false;
@@ -783,7 +832,8 @@ function isValidViber(viber) {
  */
 function isValidEmail(email) {
 	var flag = true;	
-	if (!isempty(email)) {
+	if (!isempty(email) || email == " ") {
+		email.value = '';
 		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		document.getElementById('email').focus();
 		flag = false;
@@ -817,7 +867,8 @@ function isValidEmail(email) {
  */
 function isValidUsername(username) {
 	var flag = true;			
-	if (!isempty(username)) {
+	if (!isempty(username) || username == " ") {
+		username.value = '';
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
 		flag = false;
