@@ -138,4 +138,23 @@ public class Validator {
 		}
 		return true;
 	}
+	
+	/**
+	 * Checks if a string passed into the method represents a number.
+	 * 
+	 * @param cs, of type CharSequence that represents the string to check if it represents a number.	  
+	 * @return A boolean primitive that indicates whether the string that was passed is in fact a number. 
+	 */
+	public static boolean isNumber(final CharSequence cs) {
+		if (cs == null || cs.toString().isEmpty()) {
+			return false;
+		}
+		final int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (!Character.isDigit(cs.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

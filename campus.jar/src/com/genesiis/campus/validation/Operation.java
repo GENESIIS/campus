@@ -22,7 +22,9 @@ public enum Operation {
 	SESSIONEXPIR("EXP",ResponseType.JSON, ""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	
-	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
+	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
+	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "/dist/partials/student/student-dashboard.jsp"),		
+	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
