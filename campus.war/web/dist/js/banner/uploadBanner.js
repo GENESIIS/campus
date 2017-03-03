@@ -429,9 +429,9 @@ function validateUploadBannerEmbedData(){
 	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#duration').val(),
 			/^[0-9]+$/g),"display duration","displayDurationInfor")))
 		return validationPass;
-	if(!isFieldFilled($('#startDate').val(),'Start date','startDateInfor'))
+	if(!isFieldFilled(isempty($('#startDate').val()),'Start date','startDateInfor'))
 		return validationPass;
-	if(!isFieldFilled($('#endtDate').val(),'End date','endtDateInfor'))
+	if(!isFieldFilled(isempty($('#endtDate').val()),'End date','endtDateInfor'))
 		return validationPass;
 	if(!isFieldFilled(
 			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
