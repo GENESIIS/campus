@@ -9,23 +9,22 @@
     <meta charset="UTF-8">
     <title>Campus.lk</title>
 
-    <!-- Bootstrap & CSS Style-->
-    <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
 
-    <!-- Data Table CSS -->
-    <link href="../../bower-components/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../../bower-components/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<!-- Bootstrap & CSS Style-->
+	<link href="/dist/css/style.css" rel="stylesheet">
+	<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- jQuery & Other js -->
-    <script type="text/javascript" src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    <script src="../../bower-components/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../bower-components/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../bower-components/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../js/main.js"></script>
+	<!-- Data Table CSS -->
+	<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
+
+	<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+    
 </head>
 <body>
 
@@ -136,7 +135,9 @@
                 </div>
                 <!-- End Panel Header -->
                 <hr>
-                <div class="search-result-view clearfix">
+					<div class="search-result-view clearfix">
+
+						<!-- 
                     <table  class="table table-striped table-bordered dt-responsive" cellspacing="0" width="">
                         <thead>
                             <tr>
@@ -192,7 +193,7 @@
                                 </td>
                             </tr>
                             <!-- 1st row -->
-
+						<!-- 
                             <tr>
                                 <td>
                                     <div class="tutor-prof-image">
@@ -236,8 +237,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            <!-- 1st row --> 
-
+                            <!-- 1st row -->
+						<!-- 
                             <tr>
                                 <th>Profile</th>
                                 <th>Contact Details</th>
@@ -246,8 +247,25 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
+                    
+                    -->
+
+
+
+						<table id="example"
+							class="table table-striped table-bordered dt-responsive"
+							cellspacing="0" width="">
+                    <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Contact Details</th>
+                                <th>Subjects</th>
+                                <th>Qualifications</th>
+                            </tr>
+                        </thead>
+						</table>
+					</div>
+				</div>
         </div>
         <!-- End result-panel -->
     </div>
@@ -263,5 +281,14 @@
     </div>
 </footer>
 <!-- End Footer -->
+
+	<!-- custom javascript -->
+	<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
+	
 </body>
 </html>
