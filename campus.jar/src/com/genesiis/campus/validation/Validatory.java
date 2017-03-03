@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //         has been corrected
 //20170303 DN c131-admin-manage-banner-upload-banner-image-dn declare 
 //         compareDates(Date date,Date otherDate) throws Exception method signature.
+//         Declared methods with string error message parameter.
 
 
 
@@ -30,6 +31,19 @@ public interface Validatory {
 	 */
 	public boolean isNotEmpty(String text) throws Exception;
 	
+	
+	/**
+	 * isNotEmpty  method validate if the passed String is
+	 * null or empty.
+	 * @author DN
+	 * @param text to be tested for null or empty
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return boolean if "text" contains an alpha numeric value
+	 * method returns true else false. 
+	 * @throws Exception
+	 */
+	public boolean isNotEmpty(String text,String errorMessage) throws Exception;
+	
 	/**
 	 * validateEmail method test for known email patterns.
 	 * If the argument in test is confirm to valid email
@@ -43,6 +57,19 @@ public interface Validatory {
 	public boolean validateEmail(String email) throws Exception;
 	
 	/**
+	 * validateEmail method test for known email patterns.
+	 * If the argument in test is confirm to valid email
+	 * format ,method successfully passes the test
+	 * @author DN
+	 * @param email String 
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return boolean if email confirms to the email format
+	 * return true else false.
+	 * @throws Exception
+	 */
+	public boolean validateEmail(String email,String errorMessage) throws Exception;
+	
+	/**
 	 * isInteger() tests if the passed parameter is an Integer
 	 * @author DN
 	 * @param value String value representing the Integer and
@@ -51,6 +78,18 @@ public interface Validatory {
 	 * @throws Exception
 	 */
 	public boolean isInteger(String value) throws Exception;
+
+	/**
+	 * isInteger() tests if the passed parameter is an Integer
+	 * @author DN
+	 * @param value String value representing the Integer and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Integer
+	 * @throws Exception
+	 */
+	public boolean isInteger(String value,String errorMessage) throws Exception;
+	
 	/**
 	 * isFloat() tests if the passed parameter is an Float
 	 * @author DN
@@ -60,6 +99,17 @@ public interface Validatory {
 	 * @throws Exception
 	 */
 	public boolean isFloat(String value) throws Exception;
+	
+	/**
+	 * isFloat() tests if the passed parameter is an Float
+	 * @author DN
+	 * @param value String value representing the Float and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Float
+	 * @throws Exception
+	 */
+	public boolean isFloat(String value,String errorMessage) throws Exception;
 	
 	/**
 	 * isValidPhoneNumber validates the phone number which should be
@@ -97,7 +147,7 @@ public interface Validatory {
 	 * @return int value as explained above
 	 * @throws Exception 
 	 */
-	public int compareDates(Date date,Date otherDate) throws Exception;
+	public int compareDates(Date date, Date otherDate,String ErrorMessage) throws Exception;
 	
 	/**
 	 * isUrlValid() expects a url string and a long option
@@ -116,7 +166,7 @@ public interface Validatory {
 	 * @return boolean true if the url accordance with the set requirement by the option, else returns false.
 	 * @throws Exception
 	 */
-	public boolean isUrlValid(String url,long options) throws Exception;
+	public boolean isUrlValid(String url,long options,String errorMessage) throws Exception;
 		
 	
 }
