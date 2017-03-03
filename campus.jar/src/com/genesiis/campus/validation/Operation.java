@@ -9,6 +9,7 @@ package com.genesiis.campus.validation;
 //20170116 CM c36-add-tutor-information removed an un wanted attribute from the enum
 //20170117 CM c36-add-tutor-information add CHECK_EMAIL attribute to the enum
 //20170227 CW c37-tutor-update-tutor-profile-cw added TUTOR_UPDATE_TUTOR_DETAILS & TUTOR_UPDATE_TUTOR
+//20170303 CW c37-tutor-update-tutor-profile-cw added CHECK_PASSWORDS
 
 
 /**
@@ -26,6 +27,7 @@ public enum Operation {
 	UPDATE_TUTOR("UPDATE_TUTOR", ResponseType.JSP,"dist/partials/viewUpdateTutor.jsp"),
 	VIEW_TUTOR_UPDATE_TUTOR_DETAILS("VIEW_TUTOR_UPDATE_TUTOR_DETAILS", ResponseType.JSP,"dist/partials/tutorUpdateTutorProfile.jsp"),
 	TUTOR_UPDATE_TUTOR("TUTOR_UPDATE_TUTOR", ResponseType.JSP,"dist/partials/tutorUpdateTutorProfile.jsp"),
+	CHECK_PASSWORDS("CHECK_PASSWORDS", ResponseType.JSON, "tutorUpdateTutorProfile.jsp"),
 	CHECK_EMAIL("CHECK_EMAIL", ResponseType.JSON, "addTutorDetails.jsp");
 	
 	
