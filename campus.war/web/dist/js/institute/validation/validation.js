@@ -19,7 +19,8 @@
  *				 in such a way that the testable string is process by removing any spaces within 
  *20170227 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() implemented for url validations
  *20170228 DN c131-admin-manage-banner-upload-banner-image-dn  changed urlTest() method.
- *
+ *20170303 DN c131-admin-manage-banner-upload-banner-image-dn shift the compareDates() method from
+ *            /campus.war/web/dist/js/banner/uploadBanner.js
  */ 
 
  
@@ -207,5 +208,30 @@ function urlTest(urlInputTextid){
 	return validUrl;
 }
 
+/**
+ * compareDates() accept two string dates which seperated by given 
+ * delemeter , compares those and returns 
+ * date1 > date2 --> 1
+ * date1 == date2 --> 0
+ * date1 < date2 --> -1
+ * @author dushantha DN
+ * @param firstDateString
+ * @param secondDateString
+ * @returns {Number}
+ */
+function compareDates(firstDateString,secondDateString,delimeter){
+	
+	var dateSplitArray = firstDateString.split(delimeter); //2017-02-14
+	var firstDate = new Date(dateSplitArray[0],(dateSplitArray[1]-1),dateSplitArray[2]);
+	dateSplitArray = secondDateString.split(delimeter); 
+	var secondDate = new Date(secondDateString[0],(secondDateString[1]-1),secondDateString[2]);
+	if(firstDate.getTime()>secondDate.getTime()){
+		return 1;
+	}else if (firstDate.getTime()<secondDate.getTime()){
+		return -1;
+	} else {
+		return 0;
+	}
+}
 
 
