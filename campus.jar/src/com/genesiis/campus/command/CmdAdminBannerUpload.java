@@ -92,6 +92,7 @@ public class CmdAdminBannerUpload implements ICommand {
 				 */				
 				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
 				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+				
 				return uploadFullBannerCredentials(jsn,view,userName,helper);				
 		    default:
 		    	return view;

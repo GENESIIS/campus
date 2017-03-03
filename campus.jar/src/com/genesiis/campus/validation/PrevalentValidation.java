@@ -12,7 +12,10 @@ package com.genesiis.campus.validation;
 //20161123 DN c10-contacting-us-page-MP  changed the regular expression to accept only +(2 digit)(9-digit)
 //20170303 DN c131-admin-manage-banner-upload-banner-image-dn compareDates() method implemented. and copied all the doc comments
 //		   from interface Validatory.java to the concrete implementation
+//         isUrlValid() method implemented.
 
+
+import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -192,6 +195,36 @@ public class PrevalentValidation implements Validatory {
 	
 	}
 	
+	/**
+	 * isUrlValid() expects a url string and a long option
+	 * and if the url is accordance with the validity, the method provides a true,
+	 * else false
+	 * @param url : String url
+	 * @param options : long value  
+	 * 			ALLOW_2_SLASHES - [FALSE] Allows double '/' characters in the path component.
+	 * 			NO_FRAGMENT- [FALSE] By default fragments are allowed, if this option is included then fragments are flagged as illegal.
+	 * 			ALLOW_ALL_SCHEMES - [FALSE] By default only http, https, and ftp are considered valid schemes. Enabling this option will
+	 * 			let any scheme pass validation
+	 * 			 To set multiple options you simply add them together. For example, ALLOW_2_SLASHES + NO_FRAGMENTS enables both of those options.
+	 * options are used from org.apache.commons.validator.routines.UrlValidator. Thus should be used with the name qualifier such as 
+	 * UrlValidator.NO_FRAGMENT,UrlValidator.ALLOW_ALL_SCHEMES etc
+	 * 
+	 * @return boolean true if the url accordance with the set requirement by the option, else returns false.
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isUrlValid(String url,long options) throws Exception{
+		boolean isValidUrl =  false;
+		
+		try {
+			UrlValidator urlValidator = new UrlValidator(options);
+			isValidUrl = urlValidator.isValid(url);
+		} catch (Exception exp) {
+			log.error("isUrlValid() : Exception"+ exp.toString());
+			throw exp;
+		}
+		return isValidUrl;
+	}
 	
 	/*
 	 * throwCustomError class accepts two parameters and based on the test falsity Exception
