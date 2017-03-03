@@ -26,6 +26,7 @@
  * //20170303 CW c37-tutor-update-tutor-profile-cw modified isValidMiddlename, isValidMobileCountryCode, isValidMobileNetworkCode, isValidMobileNumber, 
  * 					isValidLandCountryCode, isValidLandAreaCode, isValidLandNumber, isValidAddress1, isValidWeblink, isValidFacebook, isValidLinkedin, 
  * 					isValidTwitter, isValidInstagram, isValidMyspace, isValidWhatsapp, isValidViber, isValidEmail, isValidUsername methods to reset when space value entered
+ * //20170303 CW c37-tutor-update-tutor-profile-cw passwordOld renamed to passwordFromDb in validateTutorModificationsByTutor(), modified isValidPassword() validate password fields using Validator.isValidPassword()
  */
 
 /**
@@ -117,7 +118,8 @@ function validateTutorModificationsByTutor() {
 	var viber = $("#viber").val();
 	var email = $("#email").val();
 	var username = $("#username").val();
-	var password = $("#password").val();
+	var oldPassword = $("#oldPassword").val();
+	var newPassword = $("#newPassword").val();
 	var confirmPassword = $("#confirmPassword" + "").val();
 	var country = $("#countryDetails :selected").text();
 	var town = $("#townDetails :selected").text();
@@ -146,7 +148,7 @@ function validateTutorModificationsByTutor() {
 	var vibernumberOld = $("#vibernumberOld").val();
 	var emailOld = $("#emailOld").val();
 	var usernameOld = $("#usernameOld").val();
-	var passwordOld = $("#passwordOld").val();
+	var passwordFromDb = $("#passwordFromDb").val();
 	var countrynameOld = $("#countrynameOld").val();
 	var townOld = $("#townOld").val();
 	var tutorstatusOld = $("#tutorstatusOld").val();
@@ -313,9 +315,9 @@ function validateTutorModificationsByTutor() {
 		flag = isValidUsername(username);
 	}
 	
-	if(password != passwordOld){	
+	if(!isempty(oldPassword) && !isempty(newPassword) && !isempty(confirmPassword)){	
 		isModified = true;
-		flag = isValidPassword(password);
+		flag = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword);
 	}	
 	
 	if (isModified == false){
@@ -892,9 +894,37 @@ function isValidUsername(username) {
  * @author CW
  * @param password
  */
-function isValidPassword(password) {
+function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword) {
 	var flag = true;				
-	if (!isempty(password)) {
+	
+	//var validPasswords = ValidatePasswords(passwordFromDb, oldPassword, newPassword, confirmPassword)
+	
+	var resp = null;
+	$.ajax({
+		url : '/TutorController',
+		method : 'POST',
+		async : false,
+		data : {
+			CCO : 'CHECK_PASSWORDS',
+			passwordFromDb : passwordFromDb,
+			oldPassword : oldPassword,
+			newPassword : newPassword,
+			confirmPassword : confirmPassword
+		},
+		dataType : "json",
+		success : function(response) {
+			resp = response;
+		},
+		error : function(response) {
+			flag = response;
+		}
+	});
+
+	return flag;
+	
+	
+	
+	/*if (!isempty(password)) {
 		document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
 		document.getElementById('password').focus();
 		flag = false;
@@ -922,9 +952,42 @@ function isValidPassword(password) {
 		document.getElementById('confirmPasswordError').innerHTML = "**Password didn't match";
 		document.getElementById('confirmPassword').focus();
 		flag = false;
-	}
-	return flag;
+	}*/
+	//return flag;
 }
+
+/**
+ * Validate Password field of the tutor for errors
+ * @author CW
+ * @param passwordFromDb, oldPassword, newPassword, confirmPassword
+ */
+/*function ValidatePasswords(passwordFromDb, oldPassword, newPassword, confirmPassword) {
+	var resp = null;
+	$.ajax({
+		url : '/TutorController',
+		method : 'POST',
+		async : false,
+		data : {
+			CCO : 'CHECK_PASSWORDS',
+			passwordFromDb : passwordFromDb,
+			oldPassword : oldPassword,
+			newPassword : newPassword,
+			confirmPassword : confirmPassword
+		},
+		dataType : "json",
+		success : function(response) {
+			resp = response;
+		},
+		error : function(response) {
+			resp = response;
+		}
+	});
+
+	return resp;
+}
+*/
+
+
 
 function ValidateUsername(username) {
 	var resp = null;
