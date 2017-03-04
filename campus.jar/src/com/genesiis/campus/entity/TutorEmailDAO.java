@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170216 CW c38-view-update-tutor-profile Add class comment & method comment.
 //20170223 CW c36-add-tutor-information re-organise the import statements.
 //20170226 CW c36-add-tutor-information modify DOC comments in findById().
+//20170304 CW c38-view-update-tutor-profile modified findById method comment to a doc comment.
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -49,7 +50,7 @@ public class TutorEmailDAO implements ICrud {
 		return 0;
 	}
 
-	/*
+	/**
 	 * findById() method assign all the tutor mails in the database into a collection which equal to given email
 	 * 
 	 * @author CW
