@@ -603,7 +603,7 @@ function clearPersonalDetailsForm() {
 	$('#sCountry').val("");
 	$('#sTown').val("");
 	$('#sAddress').val("");
-	$('#countryCodePrefix').text("");
+	$('.input-group-addon').text("");
 	$('#sMobileNumber').val("");
 	$('#sHomeNumber').val("");
 	$('#sOtherNumber').val("");
