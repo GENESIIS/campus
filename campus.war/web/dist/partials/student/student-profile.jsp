@@ -24,6 +24,7 @@
 <!-- 20170220 TR CAM-139: added new loading gif into page top (i/student/loading-1.gif) -->
 <!-- 20170220 TR CAM-139: added new styles to gif loading area  -->
 <!-- 20170220 TR CAM-139: modified styles in skills and interest widget  -->
+<!-- 20170205 PN CAM-150: onkeypress="isCountryEmpty()" method called on sTown text field. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -428,13 +429,13 @@
 
                 <div class="show modal-input-field clearfix">
                      <label>Town :</label>
-                     <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')"/>
+                     <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')" onkeypress="isCountryEmpty()"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
+                     <input hidden type="text" id="sTownCode" name="sTownCode"/>
+                     <span id="sTownError" name="sTownError" style="color:red"></span>
                 </div>
 
-                <div class="show modal-input-field clearfix">
-                    <input hidden type="text" id="sTownCode" name="sTownCode"/>
-                    <span id="sTownError" name="sTownError" style="color:red"></span>
+                <div class="show modal-input-field clearfix">                 
                     <label>Address :</label>
                     <input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
                     <span id="sAddressError" name="sAddressError" style="color:red"></span>
