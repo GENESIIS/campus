@@ -17,6 +17,7 @@ package com.genesiis.campus.validation;
 //20170302 CW c37-tutor-update-tutor-profile-cw modified isValidFirstname, isValidLastname methods to validate for numbers
 				//removed isValidLastname & modified isValidFirstname method to isValidName & Change the validateTutorFields method to use isValidName method
 				//removed isValidContactNumber & modified isValidNetworkCode method to isValidNetworkOrContactCode & Change the validateTutorFields method to use isValidNetworkOrContactCode method
+//20170305 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & add static modifier to the method declaration. 
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -444,7 +445,7 @@ public class Validator {
 	 * @param IDataHelper helper
 	 * @return boolean - Returns boolean value False if the old Password is not same as the database value or requested new password & confirmPassword are not same & not valid in lengths
 	 */
-	public boolean isValidPassword(IDataHelper helper) throws Exception {
+	public static boolean isValidPassword(IDataHelper helper) throws Exception {
 		boolean isValid = true;
 		
 		String oldPassword = helper.getParameter("oldPassword");
