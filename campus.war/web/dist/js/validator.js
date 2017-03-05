@@ -27,6 +27,7 @@
  * 					isValidLandCountryCode, isValidLandAreaCode, isValidLandNumber, isValidAddress1, isValidWeblink, isValidFacebook, isValidLinkedin, 
  * 					isValidTwitter, isValidInstagram, isValidMyspace, isValidWhatsapp, isValidViber, isValidEmail, isValidUsername methods to reset when space value entered
  * //20170303 CW c37-tutor-update-tutor-profile-cw passwordOld renamed to passwordFromDb in validateTutorModificationsByTutor(), modified isValidPassword() validate password fields using Validator.isValidPassword()
+ * //20170305 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor() to add password related validations & remove un wanted commented lines
  */
 
 /**
@@ -315,9 +316,26 @@ function validateTutorModificationsByTutor() {
 		flag = isValidUsername(username);
 	}
 	
-	if(!isempty(oldPassword) && !isempty(newPassword) && !isempty(confirmPassword)){	
+	if(isempty(oldPassword) && isempty(newPassword) && isempty(confirmPassword)){	
 		isModified = true;
-		flag = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword);
+		var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword); 
+		if(valid.message == 'FALSE'){
+			if(valid.oldPasswordError != null){
+				document.getElementById('oldPasswordError').innerHTML = valid.oldPasswordError;
+				document.getElementById('oldPassword').focus();
+			}
+
+			if(valid.newPasswordError != null){
+				document.getElementById('newPasswordError').innerHTML = valid.newPasswordError;
+				document.getElementById('newPassword').focus();
+			}
+
+			if(valid.confirmPasswordError != null){
+				document.getElementById('confirmPasswordError').innerHTML = valid.confirmPasswordError;
+				document.getElementById('confirmPassword').focus();
+			}
+			flag = false; 
+		}
 	}	
 	
 	if (isModified == false){
@@ -897,71 +915,6 @@ function isValidUsername(username) {
 function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword) {
 	var flag = true;				
 	
-	//var validPasswords = ValidatePasswords(passwordFromDb, oldPassword, newPassword, confirmPassword)
-	
-	var resp = null;
-	$.ajax({
-		url : '/TutorController',
-		method : 'POST',
-		async : false,
-		data : {
-			CCO : 'CHECK_PASSWORDS',
-			passwordFromDb : passwordFromDb,
-			oldPassword : oldPassword,
-			newPassword : newPassword,
-			confirmPassword : confirmPassword
-		},
-		dataType : "json",
-		success : function(response) {
-			resp = response;
-		},
-		error : function(response) {
-			flag = response;
-		}
-	});
-
-	return flag;
-	
-	
-	
-	/*if (!isempty(password)) {
-		document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
-		document.getElementById('password').focus();
-		flag = false;
-	}
-	
-	if (password.length > 20) {
-		document.getElementById('passwordError').innerHTML = "**Password Max length exceeded.";
-		document.getElementById('password').focus();
-		flag = false;
-	}
-	
-	if (password.length < 6) {
-		document.getElementById('passwordError').innerHTML = "**Password should have at least 6 characters.";
-		document.getElementById('password').focus();
-		flag = false;
-	}
-	
-	if (!isempty(confirmPassword)) {
-		document.getElementById('confirmPasswordError').innerHTML = "**Please confirm your password";
-		document.getElementById('confirmPassword').focus();
-		flag = false;
-	}
-	
-	if (password != confirmPassword) {
-		document.getElementById('confirmPasswordError').innerHTML = "**Password didn't match";
-		document.getElementById('confirmPassword').focus();
-		flag = false;
-	}*/
-	//return flag;
-}
-
-/**
- * Validate Password field of the tutor for errors
- * @author CW
- * @param passwordFromDb, oldPassword, newPassword, confirmPassword
- */
-/*function ValidatePasswords(passwordFromDb, oldPassword, newPassword, confirmPassword) {
 	var resp = null;
 	$.ajax({
 		url : '/TutorController',
@@ -982,12 +935,9 @@ function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPasswo
 			resp = response;
 		}
 	});
-
+	
 	return resp;
 }
-*/
-
-
 
 function ValidateUsername(username) {
 	var resp = null;
