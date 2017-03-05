@@ -2,6 +2,7 @@
 <!-- 20170227 TR c95 Added header and import all bower-components -->
 <!-- 20170227 TR c95 Added page container -->
 <!-- 20170302 JH c96 INIT display-tutors.jsp with display-tutors.html page-->
+<!-- 20170306 JH c96 changed datatable javascipt file imports to the correct location -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +17,8 @@
 	rel="stylesheet">
 
 	<!-- Data Table CSS -->
-	<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/dist/bower-components/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/dist/bower-components/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 
 
 	<!-- jQuery & Other js -->
@@ -283,10 +284,10 @@
 <!-- End Footer -->
 
 	<!-- custom javascript -->
-	<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/bower-components/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/bower-components/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/bower-components/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	
 	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
 	
