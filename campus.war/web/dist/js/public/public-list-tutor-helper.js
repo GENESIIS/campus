@@ -5,7 +5,7 @@
 window.tutorList = null;
 
 window.onload = function() {
-	listAllTutors();
+	DisplayTutorTable();
 };
 
 function listPublicTutors(){
