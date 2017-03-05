@@ -1,5 +1,6 @@
 /**
  * 20170214 PN CAM-28: INIT student-details-manipulation-helper.js file to contain all data manipulation functions for student profile JSP page. all the methods are previously located and copied from student-details-helper.js file.
+ * 20170305 PN CAM-150: isCountryEmpty() method and getTownDetails() method implemented to perform town details selection datalist.
  */
 
 /**
@@ -1161,4 +1162,60 @@ function populateProfExpformElements(response){
 		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(jobCategory);
 	});
+}
+
+/**
+ * Method is to get respective town details according to the selected country.
+ * @returns
+ */
+function getTownDetails() {
+	var country = $('#sCountryCode').val();
+	$.ajax({
+		url : '../../../StudentController',
+		data : {
+			CCO : 'GTD',
+			country: country
+		},
+		dataType : "json",
+		success : function(response) {
+			// Set Country details
+			var sTown = $("#sTown");
+			sTown.find('option').remove();
+			$('<option>').val("").text("--Select One--").appendTo(sTown);
+			$.each(response.result, function(index, value) {
+				var x = value[0].toString();
+				var y = value[1].toString();
+				$('<option>').val(x).text(y).appendTo(sTown);
+			});
+
+			// Set Country details
+			var sTownList = $("#sTownList");
+			sTownList.find('option').remove();
+			$.each(response.result, function(index, value) {
+				var x = value[0].toString();
+				var y = value[1].toString();
+				$('#sTownList').append("<option data-value='" + x + "'>" + y + "</option>");
+			});
+		},
+		error : function(response) {
+			alert("Error: " + response);
+		}
+	});
+}
+
+/**
+ * Chek if country selected before select a town.
+ * @returns
+ */
+function isCountryEmpty() {
+	isDropdownSelected(isemptyDropdown(("sCountry")),"Country","sTownError");
+	
+	if ($('#sTownError').text() != ''){
+		var sTown = $("#sTown");
+		sTown.find('option').remove();
+		
+		$('<option>').val("").text("--Select One--").appendTo(sTown);
+		var sTownList = $("#sTownList");
+		sTownList.find('option').remove();	
+	}
 }
