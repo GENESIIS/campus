@@ -15,7 +15,7 @@
  *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range 
  *20161203 PN c26-add-student-details: implemented isLetter(evt) method.
  *20161205 PN c26-add-student-details: implemented isPastfromNow(day, errorLabel).
- *20170306 PN CAM-150: isValidEmailFormat() method modified to pass a parameter into the method.
+ *20170306 PN CAM-150: isValidEmailFormat() method modified to pass a parameter into the method. isemptyDropdown(fieldValue) method modified to trim() the given input value.
  */ 
 
  
@@ -200,7 +200,7 @@ function getSelectedData(listname, elementName) {
  */
 function isemptyDropdown(fieldValue) {
 
-	return $('#'+fieldValue+'').val() === '' ? false : true;
+	return $('#'+fieldValue+'').val().trim() === '' ? false : true;
 }
 
 /**
@@ -260,6 +260,10 @@ function isLetter(evt) {
 			&& (inputValue != 32 && inputValue != 0)) {
 		evt.preventDefault();
 	}
+}
+
+function preventSpaceBarTyping(evt){
+	return evt.which !== 32;
 }
 
 /**
