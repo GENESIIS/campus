@@ -1,7 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170228 JH c96-public-list-all-tutors INIT CmdPublicListTutors.java
-//20170306 JH c96-public-list-all-tutors get tutor profile image path using SystemConfig enum
+//20170306 JH c96-public-list-all-tutors get tutor profile image path using SystemConfig enum, show error messages
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -40,9 +40,11 @@ public class CmdPublicListTutors implements ICommand{
 
 			
 		}catch(SQLException sqlException){
+			message = SystemMessage.ERROR;
 			log.error("execute() SQLException : "+ sqlException.toString());
 			throw sqlException;
 		}catch(Exception exception){
+			message = SystemMessage.ERROR;
 			log.error("execute() Exception : "+ exception.toString());
 			throw exception;
 		}finally{
