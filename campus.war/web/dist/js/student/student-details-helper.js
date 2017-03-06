@@ -484,7 +484,7 @@ function getStudentData(response) {
 	$('.editformdatabtn').prop("disabled", false); // edit buttons are now enabled.
 	
 	$("#sEmail").first().keyup(function () {
-		var $email = this.value;
+		var email = this.value;
 		var isValid = isValidEmailFormat(email);
 		if (!isValid){
 			document.getElementById('sEmailError').innerHTML = "Invalid email address.";
