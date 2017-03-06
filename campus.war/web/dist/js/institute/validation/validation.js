@@ -23,6 +23,7 @@
  *            /campus.war/web/dist/js/banner/uploadBanner.js
  *            compareDates() refactored to prevent an error
  *20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the method isValidEmailFormat to enclose the regular expression with ^ and $ 
+ *			 negate the !isPatternMatch(urltestingPattern,urlSplitedArray[1]) in urlTest() method.	
  */ 
 
  
@@ -197,16 +198,13 @@ function urlTest(urlInputTextid){
 			 *excluding for  https://56@genesiis.atlassian.net/secure/Dashboard.jspa?selectPageId=11900 
 			 *pattern
 			 */
-			validUrl=isPatternMatch(urltestingPattern,urlSplitedArray[1]);	
+			validUrl=!isPatternMatch(urltestingPattern,urlSplitedArray[1]);	
 	  } else if(isPatternMatch(urlStartWWWPattern,urlInputText)){  // does url start with 
 			urlSplitedArray = urlInputText.split('.');
 			validUrl = !isPatternMatch(urltestingPattern,urlSplitedArray[1]);
 	 } else {
 			validUrl = isPatternMatch(urltestingPattern,urlInputText);
 	}
-			
-		
-		
 	return validUrl;
 }
 
