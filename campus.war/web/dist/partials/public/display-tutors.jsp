@@ -2,7 +2,8 @@
 <!-- 20170227 TR c95 Added header and import all bower-components -->
 <!-- 20170227 TR c95 Added page container -->
 <!-- 20170302 JH c96 INIT display-tutors.jsp with display-tutors.html page-->
-<!-- 20170306 JH c96 changed datatable javascipt file imports to the correct location -->
+<!-- 20170306 JH c96 changed datatable javascipt file imports to the correct folder path -->
+<!-- 20170306 JH c96 added userMessage div section for alert messages  -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -109,6 +110,10 @@
         <!-- End inner header -->
 
         <div class="col-md-12 col-lg-12 col-sm-12">
+        
+        <div>
+        <div class="alert alert-error" name="userMessage" id="userMessage"></div>
+        </div>
             <div class="result-panel">
                 <!-- Panel Header -->
                 <div class="panel-header clearfix">
@@ -290,7 +295,10 @@
 	<script src="/dist/bower-components/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	
+	<!-- page load helper -->
 	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
 	
+	<!-- error handling java script -->
+	<script src="/dist/js/error-handling.js" type="text/javascript"></script>
 </body>
 </html>
