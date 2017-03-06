@@ -120,7 +120,7 @@
 					<pathelement path="${jbossLibDir}/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-2.jar" />
 					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/as/web/main/jbossweb-7.5.10.Final-redhat-1.jar"/>
 					<pathelement path="${jbossLibDir}/system/layers/base/.overlays/layer-base-jboss-eap-6.4.8.CP/org/jboss/log4j/logmanager/main/log4j-jboss-logmanager-1.1.2.Final-redhat-1.jar" />
-					
+					<pathelement path="${jbossLibDir}/org/apache/commons/validator/main/commons-validator-1.6.jar" />
 				</classpath>
 		</javac>
 		
