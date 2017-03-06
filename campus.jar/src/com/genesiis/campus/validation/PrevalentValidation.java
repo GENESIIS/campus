@@ -14,7 +14,8 @@ package com.genesiis.campus.validation;
 //		   from interface Validatory.java to the concrete implementation
 //         isUrlValid() method implemented.
 //		   implemented newly introduced methods with string error message parameter.
-// 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented the compareDates().
+// 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented the compareDates() and commented out earlier version 
+//				of the same method [compareDates(Date date, Date otherDate,String errorMessage)].
 // 
  
 
@@ -179,24 +180,24 @@ public class PrevalentValidation implements Validatory {
 		return isValidString;
 	}
 	
-	/**
-	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>
-	 *  and returns an integer based on the comparison 
-	 * date > otherDate  then , returns +ve int
-	 * date < otherDate then , returns -ve int
-	 * date == otherDate then, returns 0
-	 * @param date : java.util.Date the initial date
-	 * @param otherDate : java.util.Date the secondary date 
-	 * @return int value as explained above
-	 * @throws Exception 
-	 */
-	@Override
-	public int compareDates(Date date, Date otherDate,String errorMessage) throws Exception {
-		Integer outPut= date.compareTo(otherDate);
-		boolean success =  (outPut instanceof Integer);
-		throwCustomError(success, errorMessage);
-		return (int)outPut;
-	}
+//	/**
+//	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>
+//	 *  and returns an integer based on the comparison 
+//	 * date > otherDate  then , returns +ve int
+//	 * date < otherDate then , returns -ve int
+//	 * date == otherDate then, returns 0
+//	 * @param date : java.util.Date the initial date
+//	 * @param otherDate : java.util.Date the secondary date 
+//	 * @return int value as explained above
+//	 * @throws Exception 
+//	 */
+//	@Override
+//	public int compareDates(Date date, Date otherDate,String errorMessage) throws Exception {
+//		Integer outPut= date.compareTo(otherDate);
+//		boolean success =  (outPut instanceof Integer);
+//		throwCustomError(success, errorMessage);
+//		return (int)outPut;
+//	}
 	
 	/**
 	 * isUrlValid() expects a url string and a long option
@@ -330,6 +331,7 @@ public class PrevalentValidation implements Validatory {
 	 * @return int value as explained above
 	 * @throws Exception 
 	 */
+	@Override
 	public int compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage)throws Exception{
 		
 		int compareInt = Integer.MIN_VALUE;
