@@ -22,6 +22,8 @@
  *   20170303 DN c131-admin-manage-banner-upload-banner-image-dn shift the compareDates() method to
  *               /campus.war/web/dist/js/institute/validation/validation.js.
  *               include a start date and end date validation with respect to current date.
+ *  20170306 DN c131-admin-manage-banner-upload-banner-image-dn  modified the data list listing to over come the firefox browser issue by
+ *  			changing populateDataList() and in  getPreRequisitPageData() where ever required.         
  */
 
 /*
@@ -108,17 +110,17 @@ function getPreRequisitPageData(preRequistData){
 										iskeyStrocksCompleted = true;
 										return $(this).val();
 									}	
-								}).text();
-		selectedAdvertiserCode = page;
-		
-		// populating associated page slots for the page
-		
-		if(iskeyStrocksCompleted){
-			// get page code to a hidden field
-			$('#sAdvertiserCode').val(selectedAdvertiserCode);
+								}).val();
+		if(page!=undefined){
+			selectedAdvertiserCode = $('#'+page.replace(/\s+/g,"")).val();
+			alert("selectedAdvertiserCode:"+selectedAdvertiserCode);
 			
+			// populating associated page slots for the page
+			if(iskeyStrocksCompleted){
+				// get page code to a hidden field
+				$('#sAdvertiserCode').val(selectedAdvertiserCode);
+			}	
 		}
-		
 	});
 	
 	
@@ -141,18 +143,21 @@ function getPreRequisitPageData(preRequistData){
 										iskeyStrocksCompleted = true;
 										return $(this).val();
 									}	
-								}).text();
-		selectedPageCode = page;
+								}).val();
+		
+		if(page!=undefined){
+		var pageComponentArray = page.split("."); // removing the .jsp part from the page
+		selectedPageCode = $('#'+pageComponentArray[0].replace(/\s+/g,"")).val();
+		alert("selectedPageCode:"+selectedPageCode);
 		
 		// populating associated banner slots for the page
-		
 		if(iskeyStrocksCompleted){
 			// get page code to a hidden field
 			$('#sPageCode').val(selectedPageCode);
-			
 			// load the relevant page slot for page selected from data base.
 			getBannerSlotsMapedToThePage(selectedPageCode);
 		}
+	 }
 		
 	});
 	
@@ -174,15 +179,20 @@ function getPreRequisitPageData(preRequistData){
 										iskeyStrocksCompleted = true;
 										return $(this).val();
 									}	
-								}).text();
-		selectedBannerSlotCode = page;
+								}).val();
 		
-		// once the selection is made assign the code to the hidden field		
-		if(iskeyStrocksCompleted){
-			// get page code to a hidden field
-			$('#sSlotCode').val(selectedBannerSlotCode);
+		if(page!=undefined){
+			selectedBannerSlotCode = $('#'+page.replace(/\s+/g,"")).val();
+			alert("selectedPageCode:"+selectedPageCode);
 			
+			// once the selection is made assign the code to the hidden field		
+			if(iskeyStrocksCompleted){
+				
+				// get page code to a hidden field
+				$('#sSlotCode').val(selectedBannerSlotCode);
+			}	
 		}
+		
 		
 	});	
 
@@ -250,11 +260,16 @@ function populateDataList(responseAttribute,elementId){
 	$.each(responseAttribute,function(index,value){
 		var record= value.toString();
 		var recordArray =record.split(","); // convert the string to an Array
+		var recordNameCompornentArray = null;
 		
 		var recordCode = recordArray[0].toString();
 		var recordName = recordArray[1].toString();
 		//create option list on the fly and attach to the data list
-		$('<option>').val(recordName).text(recordCode).appendTo(elementWrapperSet);
+		$('<option>').val(recordName).appendTo(elementWrapperSet);
+		recordNameCompornentArray=recordName.replace(/\s+/g, "").split(".");
+		recordName = recordNameCompornentArray[0];
+		$('<input type ="hidden" id= "'+recordName+'">').val(recordCode).appendTo(elementWrapperSet);
+		//$('<option>').val(recordName).text(recordCode).appendTo(elementWrapperSet);
 	});
 }
 
@@ -384,9 +399,7 @@ $(document).on('click','#uploadBbutton', function(event){
 					$('#uploadBbutton').prop('disabled',true);
 					sendBannerPaageFieldInputs(BannerFieldInputValues,true);
 				} else{
-					
 					// fire the data field clear function
-					alert("fire the data field clear function");
 					$(':input').val('');
 				}
 			}
