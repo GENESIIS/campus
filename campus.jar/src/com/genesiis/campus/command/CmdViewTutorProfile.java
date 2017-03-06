@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170207 CW c38-view-update-tutor-profile-cw execute() method
 //20170223 CW c38-add-tutor-information re-organise the import statements.
 //20170223 CW c38-view-update-tutor-profile-cw execute() method to validate for null tutor code
+//20170306 CW c37-tutor-update-tutor-profile-cw modified execute method & change variable declarations to optimize the code
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
@@ -26,7 +27,6 @@ import java.util.Collection;
 public class CmdViewTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdViewTutorProfile.class.getName());
-	private String tutorCode = "0";
 	private String message = "";
 
 	@Override
@@ -37,6 +37,7 @@ public class CmdViewTutorProfile implements ICommand {
 			final Tutor tutor = new Tutor();
 			Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
 			
+			String tutorCode = "0";
 			tutorCode = helper.getParameter("tutorCode");
 			
 			if (Validator.isNotEmpty(tutorCode)){
