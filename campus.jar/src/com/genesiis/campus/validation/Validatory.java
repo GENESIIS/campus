@@ -6,6 +6,8 @@ package com.genesiis.campus.validation;
 //20170303 DN c131-admin-manage-banner-upload-banner-image-dn declare 
 //         compareDates(Date date,Date otherDate) throws Exception method signature.
 //         Declared methods with string error message parameter.
+//20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the signature of method 
+//         compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage).
 
 
 
@@ -147,7 +149,7 @@ public interface Validatory {
 	 * @return int value as explained above
 	 * @throws Exception 
 	 */
-	public int compareDates(Date date, Date otherDate,String ErrorMessage) throws Exception;
+	public int compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage) throws Exception;
 	
 	/**
 	 * isUrlValid() expects a url string and a long option
