@@ -10,6 +10,7 @@
 			<module name="com.google.gson" />
 			<module name="org.apache.commons.lang3"/>
 			<module name="org.apache.lucene"/>
+			<module name="org.apache.commons.validator" />
 		</dependencies>
 	</sub-deployment>
 	<sub-deployment name="campus.war">
@@ -18,6 +19,7 @@
 			<module name="org.apache.commons.io" />
 			<module name="org.apache.commons.lang3" />
 			<module name="com.google.gson" />
+			<module name="org.apache.commons.validator" />
 		</dependencies>
 	</sub-deployment>
 </jboss-deployment-structure>
