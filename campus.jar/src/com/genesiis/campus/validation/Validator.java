@@ -18,6 +18,7 @@ package com.genesiis.campus.validation;
 				//removed isValidLastname & modified isValidFirstname method to isValidName & Change the validateTutorFields method to use isValidName method
 				//removed isValidContactNumber & modified isValidNetworkCode method to isValidNetworkOrContactCode & Change the validateTutorFields method to use isValidNetworkOrContactCode method
 //20170305 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & add static modifier to the method declaration. 
+//20170306 CW c37-tutor-update-tutor-profile-cw modified isEmptyOrHavingSpace method to validate one or many space characters
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -68,13 +69,13 @@ public class Validator {
 	public static boolean isEmptyOrHavingSpace(String text) {
 		boolean status = false;
 		
-		if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+		if ((text == null) || (text.isEmpty() == true) || (text.matches("^\\s*$"))) {
 			status = true;
 		}
 		
 		return status;
 }
-
+	
 	/**
 	 * Validate helper fields for null values.
 	 * 
