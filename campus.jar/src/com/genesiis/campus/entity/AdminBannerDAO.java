@@ -16,7 +16,9 @@ package com.genesiis.campus.entity;
  * 20170223 DN c131-admin-manage-banner-upload-banner-image-dn commented the [TYPE] field as the field is deprecated in future use
                from [CAMPUS].[BAANER] table.
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn The Order of the retrieving statements 
- *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed.        
+ *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed. 
+ * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn removed the method formADate() from the class and restructured with
+ * 			   logic and placed in PrevalentValidation.java       
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -217,38 +219,7 @@ public class AdminBannerDAO implements ICrud {
 		return outerWrapper; 
 	}
 	
-	/*
-	 * formADate creates a java sql date from the passed in parameter date.
-	 * @param dateFormat: the format we required the return value to be in. 
-	 * 						e.g.  "dd/MM/yyyy, dd-MM-yyyy, MM/dd/yyyy, yyyy-MM-dd."
-	 * @param date : String date in the format e.g "2017-02-14" "
-	 * @return java.sql.Date if the date has been set else return null
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
-	 * @throws Exception
-	 */
-	private Date formADate(String dateFormat,String date)throws NullPointerException,
-	IllegalArgumentException,Exception{
-		java.sql.Date sqlDate = null;
-		try{
-			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-			java.util.Date dateToCreate = sdf.parse(date);
-			 sqlDate =  new java.sql.Date(dateToCreate.getTime());
-			
-			
-		}catch (NullPointerException npexp){
-			Log.error("formADate(String,String):NullPointerException "+ npexp.toString());
-			throw npexp;
-			
-		}catch (IllegalArgumentException ilarg) {
-			Log.error("formADate(String,String): IllegalArgumentException"+ ilarg.toString());
-			throw ilarg;
-		}catch(Exception exp){
-			Log.error("formADate(String,String): Exception"+ exp.toString());
-			throw exp;
-		}
-		return sqlDate;
-	}
+	
 	
 	/*
 	 * getTheURLType method returns the enum link type
