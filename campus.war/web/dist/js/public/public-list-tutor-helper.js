@@ -1,9 +1,11 @@
 /**
  * 20170302 JH c96 public-list-tutor-helper.js created to help list tutors for the public
- * 20170306 JH c96 removed unwanted lines and display tutor image with static system config file path, added new method selectTutorRecord(code)
+ * 20170306 JH c96 removed unwanted lines and display tutor image with static system config file path, added new method selectTutorRecord(code),
+ * 					load tutor images using system config file path with loading default image on error source
  */
 
 window.tutorList = null;
+window.tutorProfileImagePath = null;
 
 window.onload = function() {
 	listPublicTutors();
@@ -27,14 +29,29 @@ function listPublicTutors(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
+				window.tutorProfileImagePath = response.tutorProfileImagePath;
 
 				DisplayTutorTable();
-			//	    $('#example tbody').on('click', 'tr', function () {
+			    $('#example tbody').on('click', 'tr', function () {
+			  	  var tutorCode = $(this).find("td:first").html();
+				   
+				   alert("will direct to tutor public profile. and the tutor is " + tutorCode);
+				   var form = document.createElement('form');
+				   form.method = 'post';
+				   form.action = '/dist/partials/public/display-tutors.jsp';
+				   var input = document.createElement('input');
+				   input.type = 'text';
+			      input.name = 'tutorCode';
+			      input.value = tutorCode;
+			      form.appendChild(input);
+			      form.submit();
+			    });
 
 			}
 		},
 	});
 }
+
 
 /**
  * used to select a specific record of a tutor and pass the value to the next page
@@ -42,7 +59,7 @@ function listPublicTutors(){
  * @returns
  * @author JH
  */
-function selectTutorRecord(code){
+function selectTutorRecord(){
 	  var tutorCode = $(this).find("td:first").html();
 	   
 	   alert("will direct to tutor public profile. and the tutor is " + tutorCode);
@@ -67,7 +84,7 @@ function DisplayTutorTable(){
 	var t =  $('#example').DataTable();
 	var tutors = window.tutorList;
 	var rowCount = 0;
-	var tutorImagePath = "education/tutor/pro_image/";
+	var tutorImagePath = window.tutorProfileImagePath;
 	var fileSeparator = "/";
 	var extension = ".jpg";
 	t.clear().draw();
@@ -82,10 +99,11 @@ function DisplayTutorTable(){
 
 							 rowCount++;
 							var value1 = null;
+							var hiddenCode = '<input type="hidden" name="tutorCode" id="tutorCode" value="'+ value[0] +'">';
 							
-							imageFile = fileSeparator + tutorImagePath + value[0] + fileSeparator + value[0]+extension;
-							onErroImage = fileSeparator + tutorImagePath + defaultImage + extension;
-							value1 = '  <img src="' + imageFile + '" alt="" onerror="' + onErroImage + '">';
+							imageFile = fileSeparator + tutorImagePath + fileSeparator + value[0] + fileSeparator + value[0]+extension;
+							onErroImage = fileSeparator + tutorImagePath + fileSeparator + defaultImage + extension;
+							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'">';
 	
 t.row.add(
 									[
