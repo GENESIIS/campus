@@ -25,6 +25,7 @@
 <!-- 20170220 TR CAM-139: added new styles to gif loading area  -->
 <!-- 20170220 TR CAM-139: modified styles in skills and interest widget  -->
 <!-- 20170205 PN CAM-150: onkeypress="isCountryEmpty()" method called on sTown text field. -->
+<!-- 20170206 PN CAM-150: added a red asterisk mark in-front of the required form field in about me model. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -376,25 +377,25 @@
       		<h2 class="sub-title-1">| Personal Details</h2>
       		<div class="well clearfix">
       		    <div class="show modal-input-field clearfix">
-                    <label>First Name :</label>
+                    <label>First Name : <span style="color:red">*</span></label>
                     <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
                     <span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
-			        <label>Middle Name :</label>
+			        <label>Middle Name : </label>
                     <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
                     <span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
-			        <label>Last Name :</label>
+			        <label>Last Name : <span style="color:red">*</span></label>
                     <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
                     <span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
 			    </div>
 
                 <div class="show modal-input-field clearfix">
-                    <label>Birth Date :</label>
+                    <label>Birth Date : <span style="color:red">*</span></label>
                     <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
                     <span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
                 </div>
@@ -419,7 +420,7 @@
 			<h2 class="sub-title-1">| Contact Details</h2>
 			<div class="well">
 			    <div class="show modal-input-field clearfix">
-                    <label>Country :</label>
+                    <label>Country : <span style="color:red">*</span></label>
                     <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
                         <datalist name="sCountryList" id="sCountryList">
                         </datalist>
@@ -428,7 +429,7 @@
                 </div>
 
                 <div class="show modal-input-field clearfix">
-                     <label>Town :</label>
+                     <label>Town : <span style="color:red">*</span></label>
                      <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')" onkeypress="isCountryEmpty()"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
                      <input hidden type="text" id="sTownCode" name="sTownCode"/>
@@ -442,7 +443,7 @@
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
-                    <label>Mobile Number :</label>
+                    <label>Mobile Number : <span style="color:red">*</span></label>
                     <div class="input-group">
                         <span class="input-group-addon" id="countryCodePrefix"></span>
                         <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="20">
@@ -460,7 +461,7 @@
                 </div>
 
                 <div class="show modal-input-field clearfix">
-                    <label>Email :</label>
+                    <label>Email : <span style="color:red">*</span></label>
                     <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
                     <span id="sEmailError" name="sEmailError" style="color:red"></span><br>
                 </div>
