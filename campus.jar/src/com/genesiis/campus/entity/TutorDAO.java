@@ -32,6 +32,7 @@ package com.genesiis.campus.entity;
 //20170306 CW c37-tutor-update-tutor-profile-cw modified update method & removed password encryption
 //20170306 CW c37-tutor-update-tutor-profile-cw removed getListOfUsernameEmail
 				// add validateUsernameEmailFields() method from 
+//20170306 CW c37-tutor-update-tutor-profile-cw removed un wanted space from getListOfUsernameEmail()
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -301,7 +302,7 @@ public class TutorDAO implements ICrud {
 	 * @return Returns 1 if the username is available in the database, returns 2 if the email is available & 
 	 * 				returns 0 if both are not used to create a tutor profile.
 	 */
-	public static int validateUsernameEmailFields(String username, String email) throws SQLException,	Exception {
+	public static int validateUsernameEmailFields(String username, String email) throws SQLException, Exception {
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
