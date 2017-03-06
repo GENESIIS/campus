@@ -15,6 +15,7 @@
  *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range 
  *20161203 PN c26-add-student-details: implemented isLetter(evt) method.
  *20161205 PN c26-add-student-details: implemented isPastfromNow(day, errorLabel).
+ *20170306 PN CAM-150: isValidEmailFormat() method modified to pass a parameter into the method.
  */ 
 
  
@@ -118,10 +119,10 @@ function clearField(elementId){
  * @returns boolean if testing email address is a valid
  * one then returns true else return false
  */
-function validEmailFormat(){	
-	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
-	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
-	return isPatternMatch(pattern,emailAddress);
+function isValidEmailFormat(email) {
+	var emailAddress = email;
+	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
+	return isPatternMatch(pattern, emailAddress);
 }
 
 /**
