@@ -26,6 +26,7 @@
 <!-- 20170220 TR CAM-139: modified styles in skills and interest widget  -->
 <!-- 20170205 PN CAM-150: onkeypress="isCountryEmpty()" method called on sTown text field. -->
 <!-- 20170206 PN CAM-150: added a red asterisk mark in-front of the required form field in about me model. -->
+<!-- 20170306 PN CAM-150: error class declared to for error span tags, to clear them inside clearPersonalDetailsForm() method. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -379,25 +380,25 @@
       		    <div class="show modal-input-field clearfix">
                     <label>First Name : <span style="color:red">*</span></label>
                     <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
-                    <span id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
+                    <span class="error-msg" id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Middle Name : </label>
                     <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
-                    <span id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
+                    <span class="error-msg" id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Last Name : <span style="color:red">*</span></label>
                     <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
-                    <span id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
+                    <span class="error-msg" id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
 			    </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Birth Date : <span style="color:red">*</span></label>
                     <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
-                    <span id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
+                    <span class="error-msg" id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
                 </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -411,7 +412,7 @@
 			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left">About :</label>
                     <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
-                    <span id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
+                    <span class="error-msg" id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			    </div>
 			</div>
 			<!-- End personal details area -->
@@ -425,7 +426,7 @@
                         <datalist name="sCountryList" id="sCountryList">
                         </datalist>
                     <input hidden type="text" id="sCountryCode" name="sCountryCode"/>
-                    <span id="sCountryError" name="sCountryError" style="color:red"></span><br>
+                    <span class="error-msg" id="sCountryError" name="sCountryError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
@@ -433,13 +434,13 @@
                      <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')" onkeypress="isCountryEmpty()"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
                      <input hidden type="text" id="sTownCode" name="sTownCode"/>
-                     <span id="sTownError" name="sTownError" style="color:red"></span>
+                     <span class="error-msg" id="sTownError" name="sTownError" style="color:red"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">                 
                     <label>Address :</label>
                     <input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
-                    <span id="sAddressError" name="sAddressError" style="color:red"></span>
+                    <span class="error-msg" id="sAddressError" name="sAddressError" style="color:red"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -448,7 +449,7 @@
                         <span class="input-group-addon" id="countryCodePrefix"></span>
                         <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="20">
                     </div>
-                    <span id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
+                    <span class="error-msg" id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -456,44 +457,44 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="20">
-                    <span id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
+                    <span class="error-msg" id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
                     </div>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Email : <span style="color:red">*</span></label>
                     <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
-                    <span id="sEmailError" name="sEmailError" style="color:red"></span><br>
+                    <span class="error-msg" id="sEmailError" name="sEmailError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Facebook URL :</label>
                     <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200" placeholder="www.facebook.com/username">
-                    <span id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
+                    <span class="error-msg" id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Twitter URL :</label>
                     <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200" placeholder="www.twitter.com/username">
-                    <span id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
+                    <span class="error-msg" id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>LinkedIn URL :</label>
                     <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200" placeholder="www.linkedin.com/username">
-                    <span id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
+                    <span class="error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Instagram URL :</label>
                     <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200" placeholder="www.instagram.com/username">
-                    <span id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
+                    <span class="error-msg" id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>MySpace :</label>
                     <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200" placeholder="www.myspace.com/username">
-                    <span id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
+                    <span class="error-msg" id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -501,7 +502,7 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="20">
-                    <span id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
+                    <span class="error-msg" id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
                     </div>
                 </div>
 
@@ -510,7 +511,7 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="20">
-                    <span id="sViberError" name="sViberError" style="color:red"></span><br>
+                    <span class="error-msg" id="sViberError" name="sViberError" style="color:red"></span><br>
                     </div>
                 </div>
 			</div>
