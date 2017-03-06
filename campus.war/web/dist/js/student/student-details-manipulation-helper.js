@@ -1,6 +1,7 @@
 /**
  * 20170214 PN CAM-28: INIT student-details-manipulation-helper.js file to contain all data manipulation functions for student profile JSP page. all the methods are previously located and copied from student-details-helper.js file.
  * 20170305 PN CAM-150: isCountryEmpty() method and getTownDetails() method implemented to perform town details selection datalist.
+ * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans.
  */
 
 /**
@@ -604,6 +605,7 @@ function clearPersonalDetailsForm() {
 	$('#sTown').val("");
 	$('#sAddress').val("");
 	$('.input-group-addon').text("");
+	$('.error-msg').text("");
 	$('#sMobileNumber').val("");
 	$('#sHomeNumber').val("");
 	$('#sOtherNumber').val("");
