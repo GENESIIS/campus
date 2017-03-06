@@ -1,7 +1,7 @@
 /**
  * 20170302 JH c96 public-list-tutor-helper.js created to help list tutors for the public
  * 20170306 JH c96 removed unwanted lines and display tutor image with static system config file path, added new method selectTutorRecord(code),
- * 					load tutor images using system config file path with loading default image on error source
+ * 					load tutor images using system config file path with loading default image on error source,show error messages on AJAX calls
  */
 
 window.tutorList = null;
@@ -30,6 +30,7 @@ function listPublicTutors(){
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
 				window.tutorProfileImagePath = response.tutorProfileImagePath;
+				
 
 				DisplayTutorTable();
 			    $('#example tbody').on('click', 'tr', function () {
@@ -49,8 +50,14 @@ function listPublicTutors(){
 
 			}
 		},
+		error : function(x, status, error) {
+			var err = displayErrorMessage(x, status, error);
+			document.getElementById("userMessage").style.display = "block";
+			$("#userMessage").html(err);
+		}
 	});
 }
+
 
 
 /**
