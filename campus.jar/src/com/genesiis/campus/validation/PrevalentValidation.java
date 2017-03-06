@@ -14,11 +14,16 @@ package com.genesiis.campus.validation;
 //		   from interface Validatory.java to the concrete implementation
 //         isUrlValid() method implemented.
 //		   implemented newly introduced methods with string error message parameter.
-
+// 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented the compareDates().
+// 
+ 
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.log4j.Logger;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -313,9 +318,41 @@ public class PrevalentValidation implements Validatory {
 			return isTestPassed;
 		}
 	}
-
 	
-	
+	/**
+	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>
+	 *  and returns an integer based on the comparison 
+	 * date > otherDate  then , returns +ve int
+	 * date < otherDate then , returns -ve int
+	 * date == otherDate then, returns 0
+	 * @param date : java.util.Date the initial date
+	 * @param otherDate : java.util.Date the secondary date 
+	 * @return int value as explained above
+	 * @throws Exception 
+	 */
+	public int compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage)throws Exception{
+		
+		int compareInt = Integer.MIN_VALUE;
+		boolean isTestPassed = false;
+			try {
+				
+				DateFormat sdf = new SimpleDateFormat(dateFormat);
+				String sentInDate=sdf.format(firstDAte);
+				String dateComparingAgainst=sdf.format(new Date());
+				
+				compareInt= sentInDate.compareTo(dateComparingAgainst);
+				isTestPassed = (Integer.valueOf(compareInt) instanceof Integer);
+				
+			} catch (NullPointerException npexp) {
+				isTestPassed =false;
+			}catch(IllegalArgumentException ilarg){
+				isTestPassed =false;
+			} finally{
+				throwCustomError(isTestPassed,errorMessage);
+				return compareInt;
+			}
+	}
+	 
 	/*
 	 * throwCustomError class accepts two parameters and based on the test falsity Exception
 	 * will be thrown. 
