@@ -1,7 +1,7 @@
 /**
  * 20170214 PN CAM-28: INIT student-details-manipulation-helper.js file to contain all data manipulation functions for student profile JSP page. all the methods are previously located and copied from student-details-helper.js file.
  * 20170305 PN CAM-150: isCountryEmpty() method and getTownDetails() method implemented to perform town details selection datalist.
- * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans.
+ * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans. modified the JQuery which takes the gender value from the radio.
  */
 
 /**
@@ -483,8 +483,10 @@ function addStudentPersonalDetails() {
 		var whatsAppNumber = $('#sWhatsApp').val();
 		var viberNumber = $('#sViber').val();
 		var landPhoneCountryCode = $('#sCountryCode').val();
-		var gender = $('input[gender]:checked').val();
-
+		var gender = $("input[name='gender']:checked").val();
+        if(gender){
+            alert("Your are a - " + gender);
+        }
 		var jsonData = {
 			"firstName" : firstName,
 			"middleName" : middleName,
