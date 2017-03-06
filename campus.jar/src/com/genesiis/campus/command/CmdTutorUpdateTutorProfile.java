@@ -12,6 +12,7 @@ package com.genesiis.campus.command;
 //20170302 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method to use Validator.isEmptyOrHavingSpace()
 //20170305 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method & add testing messages until password errors fixed
 //20170306 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables removed testing messages.
+//20170306 CW c37-tutor-update-tutor-profile-cw modified execute method & change variable declarations to optimize the code
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -43,7 +44,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	static Logger log = Logger.getLogger(CmdTutorUpdateTutorProfile.class.getName());
 	
 	/**
-	 * @author Chathuri, Chinthaka
+	 * @author Chinthaka
 	 * @param helepr
 	 *            IDataHelper object of Object type view IView object of object
 	 *            type
@@ -59,14 +60,15 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			final Validator validator = new Validator();
 				
 			final Tutor tutor = new Tutor();
-			final TutorDAO tutorDAO = new TutorDAO();
-			int result = 0;
 			boolean updated = false;				
 			Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
 			updated = setCompareVariables(helper,tutor); // returns true if updated
 			
 			if(updated){
 				if (validator.validateTutorFields(helper)) {	
+					
+					final TutorDAO tutorDAO = new TutorDAO();
+					int result = 0;
 
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
