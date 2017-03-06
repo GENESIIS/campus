@@ -61,8 +61,8 @@
     
     <!-- Issue specific JS files. -->
     <script src="../../js/institute/validation/validation.js"></script>
-    <script src="../../js/student/student-details-manipulation-helper.js"></script>
-	<script src="../../js/student/student-details-helper.js"></script>
+    <script src="../../js/student/student-details-helper.js"></script>
+    <script src="../../js/student/student-details-manipulation-helper.js"></script>	
 	<script src="../../js/student/ui-controller.js"></script>
 
 	<!-- Data Table JS files -->
@@ -463,7 +463,7 @@
 
                 <div class="show modal-input-field clearfix">
                     <label>Email : <span style="color:red">*</span></label>
-                    <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200">
+                    <input type="text" name="sEmail" id="sEmail" onclick="" maxlength="200">
                     <span class="error-msg" id="sEmailError" name="sEmailError" style="color:red"></span><br>
                 </div>
 
