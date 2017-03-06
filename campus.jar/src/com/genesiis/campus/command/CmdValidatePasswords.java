@@ -2,16 +2,14 @@ package com.genesiis.campus.command;
 
 //20170303 c37-tutor-update-tutor-profile-cw INIT CmdValidatePasswords.java
 //20170305 c37-tutor-update-tutor-profile-cw modified execute method to validate password fields properly using Validator.isValidPassword method
+//20170306 c37-tutor-update-tutor-profile-cw removed un - used import statements
 
 import com.genesiis.campus.entity.IView;
-//import com.genesiis.campus.entity.TutorEmailDAO;
-//import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
-//import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
