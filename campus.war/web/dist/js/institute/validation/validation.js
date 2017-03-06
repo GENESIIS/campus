@@ -22,6 +22,7 @@
  *20170303 DN c131-admin-manage-banner-upload-banner-image-dn shift the compareDates() method from
  *            /campus.war/web/dist/js/banner/uploadBanner.js
  *            compareDates() refactored to prevent an error
+ *20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the method isValidEmailFormat to enclose the regular expression with ^ and $ 
  */ 
 
  
@@ -74,7 +75,7 @@ function isempty(fieldValue) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
+	var pattern = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/g;
 	return isPatternMatch(pattern, emailAddress);
 }
 
