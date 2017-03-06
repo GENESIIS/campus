@@ -17,6 +17,7 @@ package com.genesiis.campus.command;
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn SystemMessage[ENUM].toString() is called when using the systemMessages
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
+ * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods. 
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -50,7 +51,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * CmdAdminBannerUploadManager.java bears the responsibility of processing
@@ -120,6 +123,14 @@ public class CmdAdminBannerUpload implements ICommand {
 		
 	}
 	
+	/**
+	 * isClientInputAccordanceWithValidation() validates if the input fields are 
+	 * having values and those are according to the business logic.
+	 * @param jason : JasonInflator the object that is having the de-serialized values sent from
+	 * 				  client side
+	 * @return boolean
+	 * @throws Exception
+	 */
 
 	private boolean isClientInputAccordanceWithValidation(JasonInflator jason) throws Exception {
 		boolean isvalidationSuccess = false;
@@ -153,6 +164,16 @@ public class CmdAdminBannerUpload implements ICommand {
 				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
 				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
 				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+				
+				Date publishingDate 	= getADate("-",bannerPublishingDate);
+				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
+				// comparison with the current date
+				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate, "date comparison failure")>=0))
+					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be >= Current Date");
+				
+				if(!(clientInputValidator.compareDates(publishingDate, new Date(), "date comparison failure")<=0))
+					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be <= Publishing end Date");
+				
 				clientInputValidator.isInteger(urlMiniWebOrPage);
 				clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES, "Url provided is not a valid URL");
 				isvalidationSuccess=true;
@@ -165,11 +186,31 @@ public class CmdAdminBannerUpload implements ICommand {
 			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
 			throw exp;
 		}
-		
 		return isvalidationSuccess;
-		
 	}
-
+	
+	/**
+	 * getADate() returns a date.
+	 * Method accepts a date in the form yyy?MM?dd
+	 * ? denotes the delimiter which should be passed to the method, 
+	 * using which the string date is split and forms a java.util.date
+	 * @param dateDelemeter : can be any printable string character 
+	 *  e.g. "-" "," "/" etc 
+	 * @param date should be adhere to teh format yyy?MM?dd
+	 * 			yyyy: year
+	 * 			MM  : Month
+	 * 			dd  : date
+	 * 		e.g. 2017-05-26
+	 * @return java.util.Date type
+	 */
+	 private  Date getADate(String dateDelemeter,String date){
+			String [] array = date.split(dateDelemeter);
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.YEAR,Integer.parseInt(array[0]));
+			cal.set(Calendar.MONTH,Integer.parseInt(array[1])-1);
+			cal.set(Calendar.DATE,Integer.parseInt(array[2]));
+			return cal.getTime();
+		}
 
 	/*
 	 * getSessionProperty provide session associated attribute
