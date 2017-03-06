@@ -1,7 +1,7 @@
 /**
  * 20170214 PN CAM-28: INIT student-details-manipulation-helper.js file to contain all data manipulation functions for student profile JSP page. all the methods are previously located and copied from student-details-helper.js file.
  * 20170305 PN CAM-150: isCountryEmpty() method and getTownDetails() method implemented to perform town details selection datalist.
- * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans. modified the JQuery which takes the gender value from the radio.
+ * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans. modified the JQuery which takes the gender value from the radio. added a code to close model on successful details update, in addStudentPersonalDetails() method.
  */
 
 /**
@@ -484,9 +484,7 @@ function addStudentPersonalDetails() {
 		var viberNumber = $('#sViber').val();
 		var landPhoneCountryCode = $('#sCountryCode').val();
 		var gender = $("input[name='gender']:checked").val();
-        if(gender){
-            alert("Your are a - " + gender);
-        }
+
 		var jsonData = {
 			"firstName" : firstName,
 			"middleName" : middleName,
@@ -545,6 +543,7 @@ function addStudentPersonalDetails() {
 							
 							//$("#studentPersonalStatus").fadeOut();
 							alert(data.studentPersonalStatus);
+							$('#studentPersonalDetailsModal').modal('hide');
 							return;
 						}
 					},
@@ -571,9 +570,13 @@ function validateStudentPersonalDetails() {
 	isDropdownSelected(isemptyDropdown(("sCountry")), "Country",
 			"sCountryError");
 	isDropdownSelected(isemptyDropdown(("sEmail")), "Email", "sEmailError");
-
+	
 	if ($('#sBirthDate').val()) {
 		isPastfromNow("sBirthDate", "sBirthDateError");
+	}
+	
+	if(!isValidEmailFormat($('#sEmail').val())){
+		document.getElementById("sEmailError").innerHTML = "Invalid email address.";
 	}
 
 	if (($('#sFullNameError').text() != '')
