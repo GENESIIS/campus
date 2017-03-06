@@ -29,6 +29,7 @@ package com.genesiis.campus.entity;
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method & changed the variable declaration position
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method update method to fix The index 30 is out of range.
 //20170301 CW c37-tutor-update-tutor-profile-cw modified update method to fix query error
+//20170306 CW c37-tutor-update-tutor-profile-cw modified update method & removed password encryption
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -137,7 +138,7 @@ public class TutorDAO implements ICrud {
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
 				Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
-				preparedStatement.setString(30, passwordEncryptor.encryptSensitiveDataToString());
+				preparedStatement.setString(30, tutor.getPassword());
 				preparedStatement.setString(31, tutor.getUsername());
 			}else{
 				preparedStatement.setString(30, tutor.getUsername());
