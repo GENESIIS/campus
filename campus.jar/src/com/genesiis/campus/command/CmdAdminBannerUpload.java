@@ -146,7 +146,7 @@ public class CmdAdminBannerUpload implements ICommand {
 		String displayDusration		= jason.getDisplayDusration();
 		String banerToBeActive      = jason.getBanerToBeActive();
 		String bannerPublishingDate = jason.getBannerPublishingDate(); //"2017-02-14"
-		String bannerPublishingEndDate = jason.getBannerPublishingDate();		
+		String bannerPublishingEndDate = jason.getBannerPublishingEndDate();		
 		String urlMiniWebOrPage        = jason.getUrlMiniWebOrPage();	//"Page:0","URL: 1" or "Mini Web:2"
 		String urlToBeDirectedOnBannerClick = jason.getUrlToBeDirectedOnBannerClick();	
 		String bannerImageName     = jason.getBannerImageName();
@@ -168,14 +168,14 @@ public class CmdAdminBannerUpload implements ICommand {
 				Date publishingDate 	= getADate("-",bannerPublishingDate);
 				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
 				// comparison with the current date
-				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate, "date comparison failure")>=0))
-					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be >= Current Date");
-				
-				if(!(clientInputValidator.compareDates(publishingDate, new Date(), "date comparison failure")<=0))
+				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate,"yyyy-MM-dd", "date comparison failure")<=0))
 					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be <= Publishing end Date");
 				
+				if(!(clientInputValidator.compareDates(publishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
+					throw new PrevalentValidation().new FailedValidationException(" Publishing Start Date must be >= Current Date");
+				
 				clientInputValidator.isInteger(urlMiniWebOrPage);
-				clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES, "Url provided is not a valid URL");
+				//clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES+UrlValidator.ALLOW_LOCAL_URLS, "Url provided is not a valid URL");
 				isvalidationSuccess=true;
 				
 		} catch (FailedValidationException fvexp) {
