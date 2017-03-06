@@ -19,6 +19,8 @@ package com.genesiis.campus.validation;
 				//removed isValidContactNumber & modified isValidNetworkCode method to isValidNetworkOrContactCode & Change the validateTutorFields method to use isValidNetworkOrContactCode method
 //20170305 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & add static modifier to the method declaration. 
 //20170306 CW c37-tutor-update-tutor-profile-cw modified isEmptyOrHavingSpace method to validate one or many space characters
+//20170306 CW c37-tutor-update-tutor-profile-cw removed isValidUserAndEmail() to remove DAO class calling from this class
+				// modified validateTutorFields() to remove calling isValidUserAndEmail()
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -148,10 +150,6 @@ public class Validator {
 
 		boolean isValid = true; 
 		try {				
-
-			if (!isValidUserAndEmail(helper)) {
-				isValid = false;
-			}
 			
 			if (isHavingNullValues(helper)) {
 				isValid = false;
@@ -508,60 +506,6 @@ public class Validator {
 			log.error("isValidPassword:  Exception" + e.toString());
 			throw e;
 		}
-		return isValid;
-	}
-	
-	
-	/**
-	 * Validate Tutor username & email given. 
-	 * @author Chinthaka
-	 * @param helper
-	 * @return boolean : return false if user name or email is having an error
-	 * @throws Exception
-	 */
-	public boolean isValidUserAndEmail(IDataHelper helper) throws SQLException, Exception{
-
-		boolean isValid = true; 
-		int type = 0;
-		try {		
-
-			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
-				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
-				isValid = false;
-			}
-			
-			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
-				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
-				isValid = false;
-			}
-			
-			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
-				isValid = false;
-			} 
-			
-			if(!((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){		
-				type = TutorDAO.validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
-			
-				// Commented this code to use later if the username validations required. - CW
-/*				if(type == 1){
-					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-					isValid = false;
-				} */
-				
-				if(type == 2){
-					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-					isValid = false;
-				}
-			}
-			
-		} catch (SQLException sqlException) {
-			log.info("isValidUserAndEmail(): SQLException " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("isValidUserAndEmail(): Exception " + e.toString());
-			throw e;
-		} 
 		return isValid;
 	}
 }
