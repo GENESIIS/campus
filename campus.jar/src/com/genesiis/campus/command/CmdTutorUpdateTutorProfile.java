@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20170301 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method & add password encryption to new password & removed un required commented lines 
 //20170302 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method to use Validator.isEmptyOrHavingSpace()
 //20170305 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables method & add testing messages until password errors fixed
+//20170306 CW c37-tutor-update-tutor-profile-cw modified setCompareVariables removed testing messages.
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -120,7 +121,6 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
-			log.info("helper.getParameter(oldPassword) ="+ helper.getParameter("oldPassword"));
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
 				Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));
