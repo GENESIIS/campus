@@ -72,7 +72,7 @@ function DisplayTutorTable(){
 	var extension = ".jpg";
 	t.clear().draw();
 	var imageFile = null;
-	var defaultImage  = '/education/tutor/pro_image/default.jpg';
+	var defaultImage  = "default";
 
 	if (tutors !== undefined & tutors !== null) {
 		$
@@ -84,12 +84,13 @@ function DisplayTutorTable(){
 							var value1 = null;
 							
 							imageFile = fileSeparator + tutorImagePath + value[0] + fileSeparator + value[0]+extension;
-							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = ' + defaultImage + '">';
+							onErroImage = fileSeparator + tutorImagePath + defaultImage + extension;
+							value1 = '  <img src="' + imageFile + '" alt="" onerror="' + onErroImage + '">';
 	
 t.row.add(
 									[
 									 
-rowCount,
+value[0],
 											value1,
 											value[1] + '&nbsp;' + value[2]
 													+ '&nbsp;' + value[3],
