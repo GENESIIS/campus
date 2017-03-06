@@ -30,6 +30,8 @@ package com.genesiis.campus.entity;
 //20170228 CW c37-tutor-update-tutor-profile-cw modified update method update method to fix The index 30 is out of range.
 //20170301 CW c37-tutor-update-tutor-profile-cw modified update method to fix query error
 //20170306 CW c37-tutor-update-tutor-profile-cw modified update method & removed password encryption
+//20170306 CW c37-tutor-update-tutor-profile-cw removed getListOfUsernameEmail
+				// add validateUsernameEmailFields() method from 
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -331,6 +333,47 @@ public class TutorDAO implements ICrud {
 			DaoHelper.cleanup(conn, stmt, rs);
 		}
 		return 0;
+	}
+	
+	/**
+	 * @param String values containing username & email entered by the user
+	 * @author Chinthaka 
+	 * @return all the matching email & username list already entered into the database for the given username & email
+	 */
+	public static Collection<Collection<String>> getListOfUsernameEmail(String username, String email) throws SQLException, Exception{
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		final Collection<Collection<String>> allUsernameEmailList = new ArrayList<Collection<String>>();
+		
+		try{
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, username);
+			stmt.setString(2, email);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				final ArrayList<String> usernameEmailList = new ArrayList<String>();
+				usernameEmailList.add(rs.getString("USERNAME"));
+				usernameEmailList.add(rs.getString("EMAIL"));
+				allUsernameEmailList.add(usernameEmailList);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("getListOfUsernameEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getListOfUsernameEmail(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allUsernameEmailList;
 	}
 
 }
