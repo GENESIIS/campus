@@ -4,6 +4,8 @@ package com.genesiis.campus.validation;
 //20161027 AS C8-inquiry-form-for-course add SEND_COURSE_INQUIRY to the class
 //20161123 AS C19-student-login-without-using-third-party-application-test-as add STUDENT_LOGIN to the class
 //20170202 AS C22 forgot password, added EMAIL_VERIFICATION to the class.
+//20170307 CW c147-tutor-reset-password-cw added CHECK_EMAIL to the class.
+
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -25,6 +27,7 @@ public enum Operation {
 	HASH_VERIFICATION("HASHV",ResponseType.JSON,""),
 	CHANGED_PASSWORD("RESETPASS",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
+	CHECK_EMAIL("CHECK_EMAIL", ResponseType.JSON, "addTutorDetails.jsp"),
 	
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
 			
