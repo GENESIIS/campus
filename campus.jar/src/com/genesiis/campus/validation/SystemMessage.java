@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20170307 CW c147-tutor-reset-password-cw added SUCCESSFULL_CREATION, MAIL_SUCCESS_TUTOR
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -40,8 +41,9 @@ public enum SystemMessage {
 	VERIFICATION_CODEEXPIRED("Verification code has been Expired!"),
 	EMAILERROR("Invalid Email."),
 	PASSWORD_SUCCESS("Password successfully changed."),
-	PASSWORD_UNSUCCESS("Password not changed.")
-	;
+	PASSWORD_UNSUCCESS("Password not changed."),
+	MAIL_SUCCESS_TUTOR("Mail successfully submitted to Tutor's Email..."),
+	SUCCESSFULL_CREATION("Your User account is successfully created. ");
 
 	
 	private String message;
