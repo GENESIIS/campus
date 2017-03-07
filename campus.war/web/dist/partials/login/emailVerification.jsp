@@ -38,17 +38,12 @@
 <body>
    <script> 
           $( document ).ready(function() {
-        	  clearField('verifyMesssage');
-        	  clearField('verifyCode'); 
+        	
         	  clearField('verifiemail'); 
         	  clearField('verifiemail');
-        	  
-<!--              $('#openPop').on('click', function(){ -->
-<!--                 $('#verifications-popup').modal('show'); -->
-<!--              }); -->
+        	  $("#verifyCode").val("");
+			  clearField('verifyMesssage');
 
-<!--              // if span empty, hide the parent label -->
-<!--              $('.fp-msg span:empty').parent().hide(); -->
           }); 
 
     </script> 
