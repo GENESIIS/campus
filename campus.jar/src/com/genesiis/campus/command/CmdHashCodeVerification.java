@@ -42,7 +42,7 @@ public class CmdHashCodeVerification implements ICommand {
 			}
 			if (result == SystemMessage.VERIFICATION_CODEEXPIRED.message()) {
 				message = result;
-			}
+			}else
 			if (result == SystemMessage.INVALID_HASHCODE.message()) {
 				message = result;
 			} else {
