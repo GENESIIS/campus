@@ -183,7 +183,7 @@ public class StudentEmailVerificationDAO implements ICrud {
 			if (rs.next()) {
 				
 				minitDiff = rs.getInt("MinuteDiff");
-				if(minitDiff <= 30){
+				if(minitDiff <= 2){
 					singleStudent = new ArrayList<String>();
 					singleStudentCollection = singleStudent;
 
