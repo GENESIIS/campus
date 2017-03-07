@@ -33,6 +33,7 @@ package com.genesiis.campus.entity;
 //20170306 CW c37-tutor-update-tutor-profile-cw removed getListOfUsernameEmail
 				// add validateUsernameEmailFields() method from 
 //20170306 CW c37-tutor-update-tutor-profile-cw removed un wanted space from getListOfUsernameEmail()
+//20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -94,9 +95,9 @@ public class TutorDAO implements ICrud {
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
 				queryBuilder.append(", PASSWORD = ? ");	
-				queryBuilder.append("WHERE USERNAME = ?;");
+				queryBuilder.append("WHERE CODE = ?;");
 			}else{
-				queryBuilder.append("WHERE USERNAME = ?;");
+				queryBuilder.append("WHERE CODE = ?;");
 			}
 					
 			conn = ConnectionManager.getConnection();			
@@ -142,9 +143,9 @@ public class TutorDAO implements ICrud {
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
 				Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 				preparedStatement.setString(30, tutor.getPassword());
-				preparedStatement.setString(31, tutor.getUsername());
+				preparedStatement.setInt(31, tutor.getCode());
 			}else{
-				preparedStatement.setString(30, tutor.getUsername());
+				preparedStatement.setInt(30, tutor.getCode());
 			}
 			
 			status = preparedStatement.executeUpdate();
