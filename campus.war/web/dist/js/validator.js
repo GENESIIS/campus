@@ -28,6 +28,7 @@
  * 					isValidTwitter, isValidInstagram, isValidMyspace, isValidWhatsapp, isValidViber, isValidEmail, isValidUsername methods to reset when space value entered
  * //20170303 CW c37-tutor-update-tutor-profile-cw passwordOld renamed to passwordFromDb in validateTutorModificationsByTutor(), modified isValidPassword() validate password fields using Validator.isValidPassword()
  * //20170305 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor() to add password related validations & remove un wanted commented lines
+ * //20170307 CW c37-tutor-update-tutor-profile-cw modified isValidEmail() method & fix a minor bug 
  */
 
 /**
@@ -857,9 +858,9 @@ function isValidEmail(email) {
 		flag = false;
 	}
 
-	if (weblink.length > 255) {
-		document.getElementById('weblinkError').innerHTML = "**Max length exceeded";
-		document.getElementById('weblink').focus();
+	if (email.length > 255) {
+		document.getElementById('emailError').innerHTML = "**Max length exceeded";
+		document.getElementById('email').focus();
 		flag = false;
 	}
 	
