@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170221 AS C22 execute() method body implemented a try-catch block
 //20170223 AS C22 result,pageURL,message,data added inside try-block 
 //20170224 AS C22 Changed imports oder. 
+//20170307 AS C22 message handling modification completed. 
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
