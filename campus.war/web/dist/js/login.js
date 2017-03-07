@@ -5,9 +5,9 @@
  * C19-student-login-without-using-third-party-application-test-as added
  * remember checkbox.
  * 
- * CAM-21 AS logout-popup window added to after successful logout.
- * 20170206 CAM-22 password reset ajax functions coded
- * 20170223 CAM-22 password validation function added
+ * CAM-21 AS logout-popup window added to after successful logout. 20170206
+ * CAM-22 password reset ajax functions coded 20170223 CAM-22 password
+ * validation function added
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -159,14 +159,18 @@ function forgotPassword() {
 
 	// email filed validation error messages handling
 	if (!(emailempty)) {
-	//	document.getElementById('emailveryMessage').innerHTML = "  ** Email can not be Empty.";
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('** Email can not be Empty.');
+		// document.getElementById('emailveryMessage').innerHTML = " ** Email
+		// can not be Empty.";
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(
+				'** Email can not be Empty.');
 		flag = false;
 		return false;
 	}
 	if (!(valEmail)) {
-	//	document.getElementById('emailveryMessage').innerHTML = "  ** Please Enter valid email address.";
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('  ** Please Enter valid email address.');
+		// document.getElementById('emailveryMessage').innerHTML = " ** Please
+		// Enter valid email address.";
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(
+				'  ** Please Enter valid email address.');
 		flag = false;
 		return false;
 	}
@@ -188,15 +192,25 @@ function forgotPassword() {
 					},
 					dataType : "json",
 					success : function(response) {
-						if(response['message']=== 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. '){
-						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
-							jQuery('#emailveryMessage').addClass("fp-msg-success").html(response['message']);
+						if (response['message'] === 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. ') {
+							// document.getElementById('emailveryMessage').innerHTML
+							// = response['message'];
+							jQuery('#emailveryMessage').addClass(
+									"fp-msg-success").html(response['message']);
 							setTimeout(function() {
+								$("#verifyCode").val("");
+								clearField('verifyMesssage');
 								$('#verifications-popup').modal('show');
+								
+								
+								
 							}, 5000);
-						}else{
-						//	document.getElementById('emailveryMessage').innerHTML = response['message'];
-							jQuery('#emailveryMessage').addClass("fp-msg-error").html(response['message']);
+						} else {
+							// document.getElementById('emailveryMessage').innerHTML
+							// = response['message'];
+							jQuery('#emailveryMessage')
+									.addClass("fp-msg-error").html(
+											response['message']);
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -229,16 +243,17 @@ function verifyCode() {
 	var code = $("#verifyCode").val();
 	var email = $("#verifiemail").val();
 	var codeEmpty = isempty(code);
-	
 
 	// code filed validation error messages handling
 	if (!(codeEmpty)) {
-	//	document.getElementById('verifyMesssage').innerHTML = "  ** Verify Code can not be Empty.";
-		jQuery('#verifyMesssage').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
+		// document.getElementById('verifyMesssage').innerHTML = " ** Verify
+		// Code can not be Empty.";
+		jQuery('#verifyMesssage').addClass("fp-msg-error").html(
+				'  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
-	
+
 	if (code != null) {
 		var jsonData = {
 			"hashCode" : code,
@@ -260,13 +275,17 @@ function verifyCode() {
 						if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! "
 								|| response['errorMessage'] == "Verification code has been Expired!") {
 
-							//document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
-							jQuery('#verifyMesssage').addClass("fp-msg-error").html(response['errorMessage']);
+							// document.getElementById('verifyMesssage').innerHTML
+							// = response['errorMessage'];
+							jQuery('#verifyMesssage').addClass("fp-msg-error")
+									.html(response['errorMessage']);
 
 						} else {
-							jQuery('#verifyMesssage').addClass("fp-msg-success").html(response['errorMessage']);
+							jQuery('#verifyMesssage')
+									.addClass("fp-msg-success").html(
+											response['errorMessage']);
 							setTimeout(function() {
-								
+
 								var firstName = "";
 								var lastName = "";
 								var email = "";
@@ -292,8 +311,7 @@ function verifyCode() {
 								window.location.href = response['pageURL']
 										+ "?uData&" + pageURL;
 							}, 4000);
-							
-							
+
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -328,32 +346,47 @@ function hashEncode(data) {
 
 	// Encode the String
 	var encodedString = btoa(string);
-	
+
 	return encodedString;
 }
 // String Hash code decode to Sting
 function hashDecode(data) {
 	// Decode the String
 	var decodedString = atob(data);
-	
+
 	return decodedString;
 }
 
 // password changed ajax function
 function changedPassword() {
+	var validationPass = true;
 	var code = $("#userTypeCode").val();
 	var password = $("#passWord").val();
 	var confirmpassword = $("#confrmpsw").val();
 	var paaswordEmpty = isempty(password);
 	var validation = validatePasswordResetData();
-	var passvadidation = passwordAndConfirmPassword(password,confirmpassword);
+	var passvadidation = passwordAndConfirmPassword(password, confirmpassword);
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
-	//	document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
-		jQuery('#passWordError').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
+		// document.getElementById('emailtbError').innerHTML = " ** Verify Code
+		// can not be Empty.";
+		jQuery('#passWordError').addClass("fp-msg-error").html(
+				'  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
+	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
+			"Confirm Password Field", "confPassWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+			"confPassWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+			"confPassWordError"))) {
+		return !validationPass;
 	}
+	return validationPass;
 
 	if (code != null && validation && passvadidation) {
 		var jsonData = {
@@ -361,50 +394,50 @@ function changedPassword() {
 			"password" : password
 		};
 
-		$
-				.ajax({
-					type : "POST",
-					url : '/LoginController',
-					data : {
-						jsonData : JSON.stringify(jsonData),
-						CCO : "RESETPASS"
+		$.ajax({
+			type : "POST",
+			url : '/LoginController',
+			data : {
+				jsonData : JSON.stringify(jsonData),
+				CCO : "RESETPASS"
 
-					},
-					dataType : "json",
-					success : function(response) {
-					
-						if (response['message'] === "Password successfully changed.") {
-							jQuery('#message').addClass("fp-msg-success").html(response['message']);
-							setTimeout(function() {
-								window.location.href = response['pageURL'];
-							}, 4000);
-						}
-						else{
-							jQuery('#message').addClass("fp-msg-error").html(response['message']);
-						}
-					},
-					error : function(response, error, errorThrown) {
-						alert("Error " + error);
-						console.log(error);
-						var msg = '';
-						if (response.status === 0) {
-							msg = 'Not connect.\n Verify Network.';
-						} else if (response.status == 404) {
-							msg = 'Requested page not found. [404]';
-						} else if (response.status == 500) {
-							msg = 'Internal Server Error [500].';
-						} else if (error === 'parsererror') {
-							msg = 'Requested JSON parse failed.';
-						} else if (error === 'timeout') {
-							msg = 'Time out error.';
-						} else if (error === 'abort') {
-							msg = 'Ajax request aborted.';
-						} else {
-							msg = 'Uncaught Error.\n' + response.responseText;
-						}
-					}
+			},
+			dataType : "json",
+			success : function(response) {
 
-				});
+				if (response['message'] === "Password successfully changed.") {
+					jQuery('#message').addClass("fp-msg-success").html(
+							response['message']);
+					setTimeout(function() {
+						window.location.href = response['pageURL'];
+					}, 4000);
+				} else {
+					jQuery('#message').addClass("fp-msg-error").html(
+							response['message']);
+				}
+			},
+			error : function(response, error, errorThrown) {
+				alert("Error " + error);
+				console.log(error);
+				var msg = '';
+				if (response.status === 0) {
+					msg = 'Not connect.\n Verify Network.';
+				} else if (response.status == 404) {
+					msg = 'Requested page not found. [404]';
+				} else if (response.status == 500) {
+					msg = 'Internal Server Error [500].';
+				} else if (error === 'parsererror') {
+					msg = 'Requested JSON parse failed.';
+				} else if (error === 'timeout') {
+					msg = 'Time out error.';
+				} else if (error === 'abort') {
+					msg = 'Ajax request aborted.';
+				} else {
+					msg = 'Uncaught Error.\n' + response.responseText;
+				}
+			}
+
+		});
 	}
 }
 
@@ -419,25 +452,30 @@ function changedPassword() {
 function validatePasswordResetData() {
 	var validationPass = true;
 
-	if (!(isFieldFilled(
+	if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
+			"passWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(
 			isStringHasValiCharsAndLength($('#passWord').val(),
 					/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
 			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
 			"passWordError"))) {
 		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
-			"passWordError"))) {
-		return !validationPass;
-	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
-			"Confirm Password Field", "confPassWordError"))) {
-		return !validationPass;
-	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
-			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
-			"confPassWordError"))) {
-		return !validationPass;
-	}else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
-		return !validationPass;
 	}
+	// else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
+	// "Confirm Password Field", "confPassWordError"))) {
+	// return !validationPass;
+	// } else if
+	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+	// "confPassWordError"))) {
+	// return !validationPass;
+	// } else if
+	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+	// "confPassWordError"))) {
+	// return !validationPass;
+	// }
 	return validationPass;
 
 }
@@ -474,19 +512,22 @@ function clearAllFields() {
 }
 
 /**
- * Here the method confirms if both fields contain logically
- * equal string values.
+ * Here the method confirms if both fields contain logically equal string
+ * values.
+ * 
  * @author anuradha
- * @param password password field element id
- * @param reconfirmPassWord confirming field element id
- * @returns {Boolean} if the both fields are logically equal, then,
- * returns true else false.
+ * @param password
+ *            password field element id
+ * @param reconfirmPassWord
+ *            confirming field element id
+ * @returns {Boolean} if the both fields are logically equal, then, returns true
+ *          else false.
  */
-function passwordAndConfirmPassword(password, reconfirmPassWord){
+function passwordAndConfirmPassword(password, reconfirmPassWord) {
 	var passwordTrimed = password.trim();
-	var isBothValueAreIdentical= false;
-	if(passwordTrimed!=null|passwordTrimed !=""){
-		isBothValueAreIdentical= (passwordTrimed === reconfirmPassWord.trim()) ;
+	var isBothValueAreIdentical = false;
+	if (passwordTrimed != null | passwordTrimed != "") {
+		isBothValueAreIdentical = (passwordTrimed === reconfirmPassWord.trim());
 	}
 	return isBothValueAreIdentical;
 }
