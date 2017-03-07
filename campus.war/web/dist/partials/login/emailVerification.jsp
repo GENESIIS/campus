@@ -13,6 +13,7 @@
 <!-- 20170217 TR c68 validated error msg label hide and show  -->
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
 <!-- 20170223 AS CAM-22 modify messages span and validation messages -->
+<!-- 20170307 CW c147 added source link to tutor-login.js -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,7 +34,7 @@
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
-<script src='/dist/js/login.js'></script>
+<script src='/dist/js/tutor-login.js'></script>
 </head>
 <body>
    <script> 
@@ -78,7 +79,7 @@
 <!--                     <label for="username">Email : <span class="error-txt" id=emailtbError></span></label> -->
 <!--                 </div> -->
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                    <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
+                    <input type="email" class="" id="verifyemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
                 </div>
             </div>
             <div class="form-group btn-holder">
