@@ -15,6 +15,10 @@ package com.genesiis.campus.command;
 //20170306 CW c37-tutor-update-tutor-profile-cw modified execute method & change variable declarations to optimize the code
 //20170306 CW c37-tutor-update-tutor-profile-cw add isValidUserAndEmailBeforeAddTutor() & validateUsernameEmailFields() methods from c36-add-tutor-information
 				// Modified some comments
+//20170307 CW c37-tutor-update-tutor-profile-cw modified execute method comment, set tutor.setIsApproved & tutor.setTutorStatus values before update
+				//modified isValidUserAndEmailBeforeAddTutor() method to validate email if email field was updated.
+				//changed method setCompareVariables name into setCompareVariablesBeforeTutorUpdateTutor.
+
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -25,6 +29,7 @@ import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 import com.genesiis.campus.validation.Validator;
@@ -48,9 +53,8 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	
 	/**
 	 * @author Chinthaka
-	 * @param helepr
-	 *            IDataHelper object of Object type view IView object of object
-	 *            type
+	 * @param helepr IDataHelper object of Object type 
+	 * @param view IView object of object type
 	 * @return View object to servlet
 	 */
 
@@ -65,7 +69,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			final Tutor tutor = new Tutor();
 			boolean updated = false;				
 			Collection<Collection<String>> tutorViewCollection = new ArrayList<Collection<String>>();
-			updated = setCompareVariables(helper,tutor); // returns true if updated
+			updated = setCompareVariablesBeforeTutorUpdateTutor(helper,tutor); // returns true if updated
 			
 			if(updated){
 				if (validator.validateTutorFields(helper) && isValidUserAndEmailBeforeAddTutor(helper)) {	
@@ -75,25 +79,26 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 
 					UserTypeDAO typeOfUser = new UserTypeDAO();	
 					tutor.setUsertype(typeOfUser.getCode(UserType.TUTOR_ROLE.name()));
-					result = tutorDAO.update(tutor);
-							
-					tutorViewCollection = tutorDAO.findById(tutor);
-
-					view.setCollection(tutorViewCollection);	
+					
+					tutor.setIsApproved(false);	
+					tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
+					
+					result = tutorDAO.update(tutor);	
 					
 					if (result > 0) {
+						tutorViewCollection = tutorDAO.findById(tutor);
 						message = SystemMessage.UPDATED.message();
 					}
 				}else{
 					fillTutorCollection(tutorViewCollection, tutor);
-					view.setCollection(tutorViewCollection);	
 					message = SystemMessage.INCORRECTDATA.message();
 				}
 			}else{
 				fillTutorCollection(tutorViewCollection, tutor);
-				view.setCollection(tutorViewCollection);	
 				message = SystemMessage.NOMODIFICATIONS.message();
 			}
+			
+			view.setCollection(tutorViewCollection);
 			
 			if(!(message.equals(SystemMessage.NOMODIFICATIONS.message()) || message.equals(SystemMessage.UPDATED.message()))){
 				message = SystemMessage.INCORRECTDATA.message();
@@ -109,20 +114,17 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	}
 
 	/**
-	 * setVariables() method initialises all the instance variable
-	 * 
-	 * @author CM, CW
-	 * 
+	 * setCompareVariablesBeforeTutorUpdateTutor() method initialises all the instance variable	 * 
+	 * @author CM, CW	 * 
 	 * @param helper IDataHelper, Tutor
 	 * @return Returns true if updated
 	 */
 
-	public boolean setCompareVariables(IDataHelper helper, Tutor tutor) throws Exception {
+	public boolean setCompareVariablesBeforeTutorUpdateTutor(IDataHelper helper, Tutor tutor) throws Exception {
 			boolean updated = false;
 		try {
 			
-			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));
-			
+			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));			
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
@@ -597,23 +599,26 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
 				valid = false;
 			} 
-	
-			type = validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
-		
-			if(type == 1){
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				valid = false;
-			} 
 			
-			if(type == 2){
-				helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
-				valid = false;
-			} 
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("email"))) && !((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){
+				// if email address updated
+				type = validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
 			
-			if(type == 3){
-				helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
-				valid = false;
+				if(type == 1){
+					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+					valid = false;
+				} 
+				
+				if(type == 2){
+					helper.setAttribute("usernameError", SystemMessage.USERNAME_EXIST.message());
+					valid = false;
+				} 
+				
+				if(type == 3){
+					helper.setAttribute("emailError", SystemMessage.EMAIL_USED.message());
+					valid = false;
+				}
 			}
 			
 		} catch (SQLException sqlException) {
