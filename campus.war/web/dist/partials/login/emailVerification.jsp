@@ -14,6 +14,7 @@
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
 <!-- 20170223 AS CAM-22 modify messages span and validation messages -->
 <!-- 20170307 CW c147 added source link to tutor-login.js -->
+<!-- 20170307 CW c147 change CCO value of the submit button -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -83,7 +84,7 @@
                 </div>
             </div>
             <div class="form-group btn-holder">
-                <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
+                <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="TUTOR_EMAIL_VERIFICATION">Submit</button>
                
             </div>
         </div>
