@@ -85,7 +85,7 @@
 					class="validationInputFields"></label><br> <input
 					class="text-field" type="password" name="psw" id="passWord"
 					onclick="clearField('passWordError')"
-					onkeypress="validatePasswordResetData()"> 
+					> 
 				<div class="pull-right show-pwrd">
 					<span class="check-box"><input type="checkbox"
 						id="showpasscheckbox" title="Show the password as plain text"
