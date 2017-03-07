@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 //20170202 AS C22 StudentEmailVerificationDAO class created
 //20170213 AS C22 Student Generated Hash code update in update method.
 //20170224 AS C22 Changed imports oder. 
+//20170307 AS C22 verifyHashCode method condition change to nested if, and expiration time modified 
 
 import com.genesiis.campus.command.CmdEmailVarification;
 import com.genesiis.campus.entity.model.Student;
@@ -183,7 +184,7 @@ public class StudentEmailVerificationDAO implements ICrud {
 			if (rs.next()) {
 				
 				minitDiff = rs.getInt("MinuteDiff");
-				if(minitDiff <= 2){
+				if(minitDiff <= 30){
 					singleStudent = new ArrayList<String>();
 					singleStudentCollection = singleStudent;
 
