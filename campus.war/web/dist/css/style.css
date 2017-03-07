@@ -754,6 +754,26 @@ body, html {
                 font-size: 15px;
                 line-height: 20px; }
 
+/* 20170307 C106 TR INIT styling list of tutors */
+.admin-content {
+  display: block;
+  position: relative; }
+  .admin-content .inner-header {
+    background-color: #fff !important; }
+    .admin-content .inner-header .heading h1 {
+      font-family: "Arvo", serif;
+      font-size: 34px;
+      color: #3a3b3c;
+      line-height: 105px;
+      border-bottom: 2px solid #c4c4c4; }
+  .admin-content .content-holder {
+    width: 98%;
+    padding: 0 30px;
+    margin-right: auto;
+    margin-left: auto; }
+    .admin-content .content-holder .tutors-table {
+      padding-top: 40px; }
+
 /* Modules */
 .btn-home {
   display: block;
