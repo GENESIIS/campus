@@ -9,7 +9,7 @@
 <!-- 20170215 PN CAM-72 implemented 'Back to Previous Page' button, JS method redirectIntoPreviousPage()-->
 <!-- 20170216 TR CAM-72 added all styles as internal -->
 <!-- 20170216 PN CAM-72 error image path modified to load from C:\sdb\ctxdeploy\education.war\general\error\error-404.png. -->
-<!-- 20170221 PN CAM-72 removed all unwaned JS file imports from the JSP file. -->
+<!-- 20170221 PN CAM-72 removed all unwanted JS file imports from the JSP file. -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
