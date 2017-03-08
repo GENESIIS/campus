@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
 //20170216 CW c38-view-update-tutor-profile modified setCompareVariables()
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 //20170226 CW c38-view-update-tutor-profile modified fillTutorCollection method to use Validator.isEmptyOrHavingSpace()
+//20170308 CW c38-view-update-tutor-profile modified the place of String message declared.
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -41,7 +42,6 @@ import java.util.Collection;
 public class CmdUpdateTutorProfile implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdUpdateTutorProfile.class.getName());
-	private String message = "True";
 	
 	/**
 	 * @author Chathuri, Chinthaka
@@ -54,6 +54,7 @@ public class CmdUpdateTutorProfile implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		String message = "True";
 
 		try {
 			final Validator validator = new Validator();
