@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -49,27 +50,29 @@ public class PublicTutorDAO implements ICrud {
 		final StringBuilder query = new StringBuilder();
 
 		query.append("SELECT t.CODE, t.FIRSTNAME, t.MIDDLENAME, t.LASTNAME, t.EMAIL, t.LANDPHONECOUNTRYCODE, t.LANDPHONEAREACODE, t.LANDPHONENUMBER, t.MOBILEPHONENETWORKCODE, t.MOBILEPHONENUMBER,");
-		query.append("tm.MAJOR, m.NAME, tc.CATEGORY, c.NAME, tq.LEVEL, n.CODE, l.NAME, tq.name, tw.NAME FROM [CAMPUS].[TUTOR] t ");
-		query.append("INNER JOIN [CAMPUS].[TOWN] tw");
-		query.append("ON tw.CODE = t.TOWN");
-		query.append("LEFT JOIN [CAMPUS].[TUTORMAJOR] tm"); 
-		query.append("ON tm.TUTOR = t.CODE"); 
-		query.append("LEFT JOIN [CAMPUS].[MAJOR] m");
-		query.append("ON tm.MAJOR = m.CODE"); 
-		query.append("LEFT JOIN [CAMPUS].[TUTORCATEGORY] tc"); 
-		query.append("ON t.CODE = tc.TUTOR");
-		query.append("LEFT JOIN [CAMPUS].[CATEGORY] c");
-		query.append("ON c.CODE = tc.CATEGORY"); 
+		query.append("tm.MAJOR AS MAJORCODE, m.NAME AS MAJORNAME, tc.CATEGORY AS CATEGORYCODE, c.NAME AS CATEGORYNAME, ");
+		query.append("tq.LEVEL, n.CODE AS NVQ, l.NAME AS LEVELNAME, tq.name AS QUALIFICATION, tw.NAME AS TOWN FROM [CAMPUS].[TUTOR] t ");
+		query.append("INNER JOIN [CAMPUS].[TOWN] tw ");
+		query.append("ON tw.CODE = t.TOWN ");
+		query.append("LEFT JOIN [CAMPUS].[TUTORMAJOR] tm "); 
+		query.append("ON tm.TUTOR = t.CODE "); 
+		query.append("LEFT JOIN [CAMPUS].[MAJOR] m ");
+		query.append("ON tm.MAJOR = m.CODE ");
+		query.append("LEFT JOIN [CAMPUS].[TUTORCATEGORY] tc ");
+		query.append("ON t.CODE = tc.TUTOR ");
+		query.append("LEFT JOIN [CAMPUS].[CATEGORY] c ");
+		query.append("ON c.CODE = tc.CATEGORY ");
 
+		query.append("LEFT JOIN ");
 
-		query.append("LEFT JOIN");
-
-		query.append("[CAMPUS].[TUTORQUALIFICATION] tq"); 
-		query.append("ON t.CODE = tq.TUTOR"); 
-		query.append("LEFT JOIN [CAMPUS].[LEVEL] l");
-		query.append("ON tq.LEVEL = l.CODE");
-		query.append("LEFT JOIN [CAMPUS].[NVQ] n");
-		query.append("ON n.CODE = l.NVQ");
+		query.append("[CAMPUS].[TUTORQUALIFICATION] tq ");
+		query.append("ON t.CODE = tq.TUTOR ");
+		query.append("LEFT JOIN [CAMPUS].[LEVEL] l ");
+		query.append("ON tq.LEVEL = l.CODE ");
+		query.append("LEFT JOIN [CAMPUS].[NVQ] n ");
+		query.append("ON n.CODE = l.NVQ ");
+		
+		query.append("WHERE t.TUTORSTATUS = ?");
 
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -79,7 +82,8 @@ public class PublicTutorDAO implements ICrud {
 		try {
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query.toString());
-
+			
+			preparedStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -88,20 +92,22 @@ public class PublicTutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
-				singleTutorList.add(rs.getString("USERNAME"));
 				singleTutorList.add(rs.getString("EMAIL"));
-				singleTutorList.add(rs.getString("DIALCODE"));
+				singleTutorList.add(rs.getString("LANDPHONECOUNTRYCODE"));
 				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
 				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
 				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
-				singleTutorList.add(rs.getString("ISAPPROVED"));
-				singleTutorList.add(rs.getString("ADDRESS1"));
-				singleTutorList.add(rs.getString("ADDRESS2"));
-				singleTutorList.add(rs.getString("ADDRESS3"));
-				singleTutorList.add(rs.getString("TOWNNAME"));
-				singleTutorList.add(rs.getString("COUNTRY"));
-				singleTutorList.add(rs.getString("TUTORSTATUS"));
+				singleTutorList.add(rs.getString("MAJORCODE"));
+				singleTutorList.add(rs.getString("MAJORNAME"));
+				singleTutorList.add(rs.getString("CATEGORYCODE"));
+				singleTutorList.add(rs.getString("CATEGORYNAME"));
+				singleTutorList.add(rs.getString("LEVEL"));
+				singleTutorList.add(rs.getString("NVQ"));
+				singleTutorList.add(rs.getString("LEVELNAME"));
+				singleTutorList.add(rs.getString("QUALIFICATION"));
+				singleTutorList.add(rs.getString("TOWN"));
+				
 				tutorCollection.add(singleTutorList);
 			}
 
