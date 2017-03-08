@@ -51,7 +51,7 @@ public class PublicTutorDAO implements ICrud {
 
 		query.append("SELECT t.CODE, t.FIRSTNAME, t.MIDDLENAME, t.LASTNAME, t.EMAIL, t.LANDPHONECOUNTRYCODE, t.LANDPHONEAREACODE, t.LANDPHONENUMBER, t.MOBILEPHONENETWORKCODE, t.MOBILEPHONENUMBER,");
 		query.append("tm.MAJOR AS MAJORCODE, m.NAME AS MAJORNAME, tc.CATEGORY AS CATEGORYCODE, c.NAME AS CATEGORYNAME, ");
-		query.append("tq.LEVEL, n.CODE AS NVQ, l.NAME AS LEVELNAME, tq.name AS QUALIFICATION, tw.NAME AS TOWN FROM [CAMPUS].[TUTOR] t ");
+		query.append("tq.LEVEL, n.CODE AS NVQ, l.NAME AS LEVELNAME, tq.name AS QUALIFICATION, tw.NAME AS TOWN, tw.CODE AS TOWNCODE FROM [CAMPUS].[TUTOR] t ");
 		query.append("INNER JOIN [CAMPUS].[TOWN] tw ");
 		query.append("ON tw.CODE = t.TOWN ");
 		query.append("LEFT JOIN [CAMPUS].[TUTORMAJOR] tm "); 
@@ -107,6 +107,7 @@ public class PublicTutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("LEVELNAME"));
 				singleTutorList.add(rs.getString("QUALIFICATION"));
 				singleTutorList.add(rs.getString("TOWN"));
+				singleTutorList.add(rs.getString("TOWNCODE"));
 				
 				tutorCollection.add(singleTutorList);
 			}
