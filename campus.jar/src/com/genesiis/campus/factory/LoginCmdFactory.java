@@ -6,15 +6,14 @@ package com.genesiis.campus.factory;
 //20170213 AS C22 HASH_VERIFICATION ,  new CmdHashCodeVerification() command added. 
 //20170307 CW c147 added CHECK_EMAIL command added. 
 //20170307 CW c147 added TUTOR_EMAIL_VERIFICATION command added.
-
-import com.genesiis.campus.command.CmdCheckEmail;
+//20170308 CW c147 added missing break statements.
+//20170308 CW c147 removed CHECK_EMAIL command & TUTOR_EMAIL_VERIFICATION command.
 
 import com.genesiis.campus.command.CmdEmailVarification;
 import com.genesiis.campus.command.CmdHashCodeVerification;
 import com.genesiis.campus.command.CmdPasswordChange;
 import com.genesiis.campus.command.CmdStudentLogin;
 import com.genesiis.campus.command.CmdStudentLogout;
-import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -27,8 +26,6 @@ public class LoginCmdFactory implements ICmdFactory{
 		map.put(Operation.EMAIL_VERIFICATION, new CmdEmailVarification());
 		map.put(Operation.HASH_VERIFICATION, new CmdHashCodeVerification());
 		map.put(Operation.CHANGED_PASSWORD, new CmdPasswordChange());
-		map.put(Operation.CHECK_EMAIL, new CmdCheckEmail());
-		map.put(Operation.TUTOR_EMAIL_VERIFICATION, new CmdTutorEmailVerification());
 	}
 	
 	@Override
@@ -48,12 +45,11 @@ public class LoginCmdFactory implements ICmdFactory{
 			break;
 		case HASH_VERIFICATION:
 			command = map.get(o);
+			break;
 		case CHANGED_PASSWORD:
 			command = map.get(o);
-		case CHECK_EMAIL:
-			command = map.get(o);
-		case TUTOR_EMAIL_VERIFICATION:
-			command = map.get(o);			
+			break;
+		
 		default:
 			break;
 		}
