@@ -1,16 +1,19 @@
 package com.genesiis.campus.entity;
-/**
+/*
  * 20170209 DN c131-admin-manage-banner-upload-banner-image-dn cretaed the initial class stub
  * 				of BannerSlotDAO.java
  * 				the method findById(Object code) has been overriden in oder to get the banner slots.
  * 20170302 DN c131-admin-manage-banner-upload-banner-image-dn changed the sql query in  findById(Object code) 
  * 				to include group by clause and the filter conditions.
+ * 20170308 DN  c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
+ * 			   findById(Object code)  : changed the status 1 to get from  the ApplicationStatus ENUM class.
  */
 
 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -78,7 +81,11 @@ public class BannerSlotDAO implements ICrud {
 			StringBuilder bannerSlotSql = new StringBuilder("SELECT PSLT.NAME FROM [CAMPUS].[PAGESLOT]  PSLT ");
 			bannerSlotSql.append(" INNER JOIN [CAMPUS].[PAGE] PGE ");
 			bannerSlotSql.append("ON PGE.CODE=PSLT.PAGE ");
-			bannerSlotSql.append(" WHERE PGE.ISACTIVE = 1 AND PSLT.[ISACTIVE] =1 AND PSLT.PAGE=? ");
+			bannerSlotSql.append(" WHERE PGE.ISACTIVE = "
+					+ ApplicationStatus.ACTIVE.getStatusValue()
+					+ "  AND PSLT.[ISACTIVE] ="
+					+ ApplicationStatus.ACTIVE.getStatusValue()
+					+ " AND PSLT.PAGE=? ");
 			bannerSlotSql.append(" GROUP BY PSLT.NAME");
 			con = ConnectionManager.getConnection();
 			prep = con.prepareStatement(bannerSlotSql.toString());
