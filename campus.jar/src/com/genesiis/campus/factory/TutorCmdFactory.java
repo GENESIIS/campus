@@ -14,6 +14,7 @@ package com.genesiis.campus.factory;
 //20170303 CW c37-tutor-update-tutor-profile-cw add CHECK_PASSWORDS
 //20170308 CW c147-tutor-reset-password-cw Class copied from c37-tutor-update-tutor-profile-cw & removed unwanted commands
 				//c147 added CHECK_EMAIL command & TUTOR_EMAIL_VERIFICATION command.
+//20170308 CW c147-tutor-reset-password-cw removed CHECK_EMAIL command
 
 import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdTutorEmailVerification;
@@ -22,7 +23,6 @@ import com.genesiis.campus.validation.Operation;
 
 public class TutorCmdFactory implements ICmdFactory {
 	static {
-		map.put(Operation.CHECK_EMAIL, new CmdCheckEmail());
 		map.put(Operation.TUTOR_EMAIL_VERIFICATION, new CmdTutorEmailVerification());
 	}
 	
@@ -32,9 +32,6 @@ public class TutorCmdFactory implements ICmdFactory {
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		case CHECK_EMAIL:
-			command = map.get(o);
-			break;
 		case TUTOR_EMAIL_VERIFICATION:
 			command = map.get(o);	
 			break;
