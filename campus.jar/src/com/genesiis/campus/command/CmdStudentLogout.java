@@ -2,6 +2,8 @@ package com.genesiis.campus.command;
 
 //20170118 AS CAM-21 CmdStudentLogout command class created. 
 //20170130 AS CAM-21 code review modification done. 
+//20170228 AS C22-  checked current Session User and is there already account logout shows the message and  redirect to index page.
+//20170301 AS C22-removed unwanted comments 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
@@ -25,51 +27,47 @@ public class CmdStudentLogout implements ICommand {
 	static Logger log = Logger.getLogger(CmdStudentLogout.class.getName());
 
 	private Student loggedStudent;
+	String pageURL = "/index.jsp";
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
-		String pageURL = "/index.jsp";
 		try {
-			String gsonData = helper.getParameter("jsonData");
-			loggedStudent = getStudentdetails(gsonData);
+			HttpSession curentSession = helper.getRequest().getSession(false);
 
-			Date loginTime = new Date();
+			String currentSessionUser = (String) curentSession
+					.getAttribute("currentSessionUser");
+			if (currentSessionUser != null) {
+				curentSession.removeAttribute("user");
+				curentSession.removeAttribute("userCode");
+				curentSession.removeAttribute("currentUserData");
+				curentSession.invalidate();
 
-			java.util.Date utilDate = new java.util.Date();
-			java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
+				String gsonData = helper.getParameter("jsonData");
+				loggedStudent = getStudentdetails(gsonData);
 
-			loggedStudent.setLastLoggedOutDate(loginDate.toString());
-			loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime
-					.getTime()).toString());
+				Date loginTime = new Date();
 
-			int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
+				java.util.Date utilDate = new java.util.Date();
+				java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
 
-			if (status > 0) {
-				Cookie[] cookies = helper.getRequest().getCookies();
-		    	if(cookies != null){
-		    	for(Cookie cookie : cookies){
-		    		if(cookie.getName().equals("JSESSIONID")){
-		    			System.out.println("JSESSIONID="+cookie.getValue());
-		    			break;
-		    		}
-		    	}
-		    	}
-				
-				
-				HttpSession curentSession = helper.getRequest().getSession(false);
-				
-				if(curentSession != null){
-					curentSession.removeAttribute("user");
-					curentSession.removeAttribute("userCode");
-					curentSession.removeAttribute("currentUserData");
-					curentSession.invalidate();
+				loggedStudent.setLastLoggedOutDate(loginDate.toString());
+				loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime
+						.getTime()).toString());
 
-				message = SystemMessage.LOGOUTSUCCESSFULL.message();
+				int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
+
+				if (status > 0) {
+					message = SystemMessage.LOGOUTSUCCESSFULL.message();
+
+				} else {
+					message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
 				}
+
 			} else {
-				message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
+				pageURL = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
+
 			}
 
 		} catch (Exception e) {

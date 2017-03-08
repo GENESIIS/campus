@@ -2,6 +2,9 @@ package com.genesiis.campus.command;
 
 //20161123 AS C19-student-login-without-using-third-party-application-test-as CmdStudentLogin class created.
 //20161128 AS C19-student-login-without-using-third-party-application-test-as extractFromJason 
+//20170227 AS C22-checking Session null condition removed
+//20170228 AS C22- currentSessionUser checked and is there already logged, account redirect to index page.
+//20170301 AS C22-removed unwanted comments 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentDAO;
@@ -27,80 +30,93 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 public class CmdStudentLogin implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdStudentLogin.class.getName());
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
+	String pageURL;
+	String message;
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
+		HttpSession session;
 		try {
+
 			int attempts = 0;
-			String pageURL = "/dist/partials/login.jsp";
-			String message = SystemMessage.LOGINUNSUCCESSFULL.message();
-			
-			String gsonData = helper.getParameter("jsonData");
-			data = getStudentdetails(gsonData);
+			pageURL = "/dist/partials/login.jsp";
+			message = SystemMessage.LOGINUNSUCCESSFULL.message();
+			session = helper.getRequest().getSession(false);
+			String currentSessionUser = (String) session.getAttribute("currentSessionUser");
+		
+			if (currentSessionUser == null) {
 
-			String validateResult = LoginValidator.validateLogin(data);
+				String gsonData = helper.getParameter("jsonData");
+				data = getStudentdetails(gsonData);
 
-			boolean rememberMe = data.isRemember();
+				String validateResult = LoginValidator.validateLogin(data);
 
-			if (validateResult.equalsIgnoreCase("True")) {
-				data = LoginValidator.dataSeparator(data);
-				//final StudentLoginDAO loginDAO = new StudentLoginDAO();
-				ICrud loginDAO = new StudentLoginDAO();
-				dataCollection = loginDAO.findById(data);
+				boolean rememberMe = data.isRemember();
 
-				for (Collection<String> collection : dataCollection) {
-					Object[] array = collection.toArray();
-					message = (String) array[0];
+				if (validateResult.equalsIgnoreCase("True")) {
+					data = LoginValidator.dataSeparator(data);
 
-				}
+					ICrud loginDAO = new StudentLoginDAO();
+					dataCollection = loginDAO.findById(data);
 
-				if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
+					for (Collection<String> collection : dataCollection) {
+						Object[] array = collection.toArray();
+						message = (String) array[0];
 
-					if (rememberMe == true) {
-						helper.setAttribute("student", data);
-						CookieHandler.addCookie(helper.getResponse(),
-								"userIdendificationKey", data.getUserKey(),
-								2592000);
 					}
 
-					if (data.getLastLoggedInSessionid().equalsIgnoreCase("")) {
-						pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
+					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER
+							.message())) {
+
+						if (rememberMe == true) {
+							helper.setAttribute("student", data);
+							CookieHandler.addCookie(helper.getResponse(),
+									"userIdendificationKey", data.getUserKey(),
+									2592000);
+						}
+
+						if (data.getLastLoggedInSessionid()
+								.equalsIgnoreCase("")) {
+							pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
+						} else {
+							pageURL = "/dist/partials/student/student-dashboard.jsp";
+						}
+
+						session = helper.getSession(true);
+						String sessionID = session.getId();
+						data.setLastLoggedInSessionid(sessionID);
+						session.setAttribute("currentSessionUser",
+								data.getUsername());
+						session.setAttribute("user", data.getFirstName());
+						session.setAttribute("userCode", data.getCode());
+						session.setAttribute("currentUserData", dataCollection);
+						setStudentLoginDetails(data, helper);
+						int status = StudentLoginDAO.loginDataUpdate(data);
+
+						if (status > 0) {
+							message = SystemMessage.VALIDUSER.message();
+						} else {
+
+						}
 					} else {
-						pageURL = "/dist/partials/student/student-dashboard.jsp";
+						// login attempts handle in here
+						// after 3 attempts session will blocked user
 					}
 
-					HttpSession session = helper.getSession(true);
-					String sessionID = session.getId();
-					data.setLastLoggedInSessionid(sessionID);
-					session.setAttribute("currentSessionUser",
-							data.getUsername());
-					session.setAttribute("user", data.getFirstName());
-					session.setAttribute("userCode", data.getCode());
-					session.setAttribute("currentUserData", dataCollection);
-					setStudentLoginDetails(data, helper);
-					int status = StudentLoginDAO.loginDataUpdate(data);
-					
-					if(status>0){
-						message = SystemMessage.VALIDUSER.message();
-					}else{
-						
-					}
 				} else {
-					// login attempts handle in here
-					// after 3 attempts session will blocked user
+					message = SystemMessage.LOGINUNSUCCESSFULL.message();
 				}
 
 			} else {
-				message = SystemMessage.LOGINUNSUCCESSFULL.message();
-
+				message = SystemMessage.LOGGEDALLREADY.message();
+				pageURL = "/index.jsp";
 			}
 
 			helper.setAttribute("message", message);
@@ -128,7 +144,7 @@ public class CmdStudentLogin implements ICommand {
 	 */
 
 	private Student setStudentLoginDetails(Student object, IDataHelper helper) {
-		
+
 		try {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");

@@ -26,7 +26,8 @@
 <link href="dist/css/style.css" rel="stylesheet">
 <link href="dist/css/image-slides.css" rel="stylesheet">
 
-<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- <script src="/dist/js/header/ui-populate-helper.js"></script>   -->
+
 <!-- W3-Include -->
 <script src="dist/bower-components/w3/w3data.js"></script>
 <script src="dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
@@ -54,8 +55,10 @@
 		$(document)
 				.ready(
 						function() {
-							
-								var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('?'), sParameterName, i;
+						
+							var sPageURL = decodeURIComponent(window.location.search
+									.substring(1)), sURLVariables = sPageURL
+									.split('?'), sParameterName, i;
 								 for (i = 0; i < sURLVariables.length; i++) {
 													        sParameterName = sURLVariables[i].split('=');
 						
@@ -63,7 +66,8 @@
 								
 								$('#loginPopup').modal('show');
 								
-							}}
+								}
+							}
 						});
 	</script>
 	<div class="main-screen clearfix">

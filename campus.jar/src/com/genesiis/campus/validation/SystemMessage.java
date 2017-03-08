@@ -2,7 +2,7 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
-
+//20170228 AS C22 LOGGEDALLREADY attribute added
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
@@ -22,6 +22,7 @@ public enum SystemMessage {
 	LOGGEDSUCCESSFULL("Logged successfull"),
 	LOGOUTSUCCESSFULL("Logout successfull"),
 	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
+	LOGGEDALLREADY("User Already Logged In"),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),
