@@ -1,5 +1,6 @@
 /**
  * //20170307 CW c147-tutor-reset-password-cw tutor-login.js created.
+ * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, isempty method calling
  */
 
 /**
@@ -40,29 +41,29 @@ function isValidEmailFormat(email) {
  * @author Chinthaka
  */
 function forgotPassword() {
-	var userEmail = $("#verifiemail").val();
+	var userEmail = $("#verifyemail").val();
 
 	// email field validation error messages handling
-	if (isempty(userEmail)) {
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('** Email can not be Empty.');
+	if (!isempty(userEmail)) {
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Email can not be Empty. ');
 		flag = false;
 		return false;
 	}
 	if (!(isValidEmailFormat(userEmail))) {
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('  ** Please Enter valid email address.');
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Please Enter valid email address. ');
 		flag = false;
 		return false;
 	}
 	
 	if (userEmail.length > 255) {
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('** Max length exceeded.');
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Max length exceeded. ');
 		flag = false;
 		return false;
 	}
 	
 	var emailExist = ValidateEmail(email);
 	if (emailExist.message == '1') {
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html('** Email entered does not exists.');
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Email entered does not exists.');
 		flag = false;
 		return false;
 	}
