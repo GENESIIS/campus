@@ -64,14 +64,13 @@ public class CmdPublicListTutors implements ICommand{
 				Map majorMap = new HashMap<String, ArrayList<String>>();
 				
 				Iterator resultIterator = tutorArrayList.iterator();
+				Iterator newTuorsIterator = newTutorCollection.iterator();
 				
 				// remove repeating tutor basic details
 				while(resultIterator.hasNext()){
 					ArrayList<String> singleList = (ArrayList<String>) resultIterator.next();
+				
 					code = singleList.get(0);
-					
-					Iterator newTuorsIterator = newTutorCollection.iterator();
-					
 					firstName = singleList.get(1);
 					middleName = singleList.get(2);
 					lastName = singleList.get(3);
@@ -83,7 +82,7 @@ public class CmdPublicListTutors implements ICommand{
 					mobileNumber = singleList.get(9);
 					town = singleList.get(18);
 					townCode = singleList.get(19);
-					
+
 					ArrayList<String> temporaryTutor = new ArrayList<String>();
 					temporaryTutor.add(code);
 					temporaryTutor.add(firstName);
@@ -97,29 +96,32 @@ public class CmdPublicListTutors implements ICommand{
 					temporaryTutor.add(mobileNumber);
 					temporaryTutor.add(town);
 					temporaryTutor.add(townCode);
-					
-					
-			if(newTutorCollection.size() >0){ // if previous records are available
-				
-				//checks whether the object exist or not
-				boolean status = newTuorsIterator.equals(temporaryTutor); 
-				
-				if(status == true){
-					// the same tutor record is available, do nothing  
-					
-				}else{
-					// the tutor record does not available, so insert the temporary tutor record
-					newTutorCollection.add(temporaryTutor);
-					
-				}
-				
-				
-			}else{
-				
-			}
-					
-					
-					
+
+					// if previous records are available: check whether a
+					// previous record is available or not
+					if (newTutorCollection.size() > 0) {
+
+						// checks whether the object exist or not
+					newTuorsIterator = newTutorCollection.iterator();
+						boolean status = newTuorsIterator
+								.equals(temporaryTutor);
+
+						if (newTuorsIterator
+								.equals(temporaryTutor)) {
+							// the same tutor record is available, do nothing
+							newTutorCollection.add(temporaryTutor);
+
+						} else {
+							// the tutor record does not available, so insert
+							// the temporary tutor record
+			
+
+						}
+
+					} else {// no previous tutor records are available
+						newTutorCollection.add(temporaryTutor);
+					}
+
 				}
 			}
 			view.setCollection(newTutorCollection);
