@@ -69,7 +69,10 @@ public class AdminBannerDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+/**
+ * getAll() method returns all the banners that all the advertiser have published 
+ * Whether those are active or inactive.
+ */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
