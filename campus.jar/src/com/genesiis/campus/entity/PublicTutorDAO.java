@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170228 JH c96-public-list-all-tutors PublicTutorDAO.java created
 //20170302 JH c96-public-list-all-tutors getAll() method coding 
+//20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -39,14 +40,36 @@ public class PublicTutorDAO implements ICrud {
 		return null;
 	}
 
+	/**
+	 * getAll() method used to get tutors with their basic information to list for the public user.
+	 * @return collection of tutor basic details with category and major details
+	 * @author JH
+	 */
 	public Collection getAll() throws SQLException, Exception {
 		final StringBuilder query = new StringBuilder();
 
-		query.append("SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE,");
-		query.append(" LANDPHONENUMBER, MOBILEPHONENETWORKCODE, MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3,");
-		query.append("TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY, TUTORSTATUS ");
-		query.append("FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2]");
-		query.append("ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC");
+		query.append("SELECT t.CODE, t.FIRSTNAME, t.MIDDLENAME, t.LASTNAME, t.EMAIL, t.LANDPHONECOUNTRYCODE, t.LANDPHONEAREACODE, t.LANDPHONENUMBER, t.MOBILEPHONENETWORKCODE, t.MOBILEPHONENUMBER,");
+		query.append("tm.MAJOR, m.NAME, tc.CATEGORY, c.NAME, tq.LEVEL, n.CODE, l.NAME, tq.name, tw.NAME FROM [CAMPUS].[TUTOR] t ");
+		query.append("INNER JOIN [CAMPUS].[TOWN] tw");
+		query.append("ON tw.CODE = t.TOWN");
+		query.append("LEFT JOIN [CAMPUS].[TUTORMAJOR] tm"); 
+		query.append("ON tm.TUTOR = t.CODE"); 
+		query.append("LEFT JOIN [CAMPUS].[MAJOR] m");
+		query.append("ON tm.MAJOR = m.CODE"); 
+		query.append("LEFT JOIN [CAMPUS].[TUTORCATEGORY] tc"); 
+		query.append("ON t.CODE = tc.TUTOR");
+		query.append("LEFT JOIN [CAMPUS].[CATEGORY] c");
+		query.append("ON c.CODE = tc.CATEGORY"); 
+
+
+		query.append("LEFT JOIN");
+
+		query.append("[CAMPUS].[TUTORQUALIFICATION] tq"); 
+		query.append("ON t.CODE = tq.TUTOR"); 
+		query.append("LEFT JOIN [CAMPUS].[LEVEL] l");
+		query.append("ON tq.LEVEL = l.CODE");
+		query.append("LEFT JOIN [CAMPUS].[NVQ] n");
+		query.append("ON n.CODE = l.NVQ");
 
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
