@@ -2,6 +2,7 @@
  * //20170307 CW c147-tutor-reset-password-cw tutor-login.js created.
  * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, isempty method calling
  * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, ValidateEmail method calling
+ * //20170308 CW c147-tutor-reset-password-cw add ajax call from c22
  */
 
 /**
@@ -62,12 +63,56 @@ function forgotPassword() {
 		return false;
 	}
 	
-	var emailExist = ValidateEmail(userEmail);
+	$.ajax({
+		url : '/TutorController',
+		method : 'POST',
+		async : false,
+		data : {
+			CCO : 'TUTOR_EMAIL_VERIFICATION',
+			email : userEmail
+		},
+		dataType : "json",
+		success : function(response) {
+			if(response['message']=== 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. '){
+			//	document.getElementById('emailveryMessage').innerHTML = response['message'];
+				jQuery('#emailveryMessage').addClass("fp-msg-success").html(response['message']);
+				setTimeout(function() {
+					$('#verifications-popup').modal('show');
+				}, 5000);
+			}else{
+			//	document.getElementById('emailveryMessage').innerHTML = response['message'];
+				jQuery('#emailveryMessage').addClass("fp-msg-error").html(response['message']);
+			}
+		},
+		error : function(response, error, errorThrown) {
+			alert("Error " + error);
+			console.log(error);
+			var msg = '';
+			if (response.status === 0) {
+				msg = 'Not connect.\n Verify Network.';
+			} else if (response.status == 404) {
+				msg = 'Requested page not found. [404]';
+			} else if (response.status == 500) {
+				msg = 'Internal Server Error [500].';
+			} else if (error === 'parsererror') {
+				msg = 'Requested JSON parse failed.';
+			} else if (error === 'timeout') {
+				msg = 'Time out error.';
+			} else if (error === 'abort') {
+				msg = 'Ajax request aborted.';
+			} else {
+				msg = 'Uncaught Error.\n' + response.responseText;
+			}
+		}
+
+	});
+	
+/*	var emailExist = ValidateEmail(userEmail);
 	if (emailExist.message == '1') {
 		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Email entered does not exists.');
 		flag = false;
 		return false;
-	}
+	}*/
 }
 
 /**
