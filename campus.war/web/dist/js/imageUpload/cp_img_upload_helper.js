@@ -8,6 +8,7 @@
  *			PN CAM-48: createFileName() implemented for format new file name from the selected values. modified cp_img_upload_btn click function to display uploaded image.
  * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. 
  * cp_img_delete_btn button onclick function implemented. changed the code to disable cp_img_delete_btn button if there's no image to delete in the disk. 
+ * 20170308 PN CAM-48: displayErrorMessage() method implemented. default image displaying jQuery code modified.
  */
 
 var dataSet = null;
@@ -48,7 +49,7 @@ $(document).ready(function() {
 				if(actFileName != noImagetoDisplayErr){
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
 				}else{
-					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/default_logo.PNG?"+Math.random());
+					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
 					document.getElementById("cp_img_delete_btn").disabled = true;
 					$('#cp_img_err').html(noImagetoDisplayErr);
 					$('#cp_img_err').css('color', 'red');
@@ -101,8 +102,10 @@ $(document).ready(function() {
 			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());	
 			    	}
 				},
-				error:function(response,error,errorThrown) {
-					alert("Error");
+				error : function(x, status, error) {
+					//Modified the error handling.
+					var err = displayErrorMessage(x, status, error);
+					alert(err);
 				}
 			});
 		}else{
@@ -146,7 +149,6 @@ $(document).ready(function() {
 	    	    contentType : false,
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
-			    	alert(listOfFiles);
 			    	if(response.fileDeleteError != ""){
 			    		$('#cp_img_err').html(response.fileDeleteError);
 			    		$('#cp_img_err').css('color', 'red');
@@ -156,11 +158,13 @@ $(document).ready(function() {
 			    		$('#cp_img_err').css('color', 'green');
 			    		
 			    		//Display uploaded image on img tag.  		
-			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/default_logo.PNG?"+Math.random());	
+			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());	
 			    	}
 				},
-				error:function(response,error,errorThrown) {
-					alert("Error");
+				error : function(x, status, error) {
+					//Modified the error handling.
+					var err = displayErrorMessage(x, status, error);
+					alert(err);
 				}
 			});
 		}else{
@@ -198,8 +202,10 @@ function displayImgDetails() {
 				setCPImgData(response);
 			}
 		},
-		error : function(response) {
-			alert("Error: " + response);
+		error : function(x, status, error) {
+			//Modified the error handling.
+			var err = displayErrorMessage(x, status, error);
+			alert(err);
 		}
 	});
 }
@@ -236,26 +242,31 @@ function setCPImgData(response) {
  * @returns
  */
 function validateFile(fileuploadelm, to, submitbtn){
-	// get the file name and split it to separate the extension
-	var name = fileuploadelm.value;
-	var fileExt = name.split('.');
-	var fileName = name.split('\\').pop();
+	if((fileuploadelm != null) && (fileuploadelm != "") && (fileuploadelm != undefined)){
+		// get the file name and split it to separate the extension
+		var name = fileuploadelm.value;
+		var fileExt = name.split('.');
+		var fileName = name.split('\\').pop();
 	
-	var fileTypeErr = checkFileType(fileuploadelm, to, submitbtn);
-	var fileSizeErr = checkFileSize(fileuploadelm, to, submitbtn);
-	var errorMsg = "";
-	if((fileTypeErr != "") || (fileSizeErr != "")){
-		// delete the file name, disable Submit, set error message
-		fileuploadelm.value = '';
-		document.getElementById(submitbtn).disabled = true;
-		errorMsg = fileTypeErr + fileSizeErr;
-		$('#cp_img_err').html(fileName+errorMsg);
-		$('#cp_img_err').css('color', 'red');
+		var fileTypeErr = checkFileType(fileuploadelm, to, submitbtn);
+		var fileSizeErr = checkFileSize(fileuploadelm, to, submitbtn);
+		var errorMsg = "";
+		if((fileTypeErr != "") || (fileSizeErr != "")){
+			// delete the file name, disable Submit, set error message
+			fileuploadelm.value = '';
+			document.getElementById(submitbtn).disabled = true;
+			errorMsg = fileTypeErr + fileSizeErr;
+			$('#cp_img_err').html(fileName+errorMsg);
+			$('#cp_img_err').css('color', 'red');
+		}else{
+			// enable submit
+			document.getElementById(submitbtn).disabled = false;
+			$('#cp_img_err').html("");
+		}	
 	}else{
-		// enable submit
-		document.getElementById(submitbtn).disabled = false;
-		$('#cp_img_err').html("");
-	}	
+		document.getElementById(submitbtn).disabled = true;
+		$('#cp_img_err').html("Selected file is not available to upload.");
+	}
 }
 
 /**
@@ -357,4 +368,20 @@ function getActualFileName(valuesArr,nameToCheck) {
 		return noImagetoDisplayErr;
 	}
 	return noImagetoDisplayErr;
+}
+
+/**
+ * This method will format the error message and will display it to the user.
+ * @param x - error details as a JSON object
+ * @param status - error status
+ * @param error - actual error. 
+ */
+function displayErrorMessage(x, status, error) {
+	var errorMessage = 'Unexpected error encountered.';
+	if(status.toString() == 'error' && error.toString() == ''){
+		errorMessage = errorMessage + ":Selected file is not available to upload.";
+	}else {
+		errorMessage = errorMessage + " Error: " + error +" Status: "+ status;
+	}
+	return errorMessage;
 }
