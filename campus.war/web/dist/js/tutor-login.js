@@ -1,6 +1,7 @@
 /**
  * //20170307 CW c147-tutor-reset-password-cw tutor-login.js created.
  * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, isempty method calling
+ * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, ValidateEmail method calling
  */
 
 /**
@@ -61,7 +62,7 @@ function forgotPassword() {
 		return false;
 	}
 	
-	var emailExist = ValidateEmail(email);
+	var emailExist = ValidateEmail(userEmail);
 	if (emailExist.message == '1') {
 		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Email entered does not exists.');
 		flag = false;
