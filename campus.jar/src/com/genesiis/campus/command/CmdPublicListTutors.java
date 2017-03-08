@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -35,14 +36,50 @@ public class CmdPublicListTutors implements ICommand{
 		
 		try{
 			
-			final Collection<Collection<String>> tutorCollection = publicTutorDAO.getAll();
+			//final Collection<Collection<String>> tutorCollection = publicTutorDAO.getAll();
+			Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+			final ArrayList<Collection<String>> tutorArrayList = (ArrayList<Collection<String>>)  publicTutorDAO.getAll();
 			
-			if(tutorCollection.size() == 0 ){
+			if(tutorArrayList.size() == 0 ){
 				message = SystemMessage.NODATA;
 			}else{
+							
+				String code = null;
+				String firstName = null;
+				String middleName = null;
+				String lastName = null;
+				String town = null;
+				String countryCode = null;
+				String areaCode = null;
+				String landNumber = null;
+				String networkCode = null;
+				String mobileNumber = null;
+				String email = null;
+				String townCode = null;
+				String qualification = null;
+				String levelName = null;
+				
+				// maps to store repeating category and major details
 				Map categoryMap = new HashMap<String, ArrayList<String>>();
-				for(Collection<String> singleList : tutorCollection){
-					
+				Map majorMap = new HashMap<String, ArrayList<String>>();
+				
+				Iterator iterator = tutorArrayList.iterator();
+				
+				// remove repeating tutor basic details
+				while(iterator.hasNext()){
+					ArrayList<String> singleList = (ArrayList<String>) iterator.next();
+					code = singleList.get(0);
+					firstName = singleList.get(1);
+					middleName = singleList.get(2);
+					lastName = singleList.get(3);
+					email = singleList.get(4);
+					countryCode = singleList.get(5);
+					areaCode = singleList.get(6);
+					landNumber = singleList.get(7);
+					networkCode = singleList.get(8);
+					mobileNumber = singleList.get(9);
+					town = singleList.get(18);
+					townCode = singleList.get(19);
 				}
 			}
 			view.setCollection(tutorCollection);
