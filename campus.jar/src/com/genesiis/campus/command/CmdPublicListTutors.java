@@ -37,7 +37,7 @@ public class CmdPublicListTutors implements ICommand{
 		try{
 			
 			//final Collection<Collection<String>> tutorCollection = publicTutorDAO.getAll();
-			Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+			Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
 			final ArrayList<Collection<String>> tutorArrayList = (ArrayList<Collection<String>>)  publicTutorDAO.getAll();
 			
 			if(tutorArrayList.size() == 0 ){
@@ -63,12 +63,15 @@ public class CmdPublicListTutors implements ICommand{
 				Map categoryMap = new HashMap<String, ArrayList<String>>();
 				Map majorMap = new HashMap<String, ArrayList<String>>();
 				
-				Iterator iterator = tutorArrayList.iterator();
+				Iterator resultIterator = tutorArrayList.iterator();
 				
 				// remove repeating tutor basic details
-				while(iterator.hasNext()){
-					ArrayList<String> singleList = (ArrayList<String>) iterator.next();
+				while(resultIterator.hasNext()){
+					ArrayList<String> singleList = (ArrayList<String>) resultIterator.next();
 					code = singleList.get(0);
+					
+					Iterator newTuorsIterator = newTutorCollection.iterator();
+					
 					firstName = singleList.get(1);
 					middleName = singleList.get(2);
 					lastName = singleList.get(3);
@@ -80,9 +83,46 @@ public class CmdPublicListTutors implements ICommand{
 					mobileNumber = singleList.get(9);
 					town = singleList.get(18);
 					townCode = singleList.get(19);
+					
+					ArrayList<String> temporaryTutor = new ArrayList<String>();
+					temporaryTutor.add(code);
+					temporaryTutor.add(firstName);
+					temporaryTutor.add(middleName);
+					temporaryTutor.add(lastName);
+					temporaryTutor.add(email);
+					temporaryTutor.add(countryCode);
+					temporaryTutor.add(areaCode);
+					temporaryTutor.add(landNumber);
+					temporaryTutor.add(networkCode);
+					temporaryTutor.add(mobileNumber);
+					temporaryTutor.add(town);
+					temporaryTutor.add(townCode);
+					
+					
+			if(newTutorCollection.size() >0){ // if previous records are available
+				
+				//checks whether the object exist or not
+				boolean status = newTuorsIterator.equals(temporaryTutor); 
+				
+				if(status == true){
+					// the same tutor record is available, do nothing  
+					
+				}else{
+					// the tutor record does not available, so insert the temporary tutor record
+					newTutorCollection.add(temporaryTutor);
+					
+				}
+				
+				
+			}else{
+				
+			}
+					
+					
+					
 				}
 			}
-			view.setCollection(tutorCollection);
+			view.setCollection(newTutorCollection);
 			
 			
 		}catch(SQLException sqlException){
