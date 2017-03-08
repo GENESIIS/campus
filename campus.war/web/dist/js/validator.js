@@ -15,6 +15,7 @@
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method modify validations for tutor status & Town details
  * //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password validations
+ * //20170308 CW c38-view-update-tutor-profile add isHavingOnlySpaces method & modify isempty method to use isHavingOnlySpaces method
  */
 
 /**
@@ -24,7 +25,7 @@
  * @returns true if has content else false
  */
 function isempty(fieldValue) {
-	return ((fieldValue == "") || (fieldValue == null)) ? false : true;
+	return ((fieldValue == "") || (fieldValue == null) || isHavingOnlySpaces(fieldValue)) ? false : true;
 }
 
 /**
@@ -40,6 +41,20 @@ function isPatternMatch(regularExpression, source) {
 }
 
 /**
+ * isHavingOnlySpaces method validate a string value to have only one or more spaces
+ * @author Chinthaka
+ * @returns boolean : returns true if given string value is having only spaces
+ */
+function isHavingOnlySpaces(strValue) {
+	
+	if (!strValue.replace(/\s/g, '').length) {
+	    // string only contained whitespace (ie. spaces, tabs or line breaks)
+		return true;
+	}
+	return false;
+}
+
+/**
  * isValidEmailFormat method validate a email address
  * 
  * @returns boolean if testing email address is a valid one then returns true
@@ -47,7 +62,8 @@ function isPatternMatch(regularExpression, source) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	//var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	var pattern = ^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$;
 	return isPatternMatch(pattern, emailAddress);
 }
 /**
