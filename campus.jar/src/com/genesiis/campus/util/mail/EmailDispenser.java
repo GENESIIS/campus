@@ -1,7 +1,7 @@
 package com.genesiis.campus.util.mail;
 //20161027 c10-contacting-us-page EmailDispenser.java initial version created
 //20161031 c10-contacting-us-page add document and method comments
-
+//20170308 AS C9-logger Spelling mistake fixed.
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -43,7 +43,7 @@ public class EmailDispenser {
 	public void emailDispense() throws MessagingException{		
 		try {
 				dispenceEmail(email.setEmailMessage());
-				log.info("Email delevered sussessfully");
+				log.info("Email delivered successfully ");
 				
 		} catch (MessagingException msgExp) {
 			log.error("emailDispense():MessagingException :"+msgExp.toString());
