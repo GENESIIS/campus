@@ -23,7 +23,8 @@
  *               /campus.war/web/dist/js/institute/validation/validation.js.
  *               include a start date and end date validation with respect to current date.
  *  20170306 DN c131-admin-manage-banner-upload-banner-image-dn  modified the data list listing to over come the firefox browser issue by
- *  			changing populateDataList() and in  getPreRequisitPageData() where ever required.         
+ *  			changing populateDataList() and in  getPreRequisitPageData() where ever required.  
+ *  20170308 DN c131-admin-manage-banner-upload-banner-image-dn unnecessary alerts have been deleted from the script.        
  */
 
 /*
@@ -113,7 +114,6 @@ function getPreRequisitPageData(preRequistData){
 								}).val();
 		if(page!=undefined){
 			selectedAdvertiserCode = $('#'+page.replace(/\s+/g,"")).val();
-			alert("selectedAdvertiserCode:"+selectedAdvertiserCode);
 			
 			// populating associated page slots for the page
 			if(iskeyStrocksCompleted){
@@ -148,7 +148,6 @@ function getPreRequisitPageData(preRequistData){
 		if(page!=undefined){
 		var pageComponentArray = page.split("."); // removing the .jsp part from the page
 		selectedPageCode = $('#'+pageComponentArray[0].replace(/\s+/g,"")).val();
-		alert("selectedPageCode:"+selectedPageCode);
 		
 		// populating associated banner slots for the page
 		if(iskeyStrocksCompleted){
@@ -183,7 +182,6 @@ function getPreRequisitPageData(preRequistData){
 		
 		if(page!=undefined){
 			selectedBannerSlotCode = $('#'+page.replace(/\s+/g,"")).val();
-			alert("selectedPageCode:"+selectedPageCode);
 			
 			// once the selection is made assign the code to the hidden field		
 			if(iskeyStrocksCompleted){
