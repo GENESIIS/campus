@@ -18,7 +18,9 @@ package com.genesiis.campus.entity;
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn The Order of the retrieving statements 
  *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed. 
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn removed the method formADate() from the class and restructured with
- * 			   logic and placed in PrevalentValidation.java       
+ * 			   logic and placed in PrevalentValidation.java  
+ * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn   made implemented ICrudSibling interface 
+ * 			   and override the method  getAll(Object jsnObject)
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -41,9 +43,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
-public class AdminBannerDAO implements ICrud {
+public class AdminBannerDAO implements ICrudSibling {
 
-	static Logger Log = Logger.getLogger(AdminBannerDAO.class.getName());
+	static org.jboss.resteasy.logging.Logger Log = Logger.getLogger(AdminBannerDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -69,10 +71,7 @@ public class AdminBannerDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return null;
 	}
-/**
- * getAll() method returns all the banners that all the advertiser have published 
- * Whether those are active or inactive.
- */
+
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,
 			Exception {
@@ -242,6 +241,61 @@ public class AdminBannerDAO implements ICrud {
 			return LinkType.PAGE_LINK;
 		}
 		return LinkType.BAD_LINK;
+	}
+	
+	/**
+	 * getAll(Object o) method returns all the banners that all the advertiser have published 
+	 * Whether those are active or inactive. It accepts an Object type argumant
+	 * @author dushantha DN
+	 * @param  o :Object type argument
+	 * @return Collection<Collection<String>>
+	 */
+	
+	@Override
+	public Collection<Collection<String>> getAll(Object jsnObject) throws SQLException,
+			Exception {
+		
+		JasonInflator jsn = (JasonInflator)jsnObject;
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			if(jsnObject == null)
+				throw new NullPointerException("The parameter passed to the method is null.");
+			
+			int ISACTIVE 			= 	(jsn.getBanerToBeActive()=="true")?ApplicationStatus.ACTIVE.getStatusValue():ApplicationStatus.INACTIVE.getStatusValue();
+			String activationDate	=	jsn.getBannerPublishingDate();
+			String deActivateDate	= 	jsn.getBannerPublishingEndDate();
+					
+			
+			StringBuilder querybuilder = new StringBuilder("SELECT BNR.*,ADVR.NAME ADVERTISER_NAME,ADVR.CODE ADVERTISER_CODE "); 
+			querybuilder.append("FROM [CAMPUS].BANNER BNR ");
+			querybuilder.append("INNER JOIN [CAMPUS].ADVERTISER ADVR ");
+			querybuilder.append("ON BNR.ADVERTISER = ADVR.CODE WHERE ADVR.ISACTIVE = "+ISACTIVE+ " ");
+			
+			if(jsn.getBannerPublishingDate()==)
+			
+			conn = ConnectionManager.getConnection();
+			statement = conn.prepareStatement(querybuilder.toString());
+			resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				
+			}
+			
+		} catch (NullPointerException npexp) {
+			Log.error("getAll(Object): NullPointerException :  "+npexp.toString());
+			throw npexp;
+			
+		} catch (SQLException sqle){
+			Log.error("getAll(Object): SQLException : "+sqle.toString());
+			throw sqle;
+		} catch (Exception exp){
+			Log.error("getAll(Object): Exception : "+exp.toString());
+			throw exp;
+		}
+		
+		return null;
 	}
 	
 	
