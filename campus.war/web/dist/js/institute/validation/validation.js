@@ -4,6 +4,7 @@
  * //20161108 CM  c9-make-inquiry-for-institute added validateInstituteInquiryFileds() function
  * //20161108 CM c9-make-inquiry-for-institute Modified validateInstituteInquiryFileds() function
  * //20161115 CM c9-make-inquiry-for-institute added clearField(elementId) function
+ *20170308 AS C9 text filed validation messages color changing modification done
  */
 
 /**
@@ -31,9 +32,6 @@ function isFieldFilled(flag, elementName) {
 function isempty(fieldValue) {
 	return ((fieldValue.trim() == "") || (fieldValue == null)) ? false : true;
 }
-
-
-
 
 /**
  * isValidEmailFormat method validate a email address
@@ -103,76 +101,102 @@ function validateInstituteInquiryFileds() {
 	var flag = true;
 
 	if (!isValidCharactor(fullname)) {
-		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
+
+		jQuery('#fullNameError').addClass("fp-msg-error").html(
+				'  **Invalid Charactor.');
 		document.getElementById('input-firstName').focus();
-		// flag = false;
+
 		return !flag;
 
 	} else if (fullname.length > 250) {
-		document.getElementById('fullNameError').innerHTML = "**Invalid Name.";
+
+		jQuery('#fullNameError').addClass("fp-msg-error").html(
+				'  **Invalid Name.');
 		document.getElementById('input-firstName').focus();
-		// flag = false;
+
 		return !flag;
 
 	} else if (isAvailableSpace(fullname)) {
-		document.getElementById('fullNameError').innerHTML = "**Invalid Charactor.";
+
+		jQuery('#fullNameError').addClass("fp-msg-error").html(
+				'  **Invalid Charactor.');
 		document.getElementById('input-firstName').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (!isempty(fullname)) {
-		document.getElementById('fullNameError').innerHTML = "**Full name cannot be empty.";
+
+		jQuery('#fullNameError').addClass("fp-msg-error").html(
+				'  **Full name cannot be empty.');
 		document.getElementById('input-firstName').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (!isValidEmailFormat(email)) {
-		document.getElementById('emailError').innerHTML = "**Invalid Email.";
+
+		jQuery('#emailError').addClass("fp-msg-error").html(
+				'  **Invalid Email.');
 		document.getElementById('eMail').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (!isempty(email)) {
-		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
+
+		jQuery('#emailError').addClass("fp-msg-error").html(
+				'  **Email cannot be empty.');
 		document.getElementById('eMail').focus();
-		// flag = false;
+
 		return !flag;
 	} else
 
 	if (!isValidCharactor(inquiryTitle)) {
-		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
+
+		jQuery('#inquiryTitleError').addClass("fp-msg-error").html(
+				'  **Invalid Charactor.');
 		document.getElementById('input-inquiry-title').focus();
-		// flag = false;
+
 		return !flag;
 
 	} else if (inquiryTitle.length > 70) {
-		document.getElementById('inquiryTitleError').innerHTML = "**Title charactor limit exceeded.";
+
+		jQuery('#inquiryTitleError').addClass("fp-msg-error").html(
+				'  **Title charactor limit exceeded.');
 		document.getElementById('input-inquiry-title').focus();
-		// flag = false;
+
 		return !flag;
 
 	} else if (isAvailableSpace(inquiryTitle)) {
-		document.getElementById('inquiryTitleError').innerHTML = "**Invalid Charactor.";
+
+		jQuery('#inquiryTitleError').addClass("fp-msg-error").html(
+				'  **Invalid Charactor.');
 		document.getElementById('input-inquiry-title').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (isAvailableSpace(inquiry)) {
-		document.getElementById('inquiryError').innerHTML = "**Inquiry cannot be empty.";
+
+		jQuery('#inquiryError').addClass("fp-msg-error").html(
+				'  **Inquiry cannot be empty.');
 		document.getElementById('text-userMessage').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (!isempty(inquiryTitle)) {
-		document.getElementById('"inquiryTitleError"').innerHTML = "**Inquiry title cannot be empty.";
+
+		jQuery('#inquiryTitleError').addClass("fp-msg-error").html(
+				'  **Inquiry title cannot be empty.');
 		document.getElementById('input-inquiry-title').focus();
-		// flag = false;
+
 		return !flag;
 	} else if (!isempty(inquiry)) {
-		document.getElementById('"inquiryError"').innerHTML = "**Inquiry cannot be empty.";
+
+		jQuery('#inquiryError').addClass("fp-msg-error").html(
+				'  **Inquiry cannot be empty.');
 		document.getElementById('text-userMessage').focus();
-		// flag = false;
+
 		return !flag;
 
 	} else if (response.length == 0) {
-		document.getElementById('captchaError').innerHTML = "**Please verify You're not a robot.";
+
+		jQuery('#captchaError').addClass("fp-msg-error").html(
+				'  **Please verify You are not a robot.');
 		document.getElementById('captchaError').focus();
-		// flag = false;
+
 		return !flag;
 	} else {
 		return (flag);
