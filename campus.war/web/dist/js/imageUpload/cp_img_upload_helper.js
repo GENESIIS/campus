@@ -9,6 +9,8 @@
  * 20170226 PN CAM-48: getActualFileName(valuesArr,nameToCheck) method implemented. error messages declaration moved into one place. display uploaded image on dropdown change function completed. 
  * cp_img_delete_btn button onclick function implemented. changed the code to disable cp_img_delete_btn button if there's no image to delete in the disk. 
  * 20170308 PN CAM-48: displayErrorMessage() method implemented. default image displaying jQuery code modified.
+ * 20170308 PN CAM-48: modified 'cp_img_upload_btn' upload event to set selected image type back to the drop down. 
+ * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
  */
 
 var dataSet = null;
@@ -48,6 +50,7 @@ $(document).ready(function() {
 				var actFileName = getActualFileName(listOfFiles,fileName);
 				if(actFileName != noImagetoDisplayErr){
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+					document.getElementById("cp_img_upload_btn").disabled = true;
 				}else{
 					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
 					document.getElementById("cp_img_delete_btn").disabled = true;
@@ -93,7 +96,8 @@ $(document).ready(function() {
 			    	}else if(response.fileUploadSuccess != ""){
 			    		alert(response.fileUploadSuccess);  		
 			    		$('#cp_img_upload').val('');
-			    		$('#cp_img_type').find('option:first').attr('selected', 'selected');
+			    		//$('#cp_img_type').find('option:first').attr('selected', 'selected');
+			    		$("#cp_img_type").val(uploadPathConfId);
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
 			    		$('#cp_img_err').css('color', 'green');
 			    		
@@ -153,7 +157,8 @@ $(document).ready(function() {
 			    		$('#cp_img_err').html(response.fileDeleteError);
 			    		$('#cp_img_err').css('color', 'red');
 			    	}else if(response.fileDeleteSuccess != ""){
-			    		$('#cp_img_type').find('option:first').attr('selected', 'selected');
+			    		//$('#cp_img_type').find('option:first').attr('selected', 'selected');
+			    		$("#cp_img_type").val(uploadPathConfId);
 			    		$('#cp_img_err').html(response.fileDeleteSuccess);
 			    		$('#cp_img_err').css('color', 'green');
 			    		
@@ -264,7 +269,6 @@ function validateFile(fileuploadelm, to, submitbtn){
 			$('#cp_img_err').html("");
 		}	
 	}else{
-		document.getElementById(submitbtn).disabled = true;
 		$('#cp_img_err').html("Selected file is not available to upload.");
 	}
 }
