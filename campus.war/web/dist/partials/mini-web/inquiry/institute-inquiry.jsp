@@ -4,7 +4,7 @@
 <!-- 20161028 CM  c9-make inquiry for institute added message attribute -->
 <!-- 20161108 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
 <!-- 20161115 CM  c9-make inquiry for institute Edited instituteInquiry.jsp-->
-
+<!-- 20170308 AS c9-text text filed validation messages color changing modification, in line style added to header -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -24,6 +24,38 @@
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script src="/dist/js/institute/validation/validation.js"></script>
+<style type="text/css">
+.fp-msg {
+  display: block;
+  min-height: 30px;
+  margin-bottom: 15px; }
+  .fp-msg label {
+    margin-top: 10px;
+    width: 100%;
+    display: block; }
+
+.fp-msg-error {
+  background-color: #ffe0e0;
+  border-left: 4px solid #d67900;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #d67900;
+  display: block;
+  padding: 8px;
+  line-height: 20px; }
+
+.fp-msg-success {
+  background-color: #c5eebf;
+  border-left: 4px solid #3cb878;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #2b9862;
+  display: block;
+  padding: 8px;
+  line-height: 20px; }
+
+</style>
+
 </head>
 <body>
 
