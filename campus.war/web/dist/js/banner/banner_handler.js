@@ -35,6 +35,8 @@
  * 20170222 MM c127-display-banners-on-jsp-load-front-end Moved code that binds an event-handler to 'click' 
  * 				event of banner image elements to within document.ready(...). Made Ajax calls to fetch 
  * 				banner images and add banner statistics to have async = true. 				
+ * 20170308 MM c127-display-banners-on-jsp-load-front-end Made changes to correctly identify the 
+ * 				shown-banner to retrieve the banner-code to send banner-stat-update-request 				
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -52,7 +54,6 @@
 /* WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR 
  * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
  * */
-
 
 // Banner-rotation code 
 var bannerSlotWrappers = $('.banner-wrapper');
@@ -116,16 +117,31 @@ function sendBannerStatisticsUpdateRequest(banner) {
 	});
 }
 
-
 $(document).ready(function() {
 	
 	var bannerLoadingStatusIndicator = $('#areBannersDeliveredWithPage');	
-	var areBannersLoadedWithPage = bannerLoadingStatusIndicator.val();
-	
+	var areBannersLoadedWithPage = bannerLoadingStatusIndicator.val();	
 	
 	if (areBannersLoadedWithPage == null || areBannersLoadedWithPage == 'false') {
 		getBanners();
-	}
+	}	
+
+	// Bind event handler for click event to banner elements
+	$('.banner').on('click', function(e) {
+		e.preventDefault();
+		var shownBanner = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0));
+		var url = shownBanner.parents('a').attr('href');
+		sendBannerStatisticsUpdateRequest(shownBanner);
+		window.open(url, '_blank');
+	}); 
+	
+	// Trigger click upon key-down on banner
+	$('.banner').keydown(function(event){ 
+	    var keyCode = (event.keyCode ? event.keyCode : event.which);   
+	    if (keyCode == 13) {
+	        $('.banner').trigger('click');
+	    }
+	});
 });
 
 //Event handler for sending Ajax request to fetch banners 
@@ -179,10 +195,20 @@ function setBannersToPageSlots(response) {
 	// Bind event handler for click event to banner elements
 	$('.banner').on('click', function(e) {
 		e.preventDefault();
-		var url = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0)).parents('a').attr('href');
-		sendBannerStatisticsUpdateRequest($(this));
+		var shownBanner = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0));
+		var url = shownBanner.parents('a').attr('href');
+		sendBannerStatisticsUpdateRequest(shownBanner);
 		window.open(url, '_blank');
 	}); 
+	
+	// Trigger click upon key-down on banner
+	$('.banner').keydown(function(event){ 
+	    var keyCode = (event.keyCode ? event.keyCode : event.which);   
+	    if (keyCode == 13) {
+	    	alert("banner keypress");
+	        $('.banner').trigger('click');
+	    }
+	});
 }
 
 // Get the current JSP page name
