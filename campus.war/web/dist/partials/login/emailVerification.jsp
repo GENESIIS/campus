@@ -15,6 +15,7 @@
 <!-- 20170223 AS CAM-22 modify messages span and validation messages -->
 <!-- 20170307 CW c147 added source link to tutor-login.js -->
 <!-- 20170307 CW c147 change CCO value of the submit button -->
+<!-- 20170308 CW c147 change script clearField values -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,8 +43,7 @@
           $( document ).ready(function() {
         	  clearField('verifyMesssage');
         	  clearField('verifyCode'); 
-        	  clearField('verifiemail'); 
-        	  clearField('verifiemail');
+        	  clearField('verifyemail'); 
         	  
 <!--              $('#openPop').on('click', function(){ -->
 <!--                 $('#verifications-popup').modal('show'); -->
