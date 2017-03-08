@@ -773,6 +773,14 @@ body, html {
     margin-left: auto; }
     .admin-content .content-holder .tutors-table {
       padding-top: 40px; }
+      .admin-content .content-holder .tutors-table .dataTables_length {
+        font-size: 15px;
+        font-family: "Raleway", sans-serif; }
+        .admin-content .content-holder .tutors-table .dataTables_length select {
+          margin: 0 15px; }
+      .admin-content .content-holder .tutors-table .dataTable {
+        border-top: 4px solid #e1e1e1;
+        margin-top: 15px; }
 
 /* Modules */
 .btn-home {
