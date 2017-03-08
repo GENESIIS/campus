@@ -36,7 +36,7 @@ public class CmdTutorEmailVerification implements ICommand {
 			System.out.println("verifyemail = "+helper.getParameter("verifyemail"));
 /*			data = getStudentdetails(gsonData);
 			boolean validEmail = LoginValidator.validateEmail(data.getEmail());
-			if (validEmail) {
+z			if (validEmail) {
 				ICrud emailVarifyDAO = new StudentEmailVerificationDAO();
 				dataCollection = emailVarifyDAO.findById(data);
 
