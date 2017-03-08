@@ -778,9 +778,14 @@ body, html {
         font-family: "Raleway", sans-serif; }
         .admin-content .content-holder .tutors-table .dataTables_length select {
           margin: 0 15px; }
+      .admin-content .content-holder .tutors-table .dataTables_filter input {
+        border: 2px solid #d7d7d7;
+        border-radius: 3px;
+        width: 20%; }
       .admin-content .content-holder .tutors-table .dataTable {
         border-top: 4px solid #e1e1e1;
-        margin-top: 15px; }
+        margin-top: 15px !important;
+        font-family: "Roboto", sans-serif; }
 
 /* Modules */
 .btn-home {

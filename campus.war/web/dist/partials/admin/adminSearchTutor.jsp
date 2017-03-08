@@ -28,6 +28,7 @@
 	
 	  
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
 </head>
 
 
@@ -54,7 +55,7 @@
                 <!-- Page content -->
                 <form action="/AdminController" method="POST" id="basicForm">
 
-                    <table id="example" class="display" width="100%">
+                    <table id="example" class="display compact" width="100%">
                         <thead>
                             <tr>
                                 <th>Code</th>
@@ -71,6 +72,7 @@
                             </tr>
                         </thead>
                     </table>
+                    
                 </form>
             </div>
 		    <!-- End tutors table  -->
