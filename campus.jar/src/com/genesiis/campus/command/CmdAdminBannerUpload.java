@@ -18,6 +18,9 @@ package com.genesiis.campus.command;
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods. 
+ * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
+ * 			getSessionProperty() method catch IllegalArgumentException. But logs NullPointerException corrected.
+ * 			clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !"); Typo error is corrected.
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -159,11 +162,11 @@ public class CmdAdminBannerUpload implements ICommand {
 				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
 				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
 				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
-				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
+				clientInputValidator.isNotEmpty(displayDusration," The display Duration field is empty !");
 				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
-				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
+				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or disable option");
 				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
-				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Publishing End Date field is empty !");
 				
 				Date publishingDate 	= getADate("-",bannerPublishingDate);
 				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
@@ -233,9 +236,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			return userSessionProperty;
 			
 		} catch (IllegalArgumentException ilearg) {
-			log.error("getUserProperty(String,IDataHelper) NullPointerException"
-					+ userProperty
-					+ "request parameter is Not Set : "
+			log.error("getUserProperty(String,IDataHelper) IllegalArgumentException  : 'userProperty' request parameter is Not Set : "
 					+ ilearg.toString());
 			throw ilearg;
 		}
