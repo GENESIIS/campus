@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.mail.GenerateEmail;
+import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 
 public class CmdTutorEmailVerification implements ICommand {
 	
-	static Logger log = Logger.getLogger(GenerateEmail.class.getName());
+	static Logger log = Logger.getLogger(CmdTutorEmailVerification.class.getName());
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
@@ -26,13 +27,14 @@ public class CmdTutorEmailVerification implements ICommand {
 		String email = "";
 		String uname = "";
 		String code = "";
-		/*try {
+		try {
 
 			//IEmailComposer resetPasswordEmailComposer = new ResetPasswordInstructionEmailDispenser();
 			
 			GenerateEmail resetPasswordEmailComposer = new GenerateEmail();
 			String gsonData = helper.getParameter("jsonData");
-			data = getStudentdetails(gsonData);
+			System.out.println("verifyemail = "+helper.getParameter("verifyemail"));
+/*			data = getStudentdetails(gsonData);
 			boolean validEmail = LoginValidator.validateEmail(data.getEmail());
 			if (validEmail) {
 				ICrud emailVarifyDAO = new StudentEmailVerificationDAO();
@@ -96,11 +98,11 @@ public class CmdTutorEmailVerification implements ICommand {
 			throw sexp;
 		} catch (IllegalArgumentException ilexp) {
 			log.error("execute(): IllegalArgumentException" + ilexp.toString());
-			throw ilexp;
+			throw ilexp;*/
 		} catch (Exception exp) {
 			log.error("execute():Exception " + exp.toString());
 			throw exp;
-		}*/
+		}
 		helper.setAttribute("message", message);
 		return view;
 	}
