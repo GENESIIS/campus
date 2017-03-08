@@ -3,10 +3,14 @@ package com.genesiis.campus.entity;
 /*
  * 20170203 DN c131-admin-manage-banner-upload-banner-image-dn created the initial class stub
  * 20170221 DN c131-admin-manage-banner-upload-banner-image-dn created getAll()
+ * 20170308 DN  c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
+ * 			   getAll() CourseProvidersSQL.append("WHERE ISACTIVE = 1") :status changed to get from
+ * 			   the ApplicationStatus ENUM class.
  */
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -56,7 +60,7 @@ public class AdvertiserDAO implements ICrud {
 			Exception {
 		// Extract all the course providers who are featured providers and status is one
 				StringBuilder CourseProvidersSQL =new StringBuilder("SELECT [CODE] ,[NAME]  FROM [CAMPUS].[ADVERTISER]");
-				CourseProvidersSQL.append("WHERE [ISACTIVE] = 1");		
+				CourseProvidersSQL.append("WHERE [ISACTIVE] ="+ ApplicationStatus.ACTIVE.getStatusValue());		
 				String allCourseProviderSQL = CourseProvidersSQL.toString();
 				Connection courseProviderConnection =null;
 				PreparedStatement preparedStatement = null;
