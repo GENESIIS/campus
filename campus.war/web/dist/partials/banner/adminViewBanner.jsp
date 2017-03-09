@@ -1,4 +1,10 @@
 <!-- 20170308 DN c81-admin-manage-banner-add-and-view-banner-dn mock up design completed -->
+<!-- 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn add radio buttons to model
+				  PENDING,EXPIRED banner status.
+
+
+
+ -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -66,8 +72,13 @@
    <span id="">List <b>Active</b> Banners</span>
    <input type="radio" name="bannerStatus" value="1" id ="statusActive" checked="checked" > 
    &nbsp; &nbsp; &nbsp;<span id="">List <b>Inactive</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="0" id ="statusInactive"  > 
+   <input type="radio" name="bannerStatus" value="2" id ="statusInactive"  > 
+    &nbsp; &nbsp; &nbsp;<span id="">List <b>Pending</b> Banners</span>
+   <input type="radio" name="bannerStatus" value="3" id ="statusPending"  > 
+    &nbsp; &nbsp; &nbsp;<span id="">List <b>Expired</b> Banners</span>
+   <input type="radio" name="bannerStatus" value="4" id ="statusExpired"  > 
    <br><br>
+   <input type="button" value="Search">
    <!-- banner records will be displayed here -->
    <table width="100%" border=1>
 	   <tr>
