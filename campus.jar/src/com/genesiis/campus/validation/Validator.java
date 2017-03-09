@@ -48,6 +48,10 @@ package com.genesiis.campus.validation;
 //20170226 CW Copied isEmptyOrHavingSpace() from c36-add-tutor-information.
 //20170226 CW c38-view-update-tutor-profile modified isHavingNullValues() to use isEmptyOrHavingSpace method
 //20170309 CW c38-view-update-tutor-profile modified the validations & set the fields & make the max length as same as database column length
+//20170309 CW c38-view-update-tutor-profile modified isEmptyOrHavingSpace to check for one or many space values
+//20170309 CW c38-view-update-tutor-profile removed isValidFirstname, isValidLastname methods & add isValidName method to replace both of them
+				// modified validateTutorFields to use isValidName method
+				// modified isValidNetworkCode, isValidContactNumber, isValidAddressLine1, isValidUserNameLength method to use isEmptyOrHavingSpace method
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -61,11 +65,9 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * this class is used to validate all the tutor fields before update 
  * @author CW
- *
  */
 public class Validator {
 
@@ -96,12 +98,12 @@ public class Validator {
 	public static boolean isEmptyOrHavingSpace(String text) {
 		boolean status = false;
 		
-		if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+		if ((text == null) || (text.isEmpty() == true) || (text.matches("^\\s*$"))) {
 			status = true;
 		}
 		
 		return status;
-}
+	}
 
 	/**
 	 * Validate helper fields for null values.
@@ -174,8 +176,7 @@ public class Validator {
 	public boolean validateTutorFields(IDataHelper helper) throws Exception {
 
 		boolean isValid = true; 
-		try {	
-			
+		try {				
 
 			if (!isValidUserAndEmail(helper)) {
 				isValid = false;
@@ -185,11 +186,11 @@ public class Validator {
 				isValid = false;
 			} 			
 			
-			if (!isValidFirstname(helper.getParameter("firstname"))) {
+			if (!isValidName(helper.getParameter("firstname"))) {
 				helper.setAttribute("firstNameError", SystemMessage.FIRSTNAMEERROR.message());
 				isValid = false;
 			}
-			if (!isValidLastname(helper.getParameter("lastname"))) {
+			if (!isValidName(helper.getParameter("lastname"))) {
 				helper.setAttribute("lastNameError", SystemMessage.LASTNAMEERROR.message());
 				isValid = false;
 			}
@@ -263,44 +264,20 @@ public class Validator {
 	}	
 	
 	/**
-	 * Check the entered firstName is a valid one
+	 * Check the entered name is a valid one
 	 * 
 	 * @author Chinthaka
-	 * @param firstName
-	 * @return boolean - Returns true if the requested firstName is a valid one
+	 * @param name
+	 * @return boolean - Returns true if the requested name is a valid one
 	 */
-	public boolean isValidFirstname(String firstName) throws Exception {
+	public boolean isValidName(String name) throws Exception {
 		boolean valid = false;
 		try {
-
-			if ((isNotEmpty(firstName)) && (firstName.length() < 36) && firstName != " ") {
+			if(!isEmptyOrHavingSpace(name) && (name.length() < 21) && name.matches( "[a-zA-Z][a-zA-Z]*" )) {
 				valid = true;
 			}
-
 		} catch (Exception e) {
-			log.error("isValidFirstname:  Exception" + e.toString());
-			throw e;
-		}
-		return valid;
-	}
-	
-	/**
-	 * Check the entered lastName is a valid one
-	 * 
-	 * @author Chinthaka
-	 * @param lastName
-	 * @return boolean - Returns true if the requested lastName is a valid one
-	 */
-	public boolean isValidLastname(String lastName) throws Exception {
-		boolean valid = false;
-		try {
-
-			if ((isNotEmpty(lastName)) && (lastName.length() < 36) && lastName != " ") {
-				valid = true;
-			}
-
-		} catch (Exception e) {
-			log.error("isValidLastname:  Exception" + e.toString());
+			log.error("isValidName:  Exception" + e.toString());
 			throw e;
 		}
 		return valid;
@@ -345,7 +322,7 @@ public class Validator {
 
 			int code = Integer.parseInt(networkCode);
 			
-			if ((isNotEmpty(networkCode)) && (networkCode.length() < 11) && networkCode != " ") {
+			if (!(isEmptyOrHavingSpace(networkCode)) && (networkCode.length() < 11)) {
 				valid = true;
 			}
 
@@ -371,7 +348,7 @@ public class Validator {
 
 			int code = Integer.parseInt(contactNumber);
 			
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 15) && contactNumber != " ") {
+			if (!(isEmptyOrHavingSpace(contactNumber)) &&  (contactNumber.length() < 15)) {
 				valid = true;
 			}
 
@@ -395,7 +372,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 51) && addressLine1 != " ") {
+			if (!(isEmptyOrHavingSpace(addressLine1)) && (addressLine1.length() < 51)) {
 				valid = true;
 			}
 
@@ -486,7 +463,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 101)) {
+			if ((isEmptyOrHavingSpace(username)) && (username.length() > 5) && (username.length() < 101)) {
 				valid = true;
 			}
 
@@ -510,17 +487,17 @@ public class Validator {
 		int type = 0;
 		try {		
 
-			if (!(Validator.isNotEmpty(helper.getParameter("username"))) && (helper.getParameter("username") == " ") ){
+			if (isEmptyOrHavingSpace(helper.getParameter("username"))){
 				helper.setAttribute("usernameError", SystemMessage.EMPTYUSERNAME.message());
 				message = false;
 			}
 			
-			if (!(Validator.isNotEmpty(helper.getParameter("email")))){
+			if (isEmptyOrHavingSpace(helper.getParameter("email"))){
 				helper.setAttribute("emailError", SystemMessage.EMPTYEMAIL.message());
 				message = false;
 			}
 			
-			if (!Validator.isValidUserNameLength(helper.getParameter("username"))) {
+			if (!isValidUserNameLength(helper.getParameter("username"))) {
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
 				message = false;
 			} 
