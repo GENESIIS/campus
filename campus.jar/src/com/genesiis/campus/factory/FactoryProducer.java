@@ -29,8 +29,8 @@ public class FactoryProducer {
 			return new PublicCmdFactory();
 
 
-		} else if (choice.equalsIgnoreCase("/PayrollController")) {
-			//return new PayrollCmdFactory();
+		} else if (choice.equalsIgnoreCase("/StudentController")) {
+			return new StudentCmdFactory();
 		
 		}else if (choice.equalsIgnoreCase("/LoginController")){
 			return new LoginCmdFactory();
