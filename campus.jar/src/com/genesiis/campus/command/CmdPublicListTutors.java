@@ -50,7 +50,8 @@ public class CmdPublicListTutors implements ICommand{
 			if(tutorCollection.size() == 0 ){
 				message = SystemMessage.NODATA;
 			}else{
-//							
+//					
+				// commented until the separate method confirms the accracy
 //				String code = null;
 //				String firstName = null;
 //				String middleName = null;
@@ -165,14 +166,15 @@ public class CmdPublicListTutors implements ICommand{
 	/**
 	 * seperateBasicData() used to remove repeating records and of the tutor while
 	 * @return collection of tutor basic data 
+	 * @param tutorCollection type of Collection<Collection<String>> 
+	 * @author JH
 	 */
 	public static Collection<Collection<String>> seperateBasicData(Collection<Collection<String>> tutorCollection){
 		
 		Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
 		final ArrayList<Collection<String>> tutorArrayList = (ArrayList<Collection<String>>) tutorCollection;
 		
-		
-						
+				
 			String code = null;
 			String firstName = null;
 			String middleName = null;
@@ -187,10 +189,15 @@ public class CmdPublicListTutors implements ICommand{
 			String townCode = null;
 			String qualification = null;
 			String levelName = null;
-			
+			String categoryCode = null;
+			String categoryName = null;
+			String majorCode = null;
+			String majorName = null;
+			String nvq = null;
+
 			// maps to store repeating category and major details
-			Map categoryMap = new HashMap<String, ArrayList<String>>();
-			Map majorMap = new HashMap<String, ArrayList<String>>();
+			Map categoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			Map majorMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			
 			Iterator resultIterator = tutorArrayList.iterator();
 			Iterator newTuorsIterator = newTutorCollection.iterator();
@@ -211,7 +218,8 @@ public class CmdPublicListTutors implements ICommand{
 				mobileNumber = singleList.get(9);
 				town = singleList.get(18);
 				townCode = singleList.get(19);
-
+				
+				// create a temporary tutor record 
 				ArrayList<String> temporaryTutor = new ArrayList<String>();
 				temporaryTutor.add(code);
 				temporaryTutor.add(firstName);
@@ -225,6 +233,33 @@ public class CmdPublicListTutors implements ICommand{
 				temporaryTutor.add(mobileNumber);
 				temporaryTutor.add(town);
 				temporaryTutor.add(townCode);
+				
+				
+				// create a temporary category record
+				ArrayList<String> temporaryCategory = new ArrayList<String>();
+				temporaryCategory.add(singleList.get(12));
+				temporaryCategory.add(singleList.get(13));
+				
+				
+				//retrieves category list related to a tutor code
+				ArrayList<ArrayList<String>> tutorCategoryList = new ArrayList<ArrayList<String>>();
+				tutorCategoryList = (ArrayList<ArrayList<String>>) categoryMap.get(code);
+				if(!tutorCategoryList.isEmpty()){
+					for(ArrayList<String> singlecateory : tutorCategoryList){
+						
+						// a record for that category exist
+						if(singlecateory.equals(temporaryCategory)){
+							log.info(">>>>>.................. category already exist" + temporaryCategory.toString());
+							
+						}else{// need to insert that category for the tutor
+							log.info(">>>>>.................. category doesn't exist" + temporaryCategory.toString());
+							categoryMap.put(code, temporaryCategory);
+						}
+					}
+				}else{
+					log.info(">>>>>.................. category map empty" + temporaryCategory.toString());
+					categoryMap.put(code, temporaryCategory);
+				}
 
 				// if previous records are available: check whether a
 				// previous record is available or not
