@@ -19,11 +19,14 @@ package com.genesiis.campus.entity;
  *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed. 
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn removed the method formADate() from the class and restructured with
  * 			   logic and placed in PrevalentValidation.java  
- * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn   made implemented ICrudSibling interface 
+ * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn  made implemented ICrudSibling interface 
  * 			   and override the method  getAll(Object jsnObject)
+ * 20170309 DN c131-admin-manage-banner-upload-banner-image-dn implemented methods getAplicationStatus(int) 
+ *             and Collection<Collection<String>> getAll(Object). Add doc comments to class and methods
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
+import com.genesiis.campus.util.BannerDisplayingInflator;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.JasonInflator;
@@ -43,9 +46,15 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
+/**
+ * AdminBannerDAO class process the Banner table on behalf of
+ * Administrator operations.
+ * @author dushantha
+ *
+ */
 public class AdminBannerDAO implements ICrudSibling {
 
-	static org.jboss.resteasy.logging.Logger Log = Logger.getLogger(AdminBannerDAO.class.getName());
+	static Logger Log = Logger.getLogger(AdminBannerDAO.class.getName());
 	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -244,58 +253,125 @@ public class AdminBannerDAO implements ICrudSibling {
 	}
 	
 	/**
-	 * getAll(Object o) method returns all the banners that all the advertiser have published 
-	 * Whether those are active or inactive. It accepts an Object type argumant
+	 * getAplicationStatus: method returns the appropriate ApplicationStatus 
+	 *  based on the input int parameter.
+	 * if the supplied int does not confirm to any valid ApplicationStatus,
+	 * then ApplicationStatus.UNDEFINED will be returned.
+	 * @param value
+	 * @return ApplicationStatus 
+	 * 			1-->  ApplicationStatus.ACTIVE
+	 * 			2-->  ApplicationStatus.INACTIVE
+	 * 			3-->  ApplicationStatus.PENDING
+	 * 			4-->  ApplicationStatus.EXPIRED
+	 * 			any thing else other than the above values
+	 * 			returns ApplicationStatus.UNDEFINED.
+	 */
+	private ApplicationStatus getAplicationStatus(int value){
+		ApplicationStatus activeStatus= ApplicationStatus.UNDEFINED;
+		switch(value){
+		case 1 :
+			activeStatus = ApplicationStatus.ACTIVE;
+			break;
+		case 2:
+			activeStatus = ApplicationStatus.INACTIVE;
+		case 3:
+			activeStatus = ApplicationStatus.PENDING;
+		 break;
+		case 4:
+			activeStatus = ApplicationStatus.EXPIRED;
+			break;
+		}
+		return activeStatus;
+	}
+	
+	
+	/**
+	 * getAll(Object o) method returns all the banners that all the advertiser have published
+	 * Depending on the induced details of the incoming object
 	 * @author dushantha DN
-	 * @param  o :Object type argument
+	 * @param  object :Object type argument which has the filtering criteria
 	 * @return Collection<Collection<String>>
 	 */
 	
 	@Override
-	public Collection<Collection<String>> getAll(Object jsnObject) throws SQLException,
+	public Collection<Collection<String>> getAll(Object object) throws SQLException,
 			Exception {
 		
-		JasonInflator jsn = (JasonInflator)jsnObject;
+		BannerDisplayingInflator jsn = (BannerDisplayingInflator)object;
 		Connection conn = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		
+		Collection<Collection<String>> outerWrapper = null;
 		try {
-			if(jsnObject == null)
+			if(jsn == null)
 				throw new NullPointerException("The parameter passed to the method is null.");
 			
-			int ISACTIVE 			= 	(jsn.getBanerToBeActive()=="true")?ApplicationStatus.ACTIVE.getStatusValue():ApplicationStatus.INACTIVE.getStatusValue();
-			String activationDate	=	jsn.getBannerPublishingDate();
-			String deActivateDate	= 	jsn.getBannerPublishingEndDate();
+			int ISACTIVE 			=  getAplicationStatus(Integer.parseInt(jsn.getActiveInactiveStatus())).getStatusValue();
+			String activationDate	=  jsn.getCommencingDate();
+			String deActivateDate	=  jsn.getCessationDate();
 					
 			
-			StringBuilder querybuilder = new StringBuilder("SELECT BNR.*,ADVR.NAME ADVERTISER_NAME,ADVR.CODE ADVERTISER_CODE "); 
-			querybuilder.append("FROM [CAMPUS].BANNER BNR ");
-			querybuilder.append("INNER JOIN [CAMPUS].ADVERTISER ADVR ");
-			querybuilder.append("ON BNR.ADVERTISER = ADVR.CODE WHERE ADVR.ISACTIVE = "+ISACTIVE+ " ");
+			StringBuilder querybuilder = new StringBuilder(
+					"SELECT BNR.*,PGS.NAME PAGESLOT_NAME,ADVR.NAME ADVERTISER_NAME ");
+			querybuilder.append(" FROM [CAMPUS].BANNER BNR ");
+			querybuilder.append(" INNER JOIN [CAMPUS].ADVERTISER ADVR ");
+			querybuilder.append(" ON BNR.ADVERTISER = ADVR.CODE "
+					+ " INNER JOIN"
+					+ " [CAMPUS].PAGESLOT PGS"
+					+ " ON BNR.PAGESLOT = PGS.CODE"
+					+ " WHERE ADVR.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()+ " ");
 			
-			if(jsn.getBannerPublishingDate()==)
+			
+			if(ISACTIVE != ApplicationStatus.UNDEFINED.getStatusValue() ){
+				querybuilder.append(" AND BNR.ISACTIVE = "+ISACTIVE+ " ");
+			}
+			if(activationDate!=null&& activationDate !=""){
+				if(deActivateDate!=null && deActivateDate !=""){
+					querybuilder.append(" AND (BNR.EXPIRATIONDATE<='"+deActivateDate+"' AND ACTIVATIONDATE>='"+activationDate+"')");
+				}
+				else{
+					querybuilder.append(" AND ( ACTIVATIONDATE>='"+activationDate+"')");
+				}				
+			}
 			
 			conn = ConnectionManager.getConnection();
 			statement = conn.prepareStatement(querybuilder.toString());
 			resultSet = statement.executeQuery();
+			outerWrapper = new ArrayList<Collection<String>>();
+			
 			while(resultSet.next()){
 				
+				Collection<String> innerCol = new ArrayList<String>();				
+				innerCol.add(resultSet.getString("CODE"));
+				innerCol.add(resultSet.getString("IMAGE"));
+				innerCol.add(resultSet.getString("DISPLAYDURATION"));
+				innerCol.add(resultSet.getString("LINKTYPE"));
+				innerCol.add(resultSet.getString("URL"));
+				innerCol.add(resultSet.getString("PAGESLOT"));
+				innerCol.add(resultSet.getString("NAME PAGESLOT_NAME"));
+				innerCol.add(resultSet.getString("ISACTIVE"));
+				innerCol.add(resultSet.getString("ACTIVATIONDATE"));
+				innerCol.add(resultSet.getString("EXPIRATIONDATE"));
+				innerCol.add(resultSet.getString("ADVERTISER"));
+				innerCol.add(resultSet.getString("ADVERTISER_NAME"));
+				innerCol.add(resultSet.getString("CODE"));
+				outerWrapper.add(innerCol);
 			}
 			
 		} catch (NullPointerException npexp) {
 			Log.error("getAll(Object): NullPointerException :  "+npexp.toString());
-			throw npexp;
-			
+			throw npexp;			
 		} catch (SQLException sqle){
 			Log.error("getAll(Object): SQLException : "+sqle.toString());
 			throw sqle;
 		} catch (Exception exp){
 			Log.error("getAll(Object): Exception : "+exp.toString());
 			throw exp;
+		} finally{
+			DaoHelper.cleanup(conn, statement, resultSet);
 		}
 		
-		return null;
+		return outerWrapper;
 	}
 	
 	
