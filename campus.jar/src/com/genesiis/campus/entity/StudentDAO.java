@@ -14,7 +14,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 //20170106 PN CAM-28: SQL query modified in findById(Object code) method.
 //20170109 PN CAM-28: Added character replacement for replace ',' in findById() method.
-//20170309 PN CAM-150: DAO methods are modified to access AddressLine1, AddressLine2 and AddressLine3 values separately.
+//20170309 PN CAM-150: DAO methods are modified to access AddressLine1, AddressLine2 and AddressLine3 values separately. update(Object object, Connection con) method modified by removing network code manipulation from the mobile number. 
 
 
 import java.sql.Connection;
@@ -233,13 +233,15 @@ public class StudentDAO implements ICrud {
 			stmt.setString(9, student.getLandPhoneCountryCode());
 			
 			//This will be change later once a proper way confirmed to check the phone number, and network code.
-			if(student.getMobilePhoneNo().length() > 4){
-				stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
-				stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
-			}else{
-				stmt.setString(10, student.getMobilePhoneNo());
-				stmt.setString(11, student.getMobilePhoneNo());
-			}
+//			if(student.getMobilePhoneNo().length() > 4){
+//				stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
+//				stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+//			}else{
+//				stmt.setString(10, student.getMobilePhoneNo());
+//				stmt.setString(11, student.getMobilePhoneNo());
+//			}
+			stmt.setString(10, "0");
+			stmt.setString(11, student.getMobilePhoneNo());
 			stmt.setString(12, student.getDescription());
 			stmt.setString(13, student.getFacebookUrl());
 			stmt.setString(14, student.getTwitterUrl());
