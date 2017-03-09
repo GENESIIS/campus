@@ -23,7 +23,6 @@
 	<form action="/TutorController" method="post"
 		onsubmit="return (validateTutorModifications())">
 
-
 		<c:forEach var="tutorList" items="${result.collection}">
 
 			<c:set var="code" value="${tutorList[0]}"/>
