@@ -10,6 +10,7 @@ package com.genesiis.campus.factory;
 
 import com.genesiis.campus.command.CmdListStudentDashboardDetails;
 import com.genesiis.campus.command.CmdListStudentRecommendedProgrammes;
+import com.genesiis.campus.command.CmdTestAjaxAndFormData;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -17,6 +18,8 @@ public class StudentCmdFactory implements ICmdFactory {
 	static {
 		map.put(Operation.LIST_STUDENT_DASHBOARD, new CmdListStudentDashboardDetails());
 		map.put(Operation.LIST_STUDENT_RECOMMENDED_PROGRAMMES, new CmdListStudentRecommendedProgrammes());
+		map.put(Operation.TEST_AJAX, new CmdTestAjaxAndFormData());
+		map.put(Operation.TEST_FORM, new CmdTestAjaxAndFormData());
 	}
 
 	@Override
@@ -29,6 +32,12 @@ public class StudentCmdFactory implements ICmdFactory {
 				command = map.get(o);
 				break;
 			case LIST_STUDENT_RECOMMENDED_PROGRAMMES:
+				command = map.get(o);
+				break;
+			case TEST_AJAX:
+				command = map.get(o);
+				break;
+			case TEST_FORM:
 				command = map.get(o);
 				break;
 			default:
