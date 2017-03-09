@@ -4,9 +4,10 @@
  * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans. modified the JQuery which takes the gender value from the radio. added a code to close model on successful details update, in addStudentPersonalDetails() method.
  * 20170306 PN CAM-150: validateStudentPersonalDetails() method modified to validate empty date of birth.
  * 20170309 PN CAM-150: addStudentPersonalDetails() method and clearPersonalDetailsForm() method modified to display AddressLine1, AddressLine2, AddressLine3 separately.
+ * 20170309 PN CAM-150: populatePersonalDataformElements() method implementation modified by adding validation to check if the student details collection is updated, empty or null.
  */
 
-var studentPersonalDataSet = null;
+
 
 /**
  * This method generates a Json object to pass into tag-it input.
@@ -545,7 +546,7 @@ function addStudentPersonalDetails() {
 								$('#td-value-town').html(value[31]);
 								$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
 								$('#td-value-fbprofile').html(value[18]);
-								$('#td-value-mobileno').html(value[11] + '-' + value[15] + value[16]);
+								$('#td-value-mobileno').html(value[11] + '-' + value[16]);
 								$('#td-value-aboutme').html(value[17]);
 							});
 							
@@ -990,8 +991,13 @@ function populatePersonalDataformElements(response){
 		}
 	});
 	
-	$.each(response.studentCollection, function(index, value) {
-		studentPersonalDataSet = response.studentCollection;
+	var studentDetails = null;
+	if((studentPersonalDataSet != null)&&(studentPersonalDataSet != '')&&(studentPersonalDataSet != undefined)){
+		studentDetails = studentPersonalDataSet;
+	}else{
+		studentDetails = response.studentCollection;
+	}
+	$.each(studentDetails, function(index, value) {
 		$('#fullname-hedding').html(value[4] + ' ' + value[5] +' '+ value[6]);
 		$('#td-value-username').html("<b>" + value[1] + "</b>");
 		$('#td-value-fullname').html(value[4] + ' ' + value[5] + ' ' + value[6]);
@@ -1002,7 +1008,7 @@ function populatePersonalDataformElements(response){
 		$('#td-value-town').html(value[31]);
 		$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
 		$('#td-value-fbprofile').html(value[18]);
-		$('#td-value-mobileno').html(value[11] + '-' + value[15] + value[16]);
+		$('#td-value-mobileno').html(value[11] + '-' + value[16]);
 		$('#td-value-aboutme').html(value[17]);
 		
 		$('#sFullName').val(value[4]);
@@ -1013,7 +1019,7 @@ function populatePersonalDataformElements(response){
 		$('#sEmail').val(value[9]);
 		$('#sCountryCode').val(value[11]);
 		$('#sHomeNumber').val(value[13]);
-		$('#sMobileNumber').val(value[15] + value[16]);
+		$('#sMobileNumber').val(value[16]);
 		$('#sAddressLine1').val(value[25]);
 		$('#sAddressLine2').val(value[26]);
 		$('#sAddressLine3').val(value[27]);
