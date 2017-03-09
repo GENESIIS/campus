@@ -41,7 +41,14 @@ public class NoCacheFilter implements Filter {
 		// place your code here
 		HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        // Skip JSF resources (CSS/JS/Images/etc)
+        
+        PrintWriter out=res.getWriter();  
+        out.print("filter is invoked before");
+		// pass the request along the filter chain
+		chain.doFilter(req, res);
+		out.print("filter is invoked after"); 
+        
+        // cache clear 
         if (!req.getRequestURI().startsWith(req.getContextPath())) {
             // HTTP 1.1.
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -50,11 +57,7 @@ public class NoCacheFilter implements Filter {
             // Proxies.
             res.setDateHeader("Expires", 0);
         }
-        PrintWriter out=res.getWriter();  
-        out.print("filter is invoked before");
-		// pass the request along the filter chain
-		chain.doFilter(req, res);
-		 out.print("filter is invoked after");  
+        
 	}
 
 	/**
