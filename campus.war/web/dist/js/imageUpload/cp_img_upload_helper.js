@@ -96,7 +96,6 @@ $(document).ready(function() {
 			    	}else if(response.fileUploadSuccess != ""){
 			    		alert(response.fileUploadSuccess);  		
 			    		$('#cp_img_upload').val('');
-			    		//$('#cp_img_type').find('option:first').attr('selected', 'selected');
 			    		$("#cp_img_type").val(uploadPathConfId);
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
 			    		$('#cp_img_err').css('color', 'green');
@@ -157,7 +156,6 @@ $(document).ready(function() {
 			    		$('#cp_img_err').html(response.fileDeleteError);
 			    		$('#cp_img_err').css('color', 'red');
 			    	}else if(response.fileDeleteSuccess != ""){
-			    		//$('#cp_img_type').find('option:first').attr('selected', 'selected');
 			    		$("#cp_img_type").val(uploadPathConfId);
 			    		$('#cp_img_err').html(response.fileDeleteSuccess);
 			    		$('#cp_img_err').css('color', 'green');
