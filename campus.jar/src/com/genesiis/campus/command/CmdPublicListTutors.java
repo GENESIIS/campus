@@ -2,7 +2,8 @@ package com.genesiis.campus.command;
 
 //20170228 JH c96-public-list-all-tutors INIT CmdPublicListTutors.java
 //20170306 JH c96-public-list-all-tutors get tutor profile image path using SystemConfig enum, show error messages
-//20170308 JH c96-public-list-all-tutors remove repeating records of the tutor from the tutorCollection
+//20170308 JH c96-public-list-all-tutors remove repeating records of the tutor from the tutorCollection wip
+//20170309 JH c96-public-list-all-tutors remove repeating records of the tutor from the tutorCollection
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -35,9 +36,13 @@ public class CmdPublicListTutors implements ICommand{
 		SystemMessage message = SystemMessage.UNKNOWN;
 		
 		try{
-			
-			//final Collection<Collection<String>> tutorCollection = publicTutorDAO.getAll();
-			Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
+
+			/*
+			 * newTutorCollectio - does not contain tutor repeating records,
+			 * contains only the basic details tutorArrayList - contains tutor
+			 * repeating records with all details
+			 */
+		Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
 			final ArrayList<Collection<String>> tutorArrayList = (ArrayList<Collection<String>>)  publicTutorDAO.getAll();
 			
 			if(tutorArrayList.size() == 0 ){
@@ -99,24 +104,33 @@ public class CmdPublicListTutors implements ICommand{
 
 					// if previous records are available: check whether a
 					// previous record is available or not
-					if (newTutorCollection.size() > 0) {
+					
+					int count = newTutorCollection.size();
+					if (count> 0) {
 
-						// checks whether the object exist or not
-					newTuorsIterator = newTutorCollection.iterator();
-						boolean status = newTuorsIterator
-								.equals(temporaryTutor);
-
-						if (newTuorsIterator
-								.equals(temporaryTutor)) {
-							// the same tutor record is available, do nothing
-							newTutorCollection.add(temporaryTutor);
-
-						} else {
-							// the tutor record does not available, so insert
-							// the temporary tutor record
-			
-
-						}
+						/*
+						 *  The new temporary arrayList record need to compare against 
+						 *  the newTutorCollection records before adding it. 
+						 *  This is used to remove the repeating records of the 
+						 *  tutor collection which is originally by the DAO class.
+						 *  
+						 *  The collection result set which is returned by the PublicTutorDAO class getAll() method 
+						 *  is already ordered by the Tutor CODE. Therefore it is assumed that only 
+						 */
+						
+						ArrayList<Collection<String>> newTutorList = (ArrayList<Collection<String>>) newTutorCollection;
+						ArrayList<String> compareArray = (ArrayList<String>) newTutorList.get(count-1);
+						
+						if (compareArray
+						.equals(temporaryTutor)) {
+					// the same tutor record is available, do nothing
+							log.info(">>>>>..................already exist" + temporaryTutor.toString());
+				} else {
+					// the tutor record does not available, insert the temporary tutor record
+					log.info(">>>>>..................doesn't exist" + temporaryTutor.toString());
+					newTutorCollection.add(temporaryTutor);
+				}
+						
 
 					} else {// no previous tutor records are available
 						newTutorCollection.add(temporaryTutor);
