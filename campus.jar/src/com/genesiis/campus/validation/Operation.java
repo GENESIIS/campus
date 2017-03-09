@@ -24,7 +24,10 @@ public enum Operation {
 	
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
 	LIST_STUDENT_DASHBOARD("LIST_STUDENT_DASHBOARD", ResponseType.JSP, "/dist/partials/student/student-dashboard.jsp"),		
-	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, "");
+	LIST_STUDENT_RECOMMENDED_PROGRAMMES("LIST_STUDENT_RECOMMENDED_PROGRAMMES", ResponseType.JSON, ""),
+	TEST_AJAX("TEST_AJAX", ResponseType.JSON,""),
+	TEST_FORM("TEST_FORM",ResponseType.JSP,"/dist/partials/student/student-dashboard.jsp");
+	
 			
 	private final String commandString;
 	private final ResponseType responseType;
