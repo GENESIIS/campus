@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20161205 PN c26-add-student-details: implementing execute() method.
 //20170105 PN CAM-28: edit user information: execute() method code modified with improved connection property management.
 //20170117 PN CAM-28: dao method call moved into try block.
+//20170309 PN CAM-150: execute() method modified to add AddressLine1, AddressLine2 and AddressLine3 separately. set 'studentDetails' collection to a view object to pass into the front end.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 			studentData.add(data.getMobilePhoneNo());
 			studentData.add(data.getLandPhoneNo());
 			studentData.add(data.getAddress1());
+			studentData.add(data.getAddress2());
+			studentData.add(data.getAddress3());
 			studentData.add(data.getTown());
 			studentData.add(data.getEmail());
 			studentData.add(data.getFacebookUrl());
@@ -115,6 +118,7 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 				connection.close();
 			}
 		}
+		view.setCollection(studentDetails);
 		helper.setAttribute("studentPersonalStatus", message);
 		return view;
 	}
