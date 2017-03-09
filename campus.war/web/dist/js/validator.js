@@ -16,6 +16,7 @@
  * //20170215 CW c38-view-update-tutor-profile modified validateTutorModifications() method modify validations for tutor status & Town details
  * //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password validations
  * //20170308 CW c38-view-update-tutor-profile add isHavingOnlySpaces method & modify isempty method to use isHavingOnlySpaces method
+ * //20170309 CW c38-view-update-tutor-profile modified the validations & set the fields & make the max length as same as database column length
  */
 
 /**
@@ -62,8 +63,7 @@ function isHavingOnlySpaces(strValue) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	//var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-	var pattern = ^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$;
+	var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	return isPatternMatch(pattern, emailAddress);
 }
 /**
@@ -161,7 +161,7 @@ function validateTutorModifications() {
 			flag = false;
 		}
 		
-		if (firstname.length > 20) {
+		if (firstname.length > 35) {
 			document.getElementById('firstNameError').innerHTML = "**Max length exceeded.";
 			document.getElementById('firstName').focus();
 			flag = false;
@@ -187,7 +187,7 @@ function validateTutorModifications() {
 			}
 		}
 		
-		if (middlename.length > 20) {
+		if (middlename.length > 35) {
 			document.getElementById('middleNameError').innerHTML = "**Max length exceeded.";
 			document.getElementById('middleName').focus();
 			flag = false;
@@ -211,7 +211,7 @@ function validateTutorModifications() {
 			flag = false;
 		}
 		
-		if (lastname.length > 20) {
+		if (lastname.length > 35) {
 			document.getElementById('lastNameError').innerHTML = "**Max length exceeded.";
 			document.getElementById('lastName').focus();
 			flag = false;
@@ -353,7 +353,7 @@ function validateTutorModifications() {
 			flag = false;
 		}
 
-		if (landCountryCode.length > 5) {
+		if (landCountryCode.length > 10) {
 			document.getElementById('landError').innerHTML = "**Max length exceeded.";
 			document.getElementById('mobileCountryCode').focus();
 			flag = false;
@@ -595,9 +595,9 @@ function validateTutorModifications() {
 			flag = false;
 		}
 	
-		if (weblink.length > 255) {
-			document.getElementById('weblinkError').innerHTML = "**Max length exceeded";
-			document.getElementById('weblink').focus();
+		if (email.length > 255) {
+			document.getElementById('emailError').innerHTML = "**Max length exceeded";
+			document.getElementById('email').focus();
 			flag = false;
 		}
 		
@@ -619,7 +619,7 @@ function validateTutorModifications() {
 			flag = false;
 		}
 			
-		if (username.length > 20) {
+		if (username.length > 100) {
 			document.getElementById('usernameError').innerHTML = "**User Name Max length exceeded.";
 			document.getElementById('username').focus();
 			flag = false;
