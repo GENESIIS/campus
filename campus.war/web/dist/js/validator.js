@@ -17,6 +17,7 @@
  * //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password validations
  * //20170308 CW c38-view-update-tutor-profile add isHavingOnlySpaces method & modify isempty method to use isHavingOnlySpaces method
  * //20170309 CW c38-view-update-tutor-profile modified the validations & set the fields & make the max length as same as database column length
+ * //20170309 CW c38-view-update-tutor-profile validate fields for spaces & if only space entered then assign null to those fields.
  */
 
 /**
@@ -149,7 +150,7 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if ((!isempty(firstname)) || firstname == " ") {
-			
+			document.getElementById('firstName').value = '';
 			document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 			document.getElementById('firstName').focus();
 			flag = false;
@@ -173,14 +174,7 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if (isempty(middlename)){
-			if (middlename == " ") {
-				
-				document.getElementById('middleNameError').innerHTML = "**Middle name cannot be empty.";
-				document.getElementById('middleName').focus();
-				flag = false;
-				
-			}else if(!(/^[A-Za-z\s\u002D]+$/.test(middlename))){
-				
+			if(!(/^[A-Za-z\s\u002D]+$/.test(middlename))){				
 				document.getElementById('middleNameError').innerHTML = "**Middle name can have only Characters & Spaces.";
 				document.getElementById('middleName').focus();
 				flag = false;
@@ -199,7 +193,8 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if ((!isempty(lastname)) || lastname == " ") {
-			
+
+			document.getElementById('lastName').value = '';
 			document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
 			document.getElementById('lastName').focus();
 			flag = false;
@@ -302,6 +297,7 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if (!isempty(mobileNetworkCode)) {
+			document.getElementById('mobileNetworkCode').value = '';
 			document.getElementById('mobileNetworkError').innerHTML = "**Mobile Network Code cannot be empty.";
 			document.getElementById('mobileNetworkCode').focus();
 			flag = false;
@@ -325,6 +321,7 @@ function validateTutorModifications() {
 		isModified = true;		
 
 		if (!isempty(mobileNumber)) {
+			document.getElementById('mobileNumber').value = '';
 			document.getElementById('mobileNumberError').innerHTML = "**Mobile Number cannot be empty.";
 			document.getElementById('mobileNumber').focus();
 			flag = false;
@@ -348,6 +345,7 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if (!isempty(landCountryCode)) {
+			document.getElementById('mobileCountryCode').value = '';
 			document.getElementById('landError').innerHTML = "**Country Code cannot be empty.";
 			document.getElementById('mobileCountryCode').focus();
 			flag = false;
@@ -371,6 +369,7 @@ function validateTutorModifications() {
 		isModified = true;
 		
 		if (!isempty(landAreaCode)) {
+			document.getElementById('landAreaCode').value = '';
 			document.getElementById('landAreaCodeError').innerHTML = "**Landphone Area code cannot be empty.";
 			document.getElementById('landAreaCode').focus();
 			flag = false;
@@ -394,6 +393,7 @@ function validateTutorModifications() {
 		isModified = true;		
 
 		if (!isempty(landNumber)) {
+			document.getElementById('landNumber').value = '';
 			document.getElementById('landNumberError').innerHTML = "**Landphone number cannot be empty.";
 			document.getElementById('landNumber').focus();
 			flag = false;
@@ -417,6 +417,7 @@ function validateTutorModifications() {
 		isModified = true;		
 
 		if (!isempty(address1)) {
+			document.getElementById('address1').value = '';
 			document.getElementById('address1Error').innerHTML = "**Please Fill Address";
 			document.getElementById('address1').focus();
 			flag = false;
@@ -584,6 +585,7 @@ function validateTutorModifications() {
 		
 		isModified = true;		
 		if (!isempty(email)) {
+			document.getElementById('email').value = '';
 			document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 			document.getElementById('email').focus();
 			flag = false;
@@ -614,6 +616,7 @@ function validateTutorModifications() {
 		
 		isModified = true;		
 		if (!isempty(username)) {
+			document.getElementById('username').value = '';
 			document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 			document.getElementById('username').focus();
 			flag = false;
