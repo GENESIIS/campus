@@ -5,6 +5,7 @@
 <!-- 20170226 added c103-send-email-tutor-status-modify the way Approve Status view  -->
 <!-- 20170308 c38-view-update-tutor-profile add validations not to display anything if the java script disabled -->
 <!-- 20170309 c38-view-update-tutor-profile modified the fields max value & make the max length as same as database column length -->
+<!-- 20170309 c38-view-update-tutor-profile modified Mobile & Land country code max length -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -183,7 +184,7 @@
 				<tr>
 					<td>Mobile</td>
 					<td><input type="text"
-						name="mobileCountryCode" id="mobileCountryCode" maxlength="5"
+						name="mobileCountryCode" id="mobileCountryCode" maxlength="10"
 						onchange="clearField('mobileError')" readonly value="${mobilephonecountrycode}" />
 						<span id="mobileError" style="color: red"> ${mobileError} </span></td>
 	
@@ -200,7 +201,7 @@
 				<tr>
 					<td>Land</td>
 					<td><input type="text"
-						name="landCountryCode" id="landCountryCode" maxlength="5"
+						name="landCountryCode" id="landCountryCode" maxlength="10"
 						onchange="clearField('landError')" readonly value="${landphonecountrycode}" />
 						<span id="landError" style="color: red"> ${landError} </span></td>
 	
