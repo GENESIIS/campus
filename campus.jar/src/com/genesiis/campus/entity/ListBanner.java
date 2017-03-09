@@ -1,6 +1,8 @@
 package com.genesiis.campus.entity;
 /*
  * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn ListBanner.java class has been created
+ * 				implemented getBanners(),BannerDisplayingInflator(),setResponseCridentials() methods
+ * 				And add documentation comments.
  */
 import org.jboss.logging.Logger;
 
