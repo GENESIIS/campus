@@ -27,6 +27,7 @@
 <!-- 20170205 PN CAM-150: onkeypress="isCountryEmpty()" method called on sTown text field. -->
 <!-- 20170206 PN CAM-150: added a red asterisk mark in-front of the required form field in about me model. -->
 <!-- 20170306 PN CAM-150: error class declared to for error span tags, to clear them inside clearPersonalDetailsForm() method. -->
+<!-- 20170309 PN CAM-150: new fields are added to in put AddressLine1, AddressLine2, AddressLine3 separately. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -438,9 +439,21 @@
                 </div>
 
                 <div class="show modal-input-field clearfix">                 
-                    <label>Address :</label>
-                    <input type="text" name="sAddress" id="sAddress" onclick="clearField('sAddressError')" maxlength="200">
-                    <span class="error-msg" id="sAddressError" name="sAddressError" style="color:red"></span>
+                    <label>Address Line 1:</label>
+                    <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="200">
+                    <span class="error-msg" id="sAddressLine1Error" name="sAddressLine1Error" style="color:red"></span>
+			    </div>
+			    
+			    <div class="show modal-input-field clearfix">                 
+                    <label>Address Line 2:</label>
+                    <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="200">
+                    <span class="error-msg" id="sAddressLine2Error" name="sAddressLine2Error" style="color:red"></span>
+			    </div>
+			    
+			    <div class="show modal-input-field clearfix">                 
+                    <label>Address Line 3:</label>
+                    <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="200">
+                    <span class="error-msg" id="sAddressLine3Error" name="sAddressLine3Error" style="color:red"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
