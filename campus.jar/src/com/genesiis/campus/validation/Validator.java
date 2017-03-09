@@ -47,6 +47,7 @@ package com.genesiis.campus.validation;
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 //20170226 CW Copied isEmptyOrHavingSpace() from c36-add-tutor-information.
 //20170226 CW c38-view-update-tutor-profile modified isHavingNullValues() to use isEmptyOrHavingSpace method
+//20170309 CW c38-view-update-tutor-profile modified the validations & set the fields & make the max length as same as database column length
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -272,7 +273,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName != " ") {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 36) && firstName != " ") {
 				valid = true;
 			}
 
@@ -294,7 +295,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName != " ") {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 36) && lastName != " ") {
 				valid = true;
 			}
 
@@ -318,7 +319,7 @@ public class Validator {
 			
 			int code = Integer.parseInt(countryCode);
 			
-			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6) && !(countryCode.equals("0"))) {
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 11) && !(countryCode.equals("0"))) {
 				valid = true;
 			}
 
@@ -370,7 +371,7 @@ public class Validator {
 
 			int code = Integer.parseInt(contactNumber);
 			
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber != " ") {
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 15) && contactNumber != " ") {
 				valid = true;
 			}
 
@@ -394,7 +395,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 != " ") {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 51) && addressLine1 != " ") {
 				valid = true;
 			}
 
@@ -485,7 +486,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 21)) {
+			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 101)) {
 				valid = true;
 			}
 
