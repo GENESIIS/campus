@@ -4,6 +4,7 @@
 <!-- 20170302 JH c96 INIT display-tutors.jsp with display-tutors.html page-->
 <!-- 20170306 JH c96 changed datatable javascipt file imports to the correct folder path -->
 <!-- 20170306 JH c96 added userMessage div section for alert messages  -->
+<!-- 20170309 JH c96 changed tutor table element id 'example' into 'tutorListTable' -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,122 +144,7 @@
                 <hr>
 					<div class="search-result-view clearfix">
 
-						<!-- 
-                    <table  class="table table-striped table-bordered dt-responsive" cellspacing="0" width="">
-                        <thead>
-                            <tr>
-                                <th>Profile</th>
-                                <th>Contact Details</th>
-                                <th>Subjects</th>
-                                <th>Qualifications</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    <div class="tutor-prof-image">
-                                        <a href="javascript:">
-                                            <img src="../../i/public/tutors/pfr-image.jpg" alt="">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-contact-details">
-                                        <a href="javascript:">Anil K Senadheera</a>
-                                        <h3>Mobile : 	<span>0777 123 456</span></h3>
-                                        <h3>Office  :	<span>011 7 123 456</span></h3>
-                                        <h3>Email :	<span>test@gmail.com</span></h3>
-                                        <h3>District :	<span>Colombo</span></h3>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-subjects">
-                                        <ul>
-                                            <li>- Mathematics </li>
-                                            <li>- Computer Science  </li>
-                                            <li>- ICT  </li>
-                                            <li>- Software Engineering </li>
-                                            <li>- Computer Science  </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-qualifications clearfix">
-                                        <label for="">Educational Area  :</label>
-                                        <ul>
-                                            <li>- School Education </li>
-                                            <li>- Higher Education </li>
-                                        </ul>
-
-                                        <label for="">Educational Area  :</label>
-                                        <ul>
-                                            <li> - BSc. Engineering</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- 1st row -->
-						<!-- 
-                            <tr>
-                                <td>
-                                    <div class="tutor-prof-image">
-                                        <a href="javascript:">
-                                            <img src="../../i/public/tutors/pfr-image.jpg" alt="">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-contact-details">
-                                        <a href="javascript:">Anil K Senadheera</a>
-                                        <h3>Mobile : 	<span>0777 123 456</span></h3>
-                                        <h3>Office  :	<span>011 7 123 456</span></h3>
-                                        <h3>Email :	<span>test@gmail.com</span></h3>
-                                        <h3>District :	<span>Colombo</span></h3>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-subjects">
-                                        <ul>
-                                            <li>- Mathematics </li>
-                                            <li>- Computer Science  </li>
-                                            <li>- ICT  </li>
-                                            <li>- Software Engineering </li>
-                                            <li>- Computer Science  </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="t-qualifications clearfix">
-                                        <label for="">Educational Area  :</label>
-                                        <ul>
-                                            <li>- School Education </li>
-                                            <li>- Higher Education </li>
-                                        </ul>
-
-                                        <label for="">Educational Area  :</label>
-                                        <ul>
-                                            <li> - BSc. Engineering</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- 1st row -->
-						<!-- 
-                            <tr>
-                                <th>Profile</th>
-                                <th>Contact Details</th>
-                                <th>Subjects</th>
-                                <th>Qualifications</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    -->
-
-
-
-						<table id="example"
+						<table id="tutorListTable"
 							class="table table-striped table-bordered dt-responsive"
 							cellspacing="0" width="">
                     <thead>

@@ -2,6 +2,7 @@
  * 20170302 JH c96 public-list-tutor-helper.js created to help list tutors for the public
  * 20170306 JH c96 removed unwanted lines and display tutor image with static system config file path, added new method selectTutorRecord(code),
  * 					load tutor images using system config file path with loading default image on error source,show error messages on AJAX calls
+ * 20170309 JH c96 changed the tutor table element id 'example' into 'tutorListTable' due to changes in jsp page
  */
 
 window.tutorList = null;
@@ -33,7 +34,7 @@ function listPublicTutors(){
 				
 
 				DisplayTutorTable();
-			    $('#example tbody').on('click', 'tr', function () {
+			    $('#tutorListTable tbody').on('click', 'tr', function () {
 			  	  var tutorCode = $(this).find("td:first").html();
 				   
 				   alert("will direct to tutor public profile. and the tutor is " + tutorCode);
@@ -88,7 +89,7 @@ function selectTutorRecord(){
  * @author JH
  */
 function DisplayTutorTable(){
-	var t =  $('#example').DataTable();
+	var t =  $('#tutorListTable').DataTable();
 	var tutors = window.tutorList;
 	var rowCount = 0;
 	var tutorImagePath = window.tutorProfileImagePath;
