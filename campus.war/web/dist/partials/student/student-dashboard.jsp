@@ -32,6 +32,7 @@
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 
+<script src='/dist/js/sampleTesting.js'></script>
 </head>
 
 <body>
@@ -137,6 +138,7 @@
 										</c:forEach>
 									</div></td>
 									
+									
 							</tr>
 							<!-- End Notes -->
 						</table>
@@ -148,7 +150,12 @@
 					<div class="widget w-about-me clearfix">
 						<div class="widget-header">
 							<label for="About">About</label>
-							<button >Edit</button>
+							<button id="testingAjax" name="CCO" id="CCO" value="TEST_AJAX" onclick="ajaxTesting();"> Ajax call</button>
+							
+							<form class="submit-form" method="POST" action="../../../../StudentController">
+							
+							<button type="submit" id="testingForm" name="CCO" id="CCO" value="TEST_FORM" >Form submition</button>
+							</form>
 						</div>
 						<!-- End widget header -->
 
