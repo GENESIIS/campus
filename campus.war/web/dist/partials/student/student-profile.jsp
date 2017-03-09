@@ -28,6 +28,7 @@
 <!-- 20170206 PN CAM-150: added a red asterisk mark in-front of the required form field in about me model. -->
 <!-- 20170306 PN CAM-150: error class declared to for error span tags, to clear them inside clearPersonalDetailsForm() method. -->
 <!-- 20170309 PN CAM-150: new fields are added to in put AddressLine1, AddressLine2, AddressLine3 separately. -->
+<!-- 20170309 PN CAM-150: 'About me model' text field lengths are modified. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -380,19 +381,19 @@
       		<div class="well clearfix">
       		    <div class="show modal-input-field clearfix">
                     <label>First Name : <span style="color:red">*</span></label>
-                    <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="200">
+                    <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="99">
                     <span class="error-msg" id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Middle Name : </label>
-                    <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="200">
+                    <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="99">
                     <span class="error-msg" id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Last Name : <span style="color:red">*</span></label>
-                    <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="200">
+                    <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="99">
                     <span class="error-msg" id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
 			    </div>
 
@@ -412,7 +413,7 @@
 
 			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left">About :</label>
-                    <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="200"></textarea>
+                    <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="499"></textarea>
                     <span class="error-msg" id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
 			    </div>
 			</div>
@@ -440,19 +441,19 @@
 
                 <div class="show modal-input-field clearfix">                 
                     <label>Address Line 1:</label>
-                    <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="200">
+                    <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="49">
                     <span class="error-msg" id="sAddressLine1Error" name="sAddressLine1Error" style="color:red"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 2:</label>
-                    <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="200">
+                    <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="49">
                     <span class="error-msg" id="sAddressLine2Error" name="sAddressLine2Error" style="color:red"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 3:</label>
-                    <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="200">
+                    <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="49">
                     <span class="error-msg" id="sAddressLine3Error" name="sAddressLine3Error" style="color:red"></span>
 			    </div>
 
@@ -482,31 +483,31 @@
 
                 <div class="show modal-input-field clearfix">
                     <label>Facebook URL :</label>
-                    <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="200" placeholder="www.facebook.com/username">
+                    <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="199" placeholder="www.facebook.com/username">
                     <span class="error-msg" id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Twitter URL :</label>
-                    <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="200" placeholder="www.twitter.com/username">
+                    <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="199" placeholder="www.twitter.com/username">
                     <span class="error-msg" id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>LinkedIn URL :</label>
-                    <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="200" placeholder="www.linkedin.com/username">
+                    <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="199" placeholder="www.linkedin.com/username">
                     <span class="error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Instagram URL :</label>
-                    <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="200" placeholder="www.instagram.com/username">
+                    <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="199" placeholder="www.instagram.com/username">
                     <span class="error-msg" id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>MySpace :</label>
-                    <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="200" placeholder="www.myspace.com/username">
+                    <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="199" placeholder="www.myspace.com/username">
                     <span class="error-msg" id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
 			    </div>
 
