@@ -21,22 +21,48 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>mainController</servlet-name>
-		<servlet-class>CampusController</servlet-class>
+		<description></description>
+		<display-name>PublicController</display-name>
+		<servlet-name>PublicController</servlet-name>
+		<servlet-class>com.genesiis.campus.publicController.PublicController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicController</servlet-name>
+		<url-pattern>/PublicController</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+	<description></description>
+		<display-name>CampusController</display-name>
+		<servlet-name>CampusController</servlet-name>
+		<servlet-class>com.genesiis.campus.controller.CampusController</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>mainController</servlet-name>
+		<servlet-name>CampusController</servlet-name>
 		<url-pattern>/CampusController</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<filter> -->
-<!-- 		<filter-name>cacheFilter</filter-name> -->
-<!-- 		<filter-class>NoCacheFilter</filter-class> -->
-<!-- 	</filter> -->
+<servlet>
+		<description></description>
+		<display-name>LoginController</display-name>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.genesiis.campus.loginController.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
 
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>cacheFilter</filter-name> -->
-<!-- 		<url-pattern>/NoCacheFilter</url-pattern> -->
-<!-- 	</filter-mapping> -->
+
+	<filter>
+		<filter-name>NoCacheFilter</filter-name>
+		<filter-class>com.genesiis.campus.loginController.NoCacheFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>NoCacheFilter</filter-name>
+		<url-pattern>/NoCacheFilter</url-pattern>
+	</filter-mapping>
 </web-app>
