@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //20161122 PN c27-upload-user-image: added new attributes to the Enum
 //20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
 //20161220 PN CAM-28: added new attributes to the Enum FAILDTODELETE,FAILDTOUPDATE,NODETAILSTOUPDATE,NODETAILSTODELETE 
+//20170310 PN CAM-150: added new attribute to the Enum INVALID_LOCALE_DETAILS.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -88,6 +89,7 @@ public enum SystemMessage {
 	FILE_SIZE_EXCEEDED("Uploaded file is too Large. Please upload a smaller file."),
 	IS_NOT_NUMERIC("Enter in a numeric value please"),
 	INVALID_DURATION_FORMAT("Enter in a duration with format: 4y 3m 2d"),	
+	INVALID_LOCALE_DETAILS("Invalid Country or Town value selected."),
 	/**
 	 * json: key: successful
 	 * **/
