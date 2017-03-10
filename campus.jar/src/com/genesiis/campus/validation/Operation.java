@@ -31,6 +31,7 @@ package com.genesiis.campus.validation;
 //20170213 DN CAM-131 UPLOAD_BANNER_IMAGE_CREDENTIALS enum value is added.
 //20170215 DN CAM-131 BANNER_CREDENTIALS enum value declared.
 //            UPLOAD_BANNER_IMAGE_CREDENTIALS -->UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER
+//20170310 DN c81-admin-manage-banner-add-and-view-banner-dn ADMIN_DISPLAY_BANNERS enum is added to the class
 
 /**
  * Operation class facilitate in binding the CCO
@@ -58,7 +59,8 @@ public enum Operation {
 	DISPLAY_BANNER_MANAGER_ONLOAD_PAGE_DATA("DBPDOL",ResponseType.JSON,""),
 	UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE("LSPBSLT",ResponseType.JSON,""),
 	UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER("UBIMBA",ResponseType.JSON,""),
-	UPLOAD_FULL_BANNER_CREDENTIALS("UFBCR",ResponseType.JSON,""), 
+	UPLOAD_FULL_BANNER_CREDENTIALS("UFBCR",ResponseType.JSON,""),
+	ADMIN_DISPLAY_BANNERS("ADDISBNRS",ResponseType.JSON,""),
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
 			
 	private final String commandString;
