@@ -55,7 +55,7 @@
 					<span class="form-intro">Please fill the form below to add a course provider (Complete all sections)</span>
 				</h2>
 				
-				<form name="addCourseForm" class="form form-admin has-error-form" method="POST" action="/dist/partials/admin/courseProviderManagement.jsp">	
+				<form name="addCourseForm" class="form form-admin has-error-form" method="POST" action="">	
 				
 					<div class="alert alert-danger fade in">
 						Please correct all highlighted errors and try again
@@ -409,10 +409,24 @@
 					</div>	
 					
 					<div class="row clearfix">
-						<button type="submit" class="btn btn-register pull-right"><i class="fa fa-floppy-o" aria-hidden="true"></i> Add Course provider </button>
+						<button type="button" class="btn btn-register pull-right"><i class="fa fa-times fa-3x" aria-hidden="true"></i> Add Course provider </button>
 					</div>
 					
 				</form>	
+				
+				<div id="upload-logo-modal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+								<h4 class="modal-title">Upload Course Provider Logo</h4>
+							</div>
+							<div class="modal-body">
+								This is the test modal pop-up.
+							</div>
+							<div class="modal-footer"></div>
+						</div>
+					</div>
+				</div>
 				
 			</div>				
 		</div>

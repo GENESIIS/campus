@@ -25,4 +25,9 @@ $(document).ready(function () {
     // Admin Forms - Bootstrap Tooltip - Dimuthu Kalyanaratne 24022017
     $('[data-toggle="tooltip"]').tooltip();  
     
+ // Admin Forms - Bootstrap Modal - Dimuthu Kalyanaratne 24022017
+    jQuery(".btn-register").click(function(){
+		jQuery('#upload-logo-modal').modal('show');
+	});
+    
 });
