@@ -51,8 +51,7 @@ public enum SystemConfig {
 	VRTICL_BNR1_160_1600("160","1600",""),
 	VRTICL_BNR1_180_150("180","150",""),
 	VRTICL_BNR2_180_150("180","150",""),
-	BANNER_IMAGE_SIZE("3","",""),
-	
+	BANNER_IMAGE_SIZE("3","",""),	
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 	
 	
