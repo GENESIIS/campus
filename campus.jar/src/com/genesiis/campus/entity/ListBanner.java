@@ -3,6 +3,9 @@ package com.genesiis.campus.entity;
  * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn ListBanner.java class has been created
  * 				implemented getBanners(),BannerDisplayingInflator(),setResponseCridentials() methods
  * 				And add documentation comments.
+ *  20170309 DN c81-admin-manage-banner-add-and-view-banner-dn
+ * 				addAttribute(IDataHelper,String,Object) and addToTheInnerCollection(Collection<Collection<String>>)
+ * 				implemented
  */
 import org.jboss.logging.Logger;
 
@@ -31,7 +34,11 @@ public class ListBanner {
 	private int successCode =0;
 	private String message="";
 	
-	
+	/**
+	 * ListBanner constructor that accepts a IDataHelper
+	 * instance and binds to the ListBanner itself.
+	 * @param helper
+	 */
 	public ListBanner(IDataHelper helper){
 		this.helper = helper;
 	}
@@ -85,6 +92,29 @@ public class ListBanner {
 		bannerDisplayCredential.setActiveInactiveStatus(helper.getParameter("activeInactiveStatus"));
 		return bannerDisplayCredential;
 		
+	}
+	/**
+	 * addToTheInnerCollection method add element to the innerCollection
+	 * @param wraper
+	 * @param value
+	 * @return boolean true if adding is successfull else false
+	 */
+	public boolean addToTheInnerCollection(Collection<Collection<String>> wraper,String value) {
+		boolean addingSuccess =false;
+		for(Collection<String> innerCol:wraper ){
+			addingSuccess=innerCol.add(value);
+		}
+		return addingSuccess;
+	}
+	
+	/**
+	 * addAttribute method sets the request attribute
+	 * @param helper
+	 * @param attributeName
+	 * @param attribute
+	 */
+	public void addAttribute(IDataHelper helper,String attributeName,Object attribute){
+		helper.setAttribute(attributeName,attribute);
 	}
 	
 	/*
