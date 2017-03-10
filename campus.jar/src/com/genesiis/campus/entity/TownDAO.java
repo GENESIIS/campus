@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+//20170310 PN CAM-150: isTownExists(int townCode) method implemented to validate town value.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -142,6 +143,48 @@ public class TownDAO implements ICrud{
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	/**
+	 * 	This method will check and validate if the country entered is a valid value.
+	 * @param townCode
+	 * @return true; if town value found in [CAMPUS].[TOWN] table.
+	 */
+	public static boolean isTownExists(int townCode) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int count = -1;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT count(*) from [CAMPUS].[TOWN] WHERE [CODE] = ?;";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, townCode);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException sqlException) {
+			log.error("isCountryExists(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("isCountryExists(): E " + e.toString());
+			throw e;
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return (count > 0) ? true : false;
 	}
 
 }
