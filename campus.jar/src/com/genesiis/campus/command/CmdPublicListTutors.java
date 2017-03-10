@@ -111,9 +111,9 @@ public class CmdPublicListTutors implements ICommand{
 			Map categoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			Map majorMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			
-			// array lists to store values for maps
-			ArrayList<ArrayList<String>> categoryList = new ArrayList<ArrayList<String>>();
-			ArrayList<ArrayList<String>> majorList = new ArrayList<ArrayList<String>>();
+			
+			ArrayList<ArrayList<String>> categoryList =  null;
+			ArrayList<ArrayList<String>> majorList = null;
 			
 			Iterator resultIterator = tutorArrayList.iterator();
 			Iterator newTuorsIterator = newTutorCollection.iterator();
@@ -156,27 +156,8 @@ public class CmdPublicListTutors implements ICommand{
 				temporaryCategory.add(singleList.get(12));
 				temporaryCategory.add(singleList.get(13));
 				
-				
-				//retrieves category list related to a tutor code
-				ArrayList<ArrayList<String>> tutorCategoryList = new ArrayList<ArrayList<String>>();
-				tutorCategoryList = (ArrayList<ArrayList<String>>) categoryMap.get(code);
-				if(tutorCategoryList != null){
-//					for(ArrayList<String> singlecateory : tutorCategoryList){
-						
-						// a record for that category exist
-						if(tutorCategoryList.equals(temporaryCategory)){
-							log.info(">>>>>.................. category already exist" + temporaryCategory.toString());
-							
-						}else{// need to insert that category for the tutor
-							log.info(">>>>>.................. category doesn't exist" + temporaryCategory.toString());
-							categoryMap.put(code, temporaryCategory);
-						}
-//					}
-				}else{
-					log.info(">>>>>.................. category map" + temporaryCategory.toString());
-					categoryMap.put(code, temporaryCategory);
-				}
 
+				
 				// if previous records are available: check whether a
 				// previous record is available or not
 				
@@ -197,15 +178,40 @@ public class CmdPublicListTutors implements ICommand{
 					ArrayList<Collection<String>> newTutorList = (ArrayList<Collection<String>>) newTutorCollection;
 					ArrayList<String> compareArray = (ArrayList<String>) newTutorList.get(count-1);
 					
-					if (compareArray
-					.equals(temporaryTutor)) {
-				// the same tutor record is available, do nothing
+					if (compareArray.equals(temporaryTutor)) {
+						// the same tutor record is available, do nothing
 						log.info(">>>>>..................already exist" + temporaryTutor.toString());
-			} else {
-				// the tutor record does not available, insert the temporary tutor record
-				log.info(">>>>>..................doesn't exist" + temporaryTutor.toString());
-				newTutorCollection.add(temporaryTutor);
-			}
+						
+						//retrieves category list related to a tutor code
+						ArrayList<ArrayList<String>> tutorCategoryList = (ArrayList<ArrayList<String>>) categoryMap.get(code);
+						if(tutorCategoryList != null){
+//							for(ArrayList<String> singlecateory : tutorCategoryList){
+								
+								// a record for that category exist
+								if(tutorCategoryList.equals(temporaryCategory)){
+									log.info(">>>>>.................. category already exist" + temporaryCategory.toString());
+									
+								}else{// need to insert that category for the tutor
+									log.info(">>>>>.................. category doesn't exist" + temporaryCategory.toString());
+									//categoryList.add(temporaryCategory);
+								}
+//							}
+						}else{
+							log.info(">>>>>.................. category map" + temporaryCategory.toString());
+							categoryMap.put(code, temporaryCategory);
+						}
+						
+					} else {
+						// the tutor record does not available, insert the temporary tutor record
+						log.info(">>>>>..................doesn't exist" + temporaryTutor.toString());
+						newTutorCollection.add(temporaryTutor);
+						
+						// create new array lists to store values for maps for new tutor
+						categoryList = new ArrayList<ArrayList<String>>();
+						majorList = new ArrayList<ArrayList<String>>();
+						
+						categoryList.add(temporaryCategory);
+					}
 					
 
 				} else {// no previous tutor records are available
@@ -213,6 +219,7 @@ public class CmdPublicListTutors implements ICommand{
 				}
 
 			}
+			categoryMap.put(code, categoryList);
 			log.info("category map " + categoryMap.toString());
 
 		return newTutorCollection;
