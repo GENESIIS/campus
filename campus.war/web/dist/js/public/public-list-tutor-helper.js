@@ -3,6 +3,7 @@
  * 20170306 JH c96 removed unwanted lines and display tutor image with static system config file path, added new method selectTutorRecord(code),
  * 					load tutor images using system config file path with loading default image on error source,show error messages on AJAX calls
  * 20170309 JH c96 changed the tutor table element id 'example' into 'tutorListTable' due to changes in jsp page
+ * 20170310 JH c96 selectTutorRecord() method modified to display tutor private details with mobile, office, email and the town details wip
  */
 
 window.tutorList = null;
@@ -112,14 +113,18 @@ function DisplayTutorTable(){
 							imageFile = fileSeparator + tutorImagePath + fileSeparator + value[0] + fileSeparator + value[0]+extension;
 							onErroImage = fileSeparator + tutorImagePath + fileSeparator + defaultImage + extension;
 							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'">';
+							value2 = '<div> <div style="color:blue;"> ' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</div>'
+							+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
+							+ '<div> <label>Office : </label> ' + value[5]+ value[8]+ ' '+  value[9]+'</div>'
+							+ '<div> <label>Email : </label> ' + value[4] +'</div>'
+							+ '<div> <label>Town : </label> ' + value[19]+ '</div><div>';							
 	
 t.row.add(
 									[
 									 
 value[0],
 											value1,
-											value[1] + '&nbsp;' + value[2]
-													+ '&nbsp;' + value[3],
+											value2,
 											value[4],
 											value[5]
 
