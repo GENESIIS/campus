@@ -31,7 +31,7 @@ function loadBanners(){
 		type:'POST',
 		url:'',
 		data:{
-			CCO					:"DABNRS", //Display All Banners
+			CCO					:"ADDISBNRS", //Admin Display Banners
 			commencingDate		:$('#startDate').val(),
 			cessationDate		:$('#endtDate').val(),
 			activeInactiveStatus:$('input:radio[name=bannerStatus]:checked').val()
@@ -41,7 +41,7 @@ function loadBanners(){
 			// call the function that populates the table based on supplied data
 			if(response.result.length===0)
 				displayLabelMessage('messagePopUp','displayLabel','green',"No records to display !");
-			populateBannerTable(response.result);
+			populateBannerTable(response.result,response.bannerWarPath);
 			
 		},
 		error:function(allBanners,error,errorThrown){
@@ -68,13 +68,16 @@ function loadBanners(){
  * 		  extracted from the repository.
  * @returns null if the Array of array is 
  */
-function populateBannerTable(allBannerRecords){
+function populateBannerTable(allBannerRecords,bannerWarPath){
 	
-	if(allBannerRecords.length === 0)
+	if(allBannerRecords.length === 0){
 		return null;
+	}
+		
 	
 	// assigning all the banner records to the global variable.
 	bannerArray = allBannerRecords;
+	var bannerImageWarPath = bannerWarPath;
 		/*
 		 * allBannerRecords forms a structure similar to bellow
 		 * [[a1,b1,c1],[a2,b2,c2],[a3,b3,c3],...,[an,bn,cn]].
@@ -93,7 +96,7 @@ function populateBannerTable(allBannerRecords){
 			var imageName =aRow[1];
 			var bannerActivateDate=aRow[1];
 			var bannerDeactivateDate = null;
-			var url ='#';
+			var url =bannerImageWarPath+"/"+imageName;
 			var markUp = "<tr id='rowId"+rowNumber+"'><td> From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
 					markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
 										"<input type='submit' name="" class='editRow' id='CCO' value='ADMEDTBNR'>" +//ADMIN EDIT BANNER
@@ -138,3 +141,5 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 	
 }
+
+
