@@ -342,19 +342,19 @@ public class AdminBannerDAO implements ICrudSibling {
 			while(resultSet.next()){
 				
 				Collection<String> innerCol = new ArrayList<String>();				
-				innerCol.add(resultSet.getString("CODE"));
-				innerCol.add(resultSet.getString("IMAGE"));
-				innerCol.add(resultSet.getString("DISPLAYDURATION"));
-				innerCol.add(resultSet.getString("LINKTYPE"));
-				innerCol.add(resultSet.getString("URL"));
-				innerCol.add(resultSet.getString("PAGESLOT"));
-				innerCol.add(resultSet.getString("NAME PAGESLOT_NAME"));
-				innerCol.add(resultSet.getString("ISACTIVE"));
-				innerCol.add(resultSet.getString("ACTIVATIONDATE"));
-				innerCol.add(resultSet.getString("EXPIRATIONDATE"));
-				innerCol.add(resultSet.getString("ADVERTISER"));
-				innerCol.add(resultSet.getString("ADVERTISER_NAME"));
-				innerCol.add(resultSet.getString("CODE"));
+				innerCol.add(resultSet.getString("CODE"));	//0
+				innerCol.add(resultSet.getString("IMAGE"));	//1
+				innerCol.add(resultSet.getString("DISPLAYDURATION")); //2
+				innerCol.add(resultSet.getString("LINKTYPE")); //3
+				innerCol.add(resultSet.getString("URL"));  //4
+				innerCol.add(resultSet.getString("PAGESLOT")); //5
+				innerCol.add(resultSet.getString("NAME PAGESLOT_NAME")); //6
+				innerCol.add(resultSet.getString("ISACTIVE"));//7
+				innerCol.add(resultSet.getString("ACTIVATIONDATE")); //8
+				innerCol.add(resultSet.getString("EXPIRATIONDATE")); //9
+				innerCol.add(resultSet.getString("ADVERTISER"));	//10
+				innerCol.add(resultSet.getString("ADVERTISER_NAME")); //11
+				
 				outerWrapper.add(innerCol);
 			}
 			
