@@ -5,6 +5,7 @@
  * 20170306 PN CAM-150: validateStudentPersonalDetails() method modified to validate empty date of birth.
  * 20170309 PN CAM-150: addStudentPersonalDetails() method and clearPersonalDetailsForm() method modified to display AddressLine1, AddressLine2, AddressLine3 separately.
  * 20170309 PN CAM-150: populatePersonalDataformElements() method implementation modified by adding validation to check if the student details collection is updated, empty or null.
+ * 20170310 PN CAM-150: addStudentPersonalDetails() method modified by adding if-else condition.
  */
 
 
@@ -527,32 +528,29 @@ function addStudentPersonalDetails() {
 					success : function(data) {
 						if (data.studentPersonalStatus) {
 							studentPersonalDataSet = data.result;
-							if (data.studentPersonalStatus === "Unsuccessful.") {
+							if (data.studentPersonalStatus === "Details updated successfully." || data.studentPersonalStatus === "Details added successfully.") {
+								$.each(studentPersonalDataSet, function(index, value) {
+									$('#fullname-hedding').html(value[4] + ' ' + value[5] +' '+ value[6]);
+									$('#td-value-username').html("<b>" + value[1] + "</b>");
+									$('#td-value-fullname').html(value[4] + ' ' + value[5] + ' ' + value[6]);
+									$('#td-value-birthday').html(value[7]);
+									$('#td-value-gender').html(getGenderString(parseInt(value[8])));
+									$('#td-value-email').html(value[9]);
+									$('#td-value-country').html(value[30]);
+									$('#td-value-town').html(value[31]);
+									$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
+									$('#td-value-fbprofile').html(value[18]);
+									$('#td-value-mobileno').html(value[11] + '-' + value[16]);
+									$('#td-value-aboutme').html(value[17]);
+								});
+								
 								alert(data.studentPersonalStatus);
+								$('#studentPersonalDetailsModal').modal('hide');
 								return;
-							} else if (data.studentPersonalStatus === "Invalid Information") {
+							} else {
 								alert(data.studentPersonalStatus);
 								return;
 							}
-							
-							$.each(studentPersonalDataSet, function(index, value) {
-								$('#fullname-hedding').html(value[4] + ' ' + value[5] +' '+ value[6]);
-								$('#td-value-username').html("<b>" + value[1] + "</b>");
-								$('#td-value-fullname').html(value[4] + ' ' + value[5] + ' ' + value[6]);
-								$('#td-value-birthday').html(value[7]);
-								$('#td-value-gender').html(getGenderString(parseInt(value[8])));
-								$('#td-value-email').html(value[9]);
-								$('#td-value-country').html(value[30]);
-								$('#td-value-town').html(value[31]);
-								$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
-								$('#td-value-fbprofile').html(value[18]);
-								$('#td-value-mobileno').html(value[11] + '-' + value[16]);
-								$('#td-value-aboutme').html(value[17]);
-							});
-							
-							alert(data.studentPersonalStatus);
-							$('#studentPersonalDetailsModal').modal('hide');
-							return;
 						}
 					},
 					error : function(e) {
