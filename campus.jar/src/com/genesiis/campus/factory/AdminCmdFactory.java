@@ -17,9 +17,11 @@ package com.genesiis.campus.factory;
 //            accordingly.
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_CREDENTIALS  map entry added,changed the getCommand()
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn UPLOAD_BANNER_IMAGE_CREDENTIALS -->UPLOAD_BANNER_IMAGE_BY_ADMIN
+//20170310 DN c81-admin-manage-banner-add-and-view-banner-dn ADMIN_DISPLAY_BANNERS has been added to map.
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
+import com.genesiis.campus.command.CmdListBanner;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -36,6 +38,8 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.UPLOAD_BANNER_SLOT_ON_BANNER_MANAGER_PAGE, new CmdBannerPreRequisite());
 		map.put(Operation.UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER, new CmdAdminBannerUpload());
 		map.put(Operation.UPLOAD_FULL_BANNER_CREDENTIALS,new CmdAdminBannerUpload());
+		map.put(Operation.ADMIN_DISPLAY_BANNERS, new CmdListBanner());
+		
 	}
 
 	@Override
