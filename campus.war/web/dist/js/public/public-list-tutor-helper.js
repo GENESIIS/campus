@@ -29,6 +29,7 @@ function listPublicTutors(){
 		async : false,
 		success : function(response) {
 
+
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
 				window.tutorProfileImagePath = response.tutorProfileImagePath;
@@ -109,6 +110,9 @@ function DisplayTutorTable(){
 							 rowCount++;
 							var value1 = null;
 							var hiddenCode = '<input type="hidden" name="tutorCode" id="tutorCode" value="'+ value[0] +'">';
+							var value2 = null;
+							var value3 =  null;
+							var value4 = null;
 							
 							imageFile = fileSeparator + tutorImagePath + fileSeparator + value[0] + fileSeparator + value[0]+extension;
 							onErroImage = fileSeparator + tutorImagePath + fileSeparator + defaultImage + extension;
@@ -117,7 +121,9 @@ function DisplayTutorTable(){
 							+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
 							+ '<div> <label>Office : </label> ' + value[5]+ value[8]+ ' '+  value[9]+'</div>'
 							+ '<div> <label>Email : </label> ' + value[4] +'</div>'
-							+ '<div> <label>Town : </label> ' + value[19]+ '</div><div>';							
+							+ '<div> <label>Town : </label> ' + value[19]+ '</div><div>';	
+							
+							
 	
 t.row.add(
 									[
