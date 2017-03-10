@@ -18,6 +18,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin View Banner</title>
 
+<style type="text/css">    
+    table{
+        width: 100%;
+        margin-bottom: 20px;
+		border-collapse: collapse;
+    }
+    table, th, td{
+        border: 1px solid #cdcdcd;
+    }
+    table th, table td{
+        padding: 10px;
+        text-align: left;
+    }
+</style>
+
 <!-- Bootstrap & CSS Style-->
     <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
@@ -80,18 +95,26 @@
    <br><br>
    <input type="button" value="Search">
    <!-- banner records will be displayed here -->
-   <table width="100%" border=1>
-	   <tr>
-	     <td>
-	       From:2017-03-08 |To:2017-04-07
-	       <br><br>
-	       <button class="rowEditButon"> Edit</button>
-	     </td>
-	     <td>
-	       <img id="bnnerImage"  src="/dist/i/higher-education/slider-bg-1.jpg"   alt="banner-Image" style="width:400px;hight:50px">
-	       
-	     </td>
-	   </tr>
+   <table >
+	   	<thead>
+	            <tr>
+	                <th>Banner Information</th>
+	                <th>Banner Image</th>
+	            </tr>
+	     </thead>
+	      <tbody>
+		    <tr>
+		     <td>
+		       From:2017-03-08 |To:2017-04-07
+		       <br><br>
+		       <button class="rowEditButon"> Edit</button>
+		     </td>
+		     <td>
+		       <img id="bnnerImage"  src="/dist/i/higher-education/slider-bg-1.jpg"   alt="banner-Image" style="width:400px;hight:50px">
+		       
+		     </td>
+		   </tr>
+	      <tbody>	   
    </table>
 
 </body>
