@@ -20,7 +20,15 @@ function ajaxTesting(){
 			dataType : "json",
 			success : function(response) {
 			
-				window.location = response.url;
+				window.location = response.redirectURL;
+			},
+			
+			complete: function(response, status) {
+//				if(status==200){
+//					
+//				}else{
+//				window.location = response.redirectURL;
+//				}
 			},
 			error : function(e) {
 				 alert("Error " + e);
