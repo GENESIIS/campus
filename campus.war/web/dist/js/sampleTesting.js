@@ -19,7 +19,7 @@ function ajaxTesting(){
 			},
 			dataType : "json",
 			success : function(response) {
-				alert(response.result);
+			
 				window.location = response.url;
 			},
 			error : function(e) {

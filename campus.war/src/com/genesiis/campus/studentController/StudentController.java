@@ -7,6 +7,7 @@ import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.apache.log4j.Logger;
 
@@ -63,12 +64,15 @@ public class StudentController extends CampusController {
 					response.sendRedirect("http://www.campus.dev:8080/dist/partials/error/error-content.jsp");
 				}else if(ResponseType.JSON.equals(responseType)){
 				//	JSONObject jobj = new JSONObject();
+			//		JsonObject myObj = new JsonObject();
 			//		Gson gson = new Gson();
-			//		String urlToRedirect = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
-			//		gson.put("url",urlToRedirect);
-			//		response.getWriter().write(gson.toJson("url",urlToRedirect));
-					
-					response.setHeader("Location", "http://www.campus.dev:8080/dist/partials/error/error-content.jsp");
+					String urlToRedirect = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
+				//	myObj.add("url",urlToRedirect);
+				//	response.getWriter().write(myObj.("url",urlToRedirect));
+					response.setIntHeader("Refresh", 0);
+				//	response.setHeader("Location", "http://www.campus.dev:8080/dist/partials/error/error-content.jsp");
+			
+					 response.getWriter().write("{ url: '" + urlToRedirect + "' }");
 				}
 				
 			}else{
