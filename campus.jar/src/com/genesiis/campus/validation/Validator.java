@@ -52,6 +52,7 @@ package com.genesiis.campus.validation;
 //20170309 CW c38-view-update-tutor-profile removed isValidFirstname, isValidLastname methods & add isValidName method to replace both of them
 				// modified validateTutorFields to use isValidName method
 				// modified isValidNetworkCode, isValidContactNumber, isValidAddressLine1, isValidUserNameLength method to use isEmptyOrHavingSpace method
+//20170311 CW c38-view-update-tutor-profile modified isValidUserNameLength method to validate username length correctly
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -446,7 +447,7 @@ public class Validator {
 	 * @return boolean to validate email address.
 	 **/
 	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
@@ -463,7 +464,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isEmptyOrHavingSpace(username)) && (username.length() > 5) && (username.length() < 101)) {
+			if ((!isEmptyOrHavingSpace(username)) && (username.length() > 5) && (username.length() < 101)) {
 				valid = true;
 			}
 
