@@ -18,6 +18,7 @@
  * //20170308 CW c38-view-update-tutor-profile add isHavingOnlySpaces method & modify isempty method to use isHavingOnlySpaces method
  * //20170309 CW c38-view-update-tutor-profile modified the validations & set the fields & make the max length as same as database column length
  * //20170309 CW c38-view-update-tutor-profile validate fields for spaces & if only space entered then assign null to those fields.
+ * //20170311 CW c38-view-update-tutor-profile modified isValidEmailFormat method to fix email validation errors
  */
 
 /**
@@ -64,9 +65,10 @@ function isHavingOnlySpaces(strValue) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
 	return isPatternMatch(pattern, emailAddress);
 }
+
 /**
  * Validate URL
  * 
