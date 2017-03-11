@@ -5,6 +5,7 @@ package com.genesiis.campus.entity.model;
 //20170102 CW c36-add-tutor-information isActive and add tutorStatus
 //20170114 CW c36-add-tutor-information modified the name of the getViber() method to getViberNumber()
 //20170307 CW c147-tutor-reset-password-cw class copied from c37-tutor-update-tutor-profile-cw.
+//20170311 CW c147-tutor-reset-password-cw added hashCode, hashGenTime & their getters & setters
 
 import java.sql.Date;
 
@@ -45,6 +46,9 @@ public class Tutor {
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private String hashCode;
+	private int hashGenTime;
+	
 	/**
 	 * @return the code
 	 */
@@ -458,5 +462,29 @@ public class Tutor {
 	 */
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
+	}
+	/**
+	 * @return the hashCode
+	 */
+	public String getHashCode() {
+		return hashCode;
+	}
+	/**
+	 * @param hashCode the hashCode to set
+	 */
+	public void setHashCode(String hashCode) {
+		this.hashCode = hashCode;
+	}
+	/**
+	 * @return the hashGenTime
+	 */
+	public int getHashGenTime() {
+		return hashGenTime;
+	}
+	/**
+	 * @param hashGenTime the hashGenTime to set
+	 */
+	public void setHashGenTime(int hashGenTime) {
+		this.hashGenTime = hashGenTime;
 	}	
 }
