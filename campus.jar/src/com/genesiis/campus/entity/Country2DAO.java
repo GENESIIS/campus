@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 //20170310 PN CAM-150: isCountryExists(int countryCode) method implemented to validate country value.
+//20170312 PN CAM-150: SQL query modified in isCountryExists() method.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -146,7 +147,7 @@ public class Country2DAO implements ICrud{
 	 * @param countryCode
 	 * @return true; if country value found in [CAMPUS].[COUNTRY2] table.
 	 */
-	public static boolean isCountryExists(int countryCode) throws SQLException, Exception {
+	public static boolean isCountryExists(int countryCode,int townCode) throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -154,10 +155,11 @@ public class Country2DAO implements ICrud{
 		
 		try {
 			conn = ConnectionManager.getConnection();
-			String query = "SELECT count(*) from [CAMPUS].[COUNTRY2] WHERE [CODE] = ?;";
+			String query = "SELECT count(*) FROM [CAMPUS].[COUNTRY2] c INNER JOIN [CAMPUS].[TOWN] t ON t.[COUNTRY]=c.[CODE] WHERE c.[CODE]=? AND t.[CODE]=?;";
 
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, countryCode);
+			stmt.setInt(2, townCode);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
