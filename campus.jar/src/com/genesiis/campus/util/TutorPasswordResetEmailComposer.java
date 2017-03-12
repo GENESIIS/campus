@@ -1,6 +1,9 @@
 package com.genesiis.campus.util;
 
 //20170307 CW c147-tutor-reset-password-cw TutorPasswordResetEmailComposer class created.
+//20170312 CW c147-tutor-reset-password-cw created TutorPasswordResetEmailComposer(String hashCode) constructor
+				// modified getEmailBody method to get the proper email body
+				// add hashcode variable
 
 import com.genesiis.campus.util.mail.EmailContentCreator;
 import com.genesiis.campus.util.mail.EmailDispenser;
@@ -31,7 +34,7 @@ public class TutorPasswordResetEmailComposer implements IEmailComposer, EmailCon
 	private String mailBody;
 	private IEmail generalEmail;
 	private EmailDispenser emailDispenser;
-	private String tutorStatus;
+	private String hashCode;
 	
 /**
  * No Argument Constructor for the class
@@ -46,9 +49,8 @@ public class TutorPasswordResetEmailComposer implements IEmailComposer, EmailCon
  * this will assign the tutor status in order to use later to send the email
  * @author CHINTHAKA
  */
-	public TutorPasswordResetEmailComposer(int appStatus){
-		ApplicationStatus[] applicationStatus = ApplicationStatus.values();
-		tutorStatus = applicationStatus[appStatus].toString().toLowerCase();
+	public TutorPasswordResetEmailComposer(String hashCode){
+		this.hashCode = hashCode;
 	}
 
 	@Override
@@ -115,11 +117,14 @@ public class TutorPasswordResetEmailComposer implements IEmailComposer, EmailCon
 	@Override
 	public String getEmailBody() {
 		StringBuilder result = new StringBuilder();		
-		
+
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
-		result.append(" "+tutorStatus+" ");
-		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2.getMailBody());
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY1.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY2.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(SystemEmail.SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY3.getMailBody());
+		result.append(" "+hashCode+" ");
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();
