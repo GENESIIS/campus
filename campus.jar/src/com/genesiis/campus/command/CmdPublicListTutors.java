@@ -6,7 +6,7 @@ package com.genesiis.campus.command;
 //20170309 JH c96-public-list-all-tutors created seperateBasicData(Collection<Collection<String>>) to separate tutor basic details, category, major and qualification 
 //				details from the initial DAO class result wip, removed commented lines
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
-//20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating details from the tutor basic data wip
+//20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records from the tutor basic data, fixed concurrent modification exception
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -134,10 +134,32 @@ public class CmdPublicListTutors implements ICommand{
 				if(code.equalsIgnoreCase(singleList.get(0))){
 					
 				}else{
-					if(!code.equalsIgnoreCase("0")){// to exclude the first iteration
-						categoryMap.put(code, categoryList);
-						categoryList = null;
+					// to exclude the first iteration and empty category lists
+					if(!code.equalsIgnoreCase("0") || (categoryList != null) ){
+						
+						ArrayList<ArrayList<String>> finalCategoryList = new ArrayList<ArrayList<String>>();
+						
+						Iterator categoryListIterator = categoryList.iterator(); // iterator for list with duplicates
+
+					while (categoryListIterator.hasNext()) {
+						
+						int arraySize = finalCategoryList.size(); // array size
+						boolean isNew = true;
+						
+						ArrayList<String> temporaryCategory = (ArrayList<String>) categoryListIterator.next();
+						ArrayList<String> compareCateogry = null; // to compare categories
+						
+						if(finalCategoryList.contains(temporaryCategory)){
+							// the category already exist
+						}else{
+							finalCategoryList.add(temporaryCategory);
+						}
+						
 					}
+
+					categoryMap.put(code, finalCategoryList);
+					categoryList = null;
+				}
 				}
 				
 				code = singleList.get(0);
@@ -171,8 +193,11 @@ public class CmdPublicListTutors implements ICommand{
 				
 				// create a temporary category record
 				ArrayList<String> temporaryCategory = new ArrayList<String>();
-				temporaryCategory.add(singleList.get(12));
-				temporaryCategory.add(singleList.get(13));
+				
+				if(singleList.get(12) != null){
+					temporaryCategory.add(singleList.get(12));
+					temporaryCategory.add(singleList.get(13));
+				}
 
 //				
 //				ArrayList<String> temporaryMajor  = new ArrayList<String>();
@@ -211,7 +236,7 @@ public class CmdPublicListTutors implements ICommand{
 					if (compareArray.equals(temporaryTutor)) {
 						// the same tutor record is available, do nothing
 						log.info(">>>>>..................already exist " + temporaryTutor.toString());	
-						if(categoryList != null){
+						if(categoryList != null && temporaryCategory != null){
 							categoryList.add(temporaryCategory);
 						}
 						
@@ -221,7 +246,10 @@ public class CmdPublicListTutors implements ICommand{
 						newTutorList.add(temporaryTutor);
 						
 					categoryList = new ArrayList<ArrayList<String>>();
-					categoryList.add(temporaryCategory);
+					
+					if(categoryList != null && temporaryCategory != null){
+						categoryList.add(temporaryCategory);
+					}
 					}
 					
 
@@ -230,27 +258,17 @@ public class CmdPublicListTutors implements ICommand{
 					newTutorList.add(temporaryTutor);
 					
 					categoryList = new 	ArrayList<ArrayList<String>>();
-					categoryList.add(temporaryCategory);
+					if(categoryList != null && temporaryCategory != null){
+						categoryList.add(temporaryCategory);
+					}
 				}
 
 			}
 			
-			
-//			while(newTuorsIterator.hasNext()){
-//				ArrayList<String> singleList = (ArrayList<String>) newTuorsIterator.next();
-//				
-//				String tutorCode = singleList.get(0);
-//				
-//				categoryList = new ArrayList<ArrayList<String>>();
-//				
-//				while(resultIterator.hasNext()){
-//					
-//				}
-//				
-//			}
 			if(!categoryMap.isEmpty()){
-				log.info("cateogry map " + categoryMap.toString());
+				log.info("cateogry map " + categoryMap);
 			}
+
 			
 			Map returData = new HashMap();
 			returData.put("tutorCollection", newTutorList);
