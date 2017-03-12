@@ -6,7 +6,8 @@ package com.genesiis.campus.command;
 //20170309 JH c96-public-list-all-tutors created seperateBasicData(Collection<Collection<String>>) to separate tutor basic details, category, major and qualification 
 //				details from the initial DAO class result wip, removed commented lines
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
-//20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records from the tutor basic data, fixed concurrent modification exception
+//20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records, major records from the tutor 
+//			basic data, fixed concurrent modification exception
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -49,7 +50,9 @@ public class CmdPublicListTutors implements ICommand{
 
 			final Collection<Collection<String>> tutorCollection = publicTutorDAO
 					.getAll();
-
+			Map tutorMajorMap = new  HashMap<String, ArrayList<ArrayList<String>>>();
+			Map tutorCategoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			
 			if (tutorCollection.size() == 0) {
 				message = SystemMessage.NODATA;
 			} else {
@@ -57,8 +60,12 @@ public class CmdPublicListTutors implements ICommand{
 				Map returnData = new HashMap();
 				returnData = seperateBasicData(tutorCollection);
 				newTutorCollection = (Collection<Collection<String>>) returnData.get("tutorCollection");
+				tutorCategoryMap = (Map) returnData.get("categoryData");
+				tutorMajorMap = (Map) returnData.get("majaorData");
 				
 			}
+			helper.setAttribute("majorMap", tutorMajorMap);
+			helper.setAttribute("categoryMap", tutorCategoryMap);
 			view.setCollection(newTutorCollection);
 
 		} catch (SQLException sqlException) {
@@ -134,6 +141,14 @@ public class CmdPublicListTutors implements ICommand{
 				if(code.equalsIgnoreCase(singleList.get(0))){
 					
 				}else{
+					
+					/*
+					 * initially, tutor collection has duplicate category and major details
+					 *  under the same tutor code. Therefore following method will compare
+					 *  current category / major collection for the duplicate values and create a 
+					 *  new category / major lists without duplicate records
+					 */
+					
 					// to exclude the first iteration and empty category lists
 					if(!code.equalsIgnoreCase("0") || (categoryList != null) ){
 						
@@ -159,6 +174,31 @@ public class CmdPublicListTutors implements ICommand{
 
 					categoryMap.put(code, finalCategoryList);
 					categoryList = null;
+				}
+					
+					
+					// to exclude the first iteration and empty major lists
+					if(!code.equalsIgnoreCase("0") || (majorList != null) ){
+						
+						ArrayList<ArrayList<String>> finalMajorList = new ArrayList<ArrayList<String>>();
+						
+						Iterator majorListIterator = majorList.iterator(); // iterator for list with duplicates
+
+					while (majorListIterator.hasNext()) {
+
+						ArrayList<String> temporaryMjor = (ArrayList<String>) majorListIterator.next();
+						ArrayList<String> compareMajor = null; // to compare categories
+						
+						if(finalMajorList.contains(temporaryMjor)){
+							// the category already exist
+						}else{
+							finalMajorList.add(temporaryMjor);
+						}
+						
+					}
+
+					majorMap.put(code, finalMajorList);
+					majorList = null;
 				}
 				}
 				
@@ -198,11 +238,10 @@ public class CmdPublicListTutors implements ICommand{
 					temporaryCategory.add(singleList.get(12));
 					temporaryCategory.add(singleList.get(13));
 				}
-
-//				
-//				ArrayList<String> temporaryMajor  = new ArrayList<String>();
-//				temporaryMajor.add(singleList.get(10));
-//				temporaryMajor.add(singleList.get(11));
+			
+				ArrayList<String> temporaryMajor  = new ArrayList<String>();
+				temporaryMajor.add(singleList.get(10));
+				temporaryMajor.add(singleList.get(11));
 				
 				
 				// if previous records are available: check whether the last
@@ -235,31 +274,46 @@ public class CmdPublicListTutors implements ICommand{
 					
 					if (compareArray.equals(temporaryTutor)) {
 						// the same tutor record is available, do nothing
-						log.info(">>>>>..................already exist " + temporaryTutor.toString());	
 						if(categoryList != null && temporaryCategory != null){
 							categoryList.add(temporaryCategory);
 						}
+						if(majorList != null && temporaryMajor != null){
+							majorList.add(temporaryMajor);
+						}
 						
 					} else {
-						// the tutor record does not available, insert the temporary tutor record
-						log.info(">>>>>..................tutor doesn't exist " + temporaryTutor.toString());
-						newTutorList.add(temporaryTutor);
-						
+					// the tutor record does not available, insert the temporary
+					// tutor record
+					newTutorList.add(temporaryTutor);
+
+					// add all category related records
 					categoryList = new ArrayList<ArrayList<String>>();
-					
-					if(categoryList != null && temporaryCategory != null){
+
+					if (categoryList != null && temporaryCategory != null) {
 						categoryList.add(temporaryCategory);
+					}
+					
+					// add all major related records	
+					majorList = new ArrayList<ArrayList<String>>();
+					
+					if(majorList != null && temporaryMajor != null){
+						majorList.add(temporaryMajor);
 					}
 					}
 					
 
 				} else {// no previous tutor records are available
-					log.info(">>>>>..................first tutor record " + temporaryTutor.toString());
 					newTutorList.add(temporaryTutor);
 					
 					categoryList = new 	ArrayList<ArrayList<String>>();
+					majorList = new ArrayList<ArrayList<String>>();
+					
 					if(categoryList != null && temporaryCategory != null){
 						categoryList.add(temporaryCategory);
+					}
+					
+					if(majorList != null && temporaryMajor != null){
+						majorList.add(temporaryMajor);
 					}
 				}
 
@@ -267,6 +321,9 @@ public class CmdPublicListTutors implements ICommand{
 			
 			if(!categoryMap.isEmpty()){
 				log.info("cateogry map " + categoryMap);
+			}
+			if(!majorMap.isEmpty()){
+				log.info("major map " + majorMap);
 			}
 
 			
