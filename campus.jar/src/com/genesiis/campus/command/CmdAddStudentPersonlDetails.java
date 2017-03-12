@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170117 PN CAM-28: dao method call moved into try block.
 //20170309 PN CAM-150: execute() method modified to add AddressLine1, AddressLine2 and AddressLine3 separately. set 'studentDetails' collection to a view object to pass into the front end.
 //20170310 PN CAM-150: execute() method modified by adding validation to country and town values.
+//20170312 PN CAM-150: execute() method country code and town code existence check condition modifications -WIP
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,10 +52,10 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 
 			if (Validator.isNotEmpty(data.getTown()) && Validator.isNotEmpty(data.getLandPhoneCountryCode())) {
 				log.info("data.getTown(): "+data.getTown());
-				boolean isCountryExists = Country2DAO.isCountryExists(Integer.parseInt(data.getLandPhoneCountryCode()));
-				boolean isTownExists = TownDAO.isTownExists(Integer.parseInt(data.getTown()));
+				boolean isCountryExists = Country2DAO.isCountryExists(Integer.parseInt(data.getLandPhoneCountryCode()),Integer.parseInt(data.getTown()));
+				//boolean isTownExists = TownDAO.isTownExists(Integer.parseInt(data.getTown()));
 				
-				if (Country2DAO.isCountryExists(Integer.parseInt(data.getLandPhoneCountryCode())) && TownDAO.isTownExists(Integer.parseInt(data.getTown()))) {
+				if (isCountryExists) {
 					data.setCode(StudentCode);
 					data.setCrtBy("USER");
 					data.setModBy("USER");
