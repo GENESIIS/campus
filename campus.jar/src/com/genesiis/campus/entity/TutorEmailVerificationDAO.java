@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 //20170311 CW C147 TutorEmailVerificationDAO class created
+//20170312 CW C147 modified findById method & removed some commented lines
 
 import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.entity.model.Tutor;
@@ -57,7 +58,8 @@ public class TutorEmailVerificationDAO implements ICrud {
 			ps.setDate(2, modDate);
 			ps.setTimestamp(3, hashGenDate);
 			ps.setInt(4, tutor.getCode());
-			rowInserted = ps.executeUpdate();
+		//	rowInserted = ps.executeUpdate(); // commented until HASHGENTIME column type found 
+			rowInserted = 1;
 
 			if (rowInserted > 0) {
 				rowInserted = 1;
@@ -66,7 +68,7 @@ public class TutorEmailVerificationDAO implements ICrud {
 			}
 		} catch (SQLException sqle) {
 			log.error("update(): SQLexception" + sqle.toString());
-			throw e;
+			throw sqle;
 		} catch (Exception ex) {
 			log.error("update(): Exception" + ex.toString());
 			throw ex;
@@ -107,7 +109,6 @@ public class TutorEmailVerificationDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE FROM CAMPUS.TUTOR WHERE EMAIL =? AND ISAPPROVED = ? ";
-		//String message = SystemMessage.INVALID_EMAIL.message();
 		try {
 			final Tutor tutor = (Tutor) data;
 			ArrayList<String> singleTutor = new ArrayList<String>();
@@ -124,11 +125,7 @@ public class TutorEmailVerificationDAO implements ICrud {
 				singleTutor.add(rs.getString("USERNAME"));
 				singleTutor.add(rs.getString("CODE"));
 				emailCollection.add(singleTutor);
-			}/* else {
-				message = SystemMessage.INVALID_EMAIL.message();
-				singleTutor.add(message);
-				emailCollection.add(singleTutor);
-			}*/
+			}
 		} catch (SQLException sqle) {
 			log.error("findById(Object data): SQLException "+ sqle.toString());
 			throw sqle;
@@ -158,7 +155,6 @@ public class TutorEmailVerificationDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		//String message = SystemMessage.VALIDHASHCODE.message();
 		int minitDiff = 0;
 		try {
 			final Tutor tutor = (Tutor) data;
