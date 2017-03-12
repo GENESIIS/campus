@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170309 JH c96-public-list-all-tutors created seperateBasicData(Collection<Collection<String>>) to separate tutor basic details, category, major and qualification 
 //				details from the initial DAO class result wip, removed commented lines
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
+//20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating details from the tutor basic data wip
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -52,7 +53,11 @@ public class CmdPublicListTutors implements ICommand{
 			if (tutorCollection.size() == 0) {
 				message = SystemMessage.NODATA;
 			} else {
-				newTutorCollection = seperateBasicData(tutorCollection);
+				//newTutorCollection = seperateBasicData(tutorCollection);
+				Map returnData = new HashMap();
+				returnData = seperateBasicData(tutorCollection);
+				newTutorCollection = (Collection<Collection<String>>) returnData.get("tutorCollection");
+				
 			}
 			view.setCollection(newTutorCollection);
 
@@ -81,9 +86,9 @@ public class CmdPublicListTutors implements ICommand{
 	 * @param tutorCollection type of Collection<Collection<String>> 
 	 * @author JH
 	 */
-	public static Collection<Collection<String>> seperateBasicData(Collection<Collection<String>> tutorCollection){
+	public static Map seperateBasicData(Collection<Collection<String>> tutorCollection){
 		
-		Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
+		ArrayList<ArrayList<String>> newTutorList = new ArrayList<ArrayList<String>>();
 		final ArrayList<Collection<String>> tutorArrayList = (ArrayList<Collection<String>>) tutorCollection;
 		
 				
@@ -116,7 +121,7 @@ public class CmdPublicListTutors implements ICommand{
 			ArrayList<ArrayList<String>> majorList = null;
 			
 			Iterator resultIterator = tutorArrayList.iterator();
-			Iterator newTuorsIterator = newTutorCollection.iterator();
+			Iterator newTuorsIterator = newTutorList.iterator();
 			
 			//category list
 			ArrayList<ArrayList<String>> x = null;
@@ -126,15 +131,15 @@ public class CmdPublicListTutors implements ICommand{
 				
 				ArrayList<String> singleList = (ArrayList<String>) resultIterator.next();
 				
-			if(code.equalsIgnoreCase(singleList.get(0))){// a new tutor
-				
-				if(!categoryList.isEmpty()){
-					categoryMap.put(code, categoryList);
+				if(code.equalsIgnoreCase(singleList.get(0))){
+					
+				}else{
+					if(!code.equalsIgnoreCase("0")){// to exclude the first iteration
+						categoryMap.put(code, categoryList);
+						categoryList = null;
+					}
 				}
-				categoryList = new ArrayList<ArrayList<String>>();
-			}else{// same previous tutor
-				categoryList = new ArrayList<ArrayList<String>>();
-			}
+				
 				code = singleList.get(0);
 				firstName = singleList.get(1);
 				middleName = singleList.get(2);
@@ -168,13 +173,17 @@ public class CmdPublicListTutors implements ICommand{
 				ArrayList<String> temporaryCategory = new ArrayList<String>();
 				temporaryCategory.add(singleList.get(12));
 				temporaryCategory.add(singleList.get(13));
-				
 
+//				
+//				ArrayList<String> temporaryMajor  = new ArrayList<String>();
+//				temporaryMajor.add(singleList.get(10));
+//				temporaryMajor.add(singleList.get(11));
 				
-				// if previous records are available: check whether a
-				// previous record is available or not
 				
-				int count = newTutorCollection.size();	
+				// if previous records are available: check whether the last
+				// record matches the current temporary tutor record
+				
+				int count = newTutorList.size();	
 				int index = 0;
 						
 				if(count != 0){
@@ -184,103 +193,70 @@ public class CmdPublicListTutors implements ICommand{
 				}
 	
 				
-				ArrayList<Collection<String>> newTutorList = (ArrayList<Collection<String>>) newTutorCollection;
-				
-				if(index != 0){
+				if (count> 0) {
+
+					/*
+					 *  The new temporary arrayList record need to compare against 
+					 *  the newTutorCollection records before adding it. 
+					 *  This is used to remove the repeating records of the 
+					 *  tutor collection which is originally by the DAO class.
+					 *  
+					 *  The collection result set which is returned by the PublicTutorDAO class getAll() method 
+					 *  is already ordered by the Tutor CODE. Therefore it is assumed that only
+					 *  the last record of the tutor basic details collection is able to have a duplicate record.  
+					 */
+					
 					ArrayList<String> compareArray = (ArrayList<String>) newTutorList.get(index);
+					
 					if (compareArray.equals(temporaryTutor)) {
 						// the same tutor record is available, do nothing
-						log.info(">>>>>..................already exist for code " + code + ">>>>"+  temporaryTutor.toString());
-						}else{
-							log.info(">>>>>..................new tutor" + code + ">>>>"+ temporaryTutor.toString());
-							newTutorCollection.add(temporaryTutor);
-						}
-				}else{
-					log.info(">>>>>..................first tutor" + code + ">>>>"+ temporaryTutor.toString());
-					
-					x = new ArrayList<ArrayList<String>>();
-					x = (ArrayList<ArrayList<String>>) categoryMap.get(code); //get list for the selected category
-					
-					if(x != null){
-						boolean match = x.equals(temporaryCategory);
-						
-						if(match){
-							log.info(">>>>>.................. category already exist for "+ code + ">>>>> " + temporaryCategory.toString());
-						}else{
-							log.info(">>>>>.................. new category for "+ code + ">>>>> " + temporaryCategory.toString());
+						log.info(">>>>>..................already exist " + temporaryTutor.toString());	
+						if(categoryList != null){
 							categoryList.add(temporaryCategory);
 						}
-					}else{
-						log.info(">>>>>.................. new category for "+ code + ">>>>> " + temporaryCategory.toString());
-						categoryList.add(temporaryCategory);
+						
+					} else {
+						// the tutor record does not available, insert the temporary tutor record
+						log.info(">>>>>..................tutor doesn't exist " + temporaryTutor.toString());
+						newTutorList.add(temporaryTutor);
+						
+					categoryList = new ArrayList<ArrayList<String>>();
+					categoryList.add(temporaryCategory);
 					}
-					newTutorCollection.add(temporaryTutor);
-				}
-		
+					
 
-			
-				
-//				if (count> 0) {
-//
-//					/*
-//					 *  The new temporary arrayList record need to compare against 
-//					 *  the newTutorCollection records before adding it. 
-//					 *  This is used to remove the repeating records of the 
-//					 *  tutor collection which is originally by the DAO class.
-//					 *  
-//					 *  The collection result set which is returned by the PublicTutorDAO class getAll() method 
-//					 *  is already ordered by the Tutor CODE. Therefore it is assumed that only
-//					 *  the last record of the tutor basic details collection is able to have a duplicate record.  
-//					 */
-//					
-//					ArrayList<Collection<String>> newTutorList = (ArrayList<Collection<String>>) newTutorCollection;
-//					ArrayList<String> compareArray = (ArrayList<String>) newTutorList.get(count-1);
-//					
-//					if (compareArray.equals(temporaryTutor)) {
-//						// the same tutor record is available, do nothing
-//						log.info(">>>>>..................already exist" + temporaryTutor.toString());
-//						
-//						//retrieves category list related to a tutor code
-//						ArrayList<ArrayList<String>> tutorCategoryList = (ArrayList<ArrayList<String>>) categoryMap.get(code);
-//						if(tutorCategoryList != null){
-////							for(ArrayList<String> singlecateory : tutorCategoryList){
-//								
-//								// a record for that category exist
-//								if(tutorCategoryList.equals(temporaryCategory)){
-//									log.info(">>>>>.................. category already exist" + temporaryCategory.toString());
-//									
-//								}else{// need to insert that category for the tutor
-//									log.info(">>>>>.................. category doesn't exist" + temporaryCategory.toString());
-//									//categoryList.add(temporaryCategory);
-//								}
-////							}
-//						}else{
-//							log.info(">>>>>.................. category map" + temporaryCategory.toString());
-//							categoryMap.put(code, temporaryCategory);
-//						}
-//						
-//					} else {
-//						// the tutor record does not available, insert the temporary tutor record
-//						log.info(">>>>>..................doesn't exist" + temporaryTutor.toString());
-//						newTutorCollection.add(temporaryTutor);
-//						
-//						// create new array lists to store values for maps for new tutor
-//						categoryList = new ArrayList<ArrayList<String>>();
-//						majorList = new ArrayList<ArrayList<String>>();
-//						
-//						categoryList.add(temporaryCategory);
-//					}
-//					
-//
-//				} else {// no previous tutor records are available
-//					newTutorCollection.add(temporaryTutor);
-//				}
+				} else {// no previous tutor records are available
+					log.info(">>>>>..................first tutor record " + temporaryTutor.toString());
+					newTutorList.add(temporaryTutor);
+					
+					categoryList = new 	ArrayList<ArrayList<String>>();
+					categoryList.add(temporaryCategory);
+				}
 
 			}
-		//	categoryMap.put(code, categoryList);
-			log.info("category map " + categoryMap.toString());
-
-		return newTutorCollection;
+			
+			
+//			while(newTuorsIterator.hasNext()){
+//				ArrayList<String> singleList = (ArrayList<String>) newTuorsIterator.next();
+//				
+//				String tutorCode = singleList.get(0);
+//				
+//				categoryList = new ArrayList<ArrayList<String>>();
+//				
+//				while(resultIterator.hasNext()){
+//					
+//				}
+//				
+//			}
+			if(!categoryMap.isEmpty()){
+				log.info("cateogry map " + categoryMap.toString());
+			}
+			
+			Map returData = new HashMap();
+			returData.put("tutorCollection", newTutorList);
+			returData.put("categoryData", categoryMap);
+			returData.put("majaorData", majorMap);
+		return returData;
 	}
 }
 
