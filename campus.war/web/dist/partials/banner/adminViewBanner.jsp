@@ -84,7 +84,7 @@
    
    <br><br>
    <!-- banner records will be displayed here -->
-   <table id='bannerDisplaytbl' width ="100%">
+   <table id='bannerDisplaytbl' width ="100%" style="max-height:800px;  overflow: auto">
 	   	<thead>
 	            <tr>
 	            	<th align="center" width="20%">Row # </th>
@@ -92,6 +92,7 @@
 	                <th width="40%%">Banner Image</th>
 	            </tr>
 	     </thead>
+	     <tbody></tbody>
 
    </table>
 

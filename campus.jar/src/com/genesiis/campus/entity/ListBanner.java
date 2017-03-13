@@ -11,11 +11,16 @@ import org.jboss.logging.Logger;
 
 import com.genesiis.campus.util.BannerDisplayingInflator;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.PrevalentValidation;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
+import com.genesiis.campus.validation.PrevalentValidation.FailedValidationException;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 
 /**
@@ -128,6 +133,111 @@ public class ListBanner {
 		helper.setAttribute("successCode", getSuccessCode());
 		helper.setAttribute("message", message);
 	}
+	
+	
+	/**
+	 * isClientInputAccordanceWithValidation() validates if the input fields are 
+	 * having values and those are according to the business logic.
+	 * @param rowDisplayCriteria : JasonInflator the object that is having the de-serialized values sent from
+	 * 				  client side
+	 * @return boolean
+	 * @throws Exception
+	 */
+
+	private boolean isClientInputAccordanceWithValidation(BannerDisplayingInflator rowDisplayCriteria) throws Exception {
+		boolean isvalidationSuccess = false;
+		if(rowDisplayCriteria==null){
+			log.info("isClientInputAccordanceWithValidation (): --> JasonInflator object is null ");
+			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL;
+			return false;
+		}
+		
+		
+		try {
+			
+			// validation has to done in a such a way that if none of the values are provieded then it's ok
+			//if one date is provided then we have to start validation
+			//TO BE DONE ON 20170314
+			    String dateCommenced = rowDisplayCriteria.getCommencingDate();
+			    String dateCessation = rowDisplayCriteria.getCessationDate();
+				Date filterStartDate = this.getADate("-",dateCommenced );
+				Date filterEndDate = this.getADate("-",dateCessation);
+				int activeInactiveStatus = Integer.parseInt(rowDisplayCriteria.getActiveInactiveStatus());
+			    Validatory clientInputValidator = new PrevalentValidation();
+			    
+			    
+//			    clientInputValidator.isNotEmpty(advertiserCode," Advertiser field is empty !");
+//				clientInputValidator.isInteger(advertiserCode," Choose Advertiser from the list");
+//				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
+//				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
+//				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
+//				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
+//				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
+//				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
+//				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
+//				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+//				
+//				Date publishingDate 	= getADate("-",bannerPublishingDate);
+//				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
+//				// comparison with the current date
+//				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate,"yyyy-MM-dd", "date comparison failure")<=0))
+//					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be <= Publishing end Date");
+//				
+//				if(!(clientInputValidator.compareDates(publishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
+//					throw new PrevalentValidation().new FailedValidationException(" Publishing Start Date must be >= Current Date");
+//				
+//				clientInputValidator.isInteger(urlMiniWebOrPage);
+//				//clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES+UrlValidator.ALLOW_LOCAL_URLS, "Url provided is not a valid URL");
+//				isvalidationSuccess=true;
+				
+//		} catch (FailedValidationException fvexp) {
+//			this.message = message +" "+ fvexp.toString();
+//			this.setSuccessCode(-2); 
+//			return false;
+		} catch(Exception exp){
+			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
+			throw exp;
+		}
+		return isvalidationSuccess;
+	}
+	
+	/**
+	 * getADate() returns a date.
+	 * Method accepts a date in the form yyy?MM?dd
+	 * ? denotes the delimiter which should be passed to the method, 
+	 * using which the string date is split and forms a java.util.date
+	 * @param dateDelemeter : can be any printable string character 
+	 *  e.g. "-" "," "/" etc 
+	 * @param date should be adhere to teh format yyy?MM?dd
+	 * 			yyyy: year
+	 * 			MM  : Month
+	 * 			dd  : date
+	 * 		e.g. 2017-05-26
+	 * @return java.util.Date type
+	 */
+	 private  Date getADate(String dateDelemeter,String date){
+			String [] array = date.split(dateDelemeter);
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.YEAR,Integer.parseInt(array[0]));
+			cal.set(Calendar.MONTH,Integer.parseInt(array[1])-1);
+			cal.set(Calendar.DATE,Integer.parseInt(array[2]));
+			return cal.getTime();
+		}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Gets the success code.

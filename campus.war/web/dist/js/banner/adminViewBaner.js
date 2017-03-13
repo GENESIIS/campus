@@ -131,7 +131,6 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			
 		});
 	
-		
 }
 
 /**
