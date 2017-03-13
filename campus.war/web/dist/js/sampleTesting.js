@@ -1,5 +1,6 @@
 /**
  * 20170309 AS CAM-142 sampleTesting.js created for testing 
+ * 20170313 AS CAM-142 ajaxTesting response modify
  */
 
 function ajaxTesting(){
@@ -19,16 +20,17 @@ function ajaxTesting(){
 			},
 			dataType : "json",
 			success : function(response) {
-			
+				
+			if(response.redirectURL != null){
 				window.location = response.redirectURL;
+			}else{
+				
+			}
+			
 			},
 			
 			complete: function(response, status) {
-//				if(status==200){
-//					
-//				}else{
-//				window.location = response.redirectURL;
-//				}
+
 			},
 			error : function(e) {
 				 alert("Error " + e);
