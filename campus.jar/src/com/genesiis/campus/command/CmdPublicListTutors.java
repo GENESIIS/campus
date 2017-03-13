@@ -8,7 +8,7 @@ package com.genesiis.campus.command;
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
 //20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records, major records from the tutor 
 //			basic data, fixed concurrent modification exception
-//20170313 JH c96-public-list-all-tutors remove repeating qualification records, removed unwanted comments, return qualification records
+//20170313 JH c96-public-list-all-tutors remove repeating qualification records and select only the highest qualification, removed unwanted comments, return qualification records
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -93,7 +93,7 @@ public class CmdPublicListTutors implements ICommand{
 	
 	/**
 	 * seperateBasicData() used to remove repeating records and of the tutor while
-	 * @return collection of tutor basic data 
+	 * @return map of tutor basic data including category data, major data and qualification
 	 * @param tutorCollection type of Collection<Collection<String>> 
 	 * @author JH
 	 */
@@ -135,10 +135,7 @@ public class CmdPublicListTutors implements ICommand{
 			
 			Iterator resultIterator = tutorArrayList.iterator();
 			Iterator newTuorsIterator = newTutorList.iterator();
-			
-			//category list
-			ArrayList<ArrayList<String>> x = null;
-			
+
 			// remove repeating tutor basic details
 			while(resultIterator.hasNext()){
 				
@@ -169,11 +166,14 @@ public class CmdPublicListTutors implements ICommand{
 						
 						ArrayList<String> temporaryCategory = (ArrayList<String>) categoryListIterator.next();
 						
-						if(finalCategoryList.contains(temporaryCategory)){
-							// the category already exist
-						}else{
-							finalCategoryList.add(temporaryCategory);
+						if(!temporaryCategory.isEmpty()){
+							if(finalCategoryList.contains(temporaryCategory)){
+								// the category already exist
+							}else{
+								finalCategoryList.add(temporaryCategory);
+							}
 						}
+
 						
 					}
 
@@ -193,10 +193,12 @@ public class CmdPublicListTutors implements ICommand{
 
 						ArrayList<String> temporaryMjor = (ArrayList<String>) majorListIterator.next();
 						
-						if(finalMajorList.contains(temporaryMjor)){
-							// the category already exist
-						}else{
-							finalMajorList.add(temporaryMjor);
+						if(!temporaryMjor.isEmpty()){
+							if(finalMajorList.contains(temporaryMjor)){
+								// the category already exist
+							}else{
+								finalMajorList.add(temporaryMjor);
+							}
 						}
 						
 					}
@@ -206,31 +208,51 @@ public class CmdPublicListTutors implements ICommand{
 				}
 					
 					// to exclude the first iteration and empty qualification lists
-					if(!code.equalsIgnoreCase("0") || (qualificationList != null) ){
+					if(!code.equalsIgnoreCase("0") || (qualificationList != null)){
 						
-						ArrayList<ArrayList<String>> finalqualificationList = new ArrayList<ArrayList<String>>();
+						ArrayList<ArrayList<String>> uniqueQualificationList = new ArrayList<ArrayList<String>>();
 						int highestNVQ = 0;						
 						Iterator qualificationListIterator = qualificationList.iterator(); // iterator for list with duplicates
+						
 
 					while (qualificationListIterator.hasNext()) {
 
 						ArrayList<String> temporaryQualification = (ArrayList<String>) qualificationListIterator.next();
 						
-						if(finalqualificationList.contains(temporaryQualification)){
-							// the category already exist
-						}else{
-							int temporaryQualificationNVQ =  Integer.parseInt(temporaryQualification.get(1));
-							if(temporaryQualificationNVQ > highestNVQ){
+						if(!temporaryQualification.isEmpty()){
+							
+							int temporaryQualificationNVQ = Integer
+									.parseInt(temporaryQualification.get(1));// get nvq level of the qualification
+							if (temporaryQualificationNVQ > highestNVQ) {
 								highestNVQ = temporaryQualificationNVQ;
 							}
-							finalqualificationList.add(temporaryQualification);
 
+							if (uniqueQualificationList
+									.contains(temporaryQualification)) {
+								// the category already exist
+							} else {
+								uniqueQualificationList
+										.add(temporaryQualification);// add only unique qualifications
+
+							}
 						}
 						
 					}
+					
+					Iterator finalQualificationIterator = uniqueQualificationList.iterator();
+					ArrayList<ArrayList<String>> finalQualificationList = new ArrayList<ArrayList<String>>();
+					
+					while (finalQualificationIterator.hasNext()) {
+						ArrayList<String> temporaryQualification = (ArrayList<String>) finalQualificationIterator.next();
+						if(String.valueOf(highestNVQ).equalsIgnoreCase(temporaryQualification.get(1))){
+							finalQualificationList.add(temporaryQualification);
+						}
+					}
+					
 
-					qualificationMap.put(code, finalqualificationList);
+					qualificationMap.put(code, finalQualificationList);
 					qualificationList = null;
+					
 				}	
 					
 				}
@@ -279,7 +301,7 @@ public class CmdPublicListTutors implements ICommand{
 				}
 				
 				ArrayList<String> temporaryQualification = new ArrayList<String>();
-				
+
 				if(singleList.get(14) != null){
 					temporaryQualification.add(singleList.get(14));
 					temporaryQualification.add(singleList.get(15));
@@ -349,8 +371,7 @@ public class CmdPublicListTutors implements ICommand{
 					
 					// add all qualification related records	
 					qualificationList = new ArrayList<ArrayList<String>>();
-					
-					if(qualificationList != null && qualificationList != null){
+					if(qualificationList != null && temporaryQualification != null){
 						qualificationList.add(temporaryQualification);
 					}
 					}
