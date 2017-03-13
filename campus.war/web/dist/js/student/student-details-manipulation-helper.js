@@ -6,6 +6,7 @@
  * 20170309 PN CAM-150: addStudentPersonalDetails() method and clearPersonalDetailsForm() method modified to display AddressLine1, AddressLine2, AddressLine3 separately.
  * 20170309 PN CAM-150: populatePersonalDataformElements() method implementation modified by adding validation to check if the student details collection is updated, empty or null.
  * 20170310 PN CAM-150: addStudentPersonalDetails() method modified by adding if-else condition.
+ * 20170313 PN CAM-150: addStudentPersonalDetails() method modified to pass locale details in to the command class.
  */
 
 
@@ -492,6 +493,14 @@ function addStudentPersonalDetails() {
 		var viberNumber = $('#sViber').val();
 		var landPhoneCountryCode = $('#sCountryCode').val();
 		var gender = $("input[name='gender']:checked").val();
+		
+		var countryName = $('#sCountry').val();
+		var townName = $('#sTown').val();
+		
+		var localeData = {
+			"countryName" : countryName,
+			"townName" : townName
+		};
 
 		var jsonData = {
 			"firstName" : firstName,
@@ -522,7 +531,8 @@ function addStudentPersonalDetails() {
 					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
-						CCO : "APD"
+						CCO : "APD",
+						localeData : JSON.stringify(localeData)
 					},
 					dataType : "json",
 					success : function(data) {
