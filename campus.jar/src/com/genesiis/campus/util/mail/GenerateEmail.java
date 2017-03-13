@@ -4,6 +4,8 @@ package com.genesiis.campus.util.mail;
 				//add sendTutorResetPasswordVerificationEmail() method
 //20170312 CW c147-tutor-reset-password-cw modified sendTutorResetPasswordVerificationEmail method return type to int
 				//modified sendMail method to sent the tutor reset password email using tutor details
+//20170313 CW c147-tutor-reset-password-cw modified sendTutorResetPasswordVerificationEmail method comment
+				// Removed systemMessage(int status) method
 
 import com.genesiis.campus.util.TutorPasswordResetEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -22,9 +24,9 @@ public class GenerateEmail {
 static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 	
 	/*
-	 * sendAdminTutorUpdateEmail() method handles the email sending at the time of tutor details update by Admin.
+	 * sendTutorResetPasswordVerificationEmail() method handles the email sending at the time of tutor reset password.
 	 * @author CW
-	 * @return String
+	 * @return int
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
 	public int sendTutorResetPasswordVerificationEmail(String firstname, String lastname, String emailAddress, String username, String hashCode) 
@@ -53,29 +55,6 @@ static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 		throw exp;
 	}
 	return status;	
-	}
-
-	/*
-	 * systemMessage() handles the system Messages according to
-	 * the state of the status passed in
-	 * @return String the message
-	 * @param status 3 request submitted successfully.
-	 * @param status -3 request submission fails.
-	 * 
-	 */
-	private String systemMessage(int status){
-		String message = SystemMessage.UNKNOWN.message();
-		switch(status){		
-		case 3:
-			message =SystemMessage.MAIL_SUCCESS_TUTOR.message();
-			break;
-		case -3:
-			message =SystemMessage.MAIL_UNSUCCESS.message();
-			break;
-		default:			
-			break;
-		}
-		return message;
 	}
 	
 	/*
