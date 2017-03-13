@@ -5,6 +5,7 @@ package com.genesiis.campus.factory;
 				//c147 added CHECK_EMAIL command & TUTOR_EMAIL_VERIFICATION command.
 //20170308 CW c147-tutor-reset-password-cw removed CHECK_EMAIL command
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw add TUTOR_HASH_VERIFICATION command
+//20170313 CW c148-tutor-verify-hashcode-reset-password-cw modified TUTOR_HASH_VERIFICATION details in getCommand method
 
 import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.command.CmdTutorHashVerification;
@@ -24,6 +25,9 @@ public class TutorCmdFactory implements ICmdFactory {
 		o = Operation.getOperation(cco);
 		switch (o) {
 		case TUTOR_EMAIL_VERIFICATION:
+			command = map.get(o);	
+			break;
+		case TUTOR_HASH_VERIFICATION:
 			command = map.get(o);	
 			break;
 		default:
