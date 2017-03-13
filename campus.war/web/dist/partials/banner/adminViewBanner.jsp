@@ -2,7 +2,8 @@
 <!-- 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn add radio buttons to model
 				  PENDING,EXPIRED banner status.
 
-
+     20170309 DN c81-admin-manage-banner-add-and-view-banner-dn removed the style script and tbody
+      tag of the table from the jsp file. Add the Row #  <th> element
 
  -->
 
@@ -18,20 +19,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin View Banner</title>
 
-<style type="text/css">    
-    table{
-        width: 100%;
-        margin-bottom: 20px;
-		border-collapse: collapse;
-    }
-    table, th, td{
-        border: 1px solid #cdcdcd;
-    }
-    table th, table td{
-        padding: 10px;
-        text-align: left;
-    }
-</style>
 
 <!-- Bootstrap & CSS Style-->
     <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -93,28 +80,19 @@
     &nbsp; &nbsp; &nbsp;<span id="">List <b>Expired</b> Banners</span>
    <input type="radio" name="bannerStatus" value="4" id ="statusExpired"  > 
    <br><br>
-   <input type="button" value="Search">
+   <button type="button" value="Search">Filter The Banners</button>
+   
+   <br><br>
    <!-- banner records will be displayed here -->
-   <table id='bannerDisplaytbl' >
+   <table id='bannerDisplaytbl' width ="100%">
 	   	<thead>
 	            <tr>
-	                <th>Banner Information</th>
-	                <th>Banner Image</th>
+	            	<th align="center" width="20%">Row # </th>
+	                <th width="40%%">Banner Information</th>
+	                <th width="40%%">Banner Image</th>
 	            </tr>
 	     </thead>
-	      <tbody>
-		    <tr>
-		     <td>
-		       From:2017-03-08 |To:2017-04-07
-		       <br><br>
-		       <button class="rowEditButon"> Edit</button>
-		     </td>
-		     <td>
-		       <img id="bnnerImage"  src="/dist/i/higher-education/slider-bg-1.jpg"   alt="banner-Image" style="width:400px;hight:50px">
-		       
-		     </td>
-		   </tr>
-	      <tbody>	   
+
    </table>
 
 </body>
