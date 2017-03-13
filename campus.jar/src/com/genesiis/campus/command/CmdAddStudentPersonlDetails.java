@@ -6,7 +6,7 @@ package com.genesiis.campus.command;
 //20170117 PN CAM-28: dao method call moved into try block.
 //20170309 PN CAM-150: execute() method modified to add AddressLine1, AddressLine2 and AddressLine3 separately. set 'studentDetails' collection to a view object to pass into the front end.
 //20170310 PN CAM-150: execute() method modified by adding validation to country and town values.
-//20170312 PN CAM-150: execute() method country code and town code existence check condition modifications -WIP
+//20170313 PN CAM-150: execute() method country code and town code existence check, if condition modified.
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class CmdAddStudentPersonlDetails implements ICommand {
 	static Logger log = Logger.getLogger(CmdAddStudentPersonlDetails.class.getName());
@@ -48,14 +49,19 @@ public class CmdAddStudentPersonlDetails implements ICommand {
 		Connection connection = null;
 
 		try {
+			
+			//get countryName and townName details from the JSP page via Gson object.
+			JsonObject localData = new Gson().fromJson(helper.getParameter("localeData"), JsonObject.class);
+			String countryName = localData.get("countryName").getAsString();
+			String townName = localData.get("townName").getAsString();
+			
+			//get other details from the JSP page via Gson object.
 			data = gson.fromJson(helper.getParameter("jsonData"), Student.class);
 
+			//Validates country and town fields, before perform insertion.
 			if (Validator.isNotEmpty(data.getTown()) && Validator.isNotEmpty(data.getLandPhoneCountryCode())) {
-				log.info("data.getTown(): "+data.getTown());
-				boolean isCountryExists = Country2DAO.isCountryExists(Integer.parseInt(data.getLandPhoneCountryCode()),Integer.parseInt(data.getTown()));
-				//boolean isTownExists = TownDAO.isTownExists(Integer.parseInt(data.getTown()));
-				
-				if (isCountryExists) {
+				boolean isLocaleExists = Country2DAO.isLocaleExists(countryName, townName);
+				if (isLocaleExists) {
 					data.setCode(StudentCode);
 					data.setCrtBy("USER");
 					data.setModBy("USER");
