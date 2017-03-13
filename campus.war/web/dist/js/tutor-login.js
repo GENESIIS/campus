@@ -3,6 +3,7 @@
  * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, isempty method calling
  * //20170308 CW c147-tutor-reset-password-cw modified forgotPassword, ValidateEmail method calling
  * //20170308 CW c147-tutor-reset-password-cw add ajax call from c22
+ * //20170313 CW c148-tutor-verify-hashcode-reset-password-cw removed ValidateEmail method & add verifyCode method
  */
 
 /**
@@ -106,38 +107,121 @@ function forgotPassword() {
 		}
 
 	});
-	
-/*	var emailExist = ValidateEmail(userEmail);
-	if (emailExist.message == '1') {
-		jQuery('#emailveryMessage').addClass("fp-msg-error").html(' ** Email entered does not exists.');
-		flag = false;
-		return false;
-	}*/
 }
 
 /**
- * This function is used to validate the email field with the database values
- * @param email
- * @returns 1 if email does not exist in the database & returns 0 if email already exists in the database.
+ * This function will validate the entered hash code with the database saved value
+ * @author Chinthaka
  */
-function ValidateEmail(email) {
-	var resp = null;
-	$.ajax({
-		url : '/TutorController',
-		method : 'POST',
-		async : false,
-		data : {
-			CCO : 'CHECK_EMAIL',
-			email : email
-		},
-		dataType : "json",
-		success : function(response) {
-			resp = response;
-		},
-		error : function(response) {
-			resp = response;
-		}
-	});
+function verifyCode() {
+	var code = $("#verifyCode").val();
+	var email = $("#verifyemail").val();
+	var codeEmpty = isempty(code);
+	
 
-	return resp;
+	// code filed validation error messages handling
+	if (!(codeEmpty)) {
+	//	document.getElementById('verifyMesssage').innerHTML = "  ** Verify Code can not be Empty.";
+		jQuery('#verifyMesssage').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
+		flag = false;
+		return false;
+	}
+	
+	if (code != null) {
+/*		var jsonData = {
+			"hashCode" : code,
+			"email" : email
+		};
+*/
+		$.ajax({
+					type : "POST",
+					url : '/TutorController',
+					data : {
+						hashCode : code,
+						email : email,
+						CCO : "TUTOR_HASH_VERIFICATION"
+					},
+					dataType : "json",
+					success : function(response) {
+						var counter = 0;
+						if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! "
+								|| response['errorMessage'] == "Verification code has been Expired!") {
+
+							//document.getElementById('verifyMesssage').innerHTML = response['errorMessage'];
+							jQuery('#verifyMesssage').addClass("fp-msg-error").html(response['errorMessage']);
+
+						} else {
+							jQuery('#verifyMesssage').addClass("fp-msg-success").html(response['errorMessage']);
+							setTimeout(function() {
+								
+								var firstName = "";
+								var lastName = "";
+								var email = "";
+								var scode = "";
+								var resultData = response.result;
+
+								$.each(response.result, function(index, value) {
+									var res = value.toString();
+									var data = res.split(",");
+									counter++;
+
+									firstName = data[0].toString();
+									lastName = data[1].toString();
+									email = data[2].toString();
+									scode = data[4].toString();
+								});
+								var encode = hashEncode(scode);
+								// var decode = hashDecose(encode);
+								// data binding to URL
+								var pageURL = firstName + "&" + lastName + "&"
+										+ email + "&" + encode;
+
+								window.location.href = response['pageURL']
+										+ "?uData&" + pageURL;
+							}, 4000);
+							
+							
+						}
+					},
+					error : function(response, error, errorThrown) {
+						alert("Error " + error);
+						console.log(error);
+						var msg = '';
+						if (response.status === 0) {
+							msg = 'Not connect.\n Verify Network.';
+						} else if (response.status == 404) {
+							msg = 'Requested page not found. [404]';
+						} else if (response.status == 500) {
+							msg = 'Internal Server Error [500].';
+						} else if (error === 'parsererror') {
+							msg = 'Requested JSON parse failed.';
+						} else if (error === 'timeout') {
+							msg = 'Time out error.';
+						} else if (error === 'abort') {
+							F
+							msg = 'Ajax request aborted.';
+						} else {
+							msg = 'Uncaught Error.\n' + response.responseText;
+						}
+					}
+
+				});
+	}
+}
+// String encode to Hash code
+function hashEncode(data) {
+	// Define the string
+	var string = data;
+
+	// Encode the String
+	var encodedString = btoa(string);
+	
+	return encodedString;
+}
+// String Hash code decode to Sting
+function hashDecode(data) {
+	// Decode the String
+	var decodedString = atob(data);
+	
+	return decodedString;
 }
