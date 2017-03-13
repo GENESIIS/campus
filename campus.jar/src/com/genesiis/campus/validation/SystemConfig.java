@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //				value2 and value3 to match fields in SystemConfig table
 //20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
 //20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
+//20170313 AS C142 Session expiration page URL added to enum
 
 /**
  * SystemConfig enum is intended to be used for the purpose of identifying the
@@ -31,8 +32,9 @@ public enum SystemConfig {
 	COURSE_IMAGE_PATH("", "", ""), 
 	STUDENT_PROFILE_IMAGE_PATH("", "", ""),
 	TUTOR_PROFILE_IMAGE_PATH("", "", ""),
-	CATEGORY_LOGO_PATH("education/general/category/logo","","");
-
+	CATEGORY_LOGO_PATH("education/general/category/logo","",""),
+	SESSION_EXPIRATION_URL("http://www.campus.dev:8080/dist/partials/error/error-content.jsp","","");
+	
 	private String value1;
 	private String value2;
 	private String value3;
