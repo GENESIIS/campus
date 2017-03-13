@@ -1,3 +1,5 @@
+<!-- 20170202 TR CAM-94 added new error directory to i (i/error): for including all error images and icons -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>

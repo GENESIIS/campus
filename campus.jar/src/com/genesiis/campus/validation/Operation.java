@@ -25,6 +25,8 @@ package com.genesiis.campus.validation;
 //20161217 MM c2-integrate-google-banners Removed LOAD_BANNER_PAGE constant (before 
 //				merging with sprint branch) that was there for testing the banner 
 //				displaying functionality 
+//20170111 PN CAM-72: added ERROR_HANDELING_COMMAND attribute to the Operation class.
+//20170112 PN CAM-72: modified ERROR_HANDELING_COMMAND attribute to display error page using JSP.
 //20161109 PN c11-criteria-based-filter-search changed ResponseType.JSP into ResponseType.JSON. 
 //20161121 PN c27-upload-user-image: added UPLOAD_USER_PROFILE attribute to operation Enum.
 //20161130 PN c27-upload-user-image: GET_USER_PROFILE enum values are changed.
@@ -52,6 +54,7 @@ public enum Operation {
 	LIST_MAJOR_DATA("LIST_MAJOR_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_DISTRICT_DATA("LIST_DISTRICT_DATA", ResponseType.JSP, "index.jsp"), 
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
+	ERROR_HANDELING_COMMAND("EHC", ResponseType.JSP, "ErrorPage.jsp"),
 	UPLOAD_USER_PROFILE("UUP", ResponseType.JSON, "index.jsp"), 
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp"),
     SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER("SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER",ResponseType.JSON," "),

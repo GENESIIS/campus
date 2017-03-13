@@ -4,7 +4,7 @@ package com.genesiis.campus.command;
 //20161117 JH c7-higher-education-landing-page-MP code modifications : mx code review 
 //20161125 JH c7-higher-education-landing-page-MP QA modifications: load category logo using system config enum
 
-import com.genesiis.campus.entity.LPCategoryDAO;
+import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.InstituteDAO;
@@ -40,7 +40,7 @@ public class CmdListCategories implements ICommand{
 	@Override
 	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
 
-		ICrud categoryDAO = new LPCategoryDAO();
+		ICrud categoryDAO = new CategoryDAO();
 		ICrud instituteDAO = new InstituteDAO();
 		final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
 		

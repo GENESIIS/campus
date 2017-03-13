@@ -10,6 +10,7 @@ package com.genesiis.campus.controller;
 // 20161114 MM public-controller-testing-2 Changed implementation of process() so that even when 
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
+// 20170111 PN Modified process() method to check CCO value and change the value if the caller servlet is ExceptionHandlingController.
 //20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
 
 import com.genesiis.campus.entity.IView;
@@ -61,21 +62,23 @@ public class CampusController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		process(request, response);
 	}
 
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
 		helper = new DataHelper(request);
 		cco = helper.getCommandCode();
+		
+		if(request.getServletPath().equals("/ExceptionHandlingController")){
+			cco = "EHC";
+		}
+		
 		ResponseType responseType = helper.getResponseType(cco);
-
 		try {
 			result = helper.getResultView(cco);
 			Gson gson = new Gson();

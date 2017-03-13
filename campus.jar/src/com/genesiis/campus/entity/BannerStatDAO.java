@@ -23,6 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 public class BannerStatDAO implements ICrud {
 
 	static Logger Log = Logger.getLogger(BannerStatDAO.class.getName());
