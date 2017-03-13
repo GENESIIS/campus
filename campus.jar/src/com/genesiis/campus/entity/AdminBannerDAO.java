@@ -21,8 +21,10 @@ package com.genesiis.campus.entity;
  * 			   logic and placed in PrevalentValidation.java  
  * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn  made implemented ICrudSibling interface 
  * 			   and override the method  getAll(Object jsnObject)
- * 20170309 DN c131-admin-manage-banner-upload-banner-image-dn implemented methods getAplicationStatus(int) 
+ * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn implemented methods getAplicationStatus(int) 
  *             and Collection<Collection<String>> getAll(Object). Add doc comments to class and methods
+ * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn    getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
+ * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE")                  
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -348,7 +350,7 @@ public class AdminBannerDAO implements ICrudSibling {
 				innerCol.add(resultSet.getString("LINKTYPE")); //3
 				innerCol.add(resultSet.getString("URL"));  //4
 				innerCol.add(resultSet.getString("PAGESLOT")); //5
-				innerCol.add(resultSet.getString("NAME PAGESLOT_NAME")); //6
+				innerCol.add(resultSet.getString("PAGESLOT_NAME")); //6
 				innerCol.add(resultSet.getString("ISACTIVE"));//7
 				innerCol.add(resultSet.getString("ACTIVATIONDATE")); //8
 				innerCol.add(resultSet.getString("EXPIRATIONDATE")); //9
