@@ -128,13 +128,13 @@ function DisplayTutorTable(){
 							onErroImage = fileSeparator + tutorImagePath + fileSeparator + defaultImage + extension;
 							
 							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'">';
-							
-							value2 = '<div> <div> <a href="javascript:" onclick="">' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</a></div>'
-							+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
-							+ '<div> <label>Office : </label> ' + value[5]+ value[8]+ ' '+  value[9]+'</div>'
-							+ '<div> <label>Email : </label> ' + value[4] +'</div>'
-							+ '<div> <label>Town : </label> ' + value[19]+ '</div><div>';	
 
+								value2 = '<div> <div> <a href="javascript:" onclick="">' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</a></div>'											
+								+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
+								+ '<div> <label>Office : </label> ' + value[5]+ value[8]+ ' '+  value[9]+'</div>'
+								+ '<div> <label>Email : </label> ' + value[4] +'</div>'
+								+ '<div> <label>Town : </label> ' + value[10]+ '</div><div>';								
+							
 							var majorArrayList = majorMap[value[0]];
 							$.each(majorArrayList, function(index, currentMajor) {
 								
@@ -147,15 +147,36 @@ function DisplayTutorTable(){
 							
 							
 							var categoryArrayList = categoryMap[value[0]];
+
+							if(categoryArrayList != null || categoryArrayList != undefined){
+								value4 += '<div><label>Education Area : </label></div>';
 							$.each(categoryArrayList, function(index, currentCategory) {
-								
+
 								if(currentCategory[1] != null || currentCategory[1] != undefined){
 									
-									value4 +=  '<a href="javascript:" onclick="">' + currentCategory[1] + '</a></br>';	
+									value4 +=  '<label class="glyphicon glyphicon-minus"></label> <a href="javascript:" onclick="">' + currentCategory[1] + '</a></br>';	
 								}
 								
 							});
+						}
+							value4 += '</div> <br/>';
+							
+							var qualificationArrayList = qualificationMap[value[0]];
+
+							if(qualificationArrayList != null || qualificationArrayList != undefined){
+								value4 += '<div><label>Highest Qualification : </label></div>';
+							$.each(qualificationArrayList, function(index, currentQualification) {
+
+								if(currentQualification[1] != null || currentQualification[1] != undefined){
+									
+									value4 +=  '<label class="glyphicon glyphicon-minus"></label> <a href="javascript:" onclick="">' + currentQualification[2]  + ' in '+ currentQualification[3] + '</a></br>';	
+								}
+								
+							});
+						}
 							value4 += '</div>';
+							
+							
 	
 t.row.add(
 									[
