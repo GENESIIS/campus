@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
 //20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records, major records from the tutor 
 //			basic data, fixed concurrent modification exception
+//20170313 JH c96-public-list-all-tutors remove repeating qualification records wip
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -122,10 +123,12 @@ public class CmdPublicListTutors implements ICommand{
 			// maps to store repeating category and major details
 			Map categoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			Map majorMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			Map qualificationMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			
 			
 			ArrayList<ArrayList<String>> categoryList =  null;
 			ArrayList<ArrayList<String>> majorList = null;
+			ArrayList<ArrayList<String>> qualificationList = null;
 			
 			Iterator resultIterator = tutorArrayList.iterator();
 			Iterator newTuorsIterator = newTutorList.iterator();
@@ -162,7 +165,7 @@ public class CmdPublicListTutors implements ICommand{
 						boolean isNew = true;
 						
 						ArrayList<String> temporaryCategory = (ArrayList<String>) categoryListIterator.next();
-						ArrayList<String> compareCateogry = null; // to compare categories
+					//	ArrayList<String> compareCateogry = null; // to compare categories
 						
 						if(finalCategoryList.contains(temporaryCategory)){
 							// the category already exist
@@ -187,7 +190,7 @@ public class CmdPublicListTutors implements ICommand{
 					while (majorListIterator.hasNext()) {
 
 						ArrayList<String> temporaryMjor = (ArrayList<String>) majorListIterator.next();
-						ArrayList<String> compareMajor = null; // to compare categories
+						//ArrayList<String> compareMajor = null; // to compare categories
 						
 						if(finalMajorList.contains(temporaryMjor)){
 							// the category already exist
@@ -200,6 +203,31 @@ public class CmdPublicListTutors implements ICommand{
 					majorMap.put(code, finalMajorList);
 					majorList = null;
 				}
+					
+					// to exclude the first iteration and empty qualification lists
+					if(!code.equalsIgnoreCase("0") || (qualificationList != null) ){
+						
+						ArrayList<ArrayList<String>> finalqualificationList = new ArrayList<ArrayList<String>>();
+						
+						Iterator qualificationListIterator = finalqualificationList.iterator(); // iterator for list with duplicates
+
+					while (qualificationListIterator.hasNext()) {
+
+						ArrayList<String> temporaryQualification = (ArrayList<String>) qualificationListIterator.next();
+				//		ArrayList<String> compareQualification = null; // to compare categories
+						
+						if(finalqualificationList.contains(temporaryQualification)){
+							// the category already exist
+						}else{
+							finalqualificationList.add(temporaryQualification);
+						}
+						
+					}
+
+					qualificationMap.put(code, finalqualificationList);
+					qualificationList = null;
+				}	
+					
 				}
 				
 				code = singleList.get(0);
@@ -240,9 +268,20 @@ public class CmdPublicListTutors implements ICommand{
 				}
 			
 				ArrayList<String> temporaryMajor  = new ArrayList<String>();
+				if(singleList.get(10) != null){
 				temporaryMajor.add(singleList.get(10));
 				temporaryMajor.add(singleList.get(11));
+				}
 				
+				ArrayList<String> temporaryQualification = new ArrayList<String>();
+				
+				if(singleList.get(14) != null){
+					temporaryQualification.add(singleList.get(14));
+					temporaryQualification.add(singleList.get(15));
+					temporaryQualification.add(singleList.get(16));
+					temporaryQualification.add(singleList.get(17));
+					
+				}
 				
 				// if previous records are available: check whether the last
 				// record matches the current temporary tutor record
@@ -280,6 +319,9 @@ public class CmdPublicListTutors implements ICommand{
 						if(majorList != null && temporaryMajor != null){
 							majorList.add(temporaryMajor);
 						}
+						if(qualificationList != null && temporaryQualification != null){
+							qualificationList.add(temporaryQualification);
+						}
 						
 					} else {
 					// the tutor record does not available, insert the temporary
@@ -299,6 +341,13 @@ public class CmdPublicListTutors implements ICommand{
 					if(majorList != null && temporaryMajor != null){
 						majorList.add(temporaryMajor);
 					}
+					
+					// add all qualification related records	
+					qualificationList = new ArrayList<ArrayList<String>>();
+					
+					if(qualificationList != null && qualificationList != null){
+						qualificationList.add(temporaryQualification);
+					}
 					}
 					
 
@@ -307,6 +356,7 @@ public class CmdPublicListTutors implements ICommand{
 					
 					categoryList = new 	ArrayList<ArrayList<String>>();
 					majorList = new ArrayList<ArrayList<String>>();
+					qualificationList = new ArrayList<ArrayList<String>>();
 					
 					if(categoryList != null && temporaryCategory != null){
 						categoryList.add(temporaryCategory);
@@ -314,6 +364,9 @@ public class CmdPublicListTutors implements ICommand{
 					
 					if(majorList != null && temporaryMajor != null){
 						majorList.add(temporaryMajor);
+					}
+					if(qualificationList != null && qualificationList != null){
+						qualificationList.add(temporaryQualification);
 					}
 				}
 
@@ -325,12 +378,18 @@ public class CmdPublicListTutors implements ICommand{
 			if(!majorMap.isEmpty()){
 				log.info("major map " + majorMap);
 			}
+			if(!qualificationMap.isEmpty()){
+				log.info("qualification map " + qualificationMap);
+			}
+
 
 			
 			Map returData = new HashMap();
 			returData.put("tutorCollection", newTutorList);
 			returData.put("categoryData", categoryMap);
 			returData.put("majaorData", majorMap);
+			returData.put("qualification", qualificationMap);
+			
 		return returData;
 	}
 }
