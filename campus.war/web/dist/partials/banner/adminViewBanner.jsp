@@ -95,7 +95,7 @@
    <br><br>
    <input type="button" value="Search">
    <!-- banner records will be displayed here -->
-   <table >
+   <table id='bannerDisplaytbl' >
 	   	<thead>
 	            <tr>
 	                <th>Banner Information</th>
