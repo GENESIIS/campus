@@ -8,7 +8,7 @@ package com.genesiis.campus.command;
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
 //20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records, major records from the tutor 
 //			basic data, fixed concurrent modification exception
-//20170313 JH c96-public-list-all-tutors remove repeating qualification records, removed unwanted comments
+//20170313 JH c96-public-list-all-tutors remove repeating qualification records, removed unwanted comments, return qualification records
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -53,6 +53,7 @@ public class CmdPublicListTutors implements ICommand{
 					.getAll();
 			Map tutorMajorMap = new  HashMap<String, ArrayList<ArrayList<String>>>();
 			Map tutorCategoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			Map tutorQualificationMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			
 			if (tutorCollection.size() == 0) {
 				message = SystemMessage.NODATA;
@@ -63,10 +64,12 @@ public class CmdPublicListTutors implements ICommand{
 				newTutorCollection = (Collection<Collection<String>>) returnData.get("tutorCollection");
 				tutorCategoryMap = (Map) returnData.get("categoryData");
 				tutorMajorMap = (Map) returnData.get("majaorData");
+				tutorQualificationMap = (Map) returnData.get("qualification");
 				
 			}
 			helper.setAttribute("majorMap", tutorMajorMap);
 			helper.setAttribute("categoryMap", tutorCategoryMap);
+			helper.setAttribute("qualificationMap", tutorQualificationMap);
 			view.setCollection(newTutorCollection);
 
 		} catch (SQLException sqlException) {
