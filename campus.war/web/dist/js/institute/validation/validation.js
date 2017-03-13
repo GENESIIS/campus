@@ -107,7 +107,7 @@ function isFieldFilled(flag, elementName, errorLabelId){
 function isStringHasValiCharsAndLength(testableInput){
 	var validCharAndLength= false;
 	if(testableInput!=""|testableInput!=null){
-		var testableRegularExpression = /^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g;
+		var testableRegularExpression = /^([a-zA-Z]+)([a-zA-Z0-9_]+){7,}$/g;
 		validCharAndLength= isPatternMatch(testableRegularExpression,testableInput.trim()); 
 	}
 	return validCharAndLength;
