@@ -18,6 +18,7 @@ package com.genesiis.campus.factory;
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn BANNER_CREDENTIALS  map entry added,changed the getCommand()
 //20170216 DN c131-admin-manage-banner-upload-banner-image-dn UPLOAD_BANNER_IMAGE_CREDENTIALS -->UPLOAD_BANNER_IMAGE_BY_ADMIN
 //20170310 DN c81-admin-manage-banner-add-and-view-banner-dn ADMIN_DISPLAY_BANNERS has been added to map.
+//20170313 DN c81-admin-manage-banner-add-and-view-banner-dn add the ADMIN_DISPLAY_BANNERS enum to switch structure.
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
@@ -57,6 +58,9 @@ public class AdminCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;	
 		case UPLOAD_FULL_BANNER_CREDENTIALS:
+			command = map.get(o);
+			break;
+		case ADMIN_DISPLAY_BANNERS:
 			command = map.get(o);
 			break;
 		default:
