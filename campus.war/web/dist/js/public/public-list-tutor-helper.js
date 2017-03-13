@@ -4,10 +4,13 @@
  * 					load tutor images using system config file path with loading default image on error source,show error messages on AJAX calls
  * 20170309 JH c96 changed the tutor table element id 'example' into 'tutorListTable' due to changes in jsp page
  * 20170310 JH c96 selectTutorRecord() method modified to display tutor private details with mobile, office, email and the town details wip
+ * 20170313 JH c96 listPublicTutors() and DisplayTutorTable() methods modified to display tutor major details wip
  */
 
 window.tutorList = null;
 window.tutorProfileImagePath = null;
+window.majorList = null;
+window.categoryList = null;
 
 window.onload = function() {
 	listPublicTutors();
@@ -33,7 +36,8 @@ function listPublicTutors(){
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
 				window.tutorProfileImagePath = response.tutorProfileImagePath;
-				
+				window.majorList =  response.majorMap;
+				alert(window.majorList);
 
 				DisplayTutorTable();
 			    $('#tutorListTable tbody').on('click', 'tr', function () {
@@ -100,6 +104,8 @@ function DisplayTutorTable(){
 	t.clear().draw();
 	var imageFile = null;
 	var defaultImage  = "default";
+	var map = window.majorList;
+	alert(map);
 
 	if (tutors !== undefined & tutors !== null) {
 		$
@@ -123,7 +129,7 @@ function DisplayTutorTable(){
 							+ '<div> <label>Email : </label> ' + value[4] +'</div>'
 							+ '<div> <label>Town : </label> ' + value[19]+ '</div><div>';	
 							
-							
+							value3 = '<c:forEach var="entry" items="'+ map +'"><c:out value="${entry.value}"/> </c:forEach>';
 	
 t.row.add(
 									[
@@ -131,7 +137,7 @@ t.row.add(
 value[0],
 											value1,
 											value2,
-											value[4],
+											value3,
 											value[5]
 
 									]).draw(false);
