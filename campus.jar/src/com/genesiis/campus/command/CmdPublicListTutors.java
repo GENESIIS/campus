@@ -209,7 +209,7 @@ public class CmdPublicListTutors implements ICommand{
 					if(!code.equalsIgnoreCase("0") || (qualificationList != null) ){
 						
 						ArrayList<ArrayList<String>> finalqualificationList = new ArrayList<ArrayList<String>>();
-						
+						int highestNVQ = 0;						
 						Iterator qualificationListIterator = qualificationList.iterator(); // iterator for list with duplicates
 
 					while (qualificationListIterator.hasNext()) {
@@ -219,7 +219,12 @@ public class CmdPublicListTutors implements ICommand{
 						if(finalqualificationList.contains(temporaryQualification)){
 							// the category already exist
 						}else{
+							int temporaryQualificationNVQ =  Integer.parseInt(temporaryQualification.get(1));
+							if(temporaryQualificationNVQ > highestNVQ){
+								highestNVQ = temporaryQualificationNVQ;
+							}
 							finalqualificationList.add(temporaryQualification);
+
 						}
 						
 					}
@@ -372,6 +377,12 @@ public class CmdPublicListTutors implements ICommand{
 
 			}
 
+			if(!majorMap.isEmpty()){
+				log.info("major map " + majorMap);
+			}
+			if(!categoryMap.isEmpty()){
+				log.info("category map " + categoryMap);
+			}
 			if(!qualificationMap.isEmpty()){
 				log.info("qualification map " + qualificationMap);
 			}
