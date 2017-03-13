@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170311 CW C147 TutorEmailVerificationDAO class created
 //20170312 CW C147 modified findById method & removed some commented lines
+//20170313 CW C147 modified update method & removed comment on executeUpdate method calling
 
 import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.entity.model.Tutor;
@@ -58,8 +59,7 @@ public class TutorEmailVerificationDAO implements ICrud {
 			ps.setDate(2, modDate);
 			ps.setTimestamp(3, hashGenDate);
 			ps.setInt(4, tutor.getCode());
-		//	rowInserted = ps.executeUpdate(); // commented until HASHGENTIME column type found 
-			rowInserted = 1;
+			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
 				rowInserted = 1;
