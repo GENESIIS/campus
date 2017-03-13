@@ -52,9 +52,9 @@ function loadBanners(){
 				if(response.result === "NO-DATA")
 					displayLabelMessage('messagePopUp','displayLabel','green',"No records to display !");
 				populateBannerTable(response.result,response.bannerWarPath);
+			} else {
+				displayLabelMessage('messagePopUp','displayLabel','green',response.message);
 			}
-			
-			displayLabelMessage('messagePopUp','displayLabel','green',response.message);
 			
 		},
 		error:function(allBanners,error,errorThrown){
@@ -89,7 +89,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		return null;
 	}
 		
-	$("#bannerDisplaytbl tr").remove();
+	//$("#bannerDisplaytbl tr").remove();
 	// assigning all the banner records to the global variable.
 	bannerArray = allBannerRecords;
 	var bannerImageWarPath = bannerWarPath;
@@ -107,7 +107,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 * belongs to column values of the record
 			 */ 	
 			
-			var BannerCode = aRow[0];
+			var bannerCode = aRow[0];
 			var imageName =aRow[1];
 			var bannerActivateDate=aRow[8];
 			var bannerDeactivateDate = aRow[9];
@@ -120,16 +120,17 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-			var markUp = "<tr id='rowId"+rowNumber+"'><td> "+BannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
+					var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td> "+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
 					markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
 										"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
-										"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+BannerCode+"'>"+ 
+										"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+bannerCode+"'>"+ 
 									 "</form></td>";
 					markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
-			jQuery("table").css('overflow-y','auto');
-			jQuery("table tbody").append(markUp);
+					jQuery("table").css('overflow-x','auto');
+					jQuery("table").append(markUp);
 			
 		});
+	
 		
 }
 
