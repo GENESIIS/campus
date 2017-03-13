@@ -8,7 +8,7 @@ package com.genesiis.campus.command;
 //20170310 JH c96-public-list-all-tutors separate tutor category details from the tutor basic data wip
 //20170312 JH c96-public-list-all-tutors removed unwanted comments and remove repeating category records, major records from the tutor 
 //			basic data, fixed concurrent modification exception
-//20170313 JH c96-public-list-all-tutors remove repeating qualification records wip
+//20170313 JH c96-public-list-all-tutors remove repeating qualification records, removed unwanted comments
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -57,7 +57,7 @@ public class CmdPublicListTutors implements ICommand{
 			if (tutorCollection.size() == 0) {
 				message = SystemMessage.NODATA;
 			} else {
-				//newTutorCollection = seperateBasicData(tutorCollection);
+
 				Map returnData = new HashMap();
 				returnData = seperateBasicData(tutorCollection);
 				newTutorCollection = (Collection<Collection<String>>) returnData.get("tutorCollection");
@@ -165,7 +165,6 @@ public class CmdPublicListTutors implements ICommand{
 						boolean isNew = true;
 						
 						ArrayList<String> temporaryCategory = (ArrayList<String>) categoryListIterator.next();
-					//	ArrayList<String> compareCateogry = null; // to compare categories
 						
 						if(finalCategoryList.contains(temporaryCategory)){
 							// the category already exist
@@ -190,7 +189,6 @@ public class CmdPublicListTutors implements ICommand{
 					while (majorListIterator.hasNext()) {
 
 						ArrayList<String> temporaryMjor = (ArrayList<String>) majorListIterator.next();
-						//ArrayList<String> compareMajor = null; // to compare categories
 						
 						if(finalMajorList.contains(temporaryMjor)){
 							// the category already exist
@@ -209,12 +207,11 @@ public class CmdPublicListTutors implements ICommand{
 						
 						ArrayList<ArrayList<String>> finalqualificationList = new ArrayList<ArrayList<String>>();
 						
-						Iterator qualificationListIterator = finalqualificationList.iterator(); // iterator for list with duplicates
+						Iterator qualificationListIterator = qualificationList.iterator(); // iterator for list with duplicates
 
 					while (qualificationListIterator.hasNext()) {
 
 						ArrayList<String> temporaryQualification = (ArrayList<String>) qualificationListIterator.next();
-				//		ArrayList<String> compareQualification = null; // to compare categories
 						
 						if(finalqualificationList.contains(temporaryQualification)){
 							// the category already exist
@@ -371,13 +368,7 @@ public class CmdPublicListTutors implements ICommand{
 				}
 
 			}
-			
-			if(!categoryMap.isEmpty()){
-				log.info("cateogry map " + categoryMap);
-			}
-			if(!majorMap.isEmpty()){
-				log.info("major map " + majorMap);
-			}
+
 			if(!qualificationMap.isEmpty()){
 				log.info("qualification map " + qualificationMap);
 			}
