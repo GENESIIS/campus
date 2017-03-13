@@ -23,6 +23,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ResponseType;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
@@ -91,7 +92,8 @@ public class CampusController extends HttpServlet {
 			//get actual servlet Path
 			String servletPath = request.getServletPath(); 
 			
-			String redirectURL = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
+			String redirectURL = SystemConfig.SESSION_EXPIRATION_URL.getValue1(); //session expiration redirect URL 
+			
 			Gson gson = new Gson();
 			
 			//this condition checks Session attribute null or available and only execute the PublicController and LoginController 
