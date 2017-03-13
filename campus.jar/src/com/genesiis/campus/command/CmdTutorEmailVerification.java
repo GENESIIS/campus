@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170311 CW c147-tutor-reset-password-cw modified execute method to get the data from the database for given email
 //20170312 CW c147-tutor-reset-password-cw add systemMessage method to send the message properly
 				// modified execute method to send the email with hashcode 
+//20170313 CW c147-tutor-reset-password-cw tutorResetPasswordEmail variable declaration place changed
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -36,7 +37,6 @@ public class CmdTutorEmailVerification implements ICommand {
 		String uname = "";
 		String code = "";
 		try {
-			GenerateEmail tutorResetPasswordEmail = new GenerateEmail();
 			Tutor tutor = new Tutor();
 			tutor.setEmailAddress(helper.getParameter("email"));
 			boolean validEmail = LoginValidator.validateEmail(tutor.getEmailAddress());
@@ -69,6 +69,7 @@ public class CmdTutorEmailVerification implements ICommand {
 
 					int updateData = emailVarifyDAO.update(tutor);
 					if (updateData > 0) {
+						GenerateEmail tutorResetPasswordEmail = new GenerateEmail();
 						message = SystemMessage.HASHCODES.message();
 						status = tutorResetPasswordEmail.sendTutorResetPasswordVerificationEmail(tutor.getFirstName(), 
 								tutor.getLastName()	, tutor.getEmailAddress(), tutor.getUsername(), tutor.getHashCode());
@@ -80,9 +81,9 @@ public class CmdTutorEmailVerification implements ICommand {
 			} else {
 				message = SystemMessage.INVALID_EMAIL.message();
 			}
-		} catch (SQLException sexp) {
-			log.error("execute(): SQLException " + sexp.toString());
-			throw sexp;
+		} catch (SQLException sqle) {
+			log.error("execute(): SQLException " + sqle.toString());
+			throw sqle;
 		} catch (IllegalArgumentException ilexp) {
 			log.error("execute(): IllegalArgumentException" + ilexp.toString());
 			throw ilexp;
