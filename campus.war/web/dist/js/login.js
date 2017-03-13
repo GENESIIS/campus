@@ -364,7 +364,7 @@ function changedPassword() {
 	var password = $("#passWord").val();
 	var confirmpassword = $("#confrmpsw").val();
 	var paaswordEmpty = isempty(password);
-	var validation = validatePasswordResetData();
+//	var validation = validatePasswordResetData();
 	var passvadidation = passwordAndConfirmPassword(password, confirmpassword);
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
@@ -374,7 +374,21 @@ function changedPassword() {
 				'  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
-	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
+		
+		
+		
+	}else if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
+			"passWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(
+			isStringHasValiCharsAndLength($('#passWord').val(),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
+			"passWordError"))) {
+		return !validationPass;
+	}
+	
+	else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
 			"Confirm Password Field", "confPassWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
@@ -386,9 +400,9 @@ function changedPassword() {
 			"confPassWordError"))) {
 		return !validationPass;
 	}
-	return validationPass;
+	
 
-	if (code != null && validation && passvadidation) {
+	if (code != null  && passvadidation && validationPass) {
 		var jsonData = {
 			"code" : code,
 			"password" : password
@@ -457,25 +471,12 @@ function validatePasswordResetData() {
 		return !validationPass;
 	} else if (!(isFieldFilled(
 			isStringHasValiCharsAndLength($('#passWord').val(),
-					/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
 			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
 			"passWordError"))) {
 		return !validationPass;
 	}
-	// else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
-	// "Confirm Password Field", "confPassWordError"))) {
-	// return !validationPass;
-	// } else if
-	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
-	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
-	// "confPassWordError"))) {
-	// return !validationPass;
-	// } else if
-	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
-	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
-	// "confPassWordError"))) {
-	// return !validationPass;
-	// }
+
 	return validationPass;
 
 }
