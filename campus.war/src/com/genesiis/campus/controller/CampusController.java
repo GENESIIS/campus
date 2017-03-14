@@ -19,6 +19,8 @@ package com.genesiis.campus.controller;
 //													mediateResponceOnType(request, response) method created, and Session validation handle in process method.
 //													if Session is null and request comes from PublicController or LoginController its execute and return the result.
 //													otherwise check session already invalidated, then redirect to error-content.jsp page. 
+//20170314 AS CAM-142-clear-browser-cache-data-as- rtc 201703131532-DN code review issues fixed, code duplication and hard code URL get from systemconfig enum.
+//													addAttributesToResponse(objectMap,  request,  helper) and clearResponseCache(response ) created. code duplication resolved from these two methods.
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
@@ -75,10 +77,8 @@ public class CampusController extends HttpServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
- 
-		
+ 	
 		IDataHelper helper = null;
-		
 		String cco = "";
 		helper = new DataHelper(request, response);
 		cco = helper.getCommandCode();
@@ -91,13 +91,11 @@ public class CampusController extends HttpServlet {
 			
 			//get actual servlet Path
 			String servletPath = request.getServletPath(); 
-			
 			String redirectURL = SystemConfig.SESSION_EXPIRATION_URL.getValue1(); //session expiration redirect URL 
-			
 			Gson gson = new Gson();
 			
 			//this condition checks Session attribute null or available and only execute the PublicController and LoginController 
-			if(currentSessionUser == null && servletPath.equalsIgnoreCase("/PublicController") || servletPath.equalsIgnoreCase("/LoginController") ){
+			if((currentSessionUser == null) && (servletPath.equalsIgnoreCase("/PublicController") || servletPath.equalsIgnoreCase("/LoginController"))){
 				mediateResponceOnType(request, response);
 
 			}else if (currentSessionUser != null ) {
@@ -111,23 +109,14 @@ public class CampusController extends HttpServlet {
 				}else{
 					request.setAttribute("redirectURL", redirectURL); //if session null in button action, and its AJAX call function. Set the Session expiration URL to redirect.
 					Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-					Enumeration<String> attributeNames = request.getAttributeNames();
-
-					while (attributeNames.hasMoreElements()) {
-						String currentAttributeName = attributeNames
-								.nextElement();
-						Object object = helper
-								.getAttribute(currentAttributeName);
-						objectMap.put(currentAttributeName, object);
-					}
 					
+					addAttributesToResponse(objectMap, request, helper);
+				
 					response.getWriter().write(gson.toJson(objectMap));
-					
 					response.setContentType("application/json");
-					response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-				    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
-				    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-				    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
+					
+					clearResponseCache(response);
+					
 				}
 			
 			}
@@ -142,8 +131,9 @@ public class CampusController extends HttpServlet {
 	 * @param response
 	 */
 	
-	public void mediateResponceOnType(HttpServletRequest request,  HttpServletResponse response ){
-		
+	public void mediateResponceOnType(HttpServletRequest request,
+			HttpServletResponse response) {
+
 		IDataHelper helper = null;
 		IView result = null;
 		String cco = "";
@@ -151,49 +141,66 @@ public class CampusController extends HttpServlet {
 		cco = helper.getCommandCode();
 		ResponseType responseType = helper.getResponseType(cco);
 		Gson gson = new Gson();
-		
-		try{
-		result = helper.getResultView(cco);
-		
-		
-		if (ResponseType.JSP.equals(responseType)) {
 
-			request.setAttribute("result", result);
-			request.getRequestDispatcher(helper.getResultPage(cco))
-					.forward(request, response);
+		try {
+			result = helper.getResultView(cco);
 
-		} else if (ResponseType.JSON.equals(responseType)) {
+			if (ResponseType.JSP.equals(responseType)) {
 
-			Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+				request.setAttribute("result", result);
+				request.getRequestDispatcher(helper.getResultPage(cco))
+						.forward(request, response);
 
-			if (result != null && result.getCollection() != null) {
-				objectMap.put("result", result.getCollection());
-			} else {
-				objectMap.put("result", "NO-DATA");
+			} else if (ResponseType.JSON.equals(responseType)) {
+
+				Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
+
+				if (result != null && result.getCollection() != null) {
+					objectMap.put("result", result.getCollection());
+				} else {
+					objectMap.put("result", "NO-DATA");
+				}
+
+				addAttributesToResponse(objectMap, request, helper);
+				response.getWriter().write(gson.toJson(objectMap));
+				response.setContentType("application/json");
+				clearResponseCache(response);
+
 			}
 
-			Enumeration<String> attributeNames = request
-					.getAttributeNames();
-
-			while (attributeNames.hasMoreElements()) {
-				String currentAttributeName = attributeNames
-						.nextElement();
-				Object object = helper
-						.getAttribute(currentAttributeName);
-				objectMap.put(currentAttributeName, object);
-			}
-
-			response.getWriter().write(gson.toJson(objectMap));
-			response.setContentType("application/json");
-			response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-		    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
-		    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-		    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
-		}
-		
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
 		}
-		
+
+	}
+	
+	/** set result Attributes to object map. 
+	 * 
+	 * @param objectMap
+	 * @param request
+	 * @param helper
+	 */
+	
+	public void addAttributesToResponse(Map<String, Object> objectMap, HttpServletRequest request, IDataHelper helper) {
+		Enumeration<String> attributeNames = request.getAttributeNames();
+
+		while (attributeNames.hasMoreElements()) {
+			String currentAttributeName = attributeNames.nextElement();
+			Object object = helper.getAttribute(currentAttributeName);
+			objectMap.put(currentAttributeName, object);
+		}
+	}
+	
+	
+	/**
+	 * Clear cache data in response header 
+	 * @param response
+	 */
+	
+	public void clearResponseCache(HttpServletResponse response ){
+		response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
+	    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
+	    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
+	    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility 
 	}
 }
