@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorPasswordChange class created.
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw comment changed & modified execute method to encrypt & update the password
+//20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -37,9 +38,11 @@ public class CmdTutorPasswordChange implements ICommand {
 			String encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 			tutor.setPassword(encryptPassword);
 			
+			//updating the tutor table with the new password
 			ICrud passwordRest = new SigningUpTutorDAO();
 			int result = passwordRest.update(tutor);
 			if (result > 0) {
+				// if password updated successfully showing the login screen to login
 				message = SystemMessage.PASSWORD_SUCCESS.message();
 				pageURL = "/index.jsp?showLogin=true";
 			} else {
