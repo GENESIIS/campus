@@ -10,6 +10,8 @@ package com.genesiis.campus.entity;
  *              Date getADate(String dateDelemeter,String date) to include custom error handling.
  *              getBanners() method is amended to add validation part and amended the doc comments.
  *              in catch clause FailedValidationException the error log was corrected to reflect correct method name.
+ *              introduced ArrayIndexOutOfBoundsException to the catch clause in getADate() method.
+ *              Unnecessary field of the type PrevalentValidation has been removed. 
  */
 import org.jboss.logging.Logger;
 
@@ -39,7 +41,6 @@ import java.util.regex.PatternSyntaxException;
 
 public class ListBanner {
 	private static final Logger log = Logger.getLogger(ListBanner.class.getName());
-	private Validatory preValidatory = new PrevalentValidation();
 	IDataHelper helper;
 	private int successCode =0;
 	private String message="";
@@ -263,7 +264,10 @@ public class ListBanner {
 			} catch (PatternSyntaxException psExp) {
 				log.error("getADate(String,String) :PatternSyntaxException:"+ psExp.toString());
 				throw new PrevalentValidation().new FailedValidationException("Date part seperator does not confirm \n to the required format ");
-			}
+			} catch (ArrayIndexOutOfBoundsException ariob){
+				log.error("getADate(String,String) :ArrayIndexOutOfBoundsException:"+ ariob.toString());
+				throw new PrevalentValidation().new FailedValidationException("Date entered does not confirm \n to the required format");
+			} 
 			return cal.getTime();
 		}
 	 
