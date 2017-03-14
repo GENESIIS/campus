@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20170228 JH c96-public-list-all-tutors PublicTutorDAO.java created
 //20170302 JH c96-public-list-all-tutors getAll() method coding 
 //20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
+//20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -10,8 +11,8 @@ import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,42 +50,20 @@ public class PublicTutorDAO implements ICrud {
 	public Collection getAll() throws SQLException, Exception {
 		final StringBuilder query = new StringBuilder();
 
-		query.append("SELECT t.CODE, t.FIRSTNAME, t.MIDDLENAME, t.LASTNAME, t.EMAIL, t.LANDPHONECOUNTRYCODE, t.LANDPHONEAREACODE, t.LANDPHONENUMBER, t.MOBILEPHONENETWORKCODE, t.MOBILEPHONENUMBER,");
-		query.append("tm.MAJOR AS MAJORCODE, m.NAME AS MAJORNAME, tc.CATEGORY AS CATEGORYCODE, c.NAME AS CATEGORYNAME, ");
-		query.append("tq.LEVEL, n.CODE AS NVQ, l.NAME AS LEVELNAME, tq.name AS QUALIFICATION, tw.NAME AS TOWN, tw.CODE AS TOWNCODE FROM [CAMPUS].[TUTOR] t ");
-		query.append("INNER JOIN [CAMPUS].[TOWN] tw ");
-		query.append("ON tw.CODE = t.TOWN ");
-		query.append("LEFT JOIN [CAMPUS].[TUTORMAJOR] tm "); 
-		query.append("ON tm.TUTOR = t.CODE "); 
-		query.append("LEFT JOIN [CAMPUS].[MAJOR] m ");
-		query.append("ON tm.MAJOR = m.CODE ");
-		query.append("LEFT JOIN [CAMPUS].[TUTORCATEGORY] tc ");
-		query.append("ON t.CODE = tc.TUTOR ");
-		query.append("LEFT JOIN [CAMPUS].[CATEGORY] c ");
-		query.append("ON c.CODE = tc.CATEGORY ");
 
-		query.append("LEFT JOIN ");
-
-		query.append("[CAMPUS].[TUTORQUALIFICATION] tq ");
-		query.append("ON t.CODE = tq.TUTOR ");
-		query.append("LEFT JOIN [CAMPUS].[LEVEL] l ");
-		query.append("ON tq.LEVEL = l.CODE ");
-		query.append("LEFT JOIN [CAMPUS].[NVQ] n ");
-		query.append("ON n.CODE = l.NVQ ");
-		
-		query.append("WHERE t.TUTORSTATUS = ?");
-
-		PreparedStatement preparedStatement = null;
+		CallableStatement callableStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
 		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
 
 		try {
 			conn = ConnectionManager.getConnection();
-			preparedStatement = conn.prepareStatement(query.toString());
+
+			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?)}");	
+			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			callableStatement.executeQuery();
 			
-			preparedStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
-			rs = preparedStatement.executeQuery();
+			rs = callableStatement.executeQuery();
 
 			while (rs.next()) {
 				Collection<String> singleTutorList = new ArrayList<String>();
@@ -121,7 +100,7 @@ public class PublicTutorDAO implements ICrud {
 			throw exception;
 
 		} finally {
-			DaoHelper.cleanup(conn, preparedStatement, rs);
+			DaoHelper.cleanup(conn, callableStatement, rs);
 		}
 		return tutorCollection;
 	}
