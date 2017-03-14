@@ -3,7 +3,7 @@ package com.genesiis.campus.entity;
 //20170228 JH c96-public-list-all-tutors PublicTutorDAO.java created
 //20170302 JH c96-public-list-all-tutors getAll() method coding 
 //20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
-//20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call
+//20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call, added method comments and removed unwanted imports
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -44,7 +44,11 @@ public class PublicTutorDAO implements ICrud {
 
 	/**
 	 * getAll() method used to get tutors with their basic information to list for the public user.
-	 * @return collection of tutor basic details with category and major details
+	 * This includes tutor details related to TUTOR table as well as program MODULE table which 
+	 * has a foreign key relationship to the tutor table.
+	 * 
+	 * 
+	 * @return collection of tutor basic details with category, major and highest qualification details
 	 * @author JH
 	 */
 	public Collection getAll() throws SQLException, Exception {
@@ -59,6 +63,12 @@ public class PublicTutorDAO implements ICrud {
 		try {
 			conn = ConnectionManager.getConnection();
 
+			/*
+			 * callable statement public_list_all_tutors is created to avoid 
+			 * multiple database calls. Due to the Collection return type of the method
+			 * it is impossible to return separate result sets which are related to tutor
+			 * table and program module table. Therefore the following procedure call is created
+			 */
 			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?)}");	
 			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			callableStatement.executeQuery();
