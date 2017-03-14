@@ -10,6 +10,7 @@ package com.genesiis.campus.command;
 //			basic data, fixed concurrent modification exception
 //20170313 JH c96-public-list-all-tutors remove repeating qualification records and select only the highest qualification, removed unwanted comments, return qualification records
 //			added addListToMap() method to remove repeating codes
+//20170314 JH c96-public-list-all-tutors added comments and removed unwanted logger statements 
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -44,17 +45,16 @@ public class CmdPublicListTutors implements ICommand{
 		try {
 
 			/*
-			 * newTutorCollectio - does not contain tutor repeating records,
-			 * contains only the basic details tutorArrayList - contains tutor
-			 * repeating records with all details
+			 * newTutorCollection - does not contain tutor repeating records,contains only the basic details 
+			 * tutorCollection - contains tutor repeating records with all details
 			 */
 			Collection<Collection<String>> newTutorCollection = new ArrayList<Collection<String>>();
 
 			final Collection<Collection<String>> tutorCollection = publicTutorDAO
 					.getAll();
-			Map tutorMajorMap = new  HashMap<String, ArrayList<ArrayList<String>>>();
-			Map tutorCategoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
-			Map tutorQualificationMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			Map<String, ArrayList<ArrayList<String>>> tutorMajorMap = new  HashMap<String, ArrayList<ArrayList<String>>>();
+			Map<String, ArrayList<ArrayList<String>>> tutorCategoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
+			Map<String, ArrayList<ArrayList<String>>> tutorQualificationMap = new HashMap<String, ArrayList<ArrayList<String>>>();
 			
 			if (tutorCollection.size() == 0) {
 				message = SystemMessage.NODATA;
@@ -142,9 +142,11 @@ public class CmdPublicListTutors implements ICommand{
 				
 				ArrayList<String> singleList = (ArrayList<String>) resultIterator.next();
 				
-				if(code.equalsIgnoreCase(singleList.get(0))){
-					
-				}else{
+				
+				if(code.equalsIgnoreCase(singleList.get(0))){// not a new tutor 
+					// do nothing as tutor record already exist
+				
+				}else{// a new tutor 
 					
 					/*
 					 * initially, tutor collection has duplicate category and major details
@@ -392,18 +394,11 @@ public class CmdPublicListTutors implements ICommand{
 
 			}
 
-			if(!majorMap.isEmpty()){
-				log.info("major map " + majorMap);
-			}
-			if(!categoryMap.isEmpty()){
-				log.info("category map " + categoryMap);
-			}
-			if(!qualificationMap.isEmpty()){
-				log.info("qualification map " + qualificationMap);
-			}
-
-
-			
+			/*
+			 * generic types are not used due to different data types used.
+			 *  newTutorList - ArrayList<ArrayList<String>> 
+			 *  categoryMap, majorMap, qualificationMap - HashMap<String, ArrayList<ArrayList<String>>> 
+			 */
 			Map returData = new HashMap();
 			returData.put("tutorCollection", newTutorList);
 			returData.put("categoryData", categoryMap);
@@ -413,7 +408,14 @@ public class CmdPublicListTutors implements ICommand{
 		return returData;
 	}
 	
-	
+	/**
+	 * addListToMap(ArrayList<ArrayList<String>>, ArrayList<String>) used to check the passing array lists for null and 
+	 * if not null, add the temporary array list to the final array list of the map
+	 * @param mapList
+	 * @param temporaryList
+	 * @return array list of type of array list String 
+	 * @author JH
+	 */
 	public static ArrayList<ArrayList<String>> addListToMap(ArrayList<ArrayList<String>> mapList, ArrayList<String> temporaryList){
 		if(mapList != null && temporaryList != null){
 			mapList.add(temporaryList);
