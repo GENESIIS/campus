@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //20170307 CW c147-tutor-reset-password-cw added TUTOR_EMAIL_VERIFICATION to the class.
 //20170308 CW c147-tutor-reset-password-cw removed CHECK_EMAIL command
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw add TUTOR_HASH_VERIFICATION command
+//20170314 CW c148-tutor-verify-hashcode-reset-password-cw add TUTOR_RESET_PASSWORD command
 
 /**
  * Operation class facilitate in binding the CCO
@@ -31,7 +32,8 @@ public enum Operation {
 	CHANGED_PASSWORD("RESETPASS",ResponseType.JSON,""),
 	LIST_INSTITUTE_DATA("LIST_INSTITUTE_DATA", ResponseType.JSP, "index.jsp"),
 	TUTOR_EMAIL_VERIFICATION("TUTOR_EMAIL_VERIFICATION", ResponseType.JSON, ""),	
-	TUTOR_HASH_VERIFICATION("TUTOR_HASH_VERIFICATION", ResponseType.JSON, ""),
+	TUTOR_HASH_VERIFICATION("TUTOR_HASH_VERIFICATION", ResponseType.JSON, ""),	
+	TUTOR_RESET_PASSWORD("TUTOR_RESET_PASSWORD", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp");
 			
 	private final String commandString;
