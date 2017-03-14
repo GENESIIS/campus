@@ -18,6 +18,7 @@ package com.genesiis.campus.validation;
 //				of the same method [compareDates(Date date, Date otherDate,String errorMessage)].
 // 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn changed the boolean & operator to && in isNotEmpty(String text, String errorMessage)
 //			   isNotEmpty(String text) method.
+//         compareDates() corrected to use the secodDate instead of using the current date in compareTo method
  
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -343,7 +344,7 @@ public class PrevalentValidation implements Validatory {
 				
 				DateFormat sdf = new SimpleDateFormat(dateFormat);
 				String sentInDate=sdf.format(firstDAte);
-				String dateComparingAgainst=sdf.format(new Date());
+				String dateComparingAgainst=sdf.format(secodDate);
 				
 				compareInt= sentInDate.compareTo(dateComparingAgainst);
 				isTestPassed = (Integer.valueOf(compareInt) instanceof Integer);
