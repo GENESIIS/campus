@@ -17,7 +17,9 @@ package com.genesiis.campus.command;
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn SystemMessage[ENUM].toString() is called when using the systemMessages
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
- * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods. 
+ * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods.
+ * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn in isClientInputAccordanceWithValidation() add the correct SystemMessage
+ *  			SystemMessage.EMPTY_SEARCH_RESULT.message() to the method
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -136,7 +138,7 @@ public class CmdAdminBannerUpload implements ICommand {
 		boolean isvalidationSuccess = false;
 		if(jason==null){
 			log.info("isClientInputAccordanceWithValidation (): --> JasonInflator object is null ");
-			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL;
+			this.message = message +" "+SystemMessage.EMPTY_SEARCH_RESULT.message();
 			return false;
 		}
 		
