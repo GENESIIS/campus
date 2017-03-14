@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorHashVerification class created
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorHashVerification class modified to validate hashcode properly & set messages correctly
+//20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorEmailVerificationDAO;
@@ -38,6 +39,8 @@ public class CmdTutorHashVerification implements ICommand {
 			tutor.setHashCode(helper.getParameter("hashCode"));
 			
 			TutorEmailVerificationDAO tutorEmailvarification = new TutorEmailVerificationDAO();
+			//checking the entered hashcode is matching with the generated hash code
+			//if the hash code is a valid one get the details of the tutor 
 			Collection<Collection<String>> dataCollection = tutorEmailvarification.verifyHashCode(tutor);
 			
 			if(dataCollection == null && dataCollection.isEmpty()){
@@ -47,9 +50,11 @@ public class CmdTutorHashVerification implements ICommand {
 						ArrayList<String> singleTutor = new ArrayList<String>();
 						Object [] collectionArr = collection.toArray();
 					if(collection != null && !collection.isEmpty()){
+						//Validating the hash code expiration details
 						if(collectionArr[5] != null && Integer.parseInt((String)collectionArr[5]) > 30){
 							message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
 						} else {
+							//entered hashcode is a valid one & tutor can redirect into the password reset page
 							view.setCollection(dataCollection);
 							pageURL = "/dist/partials/login/passwordReset.jsp";
 							message = SystemMessage.VALIDHASHCODE.message();
