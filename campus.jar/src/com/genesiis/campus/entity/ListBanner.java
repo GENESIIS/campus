@@ -3,9 +3,12 @@ package com.genesiis.campus.entity;
  * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn ListBanner.java class has been created
  * 				implemented getBanners(),BannerDisplayingInflator(),setResponseCridentials() methods
  * 				And add documentation comments.
- *  20170309 DN c81-admin-manage-banner-add-and-view-banner-dn
+ * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn
  * 				addAttribute(IDataHelper,String,Object) and addToTheInnerCollection(Collection<Collection<String>>)
- * 				implemented
+ * 				implemented.
+ * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn refactor the method 
+ *              Date getADate(String dateDelemeter,String date) to include custom error handling.
+ *              getBanners() method is amended to add validation part and ammended the doc comments.
  */
 import org.jboss.logging.Logger;
 
@@ -21,6 +24,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.PatternSyntaxException;
 
 
 /**
@@ -49,15 +53,28 @@ public class ListBanner {
 	}
 	
 	/**
-	 * getBanners() querying on the table Banner at DAO level and returns all the
-	 * 	available Banners in a Collection of Collection of Strings.
-	 * e.g. [[1st row],[2nd row],[nth row]]	
-	 * 	[1st row]:--> [a,b,c,..,] 			
-	 * @param object : Object which encapsulate the required operational
+	 * <p>getBanners() querying on the table Banner at DAO level and returns all the
+	 * available Banners in a Collection of Collection of Strings according to the specified filtering criteria.<br>
+	 * </P>
+	 * e.g. [[1st row],[2nd row],[nth row]]	<br>
+	 * 	[1st row]:--> [a,b,c,..,] 		
+	 * </p>	
+	 * <b>NOTE</b><br>
+	 *  <p>
+	 * This method provides a none null Collection&lt;Collection&lt;String&gt;&gt; if  a valid value<br>
+	 * for the first date (start date)
+	 * is provided or if all the fields (filtering commencing date and filtering end date) left blank,<br>
+	 *  then the method thinks there is no requirement
+	 * for validation and all the banner records for active advertisers will be provided. 
+	 * Further if the client has provided values for all the fields but start date <br>
+	 * there will validation errors be thrown.
+	 * 
+	 *  The banners will be returned if the validation is successful else returns null
+	 * @param object :<p> Object which encapsulate the required operational
 	 *  			  data which should be loaded with in order 
 	 *  			  to use at DAO level classes
-	 *                 when function on database
-	 * @return Collection<Collection<String>>
+	 *                 when function on database</p>
+	 * @return Collection&lt;Collection&lt;String&gt;&gt;
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -65,17 +82,21 @@ public class ListBanner {
 		
 		Collection<Collection<String>> bannerCollection =null;
 		try {
-			
-			  ICrudSibling adminBannerDao = new AdminBannerDAO();
-			  bannerCollection= adminBannerDao.getAll(inflateBannerFilterCredential(helper));
-			  this.setSuccessCode(1);
-			  this.setResponseCridentials(helper);
+			  BannerDisplayingInflator bannerDisplayCredential = inflateBannerFilterCredential(helper);
+			  if (this.isClientInputAccordanceWithValidation(bannerDisplayCredential)){
+				  ICrudSibling adminBannerDao = new AdminBannerDAO();
+				  bannerCollection= adminBannerDao.getAll(bannerDisplayCredential);
+				  this.setSuccessCode(1);
+			  }
+			  
 		} catch (SQLException sqle) {
 			log.error("getBanners(Object) : SQLException "+sqle.toString());
 			throw sqle;
 		} catch (Exception exp) {
 			log.error("getBanners(Object) :Exception"+exp.toString());
 			throw exp;
+		} finally {
+			this.setResponseCridentials(helper);
 		}
 		return bannerCollection;
 	}
@@ -138,63 +159,69 @@ public class ListBanner {
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
 	 * having values and those are according to the business logic.
+	 * <p>
+	 * This method validates the fields if and only if the first date (start date)
+	 * is provided. If it is not provided the method thinks there has no requirement
+	 * for validation. 
+	 * Further if the client has provided values for all the fields but start date
+	 * there will validation errors be thrown.
+	 * </P>
 	 * @param rowDisplayCriteria : JasonInflator the object that is having the de-serialized values sent from
 	 * 				  client side
-	 * @return boolean
+	 * @return boolean 
 	 * @throws Exception
 	 */
 
 	private boolean isClientInputAccordanceWithValidation(BannerDisplayingInflator rowDisplayCriteria) throws Exception {
 		boolean isvalidationSuccess = false;
 		if(rowDisplayCriteria==null){
-			log.info("isClientInputAccordanceWithValidation (): --> JasonInflator object is null ");
-			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL;
-			return false;
+			log.info("isClientInputAccordanceWithValidation (): --> rowDisplayCriteria object is null ");
+			this.message = message +" "+SystemMessage.EMPTY_SEARCH_RESULT;
+			this.setSuccessCode(-1);
+			return isvalidationSuccess;
 		}
-		
-		
 		try {
-			
-			// validation has to done in a such a way that if none of the values are provieded then it's ok
-			//if one date is provided then we have to start validation
-			//TO BE DONE ON 20170314
 			    String dateCommenced = rowDisplayCriteria.getCommencingDate();
 			    String dateCessation = rowDisplayCriteria.getCessationDate();
-				Date filterStartDate = this.getADate("-",dateCommenced );
-				Date filterEndDate = this.getADate("-",dateCessation);
-				int activeInactiveStatus = Integer.parseInt(rowDisplayCriteria.getActiveInactiveStatus());
-			    Validatory clientInputValidator = new PrevalentValidation();
 			    
-			    
-//			    clientInputValidator.isNotEmpty(advertiserCode," Advertiser field is empty !");
-//				clientInputValidator.isInteger(advertiserCode," Choose Advertiser from the list");
-//				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
-//				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
-//				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
-//				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
-//				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
-//				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
-//				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
-//				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
-//				
-//				Date publishingDate 	= getADate("-",bannerPublishingDate);
-//				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
-//				// comparison with the current date
-//				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate,"yyyy-MM-dd", "date comparison failure")<=0))
-//					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be <= Publishing end Date");
-//				
-//				if(!(clientInputValidator.compareDates(publishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
-//					throw new PrevalentValidation().new FailedValidationException(" Publishing Start Date must be >= Current Date");
-//				
-//				clientInputValidator.isInteger(urlMiniWebOrPage);
-//				//clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES+UrlValidator.ALLOW_LOCAL_URLS, "Url provided is not a valid URL");
-//				isvalidationSuccess=true;
 				
-//		} catch (FailedValidationException fvexp) {
-//			this.message = message +" "+ fvexp.toString();
-//			this.setSuccessCode(-2); 
-//			return false;
-		} catch(Exception exp){
+				
+				//int activeInactiveStatus = Integer.parseInt(rowDisplayCriteria.getActiveInactiveStatus()); // if required for future use.
+			    Validatory clientInputValidator = new PrevalentValidation();
+			    boolean firstDateIsFilledAndNotNull =(dateCommenced != null) && (dateCommenced.trim().isEmpty() == false);
+			    boolean secondDateIsFilledAndNotNull= (dateCessation != null) && (dateCessation.trim().isEmpty() == false);
+			    /*
+			     * The validation for fields will commences if and only if the
+			     * start date has been filled by the user. else the system consider 
+			     * that the user required all the banner data to be listed in which case the
+			     * fields would not be required to be filled.
+			     */
+			    if (firstDateIsFilledAndNotNull){
+			    		if(secondDateIsFilledAndNotNull){
+			    			
+			    			Date filterStartDate = this.getADate("-",dateCommenced );
+			    			Date filterEndDate = this.getADate("-",dateCessation);
+			    			int comparison=clientInputValidator.compareDates(filterStartDate, filterEndDate, "yyyy-MM-dd", SystemMessage.INVALID_DATE_FORMAT.message());
+			    			if(comparison > 0)
+			    				throw new PrevalentValidation().new FailedValidationException(SystemMessage.FIRST_DATE_GT_SECOND_DATE.message());
+			    			isvalidationSuccess =true; //validation success.
+			    		} else{
+			    			throw new PrevalentValidation().new FailedValidationException(SystemMessage.INVALID_DATE.message()+
+			    					" fill in a correct date \n for the end date field");
+			    		}
+			    
+			    } else if (secondDateIsFilledAndNotNull) {
+			    	throw new PrevalentValidation().new FailedValidationException(SystemMessage.INVALID_DATE.message()+" fill start date field");
+			    } 
+			    isvalidationSuccess =true;
+			    
+		}catch (FailedValidationException fvexp ){
+			log.error("getBanners(Object) : FailedValidationException"+ fvexp.toString() );
+			isvalidationSuccess =false;
+			this.message = message +" "+ fvexp.toString();
+			this.setSuccessCode(-2);
+		}
+		catch(Exception exp){
 			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
 			throw exp;
 		}
@@ -203,41 +230,39 @@ public class ListBanner {
 	
 	/**
 	 * getADate() returns a date.
-	 * Method accepts a date in the form yyy?MM?dd
-	 * ? denotes the delimiter which should be passed to the method, 
-	 * using which the string date is split and forms a java.util.date
+	 * Method accepts a date in the form yyy?MM?dd <br>
+	 * <b>?</b> denotes the <i>delimiter </i> which should be passed to the method,  
+	 * using which the string date is split and forms a java.util.date.<br>
 	 * @param dateDelemeter : can be any printable string character 
 	 *  e.g. "-" "," "/" etc 
-	 * @param date should be adhere to teh format yyy?MM?dd
-	 * 			yyyy: year
-	 * 			MM  : Month
-	 * 			dd  : date
-	 * 		e.g. 2017-05-26
-	 * @return java.util.Date type
+	 * @param date should be adhere to the format yyy?MM?dd &nbsp;<i><b>e.g. 2017-05-26</b></i><br>
+	 * 			yyyy: year <br>
+	 * 			MM  : Month <br>
+	 * 			dd  : date <br>
+	 * 		
+	 * @return java.util.Date type or null
+	 * @throws FailedValidationException 
 	 */
-	 private  Date getADate(String dateDelemeter,String date){
-			String [] array = date.split(dateDelemeter);
-			Calendar cal = Calendar.getInstance();
-			cal.set(Calendar.YEAR,Integer.parseInt(array[0]));
-			cal.set(Calendar.MONTH,Integer.parseInt(array[1])-1);
-			cal.set(Calendar.DATE,Integer.parseInt(array[2]));
+	 private  Date getADate(String dateDelemeter,String date) throws FailedValidationException{
+		 Calendar cal=null;
+		 try {
+				String [] array = date.split(dateDelemeter);
+				cal = Calendar.getInstance();
+				cal.set(Calendar.YEAR,Integer.parseInt(array[0]));
+				cal.set(Calendar.MONTH,Integer.parseInt(array[1])-1);
+				cal.set(Calendar.DATE,Integer.parseInt(array[2]));
+				
+			} catch (NumberFormatException nfExp) {
+				log.error("getADate(String,String) :NumberFormatException:"+ nfExp.toString());
+				throw new PrevalentValidation().new FailedValidationException("Date entered does not confirm \n to the required format");
+				
+			} catch (PatternSyntaxException psExp) {
+				log.error("getADate(String,String) :PatternSyntaxException:"+ psExp.toString());
+				throw new PrevalentValidation().new FailedValidationException("Date part seperator does not confirm \n to the required format ");
+			}
 			return cal.getTime();
 		}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
 	
 	/**
 	 * Gets the success code.
