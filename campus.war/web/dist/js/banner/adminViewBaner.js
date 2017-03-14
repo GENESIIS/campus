@@ -9,7 +9,7 @@
  * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add comments to the document ready function and add a click
  * 			event to the '#filterBanners' button.
  * 			change loadBanners() success call error and information handling by adding css color
- * 
+ * 			validateDisplayingBanners()  validating method has been implemented.
  */
 
 var theNewScript = document.createElement("script");
@@ -88,6 +88,39 @@ function loadBanners(){
 	});
 	
 }
+
+/**
+ * validateDisplayingBanners() validates the input fields of
+ * bannerManger.js and returns false if any one of the fields are not confirming
+ * to the requirement
+ * @returns {Boolean}
+ */
+function validateDisplayingBanners(){
+	var validationPass =false;
+	
+	var startDate = $('#startDate').val();
+	var endDate   = $('#endtDate').val();
+	var isStartDateNotFilled =isempty(startDate);
+	var isEndDateNotFilled =isempty(endDate);
+	
+	if(!isStartDateNotFilled){
+		if(!isEndDateNotFilled){
+			
+			//validation goes here for correct dates and 
+			// date comparision
+			return !validationPass;	
+		} else{
+			displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter data");
+		}
+	}
+	
+	// both date fields are empty then it's not required to validate
+	if(isStartDateNotFilled && isEndDateNotFilled)
+		return !validationPass;	
+}
+
+
+
 
 /**
  * populateBannerTable() intend for populating the banner record table
