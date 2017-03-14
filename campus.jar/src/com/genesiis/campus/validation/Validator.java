@@ -45,8 +45,10 @@ package com.genesiis.campus.validation;
 //20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor method to validate errors in both email & username
 //20170222 CW c36-add-tutor-details modified validateTutorFields() to validate townDetails correctly
 //20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor to give proper email & username error messages
-//20170228 CW c36-add-tutor-details modified validateTutorFields() & removed calling isValidUserAndEmailBeforeAddTutor() & removed isValidUserAndEmailBeforeAddTutor()& validateUsernameEmailFields() methods 
-
+//20170228 CW c36-add-tutor-details modified validateTutorFields() & removed calling isValidUserAndEmailBeforeAddTutor() & removed isValidUserAndEmailBeforeAddTutor()& validateUsernameEmailFields() methods
+//20140314 CW c36-add-tutor-details modified validateEmail method & copied regular expression from CAM-10
+				// removed un wanted spaces & cleaned the code
+				// modified isEmptyOrHavingSpace method & changed validation for space checking
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -57,7 +59,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class Validator {
 
@@ -88,7 +89,7 @@ public class Validator {
 	public static boolean isEmptyOrHavingSpace(String text) {
 		boolean status = false;
 		
-		if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+		if ((text == null) || (text.isEmpty() == true) || (text.matches("^\\s*$"))) {
 			status = true;
 		}
 		
@@ -109,6 +110,7 @@ public class Validator {
 		try {	
 			
 			if(isEmptyOrHavingSpace(helper.getParameter("firstname"))) {
+				helper.setAttribute("firstname", "");
 				helper.setAttribute("firstNameError", SystemMessage.EMPTYFIRSTNAME.message());
 				isHavingNull = true; 
 			}
@@ -167,10 +169,7 @@ public class Validator {
 		
 		boolean isValid = true; 
 		
-		try {
-			
-
-			
+		try {	
 			if (isHavingNullValues(helper)) {
 				isValid = false;
 			} 
@@ -214,7 +213,6 @@ public class Validator {
 					helper.setAttribute("townError", SystemMessage.TOWNCODEERROR.message());
 					isValid = false;
 				}
-				
 			}
 			
 			if (!isValidAddressLine1(helper.getParameter("address1"))) {
@@ -459,7 +457,7 @@ public class Validator {
 	 * @return boolean to validate email address.
 	 **/
 	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
