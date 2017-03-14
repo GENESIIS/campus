@@ -6,6 +6,9 @@
  * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn include a button to edit record in populateBannerTable()
  * 			and indeces  of the response array that retrieves the element has been changed. Multiple line comments are added 
  * 			to the same method. Add the "/" to the url variable populateBannerTable() method.
+ * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add comments to the document ready function and add a click
+ * 			event to the '#filterBanners' button.
+ * 			change loadBanners() success call error and information handling by adding css color
  * 
  */
 
@@ -17,10 +20,24 @@ var bannerArray ="";
 var adminControllerUrl = '../../../AdminController';
 
 $(document).ready(function(){
-	
+
+	/*
+ * When the page gets loded the Banner credentials
+ * for all the active users are loaded, without a filtering
+ * criteria been applied.
+ */
 	loadBanners();
+/*
+ * when the user fires a click event on the button the system
+ * loads the data (banner credentials accordingly).
+ */	
+	$('#filterBanners').click(function(){
+		$("#bannerDisplaytbl tr").remove();
+		loadBanners();
+	});
 	
 });
+
 
 /**
  * loadBanners() method sends the request to the server wrapping the 
@@ -30,7 +47,6 @@ $(document).ready(function(){
  * the default selected field values will be extracted from the front end
  * and all the banner records for active advertisers will be populated.
  */
-
 function loadBanners(){
 	
 	$.ajax({
@@ -46,14 +62,14 @@ function loadBanners(){
 		success:function(response){
 			// call the function that populates the table based on supplied data
 			// if the server reply is a success
-			
+			var cssColour='red';
 			if(response.successCode===1){
-				
-				if(response.result === "NO-DATA")
-					displayLabelMessage('messagePopUp','displayLabel','green',"No records to display !");
+				cssColour='green';
+				if(response.result === "NO-DATA"||response.result.length===0)
+					displayLabelMessage('messagePopUp','displayLabel',cssColour,response.message);
 				populateBannerTable(response.result,response.bannerWarPath);
 			} else {
-				displayLabelMessage('messagePopUp','displayLabel','green',response.message);
+				displayLabelMessage('messagePopUp','displayLabel',cssColour,response.message);
 			}
 			
 		},
@@ -89,10 +105,9 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		return null;
 	}
 		
-	//$("#bannerDisplaytbl tr").remove();
-	// assigning all the banner records to the global variable.
-	bannerArray = allBannerRecords;
-	var bannerImageWarPath = bannerWarPath;
+		// assigning all the banner records to the global variable.
+		bannerArray = allBannerRecords;
+		var bannerImageWarPath = bannerWarPath;
 		/*
 		 * allBannerRecords forms a structure similar to bellow
 		 * [[a1,b1,c1],[a2,b2,c2],[a3,b3,c3],...,[an,bn,cn]].
@@ -100,7 +115,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		 * populating table
 		 * rowNumber ranges from 0  to (allBannerRecords.length -1)
 		 */	
-	jQuery.each(allBannerRecords,function(rowNumber, aRow){
+		jQuery.each(allBannerRecords,function(rowNumber, aRow){
 					
 			/*
 			 * go to a record level [a1,b1,c1] where a1,b1,c1
@@ -112,7 +127,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			var bannerActivateDate=aRow[8];
 			var bannerDeactivateDate = aRow[9];
 			var imgeNameComponent = aRow[1].split(".");
-			
+				
 			/*
 			 * path to the image is agreed to be '/education/banner/143/143.jpg etc
 			 * thus if there is any change to the folder structure should result a change to
@@ -120,15 +135,15 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-					var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td> "+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
-					markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
-										"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
-										"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+bannerCode+"'>"+ 
-									 "</form></td>";
-					markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
-					jQuery("table").css('overflow-x','auto');
-					jQuery("table").append(markUp);
-			
+			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td> "+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
+			markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
+								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
+								"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+bannerCode+"'>"+ 
+							 "</form></td>";
+			markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
+			jQuery("table").css('overflow-x','auto');
+			jQuery("table").append(markUp);
+		
 		});
 	
 }
