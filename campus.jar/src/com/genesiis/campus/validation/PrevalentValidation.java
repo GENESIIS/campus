@@ -16,7 +16,8 @@ package com.genesiis.campus.validation;
 //		   implemented newly introduced methods with string error message parameter.
 // 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented the compareDates() and commented out earlier version 
 //				of the same method [compareDates(Date date, Date otherDate,String errorMessage)].
-// 
+// 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn changed the boolean & operator to && in isNotEmpty(String text, String errorMessage)
+//			   isNotEmpty(String text) method.
  
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -51,7 +52,7 @@ public class PrevalentValidation implements Validatory {
 	@Override
 	public boolean isNotEmpty(String text) throws Exception{
 		boolean status = false;
-		if ((text != null) & (text.trim().isEmpty() == false)) {
+		if ((text != null) && (text.trim().isEmpty() == false)) {
 			status = true;
 		}
 		throwCustomError(status," Text Field Validation(s) Failed!");
@@ -240,7 +241,7 @@ public class PrevalentValidation implements Validatory {
 			throws Exception {
 
 		boolean status = false;
-		if ((text != null) & (text.trim().isEmpty() == false)) {
+		if ((text != null) && (text.trim().isEmpty() == false)) {
 			status = true;
 		}
 		throwCustomError(status,errorMessage);
@@ -322,13 +323,15 @@ public class PrevalentValidation implements Validatory {
 	
 	/**
 	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>
-	 *  and returns an integer based on the comparison 
-	 * date > otherDate  then , returns +ve int
-	 * date < otherDate then , returns -ve int
-	 * date == otherDate then, returns 0
-	 * @param date : java.util.Date the initial date
-	 * @param otherDate : java.util.Date the secondary date 
-	 * @return int value as explained above
+	 * and returns an integer based on the comparison <br> 
+	 * If  firstDAte > secodDate  then , returns +ve int <br>
+	 * If firstDAte < secodDate then , returns -ve int <br>
+	 * If firstDAte == secodDate then, returns 0 <br>
+	 * @param firstDAte : java.util.Date the initial date <br>
+	 * @param secodDate : java.util.Date the secondary date  <br>
+	 * @param dateFormat: String date format which must be a acceptable format such as : 'yyyy-MM-dd' etc
+	 * @param errorMessage: error message to be passed if the method fails as a result of given dateFormat is being null or is invalid
+	 * @return int value as explained above<br>
 	 * @throws Exception 
 	 */
 	@Override
