@@ -4,6 +4,7 @@
 
      20170309 DN c81-admin-manage-banner-add-and-view-banner-dn removed the style script and tbody
       tag of the table from the jsp file. Add the Row #  <th> element
+     20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add id to the button 'Filter the Banner Button
 
  -->
 
@@ -65,9 +66,9 @@
 
 <div align="center">			 
     <div id="startDateInfor" style ="color:#C70039;"></div>
-		Start date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
+		Filter Commence Date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
 	    <div id="endtDateInfor" style ="color:#C70039;"></div>
-		End date * &nbsp; <input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+		Filter End Date * &nbsp; <input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
 	</div>
 	<br><br>
 	&nbsp; &nbsp; &nbsp;
@@ -80,7 +81,7 @@
     &nbsp; &nbsp; &nbsp;<span id="">List <b>Expired</b> Banners</span>
    <input type="radio" name="bannerStatus" value="4" id ="statusExpired"  > 
    <br><br>
-   <button type="button" value="Search">Filter The Banners</button>
+   <button type="button" value="Search" id="filterBanners">Filter The Banners</button>
    
    <br><br>
    <!-- banner records will be displayed here -->
