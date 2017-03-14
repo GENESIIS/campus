@@ -8,7 +8,8 @@ package com.genesiis.campus.entity;
  * 				implemented.
  * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn refactor the method 
  *              Date getADate(String dateDelemeter,String date) to include custom error handling.
- *              getBanners() method is amended to add validation part and ammended the doc comments.
+ *              getBanners() method is amended to add validation part and amended the doc comments.
+ *              in catch clause FailedValidationException the error log was corrected to reflect correct method name.
  */
 import org.jboss.logging.Logger;
 
@@ -87,6 +88,8 @@ public class ListBanner {
 				  ICrudSibling adminBannerDao = new AdminBannerDAO();
 				  bannerCollection= adminBannerDao.getAll(bannerDisplayCredential);
 				  this.setSuccessCode(1);
+				  if(bannerCollection == null||bannerCollection.size()==0)
+					  this.message = message +"No Records to be displayed for this criteria !";
 			  }
 			  
 		} catch (SQLException sqle) {
@@ -176,7 +179,7 @@ public class ListBanner {
 		boolean isvalidationSuccess = false;
 		if(rowDisplayCriteria==null){
 			log.info("isClientInputAccordanceWithValidation (): --> rowDisplayCriteria object is null ");
-			this.message = message +" "+SystemMessage.EMPTY_SEARCH_RESULT;
+			this.message = message +" "+SystemMessage.EMPTY_SEARCH_RESULT.message();
 			this.setSuccessCode(-1);
 			return isvalidationSuccess;
 		}
@@ -216,13 +219,14 @@ public class ListBanner {
 			    isvalidationSuccess =true;
 			    
 		}catch (FailedValidationException fvexp ){
-			log.error("getBanners(Object) : FailedValidationException"+ fvexp.toString() );
+			log.error("isClientInputAccordanceWithValidation(BannerDisplayingInflator) : FailedValidationException"+ fvexp.toString() );
 			isvalidationSuccess =false;
-			this.message = message +" "+ fvexp.toString();
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2);
 		}
 		catch(Exception exp){
-			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
+			log.error("isClientInputAccordanceWithValidation(BannerDisplayingInflator) : Exception "+ exp.toString());
 			throw exp;
 		}
 		return isvalidationSuccess;
