@@ -5,6 +5,7 @@
  * 20170309 JH c96 changed the tutor table element id 'example' into 'tutorListTable' due to changes in jsp page
  * 20170310 JH c96 selectTutorRecord() method modified to display tutor private details with mobile, office, email and the town details wip
  * 20170313 JH c96 listPublicTutors() and DisplayTutorTable() methods modified to display tutor major, category and qualification details wip
+ * 20170314 JH c96 DisplayTutorTable(): added styles to html labels 
  */
 
 window.tutorList = null;
@@ -139,7 +140,7 @@ function DisplayTutorTable(){
 							$.each(majorArrayList, function(index, currentMajor) {
 								
 								if(currentMajor[1] != null || currentMajor[1] != undefined){
-									value3 +=  '<label class="glyphicon glyphicon-minus"></label> <a href="javascript:" onclick="">' + currentMajor[1] + '</a></br>';	
+									value3 +=  '<label class="glyphicon glyphicon-minus" style="color: #337ab7;"></label> <a href="javascript:" onclick="">' + currentMajor[1] + '</a></br>';	
 								}
 								
 							});
@@ -154,7 +155,7 @@ function DisplayTutorTable(){
 
 								if(currentCategory[1] != null || currentCategory[1] != undefined){
 									
-									value4 +=  '<label class="glyphicon glyphicon-minus"></label> <a href="javascript:" onclick="">' + currentCategory[1] + '</a></br>';	
+									value4 +=  '<label class="glyphicon glyphicon-minus" style="color: #337ab7;"></label> <a href="javascript:" onclick="">' + currentCategory[1] + '</a></br>';	
 								}
 								
 							});
@@ -169,7 +170,7 @@ function DisplayTutorTable(){
 
 								if(currentQualification[1] != null || currentQualification[1] != undefined){
 									
-									value4 +=  '<label class="glyphicon glyphicon-minus"></label> <a href="javascript:" onclick="">' + currentQualification[2]  + ' in '+ currentQualification[3] + '</a></br>';	
+									value4 +=  '<label class="glyphicon glyphicon-minus" style="color: #337ab7;"></label> <a href="javascript:" onclick="">' + currentQualification[2]  + ' in '+ currentQualification[3] + '</a></br>';	
 								}
 								
 							});
