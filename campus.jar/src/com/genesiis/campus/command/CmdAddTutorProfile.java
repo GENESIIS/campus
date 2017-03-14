@@ -26,6 +26,7 @@ package com.genesiis.campus.command;
 //20170228 CW c36-add-tutor-details removed validateAvailability() since it's not using anymore.
 //20170228 CW c36-add-tutor-details add validateUsernameEmailFields(), isValidUserAndEmailBeforeAddTutor() method to validate the user entered usename & email availability in the database.
 				// modified execute() to call isValidUserAndEmailBeforeAddTutor()
+//20170314 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor & add a call to validateEmail method
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -417,6 +418,11 @@ public class CmdAddTutorProfile implements ICommand {
 				helper.setAttribute("usernameError", SystemMessage.USERNAME_LENGTH.message());
 				valid = false;
 			} 
+			
+			if(Validator.validateEmail(helper.getParameter("email"))){
+				helper.setAttribute("emailError", SystemMessage.EMAILERROR.message());
+				valid = false;
+			}
 	
 			type = validateUsernameEmailFields(helper.getParameter("username"), helper.getParameter("email"));
 		
