@@ -134,7 +134,7 @@ public enum SystemMessage {
 	NOT_AVAILABLE("notAvailable"), 
 	FILE_UPLOAD_FAILED("File Uplpad Failed"), 
 	PROCESSING ("Processing..."),
-	FIRST_DATE_GT_SECOND_DATE("first date is grater than the secod date"),
+	FIRST_DATE_GT_SECOND_DATE("first date is grater than the second date"),
 	INVALID_DATE_FORMAT("invalid Date format"),
 	INVALID_INFORMATION("Invalid Information");
 
