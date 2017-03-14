@@ -1,9 +1,9 @@
 package com.genesiis.campus.entity;
 
-import com.genesiis.campus.command.CmdTutorPasswordChange;
-
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw SigningUpTutorDAO class created.
+//20170314 CW c148-tutor-verify-hashcode-reset-password-cw query error fixed
 
+import com.genesiis.campus.command.CmdTutorPasswordChange;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -25,16 +25,15 @@ public class SigningUpTutorDAO implements ICrud  {
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.STUDENT SET PASSWORD = ? WHERE CODE=? ";
+		String query = "UPDATE CAMPUS.TUTOR SET PASSWORD = ? WHERE CODE=? ";
 		PreparedStatement ps = null;
-		String encryptPassword = null;
 		int rowInserted = -1;
 
 		try {
 			Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setString(1, encryptPassword);
+			ps.setString(1, tutor.getPassword());
 			ps.setInt(2, tutor.getCode());
 
 			rowInserted = ps.executeUpdate();
