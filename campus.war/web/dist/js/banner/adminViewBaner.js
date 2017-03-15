@@ -12,6 +12,7 @@
  * 			validateDisplayingBanners()  validating method has been implemented.
  * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn loadBanners() is added the validation method.
  * 			validateDisplayingBanners() method is fully implemented.
+ * 			populateBannerTable() method where the table rows are dynamically created the Advertiser Name is added. 
  */
 
 var theNewScript = document.createElement("script");
@@ -194,6 +195,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			var bannerActivateDate=aRow[8];
 			var bannerDeactivateDate = aRow[9];
 			var imgeNameComponent = aRow[1].split(".");
+			var advertiserName = aRow[11];
 				
 			/*
 			 * path to the image is agreed to be '/education/banner/143/143.jpg etc
@@ -202,7 +204,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td> "+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
+			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td>"+advertiserName+"<hr>"+
+															bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
 			markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
 								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
 								"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+bannerCode+"'>"+ 
