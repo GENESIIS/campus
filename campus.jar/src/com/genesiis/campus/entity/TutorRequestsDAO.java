@@ -47,7 +47,8 @@ public class TutorRequestsDAO implements ICrud{
 	}
 
 	/**
-	 * findById(Object) method lists all new tutor requests. Uses the tutor status with inactive
+	 * findById(Object) method lists all new tutor requests. TUTORSTATUS value for the query 
+	 * is passed as the object value using the ApplicationStatus enum ( the value for the PENDING status ). 
 	 * @param Object
 	 * @return new tutor request collection
 	 * @author JH
