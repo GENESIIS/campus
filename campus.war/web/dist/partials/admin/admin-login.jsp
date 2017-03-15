@@ -15,10 +15,14 @@
 <!-- jquery and other js -->
 <script src="/dist/bower-components/w3/w3data.js"></script>
 <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/bower-components/jquery/jquery.min.js"></script>
 <script src="/dist/js/image-slides.js"></script>
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
+
+<script src='/dist/js/institute/validation/validation.js'></script>
+<script src='/dist/js/admin/admin-login.js'></script>
 </head>
 <body>
 
@@ -38,14 +42,14 @@
 			</div>
 		</div>
 		<!-- End page topic and error msg block -->
-
+<div class="modal-content">
 		<div class="modal-body">
+			
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-3">
 
-						<form name="adminLogin" class="form-vertical form-user" role="form"
-							method="" action="">
+						<form name="adminLogin" class="form-vertical form-user" role="form"	method="" action="">
 
 							<div class="form-group has-error">
 								<h5>Sign In</h5>
@@ -54,16 +58,15 @@
 							</div>
 
 							<div class="form-group has-error">
-								<label for="username">Username or Email <span
-									class="error-txt" id="emailtbError"></span></label> <input type="email"
-									class="form-control" id="email" placeholder="Email address"
+								<label for="username">Username or Email <span class="error-txt" id="usernameError"></span></label> <input type="email"
+									class="form-control" id="adminEmail" placeholder="Email address"
 									required onclick="clearField('emailtbError')">
 							</div>
 
 							<div class="form-group has-error">
 								<label for="password">Password <span class="error-txt"
-									id="passtbError"></span></label> <input type="password"
-									class="form-control" id="password" placeholder="Password"
+									id="passwordError"></span></label> <input type="password"
+									class="form-control" id="adminPassword" placeholder="Password"
 									required onclick="clearField('passtbError')">
 							</div>
 
@@ -73,15 +76,15 @@
 							</div>
 
 							<div class="form-group">
-								<button type="button" class="btn btn-primary btn-block"
-									name="CCO" id="CCO" value="ALOG"
-									onclick="">Sign In</button>
+
+								<button type="button" class="btn btn-primary btn-block" name="CCO" id="CCO" value="ALOG" onclick="ALogin(); resetLoginLabels();">Sign In</button> 
+							
 							</div>
 
 							<div class="form-group">
 								<div class="checkbox pull-left">
 									<label><input type="checkbox" name="remember"
-										id="remember"> Keep me logged in</label>
+										id="adminRemember"> Keep me logged in</label>
 								</div>
 								
 							</div>
@@ -90,8 +93,8 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
+			</div>
+</div>
 	</div>
 	<!-- End forgot-password-screen -->
 
