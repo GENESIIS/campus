@@ -6,7 +6,7 @@
  * 20170310 JH c96 selectTutorRecord() method modified to display tutor private details with mobile, office, email and the town details wip
  * 20170313 JH c96 listPublicTutors() and DisplayTutorTable() methods modified to display tutor major, category and qualification details wip
  * 20170314 JH c96 DisplayTutorTable(): added styles to html labels, removed commented and codes in listPublicTutors() and selectTutorRecord(),
- * 				created selectTutorMajor() and selectTutorCategory() methods
+ * 				created selectTutorMajor() and selectTutorCategory() methods, added onclick function to tutor name
  */
 
 window.tutorList = null;
@@ -128,11 +128,13 @@ function DisplayTutorTable(){
 							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'" onclick="selectTutorRecord('+ value[0] +');">';
 							value1 += hiddenCode;
 
-								value2 = '<div> <div> <a href="javascript:" onclick="">' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</a></div>'											
+								value2 = '<div> <div> <a href="javascript:" onclick="selectTutorRecord('+ value[0] +');">' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</a></div>'											
 								+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
 								+ '<div> <label>Office : </label> ' + value[5]+ value[8]+ ' '+  value[9]+'</div>'
 								+ '<div> <label>Email : </label> ' + value[4] +'</div>'
-								+ '<div> <label>Town : </label> ' + value[10]+ '</div><div>';								
+								+ '<div> <label>Town : </label> ' + value[10]+ '</div><div>';	
+								
+								value2 += hiddenCode;
 							
 							var majorArrayList = majorMap[value[0]];
 							$.each(majorArrayList, function(index, currentMajor) {
