@@ -41,7 +41,7 @@ $(document).ready(function(){
 	});
 	
  /*
-  * In the even where the Add New Banner button is clciked
+  * In the even where the Add New Banner button is clicked
   * the page will be directed to where the banners are added 
   * by the Admin
   */
