@@ -13,6 +13,8 @@
  * //20170206 CW c36-add-tutor-details-cw- modified validateTutorFileds() method validate country & town.
  * //20170223 CW c36-add-tutor-details-cw- removed isempty() method & add isEmptyOrHavingSpace() method to validate for space values
  * //20140314 CW c36-add-tutor-details modified validateTutorFileds method & removed space values for the empty fields
+ * //20170315 CW c36-add-tutor-details modified isEmptyOrHavingSpace method & add regular expression for the validate spaces
+ * 				// add isValidEmailFormat method from CAM-81
  */
 
 /**
@@ -22,9 +24,9 @@
  * @return boolean returns true if the text is empty or not contains a space value.
  **/
 function isEmptyOrHavingSpace(text) {
-	boolean status = false;
-	
-	if ((text == null) || (text.isEmpty() == true) || text.equals(" ")) {
+	var status = false;
+	var pattern = /^\\s*$/g;
+	if ((text == null) || (text.isEmpty() == true) || isPatternMatch(pattern, text)) {
 		status = true;
 	}
 	
@@ -51,9 +53,10 @@ function isPatternMatch(regularExpression, source) {
  */
 function isValidEmailFormat(email) {
 	var emailAddress = email;
-	var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	var pattern = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/g;
 	return isPatternMatch(pattern, emailAddress);
 }
+
 /**
  * Validate URL
  * 
@@ -63,7 +66,6 @@ function isValidEmailFormat(email) {
 function ValidURL(str) {
 	var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 	return regex.test(str);
-
 }
 
 function validateTutorFileds() {
@@ -101,7 +103,6 @@ function validateTutorFileds() {
 	var flag = true;
 	
 	if (!isEmptyOrHavingSpace(firstname)) {
-		document.getElementById('firstName').value = '';
 		document.getElementById('firstNameError').innerHTML = "**First name cannot be empty.";
 		document.getElementById('firstName').focus();
 		flag = false;
@@ -117,7 +118,6 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	if (!isEmptyOrHavingSpace(lastname)) {
-		document.getElementById('lastname').value = '';
 		document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -150,11 +150,9 @@ function validateTutorFileds() {
 		document.getElementById('townError').innerHTML = "**Please select Town.";
 		document.getElementById('townDetails').focus();
 		flag = false;
-	}
-	
+	}	
 	
 	if (!isEmptyOrHavingSpace(mobileCountryCode)) {
-		document.getElementById('mobileCountryCode').value = '';
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
@@ -171,11 +169,9 @@ function validateTutorFileds() {
 		document.getElementById('mobileError').innerHTML = "**Invalid Country Code";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
-	}
-	
+	}	
 
 	if (!isEmptyOrHavingSpace(mobileNetworkCode)) {
-		document.getElementById('mobileNetworkCode').value = '';
 		document.getElementById('mobileNetworkError').innerHTML = "**Mobile Network Code cannot be empty.";
 		document.getElementById('mobileNetworkCode').focus();
 		flag = false;
@@ -194,7 +190,6 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isEmptyOrHavingSpace(mobileNumber)) {
-		document.getElementById('mobileNumber').value = '';
 		document.getElementById('mobileNumberError').innerHTML = "**Mobile Number cannot be empty.";
 		document.getElementById('mobileNumber').focus();
 		flag = false;
@@ -213,7 +208,6 @@ function validateTutorFileds() {
 	}
 		
 	if (!isEmptyOrHavingSpace(landCountryCode)) {
-		document.getElementById('landCountryCode').value = '';
 		document.getElementById('landError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
@@ -232,7 +226,6 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isEmptyOrHavingSpace(landAreaCode)) {
-		document.getElementById('landAreaCode').value = '';
 		document.getElementById('landAreaCodeError').innerHTML = "**Landphone Area code cannot be empty.";
 		document.getElementById('landAreaCode').focus();
 		flag = false;
@@ -251,7 +244,6 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isEmptyOrHavingSpace(landNumber)) {
-		document.getElementById('landNumber').value = '';
 		document.getElementById('landNumberError').innerHTML = "**Landphone number cannot be empty.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -263,7 +255,6 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-
 	if (isNaN(landNumber)) {
 		document.getElementById('landNumberError').innerHTML = "**Invalid Phone number";
 		document.getElementById('landNumber').focus();
@@ -271,7 +262,6 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isEmptyOrHavingSpace(address1)) {
-		document.getElementById('address1').value = '';
 		document.getElementById('address1Error').innerHTML = "**Please Fill Address";
 		document.getElementById('address1').focus();
 		flag = false;
@@ -359,7 +349,6 @@ function validateTutorFileds() {
 	}
 
 	if (!isEmptyOrHavingSpace(email)) {
-		document.getElementById('email').value = '';
 		document.getElementById('emailError').innerHTML = "**Email cannot be empty.";
 		document.getElementById('email').focus();
 		flag = false;
@@ -379,7 +368,6 @@ function validateTutorFileds() {
 	}
 	
 	if (!isEmptyOrHavingSpace(username)) {
-		document.getElementById('username').value = '';
 		document.getElementById('usernameError').innerHTML = "**Username cannot be empty.";
 		document.getElementById('username').focus();
 		flag = false;
@@ -405,7 +393,6 @@ function validateTutorFileds() {
 	}
 	
 	if (!isEmptyOrHavingSpace(password)) {
-		document.getElementById('password').value = '';
 		document.getElementById('passwordError').innerHTML = "**Password cannot be empty.";
 		document.getElementById('password').focus();
 		flag = false;
@@ -424,7 +411,6 @@ function validateTutorFileds() {
 	}
 	
 	if (!isEmptyOrHavingSpace(confirmPassword)) {
-		document.getElementById('confirmPassword').value = '';
 		document.getElementById('confirmPasswordError').innerHTML = "**Please confirm your password";
 		document.getElementById('confirmPassword').focus();
 		flag = false;
