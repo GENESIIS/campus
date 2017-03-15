@@ -23,8 +23,9 @@ package com.genesiis.campus.entity;
  * 			   and override the method  getAll(Object jsnObject)
  * 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn implemented methods getAplicationStatus(int) 
  *             and Collection<Collection<String>> getAll(Object). Add doc comments to class and methods
- * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn    getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
- * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE")                  
+ * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
+ * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE") 
+ * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query.               
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -335,6 +336,7 @@ public class AdminBannerDAO implements ICrudSibling {
 					querybuilder.append(" AND ( ACTIVATIONDATE>='"+activationDate+"')");
 				}				
 			}
+			querybuilder.append(" ORDER BY ACTIVATIONDATE ASC ");
 			
 			conn = ConnectionManager.getConnection();
 			statement = conn.prepareStatement(querybuilder.toString());
