@@ -1,10 +1,10 @@
 package com.genesiis.campus.publicController;
 
 //20161101 PN c11-criteria-based-filter-search modified the doPost method with a null validation for IView type object.
+//20170315 JH c96-public-list-all-tutors removed unwanted import for Category entity
 
 import com.genesiis.campus.controller.CampusController;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.DataHelper;
 import com.genesiis.campus.util.IDataHelper;
 import org.apache.log4j.Logger;
