@@ -3,9 +3,9 @@
 				  PENDING,EXPIRED banner status.
 
      20170309 DN c81-admin-manage-banner-add-and-view-banner-dn removed the style script and tbody
-      tag of the table from the jsp file. Add the Row #  <th> element
+                  tag of the table from the jsp file. Add the Row #  <th> element
      20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add id to the button 'Filter the Banner Button
-
+	 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn Admin Add New Banner and Admin add New Advertiser buttons are added.
  -->
 
 
@@ -40,7 +40,7 @@
 </head>
 <body>
 
-<!-- popup window message -->
+<!-- pop-up window message -->
 <div class="modal fade" id="messagePopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
 	<div class="login-dialog modal-dialog" role="document">
 		<div class="modal-content">
@@ -63,8 +63,12 @@
 	</div>
 </div>
 
-
+<!-- End of pop-up window message -->
 <div align="center">			 
+	<div>
+	   <button type="button" value="Search" id="adminAddNewBanner">Add New Banner</button> &nbsp; &nbsp; &nbsp;
+	   <button type="button" value="Search" id="adminAddNewAdvertiser">Add New Advertiser</button>
+	</div>
     <div id="startDateInfor" style ="color:#C70039;"></div>
 		Filter Commence Date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
 	    <div id="endtDateInfor" style ="color:#C70039;"></div>
