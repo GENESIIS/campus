@@ -50,6 +50,7 @@ package com.genesiis.campus.validation;
 				// removed un wanted spaces & cleaned the code
 				// modified isEmptyOrHavingSpace method & changed validation for space checking
 //20170315 CW c36-add-tutor-details add validateEmail method from CAM-10 & removed existing one
+//20170315 CW c36-add-tutor-details modified validateEmail method to validate emails properly
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -463,10 +464,9 @@ public class Validator {
 	 public static boolean validateEmail(String email){// throws Exception {
 		boolean validEmail = false;
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
-				"^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
+				"^([\\w-+\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		validEmail = matcher.find();
-		//throwCustomError(validEmail," Email Validation Failed!");
 		return validEmail;
 	}
 	
