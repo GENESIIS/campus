@@ -3,9 +3,10 @@ package com.genesiis.campus.entity;
 //20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
 //20170117 JH c133-admin-list-tutors getAll() method coding
 //20170124 JH c133-admin-list-tutors getAll() query modified
-//20170126 JH c133-admin-list-tutors getALL() concate name and phone numbers into one parameter
+//20170126 JH c133-admin-list-tutors getALL() concatenate name and phone numbers into one parameter
 //20170130 JH c133-admin-list-tutors getAll(): removed the combined columns back to separate array attributes
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -19,6 +20,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * 
+ *
+ */
 public class TutorDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(TutorDAO.class.getName());
@@ -49,10 +54,12 @@ public class TutorDAO implements ICrud {
 	}
 
 	/**
-	 * getAll() method will list all tutors. It will order the tutor list
-	 * depending on the given order
+	 * getAll() method will list all tutor records in the TUTOR table. The tutor status is
+	 * not considered in the query. Therefore status values will have all of possible 
+	 * statuses (including active, inactive, pending and etc)
 	 * 
-	 * Ex: Active 
+	 * @return Collection
+	 * @author JH
 	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException,

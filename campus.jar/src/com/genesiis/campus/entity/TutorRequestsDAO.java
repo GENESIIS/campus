@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * TutorRequestsDAO handles database requests related to tutor requests
+ * TutorRequestsDAO handles database requests related to new tutor requests. 
+ * This request is created when a tutor creates a new account.
+ * 
  * @author JH
  *
  */
@@ -46,9 +48,10 @@ public class TutorRequestsDAO implements ICrud{
 
 	/**
 	 * findById(Object) method lists all new tutor requests. Uses the tutor status with inactive
-	 * @param code
+	 * @param Object
 	 * @return new tutor request collection
 	 * @author JH
+	 * @exception SQLException, Exception
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)

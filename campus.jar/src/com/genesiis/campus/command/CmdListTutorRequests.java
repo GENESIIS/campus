@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * CmdListTutorRequests created to list new tutor requests for administration purposes
+ * CmdListTutorRequests created to list new tutor requests for administration purposes. 
+ * The tutors that has registered and waiting for approval will be returned to the view.
  * @author JH
  *
  */

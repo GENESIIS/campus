@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * CmdAdminListTutors class used to all tutors for administration purposes
+ * CmdAdminListTutors class used to list all tutors for administration purposes.
+ * This will include all tutor status values. 
  * @author JH
  *
  */
