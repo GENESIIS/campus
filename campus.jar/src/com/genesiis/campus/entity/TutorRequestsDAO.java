@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20170130 JH c134-admin-list-new-tutor-requests INIT TutorRequestsDAO.java
 //20170130 JH c134-admin-list-new-tutor-requests findById() method coding 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -17,6 +18,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * TutorRequestsDAO handles database requests related to tutor requests
+ * @author JH
+ *
+ */
 public class TutorRequestsDAO implements ICrud{
 	static Logger log = Logger.getLogger(TutorRequestsDAO.class.getName());
 
@@ -38,6 +44,12 @@ public class TutorRequestsDAO implements ICrud{
 		return 0;
 	}
 
+	/**
+	 * findById(Object) method lists all new tutor requests. Uses the tutor status with inactive
+	 * @param code
+	 * @return new tutor request collection
+	 * @author JH
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code)
 			throws SQLException, Exception {

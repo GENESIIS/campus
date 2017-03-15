@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170117 JH c133-admin-list-tutors CmdAdminListTutors.java created
 //20170117 JH c133-admin-list-tutors list tutors and exception handling 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -16,6 +17,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * CmdAdminListTutors class used to all tutors for administration purposes
+ * @author JH
+ *
+ */
 public class CmdAdminListTutors implements ICommand{
 	
 	static Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
@@ -30,6 +36,7 @@ public class CmdAdminListTutors implements ICommand{
 		try {
 			 tutorCollection = tutorDAO.getAll();
 			 
+			 //if result is empty send a user message
 			 if(tutorCollection.size() >0){
 					view.setCollection(tutorCollection);
 			 }else{
