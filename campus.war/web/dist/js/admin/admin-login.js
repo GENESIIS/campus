@@ -6,23 +6,23 @@ var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
 theNewScript.src = "/dist/js/institute/validation/validation.js";
 
-function adminLogin() {
+function ALogin() {
 
-	var username = $("#email").val();
-	var password = $("#password").val();
-	var remember = $("#remember").prop('checked');
+	var username = $("#adminEmail").val();
+	var password = $("#adminPassword").val();
+	var remember = $("#adminRemember").prop('checked');
 	
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
 
 	// filed validation error messages handling
 	if (!(usernametb)) {
-		document.getElementById('emailtbError').innerHTML = "  ** Email can not be Empty.";
+		document.getElementById('usernameError').innerHTML = "  ** Email can not be Empty.";
 		flag = false;
 		return false;
 	}
 	if (!(passtb)) {
-		document.getElementById('passtbError').innerHTML = "   ** Password can not be Empty.";
+		document.getElementById('passwordError').innerHTML = "   ** Password can not be Empty.";
 		return false;
 	}
 
@@ -78,4 +78,5 @@ function adminLogin() {
 				});
 
 	}
+	
 }
