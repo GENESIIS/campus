@@ -12,7 +12,8 @@
  * 			validateDisplayingBanners()  validating method has been implemented.
  * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn loadBanners() is added the validation method.
  * 			validateDisplayingBanners() method is fully implemented.
- * 			populateBannerTable() method where the table rows are dynamically created the Advertiser Name is added. 
+ * 			populateBannerTable() method where the table rows are dynamically created the Advertiser Name is added.
+ * 			Document ready function is changed to navigate to add banners page when the adminAddNewBanner button is clicked.  
  */
 
 var theNewScript = document.createElement("script");
@@ -38,6 +39,18 @@ $(document).ready(function(){
 		$("#bannerDisplaytbl tr").remove();
 		loadBanners();
 	});
+	
+ /*
+  * In the even where the Add New Banner button is clciked
+  * the page will be directed to where the banners are added 
+  * by the Admin
+  */
+	$('#adminAddNewBanner').click(function(){
+		if (confirm('Proceed ?'))
+		window.location.href="/dist/partials/banner/bannerManager.jsp";
+		
+	});
+	
 	
 });
 
