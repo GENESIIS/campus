@@ -2,7 +2,7 @@ package com.genesiis.campus.command;
 
 //20170130 JH c134-admin-list-new-tutor-requests INIT CmdListTutorRequests.java
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
-//20170315 JH c134-admin-list-new-tutor-requests added doc comments
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments, changed tutor status INACTIVE to PENDING when listing for new tutor requests
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -36,8 +36,8 @@ public class CmdListTutorRequests implements ICommand{
 		SystemMessage systemMessage = SystemMessage.NO_DATA;
 
 		try {
-			// get tutors with inactive status
-			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.INACTIVE.getStatusValue());
+			// get tutors with pending status
+			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.PENDING.getStatusValue());
 			 
 			 //if result is empty send a user message
 			 if(tutorCollection.size() >0){
