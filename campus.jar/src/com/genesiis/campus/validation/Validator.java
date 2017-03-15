@@ -46,9 +46,10 @@ package com.genesiis.campus.validation;
 //20170222 CW c36-add-tutor-details modified validateTutorFields() to validate townDetails correctly
 //20170222 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor to give proper email & username error messages
 //20170228 CW c36-add-tutor-details modified validateTutorFields() & removed calling isValidUserAndEmailBeforeAddTutor() & removed isValidUserAndEmailBeforeAddTutor()& validateUsernameEmailFields() methods
-//20140314 CW c36-add-tutor-details modified validateEmail method & copied regular expression from CAM-10
+//20170314 CW c36-add-tutor-details modified validateEmail method & copied regular expression from CAM-10
 				// removed un wanted spaces & cleaned the code
 				// modified isEmptyOrHavingSpace method & changed validation for space checking
+//20170315 CW c36-add-tutor-details add validateEmail method from CAM-10 & removed existing one
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -450,19 +451,25 @@ public class Validator {
 	}		
 
 	/**
-	 * Check the given mail address is valid email or not
-	 * 
-	 * @author Chathuri
-	 * @param value
-	 * @return boolean to validate email address.
-	 **/
-	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$",
-				Pattern.CASE_INSENSITIVE);
+	 * validateEmail method test for known email patterns.
+	 * If the argument in test is confirm to valid email
+	 * format method successfully pass the test
+	 * @author DN
+	 * @param email String 
+	 * @return boolean if email confirms to the email format
+	 * return true else false.
+	 * @throws Exception
+	 */
+	 public static boolean validateEmail(String email){// throws Exception {
+		boolean validEmail = false;
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
+				"^([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})$");
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-		return matcher.find();
-	}	
-
+		validEmail = matcher.find();
+		//throwCustomError(validEmail," Email Validation Failed!");
+		return validEmail;
+	}
+	
 	/**
 	 * Check the entered user name is having a valid size
 	 * user name should have at least 6 characters & should be not more than 20 characters
