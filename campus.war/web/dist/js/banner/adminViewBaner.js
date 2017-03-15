@@ -10,6 +10,8 @@
  * 			event to the '#filterBanners' button.
  * 			change loadBanners() success call error and information handling by adding css color
  * 			validateDisplayingBanners()  validating method has been implemented.
+ * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn loadBanners() is added the validation method.
+ * 			validateDisplayingBanners() method is fully implemented.
  */
 
 var theNewScript = document.createElement("script");
@@ -48,7 +50,8 @@ $(document).ready(function(){
  * and all the banner records for active advertisers will be populated.
  */
 function loadBanners(){
-	
+	if(!validateDisplayingBanners())
+		return false;
 	$.ajax({
 		type:'POST',
 		url:adminControllerUrl,
@@ -91,32 +94,63 @@ function loadBanners(){
 
 /**
  * validateDisplayingBanners() validates the input fields of
- * bannerManger.js and returns false if any one of the fields are not confirming
- * to the requirement
- * @returns {Boolean}
+ * bannerManger.jsp and returns false if any one of the fields are not confirming to the requirement.<br><br>
+ *<i><u> Validation Criterion</u></i>
+ * <p>
+ * &#9678; The validation gets  passed if the both <i>Filtering commencing date</i><br>
+ *         and the <i>filtering ending date</i> have not got values.<br>
+ * &#9678; If the either fields has got a value then the method requests to provide<br>
+ *         due value for the empty field<br>
+ * &#9678; If both are provided values then the method checks for the validity of the values as a date,<br>
+ * &#9678; If not confirming to a valid date validation fails.<br>
+ * &#9678; If the <i>Filtering commencing date</i> &gt; <i>filtering ending date</i>, then,<br>
+ *         the validation fails. <br>eg Filtering commencing date : 2017-03-01 <br>
+ *         							filtering ending date     : 2017-02-25 <br>
+ *   
+ * </p>
+ * @returns {Boolean} if all the validation criteria have been met then the method returns <b> true</b><br>
+ * 					  else returns a <b>false</b>
  */
 function validateDisplayingBanners(){
 	var validationPass =false;
 	
 	var startDate = $('#startDate').val();
 	var endDate   = $('#endtDate').val();
-	var isStartDateNotFilled =isempty(startDate);
-	var isEndDateNotFilled =isempty(endDate);
+	var isStartDateEmpty =!isempty(startDate);
+	var isEndDateEmpty =!isempty(endDate);
 	
-	if(!isStartDateNotFilled){
-		if(!isEndDateNotFilled){
+	
+	if(!isStartDateEmpty){
+		if(!isEndDateEmpty){
 			
-			//validation goes here for correct dates and 
-			// date comparision
-			return !validationPass;	
-		} else{
+			// test if either date is  actually a date
+			 if(!(isDate(startDate) & isDate(endDate))){				 
+				 displayLabelMessage('messagePopUp','displayLabel','red',"Please enter valid dates ");
+				 return validationPass;
+			 }
+			 validationPass = (compareDates(startDate,endDate,"-")<0)?!validationPass:validationPass;
+			 
+			 if(!validationPass){ // date comparison failed 
+				 
+				 displayLabelMessage('messagePopUp','displayLabel','red',"Start date must < End date");
+				 return validationPass;
+			 } else{
+				 return validationPass;
+			 }
+		} else{	
+			
 			displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter data");
+			return validationPass;
 		}
+	} else if(!isEndDateEmpty){ // staet date is empty but end date is filled
+		
+		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter data");
+		return validationPass;
+	} else{ // both date fields are empty then it's not required to validate
+		
+		validationPass = true;
 	}
-	
-	// both date fields are empty then it's not required to validate
-	if(isStartDateNotFilled && isEndDateNotFilled)
-		return !validationPass;	
+		return validationPass;	
 }
 
 
@@ -181,6 +215,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 	
 }
 
+
 /**
  * ajaxCallErorMessage
  * @author DJ,DN re engineered 
@@ -188,7 +223,6 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
  * @error error  error message comes from the server when ajax call fails
  * @errorThrown actual error thrown once ajax response fails
  */
-
 function ajaxCallErorMessage(response,error,errorThrown){
 	  var msg = '';
   if (response.status === 0) {
