@@ -9,7 +9,8 @@
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
 <!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
 <!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
-<!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk -->
+<!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk, change html element
+				 names to match with the back end validation -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -73,19 +74,27 @@
 						<h4 class="form-section-title accordion-header">1. General
 							Information</h4>
 						<div class="accordion-body">
-							<div class="row clearfix">
+							<div class="row clearfix">								
 								<div class="form-group col-sm-12">
-									<label for="account-category" class="right-padding inline-info">
+								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
 										class="error-info" href="#" data-toggle="tooltip"
 										title="Hooray!" data-placement="top"></a>
-									</label> <label class="radio-inline radio-lbl"><input
-										type="radio" name="accCategory"
-										value="Featured course provider">Featured course
-										provider</label> <label class="radio-inline radio-lbl"><input
-										type="radio" name="accCategory"
-										value="One-off course provider">One-off course
-										provider</label>
+									</label>
+								<c:forEach items="${accountTypeBean.values}" var="accountTypes">
+								<label class="radio-inline radio-lbl">
+										<c:if test="${accountTypes.typeValue == 1}">
+											<input type="radio" name="courseProvider" id="courseProvider"
+												value="${accountTypes.typeValue}" checked="checked"
+												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+										</c:if>
+										<c:if test="${accountTypes.typeValue != 1}">
+											<input type="radio" name="courseProvider" id="courseProvider"
+												value="${accountTypes.typeValue}" 
+												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+										</c:if>
+										</label>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="row clearfix">
@@ -93,16 +102,16 @@
 									<label for="course-provider"><span class="mandatory">*</span>
 										Course Provider Name</label>
 									<div class="input-wrapper has-error">
-										<input name="courseProvider" type="text" class="form-control"
-											id="course-provider" placeholder=""> <a
-											class="error-info" href="#" data-toggle="tooltip"
+										<input name="providerName" type="text" class="form-control"
+											id="providerName" placeholder=""> <a
+											class="error-info" href="#" data-toggle="tooltip" id="errorProviderName"
 											title="Error text should reflect your product’s color palette. It’s recommended that you use a contrasting color for error states, such as a warmer hue like red or orange."></a>
 									</div>
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="shorten-name">Shorten Name</label>
 									<div class="input-wrapper">
-										<input name="shortenName" type="text" class="form-control"
+										<input name="shortName" id="shortName" type="text" class="form-control"
 											id="shorten-name" placeholder="">
 									</div>
 								</div>
@@ -111,7 +120,7 @@
 										Unique Prefix</label>
 									<div class="input-wrapper">
 										<input name="uniquePrefix" type="text" class="form-control"
-											id="unique-prefix" placeholder=""> <a
+											id="uniquePrefix" placeholder=""> <a id="errorUniquePrefix"
 											class="error-info" href="#" data-toggle="tooltip"
 											title="Hooray!"></a>
 									</div>
@@ -122,9 +131,9 @@
 									<label for="company-profile"><span class="mandatory">*</span>
 										Company Profile</label>
 									<div class="input-wrapper">
-										<textarea name="companyProfile" class="form-control"
-											id="company-profile" rows="4"></textarea>
-										<a class="error-info" href="#" data-toggle="tooltip"
+										<textarea name="aboutMe" class="form-control"
+											id="aboutMe" rows="4"></textarea>
+										<a class="error-info" href="#" data-toggle="tooltip" id="errorAboutMe"
 											title="Hooray!"></a>
 									</div>
 								</div>
@@ -132,7 +141,9 @@
 									<label for="special-features">Special Features</label>
 									<div class="input-wrapper">
 										<textarea name="specialFeatures" class="form-control"
-											id="special-features" rows="4"></textarea>
+											id="specialFeatures" rows="4"></textarea>
+											<a class="error-info" href="#" data-toggle="tooltip" id="errorSpecialFeatures"
+											title="Hooray!"></a>
 									</div>
 								</div>
 							</div>
