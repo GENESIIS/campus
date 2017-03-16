@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw SigningUpTutorDAO class created.
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw query error fixed
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw add doc comments & modified method comment
 
 import com.genesiis.campus.command.CmdTutorPasswordChange;
 import com.genesiis.campus.entity.model.Tutor;
@@ -15,12 +16,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
+/**
+ * This class is used to manage signing up details of the tutor
+ * @author chinthaka
+ *
+ */
 public class SigningUpTutorDAO implements ICrud  {
 	static Logger log = Logger.getLogger(SigningUpTutorDAO.class.getName());
 
 	/**
 	 * forget password function, update new password.
-	 * @author Anuradha
+	 * @author Chinthaka
 	 */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
