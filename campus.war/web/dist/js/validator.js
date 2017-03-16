@@ -29,6 +29,7 @@
  * //20170303 CW c37-tutor-update-tutor-profile-cw passwordOld renamed to passwordFromDb in validateTutorModificationsByTutor(), modified isValidPassword() validate password fields using Validator.isValidPassword()
  * //20170305 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor() to add password related validations & remove un wanted commented lines
  * //20170307 CW c37-tutor-update-tutor-profile-cw modified isValidEmail() method & fix a minor bug 
+ * //20170316 CW c37-tutor-update-tutor-profile-cw modified field max lengths to match database field max size
  */
 
 /**
@@ -368,7 +369,7 @@ function isValidFirstname(firstname) {
 		flag = false;
 	}
 	
-	if (firstname.length > 20) {
+	if (firstname.length > 35) {
 		document.getElementById('firstNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('firstName').focus();
 		flag = false;
@@ -397,7 +398,7 @@ function isValidMiddlename(middlename) {
 		middleName.value = '';			
 	}
 	
-	if (middlename.length > 20) {
+	if (middlename.length > 35) {
 		document.getElementById('middleNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('middleName').focus();
 		flag = false;
@@ -427,7 +428,7 @@ function isValidLastname(lastname) {
 		flag = false;
 	}
 	
-	if (lastname.length > 20) {
+	if (lastname.length > 35) {
 		document.getElementById('lastNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -542,7 +543,7 @@ function isValidLandCountryCode(landCountryCode) {
 		flag = false;
 	}
 
-	if (landCountryCode.length > 5) {
+	if (landCountryCode.length > 10) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landCountryCode').focus();
 		flag = false;
@@ -599,7 +600,7 @@ function isValidLandNumber(landNumber) {
 		flag = false;
 	}
 
-	if (landNumber.length > 10) {
+	if (landNumber.length > 15) {
 		document.getElementById('landNumberError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -887,7 +888,7 @@ function isValidUsername(username) {
 		flag = false;
 	}
 		
-	if (username.length > 20) {
+	if (username.length > 100) {
 		document.getElementById('usernameError').innerHTML = "**User Name Max length exceeded.";
 		document.getElementById('username').focus();
 		flag = false;
