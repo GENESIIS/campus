@@ -3,6 +3,7 @@
 <!-- 20170227 c37-tutor-update-tutor-profile-cw - modified password change items-->
 <!-- 20170301 c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb -->
 <!-- 20170302 CW c37-tutor-update-tutor-profile-cw modified validateTutorModifications method to validateTutorModificationsByTutor -->
+<!-- 20170316 CW c37-tutor-update-tutor-profile-cw modify field max lengths to match database field max size -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -118,7 +119,7 @@
 				<tr>
 					<td>First Name </td>
 					<td><input type="text" name="firstname" id="firstName"
-						maxlength="20" onchange="clearField('firstNameError')"
+						maxlength="35" onchange="clearField('firstNameError')"
 						value="${firstname}" /><span id="firstNameError"
 							style="color: red"> ${firstNameError} </span></td>
 				</tr>
@@ -126,13 +127,13 @@
 				<tr>
 					<td>Middle Name </td>
 					<td><input type="text" name="middlename" id="middleName"
-						maxlength="20" onchange="clearField('middleNameError')" value="${middlename}" />
+						maxlength="35" onchange="clearField('middleNameError')" value="${middlename}" />
 						<span id="middleNameError" style="color: red"> ${middleNameError} </span></td>
 				</tr>
 				<tr>
 					<td>Last Name </td>
 					<td><input type="text" name="lastname" id="lastName"
-						maxlength="20" onchange="clearField('lastNameError')"
+						maxlength="35" onchange="clearField('lastNameError')"
 						value="${lastname}" /><span id="lastNameError"
 						style="color: red"> ${lastNameError} </span></td>
 				</tr>
@@ -183,7 +184,7 @@
 				<tr>
 					<td>Mobile</td>
 					<td><input type="text"
-						name="mobileCountryCode" id="mobileCountryCode" maxlength="5"
+						name="mobileCountryCode" id="mobileCountryCode" maxlength="10"
 						onchange="clearField('mobileError')" readonly value="${mobilephonecountrycode}" />
 						<span id="mobileError" style="color: red"> ${mobileError} </span></td>
 	
@@ -193,14 +194,14 @@
 						<span id="mobileNetworkError" style="color: red"> ${mobileNetworkError} </span></td>
 	
 					<td><input type="text"
-						name="mobileNumber" id="mobileNumber" maxlength="11"
+						name="mobileNumber" id="mobileNumber" maxlength="15"
 						onchange="clearField('mobileNumberError')" value="${mobilephonenumber}" />
 						<span id="mobileNumberError" style="color: red"> ${mobileNumberError} </span></td>
 				</tr>
 				<tr>
 					<td>Land</td>
 					<td><input type="text"
-						name="landCountryCode" id="landCountryCode" maxlength="5"
+						name="landCountryCode" id="landCountryCode" maxlength="10"
 						onchange="clearField('landError')" readonly value="${landphonecountrycode}" />
 						<span id="landError" style="color: red"> ${landError} </span></td>
 	
@@ -210,70 +211,70 @@
 						<span id="landAreaCodeError" style="color: red"> ${landAreaCodeError} </span></td>
 	
 					<td><input type="text" name="landNumber" id="landNumber"
-						maxlength="10" onchange="clearField('landNumberError')" value="${landphonenumber}" />
+						maxlength="15" onchange="clearField('landNumberError')" value="${landphonenumber}" />
 						<span id="landNumberError" style="color: red"> ${landNumberError} </span></td>
 				</tr>
 				<tr>
 					<td>Address Line 1 </td>
 					<td><input type="text" name="address1" id="address1"
-						maxlength="30" onchange="clearField('address1Error')" value="${address1}" />
+						maxlength="50" onchange="clearField('address1Error')" value="${address1}" />
 						<span id="address1Error" style="color: red"> ${address1Error} </span></td>
 				</tr>
 				<tr>
 					<td>Address line 2 </td>
 					<td><input type="text" name="address2" id="address2"
-						maxlength="30" value="${address2}" /></td>
+						maxlength="50" value="${address2}" /></td>
 				</tr>
 				<tr>
 					<td>Address line 3 </td>
 					<td><input type="text" name="address3" id="address3"
-						maxlength="30" value="${address3}" /></td>
+						maxlength="50" value="${address3}" /></td>
 				</tr>
 	
 				<tr>
 					<td>Web link </td>
-					<td><input type="text" name="weblink" id="weblink" value="${weblink}" />
+					<td><input type="text" name="weblink" id="weblink" value="${weblink}" maxlength="200" />
 					<span id="weblinkError" style="color: red"> ${weblinkError} </span></td>
 				</tr>
 				<tr>
 					<td>Facebook </td>
-					<td><input type="text" name="facebook" id="facebook"
+					<td><input type="text" name="facebook" id="facebook" maxlength="200" 
 						value="${facebookurl}" /><span id="facebookError"
 						style="color: red"> ${facebookError} </span> </td>
 				</tr>
 				<tr>
 					<td>LinkedIn </td>
-					<td><input type="text" name="linkedin" id="linkedin"
+					<td><input type="text" name="linkedin" id="linkedin" maxlength="100" 
 						value="${linkedinurl}" /><span id="linkedInError"
 						style="color: red"> ${linkedInError} </span></td>
 				</tr>
 				<tr>
 					<td>Twitter </td>
-					<td><input type="text" name="twitter" id="twitter"
+					<td><input type="text" name="twitter" id="twitter" maxlength="100" 
 						value="${twitterurl}" /><span id="twitterError"
 						style="color: red"> ${twitterError} </span></td>
 				</tr>
 				<tr>
 					<td>Instagram </td>
-					<td><input type="text" name="instagram" id="instagram"
+					<td><input type="text" name="instagram" id="instagram" maxlength="100"
 						value="${instagramurl}" /><span id="instagramError"
 						style="color: red"> ${instagramError} </span></td>
 				</tr>
 				<tr>
 					<td>Myspace </td>
-					<td><input type="text" name="myspace" id="myspace"
+					<td><input type="text" name="myspace" id="myspace" maxlength="100"
 						value="${myspaceurl}" /><span
 						id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
 				</tr>
 				<tr>
 					<td>WhatsApp </td>
 					<td><input type="text" name="whatsapp" id="whatsapp"
-						maxlength="10" value="${whatsappnumber}" /><span id="whatsappError"
+						maxlength="20" value="${whatsappnumber}" /><span id="whatsappError"
 							style="color: red"> ${whatsappError} </span></td>
 				</tr>
 				<tr>
 					<td>Viber </td>
-					<td><input type="text" name="viber" id="viber" maxlength="10" value="${vibernumber}" />
+					<td><input type="text" name="viber" id="viber" maxlength="20" value="${vibernumber}" />
 						<span id="viberError" style="color: red"> ${viberError} </span></td>
 				</tr>
 				<tr>
@@ -282,32 +283,32 @@
 	
 				<tr>
 					<td>Email </td>
-					<td><input type="text" name="email" id="email"
+					<td><input type="text" name="email" id="email" maxlength="255" 
 						onchange="clearField('emailError')" value="${email}" />
 						<span id="emailError" style="color: red"> ${emailError} </span></td>
 				</tr>
 				<tr>
 					<td>Username </td>
 					<td><input type="text" name="username" id="username"
-						maxlength="50" onchange="clearField('usernameError')" value="${username}" readonly />
+						maxlength="100" onchange="clearField('usernameError')" value="${username}" readonly />
 						<span id="usernameError" style="color: red"> ${usernameError} </span></td>
 				</tr>
 				<tr>
 					<td>Old Password </td>
 					<td><input type="password" name="oldPassword" id="oldPassword"
-						maxlength="20" onchange="clearField('oldPasswordError')"/>
+						maxlength="50" onchange="clearField('oldPasswordError')"/>
 						<span id="oldPasswordError" style="color: red"> ${oldPasswordError} </span></td>
 				</tr>
 				
 				<tr>
 					<td>New Password </td>
 					<td><input type="password" name="newPassword" id="newPassword"
-						maxlength="20" onchange="clearField('newPasswordError')"/>
+						maxlength="50" onchange="clearField('newPasswordError')"/>
 						<span id="newPasswordError" style="color: red"> ${newPasswordError} </span></td>
 				</tr>
 				<tr>
 					<td>Confirm New Password </td>
-					<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="20"
+					<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="50"
 						onchange="clearField('confirmPasswordError')"/><span
 						id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>
 				</tr>
