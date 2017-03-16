@@ -31,6 +31,7 @@ public enum SystemConfig {
 	COURSE_IMAGE_PATH("", "", ""), 
 	STUDENT_PROFILE_IMAGE_PATH("", "", ""),
 	TUTOR_PROFILE_IMAGE_PATH("", "", ""),
+	ADMIN_LANDING_PAGE("","",""),
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 
 	private String value1;
