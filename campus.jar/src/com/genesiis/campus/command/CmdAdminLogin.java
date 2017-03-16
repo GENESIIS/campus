@@ -11,6 +11,8 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.LoginValidator;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 import com.google.gson.Gson;
 
@@ -37,8 +39,18 @@ public class CmdAdminLogin implements ICommand{
 				String gsonData = helper.getParameter("jsonData");
 				adminData = getAdmindetails(gsonData);
 				
-			}else{
+				String validateResult = LoginValidator.validateLogin(adminData);
+				boolean rememberMe = adminData.isRemember();
+				if (validateResult.equalsIgnoreCase("True")) {
+					
+					
+					
+				}else{
+					message = SystemMessage.LOGINUNSUCCESSFULL.message();
+				}
 				
+			}else{
+				pageURL = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 			}
 			
 			
