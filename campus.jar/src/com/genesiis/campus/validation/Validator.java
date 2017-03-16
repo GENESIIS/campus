@@ -51,6 +51,7 @@ package com.genesiis.campus.validation;
 				// modified isEmptyOrHavingSpace method & changed validation for space checking
 //20170315 CW c36-add-tutor-details add validateEmail method from CAM-10 & removed existing one
 //20170315 CW c36-add-tutor-details modified validateEmail method to validate emails properly
+//20170316 CW c36-add-tutor-details modify validation methods to match database field max size
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -275,7 +276,7 @@ public class Validator {
 	public boolean isValidFirstname(String firstName) throws Exception {
 		boolean valid = false;
 		try {
-			if ((isNotEmpty(firstName)) && (firstName.length() < 21) && firstName != " ") {
+			if ((isNotEmpty(firstName)) && (firstName.length() < 36) && firstName != " ") {
 				valid = true;
 			}
 
@@ -297,7 +298,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(lastName)) && (lastName.length() < 21) && lastName != " ") {
+			if ((isNotEmpty(lastName)) && (lastName.length() < 36) && lastName != " ") {
 				valid = true;
 			}
 
@@ -319,7 +320,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6) && !(countryCode.equals("0"))) {
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 11) && !(countryCode.equals("0"))) {
 				valid = true;
 			}
 
@@ -363,7 +364,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 11) && contactNumber != " ") {
+			if ((isNotEmpty(contactNumber)) &&  (contactNumber.length() < 16) && contactNumber != " ") {
 				valid = true;
 			}
 
@@ -385,7 +386,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 != " ") {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 51) && addressLine1 != " ") {
 				valid = true;
 			}
 
@@ -481,7 +482,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 21)) {
+			if ((isNotEmpty(username)) && (username.length() > 5) && (username.length() < 101)) {
 				valid = true;
 			}
 
@@ -516,7 +517,7 @@ public class Validator {
 				validityNumber = 2;
 			}
 			
-			if (validityNumber != 1 && (password.length() < 5) && (password.length() > 21)){ //check for the length of the password
+			if (validityNumber != 1 && (password.length() < 6) && (password.length() > 101)){ //check for the length of the password
 				helper.setAttribute("passwordError", SystemMessage.PASSWORDLENGTHERROR.message());
 				valid = false;
 			}
