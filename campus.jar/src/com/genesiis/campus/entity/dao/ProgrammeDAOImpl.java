@@ -6,9 +6,13 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170203 c138-add-basic-programme Implemented getAllLevels() method.
 //DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
+//20170316 DJ c152-add-enhanced-programme-insertion: Initiate;addIntakeDetails(),addSemesterDetails(),addModuleDetails
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.IntakeDTO;
+import com.genesiis.campus.entity.model.ModuleDTO;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
+import com.genesiis.campus.entity.model.SemesterDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -392,6 +396,27 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			DaoHelper.cleanup(conn, stmt, null);
 		}
 		return successStatus;
+	}
+
+	@Override
+	public int addIntakeDetails(IntakeDTO intakeDTO) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addSemesterDetails(SemesterDTO semesterDTO) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addModuleDetails(ModuleDTO moduleDTO) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
