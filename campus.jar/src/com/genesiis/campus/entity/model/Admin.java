@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 //20170315 AS CAM-23 c23-admin-login-logout-function-as Admin pojo class created and attributes  
-public class Admin {
+//20170316 AS CAM-23 c23-admin-login-logout-function-as LoginHistory pojo extended
+public class Admin extends LoginHistory {
 
 	private int code;
 	private String name;
@@ -12,15 +13,7 @@ public class Admin {
 	private String userType;
 	private String discription;
 	
-	private String lastLoggedInUserAgent;
-	private String lastLoggedInSessionid;
-	private String lastLoggedInDate;
-	private String lastLoggedInTime;
-	private String lastLoggedInIpAddress;
-	private String lastLoggedOutDate;
-	private String lastLoggedOutTime;
-	private String lastLoginAuthenticatedBy;
-	
+
 	private java.sql.Date crtOn;
 	private String crtBy;
 	private java.sql.Date modOn;
@@ -33,55 +26,6 @@ public class Admin {
 	}
 	public void setUserKey(String userKey) {
 		this.userKey = userKey;
-	}
-	
-	public String getLastLoggedInUserAgent() {
-		return lastLoggedInUserAgent;
-	}
-	public void setLastLoggedInUserAgent(String lastLoggedInUserAgent) {
-		this.lastLoggedInUserAgent = lastLoggedInUserAgent;
-	}
-	public String getLastLoggedInSessionid() {
-		return lastLoggedInSessionid;
-	}
-	public void setLastLoggedInSessionid(String lastLoggedInSessionid) {
-		this.lastLoggedInSessionid = lastLoggedInSessionid;
-	}
-	public String getLastLoggedInDate() {
-		return lastLoggedInDate;
-	}
-	public void setLastLoggedInDate(String lastLoggedInDate) {
-		this.lastLoggedInDate = lastLoggedInDate;
-	}
-	public String getLastLoggedInTime() {
-		return lastLoggedInTime;
-	}
-	public void setLastLoggedInTime(String lastLoggedInTime) {
-		this.lastLoggedInTime = lastLoggedInTime;
-	}
-	public String getLastLoggedInIpAddress() {
-		return lastLoggedInIpAddress;
-	}
-	public void setLastLoggedInIpAddress(String lastLoggedInIpAddress) {
-		this.lastLoggedInIpAddress = lastLoggedInIpAddress;
-	}
-	public String getLastLoggedOutDate() {
-		return lastLoggedOutDate;
-	}
-	public void setLastLoggedOutDate(String lastLoggedOutDate) {
-		this.lastLoggedOutDate = lastLoggedOutDate;
-	}
-	public String getLastLoggedOutTime() {
-		return lastLoggedOutTime;
-	}
-	public void setLastLoggedOutTime(String lastLoggedOutTime) {
-		this.lastLoggedOutTime = lastLoggedOutTime;
-	}
-	public String getLastLoginAuthenticatedBy() {
-		return lastLoginAuthenticatedBy;
-	}
-	public void setLastLoginAuthenticatedBy(String lastLoginAuthenticatedBy) {
-		this.lastLoginAuthenticatedBy = lastLoginAuthenticatedBy;
 	}
 	
 	public int getCode() {
