@@ -9,6 +9,7 @@ package com.genesiis.campus.util.mail;
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw sendTutorPasswordChangeConformationEmail method created 
 				// modified sendMail(IEmailComposer tutorUpdateEmailComposer) parameter to emailComposer
 				// modified sendTutorResetPasswordVerificationEmail method error logs
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw removed unwanted commented lines
 
 import com.genesiis.campus.util.TutorPasswordChangeConfirmationEmailComposer;
 import com.genesiis.campus.util.TutorPasswordResetEmailComposer;
@@ -128,38 +129,4 @@ static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 			return MAIL_SENT_STATUS;
 		}		
 	}
-	
-	/*
-	 * sendMail() method intended to dispense the email
-	 * @author DN
-	 * @return int -3 fail sending email 3 sent email successfully 
-	 * @throws MessagingException in any case dispensing email fails
-	 */
-/*	private int sendMail(IEmailComposer tutorUpdateEmailComposer)  {
-		int MAIL_SENT_STATUS=3;
-		try{ 
-			if(tutorUpdateEmailComposer.getGeneralEmail()== null){
-				Exception exp = new Exception("IEmail is not created ");
-				log.error("sendMail(): Exception"+exp.toString());
-				throw exp;
-			}
-				
-			tutorUpdateEmailComposer.setEmailDispenser(new EmailDispenser(tutorUpdateEmailComposer.getGeneralEmail()));
-			tutorUpdateEmailComposer.getEmailDispenser().emailDispense();
-		} catch (IllegalArgumentException illearg){
-			log.error("sendMail():IllegalArgumentException "+illearg.toString());
-			MAIL_SENT_STATUS= -3;
-		} catch (MessagingException msexp) {
-			log.error("sendMail():MessagingException "+msexp.toString());
-			MAIL_SENT_STATUS= -3;
-		} catch (NullPointerException msexp) {
-			log.error("sendMail():NullPointerException "+msexp.toString());
-			MAIL_SENT_STATUS= -3;
-		} catch(Exception exp){
-			MAIL_SENT_STATUS= -3;
-		}
-		finally{
-			return MAIL_SENT_STATUS;
-		}		
-	}*/
 }
