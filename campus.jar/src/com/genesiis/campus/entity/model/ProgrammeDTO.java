@@ -1,34 +1,36 @@
 package com.genesiis.campus.entity.model;
 
 //20170208 DJ c138-add-basic-programme-MP-dj Initiate ProgrammeDTO.java
+//20170316 DJ c152-add-enhanced-programme-insertion-Set private access modifier. 
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ProgrammeDTO {	
-	int code;
-	String name;
-	String email;
-	String image;
-	String description;
-	Float duration;
-	String entryRequirements;
-	String counselerName;
-	String counselerPhone;
-	Date displayStartDate;
-	Date expirationDate;
-	int programmeStatus;
-	int courseProvider;
-	int major;
-	int category;
-	int level;
-	int classType;
-	int town;
+	private int code;
+	private String name;
+	private String email;
+	private String image;
+	private String description;
+	private Float duration;
+	private String entryRequirements;
+	private String counselerName;
+	private String counselerPhone;
+	private Date displayStartDate;
+	private Date expirationDate;
+	private int programmeStatus;
+	private int courseProvider;
+	private int major;
+	private int category;
+	private int level;
+	private int classType;
+	private int town;
 	private Date crtOn;
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
 	private ArrayList<IntakeDTO> intakeList;
+	private ArrayList<SemesterDTO> semesterList;
 	
 	
 	public int getCode() {
@@ -169,6 +171,12 @@ public class ProgrammeDTO {
 	}
 	public void setIntakeList(ArrayList<IntakeDTO> intakeList) {
 		this.intakeList = intakeList;
+	}
+	public ArrayList<SemesterDTO> getSemesterList() {
+		return semesterList;
+	}
+	public void setSemesterList(ArrayList<SemesterDTO> semesterList) {
+		this.semesterList = semesterList;
 	}
 	
 }
