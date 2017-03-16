@@ -1,6 +1,8 @@
 <!-- 20170221 CW CAM-36 modify page to view early entered space characters as null & validations to check the javascript enable -->
 <!-- 20170222 CW CAM-36 modify the validations to check the javascript enable & if not enable give a message -->
 <!-- 20170223 CW CAM-36 modify page to remove space values from the fields when space entered in them-->
+<!-- 20170316 CW CAM-36 modify page fields to match database field max size-->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -43,13 +45,13 @@
 					<c:choose>
 						<c:when test="${tutorList[0] == ' '}">
 						   <td><input type="text" name="firstname" id="firstName"
-							maxlength="20" onchange="clearField('firstNameError')"
+							maxlength="35" onchange="clearField('firstNameError')"
 							value="" /><span id="firstNameError"
 							style="color: red"> ${firstNameError} </span></td>
 						</c:when>
 						<c:otherwise>
 							<td><input type="text" name="firstname" id="firstName"
-							maxlength="20" onchange="clearField('firstNameError')"
+							maxlength="35" onchange="clearField('firstNameError')"
 							value="${tutorList[0]}" /><span id="firstNameError"
 							style="color: red"> ${firstNameError} </span></td>
 						</c:otherwise>
@@ -61,13 +63,13 @@
 					<c:choose>
 						<c:when test="${tutorList[1] == ' '}">
 							<td><input type="text" name="middlename" id="middleName"
-								maxlength="20" onchange="clearField('middleNameError')"
+								maxlength="35" onchange="clearField('middleNameError')"
 								value="" /><span id="middleNameError"
 								style="color: red"> ${middleNameError} </span></td>
 						</c:when>
 						<c:otherwise>
 							<td><input type="text" name="middlename" id="middleName"
-								maxlength="20" onchange="clearField('middleNameError')"
+								maxlength="35" onchange="clearField('middleNameError')"
 								value="${tutorList[1]}" /><span id="middleNameError"
 								style="color: red"> ${middleNameError} </span></td>
 						</c:otherwise>
@@ -78,13 +80,13 @@
 						<c:choose>
 							<c:when test="${tutorList[2] == ' '}">
 								<td><input type="text" name="lastname" id="lastName"
-									maxlength="20" onchange="clearField('lastNameError')"
+									maxlength="35" onchange="clearField('lastNameError')"
 									value="" /><span id="lastNameError"
 									style="color: red"> ${lastNameError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="lastname" id="lastName"
-									maxlength="20" onchange="clearField('lastNameError')"
+									maxlength="35" onchange="clearField('lastNameError')"
 									value="${tutorList[2]}" /><span id="lastNameError"
 									style="color: red"> ${lastNameError} </span></td>
 							</c:otherwise>
@@ -151,48 +153,30 @@
 					<tr>
 						<td>Mobile *</td>
 						<td><input type="text" name="mobileCountryCode"
-							id="mobileCountryCode" maxlength="5"
+							id="mobileCountryCode" maxlength="10"
 							onchange="clearField('mobileError')" readonly
 							value="${tutorList[9]}" /><span id="mobileError"
 							style="color: red"> ${mobileError} </span></td>
+										
+										
+							<td><input type="text" name="mobileNetworkCode"
+							id="mobileNetworkCode" maxlength="10"
+							onchange="clearField('mobileNetworkError')"
+							value="${tutorList[10]}" /><span id="mobileNetworkError"
+							style="color: red"> ${mobileNetworkError} </span></td>
+							
+							<td></span> <input type="text" name="mobileNumber" id="mobileNumber"
+							maxlength="15" onchange="clearField('mobileNumberError')"
+							value="${tutorList[11]}" /><span id="mobileNumberError"
+							style="color: red"> ${mobileNumberError} </td>
 		
-						<c:choose>
-							<c:when test="${tutorList[10] == ' '}">		
-								<td><input type="text" name="mobileNetworkCode"
-								id="mobileNetworkCode" maxlength="10"
-								onchange="clearField('mobileNetworkError')"
-								value="" /><span id="mobileNetworkError"
-								style="color: red"> ${mobileNetworkError} </span></td>
-							</c:when>
-							<c:otherwise>
-								<td><input type="text" name="mobileNetworkCode"
-								id="mobileNetworkCode" maxlength="10"
-								onchange="clearField('mobileNetworkError')"
-								value="${tutorList[10]}" /><span id="mobileNetworkError"
-								style="color: red"> ${mobileNetworkError} </span></td>
-							</c:otherwise>
-						</c:choose>	
-		
-						<c:choose>
-							<c:when test="${tutorList[11] == ' '}">		
-								<td></span> <input type="text" name="mobileNumber" id="mobileNumber"
-								maxlength="11" onchange="clearField('mobileNumberError')"
-								value="" /><span id="mobileNumberError"
-								style="color: red"> ${mobileNumberError} </td>
-							</c:when>
-							<c:otherwise>
-								<td></span> <input type="text" name="mobileNumber" id="mobileNumber"
-								maxlength="11" onchange="clearField('mobileNumberError')"
-								value="${tutorList[11]}" /><span id="mobileNumberError"
-								style="color: red"> ${mobileNumberError} </td>
-							</c:otherwise>
-						</c:choose>	
+
 						
 					</tr>
 					<tr>
 						<td>Land *</td>
 						<td><input type="text" name="landCountryCode"
-							id="landCountryCode" maxlength="5"
+							id="landCountryCode" maxlength="10"
 							onchange="clearField('landError')" readonly
 							value="${tutorList[12]}" /><span id="landError"
 							style="color: red"> ${landError} </span></td>
@@ -215,13 +199,13 @@
 						<c:choose>
 							<c:when test="${tutorList[14] == ' '}">		
 								<td><input type="text" name="landNumber" id="landNumber"
-								maxlength="10" onchange="clearField('landNumberError')"
+								maxlength="15" onchange="clearField('landNumberError')"
 								value="" /><span id="landNumberError"
 								style="color: red"> ${landNumberError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="landNumber" id="landNumber"
-								maxlength="10" onchange="clearField('landNumberError')"
+								maxlength="15" onchange="clearField('landNumberError')"
 								value="${tutorList[14]}" /><span id="landNumberError"
 								style="color: red"> ${landNumberError} </span></td>
 							</c:otherwise>
@@ -233,13 +217,13 @@
 						<c:choose>
 							<c:when test="${tutorList[15] == ' '}">		
 								<td><input type="text" name="address1" id="address1"
-								maxlength="30" onchange="clearField('address1Error')"
+								maxlength="50" onchange="clearField('address1Error')"
 								value="" /><span id="address1Error"
 								style="color: red"> ${address1Error} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="address1" id="address1"
-								maxlength="30" onchange="clearField('address1Error')"
+								maxlength="50" onchange="clearField('address1Error')"
 								value="${tutorList[15]}" /><span id="address1Error"
 								style="color: red"> ${address1Error} </span></td>
 							</c:otherwise>
@@ -250,11 +234,11 @@
 						<c:choose>
 							<c:when test="${tutorList[16] == ' '}">		
 								<td><input type="text" name="address2" id="address2"
-								maxlength="30" value="" /></td>
+								maxlength="50" value="" /></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="address2" id="address2"
-								maxlength="30" value="${tutorList[16]}" /></td>
+								maxlength="50" value="${tutorList[16]}" /></td>
 							</c:otherwise>
 						</c:choose>	
 					</tr>
@@ -263,11 +247,11 @@
 						<c:choose>
 							<c:when test="${tutorList[17] == ' '}">	
 								<td><input type="text" name="address3" id="address3"
-								maxlength="30" value="" /></td>	
+								maxlength="50" value="" /></td>	
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="address3" id="address3"
-								maxlength="30" value="${tutorList[17]}" /></td>
+								maxlength="50" value="${tutorList[17]}" /></td>
 							</c:otherwise>
 						</c:choose>	
 					</tr>
@@ -277,12 +261,12 @@
 						<c:choose>
 							<c:when test="${tutorList[18] == ' '}">	
 								<td><input type="text" name="weblink" id="weblink"
-								onchange="clearField('weblinkError')" value="" /><span
+								onchange="clearField('weblinkError')" maxlength="200" value="" /><span
 								id="weblinkError" style="color: red"> ${weblinkError} </span></td>	
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="weblink" id="weblink"
-								onchange="clearField('weblinkError')" value="${tutorList[18]}" /><span
+								onchange="clearField('weblinkError')" maxlength="200" value="${tutorList[18]}" /><span
 								id="weblinkError" style="color: red"> ${weblinkError} </span></td>
 							</c:otherwise>
 						</c:choose>	
@@ -292,13 +276,13 @@
 						<c:choose>
 							<c:when test="${tutorList[19] == ' '}">		
 								<td><input type="text" name="facebook" id="facebook"
-								onchange="clearField('facebookError')"
+								onchange="clearField('facebookError')" maxlength="200"
 								value="" /><span id="facebookError"
 								style="color: red"> ${facebookError} </td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="facebook" id="facebook"
-								onchange="clearField('facebookError')"
+								onchange="clearField('facebookError')" maxlength="200"
 								value="${tutorList[19]}" /><span id="facebookError"
 								style="color: red"> ${facebookError} </td>
 							</c:otherwise>
@@ -309,13 +293,13 @@
 						<c:choose>
 							<c:when test="${tutorList[20] == ' '}">		
 								<td><input type="text" name="linkedin" id="linkedin"
-								onchange="clearField('linkedInError')"
+								onchange="clearField('linkedInError')" maxlength="100"
 								value="" /><span id="linkedInError"
 								style="color: red"> ${linkedInError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="linkedin" id="linkedin"
-								onchange="clearField('linkedInError')"
+								onchange="clearField('linkedInError')" maxlength="100"
 								value="${tutorList[20]}" /><span id="linkedInError"
 								style="color: red"> ${linkedInError} </span></td>
 							</c:otherwise>
@@ -326,13 +310,13 @@
 						<c:choose>
 							<c:when test="${tutorList[21] == ' '}">	
 								<td><input type="text" name="twitter" id="twitter"
-								onchange="clearField('twitterError')"
+								onchange="clearField('twitterError')" maxlength="100"
 								value="" /><span id="twitterError"
 								style="color: red"> ${twitterError} </span></td>	
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="twitter" id="twitter"
-								onchange="clearField('twitterError')"
+								onchange="clearField('twitterError')" maxlength="100"
 								value="${tutorList[21]}" /><span id="twitterError"
 								style="color: red"> ${twitterError} </span></td>
 							</c:otherwise>
@@ -343,13 +327,13 @@
 						<c:choose>
 							<c:when test="${tutorList[22] == ' '}">		
 								<td><input type="text" name="instagram" id="instagram"
-								onchange="clearField('instagramError')"
+								onchange="clearField('instagramError')" maxlength="100"
 								value="" /><span id="instagramError"
 								style="color: red"> ${instagramError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="instagram" id="instagram"
-								onchange="clearField('instagramError')"
+								onchange="clearField('instagramError')" maxlength="100"
 								value="${tutorList[22]}" /><span id="instagramError"
 								style="color: red"> ${instagramError} </span></td>
 							</c:otherwise>
@@ -359,12 +343,12 @@
 						<td>Myspace</td>
 						<c:choose>
 							<c:when test="${tutorList[23] == ' '}">		
-								<td><input type="text" name="myspace" id="myspace"
+								<td><input type="text" name="myspace" id="myspace" maxlength="100"
 								onchange="clearField('mySpaceError')" value="" /><span
 								id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
 							</c:when>
 							<c:otherwise>
-								<td><input type="text" name="myspace" id="myspace"
+								<td><input type="text" name="myspace" id="myspace" maxlength="100"
 								onchange="clearField('mySpaceError')" value="${tutorList[23]}" /><span
 								id="mySpaceError" style="color: red"> ${mySpaceError} </span></td>
 							</c:otherwise>
@@ -409,12 +393,12 @@
 						<td>Email *</td>
 						<c:choose>
 							<c:when test="${tutorList[26] == ' '}">		
-								<td><input type="text" name="email" id="email"
+								<td><input type="text" name="email" id="email" maxlength="255"
 								onchange="clearField('emailError')" value="" /><span
 								id="emailError" style="color: red"> ${emailError} </span></td>
 							</c:when>
 							<c:otherwise>
-								<td><input type="text" name="email" id="email"
+								<td><input type="text" name="email" id="email" maxlength="255"
 								onchange="clearField('emailError')" value="${tutorList[26]}" /><span
 								id="emailError" style="color: red"> ${emailError} </span></td>
 							</c:otherwise>
@@ -425,13 +409,13 @@
 						<c:choose>
 							<c:when test="${tutorList[27] == ' '}">		
 								<td><input type="text" name="username" id="username"
-								maxlength="20" onchange="clearField('usernameError')"
+								maxlength="100" onchange="clearField('usernameError')"
 								value="" /><span id="usernameError"
 								style="color: red"> ${usernameError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="username" id="username"
-								maxlength="20" onchange="clearField('usernameError')"
+								maxlength="100" onchange="clearField('usernameError')"
 								value="${tutorList[27]}" /><span id="usernameError"
 								style="color: red"> ${usernameError} </span></td>
 							</c:otherwise>
@@ -439,14 +423,14 @@
 					</tr>
 					<tr>
 						<td>Password *</td>
-						<td><input type="password" name="password" id="password"
-							maxlength="20" onchange="clearField('passwordError')" /><span
+						<td><input type="password" name="password" id="password" 
+							maxlength="100" onchange="clearField('passwordError')" /><span
 							id="passwordError" style="color: red"> ${passwordError} </span></td>
 					</tr>
 					<tr>
 						<td>Confirm Password *</td>
 						<td><input type="password" name="confirmPassword"
-							id="confirmPassword" maxlength="20"
+							id="confirmPassword" maxlength="100"
 							onchange="clearField('confirmPasswordError')" /><span
 							id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>
 					</tr>
