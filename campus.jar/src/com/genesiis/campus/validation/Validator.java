@@ -21,6 +21,10 @@ package com.genesiis.campus.validation;
 //20170306 CW c37-tutor-update-tutor-profile-cw modified isEmptyOrHavingSpace method to validate one or many space characters
 //20170306 CW c37-tutor-update-tutor-profile-cw removed isValidUserAndEmail() to remove DAO class calling from this class
 				// modified validateTutorFields() to remove calling isValidUserAndEmail()
+//20170316 CW c37-tutor-update-tutor-profile-cw modified field max lengths to match database field max size
+				// modified isValidNetworkOrContactCode method name to isValidNetworkCode
+				// Add isValidContactCode method
+				// Modified validateTutorFields method to work with isValidNetworkCode & isValidContactCode methods
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -184,11 +188,11 @@ public class Validator {
 				helper.setAttribute("countryError", SystemMessage.COUNTRYCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkOrContactCode(helper.getParameter("mobileNetworkCode"))) {
+			if (!isValidNetworkCode(helper.getParameter("mobileNetworkCode"))) {
 				helper.setAttribute("mobileNetworkError", SystemMessage.NETWORKCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkOrContactCode(helper.getParameter("mobileNumber"))) {
+			if (!isValidContactCode(helper.getParameter("mobileNumber"))) {
 				helper.setAttribute("mobileNumberError", SystemMessage.MOBILENUMBERERROR.message());
 				isValid = false;
 			}
@@ -196,11 +200,11 @@ public class Validator {
 				helper.setAttribute("landError", SystemMessage.LANDCOUNTRYCODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkOrContactCode(helper.getParameter("landAreaCode"))) {
+			if (!isValidNetworkCode(helper.getParameter("landAreaCode"))) {
 				helper.setAttribute("landAreaCodeError", SystemMessage.LANDAREACODEERROR.message());
 				isValid = false;
 			}
-			if (!isValidNetworkOrContactCode(helper.getParameter("landNumber"))) {
+			if (!isValidContactCode(helper.getParameter("landNumber"))) {
 				helper.setAttribute("landNumberError", SystemMessage.LANDNUMBERERROR.message());
 				isValid = false;
 			}
@@ -261,7 +265,7 @@ public class Validator {
 	public boolean isValidName(String name) throws Exception {
 		boolean valid = false;
 		try {
-			if(!isEmptyOrHavingSpace(name) && (name.length() < 21) && name.matches( "[a-zA-Z][a-zA-Z]*" )) {
+			if(!isEmptyOrHavingSpace(name) && (name.length() < 36) && name.matches( "[a-zA-Z][a-zA-Z]*" )) {
 				valid = true;
 			}
 		} catch (Exception e) {
@@ -284,7 +288,7 @@ public class Validator {
 			
 			int code = Integer.parseInt(countryCode);
 			
-			if ((isNotEmpty(countryCode)) && (countryCode.length() < 6) && !(countryCode.equals("0"))) {
+			if ((isNotEmpty(countryCode)) && (countryCode.length() < 11) && !(countryCode.equals("0"))) {
 				valid = true;
 			}
 
@@ -304,7 +308,7 @@ public class Validator {
 	 * @param networkCode
 	 * @return boolean - Returns true if the requested networkCode is a valid one
 	 */
-	public boolean isValidNetworkOrContactCode(String code) throws Exception {
+	public boolean isValidNetworkCode(String code) throws Exception {
 		boolean valid = false;
 		try {
 
@@ -324,6 +328,32 @@ public class Validator {
 	}
 
 	/**
+	 * Check the entered networkCode is a valid one
+	 * 
+	 * @author Chinthaka
+	 * @param networkCode
+	 * @return boolean - Returns true if the requested networkCode is a valid one
+	 */
+	public boolean isValidContactCode(String code) throws Exception {
+		boolean valid = false;
+		try {
+
+			int val = Integer.parseInt(code);
+			
+			if (!isEmptyOrHavingSpace(code) && (code.length() < 16)) {
+				valid = true;
+			}
+
+		} catch (NumberFormatException e) {
+			valid = false;
+		}  catch (Exception e) {
+			log.error("isValidNetworkOrContactCode:  Exception" + e.toString());
+			throw e;
+		}
+		return valid;
+	}
+	
+	/**
 	 * Check the entered addressLine1 is a valid one
 	 * 
 	 * @author Chinthaka
@@ -334,7 +364,7 @@ public class Validator {
 		boolean valid = false;
 		try {
 
-			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 31) && addressLine1 != " ") {
+			if ((isNotEmpty(addressLine1)) && (addressLine1.length() < 51) && addressLine1 != " ") {
 				valid = true;
 			}
 
@@ -479,7 +509,7 @@ public class Validator {
 							}
 							
 							//check for the length of the newPassword
-							if (!isEmptyOrHavingSpace(newPassword) && (newPassword.length() < 5) && (newPassword.length() > 21)){ 
+							if (!isEmptyOrHavingSpace(newPassword) && (newPassword.length() < 5) && (newPassword.length() > 51)){ 
 								helper.setAttribute("newPasswordError", SystemMessage.PASSWORDLENGTHERROR.message());
 								isValid = false;
 							}
