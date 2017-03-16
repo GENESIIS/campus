@@ -2,6 +2,11 @@
 /* http://meyerweb.com/eric/tools/css/reset/
  * v2.0 | 20110126
  * License: none (public domain) */
+ 
+ /*
+ * 20170316 JH c141-ui-integration-add-course-provider changed style for #select-city to .select-city and #select-country to .select-country
+ */
+ 
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway|Slabo+27px';
@@ -829,8 +834,8 @@ body, html {
       margin-bottom: 4px; }
     .admin .accordion-body .radio-lbl {
       color: #6c6b6b; }
-    .admin .accordion-body #select-country,
-    .admin .accordion-body #select-city {
+    .admin .accordion-body .select-country,
+    .admin .accordion-body .select-city {
       margin-bottom: 10px; }
 
 .btn {
