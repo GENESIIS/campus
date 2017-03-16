@@ -1,9 +1,13 @@
 package com.genesiis.campus.entity.dao;
 
 //20170221 DJ c145-add-enhanced-programme created DistrictDAOImpl.java
+//20170316 DJ c152-add-enhanced-programme-insertion-import log4j library.
 
+import com.genesiis.campus.command.CmdHandleProgrammeDetails;
 import com.genesiis.campus.entity.DistrictICrud;
 import com.genesiis.campus.util.ConnectionManager;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +23,7 @@ import java.util.Collection;
  *  @author dumani DJ   
  */
 public class DistrictDAOImpl  implements DistrictICrud{
-
+	static Logger log = Logger.getLogger(CmdHandleProgrammeDetails.class.getName());
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
