@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170207 DJ c138-add-basic-programme-MP-dj Renamed as CmdHandleProgrammeDetails.java
 //20170213 DJ c138-add-basic-programme-MP-dj Implemented populateFormData() to populate input data
 //20170221 DJ c145-add-enhanced-programme Add method retrieveProviderTown(IDataHelper helper, IView iView).
+//20170316 DJ c152-add-enhanced-programme-insertion: initiated method manageSemesterInsertion().
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.DistrictICrud;
@@ -56,6 +57,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				retrieveProviderTown(helper, iView);
 			} else if ("ADD_PROGRAMME_DETAILS".equalsIgnoreCase(ccoString)) {
 				manageProgrammeInsertion(helper, iView);
+			} else if ("ADD_SEMESTER_DETAILS".equalsIgnoreCase(ccoString)) {
+				manageSemesterInsertion(helper, iView);
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
@@ -201,6 +204,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			throw exception;
 		}
 
+	}
+	private void manageSemesterInsertion(IDataHelper helper, IView iView) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
