@@ -4,10 +4,12 @@
 <!-- 20161202 JH c39-add-course-provider added missing input fields -->
 <!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
+<!-- 20170224 DK c58-admin-manage-course-provider-ui-dk  Integrating the UI development -->
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
 <!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
 <!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
+<!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -16,82 +18,27 @@
 	class="com.genesiis.campus.validation.ApplicationStatusBean" />
 <jsp:useBean id="accountTypeBean"
 	class="com.genesiis.campus.validation.AccountTypeBean" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
-
-<!-- Bootstrap & CSS Style-->
-
+<!-- Page & Layout Styles -->
 <link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-
+<!-- Bootstrap Styles -->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
+<!-- FontAwsome Font Styles -->
+<link rel="stylesheet"
+	href="/dist/bower-components/fav/css/font-awesome.min.css">
 </head>
-<style type="text/css">
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info
-	{
-	display: block;
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
 
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
-	{
-	display: inline-block;
-	width: 25%;
-	float: left;
-	border-right: 1px solid #e1e1e1;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: #193949;
-	line-height: 0px;
-	font-weight: 600;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .input
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	line-height: 0px;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .textarea
-	{
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
-	{
-	width: 16.66%;
-	text-align: center; 
-	float: left;
-}
-.error-message{
-	color : red;
-}
-</style>
-
-<body>
+<body class="admin-page">
 	<!-- include Header-->
-<header class="header"> <jsp:include
-		page="/dist/partials/layout/header.jsp"></jsp:include> </header> 
+	 <jsp:include
+		page="/dist/partials/layout/header.jsp"></jsp:include> 
 	<!-- End Header -->
 
 
@@ -105,574 +52,490 @@
 			</div>
 		</div>
 		<!-- end inner header -->
-		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="POST" id="basicForm">
-			<!-- Page content -->
 
-				<input type="hidden" name="generatedId" id="generatedId" value=""/>
-			<div class="content-holder center-block clearfix">
-					<div class="alert alert-danger" role="alert" id="userMessage" name="userMessage">
+		<div class="container course-provider-registration admin">
+			<div class="form-wrapper">
+
+				<h2 class="form-title">
+					<span class="fa fa-pencil" aria-hidden="true"></span> Register a
+					Course Provider <span class="form-intro">Please fill the
+						form below to add a course provider (Complete all sections)</span>
+				</h2>
+
+				<form name="addCourseForm" class="form form-admin has-error-form"
+					method="POST" action="">
+
+					<div class="alert alert-danger fade in">Please correct all
+						highlighted errors and try again</div>
+
+					<div class="accordion">
+
+						<h4 class="form-section-title accordion-header">1. General
+							Information</h4>
+						<div class="accordion-body">
+							<div class="row clearfix">
+								<div class="form-group col-sm-12">
+									<label for="account-category" class="right-padding inline-info">
+										<span class="mandatory">*</span> Account Category <a
+										class="error-info" href="#" data-toggle="tooltip"
+										title="Hooray!" data-placement="top"></a>
+									</label> <label class="radio-inline radio-lbl"><input
+										type="radio" name="accCategory"
+										value="Featured course provider">Featured course
+										provider</label> <label class="radio-inline radio-lbl"><input
+										type="radio" name="accCategory"
+										value="One-off course provider">One-off course
+										provider</label>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="form-group col-sm-4">
+									<label for="course-provider"><span class="mandatory">*</span>
+										Course Provider Name</label>
+									<div class="input-wrapper has-error">
+										<input name="courseProvider" type="text" class="form-control"
+											id="course-provider" placeholder=""> <a
+											class="error-info" href="#" data-toggle="tooltip"
+											title="Error text should reflect your product’s color palette. It’s recommended that you use a contrasting color for error states, such as a warmer hue like red or orange."></a>
+									</div>
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="shorten-name">Shorten Name</label>
+									<div class="input-wrapper">
+										<input name="shortenName" type="text" class="form-control"
+											id="shorten-name" placeholder="">
+									</div>
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="unique-prefix"><span class="mandatory">*</span>
+										Unique Prefix</label>
+									<div class="input-wrapper">
+										<input name="uniquePrefix" type="text" class="form-control"
+											id="unique-prefix" placeholder=""> <a
+											class="error-info" href="#" data-toggle="tooltip"
+											title="Hooray!"></a>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="form-group col-sm-6">
+									<label for="company-profile"><span class="mandatory">*</span>
+										Company Profile</label>
+									<div class="input-wrapper">
+										<textarea name="companyProfile" class="form-control"
+											id="company-profile" rows="4"></textarea>
+										<a class="error-info" href="#" data-toggle="tooltip"
+											title="Hooray!"></a>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="special-features">Special Features</label>
+									<div class="input-wrapper">
+										<textarea name="specialFeatures" class="form-control"
+											id="special-features" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header">2. Contact
+							Information</h4>
+						<div class="accordion-body">
+							<div class="row clearfix">
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="col-xs-12">
+											<div class="row clearfix">
+												<div class="col-xs-6">
+													<label for="select-country"><span class="mandatory">*</span>
+														Country</label>
+													<div class="input-wrapper has-select">
+														<select name="selectCountry" id="select-country"
+															class="form-control">
+															<option selected>Select a country</option>
+															<option value="Sri Lanka">Sri Lanka</option>
+															<option value="Singapore">Singapore</option>
+															<option value="Australia">Australia</option>
+															<option value="Malaysia">Malaysia</option>
+														</select> <a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<label for="select-city"><span class="mandatory">*</span>
+														City</label>
+													<div class="input-wrapper has-select">
+														<select name="selectCity" id="select-city"
+															class="form-control">
+															<option selected>Select a city</option>
+															<option value="Colombo">Colombo</option>
+															<option value="Anuradhapura">Anuradhapura</option>
+															<option value="Kandy">Kandy</option>
+															<option value="Gampaha">Gampaha</option>
+														</select> <a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<div class="row clearfix">
+												<div class="form-group col-xs-12">
+													<label for="address-line-1"><span class="mandatory">*</span>
+														Street Address - Line 1</label>
+													<div class="input-wrapper">
+														<input name="addressLine1" type="text"
+															class="form-control" id="address-line-1" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="form-group col-xs-12">
+													<label for="address-line-2">Street Address - Line 2</label>
+													<div class="input-wrapper">
+														<input name="addressLine2" type="text"
+															class="form-control" id="address-line-2" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="form-group col-xs-12">
+													<label for="address-line-3">Street Address - Line 3</label>
+													<div class="input-wrapper">
+														<input name="addressLine3" type="text"
+															class="form-control" id="address-line-3" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="form-group col-xs-12">
+											<label for="land-no-1"><span class="mandatory">*</span>
+												Land Number 1</label>
+											<div class="input-wrapper input-group">
+												<input name="landPhone1CountryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="land-line-1-country-code" placeholder="" disabled>
+												<input name="landPhone1AreaCode" type="text"
+													class="col-xs-3 input-border-r" id="land-line-1-area-code"
+													placeholder=""> <input name="landPhone1" type="tel"
+													class="col-xs-6" id="land-line-1" placeholder=""> <span
+													class="phone-no-hint">+94 77 729 729</span> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="land-no-2">Land Number 2</label>
+											<div class="input-wrapper input-group">
+												<input name="landPhone2CountryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="land-line-2-country-code" placeholder="" disabled>
+												<input name="landPhone2AreaCode" type="text"
+													class="col-xs-3 input-border-r" id="land-line-2-area-code"
+													placeholder=""> <input name="landPhone2" type="tel"
+													class="col-xs-6" id="land-line-2" placeholder=""> <span
+													class="phone-no-hint">+94 77 729 729</span>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="mobile-number"><span class="mandatory">*</span>
+												Mobile Number</label>
+											<div class="input-wrapper input-group">
+												<input name="mobilePhone1CountryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="mobile-line-country-code" placeholder="" disabled>
+												<input name="mobilePhone1AreaCode" type="text"
+													class="col-xs-3 input-border-r" id="mobile-line-area-code"
+													placeholder=""> <input name="mobilePhone1"
+													type="tel" class="col-xs-6" id="mobile-line" placeholder="">
+												<span class="phone-no-hint">+94 77 729 729</span> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="fax-number">Fax Number</label>
+											<div class="input-wrapper input-group">
+												<input name="fax1CountryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="fax-country-code" placeholder="" disabled> <input
+													name="fax1AreaCode" type="text"
+													class="col-xs-3 input-border-r" id="fax-area-code"
+													placeholder=""> <span class="phone-no-hint">+94
+													77 729 729</span> <input name="fax" type="tel" class="col-xs-6"
+													id="fax" placeholder="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="form-group col-xs-12">
+											<label for="general-email"><span class="mandatory">*</span>
+												General Email</label>
+											<div class="input-wrapper">
+												<input name="generalEmail" type="email" class="form-control"
+													id="general-email" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="inquiry-email"><span class="mandatory">*</span>
+												Course Inquiry Email</label>
+											<div class="input-wrapper">
+												<input name="inquiryEmail" type="email" class="form-control"
+													id="inquiry-email" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="web-link">Web Link</label>
+											<div class="input-wrapper">
+												<input name="webLink" type="url" class="form-control"
+													id="web-link" placeholder="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header">3. Social
+							Media Information</h4>
+						<div class="accordion-body">
+							<div class="row clearfix">
+								<div class="col-sm-4 col-sm-offset-2">
+									<div class="row">
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="facebook-url">Facebook URL</label>
+											<div class="input-wrapper">
+												<input name="facebookURL" type="url" class="form-control"
+													id="facebook-url" placeholder="">
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="linkedin-url">LinkedIn URL</label>
+											<div class="input-wrapper">
+												<input name="linkedinURL" type="url" class="form-control"
+													id="linkedin-url" placeholder="">
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="twitter-url">Twitter URL</label>
+											<div class="input-wrapper">
+												<input name="twitterURL" type="url" class="form-control"
+													id="twitter-url" placeholder="">
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="instagram-url">Instagram URL</label>
+											<div class="input-wrapper">
+												<input name="instagramURL" type="url" class="form-control"
+													id="instagram-url" placeholder="">
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="myspace-url">MySpace URL</label>
+											<div class="input-wrapper">
+												<input name="myspaceURL" type="url" class="form-control"
+													id="myspace-url" placeholder="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-5">
+									<div class="row">
+										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
+											<label for="whatsapp-no">WhatsApp Number</label>
+											<div class="input-wrapper">
+												<input name="whatsAppNo" type="tel" class="form-control"
+													id="whatsapp-no" placeholder="">
+											</div>
+										</div>
+										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
+											<label for="viber-no">Viber Number</label>
+											<div class="input-wrapper">
+												<input name="viberNo" type="tel" class="form-control"
+													id="viber-no" placeholder="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header">4. Admin
+							Information</h4>
+						<div class="accordion-body">
+							<div class="row clearfix">
+								<div class="form-group col-sm-12 text-center">
+									<label for="course-provider-type"><span
+										class="mandatory">*</span> Course Provider Type</label>
+									<div class="input-wrapper has-select text-center">
+										<select name="cProviderType" id="course-provider-type">
+											<option selected>Choose a course provider type</option>
+											<option value="Individual">Individual</option>
+											<option value="Group">Group</option>
+										</select> <a class="error-info" href="#" data-toggle="tooltip"
+											title="Hooray!"></a>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<label for="course-provider-status"
+									class="text-center center-block top-padding inline-info">
+									<span class="mandatory">*</span> Course Provider Status <a
+									class="error-info" href="#" data-toggle="tooltip"
+									title="Hooray!"></a>
+								</label>
+								<div class="form-group col-sm-12 text-center center-block">
+									<label class="radio-inline radio-lbl"><input
+										type="radio" name="cProviderStatus" value="Active">Active</label>
+									<label class="radio-inline radio-lbl"><input
+										type="radio" name="cProviderStatus" value="Inactive">Inactive</label>
+									<label class="radio-inline radio-lbl"><input
+										type="radio" name="cProviderStatus" value="Pending">Pending</label>
+									<label class="radio-inline radio-lbl"><input
+										type="radio" name="cProviderStatus" value="Expired">Expired</label>
+									<label class="radio-inline radio-lbl"><input
+										type="radio" name="cProviderStatus" value="Permanent">Permanent</label>
+								</div>
+
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header">5. Account
+							Information (Authorized Personnel)</h4>
+						<div class="accordion-body">
+							<div class="row clearfix">
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="full-name"><span class="mandatory">*</span>
+												Full Name</label>
+											<div class="input-wrapper">
+												<input name="accUserFName" type="text" class="form-control"
+													id="full-name" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="contract-no"><span class="mandatory">*</span>
+												Contract Number</label>
+											<div class="input-wrapper">
+												<input name="accContractNo" type="text" class="form-control"
+													id="contract-no" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="account-email"><span class="mandatory">*</span>
+												Email</label>
+											<div class="input-wrapper">
+												<input name="accUserEmail" type="text" class="form-control"
+													id="account-email" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip"
+													title="Hooray!"></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="account-desc">Description</label>
+											<div class="input-wrapper">
+												<textarea name="accDesc" class="form-control"
+													id="account-desc" rows="3"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="border-wrapper col-sm-12 center-block">
+											<div class="row">
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="login-name"><span class="mandatory">*</span>
+														Username</label>
+													<div class="input-wrapper">
+														<input name="accUserLoginName" type="text"
+															class="form-control" id="login-name" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="login-pwd"><span class="mandatory">*</span>
+														Password</label>
+													<div class="input-wrapper">
+														<input name="accUserLoginPWD" type="password"
+															class="form-control" id="login-pwd" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="confirm-pwd"><span class="mandatory">*</span>
+														Confirm Password</label>
+													<div class="input-wrapper">
+														<input name="accUserLoginConPWD" type="password"
+															class="form-control" id="confirm-pwd" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!"></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="account-category"
+														class="right-padding inline-info"> <span
+														class="mandatory">*</span> Account Status <a
+														class="error-info" href="#" data-toggle="tooltip"
+														title="Hooray!"></a>
+													</label> <label class="radio-inline radio-lbl"><input
+														type="radio" name="accStatus" value="Active">Active</label>
+													<label class="radio-inline radio-lbl"><input
+														type="radio" name="accStatus" value="Inactive">Inactive</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Basic Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<!-- select the course provider type -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Account Type : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<!-- here we selects featured course provider account type as default and all other account
-								types are disabled by default. This is due to current requirements.
-								If we want to manage one-off course providers, then the only change need to be done is to
-								enable to select one-off provider account type and call the command class CmdAddFeaturedProvider.java -->
-
-									<!-- back end code is already completed to handle one-off course providers as well -->
-
-									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
-										<c:if test="${accountTypes.typeValue == 1}">
-											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" checked="checked"
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
-										</c:if>
-										<c:if test="${accountTypes.typeValue != 1}">
-											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" 
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
-										</c:if>
-									</c:forEach>
-									<span id="errorCourseProvider" class="error-message"></span>
-								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Name: <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" /><span id="errorProviderName"
-										class="error-message">${errorProviderName }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										Unique Name: <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="uniquePrefix"
-										id="uniquePrefix" size="30px;"
-										onblur="providerPrefixValidation();" /> <span
-										id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
-									<span id="prefixMessage" style="color: blue;"></span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										Short Name:
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="shortName"
-										id="shortName" size="30px;" /> <span id="errorShortName"
-										class="error-message">${errorShortName }</span>
-								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										Company Profile: <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
-										id="aboutMe"></textarea>
-									<span id="errorAboutMe" class="error-message">${errorAboutMe }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Special Features :</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="5" cols="90"
-										name="specialFeatures" id="specialFeatures"></textarea>
-									<span id="errorSpecialFeatures" class="error-message">${errorSpecialFeatures }</span>
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
+					<div class="row clearfix">
+						<button type="button" class="btn btn-register pull-right">
+							<i class="fa fa-times fa-3x" aria-hidden="true"></i> Add Course
+							provider
+						</button>
 					</div>
-					<!-- End filter result table -->
 
+				</form>
+
+				<div id="upload-logo-modal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button class="close" type="button" data-dismiss="modal">×</button>
+								<h4 class="modal-title">Upload Course Provider Logo</h4>
+							</div>
+							<div class="modal-body">This is the test modal pop-up.</div>
+							<div class="modal-footer"></div>
+						</div>
+					</div>
 				</div>
-				<!-- End left panel -->
-				<br /> <br />
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Contact Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">General Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="generalEmail"
-										id="generalEmail" size="25px;" /> <span
-										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Course Inquiry Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="inquiryMail"
-										id="inquiryMail" size="25px;" /> <span id="errorInquiryMail"
-										class="error-message">${errorInquiryMail }</span>
-								</div>
-							</li>
-							<!-- end -->
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Country : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="country-List"></div> <span
-								id="errorSelectedCountry" class="error-message">${errorSelectedCountry }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Town : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="town-List"></div> <span
-								id="errorSelectedTown" class="error-message">${errorSelectedTown }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone Area Code : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="areaCode" id="areaCode"
-										onkeyup="landPhoneNubmerHelper();" size="25px;" /> <span
-										id="errorAreaCode" class="error-message number-helper">${errorAreaCode }</span>
-										<span>Ex: 11, 31, 81, .....</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone 1 : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="land1" id="land1"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand1" class="error-message number-helper">${errorLand1 }</span> <span
-										id="landNumber1" style="color: blue;" class="number-helper"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone 2 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="land2" id="land2"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand2" class="error-message number-helper">${errorLand2 }</span> <span
-										id="landNumber2" style="color: blue;" class="number-helper"></span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Fax Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="fax" id="fax"
-										size="25px;" /> <span id="errorFax"
-										class="error-message number-helper">${errorFax }</span>
-										<span
-										id="faxNumber" style="color: blue;" class="number-helper"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Mobile Phone Network Code : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="networkCode"
-										id="networkCode" size="25px;"
-										onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorNetworkCode" class="error-message number-helper">${errorNetworkCode }</span>
-										<span>Ex: 77, 71, 72, .....</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Mobile Number : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="mobile" id="mobile"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLastMobileNumber" class="error-message number-helper">${errorMobile }</span>
-									<span id="lastMobileNumber" style="color: blue;" class="number-helper"></span>
-								</div>
-
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix"></li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 1 : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address1" id="address1"
-										size="50px;" /> <span id="errorAddress1"
-										class="error-message">${errorAddress1 }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 2 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address2" id="address2"
-										size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 3 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address3" id="address3"
-										size="50px;" />
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Web Link :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="webLink" id="webLink"
-										size="25px;" /> <span id="errorWebLink" class="error-message">${errorWebLink }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Facebook URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="facebook" id="facebook"
-										size="25px;" />. <span id="errorFacebook"
-										class="error-message">${errorFacebook }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">LinkedIn URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="linkdedIn"
-										id="linkdedIn" size="25px;" /> <span id="errorLinkedIn"
-										class="error-message">${errorLinkedIn }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Twitter URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="twitter" id="twitter"
-										size="25px;" /> <span id="errorTwitter" class="error-message">${errorTwitter }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Instagram URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="instagram"
-										id="instagram" size="25px;" /> <span id="errorInstagram"
-										class="error-message">${errorInstagram }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">MySpace URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="mySpace" id="mySpace"
-										size="25px;" /> <span id="errorMyspace" class="error-message">${errorMyspace }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">WhatsApp Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="whatsapp" id="whatsapp"
-										size="25px;" /> <span id="errorWhatsapp"
-										class="error-message">${errorWhatsapp }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Viber Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="viber" id="viber"
-										size="25px;" /> <span id="errorViber" class="error-message">${errorViber }</span>
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End filter result table -->
-				</div>
-				<!-- End left panel -->
-
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3 style="color: navy;">Admin Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-
-							<!-- select the course provider type -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Type : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="providerTypeList"></div> <span
-								id="errorProviderType" class="error-message">${errorProviderStatus }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Status : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<c:forEach items="${applicationStatusBean.values}"
-										var="applicationStatus">
-										<input type="radio" name="providerStatus" id="providerStatus"
-											value="${applicationStatus.statusValue}" /> ${applicationStatus}
-									 </c:forEach>
-									<span id="errorProviderStatus" class="error-message">${errorProviderStatus }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-						</ul>
-					</div>
-					<!-- End filter result table -->
-				</div>
-				<!-- End left panel -->
-				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel" id="accountInfo">
-					<h3 style="color: maroon;">Account Info | Authorized Person </h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Name : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerPrivateName"
-										id="providerPrivateName" size="50px;" /> <span
-										id="errorPrivateName" class="error-message">${errorPrivateName }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Contact Number : <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerContactNumber"
-										id="providerContactNumber" size="50px;" /> <span
-										id="errorContactNumber" class="error-message">${errorContactNumber }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="email" name="providerEmail"
-										id="providerEmail" size="50px;" /> <span
-										id="errorPrivateEmail" class="error-message">${errorProviderEmail }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Username : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;"
-										onblur="providerUsernameValidation();" /> <span
-										id="errorUsername" class="error-message">${errorProviderUsername }</span>
-										<span id="usernameMessage" style="color: blue;"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Password : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;" required /> <span
-										id="errorProviderPassword" class="error-message">${errorProviderPassword }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Confirm Password : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;" required /> <span
-										id="errorCProviderPassword" class="error-message">${errorCProviderPassword }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix"><div class="col-name">
-									<h1 class="pro-name">Account status : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name" id="accountStatusList">		
-									</h1>
-									<span id="errorStatus" class="error-message">${errorStatus }</span>
-								</div></li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Description :</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="5" cols="90"
-										name="accountDescription" id="accountDescription"></textarea>
-									<span id="errorAccountDescription" class="error-message">${errorAccountDescription }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-						</ul>
-					</div>
-					<!-- End filter result table -->
-
-				</div>
-				<!-- End left panel -->
-
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-
-							<li class="course-info clearfix">
-								<div class="col-name" style="width: 50%;">
-									<input type="button" id="viewNext" value="Next"
-										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End left panel -->
-		</form>
-
-		<form action="/AdminController" method="POST">
-			<!-- course filter panel : left side-->
-			<div class="course-filter-panel" id="logoPanel">
-				<h3>Course Provider Images</h3>
-				<!-- Filter result table -->
-				<div class="filter-result-table">
-					<ul class="result-row">
-						<li class="course-info clearfix" id="smallImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Small) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageSmall"
-									id="imageSmall" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="largeImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Large) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageLarge"
-									id="imageLarge" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="headerImg">
-							<div class="col-name">
-								<h1 class="pro-name">Header Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageHeader"
-									id="imageHeader" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="commonImg">
-							<div class="col-name">
-								<h1 class="pro-name">Common Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageCommon"
-									id="imageCommon" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-					</ul>
-				</div>
-				<!-- End filter result table -->
-				<input type="submit" value="Add" class="btn btn-success" />
 			</div>
-			<!-- End left panel -->
-		</form>
-	</div>
-	<!-- End page content  -->
+		</div>
+
 	</div>
 	<!-- End Main Container -->
 
@@ -681,8 +544,9 @@
 	</footer>
 
 	<!-- jQuery & Other js -->
-	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<!--  <script src="/dist/bower-components/jquery/jquery.min.js"></script> -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/jquery-ui/jquery-ui.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 
@@ -690,11 +554,11 @@
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 
 	<!-- custom javascript -->
-<!-- 	<script language="JavaScript" type="text/javascript"
-		src="/dist/js/header/ui-populate-helper.js"></script> -->
-		<script type="text/javascript" src="/dist/js/admin/course-provider-validator.js"></script>
+	<!-- <script language="JavaScript" type="text/javascript" src="/dist/js/header/ui-populate-helper.js"></script> -->
+
+	<script type="text/javascript"
+		src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
-		<script src="/dist/js/error-handling.js"></script>
 
 </body>
 </html>
