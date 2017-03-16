@@ -144,13 +144,13 @@
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
-				<br> Start date* &nbsp; <input type="date" name="startDate"
+				<br> Banner Avtivation date* &nbsp; <input type="date" name="startDate"
 					id="startDate" onclick="clearField('startDateInfor')">
 			</div>
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				End date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+				Banner deavtivation date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
 			</div>
 			<br><br>
 			<div>
