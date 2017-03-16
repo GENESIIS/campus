@@ -24,7 +24,15 @@
  *               include a start date and end date validation with respect to current date.
  *  20170306 DN c131-admin-manage-banner-upload-banner-image-dn  modified the data list listing to over come the firefox browser issue by
  *  			changing populateDataList() and in  getPreRequisitPageData() where ever required.  
- *  20170308 DN c131-admin-manage-banner-upload-banner-image-dn unnecessary alerts have been deleted from the script.        
+ *  20170308 DN c131-admin-manage-banner-upload-banner-image-dn unnecessary alerts have been deleted from the script.
+ *  20170316 DN clear page buttons onclidk event shifted in to the document ready function body to correct QA point 2 
+ *  		    stated in 201703132232-CN - Local test summary.
+ *  			changed the information given to the user when date comparison get failed in validateUploadBannerEmbedData() to correct QA
+ *  			comments 3/4 stated in  201703132232-CN - Local test summary.
+ *  			Introduced a mouse down event on input type file and clears any user informations given. Corrected the QA point 5 stated in 
+ *  			comment 201703132232-CN - Local test summary.
+ *  			On modal window close click event let the data of the banner page  to be reloaded and a function implemented.
+ *  			Wrote an event trigger to clear the name of the selected image name of input type="file" element of the modal window 
  */
 
 /*
@@ -322,10 +330,10 @@ $(document).on('click','#uploadBbutton', function(event){
 	 */
 	
     var banerImage=$('#file-select').prop('files')[0];
-    
-    if(banerImage===undefined){
+   // alert($('#file-select').prop('files')[0]['name']);
+    if(banerImage==undefined){
     	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
-    	return;
+    	return false;
 	}
    
     $('#bannerModalClose').hide();
@@ -395,7 +403,8 @@ $(document).on('click','#uploadBbutton', function(event){
 				$('#bannerModalClose').show();
 				if(status=="success"){
 					$('#uploadBbutton').prop('disabled',true);
-					sendBannerPaageFieldInputs(BannerFieldInputValues,true);
+					var proceed = (response.responseText.result === "NO-DATA")?false:true;
+					sendBannerPaageFieldInputs(BannerFieldInputValues,proceed);
 				} else{
 					// fire the data field clear function
 					$(':input').val('');
@@ -416,6 +425,23 @@ $(document).on('click','#openModalUpload', function(event){
 	
 	} 
 });
+
+/**
+ * This event triggers when the mouse is down on the 
+ * input type file ,file-select, element and clears any 
+ * user messages displayed.
+ */
+$(document).on('mousedown','#file-select',function(event){
+	$('#bannerDisplayLabel').html("");
+});
+
+/**
+ * on click the close button load the page data again
+ */
+$(document).on('click','#bannerModalClose',function(event){
+	displayBannerManagerPrerequistData();
+});
+
 
 
 /**
@@ -449,7 +475,7 @@ function validateUploadBannerEmbedData(){
 	//else the start date is in the past than todays date then it s illegal
 	var todaysDate = new Date().toJSON().slice(0,10);
 	if(!isFieldFilled(
-			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
+			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"Banner Activation date >= toDay ","startDateInfor"))
 		return validationPass;
 	
 	if(!isFieldFilled(isempty($('#endtDate').val()),'End date','endtDateInfor'))
@@ -458,7 +484,7 @@ function validateUploadBannerEmbedData(){
 	// startDate must be == endtDate
 	//or startDate < endtDate
 	if(!isFieldFilled(
-			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Start date > End date ","startDateInfor"))
+			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Banner deavtivation date >= Banner Activation date  ","startDateInfor"))
 		return validationPass;
 	
 	return !validationPass;
@@ -537,19 +563,24 @@ $( document ).ready(function() {
 		$('#uploadBbutton').prop('disabled',false); // if dissabled make the button enabled
 		$('#bannerUploadPopUp').modal('show');
 		$('#file-select').prop('files')[0]="";
+		$('#file-select').val(''); // clears the selected image name in the previouse call
 		$('#bannerDisplayLabel').html(""); // clear message label content
 		e.preventDefault();
 	});
 
+	/**
+	 * this method clears the input field data 
+	 * placed on the current page
+	 */
+	$('#bannerPageClearField').on('click',function(){
+		$(':input').val('');
+	});	
+	
+	
+	
 });
 
-/**
- * this method clears the input field data 
- * placed on the current page
- */
-$('#bannerPageClearField').on('click',function(){
-	$(':input').val('');
-});
+
 
 
 
