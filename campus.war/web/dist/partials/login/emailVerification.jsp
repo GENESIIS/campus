@@ -16,6 +16,7 @@
 <!-- 20170307 CW c147 added source link to tutor-login.js -->
 <!-- 20170307 CW c147 change CCO value of the submit button -->
 <!-- 20170308 CW c147 change script clearField values -->
+<!-- 20170313 CW c148 add CCO value TUTOR_HASH_VERIFICATION to verify button -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -123,7 +124,7 @@
                                 </div>
                                 <div class="form-group">
                                         <button type="button" class="btn btn-primary btn-block"
-                                            name="CCO" id="CCO" value="HASHV"
+                                            name="CCO" id="CCO" value="TUTOR_HASH_VERIFICATION"
                                             onclick="verifyCode(); clearField('verifyCode')">Verify</button>
                                     </div>
                             </div>

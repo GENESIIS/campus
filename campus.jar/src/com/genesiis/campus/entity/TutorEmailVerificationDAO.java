@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20170311 CW C147 TutorEmailVerificationDAO class created
 //20170312 CW C147 modified findById method & removed some commented lines
 //20170313 CW C147 modified update method & removed comment on executeUpdate method calling
+//20170313 CW c148-tutor-verify-hashcode-reset-password-cw modify verifyHashCode method, add MinuteDiff to the collection fix query error 
 
 import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.entity.model.Tutor;
@@ -151,7 +152,7 @@ public class TutorEmailVerificationDAO implements ICrud {
 			throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 
-		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.TUTOR WHERE EMAIL =? AND HASHCODE =? AND ISACTIVE = ?";
+		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.TUTOR WHERE EMAIL =? AND HASHCODE =? AND ISAPPROVED = ?";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -168,30 +169,16 @@ public class TutorEmailVerificationDAO implements ICrud {
 			rs = preparedStatement.executeQuery();
 			if (rs.next()) {
 					ArrayList<String> singleTutor = new ArrayList<String>();
-				//minitDiff = rs.getInt("MinuteDiff");
-				//if(minitDiff <= 30){
 					singleTutor = new ArrayList<String>();
-					//singleStudentCollection = singleStudent;
 
 					singleTutor.add(rs.getString("FIRSTNAME"));
 					singleTutor.add(rs.getString("LASTNAME"));
 					singleTutor.add(rs.getString("EMAIL"));
 					singleTutor.add(rs.getString("USERNAME"));
 					singleTutor.add(rs.getString("CODE"));
+					singleTutor.add(rs.getString("MinuteDiff"));
 					dataCollection.add(singleTutor);
-				/*}else{
-					message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
-					singleStudent = new ArrayList<String>();
-					singleStudentCollection = singleStudent;
-					singleStudent.add(message);
-				}*/
-			} /*else {
-				message = SystemMessage.INVALID_HASHCODE.message();
-				singleStudent = new ArrayList<String>();
-				singleStudentCollection = singleStudent;
-				singleStudent.add(message);
-			}*/
-			
+			}
 		} catch (SQLException sqle) {
 			log.error("verifyHashCode(Object data):  SQLException"
 					+ sqle.toString());
