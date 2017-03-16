@@ -10,7 +10,7 @@
 <!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
 <!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
 <!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk, change html element
-				 names to match with the back end validation -->
+				 names to match with the back end validation in general information, contact information wip-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -160,15 +160,8 @@
 												<div class="col-xs-6">
 													<label for="select-country"><span class="mandatory">*</span>
 														Country</label>
-													<div class="input-wrapper has-select">
-														<select name="selectCountry" id="select-country"
-															class="form-control">
-															<option selected>Select a country</option>
-															<option value="Sri Lanka">Sri Lanka</option>
-															<option value="Singapore">Singapore</option>
-															<option value="Australia">Australia</option>
-															<option value="Malaysia">Malaysia</option>
-														</select> <a class="error-info" href="#" data-toggle="tooltip"
+													<div class="input-wrapper has-select" id="country-List">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
 															title="Hooray!"></a>
 													</div>
 												</div>
@@ -176,15 +169,8 @@
 													<label for="select-city"><span class="mandatory">*</span>
 														City</label>
 													<div class="input-wrapper has-select">
-														<select name="selectCity" id="select-city"
-															class="form-control">
-															<option selected>Select a city</option>
-															<option value="Colombo">Colombo</option>
-															<option value="Anuradhapura">Anuradhapura</option>
-															<option value="Kandy">Kandy</option>
-															<option value="Gampaha">Gampaha</option>
-														</select> <a class="error-info" href="#" data-toggle="tooltip"
-															title="Hooray!"></a>
+													<a class="error-info" href="#" data-toggle="tooltip"
+															title="Hooray!" id="errorSelectedTown"></a>
 													</div>
 												</div>
 											</div>
