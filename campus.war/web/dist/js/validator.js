@@ -18,6 +18,7 @@
  * //20170315 CW c36-add-tutor-details add isempty method & modified isHavingOnlySpaces method
  * 				// modified isValidEmailFormat method to validate emails properly
  * 				// add modifications to remove spaces from the fields 
+ * //20170316 CW c36-add-tutor-details modify validateTutorFileds method to match database field max size
  */
 
 /**
@@ -120,26 +121,26 @@ function validateTutorFileds() {
 		document.getElementById('firstName').focus();
 		flag = false;
 	}
-	if (firstname.length > 20) {
+	if (firstname.length > 35) {
 		document.getElementById('firstNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('firstName').focus();
 		flag = false;
 	}
-	if (middlename.length > 20) {
+	if (middlename.length > 35) {
 		document.getElementById('middleNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('middleName').focus();
 		flag = false;
 	}
 	if (isHavingOnlySpaces(middlename)){
-		middlename.value = "";
+		middleName.value = "";
 	}
 	if (!isempty(lastname)) {
-		lastname.value = "";
+		lastName.value = "";
 		document.getElementById('lastNameError').innerHTML = "**Last Name cannot be empty.";
 		document.getElementById('lastName').focus();
 		flag = false;
 	}
-	if (lastname.length > 20) {
+	if (lastname.length > 35) {
 		document.getElementById('lastNameError').innerHTML = "**Max length exceeded.";
 		document.getElementById('lastName').focus();
 		flag = false;
@@ -170,14 +171,14 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isempty(mobileCountryCode)) {
-		mobileCountryCode.value = "";
+		mobileCountryCode.text = "";
 		document.getElementById('mobileError').innerHTML = "**Country Code cannot be empty.";
 		document.getElementById('countryError').innerHTML = "**Please Select Country Code";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
 	}
 
-	if (mobileCountryCode.length > 5) {
+	if (mobileCountryCode.length > 10) {
 		document.getElementById('mobileError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
@@ -215,7 +216,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	if (mobileNumber.length > 10) {
+	if (mobileNumber.length > 15) {
 		document.getElementById('mobileNumberError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileNumber').focus();
 		flag = false;
@@ -234,7 +235,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	if (landCountryCode.length > 5) {
+	if (landCountryCode.length > 10) {
 		document.getElementById('landError').innerHTML = "**Max length exceeded.";
 		document.getElementById('mobileCountryCode').focus();
 		flag = false;
@@ -247,7 +248,6 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isempty(landAreaCode)) {
-		landAreaCode.value = "";
 		document.getElementById('landAreaCodeError').innerHTML = "**Landphone Area code cannot be empty.";
 		document.getElementById('landAreaCode').focus();
 		flag = false;
@@ -266,13 +266,12 @@ function validateTutorFileds() {
 	}	
 	
 	if (!isempty(landNumber)) {
-		landNumber.value = "";
 		document.getElementById('landNumberError').innerHTML = "**Landphone number cannot be empty.";
 		document.getElementById('landNumber').focus();
 		flag = false;
 	}
 
-	if (landNumber.length > 10) {
+	if (landNumber.length > 15) {
 		document.getElementById('landNumberError').innerHTML = "**Max length exceeded.";
 		document.getElementById('landNumber').focus();
 		flag = false;
@@ -291,7 +290,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 
-	if (address1.length > 30) {
+	if (address1.length > 50) {
 		document.getElementById('address1Error').innerHTML = "**Max length exceeded";
 		document.getElementById('address1').focus();
 		flag = false;
@@ -399,7 +398,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (username.length > 20) {
+	if (username.length > 100) {
 		document.getElementById('usernameError').innerHTML = "**User Name Max length exceeded.";
 		document.getElementById('username').focus();
 		flag = false;
@@ -425,7 +424,7 @@ function validateTutorFileds() {
 		flag = false;
 	}
 	
-	if (password.length > 20) {
+	if (password.length > 100) {
 		document.getElementById('passwordError').innerHTML = "**Password Max length exceeded.";
 		document.getElementById('password').focus();
 		flag = false;
