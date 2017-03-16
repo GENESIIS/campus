@@ -24,6 +24,7 @@
  *            compareDates() refactored to prevent an error
  *20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the method isValidEmailFormat to enclose the regular expression with ^ and $ 
  *			 negate the !isPatternMatch(urltestingPattern,urlSplitedArray[1]) in urlTest() method.	
+ *20170315 DN c81-admin-manage-banner-add-and-view-banner-dn isDate() method has been implemented. compareDates() doc commented re structured 
  */ 
 
  
@@ -81,11 +82,11 @@ function isValidEmailFormat(email) {
 }
 
 /**
- * isValidPhoneNumber validates if the phone numbers are in correct format
- * +94(9-digit number) eg. +94123456789,+94 123 456 789,
- * 0094(9-digit number)e.g 0094123456789 0094 123 456 789 
- * 777453052 (without the leading zero including spaces within the number
- * 0777453052 (with leading  zero and 9 digit number)
+ * isValidPhoneNumber validates if the phone numbers are in correct format<br>
+ * +94(9-digit number) eg. +94123456789,+94 123 456 789,<br>
+ * 0094(9-digit number)e.g 0094123456789 0094 123 456 789 <br>
+ * 777453052 (without the leading zero including spaces within the number<br>
+ * 0777453052 (with leading  zero and 9 digit number)<br>
  * <b> if the State rule changes in a such a way that <i>the number of digits </i>for local telephone number to be changed<b>
  * then validation fails
  * @author dushantha DN
@@ -159,16 +160,17 @@ function isStringHasValiCharsAndLength(testableInput, regex){
  * this method test if the url entered is a correct one,
  * test is minimally conducted as the url validation involves complex
  * considerations.
- * this method tests bellow formats of URL with https/http/ftp
- * e.g
- * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*
- * https://www.google.lk
- * www.google.lk
- * <b>NOTE</b>: but this validation returns false for URLs which contains "/" at the end.
- * Hence 'https://www.google.lk/' results an invalid url.
- * method does not validate urls having ":" in between e.g http://www.campus.dev:8080
+ * this method tests bellow formats of URL with https/http/ftp<br>
+ * e.g<br>
+ * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*<br>
+ * https://www.google.lk<br>
+ * www.google.lk<br><br>
+ * <b>NOTE</b>:<br>
+ * but this validation returns false for URLs which contains "/" at the end.<br>
+ * Hence 'https://www.google.lk/' results an invalid url.<br>
+ * method does not validate urls having ":" in between e.g http://www.campus.dev:8080<br>
  * @author dushantha DN
- * @param urlInputTextid
+ * @param urlInputTextid : id of the element (input) where the url testable string is inserted
  */
 function urlTest(urlInputTextid){
 	var validUrl = false;
@@ -209,15 +211,24 @@ function urlTest(urlInputTextid){
 }
 
 /**
- * compareDates() accept two string dates which seperated by given 
- * delemeter , compares those and returns 
- * date1 > date2 --> 1
- * date1 == date2 --> 0
- * date1 < date2 --> -1
+ * compareDates() accept two string dates which separated by given 
+ * delimiter , compares those and returns 
+ * date1 > date2 --> 1 <br>
+ * date1 == date2 --> 0 <br> 
+ * date1 < date2 --> -1 <br>
  * @author dushantha DN
- * @param firstDateString
- * @param secondDateString
- * @returns {Number}
+ * @since 2017-03-15
+ * @param firstDateString : the client code which uses the method <b>must<br>
+ * 							guarantee</b> that the provided String is illegible <br>
+ * 							and safe to convert to Date type.<br>
+ * 							The first date string to be compare against the secondDateString
+ * @param secondDateString :the client code which uses the method <b>must<br>
+ * 							guarantee</b> that the provided String is illegible <br>
+ * 							and safe to convert to Date type.<br>
+ * @returns {Number} : int value
+ * 					  date1 > date2 --> 1 <br>
+ * 					  date1 == date2 --> 0 <br>
+ *                    date1 < date2 --> -1 <br>
  */
 function compareDates(firstDateString,secondDateString,delimeter){
 	
@@ -234,4 +245,29 @@ function compareDates(firstDateString,secondDateString,delimeter){
 	}
 }
 
-
+/**
+ * isDate function accepts a String value which is to be
+ * tested for a valid date.<br>
+ * If the provided string is acceptable format of date then the method will<br>
+ * return a truth else false<br>
+ * @author dushantha DN
+ * @param valueToBeTested : must be a string <br>
+ * 						Allowable string values are as follows:<br>
+ * 						'yyyy-MM-dd' or any valid date format.<br>
+ * 						The delimiter can be any printable valid date separator.<br>
+ * 						such as "-,/,*,!,@,#,?"
+ * 						
+ * @since 2017-03-15
+ * @returns {Boolean} if the string in question can be safely converted to a date<br>
+ * 					 the method returns a true else false
+ */
+function isDate(valueToBeTested){
+	if(typeof valueToBeTested != 'string')
+	       return false;
+	if( new Date(valueToBeTested)=="Invalid Date"){
+        return false;
+     } else {
+         return true;
+     }
+	
+}
