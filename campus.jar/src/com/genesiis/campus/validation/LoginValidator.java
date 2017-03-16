@@ -1,6 +1,7 @@
 package com.genesiis.campus.validation;
 //20161220 as c19-student-login-without-using-third-party-application-as removed unwanted comments and loggers
-
+//20170317 AS c23-admin-login-logout-function-as validateLogin(Admin data) and dataSeparator(Admin data) methods added
+import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
 
 import org.apache.log4j.Logger;
@@ -64,12 +65,76 @@ public class LoginValidator {
 	}
 
 	/**
+	 * validate admin login data
+	 * 
+	 * @author anuradha
+	 * @param data
+	 * @return String to validate is given strings contains a null value
+	 *         (message)
+	 * @throws ParseException
+	 * 
+	 */
+
+	public static String validateLogin(Admin data) throws ParseException {
+		String message = "True";
+
+		try {
+
+			Validatory vl = new PrevalentValidation();
+
+			if (!vl.isNotEmpty(data.getUserKey())
+					|| !vl.isNotEmpty(data.getPassword())) {
+				message = SystemMessage.EMPTYFIELD.message();
+
+			} else {
+				message = "True";
+
+			}
+
+		
+			
+		} catch (Exception e) {
+			log.error("validateLogin : " + e);
+		
+		}
+
+		return message;
+	}
+	
+	
+	
+	
+	
+	/**
 	 * @author anuradha
 	 * @param data
 	 * @return data object
 	 * @throws ParseException
 	 */
 	public static Student dataSeparator(Student data) throws Exception {
+		try {
+			if (validateEmail(data.getUserKey())) {
+				
+				data.setEmail(data.getUserKey());
+			} else if (!validateEmail(data.getUserKey())) {
+				data.setUsername(data.getUserKey());
+				
+			}
+		} catch (Exception e) {
+			log.error("dataSeparator : " + e);
+
+		}
+
+		return data;
+	}
+	
+	/**
+	 * @author anuradha
+	 * @param data
+	 * @return data object
+	 * @throws ParseException
+	 */
+	public static Admin dataSeparator(Admin data) throws Exception {
 		try {
 			if (validateEmail(data.getUserKey())) {
 				
