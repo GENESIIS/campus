@@ -11,6 +11,8 @@
 //20170223 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): change hints to error messages when they show errors 
 //20170224 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): show error messages on error
 //20170301 JH c141-add-course-provider-issue-improvements saveCourseProvider(): AJAX error handling, show error message on error
+//20170316 JH c141-ui-integration-add-course-provider getDataOnCountrySelection(), displayProviderCountries(), getDataOnCountrySelection() changed to add
+//			  	css styles
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -22,9 +24,12 @@ window.responseErrorMessage = null;
  * load data, arrange elements when the document is ready
  */
 $(document).ready(function() {
-	arrangeUI();
+	/*commented until the logo panel confirms*/
+	//arrangeUI();
 });
 
+
+/* this will be removed in the final stages */
 /*
  * hides the logo panel and clear the user message
  */
@@ -239,7 +244,7 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
 
-	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrySelection()"><option value="">--Default--</option>';
+	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrySelection()" class="select-country form-control"><option value="">--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
 			singleCountryElement += '<option value="' + value[0] + '">';
@@ -260,8 +265,8 @@ function displayProviderCountries() {
 function getDataOnCountrySelection() {
 
 	if (!isempty(document.getElementById('selectedCountry').value)) {
-		document.getElementById('errorSelectedCountry').innerHTML = "**Select a country to proceed.";
-		document.getElementById('selectedCountry').focus();
+		$("#errorSelectedCountry").val = "**Select a country to proceed.";
+		$("#selectedCountry").addClass("has-error");
 		document.getElementById('landNumber1').innerHTML = "";
 		document.getElementById('landNumber2').innerHTML = "";
 		document.getElementById('lastMobileNumber').innerHTML = "";
@@ -316,7 +321,7 @@ function displayProviderTownList() {
 	var countryCollection = window.townCollection;
 	var singleTownElement = '';
 
-	singleTownElement += '<select id="selectedTown" name="selectedTown"><option value="">--Default--</option>';
+	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--Default--</option>';
 	if (townCollection !== undefined & townCollection !== null) {
 		$.each(townCollection, function(index, value) {
 			singleTownElement += '<option value="' + value[0] + '">';
