@@ -28,6 +28,7 @@ package com.genesiis.campus.command;
 				// modified execute() to call isValidUserAndEmailBeforeAddTutor()
 //20170314 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor & add a call to validateEmail method
 //20170315 CW c36-add-tutor-details modified isValidUserAndEmailBeforeAddTutor email validation modified
+//20170317 CW c36-add-tutor-details modified log variable declaration
 
 
 import com.genesiis.campus.entity.CountryDAO;
@@ -321,7 +322,6 @@ public class CmdAddTutorProfile implements ICommand {
 	 * @param tutorCollection, tutor
 	 */
 	private void fillTutorCollection(Collection<String> tutorCollection, Tutor tutor) throws SQLException, Exception{
-		
 		tutorCollection.add(tutor.getFirstName());
 		tutorCollection.add(tutor.getMiddleName());
 		tutorCollection.add(tutor.getLastName());
