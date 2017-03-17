@@ -2,6 +2,8 @@ package com.genesiis.campus.entity;
 
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw SigningUpTutorDAO class created.
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw query error fixed
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw add doc comments & modified method comment
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw Add & modify comments to improve readability
 
 import com.genesiis.campus.command.CmdTutorPasswordChange;
 import com.genesiis.campus.entity.model.Tutor;
@@ -15,28 +17,34 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
+/**
+ * This class is used to manage signing up details of the tutor
+ * @author chinthaka
+ *
+ */
 public class SigningUpTutorDAO implements ICrud  {
 	static Logger log = Logger.getLogger(SigningUpTutorDAO.class.getName());
 
 	/**
 	 * forget password function, update new password.
-	 * @author Anuradha
+	 * @author Chinthaka
+	 * @return 1 if successfully updated 0 otherwise
 	 */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.TUTOR SET PASSWORD = ? WHERE CODE=? ";
 		PreparedStatement ps = null;
 		int rowInserted = -1;
 
 		try {
 			Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();
+			String query = "UPDATE CAMPUS.TUTOR SET PASSWORD = ? WHERE CODE=? ";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, tutor.getPassword());
 			ps.setInt(2, tutor.getCode());
 
-			rowInserted = ps.executeUpdate();
+			rowInserted = ps.executeUpdate(); // returns number of rows updated
 
 			if (rowInserted > 0) {
 				rowInserted = 1;

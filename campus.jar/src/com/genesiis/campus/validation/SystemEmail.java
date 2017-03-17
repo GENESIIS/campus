@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //20170219 CW c103-send-email-tutor-status-change-cw - add attributes to the Enum
 //20170307 CW c147-tutor-reset-password-cw Class copied from c103-send-email-tutor-status-change-cw.
 //20170312 CW c147-tutor-reset-password-cw SEND_EMAIL_TUTOR_RESET_PASSWORD1, SEND_EMAIL_TUTOR_RESET_PASSWORD2, SEND_EMAIL_TUTOR_RESET_PASSWORD3
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw SEND_EMAIL_TUTOR_PASSWORD_CHANGE_CONFIRMATION_BODY1 command added
 
 /**
  * SystemMail enum handles the content of the email to be sent
@@ -26,7 +27,8 @@ public enum SystemEmail {
 	SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2("Update Confirmation", "Dear Sir/Madam","Tutor of campus.lk website."),
 	SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY1("Campus.lk Tutor Password Reset", "Dear ","Campus.lk has received a request to reset the password for your tutor account. If you did not request to reset your password, please ignore this email."),
 	SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY2("Campus.lk Tutor Password Reset", "Dear ","Otherwise please copy & paste below hash code in the popup window."),
-	SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY3("Campus.lk Tutor Password Reset", "Dear ","Hash code : ");
+	SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY3("Campus.lk Tutor Password Reset", "Dear ","Hash code : "),
+	SEND_EMAIL_TUTOR_PASSWORD_CHANGE_CONFIRMATION_BODY1("Campus.lk Tutor Password Change Confirmation", "Dear ","You've successfully changed your campus.lk password.");
 	
 	private final String subject;
 	private final String title;

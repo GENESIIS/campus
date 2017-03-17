@@ -6,7 +6,12 @@ package com.genesiis.campus.util.mail;
 				//modified sendMail method to sent the tutor reset password email using tutor details
 //20170313 CW c147-tutor-reset-password-cw modified sendTutorResetPasswordVerificationEmail method comment
 				// Removed systemMessage(int status) method
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw sendTutorPasswordChangeConformationEmail method created 
+				// modified sendMail(IEmailComposer tutorUpdateEmailComposer) parameter to emailComposer
+				// modified sendTutorResetPasswordVerificationEmail method error logs
+//20170316 CW c149-tutor-email-confirmation-for-password-change-cw removed unwanted commented lines
 
+import com.genesiis.campus.util.TutorPasswordChangeConfirmationEmailComposer;
 import com.genesiis.campus.util.TutorPasswordResetEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
 import com.genesiis.campus.validation.SystemMessage;
@@ -33,25 +38,59 @@ static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 			throws IllegalArgumentException, Exception {
 		int status;
 		try {
-			IEmailComposer tutorUpdateEmailComposer = new TutorPasswordResetEmailComposer(hashCode);
+			IEmailComposer tutorResetPasswordEmailComposer = new TutorPasswordResetEmailComposer(hashCode);
 			
 			String recieversName = firstname.concat(" " + lastname);
 			
 			//Used the same email address send to the method as the senders email address & receivers email address. 
 			//The senders email address will overridden later from the email address in campus.xml file
-			tutorUpdateEmailComposer.setEnvironment(recieversName, emailAddress,
-					tutorUpdateEmailComposer.composeSingleEmailList(emailAddress),
+			tutorResetPasswordEmailComposer.setEnvironment(recieversName, emailAddress,
+					tutorResetPasswordEmailComposer.composeSingleEmailList(emailAddress),
 					SystemEmail.SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATION.message());
 	
-			tutorUpdateEmailComposer.formatEmailInstance(username);
-			status = this.sendMail(tutorUpdateEmailComposer);
+			tutorResetPasswordEmailComposer.formatEmailInstance(username);
+			status = this.sendMail(tutorResetPasswordEmailComposer);
 
 	} catch (IllegalArgumentException ilexp) {
-		log.error("execute(): IllegalArgumentException" + ilexp.toString());
+		log.error("sendTutorResetPasswordVerificationEmail(): IllegalArgumentException" + ilexp.toString());
 		throw ilexp;
 	} catch (Exception exp) {
-		log.error("execute():Exception " + exp.toString());
+		log.error("sendTutorResetPasswordVerificationEmail():Exception " + exp.toString());
+		throw exp;
+	}
+	return status;	
+	}
+	
+	/*
+	 * sendTutorPasswordChangeConformationEmail() method handles the email sending at the time of tutor password change confirmation.
+	 * @author CW
+	 * @return int
+	 * @throws IllegalArgumentException & Exception in any case email sending fails
+	 */
+	public int sendTutorPasswordChangeConformationEmail(String firstname, String lastname, String emailAddress, String username) 
+			throws IllegalArgumentException, Exception {
+		int status;
+		try {
+			IEmailComposer tutorPasswordChangeEmailComposer = new TutorPasswordChangeConfirmationEmailComposer();
+			
+			String recieversName = firstname.concat(" " + lastname);
+			
+			//Used the same email address send to the method as the senders email address & receivers email address. 
+			//The senders email address will overridden later from the email address in campus.xml file
+			tutorPasswordChangeEmailComposer.setEnvironment(recieversName, emailAddress,
+					tutorPasswordChangeEmailComposer.composeSingleEmailList(emailAddress),
+					SystemEmail.SEND_EMAIL_TUTOR_RESET_PASSWORD_BODY1.getSubject(),
+					SystemMessage.SUCCESSFULL_CREATION.message());
+	
+			tutorPasswordChangeEmailComposer.formatEmailInstance(username);
+			status = this.sendMail(tutorPasswordChangeEmailComposer);
+
+	} catch (IllegalArgumentException ilexp) {
+		log.error("sendTutorPasswordChangeConformationEmail(): IllegalArgumentException" + ilexp.toString());
+		throw ilexp;
+	} catch (Exception exp) {
+		log.error("sendTutorPasswordChangeConformationEmail():Exception " + exp.toString());
 		throw exp;
 	}
 	return status;	
@@ -63,17 +102,17 @@ static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 	 * @return int -3 fail sending email 3 sent email successfully 
 	 * @throws MessagingException in any case dispensing email fails
 	 */
-	private int sendMail(IEmailComposer tutorUpdateEmailComposer)  {
+	private int sendMail(IEmailComposer emailComposer)  {
 		int MAIL_SENT_STATUS=3;
 		try{ 
-			if(tutorUpdateEmailComposer.getGeneralEmail()== null){
+			if(emailComposer.getGeneralEmail()== null){
 				Exception exp = new Exception("IEmail is not created ");
 				log.error("sendMail(): Exception"+exp.toString());
 				throw exp;
 			}
 				
-			tutorUpdateEmailComposer.setEmailDispenser(new EmailDispenser(tutorUpdateEmailComposer.getGeneralEmail()));
-			tutorUpdateEmailComposer.getEmailDispenser().emailDispense();
+			emailComposer.setEmailDispenser(new EmailDispenser(emailComposer.getGeneralEmail()));
+			emailComposer.getEmailDispenser().emailDispense();
 		} catch (IllegalArgumentException illearg){
 			log.error("sendMail():IllegalArgumentException "+illearg.toString());
 			MAIL_SENT_STATUS= -3;

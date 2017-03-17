@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorHashVerification class created
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorHashVerification class modified to validate hashcode properly & set messages correctly
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations & execute method to improve code performance
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorEmailVerificationDAO;
@@ -39,21 +40,25 @@ public class CmdTutorHashVerification implements ICommand {
 			tutor.setHashCode(helper.getParameter("hashCode"));
 			
 			TutorEmailVerificationDAO tutorEmailvarification = new TutorEmailVerificationDAO();
+			
 			//checking the entered hashcode is matching with the generated hash code
 			//if the hash code is a valid one get the details of the tutor 
 			Collection<Collection<String>> dataCollection = tutorEmailvarification.verifyHashCode(tutor);
 			
-			if(dataCollection == null && dataCollection.isEmpty()){
+			if(dataCollection == null || dataCollection.isEmpty()){
 				message = SystemMessage.INVALID_HASHCODE.message();
 			}else{
 				for (Collection<String> collection : dataCollection) {
-						ArrayList<String> singleTutor = new ArrayList<String>();
-						Object [] collectionArr = collection.toArray();
+					
 					if(collection != null && !collection.isEmpty()){
+						
 						//Validating the hash code expiration details
-						if(collectionArr[5] != null && Integer.parseInt((String)collectionArr[5]) > 30){
+						Object [] collectionArr = collection.toArray();
+						
+						if(collectionArr != null && collectionArr[5] != null && Integer.parseInt((String)collectionArr[5]) > 30){
 							message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
 						} else {
+							
 							//entered hashcode is a valid one & tutor can redirect into the password reset page
 							view.setCollection(dataCollection);
 							pageURL = "/dist/partials/login/passwordReset.jsp";
