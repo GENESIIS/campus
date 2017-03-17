@@ -26,6 +26,7 @@ package com.genesiis.campus.entity;
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw class copied from c38-view-update-tutor-profile-cw
 //20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations further to improve code performance
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -73,9 +74,7 @@ public class TutorDAO implements ICrud {
 		PreparedStatement preparedStatement = null;
 		int status = -1;		
 				
-		try {			
-			final Tutor tutor = (Tutor) object;
-			conn = ConnectionManager.getConnection();			
+		try {					
 			
 			StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
 			queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
@@ -86,45 +85,46 @@ public class TutorDAO implements ICrud {
 			queryBuilder.append("MODBY = ? ");
 			queryBuilder.append("WHERE USERNAME = ?;");
 		
+			conn = ConnectionManager.getConnection();	
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
+			
+			final Tutor tutor = (Tutor) object;
 			preparedStatement.setString(1, tutor.getFirstName());
 			preparedStatement.setString(2, tutor.getMiddleName());
-			preparedStatement.setString(3, tutor.getLastName());
-			
-			preparedStatement.setString(4, tutor.getGender());
-			
+			preparedStatement.setString(3, tutor.getLastName());			
+			preparedStatement.setString(4, tutor.getGender());			
 			preparedStatement.setString(5, tutor.getEmailAddress());
+			
 			preparedStatement.setString(6, tutor.getLandCountryCode());
 			preparedStatement.setString(7, tutor.getLandAreaCode());
 			preparedStatement.setString(8, tutor.getLandNumber());
-			preparedStatement.setString(9, tutor.getMobileCountryCode());
-			
+			preparedStatement.setString(9, tutor.getMobileCountryCode());			
 			preparedStatement.setString(10, tutor.getMobileNetworkCode());
+			
 			preparedStatement.setString(11, tutor.getMobileNumber());
 			preparedStatement.setString(12, tutor.getDescription());
 			preparedStatement.setString(13, tutor.getExperience());
-			preparedStatement.setString(14, tutor.getWebLink());
-		
+			preparedStatement.setString(14, tutor.getWebLink());		
 			preparedStatement.setString(15, tutor.getFacebookLink());
+			
 			preparedStatement.setString(16, tutor.getTwitterNumber());
 			preparedStatement.setString(17, tutor.getMySpaceId()); 
 			preparedStatement.setString(18, tutor.getLinkedInLink());
 			preparedStatement.setString(19, tutor.getInstagramId());
-		
 			preparedStatement.setString(20, tutor.getViberNumber());
-			preparedStatement.setString(21, tutor.getWhatsAppId());
 			
+			preparedStatement.setString(21, tutor.getWhatsAppId());
 			preparedStatement.setBoolean(22, tutor.getIsApproved()); 
 			preparedStatement.setInt(23, tutor.getTutorStatus());			
-			preparedStatement.setString(24, tutor.getAddressLine1());
-			
+			preparedStatement.setString(24, tutor.getAddressLine1());			
 			preparedStatement.setString(25, tutor.getAddressLine2());
+			
 			preparedStatement.setString(26, tutor.getAddressLine3());
 			preparedStatement.setString(27, tutor.getTown());
 			preparedStatement.setInt(28, tutor.getUsertype());		
-			preparedStatement.setString(29, tutor.getModBy());
-			
+			preparedStatement.setString(29, tutor.getModBy());			
 			preparedStatement.setString(30, tutor.getUsername());
+			
 			status = preparedStatement.executeUpdate();
 
 		} catch (ClassCastException cce) {
@@ -167,10 +167,7 @@ public class TutorDAO implements ICrud {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;					
 			
-		try {
-			
-			Tutor tutor = (Tutor) code; 
-			conn = ConnectionManager.getConnection();			
+		try {						
 			
 			StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
 			queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
@@ -181,7 +178,10 @@ public class TutorDAO implements ICrud {
 			queryBuilder.append("JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN ");
 			queryBuilder.append("WHERE T.CODE = ?;");
 			
+			conn = ConnectionManager.getConnection();
 			stmt = conn.prepareStatement(queryBuilder.toString());
+			
+			Tutor tutor = (Tutor) code; 
 			stmt.setInt(1, tutor.getCode());
 			rs = stmt.executeQuery();
 
