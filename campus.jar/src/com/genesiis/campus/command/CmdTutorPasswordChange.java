@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw create fillTutorRequiredFields method & change execute method to send email after password change
 							// Add method comments to execute & fillTutorRequiredFields methods, add systemMessage method
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance & add comments to improve readability
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -23,6 +24,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This class is used to update the tutor table using the new password entered
+ * further it implements ICommand interface
+ * @author chinthaka
+ */
 public class CmdTutorPasswordChange implements ICommand {
 	static Logger log = Logger.getLogger(CmdTutorPasswordChange.class.getName());
 
@@ -78,11 +84,18 @@ public class CmdTutorPasswordChange implements ICommand {
 		return view;
 	}
 	
+	/**
+	 * This method used to get the tutor details from database & fill the required fields in tutor to send the email
+	 * @author chinthaka
+	 * @param tutor
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	private void fillTutorRequiredFields(Tutor tutor) throws SQLException, Exception{
-		ICrud tutorDaoObj = new TutorDAO();
-		Collection<Collection<String>> allTutorDetailList = new ArrayList<Collection<String>>();
 
 		try {
+			ICrud tutorDaoObj = new TutorDAO();
+			Collection<Collection<String>> allTutorDetailList = new ArrayList<Collection<String>>();
 			allTutorDetailList = tutorDaoObj.findById(tutor);
 			
 			for (Collection<String> tutorCollection : allTutorDetailList) {
