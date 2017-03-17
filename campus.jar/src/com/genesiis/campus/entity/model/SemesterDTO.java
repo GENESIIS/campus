@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20170316 DJ c152-add-enhanced-programme-insertion- Initiate SemesterDTO.java
+//20170317 DJ c152-add-enhanced-programme-insertion- Add programmeCode attribute.
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class SemesterDTO {
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private int programmeCode;
 	private ArrayList<ModuleDTO> moduleList;
 	
 	
@@ -78,6 +80,12 @@ public class SemesterDTO {
 	}
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
+	}	
+	public int getProgrammeCode() {
+		return programmeCode;
+	}
+	public void setProgrammeCode(int programmeCode) {
+		this.programmeCode = programmeCode;
 	}
 	public ArrayList<ModuleDTO> getModuleList() {
 		return moduleList;
