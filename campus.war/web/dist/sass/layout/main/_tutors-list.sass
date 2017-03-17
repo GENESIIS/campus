@@ -32,12 +32,53 @@
           margin: 0 15px
 
       .dataTables_filter
+        font-family: "Raleway", sans-serif
+        width: 90%
+
+        label
+          width: 100%
+          line-height: 34px
+
         input
           border: 2px solid #d7d7d7
           border-radius: 3px
-          width: 20%
+          width: 85%
+          float: right
+          height: 34px 
+          font-size: 15px
+          font-weight: bold
+
 
       .dataTable
         border-top: 4px solid #e1e1e1
         margin-top: 15px !important
         font-family: "Roboto", sans-serif
+
+      thead
+        tr
+          height: 70px
+          font-size: 16px
+
+          .sorting:after
+            content: "" !important
+
+          .sorting_asc:after
+            content: "" !important
+
+          .sorting_desc:after
+            content: "" !important
+
+      tbody
+        tr
+          height: 65px !important
+
+  .dataTables_wrapper
+    font-family: "Raleway", sans-serif
+
+    .dataTables_paginate
+      .paginate_button
+        padding: 1em 0 !important
+
+    div.dataTables_info
+      padding-top: 18px
+      font-size: 16px

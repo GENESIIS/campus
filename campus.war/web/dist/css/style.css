@@ -778,14 +778,42 @@ body, html {
         font-family: "Raleway", sans-serif; }
         .admin-content .content-holder .tutors-table .dataTables_length select {
           margin: 0 15px; }
-      .admin-content .content-holder .tutors-table .dataTables_filter input {
-        border: 2px solid #d7d7d7;
-        border-radius: 3px;
-        width: 20%; }
+      .admin-content .content-holder .tutors-table .dataTables_filter {
+        font-family: "Raleway", sans-serif;
+        width: 90%; }
+        .admin-content .content-holder .tutors-table .dataTables_filter label {
+          width: 100%;
+          line-height: 34px; }
+        .admin-content .content-holder .tutors-table .dataTables_filter input {
+          border: 2px solid #d7d7d7;
+          border-radius: 3px;
+          width: 85%;
+          float: right;
+          height: 34px;
+          font-size: 15px;
+          font-weight: bold; }
       .admin-content .content-holder .tutors-table .dataTable {
         border-top: 4px solid #e1e1e1;
         margin-top: 15px !important;
         font-family: "Roboto", sans-serif; }
+      .admin-content .content-holder .tutors-table thead tr {
+        height: 70px;
+        font-size: 16px; }
+        .admin-content .content-holder .tutors-table thead tr .sorting:after {
+          content: "" !important; }
+        .admin-content .content-holder .tutors-table thead tr .sorting_asc:after {
+          content: "" !important; }
+        .admin-content .content-holder .tutors-table thead tr .sorting_desc:after {
+          content: "" !important; }
+      .admin-content .content-holder .tutors-table tbody tr {
+        height: 65px !important; }
+  .admin-content .dataTables_wrapper {
+    font-family: "Raleway", sans-serif; }
+    .admin-content .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 1em 0 !important; }
+    .admin-content .dataTables_wrapper div.dataTables_info {
+      padding-top: 18px;
+      font-size: 16px; }
 
 /* Modules */
 .btn-home {
