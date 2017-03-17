@@ -1,9 +1,10 @@
 /**
  * This java script file is to support admin list tutor function
- * 20170117 JH C133-admin-list-tutor
+ * 20170117 JH C134-admin-list-new-tutor-requests tutorDataTable() modified: used ApplicationStatus enum class values to add css styles to datatable 
  */
 
 window.tutorList = null;
+window.ApplicationStatus = null;
 
 window.onload = function() {
 	listAllTutors();
@@ -22,6 +23,7 @@ function listAllTutors(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
+				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
 				    $('#example tbody').on('click', 'tr', function () {
@@ -58,6 +60,7 @@ function listTutorRequests(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
+				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
 				    $('#example tbody').on('click', 'tr', function () {
@@ -84,6 +87,7 @@ function tutorDataTable(){
 	var tutors = window.tutorList;
 	var rowCount = 0;
 	t.clear().draw();
+	var statusValues = window.ApplicationStatus;
 
 	if (tutors !== undefined & tutors !== null) {
 		$
@@ -95,22 +99,25 @@ function tutorDataTable(){
 							var data = res.split(",");
 							rowCount++;
 							var value11 = null;
-							if (value[11] == 1) {
+							/* 
+							 * compare tutor request status with the application status values
+							 */
+							if (value[11] == statusValues["ACTIVE"]) {
 								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;"></span>';
-							} else if (value[11] == 0) {
+							} else if (value[11] == statusValues["INACTIVE"]) {
 								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;"></span>';
-							} else if (value[11] == 2) {
+							} else if (value[11] == statusValues["PENDING"]) {
 								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;"></span>';
 							}
 							
 							var value17 = null; 
-							if( value[17] == 1){
+							if( value[17] == statusValues["ACTIVE"]){
 								value17 = ' <span style="color:green;">Active</span></td>';
-							}else if( value[17] == 0){
+							}else if( value[17] == statusValues["INACTIVE"]){
 								value17 = ' <span style="color:red;">Inactive </span></td>';
-							}else if( value[17] == 2){
+							}else if( value[17] == statusValues["PENDING"]){
 								value17 = ' <span style="color:blue;">Pending </span></td>';
-							}else if( value[17] == 3){
+							}else if( value[17] == statusValues["EXPIRED"]){
 								value17 = ' <span style="color:red;">Expired </span></td>';
 							}
 							
