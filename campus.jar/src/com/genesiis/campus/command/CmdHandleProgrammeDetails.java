@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170213 DJ c138-add-basic-programme-MP-dj Implemented populateFormData() to populate input data
 //20170221 DJ c145-add-enhanced-programme Add method retrieveProviderTown(IDataHelper helper, IView iView).
 //20170316 DJ c152-add-enhanced-programme-insertion: initiated method manageSemesterInsertion().
+//20170317 DJ c152-add-enhanced-programme-insertion: initiated method manageModuleInsertion(), manageIntakeInsertion().
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.DistrictICrud;
@@ -14,7 +15,10 @@ import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.DistrictDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
+import com.genesiis.campus.entity.model.IntakeDTO;
+import com.genesiis.campus.entity.model.ModuleDTO;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
+import com.genesiis.campus.entity.model.SemesterDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.FormValidator;
@@ -59,6 +63,10 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				manageProgrammeInsertion(helper, iView);
 			} else if ("ADD_SEMESTER_DETAILS".equalsIgnoreCase(ccoString)) {
 				manageSemesterInsertion(helper, iView);
+			} else if ("ADD_MODULE_DETAILS".equalsIgnoreCase(ccoString)) {
+				manageModuleInsertion(helper, iView);
+			} else if ("ADD_INTAKE_DETAILS".equalsIgnoreCase(ccoString)) {
+				manageIntakeInsertion(helper, iView);
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
@@ -205,9 +213,59 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 		}
 
 	}
-	private void manageSemesterInsertion(IDataHelper helper, IView iView) {
-		// TODO Auto-generated method stub
-		
+
+	/** Manage form data of Semester information(input values) for database insertion.
+	 * @author DJ dumani
+	 * @param helper 	  
+	 * @param iView 
+	 */	
+	private void manageSemesterInsertion(IDataHelper helper, IView iView) throws Exception {
+		// boolean isOkToSave = FormValidator.validateSemesterDetails(helper);
+		// if (isOkToSave) {
+		final SemesterDTO semesterDTO = new SemesterDTO();
+		// TODO:need to do batch update
+		int successStatus = programmeDAO.addSemesterDetails(semesterDTO);
+		if (successStatus > 0) {
+			helper.setAttribute("successMessage", "success");
+		}
+		// }
+
+	}
+
+	/** Manage form data of Module information(input values) for database insertion.
+	 * @author DJ dumani
+	 * @param helper 	  
+	 * @param iView 
+	 */	
+	private void manageModuleInsertion(IDataHelper helper, IView iView) throws Exception{
+		// boolean isOkToSave = FormValidator.validateSemesterDetails(helper);
+		// if (isOkToSave) {
+		final ModuleDTO moduleDTO = new ModuleDTO();
+		// TODO:need to do batch update
+		int successStatus = programmeDAO.addModuleDetails(moduleDTO);
+		if (successStatus > 0) {
+			helper.setAttribute("successMessage", "success");
+		}
+		// }
+
+	}
+	
+	/** Manage form data of intake  information(input values) for database insertion.
+	 * @author DJ dumani
+	 * @param helper 	  
+	 * @param iView 
+	 */	
+	private void manageIntakeInsertion(IDataHelper helper, IView iView)throws Exception {
+		// boolean isOkToSave = FormValidator.validateSemesterDetails(helper);
+		// if (isOkToSave) {
+		final IntakeDTO intakeDTO = new IntakeDTO();
+		// TODO:need to do batch update
+		int successStatus = programmeDAO.addIntakeDetails(intakeDTO);
+		if (successStatus > 0) {
+			helper.setAttribute("successMessage", "success");
+		}
+		// }
+
 	}
 
 }
