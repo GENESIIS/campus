@@ -7,6 +7,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
 //20170316 DJ c152-add-enhanced-programme-insertion: Initiate;addIntakeDetails(),addSemesterDetails(),addModuleDetails
+//20170317 DJ c152-add-enhanced-programme-insertion: addSemesterDetails() implementation.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.IntakeDTO;
@@ -404,12 +405,48 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 
+	/**
+	 *Add Semester details to application.Developer able to set properties to semesterDTO and save.	 
+	 * @author DJ
+	 * @param programmeDTO   ProgrammeDTO
+	 * @return int 
+	 */
 	@Override
-	public int addSemesterDetails(SemesterDTO semesterDTO) throws SQLException,
+	public int addSemesterDetails(final SemesterDTO semesterDTO) throws SQLException,
 			Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int successStatus=0;
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[SEMESTER] ([NAME],[DESCRIPTION] ,[YEARNO],[SEMESTERNO] ,[ISACTIVE]  ,[PROGRAMME] ,[CRTON],[CRTBY])");
+			sb.append("VALUES ( ");			
+			sb.append(" ?,?,?,?,?,?,?,?,?,? ");
+			sb.append(" ) ");
+			
+			stmt=conn.prepareStatement(sb.toString());
+			stmt.setString(1, semesterDTO.getSemesterName());
+			stmt.setString(2, semesterDTO.getDescription());
+			stmt.setInt(3, semesterDTO.getYearNumber());
+			stmt.setFloat(4, semesterDTO.getSemesterNumber());
+			stmt.setInt(5, semesterDTO.getIsActive());
+			stmt.setInt(5, semesterDTO.getProgrammeCode());
+			stmt.setDate(7, new java.sql.Date(semesterDTO.getCrtOn().getTime()));
+			stmt.setString(8, semesterDTO.getCrtBy());
+			
+		} catch (SQLException sqlException) {
+			log.info("addProgrammeDetails() sqlException"
+					+ sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("addProgrammeDetails() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, null);
+		}
+		return successStatus;
 	}
 
 	@Override
