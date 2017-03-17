@@ -25,6 +25,7 @@ package com.genesiis.campus.entity;
 //20170223 CW c36-add-tutor-information re-organise the import statements.
 //20170225 CW c38-view-update-tutor-profile removed Password & confirm Password
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw class copied from c38-view-update-tutor-profile-cw
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -70,21 +71,21 @@ public class TutorDAO implements ICrud {
 
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		int status = -1;
-		
-		StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
-		queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
-		queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
-		queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
-		queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
-		queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
-		queryBuilder.append("MODBY = ? ");
-		queryBuilder.append("WHERE USERNAME = ?;");
+		int status = -1;		
 				
 		try {			
 			final Tutor tutor = (Tutor) object;
 			conn = ConnectionManager.getConnection();			
 			
+			StringBuilder queryBuilder = new StringBuilder("UPDATE [CAMPUS].[TUTOR] SET FIRSTNAME = ? , MIDDLENAME = ? , LASTNAME = ? , GENDER = ? , ");
+			queryBuilder.append("EMAIL = ? , LANDPHONECOUNTRYCODE = ? , LANDPHONEAREACODE = ? , LANDPHONENUMBER = ? , MOBILEPHONECOUNTRYCODE = ? ,");
+			queryBuilder.append("MOBILEPHONENETWORKCODE = ? , MOBILEPHONENUMBER = ? ,DESCRIPTION = ? , EXPERIENCE = ? , WEBLINK = ? , ");		
+			queryBuilder.append("FACEBOOKURL = ? , TWITTERURL = ? , MYSPACEURL = ? , LINKEDINURL = ? , INSTAGRAMURL = ? ,");
+			queryBuilder.append("VIBERNUMBER = ? , WHATSAPPNUMBER = ? , ISAPPROVED = ? , TUTORSTATUS = ? , ADDRESS1 = ? , ");
+			queryBuilder.append("ADDRESS2 = ? , ADDRESS3 = ? , TOWN = ? , USERTYPE = ? , MODON = GETDATE() , ");
+			queryBuilder.append("MODBY = ? ");
+			queryBuilder.append("WHERE USERNAME = ?;");
+		
 			preparedStatement = conn.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, tutor.getFirstName());
 			preparedStatement.setString(2, tutor.getMiddleName());
@@ -164,33 +165,28 @@ public class TutorDAO implements ICrud {
 		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		int countryCode = 0;
-		double townCode = 0;
-		String countryName = null;
-		String townName = null;
-					
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
-		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
-		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
-		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
-		queryBuilder.append("FROM [CAMPUS].[TUTOR] T ");
-		queryBuilder.append("JOIN [CAMPUS].[COUNTRY2] C ON C.CODE = T.LANDPHONECOUNTRYCODE ");
-		queryBuilder.append("JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN ");
-		queryBuilder.append("WHERE T.CODE = ?;");
+		ResultSet rs = null;					
 			
 		try {
 			
 			Tutor tutor = (Tutor) code; 
 			conn = ConnectionManager.getConnection();			
 			
+			StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+			queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
+			queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
+			queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
+			queryBuilder.append("FROM [CAMPUS].[TUTOR] T ");
+			queryBuilder.append("JOIN [CAMPUS].[COUNTRY2] C ON C.CODE = T.LANDPHONECOUNTRYCODE ");
+			queryBuilder.append("JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN ");
+			queryBuilder.append("WHERE T.CODE = ?;");
+			
 			stmt = conn.prepareStatement(queryBuilder.toString());
 			stmt.setInt(1, tutor.getCode());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				final ArrayList<String> singleTutorList = new ArrayList<String>();		
-				
+				final ArrayList<String> singleTutorList = new ArrayList<String>();						
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
@@ -284,7 +280,7 @@ public class TutorDAO implements ICrud {
 		ResultSet rs = null;
 		
 		try {
-			conn = ConnectionManager.getConnection();
+			conn = ConnectionManager.getConnection();			
 			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
 
 			stmt = conn.prepareStatement(query);
