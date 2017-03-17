@@ -2,6 +2,7 @@
 <!-- 20170222 CW CAM-36 modify the validations to check the javascript enable & if not enable give a message -->
 <!-- 20170223 CW CAM-36 modify page to remove space values from the fields when space entered in them-->
 <!-- 20170316 CW CAM-36 modify page fields to match database field max size-->
+<!-- 20170317 CW CAM-36 modify page & fix some jsp tag errors-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -75,6 +76,7 @@
 						</c:otherwise>
 					</c:choose>	
 				</tr>
+
 					<tr>
 						<td>Last Name *</td>
 						<c:choose>
@@ -91,6 +93,8 @@
 									style="color: red"> ${lastNameError} </span></td>
 							</c:otherwise>
 						</c:choose>	
+					</tr>
+	
 					<tr>
 						<td>Gender *</td>
 						<td><c:choose>
@@ -111,15 +115,15 @@
 					</tr>
 					<tr>
 						<td>Experience</td>
-						<td><textarea rows="10" cols="26" name="experience"
-								id="experience" onchange="clearField('experienceError')" ><c:out value="${tutorList[4]}"/></textarea><span
-							id="experienceError" style="color: red"> ${experienceError} </span></td>
+						<td><textarea rows="10" cols="26" name="experience"	id="experience" onchange="clearField('experienceError')" ><c:out value="${tutorList[4]}"/></textarea>
+						<span id="experienceError" style="color: red"> ${experienceError} </span></td>
 					</tr>
 					<tr>
-						<td>About Me </span></td>
-						<td><textarea rows="10" cols="26" name="aboutMe" id="aboutMe"
-								onchange="clearField('aboutMeError')"><c:out value="${tutorList[5]}"/></textarea><span
-							id="aboutMeError" style="color: red"> ${aboutMeError} </td>
+						<td>About Me</td>
+						<td>
+							<textarea rows="10" cols="26" name="aboutMe" id="aboutMe" onchange="clearField('aboutMeError')"><c:out value="${tutorList[5]}"/></textarea>
+							<span id="aboutMeError" style="color:red;">${aboutMeError}</span>
+						</td>
 					</tr>
 					<tr>
 						<td><h2>Contact Info</h2></td>
@@ -139,7 +143,7 @@
 					</tr>
 					<tr>
 						<td>Town*</td>
-						<c:if test = "${tutorList[7] != null && tutorList[7] != ' '}"	>			
+						<c:if test="${tutorList[7] != null && tutorList[7] != ' '}">			
 							<td>${tutorList[7]}</td>
 						</c:if>
 						<td><select name="townDetails" id="townDetails"
@@ -156,8 +160,7 @@
 							id="mobileCountryCode" maxlength="10"
 							onchange="clearField('mobileError')" readonly
 							value="${tutorList[9]}" /><span id="mobileError"
-							style="color: red"> ${mobileError} </span></td>
-										
+							style="color: red"> ${mobileError} </span></td>										
 										
 							<td><input type="text" name="mobileNetworkCode"
 							id="mobileNetworkCode" maxlength="10"
@@ -165,13 +168,10 @@
 							value="${tutorList[10]}" /><span id="mobileNetworkError"
 							style="color: red"> ${mobileNetworkError} </span></td>
 							
-							<td></span> <input type="text" name="mobileNumber" id="mobileNumber"
+							<td><input type="text" name="mobileNumber" id="mobileNumber"
 							maxlength="15" onchange="clearField('mobileNumberError')"
 							value="${tutorList[11]}" /><span id="mobileNumberError"
-							style="color: red"> ${mobileNumberError} </td>
-		
-
-						
+							style="color: red"> ${mobileNumberError} </span></td>					
 					</tr>
 					<tr>
 						<td>Land *</td>
@@ -230,7 +230,7 @@
 						</c:choose>	
 					</tr>
 					<tr>
-						<td>Address line 2 </span></td>
+						<td><span> Address line 2 </span></td>
 						<c:choose>
 							<c:when test="${tutorList[16] == ' '}">		
 								<td><input type="text" name="address2" id="address2"
@@ -243,7 +243,7 @@
 						</c:choose>	
 					</tr>
 					<tr>
-						<td>Address line 3 </span></td>
+						<td><span>Address line 3 </span></td>
 						<c:choose>
 							<c:when test="${tutorList[17] == ' '}">	
 								<td><input type="text" name="address3" id="address3"
@@ -272,19 +272,19 @@
 						</c:choose>	
 					</tr>
 					<tr>
-						<td>Facebook </span></td>
+						<td>Facebook</td>
 						<c:choose>
 							<c:when test="${tutorList[19] == ' '}">		
 								<td><input type="text" name="facebook" id="facebook"
 								onchange="clearField('facebookError')" maxlength="200"
 								value="" /><span id="facebookError"
-								style="color: red"> ${facebookError} </td>
+								style="color: red"> ${facebookError} </span></td>
 							</c:when>
 							<c:otherwise>
 								<td><input type="text" name="facebook" id="facebook"
 								onchange="clearField('facebookError')" maxlength="200"
 								value="${tutorList[19]}" /><span id="facebookError"
-								style="color: red"> ${facebookError} </td>
+								style="color: red"> ${facebookError} </span></td>
 							</c:otherwise>
 						</c:choose>	
 					</tr>
