@@ -4,11 +4,13 @@ package com.genesiis.campus.command;
 //20170117 JH c133-admin-list-tutors list tutors and exception handling 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments
+//20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
@@ -16,6 +18,8 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CmdAdminListTutors class used to list all tutors for administration purposes.
@@ -44,6 +48,15 @@ public class CmdAdminListTutors implements ICommand{
 				systemMessage = SystemMessage.NO_DATA; 
 			 }
 
+			 // return application status values
+			 ApplicationStatus[] applicationStatus = ApplicationStatus.values();
+			 Map<String, String> applicationStatusValue = new HashMap<String, String>();
+			 
+			 for( ApplicationStatus singleValue : applicationStatus){
+				 applicationStatusValue.put(singleValue.toString(), String.valueOf(singleValue.getStatusValue()));
+			 }
+			 helper.setAttribute("applicationStatus", applicationStatusValue);
+			 
 		}  catch (SQLException sqlException) {
 			log.error("execute(IDataHelper, IView) : Exception"
 					+ sqlException.toString());

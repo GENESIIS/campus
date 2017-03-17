@@ -60,6 +60,7 @@ function listTutorRequests(){
 
 			if (response !== undefined && response !== null) {
 				window.tutorList = response.result;
+				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
 				    $('#example tbody').on('click', 'tr', function () {
