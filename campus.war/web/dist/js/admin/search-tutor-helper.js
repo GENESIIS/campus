@@ -1,6 +1,7 @@
 /**
  * This java script file is to support admin list tutor function
- * 20170117 JH C134-admin-list-new-tutor-requests tutorDataTable() modified: used ApplicationStatus enum class values to add css styles to datatable 
+ * 20170117 JH c134-admin-list-new-tutor-requests tutorDataTable() modified: used ApplicationStatus enum class values to add css styles to datatable 
+ * 				removed displayTutotList() unwanted method
  */
 
 window.tutorList = null;
@@ -8,6 +9,7 @@ window.ApplicationStatus = null;
 
 window.onload = function() {
 	listAllTutors();
+	$(".hide-value").hide();
 };
 
 function listAllTutors(){
@@ -103,11 +105,20 @@ function tutorDataTable(){
 							 * compare tutor request status with the application status values
 							 */
 							if (value[11] == statusValues["ACTIVE"]) {
-								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;"></span>';
-							} else if (value[11] == statusValues["INACTIVE"]) {
-								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;"></span>';
-							} else if (value[11] == statusValues["PENDING"]) {
-								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;"></span>';
+								
+								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;">'
+								value11 += '<label class="hide-value">' + statusValues["ACTIVE"]+'</label></span>';
+							
+							} 
+							else if (value[11] == statusValues["INACTIVE"]) {
+								
+								value11 = ' <span class="glyphicon glyphicon-remove" style="color:blue;">'
+								value11 += '<label class="hide-value">'	+ statusValues["INACTIVE"]+'</label></span>';
+								 
+							}
+							else if (value[11] == statusValues["PENDING"]) {
+								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:red;">'
+								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>'
 							}
 							
 							var value17 = null; 
