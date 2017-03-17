@@ -1,7 +1,7 @@
 /**
  * This java script file is to support admin list tutor function
  * 20170117 JH c134-admin-list-new-tutor-requests tutorDataTable() modified: used ApplicationStatus enum class values to add css styles to datatable 
- * 				removed displayTutotList() unwanted method
+ * 				removed displayTutotList() unwanted method, added AJAX on error method
  */
 
 window.tutorList = null;
@@ -9,10 +9,18 @@ window.ApplicationStatus = null;
 
 window.onload = function() {
 	listAllTutors();
-	$(".hide-value").hide();
 };
 
+/**
+ * listAllTutors() used to list all tutors in the tutor table. 
+ * This will list tutors in descending order.
+ * @author JH
+ */
 function listAllTutors(){
+	
+	$("#button-all").addClass("active");
+	$("#button-new").removeClass("active");
+	
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
@@ -29,7 +37,7 @@ function listAllTutors(){
 
 				tutorDataTable();
 				    $('#example tbody').on('click', 'tr', function () {
-				    	   var tutorCode = $(this).find("td:first").html();
+				    	   var tutorCode = $(this).find("td:second").html();
 				    	   
 				    	   var form = document.createElement('form');
 				    	   form.method = 'post';
@@ -44,12 +52,24 @@ function listAllTutors(){
 				    });
 			}
 		},
+		error : function(x, status, error) {
+			var err = displayErrorMessage(x, status, error);
+			document.getElementById("userMessage").style.display = "block";
+			$("#userMessage").html(err);
+		}
 	});
 }
 
-
-
+/**
+ * This listTutorRequests() method will list all the new 
+ * tutor requests. ( where, ApprovalStatus = PENDING)
+ * @author JH
+ */
 function listTutorRequests(){
+	
+	$("#button-new").addClass("active");
+	$("#button-all").removeClass("active");
+	
 	$.ajax({
 		url : '/AdminController',
 		method : 'POST',
@@ -81,9 +101,19 @@ function listTutorRequests(){
 				    });
 			}
 		},
+		error : function(x, status, error) {
+			var err = displayErrorMessage(x, status, error);
+			document.getElementById("userMessage").style.display = "block";
+			$("#userMessage").html(err);
+		}
 	});
 }
 
+
+/**
+ * tutorDataTable() used to display tutor details into a datatable
+ * @author JH
+ */
 function tutorDataTable(){
 	var t =  $('#example').DataTable();
 	var tutors = window.tutorList;
@@ -112,12 +142,12 @@ function tutorDataTable(){
 							} 
 							else if (value[11] == statusValues["INACTIVE"]) {
 								
-								value11 = ' <span class="glyphicon glyphicon-remove" style="color:blue;">'
+								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;">'
 								value11 += '<label class="hide-value">'	+ statusValues["INACTIVE"]+'</label></span>';
 								 
 							}
 							else if (value[11] == statusValues["PENDING"]) {
-								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:red;">'
+								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;">'
 								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>'
 							}
 							
@@ -156,47 +186,4 @@ t.row.add(
 	}
 	
 }
-
-
-function displayTutotList(){
 	
-	var tutors = window.tutorList;
-	$('#example').DataTable();
-	var singleTutorElement = '';
-
-	if (tutors !== undefined & tutors !== null) {
-		$.each(tutors, function(index, value) {
-			
-			singleTutorElement += '<tr>';
-			singleTutorElement += '<td>' + value[0] + '</td>';
-			singleTutorElement += '<td>' + value[1] + value[2] + value[3] + '</td>';
-			singleTutorElement += '<td>' + value[4] + '</td>';
-			singleTutorElement += '<td>' + value[5] + '</td>';
-			singleTutorElement += '<td>' + value[6] + + value[7] + value[8] + '</td>';
-			singleTutorElement += '<td>' + value[6] + + value[9] + value[10] + '</td>';
-			singleTutorElement += '<td>' + value[12] + + value[13] + value[14] + '</td>';
-			singleTutorElement += '<td>' + value[15] + '</td>';
-			singleTutorElement += '<td>' + value[6] + '</td>';
-			singleTutorElement += '<td>' + value[16] + '</td>';
-			
-			if( value[11] == 1){
-				singleTutorElement += '<td>' + value[11] + ' <span class="glyphicon glyphicon-ok"></span></td>';
-			}else if( value[11] == 0){
-				singleTutorElement += '<td>' + value[11] + ' <span class="glyphicon glyphicon-remove"></span></td>';
-			}
-			if( value[17] == 1){
-				singleTutorElement += '<td>' + value[17] + ' <span>Active</span></td>';
-			}else if( value[17] == 0){
-				singleTutorElement += '<td>' + value[17] + ' <span>Inactive </span></td>';
-			}
-//			singleTutorElement += '<td>' + value[17] + '</td>';
-			singleTutorElement += '</tr>';
-			
-		});
-	}
-
-	var tableElement = $("#example");
-	tableElement.html(tableElement);
-	
-	
-}	
