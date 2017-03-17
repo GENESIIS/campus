@@ -1,3 +1,4 @@
+<!-- 20170317 JH c134-admin-list-new-tutor-requests added new style .hide-value to hide the content of approval status column, imported AJAX error handling js -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -30,6 +31,9 @@
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 </head>
 <style type="text/css">
+.hide-value{
+	display: none; 
+}
 .main-category .content-holder .course-filter-panel .filter-result-table .course-info
 	{
 	display: block;
@@ -110,8 +114,8 @@
 			<!-- Page content -->
 
 			<ul class="nav nav-pills pull-right" role="tablist">
-				<li class="active"><a onclick="listAllTutors();">All</a></li>
-				<li><a onclick="listTutorRequests();">new</a></li>
+				<li class="" id="button-all"><a onclick="listAllTutors();">All</a></li>
+				<li id="button-new"><a onclick="listTutorRequests();">new</a></li>
 			</ul>
 
 			<br />
@@ -157,6 +161,9 @@
 	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	
+		<!-- error handling java script -->
+	<script src="/dist/js/error-handling.js" type="text/javascript"></script>
 
 </body>
 </html>
