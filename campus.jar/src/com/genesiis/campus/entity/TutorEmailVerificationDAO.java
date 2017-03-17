@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170312 CW C147 modified findById method & removed some commented lines
 //20170313 CW C147 modified update method & removed comment on executeUpdate method calling
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw modify verifyHashCode method, add MinuteDiff to the collection fix query error 
+//20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance
 
 import com.genesiis.campus.command.CmdTutorEmailVerification;
 import com.genesiis.campus.entity.model.Tutor;
@@ -42,7 +43,6 @@ public class TutorEmailVerificationDAO implements ICrud {
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.TUTOR SET HASHCODE=?, MODON=?, HASHGENTIME=?  WHERE CODE=? ";
 		PreparedStatement ps = null;
 		int rowInserted = -1;
 		try {
@@ -55,6 +55,7 @@ public class TutorEmailVerificationDAO implements ICrud {
 			long time = System.currentTimeMillis();
 			java.sql.Timestamp hashGenDate = new java.sql.Timestamp(time);
 			
+			String query = "UPDATE CAMPUS.TUTOR SET HASHCODE=?, MODON=?, HASHGENTIME=?  WHERE CODE=? ";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, tutor.getHashCode());
 			ps.setDate(2, modDate);
@@ -105,21 +106,20 @@ public class TutorEmailVerificationDAO implements ICrud {
 			throws SQLException, Exception {
 
 		Collection<Collection<String>> emailCollection = new ArrayList<Collection<String>>();
-
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE FROM CAMPUS.TUTOR WHERE EMAIL =? AND ISAPPROVED = ? ";
 		try {
 			final Tutor tutor = (Tutor) data;
-			ArrayList<String> singleTutor = new ArrayList<String>();
 			conn = ConnectionManager.getConnection();
+			String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE FROM CAMPUS.TUTOR WHERE EMAIL =? AND ISAPPROVED = ? ";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, tutor.getEmailAddress());
 			preparedStatement.setString(2, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
 
 			rs = preparedStatement.executeQuery();
 			if (rs.next()) {
+				ArrayList<String> singleTutor = new ArrayList<String>();
 				singleTutor.add(rs.getString("FIRSTNAME"));
 				singleTutor.add(rs.getString("LASTNAME"));
 				singleTutor.add(rs.getString("EMAIL"));
@@ -138,7 +138,6 @@ public class TutorEmailVerificationDAO implements ICrud {
 		}
 		return emailCollection;
 	}
-
 	
 	/**
 	 * to get the relevant details to verify the tutor entered hashcode
@@ -152,14 +151,13 @@ public class TutorEmailVerificationDAO implements ICrud {
 			throws SQLException, Exception {
 		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
 
-		String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.TUTOR WHERE EMAIL =? AND HASHCODE =? AND ISAPPROVED = ?";
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		int minitDiff = 0;
 		try {
 			final Tutor tutor = (Tutor) data;
 			conn = ConnectionManager.getConnection();
+			String query = "SELECT USERNAME, FIRSTNAME, LASTNAME, EMAIL, CODE, HASHGENTIME, DATEDIFF(MINUTE ,HASHGENTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.TUTOR WHERE EMAIL =? AND HASHCODE =? AND ISAPPROVED = ?";
 			preparedStatement = conn.prepareStatement(query);
 			
 			preparedStatement.setString(1, tutor.getEmailAddress());
@@ -169,7 +167,6 @@ public class TutorEmailVerificationDAO implements ICrud {
 			rs = preparedStatement.executeQuery();
 			if (rs.next()) {
 					ArrayList<String> singleTutor = new ArrayList<String>();
-					singleTutor = new ArrayList<String>();
 
 					singleTutor.add(rs.getString("FIRSTNAME"));
 					singleTutor.add(rs.getString("LASTNAME"));
