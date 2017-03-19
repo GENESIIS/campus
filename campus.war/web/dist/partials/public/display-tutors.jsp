@@ -30,7 +30,7 @@
 	<script src="/dist/js/main.js"></script>
     
 </head>
-<body>
+<body onload="getCategoryData();">
 
 <!-- Header-->
 <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
@@ -119,7 +119,7 @@
 <footer>
     <div class="ft-top"></div>
     <div class="ft-bottom text-center">
-        <label for="Copyright">Copyright � Campus.lk</label>
+        <label for="Copyright">Copyright @ Campus.lk</label>
     </div>
 </footer>
 <!-- End Footer -->
@@ -131,7 +131,7 @@
 	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	
 	<!-- header load helper  -->
-	<script src="/dist/js/header/ui-populate-helper.js"></script>
+	<script src="/dist/js/header/ui-populate-helper.js"  type="text/javascript"></script>
 	
 	<!-- page load helper -->
 	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
