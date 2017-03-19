@@ -1,6 +1,7 @@
 package com.genesiis.campus.validation;
 
 //20161024 DN c10-contacting-us created the initial Operation.java version
+//20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20170302 JH c96-public-list-all-tutors added PUBLIC_LIST_ALL_TUTORS enum
 
 /**
@@ -10,6 +11,7 @@ package com.genesiis.campus.validation;
 public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
+	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""), 
 	PUBLIC_LIST_ALL_TUTORS("PUBLIC_LIST_ALL_TUTORS", ResponseType.JSON, "/dist/public/display-tutors.jsp");
 			
 	private final String commandString;
