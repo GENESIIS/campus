@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170221 DJ c145-add-enhanced-programme Add method retrieveProviderTown(IDataHelper helper, IView iView).
 //20170316 DJ c152-add-enhanced-programme-insertion: initiated method manageSemesterInsertion().
 //20170317 DJ c152-add-enhanced-programme-insertion: initiated method manageModuleInsertion(), manageIntakeInsertion().
+//20170319 DJ c152-add-enhanced-programme-insertion: initiated method populateAddModuleView().
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.DistrictICrud;
@@ -67,6 +68,8 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				manageModuleInsertion(helper, iView);
 			} else if ("ADD_INTAKE_DETAILS".equalsIgnoreCase(ccoString)) {
 				manageIntakeInsertion(helper, iView);
+			}else if ("LIST_MODULE_TAB".equalsIgnoreCase(ccoString)) {
+				populateAddModuleView(helper, iView);
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception " + exception);
@@ -265,7 +268,18 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 			helper.setAttribute("successMessage", "success");
 		}
 		// }
-
+	}
+	
+	/** Populating module insertion interface.
+	 * @author DJ dumani
+	 * @param helper 	  
+	 * @param iView 
+	 */	
+	private void populateAddModuleView(IDataHelper helper, IView iView)throws Exception {
+		//TODO : List all the semester to a drop down list
+		final Collection<Collection<String>> semesterCollection=programmeDAO.getAllSemesters();
+		helper.setAttribute("semesterCollection", semesterCollection );
+		
 	}
 
 }
