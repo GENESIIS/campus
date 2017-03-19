@@ -5,7 +5,8 @@
 <!-- 20170306 JH c96 changed datatable javascipt file imports to the correct folder path -->
 <!-- 20170306 JH c96 added userMessage div section for alert messages  -->
 <!-- 20170309 JH c96 changed tutor table element id 'example' into 'tutorListTable' -->
-
+<!-- 20170319 JH c96 added header scripts and header.jsp -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,59 +33,7 @@
 <body>
 
 <!-- Header-->
-<header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
-    <div class="top">
-        <div class="logo-brand">
-            <h1 class="logo-txt">Campus.lk</h1>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="menu-bar">
-            <div class="home pull-left">
-                <a href="../../../index.jsp" class="btn-home center-block"></a>
-            </div>
-            <!-- End home button -->
-            <div class="menu-tabs clearfix">
-                <!-- Main menu tabs -->
-                <div class="top-menus">
-                    <ul class="list-inline">
-                        <li><a href="javascript:">All Courses</a></li>
-                        <li><a href="about-us.jsp">About Us</a></li>
-                        <li><a href="contact-us.jsp">Contact Us</a></li>
-                        <li><a href="news.jsp">News</a></li>
-                        <li><a href="f-and-q.jsp">F & Q</a></li>
-                        <li><a href="rss.jsp">Rss</a></li>
-                    </ul>
-                </div>
-                <!-- End Main menu tabs -->
-
-                <!-- Course Category tabs -->
-                <div class="bottom-menus">
-                    <ul class="list-inline">
-                        <li><a href="javascript:">Pre Education</a></li>
-                        <li><a href="javascript:">School Education</a></li>
-                        <li><a href="category/higher-education.jsp">Higher
-                            Education</a></li>
-                        <li><a href="javascript:">Corporate Training</a></li>
-                        <li><a href="javascript:">Vocational Training</a></li>
-                        <li><a href="javascript:">Talent & Skill</a></li>
-                    </ul>
-                </div>
-                <!-- End Course Category tabs -->
-            </div>
-            <div class="keyword-search pull-right">
-                <div class="search-bar">
-                    <!--<input type="text" placeholder="Keyword Search"> <a href="javascript:" class="colr-white">Enter</a>-->
-                </div>
-                <!-- End Keyword Search -->
-                <div class="login-link">
-                    <a href="javascript:" class="colr-white">Login</a>
-                </div>
-            </div>
-            <!-- End keyword search -->
-        </div>
-    </div>
-</header>
+<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 <!-- End Header -->
 
 <div class="tutors-screen clearfix">
@@ -180,6 +129,9 @@
 	<script src="/dist/bower-components/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/bower-components/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<!-- header load helper  -->
+	<script src="/dist/js/header/ui-populate-helper.js"></script>
 	
 	<!-- page load helper -->
 	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
