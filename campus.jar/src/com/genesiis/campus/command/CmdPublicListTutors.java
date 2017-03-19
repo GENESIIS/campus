@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20170313 JH c96-public-list-all-tutors remove repeating qualification records and select only the highest qualification, removed unwanted comments, return qualification records
 //			added addListToMap() method to remove repeating codes
 //20170314 JH c96-public-list-all-tutors added comments and removed unwanted logger statements 
+//20170319 JH c96-public-list-all-tutors modified the SystemMessage valued to return only the String message instead of a complete enum
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -83,7 +84,7 @@ public class CmdPublicListTutors implements ICommand{
 			throw exception;
 		}finally{
 			final String tutorImagePath = SystemConfig.TUTOR_PROFILE_IMAGE_PATH.getValue1();
-			helper.setAttribute("userMessage", message.toString());
+			helper.setAttribute("userMessage", message.message());
 			helper.setAttribute("tutorProfileImagePath", tutorImagePath);
 		}
 		
