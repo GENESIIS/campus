@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170302 JH c96-public-list-all-tutors getAll() method coding 
 //20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
 //20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call, added method comments and removed unwanted imports
+//20170320 JH c96-public-list-all-tutors fixed missing @Override annotation and method signature changes from IDCrud
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -21,39 +22,46 @@ import java.util.Collection;
 public class PublicTutorDAO implements ICrud {
 
 	static Logger log = Logger.getLogger(PublicTutorDAO.class.getName());
-	
+
+	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int update(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int delete(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Collection findById(Object code) throws SQLException, Exception {
+	@Override
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * getAll() method used to get tutors with their basic information to list for the public user.
-	 * This includes tutor details related to TUTOR table as well as program MODULE table which 
-	 * has a foreign key relationship to the tutor table.
+	 * getAll() method used to get tutors with their basic information to list
+	 * for the public user. This includes tutor details related to TUTOR table
+	 * as well as program MODULE table which has a foreign key relationship to
+	 * the tutor table.
 	 * 
 	 * 
-	 * @return collection of tutor basic details with category, major and highest qualification details
+	 * @return collection of tutor basic details with category, major and
+	 *         highest qualification details
 	 * @author JH
 	 */
-	public Collection getAll() throws SQLException, Exception {
-		final StringBuilder query = new StringBuilder();
+	@Override
+	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 
+		final StringBuilder query = new StringBuilder();
 
 		CallableStatement callableStatement = null;
 		ResultSet rs = null;
@@ -64,15 +72,16 @@ public class PublicTutorDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 
 			/*
-			 * callable statement public_list_all_tutors is created to avoid 
-			 * multiple database calls. Due to the Collection return type of the method
-			 * it is impossible to return separate result sets which are related to tutor
-			 * table and program module table. Therefore the following procedure call is created
+			 * callable statement public_list_all_tutors is created to avoid
+			 * multiple database calls. Due to the Collection return type of the
+			 * method it is impossible to return separate result sets which are
+			 * related to tutor table and program module table. Therefore the
+			 * following procedure call is created
 			 */
-			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?)}");	
+			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?)}");
 			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			callableStatement.executeQuery();
-			
+
 			rs = callableStatement.executeQuery();
 
 			while (rs.next()) {
@@ -97,7 +106,7 @@ public class PublicTutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("QUALIFICATION"));
 				singleTutorList.add(rs.getString("TOWN"));
 				singleTutorList.add(rs.getString("TOWNCODE"));
-				
+
 				tutorCollection.add(singleTutorList);
 			}
 
@@ -113,22 +122,23 @@ public class PublicTutorDAO implements ICrud {
 			DaoHelper.cleanup(conn, callableStatement, rs);
 		}
 		return tutorCollection;
+
 	}
 
-	public int add(Object object, Connection conn) throws SQLException,
-			Exception {
+	@Override
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int update(Object object, Connection conn) throws SQLException,
-			Exception {
+	@Override
+	public int update(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int delete(Object object, Connection conn) throws SQLException,
-			Exception {
+	@Override
+	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
