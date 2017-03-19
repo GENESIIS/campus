@@ -27,9 +27,9 @@ public interface ProgrammeICrud extends ICrud {
 	
 	public Collection<Collection<String>> getAllClassTypes()throws SQLException,Exception;
 	
-	/*public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
+	public Collection<Collection<String>> getAllSemesters()throws SQLException,Exception;
 	
-	public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;*/
+	/*public Collection<Collection<String>> getAllProgrammeInterests()throws SQLException,Exception;*/
 	
 	public Collection<Collection<String>> getAllCategories()throws SQLException,Exception;
 	
