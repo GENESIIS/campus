@@ -136,11 +136,11 @@
 				<input id="duration" type='text' onclick="clearField('displayDurationInfor')">
 			</div>
 			<br>
-			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
-				type="radio" name="bannerEnable" value="true" checked="checked"> <label
-				for="bannerEnable">Yes</label> <input type="radio"
-				name="bannerEnable" value="false" > <label
-				for="bannebannerDisablerEnable">No</label>
+			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
+			<label for="bannerEnable" hidden='true'>true</label>
+			 <input type="radio" name="bannerEnable" id='bannerEnable'value="true" >YES 
+			 <label for="bannerDissable" hidden='true'>false</label>
+			<input type="radio" name="bannerEnable" id='bannerDissable' value="false" >NO
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
