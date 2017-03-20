@@ -11,6 +11,8 @@
 <!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
 <!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk, change html element
 				 names to match with the back end validation in general information, contact information wip-->
+<!-- 20170320 JH c141-ui-integration-add-course-provider change html element names to match with the back end validation in 
+				contact information, social media and admin info wip-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -168,7 +170,7 @@
 												<div class="col-xs-6">
 													<label for="select-city"><span class="mandatory">*</span>
 														City</label>
-													<div class="input-wrapper has-select">
+													<div class="input-wrapper has-select" id="town-List">
 													<a class="error-info" href="#" data-toggle="tooltip"
 															title="Hooray!" id="errorSelectedTown"></a>
 													</div>
@@ -181,17 +183,17 @@
 													<label for="address-line-1"><span class="mandatory">*</span>
 														Street Address - Line 1</label>
 													<div class="input-wrapper">
-														<input name="addressLine1" type="text"
-															class="form-control" id="address-line-1" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<input name="address1" type="text"
+															class="form-control" id="address1" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress1"
 															title="Hooray!"></a>
 													</div>
 												</div>
 												<div class="form-group col-xs-12">
 													<label for="address-line-2">Street Address - Line 2</label>
 													<div class="input-wrapper">
-														<input name="addressLine2" type="text"
-															class="form-control" id="address-line-2" placeholder="">
+														<input name="address2" type="text"
+															class="form-control" id="address2" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip"
 															title="Hooray!"></a>
 													</div>
@@ -199,8 +201,8 @@
 												<div class="form-group col-xs-12">
 													<label for="address-line-3">Street Address - Line 3</label>
 													<div class="input-wrapper">
-														<input name="addressLine3" type="text"
-															class="form-control" id="address-line-3" placeholder="">
+														<input name="address3" type="text"
+															class="form-control" id="address3" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip"
 															title="Hooray!"></a>
 													</div>
@@ -222,7 +224,7 @@
 													class="col-xs-3 input-border-r" id="land-line-1-area-code"
 													placeholder=""> <input name="landPhone1" type="tel"
 													class="col-xs-6" id="land-line-1" placeholder=""> <span
-													class="phone-no-hint">+94 77 729 729</span> <a
+													class="phone-no-hint" id="landNumber1">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
 													title="Hooray!"></a>
 											</div>
@@ -237,7 +239,7 @@
 													class="col-xs-3 input-border-r" id="land-line-2-area-code"
 													placeholder=""> <input name="landPhone2" type="tel"
 													class="col-xs-6" id="land-line-2" placeholder=""> <span
-													class="phone-no-hint">+94 77 729 729</span>
+													class="phone-no-hint" id="landNumber2">+94 77 729 729</span>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -251,7 +253,7 @@
 													class="col-xs-3 input-border-r" id="mobile-line-area-code"
 													placeholder=""> <input name="mobilePhone1"
 													type="tel" class="col-xs-6" id="mobile-line" placeholder="">
-												<span class="phone-no-hint">+94 77 729 729</span> <a
+												<span class="phone-no-hint" id="lastMobileNumber">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
 													title="Hooray!"></a>
 											</div>
@@ -278,8 +280,8 @@
 												General Email</label>
 											<div class="input-wrapper">
 												<input name="generalEmail" type="email" class="form-control"
-													id="general-email" placeholder=""> <a
-													class="error-info" href="#" data-toggle="tooltip"
+													id="generalEmail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorGeneralEmail"
 													title="Hooray!"></a>
 											</div>
 										</div>
@@ -287,9 +289,9 @@
 											<label for="inquiry-email"><span class="mandatory">*</span>
 												Course Inquiry Email</label>
 											<div class="input-wrapper">
-												<input name="inquiryEmail" type="email" class="form-control"
-													id="inquiry-email" placeholder=""> <a
-													class="error-info" href="#" data-toggle="tooltip"
+												<input name="inquiryMail" type="email" class="form-control"
+													id="inquiryMail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorInquiryMail"
 													title="Hooray!"></a>
 											</div>
 										</div>
@@ -297,7 +299,9 @@
 											<label for="web-link">Web Link</label>
 											<div class="input-wrapper">
 												<input name="webLink" type="url" class="form-control"
-													id="web-link" placeholder="">
+													id="webLink" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
+													title="Hooray!"></a>
 											</div>
 										</div>
 									</div>
@@ -314,36 +318,45 @@
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="facebook-url">Facebook URL</label>
 											<div class="input-wrapper">
-												<input name="facebookURL" type="url" class="form-control"
-													id="facebook-url" placeholder="">
+												<input name="facebook" type="url" class="form-control"
+													id="facebook" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink" title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="linkedin-url">LinkedIn URL</label>
 											<div class="input-wrapper">
-												<input name="linkedinURL" type="url" class="form-control"
-													id="linkedin-url" placeholder="">
+												<input name="linkdedIn" type="url" class="form-control"
+													id="linkdedIn" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorLinkedIn"
+													title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="twitter-url">Twitter URL</label>
 											<div class="input-wrapper">
-												<input name="twitterURL" type="url" class="form-control"
-													id="twitter-url" placeholder="">
+												<input name="twitter" type="url" class="form-control"
+													id="twitter" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorTwitter"
+													title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="instagram-url">Instagram URL</label>
 											<div class="input-wrapper">
-												<input name="instagramURL" type="url" class="form-control"
-													id="instagram-url" placeholder="">
+												<input name="instagram" type="url" class="form-control"
+													id="instagram" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorInstagram"
+													title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="myspace-url">MySpace URL</label>
 											<div class="input-wrapper">
-												<input name="myspaceURL" type="url" class="form-control"
-													id="myspace-url" placeholder="">
+												<input name="whatsapp" type="url" class="form-control"
+													id="whatsapp" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorMyspace"
+													title="Hooray!"></a>
 											</div>
 										</div>
 									</div>
@@ -355,13 +368,17 @@
 											<div class="input-wrapper">
 												<input name="whatsAppNo" type="tel" class="form-control"
 													id="whatsapp-no" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWhatsapp"
+													title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
 											<label for="viber-no">Viber Number</label>
 											<div class="input-wrapper">
-												<input name="viberNo" type="tel" class="form-control"
-													id="viber-no" placeholder="">
+												<input name="viber" type="tel" class="form-control"
+													id="viber" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorViber"
+													title="Hooray!"></a>
 											</div>
 										</div>
 									</div>
@@ -376,13 +393,13 @@
 								<div class="form-group col-sm-12 text-center">
 									<label for="course-provider-type"><span
 										class="mandatory">*</span> Course Provider Type</label>
-									<div class="input-wrapper has-select text-center">
-										<select name="cProviderType" id="course-provider-type">
+									<div class="input-wrapper has-select text-center" id="providerTypeList">
+									<%--	<select name="cProviderType" id="course-provider-type">
 											<option selected>Choose a course provider type</option>
 											<option value="Individual">Individual</option>
 											<option value="Group">Group</option>
 										</select> <a class="error-info" href="#" data-toggle="tooltip"
-											title="Hooray!"></a>
+											title="Hooray!"></a> --%>
 									</div>
 								</div>
 							</div>
@@ -394,7 +411,7 @@
 									title="Hooray!"></a>
 								</label>
 								<div class="form-group col-sm-12 text-center center-block">
-									<label class="radio-inline radio-lbl"><input
+								<%--	<label class="radio-inline radio-lbl"><input
 										type="radio" name="cProviderStatus" value="Active">Active</label>
 									<label class="radio-inline radio-lbl"><input
 										type="radio" name="cProviderStatus" value="Inactive">Inactive</label>
@@ -403,7 +420,14 @@
 									<label class="radio-inline radio-lbl"><input
 										type="radio" name="cProviderStatus" value="Expired">Expired</label>
 									<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Permanent">Permanent</label>
+										type="radio" name="cProviderStatus" value="Permanent">Permanent</label> --%>
+										
+										<c:forEach items="${applicationStatusBean.values}"
+										var="applicationStatus">
+										
+										<label class="radio-inline radio-lbl">
+										<input type="radio" name="providerStatus"  id="providerStatus" value="${applicationStatus.statusValue}">${applicationStatus}</label>
+									 </c:forEach>
 								</div>
 
 							</div>
@@ -553,8 +577,7 @@
 	<!-- custom javascript -->
 	<!-- <script language="JavaScript" type="text/javascript" src="/dist/js/header/ui-populate-helper.js"></script> -->
 
-	<script type="text/javascript"
-		src="/dist/js/admin/course-provider-validator.js"></script>
+	<script src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
 
 </body>
