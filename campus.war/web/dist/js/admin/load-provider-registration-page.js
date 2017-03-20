@@ -189,10 +189,10 @@ function displayAccountStatusList() {
 				.each(
 						accountList,
 						function(index, value) {
-							singleTypeElement += '<input type="radio" name="accountStatus" id="accountStatus" value="'
-									+ value[0] + '"/>';
+							singleTypeElement += '<label class="radio-inline radio-lbl">';
+							singleTypeElement += '<input type="radio" name="accountStatus" id="accountStatus" value="' + value[0] + '">';
 							singleTypeElement += value[1];
-							singleTypeElement += '&nbsp;&nbsp;';
+							singleTypeElement += '</label>&nbsp;&nbsp;';
 
 						});
 	}
@@ -266,7 +266,9 @@ function displayProviderCountries() {
 function getDataOnCountrySelection() {
 
 	if (!isempty(document.getElementById('selectedCountry').value)) {
-		$("#errorSelectedCountry").val = "**Select a country to proceed.";
+		$('#errorSelectedCountry').removeAttr('title');
+		  $('#errorSelectedCountry').attr('data-original-title', "**Select a country to proceed.");
+	//	$("#errorSelectedCountry").val = "**Select a country to proceed.";
 		$("#selectedCountry").addClass("has-error");
 		document.getElementById('landNumber1').innerHTML = "";
 		document.getElementById('landNumber2').innerHTML = "";
@@ -287,6 +289,7 @@ function getProviderTownListData() {
 
 	if (selectedCountry == '' || selectedCountry == null) {
 		document.getElementById('errorSelectedTown').innerHTML = "**Select your country first.";
+		$("#town-List").addClass("has-error");
 	} else {
 		document.getElementById('errorSelectedTown').innerHTML = "";
 		$.ajax({
@@ -363,56 +366,56 @@ function landPhoneNubmerHelper() {
 		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
 		
 	}else{
-		 if (!isempty(areaCode)) {
-			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
-
-		}if(!isempty(networkCode)){
-			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
-			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
-		
-		} if (isempty(areaCode)) {
-			if (isPatternMatch(integerPattern, areaCode)) {
-				var lastLandNumber1 = "+" + country + " " + areaCode + " "
-						+ land1;
-				var lastLandNumber2 = "+" + country + " " + areaCode + " "
-						+ land2;
-
-				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
-				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
-
-				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
-					document.getElementById('landNumber1').innerHTML = "";
-					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
-				}
-				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
-					document.getElementById('landNumber2').innerHTML = "";
-					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
-
-				}
-			} else {
-				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
-			}
-
-
-		} if(isempty(networkCode)){
-			 if(!isPatternMatch(integerPattern, networkCode)){
-
-				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
-				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
-
-							
-			 } else if (isPatternMatch(integerPattern, networkCode)) {
-
-				var lastMobilNumber = "+" + country + " " + networkCode + " "
-						+ mobile;
-
-				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
-					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
-				}
-			}
-
-		}
+//		 if (!isempty(areaCode)) {
+//			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
+//
+//		}if(!isempty(networkCode)){
+//			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
+//			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
+//		
+//		} if (isempty(areaCode)) {
+//			if (isPatternMatch(integerPattern, areaCode)) {
+//				var lastLandNumber1 = "+" + country + " " + areaCode + " "
+//						+ land1;
+//				var lastLandNumber2 = "+" + country + " " + areaCode + " "
+//						+ land2;
+//
+//				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
+//				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
+//
+//				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
+//					document.getElementById('landNumber1').innerHTML = "";
+//					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
+//				}
+//				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
+//					document.getElementById('landNumber2').innerHTML = "";
+//					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
+//
+//				}
+//			} else {
+//				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
+//			}
+//
+//
+//		} if(isempty(networkCode)){
+//			 if(!isPatternMatch(integerPattern, networkCode)){
+//
+//				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
+//				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
+//
+//							
+//			 } else if (isPatternMatch(integerPattern, networkCode)) {
+//
+//				var lastMobilNumber = "+" + country + " " + networkCode + " "
+//						+ mobile;
+//
+//				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+//				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
+//					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
+//				}
+//			}
+//
+//		}
 		
 	}
 
