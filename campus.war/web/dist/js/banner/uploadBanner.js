@@ -260,6 +260,8 @@ function populateDataList(responseAttribute,elementId){
 	var elementWrapperSet = $('#'+elementId);
 	// visually remove all the option element
 	elementWrapperSet.find('option').remove();
+	// visually remove all the input element
+	elementWrapperSet.find('input').remove();
 	
 	/* use the response and process the banner slot list
 	* this brings the collection that contains the Collection<collection<String>>
@@ -344,7 +346,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	var codeOfSelectedPage= $('#sPageCode').val();
 	var bannerSlotCode=$('#sSlotCode').val();
 	var displayDusration= $('#duration').val();
-	var banerToBeActive=$('input:radio[name=bannerEnable]:checked').val(); // validate for 'undefined'
+	var banerToBeActive=$('input[name=bannerEnable]:checked').val(); // validate for 'undefined'
 	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
 	var bannerPublishingEndDate= $('#endtDate').val();
 	var urlMiniWebOrPage = $('input:radio[name=urlspecifier]:checked').val();
@@ -384,11 +386,11 @@ $(document).on('click','#uploadBbutton', function(event){
 				if(response['successCode']==1){					
 					cssColour='green';
 					proceed=true;
-					$(':input').val('');
+					BannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name to the array that consisits of the page user inputs 
 				} 
 				
 				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
-				sendBannerPaageFieldInputs(response['bannerImageName'],proceed);
+				sendBannerPaageFieldInputs(BannerFieldInputValues,proceed);
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
@@ -397,13 +399,15 @@ $(document).on('click','#uploadBbutton', function(event){
 				 * message pop up modal and display the error
 				 */
 				$('#bannerUploadPopUp').modal('hide');
+				displayBannerManagerPrerequistData(); // reload the date if the operation success or not the fields are cleared 20170320-DN
 				displayLabelMessage('messagePopUp','displayLabel','red',msg);
 				
 				},
 			complete: function(response,status){
 				$('#bannerModalClose').show();
 				$('#uploadBbutton').prop('disabled',false);
-				displayBannerManagerPrerequistData(); // reload the date if the operation success or not the fields are cleared 20170320-DN
+				$(':input').val('');
+			    
 
 			}
 		});
@@ -532,14 +536,15 @@ if(elegibleToProceed){
 					cssColour='green';
 				}
 				$('#bannerUploadPopUp').modal('hide');
+				displayBannerManagerPrerequistData();
 				displayLabelMessage('messagePopUp','displayLabel',cssColour,response['message']);	
 				
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
 				$('#bannerUploadPopUp').modal('hide');
-				displayLabelMessage('messagePopUp','displayLabel','red',msg);
-				
+				displayBannerManagerPrerequistData();
+				displayLabelMessage('messagePopUp','displayLabel','red',msg);				
 				}
 		});
 		
