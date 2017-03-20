@@ -7,6 +7,7 @@
  * 20170313 JH c96 listPublicTutors() and DisplayTutorTable() methods modified to display tutor major, category and qualification details wip
  * 20170314 JH c96 DisplayTutorTable(): added styles to html labels, removed commented and codes in listPublicTutors() and selectTutorRecord(),
  * 				created selectTutorMajor() and selectTutorCategory() methods, added onclick function to tutor name
+ * 20170320 JH c96 added getCategoryData() method to window.onload function to call header populate methods
  */
 
 window.tutorList = null;
@@ -16,6 +17,7 @@ window.categoryList = null;
 window.qualificationList = null;
 
 window.onload = function() {
+	getCategoryData();
 	listPublicTutors();
 };
 
