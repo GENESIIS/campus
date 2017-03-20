@@ -72,7 +72,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	private ImageUtility imageUtility =new ImageUtility();
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	private String message = "";
-	private static FileUtility fileUtility = new FileUtility();
+	private static final FileUtility fileUtility = new FileUtility();
 	
 	
 	/* (non-Javadoc)
@@ -561,8 +561,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			throw exp;
 		}	
 		
-	 	setResponseCridentials(helper); 
-	 	this.setFileUtility(null); // clear the static class field on completion.
+	 	setResponseCridentials(helper);
 	 	return view;
 	}
 
@@ -694,9 +693,7 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 		this.message = message;
 	}
 	
-	private void setFileUtility(FileUtility fileUtility) {
-		CmdAdminBannerUpload.fileUtility = fileUtility;
-	}
+	
 	
 	/**
 	 * Gets the success code.
