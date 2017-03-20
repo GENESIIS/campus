@@ -25,14 +25,17 @@
  *  20170306 DN c131-admin-manage-banner-upload-banner-image-dn  modified the data list listing to over come the firefox browser issue by
  *  			changing populateDataList() and in  getPreRequisitPageData() where ever required.  
  *  20170308 DN c131-admin-manage-banner-upload-banner-image-dn unnecessary alerts have been deleted from the script.
- *  20170316 DN clear page buttons onclidk event shifted in to the document ready function body to correct QA point 2 
- *  		    stated in 201703132232-CN - Local test summary.
+ *  20170316 DN c131-admin-manage-banner-upload-banner-image-dn clear page buttons on click event shifted in to the document ready 
+ *  		    function body to correct QA point 2  stated in 201703132232-CN - Local test summary.
  *  			changed the information given to the user when date comparison get failed in validateUploadBannerEmbedData() to correct QA
  *  			comments 3/4 stated in  201703132232-CN - Local test summary.
  *  			Introduced a mouse down event on input type file and clears any user informations given. Corrected the QA point 5 stated in 
  *  			comment 201703132232-CN - Local test summary.
  *  			On modal window close click event let the data of the banner page  to be reloaded and a function implemented.
  *  			Wrote an event trigger to clear the name of the selected image name of input type="file" element of the modal window 
+ *  20170320 DN c131-admin-manage-banner-upload-banner-image-dn. To coop the situation where the image size is > allowable size,
+ *  			and retains the error message the success: block  ad the complete blocks are redesigned to correct QA point 6 stated in 
+ *  			comment 201703132232-CN - Local test summary.
  */
 
 /*
@@ -377,12 +380,15 @@ $(document).on('click','#uploadBbutton', function(event){
 			processData : false,
 			success: function(response){
 				var cssColour='red';
-				if(response['successCode']==1){
-					BannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name
+				var proceed = false;
+				if(response['successCode']==1){					
 					cssColour='green';
-				}
-				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
+					proceed=true;
+					$(':input').val('');
+				} 
 				
+				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
+				sendBannerPaageFieldInputs(response['bannerImageName'],proceed);
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
@@ -390,25 +396,15 @@ $(document).on('click','#uploadBbutton', function(event){
 				 * close the image uploading modal and opens the 
 				 * message pop up modal and display the error
 				 */
-		
 				$('#bannerUploadPopUp').modal('hide');
 				displayLabelMessage('messagePopUp','displayLabel','red',msg);
 				
 				},
-			complete: function(response,status){ 
-				/*
-				 * the close span will be shown : either fails or success
-				 * user should have the ability to close the modal window
-				 */
+			complete: function(response,status){
 				$('#bannerModalClose').show();
-				if(status=="success"){
-					$('#uploadBbutton').prop('disabled',true);
-					var proceed = (response.responseText.result === "NO-DATA")?false:true;
-					sendBannerPaageFieldInputs(BannerFieldInputValues,proceed);
-				} else{
-					// fire the data field clear function
-					$(':input').val('');
-				}
+				$('#uploadBbutton').prop('disabled',false);
+				displayBannerManagerPrerequistData(); // reload the date if the operation success or not the fields are cleared 20170320-DN
+
 			}
 		});
 
