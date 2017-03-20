@@ -443,9 +443,9 @@
 											<label for="full-name"><span class="mandatory">*</span>
 												Full Name</label>
 											<div class="input-wrapper">
-												<input name="accUserFName" type="text" class="form-control"
-													id="full-name" placeholder=""> <a
-													class="error-info" href="#" data-toggle="tooltip"
+												<input name="providerPrivateName" type="text" class="form-control"
+													id="providerPrivateName" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateName"
 													title="Hooray!"></a>
 											</div>
 										</div>
@@ -453,9 +453,9 @@
 											<label for="contract-no"><span class="mandatory">*</span>
 												Contract Number</label>
 											<div class="input-wrapper">
-												<input name="accContractNo" type="text" class="form-control"
-													id="contract-no" placeholder=""> <a
-													class="error-info" href="#" data-toggle="tooltip"
+												<input name="providerContactNumber" type="text" class="form-control"
+													id="providerContactNumber" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorContactNumber"
 													title="Hooray!"></a>
 											</div>
 										</div>
@@ -463,17 +463,19 @@
 											<label for="account-email"><span class="mandatory">*</span>
 												Email</label>
 											<div class="input-wrapper">
-												<input name="accUserEmail" type="text" class="form-control"
-													id="account-email" placeholder=""> <a
-													class="error-info" href="#" data-toggle="tooltip"
+												<input name="providerEmail" type="text" class="form-control"
+													id="providerEmail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateEmail"
 													title="Hooray!"></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="account-desc">Description</label>
 											<div class="input-wrapper">
-												<textarea name="accDesc" class="form-control"
-													id="account-desc" rows="3"></textarea>
+												<textarea name="errorAccountDescription" class="form-control"
+													id="errorAccountDescription" rows="3"></textarea>
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorAccountDescription"
+													title="Hooray!"></a>
 											</div>
 										</div>
 									</div>
@@ -486,9 +488,9 @@
 													<label for="login-name"><span class="mandatory">*</span>
 														Username</label>
 													<div class="input-wrapper">
-														<input name="accUserLoginName" type="text"
-															class="form-control" id="login-name" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<input name="providerUsername" type="text"
+															class="form-control" id="providerUsername" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorUsername"
 															title="Hooray!"></a>
 													</div>
 												</div>
@@ -496,9 +498,9 @@
 													<label for="login-pwd"><span class="mandatory">*</span>
 														Password</label>
 													<div class="input-wrapper">
-														<input name="accUserLoginPWD" type="password"
-															class="form-control" id="login-pwd" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<input name="providerPassword" type="password"
+															class="form-control" id="providerPassword" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderPassword"
 															title="Hooray!"></a>
 													</div>
 												</div>
@@ -506,9 +508,9 @@
 													<label for="confirm-pwd"><span class="mandatory">*</span>
 														Confirm Password</label>
 													<div class="input-wrapper">
-														<input name="accUserLoginConPWD" type="password"
-															class="form-control" id="confirm-pwd" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<input name="cProviderPassword" type="password"
+															class="form-control" id="cProviderPassword" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorCProviderPassword"
 															title="Hooray!"></a>
 													</div>
 												</div>
@@ -516,12 +518,11 @@
 													<label for="account-category"
 														class="right-padding inline-info"> <span
 														class="mandatory">*</span> Account Status <a
-														class="error-info" href="#" data-toggle="tooltip"
+														class="error-info" href="#" data-toggle="tooltip" id="errorStatus"
 														title="Hooray!"></a>
-													</label> <label class="radio-inline radio-lbl"><input
-														type="radio" name="accStatus" value="Active">Active</label>
-													<label class="radio-inline radio-lbl"><input
-														type="radio" name="accStatus" value="Inactive">Inactive</label>
+													</label> 
+													
+													<div id="accountStatusList"></div>
 												</div>
 											</div>
 										</div>
