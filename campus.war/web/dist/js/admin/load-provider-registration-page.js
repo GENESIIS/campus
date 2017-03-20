@@ -13,6 +13,7 @@
 //20170301 JH c141-add-course-provider-issue-improvements saveCourseProvider(): AJAX error handling, show error message on error
 //20170316 JH c141-ui-integration-add-course-provider getDataOnCountrySelection(), displayProviderCountries(), getDataOnCountrySelection() changed to add
 //			  	css styles
+//20170320 JH c141-ui-integration-add-course-provider added isempty() method to validate input for whitespaces
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -492,5 +493,15 @@ function saveCourseProvider() {
 					});
 		}
 	}
+}
+
+/**
+ * @author JH
+ * @param fieldValue
+ *            it is the value of a document element
+ * @returns true if has content else false. (used to validate string values)
+ */
+function isempty(fieldValue) {
+	return (($.trim(fieldValue) == "") || (fieldValue == null)) ? false : true;
 }
 	
