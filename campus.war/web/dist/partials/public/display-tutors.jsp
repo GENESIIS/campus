@@ -30,7 +30,7 @@
 	<script src="/dist/js/main.js"></script>
     
 </head>
-<body onload="getCategoryData();">
+<body>
 
 <!-- Header-->
 <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
@@ -129,9 +129,6 @@
 	<script src="/dist/bower-components/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/bower-components/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	
-	<!-- header load helper  -->
-	<script src="/dist/js/header/ui-populate-helper.js"  type="text/javascript"></script>
 	
 	<!-- page load helper -->
 	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
