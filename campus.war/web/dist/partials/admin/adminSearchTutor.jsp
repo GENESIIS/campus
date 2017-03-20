@@ -1,3 +1,4 @@
+<!-- c133-admin-list-tutors removed unwanted commented codes -->
 <!-- 20170317 JH c134-admin-list-new-tutor-requests added new style .hide-value to hide the content of approval status column, imported AJAX error handling js -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -29,123 +30,71 @@
 	
 	  
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
-</head>
+
 <style type="text/css">
 .hide-value{
 	display: none; 
 }
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info
-	{
-	display: block;
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
-	{
-	display: inline-block;
-	width: 25%;
-	float: left;
-	border-right: 1px solid #e1e1e1;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: #193949;
-	line-height: 0px;
-	font-weight: 600;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .input
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	line-height: 0px;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .textarea
-	{
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
-	{
-	width: 16.66%;
-	text-align: center;
-	float: left;
-}
-.error-message{
-	color : red;
-}
 </style>
+</head>
+
 
 <body>
 	<!-- include Header-->
-	<header class="header"> <jsp:include
-		page="/dist/partials/layout/header.jsp"></jsp:include> </header>
+	<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 
 
 	<!-- Main Container - Higher-Education -->
-	<div class="main-category clearfix">
+	<div class="admin-content clearfix">
 
 		<!-- page inner header -->
 		<div class="inner-header">
-			<div class="category-name">
+			<div class="heading">
 				<h1>| Search Tutor</h1>
 			</div>
 		</div>
 		<!-- end inner header -->
-
+		
 		<div class="content-holder center-block clearfix">
-			<!-- Page content -->
 
-			<ul class="nav nav-pills pull-right" role="tablist">
-				<li class="" id="button-all"><a onclick="listAllTutors();">All</a></li>
-				<li id="button-new"><a onclick="listTutorRequests();">new</a></li>
-			</ul>
+            <div class="tutors-table">
+                <!-- Page content -->
+                <form action="/AdminController" method="POST" id="basicForm">
 
-			<br />
-			<table id="example" class="display" width="100%">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Code</th>
-						<th>Name</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Land Phone number</th>
-						<th>Mobile phone number</th>
-						<!-- 	<th>Address Line1</th>
-						<th>Address Line2</th>
-						<th>Address Line3</th> -->
-						<th>Town</th>
-						<th>Country</th>
-						<th>Approval status</th>
-						<th>Status</th>
-					</tr>
-					</tr>
-				</thead>
-			</table>
+					<div>
+						<ul class="nav nav-pills pull-right" role="tablist">
+							<li class="" id="button-all"><a onclick="listAllTutors();">All</a></li>
+							<li id="button-new"><a onclick="listTutorRequests();">new</a></li>
+						</ul>
+					</div>
+					<table id="tutors-table" class="display compact" width="100%">
+                        <thead>
+                            <tr>
+                            	<th></th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Land Phone number</th>
+                                <th>Mobile phone number</th>
+                                <th>Town</th>
+                                <th>Country</th>
+                                <th>Approval status</th>
+                                <th>Status</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </form>
+            </div>
+		    <!-- End tutors table  -->
 		</div>
+        <!-- End content-holder  -->
+	</div>
+	<!-- End Admin-content  -->
 
-	</div>
-	<!-- End page content  -->
-	</div>
-	<!-- End Main Container -->
 
 	<!-- Footer -->
 	<footer> <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
@@ -161,9 +110,6 @@
 	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	
-		<!-- error handling java script -->
-	<script src="/dist/js/error-handling.js" type="text/javascript"></script>
 
 </body>
 </html>

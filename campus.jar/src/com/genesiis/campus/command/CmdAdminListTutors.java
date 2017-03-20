@@ -3,6 +3,8 @@ package com.genesiis.campus.command;
 //20170117 JH c133-admin-list-tutors CmdAdminListTutors.java created
 //20170117 JH c133-admin-list-tutors list tutors and exception handling 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
+//20170206 JH c133-admin-list-tutors added doc comments
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments
 //20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
 
@@ -27,10 +29,22 @@ import java.util.Map;
  * @author JH
  *
  */
+
 public class CmdAdminListTutors implements ICommand{
 	
 	static Logger log = Logger.getLogger(CmdAdminListTutors.class.getName());
 
+	/** 
+	 * @author JH
+	 * @param helper
+	 * @param view
+	 * @return IView
+	 * @author JH
+	 * 
+	 * execute method used to handle data retrieval related to 
+	 * admin tutor listing function. All tutors belongs to any 
+	 * status, need to be listed for this requirement. 
+	 */
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 

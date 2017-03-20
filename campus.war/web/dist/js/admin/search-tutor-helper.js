@@ -36,7 +36,7 @@ function listAllTutors(){
 				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
-				    $('#example tbody').on('click', 'tr', function () {
+				    $('#tutors-table tbody').on('click', 'tr', function () {
 				    	   var tutorCode = $(this).find("td:second").html();
 				    	   
 				    	   var form = document.createElement('form');
@@ -85,8 +85,8 @@ function listTutorRequests(){
 				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
-				    $('#example tbody').on('click', 'tr', function () {
-				    	   var tutorCode = $(this).find("td:first").html();
+				    $('#tutors-table tbody').on('click', 'tr', function () {
+				    	   var tutorCode = $(this).find("td:second").html();
 				    	   
 				    	   var form = document.createElement('form');
 				    	   form.method = 'post';
@@ -115,7 +115,7 @@ function listTutorRequests(){
  * @author JH
  */
 function tutorDataTable(){
-	var t =  $('#example').DataTable();
+	var t =  $('#tutors-table').DataTable();
 	var tutors = window.tutorList;
 	var rowCount = 0;
 	t.clear().draw();
