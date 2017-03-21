@@ -2,13 +2,18 @@
  * This java script file is to support admin list tutor function
  * 20170117 JH c134-admin-list-new-tutor-requests tutorDataTable() modified: used ApplicationStatus enum class values to add css styles to datatable 
  * 				removed displayTutotList() unwanted method, added AJAX on error method
+ * 20170321 JH c134-admin-list-new-tutor-requests remove code used to select table record details and added new event to select tutor code
+ * 				on click, show error messages on AJAX call error 
  */
 
 window.tutorList = null;
 window.ApplicationStatus = null;
 
+/**
+ * list all tutors on page load
+ */
 window.onload = function() {
-	listAllTutors();
+	listAllTutors();	
 };
 
 /**
@@ -36,25 +41,10 @@ function listAllTutors(){
 				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
-				    $('#tutors-table tbody').on('click', 'tr', function () {
-				    	   var tutorCode = $(this).find("td:second").html();
-				    	   
-				    	   var form = document.createElement('form');
-				    	   form.method = 'post';
-				    	   form.action = '/dist/partials/admin/updateTutorProfile.jsp';
-				    	   var input = document.createElement('input');
-				    	   input.type = 'text';
-				           input.name = 'tutorCode';
-				           input.value = tutorCode;
-				           form.appendChild(input);
-				           form.submit();
-				    	   
-				    });
 			}
 		},
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
-			document.getElementById("userMessage").style.display = "block";
 			$("#userMessage").html(err);
 		}
 	});
@@ -85,25 +75,10 @@ function listTutorRequests(){
 				window.ApplicationStatus = response.applicationStatus;
 
 				tutorDataTable();
-				    $('#tutors-table tbody').on('click', 'tr', function () {
-				    	   var tutorCode = $(this).find("td:second").html();
-				    	   
-				    	   var form = document.createElement('form');
-				    	   form.method = 'post';
-				    	   form.action = '/dist/partials/admin/updateTutorProfile.jsp';
-				    	   var input = document.createElement('input');
-				    	   input.type = 'text';
-				           input.name = 'tutorCode';
-				           input.value = tutorCode;
-				           form.appendChild(input);
-				           form.submit();
-				    	   
-				    });
 			}
 		},
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
-			document.getElementById("userMessage").style.display = "block";
 			$("#userMessage").html(err);
 		}
 	});
@@ -186,4 +161,16 @@ t.row.add(
 	}
 	
 }
+
+/**
+ * To select the tutor code on table row selection
+ */
+$(document).ready(function() {
+    var table = $('#tutors-table').DataTable();
+     
+    $('#tutors-table tbody').on('click', 'tr', function () {
+        var data = table.row( this ).data();
+        alert( 'The tutor code is '+data[1]+'.' );
+    } );
+} );
 	
