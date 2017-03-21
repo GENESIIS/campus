@@ -18,7 +18,8 @@ package com.genesiis.campus.entity;
  * 20170224 DN c131-admin-manage-banner-upload-banner-image-dn The Order of the retrieving statements 
  *             of [IMAGE] and [CODE] in method addBannerRecordInOneTransAction() has been changed. 
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn removed the method formADate() from the class and restructured with
- * 			   logic and placed in PrevalentValidation.java       
+ * 			   logic and placed in PrevalentValidation.java  
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary.   
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -107,15 +108,15 @@ public class AdminBannerDAO implements ICrud {
 
 	/**
 	 * addBannerRecordInOneTransAction Method insert a record to table banner 
-	 * when a Banner is added to the System, and if the inital operation
+	 * when a Banner is added to the System, and if the initial operation
 	 * reported success then the method returns the banner code and the
 	 * Banner Image name from the data base in a collection wrapped within a collection.
 	 * 
 	 * @param banner : JasonInflator instance wrapped as an Object
-	 * @param bannerImageExtension : extension of the banner eg. jpg,jpg,ping etc.
-	 * @param userName : user name of the user who fires the method eg."admin" etc
+	 * @param bannerImageExtension : extension of the banner e.g. jpg,jpg,ping etc.
+	 * @param userName : user name of the user who fires the method e.g."admin" etc
 	 * @return Collection<Collection<String>> : Single record is wrapped within 
-	 * another collection eg. {{x,y},{s,d},..}
+	 * another collection e.g. {{x,y},{s,d},..}
 	 * @throws SQLException
 	 * @throws Exception
 	 */
