@@ -1,15 +1,16 @@
 package com.genesiis.campus.entity.model;
 //20170315 AS CAM-23 c23-admin-login-logout-function-as Admin pojo class created and attributes  
 //20170316 AS CAM-23 c23-admin-login-logout-function-as LoginHistory pojo extended
+//20170321 AS CAM-23 c23-admin-login-logout-function-as code and isActive Attributes changed to adminCode and adminIsActive
 public class Admin extends LoginHistory {
 
-	private int code;
+	private int adminCode;
 	private String name;
 	private String userKey;
 	private String username;
 	private String email;
 	private String password;
-	private boolean isActive;
+	private boolean adminisActive;
 	private String userType;
 	private String discription;
 	
@@ -28,11 +29,11 @@ public class Admin extends LoginHistory {
 		this.userKey = userKey;
 	}
 	
-	public int getCode() {
-		return code;
+	public int getAdminCode() {
+		return adminCode;
 	}
-	public void setCode(int code) {
-		this.code = code;
+	public void setAdminCode(int adminCode) {
+		this.adminCode = adminCode;
 	}
 	public String getName() {
 		return name;
@@ -58,11 +59,12 @@ public class Admin extends LoginHistory {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isActive() {
-		return isActive;
+	
+	public boolean isAdminisActive() {
+		return adminisActive;
 	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setAdminisActive(boolean adminisActive) {
+		this.adminisActive = adminisActive;
 	}
 	public String getUserType() {
 		return userType;
