@@ -106,7 +106,7 @@
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
-					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor')">
+					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
 				<datalist id="advertiserList" name="advertiserList"> </datalist>
 				<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
 			</div>
@@ -116,7 +116,7 @@
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
 				<input id="page" name="page" list="pageList"
-					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor')">
+					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
 				<datalist id="pageList" name="pageList"> </datalist>
 				<input type="hidden" id="sPageCode" name="sPageCode" />
 			</div>
@@ -126,7 +126,7 @@
 				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
 				<input id="slot" name="slot"
 					list="slotList" class="text-field" type="text"
-					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor')">
+					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
 				<datalist id="slotList" name="slotList"> </datalist>
 				<input type="hidden" id="sSlotCode" name="sSlotCode" />
 			</div>
@@ -134,7 +134,7 @@
 			<div>
 				Duration (Seconds) *&nbsp;
 				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
-				<input id="duration" type='text' onclick="clearField('displayDurationInfor')">
+				<input id="duration" type='text' onclick="clearField('displayDurationInfor');">
 			</div>
 			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
@@ -151,7 +151,7 @@
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				Banner deavtivation date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+				Banner deavtivation date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor');">
 			</div>
 			<br><br>
 			<div>
@@ -166,7 +166,7 @@
 			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
 			<br><br>
 			<div id="urlInfor" style ="color:#C70039;"></div><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor')">
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');">
 			</div>
 			<br><br>
 			<!-- Form image submit -->
