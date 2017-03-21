@@ -124,6 +124,9 @@ public class CmdPublicListTutors implements ICommand{
 			String majorCode = null;
 			String majorName = null;
 			String nvq = null;
+			
+			int rowCount = 0;
+			int listSize = tutorArrayList.size();
 
 			// maps to store repeating category and major details
 			Map<String, ArrayList<ArrayList<String>>> categoryMap = new HashMap<String, ArrayList<ArrayList<String>>>();
@@ -142,12 +145,14 @@ public class CmdPublicListTutors implements ICommand{
 			while(resultIterator.hasNext()){
 				
 				ArrayList<String> singleList = (ArrayList<String>) resultIterator.next();
+				rowCount +=1;
 				
+				//if(code.equalsIgnoreCase(singleList.get(0)) &&  (rowCount == listSize)){// not a new tutor 
+					// the last tutor record comes here
 				
-				if(code.equalsIgnoreCase(singleList.get(0))){// not a new tutor 
-					// do nothing as tutor record already exist
-				
-				}else{// a new tutor 
+				//}else
+					
+					if((!code.equalsIgnoreCase(singleList.get(0))) || (rowCount == listSize)){// a new tutor 
 					
 					/*
 					 * initially, tutor collection has duplicate category and major details
@@ -168,13 +173,13 @@ public class CmdPublicListTutors implements ICommand{
 						int arraySize = finalCategoryList.size(); // array size
 						boolean isNew = true;
 						
-						ArrayList<String> temporaryCategory = (ArrayList<String>) categoryListIterator.next();
+						ArrayList<String> temporaryCategory1 = (ArrayList<String>) categoryListIterator.next();
 						
-						if(!temporaryCategory.isEmpty()){
-							if(finalCategoryList.contains(temporaryCategory)){
+						if(!temporaryCategory1.isEmpty()){
+							if(finalCategoryList.contains(temporaryCategory1)){
 								// the category already exist
 							}else{
-								finalCategoryList.add(temporaryCategory);
+								finalCategoryList.add(temporaryCategory1);
 							}
 						}
 
@@ -210,6 +215,7 @@ public class CmdPublicListTutors implements ICommand{
 					}
 					//add final major list to the map if the list is not empty
 					if(finalMajorList.size() != 0){
+						log.info(">>>>>>>>>>>" + code + " " +finalMajorList);
 						majorMap.put(code, finalMajorList);
 					}
 					majorList = null;
@@ -351,6 +357,9 @@ public class CmdPublicListTutors implements ICommand{
 					if (compareArray.equals(temporaryTutor)) {
 						// the same tutor record is available, do nothing
 
+						categoryList = new ArrayList<ArrayList<String>>();
+						majorList = new ArrayList<ArrayList<String>>();
+						qualificationList = new ArrayList<ArrayList<String>>();
 						categoryList = addListToMap(categoryList, temporaryCategory);
 						majorList = addListToMap(majorList, temporaryMajor);	
 						qualificationList = addListToMap(qualificationList, temporaryQualification);
@@ -392,6 +401,42 @@ public class CmdPublicListTutors implements ICommand{
 					qualificationList = addListToMap(qualificationList, temporaryQualification);
 
 				}
+				
+			if (rowCount == listSize) {
+				if (!code.equalsIgnoreCase("0") || (categoryList != null)) {
+
+					ArrayList<ArrayList<String>> finalCategoryList = new ArrayList<ArrayList<String>>();
+
+					Iterator categoryListIterator = categoryList.iterator(); // iterator
+																				// for
+																				// list
+																				// with
+																				// duplicates
+
+					while (categoryListIterator.hasNext()) {
+
+						int arraySize = finalCategoryList.size(); // array size
+						boolean isNew = true;
+
+						ArrayList<String> temporaryCategory2 = (ArrayList<String>) categoryListIterator.next();
+
+						if (!temporaryCategory2.isEmpty()) {
+							if (finalCategoryList.contains(temporaryCategory2)) {
+								// the category already exist
+							} else {
+								finalCategoryList.add(temporaryCategory2);
+							}
+						}
+
+					}
+					// add final category list to the map if the list is not
+					// empty
+					if (finalCategoryList.size() != 0) {
+						categoryMap.put(code, finalCategoryList);
+					}
+					categoryList = null;
+				}
+			}
 
 			}
 
