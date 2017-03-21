@@ -25,17 +25,17 @@
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
 <!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css"> -->
-<link rel="stylesheet" type="text/css" href="/dist/bower-components/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="/dist/bower-components/datatable/jquery.dataTables.css">
 
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script> 
 	<script src="/dist/js/main.js"></script>
 	
 	  
-<!-- <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script> -->
-<link rel="stylesheet" type="text/css" href="/dist/bower-components/jquery.dataTables.js">
+<!--<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>-->
+<script src="/dist/bower-components/datatable/jquery.dataTables.js"></script>
 
 </head>
 
