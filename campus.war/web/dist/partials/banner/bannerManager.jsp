@@ -5,6 +5,7 @@
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn add extra radio button to select link types-->
 <!-- 20170227 DN c131-admin-manage-banner-upload-banner-image-dn add error <div> tags-->
+<!-- 20170321 DN c131-admin-manage-banner-upload-banner-image-dn label is created that is attached to the radio buttons.  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -42,7 +43,7 @@
 			<div class="modal-header"> <b>System Message</b>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">Close</span>
+					<span aria-hidden="true" id='systemMessageClose'>Close</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -138,9 +139,9 @@
 			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
 			<label for="bannerEnable" hidden='true'>true</label>
-			 <input type="radio" name="bannerEnable" id='bannerEnable'value="true" >YES 
+			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" checked="checked" >YES 
 			 <label for="bannerDissable" hidden='true'>false</label>
-			<input type="radio" name="bannerEnable" id='bannerDissable' value="false" >NO
+			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false" >NO
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
