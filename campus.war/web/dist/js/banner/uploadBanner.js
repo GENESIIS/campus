@@ -36,6 +36,8 @@
  *  20170320 DN c131-admin-manage-banner-upload-banner-image-dn. To coop the situation where the image size is > allowable size,
  *  			and retains the error message the success: block  ad the complete blocks are redesigned to correct QA point 6 stated in 
  *  			comment 201703132232-CN - Local test summary.
+ *  20170321 DN c131-admin-manage-banner-upload-banner-image-dn setTheRadioButtonValues() has been implemented, the method is called on 
+ *  			close of the modal windows. Amend the method to test to proceed if the radio button groups exists.
  */
 
 /*
@@ -346,7 +348,7 @@ $(document).on('click','#uploadBbutton', function(event){
 	var codeOfSelectedPage= $('#sPageCode').val();
 	var bannerSlotCode=$('#sSlotCode').val();
 	var displayDusration= $('#duration').val();
-	var banerToBeActive=$('input[name=bannerEnable]:checked').val(); // validate for 'undefined'
+	var banerToBeActive=$('input[name=bannerEnableStatus]:checked').val(); // validate for 'undefined'
 	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
 	var bannerPublishingEndDate= $('#endtDate').val();
 	var urlMiniWebOrPage = $('input:radio[name=urlspecifier]:checked').val();
@@ -440,10 +442,16 @@ $(document).on('mousedown','#file-select',function(event){
  */
 $(document).on('click','#bannerModalClose',function(event){
 	displayBannerManagerPrerequistData();
+	setTheRadioButtonValues();
 });
 
-
-
+/**
+ * on close the system message window the radio buttons will be 
+ * initialized
+ */
+$(document).on('click','#systemMessageClose',function(event){
+	setTheRadioButtonValues();
+});
 /**
  * validateUploadBannerEmbedData() validates the input fields of
  * bannerManger.js and returns false if any one of the fields are not confirming
@@ -614,7 +622,27 @@ function onChangeEvent(idElement,errorDisplayId,fieldVarTobeTested,userInfromati
 
 }
 
-
+/**
+ * this fuction manages to initialize the radio button
+ * physically prasent on the page if the radio button
+ * groups do exist.
+ * @author dushantha DN
+ */
+function setTheRadioButtonValues(){
+	var radioButtonGroupActive = $('input[name=bannerEnableStatus]'); 
+	var radioButtonGroupUrl = $('input[name=urlspecifier]'); 
+	if(radioButtonGroupActive.length >0){
+		$('#bannerEnable').val('true');
+		$('#bannerDissable').val('false');
+	}
+	
+	if(radioButtonGroupUrl.length>0){
+		$('#urlspecifierUrl').val('1');
+		$('#urlspecifierMiniWeb').val('2');
+		$('#urlspecifierPage').val('0');	
+	}
+	
+}
 
 
 
