@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.genesiis.campus.entity.AdminLoginDAO;
+import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
@@ -42,7 +44,10 @@ public class CmdAdminLogin implements ICommand{
 				String validateResult = LoginValidator.validateLogin(adminData);
 				boolean rememberMe = adminData.isRemember();
 				if (validateResult.equalsIgnoreCase("True")) {
+					adminData = LoginValidator.dataSeparator(adminData);
 					
+					ICrud adminLoginDAO = new AdminLoginDAO();
+					dataCollection = adminLoginDAO.findById(adminData);
 					
 					
 				}else{
