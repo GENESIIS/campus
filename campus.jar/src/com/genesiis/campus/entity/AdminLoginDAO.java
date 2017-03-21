@@ -16,9 +16,10 @@ import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 
-
-public class AdminLoginDAO implements ICrud{
+public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
+	private static int MAX_ATTEMPTS =0;
+
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -38,19 +39,28 @@ public class AdminLoginDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
+	public Collection<Collection<String>> findById(Object object)
 			throws SQLException, Exception {
 		String encryptPassword = null;
-		Collection<Collection<String>> dataCollection = new ArrayList<Collection<String>>();
+		Collection<Collection<String>> dataBundel = new ArrayList<Collection<String>>();
+		Collection<String> messageCollection = null;
+		ArrayList<String> singleMessageList = null;
+		
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		String message = SystemMessage.NOTREGISTERD.message();
 
 		ResultSet rs = null;
-		String query = "SELECT CODE, USERNAME, PASSWORD, EMAIL, ISACTIVE, USERTYPE FROM CAMPUS.ADMIN  WHERE USERNAME=? AND ISACTIVE = ? OR EMAIL =? AND ISACTIVE = ? "; 
-		
+		String query = "SELECT CODE, NAME, USERNAME, PASSWORD, EMAIL, ISACTIVE, USERTYPE FROM CAMPUS.ADMIN  WHERE USERNAME=? AND ISACTIVE = ? OR EMAIL =? AND ISACTIVE = ? ";
+		String code = "";
+		String name = "";
+		String userName = "";
+		String password = "";
+		String email = "";
+		String userType = "";
+		boolean passwordMatch = false;
 		try {
-		final Admin admin = (Admin) code;
+			final Admin admin = (Admin) object;
 			Encryptable passwordEncryptor = new TripleDesEncryptor(admin
 					.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
@@ -60,26 +70,107 @@ public class AdminLoginDAO implements ICrud{
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, admin.getUsername());
 			preparedStatement
-			.setString(2, Integer.toString(ApplicationStatus.ACTIVE
-					.getStatusValue()));
+					.setString(2, Integer.toString(ApplicationStatus.ACTIVE
+							.getStatusValue()));
 			preparedStatement.setString(3, admin.getEmail());
 			preparedStatement
 					.setString(4, Integer.toString(ApplicationStatus.ACTIVE
 							.getStatusValue()));
 			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
-			
-		}catch (SQLException exception) {
-				log.error("findById(Object code):  SQLexception"
-						+ exception.toString());
-				throw exception;
-			} catch (Exception exception) {
-				log.error("findById(Object code):  exception"
-						+ exception.toString());
-				throw exception;
+
+			if (check) {
+				password = rs.getString("PASSWORD");
+				passwordMatch = encryptPassword.equals(password);
+				log.info(password + "  " + passwordMatch);
+
+				code = rs.getString("CODE");
+				name = rs.getString("NAME");
+				userName = rs.getString("USERNAME");
+				email = rs.getString("EMAIL");
+				userType = rs.getString("USERTYPE");
+				password = rs.getString("PASSWORD");
+			 if (check && passwordMatch) {
+				admin.setAdminCode(Integer.parseInt(code));
+				admin.setName(name);
+				admin.setUsername(userName);
+				admin.setEmail(email);
+				admin.setUserType(userType);
+				admin.setValid(true);
+				log.info(name + "  " + email);
+
+				final ArrayList<String> singleAdmin = new ArrayList<String>();
+				final Collection<String> adminDatabundel = singleAdmin;
+
+				singleAdmin.add(code);
+				singleAdmin.add(name);
+				singleAdmin.add(userName);
+				singleAdmin.add(email);
+				singleAdmin.add(userType);
+
+				dataBundel.add(adminDatabundel);
+				message = SystemMessage.VALIDUSER.message();
+			 } else {
+				 message = SystemMessage.INVALIDPASSWORD.message();
+				 admin.setValid(false);
+					log.info(message);
+
+					for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
+						log.info("max attempts : " + MAX_ATTEMPTS);
+						if (MAX_ATTEMPTS == 3) {
+
+						} else {
+							break;
+						}
+					}
+					 MAX_ATTEMPTS++;
+			 }
+				
+			} else {
+				message = SystemMessage.INVALIDUSERNAME.message();
+				admin.setValid(false);
+				log.info(message);
+
+				for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
+					log.info("max attempts : " + MAX_ATTEMPTS);
+					if (MAX_ATTEMPTS == 3) {
+
+					} else {
+						break;
+					}
+				}
+				MAX_ATTEMPTS++;
 			}
+
+		} catch (SQLException exception) {
+			log.error("findById(Object code):  SQLexception"
+					+ exception.toString());
+			throw exception;
+		} catch (Exception exception) {
+			log.error("findById(Object code):  exception"
+					+ exception.toString());
+			throw exception;
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+
+		singleMessageList = new ArrayList<String>();
+		singleMessageList.add(message);
+
+		messageCollection = (Collection<String>) singleMessageList;
+
+		dataBundel.add(messageCollection);
 		
-		return null;
+		return dataBundel;
 	}
 
 	@Override
