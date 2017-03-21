@@ -38,6 +38,8 @@
  *  			comment 201703132232-CN - Local test summary.
  *  20170321 DN c131-admin-manage-banner-upload-banner-image-dn setTheRadioButtonValues() has been implemented, the method is called on 
  *  			close of the modal windows. Amend the method to test to proceed if the radio button groups exists.
+ *  			validateUploadBannerEmbedData() error messages were corrected according to the QA point 10 stated in comment 201703132232-CN - Local test summary.
+ *  			Adds tests validateUploadBannerEmbedData() to check if url field is empty. commented the UrlTest() which was placed $(document).ready(function().
  */
 
 /*
@@ -57,10 +59,19 @@ $(document).ready(function(){
 	displayBannerManagerPrerequistData();
 	
 	$('#bannerDispatchingUrl').on("change",function(){
-		if(!urlTest('bannerDispatchingUrl')){
-			$('#urlInfor').html("Please provide a valid url");
+		var isUrlNotEmptyOrNotNull = isempty($('#bannerDispatchingUrl').val());
+		isFieldFilled(isUrlNotEmptyOrNotNull, 'Please provide a valid url', 'urlInfor');
+		if(!isUrlNotEmptyOrNotNull)
 			$('#bannerDispatchingUrl').val("");
-		}
+		
+		//NOTE: FOR THE TIME BEING THE BELLOW CODE HAS BEEN COMMENTED
+		// ONCE URL FUNCTION VALIDATES RFC STANDARDS COMMENT SHOULD BE REMOVED.
+		
+//		if(!urlTest('bannerDispatchingUrl')){
+//			$('#urlInfor').html("Please provide a valid url");
+//			$('#bannerDispatchingUrl').val("");
+//		}
+		
 	});
 });
 
@@ -462,20 +473,20 @@ function validateUploadBannerEmbedData(){
 	var validationPass =false;
 
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#advertiser').val(),
-		/^([a-zA-Z]+)([a-zA-Za-zA-Z0-9\._]+){0,}$/g), "Advertiser Field",
+		/^([a-zA-Z]+)([a-zA-Za-zA-Z0-9\._]+){0,}$/g), "The Advertiser Field",
 		"advertiserInfor")))
 		return validationPass;
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#page').val(),
-			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "page Field", "pageInfor")))
+			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "The Page Field", "pageInfor")))
 		return validationPass;
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#slot').val(),
-			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "slot Field",
+			/^([a-zA-Z]+)([a-zA-Z0-9\._]+){0,}$/g), "The Slot Field",
 			"advertizingSlotInfor")))
 		return validationPass;
 	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#duration').val(),
-			/^[0-9]+$/g),"display duration","displayDurationInfor")))
+			/^[0-9]+$/g),"The Display Duration","displayDurationInfor")))
 		return validationPass;
-	if(!isFieldFilled(isempty($('#startDate').val()),'Start date','startDateInfor'))
+	if(!isFieldFilled(isempty($('#startDate').val()),'The Start Date','startDateInfor'))
 		return validationPass;
 	
 	//comparing the date with the current date if the out come =0 twodates are equal
@@ -483,16 +494,18 @@ function validateUploadBannerEmbedData(){
 	//else the start date is in the past than todays date then it s illegal
 	var todaysDate = new Date().toJSON().slice(0,10);
 	if(!isFieldFilled(
-			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"Banner Activation date >= toDay ","startDateInfor"))
+			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date >= toDay ","startDateInfor"))
 		return validationPass;
 	
-	if(!isFieldFilled(isempty($('#endtDate').val()),'End date','endtDateInfor'))
+	if(!isFieldFilled(isempty($('#endtDate').val()),'The End date','endtDateInfor'))
 		return validationPass;
 	
 	// startDate must be == endtDate
 	//or startDate < endtDate
 	if(!isFieldFilled(
-			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"Banner deavtivation date >= Banner Activation date  ","startDateInfor"))
+			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"The Banner Deavtivation Date >= The Banner Activation Date  ","startDateInfor"))
+		return validationPass;
+	if(!isFieldFilled(isempty($('#bannerDispatchingUrl').val()), 'Please provide a valid url', 'urlInfor'))
 		return validationPass;
 	
 	return !validationPass;
