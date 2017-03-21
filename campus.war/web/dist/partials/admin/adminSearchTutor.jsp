@@ -1,5 +1,7 @@
 <!-- c133-admin-list-tutors removed unwanted commented codes -->
 <!-- 20170317 JH c134-admin-list-new-tutor-requests added new style .hide-value to hide the content of approval status column, imported AJAX error handling js -->
+<!-- 20170321 TR c106- changed pagination button styles  -->
+<!-- 20170321 TR c106- update new selected tab button styles ( All and New tabs )  -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -31,17 +33,12 @@
 	  
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 
-<style type="text/css">
-.hide-value{
-	display: none; 
-}
-</style>
 </head>
 
 
 <body>
 	<!-- include Header-->
-	<jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
 	<!-- End Header -->
 
 
@@ -62,10 +59,10 @@
                 <!-- Page content -->
                 <form action="/AdminController" method="POST" id="basicForm">
 
-					<div>
+					<div class="tab-holder clearfix">
 						<ul class="nav nav-pills pull-right" role="tablist">
 							<li class="" id="button-all"><a onclick="listAllTutors();">All</a></li>
-							<li id="button-new"><a onclick="listTutorRequests();">new</a></li>
+							<li id="button-new"><a onclick="listTutorRequests();">New</a></li>
 						</ul>
 					</div>
 					<table id="tutors-table" class="display compact" width="100%">

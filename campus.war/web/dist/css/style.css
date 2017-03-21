@@ -772,7 +772,15 @@ body, html {
     margin-right: auto;
     margin-left: auto; }
     .admin-content .content-holder .tutors-table {
-      padding-top: 40px; }
+      padding-top: 0; }
+      .admin-content .content-holder .tutors-table .tab-holder {
+        display: block;
+        padding: 10px 0; }
+        .admin-content .content-holder .tutors-table .tab-holder ul li {
+          width: 100px;
+          cursor: pointer;
+          text-align: center;
+          margin-left: 15px; }
       .admin-content .content-holder .tutors-table .dataTables_length {
         font-size: 15px;
         font-family: "Raleway", sans-serif; }
@@ -809,11 +817,21 @@ body, html {
         height: 65px !important; }
   .admin-content .dataTables_wrapper {
     font-family: "Raleway", sans-serif; }
-    .admin-content .dataTables_wrapper .dataTables_paginate .paginate_button {
+    .admin-content .dataTables_wrapper .dataTables_paginate .pagination {
       padding: 1em 0 !important; }
+      .admin-content .dataTables_wrapper .dataTables_paginate .pagination .paginate_button {
+        padding: 0 !important; }
+        .admin-content .dataTables_wrapper .dataTables_paginate .pagination .paginate_button:hover {
+          background-color: #fff !important;
+          color: white !important;
+          border: 1px solid #fff;
+          border-radius: 2px !important; }
     .admin-content .dataTables_wrapper div.dataTables_info {
       padding-top: 18px;
       font-size: 16px; }
+
+.hide-value {
+  display: none; }
 
 /* Modules */
 .btn-home {
