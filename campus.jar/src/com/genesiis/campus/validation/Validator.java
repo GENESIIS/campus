@@ -25,6 +25,7 @@ package com.genesiis.campus.validation;
 				// modified isValidNetworkOrContactCode method name to isValidNetworkCode
 				// Add isValidContactCode method
 				// Modified validateTutorFields method to work with isValidNetworkCode & isValidContactCode methods
+//20170321 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields() to validate townDetails & towncodeOld correctly
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -151,7 +152,7 @@ public class Validator {
 	 * @throws Exception
 	 */
 	public boolean validateTutorFields(IDataHelper helper) throws Exception {
-
+		
 		boolean isValid = true; 
 		try {				
 			
@@ -173,8 +174,8 @@ public class Validator {
 				if(!helper.getParameter("countryDetails").equals("0")){
 					// Country details are changed
 					if(!(helper.getParameter("landphonecountrycodeOld").equals(helper.getParameter("countryDetails")))){
-						// old & new country codes are different
-						if(!(helper.getParameter("towncodeOld").equals(helper.getParameter("townDetails")))){
+						// old & new country codes are different											
+						if(helper.getParameter("towncodeOld").equals(helper.getParameter("townDetails")) || helper.getParameter("townDetails").equals("0")){
 							// town codes are same i.e. town details are not changed
 							helper.setAttribute("townError", SystemMessage.TOWN_CODE_NOT_CHANGED.message());
 							isValid = false;
