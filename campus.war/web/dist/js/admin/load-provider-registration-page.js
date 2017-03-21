@@ -14,6 +14,7 @@
 //20170316 JH c141-ui-integration-add-course-provider getDataOnCountrySelection(), displayProviderCountries(), getDataOnCountrySelection() changed to add
 //			  	css styles
 //20170320 JH c141-ui-integration-add-course-provider added isempty() method to validate input for whitespaces
+//20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -245,10 +246,10 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
 
-	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrySelection()" class="select-country form-control"><option value="">--Default--</option>';
+	singleCountryElement += '<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control"><option value="">--Default--</option>';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
-			singleCountryElement += '<option value="' + value[0] + '">';
+			singleCountryElement += '<option data-value="' + value[0] + '">';
 			singleCountryElement += value[1];
 			singleCountryElement += '</option>';
 
@@ -264,12 +265,13 @@ function displayProviderCountries() {
  * display country code and list town data
  */
 function getDataOnCountrySelection() {
+//var selectedCountry = $("#selectedCountry").val();
 
-	if (!isempty(document.getElementById('selectedCountry').value)) {
-		$('#errorSelectedCountry').removeAttr('title');
-		  $('#errorSelectedCountry').attr('data-original-title', "**Select a country to proceed.");
-	//	$("#errorSelectedCountry").val = "**Select a country to proceed.";
-		$("#selectedCountry").addClass("has-error");
+	var selectedCountry = document.getElementById("selectedCountry").value;
+	if (!isempty(selectedCountry)) {
+		
+		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
+		$("#country-List").addClass("has-error");
 		document.getElementById('landNumber1').innerHTML = "";
 		document.getElementById('landNumber2').innerHTML = "";
 		document.getElementById('lastMobileNumber').innerHTML = "";
@@ -285,10 +287,11 @@ function getDataOnCountrySelection() {
  * get course provider town list for the selected country
  */		
 function getProviderTownListData() {
-	var selectedCountry = document.getElementById('selectedCountry').value;
+	clearErrorMessage();
+	var selectedCountry = $("#selectedCountry").val();
 
 	if (selectedCountry == '' || selectedCountry == null) {
-		document.getElementById('errorSelectedTown').innerHTML = "**Select your country first.";
+		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#town-List").addClass("has-error");
 	} else {
 		document.getElementById('errorSelectedTown').innerHTML = "";
@@ -325,7 +328,7 @@ function displayProviderTownList() {
 	var countryCollection = window.townCollection;
 	var singleTownElement = '';
 
-	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--Default--</option>';
+	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value=""></option>';
 	if (townCollection !== undefined & townCollection !== null) {
 		$.each(townCollection, function(index, value) {
 			singleTownElement += '<option value="' + value[0] + '">';
@@ -508,3 +511,6 @@ function isempty(fieldValue) {
 	return (($.trim(fieldValue) == "") || (fieldValue == null)) ? false : true;
 }
 	
+function clearErrorMessage(){
+	$("#town-List").removeClass("has-error");
+}

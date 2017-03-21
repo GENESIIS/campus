@@ -13,6 +13,7 @@
 				 names to match with the back end validation in general information, contact information wip-->
 <!-- 20170320 JH c141-ui-integration-add-course-provider change html element names to match with the back end validation in 
 				contact information, social media and admin info wip-->
+<!-- 20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -162,10 +163,13 @@
 												<div class="col-xs-6">
 													<label for="select-country"><span class="mandatory">*</span>
 														Country</label>
-													<div class="input-wrapper has-select" id="country-List">
+														<input list="selectedCountry" name="country-List" id="country-List" class="input-wrapper has-select" onchange="getDataOnCountrySelection()">
+												<!-- 	<div class="input-wrapper has-select" id="country-List">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
 															title="Hooray!"></a>
-													</div>
+													</div> -->
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
+															title="Hooray!"></a>
 												</div>
 												<div class="col-xs-6">
 													<label for="select-city"><span class="mandatory">*</span>
