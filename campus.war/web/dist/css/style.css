@@ -1,0 +1,487 @@
+/* Base */
+/* http://meyerweb.com/eric/tools/css/reset/
+ * v2.0 | 20110126
+ * License: none (public domain) */
+@import 'https://fonts.googleapis.com/css?family=Raleway';
+@import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway';
+@import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway|Slabo+27px';
+@import 'https://fonts.googleapis.com/css?family=Roboto';
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+textarea:focus, input:focus {
+  outline: none; }
+
+*:focus {
+  outline: none; }
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box; }
+
+.clearfix {
+  *zoom: 1; }
+  .clearfix:before, .clearfix:after {
+    display: table;
+    content: "";
+    line-height: 0; }
+  .clearfix:after {
+    clear: both; }
+
+.colr-white {
+  color: white; }
+
+.page-topic-t1 {
+  font-family: "Arvo", serif;
+  font-size: 30px;
+  color: #3a3b3c;
+  padding-bottom: 30px; }
+
+/*Font Face */
+/* Layout */
+footer .ft-top {
+  display: block;
+  height: 175px;
+  width: 100%;
+  background: #193949; }
+footer .ft-bottom {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: #092a3b; }
+  footer .ft-bottom label {
+    font-size: 18px;
+    line-height: 50px;
+    color: #d6d6d6; }
+
+.header {
+  top: 0;
+  left: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  background: #37474f;
+  height: 100%;
+  z-index: 99; }
+  .header .top {
+    display: block;
+    position: relative;
+    height: 150px; }
+    .header .top .logo-brand {
+      position: absolute;
+      vertical-align: middle;
+      top: 37%;
+      left: 3%; }
+      .header .top .logo-brand .logo-txt {
+        font-size: 35px;
+        font-weight: 600;
+        font-family: Orbitron;
+        color: #fff; }
+  .header .bottom {
+    display: block;
+    position: relative; }
+    .header .bottom .menu-bar {
+      display: block;
+      position: relative;
+      height: 100px;
+      width: 100%;
+      background: #2f66c1; }
+      .header .bottom .menu-bar .home {
+        display: inline-block;
+        position: relative;
+        width: 115px;
+        height: 100%;
+        padding-top: 20px; }
+      .header .bottom .menu-bar .menu-tabs {
+        display: inline-block;
+        position: relative;
+        width: calc(83% - 115px);
+        height: 100%; }
+        .header .bottom .menu-bar .menu-tabs .top-menus {
+          color: #fff;
+          font-family: Oswald;
+          font-size: 18px;
+          width: 100%;
+          height: 50%;
+          display: block;
+          padding: 20px 20px 0 20px; }
+          .header .bottom .menu-bar .menu-tabs .top-menus li {
+            padding-right: 16px;
+            padding-left: 16px; }
+          .header .bottom .menu-bar .menu-tabs .top-menus:nth-child(1) {
+            padding-left: 0; }
+          .header .bottom .menu-bar .menu-tabs .top-menus li > a {
+            color: #fff; }
+            .header .bottom .menu-bar .menu-tabs .top-menus li > a:hover {
+              color: #85d0fd; }
+        .header .bottom .menu-bar .menu-tabs .bottom-menus {
+          display: block;
+          width: 100%;
+          height: 50%;
+          font-size: 18px;
+          color: #fff;
+          padding: 15px 20px 0 20px; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus li {
+            padding-right: 16px;
+            padding-left: 16px; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus:nth-child(2) {
+            padding-left: 0; }
+          .header .bottom .menu-bar .menu-tabs .bottom-menus li > a {
+            color: #fff; }
+            .header .bottom .menu-bar .menu-tabs .bottom-menus li > a:hover {
+              color: #85d0fd; }
+      .header .bottom .menu-bar .keyword-search {
+        display: inline-block;
+        width: 17%;
+        height: 100%; }
+
+body, html {
+  font-family: "Raleway", sans-serif; }
+  body a, html a {
+    text-decoration: none; }
+    body a:hover, body a:focus, body a.active, html a:hover, html a:focus, html a.active {
+      text-decoration: none !important; }
+
+.main-screen {
+  display: block;
+  position: relative;
+  background: #37474f; }
+  .main-screen .content-panel {
+    display: inline-block;
+    position: relative;
+    width: 83%;
+    background: #fff; }
+    .main-screen .content-panel .main-slider {
+      display: block;
+      position: relative;
+      width: 100%; }
+      .main-screen .content-panel .main-slider img {
+        width: 100%; }
+    .main-screen .content-panel .search-area {
+      display: block;
+      position: relative; }
+      .main-screen .content-panel .search-area .main-search-bar {
+        display: block; }
+        .main-screen .content-panel .search-area .main-search-bar .bar-holder {
+          display: block;
+          position: relative;
+          top: -42px; }
+          .main-screen .content-panel .search-area .main-search-bar .bar-holder input {
+            width: 80%;
+            line-height: 64px;
+            border: 12px solid rgba(125, 125, 125, 0.5);
+            font-size: 24px;
+            color: #918a8a;
+            padding-left: 30px; }
+      .main-screen .content-panel .search-area .filter-boxes {
+        display: block;
+        padding-bottom: 60px; }
+        .main-screen .content-panel .search-area .filter-boxes .box-holder {
+          width: 90%; }
+          .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li {
+            width: 29.5%;
+            background: rgba(225, 225, 225, 0.6);
+            padding: 8px;
+            margin-top: 30px;
+            margin-right: 5.5%;
+            transition: all 0.3s; }
+            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li:hover {
+              background: #508ef6; }
+            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li:nth-child(3n) {
+              margin-right: 0;
+              float: right; }
+            .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box {
+              background: #fff;
+              display: block;
+              width: 100%;
+              font-family: "Slabo 27px", serif;
+              padding-bottom: 20px; }
+              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name {
+                display: block;
+                padding: 16px; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .category-name a {
+                  font-size: 26px;
+                  color: #818181;
+                  font-family: "Slabo 27px", serif; }
+              .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info {
+                display: block; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image {
+                  display: inline-block;
+                  position: relative;
+                  width: 46%; }
+                  .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .image img {
+                    width: 90%; }
+                .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description {
+                  display: inline-block;
+                  width: 54%;
+                  position: relative;
+                  font-size: 15px;
+                  color: #919191;
+                  line-height: 16px;
+                  padding-right: 8px;
+                  padding-left: 2px; }
+                  .main-screen .content-panel .search-area .filter-boxes .box-holder ul > li .category-box .course-info .description a {
+                    padding-top: 20px;
+                    color: #3a74d6;
+                    font-size: 16px; }
+  .main-screen .banner-panel {
+    width: 17%;
+    display: inline-block;
+    background: #37474f;
+    position: relative;
+    height: 100%; }
+
+.courses-screen {
+  display: block;
+  position: relative; }
+  .courses-screen .inner-header .right-corner {
+    display: inline-block;
+    float: right;
+    width: 30%; }
+    .courses-screen .inner-header .right-corner .sort-box {
+      display: block;
+      line-height: 88px; }
+      .courses-screen .inner-header .right-corner .sort-box input {
+        height: 40px;
+        background: #4b5b66;
+        width: 100%;
+        border: none;
+        padding-left: 18px; }
+  .courses-screen .filter-area {
+    display: block;
+    width: 100%; }
+    .courses-screen .filter-area .category-panel {
+      display: inline-block;
+      position: relative;
+      width: 28%;
+      padding-left: 5%;
+      padding-top: 38px;
+      float: left; }
+      .courses-screen .filter-area .category-panel .all-category {
+        display: block;
+        padding-top: 50px; }
+    .courses-screen .filter-area .result-panel {
+      display: inline-block;
+      position: relative;
+      width: 72%;
+      float: right;
+      padding-right: 1%; }
+      .courses-screen .filter-area .result-panel .panel-header {
+        display: block;
+        width: 100%; }
+        .courses-screen .filter-area .result-panel .panel-header .filter-path {
+          display: block;
+          height: 70px;
+          width: 60%; }
+          .courses-screen .filter-area .result-panel .panel-header .filter-path ol {
+            display: block;
+            padding-top: 46px;
+            font-size: 20px; }
+        .courses-screen .filter-area .result-panel .panel-header .search-boxes-bar {
+          display: block;
+          background: #2f66c2;
+          width: 100%; }
+          .courses-screen .filter-area .result-panel .panel-header .search-boxes-bar .drop-holder {
+            line-height: 66px; }
+            .courses-screen .filter-area .result-panel .panel-header .search-boxes-bar .drop-holder input {
+              height: 40px;
+              background: #4065a4;
+              border: 1px solid #748bb1;
+              padding-left: 18px;
+              width: 100%;
+              color: #fff; }
+      .courses-screen .filter-area .result-panel .search-result-view {
+        display: block;
+        overflow-y: auto; }
+        .courses-screen .filter-area .result-panel .search-result-view .result-box {
+          display: block;
+          border-bottom: 5px solid #ededed;
+          padding: 20px 10px 40px; }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box:nth-child(even) {
+            background: rgba(47, 102, 194, 0.03); }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name {
+            display: block;
+            width: 100%; }
+            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name a {
+              font-size: 25px;
+              color: #3a8af7;
+              font-family: "Slabo 27px", serif;
+              line-height: 45px; }
+            .courses-screen .filter-area .result-panel .search-result-view .result-box .course-name:hover {
+              text-decoration: underline; }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .course-info {
+            display: inline-block;
+            width: 72%;
+            float: left;
+            padding-top: 30px; }
+          .courses-screen .filter-area .result-panel .search-result-view .result-box .provider-info {
+            display: inline-block;
+            float: right;
+            width: 28%; }
+
+/** 20170227 TR c95 INIT styling display-tutors */
+.tutors-screen {
+  display: block;
+  position: relative; }
+  .tutors-screen .screen-container {
+    padding-top: 36px;
+    display: block;
+    width: 92%;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto; }
+    .tutors-screen .screen-container .filter-path ol {
+      font-size: 20px;
+      line-height: 35px; }
+    .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar {
+      display: block;
+      background: #2f66c2;
+      width: 100%; }
+      .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar .drop-holder {
+        line-height: 66px; }
+        .tutors-screen .screen-container .result-panel .panel-header .search-boxes-bar .drop-holder input {
+          height: 40px;
+          background: #4065a4;
+          border: 1px solid #96b3e4;
+          padding-left: 18px;
+          width: 100%;
+          color: #fff; }
+    .tutors-screen .screen-container .result-panel .search-result-view table thead th {
+      text-align: center;
+      color: #313131;
+      font-size: 18px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .tutor-prof-image {
+      text-align: center;
+      padding-top: 25px;
+      display: block; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .tutor-prof-image img {
+        width: 100px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details {
+      display: block;
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details a {
+        color: #3a8af7;
+        font-size: 18px;
+        font-family: "Slabo 27px", serif;
+        padding-bottom: 5px;
+        display: block; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details a:hover {
+          text-decoration: underline !important; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details h3 {
+        color: #3b434c;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 26px; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-contact-details h3 span {
+          color: #7d7d7d;
+          font-family: Arial;
+          font-size: 14px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-subjects {
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-subjects ul li {
+        color: #7e7e7e;
+        font-family: Arial;
+        font-size: 15px; }
+    .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications {
+      padding-top: 25px;
+      padding-left: 20px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications label {
+        color: #3b434c;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px; }
+      .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications ul {
+        margin-bottom: 18px; }
+        .tutors-screen .screen-container .result-panel .search-result-view table .t-qualifications ul li {
+          color: #7e7e7e;
+          font-family: Arial;
+          font-size: 15px;
+          line-height: 26px; }
+
+/* Modules */
+.btn-home {
+  display: block;
+  width: 54px;
+  height: 54px;
+  background: url("../i/icons.png");
+  background-position: -32px -162px; }
+
+.inner-header {
+  display: block;
+  background: #36474f;
+  width: 98%;
+  margin-top: 256px;
+  padding: 0 30px; }
+  .inner-header .main-topic {
+    font-family: "Nixie One", cursive;
+    display: inline-block;
+    width: 70%; }
+    .inner-header .main-topic h1 {
+      font-size: 42px;
+      line-height: 88px;
+      color: #fff; }
+
+.filter-item {
+  display: block;
+  padding-bottom: 30px; }
+  .filter-item .item-header {
+    display: block;
+    font-family: "Slabo 27px", serif;
+    padding-bottom: 15px; }
+    .filter-item .item-header label {
+      font-size: 26px;
+      color: #3a3b3c;
+      cursor: pointer; }
+      .filter-item .item-header label span {
+        color: #3a8af7; }
+  .filter-item .item-container {
+    display: block; }
+    .filter-item .item-container .select-item {
+      display: block; }
+      .filter-item .item-container .select-item label {
+        font-size: 20px;
+        color: #3a3b3c;
+        line-height: 40px; }
