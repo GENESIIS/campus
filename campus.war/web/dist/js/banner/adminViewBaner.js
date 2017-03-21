@@ -146,19 +146,19 @@ function validateDisplayingBanners(){
 			 
 			 if(!validationPass){ // date comparison failed 
 				 
-				 displayLabelMessage('messagePopUp','displayLabel','red',"Start date must < End date");
+				 displayLabelMessage('messagePopUp','displayLabel','red',"Start Date Must < End Date");
 				 return validationPass;
 			 } else{
 				 return validationPass;
 			 }
 		} else{	
 			
-			displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter data");
+			displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter Records");
 			return validationPass;
 		}
-	} else if(!isEndDateEmpty){ // staet date is empty but end date is filled
+	} else if(!isEndDateEmpty){ // start date is empty but end date is filled
 		
-		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter data");
+		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter Records");
 		return validationPass;
 	} else{ // both date fields are empty then it's not required to validate
 		
