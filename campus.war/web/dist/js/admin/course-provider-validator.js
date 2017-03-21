@@ -462,7 +462,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	
-	if (!isValidMinMaxLength(providerPrivateName, 1, 100) {
+	if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
 		document.getElementById('providerPrivateName').focus();
 		flag = false;
