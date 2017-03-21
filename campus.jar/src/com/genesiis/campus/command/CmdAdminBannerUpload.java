@@ -20,7 +20,9 @@ package com.genesiis.campus.command;
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods. 
  * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
  * 			getSessionProperty() method catch IllegalArgumentException. But logs NullPointerException corrected.
- * 			clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !"); Typo error is corrected.
+ * 			clientInputValidator.isNotEmpty(bannerPublishingEndDate,"End Publishing Date field is empty !"); Typo error is corrected.
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() the Exception message to the client has been better formatted.
+ * 			 typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -182,7 +184,8 @@ public class CmdAdminBannerUpload implements ICommand {
 				isvalidationSuccess=true;
 				
 		} catch (FailedValidationException fvexp) {
-			this.message = message +" "+ fvexp.toString();
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2); 
 			return false;
 		} catch(Exception exp){
@@ -194,12 +197,12 @@ public class CmdAdminBannerUpload implements ICommand {
 	
 	/**
 	 * getADate() returns a date.
-	 * Method accepts a date in the form yyy?MM?dd
+	 * Method accepts a date in the form yyyy?MM?dd
 	 * ? denotes the delimiter which should be passed to the method, 
 	 * using which the string date is split and forms a java.util.date
 	 * @param dateDelemeter : can be any printable string character 
 	 *  e.g. "-" "," "/" etc 
-	 * @param date should be adhere to teh format yyy?MM?dd
+	 * @param date should be adhere to the format yyyy?MM?dd
 	 * 			yyyy: year
 	 * 			MM  : Month
 	 * 			dd  : date
@@ -434,7 +437,7 @@ public class CmdAdminBannerUpload implements ICommand {
 
 	/*
 	 * Method sets the response credentials, It sets the successfulness or the failure code,
-	 * amd the message to be dispatched to the view to the response as attributes
+	 * and the message to be dispatched to the view to the response as attributes
 	 * @author dushantha DN
 	 * setResponseCridentials sets the request attributes
 	 * @param helper: It is the HttpServletrequest wrapper instance.
@@ -635,7 +638,7 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 
 
 /*
- * getInflatedObjectFromJason de serialized the flattened jason data in to an object
+ * getInflatedObjectFromJason deserialized the flattened jason data in to an object
  * @param data String type which is the flatten Jason object state (serialized object)
  * sent from the server attached as a servlettRequest parameter IMPORTANT : String must not be  null
  * @return JasonInflator which is the inflated object with the client side informations sent in.
