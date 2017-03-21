@@ -3,6 +3,7 @@
 <!-- 20170321 TR c106- changed pagination button styles  -->
 <!-- 20170321 TR c106- update new selected tab button styles ( All and New tabs )  -->
 <!-- 20170321 TR c106- remove CDN links and added jquery.dataTables.css and jquery.dataTables.js  -->
+<!-- 20170321 JH c134-admin-list-new-tutor-requests removed commented cdn files, imported error handling javascript file, added div to display error messages -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -17,26 +18,27 @@
 
 <!-- Bootstrap & CSS Style-->
 
-<link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+	<link href="/dist/css/style.css" rel="stylesheet">
+	<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+		rel="stylesheet">
 	
-	<!--     Data Table CSS -->
-<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-<!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css"> -->
-<link rel="stylesheet" type="text/css" href="/dist/bower-components/datatable/jquery.dataTables.css">
+	<!-- Data Table CSS -->
+	<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/dist/bower-components/datatable/jquery.dataTables.css">
 
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script> 
 	<script src="/dist/js/main.js"></script>
-	
-	  
-<!--<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>-->
-<script src="/dist/bower-components/datatable/jquery.dataTables.js"></script>
+	<script src="/dist/bower-components/datatable/jquery.dataTables.js"></script>
 
+	<style type="text/css">
+	div:empty {
+  	 display: none;
+	}
+	</style>
 </head>
 
 
@@ -58,11 +60,10 @@
 		<!-- end inner header -->
 		
 		<div class="content-holder center-block clearfix">
-
+		<div class="alert alert-danger" id="userMessage"></div>
             <div class="tutors-table">
                 <!-- Page content -->
-                <form action="/AdminController" method="POST" id="basicForm">
-
+                
 					<div class="tab-holder clearfix">
 						<ul class="nav nav-pills pull-right" role="tablist">
 							<li class="" id="button-all"><a onclick="listAllTutors();">All</a></li>
@@ -87,8 +88,6 @@
                             </tr>
                         </thead>
                     </table>
-
-                </form>
             </div>
 		    <!-- End tutors table  -->
 		</div>
@@ -107,6 +106,10 @@
 
 	<!-- custom javascript -->
 	<script src="/dist/js/admin/search-tutor-helper.js"></script>
+	
+	<!-- error handling javascript -->
+	<script src="/dist/js/error-handling.js"></script>
+	
 	<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
