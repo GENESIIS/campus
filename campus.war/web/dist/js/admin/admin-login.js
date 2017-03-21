@@ -26,7 +26,7 @@ function ALogin() {
 		return false;
 	}
 
-	if ((username) && (password)) {
+	if ((usernametb) && (passtb)) {
 
 		var jsonData = {
 			"userKey" : username,
@@ -36,7 +36,7 @@ function ALogin() {
 		$
 				.ajax({
 					type : "POST",
-					url : '../../LoginController',
+					url : '../../../LoginController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
 						CCO : "ALOG"
