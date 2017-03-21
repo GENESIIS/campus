@@ -2,6 +2,7 @@
 <!-- 20170317 JH c134-admin-list-new-tutor-requests added new style .hide-value to hide the content of approval status column, imported AJAX error handling js -->
 <!-- 20170321 TR c106- changed pagination button styles  -->
 <!-- 20170321 TR c106- update new selected tab button styles ( All and New tabs )  -->
+<!-- 20170321 TR c106- remove CDN links and added jquery.dataTables.css and jquery.dataTables.js  -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -23,7 +24,9 @@
 	<!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
+<!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css"> -->
+<link rel="stylesheet" type="text/css" href="/dist/bower-components/jquery.dataTables.css">
+
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
@@ -31,7 +34,8 @@
 	<script src="/dist/js/main.js"></script>
 	
 	  
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+<!-- <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/dist/bower-components/jquery.dataTables.js">
 
 </head>
 
