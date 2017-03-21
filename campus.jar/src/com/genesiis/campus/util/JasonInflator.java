@@ -5,6 +5,8 @@ package com.genesiis.campus.util;
  * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn corrected
  *             as per the CREV comments 20170307.1645h PN and added
  *             java doc comments to the class.
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 
+ *             10 given in 201703132232-CN - Local test summary.
  */
 
 /**
@@ -118,36 +120,36 @@ public class JasonInflator {
 	}
 	
 	/**
-	 * Gets the dusration.
+	 * Gets the duration.
 	 *
-	 * @return the dusration
+	 * @return the duration
 	 */
-	public String getDusration() {
+	public String getDuration() {
 		return displayDusration;
 	}
 	
 	/**
-	 * Sets the dusration.
+	 * Sets the duration.
 	 *
-	 * @param dusration the new dusration
+	 * @param dusration the new duration
 	 */
-	public void setDusration(String dusration) {
-		this.displayDusration = dusration;
+	public void setDuration(String duration) {
+		this.displayDusration = duration;
 	}
 	
 	/**
-	 * Gets the baner to be active.
+	 * Gets the banner to be active.
 	 *
-	 * @return the baner to be active
+	 * @return the banner to be active
 	 */
 	public String getBanerToBeActive() {
 		return banerToBeActive;
 	}
 	
 	/**
-	 * Sets the baner to be active.
+	 * Sets the banner to be active.
 	 *
-	 * @param banerToBeActive the new baner to be active
+	 * @param banerToBeActive the new banner to be active
 	 */
 	public void setBanerToBeActive(String banerToBeActive) {
 		this.banerToBeActive = banerToBeActive;
