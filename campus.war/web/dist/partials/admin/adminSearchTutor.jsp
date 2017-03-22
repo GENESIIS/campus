@@ -4,6 +4,7 @@
 <!-- 20170321 TR c106- update new selected tab button styles ( All and New tabs )  -->
 <!-- 20170321 TR c106- remove CDN links and added jquery.dataTables.css and jquery.dataTables.js  -->
 <!-- 20170321 JH c134-admin-list-new-tutor-requests removed commented cdn files, imported error handling javascript file, added div to display error messages -->
+<!-- 20170322 JH c134-admin-list-new-tutor-requests modified style tag to hide only the error message when empty -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -35,7 +36,7 @@
 	<script src="/dist/bower-components/datatable/jquery.dataTables.js"></script>
 
 	<style type="text/css">
-	div:empty {
+	#userMessage:empty {
   	 display: none;
 	}
 	</style>
