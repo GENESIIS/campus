@@ -108,27 +108,56 @@
 			<div >
 				Advertiser * &nbsp; 
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
-				<input id="advertiser" name="page"
-					list="advertiserList" class="text-field" type="text"
-					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
-				<datalist id="advertiserList" name="advertiserList"> </datalist>
-				<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
+				<c:choose>
+					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
+						<input id="advertiser" name="page" value="${param.advertiserName }"
+							list="advertiserList" class="text-field" type="text"
+							placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
+						<datalist id="advertiserList" name="advertiserList"> </datalist>
+						<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" value="${param.advertizerCode}" />
+					</c:when>
+					<c:otherwise>
+					 	<input id="advertiser" name="page"
+							list="advertiserList" class="text-field" type="text"
+							placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
+						<datalist id="advertiserList" name="advertiserList"> </datalist>
+						<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<br>
-			${param.bnrHidden }
+			
 			<c:if test="${param.CCO eq 'ADMEDTBNR' }">
 				<div align="right" >
-				<img id='imageName01'src='/dist/i/slider/slide-3.jpg' alt='banner-Image' style='width:200px;hight:60px'>
+				 Uploaded Banner :
+				<img id='imageName01'src="${param.bannerUrl}" alt='banner-Image' style='width:200px;hight:60px'>
 			</div>
 			</c:if>
 			
 			<div>
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
-				<input id="page" name="page" list="pageList"
-					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
-				<datalist id="pageList" name="pageList"> </datalist>
-				<input type="hidden" id="sPageCode" name="sPageCode" />
+				
+				<c:choose>
+					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
+						<input id="page" name="page" list="pageList" value="${param.pageSlotName}"
+							class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
+						<datalist id="pageList" name="pageList"> </datalist>
+						<input type="hidden" id="sPageCode" name="sPageCode" value= "${param.pageSlotCode}"/>
+						<script>
+							$('#page').trigger('input'); 
+						</script>
+					</c:when>
+					<c:otherwise>
+						<input id="page" name="page" list="pageList"
+							class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
+						<datalist id="pageList" name="pageList"> </datalist>
+						<input type="hidden" id="sPageCode" name="sPageCode" />
+					</c:otherwise>
+				</c:choose>
+				
+				
+				
 			</div>
 			<br> <br>
 			<div>
@@ -186,6 +215,10 @@
 			<button  id="openModalUpload" >Upload Banner</button>
 			<button id="bannerPageClearField">Clear Page</button>
 		</form>
+
+
+
+
 
 	</div>
 </body>
