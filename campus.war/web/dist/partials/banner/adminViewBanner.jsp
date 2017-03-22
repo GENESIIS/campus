@@ -6,6 +6,8 @@
                   tag of the table from the jsp file. Add the Row #  <th> element
      20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add id to the button 'Filter the Banner Button
 	 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn Admin Add New Banner and Admin add New Advertiser buttons are added.
+	 20170322 DN c83-admin-manage-banner-update-banner-info-dn add extra div to display banner image when the page is reached to edit
+	 			 banner record.
  -->
 
 
