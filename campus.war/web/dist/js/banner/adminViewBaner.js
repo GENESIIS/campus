@@ -13,7 +13,9 @@
  * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn loadBanners() is added the validation method.
  * 			validateDisplayingBanners() method is fully implemented.
  * 			populateBannerTable() method where the table rows are dynamically created the Advertiser Name is added.
- * 			Document ready function is changed to navigate to add banners page when the adminAddNewBanner button is clicked.  
+ * 			Document ready function is changed to navigate to add banners page when the adminAddNewBanner button is clicked.
+ * 20170322 DN c83-admin-manage-banner-update-banner-info-dn populateBannerTable() has been added hidden fields to capture 
+ * 			the request parameters representing banner records  
  */
 
 var theNewScript = document.createElement("script");
@@ -205,8 +207,15 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			
 			var bannerCode = aRow[0];
 			var imageName =aRow[1];
+			var displayDuration =aRow[2];
+			var linkType = aRow[3];
+			var urlToNavigateClickingTheBaner = aRow[4];
+			var pageSlotCode =aRow[5];
+			var pageSlotName = aRow[6];
+			var bannerActiveInactiveState = aRow[7];
 			var bannerActivateDate=aRow[8];
 			var bannerDeactivateDate = aRow[9];
+			var advertizerCode = aRow[10];
 			var imgeNameComponent = aRow[1].split(".");
 			var advertiserName = aRow[11];
 				
@@ -219,9 +228,26 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			
 			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td>"+advertiserName+"<hr>"+
 															bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
-			markUp = markUp +"<form  method='POST'>"+ //action='urltogo' should be specified when needs to edit the banner record.
+			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ //action='urltogo' should be specified when needs to edit the banner record.
 								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
-								"<input type='hidden' id='bnrHidden"+rowNumber+"' name='bnrHidden"+rowNumber+"' value='"+bannerCode+"'>"+ 
+								"<input type='hidden' id='bannerCode"+rowNumber+"' name='bannerCode' value='"+bannerCode+"'>"+ 
+								"<input type='hidden' id='imageName"+rowNumber+"' name='imageName' value='"+imageName+"'>"+ 
+								"<input type='hidden' id='displayDuration"+rowNumber+"' name='displayDuration' value='"+displayDuration+"'>"+ 
+								"<input type='hidden' id='linkType"+rowNumber+"' name='linkType' value='"+linkType+"'>"+ 
+								"<input type='hidden' id='urlToNavigateClickingTheBaner"+rowNumber+"' name='urlToNavigateClickingTheBaner' value='"+urlToNavigateClickingTheBaner+"'>"+ 
+								"<input type='hidden' id='pageSlotCode"+rowNumber+"' name='pageSlotCode' value='"+pageSlotCode+"'>"+ 								
+								"<input type='hidden' id='pageSlotName"+rowNumber+"' name='pageSlotName' value='"+pageSlotName+"'>"+
+								"<input type='hidden' id='bannerActiveInactiveState"+rowNumber+"' name='bannerActiveInactiveState' value='"+bannerActiveInactiveState+"'>"+ 
+								"<input type='hidden' id='bannerActivateDate"+rowNumber+"' name='bannerActivateDate' value='"+bannerActivateDate+"'>"+ 
+								"<input type='hidden' id='bannerDeactivateDate"+rowNumber+"' name='bannerDeactivateDate' value='"+bannerDeactivateDate+"'>"+ 
+								"<input type='hidden' id='advertizerCode"+rowNumber+"' name='advertizerCode' value='"+advertizerCode+"'>"+ 								
+								"<input type='hidden' id='advertiserName"+rowNumber+"' name='advertiserName' value='"+advertiserName+"'>"+ 
+								"<input type='hidden' id='advertizerCode"+rowNumber+"' name='advertizerCode' value='"+advertizerCode+"'>"+ 
+								"<input type='hidden' id='bannerUrl"+rowNumber+"' name='bannerUrl' value='"+url+"'>"+ 
+								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+ 
+								
+								
+								
 							 "</form></td>";
 			markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
 			jQuery("table").css('overflow-x','auto');
