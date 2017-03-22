@@ -71,6 +71,7 @@
         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 clearfix">
             <h2 class="page-topic-t3">Reset  Your Password</h2>
             <h3 class="sub-topic-t1">Enter a new password for your account.</h3>
+            <h4 class="sub-topic-t2">Password Should be at Least 8 Characters</h4>
         </div>
         <!-- End page topic block -->
 
@@ -90,25 +91,21 @@
 
         <div class="col-lg-5 col-sm-12 col-md-6 col-xs-12 clearfix">
 
-            <div class="fp-msg fp-msg-success">
+            <div class="fp-msg">
                 <label for="error-msg" class="error-msg">
                     <span class="error-txt" id="message"></span>
                 </label>
             </div>
             <div class="input-area clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                 <label for="username"> <span class="error-txt" id="passWordError"></span> </label>
-                    <input type="password" class="" placeholder="New Password" name="psw" id="passWord"
-					onclick="clearField('passWordError')" onkeypress="validatePasswordResetData()" required >
-					 <label for="username"> <span class="error-txt" id="confPassWordError"></span> </label>
-                    <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw"
-					onclick="clearField('confPassWordError')"  required >
+                     <label for="username" class="stat-warning-txt"> <span id="passWordError"></span> </label>
+                     <input type="password" class="" placeholder="New Password" name="psw" id="passWord" onclick="clearField('passWordError')" onkeypress="validatePasswordResetData()" required >
+                     <label for="username" class="stat-error-txt"> <span id="confPassWordError">Test Error Message</span> </label>
+                     <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')"  required >
                 </div>
                 <div class="pull-right show-pwrd">
-					<span class="check-box"><input type="checkbox"
-						id="showpasscheckbox" title="Show the password as plain text"
-						onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')"></span>Show
-					Password
+                    <input class="pw-show-checkbox" type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')">
+					<span class="pw-show-lbl">Show Password</span>
 				</div>
             </div>
             <div class="btn-holder">

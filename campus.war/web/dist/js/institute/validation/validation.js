@@ -1,7 +1,8 @@
 /**
  * 
  * //20161027 AS C8-inquiry-form-for-course validation.js  created.
- * 20170228 TR C22 added .removeClass jquery line into clearField function 
+ * 20170228 TR C22 added .removeClass jquery line into clearField function (for #emailveryMessage)
+ * 20170322 TR C22 added .removeClass jquery line into clearField function (for #passWordError)
  *
  */ 
  
@@ -78,6 +79,8 @@ function isPatternMatch(regularExpression, source) {
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
 	$('#emailveryMessage').removeClass("fp-msg-error");
+	$('#passWordError').removeClass("fp-msg-error");
+	$('#verifyMesssage').removeClass("fp-msg-error"); 
 }
 
 

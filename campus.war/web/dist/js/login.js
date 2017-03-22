@@ -272,8 +272,8 @@ function verifyCode() {
 	if (!(codeEmpty)) {
 		// document.getElementById('verifyMesssage').innerHTML = " ** Verify
 		// Code can not be Empty.";
-		jQuery('#verifyMesssage').addClass("fp-msg-error").html(
-				'  ** Verify Code can not be Empty.');
+		jQuery('#verifyMesssage').addClass("fp-msg-error")
+			.html('** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}

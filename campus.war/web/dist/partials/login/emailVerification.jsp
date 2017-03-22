@@ -72,7 +72,7 @@
 <!--                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> -->
 <!--                     <label for="username">Email : <span class="error-txt" id=emailtbError></span></label> -->
 <!--                 </div> -->
-                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
                                 <div class="form-group has-error ">
                                     <div class="fp-msg">
-                                        <label for="username">
+                                        <label for="username" class="error-msg">
                                             <span class="error-txt" id="verifyMesssage"></span>
                                         </label>
                                     </div>
