@@ -30,6 +30,8 @@
  * //20170305 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor() to add password related validations & remove un wanted commented lines
  * //20170307 CW c37-tutor-update-tutor-profile-cw modified isValidEmail() method & fix a minor bug 
  * //20170316 CW c37-tutor-update-tutor-profile-cw modified field max lengths to match database field max size
+ * //20170322 CW c37-tutor-update-tutor-profile-cw add getFlagVal method & modified validateTutorModificationsByTutor method to fix flag updating error
+ * 				// modified validateTutorModificationsByTutor method to fix town validation errors
  */
 
 /**
@@ -87,6 +89,20 @@ function isValidEmailFormat(email) {
 function ValidURL(str) {
 	var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 	return regex.test(str);
+}
+
+/**
+ * Update & returns the flag value validate with flagTemp
+ * @author cw
+ * @param flag
+ * @param flagTemp
+ * @returns
+ */
+function getFlagVal(flag, flagTemp){
+	if(flag == true){
+		flag = flagTemp;
+	}
+	return flag;
 }
 
 /**
@@ -157,27 +173,29 @@ function validateTutorModificationsByTutor() {
 	var tutorstatusOld = $("#tutorstatusOld").val();
 	
 	var flag = true;
+	var flagTemp = true;
 	var isModified = false;
 	
 	if(firstname != firstnameOld){
 		isModified = true;
-		flag = isValidFirstname(firstname);
+		flagTemp = isValidFirstname(firstname);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(middlename != middlenameOld){		
 		isModified = true;
-		flag = isValidMiddlename(middlename);
+		flagTemp = isValidMiddlename(middlename);
+		flag = getFlagVal(flag, flagTemp);
 	}	
 
 	if(lastname != lastnameOld){		
 		isModified = true;
-		flag = isValidLastname(lastname);
+		flagTemp = isValidLastname(lastname);
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(experience != experienceOld){
-
-		isModified = true;
-		
+		isModified = true;		
 		if(experience.length > 2147483600){
 			document.getElementById('experienceError').innerHTML = "**Max length exceeded.";
 			document.getElementById('experience').focus();
@@ -186,9 +204,7 @@ function validateTutorModificationsByTutor() {
 	}
 	
 	if(aboutMe != descriptionOld){
-
-		isModified = true;
-		
+		isModified = true;		
 		if(experience.length > 2147483600){
 			document.getElementById('aboutMeError').innerHTML = "**Max length exceeded.";
 			document.getElementById('aboutMe').focus();
@@ -213,6 +229,11 @@ function validateTutorModificationsByTutor() {
 				flag = false;
 			}
 		}
+		if((country == countrynameOld) && (country != "--- Select Country ---")){
+			if ((town != townOld) && (town != "--- Select Country before select the town ---") && (town != "--- Select town ---")) {
+				isModified = true;
+			}
+		}
 	}
 		
 	if(townOld == ""){
@@ -224,84 +245,99 @@ function validateTutorModificationsByTutor() {
 			isModified = true;
 		}
 	} else{
-		if ((town != townOld) && (town != "--- Select Country before select the town ---")) {
+		if ((town != townOld) && (town != "--- Select Country before select the town ---") && (town != "--- Select town ---")) {
 			isModified = true;
 		}
 	}
 
 	if(mobileCountryCode != mobilephonecountrycodeOld){		
 		isModified = true;
-		flag = isValidMobileCountryCode(mobileCountryCode); 
+		flagTemp = isValidMobileCountryCode(mobileCountryCode); 
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(mobileNetworkCode != mobilephonenetworkcodeOld){		
 		isModified = true;
-		flag = isValidMobileNetworkCode(mobileNetworkCode); 
+		flagTemp = isValidMobileNetworkCode(mobileNetworkCode); 
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(mobileNumber != mobilephonenumberOld){		
 		isModified = true;		
-		flag = isValidMobileNumber(mobileNumber); 
+		flagTemp = isValidMobileNumber(mobileNumber); 
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(landCountryCode != landphonecountrycodeOld){		
 		isModified = true;
-		flag = isValidLandCountryCode(landCountryCode);
+		flagTemp = isValidLandCountryCode(landCountryCode);
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(landAreaCode != landphoneareacodeOld){		
 		isModified = true;
-		flag = isValidLandAreaCode(landAreaCode);	
+		flagTemp = isValidLandAreaCode(landAreaCode);	
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(landNumber != landphonenumberOld){		
 		isModified = true;		
-		flag = isValidLandNumber(landNumber);
+		flagTemp = isValidLandNumber(landNumber);
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(address1 != address1Old){		
 		isModified = true;		
-		flag = isValidAddress1(address1);
+		flagTemp = isValidAddress1(address1);
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(weblink != weblinkOld){		
 		isModified = true;		
-		flag = isValidWeblink(weblink);
+		flagTemp = isValidWeblink(weblink);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(facebook != facebookurlOld){		
 		isModified = true;		
-		flag = isValidFacebook(facebook);
+		flagTemp = isValidFacebook(facebook);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(linkedin != linkedinurlOld){		
 		isModified = true;
-		flag = isValidLinkedin(linkedin);
+		flagTemp = isValidLinkedin(linkedin);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(twitter != twitterurlOld){		
 		isModified = true;		
-		flag = isValidTwitter(twitter);
+		flagTemp = isValidTwitter(twitter);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(instagram != instagramurlOld){	
 		isModified = true;				
-		flag = isValidInstagram(instagram);
+		flagTemp = isValidInstagram(instagram);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(myspace != myspaceurlOld){		
 		isModified = true;			
-		flag = isValidMyspace(myspace);
+		flagTemp = isValidMyspace(myspace);
+		flag = getFlagVal(flag, flagTemp);
 	}		
 	
 	if(whatsapp != whatsappnumberOld){		
 		isModified = true;
-		flag = isValidWhatsapp(whatsapp);
+		flagTemp = isValidWhatsapp(whatsapp);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(viber != vibernumberOld){		
 		isModified = true;
-		flag = isValidViber(viber);
+		flagTemp = isValidViber(viber);
+		flag = getFlagVal(flag, flagTemp);
 	}
 
 	if(tutorStatus != tutorstatusOld){
@@ -310,12 +346,14 @@ function validateTutorModificationsByTutor() {
 	
 	if(emailOld != email){		
 		isModified = true;	
-		flag = isValidEmail(email);
+		flagTemp = isValidEmail(email);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(username != usernameOld){
 		isModified = true;
-		flag = isValidUsername(username);
+		flagTemp = isValidUsername(username);
+		flag = getFlagVal(flag, flagTemp);
 	}
 	
 	if(isempty(oldPassword) && isempty(newPassword) && isempty(confirmPassword)){	
