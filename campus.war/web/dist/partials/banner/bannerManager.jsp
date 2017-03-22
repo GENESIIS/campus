@@ -6,10 +6,14 @@
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn add extra radio button to select link types-->
 <!-- 20170227 DN c131-admin-manage-banner-upload-banner-image-dn add error <div> tags-->
 <!-- 20170321 DN c131-admin-manage-banner-upload-banner-image-dn label is created that is attached to the radio buttons.  -->
+<!-- 20170322 DN c83-admin-manage-banner-update-banner-info-dn add the jsp tag library to the page
+				 included a div element that holds the banner image on the page 
+
+ -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,8 +104,8 @@
 	<div align="center">
 		
 
-		<form id="banner-from">
-			<div>
+		<form id="banner-from">			
+			<div >
 				Advertiser * &nbsp; 
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<input id="advertiser" name="page"
@@ -111,6 +115,12 @@
 				<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
 			</div>
 			<br>
+			${param.bnrHidden }
+			<c:if test="${param.CCO eq 'ADMEDTBNR' }">
+				<div align="right" >
+				<img id='imageName01'src='/dist/i/slider/slide-3.jpg' alt='banner-Image' style='width:200px;hight:60px'>
+			</div>
+			</c:if>
 			
 			<div>
 				Page * &nbsp; 
