@@ -25,7 +25,8 @@ package com.genesiis.campus.entity;
  *             and Collection<Collection<String>> getAll(Object). Add doc comments to class and methods
  * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
  * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE") 
- * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query.               
+ * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query. 
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary.                 
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -121,15 +122,15 @@ public class AdminBannerDAO implements ICrudSibling {
 
 	/**
 	 * addBannerRecordInOneTransAction Method insert a record to table banner 
-	 * when a Banner is added to the System, and if the inital operation
+	 * when a Banner is added to the System, and if the initial operation
 	 * reported success then the method returns the banner code and the
 	 * Banner Image name from the data base in a collection wrapped within a collection.
 	 * 
 	 * @param banner : JasonInflator instance wrapped as an Object
-	 * @param bannerImageExtension : extension of the banner eg. jpg,jpg,ping etc.
-	 * @param userName : user name of the user who fires the method eg."admin" etc
+	 * @param bannerImageExtension : extension of the banner e.g. jpg,jpg,ping etc.
+	 * @param userName : user name of the user who fires the method e.g."admin" etc
 	 * @return Collection<Collection<String>> : Single record is wrapped within 
-	 * another collection eg. {{x,y},{s,d},..}
+	 * another collection e.g. {{x,y},{s,d},..}
 	 * @throws SQLException
 	 * @throws Exception
 	 */

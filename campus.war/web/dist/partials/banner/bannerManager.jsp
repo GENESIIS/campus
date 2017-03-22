@@ -5,6 +5,7 @@
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn  add the modal window to upload the banner image. -->
 <!-- 20170216 DN c131-admin-manage-banner-upload-banner-image-dn add extra radio button to select link types-->
 <!-- 20170227 DN c131-admin-manage-banner-upload-banner-image-dn add error <div> tags-->
+<!-- 20170321 DN c131-admin-manage-banner-upload-banner-image-dn label is created that is attached to the radio buttons.  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -42,7 +43,7 @@
 			<div class="modal-header"> <b>System Message</b>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">Close</span>
+					<span aria-hidden="true" id='systemMessageClose'>Close</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -105,7 +106,7 @@
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<input id="advertiser" name="page"
 					list="advertiserList" class="text-field" type="text"
-					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor')">
+					placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
 				<datalist id="advertiserList" name="advertiserList"> </datalist>
 				<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
 			</div>
@@ -115,7 +116,7 @@
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
 				<input id="page" name="page" list="pageList"
-					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor')">
+					class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
 				<datalist id="pageList" name="pageList"> </datalist>
 				<input type="hidden" id="sPageCode" name="sPageCode" />
 			</div>
@@ -125,7 +126,7 @@
 				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
 				<input id="slot" name="slot"
 					list="slotList" class="text-field" type="text"
-					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor')">
+					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
 				<datalist id="slotList" name="slotList"> </datalist>
 				<input type="hidden" id="sSlotCode" name="sSlotCode" />
 			</div>
@@ -133,24 +134,24 @@
 			<div>
 				Duration (Seconds) *&nbsp;
 				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
-				<input id="duration" type='text' onclick="clearField('displayDurationInfor')">
+				<input id="duration" type='text' onclick="clearField('displayDurationInfor');">
 			</div>
 			<br>
-			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label> <input
-				type="radio" name="bannerEnable" value="true" checked="checked"> <label
-				for="bannerEnable">Yes</label> <input type="radio"
-				name="bannerEnable" value="false" > <label
-				for="bannebannerDisablerEnable">No</label>
+			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
+			<label for="bannerEnable" hidden='true'>true</label>
+			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" checked="checked" >YES 
+			 <label for="bannerDissable" hidden='true'>false</label>
+			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false" >NO
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
-				<br> Start date* &nbsp; <input type="date" name="startDate"
+				<br> Banner Avtivation date* &nbsp; <input type="date" name="startDate"
 					id="startDate" onclick="clearField('startDateInfor')">
 			</div>
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				End date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+				Banner deavtivation date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor');">
 			</div>
 			<br><br>
 			<div>
@@ -165,7 +166,7 @@
 			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
 			<br><br>
 			<div id="urlInfor" style ="color:#C70039;"></div><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor')">
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');">
 			</div>
 			<br><br>
 			<!-- Form image submit -->

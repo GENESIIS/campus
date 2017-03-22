@@ -18,8 +18,13 @@ package com.genesiis.campus.command;
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods.
+ * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
+ * 				getSessionProperty() method catch IllegalArgumentException. But logs NullPointerException corrected.
+ * 				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"End Publishing Date field is empty !"); Typo error is corrected.
  * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn in isClientInputAccordanceWithValidation() add the correct SystemMessage
  *  			SystemMessage.EMPTY_SEARCH_RESULT.message() to the method
+ *  20170321 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() the Exception message to the client has been better formatted.		
+ * 			 typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -71,7 +76,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	private ImageUtility imageUtility =new ImageUtility();
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	private String message = "";
-	private static FileUtility fileUtility = new FileUtility();
+	private static final FileUtility fileUtility = new FileUtility();
 	
 	
 	/* (non-Javadoc)
@@ -161,11 +166,11 @@ public class CmdAdminBannerUpload implements ICommand {
 				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
 				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
 				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
-				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
+				clientInputValidator.isNotEmpty(displayDusration," The display Duration field is empty !");
 				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
-				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
+				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or disable option");
 				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
-				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Publishing End Date field is empty !");
 				
 				Date publishingDate 	= getADate("-",bannerPublishingDate);
 				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
@@ -181,7 +186,8 @@ public class CmdAdminBannerUpload implements ICommand {
 				isvalidationSuccess=true;
 				
 		} catch (FailedValidationException fvexp) {
-			this.message = message +" "+ fvexp.toString();
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2); 
 			return false;
 		} catch(Exception exp){
@@ -193,12 +199,12 @@ public class CmdAdminBannerUpload implements ICommand {
 	
 	/**
 	 * getADate() returns a date.
-	 * Method accepts a date in the form yyy?MM?dd
+	 * Method accepts a date in the form yyyy?MM?dd
 	 * ? denotes the delimiter which should be passed to the method, 
 	 * using which the string date is split and forms a java.util.date
 	 * @param dateDelemeter : can be any printable string character 
 	 *  e.g. "-" "," "/" etc 
-	 * @param date should be adhere to teh format yyy?MM?dd
+	 * @param date should be adhere to the format yyyy?MM?dd
 	 * 			yyyy: year
 	 * 			MM  : Month
 	 * 			dd  : date
@@ -235,9 +241,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			return userSessionProperty;
 			
 		} catch (IllegalArgumentException ilearg) {
-			log.error("getUserProperty(String,IDataHelper) NullPointerException"
-					+ userProperty
-					+ "request parameter is Not Set : "
+			log.error("getUserProperty(String,IDataHelper) IllegalArgumentException  : 'userProperty' request parameter is Not Set : "
 					+ ilearg.toString());
 			throw ilearg;
 		}
@@ -435,7 +439,7 @@ public class CmdAdminBannerUpload implements ICommand {
 
 	/*
 	 * Method sets the response credentials, It sets the successfulness or the failure code,
-	 * amd the message to be dispatched to the view to the response as attributes
+	 * and the message to be dispatched to the view to the response as attributes
 	 * @author dushantha DN
 	 * setResponseCridentials sets the request attributes
 	 * @param helper: It is the HttpServletrequest wrapper instance.
@@ -563,7 +567,6 @@ public class CmdAdminBannerUpload implements ICommand {
 		}	
 		
 	 	setResponseCridentials(helper); 
-	 	this.setFileUtility(null); // clear the static class field on completion.
 	 	return view;
 	}
 
@@ -637,7 +640,7 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 
 
 /*
- * getInflatedObjectFromJason de serialized the flattened jason data in to an object
+ *  getInflatedObjectFromJason deserialized the flattened jason data in to an object
  * @param data String type which is the flatten Jason object state (serialized object)
  * sent from the server attached as a servlettRequest parameter IMPORTANT : String must not be  null
  * @return JasonInflator which is the inflated object with the client side informations sent in.
@@ -695,9 +698,6 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 		this.message = message;
 	}
 	
-	private void setFileUtility(FileUtility fileUtility) {
-		CmdAdminBannerUpload.fileUtility = fileUtility;
-	}
 	
 	/**
 	 * Gets the success code.
