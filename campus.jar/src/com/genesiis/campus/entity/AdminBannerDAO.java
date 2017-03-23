@@ -26,7 +26,10 @@ package com.genesiis.campus.entity;
  * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
  * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE") 
  * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query. 
- * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary.                 
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
+ * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add extra INNER JOIN statement with  [CAMPUS].PAGE in sql query of
+ * 			   getAll(Object object) method and add   PG.NAME PAGE_NAME,PG.CODE PAGE_CODE to the select statement. Retrieve extra 02 columns namely
+ * 			   PAGE_NAME and PAGE_CODE from the resultset.	        
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -316,15 +319,18 @@ public class AdminBannerDAO implements ICrudSibling {
 					
 			
 			StringBuilder querybuilder = new StringBuilder(
-					"SELECT BNR.*,PGS.NAME PAGESLOT_NAME,ADVR.NAME ADVERTISER_NAME ");
+					"SELECT BNR.*,PGS.NAME PAGESLOT_NAME,ADVR.NAME ADVERTISER_NAME,PG.NAME PAGE_NAME,PG.CODE PAGE_CODE ");
 			querybuilder.append(" FROM [CAMPUS].BANNER BNR ");
 			querybuilder.append(" INNER JOIN [CAMPUS].ADVERTISER ADVR ");
 			querybuilder.append(" ON BNR.ADVERTISER = ADVR.CODE "
 					+ " INNER JOIN"
 					+ " [CAMPUS].PAGESLOT PGS"
 					+ " ON BNR.PAGESLOT = PGS.CODE"
-					+ " WHERE ADVR.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()+ " ");
-			
+					+ " INNER JOIN [CAMPUS].PAGE PG"
+					+ " ON PG.CODE=PGS.PAGE"
+					+ " WHERE ADVR.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()
+					+ " AND PGS.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()
+					+ " AND PG.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue());
 			
 			if(ISACTIVE != ApplicationStatus.UNDEFINED.getStatusValue() ){
 				querybuilder.append(" AND BNR.ISACTIVE = "+ISACTIVE+ " ");
@@ -359,6 +365,8 @@ public class AdminBannerDAO implements ICrudSibling {
 				innerCol.add(resultSet.getString("EXPIRATIONDATE")); //9
 				innerCol.add(resultSet.getString("ADVERTISER"));	//10
 				innerCol.add(resultSet.getString("ADVERTISER_NAME")); //11
+				innerCol.add(resultSet.getString("PAGE_NAME"));//12
+				innerCol.add(resultSet.getString("PAGE_CODE"));//13
 				
 				outerWrapper.add(innerCol);
 			}
