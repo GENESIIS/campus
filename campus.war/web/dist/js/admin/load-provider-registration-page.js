@@ -42,11 +42,11 @@ function arrangeUI() {
 	
 	var message =	$('#userMessage').val();
 	
-	if (!isempty(message)) {
-		document.getElementById("userMessage").style.display = "none";
-	}else{
-		document.getElementById("userMessage").style.display = "block";
-	}
+//	if (!isempty(message)) {
+//		document.getElementById("userMessage").style.display = "none";
+//	}else{
+//		document.getElementById("userMessage").style.display = "block";
+//	}
 
 }
 
@@ -233,7 +233,7 @@ function getProviderPageLoadData() {
 				},
 				error : function(x, status, error) {
 					var err = displayErrorMessage(x, status, error);
-					document.getElementById("userMessage").style.display = "block";
+				//	document.getElementById("userMessage").style.display = "block";
 					$("#userMessage").html(err);
 				},
 			});

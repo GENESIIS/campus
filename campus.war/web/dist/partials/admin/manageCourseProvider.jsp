@@ -14,6 +14,7 @@
 <!-- 20170320 JH c141-ui-integration-add-course-provider change html element names to match with the back end validation in 
 				contact information, social media and admin info wip-->
 <!-- 20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip -->
+<!-- 20170323 JH c141-ui-integration-add-course-provider -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -37,6 +38,11 @@
 <!-- FontAwsome Font Styles -->
 <link rel="stylesheet"
 	href="/dist/bower-components/fav/css/font-awesome.min.css">
+	<style type="text/css">
+	#userMessage:empty{
+		display: none;
+	}
+	</style>
 </head>
 
 <body class="admin-page">
@@ -66,11 +72,10 @@
 						form below to add a course provider (Complete all sections)</span>
 				</h2>
 
-				<form name="addCourseForm" class="form form-admin has-error-form"
-					method="POST" action="">
+				<!-- <form name="addCourseForm" class="form form-admin has-error-form"
+					method="POST" action=""> 		 -->
 
-					<div class="alert alert-danger fade in">Please correct all
-						highlighted errors and try again</div>
+					<div class="alert alert-danger fade in" id="userMessage"></div>
 
 					<div class="accordion">
 
@@ -82,7 +87,7 @@
 								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
 										class="error-info" href="#" data-toggle="tooltip"
-										title="Hooray!" data-placement="top"></a>
+										title="Error! " data-placement="top"></a>
 									</label>
 								<c:forEach items="${accountTypeBean.values}" var="accountTypes">
 								<label class="radio-inline radio-lbl">
@@ -104,11 +109,11 @@
 								<div class="form-group col-sm-4">
 									<label for="course-provider"><span class="mandatory">*</span>
 										Course Provider Name</label>
-									<div class="input-wrapper has-error">
+									<div class="input-wrapper">
 										<input name="providerName" type="text" class="form-control"
 											id="providerName" placeholder=""> <a
 											class="error-info" href="#" data-toggle="tooltip" id="errorProviderName"
-											title="Error text should reflect your product’s color palette. It’s recommended that you use a contrasting color for error states, such as a warmer hue like red or orange."></a>
+											title=""></a>
 									</div>
 								</div>
 								<div class="form-group col-sm-4">
@@ -125,7 +130,7 @@
 										<input name="uniquePrefix" type="text" class="form-control"
 											id="uniquePrefix" placeholder=""> <a id="errorUniquePrefix"
 											class="error-info" href="#" data-toggle="tooltip"
-											title="Hooray!"></a>
+											title="Error! "></a>
 									</div>
 								</div>
 							</div>
@@ -137,7 +142,7 @@
 										<textarea name="aboutMe" class="form-control"
 											id="aboutMe" rows="4"></textarea>
 										<a class="error-info" href="#" data-toggle="tooltip" id="errorAboutMe"
-											title="Hooray!"></a>
+											title="Error! "></a>
 									</div>
 								</div>
 								<div class="form-group col-sm-6">
@@ -146,7 +151,7 @@
 										<textarea name="specialFeatures" class="form-control"
 											id="specialFeatures" rows="4"></textarea>
 											<a class="error-info" href="#" data-toggle="tooltip" id="errorSpecialFeatures"
-											title="Hooray!"></a>
+											title="Error! "></a>
 									</div>
 								</div>
 							</div>
@@ -166,17 +171,17 @@
 														<input list="selectedCountry" name="country-List" id="country-List" class="input-wrapper has-select" onchange="getDataOnCountrySelection()">
 												<!-- 	<div class="input-wrapper has-select" id="country-List">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div> -->
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
-															title="Hooray!"></a>
+															title="Error! "></a>
 												</div>
 												<div class="col-xs-6">
 													<label for="select-city"><span class="mandatory">*</span>
 														City</label>
 													<div class="input-wrapper has-select" id="town-List">
 													<a class="error-info" href="#" data-toggle="tooltip"
-															title="Hooray!" id="errorSelectedTown"></a>
+															title="Error! " id="errorSelectedTown"></a>
 													</div>
 												</div>
 											</div>
@@ -190,7 +195,7 @@
 														<input name="address1" type="text"
 															class="form-control" id="address1" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress1"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-xs-12">
@@ -199,7 +204,7 @@
 														<input name="address2" type="text"
 															class="form-control" id="address2" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-xs-12">
@@ -208,7 +213,7 @@
 														<input name="address3" type="text"
 															class="form-control" id="address3" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 											</div>
@@ -230,7 +235,7 @@
 													class="col-xs-6" id="land-line-1" placeholder=""> <span
 													class="phone-no-hint" id="landNumber1">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -259,7 +264,7 @@
 													type="tel" class="col-xs-6" id="mobile-line" placeholder="">
 												<span class="phone-no-hint" id="lastMobileNumber">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -286,7 +291,7 @@
 												<input name="generalEmail" type="email" class="form-control"
 													id="generalEmail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorGeneralEmail"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -296,7 +301,7 @@
 												<input name="inquiryMail" type="email" class="form-control"
 													id="inquiryMail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorInquiryMail"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -305,7 +310,7 @@
 												<input name="webLink" type="url" class="form-control"
 													id="webLink" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 									</div>
@@ -324,7 +329,7 @@
 											<div class="input-wrapper">
 												<input name="facebook" type="url" class="form-control"
 													id="facebook" placeholder="">
-													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink" title="Hooray!"></a>
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink" title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
@@ -333,7 +338,7 @@
 												<input name="linkdedIn" type="url" class="form-control"
 													id="linkdedIn" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorLinkedIn"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
@@ -342,7 +347,7 @@
 												<input name="twitter" type="url" class="form-control"
 													id="twitter" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorTwitter"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
@@ -351,7 +356,7 @@
 												<input name="instagram" type="url" class="form-control"
 													id="instagram" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorInstagram"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
@@ -360,7 +365,7 @@
 												<input name="whatsapp" type="url" class="form-control"
 													id="whatsapp" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorMyspace"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 									</div>
@@ -373,7 +378,7 @@
 												<input name="whatsAppNo" type="tel" class="form-control"
 													id="whatsapp-no" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWhatsapp"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
@@ -382,7 +387,7 @@
 												<input name="viber" type="tel" class="form-control"
 													id="viber" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorViber"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 									</div>
@@ -403,7 +408,7 @@
 											<option value="Individual">Individual</option>
 											<option value="Group">Group</option>
 										</select> <a class="error-info" href="#" data-toggle="tooltip"
-											title="Hooray!"></a> --%>
+											title="Error! "></a> --%>
 									</div>
 								</div>
 							</div>
@@ -412,7 +417,7 @@
 									class="text-center center-block top-padding inline-info">
 									<span class="mandatory">*</span> Course Provider Status <a
 									class="error-info" href="#" data-toggle="tooltip"
-									title="Hooray!"></a>
+									title="Error! "></a>
 								</label>
 								<div class="form-group col-sm-12 text-center center-block">
 								<%--	<label class="radio-inline radio-lbl"><input
@@ -450,7 +455,7 @@
 												<input name="providerPrivateName" type="text" class="form-control"
 													id="providerPrivateName" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateName"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
@@ -460,7 +465,7 @@
 												<input name="providerContactNumber" type="text" class="form-control"
 													id="providerContactNumber" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorContactNumber"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
@@ -470,7 +475,7 @@
 												<input name="providerEmail" type="text" class="form-control"
 													id="providerEmail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateEmail"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
@@ -479,7 +484,7 @@
 												<textarea name="errorAccountDescription" class="form-control"
 													id="errorAccountDescription" rows="3"></textarea>
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorAccountDescription"
-													title="Hooray!"></a>
+													title="Error! "></a>
 											</div>
 										</div>
 									</div>
@@ -495,7 +500,7 @@
 														<input name="providerUsername" type="text"
 															class="form-control" id="providerUsername" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorUsername"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-sm-8 col-sm-offset-2">
@@ -505,7 +510,7 @@
 														<input name="providerPassword" type="password"
 															class="form-control" id="providerPassword" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderPassword"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-sm-8 col-sm-offset-2">
@@ -515,7 +520,7 @@
 														<input name="cProviderPassword" type="password"
 															class="form-control" id="cProviderPassword" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorCProviderPassword"
-															title="Hooray!"></a>
+															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-sm-8 col-sm-offset-2">
@@ -523,7 +528,7 @@
 														class="right-padding inline-info"> <span
 														class="mandatory">*</span> Account Status <a
 														class="error-info" href="#" data-toggle="tooltip" id="errorStatus"
-														title="Hooray!"></a>
+														title="Error! "></a>
 													</label> 
 													
 													<div id="accountStatusList"></div>
@@ -544,7 +549,7 @@
 						</button>
 					</div>
 
-				</form>
+			<!-- 	</form>			 -->
 
 				<div id="upload-logo-modal" class="modal fade">
 					<div class="modal-dialog">
@@ -584,6 +589,7 @@
 
 	<script src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
+	<script  src="/dist/js/error-handling.js"type="text/javascript"></script>
 
 </body>
 </html>
