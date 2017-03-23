@@ -216,6 +216,16 @@ header .header {
             background: url("../i/ico-search.png"); }
         header .header .bottom .menu-bar .keyword-search .login-link {
           float: right; }
+          header .header .bottom .menu-bar .keyword-search .login-link .lbl-username {
+            padding-top: 10px;
+            color: #25dada;
+            font-size: 13px;
+            font-family: "Roboto", sans-serif; }
+          header .header .bottom .menu-bar .keyword-search .login-link .link-logout {
+            padding: 0;
+            float: right;
+            padding-top: 8px;
+            line-height: 14px; }
           header .header .bottom .menu-bar .keyword-search .login-link a {
             line-height: 50px;
             color: #fff;

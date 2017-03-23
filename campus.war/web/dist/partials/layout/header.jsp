@@ -52,12 +52,12 @@
 							data-target="#loginPopup"> Login </a>
 					</c:if>
 					<c:if test="${sessionScope.currentSessionUser != null}">
-						<h3>Hi ${sessionScope.user}, Login successful.</h3>
+						<h3 class="lbl-username">Hi ${sessionScope.user}, Login successful</h3> 
 						
 						<input type="hidden" id="userCode" name="userCode"
 							value="${sessionScope.userCode}" />
 
-						<a class="btn btn-link colr-white" name="CCO"
+						<a class="btn btn-link colr-white link-logout" name="CCO"
 							id="CCO" value="SLGOUT" onclick="studentLogout()">Logout</a>
 
 					</c:if>
