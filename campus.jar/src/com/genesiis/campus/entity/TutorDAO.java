@@ -1,0 +1,142 @@
+package com.genesiis.campus.entity;
+
+//20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
+//20170117 JH c133-admin-list-tutors getAll() method coding
+//20170124 JH c133-admin-list-tutors getAll() query modified
+//20170126 JH c133-admin-list-tutors getALL() concatenate name and phone numbers into one parameter
+//20170130 JH c133-admin-list-tutors getAll(): removed the combined columns back to separate array attributes
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
+//20170203 JH c133-admin-list-tutors removed 'TOP 1000' constraint from getAll() method query string 
+//20170206 JH c133-admin-list-tutors replaced String with String Builder implementation to create the query
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments
+
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class TutorDAO implements ICrud {
+
+	static Logger log = Logger.getLogger(TutorDAO.class.getName());
+
+	@Override
+	public int add(Object object) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+				return 0;
+	}
+
+	@Override
+	public int update(Object object) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(Object object) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Collection<Collection<String>> findById(Object code)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * getAll() method will list all tutor records in the TUTOR table. The tutor status is
+	 * not considered in the query. Therefore status values will have all of possible 
+	 * statuses (including active, inactive, pending and etc)
+	 * 
+	 * @return Collection
+	 * @author JH
+	 */
+	@Override
+	public Collection<Collection<String>> getAll() throws SQLException,
+			Exception {
+
+		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
+				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
+				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
+
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection conn = null;
+		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+		
+		try{
+			conn = ConnectionManager.getConnection();
+			preparedStatement = conn.prepareStatement(query.toString());
+			
+			rs = preparedStatement.executeQuery();
+			
+			while(rs.next()){
+				Collection<String> singleTutorList = new ArrayList<String>();
+				singleTutorList.add(rs.getString("CODE"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(rs.getString("EMAIL"));
+				singleTutorList.add(rs.getString("DIALCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("ISAPPROVED"));
+				singleTutorList.add(rs.getString("ADDRESS1"));
+				singleTutorList.add(rs.getString("ADDRESS2"));
+				singleTutorList.add(rs.getString("ADDRESS3"));
+				singleTutorList.add(rs.getString("TOWNNAME"));
+				singleTutorList.add(rs.getString("COUNTRY"));
+				singleTutorList.add(rs.getString("TUTORSTATUS"));			
+				tutorCollection.add(singleTutorList);
+			}
+
+			
+			
+		}catch(SQLException SQLException){
+			log.error("SQL Exception : " + SQLException.toString());
+			throw SQLException;
+			
+		}catch(Exception exception){
+			log.error("Exception : " + exception.toString());
+			throw exception;
+			
+		}finally{
+			DaoHelper.cleanup(conn, preparedStatement, rs);
+		}
+		return tutorCollection;
+	}
+
+	@Override
+	public int add(Object object, Connection conn) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(Object object, Connection conn) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(Object object, Connection conn) throws SQLException,
+			Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

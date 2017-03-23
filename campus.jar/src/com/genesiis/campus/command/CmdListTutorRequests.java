@@ -1,0 +1,77 @@
+package com.genesiis.campus.command;
+
+//20170130 JH c134-admin-list-new-tutor-requests INIT CmdListTutorRequests.java
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
+//20170315 JH c134-admin-list-new-tutor-requests added doc comments, changed tutor status INACTIVE to PENDING when listing for new tutor requests
+//20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
+
+import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TutorDAO;
+import com.genesiis.campus.entity.TutorRequestsDAO;
+import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * CmdListTutorRequests created to list new tutor requests for administration purposes. 
+ * The tutors that has registered and waiting for approval will be returned to the view.
+ * @author JH
+ *
+ */
+public class CmdListTutorRequests implements ICommand{
+
+	static Logger log = Logger.getLogger(CmdListTutorRequests.class.getName());
+
+	public IView execute(IDataHelper helper, IView view) throws SQLException,
+			Exception {
+
+		ICrud tutorRequestsDAO = new TutorRequestsDAO();
+		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+		SystemMessage systemMessage = SystemMessage.NO_DATA;
+
+		try {
+			// get tutors with pending status
+			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.PENDING.getStatusValue());
+			 
+			 //if result is empty send a user message
+			 if(tutorCollection.size() >0){
+					view.setCollection(tutorCollection);
+			 }else{
+				systemMessage = SystemMessage.NO_DATA; 
+			 }
+			 
+			 // return application status values
+			 ApplicationStatus[] applicationStatus = ApplicationStatus.values();
+			 Map<String, String> applicationStatusValue = new HashMap<String, String>();
+			 
+			 for( ApplicationStatus singleValue : applicationStatus){
+				 applicationStatusValue.put(singleValue.toString(), String.valueOf(singleValue.getStatusValue()));
+			 }
+			 helper.setAttribute("applicationStatus", applicationStatusValue);
+
+		}  catch (SQLException sqlException) {
+			log.error("execute(IDataHelper, IView) : Exception"
+					+ sqlException.toString());
+			systemMessage = SystemMessage.ERROR;
+			throw sqlException;
+		}catch (Exception exception) {
+			log.error("execute(IDataHelper, IView) : Exception"
+					+ exception.toString());
+			systemMessage = SystemMessage.ERROR;
+			throw exception;
+		}finally{
+			helper.setAttribute("userMessage", systemMessage.message());
+		}
+
+		return view;
+	}
+}
