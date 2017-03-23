@@ -2,15 +2,15 @@ package com.genesiis.campus.command;
 
 //20161122 CM c36-add-tutor-information INIT CmdLoadTownDetails.java
 //20161122 CM c36-add-tutor-information Modified execute()method. 
+//20170130 CW c36-add-tutor-information re-organise the import statements.
 
 import java.sql.SQLException;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TownDAO;
 import com.genesiis.campus.util.IDataHelper;
+import org.apache.log4j.Logger;
 
 public class CmdLoadTownDetails implements ICommand {
 
@@ -26,10 +26,8 @@ public class CmdLoadTownDetails implements ICommand {
 			view.setCollection(townCollection);
 			
 		} catch (Exception exception) {
-			log.error("execute() : " + exception);
+			log.error("execute() : Exception " + exception.toString());
 			throw exception;
-		} finally {
-
 		}
 		return view;
 	}

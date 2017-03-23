@@ -2,6 +2,28 @@ package com.genesiis.campus.entity;
 
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
+//20161221 CW c36-add-tutor-details Removed findById() method.
+//20161221 CW c36-add-tutor-details Modified add() method & added Password Encryption. 
+//20161223 CW c36-add-tutor-details Modified add() method & added StringBuilder.
+//20170106 CW c36-add-tutor-details Added isAvailableUserName() method 
+//20170110 CW c36-add-tutor-details Modified add() method - add tutor crtBy & modBy using getter methods 
+//20170111 CW c36-add-tutor-details removed isAvailableUserName() method 
+//20170124 CW c36-add-tutor-details modified getAll() method according to the 201701201215 DJ crev modification request.
+//20170125 CW c36-add-tutor-details add validateUsernameEmailFields() method.
+//20170130 CW c36-add-tutor-details modified validateUsernameEmailFields() method
+//20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170222 CW c36-add-tutor-details modified validateUsernameEmailFields() to add validations to check both email & username
+//20170223 CW c36-add-tutor-details modified validateUsernameEmailFields method to validate email & username separately
+//20170228 CW c36-add-tutor-details modified validateUsernameEmailFields removed testing messages & add short circuit & operator
+//									moved validateUsernameEmailFields method into Validator.java & add getListOfUsernameEmail method
+
+import com.genesiis.campus.entity.model.Tutor;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.util.security.Encryptable;
+import com.genesiis.campus.util.security.TripleDesEncryptor;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +31,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.entity.model.Tutor;
-import com.genesiis.campus.util.ConnectionManager;
+import java.util.TreeSet;
 
 public class TutorDAO implements ICrud {
 
@@ -22,76 +40,78 @@ public class TutorDAO implements ICrud {
 	/**
 	 * Save tutor details in Database
 	 * 
-	 * @author Chathuri
+	 * @author Chathuri, Chinthaka
 	 * @param object
 	 *            : Tutor object of Object type
 	 * @return int number of success/fail status
 	 */
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-		String query = "INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, "
-				+ "MIDDLENAME, LASTNAME, GENDER, EMAIL, IMAGEPATH, "
-				+ "LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE"
-				+ ",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,"
-				+ "VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,ISACTIVE, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE"
-				+ ",CRTON,CRTBY,MODON, MODBY ) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?)";
+		
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		final Tutor tutor = (Tutor) object;
 		int status = -1;
+		
+		StringBuilder queryBuilder = new StringBuilder("INSERT INTO [CAMPUS].[TUTOR] (USERNAME, PASSWORD, FIRSTNAME, ");
+		queryBuilder.append("MIDDLENAME, LASTNAME, GENDER, EMAIL, ");
+		queryBuilder.append("LANDPHONECOUNTRYCODE, LANDPHONEAREACODE,LANDPHONENUMBER,MOBILEPHONECOUNTRYCODE,MOBILEPHONENETWORKCODE");
+		queryBuilder.append(",MOBILEPHONENUMBER,DESCRIPTION, EXPERIENCE,WEBLINK,FACEBOOKURL,TWITTERURL,MYSPACEURL,LINKEDINURL,INSTAGRAMURL,");
+		queryBuilder.append("VIBERNUMBER,WHATSAPPNUMBER,ISAPPROVED,TUTORSTATUS, ADDRESS1,ADDRESS2,ADDRESS3,TOWN,USERTYPE");
+		queryBuilder.append(",CRTON,CRTBY,MODON, MODBY ) ");
+		queryBuilder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,GETDATE(),?, GETDATE(), ?);");
+						
+		try {			
+			final Tutor tutor = (Tutor) object;
+			conn = ConnectionManager.getConnection();			
 
-		try {
-			conn = ConnectionManager.getConnection();
-			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, tutor.getUsername());
-			preparedStatement.setString(2, tutor.getPassword());
+			Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
+			
+			preparedStatement = conn.prepareStatement(queryBuilder.toString());
+			preparedStatement.setString(1, tutor.getUsername());			
+			preparedStatement.setString(2, passwordEncryptor.encryptSensitiveDataToString());
 			preparedStatement.setString(3, tutor.getFirstName());
 			preparedStatement.setString(4, tutor.getMiddleName());
 			preparedStatement.setString(5, tutor.getLastName());
 			preparedStatement.setString(6, tutor.getGender());
-			preparedStatement.setString(7, tutor.getEmail());
-			preparedStatement.setString(8, tutor.getImagePath());
-			preparedStatement.setString(9, tutor.getLandCountryCode());
-			preparedStatement.setString(10, tutor.getLandAreaCode());
-			preparedStatement.setString(11, tutor.getLandNumber());
-			preparedStatement.setString(12, tutor.getMobileCountryCode());
-			preparedStatement.setString(13, tutor.getMobileNetworkCode());
-			preparedStatement.setString(14, tutor.getMobileNumber());
-			preparedStatement.setString(15, tutor.getDescription());
-			preparedStatement.setString(16, tutor.getExperience());
-			preparedStatement.setString(17, tutor.getWebLink());
-			preparedStatement.setString(18, tutor.getFacebook());
-			preparedStatement.setString(19, tutor.getTwitter());
-			preparedStatement.setString(20, tutor.getMySpace());
-			preparedStatement.setString(21, tutor.getLinkedIn());
-			preparedStatement.setString(22, tutor.getInstagram());
-			preparedStatement.setString(23, tutor.getViber());
-			preparedStatement.setString(24, tutor.getWhatsApp());
-			preparedStatement.setInt(25, tutor.getIsActive());
-			preparedStatement.setInt(26, tutor.getIsApproved());
-			preparedStatement.setString(27, tutor.getAddressLine1());
-			preparedStatement.setString(28, tutor.getAddressLine2());
-			preparedStatement.setString(29, tutor.getAddressLine3());
-			preparedStatement.setString(30, tutor.getTown());
-			preparedStatement.setInt(31, tutor.getUsertype());
-			preparedStatement.setString(32, "chathuri");
-			preparedStatement.setString(33, "chathuri");
+			preparedStatement.setString(7, tutor.getEmailAddress());
+			preparedStatement.setString(8, tutor.getLandCountryCode());
+			preparedStatement.setString(9, tutor.getLandAreaCode());
+			preparedStatement.setString(10, tutor.getLandNumber());
+			preparedStatement.setString(11, tutor.getMobileCountryCode());
+			preparedStatement.setString(12, tutor.getMobileNetworkCode());
+			preparedStatement.setString(13, tutor.getMobileNumber());
+			preparedStatement.setString(14, tutor.getDescription());
+			preparedStatement.setString(15, tutor.getExperience());
+			preparedStatement.setString(16, tutor.getWebLink());
+			preparedStatement.setString(17, tutor.getFacebookLink());
+			preparedStatement.setString(18, tutor.getTwitterNumber());
+			preparedStatement.setString(19, tutor.getMySpaceId()); 
+			preparedStatement.setString(20, tutor.getLinkedInLink());
+			preparedStatement.setString(21, tutor.getInstagramId());
+			preparedStatement.setString(22, tutor.getViberNumber());
+			preparedStatement.setString(23, tutor.getWhatsAppId());
+			preparedStatement.setBoolean(24, tutor.getIsApproved()); 
+			preparedStatement.setInt(25, tutor.getTutorStatus()); 
+			preparedStatement.setString(26, tutor.getAddressLine1());
+			preparedStatement.setString(27, tutor.getAddressLine2());
+			preparedStatement.setString(28, tutor.getAddressLine3());
+			preparedStatement.setString(29, tutor.getTown());
+			preparedStatement.setInt(30, tutor.getUsertype());
+			preparedStatement.setString(31, tutor.getCrtBy());
+			preparedStatement.setString(32, tutor.getModBy());
 			status = preparedStatement.executeUpdate();
 
+		} catch (ClassCastException cce) {
+			log.error("add(): ClassCastException " + cce.toString());
+			throw cce;
 		} catch (SQLException exception) {
-			log.error("add(): " + exception.toString());
+			log.error("add(): SQLException " + exception.toString());
 			throw exception;
 		} catch (Exception exception) {
-			log.error("add(): " + exception.toString());
+			log.error("add(): Exception " + exception.toString());
 			throw exception;
 		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
+			DaoHelper.cleanup(conn, preparedStatement, null);
 		}
 
 		return status;
@@ -110,50 +130,82 @@ public class TutorDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object code)
-			throws SQLException, Exception {
-		final Collection<Collection<String>> allTownList = new ArrayList<Collection<String>>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		Tutor tutor = (Tutor) code;
-		try {
-			conn = ConnectionManager.getConnection();
-			String query = "SELECT [USERNAME] FROM [CAMPUS].[TUTOR] WHERE USERNAME=?";
-
-			stmt = conn.prepareStatement(query);
-			stmt.setString(1, tutor.getUsername());
-			final ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleTownList = new ArrayList<String>();
-				singleTownList.add(rs.getString("USERNAME"));
-
-				final Collection<String> singleTownCollection = singleTownList;
-				allTownList.add(singleTownCollection);
-			}
-		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
-			throw sqlException;
-		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
-			throw e;
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-		return allTownList;
-
-	}
-
-	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
+	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * Returns all the town details in Database
+	 * 
+	 * @author Chinthaka
+	 * 
+	 * @return Returns all the tutor details from a collection of collection
+	 */
+	@Override
+	public Collection<Collection<String>> getAll() throws SQLException,	Exception {
+		
+		final Collection<Collection<String>> allTutorList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT * FROM [CAMPUS].[TUTOR]";
+
+			conn = ConnectionManager.getConnection();
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleTutorList = new ArrayList<String>();
+				singleTutorList.add(rs.getString("CODE"));
+				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(rs.getString("PASSWORD"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("GENDER"));
+				singleTutorList.add(rs.getString("EMAIL"));
+				singleTutorList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("DESCRIPTION"));
+				singleTutorList.add(rs.getString("EXPERIENCE"));
+				singleTutorList.add(rs.getString("WEBLINK"));
+				singleTutorList.add(rs.getString("FACEBOOKURL"));
+				singleTutorList.add(rs.getString("TWITTERURL"));
+				singleTutorList.add(rs.getString("MYSPACEURL"));
+				singleTutorList.add(rs.getString("LINKEDINURL"));
+				singleTutorList.add(rs.getString("INSTAGRAMURL"));
+				singleTutorList.add(rs.getString("VIBERNUMBER"));
+				singleTutorList.add(rs.getString("WHATSAPPNUMBER"));
+				singleTutorList.add(rs.getString("ISAPPROVED"));
+				singleTutorList.add(rs.getString("TUTORSTATUS"));
+				singleTutorList.add(rs.getString("ADDRESS1"));
+				singleTutorList.add(rs.getString("ADDRESS2"));
+				singleTutorList.add(rs.getString("ADDRESS3"));
+				singleTutorList.add(rs.getString("TOWN"));
+				singleTutorList.add(rs.getString("USERTYPE"));
+				singleTutorList.add(rs.getString("CRTON"));
+				singleTutorList.add(rs.getString("CRTBY"));
+				singleTutorList.add(rs.getString("MODON"));
+				singleTutorList.add(rs.getString("MODBY"));
+				allTutorList.add(singleTutorList);
+			}
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allTutorList;
 	}
 
 	@Override
@@ -176,5 +228,46 @@ public class TutorDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	/**
+	 * @param String values containing username & email entered by the user
+	 * @author Chinthaka 
+	 * @return all the matching email & username list already entered into the database for the given username & email
+	 */
+	public static Collection<Collection<String>> getListOfUsernameEmail(String username, String email) throws SQLException, Exception{
 
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		final Collection<Collection<String>> allUsernameEmailList = new ArrayList<Collection<String>>();
+		
+		try{
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT [USERNAME], [EMAIL] FROM [CAMPUS].[TUTOR] WHERE USERNAME=? OR EMAIL=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, username);
+			stmt.setString(2, email);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				final ArrayList<String> usernameEmailList = new ArrayList<String>();
+				usernameEmailList.add(rs.getString("USERNAME"));
+				usernameEmailList.add(rs.getString("EMAIL"));
+				allUsernameEmailList.add(usernameEmailList);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("getListOfUsernameEmail(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getListOfUsernameEmail(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allUsernameEmailList;
+	}
 }
