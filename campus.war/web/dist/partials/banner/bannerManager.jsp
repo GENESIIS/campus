@@ -156,24 +156,32 @@
 					</c:otherwise>
 				</c:choose>
 				
-				
-				
 			</div>
 			<br> <br>
 			<div>
 				Advertising slot * &nbsp; 
 				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
-				<input id="slot" name="slot"
-					list="slotList" class="text-field" type="text"
-					placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
-				<datalist id="slotList" name="slotList"> </datalist>
-				<input type="hidden" id="sSlotCode" name="sSlotCode" />
+				<c:choose>
+					<c:when test="${param.CCO eq 'ADMEDTBNR'}">
+						<input id="slot" name="slot" list="slotList" class="text-field" type="text" value="${param.pageSlotName}"
+									placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
+							<datalist id="slotList" name="slotList"> </datalist>
+							<input type="hidden" id="sSlotCode" name="sSlotCode" value="${param.pageSlotCode}" />
+					</c:when>
+					<c:otherwise>
+						<input id="slot" name="slot" list="slotList" class="text-field" type="text"
+								placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
+						<datalist id="slotList" name="slotList"> </datalist>
+						<input type="hidden" id="sSlotCode" name="sSlotCode" />
+					</c:otherwise>
+				</c:choose>
+				
 			</div>
 			<br>
 			<div>
 				Duration (Seconds) *&nbsp;
 				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
-				<input id="duration" type='text' onclick="clearField('displayDurationInfor');">
+				<input id="duration" type='text' onclick="clearField('displayDurationInfor');" value="${param.displayDuration}">
 			</div>
 			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
@@ -185,12 +193,15 @@
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
 				<br> Banner Avtivation date* &nbsp; <input type="date" name="startDate"
-					id="startDate" onclick="clearField('startDateInfor')">
+					id="startDate" onclick="clearField('startDateInfor')" value="${param.bannerActivateDate}">
 			</div>
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				Banner deavtivation date * &nbsp;<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor');">
+				Banner deavtivation date * &nbsp;<input
+					type="date" name="endtDate" id="endtDate"
+					onclick="clearField('endtDateInfor');"
+					value="${param.bannerDeactivateDate}">
 			</div>
 			<br><br>
 			<div>
@@ -205,7 +216,7 @@
 			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
 			<br><br>
 			<div id="urlInfor" style ="color:#C70039;"></div><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');">
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}">
 			</div>
 			<br><br>
 			<!-- Form image submit -->
