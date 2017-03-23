@@ -140,10 +140,10 @@
 				
 				<c:choose>
 					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
-						<input id="page" name="page" list="pageList" value="${param.pageSlotName}"
+						<input id="page" name="page" list="pageList" value="${param.pageName}"
 							class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
 						<datalist id="pageList" name="pageList"> </datalist>
-						<input type="hidden" id="sPageCode" name="sPageCode" value= "${param.pageSlotCode}"/>
+						<input type="hidden" id="sPageCode" name="sPageCode" value= "${param.pageCode}"/>
 						<script>
 							$('#page').trigger('input'); 
 						</script>
