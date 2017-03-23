@@ -17,6 +17,7 @@ package com.genesiis.campus.validation;
 //20170228 c37-tutor-update-tutor-profile-cw-fixed INCORRECT_PASSWORD spelling mistake
 //20170301 c37-tutor-update-tutor-profile-cw-added OLD_NEW_PASSWORD_SAME & NEW_CONFIRM_PASSWORD_NOTSAME
 //20170301 c37-tutor-update-tutor-profile-cw-added TOWN_CODE_NOT_CHANGED
+//20170323 c37-tutor-update-tutor-profile-cw modified EMPTYCONFIRMPASSWORD message
 
 
 public enum SystemMessage {	
@@ -42,7 +43,7 @@ public enum SystemMessage {
 	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
-	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
+	EMPTYCONFIRMPASSWORD("Confirm password cannot be empty."),
 	OLD_NEW_PASSWORD_SAME("Old & new passwords cannot be same ... "),
 	NEW_CONFIRM_PASSWORD_NOTSAME("new password and confirm password are not same ... "),
 	FIRSTNAMEERROR("Invalid First Name."),
