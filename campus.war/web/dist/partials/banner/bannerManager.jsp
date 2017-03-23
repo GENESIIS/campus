@@ -7,7 +7,8 @@
 <!-- 20170227 DN c131-admin-manage-banner-upload-banner-image-dn add error <div> tags-->
 <!-- 20170321 DN c131-admin-manage-banner-upload-banner-image-dn label is created that is attached to the radio buttons.  -->
 <!-- 20170322 DN c83-admin-manage-banner-update-banner-info-dn add the jsp tag library to the page
-				 included a div element that holds the banner image on the page 
+				 included a div element that holds the banner image on the page.
+				 Made upload banner visible depend on the situation. create update button. 
 
  -->
 
@@ -186,9 +187,17 @@
 			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
 			<label for="bannerEnable" hidden='true'>true</label>
-			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" checked="checked" >YES 
+			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" 
+			 <c:if test="${param.bannerActiveInactiveState != 0 }">
+			 	checked="checked"
+			 </c:if>
+			  >YES 			  
 			 <label for="bannerDissable" hidden='true'>false</label>
-			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false" >NO
+			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false"
+			<c:if test="${param.bannerActiveInactiveState eq 0 }">
+			 	checked="checked"
+			 </c:if>
+			 >NO
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
@@ -207,13 +216,13 @@
 			<div>
 			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
 			URL : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl" checked="checked" >
+			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl"	<c:if test="${param.linkType eq 1}">checked="checked"</c:if>>
 			&nbsp;&nbsp;
 			Mini Web : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb">
+			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb" <c:if test="${param.linkType eq 2}">checked="checked"</c:if>  >
 			Page : &nbsp;&nbsp;
 			&nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage">
+			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage" <c:if test="${param.linkType eq 3}">checked="checked"</c:if>  >
 			<br><br>
 			<div id="urlInfor" style ="color:#C70039;"></div><br>			
 				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}">
@@ -223,8 +232,16 @@
 
 			<label><b>Upload Banner</b></label> <br><br><br>
 <!-- 			<button  id="openModalUpload" data-target="#bannerUploadPopUp" >Upload Banner</button> -->
-			<button  id="openModalUpload" >Upload Banner</button>
+			
+			<button  id="openModalUpload" >
+			<c:choose>
+				<c:when test="${!empty param.bannerCode}">Change the Banner</c:when><c:otherwise>Upload the Banner</c:otherwise>
+			</c:choose>
+			</button>
 			<button id="bannerPageClearField">Clear Page</button>
+			<c:if test="${!empty param.bannerCode}">
+				<button id="bannerRecordUpdate">Update the Record</button>
+			</c:if>
 		</form>
 
 
