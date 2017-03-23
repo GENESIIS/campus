@@ -29,7 +29,8 @@ package com.genesiis.campus.entity;
  * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
  * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add extra INNER JOIN statement with  [CAMPUS].PAGE in sql query of
  * 			   getAll(Object object) method and add   PG.NAME PAGE_NAME,PG.CODE PAGE_CODE to the select statement. Retrieve extra 02 columns namely
- * 			   PAGE_NAME and PAGE_CODE from the resultset.	        
+ * 			   PAGE_NAME and PAGE_CODE from the resultset.	
+ * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.         
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -265,11 +266,11 @@ public class AdminBannerDAO implements ICrudSibling {
 	 * if the supplied int does not confirm to any valid ApplicationStatus,
 	 * then ApplicationStatus.UNDEFINED will be returned.
 	 * @param value
-	 * @return ApplicationStatus 
-	 * 			1-->  ApplicationStatus.ACTIVE
-	 * 			2-->  ApplicationStatus.INACTIVE
-	 * 			3-->  ApplicationStatus.PENDING
-	 * 			4-->  ApplicationStatus.EXPIRED
+	 * @return ApplicationStatus <br>
+	 * 			1-->  ApplicationStatus.ACTIVE<br>
+	 * 			0-->  ApplicationStatus.INACTIVE<br>
+	 * 			3-->  ApplicationStatus.PENDING<br>
+	 * 			4-->  ApplicationStatus.EXPIRED<br>
 	 * 			any thing else other than the above values
 	 * 			returns ApplicationStatus.UNDEFINED.
 	 */
@@ -279,14 +280,16 @@ public class AdminBannerDAO implements ICrudSibling {
 		case 1 :
 			activeStatus = ApplicationStatus.ACTIVE;
 			break;
-		case 2:
+		case 0:
 			activeStatus = ApplicationStatus.INACTIVE;
-		case 3:
+			break;
+		case 2:
 			activeStatus = ApplicationStatus.PENDING;
-		 break;
-		case 4:
+			break;
+		case 3:
 			activeStatus = ApplicationStatus.EXPIRED;
 			break;
+		
 		}
 		return activeStatus;
 	}
