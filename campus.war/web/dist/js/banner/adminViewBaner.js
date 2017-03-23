@@ -16,6 +16,8 @@
  * 			Document ready function is changed to navigate to add banners page when the adminAddNewBanner button is clicked.
  * 20170322 DN c83-admin-manage-banner-update-banner-info-dn populateBannerTable() has been added hidden fields to capture 
  * 			the request parameters representing banner records  
+ * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add two variables var pageName , pageCode to extract two columns 
+ * 			to be passed to the editing jsp and insert analogous hidden input names.
  */
 
 var theNewScript = document.createElement("script");
@@ -218,6 +220,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			var advertizerCode = aRow[10];
 			var imgeNameComponent = aRow[1].split(".");
 			var advertiserName = aRow[11];
+			var pageName = aRow[12];
+			var pageCode = aRow[13];
 				
 			/*
 			 * path to the image is agreed to be '/education/banner/143/143.jpg etc
@@ -228,7 +232,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			
 			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td>"+advertiserName+"<hr>"+
 															bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
-			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ //action='urltogo' should be specified when needs to edit the banner record.
+			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ 
 								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
 								"<input type='hidden' id='bannerCode"+rowNumber+"' name='bannerCode' value='"+bannerCode+"'>"+ 
 								"<input type='hidden' id='imageName"+rowNumber+"' name='imageName' value='"+imageName+"'>"+ 
@@ -244,9 +248,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='advertiserName"+rowNumber+"' name='advertiserName' value='"+advertiserName+"'>"+ 
 								"<input type='hidden' id='advertizerCode"+rowNumber+"' name='advertizerCode' value='"+advertizerCode+"'>"+ 
 								"<input type='hidden' id='bannerUrl"+rowNumber+"' name='bannerUrl' value='"+url+"'>"+ 
-								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+ 
-								
-								
+								"<input type='hidden' id='pageName"+rowNumber+"' name='pageName' value='"+pageName+"'>"+
+								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								
 							 "</form></td>";
 			markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
