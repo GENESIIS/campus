@@ -32,6 +32,7 @@
  * //20170316 CW c37-tutor-update-tutor-profile-cw modified field max lengths to match database field max size
  * //20170322 CW c37-tutor-update-tutor-profile-cw add getFlagVal method & modified validateTutorModificationsByTutor method to fix flag updating error
  * 				// modified validateTutorModificationsByTutor method to fix town validation errors
+ * //20170323 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & add address2, address3 field space removal validations
  */
 
 /**
@@ -127,6 +128,8 @@ function validateTutorModificationsByTutor() {
 	var landAreaCode = $("#landAreaCode").val();
 	var landNumber = $("#landNumber").val();
 	var address1 = $("#address1").val();
+	var address2 = $("#address2").val();
+	var address3 = $("#address3").val();	
 	var weblink = $("#weblink").val();
 	var facebook = $("#facebook").val();
 	var linkedin = $("#linkedin").val();
@@ -291,7 +294,15 @@ function validateTutorModificationsByTutor() {
 		flagTemp = isValidAddress1(address1);
 		flag = getFlagVal(flag, flagTemp);
 	}
+	
+	if (isHavingOnlySpaces(address2)) {
+		document.getElementById('address2').value = '';	
+	}
 
+	if (isHavingOnlySpaces(address3)) {
+		document.getElementById('address3').value = '';
+	}
+	
 	if(weblink != weblinkOld){		
 		isModified = true;		
 		flagTemp = isValidWeblink(weblink);
