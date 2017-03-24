@@ -9,7 +9,9 @@
 //20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
 //20170227 JH c141-add-course-provider-issue-improvements validateFormURL(): modified to validate URL maximum length
 //20170228 JH c141-add-course-provider-issue-improvements isValidMinMaxLength() modified, front end validation method changed due to one off course provider implementation
-//20170323 JH c141-ui-add-course-provider-issue-improvements modified providerPrefixValidation() method 
+//20170323 JH c141-ui-for-add-course-provider modified providerPrefixValidation() method 
+//20170324 JH c141-ui-for-add-course-provider providerUsernameValidation() method changes wip
+
 window.prefixFlag = true;
 window.usernameFlag = true;
 
@@ -128,24 +130,31 @@ function isValidMinMaxLength(parameter, min, max) {
  */
 function providerUsernameValidation() {
 
-	document.getElementById('errorUsername').innerHTML = "";
-	document.getElementById('usernameMessage').innerHTML = "";
-
+//	document.getElementById('errorUsername').innerHTML = "";
+//	document.getElementById('usernameMessage').innerHTML = "";
+	clearErrorMessage($('#errorUsername').attr('id'));
+	
 	var flag = false;
 	var integerPattern = /^[0-9]+$/;
 
 	var selectedUsername = document.getElementById('providerUsername').value;
 	var userEmail = document.getElementById('providerEmail').value;
-
+	var message = "Error";
+	
 	if (!isempty(selectedUsername)
-			|| isPatternMatch(integerPattern, selectedUsername)) {
-		document.getElementById('errorUsername').innerHTML = "**Username is empty or can't contain only numbers.";
-		document.getElementById('providerUsername').focus();
+			|| isPatternMatch(providerUsername, selectedUsername)) {
+//		document.getElementById('errorUsername').innerHTML = "**Username is empty or can't contain only numbers.";
+//		document.getElementById('providerUsername').focus();
+		message = "Username is empty or can't contain only numbers.";
+		$("#errorUsername").attr({ "title" : message,"data-original-title" : message});
+		$("#providerUsername").addClass("has-error");
+//		setErrorMessage($('#errorUsername').attr('id'), $('#errorUsername').attr('id'), "**Username is empty or can't contain only numbers.");
 		return false;
 	} else {
 		if (selectedUsername.length < 5 || selectedUsername.length >100) {// check whether the username has
 											// less than 5 characters
-			document.getElementById('errorUsername').innerHTML = "**Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
+			message = "**Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
+		//	document.getElementById('errorUsername').innerHTML = "**Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
 			return false;
 		} else {
 			document.getElementById('errorUsername').innerHTML = "";
@@ -169,12 +178,14 @@ function providerUsernameValidation() {
 
 								if (response['validationFlag'] === 1) {
 									flag = true;
-									document.getElementById('usernameMessage').innerHTML = response.userMessage;
+									message = response.userMessage;
+								//	document.getElementById('usernameMessage').innerHTML = response.userMessage;
 								}
 								if (response['validationFlag'] === 0) {
 									flag = false;
-									document.getElementById('errorUsername').innerHTML = response.userMessage;
-									document.getElementById('providerUsername').focus();
+//									document.getElementById('errorUsername').innerHTML = response.userMessage;
+//									document.getElementById('providerUsername').focus();
+									message = response.userMessage;
 								}
 
 								return flag;
@@ -184,6 +195,9 @@ function providerUsernameValidation() {
 					});
 		}
 	}
+//	$("#errorUsername").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
+//	$("#providerUsername").addClass("has-error");
+	//setErrorMessage($('#providerUsername').attr('id'), $('#errorUsername').attr('id'), message);
 }
 
 /**
