@@ -30,7 +30,8 @@ package com.genesiis.campus.entity;
  * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add extra INNER JOIN statement with  [CAMPUS].PAGE in sql query of
  * 			   getAll(Object object) method and add   PG.NAME PAGE_NAME,PG.CODE PAGE_CODE to the select statement. Retrieve extra 02 columns namely
  * 			   PAGE_NAME and PAGE_CODE from the resultset.	
- * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.         
+ * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.         
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -48,6 +49,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,11 +71,58 @@ public class AdminBannerDAO implements ICrudSibling {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+/**
+ * method updates a banner records which is sent to the method by
+ * encapsulating in the Object.<br>
+ * @param Object is the JasonInflator<br>
+ * If the update is success it returns the number of rows been updated <br>
+ * if the update query fails then returns 0
+ */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		JasonInflator aBannerRecord = (JasonInflator)object;
+		String bannerCode = aBannerRecord.getBannerCode();
+		Connection conn = null;
+		PreparedStatement prepare = null;
+		int result=0;
+		
+		StringBuilder insertingQueryBuilder = new StringBuilder("UPDATE [CAMPUS].[BANNER] ");
+		insertingQueryBuilder.append(" SET  ");
+		insertingQueryBuilder.append("[IMAGE]= ''"+aBannerRecord.getBannerImageName()+"'' ,[EXPIRATIONDATE] =''"+aBannerRecord.getBannerPublishingEndDate()+"'',"); //+"1"+","
+		insertingQueryBuilder.append("[DISPLAYDURATION] ="+Integer.parseInt(aBannerRecord.getDisplayDusration())+",");
+		insertingQueryBuilder.append("[LINKTYPE] = "+getTheURLType(aBannerRecord.getUrlMiniWebOrPage()).getMappingInt()+",");
+		insertingQueryBuilder.append("[URL] =''"+aBannerRecord.getUrlToBeDirectedOnBannerClick()+"'',");
+		insertingQueryBuilder.append("[ISACTIVE] ="+ aBannerRecord.getBanerToBeActive()+",");
+		insertingQueryBuilder.append("[PAGESLOT] ="+ Integer.parseInt(aBannerRecord.getBannerSlotCode())+",");
+		insertingQueryBuilder.append("[ADVERTISER]="+ Integer.parseInt(aBannerRecord.getAdvertiserCode())+"," );//('default.gif' ,getdate()+4,1,5 ,1,'www.topjobs.lk' ,'1',1,1,
+		insertingQueryBuilder.append("[CRTON] = getdate(),"); 
+		insertingQueryBuilder.append("[CRTBY] =''"+	aBannerRecord.getUser()+"'',[MODON] =getdate(),");
+		insertingQueryBuilder.append("[MODBY] =''"+	aBannerRecord.getUser()+"'',");
+		insertingQueryBuilder.append("[ACTIVATIONDATE] =''"+ java.sql.Date.valueOf(aBannerRecord.getBannerPublishingDate())+"'')");
+		insertingQueryBuilder.append(" WHERE CODE ="+Integer.parseInt(aBannerRecord.getBannerCode()));
+		insertingQueryBuilder.append(";" );   
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			prepare = conn.prepareStatement(insertingQueryBuilder.toString());
+			result = prepare.executeUpdate();	
+			
+		} catch (SQLTimeoutException stoe){
+			Log.error("update(Object) : SQLTimeoutException "+stoe.toString());
+			throw stoe;
+		} catch (SQLException sqle) {
+			Log.error("update(Object) : SQLException "+sqle.toString());
+			throw sqle;
+			
+		} catch (Exception exp) {
+			Log.error("update(Object) : Exception "+exp.toString());
+			throw exp;
+		} finally {
+			DaoHelper.closeConnection(conn);
+			DaoHelper.closeStatement(prepare);
+		}
+		return result;
 	}
 
 	@Override
