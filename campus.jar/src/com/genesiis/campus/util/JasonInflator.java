@@ -7,6 +7,7 @@ package com.genesiis.campus.util;
  *             java doc comments to the class.
  * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 
  *             10 given in 201703132232-CN - Local test summary.
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn new fields "bannerCode" and "user" are added with getters and setters.
  */
 
 /**
@@ -36,10 +37,28 @@ public class JasonInflator {
 	private String bannerPublishingDate; //"2017-02-14"
 	private String bannerPublishingEndDate;		
 	private String urlMiniWebOrPage;	//"Page:0","URL: 1" or "Mini Web:2"
-	private String urlToBeDirectedOnBannerClick;	
+	private String urlToBeDirectedOnBannerClick;
+	private String bannerCode;
 	private String bannerImageName;
+	private String user;
 	
 	
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getBannerCode() {
+		return bannerCode;
+	}
+
+	public void setBannerCode(String bannerCode) {
+		this.bannerCode = bannerCode;
+	}
+
 	public String getUrlMiniWebOrPage() {
 		return urlMiniWebOrPage;
 	}
