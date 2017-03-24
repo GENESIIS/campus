@@ -43,6 +43,8 @@
  *  20170324 DN c83-admin-manage-banner-update-banner-info-dn uploadBbutton onclick event is refactor to include the logic related to editing the banner
  *               and the banner record. Refactor the sendBannerPaageFieldInputs() to include extra parameter called CommandCode. bannerCode is added to
  *               the array "jasonBanner" in sendBannerPaageFieldInputs().
+ *               bannerRecordUpdate on click function implemented to update only the banner records but not the image.
+ *               function getBannerCredentials() is implemented to populate the banner data to an array by extracting from input fields.
  */
 
 /*
@@ -319,8 +321,8 @@ function ajaxErorMessage(response,error,errorThrown){
 }
 
 /**
- * displayLabelMessage(): displays an user define message text in the a modal window
- * This message either can be an error or success message.
+ * displayLabelMessage(): displays an user define message text in the a modal window,<br>
+ * This message either can be an error or success message.<br>
  * @author dushantha DN
  * @param messagePopUpId the id of the modal popUp where the label is embedded.
  * @param cssColour required color theme for the message to be displayed
@@ -332,7 +334,12 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	
 }
 
-
+/**
+ * function getBannerCredentials will extract all the banner related information<br>
+ * those which inserted by the user and capture it to an teue array<br>
+ * 
+ * @returns {Array} the array having the banner related data 
+ */
 function getBannerCredentials(){
 	
 	var bannerCode = $('#bannerCode').val(); // check if the banner code is set. If so banner record must be edited.
@@ -474,16 +481,22 @@ $(document).on('click','#uploadBbutton', function(event){
 				$('#bannerModalClose').show();
 				$('#uploadBbutton').prop('disabled',false);
 				$(':input').val('');
-			    
 
 			}
 		});
-	} else { // Only the banner record is updated without the banner image
-		BannerFieldInputValues.push($('#bannerEditableImageName').val());
-		sendBannerPaageFieldInputs(BannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
-	}
+	} 
 	
 });
+
+/**
+ * When the user needs only to update the banner fields but the banner image
+ * this event trigges.
+ */
+$(document).on('click','#bannerRecordUpdate', function(event){  // Only the banner record is updated without the banner image
+	BannerFieldInputValues.push($('#bannerEditableImageName').val());
+	sendBannerPaageFieldInputs(BannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
+});
+
 
 /**
  * this event gets triggerred once the Upload 
@@ -665,9 +678,6 @@ $( document ).ready(function() {
 	
 	
 });
-
-
-
 
 
 /**
