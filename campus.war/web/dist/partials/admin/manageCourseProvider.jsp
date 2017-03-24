@@ -542,12 +542,16 @@
 
 					</div>
 
-					<div class="row clearfix">
+			 	<div class="row clearfix">
+			 	<!--
 						<button type="button" class="btn btn-register pull-right">
-							<i class="fa fa-times fa-3x" aria-hidden="true"></i> Add Course
+							<i class="fa fa-times fa-3x" aria-hidden="true" onclick="saveCourseProvider();"></i> Add Course
 							provider
-						</button>
-					</div>
+						</button>-->
+						
+						<input type="button" id="viewNext" value="Next"
+										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
+					</div> 
 
 			<!-- 	</form>			 -->
 

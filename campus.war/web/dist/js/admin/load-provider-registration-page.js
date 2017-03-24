@@ -13,8 +13,9 @@
 //20170301 JH c141-add-course-provider-issue-improvements saveCourseProvider(): AJAX error handling, show error message on error
 //20170316 JH c141-ui-integration-add-course-provider getDataOnCountrySelection(), displayProviderCountries(), getDataOnCountrySelection() changed to add
 //			  	css styles
-//20170320 JH c141-ui-integration-add-course-provider added isempty() method to validate input for whitespaces
-//20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip
+//20170320 JH c141-ui-integration-for-add-course-provider added isempty() method to validate input for whitespaces
+//20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
+//20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage() methods
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -513,4 +514,26 @@ function isempty(fieldValue) {
 	
 function clearErrorMessage(){
 	$("#town-List").removeClass("has-error");
+}
+
+/**
+ * clear error message class
+ * @param toolTipElement
+ * @author JH
+ */
+function clearErrorMessage(toolTipElement){
+	$(toolTipElement).removeClass("has-error");
+}
+
+/**
+ * Used to set error message
+ * @param errorElement
+ * @param errorToolTip
+ * @param message
+ * @author JH
+ */
+function setErrorMessage(errorElement, errorToolTip, message){
+	
+	$(errorToolTip).attr({ "title" : message,"data-original-title" : message});
+	$(errorElement).addClass("has-error");
 }
