@@ -25,10 +25,12 @@ package com.genesiis.campus.command;
  *  			SystemMessage.EMPTY_SEARCH_RESULT.message() to the method
  *  20170321 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() the Exception message to the client has been better formatted.		
  * 			 typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn refactor the method uploadFullBannerCredentials() to adhere the banner record update: insertion. 
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
 import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.ICrudSibling;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Banner;
 import com.genesiis.campus.util.ConnectionManager;
@@ -107,7 +109,7 @@ public class CmdAdminBannerUpload implements ICommand {
 				 */				
 				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
 				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-				
+				jsn.setUser(userName);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
 				}
@@ -516,15 +518,26 @@ public class CmdAdminBannerUpload implements ICommand {
 		  * want to get the banner code and bannerName once the update is succeeded
 		  * and save to the data base table banner
 		  */
-		 Collection<Collection<String>> banners = new AdminBannerDAO().
-				 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
 		 
-		 String bannerCode = (String) getElementFromCollection(banners,0);
-		 String bannerNamer = (String) getElementFromCollection(banners,1);
+		 String bannerCode = rowBanner.getBannerCode();
+		 String bannerNamer="";
+		 if(bannerCode.isEmpty()){ // new banner record is adding
+			 
+			 Collection<Collection<String>> banners = new AdminBannerDAO().
+					 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
+			 bannerCode = (String) getElementFromCollection(banners,0);
+			 bannerNamer = (String) getElementFromCollection(banners,1);
+			 
+		 } else { // this is an insert or update for an existing record
+			 ICrudSibling adminBanerInsert = new AdminBannerDAO();
+			 if(adminBanerInsert.update(rowBanner)== 0){
+					throw new PrevalentValidation().new FailedValidationException(
+							SystemMessage.UPDATE_UNSUCCESSFUL.toString());
+			 }
+		 }
 		 
 		 con = ConnectionManager.getConnection();
 		 
-		
 		// get the banner absolute path for physical location to store the image 
 		 
 		String bannerImagePhysicalUploadPath = imageUtility
@@ -540,7 +553,6 @@ public class CmdAdminBannerUpload implements ICommand {
 						.getImageTeporyUploadPath(
 								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
 								"tempbanner", con);
-			
 	
 		// if only the file is moved ,delete the temporary folder which is created before	
 		 
@@ -548,13 +560,22 @@ public class CmdAdminBannerUpload implements ICommand {
 					 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName()) ){
 				
 				this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
-				this.message =this.message + " "+SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.toString();
+				this.message =this.message + " ";
+				this.message = (rowBanner.getBannerCode().isEmpty()) ? SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD
+						.toString() : SystemMessage.UPDATE_SUCCESSFUL
+						.toString();
 				this.setSuccessCode(1);
 				log.info("uploadFullBannerCredentials(JasonInflator.IView,String) completed --> :"
 						+ "Banner Credentials are written to the rpository and image is uploaded");
 				
 			}
 			
+		}catch (FailedValidationException fvexp) {
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
+			this.setSuccessCode(-2);
+			setResponseCridentials(helper);
+			return view;
 		} catch (JsonSyntaxException jsyexp) {
 			log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
 			throw jsyexp;	
