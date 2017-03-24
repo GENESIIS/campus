@@ -14,7 +14,8 @@
 <!-- 20170320 JH c141-ui-integration-add-course-provider change html element names to match with the back end validation in 
 				contact information, social media and admin info wip-->
 <!-- 20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip -->
-<!-- 20170323 JH c141-ui-integration-add-course-provider -->
+<!-- 20170323 JH c141-ui-integration-add-course-provider added error-handling javascript to hand, changed the default error title -->
+<!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -83,10 +84,10 @@
 							Information</h4>
 						<div class="accordion-body">
 							<div class="row clearfix">								
-								<div class="form-group col-sm-12">
+								<div class="form-group col-sm-12" id="accountTypeDiv">
 								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
-										class="error-info" href="#" data-toggle="tooltip"
+										class="error-info" href="#" data-toggle="tooltip" id="errorCourseProvider"
 										title="Error! " data-placement="top"></a>
 									</label>
 								<c:forEach items="${accountTypeBean.values}" var="accountTypes">
@@ -109,7 +110,7 @@
 								<div class="form-group col-sm-4">
 									<label for="course-provider"><span class="mandatory">*</span>
 										Course Provider Name</label>
-									<div class="input-wrapper">
+									<div class="input-wrapper" id="providerNameDiv">
 										<input name="providerName" type="text" class="form-control"
 											id="providerName" placeholder=""> <a
 											class="error-info" href="#" data-toggle="tooltip" id="errorProviderName"
@@ -118,7 +119,7 @@
 								</div>
 								<div class="form-group col-sm-4">
 									<label for="shorten-name">Shorten Name</label>
-									<div class="input-wrapper">
+									<div class="input-wrapper" id="shortNameDiv">
 										<input name="shortName" id="shortName" type="text" class="form-control"
 											id="shorten-name" placeholder="">
 									</div>
@@ -138,7 +139,7 @@
 								<div class="form-group col-sm-6">
 									<label for="company-profile"><span class="mandatory">*</span>
 										Company Profile</label>
-									<div class="input-wrapper">
+									<div class="input-wrapper" id="aboutMeDiv">
 										<textarea name="aboutMe" class="form-control"
 											id="aboutMe" rows="4"></textarea>
 										<a class="error-info" href="#" data-toggle="tooltip" id="errorAboutMe"
@@ -147,7 +148,7 @@
 								</div>
 								<div class="form-group col-sm-6">
 									<label for="special-features">Special Features</label>
-									<div class="input-wrapper">
+									<div class="input-wrapper" id="specialFeaturesDiv">
 										<textarea name="specialFeatures" class="form-control"
 											id="specialFeatures" rows="4"></textarea>
 											<a class="error-info" href="#" data-toggle="tooltip" id="errorSpecialFeatures"
@@ -451,7 +452,7 @@
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="full-name"><span class="mandatory">*</span>
 												Full Name</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="providerPrivateNameDiv">
 												<input name="providerPrivateName" type="text" class="form-control"
 													id="providerPrivateName" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateName"
@@ -461,7 +462,7 @@
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="contract-no"><span class="mandatory">*</span>
 												Contract Number</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="providerContactNumberDiv">
 												<input name="providerContactNumber" type="text" class="form-control"
 													id="providerContactNumber" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorContactNumber"
@@ -471,7 +472,7 @@
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="account-email"><span class="mandatory">*</span>
 												Email</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="providerEmailDiv">
 												<input name="providerEmail" type="text" class="form-control"
 													id="providerEmail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateEmail"
@@ -480,9 +481,9 @@
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="account-desc">Description</label>
-											<div class="input-wrapper">
-												<textarea name="errorAccountDescription" class="form-control"
-													id="errorAccountDescription" rows="3"></textarea>
+											<div class="input-wrapper" id="accountDescriptionDiv">
+												<textarea name="accountDescription" class="form-control"
+													id="accountDescription" rows="3"></textarea>
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorAccountDescription"
 													title="Error! "></a>
 											</div>
@@ -496,7 +497,7 @@
 												<div class="form-group col-sm-8 col-sm-offset-2">
 													<label for="login-name"><span class="mandatory">*</span>
 														Username</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="usernameDiv">
 														<input name="providerUsername" type="text"
 															class="form-control" id="providerUsername" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorUsername"
