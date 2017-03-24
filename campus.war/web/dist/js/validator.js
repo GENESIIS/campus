@@ -33,6 +33,7 @@
  * //20170322 CW c37-tutor-update-tutor-profile-cw add getFlagVal method & modified validateTutorModificationsByTutor method to fix flag updating error
  * 				// modified validateTutorModificationsByTutor method to fix town validation errors
  * //20170323 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & add address2, address3 field space removal validations
+ * //20170324 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & fix password validation error
  */
 
 /**
@@ -366,29 +367,55 @@ function validateTutorModificationsByTutor() {
 		flagTemp = isValidUsername(username);
 		flag = getFlagVal(flag, flagTemp);
 	}
-	
-	if(isempty(oldPassword) && isempty(newPassword) && isempty(confirmPassword)){	
+
+	if(isempty(oldPassword)){ // old password has content
 		isModified = true;
-		var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword); 
-		if(valid.message == 'FALSE'){
-			if(valid.oldPasswordError != null){
-				document.getElementById('oldPasswordError').innerHTML = valid.oldPasswordError;
-				document.getElementById('oldPassword').focus();
-			}
+		if(isempty(newPassword)){ // new password has content
+			if(isempty(confirmPassword)){ // confirm password has content
+				var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword); 
 
-			if(valid.newPasswordError != null){
-				document.getElementById('newPasswordError').innerHTML = valid.newPasswordError;
-				document.getElementById('newPassword').focus();
-			}
+				if(valid.message == 'FALSE'){
+					if(valid.oldPasswordError != null){
+						document.getElementById('oldPasswordError').innerHTML = " ** " + valid.oldPasswordError;						
+						document.getElementById('oldPassword').value = '';						
+						document.getElementById('oldPassword').focus();
+					}
 
-			if(valid.confirmPasswordError != null){
-				document.getElementById('confirmPasswordError').innerHTML = valid.confirmPasswordError;
-				document.getElementById('confirmPassword').focus();
+					if(valid.newPasswordError != null){
+						document.getElementById('newPasswordError').innerHTML = " ** " + valid.newPasswordError;
+						document.getElementById('newPassword').focus();
+					}
+
+					if(valid.confirmPasswordError != null){
+						document.getElementById('confirmPasswordError').innerHTML = " ** " + valid.confirmPasswordError;
+						document.getElementById('confirmPassword').focus();
+					}
+					flag = false; 
+				}			
+			}else{ // confirm password empty
+				flag = false; 
+				document.getElementById('confirmPasswordError').innerHTML = " ** Please enter confirm password";
 			}
+		}else{ // new password empty
 			flag = false; 
+			document.getElementById('newPasswordError').innerHTML = " ** Please enter password";
+			if(!isempty(confirmPassword)){ // confirm password empty
+				document.getElementById('confirmPasswordError').innerHTML = " ** Please enter confirm password";			
+			}                               
 		}
-	}	
-	
+	}else{
+		if(isempty(newPassword)){
+			isModified = true;
+			flag = false; 
+			document.getElementById('newPasswordError').innerHTML = " ** Please enter old password";
+		}
+		if(isempty(confirmPassword)){
+			isModified = true;
+			flag = false; 
+			document.getElementById('confirmPasswordError').innerHTML = " ** Please enter old password";			
+		}
+	}
+
 	if (isModified == false){
 		document.getElementById('message').innerHTML = "**You haven't done any changes.";
 		flag = false;
