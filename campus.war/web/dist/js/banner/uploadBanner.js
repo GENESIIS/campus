@@ -40,6 +40,9 @@
  *  			close of the modal windows. Amend the method to test to proceed if the radio button groups exists.
  *  			validateUploadBannerEmbedData() error messages were corrected according to the QA point 10 stated in comment 201703132232-CN - Local test summary.
  *  			Adds tests validateUploadBannerEmbedData() to check if url field is empty. commented the UrlTest() which was placed $(document).ready(function().
+ *  20170324 DN c83-admin-manage-banner-update-banner-info-dn uploadBbutton onclick event is refactor to include the logic related to editing the banner
+ *               and the banner record. Refactor the sendBannerPaageFieldInputs() to include extra parameter called CommandCode. bannerCode is added to
+ *               the array "jasonBanner" in sendBannerPaageFieldInputs().
  */
 
 /*
@@ -329,31 +332,15 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	
 }
 
-/**
- *  this event gets fired once the <I>upload </I> button of the banner page
- *  triggers and it collects all the information from the page and
- *  passes to server. 
- *  <b>Note:</b> It's a must to fill all the data mentioned specially the 
- *  radio buttons to retrieve correct selection other than the undefined 
- *  java script value.
- *  Method perform the front end validation before it commence the server 
- *  request ajax call.
- *  @author dushantha DN
- */
- 
-$(document).on('click','#uploadBbutton', function(event){
+
+function getBannerCredentials(){
 	
-    /*
-	 * Extracting Banner page data
-	 */
-	
-    var banerImage=$('#file-select').prop('files')[0];
-   // alert($('#file-select').prop('files')[0]['name']);
-    if(banerImage==undefined){
-    	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
-    	return false;
-	}
-   
+	var bannerCode = $('#bannerCode').val(); // check if the banner code is set. If so banner record must be edited.
+	var isbannerCodeNullOrEmty = (bannerCode==null|| bannerCode==="")?true:false;
+	//if the banner is to be edited then the banercode is Not empty,
+    // Else it is a new Banner to be added to the repository   
+    bannerCode= (isbannerCodeNullOrEmty)?"":bannerCode;
+    	
     $('#bannerModalClose').hide();
 	var advertiserCode= $('#sAdvertiserCode').val();
 	var codeOfSelectedPage= $('#sPageCode').val();
@@ -376,8 +363,75 @@ $(document).on('click','#uploadBbutton', function(event){
 	BannerFieldInputValues.push(bannerPublishingEndDate);
 	BannerFieldInputValues.push(urlMiniWebOrPage);
 	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
-		
-		
+	BannerFieldInputValues.push(bannerCode);	
+	
+	return BannerFieldInputValues;
+	
+}
+
+/**
+ *  this event gets fired once the <I>upload </I> button of the banner page
+ *  triggers and it collects all the information from the page and
+ *  passes to server. 
+ *  <b>Note:</b> It's a must to fill all the data mentioned specially the 
+ *  radio buttons to retrieve correct selection other than the undefined 
+ *  java script value.
+ *  Method perform the front end validation before it commence the server 
+ *  request ajax call.
+ *  @author dushantha DN
+ */
+ 
+$(document).on('click','#uploadBbutton', function(event){
+	
+    /*
+	 * Extracting Banner page data
+	 */
+	
+    var banerImage=$('#file-select').prop('files')[0];
+    var bannerCode = $('#bannerCode').val(); // check if the banner code is set. If so banner record must be edited.
+    var isbannerCodeNullOrEmty = (bannerCode==null|| bannerCode==="")?true:false;
+    var isImagetSelected = (banerImage==undefined)?false: true;
+    
+    //both banner image and the Banner COde are not selected : Exit the program
+    if(banerImage==undefined & isbannerCodeNullOrEmty ){
+    	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
+    	return false;
+	}
+    
+//    //if the banner is to be edited then the banercode is Not empty,
+//    // Else it is a new Banner to be added to the repository   
+//    bannerCode= (isbannerCodeNullOrEmty)?"":bannerCode;
+//    	
+//    $('#bannerModalClose').hide();
+//	var advertiserCode= $('#sAdvertiserCode').val();
+//	var codeOfSelectedPage= $('#sPageCode').val();
+//	var bannerSlotCode=$('#sSlotCode').val();
+//	var displayDusration= $('#duration').val();
+//	var banerToBeActive=$('input[name=bannerEnableStatus]:checked').val(); // validate for 'undefined'
+//	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
+//	var bannerPublishingEndDate= $('#endtDate').val();
+//	var urlMiniWebOrPage = $('input:radio[name=urlspecifier]:checked').val();
+//	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
+//	
+//	// adding required  banner <form> fields to an array
+//	var BannerFieldInputValues =[];
+//	BannerFieldInputValues.push(advertiserCode);
+//	BannerFieldInputValues.push(codeOfSelectedPage);
+//	BannerFieldInputValues.push(bannerSlotCode);
+//	BannerFieldInputValues.push(displayDusration);
+//	BannerFieldInputValues.push(banerToBeActive);
+//	BannerFieldInputValues.push(bannerPublishingDate);
+//	BannerFieldInputValues.push(bannerPublishingEndDate);
+//	BannerFieldInputValues.push(urlMiniWebOrPage);
+//	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
+//	BannerFieldInputValues.psuh(bannerCode);	
+	
+    var BannerFieldInputValues = getBannerCredentials();
+    
+	//Both the image and the banner record has to update or
+	// a brand new banner is to add to the system
+	if(isImagetSelected){
+	
 	var formData = new FormData();
 	formData.append("file",banerImage);
 		
@@ -403,7 +457,7 @@ $(document).on('click','#uploadBbutton', function(event){
 				} 
 				
 				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
-				sendBannerPaageFieldInputs(BannerFieldInputValues,proceed);
+				sendBannerPaageFieldInputs(BannerFieldInputValues,proceed,"UFBCR"); //UPLOAD FULL BANNER CREDENTIALS
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
@@ -424,7 +478,11 @@ $(document).on('click','#uploadBbutton', function(event){
 
 			}
 		});
-
+	} else { // Only the banner record is updated without the banner image
+		BannerFieldInputValues.push($('#bannerEditableImageName').val());
+		sendBannerPaageFieldInputs(BannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
+	}
+	
 });
 
 /**
@@ -518,10 +576,14 @@ function validateUploadBannerEmbedData(){
  * 		  other than the banner image to be uploaded are contained.
  * @param elegibleToProceed : a boolean flag which depicts id the operation is safe
  *  	  to be executed. If false the banner data will not be passed to the back end.
+ * @param CommandCode String type which decides what is commant to be send with the data.<br>
+ * 		  e.g. "UFBCR" etc which is having an internal meaning to the action performing<br>
+ * 		  at the server end.	
  * @author dushantha DN
- * @since 20170216 v 1.0
+ * @since 20170216 v 1.0 <br>
+ * 		  20170324 v 1.01 <br>
  */
-function sendBannerPaageFieldInputs(formFieldArray,elegibleToProceed ){
+function sendBannerPaageFieldInputs(formFieldArray,elegibleToProceed,CommandCode ){
 	
 if(elegibleToProceed){
 		
@@ -536,7 +598,9 @@ if(elegibleToProceed){
 				"bannerPublishingEndDate":formFieldArray[6]	,
 				"urlMiniWebOrPage" :formFieldArray[7],
 				"urlToBeDirectedOnBannerClick":formFieldArray[8],
-				"bannerImageName":formFieldArray[9]
+				"bannerCode":formFieldArray[9],
+				"bannerImageName":formFieldArray[10],
+				"user":""
 		};
 		// ajax call to transfer data to server end
 		
@@ -545,7 +609,7 @@ if(elegibleToProceed){
 			dataType:"json",
 			url : adminControllerUrl, 
 			data : {
-					CCO:"UFBCR",//UPLOAD FULL BANNER CREDENTIALS
+					CCO:CommandCode,
 				jsonData:JSON.stringify(jasonBanner)
 			},
 			//cache: false,
