@@ -26,6 +26,7 @@ package com.genesiis.campus.validation;
 				// Add isValidContactCode method
 				// Modified validateTutorFields method to work with isValidNetworkCode & isValidContactCode methods
 //20170321 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields() to validate townDetails & towncodeOld correctly
+//20170324 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & fix password length validation error
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -510,7 +511,7 @@ public class Validator {
 							}
 							
 							//check for the length of the newPassword
-							if (!isEmptyOrHavingSpace(newPassword) && (newPassword.length() < 5) && (newPassword.length() > 51)){ 
+							if (isEmptyOrHavingSpace(newPassword) || (newPassword.length() < 5) || (newPassword.length() > 51)){ 
 								helper.setAttribute("newPasswordError", SystemMessage.PASSWORDLENGTHERROR.message());
 								isValid = false;
 							}
