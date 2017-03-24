@@ -8,7 +8,9 @@
 <!-- 20170321 DN c131-admin-manage-banner-upload-banner-image-dn label is created that is attached to the radio buttons.  -->
 <!-- 20170322 DN c83-admin-manage-banner-update-banner-info-dn add the jsp tag library to the page
 				 included a div element that holds the banner image on the page.
-				 Made upload banner visible depend on the situation. create update button. 
+				 Made upload banner visible depend on the situation. create update button.
+	 20170324 DN c83-admin-manage-banner-update-banner-info-dn two hidden fields for capturing banner code and image name
+	 			 have been inserted.
 
  -->
 
@@ -107,6 +109,8 @@
 
 		<form id="banner-from">			
 			<div >
+				<input type="hidden" id="bannerCode" name="bannerCode" value="${param.bannerCode}" >
+				<input type="hidden" id="bannerEditableImageName" name="bannerEditableImageName" value="${param.imageName}" >
 				Advertiser * &nbsp; 
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<c:choose>
