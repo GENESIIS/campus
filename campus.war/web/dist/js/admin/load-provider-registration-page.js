@@ -273,6 +273,7 @@ function getDataOnCountrySelection() {
 		
 		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#country-List").addClass("has-error");
+		
 		document.getElementById('landNumber1').innerHTML = "";
 		document.getElementById('landNumber2').innerHTML = "";
 		document.getElementById('lastMobileNumber').innerHTML = "";
@@ -545,7 +546,7 @@ function setErrorMessage(errorElement, errorToolTip, message){
  * @param message
  */
 function setSuccessMessage(sucessElement, sucessToolTip, message){
-	//class has-error is used until a css style is cretaed for success messages
+	//has-error style class is used until a style class is created for success messages
 	
 	$(sucessToolTip).attr({ "title" : message,"data-original-title" : message});
 	$(sucessElement).addClass("has-error");

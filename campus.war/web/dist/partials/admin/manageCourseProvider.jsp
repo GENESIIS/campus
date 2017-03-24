@@ -127,7 +127,7 @@
 								<div class="form-group col-sm-4">
 									<label for="unique-prefix"><span class="mandatory">*</span>
 										Unique Prefix</label>
-									<div class="input-wrapper">
+									<div class="input-wrapper" id="uniquePrefixDiv" >
 										<input name="uniquePrefix" type="text" class="form-control"
 											id="uniquePrefix" placeholder=""> <a id="errorUniquePrefix"
 											class="error-info" href="#" data-toggle="tooltip"
@@ -410,15 +410,17 @@
 											<option value="Group">Group</option>
 										</select> <a class="error-info" href="#" data-toggle="tooltip"
 											title="Error! "></a> --%>
+											
+											
 									</div>
+									<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"
+											title="Error! "></a> 
 								</div>
 							</div>
 							<div class="row clearfix">
 								<label for="course-provider-status"
 									class="text-center center-block top-padding inline-info">
-									<span class="mandatory">*</span> Course Provider Status <a
-									class="error-info" href="#" data-toggle="tooltip"
-									title="Error! "></a>
+									<span class="mandatory">*</span> Course Provider Status 
 								</label>
 								<div class="form-group col-sm-12 text-center center-block">
 								<%--	<label class="radio-inline radio-lbl"><input
@@ -438,6 +440,9 @@
 										<label class="radio-inline radio-lbl">
 										<input type="radio" name="providerStatus"  id="providerStatus" value="${applicationStatus.statusValue}">${applicationStatus}</label>
 									 </c:forEach>
+									 <a
+									class="error-info" href="#" data-toggle="tooltip" id="errorProviderStatus"
+									title="Error! "></a>
 								</div>
 
 							</div>
