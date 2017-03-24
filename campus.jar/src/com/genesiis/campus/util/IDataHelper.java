@@ -2,7 +2,7 @@ package com.genesiis.campus.util;
 
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
-//20170203 133-admin-list-tutors arranged imports according to the style guide
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.validation.ResponseType;

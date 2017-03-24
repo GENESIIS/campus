@@ -1,7 +1,7 @@
 package com.genesiis.campus.factory;
 
 //20161024 DN created ICmdFactory.java
-//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
+//20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
