@@ -4,6 +4,7 @@
 <!-- 20170301 c37-tutor-update-tutor-profile-cw modified passwordOld to passwordFromDb -->
 <!-- 20170302 CW c37-tutor-update-tutor-profile-cw modified validateTutorModifications method to validateTutorModificationsByTutor -->
 <!-- 20170316 CW c37-tutor-update-tutor-profile-cw modify field max lengths to match database field max size -->
+<!-- 20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password & Confirm new Password to Confirm Password-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -294,7 +295,7 @@
 						<span id="usernameError" style="color: red"> ${usernameError} </span></td>
 				</tr>
 				<tr>
-					<td>Old Password </td>
+					<td>Current Password </td>
 					<td><input type="password" name="oldPassword" id="oldPassword"
 						maxlength="50" onchange="clearField('oldPasswordError')"/>
 						<span id="oldPasswordError" style="color: red"> ${oldPasswordError} </span></td>
@@ -307,7 +308,7 @@
 						<span id="newPasswordError" style="color: red"> ${newPasswordError} </span></td>
 				</tr>
 				<tr>
-					<td>Confirm New Password </td>
+					<td>Confirm Password </td>
 					<td><input type="password" name="confirmPassword" id="confirmPassword" maxlength="50"
 						onchange="clearField('confirmPasswordError')"/><span
 						id="confirmPasswordError" style="color: red"> ${confirmPasswordError} </span></td>

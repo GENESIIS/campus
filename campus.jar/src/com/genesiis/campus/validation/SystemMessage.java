@@ -17,6 +17,8 @@ package com.genesiis.campus.validation;
 //20170228 c37-tutor-update-tutor-profile-cw-fixed INCORRECT_PASSWORD spelling mistake
 //20170301 c37-tutor-update-tutor-profile-cw-added OLD_NEW_PASSWORD_SAME & NEW_CONFIRM_PASSWORD_NOTSAME
 //20170301 c37-tutor-update-tutor-profile-cw-added TOWN_CODE_NOT_CHANGED
+//20170323 c37-tutor-update-tutor-profile-cw modified EMPTYCONFIRMPASSWORD message
+//20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password
 
 
 public enum SystemMessage {	
@@ -42,8 +44,8 @@ public enum SystemMessage {
 	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
-	EMPTYCONFIRMPASSWORD("Password cannot be empty."),
-	OLD_NEW_PASSWORD_SAME("Old & new passwords cannot be same ... "),
+	EMPTYCONFIRMPASSWORD("Confirm password cannot be empty."),
+	CURRENT_NEW_PASSWORD_SAME("Current & new passwords cannot be same ... "),
 	NEW_CONFIRM_PASSWORD_NOTSAME("new password and confirm password are not same ... "),
 	FIRSTNAMEERROR("Invalid First Name."),
 	LASTNAMEERROR("Invalid Last Name."),
@@ -51,7 +53,7 @@ public enum SystemMessage {
 	UPDATED("Details Updated successfully."),
 	NOMODIFICATIONS("You haven't done any changes."),
 	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
-	INCORRECT_PASSWORD("Incorrect Old Password ..."),
+	INCORRECT_PASSWORD("Incorrect Current Password ..."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
 	COUNTRYCODEERROR("Country code error."),
 	NETWORKCODEERROR("Mobile network code error."),
