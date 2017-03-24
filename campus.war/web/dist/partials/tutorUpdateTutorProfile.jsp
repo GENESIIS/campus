@@ -325,7 +325,13 @@
 		</div>
 		
 	</form>
-
+	
+	<form action="/TutorController" method="POST">
+		<div id="main-content" align="center">
+			<button type="submit" name="CCO" id="CCO" value="ADD_EMPLOYMENT" 
+			class="pure-button pure-button-primary">Add Employment Details</button>
+		</div>
+	</form>
 
 	<script type="text/javascript"
 		src="\dist\bower-components\jquery\jquery.min.js"></script>
