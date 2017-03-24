@@ -15,7 +15,7 @@
 //			  	css styles
 //20170320 JH c141-ui-integration-for-add-course-provider added isempty() method to validate input for whitespaces
 //20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
-//20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage() methods
+//20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -536,4 +536,17 @@ function setErrorMessage(errorElement, errorToolTip, message){
 	
 	$(errorToolTip).attr({ "title" : message,"data-original-title" : message});
 	$(errorElement).addClass("has-error");
+}
+
+/**
+ * Used to set success messages
+ * @param errorElement
+ * @param errorToolTip
+ * @param message
+ */
+function setSuccessMessage(sucessElement, sucessToolTip, message){
+	//class has-error is used until a css style is cretaed for success messages
+	
+	$(sucessToolTip).attr({ "title" : message,"data-original-title" : message});
+	$(sucessElement).addClass("has-error");
 }
