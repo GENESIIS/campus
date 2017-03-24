@@ -9,7 +9,7 @@
 //20170226 JH c141-add-course-provider-issue-improvements isValidMinMaxLength(): created to validate both min and max values of a parameter, added method comments
 //20170227 JH c141-add-course-provider-issue-improvements validateFormURL(): modified to validate URL maximum length
 //20170228 JH c141-add-course-provider-issue-improvements isValidMinMaxLength() modified, front end validation method changed due to one off course provider implementation
-
+//20170323 JH c141-ui-add-course-provider-issue-improvements modified providerPrefixValidation() method 
 window.prefixFlag = true;
 window.usernameFlag = true;
 
@@ -194,24 +194,33 @@ function providerUsernameValidation() {
 function providerPrefixValidation() {
 
 	var selectedPrefix = document.getElementById('uniquePrefix').value;
-	document.getElementById('errorUniquePrefix').innerHTML = "";
-	document.getElementById('prefixMessage').innerHTML = "";
+//	document.getElementById('errorUniquePrefix').innerHTML = "";
+//	document.getElementById('prefixMessage').innerHTML = "";
+	
+	clearErrorMessage($('#uniquePrefix').attr('id'));
 	var flag = false;
 
 	if (!isempty(selectedPrefix)) {
 
-		document.getElementById('prefixMessage').innerHTML = "";
-		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
-		document.getElementById('uniquePrefix').focus();
+//		document.getElementById('prefixMessage').innerHTML = "";
+//		document.getElementById('errorUniquePrefix').innerHTML = "**Give a unique name.";
+//		document.getElementById('uniquePrefix').focus();
+		
+		setErrorMessage($('#uniquePrefix').attr('id'), $('#errorUniquePrefix').attr('id'), "**Give a unique name.");
 		return false;
 	} else if (selectedPrefix.length < 2) {
 
-		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
+	//	document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too small";
+		setErrorMessage($('#uniquePrefix').attr('id'), $('#errorUniquePrefix').attr('id'), "Unique prefix is too small");
+		
 		return false;
 	} else if (selectedPrefix.length > 20) {
 
-		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
-		document.getElementById('prefixMessage').value = "";
+//		document.getElementById('errorUniquePrefix').innerHTML = "Unique prefix is too large";
+//		document.getElementById('prefixMessage').value = "";
+		
+
+		setErrorMessage($('#uniquePrefix').attr('id'), $('#errorUniquePrefix').attr('id'), "Unique prefix is too large");
 		return false;
 	} else {
 
@@ -233,12 +242,14 @@ function providerPrefixValidation() {
 							window.prefixFlag == response.validationFlag;
 
 							if (response['validationFlag'] === 1) {
-								document.getElementById('prefixMessage').innerHTML = response.userMessage;
+//								document.getElementById('prefixMessage').innerHTML = response.userMessage;
+								setErrorMessage($('#uniquePrefix').attr('id'), $('#errorUniquePrefix').attr('id'), response.userMessage);
 								flag = true;
 							}
 							if (response['validationFlag'] === 0) {
-								document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
-								document.getElementById('uniquePrefix').focus();
+//								document.getElementById('errorUniquePrefix').innerHTML = response.userMessage;
+//								document.getElementById('uniquePrefix').focus();
+								setErrorMessage($('#uniquePrefix').attr('id'), $('#errorUniquePrefix').attr('id'), response.userMessage);
 								flag = false;
 							}
 
@@ -318,8 +329,10 @@ function vaidateCourseProviderDeatils(form) {
 	var accountContactNumber = $("#providerContactNumber").val();
 
 	if (!isempty(courseProvider)) {
-		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
-		document.getElementById('courseProvider').focus();
+//		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
+//		document.getElementById('courseProvider').focus();
+		
+		setErrorMessage(courseProvider, errorCourseProvider, "**Select a course provider type.")
 		flag = false;
 	}
 
