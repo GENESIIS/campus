@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161122 JH c39-add-course-provider CourseProviderDAO created
 //20170324 CW c157-add-tutor-employment-details-cw getAll method created
 //20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get details correctly
+//20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get string values correctly
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -82,21 +83,23 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
 												
 				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
-				singleFeaturedCourseProviderList.add(rs.getString("USERNAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("PASSWORD"));
-				singleFeaturedCourseProviderList.add(rs.getString("FIRSTNAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("MIDDLENAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("LASTNAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("GENDER"));
-				singleFeaturedCourseProviderList.add(rs.getString("EMAIL"));
+				singleFeaturedCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
+				singleFeaturedCourseProviderList.add(rs.getString("SHORTNAME"));
+				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
+				singleFeaturedCourseProviderList.add(rs.getString("DESCRIPTION"));
+				singleFeaturedCourseProviderList.add(rs.getString("GENERALEMAIL"));
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
 				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
 				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONEAREACODE"));
-				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONENUMBER"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONENO"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONE2NO"));
+				singleFeaturedCourseProviderList.add(rs.getString("FAXNO"));
 				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
 				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
-				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONENUMBER"));
-				singleFeaturedCourseProviderList.add(rs.getString("DESCRIPTION").trim());
-				singleFeaturedCourseProviderList.add(rs.getString("EXPERIENCE").trim());
+				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONENO"));
+				singleFeaturedCourseProviderList.add(rs.getString("HEADERIMAGEPATH"));
+				singleFeaturedCourseProviderList.add(rs.getString("LOGOIMAGEPATH"));
+				singleFeaturedCourseProviderList.add(rs.getString("SPECIALITY"));
 				singleFeaturedCourseProviderList.add(rs.getString("WEBLINK"));
 				singleFeaturedCourseProviderList.add(rs.getString("FACEBOOKURL"));
 				singleFeaturedCourseProviderList.add(rs.getString("TWITTERURL"));
@@ -105,19 +108,22 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				singleFeaturedCourseProviderList.add(rs.getString("INSTAGRAMURL"));
 				singleFeaturedCourseProviderList.add(rs.getString("VIBERNUMBER"));
 				singleFeaturedCourseProviderList.add(rs.getString("WHATSAPPNUMBER"));
-				singleFeaturedCourseProviderList.add(rs.getString("ISAPPROVED"));
-				singleFeaturedCourseProviderList.add(rs.getString("TUTORSTATUS"));
+				singleFeaturedCourseProviderList.add(rs.getString("EXPIRATIONDATE"));
 				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS1"));
-				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS2"));
+				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS2"));				
 				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS3"));
-				singleFeaturedCourseProviderList.add(rs.getString("TOWN"));
-				singleFeaturedCourseProviderList.add(rs.getString("USERTYPE"));
+				singleFeaturedCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
+				singleFeaturedCourseProviderList.add(rs.getString("HEADOFFICETOWN"));
+				singleFeaturedCourseProviderList.add(rs.getString("ISTUTORRELATED"));
+				singleFeaturedCourseProviderList.add(rs.getString("ISADMINALLOWED"));
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));				
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
+				singleFeaturedCourseProviderList.add(rs.getString("PRINCIPAL"));
+				singleFeaturedCourseProviderList.add(rs.getString("TUTOR"));
 				singleFeaturedCourseProviderList.add(rs.getString("CRTON"));
-				singleFeaturedCourseProviderList.add(rs.getString("CRTBY"));
+				singleFeaturedCourseProviderList.add(rs.getString("CRTBY"));				
 				singleFeaturedCourseProviderList.add(rs.getString("MODON"));
 				singleFeaturedCourseProviderList.add(rs.getString("MODBY"));
-				singleFeaturedCourseProviderList.add(rs.getString("HASHCODE"));
-				singleFeaturedCourseProviderList.add(rs.getString("HASHGENTIME"));
 
 				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
 			}		
