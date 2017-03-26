@@ -16,6 +16,7 @@
 <!-- 20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip -->
 <!-- 20170323 JH c141-ui-integration-add-course-provider added error-handling javascript to hand, changed the default error title -->
 <!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
+<!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -84,12 +85,14 @@
 							Information</h4>
 						<div class="accordion-body">
 							<div class="row clearfix">								
-								<div class="form-group col-sm-12" id="accountTypeDiv">
+								<div class="form-group col-sm-12">
+								<div  id="accountTypeDiv">
 								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
 										class="error-info" href="#" data-toggle="tooltip" id="errorCourseProvider"
 										title="Error! " data-placement="top"></a>
 									</label>
+									</div>
 								<c:forEach items="${accountTypeBean.values}" var="accountTypes">
 								<label class="radio-inline radio-lbl">
 										<c:if test="${accountTypes.typeValue == 1}">
@@ -121,7 +124,9 @@
 									<label for="shorten-name">Shorten Name</label>
 									<div class="input-wrapper" id="shortNameDiv">
 										<input name="shortName" id="shortName" type="text" class="form-control"
-											id="shorten-name" placeholder="">
+											id="shorten-name" placeholder=""> <a
+											class="error-info" href="#" data-toggle="tooltip" id="errorShortName"
+											title=""></a>
 									</div>
 								</div>
 								<div class="form-group col-sm-4">
@@ -171,9 +176,10 @@
 														Country</label>
 														<input list="selectedCountry" name="country-List" id="country-List" class="input-wrapper has-select" onchange="getDataOnCountrySelection()">
 												<!-- 	<div class="input-wrapper has-select" id="country-List">
-														<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
-															title="Error! "></a>
+														
 													</div> -->
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
+															title="Error! "></a>
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
 															title="Error! "></a>
 												</div>
@@ -192,7 +198,7 @@
 												<div class="form-group col-xs-12">
 													<label for="address-line-1"><span class="mandatory">*</span>
 														Street Address - Line 1</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="address1Div">
 														<input name="address1" type="text"
 															class="form-control" id="address1" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress1"
