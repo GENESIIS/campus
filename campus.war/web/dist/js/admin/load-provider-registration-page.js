@@ -16,6 +16,7 @@
 //20170320 JH c141-ui-integration-for-add-course-provider added isempty() method to validate input for whitespaces
 //20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
 //20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
+//20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -330,7 +331,7 @@ function displayProviderTownList() {
 	var countryCollection = window.townCollection;
 	var singleTownElement = '';
 
-	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value=""></option>';
+	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--default--</option>';
 	if (townCollection !== undefined & townCollection !== null) {
 		$.each(townCollection, function(index, value) {
 			singleTownElement += '<option value="' + value[0] + '">';
@@ -431,7 +432,7 @@ function landPhoneNubmerHelper() {
  */
 function saveCourseProvider() {
 
-	var errorMessageList = document.getElementsByClassName('error-message');
+	var errorMessageList = document.getElementsByClassName('has-error');
 	var flag = true;
 
 	// clear all previous error messages
@@ -499,6 +500,8 @@ function saveCourseProvider() {
 							$("#userMessage").html(err);
 						}
 					});
+		}else{
+			$("#userMessage").html("One or more fields are invalid.");
 		}
 	}
 }
