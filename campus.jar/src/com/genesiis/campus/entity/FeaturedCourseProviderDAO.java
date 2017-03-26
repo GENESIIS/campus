@@ -2,9 +2,12 @@ package com.genesiis.campus.entity;
 
 //20161122 JH c39-add-course-provider CourseProviderDAO created
 //20170324 CW c157-add-tutor-employment-details-cw getAll method created
+//20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get details correctly
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +16,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * FeaturedCourseProviderDAO class used to handle basic operations of the featured
+ * course provider
+ * @author JH
+ *
+ */
 public class FeaturedCourseProviderDAO implements ICrud {
+	
+	static Logger log = Logger.getLogger(FeaturedCourseProviderDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -39,6 +50,11 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		return null;
 	}
 
+	/**
+	 * Returns all the Featured Course Provider Details list
+	 * @author Chinthaka 
+	 * @return Returns the Featured Course Provider Details in Database from a collection of collection
+	 */
 	@Override
 	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		
@@ -46,10 +62,6 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int countryCode = 0;
-		double townCode = 0;
-		String countryName = null;
-		String townName = null;
 					
 		StringBuilder queryBuilder = new StringBuilder("SELECT [CODE], [UNIQUEPREFIX], [SHORTNAME], [NAME], [DESCRIPTION], [GENERALEMAIL], ");
 		queryBuilder.append("[COURSEINQUIRYEMAIL], [LANDPHONECOUNTRYCODE], [LANDPHONEAREACODE], [LANDPHONENO], ");
@@ -62,11 +74,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			
 		try {
 			
-			Tutor tutor = (Tutor) code; 
-			conn = ConnectionManager.getConnection();			
-			
+			conn = ConnectionManager.getConnection();						
 			stmt = conn.prepareStatement(queryBuilder.toString());
-			stmt.setInt(1, tutor.getCode());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -96,26 +105,27 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				singleFeaturedCourseProviderList.add(rs.getString("INSTAGRAMURL"));
 				singleFeaturedCourseProviderList.add(rs.getString("VIBERNUMBER"));
 				singleFeaturedCourseProviderList.add(rs.getString("WHATSAPPNUMBER"));
+				singleFeaturedCourseProviderList.add(rs.getString("ISAPPROVED"));
+				singleFeaturedCourseProviderList.add(rs.getString("TUTORSTATUS"));
 				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS1"));
 				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS2"));
 				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS3"));
-				singleFeaturedCourseProviderList.add(rs.getString("TOWNNAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("TOWN"));				
+				singleFeaturedCourseProviderList.add(rs.getString("TOWN"));
 				singleFeaturedCourseProviderList.add(rs.getString("USERTYPE"));
-				singleFeaturedCourseProviderList.add(rs.getString("COUNTRYNAME"));
-				singleFeaturedCourseProviderList.add(rs.getString("ISAPPROVED"));
-				singleFeaturedCourseProviderList.add(rs.getString("TUTORSTATUS"));
+				singleFeaturedCourseProviderList.add(rs.getString("CRTON"));
+				singleFeaturedCourseProviderList.add(rs.getString("CRTBY"));
+				singleFeaturedCourseProviderList.add(rs.getString("MODON"));
+				singleFeaturedCourseProviderList.add(rs.getString("MODBY"));
+				singleFeaturedCourseProviderList.add(rs.getString("HASHCODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("HASHGENTIME"));
 
 				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
-			}
-		} catch (ClassCastException cce) {
-			log.error("findById(): ClassCastException " + cce.toString());
-			throw cce;
+			}		
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLException " + sqlException.toString());
+			log.info("getAll(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): Exception " + e.toString());
+			log.info("getAll(): Exception " + e.toString());
 			throw e;
 		} finally {			
 			DaoHelper.cleanup(conn, stmt, rs);
