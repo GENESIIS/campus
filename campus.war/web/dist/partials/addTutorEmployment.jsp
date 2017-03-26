@@ -1,4 +1,5 @@
 <!-- 20170322 c157-add-tutor-employment-details-cw - created addTutorEmployment jsp file -->
+<!-- 20170322 c157-add-tutor-employment-details-cw - modified src tags -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -137,9 +138,7 @@
 			</section>
 		</article>
 	</div>
-	<script type="text/javascript"
-		src="\dist\bower-components\jquery\jquery.min.js"></script>
-	<script src="/dist/js/tutor-helper.js"></script>
-	<script src="/dist/js/validator.js"></script>
+	<script type="text/javascript" src="\dist\bower-components\jquery\jquery.min.js"></script>
+	<script src="/dist/js/tutor/experience.js"></script>
 </body>
 </html>
