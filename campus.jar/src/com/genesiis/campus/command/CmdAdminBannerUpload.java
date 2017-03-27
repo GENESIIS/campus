@@ -31,6 +31,7 @@ package com.genesiis.campus.command;
  *              uploadFullBannerCredentials() refactor to include bannerRecordUpdated() method call.
  *              bannerRecordUpdated(JasonInflator) has been modified to include ZERO_UPDATES enum instead of SystemMessage.UPDATE_UNSUCCESSFUL.
  *              Rearranged the doc comment.
+ *              updateBannerCredentials() method has been changed to include the message & setResponseCridentials() and to set the success code.
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -543,6 +544,9 @@ public class CmdAdminBannerUpload implements ICommand {
 	private void updateBannerCredentials(JasonInflator rowBanner,IDataHelper helper) throws SQLException,Exception{
 		try {
 			bannerRecordUpdated(rowBanner);
+			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
+			this.setSuccessCode(1);
+			setResponseCridentials(helper);
 			log.info("updateBannerCredentials(JasonInflator,IDataHelper) --> banner records are updated successfully ");
 		} catch (FailedValidationException fvexp) {
 			String [] errorMessagePart =fvexp.toString().split(":");
