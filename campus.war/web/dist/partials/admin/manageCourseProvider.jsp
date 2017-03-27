@@ -134,7 +134,7 @@
 										Unique Prefix</label>
 									<div class="input-wrapper" id="uniquePrefixDiv" >
 										<input name="uniquePrefix" type="text" class="form-control"
-											id="uniquePrefix" placeholder=""> <a id="errorUniquePrefix"
+											id="uniquePrefix" placeholder="" onblur="providerPrefixValidation();"> <a id="errorUniquePrefix"
 											class="error-info" href="#" data-toggle="tooltip"
 											title="Error! "></a>
 									</div>
@@ -294,7 +294,7 @@
 										<div class="form-group col-xs-12">
 											<label for="general-email"><span class="mandatory">*</span>
 												General Email</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="generalEmailDiv">
 												<input name="generalEmail" type="email" class="form-control"
 													id="generalEmail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorGeneralEmail"
@@ -304,7 +304,7 @@
 										<div class="form-group col-xs-12">
 											<label for="inquiry-email"><span class="mandatory">*</span>
 												Course Inquiry Email</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="inquiryMailDiv">
 												<input name="inquiryMail" type="email" class="form-control"
 													id="inquiryMail" placeholder=""> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorInquiryMail"
@@ -313,7 +313,7 @@
 										</div>
 										<div class="form-group col-xs-12">
 											<label for="web-link">Web Link</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="webLinkDiv">
 												<input name="webLink" type="url" class="form-control"
 													id="webLink" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
@@ -333,7 +333,7 @@
 									<div class="row">
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="facebook-url">Facebook URL</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="facebookDiv">
 												<input name="facebook" type="url" class="form-control"
 													id="facebook" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink" title="Error! "></a>
@@ -341,7 +341,7 @@
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="linkedin-url">LinkedIn URL</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="linkdedInDiv">
 												<input name="linkdedIn" type="url" class="form-control"
 													id="linkdedIn" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorLinkedIn"
@@ -350,7 +350,7 @@
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="twitter-url">Twitter URL</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="twitterDiv">
 												<input name="twitter" type="url" class="form-control"
 													id="twitter" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorTwitter"
@@ -359,7 +359,7 @@
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="instagram-url">Instagram URL</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="instagramDiv">
 												<input name="instagram" type="url" class="form-control"
 													id="instagram" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorInstagram"
@@ -368,9 +368,9 @@
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
 											<label for="myspace-url">MySpace URL</label>
-											<div class="input-wrapper">
-												<input name="whatsapp" type="url" class="form-control"
-													id="whatsapp" placeholder="">
+											<div class="input-wrapper" id="mySpaceDiv">
+												<input name="mySpace" type="url" class="form-control"
+													id="mySpace" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorMyspace"
 													title="Error! "></a>
 											</div>
