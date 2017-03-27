@@ -2,9 +2,12 @@
 <!-- 20170322 c157-add-tutor-employment-details-cw - modified src tags -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - modified the file according to UI Mockup design -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - modified employeeDetails name into employerDetails -->
+<!-- 20170327 c157-add-tutor-employment-details-cw - add tutorCode hidden field & assign a value -->
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,24 +20,26 @@
 			<h1>Add Tutor Employee</h1>
 		</header>
 		
-		<section>
-			<nav>
-				<ul>
-					<form action="/TutorController" method="POST" align="center">
-						<tr>
-							<td>Employer</td>	
-							<td><span id="employerError"></span> 
-								<select name="employerDetails" id="employerDetails" onchange="clearField('employerError')">
-									<option></option>
-								</select><span id="employerError" style="color: red"> ${employerError} </span>
-							</td>
-						</tr>
-						<button type="submit" name="CCO" id="CCO" value="ADD_EMPLOYMENT_DETAILS"
-							class="pure-button pure-button-primary">Add Employment Request</button>
-					</form>
-				</ul>
-			</nav>
-		</section>
+		<form action="/TutorController" method="POST" align="center">
+			<c:forEach var="tutorList" items="${result.collection}">			
+				<c:set var="tutorcode" value="${tutorList[0]}"/>			
+			</c:forEach>
+			
+				<input type="hidden" name="tutorCode" id="tutorCode" value="${tutorcode}"/>
+			
+			<table align="center">	
+				<tr>
+					<td>Employer</td>	
+					<td><span id="employerError"></span> 
+						<select name="employerDetails" id="employerDetails" onchange="clearField('employerError')">
+							<option></option>
+						</select><span id="employerError" style="color: red"> ${employerError} </span>
+					</td>		
+					<td><button type="submit" name="CCO" id="CCO" value="ADD_EMPLOYMENT_DETAILS"
+						class="pure-button pure-button-primary">Add Employment Request</button></td>
+				</tr>	
+			</table>
+		</form>
 		<br />
 		<br />
 		<section>
