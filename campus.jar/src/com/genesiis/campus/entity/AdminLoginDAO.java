@@ -113,33 +113,38 @@ public class AdminLoginDAO implements ICrud {
 			 } else {
 				 message = SystemMessage.INVALIDPASSWORD.message();
 				 admin.setValid(false);
-					log.info(message);
+					
 
 					for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
 						log.info("max attempts : " + MAX_ATTEMPTS);
 						if (MAX_ATTEMPTS == 3) {
-
-						} else {
+							message = SystemMessage.LOGGINATTEMPT3.message();	
+							log.info(message);
+						} if(MAX_ATTEMPTS==2){
+							
+						}else {
 							break;
 						}
 					}
-					 MAX_ATTEMPTS++;
+					// MAX_ATTEMPTS++;
+					 log.info(message);
 			 }
 				
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				admin.setValid(false);
-				log.info(message);
-
+				
 				for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
 					log.info("max attempts : " + MAX_ATTEMPTS);
 					if (MAX_ATTEMPTS == 3) {
-
+						message = SystemMessage.LOGGINATTEMPT3.message();
+						log.info(message);
 					} else {
 						break;
 					}
 				}
-				MAX_ATTEMPTS++;
+				//MAX_ATTEMPTS++;
+				log.info(message);
 			}
 
 		} catch (SQLException exception) {
