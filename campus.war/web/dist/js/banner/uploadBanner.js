@@ -47,6 +47,8 @@
  *               function getBannerCredentials() is implemented to populate the banner data to an array by extracting from input fields.
  * 20170327 DN c83-admin-manage-banner-update-banner-info-dn validateUploadBannerEmbedData() has been amended to compare the banner 
  * 				existence of the code when the activation date is compared against the current date. This logic has been removed.
+ * 				Made bannerFieldInputValues array a global variable.The on('click') bannerRecordUpdate selector changed to populate 
+ * 				the array bannerFieldInputValues initially.
  */
 
 /*
@@ -61,6 +63,7 @@ var selectedAdvertiserCode ='';
 var selectedBannerSlotCode ='';
 var adminControllerUrl = '../../../AdminController';
 var bannerImageName="";
+var bannerFieldInputValues=[];
 
 $(document).ready(function(){
 	displayBannerManagerPrerequistData();
@@ -362,19 +365,19 @@ function getBannerCredentials(){
 	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
 	
 	// adding required  banner <form> fields to an array
-	var BannerFieldInputValues =[];
-	BannerFieldInputValues.push(advertiserCode);
-	BannerFieldInputValues.push(codeOfSelectedPage);
-	BannerFieldInputValues.push(bannerSlotCode);
-	BannerFieldInputValues.push(displayDusration);
-	BannerFieldInputValues.push(banerToBeActive);
-	BannerFieldInputValues.push(bannerPublishingDate);
-	BannerFieldInputValues.push(bannerPublishingEndDate);
-	BannerFieldInputValues.push(urlMiniWebOrPage);
-	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
-	BannerFieldInputValues.push(bannerCode);	
+	//var bannerFieldInputValues =[];
+	bannerFieldInputValues.push(advertiserCode);
+	bannerFieldInputValues.push(codeOfSelectedPage);
+	bannerFieldInputValues.push(bannerSlotCode);
+	bannerFieldInputValues.push(displayDusration);
+	bannerFieldInputValues.push(banerToBeActive);
+	bannerFieldInputValues.push(bannerPublishingDate);
+	bannerFieldInputValues.push(bannerPublishingEndDate);
+	bannerFieldInputValues.push(urlMiniWebOrPage);
+	bannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
+	bannerFieldInputValues.push(bannerCode);	
 	
-	return BannerFieldInputValues;
+	return bannerFieldInputValues;
 	
 }
 
@@ -435,7 +438,7 @@ $(document).on('click','#uploadBbutton', function(event){
 //	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
 //	BannerFieldInputValues.psuh(bannerCode);	
 	
-    var BannerFieldInputValues = getBannerCredentials();
+    bannerFieldInputValues = getBannerCredentials();
     
 	//Both the image and the banner record has to update or
 	// a brand new banner is to add to the system
@@ -462,11 +465,11 @@ $(document).on('click','#uploadBbutton', function(event){
 				if(response['successCode']==1){					
 					cssColour='green';
 					proceed=true;
-					BannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name to the array that consisits of the page user inputs 
+					bannerFieldInputValues.push(response['bannerImageName']); // adding the banner image name to the array that consisits of the page user inputs 
 				} 
 				
 				displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
-				sendBannerPaageFieldInputs(BannerFieldInputValues,proceed,"UFBCR"); //UPLOAD FULL BANNER CREDENTIALS
+				sendBannerPaageFieldInputs(bannerFieldInputValues,proceed,"UFBCR"); //UPLOAD FULL BANNER CREDENTIALS
 			},
 			error: function(pageSlots,error,errorThrown){
 				var msg = ajaxErorMessage(pageSlots,error,errorThrown);
@@ -494,9 +497,10 @@ $(document).on('click','#uploadBbutton', function(event){
  * When the user needs only to update the banner fields but the banner image
  * this event trigges.
  */
-$(document).on('click','#bannerRecordUpdate', function(event){  // Only the banner record is updated without the banner image
-	BannerFieldInputValues.push($('#bannerEditableImageName').val());
-	sendBannerPaageFieldInputs(BannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
+$(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputValues){  // Only the banner record is updated without the banner image
+	bannerFieldInputValues=getBannerCredentials();
+	bannerFieldInputValues.push($('#bannerEditableImageName').val());
+	sendBannerPaageFieldInputs(bannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
 });
 
 
