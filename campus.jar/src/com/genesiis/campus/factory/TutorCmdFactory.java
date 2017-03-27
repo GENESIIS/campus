@@ -13,7 +13,9 @@ package com.genesiis.campus.factory;
 //20170227 CW c37-tutor-update-tutor-profile-cw add VIEW_TUTOR_UPDATE_TUTOR_DETAILS & TUTOR_UPDATE_TUTOR element
 //20170303 CW c37-tutor-update-tutor-profile-cw add CHECK_PASSWORDS
 //20170323 CW c157-add-tutor-employment-details-cw command LIST_COURSE_PROVIDERS_FOR_TUTORS added
+//20170327 CW c157-add-tutor-employment-details-cw command ADD_EMPLOYMENT_DETAILS added
 
+import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdListCourseProvidersForTutors;
 import com.genesiis.campus.command.CmdLoadCountry;
@@ -33,6 +35,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.TUTOR_UPDATE_TUTOR, new CmdTutorUpdateTutorProfile());
 		map.put(Operation.CHECK_PASSWORDS, new CmdValidatePasswords());
 		map.put(Operation.LIST_COURSE_PROVIDERS_FOR_TUTORS, new CmdListCourseProvidersForTutors());
+		map.put(Operation.ADD_EMPLOYMENT_DETAILS, new CmdAddTutorEmploymentDetails());		
 	}
 	
 	@Override
@@ -66,6 +69,9 @@ public class TutorCmdFactory implements ICmdFactory {
 			command = map.get(o);
 			break;
 		case LIST_COURSE_PROVIDERS_FOR_TUTORS:
+			command = map.get(o);
+			break;
+		case ADD_EMPLOYMENT_DETAILS:
 			command = map.get(o);
 			break;
 		default:
