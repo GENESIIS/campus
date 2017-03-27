@@ -23,6 +23,7 @@ public enum SystemMessage {
 	LOGOUTSUCCESSFULL("Logout successfull"),
 	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
 	LOGGEDALLREADY("User Already Logged In"),
+	LOGGINATTEMPT3("Temporary Your account has been blocked!"),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),
