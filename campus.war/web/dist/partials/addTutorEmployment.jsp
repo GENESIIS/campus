@@ -3,6 +3,7 @@
 <!-- 20170327 c157-add-tutor-employment-details-cw - modified the file according to UI Mockup design -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - modified employeeDetails name into employerDetails -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - add tutorCode hidden field & assign a value -->
+<!-- 20170327 c157-add-tutor-employment-details-cw - fix some jsp alignment errors -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -15,7 +16,7 @@
 <title>Add Tutor Employment details</title>
 </head>
 <body>
-	<div class="container">
+	<div class="container" align="center">
 		<header align="center">
 			<h1>Add Tutor Employee</h1>
 		</header>
