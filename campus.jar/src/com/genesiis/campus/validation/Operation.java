@@ -12,6 +12,7 @@ package com.genesiis.campus.validation;
 //20170303 CW c37-tutor-update-tutor-profile-cw added CHECK_PASSWORDS
 //20170323 CW c157-add-tutor-employment-details-cw added LIST_COURSE_PROVIDERS_FOR_TUTORS
 //20170324 CW c157-add-tutor-employment-details-cw added ADD_EMPLOYMENT
+//20170327 CW c157-add-tutor-employment-details-cw added ADD_EMPLOYMENT_DETAILS command
 
 
 /**
@@ -32,6 +33,7 @@ public enum Operation {
 	CHECK_PASSWORDS("CHECK_PASSWORDS", ResponseType.JSON, "tutorUpdateTutorProfile.jsp"),
 	LIST_COURSE_PROVIDERS_FOR_TUTORS("LIST_COURSE_PROVIDERS_FOR_TUTORS", ResponseType.JSON, ""),
 	ADD_EMPLOYMENT("ADD_EMPLOYMENT", ResponseType.JSP,"dist/partials/addTutorEmployment.jsp"),	
+	ADD_EMPLOYMENT_DETAILS("ADD_EMPLOYMENT_DETAILS", ResponseType.JSP, "dist/partials/addTutorEmployment.jsp"),
 	CHECK_EMAIL("CHECK_EMAIL", ResponseType.JSON, "addTutorDetails.jsp");	
 	
 	private final String commandString;
