@@ -45,6 +45,8 @@
  *               the array "jasonBanner" in sendBannerPaageFieldInputs().
  *               bannerRecordUpdate on click function implemented to update only the banner records but not the image.
  *               function getBannerCredentials() is implemented to populate the banner data to an array by extracting from input fields.
+ * 20170327 DN c83-admin-manage-banner-update-banner-info-dn validateUploadBannerEmbedData() has been amended to compare the banner 
+ * 				existence of the code when the activation date is compared against the current date. This logic has been removed.
  */
 
 /*
@@ -564,9 +566,12 @@ function validateUploadBannerEmbedData(){
 	//or <0 --> i.e todays < startDate  then the result is as expected.
 	//else the start date is in the past than todays date then it s illegal
 	var todaysDate = new Date().toJSON().slice(0,10);
+	
+	//Banner Activation Date validation against the current date 
+	
 	if(!isFieldFilled(
-			compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date >= toDay ","startDateInfor"))
-		return validationPass;
+				compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date >= toDay ","startDateInfor"))
+			return validationPass;
 	
 	if(!isFieldFilled(isempty($('#endtDate').val()),'The End date','endtDateInfor'))
 		return validationPass;
