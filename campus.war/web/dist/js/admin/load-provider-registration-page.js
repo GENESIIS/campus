@@ -16,7 +16,7 @@
 //20170320 JH c141-ui-integration-for-add-course-provider added isempty() method to validate input for whitespaces
 //20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
 //20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
-//20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message
+//20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message, saveCourseProvider():changed to clear has-error style class
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -437,7 +437,8 @@ function saveCourseProvider() {
 
 	// clear all previous error messages
 	for (var i = 0; i < errorMessageList.length; i++) {
-		errorMessageList[i].innerHTML = "";
+//		errorMessageList[i].innerHTML = "";
+		clearErrorMessage(i);
 	}
 
 	if (providerPrefixValidation() === false) {

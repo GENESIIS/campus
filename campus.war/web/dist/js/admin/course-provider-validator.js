@@ -313,7 +313,7 @@ function vaidateCourseProviderDeatils(form) {
 //		document.getElementById('errorCourseProvider').innerHTML = "**Select a course provider type.";
 //		document.getElementById('courseProvider').focus();
 		
-		setErrorMessage('#accountTypeDiv', '#errorCourseProvider' , "Select a course provider type.");
+		setErrorMessage('#accountTypeDiv', '#errorAccountTypes' , "Select a course provider type.");
 		flag = false;
 	}
 

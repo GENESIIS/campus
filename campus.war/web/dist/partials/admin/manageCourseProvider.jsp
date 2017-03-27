@@ -86,7 +86,7 @@
 						<div class="accordion-body">
 							<div class="row clearfix">								
 								<div class="form-group col-sm-12">
-								<div  id="accountTypeDiv">
+								<div>
 								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
 										class="error-info" href="#" data-toggle="tooltip" id="errorCourseProvider"
