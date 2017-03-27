@@ -16,6 +16,7 @@ package com.genesiis.campus.validation;
 //20161124 PN c27-upload-user-image: added new attributes to the Enum FILEADDED, FILEUPDATED, FILEDELETED, FILEUPLOADED
 //20170222 DN c131-admin-manage-banner-upload-banner-image-dn PROCESSING enum value added
 //20170314 DN c81-admin-manage-banner-add-and-view-banner-dn FIRST_DATE_GT_SECOND_DATE,INVALID_DATE_FORMAT  enum value is added to the enum list.
+//20170327 DN c83-admin-manage-banner-update-banner-info-dn ZERO_UPDATES enum is added
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -136,6 +137,7 @@ public enum SystemMessage {
 	PROCESSING ("Processing..."),
 	FIRST_DATE_GT_SECOND_DATE("first date is grater than the second date"),
 	INVALID_DATE_FORMAT("invalid Date format"),
+	ZERO_UPDATES("Zero Records Get Updated!"),
 	INVALID_INFORMATION("Invalid Information");
 
 	private String message;
