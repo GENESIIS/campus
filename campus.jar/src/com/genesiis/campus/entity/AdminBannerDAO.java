@@ -31,7 +31,8 @@ package com.genesiis.campus.entity;
  * 			   getAll(Object object) method and add   PG.NAME PAGE_NAME,PG.CODE PAGE_CODE to the select statement. Retrieve extra 02 columns namely
  * 			   PAGE_NAME and PAGE_CODE from the resultset.	
  * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.
- * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.         
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.
+ * 20170327 DN c83-admin-manage-banner-update-banner-info-dn update(Object) method has been changed to correct the syntax errors.         
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -86,20 +87,22 @@ public class AdminBannerDAO implements ICrudSibling {
 		Connection conn = null;
 		PreparedStatement prepare = null;
 		int result=0;
+		String[] imageNameSplitter = aBannerRecord.getBannerImageName().split("\\.");
+		String storingImageName = aBannerRecord.getBannerCode()+"."+imageNameSplitter[1];
 		
 		StringBuilder insertingQueryBuilder = new StringBuilder("UPDATE [CAMPUS].[BANNER] ");
 		insertingQueryBuilder.append(" SET  ");
-		insertingQueryBuilder.append("[IMAGE]= ''"+aBannerRecord.getBannerImageName()+"'' ,[EXPIRATIONDATE] =''"+aBannerRecord.getBannerPublishingEndDate()+"'',"); //+"1"+","
+		insertingQueryBuilder.append("[IMAGE]= '"+storingImageName+"' ,[EXPIRATIONDATE] ='"+aBannerRecord.getBannerPublishingEndDate()+"',"); //+"1"+","
 		insertingQueryBuilder.append("[DISPLAYDURATION] ="+Integer.parseInt(aBannerRecord.getDisplayDusration())+",");
 		insertingQueryBuilder.append("[LINKTYPE] = "+getTheURLType(aBannerRecord.getUrlMiniWebOrPage()).getMappingInt()+",");
-		insertingQueryBuilder.append("[URL] =''"+aBannerRecord.getUrlToBeDirectedOnBannerClick()+"'',");
-		insertingQueryBuilder.append("[ISACTIVE] ="+ aBannerRecord.getBanerToBeActive()+",");
+		insertingQueryBuilder.append("[URL] ='"+aBannerRecord.getUrlToBeDirectedOnBannerClick()+"',");
+		insertingQueryBuilder.append("[ISACTIVE] ='"+ aBannerRecord.getBanerToBeActive()+"',");
 		insertingQueryBuilder.append("[PAGESLOT] ="+ Integer.parseInt(aBannerRecord.getBannerSlotCode())+",");
 		insertingQueryBuilder.append("[ADVERTISER]="+ Integer.parseInt(aBannerRecord.getAdvertiserCode())+"," );//('default.gif' ,getdate()+4,1,5 ,1,'www.topjobs.lk' ,'1',1,1,
 		insertingQueryBuilder.append("[CRTON] = getdate(),"); 
-		insertingQueryBuilder.append("[CRTBY] =''"+	aBannerRecord.getUser()+"'',[MODON] =getdate(),");
-		insertingQueryBuilder.append("[MODBY] =''"+	aBannerRecord.getUser()+"'',");
-		insertingQueryBuilder.append("[ACTIVATIONDATE] =''"+ java.sql.Date.valueOf(aBannerRecord.getBannerPublishingDate())+"'')");
+		insertingQueryBuilder.append("[CRTBY] ='"+	aBannerRecord.getUser()+"',[MODON] =getdate(),");
+		insertingQueryBuilder.append("[MODBY] ='"+	aBannerRecord.getUser()+"',");
+		insertingQueryBuilder.append("[ACTIVATIONDATE] ='"+ java.sql.Date.valueOf(aBannerRecord.getBannerPublishingDate())+"' ");
 		insertingQueryBuilder.append(" WHERE CODE ="+Integer.parseInt(aBannerRecord.getBannerCode()));
 		insertingQueryBuilder.append(";" );   
 		
