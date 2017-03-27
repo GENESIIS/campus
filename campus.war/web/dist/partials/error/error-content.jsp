@@ -11,6 +11,7 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
+<link href="/dist/css/font-awesome.css" rel="stylesheet">
 
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <!-- W3-Include -->
@@ -34,8 +35,14 @@
 
 					window.location.href = 'http://www.campus.dev:8080/index.jsp?showLogin=true'; //this name may have to change depend on actual location of the page "Student Login or public index page"
 
-				}, 5000);
+				}, 100000);
 	</script>
-	Sorry, you are not allowed to view content ......
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	    <div class="msg-display-area text-center clearfix">
+            <div class="display-msg">
+               <label>Sorry, you are not allowed to view content...</label>
+            </div>
+	    </div>
+	</div>
 </body>
 </html>

@@ -116,7 +116,7 @@ function resetLoginLabels() {
 function studentLogout() {
 	
 	var userId = $("#userCode").val();
-	
+
 	if (userId != null) {
 		var jsonData = {
 			"code" : userId
@@ -138,7 +138,7 @@ function studentLogout() {
 					
 					setTimeout( function(){
 						window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
-						}, 5000);
+						}, 5000); 
 				}else{
 				 
 				setTimeout( function(){

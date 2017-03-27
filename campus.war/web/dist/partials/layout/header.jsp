@@ -4,6 +4,7 @@
 <!-- 20161110 JH c7 css styles changes -->
 <!-- 20161117 JH c7 load header categories from json object -->
 <!-- 20161118 JH c7 header page css style changes -->
+<!-- 20170323 TR c21 added link-logout class to login-link and changed styles -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
@@ -52,7 +53,7 @@
 							data-target="#loginPopup"> Login </a>
 					</c:if>
 					<c:if test="${sessionScope.currentSessionUser != null}">
-						<h3 class="lbl-username">Hi ${sessionScope.user}, Login successful</h3> 
+						<h3 class="lbl-username">Hi ${sessionScope.user}, Login successful</h3>
 						
 						<input type="hidden" id="userCode" name="userCode"
 							value="${sessionScope.userCode}" />

@@ -851,6 +851,62 @@ body, html {
       .modal-content .modal-body .form-social .twitter {
         background: #43C8F5; }
 
+.modal-logout .modal-content {
+  border-radius: 5px !important; }
+.modal-logout .modal-header button {
+  cursor: pointer;
+  font-family: "Roboto", sans-serif; }
+.modal-logout .modal-body .display-msg {
+  background-color: #c5eebf;
+  border-left: 4px solid #3cb878;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #2b9862;
+  padding: 8px;
+  line-height: 20px;
+  width: 100%; }
+
+.modal-session .modal-content {
+  border-radius: 5px !important; }
+.modal-session .modal-header button {
+  cursor: pointer;
+  font-family: "Roboto", sans-serif; }
+.modal-session .modal-body .display-msg {
+  background-color: #ffe0e0;
+  border-left: 4px solid #d67900;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: #d67900;
+  padding: 8px;
+  line-height: 20px;
+  width: 100%; }
+
+.msg-display-area {
+  display: block;
+  padding-top: 15%;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto; }
+  .msg-display-area .display-msg {
+    padding: 25px;
+    border: 4px solid #ef2626;
+    border-radius: 7PX;
+    padding-bottom: 50px; }
+    .msg-display-area .display-msg label {
+      line-height: 80px;
+      padding-left: 15px;
+      font-family: "Roboto", sans-serif;
+      font-size: 24px;
+      color: #33b178; }
+      .msg-display-area .display-msg label:before {
+        font-family: FontAwesome;
+        content: "";
+        font-size: 80px;
+        color: #d43f3a;
+        position: relative;
+        top: 26px;
+        padding-right: 20px; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {
