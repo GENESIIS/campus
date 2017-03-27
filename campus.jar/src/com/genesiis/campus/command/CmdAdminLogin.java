@@ -29,7 +29,7 @@ public class CmdAdminLogin implements ICommand{
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		log.info("hit here");
+		
 		HttpSession session;
 		try {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
@@ -52,12 +52,16 @@ public class CmdAdminLogin implements ICommand{
 					
 				}else{
 					message = SystemMessage.LOGINUNSUCCESSFULL.message();
+					pageURL = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 				}
 				
 			}else{
 				pageURL = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 			}
 			
+			helper.setAttribute("message", message);
+			helper.setAttribute("pageURL", pageURL);
+			view.setCollection(dataCollection);
 			
 		} catch (SQLException e) {
 			log.error("execute(IDataHelper helper, IView view):  SQLException"
@@ -69,7 +73,7 @@ public class CmdAdminLogin implements ICommand{
 			throw e;
 		}
 		
-		return null;
+		return view;
 	}
 	
 	
