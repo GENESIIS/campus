@@ -88,7 +88,7 @@ function validateFormURL(url, errorElementId, foucsElementId){
 		var message2 = "**URL is too long.";	
 //		document.getElementById(errorElementId ).innerHTML = message2;
 //		document.getElementById(foucsElementId).focus();
-		setErrorMessage(courseProvider, errorCourseProvider, message2);
+		setErrorMessage(foucsElementId, errorElementId, message2);
 		flag = false;
 	}else if (isempty(url) && !ValidURL(url)) {
 		var message1 = "**Invalid URL.";		
@@ -138,7 +138,8 @@ function providerUsernameValidation() {
 	var flag = false;
 	var integerPattern = /^[0-9]+$/; //pattern to validate for numbers
 
-	var selectedUsername = document.getElementById('providerUsername').value;
+//	var selectedUsername = document.getElementById('providerUsername').value;
+	var selectedUsername = $("#providerUsername").val();
 	var userEmail = document.getElementById('providerEmail').value;
 	var message = "Error";
 	
@@ -204,7 +205,7 @@ function providerPrefixValidation() {
 
 	var selectedPrefix = $("#uniquePrefix").val();
 	
-	clearErrorMessage($('#uniquePrefix').attr('id'));
+	clearErrorMessage($('#uniquePrefixDiv').attr('id'));
 	var flag = false;
 	var message = null;
 
@@ -349,25 +350,25 @@ function vaidateCourseProviderDeatils(form) {
 	if (!isValidMinMaxLength(generalEmail, 1,  255)) {
 //		document.getElementById('errorGeneralEmail').innerHTML = "**General email field is empty or too long.";
 //		document.getElementById('generalEmail').focus();
-		setErrorMessage('#shortNameDiv', '#errorGeneralEmail', "Short name should be less than 20 characters.");
+		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "General email field is empty or too long.");
 		flag = false;
 	}
 	if (!isValidEmailFormat(generalEmail)) {
 //		document.getElementById('errorGeneralEmail').innerHTML = "**Invalid email.";
 //		document.getElementById('generalEmail').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "Invalid email.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(inquiryMail, 1, 255)) {
 //		document.getElementById('errorInquiryMail').innerHTML = "**Empty or too long inquiry mail.";
 //		document.getElementById('inquiryMail').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isValidEmailFormat(inquiryMail)) {
 //		document.getElementById('errorInquiryMail').innerHTML = "**Invalid email.";
 //		document.getElementById('inquiryMail').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Short name should be less than 20 characters.");
 		flag = false;
 	}
 //	if (!isValidMinMaxLength(land1, 1, 20)) {
@@ -432,17 +433,17 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 
-	flag  = validateFormURL(webLink, $('#errorWebLink').attr('id'), $('#webLink')
+	flag  = validateFormURL(webLink, $('#errorWebLink').attr('id'), $('#webLinkDiv')
 			.attr('id'));
 	flag  = validateFormURL(facebook, $('#errorFacebook').attr('id'), $(
-			'#facebook').attr('id'));
+			'#facebookDiv').attr('id'));
 	flag  = validateFormURL(linkdedIn, $('#errorLinkedIn').attr('id'), $(
-			'#linkdedIn').attr('id'));
-	flag = validateFormURL(twitter, $('#errorTwitter').attr('id'), $('#twitter')
+			'#linkdedInDiv').attr('id'));
+	flag = validateFormURL(twitter, $('#errorTwitter').attr('id'), $('#twitterDiv')
 			.attr('id'));
 	flag =  validateFormURL(instagram, $('#errorInstagram').attr('id'), $(
-			'#instagram').attr('id'));
-	flag = validateFormURL(mySpace, $('#errorMyspace').attr('id'), $('#mySpace')
+			'#instagramDiv').attr('id'));
+	flag = validateFormURL(mySpace, $('#errorMyspace').attr('id'), $('#mySpaceDiv')
 			.attr('id'));
 	
 	
