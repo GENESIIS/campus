@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170327 CW c157-add-tutor-employment-details-cw INIT CmdAddTutorEmploymentDetails.java
 //20170327 CW c157-add-tutor-employment-details-cw modified execute method to add employment data to the database
 				// created setEmploymentDetails method
+//20170327 CW c157-add-tutor-employment-details-cw modified execute method & fix data saving error
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -11,6 +12,7 @@ import com.genesiis.campus.entity.model.Employment;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -39,22 +41,23 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 
 		try {			
 			Employment employmentDetails = new Employment();
+			String tutorCode = helper.getParameter("tutorCode");
+			String employerCode = helper.getParameter("employerDetails");			
 			
-			if(helper.getParameter("tutorCode") != null && helper.getParameter("employerCode") != null){
-				employmentDetails = setEmploymentDetails(helper.getParameter("tutorCode"), helper.getParameter("employerCode"));
+			if(Validator.isNotEmpty(tutorCode) && Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){
+				employmentDetails = setEmploymentDetails(tutorCode, employerCode);
+							
+				EmploymentDAO addEmployment = new EmploymentDAO();
+				int status = addEmployment.add(employmentDetails);			
+				
+				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();
+				final Tutor tutor = new Tutor();
+				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+				
+				allFeaturedCourseProviderList = featuredCourseProviders.getAll();
+				
+				view.setCollection(allFeaturedCourseProviderList);			
 			}
-			
-			EmploymentDAO addEmployment = new EmploymentDAO();
-			int status = addEmployment.add(employmentDetails);			
-			
-			final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();
-			final Tutor tutor = new Tutor();
-			Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
-			
-			allFeaturedCourseProviderList = featuredCourseProviders.getAll();
-			
-			view.setCollection(allFeaturedCourseProviderList);			
-			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
