@@ -3,6 +3,7 @@
 <!-- 20170125 AS CAM-21 Logout message for 'logout-popup' window created.C  -->
 <!-- 20170228 AS CAM-21 User Already Logged In popup message window created  -->
 <!-- 20170324 TR CAM-21 added display-msg class to massage label and styling -->
+<!-- 20170327 TR CAM-21 added display-msg class to massage label and styling -->
 
 <!-- popup massage window -->
 

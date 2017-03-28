@@ -1,5 +1,7 @@
 <!-- 20170120 CAM-20 login popup window integrated -->
+<!-- 20170328 CAM-21 removed hash-error class from form-group -->
 
+<link href="/dist/css/font-awesome.css" rel="stylesheet">
 <script src='/dist/js/institute/validation/validation.js'></script>
 <script src='/dist/js/login.js'></script>
 
@@ -30,7 +32,7 @@
 										class="error-txt" id="errorMesssage"></span></label>
 								</div>
 
-								<div class="form-group has-error">
+								<div class="form-group">
 									<label for="username">Username or Email <span
 										class="error-txt" id="emailtbError"></span></label> <input
 										type="email" class="form-control" id="email"
@@ -38,7 +40,7 @@
 										onclick="clearField('emailtbError')">
 								</div>
 
-								<div class="form-group has-error">
+								<div class="form-group">
 									<label for="password">Password <span class="error-txt"
 										id="passtbError"></span></label> <input type="password"
 										class="form-control" id="password" placeholder="Password"

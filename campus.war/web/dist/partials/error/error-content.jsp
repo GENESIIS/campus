@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!-- 	20170124 AS CAM-20 Error handle for created this page. This page created for view unauthorized access -->
+<!-- 20170124 AS CAM-20 Error handle for created this page. This page created for view unauthorized access -->
+<!-- 20170327 TR c21 change body structure and added bootstrap classes  -->
+<!-- 20170328 TR c21 Styling msg-display-area - done  -->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,12 +38,12 @@
 
 					window.location.href = 'http://www.campus.dev:8080/index.jsp?showLogin=true'; //this name may have to change depend on actual location of the page "Student Login or public index page"
 
-				}, 100000);
+				}, 5000);
 	</script>
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	    <div class="msg-display-area text-center clearfix">
             <div class="display-msg">
-               <label>Sorry, you are not allowed to view content...</label>
+               <label>Sorry, you are not allowed to view content.</label>
             </div>
 	    </div>
 	</div>
