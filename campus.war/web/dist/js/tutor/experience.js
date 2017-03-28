@@ -4,6 +4,7 @@
  * 20170326 CW c157-add-tutor-employment-details-cw modified getCourseProviderData method to view course provider list correctly
  * 20170327 CW c157-add-tutor-employment-details-cw add method comments & modified getCourseProviderData method data filling item name
  * 20170328 CW c157-add-tutor-employment-details-cw add method displaySelectedCourseProviders
+ * 20170328 CW c157-add-tutor-employment-details-cw modified method displaySelectedCourseProviders to fix errors wip
  */
 
 $(document).ready(function() {
@@ -61,13 +62,15 @@ function displaySelectedCourseProviders() {
 	var tutorCode = $("#tutorCode").val();
 	$.ajax({
 		url : '/TutorController',
+		method : 'POST',
+		async : false,
 		data : {
 			CCO : 'LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS',
 			tutorCode : tutorCode
 		},
-		dataType : "json",
+		dataType : "jsp",
 		success : function(response) {
-			getCourseProviderData(response);
+			resp = response;
 		},
 		error : function(response) {
 			alert("Error: " + response);
