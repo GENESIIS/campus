@@ -133,7 +133,7 @@ function isValidMinMaxLength(parameter, min, max) {
  */
 function providerUsernameValidation() {
 
-	clearErrorMessage($('#usernameDiv').attr('id'));
+	clearToolTip('#usernameDiv');
 	
 	var flag = false;
 	var integerPattern = /^[0-9]+$/; //pattern to validate for numbers
@@ -205,7 +205,7 @@ function providerPrefixValidation() {
 
 	var selectedPrefix = $("#uniquePrefix").val();
 	
-	clearErrorMessage($('#uniquePrefixDiv').attr('id'));
+	clearToolTip('#uniquePrefixDiv');
 	var flag = false;
 	var message = null;
 
@@ -327,7 +327,7 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	if (!isempty(aboutMe)) {
-		setErrorMessage('#aboutMeDiv', '#aboutMe', "Give a breif description.");
+		setErrorMessage('#aboutMeDiv', '#errorAboutMe', "Give a breif description.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(specialFeatures, 0, 100)) {
