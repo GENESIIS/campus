@@ -244,7 +244,7 @@ function providerPrefixValidation() {
 							window.prefixFlag == response.validationFlag;
 
 							if (response['validationFlag'] === 1) {
-								setErrorMessage('#uniquePrefixDiv', '#errorUniquePrefix', response.userMessage);
+								setSuccessMessage('#uniquePrefixDiv', '#errorUniquePrefix', response.userMessage);
 								flag = true;
 							}
 							if (response['validationFlag'] === 0) {
@@ -396,7 +396,7 @@ function vaidateCourseProviderDeatils(form) {
 	if (!isEmptyValue(country)) {
 //		document.getElementById('errorSelectedCountry').innerHTML = "**Select your country.";
 //		document.getElementById('selectedCountry').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#country-List', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isEmptyValue(townList) && !isempty(country)) {
@@ -408,7 +408,7 @@ function vaidateCourseProviderDeatils(form) {
 	if (!isEmptyValue(townList) && isEmptyValue(country)) {
 //		document.getElementById('errorSelectedTown').innerHTML = "**Select your town";
 //		document.getElementById('errorSelectedTown').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#town-List', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 
@@ -430,62 +430,62 @@ function vaidateCourseProviderDeatils(form) {
 	 if (isempty(whatsapp) && !isPatternMatch(integerPattern, whatsapp) ) {
 //	 document.getElementById('errorWhatsapp').innerHTML = "**Invalid whatsapp number.";
 //	 document.getElementById('whatsapp').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#whatsappDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 	 flag = false;
 	 }
 	 if (isempty(viber) && !isPatternMatch(integerPattern, whatsapp)) {
 //	 document.getElementById('errorViber').innerHTML = "**Invalid viber number.";
 //	 document.getElementById('viber').focus();
-			setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+			setErrorMessage('#viberDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 	 flag = false;
 	 }
 	if (!isEmptyValue(providerType)) {
 //		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
 //		document.getElementById('selectedProviderType').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#selectedProviderTypeDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (providerStatus === null || providerStatus === undefined) {
 //		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
 //		document.getElementById('providerStatus').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerStatusDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	
 	if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 //		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
 //		document.getElementById('providerPrivateName').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerPrivateNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if ((!isValidMinMaxLength(providerEmail, 1, 255)) || !isValidEmailFormat(providerEmail)) {
 //		document.getElementById('errorPrivateEmail').innerHTML = "**Private email address is required. Maximum 255 charaters allowed.";
 //		document.getElementById('providerEmail').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerEmailDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (isPatternMatch(integerPattern, providerUsername)) {
 //		document.getElementById('errorUsername').innerHTML = "** Username can't contain only numbers.";
 //		document.getElementById('providerUsername').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerUsernameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(providerUsername, 1, 100)) {
 //		document.getElementById('errorUsername').innerHTML = "** Username is empty or too long (maximum 100 characters).";
 //		document.getElementById('providerUsername').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerUsernameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
 //		document.getElementById('errorProviderPassword').innerHTML = "**Empty password field(s).";
 //		document.getElementById('providerPassword').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerPasswordDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(providerPassword, 6, 100)) {
 //		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
 //		document.getElementById('providerPassword').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerPasswordDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	
@@ -507,19 +507,19 @@ function vaidateCourseProviderDeatils(form) {
 	if (accountStatus === null || accountStatus === undefined) {
 //		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
 //		document.getElementById('accountStatus').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#accountStatusDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isValidLength(accountDescription, 4000)) {
 //		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
 //		document.getElementById('accountDescription').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#accountDescriptionDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 	if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
 //		document.getElementById('errorContactNumber').innerHTML = "**Invlaid or empty contact number.";
 //		document.getElementById('providerContactNumber').focus();
-		setErrorMessage('#shortNameDiv', errorCourseProvider, "Short name should be less than 20 characters.");
+		setErrorMessage('#providerContactNumberDiv', errorCourseProvider, "Short name should be less than 20 characters.");
 		flag = false;
 	}
 
