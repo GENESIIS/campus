@@ -54,7 +54,7 @@
 							<div class="form-group has-error">
 								<h5>Sign In</h5>
 								<label for="error-msg" class="error-msg"><span
-									class="error-txt" id="errorMesssage"></span></label>
+									class="error-txt" id="adminErrorMess"></span></label>
 							</div>
 
 							<div class="form-group has-error">

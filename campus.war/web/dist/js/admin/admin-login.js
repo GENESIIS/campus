@@ -45,13 +45,16 @@ function ALogin() {
 					dataType : "json",
 					success : function(response) {
 
-						if (response['message'] === "valid Username and Password.") {
-							window.location.href = response['pageURL'];
-						}if(response['message'] === "User Already Logged In"){
-							
-						} else {
-							document.getElementById('errorMesssage').innerHTML = response['message'];
-						}
+//						if (response['message'] === "valid Username and Password.") {
+//							window.location.href = response['pageURL'];
+//						}if(response['message'] === "User Already Logged In"){
+//							
+//						} else {
+						
+						window.location.href = response['pageURL'];			
+						document.getElementById('adminErrorMess').innerHTML = response['message'];
+						
+//						}
 
 					},
 					error : function(response,error,errorThrown) {
