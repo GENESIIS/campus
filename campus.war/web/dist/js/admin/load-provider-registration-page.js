@@ -17,7 +17,8 @@
 //20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
 //20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
 //20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message, saveCourseProvider():changed to clear has-error style class
-//20170328 JH c141-ui-integration-for-add-course-provider saveCourseProvider() clear error messages methods modified
+//20170328 JH c141-ui-integration-for-add-course-provider saveCourseProvider() methods used to clear error messages modified, added clearToolTip() method to 
+//				clear error and success message		
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -248,8 +249,8 @@ function getProviderPageLoadData() {
 function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
-
-	singleCountryElement += '<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control"><option value="">--Default--</option>';
+//<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control">
+	singleCountryElement += '<datalist id="selectedCountry" name="selectedCountry" class="form-control">';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
 			singleCountryElement += '<option data-value="' + value[0] + '">';
@@ -258,9 +259,10 @@ function displayProviderCountries() {
 
 		});
 	}
-	singleCountryElement += '';
-	var countryNames = $("#country-List");
+	singleCountryElement += '</datalist>';
+	var countryNames = $("#selectedCountry");
 	countryNames.html(singleCountryElement);
+//$(countryNames).append
 
 }
 
@@ -440,7 +442,7 @@ function saveCourseProvider() {
 	for (var i = 0; i < errorMessageList.length; i++) {
 		var varId = $(errorMessageList[i]).attr('id');
 		varId = '#' + varId;
-		clearErrorMessage(varId);
+		clearToolTip(varId);
 		
 		
 	}
@@ -535,6 +537,16 @@ function clearErrorMessage(toolTipElement){
 }
 
 /**
+ * clear both success or error message
+ * @param element
+ * @author JH
+ */
+function clearToolTip(element){
+	$(element).removeClass("has-error");
+	$(element).removeClass("has-success");
+}
+
+/**
  * Used to set error message
  * @param errorElement
  * @param errorToolTip
@@ -557,6 +569,6 @@ function setSuccessMessage(successElement, successToolTip, message){
 	//has-error style class is used until a style class is created for success messages
 	
 	$(successToolTip).attr({ "title" : message,"data-original-title" : message});
-	$(successElement).addClass("has-error");
-	$(successElement).css("border", "1px solid green !important");
+	$(successElement).addClass("has-success");
+	//$(successElement).css("border", "1px solid green !important");
 }
