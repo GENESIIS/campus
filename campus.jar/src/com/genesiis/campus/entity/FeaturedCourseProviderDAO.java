@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170324 CW c157-add-tutor-employment-details-cw getAll method created
 //20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get details correctly
 //20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get string values correctly
+//20170328 CW c157-add-tutor-employment-details-cw added getTutorSelectedFCP
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -83,7 +84,6 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
 												
 				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
-				singleFeaturedCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 				singleFeaturedCourseProviderList.add(rs.getString("SHORTNAME"));
 				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
 				singleFeaturedCourseProviderList.add(rs.getString("DESCRIPTION"));
@@ -156,6 +156,53 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	/**
+	 * Returns all the tutor selected Featured Course Provider Details list
+	 * @author Chinthaka 
+	 * @return Returns the tutor selected Featured Course Provider Details in Database from a collection of collection
+	 */
+	public static Collection<Collection<String>> getTutorSelectedFCP(String tutorCode) throws SQLException, Exception {
+
+		final Collection<Collection<String>> allTutorSelectedFCPList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT [CODE], [SHORTNAME], [NAME], [DESCRIPTION], [SPECIALITY], "
+				+ "[ADDRESS1] + [ADDRESS2] + [ADDRESS3] ADDRESS FROM CAMPUS.COURSEPROVIDER CP "
+				+ "WHERE CP.CODE IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ?)";		
+		
+		try {			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, tutorCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleTutorSelectedFCPList = new ArrayList<String>();		
+												
+				singleTutorSelectedFCPList.add(rs.getString("CODE"));
+				singleTutorSelectedFCPList.add(rs.getString("SHORTNAME"));
+				singleTutorSelectedFCPList.add(rs.getString("NAME"));
+				singleTutorSelectedFCPList.add(rs.getString("DESCRIPTION"));
+				singleTutorSelectedFCPList.add(rs.getString("SPECIALITY"));
+				singleTutorSelectedFCPList.add(rs.getString("ADDRESS "));
+				singleTutorSelectedFCPList.add(tutorCode);
+								
+				allTutorSelectedFCPList.add(singleTutorSelectedFCPList);
+			}		
+		} catch (SQLException sqlException) {
+			log.info("getTutorSelectedFCP(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getTutorSelectedFCP(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allTutorSelectedFCPList;
 	}
 
 }
