@@ -1,4 +1,5 @@
 package com.genesiis.campus.command;
+import java.net.URL;
 //20170314 AS c23-admin-login-logout-function-as CmdAdminLogin class created 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -24,6 +25,7 @@ public class CmdAdminLogin implements ICommand{
 	
 	private Collection<Collection<String>> dataCollection = null;
 	String pageURL;
+	String path;
 	String message;
 	private Admin adminData;
 	@Override
@@ -31,6 +33,9 @@ public class CmdAdminLogin implements ICommand{
 			Exception {
 		
 		HttpSession session;
+		
+		String domain = new URL(helper.getRequestURL()).getHost();
+		
 		try {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			session = helper.getRequest().getSession(false);
@@ -49,14 +54,37 @@ public class CmdAdminLogin implements ICommand{
 					ICrud adminLoginDAO = new AdminLoginDAO();
 					dataCollection = adminLoginDAO.findById(adminData);
 					
+					for (Collection<String> collection : dataCollection) {
+						Object[] array = collection.toArray();
+						message = (String) array[0];
+
+					}
+					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
+						
+					}else{
+						if (message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT3.message())) {
+							message = SystemMessage.LOGGINATTEMPT3.message();
+							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
+							pageURL = domain+""+path;
+						} else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT2.message())){
+							message = SystemMessage.LOGGINATTEMPT2.message();
+							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
+							pageURL = domain+""+path;
+							
+						}else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT1.message())){
+							message = SystemMessage.LOGGINATTEMPT1.message();
+							
+						}
+					}
+					
 					
 				}else{
 					message = SystemMessage.LOGINUNSUCCESSFULL.message();
-					pageURL = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 				}
 				
 			}else{
-				pageURL = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
+				path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 			}
 			
 			helper.setAttribute("message", message);
