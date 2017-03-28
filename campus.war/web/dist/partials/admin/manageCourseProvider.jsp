@@ -17,6 +17,7 @@
 <!-- 20170323 JH c141-ui-integration-add-course-provider added error-handling javascript to hand, changed the default error title -->
 <!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
 <!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
+<!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -41,10 +42,19 @@
 <link rel="stylesheet"
 	href="/dist/bower-components/fav/css/font-awesome.min.css">
 	<style type="text/css">
-	#userMessage:empty{
-		display: none;
-	}
-	</style>
+#userMessage:empty {
+	display: none;
+}
+
+.has-success input,.has-success text-area,.has-success select {
+	border: 1px solid #1eab37 !important;
+}
+
+.has-success .error-info {
+	visibility: visible;
+	z-index: 9999;
+}
+</style>
 </head>
 
 <body class="admin-page">
@@ -174,12 +184,16 @@
 												<div class="col-xs-6">
 													<label for="select-country"><span class="mandatory">*</span>
 														Country</label>
-														<input list="selectedCountry" name="country-List" id="country-List" class="input-wrapper has-select" onchange="getDataOnCountrySelection()">
-												<!-- 	<div class="input-wrapper has-select" id="country-List">
+												<%--	<div class="input-wrapper has-select" id="country-List">
+														<input list="selectedCountry" name="country-List" id="country-List" class="form-control" 
+														onchange="getDataOnCountrySelection()">
+													</div> --%>
+													
+														<div class="input-wrapper has-select" id="country-List">
+														<input list="selectedCountry">
 														
-													</div> -->
-													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
-															title="Error! "></a>
+														<a class="error-info" href="#" data-toggle="tooltip" title="Hooray!"></a>
+													</div>
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
 															title="Error! "></a>
 												</div>
@@ -510,7 +524,7 @@
 														Username</label>
 													<div class="input-wrapper" id="usernameDiv">
 														<input name="providerUsername" type="text"
-															class="form-control" id="providerUsername" placeholder="">
+															class="form-control" id="providerUsername" placeholder="" onblur="providerUsernameValidation();">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorUsername"
 															title="Error! "></a>
 													</div>
