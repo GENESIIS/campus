@@ -49,6 +49,9 @@
  * 				existence of the code when the activation date is compared against the current date. This logic has been removed.
  * 				Made bannerFieldInputValues array a global variable.The on('click') bannerRecordUpdate selector changed to populate 
  * 				the array bannerFieldInputValues initially.
+ * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. Add validateUploadBannerEmbedData() validation part to the onclick event of bannerRecordUpdate.
+ * 				Change the onclick event of the 'bannerModalClose' logic to include event.preventDefault to over come page been reload. 
+ * 				Removed the isbannerCodeNullOrEmty check from onclick event of uploadBbutton element.
  */
 
 /*
@@ -365,7 +368,9 @@ function getBannerCredentials(){
 	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
 	
 	// adding required  banner <form> fields to an array
-	//var bannerFieldInputValues =[];
+	
+	if(bannerFieldInputValues.length!=0)
+		bannerFieldInputValues =[]; // if array is not empty then empty it
 	bannerFieldInputValues.push(advertiserCode);
 	bannerFieldInputValues.push(codeOfSelectedPage);
 	bannerFieldInputValues.push(bannerSlotCode);
@@ -398,45 +403,23 @@ $(document).on('click','#uploadBbutton', function(event){
     /*
 	 * Extracting Banner page data
 	 */
-	
+	event.stopPropagation(); 
+    event.preventDefault(); 
     var banerImage=$('#file-select').prop('files')[0];
     var bannerCode = $('#bannerCode').val(); // check if the banner code is set. If so banner record must be edited.
     var isbannerCodeNullOrEmty = (bannerCode==null|| bannerCode==="")?true:false;
     var isImagetSelected = (banerImage==undefined)?false: true;
     
-    //both banner image and the Banner COde are not selected : Exit the program
-    if(banerImage==undefined & isbannerCodeNullOrEmty ){
+    //If program counter reaches this path then either a new banner is to be uploaded
+    // or updating an existing a banner record. In both cases user need to update or upload a
+    // new banner image. There can be banner code ( updating an existing record with a new image) or banner code
+    // is not assigned (totally new banner), either case should not be proceeded is banner image is not selected
+    //: Exit the program
+    if(banerImage==undefined){
     	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
+    	$('#bannerModalClose').show();
     	return false;
 	}
-    
-//    //if the banner is to be edited then the banercode is Not empty,
-//    // Else it is a new Banner to be added to the repository   
-//    bannerCode= (isbannerCodeNullOrEmty)?"":bannerCode;
-//    	
-//    $('#bannerModalClose').hide();
-//	var advertiserCode= $('#sAdvertiserCode').val();
-//	var codeOfSelectedPage= $('#sPageCode').val();
-//	var bannerSlotCode=$('#sSlotCode').val();
-//	var displayDusration= $('#duration').val();
-//	var banerToBeActive=$('input[name=bannerEnableStatus]:checked').val(); // validate for 'undefined'
-//	var bannerPublishingDate= $('#startDate').val();  // e.g bannerPublishingDate = "2017-02-14" 
-//	var bannerPublishingEndDate= $('#endtDate').val();
-//	var urlMiniWebOrPage = $('input:radio[name=urlspecifier]:checked').val();
-//	var urlToBeDirectedOnBannerClick=$('#bannerDispatchingUrl').val();
-//	
-//	// adding required  banner <form> fields to an array
-//	var BannerFieldInputValues =[];
-//	BannerFieldInputValues.push(advertiserCode);
-//	BannerFieldInputValues.push(codeOfSelectedPage);
-//	BannerFieldInputValues.push(bannerSlotCode);
-//	BannerFieldInputValues.push(displayDusration);
-//	BannerFieldInputValues.push(banerToBeActive);
-//	BannerFieldInputValues.push(bannerPublishingDate);
-//	BannerFieldInputValues.push(bannerPublishingEndDate);
-//	BannerFieldInputValues.push(urlMiniWebOrPage);
-//	BannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
-//	BannerFieldInputValues.psuh(bannerCode);	
 	
     bannerFieldInputValues = getBannerCredentials();
     
@@ -447,8 +430,8 @@ $(document).on('click','#uploadBbutton', function(event){
 	var formData = new FormData();
 	formData.append("file",banerImage);
 		
-	event.stopPropagation(); 
-    event.preventDefault(); 
+//	event.stopPropagation(); 
+//    event.preventDefault(); 
 		
 	 // ajax call to transfer banner Image to server end
 		$.ajax({
@@ -494,13 +477,19 @@ $(document).on('click','#uploadBbutton', function(event){
 });
 
 /**
- * When the user needs only to update the banner fields but the banner image
- * this event trigges.
+ * When the user needs only to update the banner fields but the banner image<br>
+ * this event trigges.This event release the update to the data base if and only<br>
+ * if the front end validation passes<br>
  */
 $(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputValues){  // Only the banner record is updated without the banner image
+	event.preventDefault();
 	bannerFieldInputValues=getBannerCredentials();
 	bannerFieldInputValues.push($('#bannerEditableImageName').val());
-	sendBannerPaageFieldInputs(bannerFieldInputValues,true,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
+	var isValidationvalidationPassed= validateUploadBannerEmbedData();
+	if(isValidationvalidationPassed){
+		sendBannerPaageFieldInputs(bannerFieldInputValues,isValidationvalidationPassed,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
+	}
+	 
 });
 
 
@@ -529,7 +518,8 @@ $(document).on('mousedown','#file-select',function(event){
  * on click the close button load the page data again
  */
 $(document).on('click','#bannerModalClose',function(event){
-	displayBannerManagerPrerequistData();
+	event.preventDefault();
+	//displayBannerManagerPrerequistData();
 	setTheRadioButtonValues();
 });
 
@@ -538,6 +528,7 @@ $(document).on('click','#bannerModalClose',function(event){
  * initialized
  */
 $(document).on('click','#systemMessageClose',function(event){
+	event.preventDefault();
 	setTheRadioButtonValues();
 });
 /**
@@ -682,6 +673,7 @@ $( document ).ready(function() {
 	 */
 	$('#bannerPageClearField').on('click',function(){
 		$(':input').val('');
+		$('#bannerImagediv01').remove();
 	});	
 	
 	
