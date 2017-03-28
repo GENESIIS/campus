@@ -11,6 +11,7 @@
 				 Made upload banner visible depend on the situation. create update button.
 	 20170324 DN c83-admin-manage-banner-update-banner-info-dn two hidden fields for capturing banner code and image name
 	 			 have been inserted.
+	 20170328 DN c83-admin-manage-banner-update-banner-info-dn. Element id 'bannerCode' made disable and visible id CCO is to ADMEDTBNR.
 
  -->
 
@@ -109,9 +110,12 @@
 
 		<form id="banner-from">			
 			<div >
-				<input type="hidden" id="bannerCode" name="bannerCode" value="${param.bannerCode}" >
+				<c:if test="${param.CCO eq 'ADMEDTBNR'}">
+			     BannerCode :
+					<input type="text" id="bannerCode" name="bannerCode" value="${param.bannerCode}" disabled >
+				</c:if>
 				<input type="hidden" id="bannerEditableImageName" name="bannerEditableImageName" value="${param.imageName}" >
-				Advertiser * &nbsp; 
+				<br>Advertiser * &nbsp; 
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
 				<c:choose>
 					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
@@ -133,10 +137,10 @@
 			<br>
 			
 			<c:if test="${param.CCO eq 'ADMEDTBNR' }">
-				<div align="right" >
+				<div align="right" id="bannerImagediv01" >
 				 Uploaded Banner :
 				<img id='imageName01'src="${param.bannerUrl}" alt='banner-Image' style='width:200px;hight:60px'>
-			</div>
+				</div>
 			</c:if>
 			
 			<div>
