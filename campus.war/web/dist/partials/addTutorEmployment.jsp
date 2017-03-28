@@ -4,6 +4,7 @@
 <!-- 20170327 c157-add-tutor-employment-details-cw - modified employeeDetails name into employerDetails -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - add tutorCode hidden field & assign a value -->
 <!-- 20170327 c157-add-tutor-employment-details-cw - fix some jsp alignment errors -->
+<!-- 20170328 c157-add-tutor-employment-details-cw - modified employer details grid -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -53,7 +54,6 @@
 							<th></th>
 							<th>Short Name</th>
 							<th>Name</th>
-							<th>Description</th>
 							<th>Speciality</th>
 							<th>Address</th>
 							<th></th>
@@ -61,12 +61,10 @@
 						<c:forEach var="companies" items="${result.collection}" varStatus="loop">
 							<tr>
 								<td><c:out value="${loop.index+1}" /></td>
-								<td><c:out value="${companies[0]}"></c:out></td>
 								<td><c:out value="${companies[1]}"></c:out></td>
 								<td><c:out value="${companies[2]}"></c:out></td>
-								<td><c:out value="${companies[3]}"></c:out></td>
 								<td><c:out value="${companies[4]}"></c:out></td>
-								<td><c:out value="${companies[7]}"></c:out></td>
+								<td><c:out value="${companies[5]}"></c:out></td>
 								<td>
 									<form method="POST" action="CompanyController">
 										<input id="orgCode" name="orgCode"
@@ -74,7 +72,7 @@
 											id="comCode" name="comCode"
 											value="<c:out value="${companies[0]}"/>" hidden="true" />
 										<button type="submit" name="CCO" id="CCO" value="UCO"
-											class="pure-button pure-button-primary">EDIT</button>
+											class="pure-button pure-button-primary">Remove</button>
 									</form>
 								</td>
 							</tr>
