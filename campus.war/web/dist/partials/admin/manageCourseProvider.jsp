@@ -17,7 +17,7 @@
 <!-- 20170323 JH c141-ui-integration-add-course-provider added error-handling javascript to hand, changed the default error title -->
 <!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
 <!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
-<!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages -->
+<!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages, added missing ids for password, cPassword and accountStatus -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -181,23 +181,22 @@
 									<div class="row clearfix">
 										<div class="col-xs-12">
 											<div class="row clearfix">
-												<div class="col-xs-6">
-													<label for="select-country"><span class="mandatory">*</span>
-														Country</label>
+											<div class="col-xs-6">
+												<label for="select-country"><span class="mandatory">*</span>
+													Country</label>
 												<%--	<div class="input-wrapper has-select" id="country-List">
 														<input list="selectedCountry" name="country-List" id="country-List" class="form-control" 
 														onchange="getDataOnCountrySelection()">
 													</div> --%>
-													
-														<div class="input-wrapper has-select" id="country-List">
-														<input list="selectedCountry">
-														
-														<a class="error-info" href="#" data-toggle="tooltip" title="Hooray!"></a>
-													</div>
-													<a class="error-info" href="#" data-toggle="tooltip" id="errorSelectedCountry"
-															title="Error! "></a>
+
+												<div class="input-wrapper has-select" id="country-List">
+													<input list="selectedCountry">
+													 <a	class="error-info" href="#" data-toggle="tooltip"
+														id="errorSelectedCountry" title="Error! "></a>
 												</div>
-												<div class="col-xs-6">
+
+											</div>
+											<div class="col-xs-6">
 													<label for="select-city"><span class="mandatory">*</span>
 														City</label>
 													<div class="input-wrapper has-select" id="town-List">
@@ -221,19 +220,19 @@
 												</div>
 												<div class="form-group col-xs-12">
 													<label for="address-line-2">Street Address - Line 2</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="address2Div">
 														<input name="address2" type="text"
 															class="form-control" id="address2" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress2"
 															title="Error! "></a>
 													</div>
 												</div>
 												<div class="form-group col-xs-12">
 													<label for="address-line-3">Street Address - Line 3</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="address3Div">
 														<input name="address3" type="text"
 															class="form-control" id="address3" placeholder="">
-														<a class="error-info" href="#" data-toggle="tooltip"
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress3"
 															title="Error! "></a>
 													</div>
 												</div>
@@ -532,7 +531,7 @@
 												<div class="form-group col-sm-8 col-sm-offset-2">
 													<label for="login-pwd"><span class="mandatory">*</span>
 														Password</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="providerPasswordDiv">
 														<input name="providerPassword" type="password"
 															class="form-control" id="providerPassword" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderPassword"
@@ -542,14 +541,14 @@
 												<div class="form-group col-sm-8 col-sm-offset-2">
 													<label for="confirm-pwd"><span class="mandatory">*</span>
 														Confirm Password</label>
-													<div class="input-wrapper">
+													<div class="input-wrapper" id="cProviderPasswordDiv">
 														<input name="cProviderPassword" type="password"
 															class="form-control" id="cProviderPassword" placeholder="">
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorCProviderPassword"
 															title="Error! "></a>
 													</div>
 												</div>
-												<div class="form-group col-sm-8 col-sm-offset-2">
+												<div class="form-group col-sm-8 col-sm-offset-2" id="accountStatusDiv">
 													<label for="account-category"
 														class="right-padding inline-info"> <span
 														class="mandatory">*</span> Account Status <a
