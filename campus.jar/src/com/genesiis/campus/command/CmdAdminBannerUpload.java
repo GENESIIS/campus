@@ -32,6 +32,7 @@ package com.genesiis.campus.command;
  *              bannerRecordUpdated(JasonInflator) has been modified to include ZERO_UPDATES enum instead of SystemMessage.UPDATE_UNSUCCESSFUL.
  *              Rearranged the doc comment.
  *              updateBannerCredentials() method has been changed to include the message & setResponseCridentials() and to set the success code.
+ * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. In setResponseCridentials() :null check for fileUtility.getFileItem() is implemented.
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -483,10 +484,16 @@ public class CmdAdminBannerUpload implements ICommand {
 	 * setResponseCridentials sets the request attributes
 	 * @param helper: It is the HttpServletrequest wrapper instance.
 	 */
-	private void setResponseCridentials(IDataHelper helper){
-		helper.setAttribute("successCode", getSuccessCode());
-		helper.setAttribute("message", message);
-		helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
+	private void setResponseCridentials(IDataHelper helper) throws Exception{
+		try {
+			helper.setAttribute("successCode", getSuccessCode());
+			helper.setAttribute("message", message);
+			if( fileUtility.getFileItem()!=null)
+			 helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
+		} catch (Exception exp) {
+			log.error("setResponseCridentials(IDataHelper):SQLException "+ exp.toString());
+			throw exp;
+		}
 	}
 		
 	
@@ -546,6 +553,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			bannerRecordUpdated(rowBanner);
 			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
 			this.setSuccessCode(1);
+			helper.setAttribute("bannerWarPath", SystemConfig.BANNER_IMAGE_WAR_PATH.getValue1());
 			setResponseCridentials(helper);
 			log.info("updateBannerCredentials(JasonInflator,IDataHelper) --> banner records are updated successfully ");
 		} catch (FailedValidationException fvexp) {
