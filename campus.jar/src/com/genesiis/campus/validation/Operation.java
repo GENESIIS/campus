@@ -14,6 +14,7 @@ package com.genesiis.campus.validation;
 //20170324 CW c157-add-tutor-employment-details-cw added ADD_EMPLOYMENT
 //20170327 CW c157-add-tutor-employment-details-cw added ADD_EMPLOYMENT_DETAILS command
 //20170328 CW c157-add-tutor-employment-details-cw command LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS added
+//20170328 CW c157-add-tutor-employment-details-cw modified command LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS responseType to JSON
 
 /**
  * Operation class facilitate in binding the CCO
@@ -34,7 +35,7 @@ public enum Operation {
 	LIST_COURSE_PROVIDERS_FOR_TUTORS("LIST_COURSE_PROVIDERS_FOR_TUTORS", ResponseType.JSON, ""),
 	ADD_EMPLOYMENT("ADD_EMPLOYMENT", ResponseType.JSP,"dist/partials/addTutorEmployment.jsp"),	
 	ADD_EMPLOYMENT_DETAILS("ADD_EMPLOYMENT_DETAILS", ResponseType.JSP, "dist/partials/addTutorEmployment.jsp"),
-	LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS("LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS", ResponseType.JSP, "dist/partials/addTutorEmployment.jsp"),
+	LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS("LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS", ResponseType.JSON, ""),
 	CHECK_EMAIL("CHECK_EMAIL", ResponseType.JSON, "addTutorDetails.jsp");	
 	
 	private final String commandString;
