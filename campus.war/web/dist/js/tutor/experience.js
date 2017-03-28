@@ -6,6 +6,7 @@
  * 20170328 CW c157-add-tutor-employment-details-cw add method displaySelectedCourseProviders
  * 20170328 CW c157-add-tutor-employment-details-cw modified method displaySelectedCourseProviders to fix errors wip
  * 20170328 CW c157-add-tutor-employment-details-cw add fillSelectedCourseProviderData & clearField methods
+ * 20170328 CW c157-add-tutor-employment-details-cw modified & done testing on fillSelectedCourseProviderData method to add button to the table
  */
 
 $(document).ready(function() {
@@ -92,7 +93,9 @@ function fillSelectedCourseProviderData(response) {
 /*		var res = value.toString();
 		var data = res.split(",");*/
         
-        trHTML += '<tr><td>' + index + '</td><td>' + value[1].toString() + '</td><td>' + value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>' + <input type="checkbox" name="isApproved" value="1" checked disabled readonly>'</td></tr>';
+        trHTML += '<tr><td>' + index + '</td><td>' + value[1].toString() + '</td><td>' 
+        		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
+        		+ '<input id=' + Button + ' type=' + button + ' value='+' class=' + plusButton + ' /></td></tr>';
     });
     
     $('#employers').append(trHTML);
