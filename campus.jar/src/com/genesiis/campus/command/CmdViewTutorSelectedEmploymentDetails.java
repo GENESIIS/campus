@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170328 CW c157-add-tutor-employment-details-cw Init CmdViewTutorSelectedEmploymentDetails Class
+//20170328 CW c157-add-tutor-employment-details-cw modified allFeaturedCourseProviderList to allSelectedFeaturedCourseProviderList
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -24,10 +25,10 @@ public class CmdViewTutorSelectedEmploymentDetails implements ICommand {
 			String tutorCode = helper.getParameter("tutorCode");
 			
 			if(Validator.isNotEmpty(tutorCode)){
-				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
-				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
+				Collection<Collection<String>> allSelectedFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+				allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
 				
-				view.setCollection(allFeaturedCourseProviderList);			
+				view.setCollection(allSelectedFeaturedCourseProviderList);			
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
