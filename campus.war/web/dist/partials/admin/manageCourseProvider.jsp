@@ -394,16 +394,16 @@
 									<div class="row">
 										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
 											<label for="whatsapp-no">WhatsApp Number</label>
-											<div class="input-wrapper">
-												<input name="whatsAppNo" type="tel" class="form-control"
-													id="whatsapp-no" placeholder="">
+											<div class="input-wrapper" id="whatsappDiv">
+												<input name="whatsapp" type="tel" class="form-control"
+													id="whatsapp" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWhatsapp"
 													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
 											<label for="viber-no">Viber Number</label>
-											<div class="input-wrapper">
+											<div class="input-wrapper" id="viberDiv">
 												<input name="viber" type="tel" class="form-control"
 													id="viber" placeholder="">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorViber"
@@ -441,18 +441,8 @@
 									class="text-center center-block top-padding inline-info">
 									<span class="mandatory">*</span> Course Provider Status 
 								</label>
-								<div class="form-group col-sm-12 text-center center-block">
-								<%--	<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Active">Active</label>
-									<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Inactive">Inactive</label>
-									<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Pending">Pending</label>
-									<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Expired">Expired</label>
-									<label class="radio-inline radio-lbl"><input
-										type="radio" name="cProviderStatus" value="Permanent">Permanent</label> --%>
-										
+								<div class="form-group col-sm-12 text-center center-block" id="providerStatusDiv">
+									
 										<c:forEach items="${applicationStatusBean.values}"
 										var="applicationStatus">
 										
@@ -549,15 +539,14 @@
 													</div>
 												</div>
 												<div class="form-group col-sm-8 col-sm-offset-2" id="accountStatusDiv">
-													<label for="account-category"
-														class="right-padding inline-info"> <span
-														class="mandatory">*</span> Account Status <a
-														class="error-info" href="#" data-toggle="tooltip" id="errorStatus"
-														title="Error! "></a>
-													</label> 
-													
-													<div id="accountStatusList"></div>
-												</div>
+												<label for="account-category"
+													class="right-padding inline-info"> <span
+													class="mandatory">*</span> Account Status
+												</label> <a class="error-info" href="#"
+													data-toggle="tooltip" id="errorStatus" title="Error! "></a>
+
+												<div id="accountStatusList"></div>
+											</div>
 											</div>
 										</div>
 									</div>

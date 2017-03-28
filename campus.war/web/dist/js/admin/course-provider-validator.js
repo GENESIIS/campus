@@ -418,63 +418,43 @@ function vaidateCourseProviderDeatils(form) {
 	flag = validateFormURL(mySpace, '#errorMyspace', '#mySpaceDiv', 0, 255);
 
 	 if (isempty(whatsapp) && !isPatternMatch(integerPattern, whatsapp) ) {
-//	 document.getElementById('errorWhatsapp').innerHTML = "**Invalid whatsapp number.";
-//	 document.getElementById('whatsapp').focus();
 		setErrorMessage('#whatsappDiv', '#errorWhatsapp', "Invalid whatsapp number.");
-	 flag = false;
+		flag = false;
 	 }
-	 if (isempty(viber) && !isPatternMatch(integerPattern, whatsapp)) {
-//	 document.getElementById('errorViber').innerHTML = "**Invalid viber number.";
-//	 document.getElementById('viber').focus();
+	 if (isempty(viber) && !isPatternMatch(integerPattern, viber)) {;
 			setErrorMessage('#viberDiv', '#errorViber', "Invalid viber number.");
-	 flag = false;
+		flag = false;
 	 }
 	if (!isEmptyValue(providerType)) {
-//		document.getElementById('errorProviderType').innerHTML = "**Select course provider type.";
-//		document.getElementById('selectedProviderType').focus();
-		setErrorMessage('#selectedProviderTypeDiv', '#errorProviderType', "Select course provider type.");
+		setErrorMessage('#providerTypeList', '#errorProviderType', "Select course provider type.");
 		flag = false;
 	}
 	if (providerStatus === null || providerStatus === undefined) {
-//		document.getElementById('errorProviderStatus').innerHTML = "**Select the course provider status.";
-//		document.getElementById('providerStatus').focus();
 		setErrorMessage('#providerStatusDiv', '#errorProviderStatus', "Select the course provider status.");
 		flag = false;
 	}
 	
 	if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
-//		document.getElementById('errorPrivateName').innerHTML = "**Personal name is empty or too long.";
-//		document.getElementById('providerPrivateName').focus();
 		setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 		flag = false;
 	}
 	if ((!isValidMinMaxLength(providerEmail, 1, 255)) || !isValidEmailFormat(providerEmail)) {
-//		document.getElementById('errorPrivateEmail').innerHTML = "**Private email address is required. Maximum 255 charaters allowed.";
-//		document.getElementById('providerEmail').focus();
 		setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email address is required. Maximum 255 charaters allowed.");
 		flag = false;
 	}
 	if (isPatternMatch(integerPattern, providerUsername)) {
-//		document.getElementById('errorUsername').innerHTML = "** Username can't contain only numbers.";
-//		document.getElementById('providerUsername').focus();
 		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username can't contain only numbers.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(providerUsername, 1, 100)) {
-//		document.getElementById('errorUsername').innerHTML = "** Username is empty or too long (maximum 100 characters).";
-//		document.getElementById('providerUsername').focus();
 		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is empty or too long (maximum 100 characters).");
 		flag = false;
 	}
 	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
-//		document.getElementById('errorProviderPassword').innerHTML = "**Empty password field(s).";
-//		document.getElementById('providerPassword').focus();
 		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Empty password field(s).");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(providerPassword, 6, 100)) {
-//		document.getElementById('errorProviderPassword').innerHTML = "**Password is weak.";
-//		document.getElementById('providerPassword').focus();
 		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Password is weak.");
 		flag = false;
 	}
@@ -495,20 +475,14 @@ function vaidateCourseProviderDeatils(form) {
 // flag = false;
 // }
 	if (accountStatus === null || accountStatus === undefined) {
-//		document.getElementById('errorStatus').innerHTML = "**Select the account status.";
-//		document.getElementById('accountStatus').focus();
 		setErrorMessage('#accountStatusDiv', '#errorStatus', "Select the account status.");
 		flag = false;
 	}
 	if (!isValidLength(accountDescription, 4000)) {
-//		document.getElementById('errorAccountDescription').innerHTML = "**Description is too long.";
-//		document.getElementById('accountDescription').focus();
 		setErrorMessage('#accountDescriptionDiv', '#errorAccountDescription', "Description is too long.");
 		flag = false;
 	}
 	if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
-//		document.getElementById('errorContactNumber').innerHTML = "**Invlaid or empty contact number.";
-//		document.getElementById('providerContactNumber').focus();
 		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid or empty contact number.");
 		flag = false;
 	}
