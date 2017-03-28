@@ -18,7 +18,7 @@ import com.genesiis.campus.validation.SystemMessage;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
-	private static int MAX_ATTEMPTS =0;
+	private static int MAX_ATTEMPTS = 0;
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -39,13 +39,12 @@ public class AdminLoginDAO implements ICrud {
 	}
 
 	@Override
-	public Collection<Collection<String>> findById(Object object)
-			throws SQLException, Exception {
+	public Collection<Collection<String>> findById(Object object) throws SQLException, Exception {
 		String encryptPassword = null;
 		Collection<Collection<String>> dataBundel = new ArrayList<Collection<String>>();
 		Collection<String> messageCollection = null;
 		ArrayList<String> singleMessageList = null;
-		
+
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		String message = SystemMessage.NOTREGISTERD.message();
@@ -61,28 +60,21 @@ public class AdminLoginDAO implements ICrud {
 		boolean passwordMatch = false;
 		try {
 			final Admin admin = (Admin) object;
-			Encryptable passwordEncryptor = new TripleDesEncryptor(admin
-					.getPassword().trim());
-			encryptPassword = passwordEncryptor.encryptSensitiveDataToString()
-					.trim();
+			Encryptable passwordEncryptor = new TripleDesEncryptor(admin.getPassword().trim());
+			encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, admin.getUsername());
-			preparedStatement
-					.setString(2, Integer.toString(ApplicationStatus.ACTIVE
-							.getStatusValue()));
+			preparedStatement.setString(2, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
 			preparedStatement.setString(3, admin.getEmail());
-			preparedStatement
-					.setString(4, Integer.toString(ApplicationStatus.ACTIVE
-							.getStatusValue()));
+			preparedStatement.setString(4, Integer.toString(ApplicationStatus.ACTIVE.getStatusValue()));
 			rs = preparedStatement.executeQuery();
 			boolean check = rs.next();
 
 			if (check) {
 				password = rs.getString("PASSWORD");
 				passwordMatch = encryptPassword.equals(password);
-				log.info(password + "  " + passwordMatch);
 
 				code = rs.getString("CODE");
 				name = rs.getString("NAME");
@@ -90,70 +82,64 @@ public class AdminLoginDAO implements ICrud {
 				email = rs.getString("EMAIL");
 				userType = rs.getString("USERTYPE");
 				password = rs.getString("PASSWORD");
-			 if (check && passwordMatch) {
-				admin.setAdminCode(Integer.parseInt(code));
-				admin.setName(name);
-				admin.setUsername(userName);
-				admin.setEmail(email);
-				admin.setUserType(userType);
-				admin.setValid(true);
-				log.info(name + "  " + email);
 
-				final ArrayList<String> singleAdmin = new ArrayList<String>();
-				final Collection<String> adminDatabundel = singleAdmin;
+				for (MAX_ATTEMPTS = MAX_ATTEMPTS; MAX_ATTEMPTS <= 3; MAX_ATTEMPTS++) {
+					if (check && passwordMatch) {
+						admin.setAdminCode(Integer.parseInt(code));
+						admin.setName(name);
+						admin.setUsername(userName);
+						admin.setEmail(email);
+						admin.setUserType(userType);
+						admin.setValid(true);
+						log.info(name + "  " + email);
 
-				singleAdmin.add(code);
-				singleAdmin.add(name);
-				singleAdmin.add(userName);
-				singleAdmin.add(email);
-				singleAdmin.add(userType);
+						final ArrayList<String> singleAdmin = new ArrayList<String>();
+						final Collection<String> adminDatabundel = singleAdmin;
 
-				dataBundel.add(adminDatabundel);
-				message = SystemMessage.VALIDUSER.message();
-			 } else {
-				 message = SystemMessage.INVALIDPASSWORD.message();
-				 admin.setValid(false);
-					
+						singleAdmin.add(code);
+						singleAdmin.add(name);
+						singleAdmin.add(userName);
+						singleAdmin.add(email);
+						singleAdmin.add(userType);
 
-					for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
-						log.info("max attempts : " + MAX_ATTEMPTS);
+						dataBundel.add(adminDatabundel);
+						message = SystemMessage.VALIDUSER.message();
+						break;
+					} else {
+						log.info(" Attempts  " + MAX_ATTEMPTS);
+						message = SystemMessage.INVALIDPASSWORD.message();
+						admin.setValid(false);
+
 						if (MAX_ATTEMPTS == 3) {
-							message = SystemMessage.LOGGINATTEMPT3.message();	
-							log.info(message);
-						} if(MAX_ATTEMPTS==2){
-							
-						}else {
+							message = SystemMessage.LOGGINATTEMPT3.message();
+							MAX_ATTEMPTS++;
+							break;
+						} else if (MAX_ATTEMPTS == 2) {
+							message = SystemMessage.LOGGINATTEMPT2.message();
+							MAX_ATTEMPTS++;
+							break;
+						} else if (MAX_ATTEMPTS == 1) {
+							message = SystemMessage.LOGGINATTEMPT1.message();
+							MAX_ATTEMPTS++;
+							break;
+						} else {
+							MAX_ATTEMPTS++;
 							break;
 						}
+
 					}
-					// MAX_ATTEMPTS++;
-					 log.info(message);
-			 }
-				
+				}
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				admin.setValid(false);
-				
-				for (MAX_ATTEMPTS=MAX_ATTEMPTS; MAX_ATTEMPTS < 3; MAX_ATTEMPTS++) {
-					log.info("max attempts : " + MAX_ATTEMPTS);
-					if (MAX_ATTEMPTS == 3) {
-						message = SystemMessage.LOGGINATTEMPT3.message();
-						log.info(message);
-					} else {
-						break;
-					}
-				}
-				//MAX_ATTEMPTS++;
 				log.info(message);
-			}
 
+			}
 		} catch (SQLException exception) {
-			log.error("findById(Object code):  SQLexception"
-					+ exception.toString());
+			log.error("findById(Object code):  SQLexception" + exception.toString());
 			throw exception;
 		} catch (Exception exception) {
-			log.error("findById(Object code):  exception"
-					+ exception.toString());
+			log.error("findById(Object code):  exception" + exception.toString());
 			throw exception;
 		} finally {
 			if (rs != null) {
@@ -167,41 +153,37 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		}
-
+		log.info(message);
 		singleMessageList = new ArrayList<String>();
 		singleMessageList.add(message);
 
 		messageCollection = (Collection<String>) singleMessageList;
 
 		dataBundel.add(messageCollection);
-		
+
 		return dataBundel;
 	}
 
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
+	public Collection<Collection<String>> getAll() throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int add(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int add(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int update(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(Object object, Connection conn) throws SQLException,
-			Exception {
+	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
