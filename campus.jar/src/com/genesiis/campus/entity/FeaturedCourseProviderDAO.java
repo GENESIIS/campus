@@ -5,6 +5,8 @@ package com.genesiis.campus.entity;
 //20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get details correctly
 //20170326 CW c157-add-tutor-employment-details-cw modified getAll method to get string values correctly
 //20170328 CW c157-add-tutor-employment-details-cw added getTutorSelectedFCP
+//20170328 CW c157-add-tutor-employment-details-cw added UNIQUEPREFIX to getAll method
+				// add trim to the string values in getTutorSelectedFCP method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -84,6 +86,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
 												
 				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
 				singleFeaturedCourseProviderList.add(rs.getString("SHORTNAME"));
 				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
 				singleFeaturedCourseProviderList.add(rs.getString("DESCRIPTION"));
@@ -183,12 +186,12 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleTutorSelectedFCPList = new ArrayList<String>();		
 												
-				singleTutorSelectedFCPList.add(rs.getString("CODE"));
-				singleTutorSelectedFCPList.add(rs.getString("SHORTNAME"));
-				singleTutorSelectedFCPList.add(rs.getString("NAME"));
-				singleTutorSelectedFCPList.add(rs.getString("DESCRIPTION"));
-				singleTutorSelectedFCPList.add(rs.getString("SPECIALITY"));
-				singleTutorSelectedFCPList.add(rs.getString("ADDRESS "));
+				singleTutorSelectedFCPList.add((rs.getString("CODE")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("SHORTNAME")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("NAME")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("DESCRIPTION")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("SPECIALITY")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("ADDRESS")).trim());
 				singleTutorSelectedFCPList.add(tutorCode);
 								
 				allTutorSelectedFCPList.add(singleTutorSelectedFCPList);
