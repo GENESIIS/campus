@@ -17,6 +17,7 @@
 //20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
 //20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
 //20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message, saveCourseProvider():changed to clear has-error style class
+//20170328 JH c141-ui-integration-for-add-course-provider saveCourseProvider() clear error messages methods modified
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -437,8 +438,11 @@ function saveCourseProvider() {
 
 	// clear all previous error messages
 	for (var i = 0; i < errorMessageList.length; i++) {
-//		errorMessageList[i].innerHTML = "";
-		clearErrorMessage(i);
+		var varId = $(errorMessageList[i]).attr('id');
+		varId = '#' + varId;
+		clearErrorMessage(varId);
+		
+		
 	}
 
 	if (providerPrefixValidation() === false) {
@@ -549,9 +553,10 @@ function setErrorMessage(errorElement, errorToolTip, message){
  * @param errorToolTip
  * @param message
  */
-function setSuccessMessage(sucessElement, sucessToolTip, message){
+function setSuccessMessage(successElement, successToolTip, message){
 	//has-error style class is used until a style class is created for success messages
 	
-	$(sucessToolTip).attr({ "title" : message,"data-original-title" : message});
-	$(sucessElement).addClass("has-error");
+	$(successToolTip).attr({ "title" : message,"data-original-title" : message});
+	$(successElement).addClass("has-error");
+	$(successElement).css("border", "1px solid green !important");
 }
