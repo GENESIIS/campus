@@ -3,10 +3,12 @@
  * 				//add displayCourseProviders, getCourseProviderData & ready functions
  * 20170326 CW c157-add-tutor-employment-details-cw modified getCourseProviderData method to view course provider list correctly
  * 20170327 CW c157-add-tutor-employment-details-cw add method comments & modified getCourseProviderData method data filling item name
+ * 20170328 CW c157-add-tutor-employment-details-cw add method displaySelectedCourseProviders
  */
 
 $(document).ready(function() {
 	displayCourseProviders();
+	displaySelectedCourseProviders();
 });
 
 /**
@@ -47,6 +49,28 @@ function getCourseProviderData(response) {
 			var x = data[0].toString(); // code
 			var y = data[3].toString(); // name
 			$('<option>').val(x).text(y).appendTo(categories);
+		}
+	});
+}
+
+/**
+ * This method used to query tutor selected featured course provider details from the database
+ * @author CW
+ */
+function displaySelectedCourseProviders() {
+	var tutorCode = $("#tutorCode").val();
+	$.ajax({
+		url : '/TutorController',
+		data : {
+			CCO : 'LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS',
+			tutorCode : tutorCode
+		},
+		dataType : "json",
+		success : function(response) {
+			getCourseProviderData(response);
+		},
+		error : function(response) {
+			alert("Error: " + response);
 		}
 	});
 }
