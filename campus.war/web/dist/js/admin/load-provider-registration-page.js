@@ -19,6 +19,8 @@
 //20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message, saveCourseProvider():changed to clear has-error style class
 //20170328 JH c141-ui-integration-for-add-course-provider saveCourseProvider() methods used to clear error messages modified, added clearToolTip() method to 
 //				clear error and success message		
+//20170329 JH c141-ui-integration-for-add-course-provider added displyPhoneNumber() method to display given phone number or the information message to the user related to the phone number,
+//				landPhoneNubmerHelper() method changed to match new UI elements
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -233,6 +235,7 @@ function getProviderPageLoadData() {
 						displayProviderTypes();
 						getProviderTownListData();
 						displayAccountStatusList();
+						landPhoneNubmerHelper();
 					}
 				},
 				error : function(x, status, error) {
@@ -362,17 +365,25 @@ function landPhoneNubmerHelper() {
 	
 	var integerPattern = /^[0-9]+$/;
 
-	var errorMessageList = document.getElementsByClassName('number-helper');
+	var errorMessageList = document.getElementsByClassName('phone-no-hint');
 
 	// clear all previous error messages related to phone number
 	for (var i = 0; i < errorMessageList.length; i++) {
-		errorMessageList[i].innerHTML = "";
+		var varId = $(errorMessageList[i]).attr('id');
+		varId = '#' + varId;
+		$(varId).text("");
+		//clearToolTip(varId);
 	}
-	
+	country = 94 ;
 	if (!isempty(country)) {
 		
-		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
-		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
+		displyPhoneNumber('#landNumber1',"Please select your country." );
+		displyPhoneNumber('#landNumber2',"Please select your country." );
+		displyPhoneNumber('#lastMobileNumber',"Please select your country." );
+		displyPhoneNumber('#lastFaxNumber',"Please select your country." );
+		
+//		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
+//		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
 		
 	}else{
 //		 if (!isempty(areaCode)) {
@@ -544,6 +555,18 @@ function clearErrorMessage(toolTipElement){
 function clearToolTip(element){
 	$(element).removeClass("has-error");
 	$(element).removeClass("has-success");
+}
+
+/**
+ * used to display the last phone number as a hint to the user.
+ * Then the user can check the final phone number and do any changes to 
+ * get the correct final phone number
+ * @param hintSpan
+ * @param phoneNumber
+ * @author JH
+ */
+function displyPhoneNumber(hintSpan, phoneNumber){
+	$(hintSpan).text(phoneNumber);
 }
 
 /**

@@ -14,6 +14,7 @@
 //20170327 JH c141-ui-for-add-course-provider validateFormURL changes wip, removed commented codes in vaidateCourseProviderDeatils() method 
 //20170328 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils() method code refactoring wip, validateFormURL():error handling changed to add style classes and
 //				to accept min max length for url length validation as parameters 
+//20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields
 
 window.prefixFlag = true;
 window.usernameFlag = true;

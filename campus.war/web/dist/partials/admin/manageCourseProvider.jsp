@@ -299,7 +299,7 @@
 													id="countryCode" placeholder="" disabled> 
 												<input name="areaCode" type="text"
 													class="col-xs-3 input-border-r" id="areaCode"
-													placeholder=""> <span class="phone-no-hint">+94
+													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber">+94
 													77 729 729</span> 
 												<input name="fax" type="tel" class="col-xs-6"
 													id="fax" placeholder="">
