@@ -18,6 +18,7 @@
 <!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
 <!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
 <!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages, added missing ids for password, cPassword and accountStatus -->
+<!-- 20170329 JH c141-ui-integration-for-add-course-provider changed phone number related ids to match with front end validation classes -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -245,29 +246,31 @@
 										<div class="form-group col-xs-12">
 											<label for="land-no-1"><span class="mandatory">*</span>
 												Land Number 1</label>
-											<div class="input-wrapper input-group">
-												<input name="landPhone1CountryCode" type="text"
+											<div class="input-wrapper input-group" id="land1Div">
+												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
-													id="land-line-1-country-code" placeholder="" disabled>
-												<input name="landPhone1AreaCode" type="text"
-													class="col-xs-3 input-border-r" id="land-line-1-area-code"
-													placeholder=""> <input name="landPhone1" type="tel"
-													class="col-xs-6" id="land-line-1" placeholder=""> <span
+													id="countryCode" placeholder="" disabled>
+												<input name="areaCode" type="text"
+													class="col-xs-3 input-border-r" id="areaCode"
+													placeholder="">
+												 <input name="land1" type="tel"
+													class="col-xs-6" id="land1" placeholder=""> <span
 													class="phone-no-hint" id="landNumber1">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
-													title="Error! "></a>
+													title="Error! " id="errorLand1"></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
 											<label for="land-no-2">Land Number 2</label>
-											<div class="input-wrapper input-group">
-												<input name="landPhone2CountryCode" type="text"
+											<div class="input-wrapper input-group" id="land2Div">
+												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
-													id="land-line-2-country-code" placeholder="" disabled>
-												<input name="landPhone2AreaCode" type="text"
-													class="col-xs-3 input-border-r" id="land-line-2-area-code"
-													placeholder=""> <input name="landPhone2" type="tel"
-													class="col-xs-6" id="land-line-2" placeholder=""> <span
+													id="countryCode" placeholder="" disabled>
+												<input name="areaCode" type="text"
+													class="col-xs-3 input-border-r" id="areaCode"
+													placeholder="">
+												<input name="land2" type="tel"
+													class="col-xs-6" id="land2" placeholder=""> <span
 													class="phone-no-hint" id="landNumber2">+94 77 729 729</span>
 											</div>
 										</div>
@@ -275,13 +278,14 @@
 											<label for="mobile-number"><span class="mandatory">*</span>
 												Mobile Number</label>
 											<div class="input-wrapper input-group">
-												<input name="mobilePhone1CountryCode" type="text"
+												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
-													id="mobile-line-country-code" placeholder="" disabled>
-												<input name="mobilePhone1AreaCode" type="text"
-													class="col-xs-3 input-border-r" id="mobile-line-area-code"
-													placeholder=""> <input name="mobilePhone1"
-													type="tel" class="col-xs-6" id="mobile-line" placeholder="">
+													id="countryCode" placeholder="" disabled>
+												<input name="networkCode" type="text"
+													class="col-xs-3 input-border-r" id="networkCode"
+													placeholder=""> 
+												<input name="mobile"
+													type="tel" class="col-xs-6" id="mobile" placeholder="">
 												<span class="phone-no-hint" id="lastMobileNumber">+94 77 729 729</span> <a
 													class="error-info" href="#" data-toggle="tooltip"
 													title="Error! "></a>
@@ -290,13 +294,14 @@
 										<div class="form-group col-xs-12">
 											<label for="fax-number">Fax Number</label>
 											<div class="input-wrapper input-group">
-												<input name="fax1CountryCode" type="text"
+												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
-													id="fax-country-code" placeholder="" disabled> <input
-													name="fax1AreaCode" type="text"
-													class="col-xs-3 input-border-r" id="fax-area-code"
+													id="countryCode" placeholder="" disabled> 
+												<input name="areaCode" type="text"
+													class="col-xs-3 input-border-r" id="areaCode"
 													placeholder=""> <span class="phone-no-hint">+94
-													77 729 729</span> <input name="fax" type="tel" class="col-xs-6"
+													77 729 729</span> 
+												<input name="fax" type="tel" class="col-xs-6"
 													id="fax" placeholder="">
 											</div>
 										</div>
