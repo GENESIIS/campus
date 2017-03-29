@@ -6,7 +6,7 @@
 <!-- 20170327 c157-add-tutor-employment-details-cw - fix some jsp alignment errors -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - modified employer details grid -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - fixed some jsp errors -->
-<!-- 20170328 c157-add-tutor-employment-details-cw - add tutorCode, employerCode hidden items in the table & ad validation to the table-->
+<!-- 20170328 c157-add-tutor-employment-details-cw - add tutorCode, employerCode hidden items in the table & add validation to the table-->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

@@ -8,6 +8,7 @@
  * 20170328 CW c157-add-tutor-employment-details-cw add fillSelectedCourseProviderData & clearField methods
  * 20170328 CW c157-add-tutor-employment-details-cw modified & done testing on fillSelectedCourseProviderData method to add button to the table
  * 20170329 CW c157-add-tutor-employment-details-cw modified & done testing on fillSelectedCourseProviderData method to add button to the table
+ * 20170329 CW c157-add-tutor-employment-details-cw modified the button of the table
  */
 
 $(document).ready(function() {
@@ -109,7 +110,7 @@ function fillSelectedCourseProviderData(response) {
 		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
 		+ '<input type=hidden name=tutorCode id=tutorCode value=' + value[6].toString() + '/>'
 		+ '<input type=hidden name=employerCode id=employerCode value=' + value[0].toString() + '/>'
-		+ '<input name= CCO id= CCO type= button value= Remove class= pure-button pure-button-primary /></td></tr>';
+		+ '<button type=submit name=CCO id=CCO value=REMOVE_EMPLOYMENT class=pure-button pure-button-primary>Remove</button></td></tr>';
     	
     });
     
