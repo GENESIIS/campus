@@ -1,10 +1,10 @@
 package com.genesiis.campus.command;
 
-import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
-
 //20170323 CW c157-add-tutor-employment-details-cw INIT CmdListCourseProvidersForTutors.java
 //20170326 CW c157-add-tutor-employment-details-cw create execute method
+//20170329 CW c157-add-tutor-employment-details-cw edit the place of the comments
 
+import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.model.Tutor;
