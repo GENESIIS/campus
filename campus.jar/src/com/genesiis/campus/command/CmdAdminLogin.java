@@ -35,7 +35,7 @@ public class CmdAdminLogin implements ICommand{
 		HttpSession session;
 		
 		String domain = new URL(helper.getRequestURL()).getHost();
-		
+		log.info(domain);
 		try {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			session = helper.getRequest().getSession(false);
@@ -61,15 +61,19 @@ public class CmdAdminLogin implements ICommand{
 					}
 					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
 						
+						message = SystemMessage.LOGGEDSUCCESSFULL.message();
+						path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
+						pageURL = path;
+	
 					}else{
 						if (message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT3.message())) {
 							message = SystemMessage.LOGGINATTEMPT3.message();
 							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
-							pageURL = domain+""+path;
+							pageURL = path;
 						} else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT2.message())){
 							message = SystemMessage.LOGGINATTEMPT2.message();
 							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
-							pageURL = domain+""+path;
+							pageURL = path;
 							
 						}else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT1.message())){
 							message = SystemMessage.LOGGINATTEMPT1.message();
