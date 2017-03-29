@@ -52,6 +52,7 @@
  * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. Add validateUploadBannerEmbedData() validation part to the onclick event of bannerRecordUpdate.
  * 				Change the onclick event of the 'bannerModalClose' logic to include event.preventDefault to over come page been reload. 
  * 				Removed the isbannerCodeNullOrEmty check from onclick event of uploadBbutton element.
+ * 20170329 DN change sendBannerPaageFieldInputs() method to dynamically changed the updated image on bannerManager.jsp
  */
 
 /*
@@ -430,9 +431,6 @@ $(document).on('click','#uploadBbutton', function(event){
 	var formData = new FormData();
 	formData.append("file",banerImage);
 		
-//	event.stopPropagation(); 
-//    event.preventDefault(); 
-		
 	 // ajax call to transfer banner Image to server end
 		$.ajax({
 			type:"POST",
@@ -632,6 +630,8 @@ if(elegibleToProceed){
 				var cssColour='red';
 				if(response['successCode']==1){
 					cssColour='green';
+					if(response['bannerWarPath']!="")
+						$('#imageName01').attr('src',response['bannerWarPath']+'?'+Math.random());
 				}
 				$('#bannerUploadPopUp').modal('hide');
 				displayBannerManagerPrerequistData();
