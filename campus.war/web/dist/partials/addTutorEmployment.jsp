@@ -7,6 +7,7 @@
 <!-- 20170328 c157-add-tutor-employment-details-cw - modified employer details grid -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - fixed some jsp errors -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - add tutorCode, employerCode hidden items in the table & add validation to the table-->
+<!-- 20170329 c157-add-tutor-employment-details-cw - add remove button -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -58,6 +59,7 @@
 							<th>Name</th>
 							<th>Speciality</th>
 							<th>Address</th>
+							<th>Select</th>
 							<th></th>
 						</tr>
 						<c:forEach var="companies" items="${result.collection}" varStatus="loop">
@@ -72,13 +74,16 @@
 										<td>									
 											<input id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>" hidden="true" />
 											<input id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>" hidden="true" />
-											<button type="submit" name="CCO" id="CCO" value="REMOVE_EMPLOYMENT" class="pure-button pure-button-primary">Remove</button>
+											
 										</td>
 									</c:when>
 								</c:choose>
 							</tr>
 						</c:forEach>
 					</table>
+					<div style="text-align:right">  
+    					<button type="submit" name="CCO" id="CCO" value="REMOVE_SELECTED_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Remove</button>
+					</div>
 				</div>
 			</form>
 		</div>
