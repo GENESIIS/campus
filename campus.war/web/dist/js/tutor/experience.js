@@ -7,6 +7,7 @@
  * 20170328 CW c157-add-tutor-employment-details-cw modified method displaySelectedCourseProviders to fix errors wip
  * 20170328 CW c157-add-tutor-employment-details-cw add fillSelectedCourseProviderData & clearField methods
  * 20170328 CW c157-add-tutor-employment-details-cw modified & done testing on fillSelectedCourseProviderData method to add button to the table
+ * 20170329 CW c157-add-tutor-employment-details-cw modified & done testing on fillSelectedCourseProviderData method to add button to the table
  */
 
 $(document).ready(function() {
@@ -93,12 +94,33 @@ function fillSelectedCourseProviderData(response) {
 /*		var res = value.toString();
 		var data = res.split(",");*/
         
-        trHTML += '<tr><td>' + index + '</td><td>' + value[1].toString() + '</td><td>' 
+/*        trHTML += '<tr><td>' + index + '</td><td>' + value[1].toString() + '</td><td>' 
         		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
-        		+ '<input id=' + Button + ' type=' + button + ' value='+' class=' + plusButton + ' /></td></tr>';
+        		+ '<input id=' + Button + ' type=' + button + ' value='+' class=' + plusButton + ' /></td></tr>';*/
+    	
+    	var sequence = index + 1;
+    	/*
+        trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>' 
+		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
+		+ '<input id= Button type= button value= Remove class= pure-button pure-button-primary /></td></tr>';*/
+        
+
+        trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>' 
+		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
+		+ '<input type=hidden name=tutorCode id=tutorCode value=' + value[6].toString() + '/>'
+		+ '<input type=hidden name=employerCode id=employerCode value=' + value[0].toString() + '/>'
+		+ '<input name= CCO id= CCO type= button value= Remove class= pure-button pure-button-primary /></td></tr>';
+    	
     });
     
     $('#employers').append(trHTML);
+    
+    
+/*
+	<input id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>" hidden="true" />
+	<input id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>" hidden="true" />
+	<button type="submit" name="CCO" id="CCO" value="REMOVE_EMPLOYMENT" class="pure-button pure-button-primary">Remove</button>
+*/    
     /*
 	<th>Short Name</th>
 	<th>Name</th>
