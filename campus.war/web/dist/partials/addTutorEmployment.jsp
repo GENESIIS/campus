@@ -6,6 +6,7 @@
 <!-- 20170327 c157-add-tutor-employment-details-cw - fix some jsp alignment errors -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - modified employer details grid -->
 <!-- 20170328 c157-add-tutor-employment-details-cw - fixed some jsp errors -->
+<!-- 20170328 c157-add-tutor-employment-details-cw - add tutorCode, employerCode hidden items in the table & ad validation to the table-->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -61,16 +62,20 @@
 						</tr>
 						<c:forEach var="companies" items="${result.collection}" varStatus="loop">
 							<tr>
-								<td><c:out value="${loop.index+1}"></c:out></td>
-								<td><c:out value="${companies[1]}"></c:out></td>
-								<td><c:out value="${companies[2]}"></c:out></td>
-								<td><c:out value="${companies[4]}"></c:out></td>
-								<td><c:out value="${companies[5]}"></c:out></td>
-								<td>									
-									<input id="orgCode" name="orgCode" value="<c:out value="${orgCode}"/>" hidden="true" />
-									<input id="comCode" name="comCode" value="<c:out value="${companies[0]}"/>" hidden="true" />
-									<button type="submit" name="CCO" id="CCO" value="UCO" class="pure-button pure-button-primary">Remove</button>
-								</td>
+								<c:choose>
+									<c:when test="${companies[1] != null}">
+										<td><c:out value="${loop.index+1}"></c:out></td>
+										<td><c:out value="${companies[1]}"></c:out></td>
+										<td><c:out value="${companies[2]}"></c:out></td>
+										<td><c:out value="${companies[4]}"></c:out></td>
+										<td><c:out value="${companies[5]}"></c:out></td>
+										<td>									
+											<input id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>" hidden="true" />
+											<input id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>" hidden="true" />
+											<button type="submit" name="CCO" id="CCO" value="REMOVE_EMPLOYMENT" class="pure-button pure-button-primary">Remove</button>
+										</td>
+									</c:when>
+								</c:choose>
 							</tr>
 						</c:forEach>
 					</table>
