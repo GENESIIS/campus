@@ -31,8 +31,8 @@ public enum SystemConfig {
 	COURSE_IMAGE_PATH("", "", ""), 
 	STUDENT_PROFILE_IMAGE_PATH("", "", ""),
 	TUTOR_PROFILE_IMAGE_PATH("", "", ""),
-	ADMIN_LANDING_PAGE("","",""),
-	ADMIN_LOGIN_PAGE("/dist/partials/admin/admin-login.jsp","/dist/partials/admin/admin-login.jsp?tempt=2","/dist/partials/admin/admin-login.jsp?tempt=3"),
+	ADMIN_LANDING_PAGE("admin-dashboard.jsp","",""),
+	ADMIN_LOGIN_PAGE("admin-login.jsp","admin-login.jsp?tempt=2","admin-login.jsp?tempt=3"),
 	CATEGORY_LOGO_PATH("education/general/category/logo","","");
 
 	private String value1;
