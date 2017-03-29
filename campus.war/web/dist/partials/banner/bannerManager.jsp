@@ -135,14 +135,12 @@
 				</c:choose>
 			</div>
 			<br>
-			
-			<c:if test="${param.CCO eq 'ADMEDTBNR' }">
-				<div align="right" id="bannerImagediv01" >
-				 Uploaded Banner :
-				<img id='imageName01'src="${param.bannerUrl}" alt='banner-Image' style='width:200px;hight:60px'>
-				</div>
-			</c:if>
-			
+				<c:if test="${param.CCO eq 'ADMEDTBNR'}">
+					<div align="right" id="bannerImagediv01" >
+					 Uploaded Banner : 
+					<img id='imageName01'	src="${param.bannerUrl}"  alt='banner-Image' style='width:200px;hight:60px'>
+					</div>
+				</c:if>
 			<div>
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
