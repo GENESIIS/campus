@@ -1049,6 +1049,14 @@ body, html {
       font-family: "Muli", sans-serif;
       color: #93a1b1; }
 
+.error-msg {
+  color: #ff5a09;
+  font-family: "Signika", sans-serif;
+  font-size: 13px;
+  position: relative;
+  left: 20%;
+  top: 2px; }
+
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
 /* 20170207 TR CAM-139 changed modal-footer styles */

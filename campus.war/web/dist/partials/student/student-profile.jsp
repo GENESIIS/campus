@@ -29,6 +29,8 @@
 <!-- 20170306 PN CAM-150: error class declared to for error span tags, to clear them inside clearPersonalDetailsForm() method. -->
 <!-- 20170309 PN CAM-150: new fields are added to in put AddressLine1, AddressLine2, AddressLine3 separately. -->
 <!-- 20170309 PN CAM-150: 'About me model' text field lengths are modified. -->
+<!-- 20170329 TR CAM-150: Removed inline styles from error-msg span and added styles to error-msg class -->
+<!-- 20170329 TR CAM-150: fixed error messages styles and display position in 'About Me modal'  -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -381,26 +383,26 @@
       		<div class="well clearfix">
       		    <div class="show modal-input-field clearfix">
                     <label>First Name : <span style="color:red">*</span></label>
-                    <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="99">
-                    <span class="error-msg" id="sFullNameError" name="sFullNameError" style="color:red"></span><br>
+                    <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="99"><br>
+                    <span class="error-msg" id="sFullNameError" name="sFullNameError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Middle Name : </label>
-                    <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="99">
-                    <span class="error-msg" id="sMiddleNameError" name="sMiddleNameError" style="color:red"></span><br>
+                    <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="99"><br>
+                    <span class="error-msg" id="sMiddleNameError" name="sMiddleNameError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Last Name : <span style="color:red">*</span></label>
-                    <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="99">
-                    <span class="error-msg" id="sLastNameError" name="sLastNameError" style="color:red"></span><br>
+                    <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="99"><br>
+                    <span class="error-msg" id="sLastNameError" name="sLastNameError"></span>
 			    </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Birth Date : <span style="color:red">*</span></label>
-                    <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')">
-                    <span class="error-msg" id="sBirthDateError" name="sBirthDateError" style="color:red"></span><br>
+                    <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')"><br>
+                    <span class="error-msg" id="sBirthDateError" name="sBirthDateError"></span>
                 </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -413,8 +415,8 @@
 
 			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left">About :</label>
-                    <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="499"></textarea>
-                    <span class="error-msg" id="sAboutMeError" name="sAboutMeError" style="color:red"></span><br>
+                    <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="499"></textarea><br>
+                    <span class="error-msg" id="sAboutMeError" name="sAboutMeError"></span>
 			    </div>
 			</div>
 			<!-- End personal details area -->
@@ -427,34 +429,34 @@
                     <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
                         <datalist name="sCountryList" id="sCountryList">
                         </datalist>
-                    <input hidden type="text" id="sCountryCode" name="sCountryCode"/>
-                    <span class="error-msg" id="sCountryError" name="sCountryError" style="color:red"></span><br>
+                    <input hidden type="text" id="sCountryCode" name="sCountryCode"/><br>
+                    <span class="error-msg" id="sCountryError" name="sCountryError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                      <label>Town : <span style="color:red">*</span></label>
                      <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')" onkeypress="isCountryEmpty()"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
-                     <input hidden type="text" id="sTownCode" name="sTownCode"/>
-                     <span class="error-msg" id="sTownError" name="sTownError" style="color:red"></span>
+                     <input hidden type="text" id="sTownCode" name="sTownCode"/><br>
+                     <span class="error-msg" id="sTownError" name="sTownError" ></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">                 
                     <label>Address Line 1:</label>
-                    <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="49">
-                    <span class="error-msg" id="sAddressLine1Error" name="sAddressLine1Error" style="color:red"></span>
+                    <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="49"><br>
+                    <span class="error-msg" id="sAddressLine1Error" name="sAddressLine1Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 2:</label>
-                    <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="49">
-                    <span class="error-msg" id="sAddressLine2Error" name="sAddressLine2Error" style="color:red"></span>
+                    <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="49"><br>
+                    <span class="error-msg" id="sAddressLine2Error" name="sAddressLine2Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 3:</label>
-                    <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="49">
-                    <span class="error-msg" id="sAddressLine3Error" name="sAddressLine3Error" style="color:red"></span>
+                    <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="49"><br>
+                    <span class="error-msg" id="sAddressLine3Error" name="sAddressLine3Error"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -463,60 +465,60 @@
                         <span class="input-group-addon" id="countryCodePrefix"></span>
                         <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="20">
                     </div>
-                    <span class="error-msg" id="sMobileNumberError" name="sMobileNumberError" style="color:red"></span>
+                    <span class="error-msg" id="sMobileNumberError" name="sMobileNumberError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
                     <label>Home Number :</label>
                     <div class="input-group">
-                    <span class="input-group-addon" id="countryCodePrefix"></span>
-                    <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="20">
-                    <span class="error-msg" id="sHomeNumberError" name="sHomeNumberError" style="color:red"></span><br>
+                        <span class="input-group-addon" id="countryCodePrefix"></span>
+                        <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="20">
                     </div>
+                    <span class="error-msg" id="sHomeNumberError" name="sHomeNumberError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Email : <span style="color:red">*</span></label>
-                    <input type="text" name="sEmail" id="sEmail" onclick="" maxlength="200">
-                    <span class="error-msg" id="sEmailError" name="sEmailError" style="color:red"></span><br>
+                    <input type="text" name="sEmail" id="sEmail" onclick="" maxlength="200"><br>
+                    <span class="error-msg" id="sEmailError" name="sEmailError"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Facebook URL :</label>
-                    <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="199" placeholder="www.facebook.com/username">
-                    <span class="error-msg" id="sFacebookUrlError" name="sFacebookUrlError" style="color:red"></span><br>
+                    <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="199" placeholder="www.facebook.com/username"><br>
+                    <span class="error-msg" id="sFacebookUrlError" name="sFacebookUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Twitter URL :</label>
-                    <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="199" placeholder="www.twitter.com/username">
-                    <span class="error-msg" id="stwitterUrlError" name="stwitterUrlError" style="color:red"></span><br>
+                    <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="199" placeholder="www.twitter.com/username"><br>
+                    <span class="error-msg" id="stwitterUrlError" name="stwitterUrlError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>LinkedIn URL :</label>
-                    <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="199" placeholder="www.linkedin.com/username">
-                    <span class="error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError" style="color:red"></span><br>
+                    <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="199" placeholder="www.linkedin.com/username"><br>
+                    <span class="error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Instagram URL :</label>
-                    <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="199" placeholder="www.instagram.com/username">
-                    <span class="error-msg" id="sInstergramUrlError" name="sInstergramUrlError" style="color:red"></span><br>
+                    <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="199" placeholder="www.instagram.com/username"><br>
+                    <span class="error-msg" id="sInstergramUrlError" name="sInstergramUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>MySpace :</label>
-                    <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="199" placeholder="www.myspace.com/username">
-                    <span class="error-msg" id="smySpaceError" name="smySpaceError" style="color:red"></span><br>
+                    <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="199" placeholder="www.myspace.com/username"><br>
+                    <span class="error-msg" id="smySpaceError" name="smySpaceError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>WhatsApp :</label>
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
-                    <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="20">
-                    <span class="error-msg" id="sWhatsAppError" name="sWhatsAppError" style="color:red"></span><br>
+                    <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="20"><br>
+                    <span class="error-msg" id="sWhatsAppError" name="sWhatsAppError"></span>
                     </div>
                 </div>
 
@@ -525,7 +527,7 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="20">
-                    <span class="error-msg" id="sViberError" name="sViberError" style="color:red"></span><br>
+                    <span class="error-msg" id="sViberError" name="sViberError"></span><br>
                     </div>
                 </div>
 			</div>
