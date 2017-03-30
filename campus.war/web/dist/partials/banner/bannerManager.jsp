@@ -12,7 +12,9 @@
 	 20170324 DN c83-admin-manage-banner-update-banner-info-dn two hidden fields for capturing banner code and image name
 	 			 have been inserted.
 	 20170328 DN c83-admin-manage-banner-update-banner-info-dn. Element id 'bannerCode' made disable and visible id CCO is to ADMEDTBNR.
-
+     20170330 DN c83-admin-manage-banner-update-banner-info-dn. Uploaded Banner : alt property set to "Yet No Image".  Removed the condition
+     			 surrounded by the upload Banner element.
+     			 Removed the condition check surrounded the "Banner Code" element.
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -110,10 +112,10 @@
 
 		<form id="banner-from">			
 			<div >
-				<c:if test="${param.CCO eq 'ADMEDTBNR'}">
+<%-- 				<c:if test="${param.CCO eq 'ADMEDTBNR'}"> --%>
 			     BannerCode :
 					<input type="text" id="bannerCode" name="bannerCode" value="${param.bannerCode}" disabled >
-				</c:if>
+<%-- 				</c:if> --%>
 				<input type="hidden" id="bannerEditableImageName" name="bannerEditableImageName" value="${param.imageName}" >
 				<br>Advertiser * &nbsp; 
 				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
@@ -135,12 +137,12 @@
 				</c:choose>
 			</div>
 			<br>
-				<c:if test="${param.CCO eq 'ADMEDTBNR'}">
+<%-- 				<c:if test="${param.CCO eq 'ADMEDTBNR'}"> --%>
 					<div align="right" id="bannerImagediv01" >
 					 Uploaded Banner : 
-					<img id='imageName01'	src="${param.bannerUrl}"  alt='banner-Image' style='width:200px;hight:60px'>
+					<img id='imageName01'	src="${param.bannerUrl}"  alt='Yet No Image' style='width:200px;hight:60px'>
 					</div>
-				</c:if>
+<%-- 				</c:if> --%>
 			<div>
 				Page * &nbsp; 
 				<div id="pageInfor" style ="color:#C70039;"></div><br>
