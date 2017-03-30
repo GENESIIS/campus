@@ -407,18 +407,20 @@ function landPhoneNubmerHelper() {
 				lastLandNumber2 += " " + areaCode2;
 				displyPhoneNumber('#landNumber2', lastLandNumber2);
 				
-			}else if(isempty(areaCode3)) {
+			}if(isempty(areaCode3)) {
 				lastFaxNumber += " " + areaCode3;
-				lastFaxNumber('#lastFaxNumber', lastFaxNumber);
+				displyPhoneNumber('#lastFaxNumber', lastFaxNumber);
 			} else {
-				displyPhoneNumber('#landNumber2', "Area code is empty.");
-				displyPhoneNumber('#lastFaxNumber', "Area code is empty.");
+				if(!isempty(areaCode2)) {
+					displyPhoneNumber('#landNumber2', "Area code is empty.");
+					}
+				if(!isempty(areaCode3)){
+					displyPhoneNumber('#lastFaxNumber', "Area code is empty.");
+				}
 			}
 
 		}if(!isempty(networkCode)){
-			displyPhoneNumber('#errorMobile', "Area code is empty.");
-//			document.getElementById('errorMobile').innerHTML = "**Network code is empty.";
-//			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
+			displyPhoneNumber('#errorMobile', "Network code is empty.");
 		
 		} if (isempty(areaCode1)) {
 			lastLandNumber1 += " " + areaCode1;
@@ -430,12 +432,20 @@ function landPhoneNubmerHelper() {
 				
 			}if (isempty(areaCode3)) {
 				lastFaxNumber += " " + areaCode3;
-				lastFaxNumber('#lastFaxNumber', lastFaxNumber);
+				displyPhoneNumber('#lastFaxNumber', lastFaxNumber);
 			} else {
-				lastLandNumber2 += " " + areaCode1;
-				lastFaxNumber += " " + areaCode1;
-				displyPhoneNumber('#landNumber2', lastLandNumber2);
-				displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+				
+				if(!isempty(areaCode2)) {
+					//lastLandNumber2 = "";
+					lastLandNumber2 += " " + areaCode1;
+					displyPhoneNumber('#landNumber2', lastLandNumber2);
+					}
+				if(!isempty(areaCode3)){
+					//lastFaxNumber = "";
+					lastFaxNumber += " " + areaCode1;
+					displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+				}
+				
 			}
 			
 //			if (isPatternMatch(integerPattern, areaCode)) {

@@ -299,7 +299,7 @@
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled> 
 												<input name="areaCode3" type="text"
-													class="col-xs-3 input-border-r" id="areaCode3"
+													class="col-xs-3 input-border-r" id="areaCode3" onkeyup="landPhoneNubmerHelper();"
 													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber"></span> 
 												<input name="fax" type="tel" class="col-xs-6"
 													id="fax" placeholder="">
