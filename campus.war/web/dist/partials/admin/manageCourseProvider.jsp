@@ -267,7 +267,7 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="areaCode2" type="text"
+												<input name="areaCode2" type="text" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-3 input-border-r" id="areaCode2"
 													placeholder="">
 												<input name="land2" type="tel"
@@ -282,7 +282,7 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="networkCode" type="text"
+												<input name="networkCode" type="text" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-3 input-border-r" id="networkCode"
 													placeholder=""> 
 												<input name="mobile"

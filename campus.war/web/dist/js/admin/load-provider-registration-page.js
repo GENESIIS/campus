@@ -21,7 +21,7 @@
 //				clear error and success message		
 //20170329 JH c141-ui-integration-for-add-course-provider added displyPhoneNumber() method to display given phone number or the information message to the user related to the phone number,
 //				landPhoneNubmerHelper() method changed to match new UI elements
-//20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip
+//20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip, isempty() method refactored as isValidNumber()
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -403,11 +403,11 @@ function landPhoneNubmerHelper() {
 		 if (!isempty(areaCode1)) {
 			 
 			displyPhoneNumber('#landNumber1', "Area code is empty.");
-			if (isempty(areaCode2)) {
+			if(isempty(areaCode2)) {
 				lastLandNumber2 += " " + areaCode2;
 				displyPhoneNumber('#landNumber2', lastLandNumber2);
 				
-			}if (isempty(areaCode3)) {
+			}else if(isempty(areaCode3)) {
 				lastFaxNumber += " " + areaCode3;
 				lastFaxNumber('#lastFaxNumber', lastFaxNumber);
 			} else {
@@ -420,7 +420,24 @@ function landPhoneNubmerHelper() {
 //			document.getElementById('errorMobile').innerHTML = "**Network code is empty.";
 //			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
 		
-		} if (isempty(areaCode)) {
+		} if (isempty(areaCode1)) {
+			lastLandNumber1 += " " + areaCode1;
+			displyPhoneNumber('#landNumber1', lastLandNumber1);
+			
+			if (isempty(areaCode2)) {
+				lastLandNumber2 += " " + areaCode2;
+				displyPhoneNumber('#landNumber2', lastLandNumber2);
+				
+			}if (isempty(areaCode3)) {
+				lastFaxNumber += " " + areaCode3;
+				lastFaxNumber('#lastFaxNumber', lastFaxNumber);
+			} else {
+				lastLandNumber2 += " " + areaCode1;
+				lastFaxNumber += " " + areaCode1;
+				displyPhoneNumber('#landNumber2', lastLandNumber2);
+				displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+			}
+			
 //			if (isPatternMatch(integerPattern, areaCode)) {
 //				lastLandNumber1 = "+" + country + " " + areaCode + " "
 //						+ land1;
@@ -552,13 +569,14 @@ function saveCourseProvider() {
 }
 
 /**
+ * Checks the input value is empty or is not a number
  * @author JH
  * @param fieldValue
  *            it is the value of a document element
  * @returns true if has content else false. (used to validate string values)
  */
-function isempty(fieldValue) {
-	return (($.trim(fieldValue) == "") || (fieldValue == null)) ? false : true;
+function isValidNumber(fieldValue) {
+	return (($.trim(fieldValue) == "") || (fieldValue == null) || (!isPatternMatch(integerPattern, areaCode))) ? true : false;
 }
 	
 function clearErrorMessage(){
