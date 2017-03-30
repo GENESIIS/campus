@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity;
 
 // 20170327 c157-add-tutor-employment-details-cw - INIT EmploymentDAO.java & Create Add method
+// 20170330 CW c157-add-tutor-employment-details-cw create deleteMultiple method
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -108,6 +109,39 @@ public class EmploymentDAO implements ICrud {
 	public int delete(Object object, Connection conn) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	/**
+	 * Delete selected employment details in Database
+	 * 
+	 * @author CW
+	 * @param String : allSelectedToRemove All the code values of selected rows in EMPLOYMENT table
+	 * @return int number of success/fail status
+	 */
+	public int deleteMultiple(String allSelectedToRemove) throws SQLException, Exception {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int status = -1;
+		
+		String query = "DELETE FROM CAMPUS.EMPLOYMENT WHERE CODE IN (" + allSelectedToRemove + ")";
+						
+		try {			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(query);
+			status = stmt.executeUpdate();
+
+		} catch (SQLException exception) {
+			log.error("deleteMultiple(): SQLException " + exception.toString());
+			throw exception;
+		} catch (Exception exception) {
+			log.error("deleteMultiple(): Exception " + exception.toString());
+			throw exception;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, null);
+		}
+
+		return status;
 	}
 
 }
