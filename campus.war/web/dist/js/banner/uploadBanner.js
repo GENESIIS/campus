@@ -52,7 +52,11 @@
  * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. Add validateUploadBannerEmbedData() validation part to the onclick event of bannerRecordUpdate.
  * 				Change the onclick event of the 'bannerModalClose' logic to include event.preventDefault to over come page been reload. 
  * 				Removed the isbannerCodeNullOrEmty check from onclick event of uploadBbutton element.
- * 20170329 DN change sendBannerPaageFieldInputs() method to dynamically changed the updated image on bannerManager.jsp
+ * 20170329 DN c83-admin-manage-banner-update-banner-info-dn. change sendBannerPaageFieldInputs() method to dynamically changed the updated image on bannerManager.jsp.
+ * 20170330 DN c83-admin-manage-banner-update-banner-info-dn. displayBannerManagerPrerequistData() modified to remove complete: property of the ajax call.
+ * 				on('click','#uploadBbutton') event $(':input').val(''); is removed from the complete property of the ajax call.
+ * 				sendBannerPaageFieldInputs() amend to exclude the null check of the "bannerwarpath" attribute when setting the src of image element.
+ * 				Add "banerCode" attribute to the same block of code.
  */
 
 /*
@@ -109,9 +113,6 @@ function displayBannerManagerPrerequistData(){
 		error:function(preRequistData,error,errorThrown){
 			var msg = ajaxErorMessage(preRequistData,error,errorThrown);
 			displayLabelMessage('messagePopUp','displayLabel','red',msg);
-		},
-		complete:function(){
-			
 		}
 	});
 }
@@ -378,7 +379,7 @@ function getBannerCredentials(){
 	bannerFieldInputValues.push(displayDusration);
 	bannerFieldInputValues.push(banerToBeActive);
 	bannerFieldInputValues.push(bannerPublishingDate);
-	bannerFieldInputValues.push(bannerPublishingEndDate);
+	bannerFieldInputValues.push(bannerPublishingEndDate); 
 	bannerFieldInputValues.push(urlMiniWebOrPage);
 	bannerFieldInputValues.push(urlToBeDirectedOnBannerClick);
 	bannerFieldInputValues.push(bannerCode);	
@@ -466,8 +467,6 @@ $(document).on('click','#uploadBbutton', function(event){
 			complete: function(response,status){
 				$('#bannerModalClose').show();
 				$('#uploadBbutton').prop('disabled',false);
-				$(':input').val('');
-
 			}
 		});
 	} 
@@ -623,15 +622,15 @@ if(elegibleToProceed){
 					CCO:CommandCode,
 				jsonData:JSON.stringify(jasonBanner)
 			},
-			//cache: false,
 			//contentType : false,
 			//processData : false,
 			success: function(response){
 				var cssColour='red';
 				if(response['successCode']==1){
 					cssColour='green';
-					if(response['bannerWarPath']!="")
-						$('#imageName01').attr('src',response['bannerWarPath']+'?'+Math.random());
+					//setting the updated banner image on the page.
+					$('#bannerCode').val(response['bannerCode']);
+					$('#imageName01').attr('src',"/"+response['bannerWarPath']+'?'+Math.random());
 				}
 				$('#bannerUploadPopUp').modal('hide');
 				displayBannerManagerPrerequistData();
