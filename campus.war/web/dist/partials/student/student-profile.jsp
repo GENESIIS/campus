@@ -384,25 +384,25 @@
       		    <div class="show modal-input-field clearfix">
                     <label>First Name : <span style="color:red">*</span></label>
                     <input type="text" name="sFullName" id="sFullName" onkeypress="return isLetter(event)" onkeypress="" onclick="clearField('sFullNameError')" maxlength="99"><br>
-                    <span class="error-msg" id="sFullNameError" name="sFullNameError"></span>
+                    <span class="std-mdl-error-msg" id="sFullNameError" name="sFullNameError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Middle Name : </label>
                     <input type="text" name="sMiddleName" id="sMiddleName" onkeypress="return isLetter(event)" onclick="clearField('sMiddleNameError')" maxlength="99"><br>
-                    <span class="error-msg" id="sMiddleNameError" name="sMiddleNameError"></span>
+                    <span class="std-mdl-error-msg" id="sMiddleNameError" name="sMiddleNameError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>Last Name : <span style="color:red">*</span></label>
                     <input type="text" name="sLastName" id="sLastName" onkeypress="return isLetter(event)" onclick="clearField('sLastNameError')" maxlength="99"><br>
-                    <span class="error-msg" id="sLastNameError" name="sLastNameError"></span>
+                    <span class="std-mdl-error-msg" id="sLastNameError" name="sLastNameError"></span>
 			    </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Birth Date : <span style="color:red">*</span></label>
                     <input type="date" name="sBirthDate" id="sBirthDate" onclick="clearField('sBirthDateError')"  onchange ="isPastfromNow('sBirthDate', 'sBirthDateError')"><br>
-                    <span class="error-msg" id="sBirthDateError" name="sBirthDateError"></span>
+                    <span class="std-mdl-error-msg" id="sBirthDateError" name="sBirthDateError"></span>
                 </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -416,7 +416,7 @@
 			    <div class="show modal-input-field clearfix">
 			        <label class="pull-left">About :</label>
                     <textarea type="text" name="sAboutMe" id="sAboutMe" onclick="clearField('sAboutMeError')" maxlength="499"></textarea><br>
-                    <span class="error-msg" id="sAboutMeError" name="sAboutMeError"></span>
+                    <span class="std-mdl-error-msg" id="sAboutMeError" name="sAboutMeError"></span>
 			    </div>
 			</div>
 			<!-- End personal details area -->
@@ -430,7 +430,7 @@
                         <datalist name="sCountryList" id="sCountryList">
                         </datalist>
                     <input hidden type="text" id="sCountryCode" name="sCountryCode"/><br>
-                    <span class="error-msg" id="sCountryError" name="sCountryError"></span>
+                    <span class="std-mdl-error-msg" id="sCountryError" name="sCountryError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
@@ -438,25 +438,25 @@
                      <input type="text" id="sTown" name="sTown" list="sTownList" placeholder="-- Select Town --" onclick="clearField('sTownError')" onkeypress="isCountryEmpty()"/>
                      <datalist name="sTownList" id="sTownList"></datalist>
                      <input hidden type="text" id="sTownCode" name="sTownCode"/><br>
-                     <span class="error-msg" id="sTownError" name="sTownError" ></span>
+                     <span class="std-mdl-error-msg" id="sTownError" name="sTownError" ></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">                 
                     <label>Address Line 1:</label>
                     <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="49"><br>
-                    <span class="error-msg" id="sAddressLine1Error" name="sAddressLine1Error"></span>
+                    <span class="std-mdl-error-msg" id="sAddressLine1Error" name="sAddressLine1Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 2:</label>
                     <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="49"><br>
-                    <span class="error-msg" id="sAddressLine2Error" name="sAddressLine2Error"></span>
+                    <span class="std-mdl-error-msg" id="sAddressLine2Error" name="sAddressLine2Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
                     <label>Address Line 3:</label>
                     <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="49"><br>
-                    <span class="error-msg" id="sAddressLine3Error" name="sAddressLine3Error"></span>
+                    <span class="std-mdl-error-msg" id="sAddressLine3Error" name="sAddressLine3Error"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -465,7 +465,7 @@
                         <span class="input-group-addon" id="countryCodePrefix"></span>
                         <input class ="phoneNum" type="text" name="sMobileNumber" id="sMobileNumber" onkeypress="return isNumber(event)" onclick="clearField('sMobileNumberError')" maxlength="20">
                     </div>
-                    <span class="error-msg" id="sMobileNumberError" name="sMobileNumberError"></span>
+                    <span class="std-mdl-error-msg" id="sMobileNumberError" name="sMobileNumberError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -474,43 +474,43 @@
                         <span class="input-group-addon" id="countryCodePrefix"></span>
                         <input class ="phoneNum" type="text" name="sHomeNumber" id="sHomeNumber" onkeypress="return isNumber(event)" onclick="clearField('sHomeNumberError')" maxlength="20">
                     </div>
-                    <span class="error-msg" id="sHomeNumberError" name="sHomeNumberError"></span>
+                    <span class="std-mdl-error-msg" id="sHomeNumberError" name="sHomeNumberError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Email : <span style="color:red">*</span></label>
                     <input type="text" name="sEmail" id="sEmail" onclick="" maxlength="200"><br>
-                    <span class="error-msg" id="sEmailError" name="sEmailError"></span><br>
+                    <span class="std-mdl-error-msg" id="sEmailError" name="sEmailError"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Facebook URL :</label>
                     <input type="text" name="sFacebookUrl" id="sFacebookUrl" onclick="clearField('sFacebookUrlError')" maxlength="199" placeholder="www.facebook.com/username"><br>
-                    <span class="error-msg" id="sFacebookUrlError" name="sFacebookUrlError"></span>
+                    <span class="std-mdl-error-msg" id="sFacebookUrlError" name="sFacebookUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Twitter URL :</label>
                     <input type="text" name="stwitterUrl" id="stwitterUrl" onclick="clearField('stwitterUrlError')" maxlength="199" placeholder="www.twitter.com/username"><br>
-                    <span class="error-msg" id="stwitterUrlError" name="stwitterUrlError"></span>
+                    <span class="std-mdl-error-msg" id="stwitterUrlError" name="stwitterUrlError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
 			        <label>LinkedIn URL :</label>
                     <input type="text" name="sLinkedInUrl" id="sLinkedInUrl" onclick="clearField('sLinkedInUrlError')" maxlength="199" placeholder="www.linkedin.com/username"><br>
-                    <span class="error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError"></span>
+                    <span class="std-mdl-error-msg" id="sLinkedInUrlError" name="sLinkedInUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Instagram URL :</label>
                     <input type="text" name="sInstergramUrl" id="sInstergramUrl" onclick="clearField('sInstergramUrlError')" maxlength="199" placeholder="www.instagram.com/username"><br>
-                    <span class="error-msg" id="sInstergramUrlError" name="sInstergramUrlError"></span>
+                    <span class="std-mdl-error-msg" id="sInstergramUrlError" name="sInstergramUrlError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>MySpace :</label>
                     <input type="text" name="smySpace" id="smySpace" onclick="clearField('smySpaceError')" maxlength="199" placeholder="www.myspace.com/username"><br>
-                    <span class="error-msg" id="smySpaceError" name="smySpaceError"></span>
+                    <span class="std-mdl-error-msg" id="smySpaceError" name="smySpaceError"></span>
 			    </div>
 
 			    <div class="show modal-input-field clearfix">
@@ -518,7 +518,7 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sWhatsApp" id="sWhatsApp" onclick="clearField('sWhatsAppError')" onkeypress="return isNumber(event)" maxlength="20"><br>
-                    <span class="error-msg" id="sWhatsAppError" name="sWhatsAppError"></span>
+                    <span class="std-mdl-error-msg" id="sWhatsAppError" name="sWhatsAppError"></span>
                     </div>
                 </div>
 
@@ -527,7 +527,7 @@
                     <div class="input-group">
                     <span class="input-group-addon" id="countryCodePrefix"></span>
                     <input class ="phoneNum" type="text" name="sViber" id="sViber" onclick="clearField('sViberError')" onkeypress="return isNumber(event)" maxlength="20">
-                    <span class="error-msg" id="sViberError" name="sViberError"></span><br>
+                    <span class="std-mdl-error-msg" id="sViberError" name="sViberError"></span><br>
                     </div>
                 </div>
 			</div>
@@ -578,14 +578,16 @@
                             <label>Grade :</label>
                             <select id="sseQualification" name = "sseQualification" onchange="clearField('sseQualificationError')">
                                 <option value="">--Select One--</option>
-                            </select> <span id="sseQualificationError" name="sseQualificationError" style="color:red"></span>
+                            </select> <br>
+                            <span class="std-mdl-error-msg" id="sseQualificationError" name="sseQualificationError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>Subject Stream :</label>
                             <select id="sseStream" name = "sseStream" onchange="clearField('sseStreamError')">
                                 <option value="">--Select One--</option>
-                            </select> <span id="sseStreamError" name="sseStreamError" style="color:red"></span>
+                            </select> <br>
+                            <span class="std-mdl-error-msg" id="sseStreamError" name="sseStreamError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
@@ -594,37 +596,39 @@
                                 <option value="">--Select One--</option>
                                 <option value="1">Pass</option>
                                 <option value="0">Fail</option>
-                            </select> <span id="sseResultError" name="sseResultError" style="color:red"></span>
+                            </select> <br>
+                            <span class="std-mdl-error-msg" id="sseResultError" name="sseResultError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>Index No :</label>
-                            <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')" maxlength="20">
-                            <span id="sseIndexNoError" name="sseIndexNoError" style="color:red"></span>
+                            <input type="text" name="sseIndexNo" id="sseIndexNo" onkeypress="return isNumber(event)" onclick="clearField('sseIndexNoError')" maxlength="20"><br>
+                            <span class="std-mdl-error-msg" id="sseIndexNoError" name="sseIndexNoError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>School :</label>
-                            <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')" maxlength="200">
-                            <span id="sseSchoolError" name="sseSchoolError" style="color:red"></span>
+                            <input type="text" name="sseSchool" id="sseSchool" onclick="clearField('sseSchoolError')" maxlength="200"><br>
+                            <span class="std-mdl-error-msg" id="sseSchoolError" name="sseSchoolError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>Achieved on :</label>
-                            <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')">
-                            <span id="sseAchievedonError" name="sseAchievedonError" style="color:red"></span>
+                            <input type="date" name="" id="sseAchievedon" onclick="clearField('sseAchievedonError')"><br>
+                            <span class="std-mdl-error-msg" id="sseAchievedonError" name="sseAchievedonError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>Medium :</label>
                             <select name="sseMedium" id="sseMedium" onchange="clearField('sseMediumError')">
                             <option value="">--Select One--</option>
-                            </select><span name="sseMediumError" id="sseMediumError" style="color:red"></span>
+                            </select><br>
+                            <span class="std-mdl-error-msg" name="sseMediumError" id="sseMediumError"></span>
                         </div>
 
                         <div class="show modal-input-field clearfix">
                             <label>Country :</label>
-                            <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --"/>
+                            <input type="text" id="sseCountry" name="sseCountry" list="sseCountryList" placeholder="-- Select Country --"/><br>
                             <datalist name="sseCountryList" id="sseCountryList"></datalist>
                         </div>
 
@@ -650,61 +654,62 @@
 		                <input hidden name="highedu-id" id="highedu-id">
 		                <div class="show modal-input-field clearfix">
 			                <label>Institute of Study :</label>
-			                <input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200">
-			                <span id="instituteofStudyError" name="instituteofStudyError" style="color:red"></span><br>
+			                <input type="text" name="instituteofStudy" id="instituteofStudy" onclick="clearField('instituteofStudyError')" maxlength="200"><br>
+			                <span class="std-mdl-error-msg" id="instituteofStudyError" name="instituteofStudyError"></span>
 		                </div>
 		                
 		                <div class="show modal-input-field clearfix">
 			                <label>Affiliated Institute :</label>
-			                <input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')" maxlength="200">
-			                <span id="affiliatedInstituteError" name="affiliatedInstituteError" style="color:red"></span>
+			                <input type="text" name="affiliatedInstitute" id="affiliatedInstitute" onclick="clearField('affiliatedInstituteError')" maxlength="200"><br>
+			                <span class="std-mdl-error-msg" id="affiliatedInstituteError" name="affiliatedInstituteError"></span>
 		                </div>
 		
 						<div class="show modal-input-field clearfix">
 			                <label>Area of study :</label>
 			                <select id="areaofstudy" name = "areaofstudy" onchange="clearField('areaofstudyError')">
 			                    <option value="">--Select One--</option>
-			                </select> 
-			                <span id="areaofstudyError" name="areaofstudyError" style="color:red"></span>
+			                </select> <br>
+			                <span class="std-mdl-error-msg" id="areaofstudyError" name="areaofstudyError"></span>
 		                </div>
 		               
 		                <div class="show modal-input-field clearfix">
 		                	<label>Award :</label>
 			                <select id="award" name = "award" onchange="clearField('awardError')">
 			                    <option value="">--Select One--</option>
-			                </select> 
-			                <span id="awardError" name="awardError" style="color:red"></span>
+			                </select> <br>
+			                <span class="std-mdl-error-msg" id="awardError" name="awardError"></span>
 		                </div>
 		                
 		                <div class="show modal-input-field clearfix">
 			                <label>Student ID (University Index) :</label>
-			                <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200">
-			                <span id="studentIdError" name="studentIdError" style="color:red"></span>
+			                <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200"><br>
+			                <span class="std-mdl-error-msg" id="studentIdError" name="studentIdError"></span>
 		                </div>
 		                
 		                <div class="show modal-input-field clearfix">
 			                <label>GPA/Result :</label>
-			                <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')" maxlength="2" onkeypress="return isNumber(event)">
-			                <span id="gpa" name="gpa" style="color:red"></span>
+			                <input type="text" name="gpa" id="gpa" onclick="clearField('gpaError')" maxlength="2" onkeypress="return isNumber(event)"><br>
+			                <span class="std-mdl-error-msg" id="gpa" name="gpa"></span>
 		                </div>
 						
 						<div class="show modal-input-field clearfix">
 			                <label>Commenced On :</label>
-			                <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
-			                <span id="heCommencedOnError" name="heCommencedOnError" style="color:red"></span>
+			                <input type="date" name="heCommencedOn" id="heCommencedOn" onclick="clearField('heCommencedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')"><br>
+			                <span class="std-mdl-error-msg" id="heCommencedOnError" name="heCommencedOnError"></span>
 		                </div>
 						
 						<div class="show modal-input-field clearfix">
 			                <label>Completed On :</label>
-			                <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')">
-			                <span id="heCompletedOnError" name="heCompletedOnError" style="color:red"></span>
+			                <input type="date" name="heCompletedOn" id="heCompletedOn" onclick="clearField('heCompletedOnError')" onchange ="checkDateRange('heCommencedOn','heCompletedOn','heCommencedOnError','heCompletedOnError')"><br>
+			                <span class="std-mdl-error-msg" id="heCompletedOnError" name="heCompletedOnError"></span>
 		                </div>
 		
 		                <div class="show modal-input-field clearfix">
 			                <label>Medium :</label>
 			                <select name="heMedium" id="heMedium" onchange="clearField('heMediumError')">
 			                    <option value="">--Select One--</option>
-			                </select><span name="heMediumError" id="heMediumError" style="color:red"></span>
+			                </select><br>
+			                <span class="std-mdl-error-msg" name="heMediumError" id="heMediumError"></span>
 		                </div>
 		
 		                <div class="show modal-input-field clearfix">
@@ -798,39 +803,40 @@
                     <label>Industry of the Organization :</label>
                     <select id="industryoftheOrganization" name = "industryoftheOrganization" onchange="clearField('industryoftheOrganizationError')">
                         <option value="">--Select One--</option>
-                    </select>
-                    <span id="industryoftheOrganizationError" name="industryoftheOrganizationError" style="color:red"></span>
+                    </select><br>
+                    <span class="std-mdl-error-msg" id="industryoftheOrganizationError" name="industryoftheOrganizationError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Organization :</label>
-                    <input type="text" name="organization" id="organization" onclick="clearField('organizationError')">
-                    <span id="organizationError" name="organizationError" style="color:red"></span>
+                    <input type="text" name="organization" id="organization" onclick="clearField('organizationError')"><br>
+                    <span class="std-mdl-error-msg" id="organizationError" name="organizationError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Job Category :</label>
                     <select id="jobCategory" name = "jobCategory" onchange="clearField('jobCategoryError')">
                         <option value="">--Select One--</option>
-                    </select> <span id="jobCategoryError" name="jobCategoryError" style="color:red"></span>
+                    </select> <br>
+                    <span class="std-mdl-error-msg" id="jobCategoryError" name="jobCategoryError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Designation :</label>
-                    <input type="text" name="designation" id="designation" onclick="clearField('designationError')">
-                    <span id="designationError" name="designationError" style="color:red"></span><br>
+                    <input type="text" name="designation" id="designation" onclick="clearField('designationError')"><br>
+                    <span class="std-mdl-error-msg" id="designationError" name="designationError"></span><br>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Commenced on :</label>
-                    <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
-                    <span id="commencedOnError" name="commencedOnError" style="color:red"></span>
+                    <input type="date" name="commencedOn" id="commencedOn" onclick="clearField('commencedOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')"><br>
+                    <span class="std-mdl-error-msg" id="commencedOnError" name="commencedOnError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">
                     <label>Completion on :</label>
-                    <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')">
-                    <span id="completionOnError" name="completionOnError" style="color:red"></span>
+                    <input type="date" name="completionOn" id="completionOn" onclick="clearField('completionOnError')" onchange ="checkDateRange('commencedOn','completionOn','commencedOnError','completionOnError')"><br>
+                    <span class="std-mdl-error-msg" id="completionOnError" name="completionOnError"></span>
                 </div>
 
                 <div class="show modal-input-field clearfix">

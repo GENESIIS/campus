@@ -1021,7 +1021,7 @@ body, html {
   transition: all 0.3s; }
 
 .btn-close {
-  background-color: #7da7d9; }
+  background-color: #717171; }
 
 .slideable {
   display: none; }
@@ -1049,13 +1049,16 @@ body, html {
       font-family: "Muli", sans-serif;
       color: #93a1b1; }
 
-.error-msg {
+.std-mdl-error-msg {
   color: #ff5a09;
   font-family: "Signika", sans-serif;
   font-size: 13px;
   position: relative;
   left: 20%;
-  top: 2px; }
+  top: 3px; }
+
+.modal-professional .std-mdl-error-msg {
+  left: 30%; }
 
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
