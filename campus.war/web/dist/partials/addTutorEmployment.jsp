@@ -9,6 +9,7 @@
 <!-- 20170328 c157-add-tutor-employment-details-cw - add tutorCode, employerCode hidden items in the table & add validation to the table-->
 <!-- 20170329 c157-add-tutor-employment-details-cw - add remove button -->
 <!-- 20170330 c157-add-tutor-employment-details-cw - add maxSequence hidden item -->
+<!-- 20170330 c157-add-tutor-employment-details-cw - modified table view sequence -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -70,8 +71,8 @@
 										<td><c:out value="${loop.index+1}"></c:out></td>
 										<td><c:out value="${companies[1]}"></c:out></td>
 										<td><c:out value="${companies[2]}"></c:out></td>
+										<td><c:out value="${companies[3]}"></c:out></td>
 										<td><c:out value="${companies[4]}"></c:out></td>
-										<td><c:out value="${companies[5]}"></c:out></td>
 										<td>
 											<input type="hidden" id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>"/>
 											<input type="hidden" id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>"/>
