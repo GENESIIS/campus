@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170328 CW c157-add-tutor-employment-details-cw added getTutorSelectedFCP
 //20170328 CW c157-add-tutor-employment-details-cw added UNIQUEPREFIX to getAll method
 				// add trim to the string values in getTutorSelectedFCP method
+//20170330 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method to query the code in EMPLOYMENT table
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -163,7 +164,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	
 	/**
 	 * Returns all the tutor selected Featured Course Provider Details list
-	 * @author Chinthaka 
+	 * @author CW
 	 * @return Returns the tutor selected Featured Course Provider Details in Database from a collection of collection
 	 */
 	public static Collection<Collection<String>> getTutorSelectedFCP(String tutorCode) throws SQLException, Exception {
@@ -173,9 +174,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		String query = "SELECT [CODE], [SHORTNAME], [NAME], [DESCRIPTION], [SPECIALITY], "
-				+ "[ADDRESS1] + [ADDRESS2] + [ADDRESS3] ADDRESS FROM CAMPUS.COURSEPROVIDER CP "
-				+ "WHERE CP.CODE IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ?)";		
+		String query = "SELECT CP.CODE, CP.SHORTNAME, CP.NAME, CP.SPECIALITY, CP.ADDRESS1 + CP.ADDRESS2 + CP.ADDRESS3 ADDRESS, "
+				+ "EMP.CODE EMPLOYERCODE FROM CAMPUS.COURSEPROVIDER CP	"
+				+ "INNER JOIN CAMPUS.EMPLOYMENT EMP ON CP.CODE = EMP.COURSEPROVIDER "
+				+ "WHERE CP.CODE IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ?)";
 		
 		try {			
 			conn = ConnectionManager.getConnection();						
@@ -189,9 +191,9 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				singleTutorSelectedFCPList.add((rs.getString("CODE")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("SHORTNAME")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("NAME")).trim());
-				singleTutorSelectedFCPList.add((rs.getString("DESCRIPTION")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("SPECIALITY")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("ADDRESS")).trim());
+				singleTutorSelectedFCPList.add((rs.getString("EMPLOYERCODE")).trim());
 				singleTutorSelectedFCPList.add(tutorCode);
 								
 				allTutorSelectedFCPList.add(singleTutorSelectedFCPList);
