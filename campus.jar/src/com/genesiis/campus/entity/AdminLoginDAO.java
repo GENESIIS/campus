@@ -18,7 +18,7 @@ import com.genesiis.campus.validation.SystemMessage;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
-	private static int MAX_ATTEMPTS = 0;
+	
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -83,7 +83,6 @@ public class AdminLoginDAO implements ICrud {
 				userType = rs.getString("USERTYPE");
 				password = rs.getString("PASSWORD");
 
-				for (MAX_ATTEMPTS = MAX_ATTEMPTS; MAX_ATTEMPTS <= 3; MAX_ATTEMPTS++) {
 					if (check && passwordMatch) {
 						admin.setAdminCode(Integer.parseInt(code));
 						admin.setName(name);
@@ -91,8 +90,7 @@ public class AdminLoginDAO implements ICrud {
 						admin.setEmail(email);
 						admin.setUserType(userType);
 						admin.setValid(true);
-						log.info(name + "  " + email);
-
+						
 						final ArrayList<String> singleAdmin = new ArrayList<String>();
 						final Collection<String> adminDatabundel = singleAdmin;
 
@@ -104,36 +102,16 @@ public class AdminLoginDAO implements ICrud {
 
 						dataBundel.add(adminDatabundel);
 						message = SystemMessage.VALIDUSER.message();
-						break;
+		
 					} else {
-						log.info(" Attempts  " + MAX_ATTEMPTS);
 						message = SystemMessage.INVALIDPASSWORD.message();
 						admin.setValid(false);
-
-						if (MAX_ATTEMPTS == 3) {
-							message = SystemMessage.LOGGINATTEMPT3.message();
-							MAX_ATTEMPTS++;
-							break;
-						} else if (MAX_ATTEMPTS == 2) {
-							message = SystemMessage.LOGGINATTEMPT2.message();
-							MAX_ATTEMPTS++;
-							break;
-						} else if (MAX_ATTEMPTS == 1) {
-							message = SystemMessage.LOGGINATTEMPT1.message();
-							MAX_ATTEMPTS++;
-							break;
-						} else {
-							MAX_ATTEMPTS++;
-							break;
-						}
-
 					}
-				}
+	
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				admin.setValid(false);
-				log.info(message);
-
+			
 			}
 		} catch (SQLException exception) {
 			log.error("findById(Object code):  SQLexception" + exception.toString());
@@ -158,7 +136,6 @@ public class AdminLoginDAO implements ICrud {
 		singleMessageList.add(message);
 
 		messageCollection = (Collection<String>) singleMessageList;
-
 		dataBundel.add(messageCollection);
 
 		return dataBundel;
