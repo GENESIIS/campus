@@ -358,7 +358,7 @@ function displayProviderTownList() {
  */
 function landPhoneNubmerHelper() {
 	var country = $("#country-List :selected").val();
-	var areaCode = $("#areaCode1").val();as
+	var areaCode = $("#areaCode").val();
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
 	var networkCode = $("#networkCode").val();
@@ -368,6 +368,7 @@ function landPhoneNubmerHelper() {
 	var lastLandNumber1 = null;
 	var lastLandNumber2 = null;
 	var lastFaxNumber = null;
+	var lastMobileNumber = null;
 	
 	var integerPattern = /^[0-9]+$/;
 
@@ -397,104 +398,109 @@ function landPhoneNubmerHelper() {
 		lastLandNumber1 = "+" + country;
 		lastLandNumber2 = "+" + country;
 		lastFaxNumber = "+" + country;
-		
-		 if (!isempty(areaCode)) {
+
+		 if (!isValidNumber(areaCode, integerPattern)) {
 			 
-			displyPhoneNumber('#landNumber1', "Area code is empty.");
-			displyPhoneNumber('#landNumber2', "Area code is empty.");
-			displyPhoneNumber('#lastFaxNumber', "Area code is empty.");
+			displyPhoneNumber('#landNumber1', "Area code is empty or invalid.");
+			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
+			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
 			
-			var areaCodeSet = jQuery("[id=areaCode]");//set area codes
+			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
 			for (var i = 0; i< areaCodeSet.length; i++){
 				$(areaCodeSet[i]).val("");
 			}
-//			if(isempty(areaCode2)) {
-//				lastLandNumber2 += " " + areaCode2;
-//				displyPhoneNumber('#landNumber2', lastLandNumber2);
-//				
-//			}if(isempty(areaCode3)) {
-//				lastFaxNumber += " " + areaCode3;
-//				displyPhoneNumber('#lastFaxNumber', lastFaxNumber);
-//			} else {
-//				if(!isempty(areaCode2)) {
-//					displyPhoneNumber('#landNumber2', "Area code is empty.");
-//					}
-//				if(!isempty(areaCode3)){
-//					displyPhoneNumber('#lastFaxNumber', "Area code is empty.");
-//				}
-//			}
-
-		}if(!isempty(networkCode)){
-			displyPhoneNumber('#errorMobile', "Network code is empty.");
-		
-		} if (isempty(areaCode)) {
-			lastLandNumber1 += " " + areaCode;
-			displyPhoneNumber('#landNumber1', lastLandNumber1);
 			
-			if (isempty(areaCode2)) {
-				lastLandNumber2 += " " + areaCode;
-				displyPhoneNumber('#landNumber2', lastLandNumber2);
-				
-			}if (isempty(areaCode3)) {
-				lastFaxNumber += " " + areaCodeareaCode3;
-				displyPhoneNumber('#lastFaxNumber', lastFaxNumber);
-			} else {
-				
-				if(!isempty(areaCode2)) {
-					//lastLandNumber2 = "";
-					lastLandNumber2 += " " + areaCode;
-					displyPhoneNumber('#landNumber2', lastLandNumber2);
-					}
-				if(!isempty(areaCode3)){
-					//lastFaxNumber = "";
-					lastFaxNumber += " " + areaCode;
-					displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+
+		}if(!isValidNumber(networkCode, integerPattern)){
+			
+			displyPhoneNumber('#lastMobileNumber', "Network code is empty or invalid.");
+			setErrorMessage('#mobileDiv', '#errorMobile', "Network code is invalid.");
+			
+		} if (isValidNumber(areaCode, integerPattern)) {
+			
+			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
+			for (var i = 0; i< areaCodeSet.length; i++){
+				$(areaCodeSet[i]).val(areaCode);
+			}
+			
+			lastLandNumber1 += " " + areaCode;
+			lastLandNumber2 += " " + areaCode;
+			lastFaxNumber += " " + areaCode;
+		
+			// check phone number fields and set error messages or hints
+				if (isValidNumber(land1, integerPattern)) {
+					
+					clearToolTip('#land1Div');
+					lastLandNumber1 += " " + land1;
+					
+				}if(isempty(land1) && (!isValidNumber(land1, integerPattern))){
+					
+					lastLandNumber1 = "Phone number 1 is invalid.";
+					setErrorMessage('#land1Div', '#errorLand1', "Phone number 1 is invalid.");
+					
+				}if (isValidNumber(land2, integerPattern)) {
+					
+					clearToolTip('#land2Div');
+					lastLandNumber2 += " " + land2;
+					
+				}if(isempty(land2) && (!isValidNumber(land2, integerPattern))){
+					
+					lastLandNumber2 = "Phone number 2 is invalid.";
+					setErrorMessage('#land2Div', '#errorLand2', "Phone number 2 is invalid.");
+					
+				}if (isValidNumber(fax, integerPattern)) {
+					
+					clearToolTip('#faxDiv');
+					lastFaxNumber += " " + fax;
+					
+				}if(isempty(fax) && (!isValidNumber(fax, integerPattern))){
+					
+					lastFaxNumber = "Fax number is invalid.";
+					setErrorMessage('#faxDiv', '#errorFax', "Fax number is invalid.");
+					
 				}
+				
+				displyPhoneNumber('#landNumber1', lastLandNumber1);
+				displyPhoneNumber('#landNumber2', lastLandNumber2);
+				displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+			
+
+		} if(isValidNumber(networkCode, integerPattern)){
+			
+			lastMobileNumber += " " + networkCode;
+			
+			if (isValidNumber(mobile, integerPattern)) {
+				
+				clearToolTip('#mobileDiv');
+				lastMobileNumber += " " + mobile;
+				
+			}if(isempty(mobile) && (!isValidNumber(mobile, integerPattern))){
+				
+				lastMobileNumber = "Mobile number is invalid.";
+				setErrorMessage('#mobileDiv', '#errorMobile', "Mobile number is invalid.");
 				
 			}
 			
-//			if (isPatternMatch(integerPattern, areaCode)) {
-//				lastLandNumber1 = "+" + country + " " + areaCode + " "
-//						+ land1;
-//				lastLandNumber2 = "+" + country + " " + areaCode + " "
-//						+ land2;
+			displyPhoneNumber('#lastMobileNumber',lastFaxNumber );
+			
+////			 if(!isPatternMatch(integerPattern, networkCode)){
+////
+////				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
+////				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
+////
+////							
+////			 } else if (isPatternMatch(integerPattern, networkCode)) {
+////
+////				var lastMobilNumber = "+" + country + " " + networkCode + " "
+////						+ mobile;
+////
+////				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
+////				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
+////					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
+////				}
+////			}
 //
-//				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
-//				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
-//
-//				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
-//					document.getElementById('landNumber1').innerHTML = "";
-//					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
-//				}
-//				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
-//					document.getElementById('landNumber2').innerHTML = "";
-//					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
-//
-//				}
-//			} else {
-//				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
-//			}
-//
-
-		} if(isempty(networkCode)){
-//			 if(!isPatternMatch(integerPattern, networkCode)){
-//
-//				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
-//				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
-//
-//							
-//			 } else if (isPatternMatch(integerPattern, networkCode)) {
-//
-//				var lastMobilNumber = "+" + country + " " + networkCode + " "
-//						+ mobile;
-//
-//				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-//				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
-//					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
-//				}
-//			}
-
-		}
+	}
 		
 	}
 
@@ -590,8 +596,12 @@ function saveCourseProvider() {
  *            it is the value of a document element
  * @returns true if has content else false. (used to validate string values)
  */
-function isValidNumber(fieldValue) {
-	return (($.trim(fieldValue) == "") || (fieldValue == null) || (!isPatternMatch(integerPattern, areaCode))) ? true : false;
+function isValidNumber(fieldValue, integerPattern) {
+	flag = true;
+	if(($.trim(fieldValue) === "") || (fieldValue === null) || (!isPatternMatch(integerPattern, fieldValue))){
+		flag = false;
+	}
+	return flag;
 }
 	
 function clearErrorMessage(){
