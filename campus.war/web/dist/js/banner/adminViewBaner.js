@@ -50,7 +50,7 @@ $(document).ready(function(){
   * by the Admin
   */
 	$('#adminAddNewBanner').click(function(){
-		if (confirm('Proceed ?'))
+		if (confirm('Do You Want to Proceed ?'))
 		window.location.href="/dist/partials/banner/bannerManager.jsp";
 		
 	});

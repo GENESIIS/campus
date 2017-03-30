@@ -129,9 +129,6 @@ public class CmdAdminBannerUpload implements ICommand {
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
 				}
 				
-				//return uploadFullBannerCredentials(jsn,view,userName,helper);	
-				// if validation fails
-				//setResponseCridentials(helper);
 				return view;
 			case UPDATE_ONLY_THE_BANNER_RECORD:
 				
@@ -167,9 +164,6 @@ public class CmdAdminBannerUpload implements ICommand {
 		}
 		
 	}
-	
-	
-	
 	
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
