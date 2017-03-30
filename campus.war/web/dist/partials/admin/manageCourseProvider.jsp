@@ -257,8 +257,9 @@
 													placeholder="" onkeyup="landPhoneNubmerHelper();">
 												 <input name="land1" type="tel"  onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-6" id="land1" placeholder=""> <span
-													class="phone-no-hint" id="landNumber1"></span> <a
-													class="error-info" href="#" data-toggle="tooltip" id="errorLand1"
+													class="phone-no-hint" id="landNumber1"></span>
+												 <a
+													class="error-info" href="#" data-toggle="tooltip" 
 													title="Error! " id="errorLand1"></a>
 											</div>
 										</div>
@@ -271,9 +272,11 @@
 												<input name="areaCode2" type="text"
 													class="col-xs-3 input-border-r" id="areaCode2"
 													placeholder="" disabled>
-												<input name="land2" type="tel"
+												<input name="land2" type="tel" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-6" id="land2" placeholder=""> <span
 													class="phone-no-hint" id="landNumber2"></span>
+												<a class="error-info" href="#" data-toggle="tooltip" 
+													title="Error! " id="errorLand2"></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -285,7 +288,7 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="networkCode" type="text" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-3 input-border-r" id="networkCode"
-													placeholder="" disabled> 
+													placeholder="" > 
 												<input name="mobile"  onkeyup="landPhoneNubmerHelper();"
 													type="tel" class="col-xs-6" id="mobile" placeholder="">
 												<span class="phone-no-hint" id="lastMobileNumber"></span> <a
