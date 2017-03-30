@@ -34,6 +34,11 @@ package com.genesiis.campus.command;
  *              updateBannerCredentials() method has been changed to include the message & setResponseCridentials() and to set the success code.
  * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. In setResponseCridentials() :null check for fileUtility.getFileItem() is implemented.
  * 20170329 DN  c83-admin-manage-banner-update-banner-info-dn. uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper) made changes to get war image uploading path.
+ * 20170330 DN  c83-admin-manage-banner-update-banner-info-dn. method updateBannerCredentials() modified to include request attributes "bannerWarPath" and "bannerCode".
+ * 				uploadFullBannerCredentials() method modified to extract bannerImage name to a string for future manipulation and the banner name is set in the updating logic.
+ * 				Within uploadFullBannerCredentials() "bannerCode" attribute has been set.
+ * 				
+ * 				
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
@@ -554,7 +559,8 @@ public class CmdAdminBannerUpload implements ICommand {
 			bannerRecordUpdated(rowBanner);
 			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
 			this.setSuccessCode(1);
-			
+			helper.setAttribute("bannerWarPath","" );
+			helper.setAttribute("bannerCode",rowBanner.getBannerCode() );
 			setResponseCridentials(helper);
 			log.info("updateBannerCredentials(JasonInflator,IDataHelper) --> banner records are updated successfully ");
 		} catch (FailedValidationException fvexp) {
@@ -611,7 +617,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			IView view,String userName,IDataHelper helper) throws SQLException,Exception{
 		Connection con = null;
 		String bannerCode ="";
-		String bannerNamer=	rowBanner.getBannerImageName();;	
+		String bannerNamer=	rowBanner.getBannerImageName();	
 	try{
 		 
 		 String[] extension =rowBanner.getBannerImageName().split("\\.");
@@ -633,6 +639,8 @@ public class CmdAdminBannerUpload implements ICommand {
 		 } else { 
 			 // this is an insert or update for an existing record			 
 			 bannerRecordUpdated(rowBanner);
+			 //setting the banner Name
+			 bannerNamer=bannerCode+"."+extension[1];
 		 }
 		 
 		 con = ConnectionManager.getConnection();
@@ -685,11 +693,9 @@ public class CmdAdminBannerUpload implements ICommand {
 			log.error("uploadFullBannerCredentials(IDataHelper,IView):Exception "+ exp.toString());
 			throw exp;
 		}
-		
-		
 	
 		String bannerWarPath =SystemConfig.BANNER_IMAGE_WAR_PATH.getValue1()+"/"+bannerCode+"/"+bannerNamer;
-	
+		helper.setAttribute("bannerCode", bannerCode);
 		helper.setAttribute("bannerWarPath",bannerWarPath );
 	 	setResponseCridentials(helper); 
 	 	return view;
