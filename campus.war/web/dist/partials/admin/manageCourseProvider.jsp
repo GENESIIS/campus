@@ -19,6 +19,7 @@
 <!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
 <!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages, added missing ids for password, cPassword and accountStatus -->
 <!-- 20170329 JH c141-ui-integration-for-add-course-provider changed phone number related ids to match with front end validation classes -->
+<!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -252,10 +253,10 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="areaCode1" type="text"
 													class="col-xs-3 input-border-r" id="areaCode1"
-													placeholder="">
+													placeholder="" onkeyup="landPhoneNubmerHelper();">
 												 <input name="land1" type="tel"
 													class="col-xs-6" id="land1" placeholder=""> <span
-													class="phone-no-hint" id="landNumber1">+94 77 729 729</span> <a
+													class="phone-no-hint" id="landNumber1"></span> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorLand1"
 													title="Error! " id="errorLand1"></a>
 											</div>
@@ -271,7 +272,7 @@
 													placeholder="">
 												<input name="land2" type="tel"
 													class="col-xs-6" id="land2" placeholder=""> <span
-													class="phone-no-hint" id="landNumber2">+94 77 729 729</span>
+													class="phone-no-hint" id="landNumber2"></span>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
@@ -286,7 +287,7 @@
 													placeholder=""> 
 												<input name="mobile"
 													type="tel" class="col-xs-6" id="mobile" placeholder="">
-												<span class="phone-no-hint" id="lastMobileNumber">+94 77 729 729</span> <a
+												<span class="phone-no-hint" id="lastMobileNumber"></span> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorMobile"
 													title="Error! "></a>
 											</div>
@@ -299,8 +300,7 @@
 													id="countryCode" placeholder="" disabled> 
 												<input name="areaCode3" type="text"
 													class="col-xs-3 input-border-r" id="areaCode3"
-													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber">+94
-													77 729 729</span> 
+													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber"></span> 
 												<input name="fax" type="tel" class="col-xs-6"
 													id="fax" placeholder="">
 												<a class="error-info" href="#" data-toggle="tooltip" id="errorFax"
