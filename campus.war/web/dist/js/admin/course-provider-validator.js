@@ -14,7 +14,7 @@
 //20170327 JH c141-ui-for-add-course-provider validateFormURL changes wip, removed commented codes in vaidateCourseProviderDeatils() method 
 //20170328 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils() method code refactoring wip, validateFormURL():error handling changed to add style classes and
 //				to accept min max length for url length validation as parameters 
-//20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields
+//20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields, vaidateCourseProviderDeatils() modified to do phone number validation wip
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -276,7 +276,9 @@ function vaidateCourseProviderDeatils(form) {
 	var specialFeatures = $("#specialFeatures").val();
 	var generalEmail = $("#generalEmail").val();
 	var inquiryMail = $("#inquiryMail").val();
-	var areaCode = $("#areaCode").val();
+	var areaCode1 = $("#areaCode1").val();
+	var areaCode2 = $("#areaCode2").val();
+	var areaCode3 = $("#areaCode3").val();
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
 	var fax = $("#fax").val();
@@ -333,59 +335,55 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#specialFeaturesDiv', '#errorSpecialFeatures', "Only 100 characters allowed.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(generalEmail, 1,  255)) {
-		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "General email field is empty or too long.");
-		flag = false;
-	}
 	if (!isValidEmailFormat(generalEmail)) {
 		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "Invalid email.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(inquiryMail, 1, 255)) {
-		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Short name should be less than 20 characters.");
+	if (!isValidMinMaxLength(generalEmail, 1,  255)) {
+		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "General email field is empty or too long.");
 		flag = false;
 	}
 	if (!isValidEmailFormat(inquiryMail)) {
-		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Short name should be less than 20 characters.");
+		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Invalid email.");
 		flag = false;
 	}
-//	if (!isValidMinMaxLength(land1, 1, 20)) {
-//		document.getElementById('errorLand1').innerHTML = "**Land phone number can't be empty (maximum 20 characters).";
-//		document.getElementById('land1').focus();
-//		flag = false;
-//	}
-//	if (isempty(courseProvider) && !isPatternMatch(integerPattern, land1)) {
-//		document.getElementById('errorLand1').innerHTML = "**Invalid Land phone number.";
-//		document.getElementById('land1').focus();
-//		flag = false;
-//	}
-//	if (!isValidMinMaxLength(fax, 0, 20) || !isPatternMatch(integerPattern, fax)) {
-//		document.getElementById('errorFax').innerHTML = "**Fax number invalid or exceed the length (maximum 20 characters)";
-//		document.getElementById('fax').focus();
-//		flag = false;
-//	}
-//	if (!isValidMinMaxLength(land2, 0, 20) || !isPatternMatch(integerPattern, land2)) {
-//		document.getElementById('errorLand2').innerHTML = "**Land phone number 2 is not valid or exceed the length (maximum 20 chracters).";
-//		document.getElementById('land2').focus();
-//		flag = false;
-//	}
-//	if (!isValidMinMaxLength(areaCode, 0, 20) && !isPatternMatch(integerPattern, areaCode)) {
-//		document.getElementById('errorAreaCode').innerHTML = "**Area code is invalid or exceed the length (maximum 20 chracters). ";
-//		document.getElementById('areaCode').focus();
-//		document.getElementById('errorLand1').innerHTML = "**Area code is invalid.";
-//		flag = false;
-//	}
-//	if (!isValidMinMaxLength(networkCode, 1, 20) || !isPatternMatch(integerPattern, networkCode)) {
-//		document.getElementById('errorNetworkCode').innerHTML = "**Invalid or too long network code. Maximum 20 characters.";
-//		document.getElementById('networkCode').focus();
-//		flag = false;
-//	}
-//	if (!isValidMinMaxLength(mobile, 1, 20) || !isPatternMatch(integerPattern, mobile)) {
-//		document.getElementById('errorLastMobileNumber').innerHTML = "**Give a valid mobile phone number.";
-//		document.getElementById('errorNetworkCode').innerHTML = "**Network code is not valid. ";
-//		document.getElementById('mobile').focus();
-//		flag = false;
-//	}
+	if (!isValidMinMaxLength(inquiryMail, 1, 255)) {
+		setErrorMessage('#inquiryMailDiv', '#errorInquiryMail', "Empty or too long inquiry mail.");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(land1, 1, 20)) {
+		setErrorMessage('#land1Div', '#land1Div', "Land phone number can't be empty (maximum 20 characters).");
+		flag = false;
+	}
+	if (isempty(courseProvider) && !isPatternMatch(integerPattern, land1)) {
+		setErrorMessage('#land1Div', '#errorLand1', "Invalid Land phone number.");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(fax, 0, 20) || !isPatternMatch(integerPattern, fax)) {
+		setErrorMessage('#faxDiv', '#errorFax', "Fax number invalid or exceed the length (maximum 20 characters).");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(land2, 0, 20) || !isPatternMatch(integerPattern, land2)) {
+		setErrorMessage('#land2Div', '#errorLand2', "Land phone number 2 is not valid or exceed the length (maximum 20 characters).");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(areaCode1, 0, 20) && !isPatternMatch(integerPattern, areaCode1)) {
+		setErrorMessage('#land1Div', '#errorLand1', "Area code is invalid or exceed the length (maximum 20 chracters). ");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(areaCode2, 0, 20) && !isPatternMatch(integerPattern, areaCode2)) {
+		setErrorMessage('#land2Div', '#errorLand2', "Area code is invalid or exceed the length (maximum 20 chracters). ");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(mobile, 1, 20) || !isPatternMatch(integerPattern, mobile)) {
+		setErrorMessage('#mobileDiv', '#errorMobile', "Give a valid mobile phone number.");
+		document.getElementById('mobile').focus();
+		flag = false;
+	}
+	if (!isValidMinMaxLength(networkCode, 1, 20) || !isPatternMatch(integerPattern, networkCode)) {
+		setErrorMessage('#mobileDiv', '#errorMobile', "Invalid or too long network code. Maximum 20 characters.");
+		flag = false;
+	}
 	if (!isValidMinMaxLength(address1, 1, 50)) {
 		setErrorMessage('#address1Div', '#errorAddress1', "Address is empty or too long ( sholud beless than 50 characters).");
 		flag = false;
