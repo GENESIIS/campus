@@ -21,6 +21,7 @@
 //				clear error and success message		
 //20170329 JH c141-ui-integration-for-add-course-provider added displyPhoneNumber() method to display given phone number or the information message to the user related to the phone number,
 //				landPhoneNubmerHelper() method changed to match new UI elements
+//20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -357,11 +358,18 @@ function displayProviderTownList() {
  */
 function landPhoneNubmerHelper() {
 	var country = $("#country-List :selected").val();
-	var areaCode = $("#areaCode").val();
+	var areaCode1 = $("#areaCode1").val();
+	var areaCode2 = $("#areaCode2").val();
+	var areaCode3 = $("#areaCode3").val();
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
 	var networkCode = $("#networkCode").val();
+	var fax = $("#fax").val();
 	var mobile = $("#mobile").val();
+	
+	var lastLandNumber1 = null;
+	var lastLandNumber2 = null;
+	var lastFaxNumber = null;
 	
 	var integerPattern = /^[0-9]+$/;
 
@@ -372,7 +380,7 @@ function landPhoneNubmerHelper() {
 		var varId = $(errorMessageList[i]).attr('id');
 		varId = '#' + varId;
 		$(varId).text("");
-		//clearToolTip(varId);
+		
 	}
 	country = 94 ;
 	if (!isempty(country)) {
@@ -382,22 +390,41 @@ function landPhoneNubmerHelper() {
 		displyPhoneNumber('#lastMobileNumber',"Please select your country." );
 		displyPhoneNumber('#lastFaxNumber',"Please select your country." );
 		
-//		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
-//		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
-		
 	}else{
-//		 if (!isempty(areaCode)) {
-//			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
-//
-//		}if(!isempty(networkCode)){
-//			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
+		var numbers = jQuery("[id=countryCode]");
+		for (var i = 0; i< numbers.length; i++){
+			$(numbers[i]).val("+" + country);
+		}
+	
+		lastLandNumber1 = "+" + country;
+		lastLandNumber2 = "+" + country;
+		lastFaxNumber = "+" + country;
+		
+		 if (!isempty(areaCode1)) {
+			 
+			displyPhoneNumber('#landNumber1', "Area code is empty.");
+			if (isempty(areaCode2)) {
+				lastLandNumber2 += " " + areaCode2;
+				displyPhoneNumber('#landNumber2', lastLandNumber2);
+				
+			}if (isempty(areaCode3)) {
+				lastFaxNumber += " " + areaCode3;
+				lastFaxNumber('#lastFaxNumber', lastFaxNumber);
+			} else {
+				displyPhoneNumber('#landNumber2', "Area code is empty.");
+				displyPhoneNumber('#lastFaxNumber', "Area code is empty.");
+			}
+
+		}if(!isempty(networkCode)){
+			displyPhoneNumber('#errorMobile', "Area code is empty.");
+//			document.getElementById('errorMobile').innerHTML = "**Network code is empty.";
 //			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
-//		
-//		} if (isempty(areaCode)) {
+		
+		} if (isempty(areaCode)) {
 //			if (isPatternMatch(integerPattern, areaCode)) {
-//				var lastLandNumber1 = "+" + country + " " + areaCode + " "
+//				lastLandNumber1 = "+" + country + " " + areaCode + " "
 //						+ land1;
-//				var lastLandNumber2 = "+" + country + " " + areaCode + " "
+//				lastLandNumber2 = "+" + country + " " + areaCode + " "
 //						+ land2;
 //
 //				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
@@ -416,8 +443,8 @@ function landPhoneNubmerHelper() {
 //				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
 //			}
 //
-//
-//		} if(isempty(networkCode)){
+
+		} if(isempty(networkCode)){
 //			 if(!isPatternMatch(integerPattern, networkCode)){
 //
 //				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
@@ -434,8 +461,8 @@ function landPhoneNubmerHelper() {
 //					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
 //				}
 //			}
-//
-//		}
+
+		}
 		
 	}
 
