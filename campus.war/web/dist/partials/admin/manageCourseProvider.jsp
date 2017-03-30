@@ -250,13 +250,13 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="areaCode" type="text"
-													class="col-xs-3 input-border-r" id="areaCode"
+												<input name="areaCode1" type="text"
+													class="col-xs-3 input-border-r" id="areaCode1"
 													placeholder="">
 												 <input name="land1" type="tel"
 													class="col-xs-6" id="land1" placeholder=""> <span
 													class="phone-no-hint" id="landNumber1">+94 77 729 729</span> <a
-													class="error-info" href="#" data-toggle="tooltip"
+													class="error-info" href="#" data-toggle="tooltip" id="errorLand1"
 													title="Error! " id="errorLand1"></a>
 											</div>
 										</div>
@@ -266,8 +266,8 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="areaCode" type="text"
-													class="col-xs-3 input-border-r" id="areaCode"
+												<input name="areaCode2" type="text"
+													class="col-xs-3 input-border-r" id="areaCode2"
 													placeholder="">
 												<input name="land2" type="tel"
 													class="col-xs-6" id="land2" placeholder=""> <span
@@ -277,7 +277,7 @@
 										<div class="form-group col-xs-12">
 											<label for="mobile-number"><span class="mandatory">*</span>
 												Mobile Number</label>
-											<div class="input-wrapper input-group">
+											<div class="input-wrapper input-group" id="mobileDiv">
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
@@ -287,22 +287,24 @@
 												<input name="mobile"
 													type="tel" class="col-xs-6" id="mobile" placeholder="">
 												<span class="phone-no-hint" id="lastMobileNumber">+94 77 729 729</span> <a
-													class="error-info" href="#" data-toggle="tooltip"
+													class="error-info" href="#" data-toggle="tooltip" id="errorMobile"
 													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-xs-12">
 											<label for="fax-number">Fax Number</label>
-											<div class="input-wrapper input-group">
+											<div class="input-wrapper input-group" id="faxDiv">
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled> 
-												<input name="areaCode" type="text"
-													class="col-xs-3 input-border-r" id="areaCode"
+												<input name="areaCode3" type="text"
+													class="col-xs-3 input-border-r" id="areaCode3"
 													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber">+94
 													77 729 729</span> 
 												<input name="fax" type="tel" class="col-xs-6"
 													id="fax" placeholder="">
+												<a class="error-info" href="#" data-toggle="tooltip" id="errorFax"
+													title="Error! "></a>
 											</div>
 										</div>
 									</div>
