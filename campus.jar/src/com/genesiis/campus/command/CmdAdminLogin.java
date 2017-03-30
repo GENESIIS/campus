@@ -13,6 +13,7 @@ import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.util.CookieHandler;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemConfig;
@@ -28,6 +29,7 @@ public class CmdAdminLogin implements ICommand{
 	String path;
 	String message;
 	private Admin adminData;
+	private static int max =0;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -57,30 +59,79 @@ public class CmdAdminLogin implements ICommand{
 					for (Collection<String> collection : dataCollection) {
 						Object[] array = collection.toArray();
 						message = (String) array[0];
-
 					}
+					
 					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
+						
+						if (rememberMe == true) {
+							helper.setAttribute("admin", adminData);
+							CookieHandler.addCookie(helper.getResponse(),
+									"userIdendificationKey", adminData.getUserKey(),
+									2592000);
+						}
+						//session variable setting 
+						session = helper.getSession(true);
+						String sessionId = session.getId();
+						session.setAttribute("currentSessionUser",adminData.getUsername());
+						session.setAttribute("user", adminData.getName());
+						session.setAttribute("userCode", adminData.getCode());
+						
+						int status = adminLoginDAO.add(adminData);
+						
 						
 						message = SystemMessage.LOGGEDSUCCESSFULL.message();
 						path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 						pageURL = path;
 	
 					}else{
-						if (message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT3.message())) {
-							message = SystemMessage.LOGGINATTEMPT3.message();
-							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
-							pageURL = path;
-						} else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT2.message())){
-							message = SystemMessage.LOGGINATTEMPT2.message();
-							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
-							pageURL = path;
-							
-						}else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT1.message())){
-							message = SystemMessage.LOGGINATTEMPT1.message();
-							
+//						if (message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT3.message())) {
+//							message = SystemMessage.LOGGINATTEMPT3.message();
+//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
+//							pageURL = path;
+//						} else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT2.message())){
+//							message = SystemMessage.LOGGINATTEMPT2.message();
+//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
+//							pageURL = path;
+//							
+//						}else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT1.message())){
+//							message = SystemMessage.LOGGINATTEMPT1.message();
+//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+//							pageURL = path;
+//							
+//						}else if(message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())){
+//							message = SystemMessage.VALIDUSER.message();
+//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+//							pageURL = path;
+//						}
+						
+						for (max = max; max <= 3; max++) {
+							log.info(" Attempts  " + max);
+							if (max == 3) {
+								message = SystemMessage.LOGGINATTEMPT3.message();
+								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
+								pageURL = path;
+								max++;
+								break;
+							} else if (max == 2) {
+								message = SystemMessage.LOGGINATTEMPT2.message();
+								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
+								pageURL = path;
+								max++;
+								break;
+							} else if (max == 1) {
+								message = SystemMessage.LOGGINATTEMPT1.message();
+								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+								pageURL = path;
+								max++;
+								break;
+							} else {
+								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+								pageURL = path;
+								max++;
+								break;
+							}
 						}
 					}
-					
 					
 				}else{
 					message = SystemMessage.LOGINUNSUCCESSFULL.message();
