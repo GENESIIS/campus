@@ -15,6 +15,7 @@
 //20170328 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils() method code refactoring wip, validateFormURL():error handling changed to add style classes and
 //				to accept min max length for url length validation as parameters 
 //20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields, vaidateCourseProviderDeatils() modified to do phone number validation wip
+//20170330 JH c141-ui-for-add-course-provider isempty() method modified to fix an error
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -26,7 +27,7 @@ window.usernameFlag = true;
  * @returns true if has content else false. (used to validate string values)
  */
 function isempty(fieldValue) {
-	return ((trim(fieldValue) == "") || (fieldValue == null)) ? false : true;
+	return (($.trim(fieldValue) == "") || (fieldValue == null)) ? false : true;
 }
 
 
