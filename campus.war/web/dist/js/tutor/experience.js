@@ -11,6 +11,7 @@
  * 20170329 CW c157-add-tutor-employment-details-cw modified the button of the table
  * 20170329 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & remove the button & add a check box into the table
  * 20170330 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & make dynamic field names
+ * 20170330 CW c157-add-tutor-employment-details-cw add employmentCode hidden field in fillSelectedCourseProviderData method
  */
 
 $(document).ready(function() {
@@ -99,8 +100,9 @@ function fillSelectedCourseProviderData(response) {
     	maxIndex = index;
     	var sequence = index + 1;
         trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>' 
-		+ value[2].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
+		+ value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' + value[4].toString() + '</td><td>'
 		+ '<input type=hidden name=sequence id=sequence value=' + sequence + '>'
+		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+'  value=' + value[5].toString() + '>'
 		+ '<input type=hidden name=tutorCode'+sequence+' id=tutorCode'+sequence+'  value=' + value[6].toString() + '>'
 		+ '<input type=hidden name=employerCode'+sequence+' id=employerCode'+sequence+' value=' + value[0].toString() + '>'
 		+ '<input type=checkbox id=isSelected'+sequence+' name=isSelected'+sequence+' value=1></td></tr>';
