@@ -19,7 +19,8 @@
 <!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
 <!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages, added missing ids for password, cPassword and accountStatus -->
 <!-- 20170329 JH c141-ui-integration-for-add-course-provider changed phone number related ids to match with front end validation classes -->
-<!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip -->
+<!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip, disabled area code inputs except
+					land number one -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -251,10 +252,10 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="areaCode1" type="text"
-													class="col-xs-3 input-border-r" id="areaCode1"
+												<input name="areaCode" type="text"
+													class="col-xs-3 input-border-r" id="areaCode"
 													placeholder="" onkeyup="landPhoneNubmerHelper();">
-												 <input name="land1" type="tel"
+												 <input name="land1" type="tel"  onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-6" id="land1" placeholder=""> <span
 													class="phone-no-hint" id="landNumber1"></span> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorLand1"
@@ -267,9 +268,9 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled>
-												<input name="areaCode2" type="text" onkeyup="landPhoneNubmerHelper();"
+												<input name="areaCode2" type="text"
 													class="col-xs-3 input-border-r" id="areaCode2"
-													placeholder="">
+													placeholder="" disabled>
 												<input name="land2" type="tel"
 													class="col-xs-6" id="land2" placeholder=""> <span
 													class="phone-no-hint" id="landNumber2"></span>
@@ -284,8 +285,8 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="networkCode" type="text" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-3 input-border-r" id="networkCode"
-													placeholder=""> 
-												<input name="mobile"
+													placeholder="" disabled> 
+												<input name="mobile"  onkeyup="landPhoneNubmerHelper();"
 													type="tel" class="col-xs-6" id="mobile" placeholder="">
 												<span class="phone-no-hint" id="lastMobileNumber"></span> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorMobile"
@@ -298,10 +299,10 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled> 
-												<input name="areaCode3" type="text"
-													class="col-xs-3 input-border-r" id="areaCode3" onkeyup="landPhoneNubmerHelper();"
-													placeholder=""> <span class="phone-no-hint" id="lastFaxNumber"></span> 
-												<input name="fax" type="tel" class="col-xs-6"
+												<input name="areaCode2" type="text"
+													class="col-xs-3 input-border-r" id="areaCode2"
+													placeholder="" disabled> <span class="phone-no-hint" id="lastFaxNumber"></span> 
+												<input name="fax" type="tel" class="col-xs-6"  onkeyup="landPhoneNubmerHelper();"
 													id="fax" placeholder="">
 												<a class="error-info" href="#" data-toggle="tooltip" id="errorFax"
 													title="Error! "></a>
