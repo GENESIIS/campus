@@ -22,6 +22,7 @@
 //20170329 JH c141-ui-integration-for-add-course-provider added displyPhoneNumber() method to display given phone number or the information message to the user related to the phone number,
 //				landPhoneNubmerHelper() method changed to match new UI elements
 //20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip, isempty() method refactored as isValidNumber()
+//20170331 JH c141-ui-integration-for-add-course-provider datalist implementation for country list wip
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -253,7 +254,9 @@ function getProviderPageLoadData() {
 function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	var singleCountryElement = '';
-//<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control">
+
+	/*
+	//<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control">
 	singleCountryElement += '<datalist id="selectedCountry" name="selectedCountry" class="form-control">';
 	if (countryCollection !== undefined & countryCollection !== null) {
 		$.each(countryCollection, function(index, value) {
@@ -267,6 +270,28 @@ function displayProviderCountries() {
 	var countryNames = $("#selectedCountry");
 	countryNames.html(singleCountryElement);
 //$(countryNames).append
+
+*/
+	
+	// check if the browser supports datalist function before proceeding 
+	if(document.createElement("datalist").options) {
+		$("#countries").on("input", function(e) {
+	
+			
+			if (countryCollection !== undefined & countryCollection !== null) {
+				var dataList = $("#countryresults");
+				dataList.empty();
+				
+				if(countryCollection.length) {
+					for(var i=0; i<countryCollection.length; i++) {
+						var opt = $("<option></option>").attr({"data-value": countryCollection[i][0], "value" : countryCollection[i][1] });
+						dataList.append(opt);
+					}
+				}
+			}
+			
+		});
+	}
 
 }
 
