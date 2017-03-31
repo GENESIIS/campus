@@ -3,6 +3,8 @@ package com.genesiis.campus.command;
 //20170323 CW c157-add-tutor-employment-details-cw INIT CmdListCourseProvidersForTutors.java
 //20170326 CW c157-add-tutor-employment-details-cw create execute method
 //20170329 CW c157-add-tutor-employment-details-cw edit the place of the comments
+//20170329 CW c157-add-tutor-employment-details-cw modified execute method to use getFCPListForTutorToSelect method instead of getAll method
+				// add validations to execute method
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -39,13 +41,18 @@ public class CmdListCourseProvidersForTutors implements ICommand  {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		try {
-			final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();
-			final Tutor tutor = new Tutor();
-			Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 			
-			allFeaturedCourseProviderList = featuredCourseProviders.getAll();
-			
-			view.setCollection(allFeaturedCourseProviderList);			
+			String tutorCode = helper.getParameter("tutorCode");
+			if(Validator.isNotEmpty(tutorCode)){
+				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();
+				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+				
+				allFeaturedCourseProviderList = featuredCourseProviders.getFCPListForTutorToSelect(tutorCode);
+				
+				view.setCollection(allFeaturedCourseProviderList);		
+			}else{
+				message = "Tutor Code is empty. Cannot view employers list ...";
+			}
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
