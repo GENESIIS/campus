@@ -28,11 +28,11 @@ $(document).ready(function() {
  * @author CW
  */
 function displayCourseProviders(tutorCode) {
-	
 	$.ajax({
 		url : '/TutorController',
 		data : {
-			CCO : 'LIST_COURSE_PROVIDERS_FOR_TUTORS'
+			CCO : 'LIST_COURSE_PROVIDERS_FOR_TUTORS',
+			tutorCode : tutorCode
 		},
 		dataType : "json",
 		success : function(response) {
@@ -57,9 +57,9 @@ function getCourseProviderData(response) {
 	$.each(response.result, function(index, value) {
 		var res = value.toString();
 		var data = res.split(",");
-		if(data[3].toString() != 'Default'){
+		if(data[1].toString() != 'Default'){
 			var x = data[0].toString(); // code
-			var y = data[3].toString(); // name
+			var y = data[1].toString(); // name
 			$('<option>').val(x).text(y).appendTo(categories);
 		}
 	});
@@ -104,7 +104,7 @@ function fillSelectedCourseProviderData(response) {
     	var sequence = index + 1;
         trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>' 
 		+ value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' + value[4].toString() + '</td><td>'
-		+ '<input type=hidden name=sequence id=sequence value=' + sequence + '>'
+		//+ '<input type=hidden name=sequence id=sequence value=' + sequence + '>'
 		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+'  value=' + value[5].toString() + '>'
 		+ '<input type=hidden name=tutorCode'+sequence+' id=tutorCode'+sequence+'  value=' + value[6].toString() + '>'
 		+ '<input type=hidden name=employerCode'+sequence+' id=employerCode'+sequence+' value=' + value[0].toString() + '>'
