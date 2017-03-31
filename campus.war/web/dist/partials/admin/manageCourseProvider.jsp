@@ -189,15 +189,9 @@
 												<label for="select-country"><span class="mandatory">*</span>
 													Country</label>
 													<div class="input-wrapper has-select" id="country-List">
-														<input name="countries" id="countries" class="form-control" list="countryresults">
+														<input name="countries" id="countries" class="form-control" list="countryresults" onchange="getDataOnCountrySelection();">
 														<datalist id="countryresults"></datalist>
 													</div> 
-
-												<div class="input-wrapper has-select" id="country-List">
-													<input list="selectedCountry">
-													 <a	class="error-info" href="#" data-toggle="tooltip"
-														id="errorSelectedCountry" title="Error! "></a>
-												</div>
 
 											</div>
 											<div class="col-xs-6">

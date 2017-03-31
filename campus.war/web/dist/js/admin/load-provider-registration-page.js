@@ -253,30 +253,11 @@ function getProviderPageLoadData() {
  */
 function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
-	var singleCountryElement = '';
-
-	/*
-	//<datalist id="selectedCountry" name="selectedCountry" class="select-country form-control">
-	singleCountryElement += '<datalist id="selectedCountry" name="selectedCountry" class="form-control">';
-	if (countryCollection !== undefined & countryCollection !== null) {
-		$.each(countryCollection, function(index, value) {
-			singleCountryElement += '<option data-value="' + value[0] + '">';
-			singleCountryElement += value[1];
-			singleCountryElement += '</option>';
-
-		});
-	}
-	singleCountryElement += '</datalist>';
-	var countryNames = $("#selectedCountry");
-	countryNames.html(singleCountryElement);
-//$(countryNames).append
-
-*/
 	
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
-		$("#countries").on("input", function(e) {
-	
+		$("#countries").on("click", function(e) {
+			$("#countries").val();
 			
 			if (countryCollection !== undefined & countryCollection !== null) {
 				var dataList = $("#countryresults");
@@ -286,6 +267,7 @@ function displayProviderCountries() {
 					for(var i=0; i<countryCollection.length; i++) {
 						var opt = $("<option></option>").attr({"data-value": countryCollection[i][0], "value" : countryCollection[i][1] });
 						dataList.append(opt);
+						getDataOnCountrySelection()
 					}
 				}
 			}
@@ -301,15 +283,15 @@ function displayProviderCountries() {
 function getDataOnCountrySelection() {
 //var selectedCountry = $("#selectedCountry").val();
 
-	var selectedCountry = document.getElementById("selectedCountry").value;
+	var selectedCountry = document.getElementById("countries").value;
 	if (!isempty(selectedCountry)) {
 		
 		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#country-List").addClass("has-error");
 		
-		document.getElementById('landNumber1').innerHTML = "";
-		document.getElementById('landNumber2').innerHTML = "";
-		document.getElementById('lastMobileNumber').innerHTML = "";
+//		document.getElementById('landNumber1').innerHTML = "";
+//		document.getElementById('landNumber2').innerHTML = "";
+//		document.getElementById('lastMobileNumber').innerHTML = "";
 
 	} else {
 		landPhoneNubmerHelper();
@@ -439,7 +421,7 @@ function landPhoneNubmerHelper() {
 		}if(!isValidNumber(networkCode, integerPattern)){
 			
 			displyPhoneNumber('#lastMobileNumber', "Network code is empty or invalid.");
-			setErrorMessage('#mobileDiv', '#errorMobile', "Network code is invalid.");
+			//setErrorMessage('#mobileDiv', '#errorMobile', "Network code is empty or invalid.");
 			
 		} if (isValidNumber(areaCode, integerPattern)) {
 			
