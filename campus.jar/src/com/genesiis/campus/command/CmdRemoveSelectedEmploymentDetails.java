@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170329 CW c157-add-tutor-employment-details-cw INIT CmdRemoveSelectedEmploymentDetails.java
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & add all the selected row tutor Codes & Course provider codes into allSelectedListToRemove collection
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & create deleteList & pass it to deleteMultiple
+//20170331 CW c157-add-tutor-employment-details-cw modified execute method & add validations & a message into the deleteMultiple method call
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,9 +59,12 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 					}
 				}
 			}
-			
-			final EmploymentDAO employment = new EmploymentDAO();
-			employment.deleteMultiple(deleteList);
+			if(deleteList != ""){
+				final EmploymentDAO employment = new EmploymentDAO();
+				employment.deleteMultiple(deleteList);
+			}else{
+				message = "Please select Employment Details to delete ...";				
+			}
 
 			Collection<Collection<String>> allSelectedFeaturedCourseProviderList = new ArrayList<Collection<String>>();			
 			allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(helper.getParameter("tutorCode1"));			
