@@ -2,7 +2,10 @@ package com.genesiis.campus.command;
 import java.net.URL;
 //20170314 AS c23-admin-login-logout-function-as CmdAdminLogin class created 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -75,35 +78,21 @@ public class CmdAdminLogin implements ICommand{
 						session.setAttribute("currentSessionUser",adminData.getUsername());
 						session.setAttribute("user", adminData.getName());
 						session.setAttribute("userCode", adminData.getCode());
-						
-						int status = adminLoginDAO.add(adminData);
-						
+						setAdminLoginDetails(adminData, helper);
+						int status = AdminLoginDAO.loginDataUpdate(adminData);
+						if(status >0){
+							//admin privacy privilege list
+							log.info(status);
+						}else{
+							
+						}
 						
 						message = SystemMessage.LOGGEDSUCCESSFULL.message();
 						path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 						pageURL = path;
 	
 					}else{
-//						if (message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT3.message())) {
-//							message = SystemMessage.LOGGINATTEMPT3.message();
-//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
-//							pageURL = path;
-//						} else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT2.message())){
-//							message = SystemMessage.LOGGINATTEMPT2.message();
-//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
-//							pageURL = path;
-//							
-//						}else if(message.equalsIgnoreCase(SystemMessage.LOGGINATTEMPT1.message())){
-//							message = SystemMessage.LOGGINATTEMPT1.message();
-//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-//							pageURL = path;
-//							
-//						}else if(message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())){
-//							message = SystemMessage.VALIDUSER.message();
-//							path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-//							pageURL = path;
-//						}
-						
+
 						for (max = max; max <= 3; max++) {
 							log.info(" Attempts  " + max);
 							if (max == 3) {
@@ -158,6 +147,45 @@ public class CmdAdminLogin implements ICommand{
 		
 		return view;
 	}
+	
+	
+	/**
+	 * Admin login details maintain.
+	 * 
+	 * @param object
+	 * @param helper
+	 * @return admin object
+	 */
+
+	private Admin setAdminLoginDetails(Admin object, IDataHelper helper) {
+
+		try {
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+			Date loginTime = new Date();
+
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
+
+			object.setLastLoggedInDate(loginDate.toString());
+			object.setLastLoggedInTime(new Timestamp(loginTime.getTime())
+					.toString());
+
+			String browser = helper.getHeader("User-Agent");
+			String[] output = browser.split("/");
+			object.setLastLoggedInUserAgent(output[0]);
+			object.setLastLoggedInIpAddress(helper.getRemoteAddress());
+		} catch (Exception e) {
+			log.error("setStudentLoginDetails(Student object, IDataHelper helper):  Exception"
+					+ e.toString());
+			throw e;
+		}
+		return object;
+	}
+	
+	
 	
 	
 	
