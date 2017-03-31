@@ -1,4 +1,5 @@
 //20170330 MM c117-display-banners-record-viewcount-back-end - INIT class; implemented execute(IDataHelper, IView) method
+//20170331 MM c117-display-banners-record-viewcount-back-end - Moved msgList variable out of try block
 
 package com.genesiis.campus.command;
 
@@ -26,10 +27,11 @@ public class CmdAddBannerViewStat implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {		
-
+		
+		List<String> msgList = new ArrayList<String>();
+		
 		try {
-			String bannerCodeStr = helper.getParameter("banner");			
-			List<String> msgList = new ArrayList<String>();
+			String bannerCodeStr = helper.getParameter("banner");	
 			
 			if (bannerCodeStr != null && !bannerCodeStr.isEmpty()) {
 				
@@ -41,7 +43,7 @@ public class CmdAddBannerViewStat implements ICommand {
 					if (callerPageStr != null && !callerPageStr.isEmpty()) {
 
 						BannerViewStatHelper bannerViewStatHelper = BannerViewStatHelper.getInstance();
-						bannerViewStatHelper.updateBannerViewCount(bannerCode);		
+						bannerViewStatHelper.updateBannerViewCount(bannerCode, callerPageStr);		
 						
 //
 //						String operationStatus = insertStatus > 0 ? "SUCCESS"
