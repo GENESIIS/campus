@@ -1,5 +1,9 @@
 package com.genesiis.campus.entity;
 
+//20170314 AS c23-admin-login-logout-function-as - AdminLoginDAO created 
+//20170314 AS c23-admin-login-logout-function-as - findById() method coding completed
+//20170331 AS c23-admin-login-logout-function-as - loginDataUpdate() method coding WIP
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +22,62 @@ import com.genesiis.campus.validation.SystemMessage;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
-	
+
+	/**
+	 * login data updating
+	 * 
+	 * @author anuradha
+	 * @param admin object
+	 * @return int
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+
+	public static int loginDataUpdate(Object object) throws SQLException, Exception {
+		Connection conn = null;
+		String query = "UPDATE CAMPUS.LOGINHISTORY SET USERAGENT=?, SESSIONID=?, LOGGEDINDATE=?, LOGGEDINTIME=?, IPADDRESS=? WHERE ADMIN=? AND ISACTIVE =?";
+		PreparedStatement ps = null;
+		int rowInserted = -1;
+
+		try {
+			Admin adminData = (Admin) object;
+			conn = ConnectionManager.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, adminData.getLastLoggedInUserAgent());
+			ps.setString(2, adminData.getLastLoggedInSessionid());
+			ps.setString(3, adminData.getLastLoggedInDate());
+			ps.setString(4, adminData.getLastLoggedInTime());
+			ps.setString(5, adminData.getLastLoggedInIpAddress());
+			ps.setInt(6, adminData.getCode());
+			ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
+			rowInserted = ps.executeUpdate();
+
+			if (rowInserted > 0) {
+				rowInserted = 1;
+			} else {
+				rowInserted = 0;
+			}
+
+		} catch (SQLException e) {
+			log.info("loginDataUpdate(): SQLexception" + e.toString());
+			throw e;
+		} catch (Exception ex) {
+			log.info("loginDataUpdate(): Exception" + ex.toString());
+			throw ex;
+		} finally {
+
+			if (ps != null) {
+				ps.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+		return rowInserted;
+
+	}
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
@@ -83,35 +142,35 @@ public class AdminLoginDAO implements ICrud {
 				userType = rs.getString("USERTYPE");
 				password = rs.getString("PASSWORD");
 
-					if (check && passwordMatch) {
-						admin.setAdminCode(Integer.parseInt(code));
-						admin.setName(name);
-						admin.setUsername(userName);
-						admin.setEmail(email);
-						admin.setUserType(userType);
-						admin.setValid(true);
-						
-						final ArrayList<String> singleAdmin = new ArrayList<String>();
-						final Collection<String> adminDatabundel = singleAdmin;
+				if (check && passwordMatch) {
+					admin.setAdminCode(Integer.parseInt(code));
+					admin.setName(name);
+					admin.setUsername(userName);
+					admin.setEmail(email);
+					admin.setUserType(userType);
+					admin.setValid(true);
 
-						singleAdmin.add(code);
-						singleAdmin.add(name);
-						singleAdmin.add(userName);
-						singleAdmin.add(email);
-						singleAdmin.add(userType);
+					final ArrayList<String> singleAdmin = new ArrayList<String>();
+					final Collection<String> adminDatabundel = singleAdmin;
 
-						dataBundel.add(adminDatabundel);
-						message = SystemMessage.VALIDUSER.message();
-		
-					} else {
-						message = SystemMessage.INVALIDPASSWORD.message();
-						admin.setValid(false);
-					}
-	
+					singleAdmin.add(code);
+					singleAdmin.add(name);
+					singleAdmin.add(userName);
+					singleAdmin.add(email);
+					singleAdmin.add(userType);
+
+					dataBundel.add(adminDatabundel);
+					message = SystemMessage.VALIDUSER.message();
+
+				} else {
+					message = SystemMessage.INVALIDPASSWORD.message();
+					admin.setValid(false);
+				}
+
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
 				admin.setValid(false);
-			
+
 			}
 		} catch (SQLException exception) {
 			log.error("findById(Object code):  SQLexception" + exception.toString());
