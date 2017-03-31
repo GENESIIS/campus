@@ -57,6 +57,8 @@
  * 				on('click','#uploadBbutton') event $(':input').val(''); is removed from the complete property of the ajax call.
  * 				sendBannerPaageFieldInputs() amend to exclude the null check of the "bannerwarpath" attribute when setting the src of image element.
  * 				Add "banerCode" attribute to the same block of code.
+ * 20170331 DN c83-admin-manage-banner-update-banner-info-dn. Method validateUploadBannerEmbedData() modified to amend the error messages.
+ * 				The method sendBannerPaageFieldInputs() changed :src attribute is set after a if check has been performed: if(response['']!='default')
  */
 
 /*
@@ -417,7 +419,7 @@ $(document).on('click','#uploadBbutton', function(event){
     // new banner image. There can be banner code ( updating an existing record with a new image) or banner code
     // is not assigned (totally new banner), either case should not be proceeded is banner image is not selected
     //: Exit the program
-    if(banerImage==undefined){
+    if(banerImage==undefined||banerImage==""){
     	displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Select an image please");
     	$('#bannerModalClose').show();
     	return false;
@@ -562,7 +564,7 @@ function validateUploadBannerEmbedData(){
 	//Banner Activation Date validation against the current date 
 	
 	if(!isFieldFilled(
-				compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date >= toDay ","startDateInfor"))
+				compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date should be >= toDays' Date ... ","startDateInfor"))
 			return validationPass;
 	
 	if(!isFieldFilled(isempty($('#endtDate').val()),'The End date','endtDateInfor'))
@@ -571,7 +573,7 @@ function validateUploadBannerEmbedData(){
 	// startDate must be == endtDate
 	//or startDate < endtDate
 	if(!isFieldFilled(
-			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"The Banner Deavtivation Date >= The Banner Activation Date  ","startDateInfor"))
+			compareDates($('#startDate').val(),$('#endtDate').val(),"-")<=0,"The Banner Deactivation Date should be >= The Banner Activation Date...  ","startDateInfor"))
 		return validationPass;
 	if(!isFieldFilled(isempty($('#bannerDispatchingUrl').val()), 'Please provide a valid url', 'urlInfor'))
 		return validationPass;
@@ -630,6 +632,7 @@ if(elegibleToProceed){
 					cssColour='green';
 					//setting the updated banner image on the page.
 					$('#bannerCode').val(response['bannerCode']);
+					if(response['bannerWarPath']!="default")
 					$('#imageName01').attr('src',"/"+response['bannerWarPath']+'?'+Math.random());
 				}
 				$('#bannerUploadPopUp').modal('hide');
