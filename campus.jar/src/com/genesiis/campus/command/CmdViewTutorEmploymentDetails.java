@@ -1,6 +1,10 @@
 package com.genesiis.campus.command;
 
 //20170327 CW c157-add-tutor-employment-details-cw INIT CmdViewTutorEmploymentDetails.java & Create execute method
+//20170331 CW c157-add-tutor-employment-details-cw modified execute method to get the list of details from getTutorSelectedFCP
+
+import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
+
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
@@ -39,11 +43,12 @@ public class CmdViewTutorEmploymentDetails implements ICommand {
 			Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
 			
 			if(helper.getParameter("tutorCode") != null){
-				singleTutorEmploymentViewCollection.add(helper.getParameter("tutorCode"));
-				tutorEmploymentViewCollection.add(singleTutorEmploymentViewCollection);
+
+				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(helper.getParameter("tutorCode"));
+				
+				view.setCollection(allFeaturedCourseProviderList);	
 			}
-			
-			view.setCollection(tutorEmploymentViewCollection);			
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
