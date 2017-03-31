@@ -5,7 +5,7 @@ package com.genesiis.campus.command;
 				// created setEmploymentDetails method
 //20170327 CW c157-add-tutor-employment-details-cw modified execute method & fix data saving error
 //20170328 CW c157-add-tutor-employment-details-cw modified execute method to call getTutorSelectedFCP & get the tutor selected course provider list
-
+//20170331 CW c157-add-tutor-employment-details-cw modified execute method & change tutorCode to tutorcodelist
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -43,7 +43,7 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 
 		try {			
 			Employment employmentDetails = new Employment();
-			String tutorCode = helper.getParameter("tutorCode");
+			String tutorCode = helper.getParameter("tutorcodelist");
 			String employerCode = helper.getParameter("employerDetails");			
 			
 			if(Validator.isNotEmpty(tutorCode) && Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){
