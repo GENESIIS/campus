@@ -21,6 +21,7 @@
 <!-- 20170329 JH c141-ui-integration-for-add-course-provider changed phone number related ids to match with front end validation classes -->
 <!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip, disabled area code inputs except
 					land number one -->
+<!-- 20170331 JH c141-ui-integration-for-add-course-provider changed the id of the datalist to countryresults -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -187,10 +188,10 @@
 											<div class="col-xs-6">
 												<label for="select-country"><span class="mandatory">*</span>
 													Country</label>
-												<%--	<div class="input-wrapper has-select" id="country-List">
-														<input list="selectedCountry" name="country-List" id="country-List" class="form-control" 
-														onchange="getDataOnCountrySelection()">
-													</div> --%>
+													<div class="input-wrapper has-select" id="country-List">
+														<input name="countries" id="countries" class="form-control" list="countryresults">
+														<datalist id="countryresults"></datalist>
+													</div> 
 
 												<div class="input-wrapper has-select" id="country-List">
 													<input list="selectedCountry">
