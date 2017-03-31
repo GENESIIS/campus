@@ -1,5 +1,7 @@
 // 20170330 MM c117-display-banners-record-viewcount-back-end INIT class act as a singleton
 // 20170331 MM c117-display-banners-record-viewcount-back-end Extended updateBannerViewCount(...) to persist bannerViewStat data
+// 20170331 MM c117-display-banners-record-viewcount-back-end Modifying updateBannerViewCount(...) method to construct a collection 
+//				of BannerViewStat objects to pass to DAO method (WIP)
 
 package com.genesiis.campus.util;
 
@@ -21,13 +23,13 @@ import java.util.Map;
 public class BannerViewStatHelper {
 	
 	private static BannerViewStatHelper bannerViewStatHelper;
-	private static Map<Integer, Integer> bannerToViewCountResolver; 
+	private static Map<Integer, List<String>> bannerToViewCountResolver; 
 	private static int viewCount;
 
 	static Logger Log = Logger.getLogger(BannerViewStatHelper.class.getName());
 	
 	
-	private static Map<Integer, Integer> getBannerToViewCountResolver() {
+	private static Map<Integer, List<String>> getBannerToViewCountResolver() {
 		return BannerViewStatHelper.bannerToViewCountResolver;
 	}
 
@@ -35,7 +37,7 @@ public class BannerViewStatHelper {
 	 * Constructor made private to prevent it being called from outside this class
 	 */
 	private BannerViewStatHelper() {
-		BannerViewStatHelper.bannerToViewCountResolver = new HashMap<Integer, Integer>();
+		BannerViewStatHelper.bannerToViewCountResolver = new HashMap<Integer, List<String>>();
 		BannerViewStatHelper.viewCount = 0;
 	} 
 	
@@ -52,40 +54,42 @@ public class BannerViewStatHelper {
 	}
 	
 	public void updateBannerViewCount(int bannerCode, String callerPage) throws Exception {
-		// update the banner view count
-		
-		Map<Integer, Integer> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
+		// update the banner view count		
+		Map<Integer, List<String>> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
 		
 		if (bannerViewCountResolver != null) {
-			Integer viewCount = bannerViewCountResolver.get(bannerCode);
-			if (viewCount == null) {
-				bannerViewCountResolver.put(bannerCode, 1);
+			List<String> bannerViewCountDetails = bannerViewCountResolver.get(bannerCode);
+			if (bannerViewCountDetails == null) {
+				bannerViewCountDetails = new ArrayList<String>();
+				
+				bannerViewCountDetails.add(String.valueOf(bannerCode));				
+				bannerViewCountResolver.put(bannerCode, bannerViewCountDetails);
 			} else {
-				bannerViewCountResolver.put(bannerCode, viewCount + 1);
+//				bannerViewCountResolver.put(bannerCode, viewCount + 1);
 			}
 			
 			BannerViewStatHelper.viewCount++; 
 		}
 		
 		if (BannerViewStatHelper.viewCount >= 100) {
-			// Persist banner counts
-			
+			// Persist banner counts			
 			List<BannerViewStat> viewStatInstances = new ArrayList<BannerViewStat>();
 
-			BannerViewStat bannerViewStat = new BannerViewStat();
-			bannerViewStat.setBanner(bannerCode);
-			bannerViewStat.setCallerPage(callerPage);
-//			bannerViewStat.setViewDate(new Date());
-//			bannerViewStat.setViewTime(new Time());
-
-			String createdBy = "SYSTEM";
-			bannerViewStat.setCrtBy(createdBy);
+			for (Integer banCode : bannerViewCountResolver.keySet()) {
+				Integer viewCountForBanner = bannerViewCountResolver.get(banCode);
+				
+				BannerViewStat bannerViewStat = new BannerViewStat();
+				bannerViewStat.setBanner(banCode);
+				bannerViewStat.setViewCount(viewCountForBanner);
+				bannerViewStat.setCallerPage(callerPage);
+				bannerViewStat.setCrtBy("SYSTEM");
+			}
 
 			BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
 			
 			int insertStatus = 0;
 			try {
-				insertStatus = bannerViewStatDao.add(bannerViewStat);
+				insertStatus = bannerViewStatDao.add(viewStatInstances);
 				
 			} catch (SQLException sqle) {
 				Log.error("execute(IDataHelper, IView) : SQLException "
