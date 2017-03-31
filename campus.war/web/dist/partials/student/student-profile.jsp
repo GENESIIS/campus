@@ -228,23 +228,23 @@
                         <div class="w-left-panel col-sm-12 col-md-6 col-lg-6">
                             <table class="tbl-wgt-about">
                                 <tr>
-                                    <td class="td-name">User Name :</td>
+                                    <td class="td-name">User Name:</td>
                                     <td class="td-value" id="td-value-username"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Full Name :</td>
+                                    <td class="td-name">Full Name:</td>
                                     <td class="td-value" id="td-value-fullname"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Birthday :</td>
+                                    <td class="td-name">Birthday:</td>
                                     <td class="td-value" id="td-value-birthday"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Gender :</td>
+                                    <td class="td-name">Gender:</td>
                                     <td class="td-value" id="td-value-gender"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Email  :</td>
+                                    <td class="td-name">Email:</td>
                                     <td class="td-value" id="td-value-email"></td>
                                 </tr>
                             </table>
@@ -254,23 +254,23 @@
                         <div class="w-right-panel col-sm-12 col-md-6 col-lg-6">
                             <table class="tbl-wgt-about">
                                 <tr>
-                                    <td class="td-name">Country :</td>
+                                    <td class="td-name">Country:</td>
                                     <td class="td-value" id="td-value-country"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Town :</td>
+                                    <td class="td-name">Town:</td>
                                     <td class="td-value" id="td-value-town"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Address :</td>
+                                    <td class="td-name">Address:</td>
                                     <td class="td-value" id="td-value-address"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">FB profile :</td>
+                                    <td class="td-name">FB profile:</td>
                                     <td class="td-value" id="td-value-fbprofile"></td>
                                 </tr>
                                 <tr>
-                                    <td class="td-name">Mobile NO :</td>
+                                    <td class="td-name">Mobile NO:</td>
                                     <td class="td-value" id="td-value-mobileno"></td>
                                 </tr>
                             </table>
@@ -443,19 +443,19 @@
                 </div>
 
                 <div class="show modal-input-field clearfix">                 
-                    <label>Address Line 1:</label>
+                    <label>Address Line 1 :</label>
                     <input type="text" name="sAddressLine1" id="sAddressLine1" onclick="clearField('sAddressLine1Error')" maxlength="49"><br>
                     <span class="std-mdl-error-msg" id="sAddressLine1Error" name="sAddressLine1Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
-                    <label>Address Line 2:</label>
+                    <label>Address Line 2 :</label>
                     <input type="text" name="sAddressLine2" id="sAddressLine2" onclick="clearField('sAddressLine2Error')" maxlength="49"><br>
                     <span class="std-mdl-error-msg" id="sAddressLine2Error" name="sAddressLine2Error"></span>
 			    </div>
 			    
 			    <div class="show modal-input-field clearfix">                 
-                    <label>Address Line 3:</label>
+                    <label>Address Line 3 :</label>
                     <input type="text" name="sAddressLine3" id="sAddressLine3" onclick="clearField('sAddressLine3Error')" maxlength="49"><br>
                     <span class="std-mdl-error-msg" id="sAddressLine3Error" name="sAddressLine3Error"></span>
 			    </div>
@@ -682,7 +682,7 @@
 		                </div>
 		                
 		                <div class="show modal-input-field clearfix">
-			                <label>Student ID (University Index) :</label>
+			                <label>Student ID (University Index):</label>
 			                <input type="text" name="studentId" id="studentId" onclick="clearField('studentIdError')" maxlength="200"><br>
 			                <span class="std-mdl-error-msg" id="studentIdError" name="studentIdError"></span>
 		                </div>
