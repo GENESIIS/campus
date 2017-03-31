@@ -15,6 +15,9 @@
      20170330 DN c83-admin-manage-banner-update-banner-info-dn. Uploaded Banner : alt property set to "Yet No Image".  Removed the condition
      			 surrounded by the upload Banner element.
      			 Removed the condition check surrounded the "Banner Code" element.
+     20170331 DN c83-admin-manage-banner-update-banner-info-dn changed the method argument to clearField('startDateInfor').
+     			Banner activation and Deactivation field name typos corrected.
+     			Add tool tip to URL field.
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -209,22 +212,22 @@
 			<div></div>
 			<div>
 			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
-				<br> Banner Avtivation date* &nbsp; <input type="date" name="startDate"
+				<br> Banner Activation date* &nbsp; <input type="date" name="startDate"
 					id="startDate" onclick="clearField('startDateInfor')" value="${param.bannerActivateDate}">
 			</div>
 			<br>
 			<div>
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				Banner deavtivation date * &nbsp;<input
+				Banner deactivation date * &nbsp;<input
 					type="date" name="endtDate" id="endtDate"
-					onclick="clearField('endtDateInfor');"
+					onclick="clearField('startDateInfor');"
 					value="${param.bannerDeactivateDate}">
 			</div>
 			<br><br>
 			<div>
 			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
 			URL : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl"	<c:if test="${param.linkType eq 1}">checked="checked"</c:if>>
+			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl"	<c:if test="${param.linkType eq 1}">checked="checked"</c:if>> 
 			&nbsp;&nbsp;
 			Mini Web : &nbsp;&nbsp;
 			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb" <c:if test="${param.linkType eq 2}">checked="checked"</c:if>  >
@@ -233,7 +236,13 @@
 			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage" <c:if test="${param.linkType eq 3}">checked="checked"</c:if>  >
 			<br><br>
 			<div id="urlInfor" style ="color:#C70039;"></div><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}">
+				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}"
+				data-toggle="tooltip" title="Please enter a valid Url / Mini  web address">
+				<script>
+					$(document).ready(function(){
+					    $('[data-toggle="tooltip"]').tooltip();   
+					});
+			  </script>
 			</div>
 			<br><br>
 			<!-- Form image submit -->
