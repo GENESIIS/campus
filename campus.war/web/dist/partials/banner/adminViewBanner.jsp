@@ -6,6 +6,8 @@
                   tag of the table from the jsp file. Add the Row #  <th> element
      20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add id to the button 'Filter the Banner Button
 	 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn Admin Add New Banner and Admin add New Advertiser buttons are added.
+	 20170322 DN c83-admin-manage-banner-update-banner-info-dn add extra div to display banner image when the page is reached to edit
+	 			 banner record.Add jsp code to populate input fields brought from editing a banner record function from adminViewBanner.jsp page.
  -->
 
 
@@ -79,11 +81,13 @@
    <span id="">List <b>Active</b> Banners</span>
    <input type="radio" name="bannerStatus" value="1" id ="statusActive" checked="checked" > 
    &nbsp; &nbsp; &nbsp;<span id="">List <b>Inactive</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="2" id ="statusInactive"  > 
-    &nbsp; &nbsp; &nbsp;<span id="">List <b>Pending</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="3" id ="statusPending"  > 
+	<input type="radio" name="bannerStatus" value="0" id="statusInactive">
+	&nbsp; &nbsp; &nbsp;
+	<span id="">List <b>Pending</b> Banners
+	</span>
+	<input type="radio" name="bannerStatus" value="2" id ="statusPending"  >
     &nbsp; &nbsp; &nbsp;<span id="">List <b>Expired</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="4" id ="statusExpired"  > 
+   <input type="radio" name="bannerStatus" value="3" id ="statusExpired"  >
    <br><br>
    <button type="button" value="Search" id="filterBanners">Filter The Banners</button>
    

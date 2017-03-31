@@ -25,7 +25,15 @@ package com.genesiis.campus.entity;
  *             and Collection<Collection<String>> getAll(Object). Add doc comments to class and methods
  * 20170313 DN c81-admin-manage-banner-add-and-view-banner-dn getAll(Object object)   innerCol.add(resultSet.getString("NAME ACTIVATIONDATE")
  * 			   corrected to innerCol.add(resultSet.getString("ACTIVATIONDATE") 
- * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query.               
+ * 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn add ORDER BY ACTIVATIONDATE ASC to the  getAll(Object) method sql query. 
+ * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
+ * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add extra INNER JOIN statement with  [CAMPUS].PAGE in sql query of
+ * 			   getAll(Object object) method and add   PG.NAME PAGE_NAME,PG.CODE PAGE_CODE to the select statement. Retrieve extra 02 columns namely
+ * 			   PAGE_NAME and PAGE_CODE from the resultset.	
+ * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.
+ * 20170327 DN c83-admin-manage-banner-update-banner-info-dn update(Object) method has been changed to correct the syntax errors.
+ *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method.         
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -43,6 +51,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,11 +73,61 @@ public class AdminBannerDAO implements ICrudSibling {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+/**
+ * method updates a banner records which is sent to the method by
+ * encapsulating in the Object.<br>
+ * @param Object is the JasonInflator<br>
+ * If the update is success it returns the number of rows been updated <br>
+ * if the update query fails then returns 0
+ */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		JasonInflator aBannerRecord = (JasonInflator)object;
+		String bannerCode = aBannerRecord.getBannerCode();
+		Connection conn = null;
+		PreparedStatement prepare = null;
+		int result=0;
+		String[] imageNameSplitter = aBannerRecord.getBannerImageName().split("\\.");
+		String storingImageName = aBannerRecord.getBannerCode()+"."+imageNameSplitter[1];
+		
+		StringBuilder insertingQueryBuilder = new StringBuilder("UPDATE [CAMPUS].[BANNER] ");
+		insertingQueryBuilder.append(" SET  ");
+		insertingQueryBuilder.append("[IMAGE]= '"+storingImageName+"' ,[EXPIRATIONDATE] ='"+aBannerRecord.getBannerPublishingEndDate()+"',"); //+"1"+","
+		insertingQueryBuilder.append("[DISPLAYDURATION] ="+Integer.parseInt(aBannerRecord.getDisplayDusration())+",");
+		insertingQueryBuilder.append("[LINKTYPE] = "+getTheURLType(aBannerRecord.getUrlMiniWebOrPage()).getMappingInt()+",");
+		insertingQueryBuilder.append("[URL] ='"+aBannerRecord.getUrlToBeDirectedOnBannerClick()+"',");
+		insertingQueryBuilder.append("[ISACTIVE] ='"+ aBannerRecord.getBanerToBeActive()+"',");
+		insertingQueryBuilder.append("[PAGESLOT] ="+ Integer.parseInt(aBannerRecord.getBannerSlotCode())+",");
+		insertingQueryBuilder.append("[ADVERTISER]="+ Integer.parseInt(aBannerRecord.getAdvertiserCode())+"," );//('default.gif' ,getdate()+4,1,5 ,1,'www.topjobs.lk' ,'1',1,1,
+		//insertingQueryBuilder.append("[CRTON] = getdate(),"); 
+		//insertingQueryBuilder.append("[CRTBY] ='"+	aBannerRecord.getUser()+"',");
+		insertingQueryBuilder.append("[MODON] =getdate(),");
+		insertingQueryBuilder.append("[MODBY] ='"+	aBannerRecord.getUser()+"',");
+		insertingQueryBuilder.append("[ACTIVATIONDATE] ='"+ java.sql.Date.valueOf(aBannerRecord.getBannerPublishingDate())+"' ");
+		insertingQueryBuilder.append(" WHERE CODE ="+Integer.parseInt(aBannerRecord.getBannerCode()));
+		insertingQueryBuilder.append(";" );   
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			prepare = conn.prepareStatement(insertingQueryBuilder.toString());
+			result = prepare.executeUpdate();	
+			
+		} catch (SQLTimeoutException stoe){
+			Log.error("update(Object) : SQLTimeoutException "+stoe.toString());
+			throw stoe;
+		} catch (SQLException sqle) {
+			Log.error("update(Object) : SQLException "+sqle.toString());
+			throw sqle;
+			
+		} catch (Exception exp) {
+			Log.error("update(Object) : Exception "+exp.toString());
+			throw exp;
+		} finally {
+			DaoHelper.closeConnection(conn);
+			DaoHelper.closeStatement(prepare);
+		}
+		return result;
 	}
 
 	@Override
@@ -121,15 +180,15 @@ public class AdminBannerDAO implements ICrudSibling {
 
 	/**
 	 * addBannerRecordInOneTransAction Method insert a record to table banner 
-	 * when a Banner is added to the System, and if the inital operation
+	 * when a Banner is added to the System, and if the initial operation
 	 * reported success then the method returns the banner code and the
 	 * Banner Image name from the data base in a collection wrapped within a collection.
 	 * 
 	 * @param banner : JasonInflator instance wrapped as an Object
-	 * @param bannerImageExtension : extension of the banner eg. jpg,jpg,ping etc.
-	 * @param userName : user name of the user who fires the method eg."admin" etc
+	 * @param bannerImageExtension : extension of the banner e.g. jpg,jpg,ping etc.
+	 * @param userName : user name of the user who fires the method e.g."admin" etc
 	 * @return Collection<Collection<String>> : Single record is wrapped within 
-	 * another collection eg. {{x,y},{s,d},..}
+	 * another collection e.g. {{x,y},{s,d},..}
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -261,11 +320,11 @@ public class AdminBannerDAO implements ICrudSibling {
 	 * if the supplied int does not confirm to any valid ApplicationStatus,
 	 * then ApplicationStatus.UNDEFINED will be returned.
 	 * @param value
-	 * @return ApplicationStatus 
-	 * 			1-->  ApplicationStatus.ACTIVE
-	 * 			2-->  ApplicationStatus.INACTIVE
-	 * 			3-->  ApplicationStatus.PENDING
-	 * 			4-->  ApplicationStatus.EXPIRED
+	 * @return ApplicationStatus <br>
+	 * 			1-->  ApplicationStatus.ACTIVE<br>
+	 * 			0-->  ApplicationStatus.INACTIVE<br>
+	 * 			3-->  ApplicationStatus.PENDING<br>
+	 * 			4-->  ApplicationStatus.EXPIRED<br>
 	 * 			any thing else other than the above values
 	 * 			returns ApplicationStatus.UNDEFINED.
 	 */
@@ -275,14 +334,16 @@ public class AdminBannerDAO implements ICrudSibling {
 		case 1 :
 			activeStatus = ApplicationStatus.ACTIVE;
 			break;
-		case 2:
+		case 0:
 			activeStatus = ApplicationStatus.INACTIVE;
-		case 3:
+			break;
+		case 2:
 			activeStatus = ApplicationStatus.PENDING;
-		 break;
-		case 4:
+			break;
+		case 3:
 			activeStatus = ApplicationStatus.EXPIRED;
 			break;
+		
 		}
 		return activeStatus;
 	}
@@ -315,15 +376,18 @@ public class AdminBannerDAO implements ICrudSibling {
 					
 			
 			StringBuilder querybuilder = new StringBuilder(
-					"SELECT BNR.*,PGS.NAME PAGESLOT_NAME,ADVR.NAME ADVERTISER_NAME ");
+					"SELECT BNR.*,PGS.NAME PAGESLOT_NAME,ADVR.NAME ADVERTISER_NAME,PG.NAME PAGE_NAME,PG.CODE PAGE_CODE ");
 			querybuilder.append(" FROM [CAMPUS].BANNER BNR ");
 			querybuilder.append(" INNER JOIN [CAMPUS].ADVERTISER ADVR ");
 			querybuilder.append(" ON BNR.ADVERTISER = ADVR.CODE "
 					+ " INNER JOIN"
 					+ " [CAMPUS].PAGESLOT PGS"
 					+ " ON BNR.PAGESLOT = PGS.CODE"
-					+ " WHERE ADVR.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()+ " ");
-			
+					+ " INNER JOIN [CAMPUS].PAGE PG"
+					+ " ON PG.CODE=PGS.PAGE"
+					+ " WHERE ADVR.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()
+					+ " AND PGS.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue()
+					+ " AND PG.ISACTIVE = "+ApplicationStatus.ACTIVE.getStatusValue());
 			
 			if(ISACTIVE != ApplicationStatus.UNDEFINED.getStatusValue() ){
 				querybuilder.append(" AND BNR.ISACTIVE = "+ISACTIVE+ " ");
@@ -358,6 +422,8 @@ public class AdminBannerDAO implements ICrudSibling {
 				innerCol.add(resultSet.getString("EXPIRATIONDATE")); //9
 				innerCol.add(resultSet.getString("ADVERTISER"));	//10
 				innerCol.add(resultSet.getString("ADVERTISER_NAME")); //11
+				innerCol.add(resultSet.getString("PAGE_NAME"));//12
+				innerCol.add(resultSet.getString("PAGE_CODE"));//13
 				
 				outerWrapper.add(innerCol);
 			}

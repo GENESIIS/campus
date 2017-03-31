@@ -18,12 +18,33 @@ package com.genesiis.campus.command;
  * 			setResponseCridentials() has called in uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper)
  * 20170303 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() implemented
  * 20170306 DN c131-admin-manage-banner-upload-banner-image-dn implemented isClientInputAccordanceWithValidation() and getADate() methods.
+ * 20170308 DN c131-admin-manage-banner-upload-banner-image-dn corrected as per the CREV comments 20170307.1645h PN.
+ * 				getSessionProperty() method catch IllegalArgumentException. But logs NullPointerException corrected.
+ * 				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"End Publishing Date field is empty !"); Typo error is corrected.
  * 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn in isClientInputAccordanceWithValidation() add the correct SystemMessage
  *  			SystemMessage.EMPTY_SEARCH_RESULT.message() to the method
+ *  20170321 DN c131-admin-manage-banner-upload-banner-image-dn isClientInputAccordanceWithValidation() the Exception message to the client has been better formatted.		
+ * 			 typos corrected as per the QA comment 10 given in 201703132232-CN - Local test summary. 
+ * 20170324 DN c83-admin-manage-banner-update-banner-info-dn refactor the method uploadFullBannerCredentials() to adhere the banner record update: insertion. 
+ * 20170327 DN c83-admin-manage-banner-update-banner-info-dn updateBannerCredentials(JasonInflator ,IDataHelper) method implemented.
+ * 				bannerRecordUpdated() method has been implemented.The execute() is changed to have the switch case UPDATE_ONLY_THE_BANNER_RECORD.
+ *              uploadFullBannerCredentials() refactor to include bannerRecordUpdated() method call.
+ *              bannerRecordUpdated(JasonInflator) has been modified to include ZERO_UPDATES enum instead of SystemMessage.UPDATE_UNSUCCESSFUL.
+ *              Rearranged the doc comment.
+ *              updateBannerCredentials() method has been changed to include the message & setResponseCridentials() and to set the success code.
+ * 20170328 DN  c83-admin-manage-banner-update-banner-info-dn. In setResponseCridentials() :null check for fileUtility.getFileItem() is implemented.
+ * 20170329 DN  c83-admin-manage-banner-update-banner-info-dn. uploadFullBannerCredentials(JasonInflator, IView, String, IDataHelper) made changes to get war image uploading path.
+ * 20170330 DN  c83-admin-manage-banner-update-banner-info-dn. method updateBannerCredentials() modified to include request attributes "bannerWarPath" and "bannerCode".
+ * 				uploadFullBannerCredentials() method modified to extract bannerImage name to a string for future manipulation and the banner name is set in the updating logic.
+ * 				Within uploadFullBannerCredentials() "bannerCode" attribute has been set.
+ * 20170331 DN c83-admin-manage-banner-update-banner-info-dn.updateBannerCredentials() the request attribute value is set to literal 'default'.
+ * 				Code duplication in method execute() has been removed.
+ * 				
  */
 
 import com.genesiis.campus.entity.AdminBannerDAO;
 import com.genesiis.campus.entity.ICrud;
+import com.genesiis.campus.entity.ICrudSibling;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Banner;
 import com.genesiis.campus.util.ConnectionManager;
@@ -71,7 +92,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	private ImageUtility imageUtility =new ImageUtility();
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	private String message = "";
-	private static FileUtility fileUtility = new FileUtility();
+	private static final FileUtility fileUtility = new FileUtility();
 	
 	
 	/* (non-Javadoc)
@@ -83,35 +104,37 @@ public class CmdAdminBannerUpload implements ICommand {
 		
 		try{
 			Operation o = Operation.getOperation(helper.getCommandCode());
+			String userName ="";
+			// clear the message if it's accumulated.
+			this.setMessage(""); 
+		    userName = (String) getSessionProperty("usenName",helper);
+			/*
+			 * ########################################################################################
+			 * WARNING: The code --> 
+			 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			 * 			has to be commented out once proper user name is obtained via
+			 * 			the HttpSession. This implementation is only valid till integration.
+			 * 			2017-02-20 09:02h
+			 * ########################################################################################
+			 */				
+			userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+			jsn.setUser(userName);
 			switch (o){
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
 				
-				// clear the message if it's accumulated.
-				this.setMessage(""); 
-				String userName = (String) getSessionProperty("usenName",helper);
-				/*
-				 * ########################################################################################
-				 * WARNING: The code --> 
-				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				 * 			has to be commented out once proper user name is obtained via
-				 * 			the HttpSession. This implementation is only valid till integration.
-				 * 			2017-02-20 09:02h
-				 * ########################################################################################
-				 */				
-				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-				
 				if(isClientInputAccordanceWithValidation(jsn)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
-				}
-				
-				//return uploadFullBannerCredentials(jsn,view,userName,helper);	
-				// if validation fails
-				setResponseCridentials(helper);
+				}				
 				return view;
+			case UPDATE_ONLY_THE_BANNER_RECORD:
 				
+				if(isClientInputAccordanceWithValidation(jsn)){
+					updateBannerCredentials(jsn, helper);
+				}				
+				return view;
 		    default:
 		    	return view;
 			}
@@ -123,11 +146,12 @@ public class CmdAdminBannerUpload implements ICommand {
 			throw exp;
 		}
 		
-	}
+	}	
 	
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
 	 * having values and those are according to the business logic.
+	 * @author dushantha DN
 	 * @param jason : JasonInflator the object that is having the de-serialized values sent from
 	 * 				  client side
 	 * @return boolean
@@ -161,11 +185,11 @@ public class CmdAdminBannerUpload implements ICommand {
 				clientInputValidator.isNotEmpty(codeOfSelectedPage,"Advertiser field is empty !");
 				clientInputValidator.isInteger(codeOfSelectedPage," Choose a page from the list");
 				clientInputValidator.isNotEmpty(bannerSlotCode," Choose a page slot from the list !");
-				clientInputValidator.isNotEmpty(displayDusration," Display Duration field is empty !");
+				clientInputValidator.isNotEmpty(displayDusration," The display Duration field is empty !");
 				clientInputValidator.isInteger(displayDusration,"Kindly enter a numerical value");
-				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or dissable option");
+				clientInputValidator.isNotEmpty(banerToBeActive,"Please select enable or disable option");
 				clientInputValidator.isNotEmpty(bannerPublishingDate,"Publishing Date field is empty !");
-				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Endp Publishing Date field is empty !");
+				clientInputValidator.isNotEmpty(bannerPublishingEndDate,"Publishing End Date field is empty !");
 				
 				Date publishingDate 	= getADate("-",bannerPublishingDate);
 				Date endPublishingDate 	= getADate("-",bannerPublishingEndDate);
@@ -181,7 +205,8 @@ public class CmdAdminBannerUpload implements ICommand {
 				isvalidationSuccess=true;
 				
 		} catch (FailedValidationException fvexp) {
-			this.message = message +" "+ fvexp.toString();
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2); 
 			return false;
 		} catch(Exception exp){
@@ -193,12 +218,13 @@ public class CmdAdminBannerUpload implements ICommand {
 	
 	/**
 	 * getADate() returns a date.
-	 * Method accepts a date in the form yyy?MM?dd
+	 * Method accepts a date in the form yyyy?MM?dd
 	 * ? denotes the delimiter which should be passed to the method, 
 	 * using which the string date is split and forms a java.util.date
 	 * @param dateDelemeter : can be any printable string character 
+	 * @author dushantha DN
 	 *  e.g. "-" "," "/" etc 
-	 * @param date should be adhere to teh format yyy?MM?dd
+	 * @param date should be adhere to the format yyyy?MM?dd
 	 * 			yyyy: year
 	 * 			MM  : Month
 	 * 			dd  : date
@@ -214,12 +240,13 @@ public class CmdAdminBannerUpload implements ICommand {
 			return cal.getTime();
 		}
 
-	/*
+	/**
 	 * getSessionProperty provide session associated attribute
+	 * @author dushantha DN
 	 * @param userProperty
-	 * @param helper  : Helper wraps the HttpRequest object and
-	 * 					facilitating manipulating a limited set of properties
-	 * 					bound to the request
+	 * @param helper  : Helper wraps the HttpRequest object and<br>
+	 * 					facilitating manipulating a limited set of properties<br>
+	 * 					bound to the request<br>
 	 * 					@see IDataHelper.
 	 * @return Object : the session property which is a object and 
 	 * 					the client who uses the method should cast 
@@ -235,9 +262,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			return userSessionProperty;
 			
 		} catch (IllegalArgumentException ilearg) {
-			log.error("getUserProperty(String,IDataHelper) NullPointerException"
-					+ userProperty
-					+ "request parameter is Not Set : "
+			log.error("getUserProperty(String,IDataHelper) IllegalArgumentException  : 'userProperty' request parameter is Not Set : "
 					+ ilearg.toString());
 			throw ilearg;
 		}
@@ -245,9 +270,10 @@ public class CmdAdminBannerUpload implements ICommand {
 	}
 	
 
-	/*
-	 * Save banner image to a temporary location. This method stores the image 
-	 * to a temporary location in the physical disk which is agreed by the system 
+	/**
+	 * Save banner image to a temporary location. This method stores the image<br> 
+	 * to a temporary location in the physical disk which is agreed by the system <br>
+	 * @author dushantha DN
 	 * @param helper the helper
 	 * @param view the view
 	 * @return the i view
@@ -310,7 +336,7 @@ public class CmdAdminBannerUpload implements ICommand {
 		return view;
 	}
 
-	/*
+	/**
 	 * deleteTempFolder() method deletes a directory in the given
 	 * path if and only if it exists.
 	 * @author dushantha DN
@@ -340,9 +366,10 @@ public class CmdAdminBannerUpload implements ICommand {
 	}
 
 
-	/*
+	/**
 	 * Checks if is image accordance with system requirement.
 	 * <b>Note</b> the file to be tested must not be null
+	 * @author dushantha DN
 	 * @param con
 	 * @param requestWrapper
 	 * @return boolean true if the Banner image matches the set system constraints
@@ -397,13 +424,13 @@ public class CmdAdminBannerUpload implements ICommand {
 	}
 	
 	
-	/*
-	 * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within
-	 *  a multipart/form-data POST request and wrapped with by "fileUtility" parameter to a location specified
-	 *  by the movingDirectoryPath parameter. This method allows to move the said file to a clean directory
-	 *  where there is no any other files or folders but the moving file only. This fact is excreted by specifying
+	/**
+	 * isTheFileMovedTOTemporaryLocation(): moves the file or form item that was received within<br>
+	 *  a multipart/form-data POST request and wrapped with by "fileUtility" parameter to a location specified<br>
+	 *  by the movingDirectoryPath parameter. This method allows to move the said file to a clean directory<br>
+	 *  where there is no any other files or folders but the moving file only. This fact is excreted by specifying<br>
 	 *  the boolean parameter <I>shouldDirectoryContentBeRemoved</I> to true
-	 *   
+	 * @author dushantha DN  
 	 * @param fileUtility : FileUtility 
 	 * 
 	 * @param movingDirectoryPath : String denotes the absolute path of the directory
@@ -433,23 +460,30 @@ public class CmdAdminBannerUpload implements ICommand {
 	}
 
 
-	/*
+	/**
 	 * Method sets the response credentials, It sets the successfulness or the failure code,
-	 * amd the message to be dispatched to the view to the response as attributes
+	 * and the message to be dispatched to the view to the response as attributes
 	 * @author dushantha DN
 	 * setResponseCridentials sets the request attributes
 	 * @param helper: It is the HttpServletrequest wrapper instance.
 	 */
-	private void setResponseCridentials(IDataHelper helper){
-		helper.setAttribute("successCode", getSuccessCode());
-		helper.setAttribute("message", message);
-		helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
+	private void setResponseCridentials(IDataHelper helper) throws Exception{
+		try {
+			helper.setAttribute("successCode", getSuccessCode());
+			helper.setAttribute("message", message);
+			if( fileUtility.getFileItem()!=null)
+			 helper.setAttribute("bannerImageName", fileUtility.getFileItem().getName());
+		} catch (Exception exp) {
+			log.error("setResponseCridentials(IDataHelper):SQLException "+ exp.toString());
+			throw exp;
+		}
 	}
 		
 	
-	/*
+	/**
 	 * getElementFromCollection() method unwraps the inner Collection<String>
 	 * and retrieves the element at given index wrapped in an Object
+	 * @author dushantha DN
 	 * @param banners Collection<Collection<String>>
 	 * @param indexOfTheElement the index of the required element of Collection<String>
 	 * i.e in the inner Collection
@@ -464,11 +498,12 @@ public class CmdAdminBannerUpload implements ICommand {
 		return element;
 	}
 
-	/*
+	/**
 	 * moveFileToPhysicalLocation() will move the banner file to the 
 	 * physical location agreed by the SystemCofig table or the enum,
 	 * By default if the folder path given by bannerImagePhysicalUploadPath contains any files
 	 * those files will be deleted.
+	 * @author dushantha DN
 	 * @param bannerImagePhysicalUploadPath 
 	 * @return boolean true if the file is written to the location given by the 
 	 * physical path. else false
@@ -487,9 +522,63 @@ public class CmdAdminBannerUpload implements ICommand {
 		return isTheFileMovedToPhysicalLocation;
 	}
 	
-	/*
+	/**
+	 * updateBannerCredentials acts as a wrapper function which calls the actual update method<br>
+	 * and handles the exceptions 
+	 * @author dushantha DN
+	 * @param rowBanner
+	 * @param helper
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	private void updateBannerCredentials(JasonInflator rowBanner,IDataHelper helper) throws SQLException,Exception{
+		try {
+			bannerRecordUpdated(rowBanner);
+			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
+			this.setSuccessCode(1);
+			helper.setAttribute("bannerWarPath","default" );
+			helper.setAttribute("bannerCode",rowBanner.getBannerCode() );
+			setResponseCridentials(helper);
+			log.info("updateBannerCredentials(JasonInflator,IDataHelper) --> banner records are updated successfully ");
+		} catch (FailedValidationException fvexp) {
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
+			this.setSuccessCode(-2);
+			setResponseCridentials(helper);
+		} catch (SQLException sqle) {
+			log.error("updateBannerCredentials(JasonInflator,IDataHelper):SQLException "+ sqle.toString());
+			throw sqle;
+		} catch (Exception exp) {
+			log.error("updateBannerCredentials(JasonInflator,IDataHelper) :Exception "+ exp.toString());
+			throw exp;
+		}	
+	}
+	
+	/**
+	 * bannerRecordUpdated <b>Updates</b> the Banner table with the data that has been <br>
+	 * passed in with the JasonInflator rowBanner which should <b>not be null</b> and the client<br>
+	 * who uses the bannerRecordUpdated method must ensure that the parameter is not null.<br>
+	 * <br>
+	 * @author dushantha DN
+	 * @param rowBanner JasonInflator type instance that captured the data about<br>
+	 * 					the current banner which is to be updated.
+	 * @throws FailedValidationException : User defined Custom Exception is thrown if zero records are <br>
+	 * 			updated.
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	private void bannerRecordUpdated(JasonInflator rowBanner) throws FailedValidationException,SQLException,Exception{
+		 ICrudSibling adminBanerInsert = new AdminBannerDAO();
+		 if(adminBanerInsert.update(rowBanner)== 0){
+				throw new PrevalentValidation().new FailedValidationException(
+						SystemMessage.ZERO_UPDATES.toString());
+		 }
+	}
+	
+	/**
 	 * uploadFullBannerCredentials Uploads the information of the banner
 	 * passed with rowBanner instance to the table Banner
+	 * @author dushantha DN
 	 * @param rowBanner: JasonInflator type, it is the basic banner
 	 * 					 information passed to the method
 	 * @param view : it is IViewand captures the Collection to send  
@@ -504,6 +593,8 @@ public class CmdAdminBannerUpload implements ICommand {
 	private IView uploadFullBannerCredentials(JasonInflator rowBanner,
 			IView view,String userName,IDataHelper helper) throws SQLException,Exception{
 		Connection con = null;
+		String bannerCode ="";
+		String bannerNamer=	rowBanner.getBannerImageName();	
 	try{
 		 
 		 String[] extension =rowBanner.getBannerImageName().split("\\.");
@@ -512,15 +603,25 @@ public class CmdAdminBannerUpload implements ICommand {
 		  * want to get the banner code and bannerName once the update is succeeded
 		  * and save to the data base table banner
 		  */
-		 Collection<Collection<String>> banners = new AdminBannerDAO().
-				 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
 		 
-		 String bannerCode = (String) getElementFromCollection(banners,0);
-		 String bannerNamer = (String) getElementFromCollection(banners,1);
+		bannerCode = rowBanner.getBannerCode();
+		
+		 if(bannerCode.isEmpty()){ // new banner record is adding
+			 
+			 Collection<Collection<String>> banners = new AdminBannerDAO().
+					 addBannerRecordInOneTransAction(rowBanner,extension[1],userName);
+			 bannerCode = (String) getElementFromCollection(banners,0);
+			 bannerNamer = (String) getElementFromCollection(banners,1);
+			 
+		 } else { 
+			 // this is an insert or update for an existing record			 
+			 bannerRecordUpdated(rowBanner);
+			 //setting the banner Name
+			 bannerNamer=bannerCode+"."+extension[1];
+		 }
 		 
 		 con = ConnectionManager.getConnection();
 		 
-		
 		// get the banner absolute path for physical location to store the image 
 		 
 		String bannerImagePhysicalUploadPath = imageUtility
@@ -536,7 +637,6 @@ public class CmdAdminBannerUpload implements ICommand {
 						.getImageTeporyUploadPath(
 								SystemConfig.BANNER_IMAGE_ABSOLUTE_PATH,
 								"tempbanner", con);
-			
 	
 		// if only the file is moved ,delete the temporary folder which is created before	
 		 
@@ -544,13 +644,22 @@ public class CmdAdminBannerUpload implements ICommand {
 					 bannerImagePhysicalUploadPath,rowBanner.getBannerImageName()) ){
 				
 				this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
-				this.message =this.message + " "+SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD.toString();
+				this.message =this.message + " ";
+				this.message = (rowBanner.getBannerCode().isEmpty()) ? SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD
+						.toString() : SystemMessage.UPDATE_SUCCESSFUL
+						.toString();
 				this.setSuccessCode(1);
 				log.info("uploadFullBannerCredentials(JasonInflator.IView,String) completed --> :"
 						+ "Banner Credentials are written to the rpository and image is uploaded");
 				
 			}
 			
+		}catch (FailedValidationException fvexp) {
+			String [] errorMessagePart =fvexp.toString().split(":");
+			this.message = message +" "+ errorMessagePart[1];
+			this.setSuccessCode(-2);
+			setResponseCridentials(helper);
+			return view;
 		} catch (JsonSyntaxException jsyexp) {
 			log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());
 			throw jsyexp;	
@@ -560,18 +669,20 @@ public class CmdAdminBannerUpload implements ICommand {
 		} catch (Exception exp) {
 			log.error("uploadFullBannerCredentials(IDataHelper,IView):Exception "+ exp.toString());
 			throw exp;
-		}	
-		
+		}
+	
+		String bannerWarPath =SystemConfig.BANNER_IMAGE_WAR_PATH.getValue1()+"/"+bannerCode+"/"+bannerNamer;
+		helper.setAttribute("bannerCode", bannerCode);
+		helper.setAttribute("bannerWarPath",bannerWarPath );
 	 	setResponseCridentials(helper); 
-	 	this.setFileUtility(null); // clear the static class field on completion.
 	 	return view;
 	}
 
-/*
+/**
  * getFileReNamedTo rename the currentFilenameWithExtension
  *  to newFileNameWithoutExtension and deletes the source file once the coping
  *  process is succeeded.
- *  
+ * @author dushantha DN 
  * @param newFileNameWithoutExtension : filename to be renamed to without the 
  * 										the extension e.g. 'account123'
  * @param fileUtility : FileUtility type instance 
@@ -636,10 +747,12 @@ private boolean getFileReNamedTo(String newFileNameWithoutExtension,FileUtility 
 }
 
 
-/*
- * getInflatedObjectFromJason de serialized the flattened jason data in to an object
+/**
+ *  getInflatedObjectFromJason deserialized the flattened jason data in to an object
+ *  @author dushantha DN
  * @param data String type which is the flatten Jason object state (serialized object)
- * sent from the server attached as a servlettRequest parameter IMPORTANT : String must not be  null
+ * sent from the server attached as a servlettRequest parameter<br>
+ *  IMPORTANT : String must not be  null
  * @return JasonInflator which is the inflated object with the client side informations sent in.
  * @throws JsonSyntaxException.
  */
@@ -695,9 +808,6 @@ private JasonInflator getInflatedObjectFromJason(String data) throws JsonSyntaxE
 		this.message = message;
 	}
 	
-	private void setFileUtility(FileUtility fileUtility) {
-		CmdAdminBannerUpload.fileUtility = fileUtility;
-	}
 	
 	/**
 	 * Gets the success code.

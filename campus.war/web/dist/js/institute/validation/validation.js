@@ -25,6 +25,7 @@
  *20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the method isValidEmailFormat to enclose the regular expression with ^ and $ 
  *			 negate the !isPatternMatch(urltestingPattern,urlSplitedArray[1]) in urlTest() method.	
  *20170315 DN c81-admin-manage-banner-add-and-view-banner-dn isDate() method has been implemented. compareDates() doc commented re structured 
+ *20170321 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() method an the comment amended. add \/{0,1} to the end of regex.
  */ 
 
  
@@ -166,9 +167,11 @@ function isStringHasValiCharsAndLength(testableInput, regex){
  * https://www.google.lk<br>
  * www.google.lk<br><br>
  * <b>NOTE</b>:<br>
- * but this validation returns false for URLs which contains "/" at the end.<br>
+ * <b>This method sometimes prompt error for valid urls hence should use with caution </b>
+ * but this validation returns false for URLs which contains "/" at the end sooner after the domain is ended.<br>
  * Hence 'https://www.google.lk/' results an invalid url.<br>
  * method does not validate urls having ":" in between e.g http://www.campus.dev:8080<br>
+ * 
  * @author dushantha DN
  * @param urlInputTextid : id of the element (input) where the url testable string is inserted
  */
@@ -179,7 +182,7 @@ function urlTest(urlInputTextid){
 		return validUrl;
 	}
 	//urlInputText.replace(/\s+/g, ""); // remove spaces between the context
-	var urlPatern =/^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	var urlPatern =/^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z_\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+\/{0,1})?$/g;
 	
 
 	/* test for characters placed at the beginning
