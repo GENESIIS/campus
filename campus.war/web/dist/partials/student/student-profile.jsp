@@ -31,6 +31,7 @@
 <!-- 20170309 PN CAM-150: 'About me model' text field lengths are modified. -->
 <!-- 20170329 TR CAM-150: Removed inline styles from error-msg span and added styles to error-msg class -->
 <!-- 20170329 TR CAM-150: fixed error messages styles and display position in 'About Me modal'  -->
+<!-- 20170331 PN CAM-150 onclick event added to sEmail textFiled. -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -479,7 +480,7 @@
 
                 <div class="show modal-input-field clearfix">
                     <label>Email : <span style="color:red">*</span></label>
-                    <input type="text" name="sEmail" id="sEmail" onclick="" maxlength="200"><br>
+                    <input type="text" name="sEmail" id="sEmail" onclick="clearField('sEmailError')" maxlength="200"><br>
                     <span class="std-mdl-error-msg" id="sEmailError" name="sEmailError"></span><br>
                 </div>
 
