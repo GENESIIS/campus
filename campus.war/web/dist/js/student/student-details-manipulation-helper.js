@@ -7,6 +7,7 @@
  * 20170309 PN CAM-150: populatePersonalDataformElements() method implementation modified by adding validation to check if the student details collection is updated, empty or null.
  * 20170310 PN CAM-150: addStudentPersonalDetails() method modified by adding if-else condition.
  * 20170313 PN CAM-150: addStudentPersonalDetails() method modified to pass locale details in to the command class.
+ * 20170331 PN CAM-150: error message span class renamed into 'std-mdl-error-msg' in clearPersonalDetailsForm().
  */
 
 
@@ -629,7 +630,7 @@ function clearPersonalDetailsForm() {
 	$('#sAddressLine2').val("");
 	$('#sAddressLine3').val("");
 	$('.input-group-addon').text("");
-	$('.error-msg').text("");
+	$('.std-mdl-error-msg').text("");
 	$('#sMobileNumber').val("");
 	$('#sHomeNumber').val("");
 	$('#sOtherNumber').val("");
