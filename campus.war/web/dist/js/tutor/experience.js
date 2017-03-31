@@ -13,18 +13,21 @@
  * 20170330 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & make dynamic field names
  * 20170330 CW c157-add-tutor-employment-details-cw add employmentCode hidden field in fillSelectedCourseProviderData method
  * 20170331 CW c157-add-tutor-employment-details-cw modified displaySelectedCourseProviders methods tutor code into tutorcodelist
+ * 20170331 CW c157-add-tutor-employment-details-cw modified read function & add tutor code, modified displayCourseProviders method & add tutor code as a parameter
+ * 				modified displaySelectedCourseProviders method & add tutor code as a parameter to the method & to ajax call as a parameter
  */
 
 $(document).ready(function() {
-	displayCourseProviders();
-	displaySelectedCourseProviders();
+	var tutorCode = $("#tutorcodelist").val();
+	displayCourseProviders(tutorCode);
+	displaySelectedCourseProviders(tutorCode);
 });
 
 /**
  * This method used to query featured course provider details from the database
  * @author CW
  */
-function displayCourseProviders() {
+function displayCourseProviders(tutorCode) {
 	
 	$.ajax({
 		url : '/TutorController',
@@ -66,8 +69,7 @@ function getCourseProviderData(response) {
  * This method used to query tutor selected featured course provider details from the database
  * @author CW
  */
-function displaySelectedCourseProviders() {
-	var tutorCode = $("#tutorcodelist").val();
+function displaySelectedCourseProviders(tutorCode) {
 	$.ajax({
 		url : '/TutorController',
 		method : 'POST',
