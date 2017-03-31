@@ -1,4 +1,5 @@
 // 20170330 MM c117-display-banners-record-viewcount-back-end INIT class and implemented add(Object) method
+// 20170331 MM c117-display-banners-record-viewcount-back-end Altered implementation of add(Object) method so it performs a batch operation 
 
 package com.genesiis.campus.entity;
 
@@ -11,31 +12,45 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class BannerViewStatDAO implements ICrud {
 
 	static Logger Log = Logger.getLogger(BannerViewStatDAO.class.getName());
 
-
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-		BannerViewStat bannerViewStat = (BannerViewStat) object;
+		
 		PreparedStatement ps = null;
-		Connection connection = null;
+		Connection con = null; 
+		int totalNumOfRecordsAffected = 0;
 		
-		String query = "INSERT INTO [campus].[BANNERVIEWSTAT] (CALLERPAGE, VIEWDATE, VIEWTIME, BANNER, CRTBY) VALUES (?, ?, ?, ?, ?)";
-		int result = -1; 
-		
-		try {
-			connection = ConnectionManager.getConnection();
-			ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, bannerViewStat.getCallerPage());
-			ps.setDate(2, bannerViewStat.getViewDate());
-			ps.setTime(3, bannerViewStat.getViewTime());			
-			ps.setInt(4, bannerViewStat.getBanner());
-			ps.setString(5, bannerViewStat.getCrtBy());
-			result = ps.executeUpdate();	
+		try {			
+			List<BannerViewStat> bannerViewStatCollection = (ArrayList<BannerViewStat>) object; 
+			
+			String query = "UPDATE [campus].[BANNERVIEWSTAT] SET BANNER = ?, VIEWCOUNT = ?, CALLERPAGE = ?, CRTBY = ?";
+			
+			con = ConnectionManager.getConnection();
+			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+						
+			for(BannerViewStat bvs : bannerViewStatCollection) {
+				
+				ps.setInt(1, bvs.getBanner());
+				ps.setInt(2, bvs.getViewCount());
+				ps.setString(3, bvs.getCallerPage());			
+				ps.setString(4, bvs.getCrtBy());
+				
+			    ps.addBatch();
+			}			
+			
+			 int[] affectedRecords = ps.executeBatch();	
+			 
+			 for (int numOfRecordsAffected : affectedRecords) {
+				 totalNumOfRecordsAffected += numOfRecordsAffected;
+			 }
+			
 		} catch (SQLException sqle) {
 			Log.info("add(): SQLException: " + sqle.toString());
 			throw sqle;
@@ -43,14 +58,15 @@ public class BannerViewStatDAO implements ICrud {
 			Log.info("add(): Exception:" + ex.toString());
 			throw ex;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
 			if (ps != null) {
 				ps.close();
 			}
-		}
-		return result;
+			if (con != null) {
+				con.close();
+			}
+		}	
+		
+		return totalNumOfRecordsAffected;
 	}
 
 	@Override
