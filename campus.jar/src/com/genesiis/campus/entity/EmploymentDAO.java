@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 // 20170327 c157-add-tutor-employment-details-cw - INIT EmploymentDAO.java & Create Add method
 // 20170330 CW c157-add-tutor-employment-details-cw create deleteMultiple method
+// 20170331 CW c157-add-tutor-employment-details-cw add method comments into add method
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -46,11 +47,11 @@ public class EmploymentDAO implements ICrud {
 			conn = ConnectionManager.getConnection();			
 			
 			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, employmentData.getVarificationstatus());
-			stmt.setString(2, employmentData.getCrtby());
-			stmt.setString(3, employmentData.getModby());
-			stmt.setInt(4, employmentData.getTutor());
-			stmt.setInt(5, employmentData.getCourseprovider());
+			stmt.setInt(1, employmentData.getVarificationstatus()); // VARIFICATIONSTATUS
+			stmt.setString(2, employmentData.getCrtby()); // CRTBY
+			stmt.setString(3, employmentData.getModby()); // MODBY
+			stmt.setInt(4, employmentData.getTutor()); // TUTOR
+			stmt.setInt(5, employmentData.getCourseprovider()); // COURSEPROVIDER
 			status = stmt.executeUpdate();
 
 		} catch (ClassCastException cce) {
