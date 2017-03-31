@@ -38,6 +38,7 @@ package com.genesiis.campus.command;
  * 				uploadFullBannerCredentials() method modified to extract bannerImage name to a string for future manipulation and the banner name is set in the updating logic.
  * 				Within uploadFullBannerCredentials() "bannerCode" attribute has been set.
  * 20170331 DN c83-admin-manage-banner-update-banner-info-dn.updateBannerCredentials() the request attribute value is set to literal 'default'.
+ * 				Code duplication in method execute() has been removed.
  * 				
  */
 
@@ -104,53 +105,35 @@ public class CmdAdminBannerUpload implements ICommand {
 		try{
 			Operation o = Operation.getOperation(helper.getCommandCode());
 			String userName ="";
-			JasonInflator jsn= null;
+			// clear the message if it's accumulated.
+			this.setMessage(""); 
+		    userName = (String) getSessionProperty("usenName",helper);
+			/*
+			 * ########################################################################################
+			 * WARNING: The code --> 
+			 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			 * 			has to be commented out once proper user name is obtained via
+			 * 			the HttpSession. This implementation is only valid till integration.
+			 * 			2017-02-20 09:02h
+			 * ########################################################################################
+			 */				
+			userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+			jsn.setUser(userName);
 			switch (o){
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
 				
-				// clear the message if it's accumulated.
-				this.setMessage(""); 
-			    userName = (String) getSessionProperty("usenName",helper);
-				/*
-				 * ########################################################################################
-				 * WARNING: The code --> 
-				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				 * 			has to be commented out once proper user name is obtained via
-				 * 			the HttpSession. This implementation is only valid till integration.
-				 * 			2017-02-20 09:02h
-				 * ########################################################################################
-				 */				
-				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-				jsn.setUser(userName);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
-				}
-				
+				}				
 				return view;
 			case UPDATE_ONLY_THE_BANNER_RECORD:
 				
-				// clear the message if it's accumulated.
-				this.setMessage(""); 
-				userName = (String) getSessionProperty("usenName",helper);
-				/*
-				 * ########################################################################################
-				 * WARNING: The code --> 
-				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				 * 			has to be commented out once proper user name is obtained via
-				 * 			the HttpSession. This implementation is only valid till integration.
-				 * 			2017-02-20 09:02h
-				 * ########################################################################################
-				 */				
-				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-				jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-				jsn.setUser(userName);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					updateBannerCredentials(jsn, helper);
-				}
-				
+				}				
 				return view;
 		    default:
 		    	return view;
@@ -163,7 +146,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			throw exp;
 		}
 		
-	}
+	}	
 	
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
