@@ -491,17 +491,12 @@ body, html {
 body.profile-display {
   color: #535e68;
   font-family: "Open Sans", sans-serif;
-  background-repeat: repeat-x;
-  background-color: #edf1f4;
-  background-position: center top; }
+  background: url("../i/public/display-tutor/body-bg.png") #edf1f4 repeat-x center 250px !important; }
 
 body.profile-display p {
   font-size: 0.9em;
   line-height: 1.4em;
   margin: 10px 0 12px; }
-
-body.profile-display .wrapper {
-  margin-top: 40px; }
 
 body.profile-display .main-content {
   background: #fff;
