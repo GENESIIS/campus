@@ -10,6 +10,7 @@
 <!-- 20170329 c157-add-tutor-employment-details-cw - add remove button -->
 <!-- 20170330 c157-add-tutor-employment-details-cw - add maxSequence hidden item -->
 <!-- 20170330 c157-add-tutor-employment-details-cw - modified table view sequence -->
+<!-- 20170331 c157-add-tutor-employment-details-cw - modified tutor code into tutorcodelist & add a checkbox item into table -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -29,10 +30,10 @@
 		
 		<form action="/TutorController" method="POST" align="center">
 			<c:forEach var="tutorList" items="${result.collection}">			
-				<c:set var="tutorcode" value="${tutorList[0]}"/>			
+				<c:set var="tutorcodelist" value="${tutorList[6]}"/>			
 			</c:forEach>
 			
-				<input type="hidden" name="tutorCode" id="tutorCode" value="${tutorcode}"/>
+				<input type="text" name="tutorcodelist" id="tutorcodelist" value="${tutorcodelist}"/>
 			
 			<table align="center">	
 				<tr>
@@ -74,7 +75,8 @@
 										<td><c:out value="${companies[3]}"></c:out></td>
 										<td><c:out value="${companies[4]}"></c:out></td>
 										<td>
-											<input type="hidden" id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>"/>
+											<input type=checkbox id=isSelected${loop.index+1} name=isSelected${loop.index+1} value=1>
+											<input type="text" id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>"/>
 											<input type="hidden" id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>"/>
 											
 										</td>
