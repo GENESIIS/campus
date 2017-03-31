@@ -11,6 +11,7 @@
 <!-- 20170330 c157-add-tutor-employment-details-cw - add maxSequence hidden item -->
 <!-- 20170330 c157-add-tutor-employment-details-cw - modified table view sequence -->
 <!-- 20170331 c157-add-tutor-employment-details-cw - modified tutor code into tutorcodelist & add a checkbox item into table -->
+<!-- 20170331 c157-add-tutor-employment-details-cw - removed some table details & add messages into the page -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -33,9 +34,14 @@
 				<c:set var="tutorcodelist" value="${tutorList[6]}"/>			
 			</c:forEach>
 			
-				<input type="text" name="tutorcodelist" id="tutorcodelist" value="${tutorcodelist}"/>
+				<input type="hidden" name="tutorcodelist" id="tutorcodelist" value="${tutorcodelist}"/>
 			
 			<table align="center">	
+				<tr>
+					<td>
+						<h2 id="message" style="color: red">${message}</h2>
+					</td>
+				</tr>
 				<tr>
 					<td>Employer</td>	
 					<td><span id="employerError"></span> 
@@ -53,7 +59,11 @@
 		<div align="center">
 			<form action="/TutorController" method="POST">
 				<h1>Manage Employment Details</h1>
-				<span style="color: red"><c:out value="${errorMessage}" /></span>
+				<tr>
+					<td>
+						<h2 id="message" style="color: red">${message}</h2>
+					</td>
+				</tr>
 				<div>
 					<table id="employers" width="80%">
 						<tr>
@@ -62,28 +72,9 @@
 							<th>Name</th>
 							<th>Speciality</th>
 							<th>Address</th>
-							<th>Select</th>
+							<th>Select to Remove</th>
 							<th></th>
 						</tr>
-						<c:forEach var="companies" items="${result.collection}" varStatus="loop">
-							<tr>
-								<c:choose>
-									<c:when test="${companies[1] != null}">
-										<td><c:out value="${loop.index+1}"></c:out></td>
-										<td><c:out value="${companies[1]}"></c:out></td>
-										<td><c:out value="${companies[2]}"></c:out></td>
-										<td><c:out value="${companies[3]}"></c:out></td>
-										<td><c:out value="${companies[4]}"></c:out></td>
-										<td>
-											<input type=checkbox id=isSelected${loop.index+1} name=isSelected${loop.index+1} value=1>
-											<input type="text" id="tutorCode" name="tutorCode" value="<c:out value="${companies[6]}"/>"/>
-											<input type="hidden" id="employerCode" name="employerCode" value="<c:out value="${companies[0]}"/>"/>
-											
-										</td>
-									</c:when>
-								</c:choose>
-							</tr>
-						</c:forEach>
 					</table>
 					<div style="text-align:right">  
     					<button type="submit" name="CCO" id="CCO" value="REMOVE_SELECTED_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Remove</button>
