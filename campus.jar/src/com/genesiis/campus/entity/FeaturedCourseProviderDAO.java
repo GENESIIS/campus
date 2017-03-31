@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170328 CW c157-add-tutor-employment-details-cw added UNIQUEPREFIX to getAll method
 				// add trim to the string values in getTutorSelectedFCP method
 //20170330 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method to query the code in EMPLOYMENT table
+//20170331 CW c157-add-tutor-employment-details-cw add getFCPListForTutorToSelect method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -210,4 +211,48 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		return allTutorSelectedFCPList;
 	}
 
+	/**
+	 * Returns the Featured Course Provider list which tutor does not added earlier
+	 * @author Chinthaka 
+	 * @return Returns the code & name of Featured Course Provider Details in Database from a collection of collection
+	 */
+	public Collection<Collection<String>> getFCPListForTutorToSelect(String tutorCode) throws SQLException, Exception {
+		
+		final Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+					
+		StringBuilder queryBuilder = new StringBuilder("SELECT CP.CODE CODE, CP.NAME NAME FROM CAMPUS.COURSEPROVIDER CP ");
+		queryBuilder.append("WHERE CP.ACCOUNTTYPE = 1 ");
+		queryBuilder.append("AND CP.CODE NOT IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ? )");		
+		queryBuilder.append("ORDER BY NAME");
+			
+		try {
+			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(queryBuilder.toString());
+			stmt.setString(1, tutorCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
+												
+				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
+
+				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
+			}		
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allFeaturedCourseProviderList;
+
+	}
 }
