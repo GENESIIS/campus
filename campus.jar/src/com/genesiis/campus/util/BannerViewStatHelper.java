@@ -1,17 +1,30 @@
 // 20170330 MM c117-display-banners-record-viewcount-back-end INIT class act as a singleton
+// 20170331 MM c117-display-banners-record-viewcount-back-end Extended updateBannerViewCount(...) to persist bannerViewStat data
 
 package com.genesiis.campus.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.genesiis.campus.entity.BannerStatDAO;
+import com.genesiis.campus.entity.BannerViewStatDAO;
 import com.genesiis.campus.entity.model.BannerStat;
+import com.genesiis.campus.entity.model.BannerViewStat;
+
+import org.apache.log4j.Logger;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BannerViewStatHelper {
 	
 	private static BannerViewStatHelper bannerViewStatHelper;
 	private static Map<Integer, Integer> bannerToViewCountResolver; 
+	private static int viewCount;
+
+	static Logger Log = Logger.getLogger(BannerViewStatHelper.class.getName());
 	
 	
 	private static Map<Integer, Integer> getBannerToViewCountResolver() {
@@ -23,10 +36,11 @@ public class BannerViewStatHelper {
 	 */
 	private BannerViewStatHelper() {
 		BannerViewStatHelper.bannerToViewCountResolver = new HashMap<Integer, Integer>();
+		BannerViewStatHelper.viewCount = 0;
 	} 
 	
 	/**
-	 * Creates a new instance of BannerViewStatHelper if not one is available already and returns it. 	 * 
+	 * Creates a new instance of BannerViewStatHelper if not one is available already and returns it. 
 	 * 
 	 * @return The singleton BannerViewStatHelper 
 	 */
@@ -37,7 +51,7 @@ public class BannerViewStatHelper {
 		return BannerViewStatHelper.bannerViewStatHelper;
 	}
 	
-	public void updateBannerViewCount(int bannerCode) {
+	public void updateBannerViewCount(int bannerCode, String callerPage) throws Exception {
 		// update the banner view count
 		
 		Map<Integer, Integer> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
@@ -49,27 +63,40 @@ public class BannerViewStatHelper {
 			} else {
 				bannerViewCountResolver.put(bannerCode, viewCount + 1);
 			}
+			
+			BannerViewStatHelper.viewCount++; 
 		}
 		
-		int viewCounts = 0;
-		// See the total of the view counts of the banners
-		for (Integer banner : bannerViewCountResolver.keySet()) {
-			int count = bannerViewCountResolver.get(banner);			
-			viewCounts += count;
-		} 
-		
-		if (viewCounts >= 100) {
+		if (BannerViewStatHelper.viewCount >= 100) {
 			// Persist banner counts
 			
+			List<BannerViewStat> viewStatInstances = new ArrayList<BannerViewStat>();
 
-			BannerStat bannerStat = new BannerStat();
-			bannerStat.setBanner(bannerCode);
+			BannerViewStat bannerViewStat = new BannerViewStat();
+			bannerViewStat.setBanner(bannerCode);
+			bannerViewStat.setCallerPage(callerPage);
+//			bannerViewStat.setViewDate(new Date());
+//			bannerViewStat.setViewTime(new Time());
 
 			String createdBy = "SYSTEM";
-			bannerStat.setCrtBy(createdBy);
+			bannerViewStat.setCrtBy(createdBy);
 
-			BannerStatDAO bannerDao = new BannerStatDAO();
-//			int insertStatus = bannerDao.add(bannerStat);
+			BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
+			
+			int insertStatus = 0;
+			try {
+				insertStatus = bannerViewStatDao.add(bannerViewStat);
+				
+			} catch (SQLException sqle) {
+				Log.error("execute(IDataHelper, IView) : SQLException "
+						+ sqle.toString());
+				throw sqle;
+				
+			} catch (Exception e) {
+				Log.error("execute(IDataHelper, IView) : Exception "
+						+ e.toString());
+				throw e;
+			}
 			
 			// Clear elements in bannerToViewCountResolver
 			
