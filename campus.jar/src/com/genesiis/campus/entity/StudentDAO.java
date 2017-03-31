@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
 //20170106 PN CAM-28: SQL query modified in findById(Object code) method.
 //20170109 PN CAM-28: Added character replacement for replace ',' in findById() method.
+//20170309 PN CAM-150: DAO methods are modified to access AddressLine1, AddressLine2 and AddressLine3 values separately. update(Object object, Connection con) method modified by removing network code manipulation from the mobile number. 
 
 
 import java.sql.Connection;
@@ -51,7 +52,7 @@ public class StudentDAO implements ICrud {
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
 					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
 					+ "[DESCRIPTION] = ?, [FACEBOOKURL] = ?, [TWITTERURL] = ?, [MYSPACEURL] = ?, [LINKEDINURL] = ?, "
-					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [TOWN] = ?, "
+					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [ADDRESS2] = ?, [ADDRESS3] = ?, [TOWN] = ?, "
 					+ "[MODON]=(getdate()), [MODBY] = ? "
 					+ "WHERE [CODE] = ?;";
 
@@ -76,9 +77,11 @@ public class StudentDAO implements ICrud {
 			stmt.setString(18, student.getViberNumber());
 			stmt.setString(19, student.getWhatsAppNumber());
 			stmt.setString(20, student.getAddress1());
-			stmt.setString(21, student.getTown());
-			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());					
+			stmt.setString(21, student.getAddress2());
+			stmt.setString(22, student.getAddress3());
+			stmt.setString(23, student.getTown());
+			stmt.setString(24, student.getModBy());
+			stmt.setInt(25, student.getCode());					
 			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());
@@ -130,12 +133,12 @@ public class StudentDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleList = new ArrayList<String>();
 				singleList.add(rs.getString("CODE"));
-				singleList.add(rs.getString("USERNAME").replaceAll(",", "##"));
+				singleList.add(rs.getString("USERNAME"));
 				singleList.add(rs.getString("PASSWORD"));
 				singleList.add(rs.getString("INDEXNO"));
-				singleList.add(rs.getString("FIRSTNAME").replaceAll(",", "##"));
-				singleList.add(rs.getString("MIDDLENAME").replaceAll(",", "##"));
-				singleList.add(rs.getString("LASTNAME").replaceAll(",", "##"));
+				singleList.add(rs.getString("FIRSTNAME"));
+				singleList.add(rs.getString("MIDDLENAME"));
+				singleList.add(rs.getString("LASTNAME"));
 				singleList.add(rs.getString("DATEOFBIRTH"));
 				singleList.add(rs.getString("GENDER"));
 				singleList.add(rs.getString("EMAIL"));
@@ -146,7 +149,7 @@ public class StudentDAO implements ICrud {
 				singleList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
 				singleList.add(rs.getString("MOBILEPHONENETWORKCODE"));
 				singleList.add(rs.getString("MOBILEPHONENO"));
-				singleList.add(rs.getString("DESCRIPTION").replaceAll(",", "##"));
+				singleList.add(rs.getString("DESCRIPTION"));
 				singleList.add(rs.getString("FACEBOOKURL"));
 				singleList.add(rs.getString("TWITTERURL"));
 				singleList.add(rs.getString("MYSPACEURL"));
@@ -154,9 +157,9 @@ public class StudentDAO implements ICrud {
 				singleList.add(rs.getString("INSTAGRAMURL"));
 				singleList.add(rs.getString("VIBERNUMBER"));
 				singleList.add(rs.getString("WHATSAPPNUMBER"));
-				singleList.add(rs.getString("ADDRESS1").replaceAll(",", "##"));
-				singleList.add(rs.getString("ADDRESS2").replaceAll(",", "##"));
-				singleList.add(rs.getString("ADDRESS3").replaceAll(",", "##"));
+				singleList.add(rs.getString("ADDRESS1"));
+				singleList.add(rs.getString("ADDRESS2"));
+				singleList.add(rs.getString("ADDRESS3"));
 				singleList.add(rs.getString("TOWN"));
 				singleList.add(rs.getString("ACCOUNTTYPE"));
 				singleList.add(rs.getString("COUNTRYNAME"));
@@ -214,7 +217,7 @@ public class StudentDAO implements ICrud {
 					+ "[LASTNAME] = ?, [DATEOFBIRTH] = ?, [GENDER] = ?, [EMAIL] = ?, [LANDPHONECOUNTRYCODE] = ?, "
 					+ "[LANDPHONENO] = ?, [MOBILEPHONECOUNTRYCODE] = ?, [MOBILEPHONENETWORKCODE] = ?, [MOBILEPHONENO] = ?, "
 					+ "[DESCRIPTION] = ?, [FACEBOOKURL] = ?, [TWITTERURL] = ?, [MYSPACEURL] = ?, [LINKEDINURL] = ?, "
-					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [TOWN] = ?, "
+					+ "[INSTAGRAMURL] = ?, [VIBERNUMBER] = ?, [WHATSAPPNUMBER] = ?, [ADDRESS1] = ?, [ADDRESS2] = ?, [ADDRESS3] = ?, [TOWN] = ?, "
 					+ "[MODON]=(getdate()), [MODBY] = ? "
 					+ "WHERE [CODE] = ?;";
 
@@ -230,14 +233,15 @@ public class StudentDAO implements ICrud {
 			stmt.setString(9, student.getLandPhoneCountryCode());
 			
 			//This will be change later once a proper way confirmed to check the phone number, and network code.
-			if(student.getMobilePhoneNo().length() > 4){
-				stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
-				stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
-			}else{
-				stmt.setString(10, student.getMobilePhoneNo());
-				stmt.setString(11, student.getMobilePhoneNo());
-			}
-		
+//			if(student.getMobilePhoneNo().length() > 4){
+//				stmt.setString(10, student.getMobilePhoneNo().substring(0, 3));
+//				stmt.setString(11, student.getMobilePhoneNo().substring(3, student.getMobilePhoneNo().length()-1));
+//			}else{
+//				stmt.setString(10, student.getMobilePhoneNo());
+//				stmt.setString(11, student.getMobilePhoneNo());
+//			}
+			stmt.setString(10, "0");
+			stmt.setString(11, student.getMobilePhoneNo());
 			stmt.setString(12, student.getDescription());
 			stmt.setString(13, student.getFacebookUrl());
 			stmt.setString(14, student.getTwitterUrl());
@@ -247,9 +251,11 @@ public class StudentDAO implements ICrud {
 			stmt.setString(18, student.getViberNumber());
 			stmt.setString(19, student.getWhatsAppNumber());
 			stmt.setString(20, student.getAddress1());
-			stmt.setString(21, student.getTown());
-			stmt.setString(22, student.getModBy());
-			stmt.setInt(23, student.getCode());				
+			stmt.setString(21, student.getAddress2());
+			stmt.setString(22, student.getAddress3());
+			stmt.setString(23, student.getTown());
+			stmt.setString(24, student.getModBy());
+			stmt.setInt(25, student.getCode());				
 			isUpdated = stmt.executeUpdate();
 		} catch (SQLException sqlException) {
 			Log.error("update(Object object): SQLE " + sqlException.toString());

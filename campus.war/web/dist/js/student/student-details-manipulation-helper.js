@@ -1,6 +1,16 @@
 /**
  * 20170214 PN CAM-28: INIT student-details-manipulation-helper.js file to contain all data manipulation functions for student profile JSP page. all the methods are previously located and copied from student-details-helper.js file.
+ * 20170305 PN CAM-150: isCountryEmpty() method and getTownDetails() method implemented to perform town details selection datalist.
+ * 20170306 PN CAM-150: clearPersonalDetailsForm() method modified to clear error spans. modified the JQuery which takes the gender value from the radio. added a code to close model on successful details update, in addStudentPersonalDetails() method.
+ * 20170306 PN CAM-150: validateStudentPersonalDetails() method modified to validate empty date of birth.
+ * 20170309 PN CAM-150: addStudentPersonalDetails() method and clearPersonalDetailsForm() method modified to display AddressLine1, AddressLine2, AddressLine3 separately.
+ * 20170309 PN CAM-150: populatePersonalDataformElements() method implementation modified by adding validation to check if the student details collection is updated, empty or null.
+ * 20170310 PN CAM-150: addStudentPersonalDetails() method modified by adding if-else condition.
+ * 20170313 PN CAM-150: addStudentPersonalDetails() method modified to pass locale details in to the command class.
+ * 20170331 PN CAM-150: error message span class renamed into 'std-mdl-error-msg' in clearPersonalDetailsForm().
  */
+
+
 
 /**
  * This method generates a Json object to pass into tag-it input.
@@ -470,7 +480,9 @@ function addStudentPersonalDetails() {
 		var description = $('#sAboutMe').val();
 		var mobilePhoneNo = $('#sMobileNumber').val();
 		var landPhoneNo = $('#sHomeNumber').val();
-		var address1 = $('#sAddress').val();
+		var address1 = $('#sAddressLine1').val();
+		var address2 = $('#sAddressLine2').val();
+		var address3 = $('#sAddressLine3').val();
 		var town = $('#sTownCode').val();
 		var email = $('#sEmail').val();
 		var facebookUrl = $('#sFacebookUrl').val();
@@ -481,7 +493,15 @@ function addStudentPersonalDetails() {
 		var whatsAppNumber = $('#sWhatsApp').val();
 		var viberNumber = $('#sViber').val();
 		var landPhoneCountryCode = $('#sCountryCode').val();
-		var gender = $('input[gender]:checked').val();
+		var gender = $("input[name='gender']:checked").val();
+		
+		var countryName = $('#sCountry').val();
+		var townName = $('#sTown').val();
+		
+		var localeData = {
+			"countryName" : countryName,
+			"townName" : townName
+		};
 
 		var jsonData = {
 			"firstName" : firstName,
@@ -492,6 +512,8 @@ function addStudentPersonalDetails() {
 			"mobilePhoneNo" : mobilePhoneNo,
 			"landPhoneNo" : landPhoneNo,
 			"address1" : address1,
+			"address2" : address2,
+			"address3" : address3,
 			"town" : town,
 			"email" : email,
 			"facebookUrl" : facebookUrl,
@@ -510,43 +532,40 @@ function addStudentPersonalDetails() {
 					url : '../../../StudentController',
 					data : {
 						jsonData : JSON.stringify(jsonData),
-						CCO : "APD"
+						CCO : "APD",
+						localeData : JSON.stringify(localeData)
 					},
 					dataType : "json",
 					success : function(data) {
 						if (data.studentPersonalStatus) {
-							if (data.studentPersonalStatus === "Unsuccessful.") {
-								//$("#studentPersonalStatus").addClass("alert alert-danger").text(data.pesaveChangesStatus).fadeIn();
-								//$("#studentPersonalStatus").fadeOut();
+							studentPersonalDataSet = data.result;
+							if (data.studentPersonalStatus === "Details updated successfully." || data.studentPersonalStatus === "Details added successfully.") {
+								$.each(studentPersonalDataSet, function(index, value) {
+									$('#fullname-hedding').html(value[4] + ' ' + value[5] +' '+ value[6]);
+									$('#td-value-username').html("<b>" + value[1] + "</b>");
+									$('#td-value-fullname').html(value[4] + ' ' + value[5] + ' ' + value[6]);
+									$('#td-value-birthday').html(value[7]);
+									$('#td-value-gender').html(getGenderString(parseInt(value[8])));
+									$('#td-value-email').html(value[9]);
+									$('#td-value-country').html(value[30]);
+									$('#td-value-town').html(value[31]);
+									$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
+									$('#td-value-fbprofile').html(value[18]);
+									$('#td-value-mobileno').html(value[11] + '-' + value[16]);
+									$('#td-value-aboutme').html(value[17]);
+								});
+								
 								alert(data.studentPersonalStatus);
+								$('#studentPersonalDetailsModal').modal('hide');
 								return;
-							} else if (data.studentPersonalStatus === "Invalid Information") {
-								//$("#studentPersonalStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
-								//$("#studentPersonalStatus").fadeOut();
+							} else {
 								alert(data.studentPersonalStatus);
 								return;
 							}
-							//$("#studentPersonalStatus").addClass("alert alert-success").text(data.studentPersonalStatus).fadeIn();
-							$('#fullname-hedding').html(firstName + ' ' + middleName + ' '+ lastName);
-							$('#td-value-fullname').html(firstName + ' ' + middleName + ' '+ lastName);
-							$('#td-value-birthday').html(dateOfBirth);
-							$('#td-value-gender').html(getGenderString(parseInt(gender)));
-							$('#td-value-email').html(email);
-							$('#td-value-country').html($('#sCountry').val());
-							$('#td-value-town').html($('#sTown').val());
-							$('#td-value-address').html(address1);
-							$('#td-value-fbprofile').html(facebookUrl);
-							$('#td-value-mobileno').html(landPhoneCountryCode + '-' + mobilePhoneNo);
-							$('#td-value-aboutme').html(description);
-							
-							//$("#studentPersonalStatus").fadeOut();
-							alert(data.studentPersonalStatus);
-							return;
 						}
 					},
 					error : function(e) {
 						alert("Error " + e);
-						//$("#studentPersonalStatus").addClass("alert alert-warning").text(e).fadeIn();
 					}
 				});
 	}
@@ -567,9 +586,15 @@ function validateStudentPersonalDetails() {
 	isDropdownSelected(isemptyDropdown(("sCountry")), "Country",
 			"sCountryError");
 	isDropdownSelected(isemptyDropdown(("sEmail")), "Email", "sEmailError");
-
+	
 	if ($('#sBirthDate').val()) {
 		isPastfromNow("sBirthDate", "sBirthDateError");
+	}else{
+		isDropdownSelected(isemptyDropdown(("sBirthDate")), "Birth Date", "sBirthDateError");
+	}
+	
+	if(!isValidEmailFormat($('#sEmail').val())){
+		document.getElementById("sEmailError").innerHTML = "Invalid email address.";
 	}
 
 	if (($('#sFullNameError').text() != '')
@@ -601,8 +626,11 @@ function clearPersonalDetailsForm() {
 	$('#sAboutMe').val("");
 	$('#sCountry').val("");
 	$('#sTown').val("");
-	$('#sAddress').val("");
-	$('#countryCodePrefix').text("");
+	$('#sAddressLine1').val("");
+	$('#sAddressLine2').val("");
+	$('#sAddressLine3').val("");
+	$('.input-group-addon').text("");
+	$('.std-mdl-error-msg').text("");
 	$('#sMobileNumber').val("");
 	$('#sHomeNumber').val("");
 	$('#sOtherNumber').val("");
@@ -972,34 +1000,38 @@ function populatePersonalDataformElements(response){
 		}
 	});
 	
-	$.each(response.studentCollection, function(index, value) {		
-		$('#fullname-hedding').html(value[4].replace(/##/g, ",") + ' ' + value[5].replace(/##/g, ",") +' '+ value[6].replace(/##/g, ","));
-		$('#td-value-username').html(
-				"<b>" + value[1].replace(/##/g, ",") + "</b>");
-		$('#td-value-fullname').html(
-				value[4].replace(/##/g, ",") + ' ' + value[5].replace(/##/g, ",")
-						+ ' ' + value[6].replace(/##/g, ","));
+	var studentDetails = null;
+	if((studentPersonalDataSet != null)&&(studentPersonalDataSet != '')&&(studentPersonalDataSet != undefined)){
+		studentDetails = studentPersonalDataSet;
+	}else{
+		studentDetails = response.studentCollection;
+	}
+	$.each(studentDetails, function(index, value) {
+		$('#fullname-hedding').html(value[4] + ' ' + value[5] +' '+ value[6]);
+		$('#td-value-username').html("<b>" + value[1] + "</b>");
+		$('#td-value-fullname').html(value[4] + ' ' + value[5] + ' ' + value[6]);
 		$('#td-value-birthday').html(value[7]);
 		$('#td-value-gender').html(getGenderString(parseInt(value[8])));
 		$('#td-value-email').html(value[9]);
 		$('#td-value-country').html(value[30]);
 		$('#td-value-town').html(value[31]);
-		$('#td-value-address').html(value[19].replace(/##/g, ","));
-		$('#td-value-fbprofile').html(value[18].replace(/##/g, ","));
-		$('#td-value-mobileno').html(
-				value[11] + '-' + value[16].replace(/##/g, ","));
-		$('#td-value-aboutme').html(value[17].replace(/##/g, ","));
+		$('#td-value-address').html(value[25]+" "+value[26]+" "+value[27]);
+		$('#td-value-fbprofile').html(value[18]);
+		$('#td-value-mobileno').html(value[11] + '-' + value[16]);
+		$('#td-value-aboutme').html(value[17]);
 		
-		$('#sFullName').val(value[4].replace(/##/g, ","));
-		$('#sMiddleName').val(value[5].replace(/##/g, ","));
-		$('#sLastName').val(value[6].replace(/##/g, ","));
+		$('#sFullName').val(value[4]);
+		$('#sMiddleName').val(value[5]);
+		$('#sLastName').val(value[6]);
 		$('#sBirthDate').val(value[7]);
 		$('input[gender]:checked').val();
 		$('#sEmail').val(value[9]);
 		$('#sCountryCode').val(value[11]);
 		$('#sHomeNumber').val(value[13]);
 		$('#sMobileNumber').val(value[16]);
-		$('#sAddress').val(value[19].replace(/##/g, ","));
+		$('#sAddressLine1').val(value[25]);
+		$('#sAddressLine2').val(value[26]);
+		$('#sAddressLine3').val(value[27]);
 		$('#sFacebookUrl').val(value[18]);
 		$('#stwitterUrl').val(value[19]);
 		$('#smySpace').val(value[20]);
@@ -1007,7 +1039,7 @@ function populatePersonalDataformElements(response){
 		$('#sInstergramUrl').val(value[22]);
 		$('#sViber').val(value[23]);
 		$('#sWhatsApp').val(value[24]);
-		$('#sAboutMe').val(value[17].replace(/##/g, ","));
+		$('#sAboutMe').val(value[17]);
 		$('#sTownCode').val(value[28]);
 		$('#sCountry').val(value[30]);
 		$('#sTown').val(value[31]);
@@ -1161,4 +1193,60 @@ function populateProfExpformElements(response){
 		var y = value[1].toString();
 		$('<option>').val(x).text(y).appendTo(jobCategory);
 	});
+}
+
+/**
+ * Method is to get respective town details according to the selected country.
+ * @returns
+ */
+function getTownDetails() {
+	var country = $('#sCountryCode').val();
+	$.ajax({
+		url : '../../../StudentController',
+		data : {
+			CCO : 'GTD',
+			country: country
+		},
+		dataType : "json",
+		success : function(response) {
+			// Set Country details
+			var sTown = $("#sTown");
+			sTown.find('option').remove();
+			$('<option>').val("").text("--Select One--").appendTo(sTown);
+			$.each(response.result, function(index, value) {
+				var x = value[0].toString();
+				var y = value[1].toString();
+				$('<option>').val(x).text(y).appendTo(sTown);
+			});
+
+			// Set Country details
+			var sTownList = $("#sTownList");
+			sTownList.find('option').remove();
+			$.each(response.result, function(index, value) {
+				var x = value[0].toString();
+				var y = value[1].toString();
+				$('#sTownList').append("<option data-value='" + x + "'>" + y + "</option>");
+			});
+		},
+		error : function(response) {
+			alert("Error: " + response);
+		}
+	});
+}
+
+/**
+ * Chek if country selected before select a town.
+ * @returns
+ */
+function isCountryEmpty() {
+	isDropdownSelected(isemptyDropdown(("sCountry")),"Country","sTownError");
+	
+	if ($('#sTownError').text() != ''){
+		var sTown = $("#sTown");
+		sTown.find('option').remove();
+		
+		$('<option>').val("").text("--Select One--").appendTo(sTown);
+		var sTownList = $("#sTownList");
+		sTownList.find('option').remove();	
+	}
 }

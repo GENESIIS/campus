@@ -758,10 +758,11 @@ body, html {
           font-family: "Roboto", sans-serif;
           text-align: center; }
           .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-name h2 {
-            line-height: 55px;
+            line-height: 30px;
             font-size: 24px;
             color: #2b57a0;
-            font-weight: 600; }
+            font-weight: 600;
+            padding: 10px 0; }
       .stud-dashboard .prf-page-container .left-side .short-info-holder {
         display: block;
         margin-top: 20px;
@@ -1021,7 +1022,7 @@ body, html {
   transition: all 0.3s; }
 
 .btn-close {
-  background-color: #7da7d9; }
+  background-color: #717171; }
 
 .slideable {
   display: none; }
@@ -1048,6 +1049,17 @@ body, html {
     .widget .widget-footer a {
       font-family: "Muli", sans-serif;
       color: #93a1b1; }
+
+.std-mdl-error-msg {
+  color: #ff5a09;
+  font-family: "Signika", sans-serif;
+  font-size: 13px;
+  position: relative;
+  left: 20%;
+  top: 3px; }
+
+.modal-professional .std-mdl-error-msg {
+  left: 30%; }
 
 /* 20170206 TR CAM-139 init modal.sass to style popup windows in student dashboard */
 /* 20170207 TR CAM-139 added new modal styles for personal details area */
@@ -1099,7 +1111,7 @@ body, html {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     color: #8d8d8d;
-    font-weight: 600;
+    font-weight: 500;
     float: left;
     line-height: 30px; }
   .modal-input-field input {
@@ -1107,6 +1119,9 @@ body, html {
     height: 32px;
     border: 2px solid #ccdae8;
     padding: 2px 12px;
+    color: #1b8e92;
+    font-family: "Roboto", sans-serif; }
+  .modal-input-field textarea {
     color: #1b8e92;
     font-family: "Roboto", sans-serif; }
   .modal-input-field .input-group {

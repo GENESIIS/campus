@@ -7,6 +7,9 @@ package com.genesiis.campus.entity;
 //20170106 PN CAM-28: improved Connection property handeling inside finally{} block. 
 //20170106 PN CAM-28: SQL query modified to takeISACTIVE status from ApplicationStatus ENUM. 
 //20170106 PN CAM-28: Object casting code moved into try{} block in applicable methods().
+//20170310 PN CAM-150: isCountryExists(int countryCode) method implemented to validate country value.
+//20170312 PN CAM-150: SQL query modified in isCountryExists() method.
+//20170313 PN CAM-150: isCountryExists() method renamed into isLocaleExists(). SQL query modified in it.
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -139,5 +142,47 @@ public class Country2DAO implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	/**
+	 * 	This method will check and validate if the country entered is a valid value.
+	 * @param countryCode
+	 * @return true; if SQL query has a record.
+	 */
+	public static boolean isLocaleExists(String countryName,String townName) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int count = -1;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT count(*) FROM [CAMPUS].[COUNTRY2] c INNER JOIN [CAMPUS].[TOWN] t ON t.[COUNTRY]=c.[CODE] WHERE c.[NAME]=? AND t.[NAME]=?;";
 
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, countryName);
+			stmt.setString(2, townName);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException sqlException) {
+			log.error("isCountryExists(): SQLE " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("isCountryExists(): E " + e.toString());
+			throw e;
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return (count > 0) ? true : false;
+	}
 }

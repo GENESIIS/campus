@@ -34,10 +34,13 @@
 //20170213 PN CAM-28: modified addHigherEducationDetails() and addProfessionalExpForm() method to setting a variable to hold value for record ID.
 //20170214 PN CAM-28: moved all the data manipulation functions into student-details-manipulation.js file	
 //					  openPersonalDataModel();openEduDataModel();openProfExpDataModel(); implemented.
+//20170306 PN CAM-150: email validation method added to sEmail text field onKeyup event.
+//20170309 PN CAM-150: declared studentPersonalDataSet variable to hold Student's data collection.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
 var dataSet = null;
+var studentPersonalDataSet = null;
 
 $(document).ready(function() {
 	$('#loading-gif-id').css('display', 'block'); //loading gif appears.
@@ -481,6 +484,16 @@ function getStudentData(response) {
 	
 	$('#loading-gif-id').css('display', 'none');
 	$('.editformdatabtn').prop("disabled", false); // edit buttons are now enabled.
+	
+	$("#sEmail").first().keyup(function () {
+		var email = this.value;
+		var isValid = isValidEmailFormat(email);
+		if (!isValid){
+			document.getElementById('sEmailError').innerHTML = "Invalid email address.";
+		}else{
+			document.getElementById('sEmailError').innerHTML = "";
+		}
+	});
 }
 
 /**

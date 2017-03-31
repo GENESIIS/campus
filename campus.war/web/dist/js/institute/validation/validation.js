@@ -15,6 +15,8 @@
  *20161129 PN c26-add-student-details: implemented checkDateRange() method to validate date range 
  *20161203 PN c26-add-student-details: implemented isLetter(evt) method.
  *20161205 PN c26-add-student-details: implemented isPastfromNow(day, errorLabel).
+ *20170306 PN CAM-150: isValidEmailFormat() method modified to pass a parameter into the method. isemptyDropdown(fieldValue) method modified to trim() the given input value.
+ *20170306 PN CAM-150: urlTest(urlInputTextid) method copied from CAM-131 branch.
  */ 
 
  
@@ -118,10 +120,10 @@ function clearField(elementId){
  * @returns boolean if testing email address is a valid
  * one then returns true else return false
  */
-function validEmailFormat(){	
-	var emailAddress = document.forms["contactUsForm"]["emailAddress"].value;	
-	var pattern =/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;	
-	return isPatternMatch(pattern,emailAddress);
+function isValidEmailFormat(email) {
+	var emailAddress = email;
+	var pattern = /([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/g;
+	return isPatternMatch(pattern, emailAddress);
 }
 
 /**
@@ -199,7 +201,7 @@ function getSelectedData(listname, elementName) {
  */
 function isemptyDropdown(fieldValue) {
 
-	return $('#'+fieldValue+'').val() === '' ? false : true;
+	return $('#'+fieldValue+'').val().trim() === '' ? false : true;
 }
 
 /**
@@ -261,6 +263,10 @@ function isLetter(evt) {
 	}
 }
 
+function preventSpaceBarTyping(evt){
+	return evt.which !== 32;
+}
+
 /**
  * This method validate given birthday is a past date
  * @param day
@@ -276,4 +282,57 @@ function isPastfromNow(day, errorLabel){
 		return false;
 	}
 	else true;
+}
+
+/**
+ * this method test if the url entered is a correct one,
+ * test is minimally conducted as the url validation involves complex
+ * considerations.
+ * this method tests bellow formats of URL with https/http/ftp
+ * e.g
+ * https://www.google.lk/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=regex*
+ * https://www.google.lk
+ * www.google.lk
+ * <b>NOTE</b>: but this validation returns false for URLs which contains "/" at the end.
+ * Hence 'https://www.google.lk/' results an invalid url.
+ * method does not validate urls having ":" in between e.g http://www.campus.dev:8080
+ * @author dushantha DN
+ * @param urlInputTextid
+ */
+function urlTest(urlInputTextid){
+	var validUrl = false;
+	var urlInputText = $('#'+urlInputTextid).val();	
+	if(urlInputText===""|urlInputText===null){
+		return validUrl;
+	}
+	//urlInputText.replace(/\s+/g, ""); // remove spaces between the context
+	var urlPatern =/^(((http(s)?|ftp):\/\/www\.)|((http(s)?|ftp):\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	
+
+	/* test for characters placed at the beginning
+	 * e.g :!@%~
+	 * \p{N} matches any kind of numeric character in any script
+	 * \p{Sm} matches any mathematical symbol
+	 * \p{Z} matches any kind of whitespace or invisible separator
+	 * \p{P} matches any kind of punctuation character
+	*/
+	var urltestingPattern =/^[\p{N}\p{Sm}\p{Z}\p{P} ]+/g;
+	var urlStartWWWPattern = /^(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z‌​\/]{2,}?\b(\/([-a-zA-Z0-9‌​@:%_\+.~#=?&\*])+)?$/g;
+	var urlSplitedArray=null;
+	
+		if( isPatternMatch(urlPatern,urlInputText)){ 
+			urlSplitedArray = urlInputText.split('://');
+			
+			/*
+			 *excluding for  https://56@genesiis.atlassian.net/secure/Dashboard.jspa?selectPageId=11900 
+			 *pattern
+			 */
+			validUrl=isPatternMatch(urltestingPattern,urlSplitedArray[1]);	
+	  } else if(isPatternMatch(urlStartWWWPattern,urlInputText)){  // does url start with 
+			urlSplitedArray = urlInputText.split('.');
+			validUrl = !isPatternMatch(urltestingPattern,urlSplitedArray[1]);
+	 } else {
+			validUrl = isPatternMatch(urltestingPattern,urlInputText);
+	}
+	return validUrl;
 }
