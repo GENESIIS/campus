@@ -37,7 +37,7 @@ package com.genesiis.campus.command;
  * 20170330 DN  c83-admin-manage-banner-update-banner-info-dn. method updateBannerCredentials() modified to include request attributes "bannerWarPath" and "bannerCode".
  * 				uploadFullBannerCredentials() method modified to extract bannerImage name to a string for future manipulation and the banner name is set in the updating logic.
  * 				Within uploadFullBannerCredentials() "bannerCode" attribute has been set.
- * 				
+ * 20170331 DN c83-admin-manage-banner-update-banner-info-dn.updateBannerCredentials() the request attribute value is set to literal 'default'.
  * 				
  */
 
@@ -553,7 +553,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			bannerRecordUpdated(rowBanner);
 			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
 			this.setSuccessCode(1);
-			helper.setAttribute("bannerWarPath","" );
+			helper.setAttribute("bannerWarPath","default" );
 			helper.setAttribute("bannerCode",rowBanner.getBannerCode() );
 			setResponseCridentials(helper);
 			log.info("updateBannerCredentials(JasonInflator,IDataHelper) --> banner records are updated successfully ");
