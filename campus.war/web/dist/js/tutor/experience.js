@@ -12,6 +12,7 @@
  * 20170329 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & remove the button & add a check box into the table
  * 20170330 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & make dynamic field names
  * 20170330 CW c157-add-tutor-employment-details-cw add employmentCode hidden field in fillSelectedCourseProviderData method
+ * 20170331 CW c157-add-tutor-employment-details-cw modified displaySelectedCourseProviders methods tutor code into tutorcodelist
  */
 
 $(document).ready(function() {
@@ -66,7 +67,7 @@ function getCourseProviderData(response) {
  * @author CW
  */
 function displaySelectedCourseProviders() {
-	var tutorCode = $("#tutorCode").val();
+	var tutorCode = $("#tutorcodelist").val();
 	$.ajax({
 		url : '/TutorController',
 		method : 'POST',
