@@ -758,10 +758,11 @@ body, html {
           font-family: "Roboto", sans-serif;
           text-align: center; }
           .stud-dashboard .prf-page-container .left-side .prf-pic-holder .prf-name h2 {
-            line-height: 55px;
+            line-height: 30px;
             font-size: 24px;
             color: #2b57a0;
-            font-weight: 600; }
+            font-weight: 600;
+            padding: 10px 0; }
       .stud-dashboard .prf-page-container .left-side .short-info-holder {
         display: block;
         margin-top: 20px;
@@ -1118,6 +1119,9 @@ body, html {
     height: 32px;
     border: 2px solid #ccdae8;
     padding: 2px 12px;
+    color: #1b8e92;
+    font-family: "Roboto", sans-serif; }
+  .modal-input-field textarea {
     color: #1b8e92;
     font-family: "Roboto", sans-serif; }
   .modal-input-field .input-group {
