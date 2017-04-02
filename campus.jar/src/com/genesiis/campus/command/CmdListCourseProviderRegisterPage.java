@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import
 //20170221 JH c141-add-course-provider-issue-improvements added doc comments
+//20170402 JH c141-ui-integration-for-add-course-provider case DISPLAY_TOWN_DATA: validate country id before parsing
 
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
@@ -17,6 +18,7 @@ import com.genesiis.campus.factory.ICmdFactory;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -73,9 +75,13 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 			case DISPLAY_TOWN_DATA:
 
 				ICrud townDao = new TownDAO();
-				int countryId = Integer.parseInt(helper.getParameter("country"));
-				townCollection = townDao.findById(countryId);
-				helper.setAttribute("townArrayList", townCollection);
+				String country = helper.getParameter("country");
+				if(Validator.isEmptyString(country)){
+					int countryId = Integer.parseInt(country);
+					townCollection = townDao.findById(countryId);
+					helper.setAttribute("townArrayList", townCollection);			
+				}
+
 				break;
 			default:
 				Collection<String> signUpdata = new ArrayList<String>();
