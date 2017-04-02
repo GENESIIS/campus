@@ -2,10 +2,9 @@ package com.genesiis.campus.command;
 
 //20170327 CW c157-add-tutor-employment-details-cw INIT CmdViewTutorEmploymentDetails.java & Create execute method
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method to get the list of details from getTutorSelectedFCP
+//20170402 CW c157-add-tutor-employment-details-cw modified execute method & add validations to allFeaturedCourseProviderList
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
-
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.model.Tutor;
@@ -39,17 +38,22 @@ public class CmdViewTutorEmploymentDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		try {
-			Collection<Collection<String>> tutorEmploymentViewCollection = new ArrayList<Collection<String>>();
 			Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
 			
 			if(helper.getParameter("tutorCode") != null){
-
+				
 				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(helper.getParameter("tutorCode"));
 				
+				if(allFeaturedCourseProviderList == null || allFeaturedCourseProviderList.isEmpty()){
+					for(int i = 0; i < 7; i++){
+						singleTutorEmploymentViewCollection.add(helper.getParameter("tutorCode"));
+					}
+					allFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
+				}
+				
 				view.setCollection(allFeaturedCourseProviderList);	
-			}
-			
+			}			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
@@ -58,5 +62,4 @@ public class CmdViewTutorEmploymentDetails implements ICommand {
 		}
 		return view;
 	}
-
 }
