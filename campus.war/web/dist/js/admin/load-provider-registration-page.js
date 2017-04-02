@@ -23,6 +23,8 @@
 //				landPhoneNubmerHelper() method changed to match new UI elements
 //20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip, isempty() method refactored as isValidNumber()
 //20170331 JH c141-ui-integration-for-add-course-provider datalist implementation for country list wip
+//20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
+//				,errorSelectedTown(): used clearToolTip() method to clear error message
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -170,7 +172,7 @@ function displayProviderTypes() {
 	var providerTypeCollection = window.courseProviderTypes;
 	var singleTypeElement = '';
 
-	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" ><option value="">--Default--</option>';
+	singleTypeElement += '<option value="">--Default--</option>';
 	if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
 		$.each(providerTypeCollection, function(index, value) {
 			singleTypeElement += '<option value="' + value[0] + '">';
@@ -180,7 +182,7 @@ function displayProviderTypes() {
 		});
 	}
 	singleTypeElement += '';
-	var providerTypeNames = $("#providerTypeList");
+	var providerTypeNames = $("#selectedProviderType");
 	providerTypeNames.html(singleTypeElement);
 
 }
@@ -257,7 +259,7 @@ function displayProviderCountries() {
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
 		$("#countries").on("click", function(e) {
-			$("#countries").val();
+			$("#countries").val("");
 			
 			if (countryCollection !== undefined & countryCollection !== null) {
 				var dataList = $("#countryresults");
@@ -267,7 +269,7 @@ function displayProviderCountries() {
 					for(var i=0; i<countryCollection.length; i++) {
 						var opt = $("<option></option>").attr({"data-value": countryCollection[i][0], "value" : countryCollection[i][1] });
 						dataList.append(opt);
-						getDataOnCountrySelection()
+					//	getDataOnCountrySelection()
 					}
 				}
 			}
@@ -281,8 +283,8 @@ function displayProviderCountries() {
  * display country code and list town data
  */
 function getDataOnCountrySelection() {
-//var selectedCountry = $("#selectedCountry").val();
 
+	clearToolTip("#countries");
 	var selectedCountry = document.getElementById("countries").value;
 	if (!isempty(selectedCountry)) {
 		
@@ -305,13 +307,16 @@ function getDataOnCountrySelection() {
  */		
 function getProviderTownListData() {
 	clearErrorMessage();
-	var selectedCountry = $("#selectedCountry").val();
+	var selectedCountry = $("#countries").val();
+var sdf = $(countries).attr( "data-value" );
+alert(sdf);
 
 	if (selectedCountry == '' || selectedCountry == null) {
 		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#town-List").addClass("has-error");
 	} else {
-		document.getElementById('errorSelectedTown').innerHTML = "";
+	//	document.getElementById('errorSelectedTown').innerHTML = "";
+		clearToolTip("#errorSelectedTown");
 		$.ajax({
 			url : '/AdminController',
 			method : 'POST',
@@ -388,7 +393,7 @@ function landPhoneNubmerHelper() {
 		$(varId).text("");
 		
 	}
-	country = 94 ;
+
 	if (!isempty(country)) {
 		
 		displyPhoneNumber('#landNumber1',"Please select your country." );
