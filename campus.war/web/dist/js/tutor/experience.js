@@ -13,8 +13,9 @@
  * 20170330 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & make dynamic field names
  * 20170330 CW c157-add-tutor-employment-details-cw add employmentCode hidden field in fillSelectedCourseProviderData method
  * 20170331 CW c157-add-tutor-employment-details-cw modified displaySelectedCourseProviders methods tutor code into tutorcodelist
- * 20170331 CW c157-add-tutor-employment-details-cw modified read function & add tutor code, modified displayCourseProviders method & add tutor code as a parameter
+ * 20170331 CW c157-add-tutor-employment-details-cw modified ready function & add tutor code, modified displayCourseProviders method & add tutor code as a parameter
  * 				modified displaySelectedCourseProviders method & add tutor code as a parameter to the method & to ajax call as a parameter
+ * 20170402 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & remove un wanted commented lines
  */
 
 $(document).ready(function() {
@@ -104,7 +105,6 @@ function fillSelectedCourseProviderData(response) {
     	var sequence = index + 1;
         trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>' 
 		+ value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' + value[4].toString() + '</td><td>'
-		//+ '<input type=hidden name=sequence id=sequence value=' + sequence + '>'
 		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+'  value=' + value[5].toString() + '>'
 		+ '<input type=hidden name=tutorCode'+sequence+' id=tutorCode'+sequence+'  value=' + value[6].toString() + '>'
 		+ '<input type=hidden name=employerCode'+sequence+' id=employerCode'+sequence+' value=' + value[0].toString() + '>'
