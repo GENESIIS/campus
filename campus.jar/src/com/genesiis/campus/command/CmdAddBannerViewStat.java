@@ -1,5 +1,6 @@
 //20170330 MM c117-display-banners-record-viewcount-back-end - INIT class; implemented execute(IDataHelper, IView) method
 //20170331 MM c117-display-banners-record-viewcount-back-end - Moved msgList variable out of try block
+//20170402 MM c117-display-banners-record-viewcount-back-end - Removed callerPage related validation code
 
 package com.genesiis.campus.command;
 
@@ -39,23 +40,15 @@ public class CmdAddBannerViewStat implements ICommand {
 
 					int bannerCode = Integer.parseInt(bannerCodeStr);	
 
-					String callerPageStr = helper.getParameter("callerPage");
-					if (callerPageStr != null && !callerPageStr.isEmpty()) {
-
-						BannerViewStatHelper bannerViewStatHelper = BannerViewStatHelper.getInstance();
-						bannerViewStatHelper.updateBannerViewCount(bannerCode, callerPageStr);		
-						
+					BannerViewStatHelper bannerViewStatHelper = BannerViewStatHelper.getInstance();
+					bannerViewStatHelper.updateBannerViewCount(bannerCode);		
+					
 //
 //						String operationStatus = insertStatus > 0 ? "SUCCESS"
 //								: "FAILURE";
 //						helper.setAttribute("operationStatus", operationStatus);
-						helper.setAttribute("operationStatus", 1);
+					helper.setAttribute("operationStatus", 1);
 						
-
-					} else {
-						msgList.add("Either no or empty value has been provided for callerPage parameter!");
-					}// end of if (callerPageStr != null &&
-						// !callerPageStr.isEmpty())
 				} else {
 					msgList.add("The value provided for banner parameter is invalid!");
 				}// end of if (Validator.isNumber(bannerCodeStr))
