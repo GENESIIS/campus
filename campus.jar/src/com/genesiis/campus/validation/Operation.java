@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //				merging with sprint branch) that was there for testing the banner 
 //				displaying functionality 
 //20170208 MM c111-display-banners-on-jsp-load - Added LIST_BANNERS enum
+//20170402 MM c117-display-banners-record-viewcount-back-end - Added ADD_BANNER_VIEW_STAT enum
 
 /**
 * Operation class facilitate in binding the CCO
@@ -17,7 +18,8 @@ public enum Operation {
 
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	ADD_BANNER_STAT("ADD_BANNER_STAT", ResponseType.JSON, ""),
-	LIST_BANNERS("LIST_BANNERS", ResponseType.JSON, "");
+	LIST_BANNERS("LIST_BANNERS", ResponseType.JSON, ""),
+	ADD_BANNER_VIEW_STAT("ADD_BANNER_VIEW_STAT", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
