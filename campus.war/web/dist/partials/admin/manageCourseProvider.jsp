@@ -22,6 +22,7 @@
 <!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip, disabled area code inputs except
 					land number one -->
 <!-- 20170331 JH c141-ui-integration-for-add-course-provider changed the id of the datalist to countryresults -->
+<!-- 20170402 JH c141-ui-integration-for-add-course-provider added error element for country list, added select tag for course provider types -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -186,11 +187,15 @@
 										<div class="col-xs-12">
 											<div class="row clearfix">
 											<div class="col-xs-6">
+											<div>
 												<label for="select-country"><span class="mandatory">*</span>
 													Country</label>
+														</div>
 													<div class="input-wrapper has-select" id="country-List">
 														<input name="countries" id="countries" class="form-control" list="countryresults" onchange="getDataOnCountrySelection();">
 														<datalist id="countryresults"></datalist>
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Error! " id="errorSelectedCountry"></a>
 													</div> 
 
 											</div>
@@ -429,6 +434,7 @@
 									<label for="course-provider-type"><span
 										class="mandatory">*</span> Course Provider Type</label>
 									<div class="input-wrapper has-select text-center" id="providerTypeList">
+									<select id="selectedProviderType" name="selectedProviderType" ></select>
 									<%--	<select name="cProviderType" id="course-provider-type">
 											<option selected>Choose a course provider type</option>
 											<option value="Individual">Individual</option>
@@ -436,10 +442,10 @@
 										</select> <a class="error-info" href="#" data-toggle="tooltip"
 											title="Error! "></a> --%>
 											
-											
-									</div>
 									<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"
 											title="Error! "></a> 
+									</div>
+									
 								</div>
 							</div>
 							<div class="row clearfix">
