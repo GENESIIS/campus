@@ -33,7 +33,8 @@ package com.genesiis.campus.entity;
  * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.
  * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.
  * 20170327 DN c83-admin-manage-banner-update-banner-info-dn update(Object) method has been changed to correct the syntax errors.
- *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method.         
+ *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method. 
+ * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string. 
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -373,6 +374,7 @@ public class AdminBannerDAO implements ICrudSibling {
 			int ISACTIVE 			=  getAplicationStatus(Integer.parseInt(jsn.getActiveInactiveStatus())).getStatusValue();
 			String activationDate	=  jsn.getCommencingDate();
 			String deActivateDate	=  jsn.getCessationDate();
+			String bannerCode		=  jsn.getBannerCode();
 					
 			
 			StringBuilder querybuilder = new StringBuilder(
@@ -399,6 +401,9 @@ public class AdminBannerDAO implements ICrudSibling {
 				else{
 					querybuilder.append(" AND ( ACTIVATIONDATE>='"+activationDate+"')");
 				}				
+			}
+			if(bannerCode!=null && bannerCode !=""){
+				querybuilder.append(" AND BNR.CODE = '"+bannerCode+"' ");
 			}
 			querybuilder.append(" ORDER BY ACTIVATIONDATE ASC ");
 			
