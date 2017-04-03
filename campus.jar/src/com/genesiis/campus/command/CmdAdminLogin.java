@@ -75,6 +75,7 @@ public class CmdAdminLogin implements ICommand{
 						//session variable setting 
 						session = helper.getSession(true);
 						String sessionId = session.getId();
+						adminData.setLastLoggedInSessionid(sessionId);
 						session.setAttribute("currentSessionUser",adminData.getUsername());
 						session.setAttribute("user", adminData.getName());
 						session.setAttribute("userCode", adminData.getCode());
@@ -152,7 +153,7 @@ public class CmdAdminLogin implements ICommand{
 	/**
 	 * Admin login details maintain.
 	 * 
-	 * @param object
+	 * @param  Admin object
 	 * @param helper
 	 * @return admin object
 	 */
@@ -161,9 +162,7 @@ public class CmdAdminLogin implements ICommand{
 
 		try {
 
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
+			
 			Date loginTime = new Date();
 
 			java.util.Date utilDate = new java.util.Date();
@@ -178,7 +177,7 @@ public class CmdAdminLogin implements ICommand{
 			object.setLastLoggedInUserAgent(output[0]);
 			object.setLastLoggedInIpAddress(helper.getRemoteAddress());
 		} catch (Exception e) {
-			log.error("setStudentLoginDetails(Student object, IDataHelper helper):  Exception"
+			log.error("setAdminLoginDetails(Admin object, IDataHelper helper):  Exception"
 					+ e.toString());
 			throw e;
 		}
