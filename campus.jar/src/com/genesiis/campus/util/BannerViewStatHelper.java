@@ -5,6 +5,8 @@
 // 20170401 MM c117-display-banners-record-viewcount-back-end - Re-factored updateBannerViewCount(...) method; changed bannerToViewCountResolver 
 //				static variable to contain a List<String> against an Integer; code now creates list of BannerViewStat objects and passes it 
 //				to be persisted when threshold is reached
+// 20170403 MM c117-display-banners-record-viewcount-back-end - Now using findById(Object) method of BannerViewStatDAO to fetch existing stat records
+//				for banners of newly received banner stat update requests
 
 package com.genesiis.campus.util;
 
@@ -20,6 +22,7 @@ import java.sql.Time;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -94,20 +97,24 @@ public class BannerViewStatHelper {
 
 		if (BannerViewStatHelper.viewCount >= 100) {
 			// flush current view counts to the DB
-			extractBannerViewStatCollection();
+			flushBannerViewStats();
 		}
 	}
 
-	private void extractBannerViewStatCollection() {
-
+	private void flushBannerViewStats() {
+		
 		Map<Integer, List<String>> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
 
 		List<BannerViewStat> viewStatInstances = new ArrayList<BannerViewStat>();
 		List<String> bannerViewCountDetails = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		List<Integer> bannerCodes = new ArrayList<Integer>();
 
 		// Persist banner counts
 		for (Integer banCode : bannerViewCountResolver.keySet()) {
+			
+			bannerCodes.add(banCode);
+			
 			bannerViewCountDetails = bannerViewCountResolver.get(banCode);
 			if (bannerViewCountDetails != null) {
 
@@ -125,6 +132,9 @@ public class BannerViewStatHelper {
 				viewStatInstances.add(bannerViewStat);
 			}
 		}
+
+		BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
+		Collection<Collection<String>> bannerStatCollection = bannerViewStatDao.findById(bannerCodes);
 
 		// Persist banner counts
 		persistBannerCounts(viewStatInstances);
@@ -155,10 +165,10 @@ public class BannerViewStatHelper {
 		}
 
 		// Clear elements in bannerToViewCountResolver
-		clearBannerViewCounts();
+		clearBannerViewStats();
 	}
 
-	private void clearBannerViewCounts() {
+	private void clearBannerViewStats() {
 		// Clear bannerToViewCountResolver
 		BannerViewStatHelper.getBannerToViewCountResolver().clear();
 		BannerViewStatHelper.viewCount = 0;
