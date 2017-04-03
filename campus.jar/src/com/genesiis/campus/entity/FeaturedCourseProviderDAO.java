@@ -10,9 +10,11 @@ package com.genesiis.campus.entity;
 //20170330 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method to query the code in EMPLOYMENT table
 //20170331 CW c157-add-tutor-employment-details-cw add getFCPListForTutorToSelect method
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & modified tutor adding sequence to the collection
+//20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & add VARIFICATIONSTATUS to the query & collections
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -177,7 +179,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		ResultSet rs = null;
 		
 		String query = "SELECT CP.CODE, CP.SHORTNAME, CP.NAME, CP.SPECIALITY, CP.ADDRESS1 + CP.ADDRESS2 + CP.ADDRESS3 ADDRESS, "
-				+ "EMP.CODE EMPLOYERCODE FROM CAMPUS.COURSEPROVIDER CP	"
+				+ "EMP.CODE EMPLOYERCODE, EMP.VARIFICATIONSTATUS VERIFYSTATUS FROM CAMPUS.COURSEPROVIDER CP	"
 				+ "INNER JOIN CAMPUS.EMPLOYMENT EMP ON CP.CODE = EMP.COURSEPROVIDER "
 				+ "WHERE CP.CODE IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ?)";
 		
@@ -197,6 +199,14 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				singleTutorSelectedFCPList.add((rs.getString("SPECIALITY")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("ADDRESS")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("EMPLOYERCODE")).trim());
+				
+				if(!(rs.getString("VERIFYSTATUS").isEmpty())){
+					int status = Integer.parseInt(rs.getString("VERIFYSTATUS".trim()));
+					ApplicationStatus[] applicationStatus = ApplicationStatus.values();
+					String verifyStatus = applicationStatus[status].toString().toLowerCase();
+					
+					singleTutorSelectedFCPList.add(verifyStatus);
+				}				
 								
 				allTutorSelectedFCPList.add(singleTutorSelectedFCPList);
 			}		
