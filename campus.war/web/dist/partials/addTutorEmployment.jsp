@@ -13,6 +13,8 @@
 <!-- 20170331 c157-add-tutor-employment-details-cw - modified tutor code into tutorcodelist & add a checkbox item into table -->
 <!-- 20170331 c157-add-tutor-employment-details-cw - removed some table details & add messages into the page -->
 <!-- 20170403 c157-add-tutor-employment-details-cw - edit tutorcodelist filling sequence -->
+<!-- 20170403 c157-add-tutor-employment-details-cw - add tutorCodeTable hidden field into the table -->
+<!-- 20170403 c157-add-tutor-employment-details-cw - add Verification Status field into the table -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -73,11 +75,13 @@
 							<th>Name</th>
 							<th>Speciality</th>
 							<th>Address</th>
+							<th>Verification Status</th>
 							<th>Select to Remove</th>
 							<th></th>
 						</tr>
 					</table>
 					<div style="text-align:right">  
+						<input type="hidden" name="tutorCodeTable" id="tutorCodeTable"/>
     					<button type="submit" name="CCO" id="CCO" value="REMOVE_SELECTED_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Remove</button>
     					<input type="hidden" name="maxSequence" id="maxSequence"/>
 					</div>
