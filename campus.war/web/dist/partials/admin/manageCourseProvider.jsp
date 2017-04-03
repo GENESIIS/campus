@@ -23,7 +23,8 @@
 					land number one -->
 <!-- 20170331 JH c141-ui-integration-for-add-course-provider changed the id of the datalist to countryresults -->
 <!-- 20170402 JH c141-ui-integration-for-add-course-provider added error element for country list, added select tag for course provider types -->
-<!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list -->
+<!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list, code changes to implement town list wip 
+					added hidden inputs to store country and town -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -197,6 +198,7 @@
 														<datalist id="countryresults"></datalist>
 														<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedCountry"></a>
+														<input type="hidden" name="selectedCountry"	id="selectedCountry" value=""/>
 													</div> 
 
 											</div>
@@ -204,8 +206,11 @@
 													<label for="select-city"><span class="mandatory">*</span>
 														City</label>
 													<div class="input-wrapper has-select" id="town-List">
+													<input name="towns" id="towns" class="form-control" list="townresults">
+													<datalist id="townresults"></datalist>
 													<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedTown"></a>
+													<input type="hidden" name="selectedTown"	id="selectedTown" value=""/>		
 													</div>
 												</div>
 											</div>
