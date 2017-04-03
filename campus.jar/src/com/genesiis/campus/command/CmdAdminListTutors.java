@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170206 JH c133-admin-list-tutors added doc comments
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments
 //20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
+//20170403 JH c134-admin-list-new-tutor-requests removed system message codes from catch blocks
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -74,12 +75,10 @@ public class CmdAdminListTutors implements ICommand{
 		}  catch (SQLException sqlException) {
 			log.error("execute(IDataHelper, IView) : Exception"
 					+ sqlException.toString());
-			systemMessage = SystemMessage.ERROR;
 			throw sqlException;
 		}catch (Exception exception) {
 			log.error("execute(IDataHelper, IView) : Exception"
 					+ exception.toString());
-			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}finally{
 			helper.setAttribute("userMessage", systemMessage.message());

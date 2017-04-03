@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments, changed tutor status INACTIVE to PENDING when listing for new tutor requests
 //20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
+//20170402 JH c134-admin-list-new-tutor-requests removed system message codes from catch blocks
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -61,12 +62,10 @@ public class CmdListTutorRequests implements ICommand{
 		}  catch (SQLException sqlException) {
 			log.error("execute(IDataHelper, IView) : Exception"
 					+ sqlException.toString());
-			systemMessage = SystemMessage.ERROR;
 			throw sqlException;
 		}catch (Exception exception) {
 			log.error("execute(IDataHelper, IView) : Exception"
 					+ exception.toString());
-			systemMessage = SystemMessage.ERROR;
 			throw exception;
 		}finally{
 			helper.setAttribute("userMessage", systemMessage.message());
