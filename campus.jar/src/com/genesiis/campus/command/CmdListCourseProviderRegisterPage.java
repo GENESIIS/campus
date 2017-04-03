@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170203 JH c39-add-course-provider mx modification: removed unwanted Logger import
 //20170221 JH c141-add-course-provider-issue-improvements added doc comments
 //20170402 JH c141-ui-integration-for-add-course-provider case DISPLAY_TOWN_DATA: validate country id before parsing
+//20170403 JH c141-ui-integration-for-add-course-provider fixed validation error in case DISPLAY_TOWN_DATA
 
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
@@ -76,7 +77,7 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 
 				ICrud townDao = new TownDAO();
 				String country = helper.getParameter("country");
-				if(Validator.isEmptyString(country)){
+				if(!Validator.isEmptyString(country)){
 					int countryId = Integer.parseInt(country);
 					townCollection = townDao.findById(countryId);
 					helper.setAttribute("townArrayList", townCollection);			
