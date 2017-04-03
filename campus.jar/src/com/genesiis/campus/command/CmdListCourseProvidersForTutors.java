@@ -5,11 +5,10 @@ package com.genesiis.campus.command;
 //20170329 CW c157-add-tutor-employment-details-cw edit the place of the comments
 //20170329 CW c157-add-tutor-employment-details-cw modified execute method to use getFCPListForTutorToSelect method instead of getAll method
 				// add validations to execute method
+//20170403 CW c157-add-tutor-employment-details-cw removed un used import statements
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.TutorDAO;
-import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
