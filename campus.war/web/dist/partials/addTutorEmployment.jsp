@@ -12,6 +12,7 @@
 <!-- 20170330 c157-add-tutor-employment-details-cw - modified table view sequence -->
 <!-- 20170331 c157-add-tutor-employment-details-cw - modified tutor code into tutorcodelist & add a checkbox item into table -->
 <!-- 20170331 c157-add-tutor-employment-details-cw - removed some table details & add messages into the page -->
+<!-- 20170403 c157-add-tutor-employment-details-cw - edit tutorcodelist filling sequence -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -31,7 +32,7 @@
 		
 		<form action="/TutorController" method="POST" align="center">
 			<c:forEach var="tutorList" items="${result.collection}">			
-				<c:set var="tutorcodelist" value="${tutorList[6]}"/>			
+				<c:set var="tutorcodelist" value="${tutorList[0]}"/>			
 			</c:forEach>
 			
 				<input type="hidden" name="tutorcodelist" id="tutorcodelist" value="${tutorcodelist}"/>
