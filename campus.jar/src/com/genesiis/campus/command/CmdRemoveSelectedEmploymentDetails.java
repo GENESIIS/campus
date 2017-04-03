@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & create deleteList & pass it to deleteMultiple
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & add validations & a message into the deleteMultiple method call
 //20170403 CW c157-add-tutor-employment-details-cw modified execute method & add validations to empty allSelectedFeaturedCourseProviderList
+//20170403 CW c157-add-tutor-employment-details-cw add validation messages to exeute method 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ import com.genesiis.campus.validation.Validator;
 public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 
 	static Logger log = Logger.getLogger(CmdRemoveSelectedEmploymentDetails.class.getName());
-	private String message = "";
 
 	/**
 	 * @author Chinthaka
@@ -38,12 +38,14 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
+		String tablemessage = "";
 		try {
 			
 			final Collection<Collection<String>> allSelectedListToRemove = new ArrayList<Collection<String>>();
 			
 			String sequence = helper.getParameter("maxSequence");
 			String deleteList = "";
+			int status = -1;
 			
 			if(Validator.isNotEmpty(sequence)){
 				int maxIndex = Integer.parseInt(sequence);				
@@ -62,9 +64,13 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 			}
 			if(deleteList != ""){
 				final EmploymentDAO employment = new EmploymentDAO();
-				employment.deleteMultiple(deleteList);
+				status = employment.deleteMultiple(deleteList);
 			}else{
-				message = "Please select Employment Details to delete ...";				
+				tablemessage = "Please select Employment Details to delete ...";				
+			}
+			
+			if(status > 0){
+				tablemessage = "Selected employers successfully removed ...";
 			}
 			
 			String tutorCode = helper.getParameter("tutorCodeTable");
@@ -84,7 +90,7 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 			log.error("execute() : Exception" + exception.toString());
 			throw exception;
 		} finally {
-			helper.setAttribute("message", message);
+			helper.setAttribute("tablemessage", tablemessage);
 		}
 		return view;
 	}
