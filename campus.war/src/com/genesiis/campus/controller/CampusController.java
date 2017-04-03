@@ -11,6 +11,7 @@ package com.genesiis.campus.controller;
 //								view.getCollection() returns null, the rest of the Objects set as 
 //								attributes to DataHelper are included in the JSON object created
 //20161109 PN c11-criteria-based-filter-search modified the process() method to modify JSON object that passes to the JSP page.
+//20170403 PN CAM-137: Main catch clause modified to load and display errors to the user appropriately.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.DataHelper;
@@ -110,6 +111,12 @@ public class CampusController extends HttpServlet {
 
 		} catch (Exception e) {
 			log.error("process(): Exception ", e);
+			//CAM-137: PN: The below condition check added to load the relevant JSP page even in an error. Then display the error message.
+			if (ResponseType.JSP.equals(responseType)) {
+				request.getRequestDispatcher(helper.getResultPage(cco)).forward(request, response);
+			} else if (ResponseType.JSON.equals(responseType)) {  
+				response.setContentType("application/json");
+			}
 		}
 	}
 }
