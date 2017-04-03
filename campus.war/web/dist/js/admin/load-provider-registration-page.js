@@ -53,9 +53,8 @@ function arrangeUI() {
 	document.getElementById("logoPanel").style.display = "none";
 	
 	publishPrograms();
-	
-	var message =	$('#userMessage').val();
-	
+
+//	
 //	if (!isempty(message)) {
 //		document.getElementById("userMessage").style.display = "none";
 //	}else{
@@ -561,8 +560,12 @@ function saveCourseProvider() {
 
 	if (providerPrefixValidation() === false) {
 		flag = false;
+		document.getElementById("userMessage").style.display = "block";
+		$("#userMessage").html("Invalid Prefix.");
 	}
 	if (providerUsernameValidation() === false) {
+		document.getElementById("userMessage").style.display = "block";
+		$("#userMessage").html("Invalid Username.");
 		flag = false;
 	}
 
@@ -588,7 +591,7 @@ function saveCourseProvider() {
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
 										$("#userMessage").html(response.userMessage);
-
+										
 										for ( var key in response) {
 											if (response.hasOwnProperty(key)) {
 												var val = response[key];
