@@ -35,7 +35,7 @@ public class AdminLoginDAO implements ICrud {
 
 	public static int loginDataUpdate(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.LOGINHISTORY SET USERAGENT=?, SESSIONID=?, LOGGEDINDATE=?, LOGGEDINTIME=?, IPADDRESS=? WHERE ADMIN=? AND ISACTIVE =?";
+		String query = "UPDATE CAMPUS.LOGINHISTORY SET USERAGENT=?, SESSIONID=?, LOGGEDINDATE=?, LOGGEDINTIME=?, IPADDRESS=? WHERE ADMIN=? ";
 		PreparedStatement ps = null;
 		int rowInserted = -1;
 
@@ -48,8 +48,8 @@ public class AdminLoginDAO implements ICrud {
 			ps.setString(3, adminData.getLastLoggedInDate());
 			ps.setString(4, adminData.getLastLoggedInTime());
 			ps.setString(5, adminData.getLastLoggedInIpAddress());
-			ps.setInt(6, adminData.getCode());
-			ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setInt(6, adminData.getAdminCode());
+			//ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
 			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
@@ -109,13 +109,14 @@ public class AdminLoginDAO implements ICrud {
 		String message = SystemMessage.NOTREGISTERD.message();
 
 		ResultSet rs = null;
-		String query = "SELECT CODE, NAME, USERNAME, PASSWORD, EMAIL, ISACTIVE, USERTYPE FROM CAMPUS.ADMIN  WHERE USERNAME=? AND ISACTIVE = ? OR EMAIL =? AND ISACTIVE = ? ";
+		String query = "SELECT ADMIN.CODE, ADMIN.NAME, ADMIN.USERNAME, ADMIN.PASSWORD, ADMIN.EMAIL, ADMIN.ISACTIVE, ADMIN.USERTYPE, USERTYPE.USERTYPESTRING FROM CAMPUS.ADMIN INNER JOIN CAMPUS.USERTYPE ON CAMPUS.ADMIN.USERTYPE = CAMPUS.USERTYPE.CODE WHERE USERNAME=? COLLATE Latin1_General_CS_AS AND ISACTIVE = ? OR EMAIL =?  AND ISACTIVE = ?";
 		String code = "";
 		String name = "";
 		String userName = "";
 		String password = "";
 		String email = "";
 		String userType = "";
+		String userTypeString = "";
 		boolean passwordMatch = false;
 		try {
 			final Admin admin = (Admin) object;
@@ -140,6 +141,7 @@ public class AdminLoginDAO implements ICrud {
 				userName = rs.getString("USERNAME");
 				email = rs.getString("EMAIL");
 				userType = rs.getString("USERTYPE");
+				userTypeString = rs.getString("USERTYPESTRING");
 				password = rs.getString("PASSWORD");
 
 				if (check && passwordMatch) {
@@ -158,6 +160,7 @@ public class AdminLoginDAO implements ICrud {
 					singleAdmin.add(userName);
 					singleAdmin.add(email);
 					singleAdmin.add(userType);
+					singleAdmin.add(userTypeString);
 
 					dataBundel.add(adminDatabundel);
 					message = SystemMessage.VALIDUSER.message();
