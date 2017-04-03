@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 				// add trim to the string values in getTutorSelectedFCP method
 //20170330 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method to query the code in EMPLOYMENT table
 //20170331 CW c157-add-tutor-employment-details-cw add getFCPListForTutorToSelect method
+//20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & modified tutor adding sequence to the collection
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -189,13 +190,13 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleTutorSelectedFCPList = new ArrayList<String>();		
 												
+				singleTutorSelectedFCPList.add(tutorCode);
 				singleTutorSelectedFCPList.add((rs.getString("CODE")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("SHORTNAME")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("NAME")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("SPECIALITY")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("ADDRESS")).trim());
 				singleTutorSelectedFCPList.add((rs.getString("EMPLOYERCODE")).trim());
-				singleTutorSelectedFCPList.add(tutorCode);
 								
 				allTutorSelectedFCPList.add(singleTutorSelectedFCPList);
 			}		
