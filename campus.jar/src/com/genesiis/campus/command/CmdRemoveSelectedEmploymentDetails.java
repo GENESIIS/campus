@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & add all the selected row tutor Codes & Course provider codes into allSelectedListToRemove collection
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & create deleteList & pass it to deleteMultiple
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & add validations & a message into the deleteMultiple method call
+//20170403 CW c157-add-tutor-employment-details-cw modified execute method & add validations to empty allSelectedFeaturedCourseProviderList
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,10 +66,19 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 			}else{
 				message = "Please select Employment Details to delete ...";				
 			}
-
+			
+			String tutorCode = helper.getParameter("tutorCodeTable");
 			Collection<Collection<String>> allSelectedFeaturedCourseProviderList = new ArrayList<Collection<String>>();			
-			allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(helper.getParameter("tutorCode1"));			
-			view.setCollection(allSelectedFeaturedCourseProviderList);			
+			allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);			
+			
+			if(allSelectedFeaturedCourseProviderList == null || allSelectedFeaturedCourseProviderList.isEmpty()){
+				Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
+				singleTutorEmploymentViewCollection.add(tutorCode);
+				allSelectedFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
+			}
+			
+			view.setCollection(allSelectedFeaturedCourseProviderList);	
+			
 			
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
