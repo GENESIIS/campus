@@ -12,8 +12,11 @@ package com.genesiis.campus.entity;
  *              in catch clause FailedValidationException the error log was corrected to reflect correct method name.
  *              introduced ArrayIndexOutOfBoundsException to the catch clause in getADate() method.
  *              Unnecessary field of the type PrevalentValidation has been removed. 
+ * 20170403 DN c86-admin-manage-banner-search-banner-dn. isClientInputAccordanceWithValidation() has been 
+ * 				modified to test the bannerCode field validation.
+ * 				inflateBannerFilterCredential() method changed to populate the bannerCode field.
  */
-import org.jboss.logging.Logger;
+
 
 import com.genesiis.campus.util.BannerDisplayingInflator;
 import com.genesiis.campus.util.IDataHelper;
@@ -23,10 +26,14 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
 import com.genesiis.campus.validation.PrevalentValidation.FailedValidationException;
 
+import org.jboss.logging.Logger;
+
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 
@@ -105,10 +112,10 @@ public class ListBanner {
 		return bannerCollection;
 	}
 	
-	/*
-	 * inflateBannerFilterCredential() creates an 
-	 * instance of BannerDisplayingInflator which intends to encapsulate
-	 * the filtering data of the listing of Banners.
+	/**
+	 * inflateBannerFilterCredential() creates an <br>
+	 * instance of BannerDisplayingInflator which intends to encapsulate<br>
+	 * the filtering data of the listing of Banners.<br>
 	 * @author dushantha DN
 	 * @param helper: IDataHelper which wraps the HttpServletRequest and HttpServletResponce
 	 * @return BannerDisplayingInflator : which encapsulate the user provide filtering 
@@ -120,6 +127,7 @@ public class ListBanner {
 		bannerDisplayCredential.setCommencingDate(helper.getParameter("commencingDate"));
 		bannerDisplayCredential.setCessationDate(helper.getParameter("cessationDate"));
 		bannerDisplayCredential.setActiveInactiveStatus(helper.getParameter("activeInactiveStatus"));
+		bannerDisplayCredential.setBannerCode(helper.getParameter("bannerCode"));
 		return bannerDisplayCredential;
 		
 	}
@@ -187,13 +195,31 @@ public class ListBanner {
 		try {
 			    String dateCommenced = rowDisplayCriteria.getCommencingDate();
 			    String dateCessation = rowDisplayCriteria.getCessationDate();
-			    
+			    String bannerCode    = rowDisplayCriteria.getBannerCode();
 				
 				
 				//int activeInactiveStatus = Integer.parseInt(rowDisplayCriteria.getActiveInactiveStatus()); // if required for future use.
 			    Validatory clientInputValidator = new PrevalentValidation();
 			    boolean firstDateIsFilledAndNotNull =(dateCommenced != null) && (dateCommenced.trim().isEmpty() == false);
 			    boolean secondDateIsFilledAndNotNull= (dateCessation != null) && (dateCessation.trim().isEmpty() == false);
+			    boolean bannerCodeFilledAndNotNull = bannerCode.trim().isEmpty();
+			     
+			    if(bannerCodeFilledAndNotNull){
+			    	 //check if it is NaN : return false
+			    	if(new PrevalentValidation().isNumeric(bannerCode,SystemMessage.IS_NOT_NUMERIC.toString())){
+			    		// check if it contains invalid formats e.g 
+			    		//formats such as 055.234234d, +.234234D,-.234234F, .089,
+			    		//+123, -234 are valid but avoided.
+			    		Pattern INVALID_NUMBER_FORMAT = Pattern.compile("^[-\\+\\.\\d]\\d*\\.{0,1}\\d+[d,f,D,F]{0,1}$");
+			    		Matcher invalidFormatMatcher = INVALID_NUMBER_FORMAT.matcher(bannerCode);
+			    		if(invalidFormatMatcher.find())
+						throw new PrevalentValidation().new FailedValidationException(
+								SystemMessage.INVALID_NUMBER_FORMAT.toString()
+										+ " Provide Correct Format! ");
+			    	}
+			     }
+			    
+			    
 			    /*
 			     * The validation for fields will commences if and only if the
 			     * start date has been filled by the user. else the system consider 
