@@ -25,6 +25,7 @@
 //20170331 JH c141-ui-integration-for-add-course-provider datalist implementation for country list wip
 //20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
 //				,errorSelectedTown(): used clearToolTip() method to clear error message
+//20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -285,8 +286,10 @@ function displayProviderCountries() {
 function getDataOnCountrySelection() {
 
 	clearToolTip("#countries");
-	var selectedCountry = document.getElementById("countries").value;
-	if (!isempty(selectedCountry)) {
+	var selectedCountry = $("#countries").val();
+	var sdf = $('datalist[data-value]').attr("data-value");
+	alert(sdf);
+	if (!isempty( )) {
 		
 		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#country-List").addClass("has-error");
@@ -297,7 +300,7 @@ function getDataOnCountrySelection() {
 
 	} else {
 		landPhoneNubmerHelper();
-		getProviderTownListData();
+		getProviderTownListData(selectedCountry);
 	}
 
 }
@@ -305,11 +308,11 @@ function getDataOnCountrySelection() {
 /**
  * get course provider town list for the selected country
  */		
-function getProviderTownListData() {
+function getProviderTownListData(selectedCountry) {
 	clearErrorMessage();
 	var selectedCountry = $("#countries").val();
-var sdf = $(countries).attr( "data-value" );
-alert(sdf);
+var sdf = $("#countries").attr("data-value");
+//alert(sdf);
 
 	if (selectedCountry == '' || selectedCountry == null) {
 		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
