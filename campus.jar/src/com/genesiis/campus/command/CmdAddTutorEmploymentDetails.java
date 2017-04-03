@@ -7,12 +7,12 @@ package com.genesiis.campus.command;
 //20170328 CW c157-add-tutor-employment-details-cw modified execute method to call getTutorSelectedFCP & get the tutor selected course provider list
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & change tutorCode to tutorcodelist
 //20170331 CW c157-add-tutor-employment-details-cw modified validations in execute method & add messages
+//20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Employment;
-import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Validator;
