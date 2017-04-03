@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
 //												  removed unwanted statements
 //20170216 PN CAM-137: modified execute() method to get and assign the values from static enum if the categoryDetails Collection is null or empty.
 //20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
+//20170403 PN CAM-137: changed the order of category image path values setting to the attributes.
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CategoryCourseProviderDAO;
@@ -84,6 +85,12 @@ public class CmdListCategoryLandingPage implements ICommand {
 				}
 				view.setCollection(categoryDetails);
 				
+				final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
+				final String contextDeploySmallLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
+				
+				helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
+				helper.setAttribute("providerLogoPath", contextDeploySmallLogoPath);
+				
 				/**
 				 * Here the attribute level in program is used to identify which
 				 * query should be executed between two queries in CategoryCourseProvderDAO.
@@ -101,12 +108,6 @@ public class CmdListCategoryLandingPage implements ICommand {
 
 				programme.setLevel(0);
 				final Collection<Collection<String>> courseProviders = categoryProgrammeDAO.findById(programme);
-				
-				final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
-				final String contextDeploySmallLogoPath = SystemConfig.PROVIDER_LOGO_PATH.getValue1();
-				
-				helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
-				helper.setAttribute("providerLogoPath", contextDeploySmallLogoPath);
 				
 				helper.setAttribute("featuredInstitutes", featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
