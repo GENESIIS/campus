@@ -26,7 +26,7 @@
 //20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
 //				,errorSelectedTown(): used clearToolTip() method to clear error message
 //20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip, landPhoneNubmerHelper() fixed errors in mobile phone number fields and remvoed
-//				commented unwanted codes, load country code from the country list
+//				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
