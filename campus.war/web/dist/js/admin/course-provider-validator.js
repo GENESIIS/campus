@@ -446,8 +446,12 @@ function vaidateCourseProviderDeatils(form) {
 	if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 		setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 		flag = false;
-	}
-	if ((!isValidMinMaxLength(providerEmail, 1, 255)) || !isValidEmailFormat(providerEmail)) {
+	} 
+	 if (!isValidEmailFormat(providerEmail)) {
+			setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email is invalid.");
+			flag = false;
+		}
+	if (!isValidMinMaxLength(providerEmail, 1, 255)) {
 		setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email address is required. Maximum 255 charaters allowed.");
 		flag = false;
 	}
@@ -490,7 +494,7 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#accountDescriptionDiv', '#errorAccountDescription', "Description is too long.");
 		flag = false;
 	}
-	if (!isempty(accountContactNumber) || !isPatternMatch(integerPattern, accountContactNumber)) {
+	if (!isValidMinMaxLength(accountContactNumber, 1, 20) || !isPatternMatch(integerPattern, accountContactNumber)) {
 		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid or empty contact number.");
 		flag = false;
 	}
