@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170327 CW c157-add-tutor-employment-details-cw modified execute method & fix data saving error
 //20170328 CW c157-add-tutor-employment-details-cw modified execute method to call getTutorSelectedFCP & get the tutor selected course provider list
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & change tutorCode to tutorcodelist
+//20170331 CW c157-add-tutor-employment-details-cw modified validations in execute method & add messages
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -30,7 +31,6 @@ import java.util.Collection;
 public class CmdAddTutorEmploymentDetails implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdAddTutorEmploymentDetails.class.getName());
-	private String message = "";
 
 	/**
 	 * @author Chinthaka
@@ -41,21 +41,33 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
+		String message = "";
+		int status = 0;
 		try {			
 			Employment employmentDetails = new Employment();
 			String tutorCode = helper.getParameter("tutorcodelist");
 			String employerCode = helper.getParameter("employerDetails");			
 			
-			if(Validator.isNotEmpty(tutorCode) && Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){
-				employmentDetails = setEmploymentDetails(tutorCode, employerCode);
-							
-				EmploymentDAO addEmployment = new EmploymentDAO();
-				int status = addEmployment.add(employmentDetails);			
-
+			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){
+				if(Validator.isNotEmpty(tutorCode)){
+					employmentDetails = setEmploymentDetails(tutorCode, employerCode);
+								
+					EmploymentDAO addEmployment = new EmploymentDAO();
+					status = addEmployment.add(employmentDetails);					
+				}
+			}else{
+				message = "Please select an Employer ... ";
+			}			
+			
+			if(status > 0){
+				message = "Selected employers successfully added ...";
+			}
+			
+			if(Validator.isNotEmpty(tutorCode)){
 				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
 				
-				view.setCollection(allFeaturedCourseProviderList);			
+				view.setCollection(allFeaturedCourseProviderList);
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
