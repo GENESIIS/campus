@@ -8,6 +8,7 @@
 	 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn Admin Add New Banner and Admin add New Advertiser buttons are added.
 	 20170322 DN c83-admin-manage-banner-update-banner-info-dn add extra div to display banner image when the page is reached to edit
 	 			 banner record.Add jsp code to populate input fields brought from editing a banner record function from adminViewBanner.jsp page.
+	 20170403 DN c86-admin-manage-banner-search-banner-dn. Add the banner code filter box to the adminViewBanner.jsp.
  -->
 
 
@@ -75,6 +76,9 @@
 		Filter Commence Date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
 	    <div id="endtDateInfor" style ="color:#C70039;"></div>
 		Filter End Date * &nbsp; <input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+	</div>&nbsp; &nbsp; &nbsp;
+	<div>
+	 Banner Code : &nbsp; &nbsp;<input  type="text" id="bannerCodeFilter" name ="bannerCodeFilter" >
 	</div>
 	<br><br>
 	&nbsp; &nbsp; &nbsp;
