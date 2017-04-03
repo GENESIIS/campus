@@ -26,7 +26,8 @@
 //20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
 //				,errorSelectedTown(): used clearToolTip() method to clear error message
 //20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip, landPhoneNubmerHelper() fixed errors in mobile phone number fields and remvoed
-//				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list
+//				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list, removed clearErrorMessage(),
+//				implemented datalist function to display town list
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -272,7 +273,6 @@ function displayProviderCountries() {
 					for(var i=0; i<countryCollection.length; i++) {
 						var opt = $("<option></option>").attr({"data-country": countryCollection[i][0], "value" : countryCollection[i][1] });
 						dataList.append(opt);
-					//	getDataOnCountrySelection()
 					}
 				}
 			}
@@ -289,6 +289,7 @@ $('#countries').on('input', function() {
     var value = $(this).val();
     window.selectedCountry = $('#countryresults [value="' + value + '"]').data('country');
     getDataOnCountrySelection();
+    $('#selectedCountry').val(window.selectedCountry);
 });
 
 /**
@@ -301,10 +302,6 @@ function getDataOnCountrySelection() {
 		
 		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#country-List").addClass("has-error");
-		
-//		document.getElementById('landNumber1').innerHTML = "";
-//		document.getElementById('landNumber2').innerHTML = "";
-//		document.getElementById('lastMobileNumber').innerHTML = "";
 
 	} else {
 		landPhoneNubmerHelper();
@@ -325,8 +322,8 @@ function getProviderTownListData() {
 		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#town-List").addClass("has-error");
 	} else {
-	//	document.getElementById('errorSelectedTown').innerHTML = "";
-		clearToolTip("#errorSelectedTown");
+
+		clearErrorMessage("#town-List");
 		$.ajax({
 			url : '/AdminController',
 			method : 'POST',
@@ -358,21 +355,54 @@ function getProviderTownListData() {
 function displayProviderTownList() {
 
 	var countryCollection = window.townCollection;
-	var singleTownElement = '';
-
-	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--default--</option>';
-	if (townCollection !== undefined & townCollection !== null) {
-		$.each(townCollection, function(index, value) {
-			singleTownElement += '<option value="' + value[0] + '">';
-			singleTownElement += value[1];
-			singleTownElement += '</option>';
-
+//	var singleTownElement = '';
+//
+//	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--default--</option>';
+//	if (townCollection !== undefined & townCollection !== null) {
+//		$.each(townCollection, function(index, value) {
+//			singleTownElement += '<option value="' + value[0] + '">';
+//			singleTownElement += value[1];
+//			singleTownElement += '</option>';
+//
+//		});
+//	}
+//	singleTownElement += '</select>';
+//	var townNames = $("#town-List");
+//	townNames.html(singleTownElement);
+	
+	
+	
+	// check if the browser supports datalist function before proceeding 
+	if(document.createElement("datalist").options) {
+		$("#towns").on("click", function(e) {
+			$("#towns").val("");
+			
+			if (countryCollection !== undefined & countryCollection !== null) {
+				var dataList = $("#townresults");
+				dataList.empty();
+				
+				if(countryCollection.length) {
+					for(var i=0; i<countryCollection.length; i++) {
+						var opt = $("<option></option>").attr({"data-town": countryCollection[i][0], "value" : countryCollection[i][1] });
+						dataList.append(opt);
+					}
+				}
+			}
+			
 		});
 	}
-	singleTownElement += '</select>';
-	var townNames = $("#town-List");
-	townNames.html(singleTownElement);
+	
 }
+
+/**
+ * select town code 
+ */
+$('#towns').on('input', function() {
+    var value = $(this).val();
+    var selectedTown = $('#townresults [value="' + value + '"]').data('town');
+    $('#selectedTown').val(selectedTown);
+});
+
 
 /**
  * landPhoneNubmerHelper() method will show relevant error messages. 
@@ -608,10 +638,6 @@ function isValidNumber(fieldValue, integerPattern) {
 		flag = false;
 	}
 	return flag;
-}
-	
-function clearErrorMessage(){
-	$("#town-List").removeClass("has-error");
 }
 
 /**
