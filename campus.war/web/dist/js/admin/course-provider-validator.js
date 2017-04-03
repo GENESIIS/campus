@@ -16,6 +16,7 @@
 //				to accept min max length for url length validation as parameters 
 //20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields, vaidateCourseProviderDeatils() modified to do phone number validation wip
 //20170330 JH c141-ui-for-add-course-provider isempty() method modified to fix an error
+//20170403 JH c141-ui-for-add-course-provider providerUsernameValidation() method modified to use common min max length validations, vaidateCourseProviderDeatils() front end validation changes
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -151,9 +152,9 @@ function providerUsernameValidation() {
 		setErrorMessage('#usernameDiv', '#errorUsername', message);
 		return false;
 	} else {
-		if (selectedUsername.length < 5 || selectedUsername.length >100) {// check whether the username has
+		if (!isValidMinMaxLength(selectedUsername, 5, 100)) {// check whether the username has
 											// less than 5 characters
-			message = "**Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
+			message = "Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.";
 			setErrorMessage('#usernameDiv', '#errorUsername', message);
 			return false;
 		} else {
@@ -421,10 +422,18 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#whatsappDiv', '#errorWhatsapp', "Invalid whatsapp number.");
 		flag = false;
 	 }
+	 if (!isValidMinMaxLength(whatsapp, 0, 20)) {
+		 setErrorMessage('#whatsappDiv', '#errorWhatsapp', "Whatsapp number is too long (maximum 20 characters).");
+			flag = false;
+	 }
 	 if (isempty(viber) && !isPatternMatch(integerPattern, viber)) {;
 			setErrorMessage('#viberDiv', '#errorViber', "Invalid viber number.");
 		flag = false;
 	 }
+	 if (!isValidMinMaxLength(viber, 0, 20)) {
+			setErrorMessage('#viberDiv', '#errorViber', "Viber number is too long (maximum 20 characters).");
+		flag = false;
+	}
 	if (!isEmptyValue(providerType)) {
 		setErrorMessage('#providerTypeList', '#errorProviderType', "Select course provider type.");
 		flag = false;
@@ -446,19 +455,18 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username can't contain only numbers.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(providerUsername, 1, 100)) {
-		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is empty or too long (maximum 100 characters).");
-		flag = false;
-	}
-	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
-		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Empty password field(s).");
+	if (!isValidMinMaxLength(providerUsername, 5, 100)) {
+		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(providerPassword, 6, 100)) {
 		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Password is weak.");
 		flag = false;
 	}
-	
+	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
+		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Empty password field(s).");
+		flag = false;
+	}
 
 // if ((isempty(providerPassword) || providerPassword.length < 6)
 // && !isempty(cProviderPassword)
