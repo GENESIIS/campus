@@ -15,6 +15,7 @@
 <!-- 20170403 c157-add-tutor-employment-details-cw - edit tutorcodelist filling sequence -->
 <!-- 20170403 c157-add-tutor-employment-details-cw - add tutorCodeTable hidden field into the table -->
 <!-- 20170403 c157-add-tutor-employment-details-cw - add Verification Status field into the table -->
+<!-- 20170403 c157-add-tutor-employment-details-cw - add tablemessage field into the table -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -64,7 +65,7 @@
 				<h1>Manage Employment Details</h1>
 				<tr>
 					<td>
-						<h2 id="message" style="color: red">${message}</h2>
+						<h2 id="tablemessage" style="color: red">${tablemessage}</h2>
 					</td>
 				</tr>
 				<div>
