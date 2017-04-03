@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20170331 CW c157-add-tutor-employment-details-cw add getFCPListForTutorToSelect method
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & modified tutor adding sequence to the collection
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & add VARIFICATIONSTATUS to the query & collections
+//20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP to get VARIFICATIONSTATUS from getApplicationStatus method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -201,10 +202,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				singleTutorSelectedFCPList.add((rs.getString("EMPLOYERCODE")).trim());
 				
 				if(!(rs.getString("VERIFYSTATUS").isEmpty())){
-					int status = Integer.parseInt(rs.getString("VERIFYSTATUS".trim()));
-					ApplicationStatus[] applicationStatus = ApplicationStatus.values();
-					String verifyStatus = applicationStatus[status].toString().toLowerCase();
-					
+					int status = Integer.parseInt(rs.getString("VERIFYSTATUS".trim()));					
+					String verifyStatus = ApplicationStatus.getApplicationStatus(status);					
 					singleTutorSelectedFCPList.add(verifyStatus);
 				}				
 								
