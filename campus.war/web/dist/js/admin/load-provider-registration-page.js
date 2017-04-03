@@ -50,7 +50,6 @@ $(document).ready(function() {
  * hides the logo panel and clear the user message
  */
 function arrangeUI() {
-	document.getElementById("logoPanel").style.display = "none";
 	
 	publishPrograms();
 
@@ -69,21 +68,22 @@ function arrangeUI() {
  * course provider will publish programs or not.
  */
 function publishPrograms(){
-	var publishProgram = $('input[name=publishProgram]:checked').val();
+	var publishProgram = $('input[name=courseProvider]:checked').val();
 	
-	if(publishProgram == 0){
-		var d = new Date();
-		$('#expirationDate').val(d);
-		document.getElementById("expire-date").style.display = "block";
+	
+	if(publishProgram == 1){
+		//var d = new Date();
+		//$('#expirationDate').val(d);
+		document.getElementById("accountInfoSection").style.display = "block";
 
-	}else if(publishProgram == 1){
-		document.getElementById("expire-date").style.display = "none";
+	}else if(publishProgram == 2){
+		document.getElementById("accountInfoSection").style.display = "none";
 		
 		/**
 		 * this assigned value is not used in the application to save the data. but to avoid the JavaScript 
 		 * warning message of invalid date format.
 		 */
-		$('#expirationDate').val("2040-12-31");
+	//	$('#expirationDate').val("2040-12-31");
 	}
 }
 
@@ -116,12 +116,12 @@ function changeRequiredData(typeValue) {
 		$('#accountStatus').val("");
 		$('#accountDescription').val("");
 
-		document.getElementById("accountInfo").style.display = "block";
+		document.getElementById("accountInfoSection").style.display = "block";
 
 	}
 	if (window.accountType == 2) {
 
-		document.getElementById("accountInfo").style.display = "none";
+		document.getElementById("accountInfoSection").style.display = "none";
 
 		$('#providerPrivateName').val("common name");
 		$('#providerContactNumber').val("common contact number");

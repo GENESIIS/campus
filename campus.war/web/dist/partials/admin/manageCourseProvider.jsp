@@ -210,7 +210,7 @@
 													<datalist id="townresults"></datalist>
 													<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedTown"></a>
-													<input type="hidden" name="selectedTown"	id="selectedTown" value=""/>		
+													<input type="hidden" name="selectedTown" id="selectedTown" value=""/>		
 													</div>
 												</div>
 											</div>
@@ -366,7 +366,7 @@
 											<div class="input-wrapper" id="facebookDiv">
 												<input name="facebook" type="url" class="form-control"
 													id="facebook" placeholder="">
-													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink" title="Error! "></a>
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorFacebook" title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-11 col-xs-12">
@@ -477,7 +477,7 @@
 
 						<h4 class="form-section-title accordion-header">5. Account
 							Information (Authorized Personnel)</h4>
-						<div class="accordion-body">
+						<div class="accordion-body" id="accountInfoSection">
 							<div class="row clearfix">
 								<div class="col-sm-6">
 									<div class="row">
