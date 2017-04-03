@@ -2,7 +2,8 @@ package com.genesiis.campus.util.landing;
 
 //20170215 PN CAM-137: init CategoryCache Singleton class to return categories associated with the landing page, from the cache.
 //20170216 PN CAM-137: implemented getDefaultCategories(String code) method will return category list from the cache for the given code.
-	
+//20170403 PN CAM-137: modified incorrect argument passing into the findById() method. -  String to Category type.
+
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.model.Category;
@@ -88,7 +89,7 @@ public class CategoryCache {
 				}
 			} else {
 				// if category code is valid and not in map, add the value into category map and return
-				categoryDetails = dao.findById(code);
+				categoryDetails = dao.findById(category);
 				catMap.put(code, categoryDetails);
 				return categoryDetails;
 			}
