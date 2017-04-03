@@ -6,19 +6,19 @@ package com.genesiis.campus.command;
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & add validations & a message into the deleteMultiple method call
 //20170403 CW c157-add-tutor-employment-details-cw modified execute method & add validations to empty allSelectedFeaturedCourseProviderList
 //20170403 CW c157-add-tutor-employment-details-cw add validation messages to exeute method 
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
+//20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
-import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.Validator;
+
+import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * this class will remove all the tutor selected course provider details which were added by the tutor earlier, 
