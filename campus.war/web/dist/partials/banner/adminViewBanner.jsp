@@ -9,6 +9,7 @@
 	 20170322 DN c83-admin-manage-banner-update-banner-info-dn add extra div to display banner image when the page is reached to edit
 	 			 banner record.Add jsp code to populate input fields brought from editing a banner record function from adminViewBanner.jsp page.
  -->
+ <!-- 20170403 TR c87 Added common header -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -42,6 +43,10 @@
 </head>
 <body>
 
+<!-- Header-->
+<header><jsp:include page="/dist/partials/layout/header.jsp"></jsp:include></header>
+<!--< End header -->
+
 <!-- pop-up window message -->
 <div class="modal fade" id="messagePopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
 	<div class="login-dialog modal-dialog" role="document">
@@ -66,6 +71,8 @@
 </div>
 
 <!-- End of pop-up window message -->
+
+<!-- Page content -->
 <div align="center">			 
 	<div>
 	   <button type="button" value="Search" id="adminAddNewBanner">Add New Banner</button> &nbsp; &nbsp; &nbsp;
