@@ -17,6 +17,8 @@
  * 				modified displaySelectedCourseProviders method & add tutor code as a parameter to the method & to ajax call as a parameter
  * 20170402 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & remove un wanted commented lines
  * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method table filling sequence
+ * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add values into tutorCodeTable hidden field in the jsp table -->
+ * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add Verification status into the table -->
  */
 
 $(document).ready(function() {
@@ -99,14 +101,16 @@ function fillSelectedCourseProviderData(response) {
 
     var trHTML = '';
     var maxIndex = 0;
+    var tutorCD = 0;
         
     $.each(response.result, function (index, value) {
     	
     	maxIndex = index;
     	var sequence = index + 1;
+    	tutorCD = value[0].toString();
     	
-        trHTML += '<tr><td>' + sequence + '</td><td>' + value[2].toString() + '</td><td>' 
-		+ value[3].toString() + '</td><td>' + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>'
+        trHTML += '<tr><td>' + sequence + '</td><td>' + value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' 
+        + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>' + value[7].toString() + '</td><td>'
 		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+'  value=' + value[6].toString() + '>'
 		+ '<input type=hidden name=tutorCode'+sequence+' id=tutorCode'+sequence+'  value=' + value[0].toString() + '>'
 		+ '<input type=hidden name=employerCode'+sequence+' id=employerCode'+sequence+' value=' + value[1].toString() + '>'
@@ -116,7 +120,7 @@ function fillSelectedCourseProviderData(response) {
     
     $('#employers').append(trHTML);	    
     document.getElementById('maxSequence').value = maxIndex;
-    
+    document.getElementById('tutorCodeTable').value = tutorCD;    
 }
 
 function clearField(elementId) {
