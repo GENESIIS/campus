@@ -9,6 +9,7 @@ import java.util.Collection;
 //20170302 PN CAM-137: init CategoryList enum class to return categories associated with the landing page, if an error thrown when accessing the DB. 
 //			           implemented getEnumAsCollection(String code) method to select an enum value from the given code and returns the attribute set as a collection.
 //					   modified Enum by adding category string value into it.
+//20170403 PN CAM-137: set category string value to the collection, when it choose values according to the give category code.
 
 /**
 * EducationCategory enum is for the purpose of making the connection between 
@@ -108,6 +109,7 @@ public enum EducationCategory {
 				singleCategoryList.add(list.getCode());
 				singleCategoryList.add(list.getName());
 				singleCategoryList.add(list.getDescription());
+				singleCategoryList.add(list.getCategoryString());
 				allCategoryList.add(singleCategoryList);
 			}		
 		}		
