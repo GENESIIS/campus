@@ -25,13 +25,15 @@
 //20170331 JH c141-ui-integration-for-add-course-provider datalist implementation for country list wip
 //20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
 //				,errorSelectedTown(): used clearToolTip() method to clear error message
-//20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip
+//20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip, landPhoneNubmerHelper() fixed errors in mobile phone number fields and remvoed
+//				commented unwanted codes, load country code from the country list
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
 window.accountType = null;
 window.courseProviderAcoountStatus = null;
 window.responseErrorMessage = null;
+window.selectedCountry = null;
 
 /**
  * load data, arrange elements when the document is ready
@@ -268,7 +270,7 @@ function displayProviderCountries() {
 				
 				if(countryCollection.length) {
 					for(var i=0; i<countryCollection.length; i++) {
-						var opt = $("<option></option>").attr({"data-value": countryCollection[i][0], "value" : countryCollection[i][1] });
+						var opt = $("<option></option>").attr({"data-country": countryCollection[i][0], "value" : countryCollection[i][1] });
 						dataList.append(opt);
 					//	getDataOnCountrySelection()
 					}
@@ -281,15 +283,21 @@ function displayProviderCountries() {
 }
 
 /**
+ * select country code 
+ */
+$('#countries').on('input', function() {
+    var value = $(this).val();
+    window.selectedCountry = $('#countryresults [value="' + value + '"]').data('country');
+    getDataOnCountrySelection();
+});
+
+/**
  * display country code and list town data
  */
 function getDataOnCountrySelection() {
 
 	clearToolTip("#countries");
-	var selectedCountry = $("#countries").val();
-	var sdf = $('datalist[data-value]').attr("data-value");
-	alert(sdf);
-	if (!isempty( )) {
+	if (!isempty(window.selectedCountry)) {
 		
 		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
 		$("#country-List").addClass("has-error");
@@ -300,7 +308,7 @@ function getDataOnCountrySelection() {
 
 	} else {
 		landPhoneNubmerHelper();
-		getProviderTownListData(selectedCountry);
+		getProviderTownListData();
 	}
 
 }
@@ -308,11 +316,10 @@ function getDataOnCountrySelection() {
 /**
  * get course provider town list for the selected country
  */		
-function getProviderTownListData(selectedCountry) {
-	clearErrorMessage();
-	var selectedCountry = $("#countries").val();
-var sdf = $("#countries").attr("data-value");
-//alert(sdf);
+function getProviderTownListData() {
+	clearErrorMessage("#country-List");
+	var selectedCountry = window.selectedCountry;
+
 
 	if (selectedCountry == '' || selectedCountry == null) {
 		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
@@ -372,7 +379,8 @@ function displayProviderTownList() {
  * It will display the last telephone number for  compulsory phone number fields. 
  */
 function landPhoneNubmerHelper() {
-	var country = $("#country-List :selected").val();
+	
+	var country = window.selectedCountry ;
 	var areaCode = $("#areaCode").val();
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
@@ -412,6 +420,7 @@ function landPhoneNubmerHelper() {
 	
 		lastLandNumber1 = "+" + country;
 		lastLandNumber2 = "+" + country;
+		lastMobileNumber = "+" + country;
 		lastFaxNumber = "+" + country;
 
 		 if (!isValidNumber(areaCode, integerPattern)) {
@@ -496,25 +505,7 @@ function landPhoneNubmerHelper() {
 				
 			}
 			
-			displyPhoneNumber('#lastMobileNumber',lastFaxNumber );
-			
-////			 if(!isPatternMatch(integerPattern, networkCode)){
-////
-////				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
-////				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
-////
-////							
-////			 } else if (isPatternMatch(integerPattern, networkCode)) {
-////
-////				var lastMobilNumber = "+" + country + " " + networkCode + " "
-////						+ mobile;
-////
-////				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-////				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
-////					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
-////				}
-////			}
-//
+			displyPhoneNumber('#lastMobileNumber',lastMobileNumber );
 	}
 		
 	}
