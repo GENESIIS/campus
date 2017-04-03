@@ -23,6 +23,7 @@
 					land number one -->
 <!-- 20170331 JH c141-ui-integration-for-add-course-provider changed the id of the datalist to countryresults -->
 <!-- 20170402 JH c141-ui-integration-for-add-course-provider added error element for country list, added select tag for course provider types -->
+<!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -192,7 +193,7 @@
 													Country</label>
 														</div>
 													<div class="input-wrapper has-select" id="country-List">
-														<input name="countries" id="countries" class="form-control" list="countryresults" onchange="getDataOnCountrySelection();">
+														<input name="countries" id="countries" class="form-control" list="countryresults">
 														<datalist id="countryresults"></datalist>
 														<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedCountry"></a>
