@@ -50,7 +50,7 @@
 			<div class="modal-header"> <b>System Message</b>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">Close</span>
+					<span aria-hidden="true" id='systemMessageClose'>Close</span>
 				</button>
 			</div>
 			<div class="modal-body">
