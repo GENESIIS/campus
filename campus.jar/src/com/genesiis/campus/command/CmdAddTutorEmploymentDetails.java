@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & change tutorCode to tutorcodelist
 //20170331 CW c157-add-tutor-employment-details-cw modified validations in execute method & add messages
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
+//20170404 CW c157-add-tutor-employment-details-cw add doc comments
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -48,14 +49,14 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			String tutorCode = helper.getParameter("tutorcodelist");
 			String employerCode = helper.getParameter("employerDetails");			
 			
-			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){
+			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){// employer code is selected
 				if(Validator.isNotEmpty(tutorCode)){
 					employmentDetails = setEmploymentDetails(tutorCode, employerCode);
 								
 					EmploymentDAO addEmployment = new EmploymentDAO();
 					status = addEmployment.add(employmentDetails);					
 				}
-			}else{
+			}else{// employer code is not selected
 				message = "Please select an Employer ... ";
 			}			
 			
@@ -90,7 +91,7 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 		Employment employment = new Employment();
 		
 		if(tutorCode != null && employerCode != null){
-			employment.setVarificationstatus(ApplicationStatus.PENDING.getStatusValue());
+			employment.setVarificationstatus(ApplicationStatus.PENDING.getStatusValue()); // initially employer verification status is pending
 			employment.setCrtby("chinthaka");
 			employment.setModby("-");
 			employment.setTutor(Integer.parseInt(tutorCode));
