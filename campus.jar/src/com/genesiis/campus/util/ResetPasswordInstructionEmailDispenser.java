@@ -117,7 +117,7 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 			result.append(System.getProperty("line.separator"));
 			result.append(this.getMailBody());
 			result.append(originalMailBody);
-			result.append(System.getProperty("line.separator"));
+			
 			result.append("If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.");
 			result.append(System.getProperty("line.separator"));
 			this.setMailBody(result.toString());
@@ -140,7 +140,7 @@ public class ResetPasswordInstructionEmailDispenser implements IEmailComposer {
 															// value will be
 															// overridden
 		setMailingSubject(mailSubject);
-		setMailBody(emailBodyText + "   " + restoftheParameters);
+		setMailBody(emailBodyText);
 
 	}
 

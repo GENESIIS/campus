@@ -48,6 +48,7 @@ public class CmdEmailVarification implements ICommand {
 		String email = "";
 		String uname = "";
 		String code = "";
+		String hashLink = " ";
 		try {
 
 			IEmailComposer resetPasswordEmailComposer = new ResetPasswordInstructionEmailDispenser();
@@ -94,7 +95,7 @@ public class CmdEmailVarification implements ICommand {
 						resetPasswordEmailComposer.setEnvironment(firstName
 								+ " " + lastName, sendersEmail,
 								recieversEmailAddreses, emailTitle, emailBody
-										+ " " + securedHash, securedHash);
+										+ " " + securedHash, hashLink);
 
 						resetPasswordEmailComposer
 								.setGeneralEmail(resetPasswordEmailComposer
