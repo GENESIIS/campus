@@ -28,6 +28,7 @@
 //20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip, landPhoneNubmerHelper() fixed errors in mobile phone number fields and remvoed
 //				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list, removed clearErrorMessage(),
 //				implemented datalist function to display town list
+//20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -546,7 +547,9 @@ function landPhoneNubmerHelper() {
  */
 function saveCourseProvider() {
 
+	// get error message list
 	var errorMessageList = document.getElementsByClassName('has-error');
+	
 	var flag = true;
 
 	// clear all previous error messages
@@ -558,6 +561,8 @@ function saveCourseProvider() {
 		
 	}
 
+	clearToolTip('#uniquePrefixDiv');
+	clearToolTip('#usernameDiv');
 	if (providerPrefixValidation() === false) {
 		flag = false;
 		document.getElementById("userMessage").style.display = "block";
