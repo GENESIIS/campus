@@ -19,6 +19,7 @@ package com.genesiis.campus.validation;
 // 20170314 DN c81-admin-manage-banner-add-and-view-banner-dn changed the boolean & operator to && in isNotEmpty(String text, String errorMessage)
 //			   isNotEmpty(String text) method.
 //         compareDates() corrected to use the secodDate instead of using the current date in compareTo method
+//20170403 DN c86-admin-manage-banner-search-banner-dn boolean isNumeric(String, String) throws Exception is added.
  
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -321,6 +322,32 @@ public class PrevalentValidation implements Validatory {
 			return isTestPassed;
 		}
 	}
+	
+	/**
+	 * isNumeric method test if the passed String <br>
+	 * value can be a number if not a custom error will be thrown<br>
+	 * @param value : String that is to be tested 
+	 * @param errorMessage
+	 * @return true if the string argument is a number else false
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isNumeric(String value, String errorMessage) throws Exception {
+		boolean isTestPassed = false;
+		try {
+			Double.parseDouble(value);
+			isTestPassed = true;
+		} catch (NumberFormatException e) {
+			isTestPassed= false;
+		} catch (NullPointerException e) {
+			isTestPassed= false;
+		} finally {
+			throwCustomError(isTestPassed,errorMessage);
+			return isTestPassed;
+		}
+	}
+	
+	
 	
 	/**
 	 * compareDates() compares two dates respectively <I>date</I> and <i>otherDate</i>

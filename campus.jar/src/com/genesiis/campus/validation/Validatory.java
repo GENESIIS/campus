@@ -8,6 +8,7 @@ package com.genesiis.campus.validation;
 //         Declared methods with string error message parameter.
 //20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the signature of method 
 //         compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage).
+//20170403 DN c86-admin-manage-banner-search-banner-dn boolean isNumeric(String, String) throws Exception is added.
 
 
 
@@ -169,6 +170,17 @@ public interface Validatory {
 	 * @throws Exception
 	 */
 	public boolean isUrlValid(String url,long options,String errorMessage) throws Exception;
+
+	/**
+	 * isNumeric method test if the passed String <br>
+	 * value can be a number if not a custom error will be thrown<br>
+	 * @author dushantha DN
+	 * @param value : String that is to be tested 
+	 * @param errorMessage
+	 * @return true if the string argument is a number else false
+	 * @throws Exception
+	 */
+	boolean isNumeric(String value, String errorMessage) throws Exception;
 		
 	
 }

@@ -1,7 +1,8 @@
 package com.genesiis.campus.util;
 /*
  * 20170309 DN BannerDisplayingInflator class has been created
- * 
+ * 20170403 DN c86-admin-manage-banner-search-banner-dn bannerCode field is added.
+ * 				getter and setter for the field bannerCode is implemented
  */
 
 /**
@@ -21,7 +22,29 @@ public class BannerDisplayingInflator {
 	/** The active inactive status. */
 	private String activeInactiveStatus;
 	
+	/** The Banner Code */
+	private String bannerCode;
 	
+	/**
+	 * getBannerCode retrieve the banner code<br>
+	 * if the banner code is not set then the<br>
+	 *  method returns empty string.<br>
+	 * @return String banner Code
+	 */
+	public String getBannerCode() {
+		return bannerCode;
+	}
+
+	/**
+	 * setBannerCode accepts a String banner Code.<br>
+	 * sets the banner code to the pass in parameter.<br>
+	 * @param bannerCode String
+	 * @return void
+	 */
+	public void setBannerCode(String bannerCode) {
+		this.bannerCode = bannerCode;
+	}
+
 	/**
 	 * Gets the commencing date.
 	 *

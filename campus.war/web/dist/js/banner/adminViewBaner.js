@@ -18,6 +18,9 @@
  * 			the request parameters representing banner records  
  * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add two variables var pageName , pageCode to extract two columns 
  * 			to be passed to the editing jsp and insert analogous hidden input names.
+ * 20170403 DN c86-admin-manage-banner-search-banner-dn.The method loadBanners() is added a field for the object to be sent to the server  
+ * 			via the ajax call, called bannerCode.
+ * 			include a banner code validation logic to the method validateDisplayingBanners() to avoid patterns other than 123.
  */
 
 var theNewScript = document.createElement("script");
@@ -77,7 +80,8 @@ function loadBanners(){
 			CCO					:"ADDISBNRS", //Admin Display Banners
 			commencingDate		:$('#startDate').val(),
 			cessationDate		:$('#endtDate').val(),
-			activeInactiveStatus:$('input:radio[name=bannerStatus]:checked').val()
+			activeInactiveStatus:$('input:radio[name=bannerStatus]:checked').val(),
+			bannerCode			:$('#bannerCodeFilter').val()
 		},
 		dataType:'json',
 		success:function(response){
@@ -134,8 +138,48 @@ function validateDisplayingBanners(){
 	
 	var startDate = $('#startDate').val();
 	var endDate   = $('#endtDate').val();
+	var bannerCode=  $('#bannerCodeFilter').val().replace(/\s+/g, '');
 	var isStartDateEmpty =!isempty(startDate);
 	var isEndDateEmpty =!isempty(endDate);
+	var isBannerCodeEmpty = !isempty(bannerCode);
+	
+	// test if the banner code is filled if so, it should be valid accepted formatted number
+	// e.g. legal but NOT accepted in format -123, -.123, +.230, 0.345, .345
+	// if the banner code has not been filled then, execution path
+	// has been considered as a legal path.\d+[d,f,D,F]{0,1}
+	
+	if(!isBannerCodeEmpty){
+		if(isNaN(Number(bannerCode))){ // content is not a number
+			displayLabelMessage('messagePopUp','displayLabel','red',"Entered Banner Code is not a valid Number!");
+			return validationPass;
+		}else if(isPatternMatch(/^[-\+]{0,1}\d*\.\d+[d,f,D,F]{0,1}$/g,bannerCode)){ 
+			/*
+			 *  at this moment patterns 
+			 *  +12.123,-12.123, +12.235D
+			 *  +.123,-.123, +.235D
+			 *  .456f, .456
+			 *  12.231D, 12.235
+			 *  have been selected
+			 */ 
+				displayLabelMessage('messagePopUp','displayLabel','red',"Entered Banner Code is not in a Valid Format !");
+				return validationPass;
+		} else if (isPatternMatch(/^[-\+]\d+[d,f,D,F]{0,1}$/g,bannerCode)){
+			
+			/*
+			 * +12, -12, +12D, -12d, -12F,-12f
+			 * patterns are captured
+			 */
+			displayLabelMessage('messagePopUp','displayLabel','red',"Entered Banner Code is not in a Valid Format !");
+			return validationPass;
+		} else if (isPatternMatch(/^\d+[d,f,D,F]$/g,bannerCode)){
+			
+			/*
+			 * 123D, 123d, 123F,123f patterns are captured.
+			 */
+			displayLabelMessage('messagePopUp','displayLabel','red',"Entered Banner Code is not in a Valid Format !");
+			return validationPass;
+		}
+	 }		
 	
 	
 	if(!isStartDateEmpty){
@@ -189,7 +233,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 	if(allBannerRecords === "NO-DATA"){
 		return null;
 	}
-		
+	
+		$('tbody tr').remove(); // if already exist remove <tr> elements within the table body
 		// assigning all the banner records to the global variable.
 		bannerArray = allBannerRecords;
 		var bannerImageWarPath = bannerWarPath;
@@ -291,3 +336,22 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	$('#'+messagePopUpId).modal('show'); // display the modal window
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 }
+
+
+/**
+ * on click event the bannerCodeFilter element will be cleared
+ */
+$(document).on('click','#bannerCodeFilter',function(event){
+	event.preventDefault();
+	$('#bannerCodeFilter').val('');
+});
+
+/**
+ * this function initiate the filtering the banners once the 
+ * input field is entered
+ */
+$(document).on('keypress','#bannerCodeFilter',function(event){
+	//event.preventDefault();
+	if(event.keyCode==13)
+		loadBanners();
+});

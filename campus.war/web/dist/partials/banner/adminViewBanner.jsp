@@ -1,13 +1,13 @@
 <!-- 20170308 DN c81-admin-manage-banner-add-and-view-banner-dn mock up design completed -->
 <!-- 20170309 DN c81-admin-manage-banner-add-and-view-banner-dn add radio buttons to model
 				  PENDING,EXPIRED banner status.
-
      20170309 DN c81-admin-manage-banner-add-and-view-banner-dn removed the style script and tbody
                   tag of the table from the jsp file. Add the Row #  <th> element
      20170314 DN c81-admin-manage-banner-add-and-view-banner-dn add id to the button 'Filter the Banner Button
 	 20170315 DN c81-admin-manage-banner-add-and-view-banner-dn Admin Add New Banner and Admin add New Advertiser buttons are added.
 	 20170322 DN c83-admin-manage-banner-update-banner-info-dn add extra div to display banner image when the page is reached to edit
 	 			 banner record.Add jsp code to populate input fields brought from editing a banner record function from adminViewBanner.jsp page.
+	 20170403 DN c86-admin-manage-banner-search-banner-dn. Add the banner code filter box to the adminViewBanner.jsp.
  -->
 
 
@@ -49,7 +49,7 @@
 			<div class="modal-header"> <b>System Message</b>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">Close</span>
+					<span aria-hidden="true" id='systemMessageClose'>Close</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -75,6 +75,9 @@
 		Filter Commence Date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
 	    <div id="endtDateInfor" style ="color:#C70039;"></div>
 		Filter End Date * &nbsp; <input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
+	</div>&nbsp; &nbsp; &nbsp;
+	<div>
+	 Banner Code : &nbsp; &nbsp;<input  type="text" id="bannerCodeFilter" name ="bannerCodeFilter" >
 	</div>
 	<br><br>
 	&nbsp; &nbsp; &nbsp;
