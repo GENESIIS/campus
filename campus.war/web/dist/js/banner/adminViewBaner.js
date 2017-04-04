@@ -18,6 +18,8 @@
  * 			the request parameters representing banner records  
  * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add two variables var pageName , pageCode to extract two columns 
  * 			to be passed to the editing jsp and insert analogous hidden input names.
+ *
+ * 20170404 TR c87 Removed rowNumber column from banner search table
  */
 
 var theNewScript = document.createElement("script");
@@ -230,8 +232,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td>"+advertiserName+"<hr>"+
-															bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
+			var markUp = "<tr id='rowId"+rowNumber+"'>" +
+				"<td><div>"+advertiserName+"</div><hr>"+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
 			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ 
 								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
 								"<input type='hidden' id='bannerCode"+rowNumber+"' name='bannerCode' value='"+bannerCode+"'>"+ 
@@ -252,7 +254,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
 							 "</form></td>";
-			markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
+			markUp = markUp +"<td><div class='img-banner-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></div></td></tr>" ;
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
 		

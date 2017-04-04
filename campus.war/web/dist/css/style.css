@@ -758,6 +758,77 @@ body, html {
             .contact-us-screen .contact-form-holder .contact-form .question-and-info-area .info-area .contact-info .fax {
               display: block; }
 
+/* 20170403 TR c87 init  */
+/* 20170404 TR   */
+/* Banner search page content */
+.banner-search-screen {
+  display: block;
+  padding-top: 60px;
+  background-color: #e5e9ec; }
+  .banner-search-screen .add-new-area {
+    display: block;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto; }
+    .banner-search-screen .add-new-area div {
+      padding-top: 60px; }
+      .banner-search-screen .add-new-area div button {
+        background-color: #1f9f61;
+        border: none;
+        height: 44px;
+        color: #fff;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        width: 100%; }
+  .banner-search-screen .filtering-area {
+    display: block;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 30px 0; }
+    .banner-search-screen .filtering-area > div {
+      padding: 0 !important; }
+      .banner-search-screen .filtering-area > div .date-picker-area {
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        color: #4b4848; }
+        .banner-search-screen .filtering-area > div .date-picker-area .date-input input {
+          border: 2px solid #7da7d9;
+          height: 28px;
+          width: 100%;
+          background-color: #e5e9ec; }
+      .banner-search-screen .filtering-area > div > div {
+        padding: 0 !important; }
+        .banner-search-screen .filtering-area > div > div .btn-radio {
+          font-family: "Roboto", sans-serif;
+          font-size: 16px;
+          color: #4b4848; }
+          .banner-search-screen .filtering-area > div > div .btn-radio .radio-block {
+            width: 22%;
+            margin-left: 4%;
+            float: left;
+            line-height: 36px; }
+            .banner-search-screen .filtering-area > div > div .btn-radio .radio-block:first-child {
+              margin-left: 0; }
+            .banner-search-screen .filtering-area > div > div .btn-radio .radio-block span {
+              margin-right: 12px; }
+        .banner-search-screen .filtering-area > div > div .btn-b-filter button {
+          border: none;
+          height: 36px;
+          color: #fff;
+          background-color: #448ccb;
+          font-family: "Roboto", sans-serif;
+          font-size: 15px;
+          width: 100%; }
+
+.tbl-bg {
+  background-color: #e5e9ec; }
+  .tbl-bg .banner-record-holder {
+    display: block;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto; }
+
 /* Responsive */
 @media only screen and (max-width: 1224px) {
   .header .top .logo-txt {

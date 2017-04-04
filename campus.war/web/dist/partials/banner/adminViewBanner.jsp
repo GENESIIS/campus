@@ -10,6 +10,7 @@
 	 			 banner record.Add jsp code to populate input fields brought from editing a banner record function from adminViewBanner.jsp page.
  -->
  <!-- 20170403 TR c87 Added common header -->
+ <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -24,9 +25,9 @@
 <title>Admin View Banner</title>
 
 
-<!-- Bootstrap & CSS Style-->
-    <link href="../../bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
+<!-- Bootstrap & CSS Style -->
+    <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/style.css" rel="stylesheet">
     <link href="../../css/image-slides.css" rel="stylesheet">
 
 <!-- jQuery & Other js -->
@@ -72,45 +73,63 @@
 
 <!-- End of pop-up window message -->
 
-<!-- Page content -->
-<div align="center">			 
-	<div>
-	   <button type="button" value="Search" id="adminAddNewBanner">Add New Banner</button> &nbsp; &nbsp; &nbsp;
-	   <button type="button" value="Search" id="adminAddNewAdvertiser">Add New Advertiser</button>
+<!-- Banner search - Page content -->
+<div class="banner-search-screen clearfix">
+	<div class="add-new-area clearfix">
+	   <div class="col-lg-2 col-md-3 pull-right"><button class type="button" value="Search" id="adminAddNewBanner">Add New Banner</button></div>
+	   <div class="col-lg-2 col-md-3 pull-right"><button type="button" value="Search" id="adminAddNewAdvertiser">Add New Advertiser</button></div>
 	</div>
-    <div id="startDateInfor" style ="color:#C70039;"></div>
-		Filter Commence Date* &nbsp; <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"> 
-	    <div id="endtDateInfor" style ="color:#C70039;"></div>
-		Filter End Date * &nbsp; <input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')">
-	</div>
-	<br><br>
-	&nbsp; &nbsp; &nbsp;
-   <span id="">List <b>Active</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="1" id ="statusActive" checked="checked" > 
-   &nbsp; &nbsp; &nbsp;<span id="">List <b>Inactive</b> Banners</span>
-	<input type="radio" name="bannerStatus" value="0" id="statusInactive">
-	&nbsp; &nbsp; &nbsp;
-	<span id="">List <b>Pending</b> Banners
-	</span>
-	<input type="radio" name="bannerStatus" value="2" id ="statusPending"  >
-    &nbsp; &nbsp; &nbsp;<span id="">List <b>Expired</b> Banners</span>
-   <input type="radio" name="bannerStatus" value="3" id ="statusExpired"  >
-   <br><br>
-   <button type="button" value="Search" id="filterBanners">Filter The Banners</button>
-   
-   <br><br>
-   <!-- banner records will be displayed here -->
-   <table id='bannerDisplaytbl' width ="100%" style="max-height:800px;  overflow: auto">
-	   	<thead>
-	            <tr>
-	            	<th align="center" width="20%">Row # </th>
-	                <th width="40%%">Banner Information</th>
-	                <th width="40%%">Banner Image</th>
-	            </tr>
-	     </thead>
-	     <tbody></tbody>
+	<div class="filtering-area clearfix">
+	    <div class="col-lg-12 col-md-12 col-sm-12">
+	        <div class="date-picker-area col-lg-5 col-md-5 col-sm-12">
+	            <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div id="startDateInfor" class="date-input">Filter Commence Date:<input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"></div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div id="endtDateInfor" class="date-input">Filter End Date:<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')"></div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12">
+                <div class="btn-radio col-lg-9 col-md-9 col-sm-10">
+                    <div class="radio-block">
+                        <span id="">Active</span>
+                        <input type="radio" name="bannerStatus" value="1" id ="statusActive" checked="checked" >
+                    </div>
 
-   </table>
+                    <div class="radio-block">
+                        <span id="">Inactive</span>
+                        <input type="radio" name="bannerStatus" value="0" id="statusInactive">
+                    </div>
 
+                    <div class="radio-block">
+                        <span id="">Pending</span>
+                        <input type="radio" name="bannerStatus" value="2" id ="statusPending"  >
+                    </div>
+
+                    <div class="radio-block">
+                        <span id="">Expired</span>
+                        <input type="radio" name="bannerStatus" value="3" id ="statusExpired"  >
+                    </div>
+                </div>
+                <div class="btn-b-filter col-lg-3 col-md-3 col-sm-12">
+                    <button type="button" value="Search" id="filterBanners">Filter The Banners</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-- Banner Records holder --%>
+<div class="tbl-bg clearfix">
+    <div class="banner-record-holder">
+       <div class="col-lg-12 col-md-12 col-sm-12">
+           <!-- banner records will be displayed here -->
+           <table id='bannerDisplaytbl' width ="100%" style="max-height:800px;  overflow: auto">
+                <!-- <thead><tr><th width="40%"></th><th width="40%"></th></tr></thead> -->
+                <tbody></tbody>
+
+           </table>
+       </div>
+    </div>
+</div>
 </body>
 </html>
