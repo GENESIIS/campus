@@ -17,8 +17,9 @@
  * 				modified displaySelectedCourseProviders method & add tutor code as a parameter to the method & to ajax call as a parameter
  * 20170402 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & remove un wanted commented lines
  * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method table filling sequence
- * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add values into tutorCodeTable hidden field in the jsp table -->
- * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add Verification status into the table -->
+ * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add values into tutorCodeTable hidden field in the jsp table
+ * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add Verification status into the table
+ * 20170404 CW c157-add-tutor-employment-details-cw modified doc comments of fillSelectedCourseProviderData method & modified clearField method to clear tablemessage 
  */
 
 $(document).ready(function() {
@@ -93,7 +94,7 @@ function displaySelectedCourseProviders(tutorCode) {
 }
 
 /**
- * This method used to fill list item from the data
+ * This method used to fill table details from the data
  * @author CW
  * @param response
  */
@@ -126,4 +127,5 @@ function fillSelectedCourseProviderData(response) {
 function clearField(elementId) {
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
+	$(document).find('#tablemessage').text('');
 }
