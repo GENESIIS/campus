@@ -25,6 +25,7 @@
 <!-- 20170402 JH c141-ui-integration-for-add-course-provider added error element for country list, added select tag for course provider types -->
 <!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list, code changes to implement town list wip 
 					added hidden inputs to store country and town -->
+<!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -84,16 +85,16 @@
 
 		<div class="container course-provider-registration admin">
 			<div class="form-wrapper">
-
 				<h2 class="form-title">
 					<span class="fa fa-pencil" aria-hidden="true"></span> Register a
 					Course Provider <span class="form-intro">Please fill the
 						form below to add a course provider (Complete all sections)</span>
 				</h2>
 
-				<!-- <form name="addCourseForm" class="form form-admin has-error-form"
-					method="POST" action=""> 		 -->
+				<form class="form form-admin has-error-form" 
+					 name="basicForm" id="basicForm" method="POST" action=""> 	
 
+		<input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
 					<div class="alert alert-danger fade in" id="userMessage"></div>
 
 					<div class="accordion">
@@ -114,13 +115,13 @@
 								<label class="radio-inline radio-lbl">
 										<c:if test="${accountTypes.typeValue == 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" checked="checked"
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+												value="${accountTypes}" checked="checked"
+												onchange="changeRequiredData('${accountTypes}');" /> ${accountTypes} &nbsp;
 										</c:if>
 										<c:if test="${accountTypes.typeValue != 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" 
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+												value="${accountTypes}" 
+												onchange="changeRequiredData('${accountTypes}');" /> ${accountTypes} &nbsp;
 										</c:if>
 										</label>
 									</c:forEach>
@@ -475,7 +476,7 @@
 							</div>
 						</div>
 
-						<h4 class="form-section-title accordion-header">5. Account
+						<h4 class="form-section-title accordion-header"  id="accountInfoSection">5. Account
 							Information (Authorized Personnel)</h4>
 						<div class="accordion-body" id="accountInfoSection">
 							<div class="row clearfix">
@@ -585,8 +586,7 @@
 										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
 					</div> 
 
-			<!-- 	</form>			 -->
-
+				</form>		
 				<div id="upload-logo-modal" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">

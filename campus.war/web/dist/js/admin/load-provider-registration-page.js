@@ -42,7 +42,7 @@ window.selectedCountry = null;
  */
 $(document).ready(function() {
 	/*commented until the logo panel confirms*/
-	//arrangeUI();
+	arrangeUI();
 });
 
 
@@ -72,12 +72,17 @@ function publishPrograms(){
 	var publishProgram = $('input[name=courseProvider]:checked').val();
 	
 	
-	if(publishProgram == 1){
-		//var d = new Date();
-		//$('#expirationDate').val(d);
+	if(publishProgram === "FEATURED_COURSE_PROVIDER"){
+	    $("#accountInfoSection").accordion({		 
+			collapsible: false
+		});
+		
+		document.getElementById("accountInfoSection").style.visibility = "visible";
 		document.getElementById("accountInfoSection").style.display = "block";
 
-	}else if(publishProgram == 2){
+	}else if(publishProgram === "ONE_OFF_COURSE_PROVIDER"){
+		
+		document.getElementById("accountInfoSection").style.visibility = "hidden";
 		document.getElementById("accountInfoSection").style.display = "none";
 		
 		/**
@@ -100,13 +105,14 @@ function clearField(elementId) {
 }
 
 function changeRequiredData(typeValue) {
+	publishPrograms();
 	window.accountType = typeValue;
 
 	/**
 	 * here methods are created to hidden input fields that are not needed for
 	 * the the of the course provider
 	 */
-	if (window.accountType == 1) {
+	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
 
 		$('#providerPrivateName').val("");
 		$('#providerContactNumber').val("");
@@ -117,12 +123,8 @@ function changeRequiredData(typeValue) {
 		$('#accountStatus').val("");
 		$('#accountDescription').val("");
 
-		document.getElementById("accountInfoSection").style.display = "block";
-
 	}
-	if (window.accountType == 2) {
-
-		document.getElementById("accountInfoSection").style.display = "none";
+	if (window.accountType === "ONE_OFF_COURSE_PROVIDER") {
 
 		$('#providerPrivateName').val("common name");
 		$('#providerContactNumber').val("common contact number");
@@ -563,15 +565,16 @@ function saveCourseProvider() {
 
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
-	if (providerPrefixValidation() === false) {
-		flag = false;
-		document.getElementById("userMessage").style.display = "block";
-		$("#userMessage").html("Invalid Prefix.");
-	}
+	
 	if (providerUsernameValidation() === false) {
 		document.getElementById("userMessage").style.display = "block";
 		$("#userMessage").html("Invalid Username.");
 		flag = false;
+	}
+	if (providerPrefixValidation() === false) {
+		flag = false;
+		document.getElementById("userMessage").style.display = "block";
+		$("#userMessage").html("Invalid Prefix.");
 	}
 
 	if (flag === true) {

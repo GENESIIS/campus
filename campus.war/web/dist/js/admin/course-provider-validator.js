@@ -312,7 +312,7 @@ function vaidateCourseProviderDeatils(form) {
 	var accountDescription = $("#accountDescription").val();
 	
 	var accountContactNumber = $("#providerContactNumber").val();
-
+	
 	if (!isempty(courseProvider)) {		
 		setErrorMessage('#accountTypeDiv', '#errorAccountTypes' , "Select a course provider type.");
 		flag = false;
