@@ -5,8 +5,9 @@ package com.genesiis.campus.command;
 //20170330 CW c157-add-tutor-employment-details-cw modified execute method & create deleteList & pass it to deleteMultiple
 //20170331 CW c157-add-tutor-employment-details-cw modified execute method & add validations & a message into the deleteMultiple method call
 //20170403 CW c157-add-tutor-employment-details-cw modified execute method & add validations to empty allSelectedFeaturedCourseProviderList
-//20170403 CW c157-add-tutor-employment-details-cw add validation messages to exeute method 
+//20170403 CW c157-add-tutor-employment-details-cw add validation messages to execute method 
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
+//20170404 CW c157-add-tutor-employment-details-cw add code comments
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -41,8 +42,6 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 		String tablemessage = "";
 		try {
 			
-			final Collection<Collection<String>> allSelectedListToRemove = new ArrayList<Collection<String>>();
-			
 			String sequence = helper.getParameter("maxSequence");
 			String deleteList = "";
 			int status = -1;
@@ -51,7 +50,7 @@ public class CmdRemoveSelectedEmploymentDetails implements ICommand  {
 				int maxIndex = Integer.parseInt(sequence);				
 				
 				final Collection<String> singleSelectedListToRemove = new ArrayList<String>();
-				for(int i = 1; i <= maxIndex+1; i++){
+				for(int i = 1; i <= maxIndex+1; i++){ // creating the comma separated list of employment codes needed to remove
 
 					if(Validator.isNotEmpty(helper.getParameter("isSelected"+i)) && helper.getParameter("isSelected"+i).equals("1")){
 						if(deleteList == ""){
