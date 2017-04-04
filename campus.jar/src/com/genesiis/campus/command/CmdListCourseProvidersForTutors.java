@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 				// add validations to execute method
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements
 //20170404 CW c157-add-tutor-employment-details-cw removed un used import statements
+//20170404 CW c157-add-tutor-employment-details-cw add doc comments
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * this class lists all the Course Providers details required by the Tutors to add employment details, 
+ * this class lists all the Course Providers details which is not already added by the tutor required by the Tutors to add employment details, 
  * further it implements ICommand interface
  * @author CW
  *
