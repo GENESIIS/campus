@@ -102,6 +102,13 @@ textarea:focus, input:focus {
   color: #8d8d8d;
   line-height: 18px; }
 
+.sub-topic-t2 {
+  font-family: sans-serif;
+  font-size: 13px !important;
+  color: #0fb8b9;
+  line-height: 18px;
+  margin-top: 6px; }
+
 .msg-warning {
   color: #e28a01;
   font-family: Verdana, sans-serif;
@@ -924,6 +931,16 @@ body, html {
     display: block; }
     .pwrd-reset-screen .input-area [class*="col-"] {
       padding: 0 !important; }
+    .pwrd-reset-screen .input-area .pw-show-checkbox {
+      height: 15px;
+      width: 15px;
+      float: right; }
+    .pwrd-reset-screen .input-area .pw-show-lbl {
+      position: relative;
+      right: 10px;
+      top: 4px;
+      font-family: "Roboto", sans-serif;
+      font-size: 13px; }
     .pwrd-reset-screen .input-area input {
       border: 2px solid #ccdae8;
       height: 40px;
@@ -972,7 +989,7 @@ body, html {
   border-left: 4px solid #d67900;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
-  color: #d67900;
+  color: #d67900 !important;
   display: block;
   padding: 8px;
   line-height: 20px; }
@@ -982,7 +999,7 @@ body, html {
   border-left: 4px solid #3cb878;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
-  color: #2b9862;
+  color: #2b9862 !important;
   display: block;
   padding: 8px;
   line-height: 20px; }
@@ -1163,3 +1180,19 @@ body, html {
   background: #555555;
   color: #fff;
   box-shadow: 1px 2px 5px #000; }
+
+.stat-warning-txt {
+  margin-bottom: 10px; }
+  .stat-warning-txt span {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px !important;
+    color: #2cbd3f;
+    line-height: 18px; }
+
+.stat-error-txt {
+  margin-bottom: 8px; }
+  .stat-error-txt span {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px !important;
+    color: #e23434;
+line-height: 18px; }
