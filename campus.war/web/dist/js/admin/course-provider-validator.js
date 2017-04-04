@@ -17,6 +17,7 @@
 //20170329 JH c141-ui-for-add-course-provider display hint messages on page load for phone number fields, vaidateCourseProviderDeatils() modified to do phone number validation wip
 //20170330 JH c141-ui-for-add-course-provider isempty() method modified to fix an error
 //20170403 JH c141-ui-for-add-course-provider providerUsernameValidation() method modified to use common min max length validations, vaidateCourseProviderDeatils() front end validation changes
+//20170404 JH c141-ui-for-add-course-provider created providerPasswordValidation() method to validate password
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -337,6 +338,7 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#specialFeaturesDiv', '#errorSpecialFeatures', "Only 100 characters allowed.");
 		flag = false;
 	}
+	clearToolTip('#generalEmailDiv');
 	if (!isValidEmailFormat(generalEmail)) {
 		setErrorMessage('#generalEmailDiv', '#errorGeneralEmail', "Invalid email.");
 		flag = false;
@@ -463,29 +465,9 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(providerPassword, 6, 100)) {
-		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Password is weak.");
-		flag = false;
-	}
-	if (!isempty(providerPassword) || !isempty(cProviderPassword)) {
-		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', "Empty password field(s).");
-		flag = false;
-	}
-
-// if ((isempty(providerPassword) || providerPassword.length < 6)
-// && !isempty(cProviderPassword)
-// && (providerPassword != cProviderPassword)) {
-// document.getElementById('errorCProviderPassword').innerHTML = "**Confirm
-// password does not match.";
-// document.getElementById('cProviderPassword').focus();
-// flag = false;
-// }
-// if (cProviderPassword.length > 100) {
-// document.getElementById('errorProviderPassword').innerHTML = "**Password is
-// too long.";
-// document.getElementById('providerPassword').focus();
-// flag = false;
-// }
+	//validation password fields
+	 flag = providerPasswordValidation(providerPassword, cProviderPassword);
+	 
 	if (accountStatus === null || accountStatus === undefined) {
 		setErrorMessage('#accountStatusDiv', '#errorStatus', "Select the account status.");
 		flag = false;
@@ -494,10 +476,40 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#accountDescriptionDiv', '#errorAccountDescription', "Description is too long.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(accountContactNumber, 1, 20) || !isPatternMatch(integerPattern, accountContactNumber)) {
-		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid or empty contact number.");
+	clearToolTip('#providerContactNumberDiv');
+	if (!isPatternMatch(integerPattern, accountContactNumber)) {
+		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid contact number. Only numbers allowed.");
+		flag = false;
+	}
+	if (!isValidMinMaxLength(accountContactNumber, 1, 20)) {
+		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Empty or too long contact number. (1-20 characters)");
 		flag = false;
 	}
 
+	return flag;
+}
+
+/**
+ * used to validate course provider account password
+ * @returns boolean true if valid
+ * @author JH
+ */
+function providerPasswordValidation(providerPassword, cProviderPassword){
+	clearToolTip('#providerPasswordDiv');
+	var message = null;
+	var flag = true;
+	
+	if ((!isValidMinMaxLength(providerPassword, 6, 100)) || (!isValidMinMaxLength(cProviderPassword, 6, 100))){	
+		message = "Empty or too long password field(s). Between 6 to 100 characters required.";
+		flag = false;
+	} else {
+		if (providerPassword !== cProviderPassword) {
+			message = "Confirm password does not match";
+			flag = false;
+		}
+	}
+	if (!flag) {
+		setErrorMessage('#providerPasswordDiv', '#errorProviderPassword', message);
+	}
 	return flag;
 }
