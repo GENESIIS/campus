@@ -1,6 +1,12 @@
 package com.genesiis.campus.command;
+//20170314 AS c23-admin-login-logout-function-as CmdAdminLogin class created
+//20170316 AS c23-admin-login-logout-function-as CmdAdminLogin class coding WIP
+//20170330 AS c23-admin-login-logout-function-as login attempts handled
+//20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
+
+
 import java.net.URL;
-//20170314 AS c23-admin-login-logout-function-as CmdAdminLogin class created 
+ 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -38,9 +44,9 @@ public class CmdAdminLogin implements ICommand{
 			Exception {
 		
 		HttpSession session;
+		//time been this code commented 
+		//String domain = new URL(helper.getRequestURL()).getHost(); 
 		
-		String domain = new URL(helper.getRequestURL()).getHost();
-		log.info(domain);
 		try {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
 			session = helper.getRequest().getSession(false);
@@ -65,7 +71,7 @@ public class CmdAdminLogin implements ICommand{
 					}
 					
 					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER.message())) {
-						
+						//Cookies handling 
 						if (rememberMe == true) {
 							helper.setAttribute("admin", adminData);
 							CookieHandler.addCookie(helper.getResponse(),
@@ -83,7 +89,7 @@ public class CmdAdminLogin implements ICommand{
 						int status = AdminLoginDAO.loginDataUpdate(adminData);
 						if(status >0){
 							//admin privacy privilege list
-							log.info(status);
+							//CAM-154 doing the admin privilege handling 
 						}else{
 							
 						}
@@ -93,9 +99,9 @@ public class CmdAdminLogin implements ICommand{
 						pageURL = path;
 	
 					}else{
-
+						//Logging attempts handling 
 						for (max = max; max <= 3; max++) {
-							log.info(" Attempts  " + max);
+							
 							if (max == 3) {
 								message = SystemMessage.LOGGINATTEMPT3.message();
 								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
@@ -129,7 +135,7 @@ public class CmdAdminLogin implements ICommand{
 				}
 				
 			}else{
-				path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
+				path = SystemConfig.ADMIN_LANDING_PAGE.getValue1(); //if user already logged, redirect to admin Landing page
 			}
 			
 			helper.setAttribute("message", message);
@@ -162,7 +168,6 @@ public class CmdAdminLogin implements ICommand{
 
 		try {
 
-			
 			Date loginTime = new Date();
 
 			java.util.Date utilDate = new java.util.Date();
