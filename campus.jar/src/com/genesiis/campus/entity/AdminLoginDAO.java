@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
 //20170314 AS c23-admin-login-logout-function-as - AdminLoginDAO created 
 //20170314 AS c23-admin-login-logout-function-as - findById() method coding completed
 //20170331 AS c23-admin-login-logout-function-as - loginDataUpdate() method coding WIP
+//20170403 AS c23-admin-login-logout-function-as - findById() sql query modification and userTypeString set to the dataColletction 
+//20170404 AS c23-admin-login-logout-function-as - loginDataUpdate() sql query modified
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +21,7 @@ import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.UserType;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
@@ -35,7 +38,7 @@ public class AdminLoginDAO implements ICrud {
 
 	public static int loginDataUpdate(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "UPDATE CAMPUS.LOGINHISTORY SET USERAGENT=?, SESSIONID=?, LOGGEDINDATE=?, LOGGEDINTIME=?, IPADDRESS=? WHERE ADMIN=? ";
+		String query = "INSERT INTO CAMPUS.LOGINHISTORY (USERAGENT, SESSIONID, LOGGEDINDATE, LOGGEDINTIME, IPADDRESS, AUTHENTICATEDBY, ADMIN, COURSEPROVIDER, TUTOR, ISACTIVE, CRTBY) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps = null;
 		int rowInserted = -1;
 
@@ -48,8 +51,12 @@ public class AdminLoginDAO implements ICrud {
 			ps.setString(3, adminData.getLastLoggedInDate());
 			ps.setString(4, adminData.getLastLoggedInTime());
 			ps.setString(5, adminData.getLastLoggedInIpAddress());
-			ps.setInt(6, adminData.getAdminCode());
-			//ps.setInt(7, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setString(6, adminData.getUserTypeString());
+			ps.setInt(7, adminData.getAdminCode());
+			ps.setString(8, UserType.FEATURED_COURSE_PROVIDER.getDefaultValue());
+			ps.setString(9, UserType.TUTOR.getDefaultValue());
+			ps.setInt(10, ApplicationStatus.ACTIVE.getStatusValue());
+			ps.setString(11, adminData.getUsername());
 			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
@@ -120,6 +127,8 @@ public class AdminLoginDAO implements ICrud {
 		boolean passwordMatch = false;
 		try {
 			final Admin admin = (Admin) object;
+			
+			//user input password encryption 
 			Encryptable passwordEncryptor = new TripleDesEncryptor(admin.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 
@@ -134,6 +143,7 @@ public class AdminLoginDAO implements ICrud {
 
 			if (check) {
 				password = rs.getString("PASSWORD");
+				//match with user encryption password and db password. 
 				passwordMatch = encryptPassword.equals(password);
 
 				code = rs.getString("CODE");
@@ -150,6 +160,7 @@ public class AdminLoginDAO implements ICrud {
 					admin.setUsername(userName);
 					admin.setEmail(email);
 					admin.setUserType(userType);
+					admin.setUserTypeString(userTypeString);
 					admin.setValid(true);
 
 					final ArrayList<String> singleAdmin = new ArrayList<String>();
@@ -193,7 +204,7 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		}
-		log.info(message);
+		
 		singleMessageList = new ArrayList<String>();
 		singleMessageList.add(message);
 
