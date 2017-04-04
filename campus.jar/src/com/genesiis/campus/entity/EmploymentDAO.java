@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 // 20170327 c157-add-tutor-employment-details-cw - INIT EmploymentDAO.java & Create Add method
 // 20170330 CW c157-add-tutor-employment-details-cw create deleteMultiple method
 // 20170331 CW c157-add-tutor-employment-details-cw add method comments into add method
+// 20170404 CW c157-add-tutor-employment-details-cw modified doc comments
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -116,7 +117,7 @@ public class EmploymentDAO implements ICrud {
 	 * Delete selected employment details in Database
 	 * 
 	 * @author CW
-	 * @param String : allSelectedToRemove All the code values of selected rows in EMPLOYMENT table
+	 * @param String : allSelectedToRemove All the comma separated code values of selected rows in EMPLOYMENT table
 	 * @return int number of success/fail status
 	 */
 	public int deleteMultiple(String allSelectedToRemove) throws SQLException, Exception {
