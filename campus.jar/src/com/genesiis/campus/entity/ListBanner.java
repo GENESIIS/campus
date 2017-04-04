@@ -15,6 +15,10 @@ package com.genesiis.campus.entity;
  * 20170403 DN c86-admin-manage-banner-search-banner-dn. isClientInputAccordanceWithValidation() has been 
  * 				modified to test the bannerCode field validation.
  * 				inflateBannerFilterCredential() method changed to populate the bannerCode field.
+ * 20170404 DN c86-admin-manage-banner-search-banner-dn. isClientInputAccordanceWithValidation() changed the method 
+ * 				call for extracting enum value from toString() to message().
+ * 				negate the assigning value to bannerCodeFilledAndNotNull variable in  isClientInputAccordanceWithValidation()
+ * 				to get the actual meaning of the test.
  */
 
 
@@ -26,7 +30,7 @@ import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
 import com.genesiis.campus.validation.PrevalentValidation.FailedValidationException;
 
-import org.jboss.logging.Logger;
+import org.apache.log4j.Logger; 
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -202,20 +206,21 @@ public class ListBanner {
 			    Validatory clientInputValidator = new PrevalentValidation();
 			    boolean firstDateIsFilledAndNotNull =(dateCommenced != null) && (dateCommenced.trim().isEmpty() == false);
 			    boolean secondDateIsFilledAndNotNull= (dateCessation != null) && (dateCessation.trim().isEmpty() == false);
-			    boolean bannerCodeFilledAndNotNull = bannerCode.trim().isEmpty();
+			    boolean bannerCodeFilledAndNotNull = !(bannerCode.trim().isEmpty());
 			     
 			    if(bannerCodeFilledAndNotNull){
 			    	 //check if it is NaN : return false
-			    	if(new PrevalentValidation().isNumeric(bannerCode,SystemMessage.IS_NOT_NUMERIC.toString())){
-			    		// check if it contains invalid formats e.g 
-			    		//formats such as 055.234234d, +.234234D,-.234234F, .089,
-			    		//+123, -234 are valid but avoided.
-			    		Pattern INVALID_NUMBER_FORMAT = Pattern.compile("^[-\\+\\.\\d]\\d*\\.{0,1}\\d+[d,f,D,F]{0,1}$");
-			    		Matcher invalidFormatMatcher = INVALID_NUMBER_FORMAT.matcher(bannerCode);
-			    		if(invalidFormatMatcher.find())
-						throw new PrevalentValidation().new FailedValidationException(
-								SystemMessage.INVALID_NUMBER_FORMAT.toString()
-										+ " Provide Correct Format! ");
+			    	if(new PrevalentValidation().isNumeric(bannerCode,SystemMessage.IS_NOT_NUMERIC.message())){
+			    		// check if it contains valid number format
+			    		Pattern VALID_NUMBER_FORMAT = Pattern.compile("^\\d+$");
+			    		Matcher validFormatMatcher = VALID_NUMBER_FORMAT.matcher(bannerCode);
+			    		
+			    		if(!validFormatMatcher.find()){
+			    			throw new PrevalentValidation().new FailedValidationException(
+									SystemMessage.INVALID_NUMBER_FORMAT.message()
+											+ " Provide Correct Format! ");
+			    		}
+						
 			    	}
 			     }
 			    
