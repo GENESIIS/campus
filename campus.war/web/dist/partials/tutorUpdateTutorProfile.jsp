@@ -5,6 +5,7 @@
 <!-- 20170302 CW c37-tutor-update-tutor-profile-cw modified validateTutorModifications method to validateTutorModificationsByTutor -->
 <!-- 20170316 CW c37-tutor-update-tutor-profile-cw modify field max lengths to match database field max size -->
 <!-- 20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password & Confirm new Password to Confirm Password-->
+<!-- 20170327 CW c157-add-tutor-employment-details-cw - add tutorCode hidden field into ADD_EMPLOYMENT button form-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -325,7 +326,15 @@
 		</div>
 		
 	</form>
-
+	
+	<form action="/TutorController" method="POST">
+		<div id="main-content" align="center">
+		
+			<input type="hidden" name="tutorCode" id="tutorCode" value="${code}"/>
+			<button type="submit" name="CCO" id="CCO" value="ADD_EMPLOYMENT" 
+			class="pure-button pure-button-primary">Add Employment Details</button>
+		</div>
+	</form>
 
 	<script type="text/javascript"
 		src="\dist\bower-components\jquery\jquery.min.js"></script>

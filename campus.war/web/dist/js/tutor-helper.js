@@ -4,10 +4,10 @@
  * 20170116 CW c36-add-tutor-details add loadTutorWithDummyData() method. 
  * 20170116 CW c36-add-tutor-details removed loadTutorWithDummyData() & add displayTownDefaults() method.
  * 20170124 CW c36-add-tutor-details modified according to the 201701201215 DJ crev modification request.
+ * 20170322 CW c157-add-tutor-employment-details-cw removed function call duplication in ready function
  */
 $(document).ready(function() {
 	displayCountryDetails();
-	displayTownDefaults();
 	displayTownDefaults();
 });
 
