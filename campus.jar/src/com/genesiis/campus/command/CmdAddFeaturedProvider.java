@@ -20,6 +20,7 @@ package com.genesiis.campus.command;
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
 //20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
+//20170404 JH c141-ui-integration-for-add-course-provider code modified to use AccountType enum class values to validate user type
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -290,18 +291,15 @@ public class CmdAddFeaturedProvider implements ICommand {
 						map.put("provider", courseProvider);
 						map.put("town", courseProviderTown);
 
-						int providerType = Integer.parseInt(helper
-								.getParameter("courseProvider"));
+						String providerType = helper.getParameter("courseProvider");
 
 						/**
 						 * selects the account type of the course provider and
 						 * calls different DAO classes depending on the
 						 * course provider type
 						 */
-						if (providerType == AccountType.FEATURED_COURSE_PROVIDER
-								.getTypeValue()) {
-							courseProvider
-									.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
+						if (providerType.equals(AccountType.FEATURED_COURSE_PROVIDER.name())) {
+							courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
 											.getTypeValue());
 							courseProvider.setTutorRelated(false);
 
@@ -326,7 +324,7 @@ public class CmdAddFeaturedProvider implements ICommand {
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
 
-						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
+						} else if (providerType.equals(AccountType.ONE_OFF_COURSE_PROVIDER.name())) {
 							courseProvider.setTutorRelated(false);
 							courseProvider.setAdminAllowed(false);
 
