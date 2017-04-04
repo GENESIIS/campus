@@ -17,6 +17,7 @@
 <!-- 20170307 CW c147 change CCO value of the submit button -->
 <!-- 20170308 CW c147 change script clearField values -->
 <!-- 20170313 CW c148 add CCO value TUTOR_HASH_VERIFICATION to verify button -->
+<!-- 20170404 CW c148 add clear commands to verifyMesssage & verifyCode fields -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,15 +44,9 @@
    <script> 
           $( document ).ready(function() {
         	  clearField('verifyMesssage');
-        	  clearField('verifyCode'); 
+        	  //clearField('verifyCode'); 
         	  clearField('verifyemail'); 
-        	  
-<!--              $('#openPop').on('click', function(){ -->
-<!--                 $('#verifications-popup').modal('show'); -->
-<!--              }); -->
-
-<!--              // if span empty, hide the parent label -->
-<!--              $('.fp-msg span:empty').parent().hide(); -->
+        	  $("#verifyCode").val("");
           }); 
 
     </script> 
@@ -102,7 +97,7 @@
         <div class="login-dialog modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage'); clearField('verifyCode')">
                         <span aria-hidden="true">Close</span>
                     </button>
                 </div>
