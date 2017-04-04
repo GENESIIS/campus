@@ -12,6 +12,7 @@ package com.genesiis.campus.entity;
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & modified tutor adding sequence to the collection
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & add VARIFICATIONSTATUS to the query & collections
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP to get VARIFICATIONSTATUS from getApplicationStatus method
+//20170404 CW c157-add-tutor-employment-details-cw add doc comments & modified getFCPListForTutorToSelect method's log message
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -224,7 +225,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	/**
 	 * Returns the Featured Course Provider list which tutor does not added earlier
 	 * @author Chinthaka 
-	 * @return Returns the code & name of Featured Course Provider Details in Database from a collection of collection
+	 * @return Returns a collection of collection consists the code & name of Featured Course Provider in Database which is not selected earlier by the same tutor 
 	 */
 	public Collection<Collection<String>> getFCPListForTutorToSelect(String tutorCode) throws SQLException, Exception {
 		
@@ -254,10 +255,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
 			}		
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLException " + sqlException.toString());
+			log.info("getFCPListForTutorToSelect(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): Exception " + e.toString());
+			log.info("getFCPListForTutorToSelect(): Exception " + e.toString());
 			throw e;
 		} finally {			
 			DaoHelper.cleanup(conn, stmt, rs);
