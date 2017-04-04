@@ -19,13 +19,16 @@
  * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method table filling sequence
  * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add values into tutorCodeTable hidden field in the jsp table
  * 20170403 CW c157-add-tutor-employment-details-cw modified fillSelectedCourseProviderData method & add Verification status into the table
- * 20170404 CW c157-add-tutor-employment-details-cw modified doc comments of fillSelectedCourseProviderData method & modified clearField method to clear tablemessage 
+ * 20170404 CW c157-add-tutor-employment-details-cw modified doc comments of fillSelectedCourseProviderData method & modified clearField method to clear tablemessage
+ * 20170404 CW c157-add-tutor-employment-details-cw modified ready method & assign tutor code value into tutorCodeTable
+ * 				modified fillSelectedCourseProviderData method & remove data filling to tutorCodeTable variable
  */
 
 $(document).ready(function() {
 	var tutorCode = $("#tutorcodelist").val();
 	displayCourseProviders(tutorCode);
 	displaySelectedCourseProviders(tutorCode);
+    document.getElementById('tutorCodeTable').value = tutorCode;  
 });
 
 /**
@@ -108,7 +111,6 @@ function fillSelectedCourseProviderData(response) {
     	
     	maxIndex = index;
     	var sequence = index + 1;
-    	tutorCD = value[0].toString();
     	
         trHTML += '<tr><td>' + sequence + '</td><td>' + value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' 
         + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>' + value[7].toString() + '</td><td>'
@@ -120,8 +122,7 @@ function fillSelectedCourseProviderData(response) {
     });
     
     $('#employers').append(trHTML);	    
-    document.getElementById('maxSequence').value = maxIndex;
-    document.getElementById('tutorCodeTable').value = tutorCD;    
+    document.getElementById('maxSequence').value = maxIndex;    
 }
 
 function clearField(elementId) {
