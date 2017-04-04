@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170331 CW c157-add-tutor-employment-details-cw modified validations in execute method & add messages
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
+//20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -67,6 +68,13 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			if(Validator.isNotEmpty(tutorCode)){
 				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
+				
+				if(allFeaturedCourseProviderList == null || allFeaturedCourseProviderList.isEmpty()){ 
+					// if any employers not selected earlier then add tutor code into the view collection
+					Collection<String> singleFeaturedCourseProviderList = new ArrayList<String>();
+					singleFeaturedCourseProviderList.add(tutorCode);
+					allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
+				}
 				
 				view.setCollection(allFeaturedCourseProviderList);
 			}
