@@ -17,6 +17,7 @@ package com.genesiis.campus.validation;
 //20170226 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): password validation methods changed
 //20170228 JH c141-add-course-provider-issue-improvements commented implementation until one off course provider implementation completed
 //20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
+//20170404 JH c141-ui-integration-for-add-course-provider validateCourseProvider() method changed to use AccountType enum class name instead of the enum value
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -284,10 +285,10 @@ public class Validator {
 		 * type. Therefore, depending on the course provider type it will relevant validations
 		 */
 		if(!isEmptyString(helper.getParameter("courseProvider"))){	
-			int courseProviderType = Integer.parseInt(helper.getParameter("courseProvider"));
+			String courseProviderType =helper.getParameter("courseProvider");
 			
 			//validate details related to featured course provider account
-			if(courseProviderType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
+			if(courseProviderType.equals(AccountType.FEATURED_COURSE_PROVIDER.name())){
 				
 				errorString = featuredAccountValidation(helper, errorString);
 			}
