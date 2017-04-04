@@ -6,6 +6,7 @@
  * //20170313 CW c148-tutor-verify-hashcode-reset-password-cw removed ValidateEmail method & add verifyCode method
  * //20170314 CW c148-tutor-verify-hashcode-reset-password-cw changedPassword, validatePasswordResetData, 
  * 						convertPassWordToString, clearAllFields, passwordAndConfirmPassword methods added.
+ * //20170404 CW c148-tutor-verify-hashcode-reset-password-cw add clearField method
  */
 
 /**
@@ -380,4 +381,18 @@ function passwordAndConfirmPassword(password, reconfirmPassWord){
 		isBothValueAreIdentical= (passwordTrimed === reconfirmPassWord.trim()) ;
 	}
 	return isBothValueAreIdentical;
+}
+
+/**
+ * clearField will clear the given data input text field once it's called
+ * @param elementId
+ */
+function clearField(elementId) {
+	$(document).find('#' + elementId).text('');	
+	
+	if(elementId == "verifyMesssage"){
+		$("#verifyCode").val("");
+	}	
+	
+	$(document).find('#message').text('');
 }
