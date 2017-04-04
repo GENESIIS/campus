@@ -18,6 +18,7 @@
 <!-- 20170308 CW c147 change script clearField values -->
 <!-- 20170313 CW c148 add CCO value TUTOR_HASH_VERIFICATION to verify button -->
 <!-- 20170404 CW c148 add clear commands to verifyMesssage & verifyCode fields -->
+<!-- 20170404 CW c148 removed unwanted commented line & clearField('verifyCode') method call -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,10 +42,9 @@
 <script src='/dist/js/tutor-login.js'></script>
 </head>
 <body>
-   <script> 
+   	<script> 
           $( document ).ready(function() {
         	  clearField('verifyMesssage');
-        	  //clearField('verifyCode'); 
         	  clearField('verifyemail'); 
         	  $("#verifyCode").val("");
           }); 
@@ -97,7 +97,7 @@
         <div class="login-dialog modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage'); clearField('verifyCode')">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage');">
                         <span aria-hidden="true">Close</span>
                     </button>
                 </div>
