@@ -18,6 +18,7 @@ package com.genesiis.campus.validation;
 //20170228 JH c141-add-course-provider-issue-improvements commented implementation until one off course provider implementation completed
 //20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
 //20170404 JH c141-ui-integration-for-add-course-provider validateCourseProvider() method changed to use AccountType enum class name instead of the enum value
+//20170405 JH c141-ui-integration-for-add-course-provider validateCourseProvider(IDataHelper) changes due to element id changes after UI integration
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -214,8 +215,13 @@ public class Validator {
 			errorString.add("Land number 1 ");
 		}
 		
-		if( !isValidLength(helper.getParameter("land2"), 20, 0) || !isInteger(helper.getParameter("land2"))){
-			helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters) or invalid. Only numbers allowed.");
+		if( !isValidLength(helper.getParameter("land2"), 20, 0)){
+			helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters).");
+			errorString.add("land number 2");
+		}
+		
+		if(isValidLength(helper.getParameter("land2"), 20, 0) && !isInteger(helper.getParameter("land2"))){
+			helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
 			errorString.add("land number 2");
 		}
 		
@@ -353,9 +359,9 @@ public class Validator {
 			}
 		}
 			
-		if(!isValidLength(helper.getParameter("providerContactNumber"), 30, 0)  || !isInteger(helper.getParameter("providerContactNumber"))){
+		if(!isValidLength(helper.getParameter("providerContactNumber"), 30, 1)  || !isInteger(helper.getParameter("providerContactNumber"))){
 			helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
-			errorString.add("Empty or invalid contact number.");
+			errorString.add("Empty, too long or invalid contact number. Maximum 30 characters.");
 		}
 		
 		if(isEmptyString(helper.getParameter("accountStatus"))){
