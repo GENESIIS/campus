@@ -14,6 +14,7 @@ package com.genesiis.campus.command;
 //20170216 PN CAM-137: modified execute() method to get and assign the values from static enum if the categoryDetails Collection is null or empty.
 //20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
 //20170403 PN CAM-137: changed the order of category image path values setting to the attributes.
+//20170405 PN CAM-137: removed exception throw statement from the execute() method and logged the full error.
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CategoryCourseProviderDAO;
@@ -112,10 +113,12 @@ public class CmdListCategoryLandingPage implements ICommand {
 				helper.setAttribute("featuredInstitutes", featuredCourseProviders);
 				helper.setAttribute("institutes", courseProviders);
 
-			} catch (Exception exception) {
-				log.error("execute() Exception : " + exception.toString());
+			} catch (SQLException sqle) {
+				log.error("execute() SQLException : " + sqle);
 				systemMessage = SystemMessage.ERROR;
-				throw exception;
+			}catch (Exception exception) {
+				log.error("execute() Exception : " + exception);
+				systemMessage = SystemMessage.ERROR;
 			}
 
 		}
