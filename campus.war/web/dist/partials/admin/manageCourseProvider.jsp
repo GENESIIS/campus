@@ -262,7 +262,7 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="areaCode" type="text"
 													class="col-xs-3 input-border-r" id="areaCode"
-													placeholder="" onkeyup="landPhoneNubmerHelper();">
+													placeholder="" onkeyup="landPhoneNubmerHelper();" maxlength="4" size="4">
 												 <input name="land1" type="tel"  onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-6" id="land1" placeholder=""> <span
 													class="phone-no-hint" id="landNumber1"></span>
@@ -479,7 +479,7 @@
 
 						<h4 class="form-section-title accordion-header"  id="accountInfoSection">5. Account
 							Information (Authorized Personnel)</h4>
-						<div class="accordion-body" id="accountInfoSection">
+						<div class="accordion-body" id="accountInfoSectionDiv">
 							<div class="row clearfix">
 								<div class="col-sm-6">
 									<div class="row">
