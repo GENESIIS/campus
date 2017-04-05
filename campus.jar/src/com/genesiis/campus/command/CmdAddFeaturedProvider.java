@@ -21,6 +21,7 @@ package com.genesiis.campus.command;
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
 //20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
 //20170404 JH c141-ui-integration-for-add-course-provider code modified to use AccountType enum class values to validate user type
+//20170405 JH c141-ui-integration-for-add-course-provider fixed exception due to account status code selection
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -307,10 +308,10 @@ public class CmdAddFeaturedProvider implements ICommand {
 									.getParameter("accountStatus");
 							
 							//compare account status with enum class values
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.ACTIVE)) {
+							if ( Integer.parseInt(accountStatus)  == ApplicationStatus.ACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(true);
 							}
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.INACTIVE)) {
+							if (Integer.parseInt(accountStatus)  == ApplicationStatus.INACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(false);
 							}
 
