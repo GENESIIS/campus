@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20170405 PN CAM-137: INIT ConnectionManager class to handle the db connection in a different way.
+//					   	getConnection() method changed by calling getInstance() method.
 
 import java.sql.Connection;
 import javax.naming.Context;
@@ -48,7 +49,7 @@ public class ConnectionManager {
 	 * @Description implement singleton pattern.
 	 * cc3431
 	 */
-	public static ConnectionManager getInstance()
+	private static ConnectionManager getInstance()
 			throws ConnectionManagerException {
 		try {
 			// call the constructor to create an instance having a datasource
@@ -71,7 +72,7 @@ public class ConnectionManager {
 		Connection c = null;
 
 		try {
-			c = ConnectionManager.dataSource.getConnection(); 
+			c = ConnectionManager.getInstance().dataSource.getConnection(); 
 
 		} catch (Exception e) {
 			logger.error("getConnection()", e); 
