@@ -267,7 +267,7 @@ function providerPrefixValidation() {
  * created to validate course provider details before submit	
  * @author JH
  */
-function vaidateCourseProviderDeatils(form) {
+function vaidateCourseProviderDeatils(accountType) {
 
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
@@ -445,10 +445,9 @@ function vaidateCourseProviderDeatils(form) {
 		setErrorMessage('#providerStatusDiv', '#errorProviderStatus', "Select the course provider status.");
 		flag = false;
 	}
-	
-	var dfsdf = window.accountType;
+
 	// validation course provider account details only for featured course provider
-	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
+	if (accountType === "FEATURED_COURSE_PROVIDER") {
 		if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 			setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 			flag = false;
