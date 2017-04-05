@@ -19,6 +19,7 @@
 <!-- 20170313 CW c148 add CCO value TUTOR_HASH_VERIFICATION to verify button -->
 <!-- 20170404 CW c148 add clear commands to verifyMesssage & verifyCode fields -->
 <!-- 20170404 CW c148 removed unwanted commented line & clearField('verifyCode') method call -->
+<!-- 20170405 CW c148 add class for label username -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,10 +44,10 @@
 </head>
 <body>
    	<script> 
-          $( document ).ready(function() {
-        	  clearField('verifyMesssage');
+          $( document ).ready(function() {        	  
         	  clearField('verifyemail'); 
         	  $("#verifyCode").val("");
+			  clearField('verifyMesssage');
           }); 
 
     </script> 
@@ -75,7 +76,7 @@
 <!--                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> -->
 <!--                     <label for="username">Email : <span class="error-txt" id=emailtbError></span></label> -->
 <!--                 </div> -->
-                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <input type="email" class="" id="verifyemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
                 </div>
             </div>
@@ -97,7 +98,7 @@
         <div class="login-dialog modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage');">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage')">
                         <span aria-hidden="true">Close</span>
                     </button>
                 </div>
@@ -110,7 +111,7 @@
 
                                 <div class="form-group has-error ">
                                     <div class="fp-msg">
-                                        <label for="username">
+                                        <label for="username" class="error-msg">
                                             <span class="error-txt" id="verifyMesssage"></span>
                                         </label>
                                     </div>
@@ -120,6 +121,7 @@
                                 <div class="form-group">
                                         <button type="button" class="btn btn-primary btn-block"
                                             name="CCO" id="CCO" value="TUTOR_HASH_VERIFICATION"
+
                                             onclick="verifyCode(); clearField('verifyCode')">Verify</button>
                                     </div>
                             </div>
