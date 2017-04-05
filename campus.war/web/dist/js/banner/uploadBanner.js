@@ -59,6 +59,8 @@
  * 				Add "banerCode" attribute to the same block of code.
  * 20170331 DN c83-admin-manage-banner-update-banner-info-dn. Method validateUploadBannerEmbedData() modified to amend the error messages.
  * 				The method sendBannerPaageFieldInputs() changed :src attribute is set after a if check has been performed: if(response['']!='default')
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn. setTheRadioButtonValues() valuse are changed true --> 1 and false --> 0 
+ * 			   to analogus with ApplicationStatus.java enum class and for ease of future enhancement
  */
 
 /*
@@ -722,8 +724,8 @@ function setTheRadioButtonValues(){
 	var radioButtonGroupActive = $('input[name=bannerEnableStatus]'); 
 	var radioButtonGroupUrl = $('input[name=urlspecifier]'); 
 	if(radioButtonGroupActive.length >0){
-		$('#bannerEnable').val('true');
-		$('#bannerDissable').val('false');
+		$('#bannerEnable').val('1');
+		$('#bannerDissable').val('0');
 	}
 	
 	if(radioButtonGroupUrl.length>0){
