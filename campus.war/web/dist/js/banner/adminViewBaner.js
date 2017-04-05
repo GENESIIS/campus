@@ -21,6 +21,8 @@
  * 20170403 DN c86-admin-manage-banner-search-banner-dn.The method loadBanners() is added a field for the object to be sent to the server  
  * 			via the ajax call, called bannerCode.
  * 			include a banner code validation logic to the method validateDisplayingBanners() to avoid patterns other than 123.
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn The method validateDisplayingBanners() modified to change the message End Date 
+ * 			to Filter Records --> Start Date to Filter Records.
  */
 
 var theNewScript = document.createElement("script");
@@ -206,7 +208,7 @@ function validateDisplayingBanners(){
 		}
 	} else if(!isEndDateEmpty){ // start date is empty but end date is filled
 		
-		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter Records");
+		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the Start Date to Filter Records");
 		return validationPass;
 	} else{ // both date fields are empty then it's not required to validate
 		
