@@ -555,21 +555,21 @@ function saveCourseProvider() {
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
 	
-//	if (providerUsernameValidation() === false) {
-//		message = "Invalid Username";
-//		flag = false;
-//	}
-//	if (providerPrefixValidation() === false) {
-//		if(flag === false){
-//			message += " and Prefix";
-//		}else{
-//			message = "Invalid Prefix";
-//		}
-//		flag = false;
-//	}
+	if (providerUsernameValidation() === false) {
+		message = "Invalid Username";
+		flag = false;
+	}
+	if (providerPrefixValidation() === false) {
+		if(flag === false){
+			message += " and Prefix";
+		}else{
+			message = "Invalid Prefix";
+		}
+		flag = false;
+	}
 
 	if (flag === true) {
-//		if (vaidateCourseProviderDeatils(window.accountType) === true) {
+		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -607,8 +607,6 @@ function saveCourseProvider() {
 									if (response['userMessage'] !== null) {
 										successAlert("#userMessage");
 										document.getElementById("userMessage").style.display = "block";	
-//										$(toolTipElement).removeClass("alert-danger");
-//										$(toolTipElement).addClass("alert-success");
 										$("#userMessage").html(response.userMessage );
 									}
 									$("#registeredId").val(response['registerId']);
@@ -624,9 +622,9 @@ function saveCourseProvider() {
 							$("#userMessage").html(err);
 						}
 					});
-//		}else{
-//			$("#userMessage").html("One or more fields are invalid.");
-//		}
+		}else{
+			$("#userMessage").html("One or more fields are invalid.");
+		}
 	}else{
 		changeAccordion("#accountInfoSection", "#accountInfoAccordion");
 		document.getElementById("userMessage").style.display = "block";
