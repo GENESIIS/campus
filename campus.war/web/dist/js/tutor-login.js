@@ -7,6 +7,8 @@
  * //20170314 CW c148-tutor-verify-hashcode-reset-password-cw changedPassword, validatePasswordResetData, 
  * 						convertPassWordToString, clearAllFields, passwordAndConfirmPassword methods added.
  * //20170404 CW c148-tutor-verify-hashcode-reset-password-cw add clearField method
+ * //20170405 CW c148-tutor-verify-hashcode-reset-password-cw add validatePasswordfields, validateConfirmPasswordResetData 
+ * 						methods & removed confirm password validations from validatePasswordResetData method
  */
 
 /**
@@ -131,11 +133,6 @@ function verifyCode() {
 	}
 	
 	if (code != null) {
-/*		var jsonData = {
-			"hashCode" : code,
-			"email" : email
-		};
-*/
 		$.ajax({
 					type : "POST",
 					url : '/TutorController',
@@ -182,8 +179,6 @@ function verifyCode() {
 								window.location.href = response['pageURL']
 										+ "?uData&" + pageURL;
 							}, 4000);
-							
-							
 						}
 					},
 					error : function(response, error, errorThrown) {
@@ -235,32 +230,24 @@ function changedPassword() {
 	var password = $("#passWord").val();
 	var confirmpassword = $("#confrmpsw").val();
 	var paaswordEmpty = isempty(password);
-	var validation = validatePasswordResetData();
+	var validation = validatePasswordfields();
 	var passvadidation = passwordAndConfirmPassword(password,confirmpassword);
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
-	//	document.getElementById('emailtbError').innerHTML = "  ** Verify Code can not be Empty.";
 		jQuery('#passWordError').addClass("fp-msg-error").html('  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
 
 	if (code != null && validation && passvadidation) {
-/*		var jsonData = {
-			"code" : code,
-			"password" : password
-		};*/
-
 		$
 				.ajax({
 					type : "POST",
 					url : '/TutorController',
 					data : {
-						//jsonData : JSON.stringify(jsonData),
 						code : code,
 						password : password,
 						CCO : "TUTOR_RESET_PASSWORD"
-
 					},
 					dataType : "json",
 					success : function(response) {
@@ -301,6 +288,21 @@ function changedPassword() {
 }
 
 /**
+ * validatePasswordfields() validates password & confirm password fields before update the database
+ * @author CW
+ * @returns {Boolean}
+ */
+function validatePasswordfields() {
+	if(validatePasswordResetData() && validateConfirmPasswordResetData()){
+		$(document).find('#passWordError').text('');
+		$(document).find('#confPassWordError').text('');
+		return true;
+	}
+	return false;
+}
+
+
+/**
  * validateSignUpWoThirdPartyPageEmbedData() validates all the current critical
  * fields placed on /dist/partials/signUpWoThirdParty.jsp page. It's the custom
  * field validator dedicated for the page above.
@@ -312,13 +314,32 @@ function validatePasswordResetData() {
 	var validationPass = true;
 
 	if (!(isFieldFilled(
-			isStringHasValiCharsAndLength($('#passWord').val(),
-					/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			isStringHasValiCharsAndLength($('#passWord').val(),	/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
 			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
 			"passWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
 			"passWordError"))) {
+		return !validationPass;
+	} else {
+		$(document).find('#passWordError').text('');
+	}
+	return validationPass;
+}
+
+/**
+ * validateConfirmPasswordResetData() validates the confirm password field with the password field
+ * 
+ * @author CW
+ * @returns {Boolean}
+ */
+function validateConfirmPasswordResetData() {
+	var validationPass = true;
+
+	if (!(isFieldFilled(
+			isStringHasValiCharsAndLength($('#confrmpsw').val(),	/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
+			"confPassWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
 			"Confirm Password Field", "confPassWordError"))) {
@@ -329,9 +350,10 @@ function validatePasswordResetData() {
 		return !validationPass;
 	}else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
 		return !validationPass;
+	} else {
+		$(document).find('#confPassWordError').text('');
 	}
 	return validationPass;
-
 }
 
 /**
