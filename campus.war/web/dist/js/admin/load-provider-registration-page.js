@@ -29,6 +29,8 @@
 //				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list, removed clearErrorMessage(),
 //				implemented datalist function to display town list
 //20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
+//20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
+//				to front end validation methods
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -556,7 +558,7 @@ function saveCourseProvider() {
 	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils() === true) {
+		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -576,6 +578,9 @@ function saveCourseProvider() {
 									
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
+//										$(toolTipElement).removeClass("alert-success");
+//										$(toolTipElement).addClass("alert-danger");
+										errorAlert("#userMessage");
 										$("#userMessage").html(response.userMessage);
 										
 										for ( var key in response) {
@@ -587,17 +592,18 @@ function saveCourseProvider() {
 										}
 									}
 								} else if (response['registerId'] !== 0) {
-									
-									if (response['userMessage'] !== null) {
-										$("#userMessage").html(response.userMessage);
-									}
 								
-									
-									window.responseErrorMessage = response.userMessage;
-
-									$('#userMessage').val(response.userMessage);
-									$('#generatedId').val(response.registerId);
-							       	$( "#basicForm" ).submit();
+									// show user message with success styles
+									if (response['userMessage'] !== null) {
+										successAlert("#userMessage");
+										document.getElementById("userMessage").style.display = "block";	
+//										$(toolTipElement).removeClass("alert-danger");
+//										$(toolTipElement).addClass("alert-success");
+										$("#userMessage").html(response.userMessage );
+									}
+									$("#registeredId").val(response['registerId']);
+									jQuery('#upload-logo-modal').modal('show');
+									$("#basicForm").trigger('reset');
 									
 									}
 							}
@@ -633,7 +639,7 @@ function isValidNumber(fieldValue, integerPattern) {
 }
 
 /**
- * clear error message class
+ * clear error message styles in tooltip
  * @param toolTipElement
  * @author JH
  */
@@ -642,13 +648,34 @@ function clearErrorMessage(toolTipElement){
 }
 
 /**
- * clear both success or error message
+ * clear both success or error message tooltip styles
  * @param element
  * @author JH
  */
 function clearToolTip(element){
 	$(element).removeClass("has-error");
 	$(element).removeClass("has-success");
+}
+
+/**
+ * add styles to display a success alert
+ * @param element
+ * @author JH
+ */
+function successAlert(element){
+	document.getElementById(element).style.display = "block";
+	$(element).removeClass("alert-danger");
+	$(element).addClass("alert-success");
+}
+
+/**
+ * add styles to display an error alert
+ * @param element
+ * @author JH
+ */
+function errorAlert(element){
+	$(element).removeClass("alert-success");
+	$(element).addClass("alert-danger");
 }
 
 /**
