@@ -36,6 +36,7 @@ package com.genesiis.campus.command;
 //				code that accesses specific indexes of the result-set more maintainable. Added
 //				code to send default-course-provider details to front-end so the default-
 //				provider image may be shown when accountType of a provider is one-off.
+//20170405 PN CAM-137: execute() method modified by adding SQLException into catch clause.
 
 import com.genesiis.campus.entity.CategoryProgrammeDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -274,13 +275,16 @@ public class CmdListCategoryProgrammes implements ICommand {
 			}// end of if (categoryStr != null && !categoryStr.isEmpty())		
 			
 		} catch (NumberFormatException nfe) {
-			Log.info("execute(IDataHelper, IView) : NumberFormatException " + nfe.toString());
+			Log.error("execute(IDataHelper, IView) : NumberFormatException " + nfe);
 			throw nfe;
 		} catch (IllegalArgumentException iae) {
-			Log.info("execute(IDataHelper, IView) : IllegalArgumentException " + iae.toString());
+			Log.error("execute(IDataHelper, IView) : IllegalArgumentException " + iae);
 			throw iae;
-		}  catch (Exception e) {
-			Log.info("execute(IDataHelper, IView) : Exception " + e.toString());
+		}  catch (SQLException e) {
+			Log.error("execute(IDataHelper, IView) : SQLException " + e);
+			throw e;
+		} catch (Exception e) {
+			Log.error("execute(IDataHelper, IView) : Exception " + e);
 			throw e;
 		} finally {
 			helper.setAttribute("messages", msgList);
