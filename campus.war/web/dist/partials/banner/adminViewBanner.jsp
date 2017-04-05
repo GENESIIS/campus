@@ -123,10 +123,8 @@
     <div class="banner-record-holder">
        <div class="col-lg-12 col-md-12 col-sm-12">
            <!-- banner records will be displayed here -->
-           <table id='bannerDisplaytbl' width ="100%" style="max-height:800px;  overflow: auto">
-                <!-- <thead><tr><th width="40%"></th><th width="40%"></th></tr></thead> -->
+           <table class="banner-records-table" id='bannerDisplaytbl'>
                 <tbody></tbody>
-
            </table>
        </div>
     </div>

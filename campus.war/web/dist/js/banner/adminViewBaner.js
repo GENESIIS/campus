@@ -232,10 +232,10 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-			var markUp = "<tr id='rowId"+rowNumber+"'>" +
-				"<td><div>"+advertiserName+"</div><hr>"+bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
-			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ 
-								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
+			var markUp = "<tr class='row-block clearfix' id='rowId"+rowNumber+"'>" +
+				"<td class='banner-info'><div class='banner-code'>Banner Code: "+bannerCode+"</div><div class='ad-info'><div class='dates'><label>From : "+bannerActivateDate+"</label><br><label>To : "+bannerDeactivateDate+"</label></div><div class='advertiser-name'>"+advertiserName+"</div></div>";
+			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+
+								"<div class='btn-edit-record'><button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button></div>" +//ADMIN EDIT BANNER
 								"<input type='hidden' id='bannerCode"+rowNumber+"' name='bannerCode' value='"+bannerCode+"'>"+ 
 								"<input type='hidden' id='imageName"+rowNumber+"' name='imageName' value='"+imageName+"'>"+ 
 								"<input type='hidden' id='displayDuration"+rowNumber+"' name='displayDuration' value='"+displayDuration+"'>"+ 
@@ -254,7 +254,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
 							 "</form></td>";
-			markUp = markUp +"<td><div class='img-banner-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></div></td></tr>" ;
+			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></div></td></tr>" ;
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
 		

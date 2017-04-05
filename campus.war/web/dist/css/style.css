@@ -828,6 +828,45 @@ body, html {
     width: 90%;
     margin-right: auto;
     margin-left: auto; }
+    .tbl-bg .banner-record-holder .banner-records-table {
+      width: 100%;
+      overflow: auto; }
+      .tbl-bg .banner-record-holder .banner-records-table tbody .row-block {
+        background-color: #fff;
+        margin-bottom: 15px;
+        display: block;
+        width: 100%;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px; }
+        .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info {
+          width: 52%;
+          display: block;
+          float: left;
+          border-right: 2px solid #cccccc;
+          padding: 15px 0 15px 15px; }
+          .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .banner-code {
+            float: right;
+            padding: 5px 10px;
+            background-color: #637275;
+            color: #fff;
+            font-size: 14px; }
+          .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .ad-info {
+            position: relative;
+            float: right;
+            width: 45%; }
+            .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .ad-info .dates {
+              color: #6e6e6e;
+              font-size: 14px;
+              line-height: 28px; }
+            .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .ad-info .advertiser-name {
+              color: #139456;
+              font-family: Calibri;
+              font-size: 18px;
+              text-transform: uppercase;
+              line-height: 25px; }
+          .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .btn-edit-record {
+            float: left;
+            padding-top: 5%; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
