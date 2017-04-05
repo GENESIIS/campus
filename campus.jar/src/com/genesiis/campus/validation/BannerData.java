@@ -23,6 +23,7 @@
 //20161217 MM c2-integrate-google-banners Changed logger level to 'error' in logging 
 //				statements in catch clauses
 //20161217 MM c2-integrate-google-banners Cleaned up imports
+//20170405 PN CAM-137: removed exception throw statement from the setBannerDetails() method and logged the full error.
 
 package com.genesiis.campus.validation;
 
@@ -189,11 +190,9 @@ public class BannerData {
 
 			} catch (SQLException sqle) {
 				Log.error("getBannerData(Operation): SQLException: "
-						+ sqle.toString());
-				throw sqle;
+						+ sqle);
 			} catch (Exception e) {
-				Log.error("getBannerData(Operation): Exception: " + e.toString());
-				throw e;
+				Log.error("getBannerData(Operation): Exception: " + e);
 			}
 		}
 	}
