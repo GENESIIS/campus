@@ -18,6 +18,7 @@ package com.genesiis.campus.entity;
 //20170215 PN CAM-137: modified getAll() method exception block get and assign the values from static enum.
 //20170215 PN CAM-137: modified getAll() method exception block by removing get and assign the values from static enum.
 //20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
+//20170405 PN CAM-137: catch clause modified in getAll() and findById(Object code) methods.
 
 import com.genesiis.campus.entity.model.Category;
 import com.genesiis.campus.util.ConnectionManager;
@@ -137,7 +138,6 @@ public class CategoryDAO implements ICrud{
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		try {
-
 			conn = ConnectionManager.getConnection();
 			
 			Category category = (Category) code;
@@ -171,6 +171,7 @@ public class CategoryDAO implements ICrud{
 			throw sqlException;
 		} catch (Exception exception) {
 			log.error("findById() : Exception " + exception.toString());
+			throw exception;
 		}finally{
 			if(preparedStatement != null){
 				preparedStatement.close();
