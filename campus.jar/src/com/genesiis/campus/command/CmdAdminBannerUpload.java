@@ -39,6 +39,9 @@ package com.genesiis.campus.command;
  * 				Within uploadFullBannerCredentials() "bannerCode" attribute has been set.
  * 20170331 DN c83-admin-manage-banner-update-banner-info-dn.updateBannerCredentials() the request attribute value is set to literal 'default'.
  * 				Code duplication in method execute() has been removed.
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn. updateBannerCredentials() changed toString() to SystemMessage.UPDATE_SUCCESSFUL.message().
+ * 				setEnvironment(IDatahelper) has been implemented by modularizing the duplicate code.
+ * 				The execute() refactor to call setEnvironment(IDatahelper) method. 
  * 				
  */
 
@@ -93,7 +96,8 @@ public class CmdAdminBannerUpload implements ICommand {
 	private ArrayList<FileItem> files = new ArrayList<FileItem>();
 	private String message = "";
 	private static final FileUtility fileUtility = new FileUtility();
-	
+	private String userName="";
+	private JasonInflator jsn=null;
 	
 	/* (non-Javadoc)
 	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
@@ -101,36 +105,21 @@ public class CmdAdminBannerUpload implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		
+				 
 		try{
 			Operation o = Operation.getOperation(helper.getCommandCode());
-			String userName ="";
-			// clear the message if it's accumulated.
-			this.setMessage(""); 
-		    userName = (String) getSessionProperty("usenName",helper);
-			/*
-			 * ########################################################################################
-			 * WARNING: The code --> 
-			 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-			 * 			has to be commented out once proper user name is obtained via
-			 * 			the HttpSession. This implementation is only valid till integration.
-			 * 			2017-02-20 09:02h
-			 * ########################################################################################
-			 */				
-			userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-			JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-			jsn.setUser(userName);
+			
 			switch (o){
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
-				
+				setEnvironment(helper);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
 				}				
 				return view;
 			case UPDATE_ONLY_THE_BANNER_RECORD:
-				
+				setEnvironment(helper);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					updateBannerCredentials(jsn, helper);
 				}				
@@ -147,6 +136,27 @@ public class CmdAdminBannerUpload implements ICommand {
 		}
 		
 	}	
+	
+	/**
+	 * 
+	 */
+	 private void setEnvironment(IDataHelper helper)throws Exception{
+		// clear the message if it's accumulated.
+			this.setMessage(""); 
+		    userName = (String) getSessionProperty("usenName",helper);
+			/*
+			 * ########################################################################################
+			 * WARNING: The code --> 
+			 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			 * 			has to be commented out once proper user name is obtained via
+			 * 			the HttpSession. This implementation is only valid till integration.
+			 * 			2017-02-20 09:02h
+			 * ########################################################################################
+			 */				
+			userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+			jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+			jsn.setUser(userName);
+	 }
 	
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
@@ -534,7 +544,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	private void updateBannerCredentials(JasonInflator rowBanner,IDataHelper helper) throws SQLException,Exception{
 		try {
 			bannerRecordUpdated(rowBanner);
-			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.toString();
+			this.message = message +" "+SystemMessage.UPDATE_SUCCESSFUL.message();
 			this.setSuccessCode(1);
 			helper.setAttribute("bannerWarPath","default" );
 			helper.setAttribute("bannerCode",rowBanner.getBannerCode() );
@@ -646,8 +656,7 @@ public class CmdAdminBannerUpload implements ICommand {
 				this.deleteTempFolder(fileUtility, bannerImageTemporaryUploadPath);
 				this.message =this.message + " ";
 				this.message = (rowBanner.getBannerCode().isEmpty()) ? SystemMessage.SUCCESSFULLY_IMAGE_UPLOAD
-						.toString() : SystemMessage.UPDATE_SUCCESSFUL
-						.toString();
+						.message() : SystemMessage.UPDATE_SUCCESSFUL.message();
 				this.setSuccessCode(1);
 				log.info("uploadFullBannerCredentials(JasonInflator.IView,String) completed --> :"
 						+ "Banner Credentials are written to the rpository and image is uploaded");
