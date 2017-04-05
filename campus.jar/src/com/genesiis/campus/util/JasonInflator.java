@@ -1,4 +1,5 @@
 package com.genesiis.campus.util;
+// TODO: Auto-generated Javadoc
 /*
  * 20170220-DN c131-admin-manage-banner-upload-banner-image-dn 
  *             created the class JasonInflator.java
@@ -8,6 +9,8 @@ package com.genesiis.campus.util;
  * 20170321 DN c131-admin-manage-banner-upload-banner-image-dn typos corrected as per the QA comment 
  *             10 given in 201703132232-CN - Local test summary.
  * 20170324 DN c83-admin-manage-banner-update-banner-info-dn new fields "bannerCode" and "user" are added with getters and setters.
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn java doc comments has been added to the file as per CREV comments
+ * 				suggested by 20170404.0807h PN.
  */
 
 /**
@@ -21,6 +24,7 @@ package com.genesiis.campus.util;
 
 public class JasonInflator {
 	
+	/** The advertiser code. */
 	/*
 	 * The following field identifiers are named in a way to
 	 * sync with the field names of the flattened (serialized)
@@ -30,12 +34,12 @@ public class JasonInflator {
 	 * dist/js/banner/uploadBanner.js#sendBannerPaageFieldInputs()
 	 */
 	private String advertiserCode;	
-	private String codeOfSelectedPage;	
+	private String codeOfSelectedPage;
 	private String bannerSlotCode;	
-	private String displayDusration;	
+	private String displayDusration;
 	private String banerToBeActive; //"true"
 	private String bannerPublishingDate; //"2017-02-14"
-	private String bannerPublishingEndDate;		
+	private String bannerPublishingEndDate;	
 	private String urlMiniWebOrPage;	//"Page:0","URL: 1" or "Mini Web:2"
 	private String urlToBeDirectedOnBannerClick;
 	private String bannerCode;
@@ -43,43 +47,93 @@ public class JasonInflator {
 	private String user;
 	
 	
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
 	public String getUser() {
 		return user;
 	}
 
+	/**
+	 * Sets the user.
+	 *
+	 * @param user the new user
+	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
 
+	/**
+	 * Gets the banner code.
+	 *
+	 * @return the banner code
+	 */
 	public String getBannerCode() {
 		return bannerCode;
 	}
 
+	/**
+	 * Sets the banner code.
+	 *
+	 * @param bannerCode the new banner code
+	 */
 	public void setBannerCode(String bannerCode) {
 		this.bannerCode = bannerCode;
 	}
 
+	/**
+	 * Gets the url mini web or page.
+	 *
+	 * @return the url mini web or page
+	 */
 	public String getUrlMiniWebOrPage() {
 		return urlMiniWebOrPage;
 	}
 
+	/**
+	 * Sets the url mini web or page.
+	 *
+	 * @param urlMiniWebOrPage the new url mini web or page
+	 */
 	public void setUrlMiniWebOrPage(String urlMiniWebOrPage) {
 		this.urlMiniWebOrPage = urlMiniWebOrPage;
 	}
 
 	
+	/**
+	 * Gets the display dusration.
+	 *
+	 * @return the display dusration
+	 */
 	public String getDisplayDusration() {
 		return displayDusration;
 	}
 
+	/**
+	 * Sets the display dusration.
+	 *
+	 * @param displayDusration the new display dusration
+	 */
 	public void setDisplayDusration(String displayDusration) {
 		this.displayDusration = displayDusration;
 	}
 
+	/**
+	 * Gets the banner image name.
+	 *
+	 * @return the banner image name
+	 */
 	public String getBannerImageName() {
 		return bannerImageName;
 	}
 
+	/**
+	 * Sets the banner image name.
+	 *
+	 * @param bannerImageName the new banner image name
+	 */
 	public void setBannerImageName(String bannerImageName) {
 		this.bannerImageName = bannerImageName;
 	}
@@ -150,7 +204,7 @@ public class JasonInflator {
 	/**
 	 * Sets the duration.
 	 *
-	 * @param dusration the new duration
+	 * @param duration the new duration
 	 */
 	public void setDuration(String duration) {
 		this.displayDusration = duration;
