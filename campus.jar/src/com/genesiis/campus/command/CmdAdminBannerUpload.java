@@ -101,36 +101,52 @@ public class CmdAdminBannerUpload implements ICommand {
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
-		
+		 String userName ="";
+		 JasonInflator jsn=null;
 		try{
 			Operation o = Operation.getOperation(helper.getCommandCode());
-			String userName ="";
-			// clear the message if it's accumulated.
-			this.setMessage(""); 
-		    userName = (String) getSessionProperty("usenName",helper);
-			/*
-			 * ########################################################################################
-			 * WARNING: The code --> 
-			 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-			 * 			has to be commented out once proper user name is obtained via
-			 * 			the HttpSession. This implementation is only valid till integration.
-			 * 			2017-02-20 09:02h
-			 * ########################################################################################
-			 */				
-			userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
-			JasonInflator jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
-			jsn.setUser(userName);
+			
 			switch (o){
 			case UPLOAD_BANNER_IMAGE_TO_TEMP_FOLDER :
 				 return saveBannerImageToTempLocation(helper,view);				 
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
 				
+				// clear the message if it's accumulated.
+				this.setMessage(""); 
+			    userName = (String) getSessionProperty("usenName",helper);
+				/*
+				 * ########################################################################################
+				 * WARNING: The code --> 
+				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				 * 			has to be commented out once proper user name is obtained via
+				 * 			the HttpSession. This implementation is only valid till integration.
+				 * 			2017-02-20 09:02h
+				 * ########################################################################################
+				 */				
+				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+				jsn.setUser(userName);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
 				}				
 				return view;
 			case UPDATE_ONLY_THE_BANNER_RECORD:
 				
+				// clear the message if it's accumulated.
+				this.setMessage(""); 
+			    userName = (String) getSessionProperty("usenName",helper);
+				/*
+				 * ########################################################################################
+				 * WARNING: The code --> 
+				 * userName =(!userName.equals(null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				 * 			has to be commented out once proper user name is obtained via
+				 * 			the HttpSession. This implementation is only valid till integration.
+				 * 			2017-02-20 09:02h
+				 * ########################################################################################
+				 */				
+				userName =(!(userName==null))?userName:UserType.ADMIN.getUserType().toLowerCase();
+				jsn= getInflatedObjectFromJason(helper.getParameter("jsonData"));
+				jsn.setUser(userName);
 				if(isClientInputAccordanceWithValidation(jsn)){
 					updateBannerCredentials(jsn, helper);
 				}				
