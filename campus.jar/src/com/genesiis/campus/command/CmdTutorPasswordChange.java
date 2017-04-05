@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw create fillTutorRequiredFields method & change execute method to send email after password change
 							// Add method comments to execute & fillTutorRequiredFields methods, add systemMessage method
 //20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance & add comments to improve readability
+//20170405 CW c149-tutor-email-confirmation-for-password-change-cw remove systemMessage method & systemMessage method call from execute method
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -64,7 +65,6 @@ public class CmdTutorPasswordChange implements ICommand {
 				// Sending the tutor password reset confirmation email
 				status = new GenerateEmail().sendTutorPasswordChangeConformationEmail(tutor.getFirstName(), 
 						tutor.getLastName()	, tutor.getEmailAddress(), tutor.getUsername());
-				message = systemMessage(status);
 			} else {
 				message = SystemMessage.PASSWORD_UNSUCCESS.message();
 			}
@@ -128,7 +128,7 @@ public class CmdTutorPasswordChange implements ICommand {
 	 * 
 	 * @param status -3 request submission fails.
 	 */
-	private String systemMessage(int status) {
+/*	private String systemMessage(int status) {
 		String message = SystemMessage.UNKNOWN.message();
 		switch (status) {
 		case 3:
@@ -141,7 +141,7 @@ public class CmdTutorPasswordChange implements ICommand {
 			break;
 		}
 		return message;
-	}
+	}*/
 }
 
 
