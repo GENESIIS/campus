@@ -7,7 +7,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
-<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- <script src="/dist/js/header/ui-populate-helper.js"></script>   -->
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
 	<div class="top">
@@ -66,5 +66,5 @@
 			<!-- End keyword search -->
 		</div>
 	</div>
-	<script src="/dist/js/header/ui-populate-helper.js"></script>
+<!-- 	<script src="/dist/js/header/ui-populate-helper.js"></script> -->
 </header>

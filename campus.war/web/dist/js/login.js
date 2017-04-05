@@ -8,6 +8,8 @@
  * CAM-21 AS logout-popup window added to after successful logout. 20170206
  * CAM-22 password reset ajax functions coded 20170223 CAM-22 password
  * validation function added
+ * CAM-21 AS getJSessionId added, to check session id from JS.
+ * CAM-21 AS removed unwanted functions - CheckingSeassion() 
  */
 var theNewScript = document.createElement("script");
 theNewScript.type = "text/javascript";
@@ -54,6 +56,15 @@ function studentLogin() {
 
 						if (response['message'] === "valid Username and Password.") {
 							window.location.href = response['pageURL'];
+						}if(response['message'] === "User Already Logged In"){
+							
+							$(window).scrollTop(0);
+							$('#loginPopup').modal('hide');
+							$('#alreadyLogged-popup').modal('show');
+							setTimeout( function(){
+								window.location.href = response['pageURL'];
+								}, 2000);
+							
 						} else {
 							document.getElementById('errorMesssage').innerHTML = response['message'];
 						}
@@ -84,6 +95,19 @@ function studentLogin() {
 
 	}
 }
+//checking sessionID
+function getJSessionId(){
+    var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+    if(jsId != null) {
+        if (jsId instanceof Array)
+            jsId = jsId[0].substring(11);
+        else
+            jsId = jsId.substring(11);
+    }
+
+    return jsId;
+}
+
 
 // reset error message labels
 function resetLoginLabels() {
@@ -92,7 +116,9 @@ function resetLoginLabels() {
 }
 
 function studentLogout() {
+	
 	var userId = $("#userCode").val();
+	
 	if (userId != null) {
 		var jsonData = {
 			"code" : userId
@@ -108,49 +134,47 @@ function studentLogout() {
 			},
 			dataType : "json",
 			success : function(response) {
-				$(window).scrollTop(0);
-				$('#logout-popup').modal('show');
-
-				setTimeout(function() {
-					window.location.href = response['pageURL']; // this name may
-					// have to
-					// change depend
-					// on actual
-					// location of
-					// the page
-					// "Student
-					// Login or
-					// public index
-					// page"
-				}, 5000);
-
+				if(response['message'] === 'Logout successfull'){
+					$(window).scrollTop(0);
+					$('#logout-popup').modal('show');
+					
+					setTimeout( function(){
+						window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+						}, 5000);
+				}else{
+				 
+				setTimeout( function(){
+					window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+					}, 5000);
+				
+				}
 			},
-			error : function(response, error, errorThrown) {
+			error : function(response,error,errorThrown) {
 				alert("Error " + error);
 				console.log(error);
-				var msg = '';
-				if (response.status === 0) {
-					msg = 'Not connect.\n Verify Network.';
-				} else if (response.status == 404) {
-					msg = 'Requested page not found. [404]';
-				} else if (response.status == 500) {
-					msg = 'Internal Server Error [500].';
-				} else if (error === 'parsererror') {
-					msg = 'Requested JSON parse failed.';
-				} else if (error === 'timeout') {
-					msg = 'Time out error.';
-				} else if (error === 'abort') {
-					msg = 'Ajax request aborted.';
-				} else {
-					msg = 'Uncaught Error.\n' + response.responseText;
-				}
+				 var msg = '';
+			      if (response.status === 0) {
+			          msg = 'Not connect.\n Verify Network.';
+			      } else if (response.status == 404) {
+			          msg = 'Requested page not found. [404]';
+			      } else if (response.status == 500) {
+			          msg = 'Internal Server Error [500].';
+			      } else if (error === 'parsererror') {
+			          msg = 'Requested JSON parse failed.';
+			      } else if (error === 'timeout') {
+			          msg = 'Time out error.';
+			      } else if (error === 'abort') {
+			          msg = 'Ajax request aborted.';
+			      } else {
+			          msg = 'Uncaught Error.\n' + response.responseText;
+			      }
 			}
 
 		});
 	}
 }
 
-// forget password function
+//forget password function
 function forgotPassword() {
 	var userEmail = $("#verifiemail").val();
 
@@ -248,8 +272,8 @@ function verifyCode() {
 	if (!(codeEmpty)) {
 		// document.getElementById('verifyMesssage').innerHTML = " ** Verify
 		// Code can not be Empty.";
-		jQuery('#verifyMesssage').addClass("fp-msg-error").html(
-				'  ** Verify Code can not be Empty.');
+		jQuery('#verifyMesssage').addClass("fp-msg-error")
+			.html('** Verify Code can not be Empty.');
 		flag = false;
 		return false;
 	}
@@ -329,7 +353,6 @@ function verifyCode() {
 						} else if (error === 'timeout') {
 							msg = 'Time out error.';
 						} else if (error === 'abort') {
-							F
 							msg = 'Ajax request aborted.';
 						} else {
 							msg = 'Uncaught Error.\n' + response.responseText;
@@ -364,7 +387,6 @@ function changedPassword() {
 	var password = $("#passWord").val();
 	var confirmpassword = $("#confrmpsw").val();
 	var paaswordEmpty = isempty(password);
-	var validation = validatePasswordResetData();
 	var passvadidation = passwordAndConfirmPassword(password, confirmpassword);
 	// code filed validation error messages handling
 	if (!(paaswordEmpty)) {
@@ -374,7 +396,19 @@ function changedPassword() {
 				'  ** Verify Code can not be Empty.');
 		flag = false;
 		return false;
-	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
+		
+		
+		
+	}else if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
+			"passWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(
+			isStringHasValiCharsAndLength($('#passWord').val(),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
+			"passWordError"))) {
+		return !validationPass;
+	}else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
 			"Confirm Password Field", "confPassWordError"))) {
 		return !validationPass;
 	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
@@ -386,9 +420,9 @@ function changedPassword() {
 			"confPassWordError"))) {
 		return !validationPass;
 	}
-	return validationPass;
+	
 
-	if (code != null && validation && passvadidation) {
+	if (code != null  && passvadidation && validationPass) {
 		var jsonData = {
 			"code" : code,
 			"password" : password
@@ -457,25 +491,12 @@ function validatePasswordResetData() {
 		return !validationPass;
 	} else if (!(isFieldFilled(
 			isStringHasValiCharsAndLength($('#passWord').val(),
-					/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
 			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
 			"passWordError"))) {
 		return !validationPass;
 	}
-	// else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
-	// "Confirm Password Field", "confPassWordError"))) {
-	// return !validationPass;
-	// } else if
-	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
-	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
-	// "confPassWordError"))) {
-	// return !validationPass;
-	// } else if
-	// (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
-	// $('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
-	// "confPassWordError"))) {
-	// return !validationPass;
-	// }
+
 	return validationPass;
 
 }
