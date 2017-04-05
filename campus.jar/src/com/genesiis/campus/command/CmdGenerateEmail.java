@@ -16,6 +16,7 @@ package com.genesiis.campus.command;
 // in a case when validation fails
 //20161124 DN c10-contacting-us-page-MP-dn setViewDataIfReCaptureFails() renamed to setFrontEndViewingDataIfValidationFails() and 
 // code refactor if any validation fails but to diplay data to front end.
+//20170504 PN CAM-137: execute() method catch clause modified by removing the SQLException catch block.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -109,10 +110,7 @@ public class CmdGenerateEmail implements ICommand {
 		 } catch (MessagingException msgexp){
 			 log.error("execute():MessagingException "+msgexp.toString());
 			 throw msgexp;
-		 } catch (SQLException sqle) {
-			 log.error("execute():SQLException "+ sqle.toString());
-			 throw sqle;
-		} catch (PrevalentValidation.FailedValidationException e){
+		 } catch (PrevalentValidation.FailedValidationException e){
 			log.error("execute():FailedValidationException "+e.toString());
 			message = e.toString();		
 			message = message.substring(message.lastIndexOf(":") + 1);
@@ -266,7 +264,8 @@ public class CmdGenerateEmail implements ICommand {
 	private void createDatabaseConnection() throws SQLException {
 		try {
 			connection = ConnectionManager.getConnection();
-		} catch (SQLException sqle) {
+		} 
+		catch (Exception sqle) {
 			log.error("add():SQLException :" + sqle.toString());
 			throw sqle;
 		}
