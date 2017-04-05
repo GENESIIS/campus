@@ -807,7 +807,7 @@ body, html {
             width: 22%;
             margin-left: 4%;
             float: left;
-            line-height: 36px; }
+            line-height: 42px; }
             .banner-search-screen .filtering-area > div > div .btn-radio .radio-block:first-child {
               margin-left: 0; }
             .banner-search-screen .filtering-area > div > div .btn-radio .radio-block span {
@@ -833,7 +833,7 @@ body, html {
       overflow: auto; }
       .tbl-bg .banner-record-holder .banner-records-table tbody .row-block {
         background-color: #fff;
-        margin-bottom: 15px;
+        margin-bottom: 22px;
         display: block;
         width: 100%;
         font-family: "Roboto", sans-serif;
@@ -842,14 +842,15 @@ body, html {
           width: 52%;
           display: block;
           float: left;
-          border-right: 2px solid #cccccc;
-          padding: 15px 0 15px 15px; }
+          padding: 15px 0 15px 20px; }
           .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .banner-code {
             float: right;
             padding: 5px 10px;
             background-color: #637275;
             color: #fff;
-            font-size: 14px; }
+            font-size: 14px;
+            position: relative;
+            top: 8px; }
           .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .ad-info {
             position: relative;
             float: right;
@@ -866,7 +867,28 @@ body, html {
               line-height: 25px; }
           .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .btn-edit-record {
             float: left;
-            padding-top: 5%; }
+            padding-top: 38px; }
+            .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .btn-edit-record button {
+              border: none;
+              height: 36px;
+              color: #fff;
+              background-color: #448ccb;
+              padding-left: 20px;
+              padding-right: 20px; }
+        .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-img {
+          border-left: 2px solid #cccccc;
+          padding: 12px 30px;
+          float: left;
+          width: 48%; }
+          .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-img .img-sample {
+            text-align: center;
+            height: 115px; }
+            .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-img .img-sample img {
+              width: auto;
+              height: auto;
+              max-height: 115px;
+              max-width: 100%;
+              border: 2px solid #1f9f61; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {

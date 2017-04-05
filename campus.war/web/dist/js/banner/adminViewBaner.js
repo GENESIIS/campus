@@ -254,7 +254,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
 							 "</form></td>";
-			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></div></td></tr>" ;
+			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
 		
