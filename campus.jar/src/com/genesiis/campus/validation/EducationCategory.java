@@ -10,6 +10,7 @@ import java.util.Collection;
 //			           implemented getEnumAsCollection(String code) method to select an enum value from the given code and returns the attribute set as a collection.
 //					   modified Enum by adding category string value into it.
 //20170403 PN CAM-137: set category string value to the collection, when it choose values according to the give category code.
+//20170405 PN CAM-137: getEnumAsCollection(String code) method modified by setting the image name of the category into collection.
 
 /**
 * EducationCategory enum is for the purpose of making the connection between 
@@ -109,6 +110,7 @@ public enum EducationCategory {
 				singleCategoryList.add(list.getCode());
 				singleCategoryList.add(list.getName());
 				singleCategoryList.add(list.getDescription());
+				singleCategoryList.add(list.getCode()+".png");
 				singleCategoryList.add(list.getCategoryString());
 				allCategoryList.add(singleCategoryList);
 			}		
