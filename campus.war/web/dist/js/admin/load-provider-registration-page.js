@@ -283,9 +283,15 @@ function displayProviderCountries() {
  */
 $('#countries').on('input', function() {
     var value = $(this).val();
-    window.selectedCountry = $('#countryresults [value="' + value + '"]').data('country');
-    getDataOnCountrySelection();
-    $('#selectedCountry').val(window.selectedCountry);
+    var country = $('#countryresults [value="' + value + '"]').data('country');
+    
+    //check if the country name changed, if yes clear town list and load the new list
+    if(country !== window.selectedCountry){
+    	window.selectedCountry = country;
+        getDataOnCountrySelection();
+        $("#towns").val("");
+        $('#selectedCountry').val(window.selectedCountry);
+    }
 });
 
 /**
@@ -438,6 +444,11 @@ function landPhoneNubmerHelper() {
 			displyPhoneNumber('#landNumber1', "Area code is empty or invalid.");
 			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
 			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
+			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");
+			setErrorMessage('#land2Div', '#errorLand2', "Area code is empty or invalid.");
+			if(isempty(fax)){ // show error message if fax number is not empty
+				setErrorMessage('#faxDiv', '#errorFax', "Area code is empty or invalid.");
+			}
 			
 			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
 			for (var i = 0; i< areaCodeSet.length; i++){
@@ -448,7 +459,7 @@ function landPhoneNubmerHelper() {
 		}if(!isValidNumber(networkCode, integerPattern)){
 			
 			displyPhoneNumber('#lastMobileNumber', "Network code is empty or invalid.");
-			//setErrorMessage('#mobileDiv', '#errorMobile', "Network code is empty or invalid.");
+			setErrorMessage('#mobileDiv', '#errorMobile', "Network code is empty or invalid.");
 			
 		} if (isValidNumber(areaCode, integerPattern)) {
 			
