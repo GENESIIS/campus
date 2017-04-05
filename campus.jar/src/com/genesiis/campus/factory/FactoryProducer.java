@@ -4,6 +4,7 @@ package com.genesiis.campus.factory;
 //20161027 AS C8-inquiry-form-for-course added InstituteController to getFactory method 
 //20161031 AS C8-inquiry-form-for-course modified InstituteCmdFactory to getFactory method
 //20161123 AS C19-student-login-without-using-third-party-application-test-as added LoginController to method.
+//20170308 CW c147-tutor-reset-password-cw added TutorCmdFactory()
 
 import org.apache.log4j.Logger;
 
@@ -34,6 +35,8 @@ public class FactoryProducer {
 		
 		}else if (choice.equalsIgnoreCase("/LoginController")){
 			return new LoginCmdFactory();
+		}else if (choice.equalsIgnoreCase("/TutorController")) {
+			return new TutorCmdFactory();
 		}
 
 		return null;

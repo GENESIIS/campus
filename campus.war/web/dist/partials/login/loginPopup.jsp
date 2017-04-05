@@ -1,7 +1,8 @@
 <!-- 20170120 CAM-20 login popup window integrated -->
+<!-- 20170308 CW c147-tutor-reset-password-cw tutor-login.js script src added. -->
 
 <script src='/dist/js/institute/validation/validation.js'></script>
-<script src='/dist/js/login.js'></script>
+<script src='/dist/js/tutor-login.js'></script>
 
 <div class="modal fade" id="loginPopup" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLongTitle" aria-hidden="true"

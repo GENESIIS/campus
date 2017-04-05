@@ -13,6 +13,13 @@
 <!-- 20170217 TR c68 validated error msg label hide and show  -->
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
 <!-- 20170223 AS CAM-22 modify messages span and validation messages -->
+<!-- 20170307 CW c147 added source link to tutor-login.js -->
+<!-- 20170307 CW c147 change CCO value of the submit button -->
+<!-- 20170308 CW c147 change script clearField values -->
+<!-- 20170313 CW c148 add CCO value TUTOR_HASH_VERIFICATION to verify button -->
+<!-- 20170404 CW c148 add clear commands to verifyMesssage & verifyCode fields -->
+<!-- 20170404 CW c148 removed unwanted commented line & clearField('verifyCode') method call -->
+<!-- 20170405 CW c148 add class for label username -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,17 +40,14 @@
 <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 <script src="/dist/js/main.js"></script>
 <script src="/dist/js/header/ui-populate-helper.js"></script>
-<script src='/dist/js/login.js'></script>
+<script src='/dist/js/tutor-login.js'></script>
 </head>
 <body>
-   <script> 
-          $( document ).ready(function() {
-        	
-        	  clearField('verifiemail'); 
-        	  clearField('verifiemail');
+   	<script> 
+          $( document ).ready(function() {        	  
+        	  clearField('verifyemail'); 
         	  $("#verifyCode").val("");
 			  clearField('verifyMesssage');
-
           }); 
 
     </script> 
@@ -73,11 +77,11 @@
 <!--                     <label for="username">Email : <span class="error-txt" id=emailtbError></span></label> -->
 <!--                 </div> -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <input type="email" class="" id="verifiemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
+                    <input type="email" class="" id="verifyemail" placeholder="Type Here" required onclick="clearField('emailveryMessage')">
                 </div>
             </div>
             <div class="form-group btn-holder">
-                <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="EMAILV">Submit</button>
+                <button type="button" class="btn btn-primary email-submit" onclick="forgotPassword()" name="CCO" id="CCO" value="TUTOR_EMAIL_VERIFICATION">Submit</button>
                
             </div>
         </div>
@@ -94,7 +98,7 @@
         <div class="login-dialog modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearField('verifyMesssage')">
                         <span aria-hidden="true">Close</span>
                     </button>
                 </div>
@@ -116,7 +120,8 @@
                                 </div>
                                 <div class="form-group">
                                         <button type="button" class="btn btn-primary btn-block"
-                                            name="CCO" id="CCO" value="HASHV"
+                                            name="CCO" id="CCO" value="TUTOR_HASH_VERIFICATION"
+
                                             onclick="verifyCode(); clearField('verifyCode')">Verify</button>
                                     </div>
                             </div>
