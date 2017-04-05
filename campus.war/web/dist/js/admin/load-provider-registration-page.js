@@ -53,20 +53,12 @@ $(document).ready(function() {
 function arrangeUI() {
 	
 	publishPrograms();
-
-//	
-//	if (!isempty(message)) {
-//		document.getElementById("userMessage").style.display = "none";
-//	}else{
-//		document.getElementById("userMessage").style.display = "block";
-//	}
-
 }
 
 
 /**
- * this method used to show or hide the expiration date depending on whether the
- * course provider will publish programs or not.
+ * this method used to show or hide the account information section depending on whether the
+ * course provider is provided with the login function.
  */
 function publishPrograms(){
 	var publishProgram = $('input[name=courseProvider]:checked').val();
@@ -357,22 +349,6 @@ function getProviderTownListData() {
 function displayProviderTownList() {
 
 	var countryCollection = window.townCollection;
-//	var singleTownElement = '';
-//
-//	singleTownElement += '<select id="selectedTown" name="selectedTown" class="select-city form-control"><option value="">--default--</option>';
-//	if (townCollection !== undefined & townCollection !== null) {
-//		$.each(townCollection, function(index, value) {
-//			singleTownElement += '<option value="' + value[0] + '">';
-//			singleTownElement += value[1];
-//			singleTownElement += '</option>';
-//
-//		});
-//	}
-//	singleTownElement += '</select>';
-//	var townNames = $("#town-List");
-//	townNames.html(singleTownElement);
-	
-	
 	
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
@@ -551,7 +527,7 @@ function saveCourseProvider() {
 
 	// get error message list
 	var errorMessageList = document.getElementsByClassName('has-error');
-	
+	var message = null; 
 	var flag = true;
 
 	// clear all previous error messages
@@ -567,14 +543,16 @@ function saveCourseProvider() {
 	clearToolTip('#usernameDiv');
 	
 	if (providerUsernameValidation() === false) {
-		document.getElementById("userMessage").style.display = "block";
-		$("#userMessage").html("Invalid Username.");
+		message = "Invalid Username";
 		flag = false;
 	}
 	if (providerPrefixValidation() === false) {
+		if(flag === false){
+			message += " and Prefix";
+		}else{
+			message = "Invalid Prefix";
+		}
 		flag = false;
-		document.getElementById("userMessage").style.display = "block";
-		$("#userMessage").html("Invalid Prefix.");
 	}
 
 	if (flag === true) {
@@ -633,6 +611,9 @@ function saveCourseProvider() {
 		}else{
 			$("#userMessage").html("One or more fields are invalid.");
 		}
+	}else{
+		document.getElementById("userMessage").style.display = "block";
+		$("#userMessage").html(message);
 	}
 }
 

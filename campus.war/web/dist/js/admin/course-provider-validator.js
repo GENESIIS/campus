@@ -18,6 +18,7 @@
 //20170330 JH c141-ui-for-add-course-provider isempty() method modified to fix an error
 //20170403 JH c141-ui-for-add-course-provider providerUsernameValidation() method modified to use common min max length validations, vaidateCourseProviderDeatils() front end validation changes
 //20170404 JH c141-ui-for-add-course-provider created providerPasswordValidation() method to validate password
+//20170405 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils(): method changed to validate account details only for featured course provider
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -445,47 +446,53 @@ function vaidateCourseProviderDeatils(form) {
 		flag = false;
 	}
 	
-	if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
-		setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
-		flag = false;
-	} 
-	 if (!isValidEmailFormat(providerEmail)) {
-			setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email is invalid.");
+	var dfsdf = window.accountType;
+	// validation course provider account details only for featured course provider
+	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
+		if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
+			setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
+			flag = false;
+		} 
+		 if (!isValidEmailFormat(providerEmail)) {
+				setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email is invalid.");
+				flag = false;
+			}
+		if (!isValidMinMaxLength(providerEmail, 1, 255)) {
+			setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email address is required. Maximum 255 charaters allowed.");
 			flag = false;
 		}
-	if (!isValidMinMaxLength(providerEmail, 1, 255)) {
-		setErrorMessage('#providerEmailDiv', '#errorPrivateEmail', "Private email address is required. Maximum 255 charaters allowed.");
-		flag = false;
-	}
-	if (isPatternMatch(integerPattern, providerUsername)) {
-		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username can't contain only numbers.");
-		flag = false;
-	}
-	if (!isValidMinMaxLength(providerUsername, 5, 100)) {
-		setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.");
-		flag = false;
-	}
-	//validation password fields
-	 flag = providerPasswordValidation(providerPassword, cProviderPassword);
-	 
-	if (accountStatus === null || accountStatus === undefined) {
-		setErrorMessage('#accountStatusDiv', '#errorStatus', "Select the account status.");
-		flag = false;
-	}
-	if (!isValidLength(accountDescription, 4000)) {
-		setErrorMessage('#accountDescriptionDiv', '#errorAccountDescription', "Description is too long.");
-		flag = false;
-	}
-	clearToolTip('#providerContactNumberDiv');
-	if (!isPatternMatch(integerPattern, accountContactNumber)) {
-		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid contact number. Only numbers allowed.");
-		flag = false;
-	}
-	if (!isValidMinMaxLength(accountContactNumber, 1, 20)) {
-		setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Empty or too long contact number. (1-20 characters)");
-		flag = false;
-	}
+		if (isPatternMatch(integerPattern, providerUsername)) {
+			setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username can't contain only numbers.");
+			flag = false;
+		}
+		if (!isValidMinMaxLength(providerUsername, 5, 100)) {
+			setErrorMessage('#providerUsernameDiv', '#errorUsername', "Username is too small or has exceeded the max length. It must have min 5 and max 100 characters.");
+			flag = false;
+		}
+		//validation password fields
+		 flag = providerPasswordValidation(providerPassword, cProviderPassword);
+		 
+		if (accountStatus === null || accountStatus === undefined) {
+			setErrorMessage('#accountStatusDiv', '#errorStatus', "Select the account status.");
+			flag = false;
+		}
+		if (!isValidLength(accountDescription, 4000)) {
+			setErrorMessage('#accountDescriptionDiv', '#errorAccountDescription', "Description is too long.");
+			flag = false;
+		}
+		clearToolTip('#providerContactNumberDiv');
+		if (!isPatternMatch(integerPattern, accountContactNumber)) {
+			setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Invlaid contact number. Only numbers allowed.");
+			flag = false;
+		}
+		if (!isValidMinMaxLength(accountContactNumber, 1, 20)) {
+			setErrorMessage('#providerContactNumberDiv', '#errorContactNumber', "Empty or too long contact number. (1-20 characters)");
+			flag = false;
+		}
 
+	}
+	
+	
 	return flag;
 }
 
