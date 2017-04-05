@@ -26,6 +26,7 @@
 <!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list, code changes to implement town list wip 
 					added hidden inputs to store country and town -->
 <!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
+<!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -591,6 +592,7 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
+								<input type="text" id="registeredId" name="registeredId" value="" readonly/>
 								<button class="close" type="button" data-dismiss="modal">×</button>
 								<h4 class="modal-title">Upload Course Provider Logo</h4>
 							</div>
