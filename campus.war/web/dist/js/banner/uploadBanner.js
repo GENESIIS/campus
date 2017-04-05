@@ -60,7 +60,10 @@
  * 20170331 DN c83-admin-manage-banner-update-banner-info-dn. Method validateUploadBannerEmbedData() modified to amend the error messages.
  * 				The method sendBannerPaageFieldInputs() changed :src attribute is set after a if check has been performed: if(response['']!='default')
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn. setTheRadioButtonValues() valuse are changed true --> 1 and false --> 0 
- * 			   to analogus with ApplicationStatus.java enum class and for ease of future enhancement
+ * 			   to analogus with ApplicationStatus.java enum class and for ease of future enhancement.
+ * 				Removed the timeOut() and implemented auto click event to close the modal window in the onclick event of the openModalUpload element.
+ *       		Removed the function call to displayBannerManagerPrerequistData() from bannerModalClose onclick event.
+ *              e.preventDefault() method is placed at the beginning of openModalUpload on click event.
  */
 
 /*
@@ -499,9 +502,10 @@ $(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputVal
  * abnnner button gets fired
  */
 $(document).on('click','#openModalUpload', function(event){
+	event.preventDefault();
 	if(!validateUploadBannerEmbedData()){
 		displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Error !");
-		setTimeout($('#bannerUploadPopUp').modal('hide'),5000);
+		$('#bannerModalClose').trigger('click');
 	
 	} 
 });
@@ -520,7 +524,6 @@ $(document).on('mousedown','#file-select',function(event){
  */
 $(document).on('click','#bannerModalClose',function(event){
 	event.preventDefault();
-	//displayBannerManagerPrerequistData();
 	setTheRadioButtonValues();
 });
 
@@ -663,12 +666,13 @@ if(elegibleToProceed){
 
 $( document ).ready(function() {	
 	$("#openModalUpload").click(function(e){
+		e.preventDefault();
 		$('#uploadBbutton').prop('disabled',false); // if dissabled make the button enabled
 		$('#bannerUploadPopUp').modal('show');
 		$('#file-select').prop('files')[0]="";
 		$('#file-select').val(''); // clears the selected image name in the previouse call
 		$('#bannerDisplayLabel').html(""); // clear message label content
-		e.preventDefault();
+//		e.preventDefault();
 	});
 
 	/**
