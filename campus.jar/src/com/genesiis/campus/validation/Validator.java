@@ -162,34 +162,6 @@ public class Validator {
 			errorString.add("About Me ");
 		}
 		
-		//following code is commented until one off course provider feature implemented
-		/*
-		 * if course provider does not need privileges to publish programs, it is indicated
-		 * by the value '0'. Therefore the validations which belongs to that category
-		 * is carried out 
-		 */
-
-//		if(!isEmptyString(helper.getParameter("publishProgram"))){
-//			if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-//				String date = helper.getParameter("expirationDate");
-//       
-//		        
-//				if(isEmptyString(date)){
-//					helper.setAttribute("errorExpiration", "Select an expiration date");
-//					errorString.add("Expiration Date ");
-//				}else{
-//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//					Date date1 = sdf.parse(date);
-//			        Date date2 = new Date();
-//			        
-//			        if(date1.before(date2)){
-//						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
-//						errorString.add("Expiration Date ");
-//					}
-//				}
-//			}	
-//		}
-		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
 			errorString.add("Country ");
@@ -206,25 +178,45 @@ public class Validator {
 		}
 		
 		if(!isValidLength(helper.getParameter("areaCode"), 20, 1) || !isInteger(helper.getParameter("areaCode")) ){
-			helper.setAttribute("errorAreaCode", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+			
+			helper.setAttribute("errorLand1", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorLand2", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+			
+			if(!isValidLength(helper.getParameter("fax"), 20, 1) ){
+				
+				if(!isEmptyString(helper.getParameter("fax"))){
+					helper.setAttribute("errorFax", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+				}
+			}
+			
 			errorString.add("Area Code ");
 		}
 		
-		if((!isValidLength(helper.getParameter("land1"), 20, 1)) || !isInteger(helper.getParameter("land1"))){
-			helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
-			errorString.add("Land number 1 ");
+		// proceed with phone number validations only if the area code is valid
+		if(isValidLength(helper.getParameter("areaCode"), 20, 1) && isInteger(helper.getParameter("areaCode")) ){
+
+			if((!isValidLength(helper.getParameter("land1"), 20, 1)) || !isInteger(helper.getParameter("land1"))){
+				helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+				errorString.add("Land number 1 ");
+			}
+			
+			if(isValidLength(helper.getParameter("land2"), 20, 0) && !isInteger(helper.getParameter("land2"))){
+				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
+				errorString.add("land number 2");
+			}
+			
+			if( !isValidLength(helper.getParameter("land2"), 20, 0)){
+				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters).");
+				errorString.add("land number 2");
+			}
+			
+			if(isValidLength(helper.getParameter("fax"), 20, 0) && !isInteger(helper.getParameter("fax"))){
+				helper.setAttribute("errorFax", "Fax number is invalid or too long. Only numbers allowed.");
+				errorString.add("fax number");
+			}
+			
 		}
-		
-		if( !isValidLength(helper.getParameter("land2"), 20, 0)){
-			helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters).");
-			errorString.add("land number 2");
-		}
-		
-		if(isValidLength(helper.getParameter("land2"), 20, 0) && !isInteger(helper.getParameter("land2"))){
-			helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
-			errorString.add("land number 2");
-		}
-		
+	
 		if(!isValidLength(helper.getParameter("networkCode"), 20, 1) || !isInteger(helper.getParameter("networkCode"))){
 			helper.setAttribute("errorNetworkCode", "Network code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
 			errorString.add("Network code ");
