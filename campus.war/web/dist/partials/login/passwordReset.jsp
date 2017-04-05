@@ -7,6 +7,7 @@
 <!-- 20170223 AS c22 modify messages span and validation messages -->
 <!-- 20170314 CW c148-tutor-verify-hashcode-reset-password-cw modified the CCO value of reset password button to TUTOR_RESET_PASSWORD -->
 <!-- 20170314 CW c148-tutor-verify-hashcode-reset-password-cw Add script source path /dist/js/tutor-login.js -->
+<!-- 20170405 CW c148-tutor-verify-hashcode-reset-password-cw Add onkeyup instead of onkeypress in password & confirm password fields -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -32,8 +33,6 @@
 <script src='/dist/js/tutor-login.js'></script>
 <script>
     $( document ).ready(function() {
-        // if span empty, hide the parent label
-     //   $('.fp-msg span:empty').parent().hide()
         
         var sPageURL = decodeURIComponent(window.location.search
 									.substring(1)), sURLVariables = sPageURL
@@ -56,9 +55,6 @@
 									+ " " + lastName;
 							document.getElementById("emailaddress").value = emailAdd;
 							document.getElementById("userTypeCode").value = decode;
-							
-
-							//document.write('<input type="text" value="firstName+" "+lastName" disabled>');
     });
 </script>
 
@@ -102,9 +98,9 @@
             <div class="input-area clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                      <label for="username" class="stat-warning-txt"> <span id="passWordError"></span> </label>
-                     <input type="password" class="" placeholder="New Password" name="psw" id="passWord" onclick="clearField('passWordError')" onkeypress="validatePasswordResetData()" required >
-                     <label for="username" class="stat-error-txt"> <span id="confPassWordError">Test Error Message</span> </label>
-                     <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')"  required >
+                     <input type="password" class="" placeholder="New Password" name="psw" id="passWord" onclick="clearField('passWordError')" onkeyup="validatePasswordResetData()" required >
+                     <label for="username" class="stat-error-txt"> <span id="confPassWordError"></span> </label>
+                     <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')" onkeyup="validateConfirmPasswordResetData()" required >
                 </div>
                 <div class="pull-right show-pwrd">
                     <input class="pw-show-checkbox" type="checkbox" id="showpasscheckbox" title="Show the password as plain text" onclick="convertPassWordToString('showpasscheckbox','passWord','confrmpsw')">
@@ -117,10 +113,7 @@
             </div>
         </div>
         <!-- End passwordReset form -->
-
-
     </div>
-
 
     <!-- Footer -->
         <jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
