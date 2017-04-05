@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //**20161024 DN created SQLServerconectionManager.java***//
+//20170405 PN CAM-137: renamed the class ConnectionManager into ConnectionManager_.
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,8 +19,8 @@ import javax.sql.DataSource;
 *
 */
 
-public class ConnectionManager {
-	static Logger log = Logger.getLogger(ConnectionManager.class.getName());
+public class ConnectionManager_ {
+	static Logger log = Logger.getLogger(ConnectionManager_.class.getName());
 
 	private static final String DB_JNDI_NAME = "java:/xenoDatabase";
 	// The DB_JNDI_NAME is the property for data source name that the
