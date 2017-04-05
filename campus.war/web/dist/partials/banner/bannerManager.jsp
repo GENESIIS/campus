@@ -19,6 +19,7 @@
      			Banner activation and Deactivation field name typos corrected.
      			Add tool tip to URL field.
      20170405 DN c83-admin-manage-banner-update-banner-info-dn Enable radio button groups' values are changed to yes-- 1 no-- 0
+     			add clearField('endtDateInfor') function to onclick event of the Banner deactivation date field
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -221,7 +222,7 @@
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
 				Banner deactivation date * &nbsp;<input
 					type="date" name="endtDate" id="endtDate"
-					onclick="clearField('startDateInfor');"
+					onclick="clearField('startDateInfor');clearField('endtDateInfor');"
 					value="${param.bannerDeactivateDate}">
 			</div>
 			<br><br>
