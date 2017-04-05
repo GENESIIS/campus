@@ -30,7 +30,7 @@
 //				implemented datalist function to display town list
 //20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
 //20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
-//				to front end validation methods
+//				to front end validation methods, show back end validation error messages wip
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -544,21 +544,21 @@ function saveCourseProvider() {
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
 	
-	if (providerUsernameValidation() === false) {
-		message = "Invalid Username";
-		flag = false;
-	}
-	if (providerPrefixValidation() === false) {
-		if(flag === false){
-			message += " and Prefix";
-		}else{
-			message = "Invalid Prefix";
-		}
-		flag = false;
-	}
+//	if (providerUsernameValidation() === false) {
+//		message = "Invalid Username";
+//		flag = false;
+//	}
+//	if (providerPrefixValidation() === false) {
+//		if(flag === false){
+//			message += " and Prefix";
+//		}else{
+//			message = "Invalid Prefix";
+//		}
+//		flag = false;
+//	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils(window.accountType) === true) {
+//		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -578,16 +578,15 @@ function saveCourseProvider() {
 									
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
-//										$(toolTipElement).removeClass("alert-success");
-//										$(toolTipElement).addClass("alert-danger");
 										errorAlert("#userMessage");
 										$("#userMessage").html(response.userMessage);
 										
 										for ( var key in response) {
 											if (response.hasOwnProperty(key)) {
 												var val = response[key];
-												var attributeName = "#" + key;
-												$(attributeName).html(val);
+												var attributeName = "#" + key;									
+												$(attributeName).attr({ "title" : val,"data-original-title" : val});
+												$(attributeName).closest(".input-wrapper").addClass("has-error");
 											}
 										}
 									}
@@ -614,10 +613,11 @@ function saveCourseProvider() {
 							$("#userMessage").html(err);
 						}
 					});
-		}else{
-			$("#userMessage").html("One or more fields are invalid.");
-		}
+//		}else{
+//			$("#userMessage").html("One or more fields are invalid.");
+//		}
 	}else{
+		changeAccordion("#accountInfoSection", "#accountInfoAccordion");
 		document.getElementById("userMessage").style.display = "block";
 		$("#userMessage").html(message);
 	}
@@ -715,4 +715,18 @@ function setSuccessMessage(successElement, successToolTip, message){
 	$(successToolTip).attr({ "title" : message,"data-original-title" : message});
 	$(successElement).addClass("has-success");
 	//$(successElement).css("border", "1px solid green !important");
+}
+
+/**
+ * check if an accordion contains an error. if contains : change the
+ * accodion color
+ * @param element
+ */
+function changeAccordion(element, accordion){
+	var errorList = $(element).find("div.has-error");
+	if (errorList) {
+		$("#accountInfoSection").css("background", "#e4aaaa");
+	}else{
+		$("#accountInfoSection").css("background", "#adc8e8");
+	}
 }
