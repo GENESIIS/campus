@@ -103,7 +103,7 @@
 
 						<h4 class="form-section-title accordion-header" id="generalInfoSection">1. General
 							Information</h4>
-						<div class="accordion-body" id="generalInfoSection">
+						<div class="accordion-body" id="generalInfoSectionDiv">
 							<div class="row clearfix">								
 								<div class="form-group col-sm-12 input-wrapper">
 								<div>

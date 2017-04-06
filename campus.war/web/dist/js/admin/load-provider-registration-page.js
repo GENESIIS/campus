@@ -593,10 +593,10 @@ function saveCourseProvider() {
 								if (response['registerId'] === 0) {
 									
 									// highlight accordions
-									changeAccordion("#accountInfoSection", "#accountInfoAccordion");
+									changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
 									changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
-									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv")
-									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv")
+									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
 									changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 									
 									if (response['userMessage'] !== null) {
@@ -646,10 +646,10 @@ function saveCourseProvider() {
 	
 	
 	// highlight accordions
-	changeAccordion("#accountInfoSection", "#accountInfoAccordion");
+	changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
 	changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
-	changeAccordion("#contactInfoSection", "#contactInfoSectionDiv")
-	changeAccordion("#socialMedialSection", "#socialMedialSectionDiv")
+	changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+	changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
 	changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 }
 
@@ -751,12 +751,15 @@ function setSuccessMessage(successElement, successToolTip, message){
  * check if an accordion contains an error. if contains : change the
  * accodion color
  * @param element
+ * @param accordion
  */
 function changeAccordion(element, accordion){
-	var errorList = $("#adminInfoSection").find("div.has-error");
-	if (errorList.size !== 0) {
-		$("#adminInfoSection").css("background", "#e4aaaa");
+	var errorList = $(accordion).find(".has-error");
+	
+//	var errorList =   $("adminInfoSectionDiv .has-error").length ;
+	if (errorList.length !== 0) {
+		$(element).css("background", "#e4aaaa");
 	}else{
-		$("#adminInfoSection").css("background", "#adc8e8");
+		$(element).css("background", "#adc8e8");
 	}
 }
