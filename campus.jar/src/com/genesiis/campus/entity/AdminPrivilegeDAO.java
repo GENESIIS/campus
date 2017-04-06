@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.command.CmdAdminLogin;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -16,7 +19,7 @@ import com.genesiis.campus.validation.ApplicationStatus;
 
 
 public class AdminPrivilegeDAO implements ICrud{
-
+	static Logger log = Logger.getLogger(AdminPrivilegeDAO.class.getName());
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
@@ -64,7 +67,7 @@ public class AdminPrivilegeDAO implements ICrud{
 
 			privilegeList = new ArrayList<String>();
 			while (rs.next()) {
-
+			
 				privilegeList.add(rs.getString(1));
 				privilegeList.add(rs.getString(2));
 			}
