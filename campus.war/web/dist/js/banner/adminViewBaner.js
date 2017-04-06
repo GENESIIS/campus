@@ -25,6 +25,8 @@
  * 			to Filter Records --> Start Date to Filter Records.
  * 20170404 TR c87 Removed rowNumber column from banner search table
  * 20170405 TR c87 modified populateBannerTable() function and added div structure to tr(row-block) 
+ * 20170406 DN c86-admin-manage-banner-search-banner-dn. An global variable  displayBannerCount is added and method  populateBannerTable(allBannerRecords,bannerWarPath)
+ * 			is modified to pass the total number of records to the adminViewBanner.jsp for displaying.
  */
 
 var theNewScript = document.createElement("script");
@@ -33,6 +35,7 @@ theNewScript.src = "../../dist/js/institute/validation/validation.js";
 
 var bannerArray ="";
 var adminControllerUrl = '../../../AdminController';
+var displayBannerCount =0;
 
 $(document).ready(function(){
 
@@ -238,6 +241,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		return null;
 	}
 	
+		displayBannerCount = 0;
 		$('tbody tr').remove(); // if already exist remove <tr> elements within the table body
 		// assigning all the banner records to the global variable.
 		bannerArray = allBannerRecords;
@@ -304,9 +308,10 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
-		
+			displayBannerCount =rowNumber; 
 		});
 	
+	$('#bannerViewRecodsCount').html(displayBannerCount+1);
 }
 
 
