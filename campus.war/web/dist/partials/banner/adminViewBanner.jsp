@@ -12,6 +12,7 @@
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
  <!-- 20170405 TR c87 modified banner-records-table layout -->
+ <!-- 20170406 TR c82 Added count-and-delete block to delete banners and display count of banners -->   
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -77,7 +78,7 @@
 <!-- Banner search - Page content -->
 <div class="banner-search-screen clearfix">
 	<div class="add-new-area clearfix">
-	   <div class="col-lg-2 col-md-3 pull-right"><button class type="button" value="Search" id="adminAddNewBanner">Add New Banner</button></div>
+	   <div class="col-lg-2 col-md-3 pull-right"><button type="button" value="Search" id="adminAddNewBanner">Add New Banner</button></div>
 	   <div class="col-lg-2 col-md-3 pull-right"><button type="button" value="Search" id="adminAddNewAdvertiser">Add New Advertiser</button></div>
 	</div>
 	<div class="filtering-area clearfix">
@@ -117,6 +118,15 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="count-and-delete">
+        <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
+            <button type="button" value="Delete Selected">Delete Selected</button>
+        </div>
+        <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
+            <input type="checkbox" name="" value="">Select All
+        </div>
+        <div class="result-count col-lg-3 col-md-3 col-sm-6"><span>25</span> Results Found</div>
     </div>
 </div>
 <%-- Banner Records holder --%>
