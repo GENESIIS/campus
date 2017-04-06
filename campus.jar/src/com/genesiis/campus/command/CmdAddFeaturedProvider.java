@@ -22,6 +22,7 @@ package com.genesiis.campus.command;
 //20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
 //20170404 JH c141-ui-integration-for-add-course-provider code modified to use AccountType enum class values to validate user type
 //20170405 JH c141-ui-integration-for-add-course-provider fixed exception due to account status code selection
+//20170406 JH c141-ui-integration-for-add-course-provider build contact number and web link hint messages
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -258,7 +259,7 @@ public class CmdAddFeaturedProvider implements ICommand {
 						courseProvider.setFaxNo(helper.getParameter("fax"));
 						courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
 						courseProvider.setExpirationDate(sql);
-						courseProvider.setWeblink(helper.getParameter("webLink"));
+						courseProvider.setWeblink(helper.getParameter("web-basic-addon") + helper.getParameter("webLink"));
 						courseProvider.setFacebookURL(helper.getParameter("facebook"));
 						courseProvider.setTwitterURL(helper.getParameter("twitter"));
 						courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
@@ -314,11 +315,11 @@ public class CmdAddFeaturedProvider implements ICommand {
 							if (Integer.parseInt(accountStatus)  == ApplicationStatus.INACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(false);
 							}
-
+							String contactNumber = countryCode + helper.getParameter("providerContactNumber");
 							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
-							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
+							courseProviderAccount.setContactNumber(contactNumber);
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
 
