@@ -13,6 +13,7 @@ package com.genesiis.campus.entity;
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP method & add VARIFICATIONSTATUS to the query & collections
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP to get VARIFICATIONSTATUS from getApplicationStatus method
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments & modified getFCPListForTutorToSelect method's log message
+//20170406 CW c157-add-tutor-employment-details-cw add findById method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -57,8 +58,86 @@ public class FeaturedCourseProviderDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		final Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+					
+		StringBuilder queryBuilder = new StringBuilder("SELECT [CODE], [UNIQUEPREFIX], [SHORTNAME], [NAME], [DESCRIPTION], [GENERALEMAIL], ");
+		queryBuilder.append("[COURSEINQUIRYEMAIL], [LANDPHONECOUNTRYCODE], [LANDPHONEAREACODE], [LANDPHONENO], ");
+		queryBuilder.append("[LANDPHONE2NO], [FAXNO], [MOBILEPHONECOUNTRYCODE], [MOBILEPHONENETWORKCODE], [MOBILEPHONENO], ");		
+		queryBuilder.append("[HEADERIMAGEPATH], [LOGOIMAGEPATH], [SPECIALITY], [WEBLINK], [FACEBOOKURL], [TWITTERURL], ");
+		queryBuilder.append("[MYSPACEURL], [LINKEDINURL], [INSTAGRAMURL], [VIBERNUMBER], [WHATSAPPNUMBER], [EXPIRATIONDATE], ");
+		queryBuilder.append("[ADDRESS1], [ADDRESS2], [ADDRESS3], [ACCOUNTTYPE], [HEADOFFICETOWN], [ISTUTORRELATED], ");
+		queryBuilder.append("[ISADMINALLOWED], [COURSEPROVIDERSTATUS], [COURSEPROVIDERTYPE], [PRINCIPAL], [TUTOR], [CRTON], ");
+		queryBuilder.append("[CRTBY], [MODON], [MODBY] FROM [CAMPUS].[COURSEPROVIDER] WHERE [ACCOUNTTYPE] = 1 ORDER BY [NAME]");
+			
+		try {
+			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(queryBuilder.toString());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
+												
+				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("UNIQUEPREFIX"));
+				singleFeaturedCourseProviderList.add(rs.getString("SHORTNAME"));
+				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
+				singleFeaturedCourseProviderList.add(rs.getString("DESCRIPTION"));
+				singleFeaturedCourseProviderList.add(rs.getString("GENERALEMAIL"));
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEINQUIRYEMAIL"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONEAREACODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONENO"));
+				singleFeaturedCourseProviderList.add(rs.getString("LANDPHONE2NO"));
+				singleFeaturedCourseProviderList.add(rs.getString("FAXNO"));
+				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("MOBILEPHONENO"));
+				singleFeaturedCourseProviderList.add(rs.getString("HEADERIMAGEPATH"));
+				singleFeaturedCourseProviderList.add(rs.getString("LOGOIMAGEPATH"));
+				singleFeaturedCourseProviderList.add(rs.getString("SPECIALITY"));
+				singleFeaturedCourseProviderList.add(rs.getString("WEBLINK"));
+				singleFeaturedCourseProviderList.add(rs.getString("FACEBOOKURL"));
+				singleFeaturedCourseProviderList.add(rs.getString("TWITTERURL"));
+				singleFeaturedCourseProviderList.add(rs.getString("MYSPACEURL"));
+				singleFeaturedCourseProviderList.add(rs.getString("LINKEDINURL"));
+				singleFeaturedCourseProviderList.add(rs.getString("INSTAGRAMURL"));
+				singleFeaturedCourseProviderList.add(rs.getString("VIBERNUMBER"));
+				singleFeaturedCourseProviderList.add(rs.getString("WHATSAPPNUMBER"));
+				singleFeaturedCourseProviderList.add(rs.getString("EXPIRATIONDATE"));
+				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS1"));
+				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS2"));				
+				singleFeaturedCourseProviderList.add(rs.getString("ADDRESS3"));
+				singleFeaturedCourseProviderList.add(rs.getString("ACCOUNTTYPE"));
+				singleFeaturedCourseProviderList.add(rs.getString("HEADOFFICETOWN"));
+				singleFeaturedCourseProviderList.add(rs.getString("ISTUTORRELATED"));
+				singleFeaturedCourseProviderList.add(rs.getString("ISADMINALLOWED"));
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEPROVIDERSTATUS"));				
+				singleFeaturedCourseProviderList.add(rs.getString("COURSEPROVIDERTYPE"));
+				singleFeaturedCourseProviderList.add(rs.getString("PRINCIPAL"));
+				singleFeaturedCourseProviderList.add(rs.getString("TUTOR"));
+				singleFeaturedCourseProviderList.add(rs.getString("CRTON"));
+				singleFeaturedCourseProviderList.add(rs.getString("CRTBY"));				
+				singleFeaturedCourseProviderList.add(rs.getString("MODON"));
+				singleFeaturedCourseProviderList.add(rs.getString("MODBY"));
+
+				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
+			}		
+		} catch (SQLException sqlException) {
+			log.info("getAll(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getAll(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allFeaturedCourseProviderList;
+
 	}
 
 	/**
