@@ -7,6 +7,7 @@
 //				to be persisted when threshold is reached
 // 20170403 MM c117-display-banners-record-viewcount-back-end - Now using findById(Object) method of BannerViewStatDAO to fetch existing stat records
 //				for banners of newly received banner stat update requests
+// 20170406 MM c117-display-banners-record-viewcount-back-end - Existing banner view stats are now updated and new ones are inserted 
 
 package com.genesiis.campus.util;
 
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +36,7 @@ public class BannerViewStatHelper {
 	private static Map<Integer, List<String>> bannerToViewCountResolver;
 	private static int viewCount;
 
-	static Logger Log = Logger.getLogger(BannerViewStatHelper.class.getName());
+	static Logger log = Logger.getLogger(BannerViewStatHelper.class.getName());
 
 	private static Map<Integer, List<String>> getBannerToViewCountResolver() {
 		return BannerViewStatHelper.bannerToViewCountResolver;
@@ -101,72 +103,174 @@ public class BannerViewStatHelper {
 		}
 	}
 
-	private void flushBannerViewStats() {
+	private void flushBannerViewStats() throws Exception {
 		
 		Map<Integer, List<String>> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
 
-		List<BannerViewStat> viewStatInstances = new ArrayList<BannerViewStat>();
+//		List<BannerViewStat> viewStatInstances = new ArrayList<BannerViewStat>();
 		List<String> bannerViewCountDetails = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		List<Integer> bannerCodes = new ArrayList<Integer>();
-
-		// Persist banner counts
-		for (Integer banCode : bannerViewCountResolver.keySet()) {
-			
-			bannerCodes.add(banCode);
-			
-			bannerViewCountDetails = bannerViewCountResolver.get(banCode);
-			if (bannerViewCountDetails != null) {
-
-				BannerViewStat bannerViewStat = new BannerViewStat();
-
-				bannerViewStat.setBanner(banCode);
-				bannerViewStat.setViewCount(Integer.parseInt(bannerViewCountDetails.get(0)));
-
-				Date lastViewDateForBanner = formatter.parse(bannerViewCountDetails.get(1));
-				bannerViewStat.setLastViewDate(new java.sql.Date(lastViewDateForBanner.getTime()));
-				bannerViewStat.setLastViewTime(new java.sql.Time(lastViewDateForBanner.getTime()));
-
-				bannerViewStat.setCrtBy("SYSTEM");
-
-				viewStatInstances.add(bannerViewStat);
-			}
-		}
-
+		List<Integer> bannerCodes = new ArrayList<Integer>(bannerViewCountResolver.keySet());
+		
 		BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
-		Collection<Collection<String>> bannerStatCollection = bannerViewStatDao.findById(bannerCodes);
+		try {
+			Collection<Collection<String>> bannerStatCollection = bannerViewStatDao.findById(bannerCodes);
+			List<BannerViewStat> bannerViewStatsToUpdate = new ArrayList<BannerViewStat>();
+			List<BannerViewStat> bannerViewStatsToInsert = new ArrayList<BannerViewStat>();
+			
+			// Persist banner counts
+			for (Integer banCode : bannerViewCountResolver.keySet()) {
+				boolean areStatsAlreadyAvailable = false; 
+				for (Collection<String> bannerStatRecord : bannerStatCollection) {
+					int index = 0;
+					Integer bannerCodeFromStats = null;
+					
+					for (String field : bannerStatRecord) {
+						bannerCodeFromStats = Integer.valueOf(field);					
+						break;
+					}			
+					
+					if (banCode.equals(bannerCodeFromStats)) {					
+						areStatsAlreadyAvailable = true;
+						
+						BannerViewStat bannerViewStat = new BannerViewStat();
+						bannerViewStat.setBanner(banCode);
+						bannerViewStat.setViewCount(Integer.parseInt(bannerViewCountDetails.get(0)));
+						Date lastViewDateForBanner = null;
+						try {
+							lastViewDateForBanner = formatter.parse(bannerViewCountDetails.get(1));
+						} catch (ParseException pe) {
+							log.error("flushBannerViewStats() : ParseException " + pe.toString());
+						} finally {
+							lastViewDateForBanner = new Date(0L);
+						}
+						
+						bannerViewStat.setLastViewDate(new java.sql.Date(lastViewDateForBanner.getTime()));
+						bannerViewStat.setLastViewTime(new java.sql.Time(lastViewDateForBanner.getTime()));
+	
+						bannerViewStat.setModBy("SYSTEM");
+	
+						bannerViewStatsToUpdate.add(bannerViewStat);					
+					} 
+				}
+				
+				if (!areStatsAlreadyAvailable) {
+					
+					BannerViewStat bannerViewStat = new BannerViewStat();
+	
+					bannerViewStat.setBanner(banCode);
+					bannerViewStat.setViewCount(Integer.parseInt(bannerViewCountDetails.get(0)));
+					Date lastViewDateForBanner = null;
+					try {
+						lastViewDateForBanner = formatter.parse(bannerViewCountDetails.get(1));
+					} catch (ParseException pe) {
+						log.error("flushBannerViewStats() : ParseException " + pe.toString());
+					} finally {
+						lastViewDateForBanner = new Date(0L);
+					}
+					bannerViewStat.setLastViewDate(new java.sql.Date(lastViewDateForBanner.getTime()));
+					bannerViewStat.setLastViewTime(new java.sql.Time(lastViewDateForBanner.getTime()));
+	
+					bannerViewStat.setCrtBy("SYSTEM");
+	
+					bannerViewStatsToInsert.add(bannerViewStat);
+				}
+				
+			}
 
-		// Persist banner counts
-		persistBannerCounts(viewStatInstances);
+			// Persist banner counts
+			persistBannerCounts(bannerViewStatsToUpdate, bannerViewStatsToInsert);
+			
+		} catch (SQLException sqle) {
+			log.error("flushBannerViewStats() : SQLException " + sqle.toString());
+			throw sqle;
+		} catch (Exception e) {
+			log.error("flushBannerViewStats() : Exception " + e.toString());
+			throw e;
+		}
 	}
 
-	private int persistBannerCounts(List<BannerViewStat> viewStatInstances) {
+	private int persistBannerCounts(List<BannerViewStat> bannerViewStatsToUpdate, List<BannerViewStat> bannerViewStatsToInsert) throws Exception {
 		BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
-
+		
+		int updateStatus = 0;
 		int insertStatus = 0;
-
-		try {
-			insertStatus = bannerViewStatDao.add(viewStatInstances);
-
-		} catch (SQLException sqle) {
-			Log.error("execute(IDataHelper, IView) : SQLException " + sqle.toString());
-			throw sqle;
-
-		} catch (Exception e) {
-			Log.error("execute(IDataHelper, IView) : Exception " + e.toString());
-			throw e;
-
-		} finally {
-			if (insertStatus > 0) {
-				log.info("Banner view stat data was successfully flushed to DB!");
-			} else {
-				log.error("The attempt to flush banner view stat data to DB was unsuccessful!");
+		
+		if (bannerViewStatsToUpdate != null && !bannerViewStatsToUpdate.isEmpty()) {
+			try {
+				updateStatus = bannerViewStatDao.update(bannerViewStatsToUpdate);		
+			} catch (SQLException sqle) {
+				log.error("persistBannerCounts(List<BannerViewStat>, List<BannerViewStat>) : SQLException " + sqle.toString());
+				throw sqle;
+				
+			} catch (Exception e) {
+				log.error("persistBannerCounts(List<BannerViewStat>, List<BannerViewStat>) : Exception " + e.toString());
+				throw e;
+				
+			} finally {
+				if (updateStatus > 0) {
+					log.info("Stat data for new banners successfully saved in DB!");
+				} else {
+					log.error("The attempt to save view-stat-data for new banners to DB was unsuccessful!");
+				}
 			}
 		}
-
+		
+		if (bannerViewStatsToInsert != null && !bannerViewStatsToInsert.isEmpty()) {
+			try {
+				insertStatus = bannerViewStatDao.add(bannerViewStatsToInsert);				
+			} catch (SQLException sqle) {
+				log.error("persistBannerCounts(List<BannerViewStat>, List<BannerViewStat>) : SQLException " + sqle.toString());
+				throw sqle;
+				
+			} catch (Exception e) {
+				log.error("persistBannerCounts(List<BannerViewStat>, List<BannerViewStat>) : Exception " + e.toString());
+				throw e;
+				
+			} finally {
+				if (insertStatus > 0) {
+					log.info("Stat data for new banners successfully saved in DB!");
+				} else {
+					log.error("The attempt to save view-stat-data for new banners to DB was unsuccessful!");
+				}
+			}
+		}
+		
 		// Clear elements in bannerToViewCountResolver
 		clearBannerViewStats();
+		
+		return updateStatus;
 	}
+//	
+//	private int persistBannerCounts(List<BannerViewStat> viewStatInstances) throws Exception {
+//		BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
+//
+//		int insertStatus = 0;
+//
+//		try {
+//			insertStatus = bannerViewStatDao.add(viewStatInstances);
+//
+//		} catch (SQLException sqle) {
+//			log.error("execute(IDataHelper, IView) : SQLException " + sqle.toString());
+//			throw sqle;
+//
+//		} catch (Exception e) {
+//			log.error("execute(IDataHelper, IView) : Exception " + e.toString());
+//			throw e;
+//
+//		} finally {
+//			if (insertStatus > 0) {
+//				log.info("Banner view stat data was successfully flushed to DB!");
+//			} else {
+//				log.error("The attempt to flush banner view stat data to DB was unsuccessful!");
+//			}
+//		}
+//
+//		// Clear elements in bannerToViewCountResolver
+//		clearBannerViewStats();
+//		
+//		return insertStatus;
+//	}
 
 	private void clearBannerViewStats() {
 		// Clear bannerToViewCountResolver
