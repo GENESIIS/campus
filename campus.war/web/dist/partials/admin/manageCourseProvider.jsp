@@ -27,6 +27,7 @@
 					added hidden inputs to store country and town -->
 <!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
 <!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
+<!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -100,11 +101,11 @@
 
 					<div class="accordion">
 
-						<h4 class="form-section-title accordion-header">1. General
+						<h4 class="form-section-title accordion-header" id="generalInfoSection">1. General
 							Information</h4>
-						<div class="accordion-body">
+						<div class="accordion-body" id="generalInfoSection">
 							<div class="row clearfix">								
-								<div class="form-group col-sm-12">
+								<div class="form-group col-sm-12 input-wrapper">
 								<div>
 								<label for="account-category" class="right-padding inline-info">
 										<span class="mandatory">*</span> Account Category <a
@@ -134,7 +135,7 @@
 										Course Provider Name</label>
 									<div class="input-wrapper" id="providerNameDiv">
 										<input name="providerName" type="text" class="form-control"
-											id="providerName" placeholder=""> <a
+											id="providerName"> <a
 											class="error-info" href="#" data-toggle="tooltip" id="errorProviderName"
 											title=""></a>
 									</div>
@@ -182,9 +183,9 @@
 							</div>
 						</div>
 
-						<h4 class="form-section-title accordion-header">2. Contact
+						<h4 class="form-section-title accordion-header" id="contactInfoSection">2. Contact
 							Information</h4>
-						<div class="accordion-body">
+						<div class="accordion-body" id="contactInfoSectionDiv">
 							<div class="row clearfix">
 								<div class="col-sm-4">
 									<div class="row clearfix">
@@ -264,8 +265,8 @@
 													class="col-xs-3 input-border-r" id="areaCode"
 													placeholder="" onkeyup="landPhoneNubmerHelper();" maxlength="4" size="4">
 												 <input name="land1" type="tel"  onkeyup="landPhoneNubmerHelper();"
-													class="col-xs-6" id="land1" placeholder=""> <span
-													class="phone-no-hint" id="landNumber1"></span>
+													class="col-xs-6" id="land1" placeholder=""  maxlength="12" size="12">
+												 <span class="phone-no-hint" id="landNumber1"></span>
 												 <a
 													class="error-info" href="#" data-toggle="tooltip" 
 													title="Error! " id="errorLand1"></a>
@@ -279,10 +280,10 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="areaCode2" type="text"
 													class="col-xs-3 input-border-r" id="areaCode2"
-													placeholder="" disabled>
+													placeholder="" disabled maxlength="4" size="4">
 												<input name="land2" type="tel" onkeyup="landPhoneNubmerHelper();"
-													class="col-xs-6" id="land2" placeholder=""> <span
-													class="phone-no-hint" id="landNumber2"></span>
+													class="col-xs-6" id="land2" placeholder=""  maxlength="12" size="12">
+												 <span class="phone-no-hint" id="landNumber2"></spans>
 												<a class="error-info" href="#" data-toggle="tooltip" 
 													title="Error! " id="errorLand2"></a>
 											</div>
@@ -296,9 +297,9 @@
 													id="countryCode" placeholder="" disabled>
 												<input name="networkCode" type="text" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-3 input-border-r" id="networkCode"
-													placeholder="" > 
+													placeholder="" maxlength="4" size="4"> 
 												<input name="mobile"  onkeyup="landPhoneNubmerHelper();"
-													type="tel" class="col-xs-6" id="mobile" placeholder="">
+													type="tel" class="col-xs-6" id="mobile" placeholder=""  maxlength="12" size="12">
 												<span class="phone-no-hint" id="lastMobileNumber"></span> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorMobile"
 													title="Error! "></a>
@@ -310,11 +311,11 @@
 												<input name="countryCode" type="text"
 													class="col-xs-3 input-border-r disabled-input"
 													id="countryCode" placeholder="" disabled> 
-												<input name="areaCode2" type="text"
+												<input name="areaCode2" type="text" maxlength="4" size="4"
 													class="col-xs-3 input-border-r" id="areaCode2"
 													placeholder="" disabled> <span class="phone-no-hint" id="lastFaxNumber"></span> 
 												<input name="fax" type="tel" class="col-xs-6"  onkeyup="landPhoneNubmerHelper();"
-													id="fax" placeholder="">
+													id="fax" placeholder="" maxlength="12" size="12">
 												<a class="error-info" href="#" data-toggle="tooltip" id="errorFax"
 													title="Error! "></a>
 											</div>
@@ -345,9 +346,10 @@
 										</div>
 										<div class="form-group col-xs-12">
 											<label for="web-link">Web Link</label>
-											<div class="input-wrapper" id="webLinkDiv">
-												<input name="webLink" type="url" class="form-control"
-													id="webLink" placeholder="">
+											<div class="input-wrapper input-group" id="webLinkDiv">
+											<span class="input-group-addon" id="basic-addon1">http://</span>
+											<input name="webLink" type="url" class="form-control"
+													id="webLink" placeholder=""> 
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
 													title="Error! "></a>
 											</div>
@@ -357,9 +359,9 @@
 							</div>
 						</div>
 
-						<h4 class="form-section-title accordion-header">3. Social
+						<h4 class="form-section-title accordion-header" id="socialMedialSection">3. Social
 							Media Information</h4>
-						<div class="accordion-body">
+						<div class="accordion-body" id="socialMedialSectionDiv">
 							<div class="row clearfix">
 								<div class="col-sm-4 col-sm-offset-2">
 									<div class="row">
@@ -434,21 +436,15 @@
 							</div>
 						</div>
 
-						<h4 class="form-section-title accordion-header">4. Admin
+						<h4 class="form-section-title accordion-header" id="adminInfoSection">4. Admin
 							Information</h4>
-						<div class="accordion-body">
+						<div class="accordion-body" id="adminInfoSectionDiv">
 							<div class="row clearfix">
 								<div class="form-group col-sm-12 text-center">
 									<label for="course-provider-type"><span
 										class="mandatory">*</span> Course Provider Type</label>
 									<div class="input-wrapper has-select text-center" id="providerTypeList">
 									<select id="selectedProviderType" name="selectedProviderType" ></select>
-									<%--	<select name="cProviderType" id="course-provider-type">
-											<option selected>Choose a course provider type</option>
-											<option value="Individual">Individual</option>
-											<option value="Group">Group</option>
-										</select> <a class="error-info" href="#" data-toggle="tooltip"
-											title="Error! "></a> --%>
 											
 									<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"
 											title="Error! "></a> 
@@ -461,7 +457,7 @@
 									class="text-center center-block top-padding inline-info">
 									<span class="mandatory">*</span> Course Provider Status 
 								</label>
-								<div class="form-group col-sm-12 text-center center-block" id="providerStatusDiv">
+								<div class="form-group col-sm-12 text-center center-block input-wrapper" id="providerStatusDiv">
 									
 										<c:forEach items="${applicationStatusBean.values}"
 										var="applicationStatus">
@@ -488,17 +484,18 @@
 												Full Name</label>
 											<div class="input-wrapper" id="providerPrivateNameDiv">
 												<input name="providerPrivateName" type="text" class="form-control"
-													id="providerPrivateName" placeholder=""> <a
+													id="providerPrivateName"> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateName"
 													title="Error! "></a>
 											</div>
 										</div>
 										<div class="form-group col-sm-8 col-sm-offset-2">
 											<label for="contract-no"><span class="mandatory">*</span>
-												Contract Number</label>
-											<div class="input-wrapper" id="providerContactNumberDiv">
+												Contact Number</label>
+											<div class="input-wrapper input-group" id="providerContactNumberDiv">
+											<span class="input-group-addon" id="countryCode2"></span>
 												<input name="providerContactNumber" type="text" class="form-control"
-													id="providerContactNumber" placeholder=""> <a
+													id="providerContactNumber" placeholder="" maxlength="12" size="12"> <a
 													class="error-info" href="#" data-toggle="tooltip" id="errorContactNumber"
 													title="Error! "></a>
 											</div>
@@ -558,7 +555,7 @@
 															title="Error! "></a>
 													</div>
 												</div>
-												<div class="form-group col-sm-8 col-sm-offset-2" id="accountStatusDiv">
+												<div class="form-group col-sm-8 col-sm-offset-2 input-wrapper" id="accountStatusDiv">
 												<label for="account-category"
 													class="right-padding inline-info"> <span
 													class="mandatory">*</span> Account Status
