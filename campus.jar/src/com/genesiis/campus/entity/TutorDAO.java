@@ -34,6 +34,7 @@ package com.genesiis.campus.entity;
 				// add validateUsernameEmailFields() method from 
 //20170306 CW c37-tutor-update-tutor-profile-cw removed un wanted space from getListOfUsernameEmail()
 //20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
+//20170406 CW c37-tutor-update-tutor-profile-cw add getTutorPassword method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -141,7 +142,6 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(29, tutor.getModBy());			
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
-				Encryptable passwordEncryptor = new TripleDesEncryptor(tutor.getPassword());
 				preparedStatement.setString(30, tutor.getPassword());
 				preparedStatement.setInt(31, tutor.getCode());
 			}else{
@@ -377,5 +377,43 @@ public class TutorDAO implements ICrud {
 		
 		return allUsernameEmailList;
 	}
+	
 
+	/**
+	 * Returns the Tutor Password
+	 * @author Chinthaka
+	 * @param int tutorCode 
+	 * @return Returns the Tutor password
+	 */
+	public String getTutorPassword(String tutorCode) throws SQLException, Exception {
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String password = null;
+		
+		try{
+			conn = ConnectionManager.getConnection();
+			String query = "SELECT PASSWORD FROM CAMPUS.TUTOR WHERE CODE=?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, tutorCode);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				password = rs.getString("PASSWORD");
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("getTutorPassword(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getTutorPassword(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return password;
+	}
 }
