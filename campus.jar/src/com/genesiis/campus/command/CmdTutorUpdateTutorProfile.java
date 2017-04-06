@@ -18,7 +18,7 @@ package com.genesiis.campus.command;
 //20170307 CW c37-tutor-update-tutor-profile-cw modified execute method comment, set tutor.setIsApproved & tutor.setTutorStatus values before update
 				//modified isValidUserAndEmailBeforeAddTutor() method to validate email if email field was updated.
 				//changed method setCompareVariables name into setCompareVariablesBeforeTutorUpdateTutor.
-
+//20170406 CW c37-tutor-update-tutor-profile-cw modified setCompareVariablesBeforeTutorUpdateTutor method & add validations for newPassword
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -124,15 +124,27 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			boolean updated = false;
 		try {
 			
-			tutor.setCode(Integer.parseInt(helper.getParameter("codeOld").toString()));			
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("tutorCode")))){
+				tutor.setCode(Integer.parseInt(helper.getParameter("tutorCode").toString()));
+			}
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
-				Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));
-				String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString();
-				tutor.setPassword(encryptedNewPassword);
-				updated = true;
+				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newPassword")))){
+					Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));
+					
+					log.info("setCompareVariablesBeforeTutorUpdateTutor ="+helper.getParameter("newPassword"));
+					
+					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString();
+					tutor.setPassword(encryptedNewPassword);
+					updated = true;
+					
+
+					log.info("encryptedNewPassword :=" + encryptedNewPassword);
+					
+					
+				}
 			}else{
 				// no need to change the password
 				tutor.setPassword("");
@@ -468,7 +480,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 		} catch (Exception e) {
-			log.error("setCompareVariables() : Exception" + e.toString());
+			log.error("setCompareVariablesBeforeTutorUpdateTutor() : Exception" + e.toString());
 			throw e;
 		}
 		
