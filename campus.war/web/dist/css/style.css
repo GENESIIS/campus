@@ -759,7 +759,11 @@ body, html {
               display: block; }
 
 /* 20170403 TR c87 init  */
-/* 20170404 TR   */
+/* 20170405 TR c87 styling page inner header (Add New buttons , Date Picker , Filter area ) */
+/* 20170405 TR c87 styling banner search table  */
+/* 20170405 TR c87 styling banner sample display area */
+/* 20170405 TR c87 styling banner banner code and info area */
+/* 20170406 TR c82 styling and set position delete checkbox  */
 /* Banner search page content */
 .banner-search-screen {
   display: block;
@@ -875,6 +879,12 @@ body, html {
               background-color: #448ccb;
               padding-left: 20px;
               padding-right: 20px; }
+          .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-info .delete-check {
+            float: left;
+            position: relative;
+            display: block;
+            top: 92px;
+            right: 145px; }
         .tbl-bg .banner-record-holder .banner-records-table tbody .row-block .banner-img {
           border-left: 2px solid #cccccc;
           padding: 12px 30px;

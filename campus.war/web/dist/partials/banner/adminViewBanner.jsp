@@ -11,6 +11,7 @@
  -->
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
+ <!-- 20170405 TR c87 modified banner-records-table layout -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
