@@ -10,12 +10,14 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
+//20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Employment;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.mail.GenerateEmail;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Validator;
 
@@ -44,6 +46,7 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		String message = "";
+		String emailMessage = "";
 		int status = 0;
 		try {			
 			Employment employmentDetails = new Employment();
@@ -63,6 +66,9 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			
 			if(status > 0){
 				message = "Selected employers successfully added ...";
+				GenerateEmail emailAtUpdate = new GenerateEmail();
+				emailMessage = emailAtUpdate.sendAdminTutorUpdateEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), 
+						helper.getParameter("email"), helper.getParameter("username"), appStatus); //send email
 			}
 			
 			if(Validator.isNotEmpty(tutorCode)){
