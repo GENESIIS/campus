@@ -28,6 +28,7 @@ package com.genesiis.campus.validation;
 //20170321 CW c37-tutor-update-tutor-profile-cw modified validateTutorFields() to validate townDetails & towncodeOld correctly
 //20170324 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & fix password length validation error
 //20170324 CW c37-tutor-update-tutor-profile-cw modify OLD_NEW_PASSWORD_SAME to CURRENT_NEW_PASSWORD_SAME
+//20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to use getTutorPassword method & get the password
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -483,15 +484,18 @@ public class Validator {
 		String oldPassword = helper.getParameter("oldPassword");
 		String newPassword = helper.getParameter("newPassword");
 		String confirmPassword = helper.getParameter("confirmPassword");
+		String tutorCode = helper.getParameter("tutorCode");
 
+		TutorDAO tutorDao = new TutorDAO();
+		String passwordFromDb = tutorDao.getTutorPassword(tutorCode);
+		
 		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword);
 		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
 						
 		try {
-			
 			if(!(isEmptyOrHavingSpace(oldPassword))){
 				// Need to change the password
-				if(!(isEmptyOrHavingSpace(oldPassword)) && (encryptedOldPassword.equals(helper.getParameter("passwordFromDb")))){
+				if(!(isEmptyOrHavingSpace(oldPassword)) && (encryptedOldPassword.equals(passwordFromDb))){
 					// encryptedOldPassword & passwordFromDb are same
 					if(!(oldPassword.equals(newPassword))){
 						// old password & new password are not same
