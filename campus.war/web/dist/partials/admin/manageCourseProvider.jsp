@@ -27,7 +27,7 @@
 					added hidden inputs to store country and town -->
 <!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
 <!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
-<!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink -->
+<!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink, added min max password hints -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -347,7 +347,7 @@
 										<div class="form-group col-xs-12">
 											<label for="web-link">Web Link</label>
 											<div class="input-wrapper input-group" id="webLinkDiv">
-											<span class="input-group-addon" id="basic-addon1">http://</span>
+											<span class="input-group-addon" id="web-basic-addon">http://</span>
 											<input name="webLink" type="url" class="form-control"
 													id="webLink" placeholder=""> 
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
@@ -541,6 +541,7 @@
 													<div class="input-wrapper" id="providerPasswordDiv">
 														<input name="providerPassword" type="password"
 															class="form-control" id="providerPassword" placeholder="">
+															<span class="phone-no-hint"> min:6  and max:100</span> 
 														<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderPassword"
 															title="Error! "></a>
 													</div>
