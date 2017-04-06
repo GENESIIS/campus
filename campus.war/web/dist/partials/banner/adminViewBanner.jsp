@@ -12,6 +12,7 @@
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
  <!-- 20170405 TR c87 modified banner-records-table layout -->
+ <!-- 20170406 DN span element is given an id for displaying the number of records available -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -125,7 +126,7 @@
         <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
             <input type="checkbox" name="" value="">Select All
         </div>
-        <div class="result-count col-lg-3 col-md-3 col-sm-6"><span>25</span> Results Found</div>
+        <div class="result-count col-lg-3 col-md-3 col-sm-6"><span id="bannerViewRecodsCount"></span> Results Found</div>
     </div>
 </div>
 <%-- Banner Records holder --%>
