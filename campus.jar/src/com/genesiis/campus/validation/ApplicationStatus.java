@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
 //20170207 DJ c138-add-basic-programme-MP-dj  Add ARCHIVE(5) enum to status values
+//20170406 DJ c138 changed values in application status enums
 
 
 /**
@@ -13,12 +14,12 @@ package com.genesiis.campus.validation;
 *
 */
 public enum ApplicationStatus {
-
-	ACTIVE(1),
-	INACTIVE(2),
-	PENDING(3),
-	EXPIRED(4),
-	ARCHIVE(5);	
+		
+	INACTIVE(0),
+	ACTIVE(1),	
+	PENDING(2),
+	EXPIRED(3),
+	ARCHIVE(5);
 	
 	private final int statusValue;
 

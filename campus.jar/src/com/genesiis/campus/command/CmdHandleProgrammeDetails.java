@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate Dao call for master data view
 //20170207 DJ c138-add-basic-programme-MP-dj Renamed as CmdHandleProgrammeDetails.java
 //20170213 DJ c138-add-basic-programme-MP-dj Implemented populateFormData() to populate input data
+//20170406 DJ c138-add-basic-programme-MP-dj populateFormData(): mx bug fixing-add level.
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.IView;
@@ -134,7 +135,7 @@ public class CmdHandleProgrammeDetails  implements ICommand {
 				programmeDTO.setMajor(Integer.parseInt(majorString));
 			}			
 			if(UtilityHelper.isNotEmpty(levelString)){
-				programmeDTO.setLevel(Integer.parseInt(categoryString));
+				programmeDTO.setLevel(Integer.parseInt(levelString));
 			}
 			if(UtilityHelper.isNotEmpty(providerString)){
 				programmeDTO.setCourseProvider(Integer.parseInt(providerString));
