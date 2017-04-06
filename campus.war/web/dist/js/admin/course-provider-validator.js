@@ -92,7 +92,7 @@ function validateFormURL(url, errorElementId, foucsElementId, min, max){
 	
 	
 	if(!isValidMinMaxLength(url, min,  max)){
-		var message2 = "URL is empty or too long.";	
+		var message2 = "URL is too long.";	
 		setErrorMessage(foucsElementId, errorElementId, message2);
 		flag = false;
 	}else if (isempty(url) && !ValidURL(url)) {
@@ -414,7 +414,7 @@ function vaidateCourseProviderDeatils(accountType) {
 		flag = false;	
 	}
 
-	flag  = validateFormURL(webLink, '#errorWebLink', '#webLinkDiv', 1, 255);
+	flag  = validateFormURL(webLink, '#errorWebLink', '#webLinkDiv', 0, 255);
 	flag  = validateFormURL(facebook, '#errorFacebook', '#facebookDiv', 0, 255);
 	flag  = validateFormURL(linkdedIn, '#errorLinkedIn', '#linkdedInDiv', 0, 255);
 	flag = validateFormURL(twitter, '#errorTwitter', '#twitterDiv', 0, 255);
