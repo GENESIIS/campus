@@ -428,12 +428,17 @@ function landPhoneNubmerHelper() {
 		displyPhoneNumber('#lastMobileNumber',"Please select your country." );
 		displyPhoneNumber('#lastFaxNumber',"Please select your country." );
 		
+
 	}else{
+		// set country code for the phone number fields
 		var numbers = jQuery("[id=countryCode]");//set country code
 		for (var i = 0; i< numbers.length; i++){
 			$(numbers[i]).val("+" + country);
 		}
-	
+	// set country code value for the course provider account contact number
+		$("#countryCode2").html("+" + country);
+		
+
 		lastLandNumber1 = "+" + country;
 		lastLandNumber2 = "+" + country;
 		lastMobileNumber = "+" + country;
@@ -555,21 +560,21 @@ function saveCourseProvider() {
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
 	
-	if (providerUsernameValidation() === false) {
-		message = "Invalid Username";
-		flag = false;
-	}
-	if (providerPrefixValidation() === false) {
-		if(flag === false){
-			message += " and Prefix";
-		}else{
-			message = "Invalid Prefix";
-		}
-		flag = false;
-	}
+//	if (providerUsernameValidation() === false) {
+//		message = "Invalid Username";
+//		flag = false;
+//	}
+//	if (providerPrefixValidation() === false) {
+//		if(flag === false){
+//			message += " and Prefix";
+//		}else{
+//			message = "Invalid Prefix";
+//		}
+//		flag = false;
+//	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils(window.accountType) === true) {
+//		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -586,6 +591,13 @@ function saveCourseProvider() {
 
 								window.responseErrorMessage = response.userMessage;
 								if (response['registerId'] === 0) {
+									
+									// highlight accordions
+									changeAccordion("#accountInfoSection", "#accountInfoAccordion");
+									changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv")
+									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv")
+									changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 									
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
@@ -625,11 +637,20 @@ function saveCourseProvider() {
 		}else{
 			$("#userMessage").html("One or more fields are invalid.");
 		}
-	}else{
-		changeAccordion("#accountInfoSection", "#accountInfoAccordion");
-		document.getElementById("userMessage").style.display = "block";
-		$("#userMessage").html(message);
-	}
+//	}else{
+//		changeAccordion("#accountInfoSection", "#accountInfoAccordion");
+//		document.getElementById("userMessage").style.display = "block";
+//		$("#userMessage").html(message);
+//	}
+	
+	
+	
+	// highlight accordions
+	changeAccordion("#accountInfoSection", "#accountInfoAccordion");
+	changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+	changeAccordion("#contactInfoSection", "#contactInfoSectionDiv")
+	changeAccordion("#socialMedialSection", "#socialMedialSectionDiv")
+	changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 }
 
 /**
@@ -732,10 +753,10 @@ function setSuccessMessage(successElement, successToolTip, message){
  * @param element
  */
 function changeAccordion(element, accordion){
-	var errorList = $(element).find("div.has-error");
-	if (errorList) {
-		$("#accountInfoSection").css("background", "#e4aaaa");
+	var errorList = $("#adminInfoSection").find("div.has-error");
+	if (errorList.size !== 0) {
+		$("#adminInfoSection").css("background", "#e4aaaa");
 	}else{
-		$("#accountInfoSection").css("background", "#adc8e8");
+		$("#adminInfoSection").css("background", "#adc8e8");
 	}
 }
