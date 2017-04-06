@@ -34,6 +34,7 @@
  * 				// modified validateTutorModificationsByTutor method to fix town validation errors
  * //20170323 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & add address2, address3 field space removal validations
  * //20170324 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & fix password validation error
+ * //20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to pass tutor Code into back end 
  */
 
 /**
@@ -175,6 +176,7 @@ function validateTutorModificationsByTutor() {
 	var countrynameOld = $("#countrynameOld").val();
 	var townOld = $("#townOld").val();
 	var tutorstatusOld = $("#tutorstatusOld").val();
+	var tutorCode = $("#tutorCode").val();
 	
 	var flag = true;
 	var flagTemp = true;
@@ -372,7 +374,7 @@ function validateTutorModificationsByTutor() {
 		isModified = true;
 		if(isempty(newPassword)){ // new password has content
 			if(isempty(confirmPassword)){ // confirm password has content
-				var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword); 
+				var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode); 
 
 				if(valid.message == 'FALSE'){
 					if(valid.oldPasswordError != null){
@@ -990,7 +992,7 @@ function isValidUsername(username) {
  * @author CW
  * @param password
  */
-function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword) {
+function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode) {
 	var flag = true;				
 	
 	var resp = null;
@@ -1003,7 +1005,8 @@ function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPasswo
 			passwordFromDb : passwordFromDb,
 			oldPassword : oldPassword,
 			newPassword : newPassword,
-			confirmPassword : confirmPassword
+			confirmPassword : confirmPassword,
+			tutorCode : tutorCode
 		},
 		dataType : "json",
 		success : function(response) {
