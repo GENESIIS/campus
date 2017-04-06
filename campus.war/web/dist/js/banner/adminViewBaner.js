@@ -241,11 +241,12 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		return null;
 	}
 	
-		displayBannerCount = 0;
 		$('tbody tr').remove(); // if already exist remove <tr> elements within the table body
 		// assigning all the banner records to the global variable.
 		bannerArray = allBannerRecords;
 		var bannerImageWarPath = bannerWarPath;
+		displayBannerCount =allBannerRecords.length;
+		
 		/*
 		 * allBannerRecords forms a structure similar to bellow
 		 * [[a1,b1,c1],[a2,b2,c2],[a3,b3,c3],...,[an,bn,cn]].
@@ -308,10 +309,10 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
-			displayBannerCount =rowNumber; 
+			 
 		});
 	
-	$('#bannerViewRecodsCount').html(displayBannerCount+1);
+	$('#bannerViewRecodsCount').html(displayBannerCount);
 }
 
 
