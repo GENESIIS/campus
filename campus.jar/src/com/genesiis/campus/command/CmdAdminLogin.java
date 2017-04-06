@@ -10,6 +10,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.genesiis.campus.entity.AdminLoginDAO;
+import com.genesiis.campus.entity.AdminPrivilegeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
@@ -39,6 +41,7 @@ public class CmdAdminLogin implements ICommand{
 	String message;
 	private Admin adminData;
 	private static int max =0;
+	Collection<String> privilegeList = null;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -90,10 +93,13 @@ public class CmdAdminLogin implements ICommand{
 						if(status >0){
 							//admin privacy privilege list
 							//CAM-154 doing the admin privilege handling 
+							AdminPrivilegeDAO adminPrivilegeDAO = new AdminPrivilegeDAO();
+							privilegeList = (ArrayList<String>) adminPrivilegeDAO.adminPrivileges(adminData);
+							dataCollection.add(privilegeList);
 						}else{
 							
 						}
-						
+						session.setAttribute("currentUserData", dataCollection);
 						message = SystemMessage.LOGGEDSUCCESSFULL.message();
 						path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 						pageURL = path;
