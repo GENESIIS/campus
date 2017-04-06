@@ -21,6 +21,12 @@
  * 20170403 DN c86-admin-manage-banner-search-banner-dn.The method loadBanners() is added a field for the object to be sent to the server  
  * 			via the ajax call, called bannerCode.
  * 			include a banner code validation logic to the method validateDisplayingBanners() to avoid patterns other than 123.
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn The method validateDisplayingBanners() modified to change the message End Date 
+ * 			to Filter Records --> Start Date to Filter Records.
+ * 20170404 TR c87 Removed rowNumber column from banner search table
+ * 20170405 TR c87 modified populateBannerTable() function and added div structure to tr(row-block) 
+ * 20170406 DN c86-admin-manage-banner-search-banner-dn. An global variable  displayBannerCount is added and method  populateBannerTable(allBannerRecords,bannerWarPath)
+ * 			is modified to pass the total number of records to the adminViewBanner.jsp for displaying.
  */
 
 var theNewScript = document.createElement("script");
@@ -29,6 +35,7 @@ theNewScript.src = "../../dist/js/institute/validation/validation.js";
 
 var bannerArray ="";
 var adminControllerUrl = '../../../AdminController';
+var displayBannerCount =0;
 
 $(document).ready(function(){
 
@@ -206,7 +213,7 @@ function validateDisplayingBanners(){
 		}
 	} else if(!isEndDateEmpty){ // start date is empty but end date is filled
 		
-		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the End Date to Filter Records");
+		displayLabelMessage('messagePopUp','displayLabel','red',"Fill in the Start Date to Filter Records");
 		return validationPass;
 	} else{ // both date fields are empty then it's not required to validate
 		
@@ -238,6 +245,8 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 		// assigning all the banner records to the global variable.
 		bannerArray = allBannerRecords;
 		var bannerImageWarPath = bannerWarPath;
+		displayBannerCount =allBannerRecords.length;
+		
 		/*
 		 * allBannerRecords forms a structure similar to bellow
 		 * [[a1,b1,c1],[a2,b2,c2],[a3,b3,c3],...,[an,bn,cn]].
@@ -275,10 +284,10 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 			 */
 			var url ="/"+bannerImageWarPath+"/"+imgeNameComponent[0]+"/"+imageName; // 
 			
-			var markUp = "<tr id='rowId"+rowNumber+"'><td>"+rowNumber+"</td><td>"+advertiserName+"<hr>"+
-															bannerCode+" From : "+bannerActivateDate+" |To : "+bannerDeactivateDate+" <br><br>";
-			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+ 
-								"<button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button>" +//ADMIN EDIT BANNER
+			var markUp = "<tr class='row-block clearfix' id='rowId"+rowNumber+"'>" +
+				"<td class='banner-info'><div class='banner-code'>Banner Code: "+bannerCode+"</div><div class='ad-info'><div class='dates'><label>From : "+bannerActivateDate+"</label><br><label>To : "+bannerDeactivateDate+"</label></div><div class='advertiser-name'>"+advertiserName+"</div></div>";
+			markUp = markUp +"<form  method='POST' action='bannerManager.jsp'>"+
+								"<div class='btn-edit-record'><button type='submit' name='CCO' class='editRow' id='CCO' value='ADMEDTBNR'>Edit The Record</button></div>" +//ADMIN EDIT BANNER
 								"<input type='hidden' id='bannerCode"+rowNumber+"' name='bannerCode' value='"+bannerCode+"'>"+ 
 								"<input type='hidden' id='imageName"+rowNumber+"' name='imageName' value='"+imageName+"'>"+ 
 								"<input type='hidden' id='displayDuration"+rowNumber+"' name='displayDuration' value='"+displayDuration+"'>"+ 
@@ -296,13 +305,14 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageName"+rowNumber+"' name='pageName' value='"+pageName+"'>"+
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
-							 "</form></td>";
-			markUp = markUp +"<td><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image' style='width:200px;hight:60px'></td></tr>" ;
+							 "</form><div class='delete-check'><input type='checkbox'></div></td>";
+			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
-		
+			 
 		});
 	
+	$('#bannerViewRecodsCount').html(displayBannerCount);
 }
 
 
@@ -354,6 +364,6 @@ $(document).on('keypress','#bannerCodeFilter',function(event){
 	//event.preventDefault();
 	if(event.keyCode==13)
 		loadBanners();
-});
 
+});
 

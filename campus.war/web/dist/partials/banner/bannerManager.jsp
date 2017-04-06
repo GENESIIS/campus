@@ -18,6 +18,8 @@
      20170331 DN c83-admin-manage-banner-update-banner-info-dn changed the method argument to clearField('startDateInfor').
      			Banner activation and Deactivation field name typos corrected.
      			Add tool tip to URL field.
+     20170405 DN c83-admin-manage-banner-update-banner-info-dn Enable radio button groups' values are changed to yes-- 1 no-- 0
+     			add clearField('endtDateInfor') function to onclick event of the Banner deactivation date field
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -197,14 +199,14 @@
 			</div>
 			<br>
 			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
-			<label for="bannerEnable" hidden='true'>true</label>
-			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" 
+			<label for="bannerEnable" hidden='true'>1</label>
+			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="1" 
 			 <c:if test="${param.bannerActiveInactiveState != 0 }">
 			 	checked="checked"
 			 </c:if>
 			  >YES 			  
-			 <label for="bannerDissable" hidden='true'>false</label>
-			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false"
+			 <label for="bannerDissable" hidden='true'>0</label>
+			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="0"
 			<c:if test="${param.bannerActiveInactiveState eq 0 }">
 			 	checked="checked"
 			 </c:if>
@@ -220,7 +222,7 @@
 			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
 				Banner deactivation date * &nbsp;<input
 					type="date" name="endtDate" id="endtDate"
-					onclick="clearField('startDateInfor');"
+					onclick="clearField('startDateInfor');clearField('endtDateInfor');"
 					value="${param.bannerDeactivateDate}">
 			</div>
 			<br><br>
