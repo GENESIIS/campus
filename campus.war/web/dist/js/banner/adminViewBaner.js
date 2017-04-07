@@ -29,6 +29,7 @@
  * 			is modified to pass the total number of records to the adminViewBanner.jsp for displaying.
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
  * 			loading resolved using response.successCode === undefined loadBanners().
+ * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
  */
 
 var theNewScript = document.createElement("script");
@@ -68,7 +69,15 @@ $(document).ready(function(){
 		
 	});
 	
-	
+	/**
+	 * on change the radio-block class all the banners that is
+	 * having the filter criteria according to the radio button selection
+	 * will be displayed.
+	 */
+	$('.radio-block').change(function(event){
+		event.preventDefault();
+		loadBanners();
+	});
 });
 
 
