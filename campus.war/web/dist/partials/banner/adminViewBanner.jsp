@@ -12,8 +12,9 @@
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
  <!-- 20170405 TR c87 modified banner-records-table layout -->
- <!-- 20170406 DN span element is given an id for displaying the number of records available -->
-
+ <!-- 20170406 DN 83-admin-manage-banner-update-banner-info-dn. The span element is given an id for displaying the number of records available -->
+ <!-- 20170407 DN 83-admin-manage-banner-update-banner-info-dn. The 'Delete Selected button is changed to 'Inactive Selected Banner(s)' as per TWs' instructions -->
+ <!-- 			  Hide the radio button pending and Expired as per Tw's instruction																				 -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -102,11 +103,11 @@
                         <input type="radio" name="bannerStatus" value="0" id="statusInactive">
                     </div>
 
-                    <div class="radio-block">
+                    <div class="radio-block" style="visibility: hidden">
                         <span id="">Pending</span>
                         <input type="radio" name="bannerStatus" value="2" id ="statusPending"  >
                     </div>
-					<div class="radio-block">
+					<div class="radio-block" style="visibility: hidden">
                         <span id="">Expired</span>
                         <input type="radio" name="bannerStatus" value="3" id ="statusExpired"  >
                     </div>
@@ -121,7 +122,7 @@
     <div id="endtDateInfor" style ="color:#C70039;"></div>
      <div class="count-and-delete">
         <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
-            <button type="button" value="Delete Selected">Delete Selected</button>
+            <button type="button" value="Delete Selected">Inactive Selected Banner(s)</button>
         </div>
         <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
             <input type="checkbox" name="" value="">Select All
