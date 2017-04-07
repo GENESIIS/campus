@@ -29,6 +29,7 @@ package com.genesiis.campus.validation;
 //20170324 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method & fix password length validation error
 //20170324 CW c37-tutor-update-tutor-profile-cw modify OLD_NEW_PASSWORD_SAME to CURRENT_NEW_PASSWORD_SAME
 //20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to use getTutorPassword method & get the password
+//20170407 CW c37-tutor-update-tutor-profile-cw add isValidPasswordFormat method
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -489,8 +490,8 @@ public class Validator {
 		TutorDAO tutorDao = new TutorDAO();
 		String passwordFromDb = tutorDao.getTutorPassword(tutorCode);
 		
-		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword);
-		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString();
+		Encryptable passwordEncryptor = new TripleDesEncryptor(oldPassword.trim());
+		String encryptedOldPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 						
 		try {
 			if(!(isEmptyOrHavingSpace(oldPassword))){
@@ -507,6 +508,11 @@ public class Validator {
 						}else{
 							if (isEmptyOrHavingSpace(newPassword)){ // check for null fields
 								helper.setAttribute("newPasswordError", SystemMessage.EMPTYPASSWORD.message());
+								isValid = false;
+							}
+							
+							if (!isEmptyOrHavingSpace(newPassword) && !isValidPasswordFormat(newPassword)){ // check for null fields
+								helper.setAttribute("newPasswordError", SystemMessage.PASSWORDFORMATERROR.message());
 								isValid = false;
 							}
 							
@@ -545,4 +551,18 @@ public class Validator {
 		}
 		return isValid;
 	}
+	
+	
+	public static boolean isValidPasswordFormat(String password){
+		
+		Pattern VALID_PASSWORD_REGEX = Pattern.compile("^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
+		
+		boolean isValid = matcher.find();
+		
+		return isValid;
+		
+	}
+	
+	
 }
