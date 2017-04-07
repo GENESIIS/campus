@@ -36,6 +36,8 @@ package com.genesiis.campus.entity;
  *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method. 
  * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string.
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn.The method addBannerRecordInOneTransAction() include the banner ISACTIVE int value in the sql query.
+ * 20170407 DN c83-admin-manage-banner-update-banner-info-dn getAll(Object object)the sql query has been amended to return the result set in ascending order 
+ * 				by EXPIRATIONDATE as per the instruction given by TW
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -353,8 +355,8 @@ public class AdminBannerDAO implements ICrudSibling {
 	
 	
 	/**
-	 * getAll(Object o) method returns all the banners that all the advertiser have published
-	 * Depending on the induced details of the incoming object
+	 * getAll(Object o) method returns all the banners that all the advertiser have published<br>
+	 * Depending on the induced details of the incoming object in ascending order by EXPIRATIONDATE. 
 	 * @author dushantha DN
 	 * @param  object :Object type argument which has the filtering criteria
 	 * @return Collection<Collection<String>>
@@ -407,7 +409,7 @@ public class AdminBannerDAO implements ICrudSibling {
 			if(bannerCode!=null && bannerCode !=""){
 				querybuilder.append(" AND BNR.CODE = '"+bannerCode+"' ");
 			}
-			querybuilder.append(" ORDER BY ACTIVATIONDATE ASC ");
+			querybuilder.append(" ORDER BY EXPIRATIONDATE ASC ");
 			
 			conn = ConnectionManager.getConnection();
 			statement = conn.prepareStatement(querybuilder.toString());
