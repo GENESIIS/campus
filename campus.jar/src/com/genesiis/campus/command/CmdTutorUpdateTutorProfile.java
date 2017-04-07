@@ -19,6 +19,7 @@ package com.genesiis.campus.command;
 				//modified isValidUserAndEmailBeforeAddTutor() method to validate email if email field was updated.
 				//changed method setCompareVariables name into setCompareVariablesBeforeTutorUpdateTutor.
 //20170406 CW c37-tutor-update-tutor-profile-cw modified setCompareVariablesBeforeTutorUpdateTutor method & add validations for newPassword
+//20170407 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method & remove filling password into tutorCollection
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -129,19 +130,19 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
+			log.info("setCompareVariablesBeforeTutorUpdateTutor oldPassword ="+helper.getParameter("oldPassword"));
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
 				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newPassword")))){
-					Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));
+					log.info("setCompareVariablesBeforeTutorUpdateTutor newPassword ="+helper.getParameter("newPassword"));
 					
-					log.info("setCompareVariablesBeforeTutorUpdateTutor ="+helper.getParameter("newPassword"));
-					
-					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString();
+					Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));					
+					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString();					
 					tutor.setPassword(encryptedNewPassword);
 					updated = true;
 					
 
-					log.info("encryptedNewPassword :=" + encryptedNewPassword);
+					log.info("setCompareVariablesBeforeTutorUpdateTutor encryptedNewPassword :=" + encryptedNewPassword);
 					
 					
 				}
@@ -500,7 +501,6 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 
 		tutorCollection.add(Integer.toString(tutor.getCode()));	
 		tutorCollection.add(tutor.getUsername());	
-		tutorCollection.add(tutor.getPassword());		
 		tutorCollection.add(tutor.getFirstName());
 		tutorCollection.add(tutor.getMiddleName());
 		tutorCollection.add(tutor.getLastName());
