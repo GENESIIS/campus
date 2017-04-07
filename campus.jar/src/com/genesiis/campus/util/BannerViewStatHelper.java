@@ -8,6 +8,7 @@
 // 20170403 MM c117-display-banners-record-viewcount-back-end - Now using findById(Object) method of BannerViewStatDAO to fetch existing stat records
 //				for banners of newly received banner stat update requests
 // 20170406 MM c117-display-banners-record-viewcount-back-end - Existing banner view stats are now updated and new ones are inserted 
+// 20170407 MM c117-display-banners-record-viewcount-back-end - Added test code to track issue with an NPE 
 
 package com.genesiis.campus.util;
 
@@ -97,7 +98,10 @@ public class BannerViewStatHelper {
 			BannerViewStatHelper.viewCount++;
 		}
 
-		if (BannerViewStatHelper.viewCount >= 100) {
+		if (BannerViewStatHelper.viewCount == 100) {
+			if (BannerViewStatHelper.viewCount % 100 == 0) {
+				log.info("Reached >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." + BannerViewStatHelper.viewCount + ". Flushing banner stats");	
+			}
 			// flush current view counts to the DB
 			flushBannerViewStats();
 		}
@@ -241,36 +245,6 @@ public class BannerViewStatHelper {
 		
 		return updateStatus;
 	}
-//	
-//	private int persistBannerCounts(List<BannerViewStat> viewStatInstances) throws Exception {
-//		BannerViewStatDAO bannerViewStatDao = new BannerViewStatDAO();
-//
-//		int insertStatus = 0;
-//
-//		try {
-//			insertStatus = bannerViewStatDao.add(viewStatInstances);
-//
-//		} catch (SQLException sqle) {
-//			log.error("execute(IDataHelper, IView) : SQLException " + sqle.toString());
-//			throw sqle;
-//
-//		} catch (Exception e) {
-//			log.error("execute(IDataHelper, IView) : Exception " + e.toString());
-//			throw e;
-//
-//		} finally {
-//			if (insertStatus > 0) {
-//				log.info("Banner view stat data was successfully flushed to DB!");
-//			} else {
-//				log.error("The attempt to flush banner view stat data to DB was unsuccessful!");
-//			}
-//		}
-//
-//		// Clear elements in bannerToViewCountResolver
-//		clearBannerViewStats();
-//		
-//		return insertStatus;
-//	}
 
 	private void clearBannerViewStats() {
 		// Clear bannerToViewCountResolver
