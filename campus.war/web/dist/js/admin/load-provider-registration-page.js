@@ -259,9 +259,11 @@ function displayProviderCountries() {
 	
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
-		$("#countries").on("click", function(e) {
+		$("#countries").on('click', function(e) {
 			$("#countries").val("");
-			
+			$('#selectedCountry').val("");
+			$('#selectedTown').val("");
+			 
 			if (countryCollection !== undefined & countryCollection !== null) {
 				var dataList = $("#countryresults");
 				dataList.empty();
@@ -278,6 +280,12 @@ function displayProviderCountries() {
 	}
 
 }
+
+
+//$("#countries").bind('click change', function(e) {
+//
+//	  $('#selectedCountry').val("");
+//});
 
 /**
  * select country code 
@@ -357,29 +365,45 @@ function getProviderTownListData() {
  */
 function displayProviderTownList() {
 
-	var countryCollection = window.townCollection;
+	var townCollection = window.townCollection;
 	
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
-		$("#towns").on("click", function(e) {
+//		$("#towns").on("click change", function(e) {
 			$("#towns").val("");
 			
-			if (countryCollection !== undefined & countryCollection !== null) {
+			if (townCollection !== undefined & townCollection !== null) {
 				var dataList = $("#townresults");
 				dataList.empty();
 				
-				if(countryCollection.length) {
-					for(var i=0; i<countryCollection.length; i++) {
-						var opt = $("<option></option>").attr({"data-town": countryCollection[i][0], "value" : countryCollection[i][1] });
+				if(townCollection.length) {
+					for(var i=0; i<townCollection.length; i++) {
+						var opt = $("<option></option>").attr({"data-town": townCollection[i][0], "value" : townCollection[i][1] });
 						dataList.append(opt);
 					}
 				}
 			}
 			
-		});
+//		});
 	}
 	
 }
+
+
+$('#towns').bind('click change',function(){
+   	$("#towns").val("");
+	if (townCollection !== undefined & townCollection !== null) {
+		var dataList = $("#townresults");
+		dataList.empty();
+		
+		if(townCollection.length) {
+			for(var i=0; i<townCollection.length; i++) {
+				var opt = $("<option></option>").attr({"data-town": townCollection[i][0], "value" : townCollection[i][1] });
+				dataList.append(opt);
+			}
+		}
+	}
+});
 
 /**
  * select town code 
@@ -552,12 +576,11 @@ function saveCourseProvider() {
 	var flag = true;
 
 	// clear all previous error messages
-	for (var i = 0; i < errorMessageList.length; i++) {
+	for (var i = 0; i <= errorMessageList.length; i++) {
 		var varId = $(errorMessageList[i]).attr('id');
 		varId = '#' + varId;
 		clearToolTip(varId);
-		
-		
+	
 	}
 
 	clearToolTip('#uniquePrefixDiv');
