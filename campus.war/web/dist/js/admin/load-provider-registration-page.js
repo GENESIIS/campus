@@ -31,6 +31,7 @@
 //20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
 //20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
 //				to front end validation methods, show back end validation error messages wip
+//20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -450,9 +451,11 @@ function landPhoneNubmerHelper() {
 			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
 			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
 			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");
-			setErrorMessage('#land2Div', '#errorLand2', "Area code is empty or invalid.");
 			if(isempty(fax)){ // show error message if fax number is not empty
 				setErrorMessage('#faxDiv', '#errorFax', "Area code is empty or invalid.");
+			}
+			if(isempty(land2)){ // show error message if land phone number 2 is not empty
+				setErrorMessage('#land2Div', '#errorLand2', "Area code is empty or invalid.");
 			}
 			
 			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
@@ -617,8 +620,8 @@ function saveCourseProvider() {
 								
 									// show user message with success styles
 									if (response['userMessage'] !== null) {
-										successAlert("#userMessage");
 										document.getElementById("userMessage").style.display = "block";	
+										successAlert("#userMessage");
 										$("#userMessage").html(response.userMessage );
 									}
 									$("#registeredId").val(response['registerId']);
@@ -693,7 +696,7 @@ function clearToolTip(element){
  * @author JH
  */
 function successAlert(element){
-	document.getElementById(element).style.display = "block";
+
 	$(element).removeClass("alert-danger");
 	$(element).addClass("alert-success");
 }
