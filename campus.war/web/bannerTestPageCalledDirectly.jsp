@@ -6,6 +6,8 @@
 <%-- 20170220 MM c127-display-banners-on-jsp-load-front-end - Added hidden field 
 				'areBannersDeliveredWithPage' to help determine by JQuery code whether to send an 
 				Ajax call to fetch banners if the slots remain empty after page load --%>
+<%-- 20170404 MM c117-display-banners-record-viewcount-back-end - Added test button to trigger 
+				sending of Ajax requests for banner-view-stat-adding --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -117,6 +119,8 @@
 		</c:otherwise>
 	</c:choose>
 	<input type="hidden" id="areBannersDeliveredWithPage" value="<c:out value="${bannerLoadStatus}"/>">
+	
+	<button id="bannerViewStatTestBtn">Click to trigger execution of banner-view-stat back-end code</button>
 	
 <%-- IMPORTANT: /dist/js/banner/banner_handler.js AND /dist/bower-components/jquery/jquery.min.js (jQuery v2.2.2) 
 	FILES *MUST* BE AVAILABLE TO ANY PAGE THAT CONTAINS BANNER CODE --%>
