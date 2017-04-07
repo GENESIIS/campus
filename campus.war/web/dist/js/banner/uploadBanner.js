@@ -543,7 +543,8 @@ $(document).on('click','#systemMessageClose',function(event){
  */
 function validateUploadBannerEmbedData(){
 	var validationPass =false;
-
+	var bannerCode =$('#bannerCode').val().trim();
+	var bannerCodeFilledAndNotEmpty = (bannerCode!=null)&&(bannerCode!="");
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#advertiser').val(),
 		/^([a-zA-Z]+)([a-zA-Za-zA-Z0-9\._]+){0,}$/g), "The Advertiser Field",
 		"advertiserInfor")))
@@ -566,12 +567,13 @@ function validateUploadBannerEmbedData(){
 	//else the start date is in the past than todays date then it s illegal
 	var todaysDate = new Date().toJSON().slice(0,10);
 	
-	//Banner Activation Date validation against the current date 
-	
-	if(!isFieldFilled(
-				compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date should be >= toDays' Date ... ","startDateInfor"))
+	//Banner Activation Date validation against the current date happens if there is no banner code assign: new Record
+	// if the banner code is prasent : existing banner to be updated.Then todays date check does not required.
+	if(!bannerCodeFilledAndNotEmpty){
+		if(!isFieldFilled(
+				(compareDates(todaysDate,$('#startDate').val(),"-")<=0),"The Banner Activation Date should be >= toDays' Date ... ","startDateInfor"))
 			return validationPass;
-	
+	}
 	if(!isFieldFilled(isempty($('#endtDate').val()),'The End date','endtDateInfor'))
 		return validationPass;
 	
