@@ -19,6 +19,7 @@ package com.genesiis.campus.validation;
 //20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
 //20170404 JH c141-ui-integration-for-add-course-provider validateCourseProvider() method changed to use AccountType enum class name instead of the enum value
 //20170405 JH c141-ui-integration-for-add-course-provider validateCourseProvider(IDataHelper) changes due to element id changes after UI integration
+//20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length change
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -179,13 +180,13 @@ public class Validator {
 		
 		if(!isValidLength(helper.getParameter("areaCode"), 20, 1) || !isInteger(helper.getParameter("areaCode")) ){
 			
-			helper.setAttribute("errorLand1", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
-			helper.setAttribute("errorLand2", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorLand1", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorLand2", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
 			
-			if(!isValidLength(helper.getParameter("fax"), 20, 1) ){
+			if(isValidLength(helper.getParameter("fax"), 20, 0) ){
 				
 				if(!isEmptyString(helper.getParameter("fax"))){
-					helper.setAttribute("errorFax", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+					helper.setAttribute("errorFax", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
 				}
 			}
 			
@@ -195,34 +196,34 @@ public class Validator {
 		// proceed with phone number validations only if the area code is valid
 		if(isValidLength(helper.getParameter("areaCode"), 20, 1) && isInteger(helper.getParameter("areaCode")) ){
 
-			if((!isValidLength(helper.getParameter("land1"), 20, 1)) || !isInteger(helper.getParameter("land1"))){
-				helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+			if((!isValidLength(helper.getParameter("land1"), 12, 1)) || !isInteger(helper.getParameter("land1"))){
+				helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 12 characters) or invalid. Only numbers allowed.");
 				errorString.add("Land number 1 ");
 			}
 			
-			if(isValidLength(helper.getParameter("land2"), 20, 0) && !isInteger(helper.getParameter("land2"))){
+			if(isValidLength(helper.getParameter("land2"), 12, 0) && !isInteger(helper.getParameter("land2"))){
 				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
 				errorString.add("land number 2");
 			}
 			
-			if( !isValidLength(helper.getParameter("land2"), 20, 0)){
-				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters).");
+			if( !isValidLength(helper.getParameter("land2"), 12, 0)){
+				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 212 characters).");
 				errorString.add("land number 2");
 			}
 			
-			if(isValidLength(helper.getParameter("fax"), 20, 0) && !isInteger(helper.getParameter("fax"))){
+			if(!isValidLength(helper.getParameter("fax"), 12, 0) || !isInteger(helper.getParameter("fax"))){
 				helper.setAttribute("errorFax", "Fax number is invalid or too long. Only numbers allowed.");
 				errorString.add("fax number");
 			}
 			
 		}
 	
-		if(!isValidLength(helper.getParameter("networkCode"), 20, 1) || !isInteger(helper.getParameter("networkCode"))){
-			helper.setAttribute("errorNetworkCode", "Network code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+		if(!isValidLength(helper.getParameter("networkCode"), 4, 1) || !isInteger(helper.getParameter("networkCode"))){
+			helper.setAttribute("errorNetworkCode", "Network code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
 			errorString.add("Network code ");
 		}
 		
-		if(!isValidLength(helper.getParameter("mobile"), 20, 1) || !isInteger(helper.getParameter("mobile"))){
+		if(!isValidLength(helper.getParameter("mobile"), 12, 1) || !isInteger(helper.getParameter("mobile"))){
 			helper.setAttribute("errorMobile", "Mobile number is empty or invalid. Only numbers allowed.");
 			errorString.add("Mobile code ");
 		}
@@ -231,11 +232,11 @@ public class Validator {
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
 		}
-		
-		if(!isValidLength(helper.getParameter("fax"), 20, 0) && !isInteger(helper.getParameter("fax"))){
-			helper.setAttribute("errorFax", "Fax number is too long(max 20 characters), or invalid");
-			errorString.add("Invalid Fax number");
-		}
+//		
+//		if(!isValidLength(helper.getParameter("fax"), 20, 0) && !isInteger(helper.getParameter("fax"))){
+//			helper.setAttribute("errorFax", "Fax number is too long(max 20 characters), or invalid");
+//			errorString.add("Invalid Fax number");
+//		}
 		
 		if(!isValidLength(helper.getParameter("address1"), 50, 1)){
 			helper.setAttribute("errorAddress1", "Empty or too long address line.");
@@ -351,11 +352,12 @@ public class Validator {
 			}
 		}
 			
-		if(!isValidLength(helper.getParameter("providerContactNumber"), 30, 1)  || !isInteger(helper.getParameter("providerContactNumber"))){
+		if(!isValidLength(helper.getParameter("providerContactNumber"), 12, 1)  || !isInteger(helper.getParameter("providerContactNumber"))){
 			helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
-			errorString.add("Empty, too long or invalid contact number. Maximum 30 characters.");
+			errorString.add("Empty, too long or invalid contact number. Maximum 12 characters.");
 		}
 		
+		String jskdfdsf = helper.getParameter("accountStatus");
 		if(isEmptyString(helper.getParameter("accountStatus"))){
 			helper.setAttribute("errorStatus", "Select the account status");
 			errorString.add("Account Status");
