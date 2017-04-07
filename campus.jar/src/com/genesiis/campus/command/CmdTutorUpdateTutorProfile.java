@@ -20,6 +20,7 @@ package com.genesiis.campus.command;
 				//changed method setCompareVariables name into setCompareVariablesBeforeTutorUpdateTutor.
 //20170406 CW c37-tutor-update-tutor-profile-cw modified setCompareVariablesBeforeTutorUpdateTutor method & add validations for newPassword
 //20170407 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method & remove filling password into tutorCollection
+//20170407 CW c37-tutor-update-tutor-profile-cw trim the password fields in  setCompareVariablesBeforeTutorUpdateTutor method
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -84,6 +85,8 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 					tutor.setIsApproved(false);	
 					tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
 					
+					
+					log.info("before call update before sent to db :=" + tutor.getPassword());
 					result = tutorDAO.update(tutor);	
 					
 					if (result > 0) {
@@ -130,19 +133,19 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
-			log.info("setCompareVariablesBeforeTutorUpdateTutor oldPassword ="+helper.getParameter("oldPassword"));
+		//	log.info("setCompareVariablesBeforeTutorUpdateTutor oldPassword ="+helper.getParameter("oldPassword"));
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
 				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newPassword")))){
-					log.info("setCompareVariablesBeforeTutorUpdateTutor newPassword ="+helper.getParameter("newPassword"));
+			//		log.info("setCompareVariablesBeforeTutorUpdateTutor newPassword ="+helper.getParameter("newPassword"));
 					
-					Encryptable passwordEncryptor = new TripleDesEncryptor(helper.getParameter("newPassword"));					
-					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString();					
+					Encryptable passwordEncryptor = new TripleDesEncryptor((helper.getParameter("newPassword")).trim());					
+					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString().trim();					
 					tutor.setPassword(encryptedNewPassword);
 					updated = true;
 					
 
-					log.info("setCompareVariablesBeforeTutorUpdateTutor encryptedNewPassword :=" + encryptedNewPassword);
+			//		log.info("setCompareVariablesBeforeTutorUpdateTutor encryptedNewPassword :=" + encryptedNewPassword);
 					
 					
 				}
