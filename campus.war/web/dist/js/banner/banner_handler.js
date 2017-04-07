@@ -39,6 +39,8 @@
  * 				shown-banner to retrieve the banner-code to send banner-stat-update-request 				
  * 20170404 MM c117-display-banners-record-viewcount-back-end - Created test code to trigger execution of 
  * 				back-end code that persists banner-view-counts 				
+ * 20170407 MM c117-display-banners-record-viewcount-back-end - Added code to track issue with NPE thrown 
+ * 				when baner-view-stat persisting back-end code is triggered 			
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -144,6 +146,53 @@ $(document).ready(function() {
 	        $('.banner').trigger('click');
 	    }
 	});
+	
+	$('#bannerViewStatTestBtn').on('click', function() {
+		alert("BannerViewStatTestButton was clicked!");
+		
+		var bannerCodeArray = [130, 131, 132, 134];
+		var index = 0;
+		
+		for (var i = 0; i < 200; i++) {
+			
+			console.log("attempt " + i);
+			if (i % 100 == 0) {
+				console.log("Reached " + i);
+			} 
+			
+			var bannerCode = bannerCodeArray[index];
+			$.ajax({
+				url : '/PublicController',
+				method : 'POST',
+				data : {
+					'CCO' : 'ADD_BANNER_VIEW_STAT',
+					'banner' : bannerCode,
+					'requestNo' : i
+				},
+				dataType : "json",
+				async : true,
+				success : function(response) {			
+					var operationStatus = response.operationStatus; 			
+					if(operationStatus != undefined && operationStatus != null) {
+						if (operationStatus === 'SUCCESS') {
+							console.log('Banner-statistics successfully updated.');
+						} else if (operationStatus === 'FAILURE') {
+							console.log('Banner-statistics update failed.');
+						}
+					}
+				},
+				error : function(response) {			
+					console.log('Ajax request to update statistics failed.');
+				}
+			});
+			
+			if (index == 3) {
+				index = 0;
+			} else {
+				index++;
+			}			
+		}
+	});
 });
 
 //Event handler for sending Ajax request to fetch banners 
@@ -224,45 +273,3 @@ function getPageName() {
 	
 	return pageName;
 }
-
-$('#bannerViewStatTestBtn').on('click', function() {
-	alert("BannerViewStatTestButton was clicked!");
-	
-	var bannerCodeArray = {130, 131, 132, 134};
-	var index = 0;
-	
-		for (var i = 0; i < 200; i++) {
-			
-			var bannerCode = bannerCodeArray[index];
-			$.ajax({
-				url : '/PublicController',
-				method : 'POST',
-				data : {
-					'CCO' : 'ADD_BANNER_VIEW_STAT',
-					'banner' : bannerCode
-				},
-				dataType : "json",
-				async : true,
-				success : function(response) {			
-					var operationStatus = response.operationStatus; 			
-					if(operationStatus != undefined && operationStatus != null) {
-						if (operationStatus === 'SUCCESS') {
-							console.log('Banner-statistics successfully updated.');
-						} else if (operationStatus === 'FAILURE') {
-							console.log('Banner-statistics update failed.');
-						}
-					}
-				},
-				error : function(response) {			
-					console.log('Ajax request to update statistics failed.');
-				}
-			});
-			
-			if (index == 3) {
-				index = 0;
-			} else {
-				index++;
-			}			
-		}
-});
-
