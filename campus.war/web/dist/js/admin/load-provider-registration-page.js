@@ -31,7 +31,7 @@
 //20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
 //20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
 //				to front end validation methods, show back end validation error messages wip
-//20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block
+//20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -595,13 +595,6 @@ function saveCourseProvider() {
 								window.responseErrorMessage = response.userMessage;
 								if (response['registerId'] === 0) {
 									
-									// highlight accordions
-									changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
-									changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
-									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
-									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
-									changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
-									
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
 										errorAlert("#userMessage");
@@ -628,7 +621,26 @@ function saveCourseProvider() {
 									jQuery('#upload-logo-modal').modal('show');
 									$("#basicForm").trigger('reset');
 									
+									// clear all previous error messages
+									var errorMessageList = document.getElementsByClassName('has-error');
+								
+									for (var i = 0; i < errorMessageList.length; i++) {
+										var varId = $(errorMessageList[i]).attr('id');
+										varId = '#' + varId;
+										clearToolTip(varId);
+										
+										
 									}
+									
+									}
+								
+								
+								// change accordions
+								changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+								changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+								changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+								changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
+								changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 							}
 						},
 						error : function(x, status, error) {
