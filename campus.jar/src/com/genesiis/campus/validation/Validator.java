@@ -19,7 +19,8 @@ package com.genesiis.campus.validation;
 //20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
 //20170404 JH c141-ui-integration-for-add-course-provider validateCourseProvider() method changed to use AccountType enum class name instead of the enum value
 //20170405 JH c141-ui-integration-for-add-course-provider validateCourseProvider(IDataHelper) changes due to element id changes after UI integration
-//20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length changes, password validation methods changed
+//20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length changes, password validation methods changed, email address
+//				validation pattern changed
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -83,7 +84,7 @@ public class Validator {
 	 * @return boolean to validate email address.
 	 **/
 	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
@@ -374,9 +375,13 @@ public class Validator {
 	 */
 	public static ArrayList<String> courseProviderURLValidation(IDataHelper helper, ArrayList<String> errorString,
 			int maxLength, int minLength, String element, String errorElement){
+		element = helper.getParameter(element);
 		
-		if(!isValidLength(helper.getParameter(element), maxLength, minLength)){
+		if(!isValidLength(element, maxLength, minLength)){
 			helper.setAttribute( errorElement, "URL exceeds the maximum length. Only " + minLength +" to " + maxLength + " characters allowed");
+			errorString.add( element + " URL invalid.");
+		}else if(!isEmptyString(element) && isInteger(element)){
+			helper.setAttribute( errorElement, "Only numbers are not allowed.");
 			errorString.add( element + " URL invalid.");
 		}
 		
