@@ -1,6 +1,14 @@
 package com.genesiis.campus.entity;
-//20170405 AS c23-admin-login-logout-function-as - AdminPrivilegeDAO created 
-//20170405 AS c23-admin-login-logout-function-as - adminPrivileges()  coding WIP
+//20170405 AS c154-admin-privilege-handling-as - AdminPrivilegeDAO created 
+//20170405 AS c154-admin-privilege-handling-as - adminPrivileges()  coding WIP
+//20170407 AS c154-admin-privilege-handling-as - imports oder changed
+
+import com.genesiis.campus.command.CmdAdminLogin;
+import com.genesiis.campus.entity.model.Admin;
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.validation.ApplicationStatus;
+
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,14 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.command.CmdAdminLogin;
-import com.genesiis.campus.entity.model.Admin;
-import com.genesiis.campus.util.ConnectionManager;
-import com.genesiis.campus.validation.ApplicationStatus;
-
 
 
 public class AdminPrivilegeDAO implements ICrud{
