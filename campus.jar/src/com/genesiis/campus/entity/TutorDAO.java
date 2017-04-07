@@ -38,6 +38,7 @@ import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
 //20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
 //20170406 CW c37-tutor-update-tutor-profile-cw add getTutorPassword method
 //20170407 CW c37-tutor-update-tutor-profile-cw removed password selecting from findById
+//20170407 CW c37-tutor-update-tutor-profile-cw trim the password fields in getTutorPassword method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -405,7 +406,7 @@ public class TutorDAO implements ICrud {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				password = rs.getString("PASSWORD");
+				password = rs.getString("PASSWORD").trim();
 				log.info("getTutorPassword password from db ="+password);
 			}
 			
