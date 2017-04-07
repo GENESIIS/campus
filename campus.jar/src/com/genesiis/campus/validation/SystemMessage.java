@@ -19,6 +19,7 @@ package com.genesiis.campus.validation;
 //20170301 c37-tutor-update-tutor-profile-cw-added TOWN_CODE_NOT_CHANGED
 //20170323 c37-tutor-update-tutor-profile-cw modified EMPTYCONFIRMPASSWORD message
 //20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password
+//20170407 CW c37-tutor-update-tutor-profile-cw added PASSWORDFORMATERROR command
 
 
 public enum SystemMessage {	
@@ -41,7 +42,8 @@ public enum SystemMessage {
 	EMPTYLANDNUMBER("Land number cannot be empty."),
 	EMPTYADDRESS1("Address Line 1 cannot be empty."),
 	TOWN_CODE_NOT_CHANGED("Please change the town code ... "),
-	PASSWORDLENGTHERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	PASSWORDLENGTHERROR("Password should have at least 8 characters & shorter than 50 characters."),
+	PASSWORDFORMATERROR("Password should have both characters & numbers with beween 8 & 50 characters."),
 	PASSWORDCONFIRMERROR("Password & confirm Password entered must be the same."),
 	EMPTYPASSWORD("Password cannot be empty."),
 	EMPTYCONFIRMPASSWORD("Confirm password cannot be empty."),
@@ -52,7 +54,7 @@ public enum SystemMessage {
 	EMPTYFIELD("Please fill required data"),
 	UPDATED("Details Updated successfully."),
 	NOMODIFICATIONS("You haven't done any changes."),
-	PASSWORDERROR("Password should have at least 6 characters & shorter than 20 characters."),
+	PASSWORDERROR("Password should have at least 8 characters & shorter than 50 characters."),
 	INCORRECT_PASSWORD("Incorrect Current Password ..."),
 	MOBILECOUNTRYCODEERROR("Mobile Country code error."),
 	COUNTRYCODEERROR("Country code error."),
