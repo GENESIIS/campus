@@ -27,6 +27,8 @@
  * 20170405 TR c87 modified populateBannerTable() function and added div structure to tr(row-block) 
  * 20170406 DN c86-admin-manage-banner-search-banner-dn. An global variable  displayBannerCount is added and method  populateBannerTable(allBannerRecords,bannerWarPath)
  * 			is modified to pass the total number of records to the adminViewBanner.jsp for displaying.
+ * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
+ * 			loading resolved using response.successCode === undefined loadBanners().
  */
 
 var theNewScript = document.createElement("script");
@@ -38,7 +40,7 @@ var adminControllerUrl = '../../../AdminController';
 var displayBannerCount =0;
 
 $(document).ready(function(){
-
+	
 	/*
  * When the page gets loded the Banner credentials
  * for all the active users are loaded, without a filtering
@@ -49,8 +51,9 @@ $(document).ready(function(){
  * when the user fires a click event on the button the system
  * loads the data (banner credentials accordingly).
  */	
-	$('#filterBanners').click(function(){
-		$("#bannerDisplaytbl tr").remove();
+	$('#filterBanners').click(function(event){
+		//$("#bannerDisplaytbl tr").remove();
+		event.preventDefault();
 		loadBanners();
 	});
 	
@@ -95,7 +98,7 @@ function loadBanners(){
 			// call the function that populates the table based on supplied data
 			// if the server reply is a success
 			var cssColour='red';
-			if(response.successCode===1){
+			if(response.successCode===1 ||response.successCode === undefined ){
 				cssColour='green';
 				if(response.result === "NO-DATA"||response.result.length===0)
 					displayLabelMessage('messagePopUp','displayLabel',cssColour,response.message);
