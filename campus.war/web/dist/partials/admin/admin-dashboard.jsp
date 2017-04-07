@@ -6,30 +6,39 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin Dashboard</title>
+
+<!-- Bootstrap & CSS Style-->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
+<link href="/dist/css/style.css" rel="stylesheet">
+<link href="/dist/css/image-slides.css" rel="stylesheet">
+
+<!-- W3-Include -->
+<script src="/dist/bower-components/w3/w3data.js"></script>
+<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+<script src="/dist/js/image-slides.js"></script>
+<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+<script src="/dist/js/main.js"></script>
+
+
 </head>
 <body>
-	Welcome to Admin Dashboard
+<header>
+	<jsp:include page="/dist/partials/layout/admin-header.jsp"></jsp:include>
+	<jsp:include page="/dist/partials/admin/AdminSessionDetails.jsp"></jsp:include>
+</header>
+ 	Welcome to Admin Dashboard 
 
-	<!-- 	checked session already created or not, if not redirect to login.jsp -->
-	<c:if test="${sessionScope.currentSessionUser == null}">
-		<script>
-			window.location.href = '/dist/partials/admin/admin-login.jsp';
-		</script>
-	</c:if>
+	
 
-	<div class="login-link">
+	<!-- Footer -->
+	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
+	<!-- End Footer -->
 
-		<c:if test="${sessionScope.currentSessionUser != null}">
-			<h3>Hi ${sessionScope.user}, Login successful.</h3>
+	<!-- jQuery & Other js -->
 
-			<input type="hidden" id="userCode" name="userCode"
-				value="${sessionScope.userCode}" />
-
-			<a class="btn btn-link colr-white" name="CCO" id="CCO" value="ALGOUT"
-				onclick="">Logout</a>
-
-		</c:if>
-	</div>
-
+	<script src="dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+	<script src="dist/js/main.js"></script>
+	<script src="dist/js/header/ui-populate-helper.js"></script>
 </body>
 </html>
