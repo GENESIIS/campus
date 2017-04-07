@@ -6,6 +6,7 @@
 <!-- 20170316 CW c37-tutor-update-tutor-profile-cw modify field max lengths to match database field max size -->
 <!-- 20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password & Confirm new Password to Confirm Password-->
 <!-- 20170406 CW c37-tutor-update-tutor-profile-cw modified code hidden field into tutorCode -->
+<!-- 20170407 CW c37-tutor-update-tutor-profile-cw removed password & passwordFromDb fields -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -28,43 +29,41 @@
 
 			<c:set var="code" value="${tutorList[0]}"/>
 			<c:set var="username" value="${tutorList[1]}"/>
-			<c:set var="password" value="${tutorList[2]}"/>
-			<c:set var="firstname" value="${tutorList[3]}"/>
-			<c:set var="middlename" value="${tutorList[4]}"/>
-			<c:set var="lastname" value="${tutorList[5]}"/>
-			<c:set var="gender" value="${tutorList[6]}"/>
-			<c:set var="email" value="${tutorList[7]}"/>
-			<c:set var="landphonecountrycode" value="${tutorList[8]}"/>
-			<c:set var="landphoneareacode" value="${tutorList[9]}"/>
-			<c:set var="landphonenumber" value="${tutorList[10]}"/>
-			<c:set var="mobilephonecountrycode" value="${tutorList[11]}"/>
-			<c:set var="mobilephonenetworkcode" value="${tutorList[12]}"/>
-			<c:set var="mobilephonenumber" value="${tutorList[13]}"/>
-			<c:set var="description" value="${fn:trim(tutorList[14])}"/>
-			<c:set var="experience" value="${fn:trim(tutorList[15])}"/>
-			<c:set var="weblink" value="${tutorList[16]}"/>
-			<c:set var="facebookurl" value="${tutorList[17]}"/>
-			<c:set var="twitterurl" value="${tutorList[18]}"/>
-			<c:set var="myspaceurl" value="${tutorList[19]}"/>
-			<c:set var="linkedinurl" value="${tutorList[20]}"/>
-			<c:set var="instagramurl" value="${tutorList[21]}"/>
-			<c:set var="vibernumber" value="${tutorList[22]}"/>
-			<c:set var="whatsappnumber" value="${tutorList[23]}"/>
-			<c:set var="address1" value="${tutorList[24]}"/>
-			<c:set var="address2" value="${tutorList[25]}"/>
-			<c:set var="address3" value="${tutorList[26]}"/>
-			<c:set var="town" value="${tutorList[27]}"/>
-			<c:set var="towncode" value="${tutorList[28]}"/>
-			<c:set var="usertype" value="${tutorList[29]}"/>
-			<c:set var="countryname" value="${tutorList[30]}"/>
-			<c:set var="isapproved" value="${tutorList[31]}"/>
-			<c:set var="tutorstatus" value="${tutorList[32]}"/>
+			<c:set var="firstname" value="${tutorList[2]}"/>
+			<c:set var="middlename" value="${tutorList[3]}"/>
+			<c:set var="lastname" value="${tutorList[4]}"/>
+			<c:set var="gender" value="${tutorList[5]}"/>
+			<c:set var="email" value="${tutorList[6]}"/>
+			<c:set var="landphonecountrycode" value="${tutorList[7]}"/>
+			<c:set var="landphoneareacode" value="${tutorList[8]}"/>
+			<c:set var="landphonenumber" value="${tutorList[9]}"/>
+			<c:set var="mobilephonecountrycode" value="${tutorList[10]}"/>
+			<c:set var="mobilephonenetworkcode" value="${tutorList[11]}"/>
+			<c:set var="mobilephonenumber" value="${tutorList[12]}"/>
+			<c:set var="description" value="${tutorList[13]}"/>
+			<c:set var="experience" value="${fn:trim(tutorList[14])}"/>
+			<c:set var="weblink" value="${fn:trim(tutorList[15])}"/>
+			<c:set var="facebookurl" value="${tutorList[16]}"/>
+			<c:set var="twitterurl" value="${tutorList[17]}"/>
+			<c:set var="myspaceurl" value="${tutorList[18]}"/>
+			<c:set var="linkedinurl" value="${tutorList[19]}"/>
+			<c:set var="instagramurl" value="${tutorList[20]}"/>
+			<c:set var="vibernumber" value="${tutorList[21]}"/>
+			<c:set var="whatsappnumber" value="${tutorList[22]}"/>
+			<c:set var="address1" value="${tutorList[23]}"/>
+			<c:set var="address2" value="${tutorList[24]}"/>
+			<c:set var="address3" value="${tutorList[25]}"/>
+			<c:set var="town" value="${tutorList[26]}"/>
+			<c:set var="towncode" value="${tutorList[27]}"/>
+			<c:set var="usertype" value="${tutorList[28]}"/>
+			<c:set var="countryname" value="${tutorList[29]}"/>
+			<c:set var="isapproved" value="${tutorList[30]}"/>
+			<c:set var="tutorstatus" value="${tutorList[31]}"/>
 
 		</c:forEach>
 		
 		<input type="hidden" name="tutorCode" id="tutorCode" value="${code}"/>
 		<input type="hidden" name="usernameOld" id="usernameOld" value="${username}"/>
-		<input type="hidden" name="passwordFromDb" id="passwordFromDb" value="${password}"/>
 		<input type="hidden" name="firstnameOld" id="firstnameOld" value="${firstname}"/>
 		<input type="hidden" name="middlenameOld" id="middlenameOld" value="${middlename}"/>
 		<input type="hidden" name="lastnameOld" id="lastnameOld" value="${lastname}"/>
