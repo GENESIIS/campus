@@ -28,6 +28,7 @@
 <!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
 <!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
 <!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink, added min max password hints -->
+<!-- 20170407 JH c141-ui-integration-for-add-course-provider added a success message to display with the modal body when a course provider is registered -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -590,7 +591,9 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<input type="text" id="registeredId" name="registeredId" value="" readonly/>
+								<div style="color:green;">
+									<label>Course provider registered and the code is</label><input type="text" id="registeredId" name="registeredId" value="" readonly/>
+								</div>							
 								<button class="close" type="button" data-dismiss="modal">×</button>
 								<h4 class="modal-title">Upload Course Provider Logo</h4>
 							</div>
