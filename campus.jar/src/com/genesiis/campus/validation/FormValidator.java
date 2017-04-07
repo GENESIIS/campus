@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20170208 DJ c138-add-basic-programme-MP-dj Add FormValidator.java
 //20170209 DJ c138-add-basic-programme-MP-dj Add validateProgrammeDetails() for back end form validations
+//20170407 DJ c138-add-basic-programme-MP-dj Course name/Counselor name validated for spaces. Counselor telephone for length of 15.
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -49,7 +50,7 @@ public class FormValidator {
 			 */
 			
 			String courseName = helper.getParameter("courseName");
-			if (!UtilityHelper.isNotEmpty(courseName) || courseName.length() > 100) {
+			if (!UtilityHelper.isNotEmpty(courseName) || courseName.length() > 100 || courseName.trim().isEmpty()) {
 				helper.setAttribute("errorCourseName",
 						"Course name is empty or too long!");
 				isValid = false;
@@ -109,7 +110,7 @@ public class FormValidator {
 			 */
 			
 			String counselorName = helper.getParameter("counselorName");
-			if (!UtilityHelper.isNotEmpty(counselorName) || counselorName.length() > 35) {
+			if (!UtilityHelper.isNotEmpty(counselorName) || counselorName.length() > 35 || counselorName.trim().isEmpty()) {
 				helper.setAttribute("errorcounselorName",
 						"Counselor name is empty or too long!");
 				isValid = false;
@@ -129,7 +130,7 @@ public class FormValidator {
 
 			String counselorEmail = helper.getParameter("counselorEmail");
 
-			if (!UtilityHelper.isNotEmpty(counselorEmail)) {
+			if (!UtilityHelper.isNotEmpty(counselorEmail) || counselorEmail.length() > 15) {
 				helper.setAttribute("errorcounselorEmail",	"Please add counselor email address");
 				isValid = false;
 			} else if (!UtilityHelper.isValidEmailFormat(counselorEmail)) {
