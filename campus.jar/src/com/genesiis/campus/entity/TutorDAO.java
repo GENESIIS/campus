@@ -1,5 +1,7 @@
 package com.genesiis.campus.entity;
 
+import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
+
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
@@ -35,6 +37,7 @@ package com.genesiis.campus.entity;
 //20170306 CW c37-tutor-update-tutor-profile-cw removed un wanted space from getListOfUsernameEmail()
 //20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
 //20170406 CW c37-tutor-update-tutor-profile-cw add getTutorPassword method
+//20170407 CW c37-tutor-update-tutor-profile-cw removed password selecting from findById
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -142,6 +145,8 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(29, tutor.getModBy());			
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
+
+				log.info("update before sent to db :=" + tutor.getPassword());
 				preparedStatement.setString(30, tutor.getPassword());
 				preparedStatement.setInt(31, tutor.getCode());
 			}else{
@@ -194,7 +199,7 @@ public class TutorDAO implements ICrud {
 		String countryName = null;
 		String townName = null;
 					
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.PASSWORD, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
 		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
 		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
 		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
@@ -219,7 +224,6 @@ public class TutorDAO implements ICrud {
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
-				singleTutorList.add(rs.getString("PASSWORD"));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
@@ -402,6 +406,7 @@ public class TutorDAO implements ICrud {
 			
 			while (rs.next()) {
 				password = rs.getString("PASSWORD");
+				log.info("getTutorPassword password from db ="+password);
 			}
 			
 		} catch (SQLException sqlException) {
