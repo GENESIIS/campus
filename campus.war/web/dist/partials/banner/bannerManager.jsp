@@ -20,6 +20,8 @@
      			Add tool tip to URL field.
      20170405 DN c83-admin-manage-banner-update-banner-info-dn Enable radio button groups' values are changed to yes-- 1 no-- 0
      			add clearField('endtDateInfor') function to onclick event of the Banner deactivation date field
+     20170407 DN c83-admin-manage-banner-update-banner-info-dn depend on the task to be perform either edit the banner or add new banner
+     			add logic to display Add Banner or Edit Banner as the heading.
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -108,8 +110,15 @@
 
 
 <div class="panel panel-default">
-      <div class="panel-heading" align="center"><h1>Add Banner</h1></div>
-      <div class="panel-body"></div>
+		<div class="panel-heading" align="center">
+			<h1>
+				<c:choose>
+					<c:when test="${param.CCO eq 'ADMEDTBNR' }">Edit Banner</c:when>
+					<c:otherwise>Add Banner</c:otherwise>
+				</c:choose>
+			</h1>
+		</div>
+		<div class="panel-body"></div>
     </div>
 
 	<div align="center">
