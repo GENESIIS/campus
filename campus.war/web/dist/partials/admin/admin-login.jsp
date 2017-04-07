@@ -27,7 +27,7 @@
 <body>
 
 	<!-- Header-->
-	<header> <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
+	<header> <jsp:include page="/dist/partials/layout/admin-header.jsp"></jsp:include>
 	<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 	<jsp:include page="/dist/partials/login/loginPopup.jsp"></jsp:include>
 	</header>
