@@ -34,7 +34,9 @@
  * 				// modified validateTutorModificationsByTutor method to fix town validation errors
  * //20170323 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & add address2, address3 field space removal validations
  * //20170324 CW c37-tutor-update-tutor-profile-cw modified validateTutorModificationsByTutor method & fix password validation error
- * //20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to pass tutor Code into back end 
+ * //20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to pass tutor Code into back end
+ * //20170407 CW c37-tutor-update-tutor-profile-cw removed passwordFromDb from validateTutorModificationsByTutor method, removed isValidPassword, ValidateUsername & ValidateEmail methods
+ * 													removed ValidateEmail method call from isValidEmail method & it's validation, removed ValidateUsername method call from isValidUsername method & it's validation
  */
 
 /**
@@ -172,7 +174,7 @@ function validateTutorModificationsByTutor() {
 	var vibernumberOld = $("#vibernumberOld").val();
 	var emailOld = $("#emailOld").val();
 	var usernameOld = $("#usernameOld").val();
-	var passwordFromDb = $("#passwordFromDb").val();
+	//var passwordFromDb = $("#passwordFromDb").val();
 	var countrynameOld = $("#countrynameOld").val();
 	var townOld = $("#townOld").val();
 	var tutorstatusOld = $("#tutorstatusOld").val();
@@ -374,7 +376,7 @@ function validateTutorModificationsByTutor() {
 		isModified = true;
 		if(isempty(newPassword)){ // new password has content
 			if(isempty(confirmPassword)){ // confirm password has content
-				var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode); 
+				//var valid = isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode); 
 
 				if(valid.message == 'FALSE'){
 					if(valid.oldPasswordError != null){
@@ -943,12 +945,12 @@ function isValidEmail(email) {
 		flag = false;
 	}
 	
-	var emailExist = ValidateEmail(email);
+	/*var emailExist = ValidateEmail(email);
 	if (emailExist.message == '0') {
 		document.getElementById('emailError').innerHTML = "**Email entered Already exists.";
 		document.getElementById('email').focus();
 		flag = false;
-	}
+	}*/
 	return flag;
 }
 
@@ -978,12 +980,12 @@ function isValidUsername(username) {
 		flag = false;
 	}	
 	
-	var usernameExist = ValidateUsername(username);
+/*	var usernameExist = ValidateUsername(username);
 	if (usernameExist.message == '0') {
 		document.getElementById('usernameError').innerHTML = "**Username Already exists.";
 		document.getElementById('username').focus();
 		flag = false;
-	}	
+	}*/	
 	return flag;
 }
 
@@ -992,7 +994,7 @@ function isValidUsername(username) {
  * @author CW
  * @param password
  */
-function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode) {
+/*function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPassword, tutorCode) {
 	var flag = true;				
 	
 	var resp = null;
@@ -1018,8 +1020,8 @@ function isValidPassword(passwordFromDb, oldPassword, newPassword, confirmPasswo
 	});
 	
 	return resp;
-}
-
+}*/
+/*
 function ValidateUsername(username) {
 	var resp = null;
 	$.ajax({
@@ -1041,7 +1043,8 @@ function ValidateUsername(username) {
 
 	return resp;
 }
-
+*/
+/*
 function ValidateEmail(email) {
 	var resp = null;
 	$.ajax({
@@ -1062,7 +1065,7 @@ function ValidateEmail(email) {
 	});
 
 	return resp;
-}
+}*/
 
 function clearField(elementId) {
 	$(document).find('#' + elementId).text('');
