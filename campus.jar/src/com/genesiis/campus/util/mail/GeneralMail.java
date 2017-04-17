@@ -10,6 +10,8 @@ package com.genesiis.campus.util.mail;
 //20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
 //				setProperties() method refactor accordingly.
 //20161227 DN CAM:18 initialized the receivers field at its deceleration so that to avoid null pointer exceptions. 
+//20170417 CW c158-send-email-tutor-employment-confirmation-cw add ccList, bccList & constructor with bccList & ccList & add addBccToMail, addCCToMail methods
+				// modified setEmailMessage method to add bccList & ccList to email
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,7 +40,9 @@ public class GeneralMail implements IEmail {
 	static Logger log = Logger.getLogger(GeneralMail.class.getName());
 
     private ArrayList<String> receivers = new ArrayList<String>();    
-    private String sender;    
+    private ArrayList<String> ccList = new ArrayList<String>(); 
+    private ArrayList<String> bccList = new ArrayList<String>(); 
+    private String sender;      
     private String host ;
     private String subject;
     private String emailBody; 
@@ -67,6 +71,30 @@ public class GeneralMail implements IEmail {
     	setSystemPropertiesAndMailEnvironment();
     }
     
+	/**
+     * GeneralMail constructor creates the MimeMessage and Session automatically 
+     * with system properties including cc & bcc address list.
+     * @author CW
+     * @param receivers to list of the email ArrayList<String>
+     * @param ccList to list of the cc email ArrayList<String>
+     * @param bccList to list of the bcc email ArrayList<String>
+     * @param sender String: email address of  the person who sends the email     * 
+     * @param subject String: subject of the email
+     * @param emailBody String : body content of the email
+     */
+    public GeneralMail( ArrayList<String> receivers, ArrayList<String> ccList, ArrayList<String> bccList, String sender,
+    		String subject,String emailBody){
+    		
+    	this.receivers = receivers;
+    	this.ccList = ccList;
+    	this.bccList = bccList;
+    	this.sender = sender; 	
+    	this.subject = subject;
+    	this.emailBody = emailBody;	
+    
+    	setSystemPropertiesAndMailEnvironment();
+    }
+    
     /**
      * setEmailMessage() setup sender,receiver list,subject,and the message body and the
      * date of generating the email
@@ -84,6 +112,22 @@ public class GeneralMail implements IEmail {
 	         addSubjectToMail(this.message,this.subject);
 	         addBodyContentToMail(this.message,this.emailBody);
 	         setSentDateToMail(this.message);
+	         
+			if(this.bccList != null || this.bccList.size() != 0){
+		         addBccToMail(this.message,this.bccList);
+			}
+	         
+
+			if(this.ccList != null || this.ccList.size() != 0){
+		         addCCToMail(this.message,this.ccList);
+			}
+	         
+	         
+	         
+	         
+	         
+	         
+	         
 	         return this.message;	        
 	         
 	      }catch (MessagingException mex) {
@@ -148,6 +192,38 @@ public class GeneralMail implements IEmail {
 			
 		}
 		
+	}
+	
+	/*
+     * addBccToMail() unfolds the list of Bcc and
+     * add to the message mailing list only if the element is not null.
+     * @author CW
+     * @param bccList - list of Bcc ,MimeMessage message being context
+     */
+	private void addBccToMail(MimeMessage message,ArrayList<String> bccList)
+			throws MessagingException {
+
+		for (String emailAddress : bccList) {
+			if(!emailAddress.equals(null)){
+				message.addRecipients(Message.RecipientType.BCC, emailAddress);
+			}			
+		}		
+	}
+	
+	/*
+     * addCCToMail() unfolds the list of CC and
+     * add to the message mailing list only if the element is not null.
+     * @author CW
+     * @param ccList - list of CC ,MimeMessage message being context
+     */
+	private void addCCToMail(MimeMessage message,ArrayList<String> ccList)
+			throws MessagingException {
+
+		for (String emailAddress : ccList) {
+			if(!emailAddress.equals(null)){
+				message.addRecipients(Message.RecipientType.CC, emailAddress);
+			}			
+		}		
 	}
 	
 	/*
