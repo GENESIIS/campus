@@ -20,7 +20,8 @@
  * 			to be passed to the editing jsp and insert analogous hidden input names.
  *
  * 20170404 TR c87 Removed rowNumber column from banner search table
- * 20170405 TR c87 modified populateBannerTable() function and added div structure to tr(row-block) 
+ * 20170405 TR c87 modified populateBannerTable() function and added div structure to tr(row-block)
+ * 20170417 TR c82 added label related with check-one-by-one checkbox 
  */
 
 var theNewScript = document.createElement("script");
@@ -254,7 +255,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageName"+rowNumber+"' name='pageName' value='"+pageName+"'>"+
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
-							 "</form><div class='delete-check'><input type='checkbox'></div></td>";
+							 "</form><div class='delete-check'><input class='check-one-by-one' type='checkbox' id='select-check'><label for='select-check'></label></div></td>";
 			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);

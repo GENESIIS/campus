@@ -12,7 +12,8 @@
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
  <!-- 20170405 TR c87 modified banner-records-table layout -->
- <!-- 20170406 TR c82 Added count-and-delete block to delete banners and display count of banners -->   
+ <!-- 20170406 TR c82 Added count-and-delete block to delete banners and display count of banners -->
+ <!-- 20170417 TR c82 added label related with check-all-delete checkbox and added styles -->
 
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -119,12 +120,13 @@
             </div>
         </div>
     </div>
-    <div class="count-and-delete">
-        <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
+    <div class="count-and-delete clearfix">
+        <div class="btn-banner-delete col-lg-2 col-md-2 col-sm-12">
             <button type="button" value="Delete Selected">Delete Selected</button>
         </div>
-        <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
-            <input type="checkbox" name="" value="">Select All
+        <div class="all-select-check col-lg-7 col-md-7 col-sm-7">
+            <input class="check-all-delete" type="checkbox" id="all-delete" value="">
+            <label for="all-delete">Select All</label>
         </div>
         <div class="result-count col-lg-3 col-md-3 col-sm-6"><span>25</span> Results Found</div>
     </div>

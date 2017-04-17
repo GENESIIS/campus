@@ -764,6 +764,7 @@ body, html {
 /* 20170405 TR c87 styling banner sample display area */
 /* 20170405 TR c87 styling banner banner code and info area */
 /* 20170406 TR c82 styling and set position delete checkbox  */
+/* 20170417 TR c82 styling checkboxes and buttons */
 /* Banner search page content */
 .banner-search-screen {
   display: block;
@@ -783,7 +784,10 @@ body, html {
         color: #fff;
         font-family: "Roboto", sans-serif;
         font-size: 15px;
-        width: 100%; }
+        width: 100%;
+        transition: all 0.3s; }
+        .banner-search-screen .add-new-area div button:hover {
+          background-color: #137747; }
   .banner-search-screen .filtering-area {
     display: block;
     width: 90%;
@@ -823,12 +827,69 @@ body, html {
           background-color: #448ccb;
           font-family: "Roboto", sans-serif;
           font-size: 15px;
-          width: 100%; }
+          width: 100%;
+          transition: all 0.3s; }
+          .banner-search-screen .filtering-area > div > div .btn-b-filter button:hover {
+            background-color: #2d6ea7; }
   .banner-search-screen .count-and-delete {
     display: block;
     width: 90%;
     margin-right: auto;
-    margin-left: auto; }
+    margin-left: auto;
+    padding-bottom: 15px; }
+    .banner-search-screen .count-and-delete .btn-banner-delete button {
+      border: none;
+      height: 36px;
+      color: #fff;
+      background-color: #e66155;
+      font-family: "Roboto", sans-serif;
+      font-size: 15px;
+      width: 100%;
+      transition: all 0.3s; }
+      .banner-search-screen .count-and-delete .btn-banner-delete button:hover {
+        background-color: #c74f45; }
+    .banner-search-screen .count-and-delete .all-select-check {
+      line-height: 36px;
+      font-family: "Roboto", sans-serif;
+      font-size: 15px;
+      color: #434549; }
+      .banner-search-screen .count-and-delete .all-select-check .check-all-delete {
+        position: absolute;
+        opacity: 0; }
+        .banner-search-screen .count-and-delete .all-select-check .check-all-delete + label {
+          position: relative;
+          cursor: pointer;
+          padding: 0; }
+          .banner-search-screen .count-and-delete .all-select-check .check-all-delete + label:before {
+            content: "";
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 2px solid #cecece; }
+        .banner-search-screen .count-and-delete .all-select-check .check-all-delete:hover + label:before {
+          background: #f35429; }
+        .banner-search-screen .count-and-delete .all-select-check .check-all-delete:checked + label:before {
+          background: #f35429; }
+        .banner-search-screen .count-and-delete .all-select-check .check-all-delete:checked + label:after {
+          content: "";
+          position: absolute;
+          left: 5px;
+          top: 18px;
+          background: white;
+          width: 2px;
+          height: 2px;
+          box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+          transform: rotate(45deg); }
+    .banner-search-screen .count-and-delete .result-count {
+      color: #434549;
+      font-family: "Roboto", sans-serif;
+      text-align: right;
+      position: relative;
+      top: 22px;
+      font-weight: 600; }
 
 .tbl-bg {
   background-color: #e5e9ec; }
@@ -904,6 +965,38 @@ body, html {
               max-height: 115px;
               max-width: 100%;
               border: 2px solid #1f9f61; }
+
+/* Styling Check boxes */
+.check-one-by-one {
+  position: absolute;
+  opacity: 0; }
+  .check-one-by-one + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0; }
+    .check-one-by-one + label:before {
+      content: "";
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 2px solid #cecece; }
+  .check-one-by-one:hover + label:before {
+    background: #f3aa37; }
+  .check-one-by-one:checked + label:before {
+    background: #f3aa37; }
+  .check-one-by-one:checked + label:after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: -1px 0 0 white, 2px 0 0 white, 2px 0px 0 white, 2px -2px 0 white, 2px -4px 0 white, 2px -6px 0 white;
+    transform: rotate(45deg); }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {
