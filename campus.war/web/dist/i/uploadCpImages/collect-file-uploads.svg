@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="218px" height="218px" viewBox="0 0 218 218" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>collect-file-uploads</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0.784313725   0 0 0 0 0.807843137   0 0 0 0 0.823529412  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"/>
+        </filter>
+        <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="210" height="210" fill="white">
+            <use xlink:href="#path-1"/>
+        </mask>
+        <rect id="path-4" x="5.10750918" y="9.50090746" width="80" height="50" rx="3"/>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.06 0" type="matrix" in="shadowBlurOuter1"/>
+        </filter>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="50" fill="white">
+            <use xlink:href="#path-4"/>
+        </mask>
+        <rect id="path-7" x="-7.10542736e-15" y="0" width="80" height="50" rx="3"/>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.06 0" type="matrix" in="shadowBlurOuter1"/>
+        </filter>
+        <mask id="mask-9" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="50" fill="white">
+            <use xlink:href="#path-7"/>
+        </mask>
+        <rect id="path-10" x="0.703877841" y="0.501288628" width="80" height="50" rx="3"/>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-11">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.06 0" type="matrix" in="shadowBlurOuter1"/>
+        </filter>
+        <mask id="mask-12" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="50" fill="white">
+            <use xlink:href="#path-10"/>
+        </mask>
+        <rect id="path-13" x="0" y="0" width="80" height="50" rx="3"/>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-14">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.06 0" type="matrix" in="shadowBlurOuter1"/>
+        </filter>
+        <mask id="mask-15" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="50" fill="white">
+            <use xlink:href="#path-13"/>
+        </mask>
+    </defs>
+    <g id="Features" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-611.000000, -1525.000000)" id="Get-Responses">
+            <g transform="translate(108.000000, 597.000000)">
+                <g transform="translate(0.000000, 861.000000)">
+                    <g id="Collect-File-Uploads" transform="translate(507.000000, 70.000000)">
+                        <g id="collect-file-uploads">
+                            <g id="Background">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"/>
+                                <use stroke="#D9DDE2" mask="url(#mask-3)" stroke-width="2" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"/>
+                            </g>
+                            <g id="Elements" transform="translate(20.000000, 20.000000)">
+                                <g id="Sound">
+                                    <g id="Background" transform="translate(45.107509, 34.500907) rotate(-15.000000) translate(-45.107509, -34.500907) ">
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"/>
+                                        <use stroke="#E5E5EA" mask="url(#mask-6)" stroke-width="2" fill="#FCFCFC" fill-rule="evenodd" xlink:href="#path-4"/>
+                                    </g>
+                                    <path d="M38.1283319,27.8850744 C38.1283319,26.7824365 38.9539812,25.5400805 39.9691678,25.1115889 L50.1500179,20.8144387 C51.1666834,20.3853228 51.9908537,20.9289911 51.9908537,22.036796 L51.9908537,47.2936969 C51.9908537,48.3979021 51.1652044,48.9445458 50.1500179,48.5160542 L39.9691678,44.218904 C38.9525022,43.7897881 38.1283319,42.5473154 38.1283319,41.4454185 L38.1283319,27.8850744 Z M29.0785022,29.7318019 C29.0785022,28.6233719 29.9704536,27.7248119 31.08331,27.7248119 L34.0049553,27.7248119 C35.11218,27.7248119 36.0097631,28.622378 36.0097631,29.7318019 L36.0097631,39.7257185 C36.0097631,40.8341486 35.1178116,41.7327086 34.0049553,41.7327086 L31.08331,41.7327086 C29.9760852,41.7327086 29.0785022,40.8351425 29.0785022,39.7257185 L29.0785022,29.7318019 Z M57.5852259,32.0791005 C58.5774925,32.7023602 59.0981419,33.4754135 59.0981419,34.2321184 C59.0981419,34.9876283 58.5783716,35.7601365 57.5880051,36.383391 C57.1238063,36.6755192 56.9818578,37.2925898 57.2709543,37.7616566 C57.5600508,38.2307235 58.1707173,38.3741606 58.6349162,38.0820324 C60.1596777,37.122474 61.0785022,35.756872 61.0785022,34.2321184 C61.0785022,32.7055233 60.1581226,31.338956 58.6306977,30.3795542 C58.1662515,30.0878276 57.5557067,30.2317928 57.2670076,30.7011096 C56.9783086,31.1704263 57.1207798,31.7873739 57.5852259,32.0791005 Z" fill="#DFE1E5" transform="translate(45.078502, 34.664896) rotate(-15.000000) translate(-45.078502, -34.664896) "/>
+                                </g>
+                                <g id="Document" transform="translate(47.000000, 41.000000)">
+                                    <g id="Background" transform="translate(40.000000, 25.000000) rotate(-360.000000) translate(-40.000000, -25.000000) ">
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"/>
+                                        <use stroke="#E5E5EA" mask="url(#mask-9)" stroke-width="2" fill="#FCFCFC" fill-rule="evenodd" xlink:href="#path-7"/>
+                                    </g>
+                                    <path d="M8,40 C8,38.8954305 8.90472412,38 10.0032986,38 L69.9967014,38 C71.1030927,38 72,38.8877296 72,40 C72,41.1045695 71.0952759,42 69.9967014,42 L10.0032986,42 C8.89690735,42 8,41.1122704 8,40 Z M8,10 C8,8.8954305 8.90472412,8 10.0032986,8 L69.9967014,8 C71.1030927,8 72,8.88772964 72,10 C72,11.1045695 71.0952759,12 69.9967014,12 L10.0032986,12 C8.89690735,12 8,11.1122704 8,10 Z M8,20 C8,18.8954305 8.89153983,18 9.99729162,18 L46.0027084,18 C47.1057821,18 48,18.8877296 48,20 C48,21.1045695 47.1084602,22 46.0027084,22 L9.99729162,22 C8.89421792,22 8,21.1122704 8,20 Z M8,30 C8,28.8954305 8.90255737,28 10.0065993,28 L57.9934007,28 C59.1016149,28 60,28.8877296 60,30 C60,31.1045695 59.0974426,32 57.9934007,32 L10.0065993,32 C8.89838509,32 8,31.1122704 8,30 Z" id="Line" fill="#DFE1E5"/>
+                                </g>
+                                <g id="Movie" transform="translate(79.910245, 113.552430) rotate(-15.000000) translate(-79.910245, -113.552430) translate(39.410245, 88.052430)">
+                                    <g id="Background">
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"/>
+                                        <use stroke="#E5E5EA" mask="url(#mask-12)" stroke-width="2" fill="#FCFCFC" fill-rule="evenodd" xlink:href="#path-10"/>
+                                    </g>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="5.61936912" y="5.33864525" width="12" height="9" rx="3"/>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="5.58220438" y="36.3869724" width="12" height="9" rx="3"/>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="63.5935011" y="5.34362438" width="12" height="9" rx="3"/>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="24.3001292" y="5.16775893" width="12" height="9" rx="3"/>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="24.2629645" y="36.2160861" width="12" height="9" rx="3"/>
+                                    <rect id="Rectangle" fill="#DFE1E5" x="43.9468151" y="5.25569166" width="12" height="9" rx="3"/>
+                                </g>
+                                <g id="Picture" transform="translate(90.000000, 120.000000)">
+                                    <g id="Background" transform="translate(40.000000, 25.000000) rotate(-360.000000) translate(-40.000000, -25.000000) ">
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-14)" xlink:href="#path-13"/>
+                                        <use stroke="#E5E5EA" mask="url(#mask-15)" stroke-width="2" fill="#FCFCFC" fill-rule="evenodd" xlink:href="#path-13"/>
+                                    </g>
+                                    <g id="Photo" transform="translate(8.000000, 8.000000)">
+                                        <rect id="Rectangle" fill="#DFE1E5" x="0" y="0" width="64" height="34" rx="1"/>
+                                        <g transform="translate(16.000000, 10.000000)" fill="#C1C3CA">
+                                            <polygon id="Mountain" points="0 14 11.3142857 0 22 14"/>
+                                            <path d="M18.1964286,5.2 L22.375,0 L33,14 L18,14 L24.875,14 L18.1964286,5.2 Z" id="Mountatin"/>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+<head xmlns=""/></svg>
