@@ -4,6 +4,7 @@ package com.genesiis.campus.util.mail;
 //20170222 CW c103-send-email-tutor-status-change-cw created sendAdminTutorUpdateEmail() to send email at tutor details update by Admin.
 //20170224 CW c103-send-email-tutor-status-change - modified systemMessage() method to return MAIL_SUCCESS_TUTOR message
 //20170406 CW c157-add-tutor-employment-details-cw add sendTutoremploymentConfirmEmail method
+//20170417 CW c157-add-tutor-employment-details-cw sendTutoremploymentConfirmEmail method name changed to sendTutorEmploymentConfirmEmail
 
 import com.genesiis.campus.util.TutorUpdateEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -28,7 +29,7 @@ public class GenerateEmail {
 	 * @return String
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
-	public String sendTutoremploymentConfirmEmail(String firstname, String lastname, String emailAddress, String username, int appStatus) 
+	public String sendTutorEmploymentConfirmEmail(String firstname, String lastname, String emailAddress, String username, int appStatus) 
 			throws IllegalArgumentException, Exception {
 		int status;
 		try {
