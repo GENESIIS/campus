@@ -33,7 +33,7 @@
 //				to front end validation methods, show back end validation error messages wip
 //20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
 //20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
-//				modified event on town input methods
+//				modified event on town input methods, clear success tool tip styles if the course provider registered
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -642,14 +642,15 @@ function saveCourseProvider() {
 									
 									// clear all previous error messages
 									var errorMessageList = document.getElementsByClassName('has-error');
-								
+									
 									for (var i = 0; i < errorMessageList.length; i++) {
 										var varId = $(errorMessageList[i]).attr('id');
 										varId = '#' + varId;
 										clearToolTip(varId);
-										
-										
+																			
 									}
+									clearToolTip("#uniquePrefixDiv");
+									clearToolTip("#usernameDiv");
 									
 									}
 								
