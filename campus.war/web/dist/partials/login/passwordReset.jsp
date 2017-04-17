@@ -5,6 +5,7 @@
 <!-- 20170217 TR c68 fixed basic responsive issues - apply bootstrap grid sys. -->
 <!-- 20170221 AS c22 UI integrated -->
 <!-- 20170223 AS c22 modify messages span and validation messages -->
+<!-- 20170417 AS c22 removed UI testing label-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -100,7 +101,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                      <label for="username" class="stat-warning-txt"> <span id="passWordError"></span> </label>
                      <input type="password" class="" placeholder="New Password" name="psw" id="passWord" onclick="clearField('passWordError')" onkeypress="validatePasswordResetData()" required >
-                     <label for="username" class="stat-error-txt"> <span id="confPassWordError">Test Error Message</span> </label>
+                     <label for="username" class="stat-error-txt"> <span id="confPassWordError"></span> </label>
                      <input type="password" class="" placeholder="Confirm Password" name="confrmpsw" id="confrmpsw" onclick="clearField('confPassWordError')"  required >
                 </div>
                 <div class="pull-right show-pwrd">

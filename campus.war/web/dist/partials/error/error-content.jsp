@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!-- 	20170124 AS CAM-20 Error handle for created this page. This page created for view unauthorized access -->
+<!-- 20170124 AS CAM-20 Error handle for created this page. This page created for view unauthorized access -->
+<!-- 20170327 TR c21 change body structure and added bootstrap classes  -->
+<!-- 20170328 TR c21 Styling msg-display-area - done  -->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,6 +14,7 @@
 	rel="stylesheet">
 <link href="/dist/css/style.css" rel="stylesheet">
 <link href="/dist/css/image-slides.css" rel="stylesheet">
+<link href="/dist/css/font-awesome.css" rel="stylesheet">
 
 <script src="/dist/js/header/ui-populate-helper.js"></script>
 <!-- W3-Include -->
@@ -36,6 +40,12 @@
 
 				}, 5000);
 	</script>
-	Sorry, you are not allowed to view content ......
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	    <div class="msg-display-area text-center clearfix">
+            <div class="display-msg">
+               <label>Sorry, you are not allowed to view content.</label>
+            </div>
+	    </div>
+	</div>
 </body>
 </html>
