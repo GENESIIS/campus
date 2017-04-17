@@ -19,6 +19,7 @@
 //20170403 JH c141-ui-for-add-course-provider providerUsernameValidation() method modified to use common min max length validations, vaidateCourseProviderDeatils() front end validation changes
 //20170404 JH c141-ui-for-add-course-provider created providerPasswordValidation() method to validate password
 //20170405 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils(): method changed to validate account details only for featured course provider
+//20170417 JH c141-ui-for-add-course-provider validateCourseProviderDetails(): concatenate weblink prefix to the weblink input value
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -267,7 +268,7 @@ function providerPrefixValidation() {
  * created to validate course provider details before submit	
  * @author JH
  */
-function vaidateCourseProviderDeatils(accountType) {
+function vaidateCourseProviderDeatils() {
 
 	var integerPattern = /^[0-9]+$/;
 	var flag = true;
@@ -293,7 +294,9 @@ function vaidateCourseProviderDeatils(accountType) {
 	var address3 = $("#address3").val();
 	var country = $("#selectedCountry").val();
 	var townList = $("#selectedTown").val();
-	var webLink = $("#webLink").val();
+	var weblinkPrefix = "http://";
+	var link = $("#webLink").val();
+	var weblink = weblinkPrefix.concat(link);
 	var facebook = $("#facebook").val();
 	var linkdedIn = $("#linkdedIn").val();
 	var twitter = $("#twitter").val();
@@ -414,7 +417,7 @@ function vaidateCourseProviderDeatils(accountType) {
 		flag = false;	
 	}
 
-	flag  = validateFormURL(webLink, '#errorWebLink', '#webLinkDiv', 0, 255);
+	flag  = validateFormURL(weblink, '#errorWebLink', '#webLinkDiv', 0, 255);
 	flag  = validateFormURL(facebook, '#errorFacebook', '#facebookDiv', 0, 255);
 	flag  = validateFormURL(linkdedIn, '#errorLinkedIn', '#linkdedInDiv', 0, 255);
 	flag = validateFormURL(twitter, '#errorTwitter', '#twitterDiv', 0, 255);
@@ -447,7 +450,7 @@ function vaidateCourseProviderDeatils(accountType) {
 	}
 
 	// validation course provider account details only for featured course provider
-	if (accountType === "FEATURED_COURSE_PROVIDER") {
+	if (courseProvider === "FEATURED_COURSE_PROVIDER") {
 		if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 			setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 			flag = false;
