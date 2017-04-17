@@ -29,6 +29,7 @@
 <!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
 <!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink, added min max password hints -->
 <!-- 20170407 JH c141-ui-integration-for-add-course-provider added a success message to display with the modal body when a course provider is registered -->
+<!-- 20170417 JH c141-ui-integration-for-add-course-provider added name attribute and the value for weblink prefix -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -348,7 +349,7 @@
 										<div class="form-group col-xs-12">
 											<label for="web-link">Web Link</label>
 											<div class="input-wrapper input-group" id="webLinkDiv">
-											<span class="input-group-addon" id="web-basic-addon">http://</span>
+											<span class="input-group-addon" name="web-basic-addon" id="web-basic-addon" value="http://">http://</span>
 											<input name="webLink" type="url" class="form-control"
 													id="webLink" placeholder=""> 
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
