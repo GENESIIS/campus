@@ -64,6 +64,10 @@
  * 				Removed the timeOut() and implemented auto click event to close the modal window in the onclick event of the openModalUpload element.
  *       		Removed the function call to displayBannerManagerPrerequistData() from bannerModalClose onclick event.
  *              e.preventDefault() method is placed at the beginning of openModalUpload on click event.
+ * 20170417 DN c83-admin-manage-banner-update-banner-info-dn. bannerRecordUpdate on click event is added changes to retrieve the banner image name, for the use case where
+ * 				an user need to update a banner sooner after a banner is added.
+ * 				sendBannerPaageFieldInputs() changed so that at edit mode the display test of the button changes from upload to change the banner and Upload the record button
+ * 				appears in edit mode.
  */
 
 /*
@@ -488,7 +492,21 @@ $(document).on('click','#uploadBbutton', function(event){
 $(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputValues){  // Only the banner record is updated without the banner image
 	event.preventDefault();
 	bannerFieldInputValues=getBannerCredentials();
-	bannerFieldInputValues.push($('#bannerEditableImageName').val());
+	var bannerImage = $('#bannerEditableImageName').val();
+	
+	/*
+	 * NOTE: IF THE WAR PATH WHERE THE BANNER GETS STORED IS CHANGED
+	 * E.G /education/banner/235/235.jpg?0.8815050977283492
+	 * THEN THE WAY THE NAME OF THE IMAGE IS RETRIEVED MUST BE CHANGED.	 * 
+	 */
+	if(bannerImage.length==0){ // if bannerImage hidden field is empty then check the banner diplay element.
+		var imagePath = $('#imageName01').attr("src");  // "/education/banner/235/235.jpg?0.8815050977283492"
+		if(imagePath.length !=0){ // if it has content then it's an editing Banner which has just been brand newly saved.
+			bannerImage = imagePath.split("/").pop().split('?')[0]; // 235.jpg
+		}		
+	}
+	
+	bannerFieldInputValues.push(bannerImage);
 	var isValidationvalidationPassed= validateUploadBannerEmbedData();
 	if(isValidationvalidationPassed){
 		sendBannerPaageFieldInputs(bannerFieldInputValues,isValidationvalidationPassed,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
@@ -641,6 +659,10 @@ if(elegibleToProceed){
 					$('#bannerCode').val(response['bannerCode']);
 					if(response['bannerWarPath']!="default")
 					$('#imageName01').attr('src',"/"+response['bannerWarPath']+'?'+Math.random());
+					$('#openModalUpload').html('Change the Banner');
+					var existelement = $('#banner-from').find('#bannerRecordUpdate');
+					if(existelement.length == 0)
+						$('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
 				}
 				$('#bannerUploadPopUp').modal('hide');
 				displayBannerManagerPrerequistData();
