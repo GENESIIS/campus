@@ -9,6 +9,8 @@
 //				for banners of newly received banner stat update requests
 // 20170406 MM c117-display-banners-record-viewcount-back-end - Existing banner view stats are now updated and new ones are inserted 
 // 20170407 MM c117-display-banners-record-viewcount-back-end - Added test code to track issue with an NPE 
+// 20170416 MM c117-display-banners-record-viewcount-back-end - Modified flushBannerViewStats() so new view-counts are added to those for the existing 
+//				BANNERVIEWSTAT records 
 
 package com.genesiis.campus.util;
 
@@ -66,6 +68,7 @@ public class BannerViewStatHelper {
 	}
 
 	public void updateBannerViewCount(int bannerCode) throws Exception {
+		log.info("VIEW STAT UPDATE REQUEST NO: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + BannerViewStatHelper.viewCount);
 		// update the banner view count
 		Map<Integer, List<String>> bannerViewCountResolver = BannerViewStatHelper.getBannerToViewCountResolver();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -98,13 +101,15 @@ public class BannerViewStatHelper {
 			BannerViewStatHelper.viewCount++;
 		}
 
-		if (BannerViewStatHelper.viewCount == 100) {
-			if (BannerViewStatHelper.viewCount % 100 == 0) {
-				log.info("Reached >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." + BannerViewStatHelper.viewCount + ". Flushing banner stats");	
-			}
+		if (BannerViewStatHelper.viewCount == 200) {
+			log.info("Reached >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." + BannerViewStatHelper.viewCount + ". Flushing banner stats");	
+		
 			// flush current view counts to the DB
 			flushBannerViewStats();
-		}
+		} else {
+			log.info("LEAVING WITHOUT FLUSHING >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + BannerViewStatHelper.viewCount);
+		}		
+		
 	}
 
 	private void flushBannerViewStats() throws Exception {
@@ -125,27 +130,45 @@ public class BannerViewStatHelper {
 			// Persist banner counts
 			for (Integer banCode : bannerViewCountResolver.keySet()) {
 				boolean areStatsAlreadyAvailable = false; 
+				bannerViewCountDetails = bannerViewCountResolver.get(banCode);
+				
 				for (Collection<String> bannerStatRecord : bannerStatCollection) {
-					int index = 0;
 					Integer bannerCodeFromStats = null;
-					
+					int bannerStatCodeFromStats = 0;
+					int viewCountFromStats = 0;
+
+					int index = 0;
 					for (String field : bannerStatRecord) {
-						bannerCodeFromStats = Integer.valueOf(field);					
-						break;
+						
+						if (index == 0) {
+							bannerStatCodeFromStats = Integer.parseInt(field);	
+							index++;
+							continue;
+						}	
+						
+						if (index == 1) {
+							bannerCodeFromStats = Integer.valueOf(field);	
+							index++;
+							continue;
+						}
+						
+						if (index == 2) {
+							viewCountFromStats = Integer.parseInt(field);	
+							break;
+						}
 					}			
 					
 					if (banCode.equals(bannerCodeFromStats)) {					
 						areStatsAlreadyAvailable = true;
 						
 						BannerViewStat bannerViewStat = new BannerViewStat();
-						bannerViewStat.setBanner(banCode);
-						bannerViewStat.setViewCount(Integer.parseInt(bannerViewCountDetails.get(0)));
+						bannerViewStat.setCode(bannerStatCodeFromStats);
+						bannerViewStat.setViewCount(Integer.parseInt(bannerViewCountDetails.get(0)) + viewCountFromStats);
 						Date lastViewDateForBanner = null;
 						try {
 							lastViewDateForBanner = formatter.parse(bannerViewCountDetails.get(1));
 						} catch (ParseException pe) {
 							log.error("flushBannerViewStats() : ParseException " + pe.toString());
-						} finally {
 							lastViewDateForBanner = new Date(0L);
 						}
 						
@@ -169,17 +192,16 @@ public class BannerViewStatHelper {
 						lastViewDateForBanner = formatter.parse(bannerViewCountDetails.get(1));
 					} catch (ParseException pe) {
 						log.error("flushBannerViewStats() : ParseException " + pe.toString());
-					} finally {
 						lastViewDateForBanner = new Date(0L);
 					}
+					
 					bannerViewStat.setLastViewDate(new java.sql.Date(lastViewDateForBanner.getTime()));
 					bannerViewStat.setLastViewTime(new java.sql.Time(lastViewDateForBanner.getTime()));
 	
 					bannerViewStat.setCrtBy("SYSTEM");
 	
 					bannerViewStatsToInsert.add(bannerViewStat);
-				}
-				
+				}				
 			}
 
 			// Persist banner counts
@@ -213,9 +235,9 @@ public class BannerViewStatHelper {
 				
 			} finally {
 				if (updateStatus > 0) {
-					log.info("Stat data for new banners successfully saved in DB!");
+					log.info("Stat data for banners successfully updated in DB!");
 				} else {
-					log.error("The attempt to save view-stat-data for new banners to DB was unsuccessful!");
+					log.error("The attempt to update view-stat-data for banners to DB was unsuccessful!");
 				}
 			}
 		}
@@ -233,9 +255,9 @@ public class BannerViewStatHelper {
 				
 			} finally {
 				if (insertStatus > 0) {
-					log.info("Stat data for new banners successfully saved in DB!");
+					log.info("Stat data for new banners successfully inserted in DB!");
 				} else {
-					log.error("The attempt to save view-stat-data for new banners to DB was unsuccessful!");
+					log.error("The attempt to insert view-stat-data for new banners to DB was unsuccessful!");
 				}
 			}
 		}
