@@ -37,6 +37,10 @@ package com.genesiis.campus.entity;
  * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string. 
  * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string.
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn.The method addBannerRecordInOneTransAction() include the banner ISACTIVE int value in the sql query.
+ * 20170407 DN c83-admin-manage-banner-update-banner-info-dn getAll(Object object)the sql query has been amended to return the result set in ascending order 
+ * 				by EXPIRATIONDATE as per the instruction given by TW
+ * 20170417 DN c83-admin-manage-banner-update-banner-info-dn update(Object object) included instanceof test to check if correct type is passed as the argument.
+ * 				local variable declared in the update(Object object) made null at finally block to prevent possible memory leaks.
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -80,12 +84,16 @@ public class AdminBannerDAO implements ICrudSibling {
  * method updates a banner records which is sent to the method by
  * encapsulating in the Object.<br>
  * @param Object is the JasonInflator<br>
+ * @return 
  * If the update is success it returns the number of rows been updated <br>
  * if the update query fails then returns 0
  */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		
+		if(!(object instanceof JasonInflator)){ // if type mismatch return 0 as the size
+			return 0;
+		}
 		JasonInflator aBannerRecord = (JasonInflator)object;
 		String bannerCode = aBannerRecord.getBannerCode();
 		Connection conn = null;
@@ -129,6 +137,10 @@ public class AdminBannerDAO implements ICrudSibling {
 		} finally {
 			DaoHelper.closeConnection(conn);
 			DaoHelper.closeStatement(prepare);
+			imageNameSplitter = null;
+			aBannerRecord =null;
+			bannerCode=null;
+			insertingQueryBuilder =null;
 		}
 		return result;
 	}
@@ -354,8 +366,8 @@ public class AdminBannerDAO implements ICrudSibling {
 	
 	
 	/**
-	 * getAll(Object o) method returns all the banners that all the advertiser have published
-	 * Depending on the induced details of the incoming object
+	 * getAll(Object o) method returns all the banners that all the advertiser have published<br>
+	 * Depending on the induced details of the incoming object in ascending order by EXPIRATIONDATE. 
 	 * @author dushantha DN
 	 * @param  object :Object type argument which has the filtering criteria
 	 * @return Collection<Collection<String>>
@@ -408,7 +420,7 @@ public class AdminBannerDAO implements ICrudSibling {
 			if(bannerCode!=null && bannerCode !=""){
 				querybuilder.append(" AND BNR.CODE = '"+bannerCode+"' ");
 			}
-			querybuilder.append(" ORDER BY ACTIVATIONDATE ASC ");
+			querybuilder.append(" ORDER BY EXPIRATIONDATE ASC ");
 			
 			conn = ConnectionManager.getConnection();
 			statement = conn.prepareStatement(querybuilder.toString());

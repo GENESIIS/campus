@@ -42,6 +42,9 @@ package com.genesiis.campus.command;
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn. updateBannerCredentials() changed toString() to SystemMessage.UPDATE_SUCCESSFUL.message().
  * 				setEnvironment(IDatahelper) has been implemented by modularizing the duplicate code.
  * 				The execute() refactor to call setEnvironment(IDatahelper) method.
+ * 20170407 DN c83-admin-manage-banner-update-banner-info-dn. isClientInputAccordanceWithValidation()changed the method signature to get IDataHelper and modified 
+ *             to add setResponseCridentials(helper) to the Catch clause.  
+ * 				 
  * 
  */
 
@@ -114,13 +117,13 @@ public class CmdAdminBannerUpload implements ICommand {
 				 return saveBannerImageToTempLocation(helper,view);
 			case UPLOAD_FULL_BANNER_CREDENTIALS:
 				setEnvironment(helper);
-				if(isClientInputAccordanceWithValidation(jsn)){
+				if(isClientInputAccordanceWithValidation(jsn,helper)){
 					return uploadFullBannerCredentials(jsn,view,userName,helper);
 				}
 				return view;
 			case UPDATE_ONLY_THE_BANNER_RECORD:
 				setEnvironment(helper);
-				if(isClientInputAccordanceWithValidation(jsn)){
+				if(isClientInputAccordanceWithValidation(jsn,helper)){
 					updateBannerCredentials(jsn, helper);
 				}
 				return view;
@@ -168,7 +171,7 @@ public class CmdAdminBannerUpload implements ICommand {
 	 * @throws Exception
 	 */
 
-	private boolean isClientInputAccordanceWithValidation(JasonInflator jason) throws Exception {
+	private boolean isClientInputAccordanceWithValidation(JasonInflator jason,IDataHelper helper) throws Exception {
 		boolean isvalidationSuccess = false;
 		if(jason==null){
 			log.info("isClientInputAccordanceWithValidation (): --> JasonInflator object is null ");
@@ -186,7 +189,7 @@ public class CmdAdminBannerUpload implements ICommand {
 		String urlMiniWebOrPage        = jason.getUrlMiniWebOrPage();	//"Page:0","URL: 1" or "Mini Web:2"
 		String urlToBeDirectedOnBannerClick = jason.getUrlToBeDirectedOnBannerClick();
 		String bannerImageName     = jason.getBannerImageName();
-
+		String bannerCode         = jason.getBannerCode();
 
 		try {
 			    Validatory clientInputValidator = new PrevalentValidation();
@@ -206,10 +209,15 @@ public class CmdAdminBannerUpload implements ICommand {
 				// comparison with the current date
 				if(!(clientInputValidator.compareDates(publishingDate, endPublishingDate,"yyyy-MM-dd", "date comparison failure")<=0))
 					throw new PrevalentValidation().new FailedValidationException("Publishing Start Date must be <= Publishing end Date");
-
-				if(!(clientInputValidator.compareDates(publishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
-					throw new PrevalentValidation().new FailedValidationException(" Publishing Start Date must be >= Current Date");
-
+				
+				if(bannerCode==null || bannerCode.trim().isEmpty()){ // if it is a new record go with the current date validation
+					if(!(clientInputValidator.compareDates(publishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
+						throw new PrevalentValidation().new FailedValidationException(" Publishing Start Date must be >= Current Date");
+				} else {
+					if(!(clientInputValidator.compareDates(endPublishingDate, new Date(),"yyyy-MM-dd", "date comparison failure")>=0))
+						throw new PrevalentValidation().new FailedValidationException("When Updating Publishing End Date must be >= Current Date..");
+				}
+				
 				clientInputValidator.isInteger(urlMiniWebOrPage);
 				//clientInputValidator.isUrlValid(urlToBeDirectedOnBannerClick, UrlValidator.ALLOW_ALL_SCHEMES+UrlValidator.ALLOW_LOCAL_URLS, "Url provided is not a valid URL");
 				isvalidationSuccess=true;
@@ -218,6 +226,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			String [] errorMessagePart =fvexp.toString().split(":");
 			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2);
+			this.setResponseCridentials(helper);
 			return false;
 		} catch(Exception exp){
 			log.error("isClientInputAccordanceWithValidation(JasonInflator) : Exception "+ exp.toString());
@@ -667,7 +676,7 @@ public class CmdAdminBannerUpload implements ICommand {
 			String [] errorMessagePart =fvexp.toString().split(":");
 			this.message = message +" "+ errorMessagePart[1];
 			this.setSuccessCode(-2);
-			setResponseCridentials(helper);
+			this.setResponseCridentials(helper);
 			return view;
 		} catch (JsonSyntaxException jsyexp) {
 			log.error("uploadFullBannerCredentials(IDataHelper,IView):JsonSyntaxException "+ jsyexp.toString());

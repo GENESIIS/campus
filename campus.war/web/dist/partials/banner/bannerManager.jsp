@@ -20,6 +20,10 @@
      			Add tool tip to URL field.
      20170405 DN c83-admin-manage-banner-update-banner-info-dn Enable radio button groups' values are changed to yes-- 1 no-- 0
      			add clearField('endtDateInfor') function to onclick event of the Banner deactivation date field
+     20170407 DN c83-admin-manage-banner-update-banner-info-dn depend on the task to be perform either edit the banner or add new banner
+     			add logic to display Add Banner or Edit Banner as the heading.
+     20170417 DN c83-admin-manage-banner-update-banner-info-dn the bannerRecordUpdate element is included within script tags instead of jstl tags
+     			the element appears when the record is to be edited.
  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -108,8 +112,15 @@
 
 
 <div class="panel panel-default">
-      <div class="panel-heading" align="center"><h1>Add Banner</h1></div>
-      <div class="panel-body"></div>
+		<div class="panel-heading" align="center">
+			<h1>
+				<c:choose>
+					<c:when test="${param.CCO eq 'ADMEDTBNR' }">Edit Banner</c:when>
+					<c:otherwise>Add Banner</c:otherwise>
+				</c:choose>
+			</h1>
+		</div>
+		<div class="panel-body"></div>
     </div>
 
 	<div align="center">
@@ -258,15 +269,13 @@
 			</c:choose>
 			</button>
 			<button id="bannerPageClearField">Clear Page</button>
-			<c:if test="${!empty param.bannerCode}">
-				<button id="bannerRecordUpdate">Update the Record</button>
-			</c:if>
+			<script>
+				if($('#bannerCode').val().length != 0){				
+					$('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
+				}				
+			</script>
+					
 		</form>
-
-
-
-
-
 	</div>
 </body>
 </html>

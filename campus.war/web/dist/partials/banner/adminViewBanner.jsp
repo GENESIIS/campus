@@ -12,8 +12,10 @@
  <!-- 20170403 TR c87 Added common header -->
  <!-- 20170403 TR c87 Re-arranged page html layout with adding css classes -->
  <!-- 20170405 TR c87 modified banner-records-table layout -->
- <!-- 20170406 DN span element is given an id for displaying the number of records available -->
-
+ <!-- 20170406 DN 83-admin-manage-banner-update-banner-info-dn. The span element is given an id for displaying the number of records available -->
+ <!-- 20170407 DN 83-admin-manage-banner-update-banner-info-dn. The 'Delete Selected button is changed to 'Inactive Selected Banner(s)' as per TWs' instructions -->
+ <!-- 			  Hide the radio button pending and Expired as per Tw's instruction	
+ <!--20170417 DN 83-admin-manage-banner-update-banner-info-dn. jQuery & Other js imported statements are placed at the end of the page	 -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -31,17 +33,6 @@
     <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/dist/css/style.css" rel="stylesheet">
     <link href="../../css/image-slides.css" rel="stylesheet">
-
-<!-- jQuery & Other js -->
-	
-    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    
-    <script src="../../js/main.js"></script>
-    <script src="../../js/image-slides.js"></script>
-	<script src="/dist/bower-components/w3/w3data.js"></script>
-    <script src="/dist/js/institute/validation/validation.js"></script>
-	<script src="/dist/js/banner/adminViewBaner.js"></script>
 	
 </head>
 <body>
@@ -102,11 +93,11 @@
                         <input type="radio" name="bannerStatus" value="0" id="statusInactive">
                     </div>
 
-                    <div class="radio-block">
+                    <div class="radio-block" style="visibility: hidden">
                         <span id="">Pending</span>
                         <input type="radio" name="bannerStatus" value="2" id ="statusPending"  >
                     </div>
-					<div class="radio-block">
+					<div class="radio-block" style="visibility: hidden">
                         <span id="">Expired</span>
                         <input type="radio" name="bannerStatus" value="3" id ="statusExpired"  >
                     </div>
@@ -121,7 +112,7 @@
     <div id="endtDateInfor" style ="color:#C70039;"></div>
      <div class="count-and-delete">
         <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
-            <button type="button" value="Delete Selected">Delete Selected</button>
+            <button type="button" value="Delete Selected">Inactive Selected Banner(s)</button>
         </div>
         <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
             <input type="checkbox" name="" value="">Select All
@@ -140,5 +131,16 @@
        </div>
     </div>
 </div>
+
+<!-- jQuery & Other js -->
+	
+    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
+    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    
+    <script src="../../js/main.js"></script>
+    <script src="../../js/image-slides.js"></script>
+	<script src="/dist/bower-components/w3/w3data.js"></script>
+    <script src="/dist/js/institute/validation/validation.js"></script>
+	<script src="/dist/js/banner/adminViewBaner.js"></script>
 </body>
 </html>

@@ -19,6 +19,8 @@ package com.genesiis.campus.entity;
  * 				call for extracting enum value from toString() to message().
  * 				negate the assigning value to bannerCodeFilledAndNotNull variable in  isClientInputAccordanceWithValidation()
  * 				to get the actual meaning of the test.
+ * 20170407 DN c83-admin-manage-banner-update-banner-info-dn isClientInputAccordanceWithValidation() method has been modified 
+ * 				to check nullability and empty string value for banner code
  */
 
 
@@ -203,10 +205,10 @@ public class ListBanner {
 				
 				
 				//int activeInactiveStatus = Integer.parseInt(rowDisplayCriteria.getActiveInactiveStatus()); // if required for future use.
-			    Validatory clientInputValidator = new PrevalentValidation();
-			    boolean firstDateIsFilledAndNotNull =(dateCommenced != null) && (dateCommenced.trim().isEmpty() == false);
-			    boolean secondDateIsFilledAndNotNull= (dateCessation != null) && (dateCessation.trim().isEmpty() == false);
-			    boolean bannerCodeFilledAndNotNull = !(bannerCode.trim().isEmpty());
+			    Validatory clientInputValidator 	 =  new PrevalentValidation();
+			    boolean firstDateIsFilledAndNotNull  = (dateCommenced != null) && (dateCommenced.trim().isEmpty() == false);
+			    boolean secondDateIsFilledAndNotNull = (dateCessation != null) && (dateCessation.trim().isEmpty() == false);
+			    boolean bannerCodeFilledAndNotNull   = (bannerCode!=null)      && (bannerCode.trim().isEmpty() == false);
 			     
 			    if(bannerCodeFilledAndNotNull){
 			    	 //check if it is NaN : return false
