@@ -33,7 +33,7 @@
 //				to front end validation methods, show back end validation error messages wip
 //20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
 //20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
-//				modified event on town input methods, clear success tool tip styles if the course provider registered
+//				modified event on town input methods, clear success tool tip styles if the course provider registered, added error alert on AJAX call errors
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -163,6 +163,7 @@ function getCourseProviderTypes() {
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
 			document.getElementById("userMessage").style.display = "block";
+			errorAlert("#userMessage");
 			$("#userMessage").html(err);
 		}
 	});
@@ -247,7 +248,8 @@ function getProviderPageLoadData() {
 				},
 				error : function(x, status, error) {
 					var err = displayErrorMessage(x, status, error);
-				//	document.getElementById("userMessage").style.display = "block";
+					document.getElementById("userMessage").style.display = "block";
+					errorAlert("#userMessage");
 					$("#userMessage").html(err);
 				},
 			});
@@ -260,7 +262,8 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	
 	// check if the browser supports datalist function before proceeding 
-	if(document.createElement("datalist").options) {
+	if(document.createElement("datalist").option) {
+
 		$("#countries").on('click', function(e) {
 			$("#countries").val("");
 			$('#selectedCountry').val("");
@@ -279,15 +282,12 @@ function displayProviderCountries() {
 			}
 			
 		});
+	}else{
+		alert("Does not support.");
 	}
 
 }
 
-
-//$("#countries").bind('click change', function(e) {
-//
-//	  $('#selectedCountry').val("");
-//});
 
 /**
  * select country code 
@@ -356,6 +356,7 @@ function getProviderTownListData() {
 			error : function(x, status, error) {
 				var err = displayErrorMessage(x, status, error);
 				document.getElementById("userMessage").style.display = "block";
+				errorAlert("#userMessage");
 				$("#userMessage").html(err);
 			}
 		});
