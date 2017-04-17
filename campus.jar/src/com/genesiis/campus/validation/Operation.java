@@ -11,7 +11,8 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""),
 	LIST_CATEGORY_LANDING_PAGE("LIST_CATEGORY_LANDING_PAGE", ResponseType.JSP, "/dist/partials/category-landing-page.jsp"),
-	LIST_TUTORS("LIST_TUTORS", ResponseType.JSON, "");
+	LIST_TUTORS("LIST_TUTORS", ResponseType.JSON, ""),
+	LIST_NEW_TUTOR_REQUESTS("LIST_NEW_TUTOR_REQUESTS", ResponseType.JSON, "");
 	
 	private final String commandString;
 	private final ResponseType responseType;

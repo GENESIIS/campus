@@ -1,0 +1,107 @@
+/* 20170307 C106 TR INIT styling list of tutors */
+
+.admin-content
+  display: block
+  position: relative
+
+  .inner-header
+    background-color: #fff !important
+    .heading
+      h1
+        font-family: "Arvo", serif
+        font-size: 34px
+        color: #3a3b3c
+        line-height: 105px
+        border-bottom: 2px solid #c4c4c4
+
+  .content-holder
+    width: 98%
+    padding: 0 30px
+    margin-right: auto
+    margin-left: auto
+
+    .tutors-table
+      padding-top: 0
+
+      .tab-holder
+        display: block
+        padding: 10px 0
+        ul
+          li
+            width: 100px
+            cursor: pointer
+            text-align: center
+            margin-left: 15px
+
+
+      // show entries count area
+      .dataTables_length
+        font-size: 15px
+        font-family: "Raleway", sans-serif
+
+        select
+          margin: 0 15px
+
+      .dataTables_filter
+        font-family: "Raleway", sans-serif
+        width: 90%
+
+        label
+          width: 100%
+          line-height: 34px
+
+        input
+          border: 2px solid #d7d7d7
+          border-radius: 3px
+          width: 85%
+          float: right
+          height: 34px 
+          font-size: 15px
+          font-weight: bold
+
+
+      .dataTable
+        border-top: 4px solid #e1e1e1
+        margin-top: 15px !important
+        font-family: "Roboto", sans-serif
+
+      thead
+        tr
+          height: 70px
+          font-size: 16px
+
+          .sorting:after
+            content: "" !important
+
+          .sorting_asc:after
+            content: "" !important
+
+          .sorting_desc:after
+            content: "" !important
+
+      tbody
+        tr
+          height: 65px !important
+
+  .dataTables_wrapper
+    font-family: "Raleway", sans-serif
+
+    .dataTables_paginate
+      .pagination
+        padding: 1em 0 !important
+
+        .paginate_button
+          padding: 0 !important
+          &:hover
+            background-color: #fff !important
+            color: white !important
+            border: 1px solid #fff
+            border-radius: 2px !important
+
+    div.dataTables_info
+      padding-top: 18px
+      font-size: 16px
+
+// Hide values
+.hide-value
+  display: none
