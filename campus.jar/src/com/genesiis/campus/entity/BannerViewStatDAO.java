@@ -2,6 +2,8 @@
 // 20170331 MM c117-display-banners-record-viewcount-back-end Altered implementation of add(Object) method so it performs a batch operation 
 // 20170401 MM c117-display-banners-record-viewcount-back-end Implemented update(Object) method and changed add(Object) to remove dealing with callerPage parameter 
 // 20170403 MM c117-display-banners-record-viewcount-back-end Implemented findById(Object) method 
+// 20170415 MM c117-display-banners-record-viewcount-back-end Modified findById(Object) to remove an additional comma from the dynamically built query, modified 
+//				update(Object) to use CODE rather than BANNER field for condition   
 
 package com.genesiis.campus.entity;
 
@@ -83,7 +85,7 @@ public class BannerViewStatDAO implements ICrud {
 		try {			
 			List<BannerViewStat> bannerViewStatCollection = (ArrayList<BannerViewStat>) object; 
 			
-			String query = "UPDATE [campus].[BANNERVIEWSTAT] SET VIEWCOUNT = ?, LASTVIEWDATE = ?, LASTVIEWTIME = ?, MODBY = ? WHERE BANNER = ?";
+			String query = "UPDATE [campus].[BANNERVIEWSTAT] SET VIEWCOUNT = ?, LASTVIEWDATE = ?, LASTVIEWTIME = ?, MODBY = ? WHERE CODE = ?";
 			
 			con = ConnectionManager.getConnection();
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -94,7 +96,7 @@ public class BannerViewStatDAO implements ICrud {
 				ps.setDate(2, bvs.getLastViewDate());			
 				ps.setTime(3, bvs.getLastViewTime());			
 				ps.setString(4, bvs.getModBy());
-				ps.setInt(5, bvs.getBanner());
+				ps.setInt(5, bvs.getCode());
 				
 			    ps.addBatch();
 			}			
@@ -145,7 +147,7 @@ public class BannerViewStatDAO implements ICrud {
 			for (int i = 0; i < bannerCodeList.size(); i++) {
 				query.append(bannerCodeList.get(i));
 				
-				if (i < bannerCodeList.size()) {
+				if (i < (bannerCodeList.size() - 1)) {
 					query.append(", ");
 				}				
 			}
