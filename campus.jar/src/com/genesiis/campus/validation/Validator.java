@@ -30,6 +30,7 @@ package com.genesiis.campus.validation;
 //20170324 CW c37-tutor-update-tutor-profile-cw modify OLD_NEW_PASSWORD_SAME to CURRENT_NEW_PASSWORD_SAME
 //20170406 CW c37-tutor-update-tutor-profile-cw modified isValidPassword method to use getTutorPassword method & get the password
 //20170407 CW c37-tutor-update-tutor-profile-cw add isValidPasswordFormat method
+//20170417 CW c37-tutor-update-tutor-profile-cw modified isValidPasswordFormat method regular expression
 
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
@@ -555,7 +556,7 @@ public class Validator {
 	
 	public static boolean isValidPasswordFormat(String password){
 		
-		Pattern VALID_PASSWORD_REGEX = Pattern.compile("^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$", Pattern.CASE_INSENSITIVE);
+		Pattern VALID_PASSWORD_REGEX = Pattern.compile("^([a-zA-Z]+)([a-zA-Z0-9_]+){7,}$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
 		
 		boolean isValid = matcher.find();
