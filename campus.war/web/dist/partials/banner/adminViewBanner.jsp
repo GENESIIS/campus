@@ -14,7 +14,8 @@
  <!-- 20170405 TR c87 modified banner-records-table layout -->
  <!-- 20170406 DN 83-admin-manage-banner-update-banner-info-dn. The span element is given an id for displaying the number of records available -->
  <!-- 20170407 DN 83-admin-manage-banner-update-banner-info-dn. The 'Delete Selected button is changed to 'Inactive Selected Banner(s)' as per TWs' instructions -->
- <!-- 			  Hide the radio button pending and Expired as per Tw's instruction																				 -->
+ <!-- 			  Hide the radio button pending and Expired as per Tw's instruction	
+ <!--20170417 DN 83-admin-manage-banner-update-banner-info-dn. jQuery & Other js imported statements are placed at the end of the page	 -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -32,17 +33,6 @@
     <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/dist/css/style.css" rel="stylesheet">
     <link href="../../css/image-slides.css" rel="stylesheet">
-
-<!-- jQuery & Other js -->
-	
-    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
-    
-    <script src="../../js/main.js"></script>
-    <script src="../../js/image-slides.js"></script>
-	<script src="/dist/bower-components/w3/w3data.js"></script>
-    <script src="/dist/js/institute/validation/validation.js"></script>
-	<script src="/dist/js/banner/adminViewBaner.js"></script>
 	
 </head>
 <body>
@@ -141,5 +131,16 @@
        </div>
     </div>
 </div>
+
+<!-- jQuery & Other js -->
+	
+    <script src="../../bower-components/jquery/jquery-3.1.1.min.js"></script>
+    <script src="../../bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
+    
+    <script src="../../js/main.js"></script>
+    <script src="../../js/image-slides.js"></script>
+	<script src="/dist/bower-components/w3/w3data.js"></script>
+    <script src="/dist/js/institute/validation/validation.js"></script>
+	<script src="/dist/js/banner/adminViewBaner.js"></script>
 </body>
 </html>
