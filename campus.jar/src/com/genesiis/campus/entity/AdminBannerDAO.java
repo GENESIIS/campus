@@ -38,6 +38,8 @@ package com.genesiis.campus.entity;
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn.The method addBannerRecordInOneTransAction() include the banner ISACTIVE int value in the sql query.
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn getAll(Object object)the sql query has been amended to return the result set in ascending order 
  * 				by EXPIRATIONDATE as per the instruction given by TW
+ * 20170417 DN c83-admin-manage-banner-update-banner-info-dn update(Object object) included instanceof test to check if correct type is passed as the argument.
+ * 				local variable declared in the update(Object object) made null at finally block to prevent possible memory leaks.
  */
 
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -81,12 +83,16 @@ public class AdminBannerDAO implements ICrudSibling {
  * method updates a banner records which is sent to the method by
  * encapsulating in the Object.<br>
  * @param Object is the JasonInflator<br>
+ * @return 
  * If the update is success it returns the number of rows been updated <br>
  * if the update query fails then returns 0
  */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		
+		if(!(object instanceof JasonInflator)){ // if type mismatch return 0 as the size
+			return 0;
+		}
 		JasonInflator aBannerRecord = (JasonInflator)object;
 		String bannerCode = aBannerRecord.getBannerCode();
 		Connection conn = null;
@@ -130,6 +136,10 @@ public class AdminBannerDAO implements ICrudSibling {
 		} finally {
 			DaoHelper.closeConnection(conn);
 			DaoHelper.closeStatement(prepare);
+			imageNameSplitter = null;
+			aBannerRecord =null;
+			bannerCode=null;
+			insertingQueryBuilder =null;
 		}
 		return result;
 	}
