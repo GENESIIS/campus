@@ -32,6 +32,8 @@
 //20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
 //				to front end validation methods, show back end validation error messages wip
 //20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
+//20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
+//				modified event on town input methods
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -369,7 +371,7 @@ function displayProviderTownList() {
 	
 	// check if the browser supports datalist function before proceeding 
 	if(document.createElement("datalist").options) {
-//		$("#towns").on("click change", function(e) {
+		$("#towns").on("click", function(e) {
 			$("#towns").val("");
 			
 			if (townCollection !== undefined & townCollection !== null) {
@@ -384,25 +386,19 @@ function displayProviderTownList() {
 				}
 			}
 			
-//		});
+		});
 	}
 	
 }
 
 
 $('#towns').bind('click change',function(){
-   	$("#towns").val("");
-	if (townCollection !== undefined & townCollection !== null) {
-		var dataList = $("#townresults");
-		dataList.empty();
-		
-		if(townCollection.length) {
-			for(var i=0; i<townCollection.length; i++) {
-				var opt = $("<option></option>").attr({"data-town": townCollection[i][0], "value" : townCollection[i][1] });
-				dataList.append(opt);
-			}
-		}
+
+	if(window.selectedCountry === "" || window.selectedCountry === null ){
+	   	$("#towns").val("");
 	}
+	
+
 });
 
 /**
@@ -586,21 +582,21 @@ function saveCourseProvider() {
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
 	
-//	if (providerUsernameValidation() === false) {
-//		message = "Invalid Username";
-//		flag = false;
-//	}
-//	if (providerPrefixValidation() === false) {
-//		if(flag === false){
-//			message += " and Prefix";
-//		}else{
-//			message = "Invalid Prefix";
-//		}
-//		flag = false;
-//	}
+	if (providerUsernameValidation() === false) {
+		message = "Invalid Username";
+		flag = false;
+	}
+	if (providerPrefixValidation() === false) {
+		if(flag === false){
+			message += " and Prefix";
+		}else{
+			message = "Invalid Prefix";
+		}
+		flag = false;
+	}
 
 	if (flag === true) {
-//		if (vaidateCourseProviderDeatils(window.accountType) === true) {
+		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -657,29 +653,25 @@ function saveCourseProvider() {
 									
 									}
 								
-								
-								// change accordions
-								changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
-								changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
-								changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
-								changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
-								changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 							}
 						},
 						error : function(x, status, error) {
 							var err = displayErrorMessage(x, status, error);
 							document.getElementById("userMessage").style.display = "block";
+							errorAlert("#userMessage");
 							$("#userMessage").html(err);
 						}
 					});
 		}else{
+			document.getElementById("userMessage").style.display = "block";
+			errorAlert("#userMessage");
 			$("#userMessage").html("One or more fields are invalid.");
 		}
-//	}else{
-//		changeAccordion("#accountInfoSection", "#accountInfoAccordion");
-//		document.getElementById("userMessage").style.display = "block";
-//		$("#userMessage").html(message);
-//	}
+	}else{
+		document.getElementById("userMessage").style.display = "block";
+		errorAlert("#userMessage");
+		$("#userMessage").html("Check username and prefix. ");
+	}
 	
 	
 	
