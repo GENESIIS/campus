@@ -24,6 +24,7 @@ package com.genesiis.campus.command;
 //20170405 JH c141-ui-integration-for-add-course-provider fixed exception due to account status code selection
 //20170406 JH c141-ui-integration-for-add-course-provider build contact number and web link hint messages
 //20170407 JH c141-ui-integration-for-add-course-provider removed commented old expiration date implementation and added codes to get web link prefix
+//20170417 JH c141-ui-integration-for-add-course-provider added "http://" as the webLinkPrefix value and build the last weblink
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -199,11 +200,9 @@ public class CmdAddFeaturedProvider implements ICommand {
 
 						expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
 						sql = java.sql.Date.valueOf(expireDate);
-						String webLinkPrefix = helper.getParameter("web-basic-addon");
+						String webLinkPrefix = "http://";
 						String webLink = helper.getParameter("webLink");
 						String lastWebAddress = webLinkPrefix + webLink;
-						log.info(lastWebAddress);
-						log.info(webLinkPrefix);
 						
 						// set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
