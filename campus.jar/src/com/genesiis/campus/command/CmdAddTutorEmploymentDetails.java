@@ -67,9 +67,15 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			if(status > 0){
 				message = "Selected employers successfully added ...";
 				GenerateEmail emailAtUpdate = new GenerateEmail();
-				emailMessage = emailAtUpdate.sendAdminTutorUpdateEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), 
-						helper.getParameter("email"), helper.getParameter("username"), appStatus); //send email
-			}
+				
+				
+				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail("chinthaka", "Weerasinghe", "chinthaka@genesiis.com", "ccw", 2); //send email
+				
+				
+				
+				/*emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), 
+						helper.getParameter("email"), helper.getParameter("username"), 2); //send email
+*/			}
 			
 			if(Validator.isNotEmpty(tutorCode)){
 				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();

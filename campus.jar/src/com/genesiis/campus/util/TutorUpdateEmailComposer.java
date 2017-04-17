@@ -61,7 +61,7 @@ public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCre
 			if(getRecieversEmailAddreses()==null||getRecieversEmailAddreses().size()==0){
 				throw new IllegalArgumentException("genRecieversEmailAddreses list is empty or undefined");
 			} else{
-				IEmail generalEmail = new GeneralMail(getRecieversEmailAddreses(),
+				IEmail generalEmail = new GeneralMail(getRecieversEmailAddreses(),getRecieversEmailAddreses(),getRecieversEmailAddreses(),
 						getSendersEmailAddress(),
 						getMailingSubject(),getMailBody());
 				this.setGeneralEmail(generalEmail);
