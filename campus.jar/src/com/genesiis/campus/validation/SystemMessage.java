@@ -7,7 +7,8 @@ public enum SystemMessage {
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
 	DELETED("Details deleted successfully."), 
-	ERROR("Unsuccessful."), 	
+	ERROR("Unsuccessful."), 
+	UNKNOWN(""),
 	EMPTYFIELD("Field is Empty."),
 	SUCCESS("Successfull"),
 	RECAPTCHAVERIFICATION("Please verify You're not a robot "),
@@ -23,12 +24,25 @@ public enum SystemMessage {
 	LOGOUTSUCCESSFULL("Logout successfull"),
 	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
 	LOGGEDALLREADY("User Already Logged In"),
+	MAIL_SUCCESS("Mail successfully submited to your email, And verification code only valid 30 MINUTES. "),
+	MAIL_UNSUCCESS("Mail Sending failed"),
+	FAIL_REQUEST_SUBMISSION("Request submission is not successfull!"),
+	PASS_REQUEST_SUBMISSION("Request successfully submitted! "),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),
 	ATTEMPS("You have done two attemps. Please try again or reset your password"),
 	SESSIONEXPIRED("Session Expired ! Please login again. "),
-	EMAILERROR("Invalid Email.");
+	INVALID_EMAIL("Your email address is invalid. Please enter a valid address ! "),
+	INVALID_HASHCODE("Your Varification code is invalid. Please try again ! "),
+	HASHCODES("Hash code updated successfull !"),
+	VALIDHASHCODE("Your Verification code valid !"),
+	HASHCODEUNS("Hash code not updated successfull !!"),
+	VERIFICATION_CODEEXPIRED("Verification code has been Expired!"),
+	EMAILERROR("Invalid Email."),
+	PASSWORD_SUCCESS("Password successfully changed."),
+	PASSWORD_UNSUCCESS("Password not changed.")
+	;
 
 	
 	private String message;

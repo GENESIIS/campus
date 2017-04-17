@@ -4,13 +4,15 @@ package com.genesiis.campus.command;
 //20170130 AS CAM-21 code review modification done. 
 //20170228 AS C22-  checked current Session User and is there already account logout shows the message and  redirect to index page.
 //20170301 AS C22-removed unwanted comments 
+//20170224 AS C22 Changed imports oder. 
+
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.SystemMessage;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;

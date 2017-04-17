@@ -7,26 +7,24 @@ package com.genesiis.campus.util.mail;
 //				add documentation comments
 //			  	Removed GeneralMail() constructor argument 'mailHost'.
 //				SetProperties(),setSystemPropertiesAndMailEnvironment() restructured.
-//20161103 AS  C8-inquiry-form-for-course email class methods modified and bug fixed 
-import com.genesiis.campus.util.MailServerManager;
-
-import org.apache.log4j.Logger;
+//20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
+//				setProperties() method refactor accordingly.
+//20161227 DN CAM:18 initialized the receivers field at its deceleration so that to avoid null pointer exceptions. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
+import com.genesiis.campus.util.MailServerManager;
 
 /**
  * GeneralMail class captures the essence of an email
@@ -39,37 +37,38 @@ public class GeneralMail implements IEmail {
 
 	static Logger log = Logger.getLogger(GeneralMail.class.getName());
 
-    private ArrayList<String> receivers = null;    
+    private ArrayList<String> receivers = new ArrayList<String>();    
     private String sender;    
+    private String host ;
     private String subject;
     private String emailBody; 
     private Properties properties;
     private Session session ;
     private MimeMessage message ;
-
+    
   
 	/**
      * GeneralMail constructor creates the MimeMessage and Session automatically 
      * with system properties.
      * @author DN
      * @param receivers to list of the email ArrayList<String>
-     * @param sender String: email address of  the person who sends the email
-     * @param host String: Mail transferring host or the domain address
+     * @param sender String: email address of  the person who sends the email     * 
      * @param subject String: subject of the email
      * @param emailBody String : body content of the email
      */
     public GeneralMail( ArrayList<String> receivers,String sender,
     		String subject,String emailBody){
+    		
     	this.receivers = receivers;
-    	this.sender = sender;
-    	//this.host = host;    	
+    	this.sender = sender; 	
     	this.subject = subject;
-    	this.emailBody = emailBody;    	    	
+    	this.emailBody = emailBody;	
+    
     	setSystemPropertiesAndMailEnvironment();
     }
     
     /**
-     * setEmailMessage() setup sender,receiver list,subject,and the message bodyand the
+     * setEmailMessage() setup sender,receiver list,subject,and the message body and the
      * date of generating the email
      * @author DN
      * @return MimeMessage formatted message
@@ -78,13 +77,14 @@ public class GeneralMail implements IEmail {
     @Override
 	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
-	    	
-	         addSenderToMail(message,sender); 
-	         addRecipientToMail(message,receivers);
-	         addSubjectToMail(message,subject);
-	         addBodyContentToMail(message,emailBody);
-	         setSentDateToMail(message);
-	         return message;	        
+	    	// BCC and CC list has not yet implemented, it can be implemented in future 
+	    	// extensions as required
+	         addSenderToMail(this.message,this.sender); 
+	         addRecipientToMail(this.message,this.receivers);
+	         addSubjectToMail(this.message,this.subject);
+	         addBodyContentToMail(this.message,this.emailBody);
+	         setSentDateToMail(this.message);
+	         return this.message;	        
 	         
 	      }catch (MessagingException mex) {
 	    	  log.error("sendEmail(MimeMessage message):MessagingException :" +mex.toString());
@@ -109,27 +109,28 @@ public class GeneralMail implements IEmail {
   * protocol.
   * @author DN  
   */
-	    private void setProperties(){
- 	
-    	try{
-    		session = createMailSession();
+	private void setProperties() {
+		try {
+			session = createMailSession();
 			properties = session.getProperties();
 			properties.setProperty("mail.smtp.starttls.enable", "true");
-			
-			//session = Session.getDefaultInstance(o,null);
 		} catch (SQLException sqle) {
-			log.error("setProperties() SQLException:"+sqle.toString());
-			
+			log.error("setProperties() SQLException:" + sqle.toString());
+
 		}
-    	
-    	message = new MimeMessage(session);
-    	
+		message = new MimeMessage(session);
 	}
-    
 	    
-	    private Session createMailSession() throws SQLException{
-			 return MailServerManager.mailSession();
-		 }
+    /*
+     * createMailSession() manages to provide the MailSession instance
+     * by accessing MailServerManger
+     * @author DN
+     * @return Session
+     * @throws SQLException
+     */
+	 private Session createMailSession() throws SQLException{
+		 return MailServerManager.mailSession();
+	 } 
 
 	/*
      * addRecipientToMail() unfolds the list of recipients and
@@ -191,7 +192,7 @@ public class GeneralMail implements IEmail {
 		message.setText(bodyContent);
 	}
 	
-	
+	// getters and setters
 
 	public ArrayList<String> getReceivers() {
 		return receivers;
@@ -217,7 +218,14 @@ public class GeneralMail implements IEmail {
 
 
 
-	
-	
+	public String getHost() {
+		return host;
+	}
+
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
 
 }

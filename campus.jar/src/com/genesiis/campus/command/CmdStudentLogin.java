@@ -16,8 +16,8 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validator;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -53,65 +53,65 @@ public class CmdStudentLogin implements ICommand {
 		
 			if (currentSessionUser == null) {
 
-				String gsonData = helper.getParameter("jsonData");
-				data = getStudentdetails(gsonData);
+			String gsonData = helper.getParameter("jsonData");
+			data = getStudentdetails(gsonData);
 
-				String validateResult = LoginValidator.validateLogin(data);
+			String validateResult = LoginValidator.validateLogin(data);
 
-				boolean rememberMe = data.isRemember();
+			boolean rememberMe = data.isRemember();
 
-				if (validateResult.equalsIgnoreCase("True")) {
-					data = LoginValidator.dataSeparator(data);
+			if (validateResult.equalsIgnoreCase("True")) {
+				data = LoginValidator.dataSeparator(data);
 
-					ICrud loginDAO = new StudentLoginDAO();
-					dataCollection = loginDAO.findById(data);
+				ICrud loginDAO = new StudentLoginDAO();
+				dataCollection = loginDAO.findById(data);
 
-					for (Collection<String> collection : dataCollection) {
-						Object[] array = collection.toArray();
-						message = (String) array[0];
+				for (Collection<String> collection : dataCollection) {
+					Object[] array = collection.toArray();
+					message = (String) array[0];
 
-					}
+				}
 
 					if (message.equalsIgnoreCase(SystemMessage.VALIDUSER
 							.message())) {
 
-						if (rememberMe == true) {
-							helper.setAttribute("student", data);
-							CookieHandler.addCookie(helper.getResponse(),
-									"userIdendificationKey", data.getUserKey(),
-									2592000);
-						}
+					if (rememberMe == true) {
+						helper.setAttribute("student", data);
+						CookieHandler.addCookie(helper.getResponse(),
+								"userIdendificationKey", data.getUserKey(),
+								2592000);
+					}
 
 						if (data.getLastLoggedInSessionid()
 								.equalsIgnoreCase("")) {
-							pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
-						} else {
-							pageURL = "/dist/partials/student/student-dashboard.jsp";
-						}
-
-						session = helper.getSession(true);
-						String sessionID = session.getId();
-						data.setLastLoggedInSessionid(sessionID);
-						session.setAttribute("currentSessionUser",
-								data.getUsername());
-						session.setAttribute("user", data.getFirstName());
-						session.setAttribute("userCode", data.getCode());
-						session.setAttribute("currentUserData", dataCollection);
-						setStudentLoginDetails(data, helper);
-						int status = StudentLoginDAO.loginDataUpdate(data);
-
-						if (status > 0) {
-							message = SystemMessage.VALIDUSER.message();
-						} else {
-
-						}
+						pageURL = "/dist/partials/student/ManageStudentDetails.jsp";
 					} else {
-						// login attempts handle in here
-						// after 3 attempts session will blocked user
+						pageURL = "/dist/partials/student/student-dashboard.jsp";
 					}
 
+						session = helper.getSession(true);
+					String sessionID = session.getId();
+					data.setLastLoggedInSessionid(sessionID);
+					session.setAttribute("currentSessionUser",
+							data.getUsername());
+					session.setAttribute("user", data.getFirstName());
+					session.setAttribute("userCode", data.getCode());
+					session.setAttribute("currentUserData", dataCollection);
+					setStudentLoginDetails(data, helper);
+					int status = StudentLoginDAO.loginDataUpdate(data);
+
+						if (status > 0) {
+						message = SystemMessage.VALIDUSER.message();
+						} else {
+
+					}
 				} else {
-					message = SystemMessage.LOGINUNSUCCESSFULL.message();
+					// login attempts handle in here
+					// after 3 attempts session will blocked user
+				}
+
+			} else {
+				message = SystemMessage.LOGINUNSUCCESSFULL.message();
 				}
 
 			} else {

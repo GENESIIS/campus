@@ -48,7 +48,7 @@
 								</div>
 
 								<div class="form-group">
-									<a class="forgot-pwd text-right" href="#"
+									<a class="forgot-pwd text-right" href="/dist/partials/login/emailVerification.jsp" 
 										title="Forgot Password ?">Forgot Password ?</a>
 								</div>
 

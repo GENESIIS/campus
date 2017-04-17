@@ -5,7 +5,9 @@
  * C19-student-login-without-using-third-party-application-test-as added
  * remember checkbox.
  * 
- * CAM-21 AS logout-popup window added to after successful logout.
+ * CAM-21 AS logout-popup window added to after successful logout. 20170206
+ * CAM-22 password reset ajax functions coded 20170223 CAM-22 password
+ * validation function added
  * CAM-21 AS getJSessionId added, to check session id from JS.
  * CAM-21 AS removed unwanted functions - CheckingSeassion() 
  */
@@ -18,7 +20,7 @@ function studentLogin() {
 	var username = $("#email").val();
 	var password = $("#password").val();
 	var remember = $("#remember").prop('checked');
-	
+
 	var usernametb = isempty(username);
 	var passtb = isempty(password);
 
@@ -68,25 +70,25 @@ function studentLogin() {
 						}
 
 					},
-					error : function(response,error,errorThrown) {
+					error : function(response, error, errorThrown) {
 						alert("Error " + error);
 						console.log(error);
-						 var msg = '';
-					      if (response.status === 0) {
-					          msg = 'Not connect.\n Verify Network.';
-					      } else if (response.status == 404) {
-					          msg = 'Requested page not found. [404]';
-					      } else if (response.status == 500) {
-					          msg = 'Internal Server Error [500].';
-					      } else if (error === 'parsererror') {
-					          msg = 'Requested JSON parse failed.';
-					      } else if (error === 'timeout') {
-					          msg = 'Time out error.';
-					      } else if (error === 'abort') {
-					          msg = 'Ajax request aborted.';
-					      } else {
-					          msg = 'Uncaught Error.\n' + response.responseText;
-					      }
+						var msg = '';
+						if (response.status === 0) {
+							msg = 'Not connect.\n Verify Network.';
+						} else if (response.status == 404) {
+							msg = 'Requested page not found. [404]';
+						} else if (response.status == 500) {
+							msg = 'Internal Server Error [500].';
+						} else if (error === 'parsererror') {
+							msg = 'Requested JSON parse failed.';
+						} else if (error === 'timeout') {
+							msg = 'Time out error.';
+						} else if (error === 'abort') {
+							msg = 'Ajax request aborted.';
+						} else {
+							msg = 'Uncaught Error.\n' + response.responseText;
+						}
 					}
 
 				});
@@ -102,12 +104,12 @@ function getJSessionId(){
         else
             jsId = jsId.substring(11);
     }
-   
+
     return jsId;
 }
 
 
-// reset error message labels 
+// reset error message labels
 function resetLoginLabels() {
 
 	$("#errorMesssage").text("");
@@ -172,3 +174,381 @@ function studentLogout() {
 	}
 }
 
+//forget password function
+function forgotPassword() {
+	var userEmail = $("#verifiemail").val();
+
+	var emailempty = isempty(userEmail);
+	var valEmail = isValidEmailFormat(userEmail);
+
+	// email filed validation error messages handling
+	if (!(emailempty)) {
+		// document.getElementById('emailveryMessage').innerHTML = " ** Email
+		// can not be Empty.";
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(
+				'** Email can not be Empty.');
+		flag = false;
+		return false;
+	}
+	if (!(valEmail)) {
+		// document.getElementById('emailveryMessage').innerHTML = " ** Please
+		// Enter valid email address.";
+		jQuery('#emailveryMessage').addClass("fp-msg-error").html(
+				'  ** Please Enter valid email address.');
+		flag = false;
+		return false;
+	}
+
+	if (userEmail != null) {
+		var jsonData = {
+			"email" : userEmail
+
+		};
+
+		$
+				.ajax({
+					type : "POST",
+					url : '/LoginController',
+					data : {
+						jsonData : JSON.stringify(jsonData),
+						CCO : "EMAILV"
+
+					},
+					dataType : "json",
+					success : function(response) {
+						if (response['message'] === 'Mail successfully submited to your email, And verification code only valid 30 MINUTES. ') {
+							// document.getElementById('emailveryMessage').innerHTML
+							// = response['message'];
+							jQuery('#emailveryMessage').addClass(
+									"fp-msg-success").html(response['message']);
+							setTimeout(function() {
+								$("#verifyCode").val("");
+								clearField('verifyMesssage');
+								$('#verifications-popup').modal('show');
+								
+								
+								
+							}, 5000);
+						} else {
+							// document.getElementById('emailveryMessage').innerHTML
+							// = response['message'];
+							jQuery('#emailveryMessage')
+									.addClass("fp-msg-error").html(
+											response['message']);
+						}
+					},
+					error : function(response, error, errorThrown) {
+						alert("Error " + error);
+						console.log(error);
+						var msg = '';
+						if (response.status === 0) {
+							msg = 'Not connect.\n Verify Network.';
+						} else if (response.status == 404) {
+							msg = 'Requested page not found. [404]';
+						} else if (response.status == 500) {
+							msg = 'Internal Server Error [500].';
+						} else if (error === 'parsererror') {
+							msg = 'Requested JSON parse failed.';
+						} else if (error === 'timeout') {
+							msg = 'Time out error.';
+						} else if (error === 'abort') {
+							msg = 'Ajax request aborted.';
+						} else {
+							msg = 'Uncaught Error.\n' + response.responseText;
+						}
+					}
+
+				});
+	}
+}
+// Verify hash code
+
+function verifyCode() {
+	var code = $("#verifyCode").val();
+	var email = $("#verifiemail").val();
+	var codeEmpty = isempty(code);
+
+	// code filed validation error messages handling
+	if (!(codeEmpty)) {
+		// document.getElementById('verifyMesssage').innerHTML = " ** Verify
+		// Code can not be Empty.";
+		jQuery('#verifyMesssage').addClass("fp-msg-error")
+			.html('** Verify Code can not be Empty.');
+		flag = false;
+		return false;
+	}
+
+	if (code != null) {
+		var jsonData = {
+			"hashCode" : code,
+			"email" : email
+		};
+
+		$
+				.ajax({
+					type : "POST",
+					url : '/LoginController',
+					data : {
+						jsonData : JSON.stringify(jsonData),
+						CCO : "HASHV"
+
+					},
+					dataType : "json",
+					success : function(response) {
+						var counter = 0;
+						if (response['errorMessage'] == "Your Varification code is invalid. Please try again ! "
+								|| response['errorMessage'] == "Verification code has been Expired!") {
+
+							// document.getElementById('verifyMesssage').innerHTML
+							// = response['errorMessage'];
+							jQuery('#verifyMesssage').addClass("fp-msg-error")
+									.html(response['errorMessage']);
+
+						} else {
+							jQuery('#verifyMesssage')
+									.addClass("fp-msg-success").html(
+											response['errorMessage']);
+							setTimeout(function() {
+
+								var firstName = "";
+								var lastName = "";
+								var email = "";
+								var scode = "";
+								var resultData = response.result;
+
+								$.each(response.result, function(index, value) {
+									var res = value.toString();
+									var data = res.split(",");
+									counter++;
+
+									firstName = data[0].toString();
+									lastName = data[1].toString();
+									email = data[2].toString();
+									scode = data[4].toString();
+								});
+								var encode = hashEncode(scode);
+								// var decode = hashDecose(encode);
+								// data binding to URL
+								var pageURL = firstName + "&" + lastName + "&"
+										+ email + "&" + encode;
+
+								window.location.href = response['pageURL']
+										+ "?uData&" + pageURL;
+							}, 4000);
+
+						}
+					},
+					error : function(response, error, errorThrown) {
+						alert("Error " + error);
+						console.log(error);
+						var msg = '';
+						if (response.status === 0) {
+							msg = 'Not connect.\n Verify Network.';
+						} else if (response.status == 404) {
+							msg = 'Requested page not found. [404]';
+						} else if (response.status == 500) {
+							msg = 'Internal Server Error [500].';
+						} else if (error === 'parsererror') {
+							msg = 'Requested JSON parse failed.';
+						} else if (error === 'timeout') {
+							msg = 'Time out error.';
+						} else if (error === 'abort') {
+							msg = 'Ajax request aborted.';
+						} else {
+							msg = 'Uncaught Error.\n' + response.responseText;
+						}
+					}
+
+				});
+	}
+}
+// String encode to Hash code
+function hashEncode(data) {
+	// Define the string
+	var string = data;
+
+	// Encode the String
+	var encodedString = btoa(string);
+
+	return encodedString;
+}
+// String Hash code decode to Sting
+function hashDecode(data) {
+	// Decode the String
+	var decodedString = atob(data);
+
+	return decodedString;
+}
+
+// password changed ajax function
+function changedPassword() {
+	var validationPass = true;
+	var code = $("#userTypeCode").val();
+	var password = $("#passWord").val();
+	var confirmpassword = $("#confrmpsw").val();
+	var paaswordEmpty = isempty(password);
+	var passvadidation = passwordAndConfirmPassword(password, confirmpassword);
+	// code filed validation error messages handling
+	if (!(paaswordEmpty)) {
+		// document.getElementById('emailtbError').innerHTML = " ** Verify Code
+		// can not be Empty.";
+		jQuery('#passWordError').addClass("fp-msg-error").html(
+				'  ** Verify Code can not be Empty.');
+		flag = false;
+		return false;
+		
+		
+		
+	}else if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
+			"passWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(
+			isStringHasValiCharsAndLength($('#passWord').val(),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
+			"passWordError"))) {
+		return !validationPass;
+	}else if (!(isFieldFilled(isempty($('#confrmpsw').val()),
+			"Confirm Password Field", "confPassWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+			"confPassWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),
+			$('#confrmpsw').val()), "PassWords Does Not Match ,The Field(s)",
+			"confPassWordError"))) {
+		return !validationPass;
+	}
+	
+
+	if (code != null  && passvadidation && validationPass) {
+		var jsonData = {
+			"code" : code,
+			"password" : password
+		};
+
+		$.ajax({
+			type : "POST",
+			url : '/LoginController',
+			data : {
+				jsonData : JSON.stringify(jsonData),
+				CCO : "RESETPASS"
+
+			},
+			dataType : "json",
+			success : function(response) {
+
+				if (response['message'] === "Password successfully changed.") {
+					jQuery('#message').addClass("fp-msg-success").html(
+							response['message']);
+					setTimeout(function() {
+						window.location.href = response['pageURL'];
+					}, 4000);
+				} else {
+					jQuery('#message').addClass("fp-msg-error").html(
+							response['message']);
+				}
+			},
+			error : function(response, error, errorThrown) {
+				alert("Error " + error);
+				console.log(error);
+				var msg = '';
+				if (response.status === 0) {
+					msg = 'Not connect.\n Verify Network.';
+				} else if (response.status == 404) {
+					msg = 'Requested page not found. [404]';
+				} else if (response.status == 500) {
+					msg = 'Internal Server Error [500].';
+				} else if (error === 'parsererror') {
+					msg = 'Requested JSON parse failed.';
+				} else if (error === 'timeout') {
+					msg = 'Time out error.';
+				} else if (error === 'abort') {
+					msg = 'Ajax request aborted.';
+				} else {
+					msg = 'Uncaught Error.\n' + response.responseText;
+				}
+			}
+
+		});
+	}
+}
+
+/**
+ * validateSignUpWoThirdPartyPageEmbedData() validates all the current critical
+ * fields placed on /dist/partials/signUpWoThirdParty.jsp page. It's the custom
+ * field validator dedicated for the page above.
+ * 
+ * @author anuradha
+ * @returns {Boolean}
+ */
+function validatePasswordResetData() {
+	var validationPass = true;
+
+	if (!(isFieldFilled(isempty($('#passWord').val()), "Password Field",
+			"passWordError"))) {
+		return !validationPass;
+	} else if (!(isFieldFilled(
+			isStringHasValiCharsAndLength($('#passWord').val(),
+			/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),
+			"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ",
+			"passWordError"))) {
+		return !validationPass;
+	}
+
+	return validationPass;
+
+}
+
+/**
+ * convertPassWordToString() method displays the pass word to text
+ * 
+ * @author anuradha
+ * @param checkboxId
+ *            check box id which used to toggle the command
+ * @param passWordElementId
+ *            password field element id
+ * @param confirmWordElementId
+ *            confirming field element id
+ * @returns void
+ */
+
+function convertPassWordToString(checkboxId, passWordElementId,
+		confirmWordElementId) {
+	var value = ($('#' + checkboxId).is(':checked')) ? "text" : "password";
+	$('#' + passWordElementId).attr("type", value);
+	$('#' + confirmWordElementId).attr("type", value);
+}
+
+/**
+ * clearAllFields willclear all the data input text fields once it'scalled
+ */
+function clearAllFields() {
+
+	$('#showpasscheckbox').prop('checked', false);
+	var value = $('#showpasscheckbox').is(':checked') ? "text" : "password";
+	$('#passWord').attr("type", value);
+	$('#confrmpsw').attr("type", value);
+}
+
+/**
+ * Here the method confirms if both fields contain logically equal string
+ * values.
+ * 
+ * @author anuradha
+ * @param password
+ *            password field element id
+ * @param reconfirmPassWord
+ *            confirming field element id
+ * @returns {Boolean} if the both fields are logically equal, then, returns true
+ *          else false.
+ */
+function passwordAndConfirmPassword(password, reconfirmPassWord) {
+	var passwordTrimed = password.trim();
+	var isBothValueAreIdentical = false;
+	if (passwordTrimed != null | passwordTrimed != "") {
+		isBothValueAreIdentical = (passwordTrimed === reconfirmPassWord.trim());
+	}
+	return isBothValueAreIdentical;
+}

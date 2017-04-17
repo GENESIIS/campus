@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 import java.sql.SQLException;
+
 import java.util.logging.Logger;
 
 import javax.mail.Session;

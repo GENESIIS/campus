@@ -1,8 +1,7 @@
 package com.genesiis.campus.util.mail;
 //20161027 c10-contacting-us-page EmailDispenser.java initial version created
 //20161031 c10-contacting-us-page add document and method comments
-
-import org.apache.log4j.Logger;
+//20170118 CAM:18 corrected the spelling error emailDispense() method.
 
 import java.util.Properties;
 
@@ -10,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 /**
  * EmailDispenser class holds the responsibility of delivering the mail
  * Across recipients
@@ -44,7 +44,7 @@ public class EmailDispenser {
 	public void emailDispense() throws MessagingException{		
 		try {
 				dispenceEmail(email.setEmailMessage());
-				log.info("Email delevered sussessfully");
+				log.info("Email delivered successfully");
 				
 		} catch (MessagingException msgExp) {
 			log.error("emailDispense():MessagingException :"+msgExp.toString());
@@ -77,7 +77,7 @@ public class EmailDispenser {
 	}
 	
 	/**
-	 * isEmailNotSet() checks id the emaik is null or set to a value
+	 * isEmailNotSet() checks id the email is null or set to a value
 	 * @return
 	 */
 	public boolean isEmailNotSet(){		
