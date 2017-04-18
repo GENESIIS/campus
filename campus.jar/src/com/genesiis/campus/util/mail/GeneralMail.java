@@ -10,8 +10,9 @@ package com.genesiis.campus.util.mail;
 //20161102 DN c10-contacting-us-page removed host,user name,password fields and changed the class constructor accordingly
 //				setProperties() method refactor accordingly.
 //20161227 DN CAM:18 initialized the receivers field at its deceleration so that to avoid null pointer exceptions. 
-//20170417 CW c158-send-email-tutor-employment-confirmation-cw add ccList, bccList & constructor with bccList & ccList & add addBccToMail, addCCToMail methods
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw add ccList, bccList & constructor with bccList & ccList & add addBccToMail, addCCToMail methods
 				// modified setEmailMessage method to add bccList & ccList to email
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw modified the code to remove un wanted spaces
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -116,18 +117,10 @@ public class GeneralMail implements IEmail {
 			if(this.bccList != null || this.bccList.size() != 0){
 		         addBccToMail(this.message,this.bccList);
 			}
-	         
-
 			if(this.ccList != null || this.ccList.size() != 0){
 		         addCCToMail(this.message,this.ccList);
 			}
-	         
-	         
-	         
-	         
-	         
-	         
-	         
+			
 	         return this.message;	        
 	         
 	      }catch (MessagingException mex) {
