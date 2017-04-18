@@ -113,7 +113,7 @@
 										<tr>
 											<td>
 												<a class="thumb-img" href="/dist/i/uploadCpImages/uploads/linkedin_large.png" title="">
-													<img src="/dist/i/uploadCpImages/uploads/linkedin_large.png" alt="" />
+													<img id="cp_img_display" name="cp_img_display" alt="" />
 												</a>CourseProviderLogo_Large
 											</td>
 											<td>image/jpeg</td>
