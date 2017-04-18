@@ -11,10 +11,12 @@ package com.genesiis.campus.command;
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
 //20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
+//20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.model.Employment;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.mail.GenerateEmail;
@@ -68,9 +70,26 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 				message = "Selected employers successfully added ...";
 				GenerateEmail emailAtUpdate = new GenerateEmail();
 				
+				//TutorDAO tutorDao = new TutorDAO();
+				final Collection<Collection<String>> allTutorCpEmailList = TutorDAO.getListOfEmailToSendEmploymentRequest(employerCode, "SITE_ADMIN_EMAIL", tutorCode);
+				//getListOfEmailToSendEmploymentRequest(String courseProviderCode, String systemConfigCode, String tutorCode)
+				String nameOfTutor;
+				Collection<String> receiverEmailList = new ArrayList<String>();
+				String bccEmail;
 				
-				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail("chinthaka", "Weerasinghe", "chinthaka@genesiis.com", "ccw", 2); //send email
+				for(Collection<String> emailDetails : allTutorCpEmailList){
+					if(emailDetails != null || emailDetails.size() != 0){
+						nameOfTutor = emailDetails.toArray()[0].toString(); // first name
+						receiverEmailList.add(emailDetails.toArray()[1].toString()); // last name
+						bccEmail = emailDetails.toArray()[2].toString(); // last name
+					}
+				}
 				
+				
+				
+				//public String sendTutorEmploymentConfirmEmail(String firstname, String lastname, Collection<String> receiverEmailList, String bccEmail)
+				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail); //send email
+				//emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail("chinthaka", "Weerasinghe", "chinthaka@genesiis.com", "ccw", 2); //send email
 				
 				
 				/*emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), 
