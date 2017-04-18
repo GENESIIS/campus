@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20170128 cw c126-formatting-un-formatted-email-tutor-signup-cw - modified attribute name
 //20170128 cw c126-formatting-un-formatted-email-tutor-signup-cw - rename the enum name from SystemMail to SystemEmail.
 //20170219 CW c103-send-email-tutor-status-change-cw - add attributes to the Enum
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw add SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1, SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY2 commands
 
 /**
  * SystemMail enum handles the content of the email to be sent
@@ -21,7 +22,9 @@ public enum SystemEmail {
 	SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE2("", "", "http://www.campus.lk"),
 	SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE3("", "", "Your user ID: "),
 	SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1("Update Confirmation", "Dear Sir/Madam","Your registration details are verified by the campus.lk site admin & you are now"),
-	SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2("Update Confirmation", "Dear Sir/Madam","Tutor of campus.lk website.");
+	SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2("Update Confirmation", "Dear Sir/Madam","Tutor of campus.lk website."),
+	SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1("Confirm Tutor Employment", "Dear Administrator","Mr."),
+	SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY2("Confirm Tutor Employment", "Dear Administrator","has selected your Institute as his working place & please confirm/reject via campus.lk web site.");
 	
 	private final String subject;
 	private final String title;
