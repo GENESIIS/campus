@@ -6,6 +6,7 @@ package com.genesiis.campus.util.mail;
 //20170406 CW c157-add-tutor-employment-details-cw add sendTutoremploymentConfirmEmail method
 //20170417 CW c157-add-tutor-employment-details-cw sendTutoremploymentConfirmEmail method name changed to sendTutorEmploymentConfirmEmail
 //20170418 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to use TutorEmploymentConfirmEmailComposer class to send email
+//20170418 CW c157-add-tutor-employment-details-cw modified setEnvironment method call in sendTutorEmploymentConfirmEmail method
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -13,6 +14,7 @@ import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.mail.MessagingException;
@@ -32,7 +34,7 @@ public class GenerateEmail {
 	 * @return String
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
-	public String sendTutorEmploymentConfirmEmail(String nameOfTutor, Collection<String> receiverEmailList, String bccEmail) 
+	public String sendTutorEmploymentConfirmEmail(String nameOfTutor, ArrayList<String> receiverEmailList, String bccEmail) 
 			throws IllegalArgumentException, Exception {
 		int status;
 		try {
@@ -42,10 +44,9 @@ public class GenerateEmail {
 			
 			//Used the same email address send to the method as the senders email address & receivers email address. 
 			//The senders email address will overridden later from the email address in campus.xml file
-			tutorEmployentConfirmEmailComposer.setEnvironment("Administrator", emailAddress,
-					tutorEmployentConfirmEmailComposer.composeSingleEmailList(emailAddress),
-					SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getSubject(),
-					SystemMessage.SUCCESSFULL_CREATTION.message());
+			tutorEmployentConfirmEmailComposer.setEnvironment("Administrator", bccEmail, receiverEmailList,
+											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getSubject(),
+											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody());
 	
 			tutorEmployentConfirmEmailComposer.formatEmailInstance(username);
 			status = this.sendMail(tutorEmployentConfirmEmailComposer);
