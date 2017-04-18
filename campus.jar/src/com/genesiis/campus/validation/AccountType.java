@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20161124 JH c7-higher-education-landing-page-MP AccountType.java created
 //20161127 MM c5-corporate-training-landing-page-MP Added getAccountTypeByTypeValue(int)
 // 				method to retrieve enum constant by passing its value for "typeValue"
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw add getAccountType method
 
 /**
  * This enum class is created to manage course provider account type. 
@@ -29,8 +30,7 @@ public enum AccountType {
 	 */
 	public int getTypeValue() {
 		return typeValue;
-	}
-	
+	}	
 	
 	/**
 	 * Returns the particular AccountType enum constant whose value for 
@@ -57,5 +57,26 @@ public enum AccountType {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Generic method for map the accountTypeValue. Able to call from whole campus application
+	 * @author CW
+	 * @param accountTypeValue selected account type Value string
+	 * @return integer AccountType
+	 * @throws Exception
+	 */
+	public static int getAccountType(String accountTypeValue){
+		int AccountType=0; 	
+		if (Validator.isEmptyOrHavingSpace(accountTypeValue)) {
+			if (accountTypeValue.equalsIgnoreCase("ACTIVE")) {
+				AccountType = FEATURED_COURSE_PROVIDER.getTypeValue();
+			}
+			if (accountTypeValue.equalsIgnoreCase("INACTIVE")) {
+				AccountType = ONE_OFF_COURSE_PROVIDER.getTypeValue();
+			}
+		}
+		
+		return AccountType;
 	}
 }
