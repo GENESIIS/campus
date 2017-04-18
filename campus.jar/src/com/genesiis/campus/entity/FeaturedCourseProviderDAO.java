@@ -14,6 +14,7 @@ package com.genesiis.campus.entity;
 //20170403 CW c157-add-tutor-employment-details-cw modified getTutorSelectedFCP to get VARIFICATIONSTATUS from getApplicationStatus method
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments & modified getFCPListForTutorToSelect method's log message
 //20170406 CW c157-add-tutor-employment-details-cw add findById method
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getFCPListForTutorToSelect method to get account type as a parameter
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -306,7 +307,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	 * @author Chinthaka 
 	 * @return Returns a collection of collection consists the code & name of Featured Course Provider in Database which is not selected earlier by the same tutor 
 	 */
-	public Collection<Collection<String>> getFCPListForTutorToSelect(String tutorCode) throws SQLException, Exception {
+	public Collection<Collection<String>> getFCPListForTutorToSelect(String tutorCode, int accountType) throws SQLException, Exception {
 		
 		final Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 		Connection conn = null;
@@ -314,7 +315,7 @@ public class FeaturedCourseProviderDAO implements ICrud {
 		ResultSet rs = null;
 					
 		StringBuilder queryBuilder = new StringBuilder("SELECT CP.CODE CODE, CP.NAME NAME FROM CAMPUS.COURSEPROVIDER CP ");
-		queryBuilder.append("WHERE CP.ACCOUNTTYPE = 1 ");
+		queryBuilder.append("WHERE CP.ACCOUNTTYPE = ? ");
 		queryBuilder.append("AND CP.CODE NOT IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ? )");		
 		queryBuilder.append("ORDER BY NAME");
 			
@@ -322,7 +323,8 @@ public class FeaturedCourseProviderDAO implements ICrud {
 			
 			conn = ConnectionManager.getConnection();						
 			stmt = conn.prepareStatement(queryBuilder.toString());
-			stmt.setString(1, tutorCode);
+			stmt.setInt(1, accountType);
+			stmt.setString(2, tutorCode);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
