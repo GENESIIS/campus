@@ -34,6 +34,8 @@ package com.genesiis.campus.entity;
 				// add validateUsernameEmailFields() method from 
 //20170306 CW c37-tutor-update-tutor-profile-cw removed un wanted space from getListOfUsernameEmail()
 //20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw removed password selecting from findById
+				// add getListOfEmailToSendEmploymentRequest method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -194,7 +196,7 @@ public class TutorDAO implements ICrud {
 		String countryName = null;
 		String townName = null;
 					
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.PASSWORD, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
 		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
 		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
 		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
@@ -219,7 +221,6 @@ public class TutorDAO implements ICrud {
 								
 				singleTutorList.add(rs.getString("CODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
-				singleTutorList.add(rs.getString("PASSWORD"));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
@@ -376,6 +377,53 @@ public class TutorDAO implements ICrud {
 		}
 		
 		return allUsernameEmailList;
+	}
+	
+
+	/**
+	 * This method is used to get the list of course provider email addresses with the tutor name & email of systemconfig table to BCC the email
+	 * @param String values containing courseProviderCode, systemConfigCode for system email & tutorCode 
+	 * @author Chinthaka 
+	 * @return all the matching email list of course providers to send the email with tutor name & system email from sysconfig table
+	 */
+	public static Collection<Collection<String>> getListOfEmailToSendEmploymentRequest(String courseProviderCode, String systemConfigCode, String tutorCode) throws SQLException, Exception{
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		final Collection<Collection<String>> allTutorCpEmailList = new ArrayList<Collection<String>>();
+		
+		try{
+			conn = ConnectionManager.getConnection();
+			
+			String query = "SELECT T.FIRSTNAME +' '+ T.LASTNAME NAME , CPA.EMAIL EMAIL, SC.VALUE1 SYSEMAIL FROM CAMPUS.COURSEPROVIDERACCOUNT CPA, CAMPUS.SYSTEMCONFIG SC, CAMPUS.TUTOR T "
+					+ "WHERE CPA.COURSEPROVIDER = ? AND SC.SYSTEMCONFIGCODE = ? AND T.CODE = ?";
+
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, courseProviderCode);
+			stmt.setString(2, systemConfigCode);
+			stmt.setString(3, tutorCode);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				final ArrayList<String> TutorCpEmailList = new ArrayList<String>();
+				TutorCpEmailList.add(rs.getString("NAME"));
+				TutorCpEmailList.add(rs.getString("EMAIL"));
+				TutorCpEmailList.add(rs.getString("SYSEMAIL"));
+				allTutorCpEmailList.add(TutorCpEmailList);
+			}
+			
+		} catch (SQLException sqlException) {
+			log.info("getListOfEmailToSendEmploymentRequest(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getListOfEmailToSendEmploymentRequest(): Exception " + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		
+		return allTutorCpEmailList;
 	}
 
 }
