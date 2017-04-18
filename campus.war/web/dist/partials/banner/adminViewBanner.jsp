@@ -113,7 +113,9 @@
     <div id="endtDateInfor" style ="color:#C70039;"></div>
      <div class="count-and-delete">
         <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
-            <button type="button" value="Delete Selected" id="inactiveBanner">Inactive Selected Banner(s)</button>
+         	<button type="button" value="Active Selected" id="activeBanner">Activate Selected Banner(s)</button>
+            <button type="button" value="Delete Selected" id="inactiveBanner">Deactivate Selected Banner(s)</button>
+           
         </div>
         <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
             <input class="check-all-delete" type="checkbox" id="all-delete" value="">
