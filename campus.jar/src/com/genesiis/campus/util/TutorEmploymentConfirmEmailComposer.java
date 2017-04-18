@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw create the class TutorEmploymentConfirmEmailComposer
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getEmailBody method to create the mail body correctly
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -116,9 +117,9 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 		StringBuilder result = new StringBuilder();		
 		
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getMailBody());
-		result.append(" "+tutorStatus+" ");
-		result.append(SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY2.getMailBody());
+		result.append(SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody());
+		result.append(" "+nameOfTutor+" ");
+		result.append(SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY2.getMailBody());
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();
@@ -133,8 +134,6 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 		result.append(System.getProperty("line.separator"));
 		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE2.getMailBody());
 		result.append(System.getProperty("line.separator"));
-		result.append(SystemEmail.SEND_EMAIL_TUTOR_SIGNUP_COMPLEMENTARY_CLOSE3.getMailBody());
-		result.append(username);
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();
