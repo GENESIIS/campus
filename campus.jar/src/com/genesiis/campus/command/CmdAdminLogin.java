@@ -94,7 +94,7 @@ public class CmdAdminLogin implements ICommand{
 							//admin privacy privilege list
 							//CAM-154 doing the admin privilege handling 
 							AdminPrivilegeDAO adminPrivilegeDAO = new AdminPrivilegeDAO();
-							privilegeList = (ArrayList<String>) adminPrivilegeDAO.adminPrivileges(adminData);
+							privilegeList = adminPrivilegeDAO.adminPrivileges(adminData);
 							dataCollection.add(privilegeList);
 						}else{
 							
