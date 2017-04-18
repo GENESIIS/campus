@@ -7,6 +7,7 @@ package com.genesiis.campus.util.mail;
 //20170417 CW c157-add-tutor-employment-details-cw sendTutoremploymentConfirmEmail method name changed to sendTutorEmploymentConfirmEmail
 //20170418 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to use TutorEmploymentConfirmEmailComposer class to send email
 //20170418 CW c157-add-tutor-employment-details-cw modified setEnvironment method call in sendTutorEmploymentConfirmEmail method
+//20170418 CW c157-add-tutor-employment-details-cw modified formatEmailInstance method call to send null String
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -48,7 +49,7 @@ public class GenerateEmail {
 											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getSubject(),
 											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody());
 	
-			tutorEmployentConfirmEmailComposer.formatEmailInstance(username);
+			tutorEmployentConfirmEmailComposer.formatEmailInstance("");
 			status = this.sendMail(tutorEmployentConfirmEmailComposer);
 
 	} catch (IllegalArgumentException ilexp) {
