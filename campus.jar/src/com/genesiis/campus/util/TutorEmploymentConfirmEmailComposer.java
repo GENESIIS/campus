@@ -1,9 +1,6 @@
 package com.genesiis.campus.util;
 
-//20170219 CW c103-send-email-tutor-status-change-cw create the class TutorUpdateEmailComposer.java to help compose the mailing using CAM-126
-//20170219 CW c103-send-email-tutor-status-change-cw Create the constructors & modified getEmailBody() method
-//20170220 CW c103-send-email-tutor-status-change-cw modified single argument constructor & getEmailBody() method.
-//20170222 CW c103-send-email-tutor-status-change-cw modified TutorUpdateEmailComposer single argument constructor to use an int value as a parameter instead of IDataHelper object
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw create the class TutorEmploymentConfirmEmailComposer
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,12 +18,12 @@ import com.genesiis.campus.validation.SystemEmail;
 import org.apache.log4j.Logger;
 
 /**
- * SignUpEmailComposer class handles the composing & formatting the email to be sent
- * at the time of tutor signup.
+ * TutorEmploymentConfirmEmailComposer class handles the composing & formatting the email to be sent
+ * at the time of tutor employment confirmation
  * @author Chinthaka CW
  */
-public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCreator  {
-	static Logger log = Logger.getLogger(TutorUpdateEmailComposer.class.getName());
+public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, EmailContentCreator  {
+	static Logger log = Logger.getLogger(TutorEmploymentConfirmEmailComposer.class.getName());
 	private String recieversName;
 	private String sendersEmailAddress;
 	private ArrayList<String> recieversEmailAddreses;
@@ -34,24 +31,23 @@ public class TutorUpdateEmailComposer implements IEmailComposer, EmailContentCre
 	private String mailBody;
 	private IEmail generalEmail;
 	private EmailDispenser emailDispenser;
-	private String tutorStatus;
+	private String nameOfTutor;
 	
 /**
  * No Argument Constructor for the class
  * @author CHINTHAKA
  */
-	public TutorUpdateEmailComposer(){
+	public TutorEmploymentConfirmEmailComposer(){
 		
 	}
 
 /**
- * Single Argument Constructor for the class TutorUpdateEmailComposer
- * this will assign the tutor status in order to use later to send the email
+ * Single Argument Constructor for the class TutorEmploymentConfirmEmailComposer
+ * this will assign the nameOfTutor in order to use later to send the email
  * @author CHINTHAKA
  */
-	public TutorUpdateEmailComposer(int appStatus){
-		ApplicationStatus[] applicationStatus = ApplicationStatus.values();
-		tutorStatus = applicationStatus[appStatus].toString().toLowerCase();
+	public TutorEmploymentConfirmEmailComposer(String nameOfTutor){
+		this.nameOfTutor = nameOfTutor;
 	}
 
 	@Override
