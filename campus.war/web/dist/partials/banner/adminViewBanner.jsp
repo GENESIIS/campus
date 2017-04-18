@@ -15,7 +15,8 @@
  <!-- 20170406 DN 83-admin-manage-banner-update-banner-info-dn. The span element is given an id for displaying the number of records available -->
  <!-- 20170407 DN 83-admin-manage-banner-update-banner-info-dn. The 'Delete Selected button is changed to 'Inactive Selected Banner(s)' as per TWs' instructions -->
  <!-- 			  Hide the radio button pending and Expired as per Tw's instruction	
- <!--20170417 DN 83-admin-manage-banner-update-banner-info-dn. jQuery & Other js imported statements are placed at the end of the page	 -->
+ <!-- 20170417 DN 83-admin-manage-banner-update-banner-info-dn. jQuery & Other js imported statements are placed at the end of the page	 -->
+ <!-- 20170418 DN 83-admin-manage-banner-update-banner-info-dn. Added id 'all-delete' property for Inactive Selected Banner(s) button -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -112,10 +113,11 @@
     <div id="endtDateInfor" style ="color:#C70039;"></div>
      <div class="count-and-delete">
         <div class="btn-banner-delete col-lg-3 col-md-3 col-sm-12">
-            <button type="button" value="Delete Selected">Inactive Selected Banner(s)</button>
+            <button type="button" value="Delete Selected" id="inactiveBanner">Inactive Selected Banner(s)</button>
         </div>
         <div class="all-select-check col-lg-6 col-md-6 col-sm-6">
-            <input type="checkbox" name="" value="">Select All
+            <input class="check-all-delete" type="checkbox" id="all-delete" value="">
+            <label for="all-delete">Select All</label>
         </div>
         <div class="result-count col-lg-3 col-md-3 col-sm-6"><span id="bannerViewRecodsCount"></span> Results Found</div>
     </div>
