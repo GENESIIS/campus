@@ -12,6 +12,7 @@ package com.genesiis.campus.command;
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
 //20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
 //20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
+//20170418 CW c157-add-tutor-employment-details-cw modified employmentDetails variable creation place
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -51,14 +52,13 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 		String emailMessage = "";
 		int status = 0;
 		try {			
-			Employment employmentDetails = new Employment();
 			String tutorCode = helper.getParameter("tutorcodelist");
 			String employerCode = helper.getParameter("employerDetails");			
 			
 			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){// employer code is selected
 				if(Validator.isNotEmpty(tutorCode)){
-					employmentDetails = setEmploymentDetails(tutorCode, employerCode);
-								
+					
+					Employment employmentDetails = setEmploymentDetails(tutorCode, employerCode);		
 					EmploymentDAO addEmployment = new EmploymentDAO();
 					status = addEmployment.add(employmentDetails);					
 				}
@@ -73,9 +73,9 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 				//TutorDAO tutorDao = new TutorDAO();
 				final Collection<Collection<String>> allTutorCpEmailList = TutorDAO.getListOfEmailToSendEmploymentRequest(employerCode, "SITE_ADMIN_EMAIL", tutorCode);
 				//getListOfEmailToSendEmploymentRequest(String courseProviderCode, String systemConfigCode, String tutorCode)
-				String nameOfTutor;
-				Collection<String> receiverEmailList = new ArrayList<String>();
-				String bccEmail;
+				String nameOfTutor = null;
+				ArrayList<String> receiverEmailList = new ArrayList<String>();
+				String bccEmail = null;
 				
 				for(Collection<String> emailDetails : allTutorCpEmailList){
 					if(emailDetails != null || emailDetails.size() != 0){
