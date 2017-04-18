@@ -50,16 +50,16 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label for="type-large" class="radio-inline"><input type="radio" id="type-large" name="logoSizeType" value="Large">Large</label>
-									<label for="type-medium" class="radio-inline"><input type="radio" id="type-medium" name="logoSizeType" value="Medium">Medium</label>
-									<label  for="type-small" class="radio-inline"><input type="radio" id="type-small" name="logoSizeType" value="Small">Small</label> 
+									<select id="cp_img_type" name="cp_img_type" required>
+											<option value="">--Select Type--</option>
+									</select>
 								</div>
 							</div>
 							<div class="col-sm-5">
 								<div class="form-group">
-									<label class="img-info">
+									<label class="img-info" id="img-info">
 										<i class="fa fa-info-circle" aria-hidden="true"></i>
-										Larger logo is to display on the homepage. The default size is 1600 x 675px.
+										<span id="cp_img_desc" name="cp_img_desc"></span>										
 									</label>
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 							<div class="col-sm-9">
 								<div class="form-group file-upload">
 									<label class="btn btn-default btn-file">
-										<input type="file" id="upload-img" hidden>
+										<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="validateFile(this, 'cp_img_upload', 'cp_img_upload_btn')" hidden>
 									</label>
 								</div>
 							</div>
@@ -161,8 +161,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-close btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-save btn-default">Save changes</button>
+					<button type="button" class="btn btn-close btn-default" data-dismiss="modal">X</button>
+					<input class="btn btn-save btn-default" type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn" value="Upload Image">
+					<input class="btn btn-save btn-default" type="submit" id="cp_img_delete_btn" name="cp_img_delete_btn" value="Delete Image">
 				</div>
 				</div>
 			</div>
