@@ -5,19 +5,6 @@ package com.genesiis.campus.command;
 //20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
 
 
-import java.net.URL;
- 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.AdminPrivilegeDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -29,7 +16,20 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
 import com.google.gson.Gson;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
+
 
 
 public class CmdAdminLogin implements ICommand{
@@ -106,6 +106,40 @@ public class CmdAdminLogin implements ICommand{
 	
 					}else{
 						//Logging attempts handling 
+						logginAttempts();
+					}
+					
+				}else{
+					message = SystemMessage.LOGINUNSUCCESSFULL.message();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+				}
+				
+			}else{
+				path = SystemConfig.ADMIN_LANDING_PAGE.getValue1(); //if user already logged, redirect to admin Landing page
+			}
+			
+			helper.setAttribute("message", message);
+			helper.setAttribute("pageURL", pageURL);
+			view.setCollection(dataCollection);
+			
+		} catch (SQLException e) {
+			log.error("execute(IDataHelper helper, IView view):  SQLException"
+					+ e.toString());
+			throw e;
+		} catch (Exception e) {
+			log.error("execute(IDataHelper helper, IView view):  Exception"
+					+ e.toString());
+			throw e;
+		}
+		
+		return view;
+	}
+	
+	/**
+	 * this methods handling user Logging attempts
+	 */
+	
+	public void logginAttempts(){
 						for (max = max; max <= 3; max++) {
 							
 							if (max == 3) {
@@ -135,33 +169,7 @@ public class CmdAdminLogin implements ICommand{
 						}
 					}
 					
-				}else{
-					message = SystemMessage.LOGINUNSUCCESSFULL.message();
-					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-				}
 				
-			}else{
-				path = SystemConfig.ADMIN_LANDING_PAGE.getValue1(); //if user already logged, redirect to admin Landing page
-			}
-			
-			helper.setAttribute("message", message);
-			helper.setAttribute("pageURL", pageURL);
-			view.setCollection(dataCollection);
-			
-		} catch (SQLException e) {
-			log.error("execute(IDataHelper helper, IView view):  SQLException"
-					+ e.toString());
-			throw e;
-		} catch (Exception e) {
-			log.error("execute(IDataHelper helper, IView view):  Exception"
-					+ e.toString());
-			throw e;
-		}
-		
-		return view;
-	}
-	
-	
 	/**
 	 * Admin login details maintain.
 	 * 

@@ -1,3 +1,9 @@
+//20170317 AS CAM-153 tabale alter modification, admin login query added
+//20170331 AS CAM-153 login data update query added
+//20170403 AS CAM-153 AdminLogin Query modification updated
+//20170405 AS CAM-153 admin privilege query updated
+
+
 //Admin tabale alter
 
 ALTER TABLE CAMPUS.ADMIN ADD

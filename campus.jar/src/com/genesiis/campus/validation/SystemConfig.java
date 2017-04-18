@@ -5,6 +5,7 @@ package com.genesiis.campus.validation;
 //				value2 and value3 to match fields in SystemConfig table
 //20161125 JH c7-higher-education-landing-page-MP added new enum class CATEGORY_LOGO_PATH
 //20161128 JH c7-higher-education-landing-page-MP changed value1 string in CATEGORY_LOGO_PATH and PROVIDER_LOGO_PATH
+//20170330 AS c23-admin-login-logout-function-as added new enum class ADMIN_LOGIN_PAGE and ADMIN_LANDING_PAGE
 
 /**
  * SystemConfig enum is intended to be used for the purpose of identifying the
