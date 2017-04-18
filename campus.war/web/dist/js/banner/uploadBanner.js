@@ -59,6 +59,15 @@
  * 				Add "banerCode" attribute to the same block of code.
  * 20170331 DN c83-admin-manage-banner-update-banner-info-dn. Method validateUploadBannerEmbedData() modified to amend the error messages.
  * 				The method sendBannerPaageFieldInputs() changed :src attribute is set after a if check has been performed: if(response['']!='default')
+ * 20170405 DN c83-admin-manage-banner-update-banner-info-dn. setTheRadioButtonValues() valuse are changed true --> 1 and false --> 0 
+ * 			   to analogus with ApplicationStatus.java enum class and for ease of future enhancement.
+ * 				Removed the timeOut() and implemented auto click event to close the modal window in the onclick event of the openModalUpload element.
+ *       		Removed the function call to displayBannerManagerPrerequistData() from bannerModalClose onclick event.
+ *              e.preventDefault() method is placed at the beginning of openModalUpload on click event.
+ * 20170417 DN c83-admin-manage-banner-update-banner-info-dn. bannerRecordUpdate on click event is added changes to retrieve the banner image name, for the use case where
+ * 				an user need to update a banner sooner after a banner is added.
+ * 				sendBannerPaageFieldInputs() changed so that at edit mode the display test of the button changes from upload to change the banner and Upload the record button
+ * 				appears in edit mode.
  */
 
 /*
@@ -483,7 +492,21 @@ $(document).on('click','#uploadBbutton', function(event){
 $(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputValues){  // Only the banner record is updated without the banner image
 	event.preventDefault();
 	bannerFieldInputValues=getBannerCredentials();
-	bannerFieldInputValues.push($('#bannerEditableImageName').val());
+	var bannerImage = $('#bannerEditableImageName').val();
+	
+	/*
+	 * NOTE: IF THE WAR PATH WHERE THE BANNER GETS STORED IS CHANGED
+	 * E.G /education/banner/235/235.jpg?0.8815050977283492
+	 * THEN THE WAY THE NAME OF THE IMAGE IS RETRIEVED MUST BE CHANGED.	 * 
+	 */
+	if(bannerImage.length==0){ // if bannerImage hidden field is empty then check the banner diplay element.
+		var imagePath = $('#imageName01').attr("src");  // "/education/banner/235/235.jpg?0.8815050977283492"
+		if(imagePath.length !=0){ // if it has content then it's an editing Banner which has just been brand newly saved.
+			bannerImage = imagePath.split("/").pop().split('?')[0]; // 235.jpg
+		}		
+	}
+	
+	bannerFieldInputValues.push(bannerImage);
 	var isValidationvalidationPassed= validateUploadBannerEmbedData();
 	if(isValidationvalidationPassed){
 		sendBannerPaageFieldInputs(bannerFieldInputValues,isValidationvalidationPassed,"UPOBR"); //UPDATE ONLY THE BANNER RECORD 
@@ -497,9 +520,10 @@ $(document).on('click','#bannerRecordUpdate', function(event,bannerFieldInputVal
  * abnnner button gets fired
  */
 $(document).on('click','#openModalUpload', function(event){
+	event.preventDefault();
 	if(!validateUploadBannerEmbedData()){
 		displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel','red',"Error !");
-		setTimeout($('#bannerUploadPopUp').modal('hide'),5000);
+		$('#bannerModalClose').trigger('click');
 	
 	} 
 });
@@ -518,7 +542,6 @@ $(document).on('mousedown','#file-select',function(event){
  */
 $(document).on('click','#bannerModalClose',function(event){
 	event.preventDefault();
-	//displayBannerManagerPrerequistData();
 	setTheRadioButtonValues();
 });
 
@@ -538,7 +561,8 @@ $(document).on('click','#systemMessageClose',function(event){
  */
 function validateUploadBannerEmbedData(){
 	var validationPass =false;
-
+	var bannerCode =$('#bannerCode').val().trim();
+	var bannerCodeFilledAndNotEmpty = (bannerCode!=null)&&(bannerCode!="");
 	if (!(isFieldFilled(isStringHasValiCharsAndLength($('#advertiser').val(),
 		/^([a-zA-Z]+)([a-zA-Za-zA-Z0-9\._]+){0,}$/g), "The Advertiser Field",
 		"advertiserInfor")))
@@ -561,12 +585,13 @@ function validateUploadBannerEmbedData(){
 	//else the start date is in the past than todays date then it s illegal
 	var todaysDate = new Date().toJSON().slice(0,10);
 	
-	//Banner Activation Date validation against the current date 
-	
-	if(!isFieldFilled(
-				compareDates(todaysDate,$('#startDate').val(),"-")<=0,"The Banner Activation Date should be >= toDays' Date ... ","startDateInfor"))
+	//Banner Activation Date validation against the current date happens if there is no banner code assign: new Record
+	// if the banner code is prasent : existing banner to be updated.Then todays date check does not required.
+	if(!bannerCodeFilledAndNotEmpty){
+		if(!isFieldFilled(
+				(compareDates(todaysDate,$('#startDate').val(),"-")<=0),"The Banner Activation Date should be >= toDays' Date ... ","startDateInfor"))
 			return validationPass;
-	
+	}
 	if(!isFieldFilled(isempty($('#endtDate').val()),'The End date','endtDateInfor'))
 		return validationPass;
 	
@@ -634,6 +659,10 @@ if(elegibleToProceed){
 					$('#bannerCode').val(response['bannerCode']);
 					if(response['bannerWarPath']!="default")
 					$('#imageName01').attr('src',"/"+response['bannerWarPath']+'?'+Math.random());
+					$('#openModalUpload').html('Change the Banner');
+					var existelement = $('#banner-from').find('#bannerRecordUpdate');
+					if(existelement.length == 0)
+						$('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
 				}
 				$('#bannerUploadPopUp').modal('hide');
 				displayBannerManagerPrerequistData();
@@ -661,12 +690,13 @@ if(elegibleToProceed){
 
 $( document ).ready(function() {	
 	$("#openModalUpload").click(function(e){
+		e.preventDefault();
 		$('#uploadBbutton').prop('disabled',false); // if dissabled make the button enabled
 		$('#bannerUploadPopUp').modal('show');
 		$('#file-select').prop('files')[0]="";
 		$('#file-select').val(''); // clears the selected image name in the previouse call
 		$('#bannerDisplayLabel').html(""); // clear message label content
-		e.preventDefault();
+//		e.preventDefault();
 	});
 
 	/**
@@ -722,8 +752,8 @@ function setTheRadioButtonValues(){
 	var radioButtonGroupActive = $('input[name=bannerEnableStatus]'); 
 	var radioButtonGroupUrl = $('input[name=urlspecifier]'); 
 	if(radioButtonGroupActive.length >0){
-		$('#bannerEnable').val('true');
-		$('#bannerDissable').val('false');
+		$('#bannerEnable').val('1');
+		$('#bannerDissable').val('0');
 	}
 	
 	if(radioButtonGroupUrl.length>0){

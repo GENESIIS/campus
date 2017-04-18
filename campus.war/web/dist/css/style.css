@@ -765,6 +765,7 @@ body, html {
 /* 20170405 TR c87 styling banner banner code and info area */
 /* 20170406 TR c82 styling and set position delete checkbox  */
 /* 20170417 TR c82 styling checkboxes and buttons */
+/* 20170418 TR c82 Add Banner page: update all inputs and text styles */
 /* Banner search page content */
 .banner-search-screen {
   display: block;
@@ -997,6 +998,55 @@ body, html {
     height: 2px;
     box-shadow: -1px 0 0 white, 2px 0 0 white, 2px 0px 0 white, 2px -2px 0 white, 2px -4px 0 white, 2px -6px 0 white;
     transform: rotate(45deg); }
+
+/* Styling Add Banner form */
+.add-banner-screen .panel-heading h1 {
+  font-size: 35px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 25px;
+  border-bottom: 2px solid #e2a4a4; }
+.add-banner-screen .form-body {
+  background-color: #fff5e9;
+  padding: 50px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto; }
+  .add-banner-screen .form-body .input-row {
+    font-family: "Roboto", sans-serif;
+    min-height: 48px; }
+    .add-banner-screen .form-body .input-row input[type=text], .add-banner-screen .form-body .input-row input[type=date] {
+      width: 400px;
+      height: 32px;
+      border: 1px solid #d2d2d2;
+      padding: 0 12px;
+      color: #3f5c73; }
+    .add-banner-screen .form-body .input-row .sub-t1 {
+      padding: 8px 0;
+      background-color: #7da7d9;
+      color: #fff;
+      font-weight: 500;
+      width: 100%; }
+    .add-banner-screen .form-body .input-row .img-preview {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      max-height: 450px;
+      font-size: 12px;
+      color: #4b5b66; }
+    .add-banner-screen .form-body .input-row .check-enable span {
+      margin-right: 15px; }
+    .add-banner-screen .form-body .input-row .check-enable input {
+      margin-right: 5px; }
+  .add-banner-screen .form-body .url-type input {
+    margin-right: 18px; }
+  .add-banner-screen .form-body .btn-area {
+    padding-top: 15px; }
+    .add-banner-screen .form-body .btn-area button {
+      border: none;
+      background-color: #1f9f61;
+      color: #fff;
+      padding: 10px; }
 
 /* Responsive */
 @media only screen and (max-width: 1224px) {

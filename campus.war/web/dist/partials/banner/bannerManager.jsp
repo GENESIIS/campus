@@ -18,7 +18,16 @@
      20170331 DN c83-admin-manage-banner-update-banner-info-dn changed the method argument to clearField('startDateInfor').
      			Banner activation and Deactivation field name typos corrected.
      			Add tool tip to URL field.
+     20170405 DN c83-admin-manage-banner-update-banner-info-dn Enable radio button groups' values are changed to yes-- 1 no-- 0
+          			add clearField('endtDateInfor') function to onclick event of the Banner deactivation date field
+     20170407 DN c83-admin-manage-banner-update-banner-info-dn depend on the task to be perform either edit the banner or add new banner
+          			add logic to display Add Banner or Edit Banner as the heading.
+     20170417 DN c83-admin-manage-banner-update-banner-info-dn the bannerRecordUpdate element is included within script tags instead of jstl tags
+          			the element appears when the record is to be edited.
  -->
+ <!-- 20170418 TR c82 changed html structure -->
+ <!-- 20170418 TR c82 added bootstrap grid classes -->
+ <!-- 20170418 TR c82 update all inputs and text styles  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -105,166 +114,193 @@
 <!-- End Banner Upload-pop-up window -->
 
 
-<div class="panel panel-default">
-      <div class="panel-heading" align="center"><h1>Add Banner</h1></div>
-      <div class="panel-body"></div>
+<div class="add-banner-screen">
+    <div class="panel-heading" align="center">
+        <h1>
+            <c:choose>
+                <c:when test="${param.CCO eq 'ADMEDTBNR' }">Edit Banner</c:when>
+                <c:otherwise>Add Banner</c:otherwise>
+            </c:choose>
+        </h1>
     </div>
 
-	<div align="center">
-		
-
+	<div>
 		<form id="banner-from">			
-			<div >
-<%-- 				<c:if test="${param.CCO eq 'ADMEDTBNR'}"> --%>
-			     BannerCode :
-					<input type="text" id="bannerCode" name="bannerCode" value="${param.bannerCode}" disabled >
-<%-- 				</c:if> --%>
-				<input type="hidden" id="bannerEditableImageName" name="bannerEditableImageName" value="${param.imageName}" >
-				<br>Advertiser * &nbsp; 
-				<div id="advertiserInfor" style ="color:#C70039;"></div><br>
-				<c:choose>
-					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
-						<input id="advertiser" name="page" value="${param.advertiserName }"
-							list="advertiserList" class="text-field" type="text"
-							placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
-						<datalist id="advertiserList" name="advertiserList"> </datalist>
-						<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" value="${param.advertizerCode}" />
-					</c:when>
-					<c:otherwise>
-					 	<input id="advertiser" name="page"
-							list="advertiserList" class="text-field" type="text"
-							placeholder="-- Select an Advertiser --" onclick="clearField('advertiserInfor');">
-						<datalist id="advertiserList" name="advertiserList"> </datalist>
-						<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<br>
-<%-- 				<c:if test="${param.CCO eq 'ADMEDTBNR'}"> --%>
-					<div align="right" id="bannerImagediv01" >
-					 Uploaded Banner : 
-					<img id='imageName01'	src="${param.bannerUrl}"  alt='Yet No Image' style='width:200px;hight:60px'>
-					</div>
-<%-- 				</c:if> --%>
-			<div>
-				Page * &nbsp; 
-				<div id="pageInfor" style ="color:#C70039;"></div><br>
-				
-				<c:choose>
-					<c:when test="${param.CCO eq 'ADMEDTBNR' }">
-						<input id="page" name="page" list="pageList" value="${param.pageName}"
-							class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
-						<datalist id="pageList" name="pageList"> </datalist>
-						<input type="hidden" id="sPageCode" name="sPageCode" value= "${param.pageCode}"/>
-						<script>
-							$('#page').trigger('input'); 
-						</script>
-					</c:when>
-					<c:otherwise>
-						<input id="page" name="page" list="pageList"
-							class="text-field" type="text" placeholder="-- Select a Page --" onclick="clearField('pageInfor');">
-						<datalist id="pageList" name="pageList"> </datalist>
-						<input type="hidden" id="sPageCode" name="sPageCode" />
-					</c:otherwise>
-				</c:choose>
-				
-			</div>
-			<br> <br>
-			<div>
-				Advertising slot * &nbsp; 
-				<div id="advertizingSlotInfor" style ="color:#C70039;"></div><br>
-				<c:choose>
-					<c:when test="${param.CCO eq 'ADMEDTBNR'}">
-						<input id="slot" name="slot" list="slotList" class="text-field" type="text" value="${param.pageSlotName}"
-									placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
-							<datalist id="slotList" name="slotList"> </datalist>
-							<input type="hidden" id="sSlotCode" name="sSlotCode" value="${param.pageSlotCode}" />
-					</c:when>
-					<c:otherwise>
-						<input id="slot" name="slot" list="slotList" class="text-field" type="text"
-								placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
-						<datalist id="slotList" name="slotList"> </datalist>
-						<input type="hidden" id="sSlotCode" name="sSlotCode" />
-					</c:otherwise>
-				</c:choose>
-				
-			</div>
-			<br>
-			<div>
-				Duration (Seconds) *&nbsp;
-				<div id="displayDurationInfor" style ="color:#C70039;"></div><br>
-				<input id="duration" type='text' onclick="clearField('displayDurationInfor');" value="${param.displayDuration}">
-			</div>
-			<br>
-			<label id="lblEnableBanner" name="lblEnableBanner">Enable</label>
-			<label for="bannerEnable" hidden='true'>true</label>
-			 <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="true" 
-			 <c:if test="${param.bannerActiveInactiveState != 0 }">
-			 	checked="checked"
-			 </c:if>
-			  >YES 			  
-			 <label for="bannerDissable" hidden='true'>false</label>
-			<input type="radio" name="bannerEnableStatus" id='bannerDissable' value="false"
-			<c:if test="${param.bannerActiveInactiveState eq 0 }">
-			 	checked="checked"
-			 </c:if>
-			 >NO
-			<div></div>
-			<div>
-			 <div id="startDateInfor" style ="color:#C70039;"></div><br>
-				<br> Banner Activation date* &nbsp; <input type="date" name="startDate"
-					id="startDate" onclick="clearField('startDateInfor')" value="${param.bannerActivateDate}">
-			</div>
-			<br>
-			<div>
-			<div id="endtDateInfor" style ="color:#C70039;"></div><br>
-				Banner deactivation date * &nbsp;<input
-					type="date" name="endtDate" id="endtDate"
-					onclick="clearField('startDateInfor');"
-					value="${param.bannerDeactivateDate}">
-			</div>
-			<br><br>
-			<div>
-			<b>Select the URL or Resource to load when Banner is Selected </b><br><br>
-			URL : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl"	<c:if test="${param.linkType eq 1}">checked="checked"</c:if>> 
-			&nbsp;&nbsp;
-			Mini Web : &nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb" <c:if test="${param.linkType eq 2}">checked="checked"</c:if>  >
-			Page : &nbsp;&nbsp;
-			&nbsp;&nbsp;
-			<input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage" <c:if test="${param.linkType eq 3}">checked="checked"</c:if>  >
-			<br><br>
-			<div id="urlInfor" style ="color:#C70039;"></div><br>			
-				URL &nbsp;<input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}"
-				data-toggle="tooltip" title="Please enter a valid Url / Mini  web address">
-				<script>
-					$(document).ready(function(){
-					    $('[data-toggle="tooltip"]').tooltip();   
-					});
-			  </script>
-			</div>
-			<br><br>
-			<!-- Form image submit -->
+			<div class="form-body clearfix">
 
-			<label><b>Upload Banner</b></label> <br><br><br>
-<!-- 			<button  id="openModalUpload" data-target="#bannerUploadPopUp" >Upload Banner</button> -->
-			
-			<button  id="openModalUpload" >
-			<c:choose>
-				<c:when test="${!empty param.bannerCode}">Change the Banner</c:when><c:otherwise>Upload the Banner</c:otherwise>
-			</c:choose>
-			</button>
-			<button id="bannerPageClearField">Clear Page</button>
-			<c:if test="${!empty param.bannerCode}">
-				<button id="bannerRecordUpdate">Update the Record</button>
-			</c:if>
+			    <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">BannerCode :</div>
+                    <div class="col-lg-8 col-md-8">
+                        <input type="text" id="bannerCode" name="bannerCode" value="${param.bannerCode}" disabled >
+                        <input type="hidden" id="bannerEditableImageName" name="bannerEditableImageName" value="${param.imageName}" >
+                    </div>
+                </div>
+                <!-- End BannerCode input field -->
+
+				<div class="col-lg-12 col-md-12 input-row">
+				    <div class="col-lg-4 col-md-4">Advertiser : *</div>
+				    <div class="col-lg-8 col-md-8">
+                        <div id="advertiserInfor" style ="color:#C70039;"></div>
+                        <c:choose>
+                            <c:when test="${param.CCO eq 'ADMEDTBNR' }">
+                                <input id="advertiser" name="page" value="${param.advertiserName }"
+                                    list="advertiserList" class="text-field" type="text"
+                                    placeholder="Select an Advertiser" onclick="clearField('advertiserInfor');">
+                                <datalist id="advertiserList" name="advertiserList"> </datalist>
+                                <input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" value="${param.advertizerCode}" />
+                            </c:when>
+                            <c:otherwise>
+                                <input id="advertiser" name="page"
+                                    list="advertiserList" class="text-field" type="text"
+                                    placeholder="Select an Advertiser" onclick="clearField('advertiserInfor');">
+                                <datalist id="advertiserList" name="advertiserList"> </datalist>
+                                <input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+				</div>
+				<!-- End Advertiser input field -->
+
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">Page : *</div>
+                    <div class="col-lg-8 col-md-8">
+                        <div id="pageInfor" style ="color:#C70039;"></div>
+                        <c:choose>
+                            <c:when test="${param.CCO eq 'ADMEDTBNR' }">
+                                <input id="page" name="page" list="pageList" value="${param.pageName}"
+                                    class="text-field" type="text" placeholder="Select a Page" onclick="clearField('pageInfor');">
+                                <datalist id="pageList" name="pageList"> </datalist>
+                                <input type="hidden" id="sPageCode" name="sPageCode" value= "${param.pageCode}"/>
+                                <script>
+                                    $('#page').trigger('input');
+                                </script>
+                            </c:when>
+                            <c:otherwise>
+                                <input id="page" name="page" list="pageList"
+                                    class="text-field" type="text" placeholder="Select a Page" onclick="clearField('pageInfor');">
+                                <datalist id="pageList" name="pageList"> </datalist>
+                                <input type="hidden" id="sPageCode" name="sPageCode" />
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+                <!-- End Page input field -->
+
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">Advertising slot : *</div>
+                    <div class="col-lg-8 col-md-8">
+                        <div id="advertizingSlotInfor" style ="color:#C70039;"></div>
+                        <c:choose>
+                            <c:when test="${param.CCO eq 'ADMEDTBNR'}">
+                                <input id="slot" name="slot" list="slotList" class="text-field" type="text" value="${param.pageSlotName}" placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
+                                <datalist id="slotList" name="slotList"> </datalist>
+                                <input type="hidden" id="sSlotCode" name="sSlotCode" value="${param.pageSlotCode}" />
+                            </c:when>
+                            <c:otherwise>
+                                <input id="slot" name="slot" list="slotList" class="text-field" type="text" placeholder="Select a Slot" onclick="clearField('advertizingSlotInfor');">
+                                <datalist id="slotList" name="slotList"> </datalist>
+                                <input type="hidden" id="sSlotCode" name="sSlotCode" />
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">Duration (Seconds) : *</div>
+                    <div class="col-lg-8 col-md-8">
+                        <div id="displayDurationInfor" style ="color:#C70039;"></div>
+                        <input id="duration" type='text' onclick="clearField('displayDurationInfor');" value="${param.displayDuration}">
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4"><label id="lblEnableBanner" name="lblEnableBanner">Enable :</label> </div>
+                    <div class="col-lg-8 col-md-8 check-enable">
+                        <label for="bannerEnable" hidden='true'>1</label>
+                        <input type="radio" name="bannerEnableStatus" id='bannerEnable' value="1" <c:if test="${param.bannerActiveInactiveState != 0 }">
+                        checked="checked"
+                        </c:if>
+                        ><span>YES</span>
+
+                        <label for="bannerDissable" hidden='true'>0</label>
+                        <input type="radio" name="bannerEnableStatus" id='bannerDissable' value="0" <c:if test="${param.bannerActiveInactiveState eq 0 }">
+                        checked="checked"
+                        </c:if>
+                        ><span>NO</span>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">Banner Activation date : *</div>
+                    <div class="col-lg-8 col-md-8">
+                        <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')" value="${param.bannerActivateDate}">
+                        <div id="startDateInfor" style ="color:#C70039;"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 input-row">
+                    <div class="col-lg-4 col-md-4">Banner Expire date : * </div>
+                    <div class="col-lg-8 col-md-8">
+                        <input type="date" name="endtDate" id="endtDate" onclick="clearField('startDateInfor');clearField('endtDateInfor');" value="${param.bannerDeactivateDate}">
+                        <div id="endtDateInfor" style ="color:#C70039;"></div>
+                    </div>
+                </div>
+
+			    <div class="col-lg-12 col-md-12 input-row" align="center">
+			        <label class="sub-t1">Select the URL or Resource to load when Banner is Selected </label>
+			    </div>
+
+			    <div class="col-lg-12 col-md-12 input-row url-type" align="center">
+			        <label>URL : </label>
+                    <input type="radio" name="urlspecifier" value="1" id ="urlspecifierUrl"	<c:if test="${param.linkType eq 1}">checked="checked"</c:if>>
+                    <label>Mini Web : </label>
+                    <input type="radio" name="urlspecifier" value="2" id ="urlspecifierMiniWeb" <c:if test="${param.linkType eq 2}">checked="checked"</c:if>>
+                    <label>Page : </label>
+                    <input type="radio" name="urlspecifier" value="0" id ="urlspecifierPage" <c:if test="${param.linkType eq 3}">checked="checked"</c:if>>
+			    </div>
+
+                <div class="col-lg-12 col-md-12 input-row" align="center">
+                    URL :
+                    <input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}" data-toggle="tooltip" title="Please enter a valid Url / Mini  web address">
+                    <div id="urlInfor" style ="color:#C70039;"></div>
+
+                    <script>
+                        $(document).ready(function(){
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
+                    </script>
+                </div>
+
+			    <!-- Form image submit -->
+			    <div class="col-lg-12 col-md-12 input-row" align="center"><label class="sub-t1">Upload Banner Preview</label></div>
+
+                <div id="bannerImagediv01" class="col-lg-12 col-md-12 input-row" >
+                    <div class="col-lg-4 col-md-4" align="right">Uploaded Banner :</div>
+                    <div class="col-lg-8 col-md-8">
+                        <img class="img-preview" id='imageName01'	src="${param.bannerUrl}"  alt='No Preview Image'>
+                    </div>
+                </div>
+
+			    <div class="col-lg-12 col-md-12 input-row btn-area">
+			        <div class="col-lg-6 col-md-6" align="right">
+                        <button  id="openModalUpload" >
+                            <c:choose>
+                                <c:when test="${!empty param.bannerCode}">Change the Banner</c:when><c:otherwise>Upload the Banner</c:otherwise>
+                            </c:choose>
+                        </button>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <button id="bannerPageClearField">Clear Page</button>
+                    </div>
+                    <script>
+                        if($('#bannerCode').val().length != 0){
+                            $('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
+                        }
+                    </script>
+                </div>
+            </div>
 		</form>
-
-
-
-
-
 	</div>
+</div>
+<!-- End add-banner-screen -->
 </body>
 </html>
