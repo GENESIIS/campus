@@ -24,6 +24,7 @@
 //				statements in catch clauses
 //20161217 MM c2-integrate-google-banners Cleaned up imports
 //20170405 PN CAM-137: removed exception throw statement from the setBannerDetails() method and logged the full error.
+//20170418 PN CAM-137: removed exception throws statement from the method signatures.
 
 package com.genesiis.campus.validation;
 
@@ -65,8 +66,7 @@ public class BannerData {
 	 * @throws Exception
 	 */
 
-	public static void setBannerDetails(IDataHelper helper, String pageName)
-			throws Exception {
+	public static void setBannerDetails(IDataHelper helper, String pageName) {
 		
 //		DO NOT REMOVE THE SET OF COMMENTED LINES BELOW! THEY SPECIY AND ASSIGN THE GOOGLE BANNER CODE.
 //		COMMENTED-OUT TO CURRENTLY DISABLE THE FUNCTIONALITY	
