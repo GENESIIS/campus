@@ -32,7 +32,15 @@
 </header>
  	Welcome to Admin Dashboard 
 
-	
+	<c:if test="${col_adminUserTypeString == 'COMPANY_DEO'}">
+	<jsp:include page="/dist/partials/admin/dashboard-panel-deo.jsp"></jsp:include>
+	</c:if>
+	<c:if test="${col_adminUserTypeString == 'ADMIN'}">
+	<jsp:include page="/dist/partials/admin/dashboard-panel-appAdmin.jsp"></jsp:include>
+	</c:if>
+	<c:if test="${col_adminUserTypeString == 'SUPER_ADMIN'}">
+	<jsp:include page="/dist/partials/admin/dashboard-panel-superAdmin.jsp"></jsp:include>
+	</c:if>
 
 	<!-- Footer -->
 	<jsp:include page="/dist/partials/layout/footer.jsp"></jsp:include>
