@@ -15,6 +15,7 @@ package com.genesiis.campus.command;
 //20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
 //20170403 PN CAM-137: changed the order of category image path values setting to the attributes.
 //20170405 PN CAM-137: removed exception throw statement from the execute() method and logged the full error.
+//20170418 PN CAM-137: removed exception throws statement from the execute() method signature.
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.CategoryCourseProviderDAO;
@@ -58,8 +59,7 @@ public class CmdListCategoryLandingPage implements ICommand {
 	 * @throws Exception
 	 */
 	@Override
-	public IView execute(IDataHelper helper, IView view) throws SQLException,
-			Exception {
+	public IView execute(IDataHelper helper, IView view) {
 		ICrud categoryDAO = new CategoryDAO();
 		ICrud categoryProgrammeDAO = new CategoryCourseProviderDAO();
 		Collection<Collection<String>> categoryCollection = null;
