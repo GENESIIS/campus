@@ -30,6 +30,7 @@
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
  * 			loading resolved using response.successCode === undefined loadBanners().
  * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
+ * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selects/ deselecting the check box on 'Select All'check box change has been coded  
  */
 
 var theNewScript = document.createElement("script");
@@ -317,7 +318,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageName"+rowNumber+"' name='pageName' value='"+pageName+"'>"+
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
-							 "</form><div class='delete-check'><input type='checkbox'></div></td>";
+							 "</form><div class='delete-check'><input class='check-one-by-one' type='checkbox' id='select_check"+bannerCode+"'><label for='select_check"+bannerCode+"'></label></div></td>";
 			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
@@ -379,3 +380,27 @@ $(document).on('keypress','#bannerCodeFilter',function(event){
 
 });
 
+/**
+ * This click event allows all the selected banners to change its
+ * status from active to inactive status. It acts as a bulk inactivation
+ * function
+ * @author dushantha DN
+ */
+$(document).on('click','#inactiveBanner',function(event){
+	event.preventDefault();
+ // dedicated function call to capture all the selected records.
+ // ajax call to transfer the data to server  	
+	
+});
+
+/**
+ * The event trigers and select all the banner records by selecting<br>
+ *  all the check boxes each belongs to a record.
+ *  If the check box is deselected then the individual check box for each
+ *  Record will be unselected
+ */
+$(document).on('change','#all-delete',function(event){
+	//if all-delete selected select all records else deselect all
+	var isCheckBoxSelected = $('#all-delete').is(':checked');
+	$('.check-one-by-one').prop('checked',isCheckBoxSelected);		
+});
