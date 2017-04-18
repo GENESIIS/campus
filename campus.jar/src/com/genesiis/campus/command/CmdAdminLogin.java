@@ -5,18 +5,6 @@ package com.genesiis.campus.command;
 //20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
 
 
-import java.net.URL;
- 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -27,7 +15,20 @@ import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.LoginValidator;
 import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
+
+import org.apache.log4j.Logger;
 import com.google.gson.Gson;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
+
 
 
 public class CmdAdminLogin implements ICommand{
@@ -100,33 +101,7 @@ public class CmdAdminLogin implements ICommand{
 	
 					}else{
 						//Logging attempts handling 
-						for (max = max; max <= 3; max++) {
-							
-							if (max == 3) {
-								message = SystemMessage.LOGGINATTEMPT3.message();
-								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
-								pageURL = path;
-								max++;
-								break;
-							} else if (max == 2) {
-								message = SystemMessage.LOGGINATTEMPT2.message();
-								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
-								pageURL = path;
-								max++;
-								break;
-							} else if (max == 1) {
-								message = SystemMessage.LOGGINATTEMPT1.message();
-								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-								pageURL = path;
-								max++;
-								break;
-							} else {
-								path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-								pageURL = path;
-								max++;
-								break;
-							}
-						}
+						logginAttempts();
 					}
 					
 				}else{
@@ -153,6 +128,40 @@ public class CmdAdminLogin implements ICommand{
 		}
 		
 		return view;
+	}
+	
+	/**
+	 * this methods handling user Logging attempts
+	 */
+	
+	public void logginAttempts(){
+		for (max = max; max <= 3; max++) {
+			
+			if (max == 3) {
+				message = SystemMessage.LOGGINATTEMPT3.message();
+				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
+				pageURL = path;
+				max++;
+				break;
+			} else if (max == 2) {
+				message = SystemMessage.LOGGINATTEMPT2.message();
+				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
+				pageURL = path;
+				max++;
+				break;
+			} else if (max == 1) {
+				message = SystemMessage.LOGGINATTEMPT1.message();
+				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+				pageURL = path;
+				max++;
+				break;
+			} else {
+				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+				pageURL = path;
+				max++;
+				break;
+			}
+		}
 	}
 	
 	

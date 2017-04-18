@@ -6,15 +6,6 @@ package com.genesiis.campus.entity;
 //20170403 AS c23-admin-login-logout-function-as - findById() sql query modification and userTypeString set to the dataColletction 
 //20170404 AS c23-admin-login-logout-function-as - loginDataUpdate() sql query modified
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.log4j.Logger;
-
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
@@ -22,6 +13,15 @@ import com.genesiis.campus.util.security.TripleDesEncryptor;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
+
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());

@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
 //20170228 AS C22 LOGGEDALLREADY attribute added
+//20170331 AS c23-admin-login-logout-function-as added to enum LOGGINATTEMPT1, LOGGINATTEMPT2, LOGGINATTEMPT3.
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
