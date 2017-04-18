@@ -5,12 +5,15 @@ package com.genesiis.campus.util.mail;
 //20170224 CW c103-send-email-tutor-status-change - modified systemMessage() method to return MAIL_SUCCESS_TUTOR message
 //20170406 CW c157-add-tutor-employment-details-cw add sendTutoremploymentConfirmEmail method
 //20170417 CW c157-add-tutor-employment-details-cw sendTutoremploymentConfirmEmail method name changed to sendTutorEmploymentConfirmEmail
+//20170418 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to use TutorEmploymentConfirmEmailComposer class to send email
 
-import com.genesiis.campus.util.TutorUpdateEmailComposer;
+import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
+
+import java.util.Collection;
 
 import javax.mail.MessagingException;
 
@@ -24,28 +27,28 @@ public class GenerateEmail {
 	static Logger log = Logger.getLogger(GenerateEmail.class.getName());
 	
 	/*
-	 * sendTutoremploymentConfirmEmail() method handles the email sending at the time of tutor details update by Admin.
+	 * sendTutorEmploymentConfirmEmail() method handles the email sending at the time of tutor add employment details.
 	 * @author CW
 	 * @return String
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
-	public String sendTutorEmploymentConfirmEmail(String firstname, String lastname, String emailAddress, String username, int appStatus) 
+	public String sendTutorEmploymentConfirmEmail(String nameOfTutor, Collection<String> receiverEmailList, String bccEmail) 
 			throws IllegalArgumentException, Exception {
 		int status;
 		try {
-			IEmailComposer tutorUpdateEmailComposer = new TutorUpdateEmailComposer(appStatus);
+			IEmailComposer tutorEmployentConfirmEmailComposer = new TutorEmploymentConfirmEmailComposer(nameOfTutor);
 			
-			String recieversName = firstname.concat(" " + lastname);
+		//	String recieversName = firstname.concat(" " + lastname);
 			
 			//Used the same email address send to the method as the senders email address & receivers email address. 
 			//The senders email address will overridden later from the email address in campus.xml file
-			tutorUpdateEmailComposer.setEnvironment(recieversName, emailAddress,
-					tutorUpdateEmailComposer.composeSingleEmailList(emailAddress),
+			tutorEmployentConfirmEmailComposer.setEnvironment("Administrator", emailAddress,
+					tutorEmployentConfirmEmailComposer.composeSingleEmailList(emailAddress),
 					SystemEmail.SEND_EMAIL_ADMIN_TUTOR_UPDATE_BODY1.getSubject(),
 					SystemMessage.SUCCESSFULL_CREATTION.message());
 	
-			tutorUpdateEmailComposer.formatEmailInstance(username);
-			status = this.sendMail(tutorUpdateEmailComposer);
+			tutorEmployentConfirmEmailComposer.formatEmailInstance(username);
+			status = this.sendMail(tutorEmployentConfirmEmailComposer);
 
 	} catch (IllegalArgumentException ilexp) {
 		log.error("execute(): IllegalArgumentException" + ilexp.toString());
