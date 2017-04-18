@@ -2,7 +2,7 @@ package com.genesiis.campus.util;
 
 //20170405 PN CAM-137: INIT ConnectionManager class to handle the db connection in a different way.
 //					   	getConnection() method changed by calling getInstance() method.
-
+//20170418 PN CAM-137: ConnectionManagerException inner class added to the ConnectionManager class.
 import java.sql.Connection;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -36,18 +36,15 @@ public class ConnectionManager {
 		} catch (Exception e) {
 			String eMessage = "ConnectionManager(): exception: "+this.DB_JNDI_NAME+ " : " + e.toString();
 			logger.error(eMessage);
-			e.printStackTrace();
 			throw new ConnectionManagerException(e);
 		}
 
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Implementing singleton pattern.
+	 * @return ConnectionManager
 	 * @throws ConnectionManagerException
-	 * @Description implement singleton pattern.
-	 * cc3431
 	 */
 	private static ConnectionManager getInstance()
 			throws ConnectionManagerException {
@@ -67,17 +64,53 @@ public class ConnectionManager {
 		return theManager;
 	}
 
-	
+	/**
+	 * Method to get db connection.
+	 * @return Connection
+	 */
 	public static Connection getConnection() {
-		Connection c = null;
+		Connection connection = null;
 
 		try {
-			c = ConnectionManager.getInstance().dataSource.getConnection(); 
+			connection = ConnectionManager.getInstance().dataSource.getConnection(); 
 
 		} catch (Exception e) {
 			logger.error("getConnection()", e); 
-			c = null;
+			connection = null;
 		}
-		return c;
+		return connection;
 	}
+	
+	
+	/**
+	 * RuntimeException represent defects in the program (bugs) – often invalid
+	 * arguments passed to a non-private method. RuntimeExceptionas can be
+	 * IllegalArgumentException, NullPointerException, or IllegalStateException
+	 * RuntimeException, a method is not obliged to establish a policy for the
+	 * unchecked exceptions thrown by its implementation (and they almost always
+	 * do not do so) 
+	 * 
+	 * ConnectionManagerException is customized exception class,
+	 * which specifically state the exceptions thrown from, managing DB source
+	 * connection.
+	 * 
+	 * @author pabodha
+	 *
+	 */
+	private static class ConnectionManagerException extends RuntimeException {
+		private static final long serialVersionUID = 1L; 
+
+		public ConnectionManagerException() {
+		}
+
+		public ConnectionManagerException(String s) {
+			super(s);
+		}
+
+		public ConnectionManagerException(Exception e) {
+			super(e.getMessage());
+		}
+
+	}
+
 }
