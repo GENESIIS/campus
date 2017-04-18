@@ -3,6 +3,7 @@ package com.genesiis.campus.util.landing;
 //20170215 PN CAM-137: init CategoryCache Singleton class to return categories associated with the landing page, from the cache.
 //20170216 PN CAM-137: implemented getDefaultCategories(String code) method will return category list from the cache for the given code.
 //20170403 PN CAM-137: modified incorrect argument passing into the findById() method. -  String to Category type.
+//20170418 PN CAM-137: removed exception throws statement from the method signatures.
 
 import com.genesiis.campus.entity.CategoryDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -46,7 +47,7 @@ public class CategoryCache {
 	 * 
 	 * @return Collection<Collection<String>> object
 	 */
-	public Collection<Collection<String>> getDefaultCategories() throws SQLException {
+	public Collection<Collection<String>> getDefaultCategories() {
 		try {
 			if (collection == null) {
 				ICrud dao = new CategoryDAO();
@@ -67,7 +68,7 @@ public class CategoryCache {
 	 * @return Collection<Collection<String>> which contains category details over given code.
 	 * @throws SQLException
 	 */
-	public Collection<Collection<String>> getDefaultCategories(String code) throws SQLException {
+	public Collection<Collection<String>> getDefaultCategories(String code) {
 		Collection<Collection<String>> categoryDetails = new ArrayList<Collection<String>>();
 		ICrud dao = new CategoryDAO();
 		Category category = new Category();
