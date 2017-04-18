@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170215 PN CAM-137: modified execute() method by removing CategoryDAO object. remove code block implemented to get institute list.
 //20170216 PN CAM-137: modified execute() method to get and assign the values from static enum if the categoryCollection is null or empty.
 //20170302 PN CAM-137: CategoryList Enum imports changes into EducationCategory Enum class.
+//20170418 PN CAM-137: removed SQLException catch clause from the execute method, since SQLException is never thrown in body of corresponding try statement.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -43,7 +44,7 @@ public class CmdListCategories implements ICommand {
 	 * @throws Exception
 	 */
 	@Override
-	public IView execute(IDataHelper helper, IView iview) throws SQLException, Exception {
+	public IView execute(IDataHelper helper, IView iview) throws Exception {
 		ICrud instituteDAO = new InstituteDAO();
 		final String contextDeployCategoryLogoPath = SystemConfig.CATEGORY_LOGO_PATH.getValue1();
 		
@@ -59,9 +60,6 @@ public class CmdListCategories implements ICommand {
 			iview.setCollection(categoryCollection);
 			helper.setAttribute("categoryLogoPath", contextDeployCategoryLogoPath);
 
-		} catch (SQLException sqle) {
-			log.info("execute() : SQL Exception " + sqle.toString());
-			throw sqle;
 		} catch (Exception e) {
 			log.info("execute() : Exception " + e.toString());
 			throw e;
