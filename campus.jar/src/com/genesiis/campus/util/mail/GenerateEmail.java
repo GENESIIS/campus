@@ -8,6 +8,7 @@ package com.genesiis.campus.util.mail;
 //20170418 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to use TutorEmploymentConfirmEmailComposer class to send email
 //20170418 CW c157-add-tutor-employment-details-cw modified setEnvironment method call in sendTutorEmploymentConfirmEmail method
 //20170418 CW c157-add-tutor-employment-details-cw modified formatEmailInstance method call to send null String
+//20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method & add bccEmailCount variable
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -40,6 +41,7 @@ public class GenerateEmail {
 		int status;
 		try {
 			IEmailComposer tutorEmployentConfirmEmailComposer = new TutorEmploymentConfirmEmailComposer(nameOfTutor);
+			String bccEmailCount = "1"; // only one email address to bcc. 
 			
 		//	String recieversName = firstname.concat(" " + lastname);
 			
@@ -47,7 +49,7 @@ public class GenerateEmail {
 			//The senders email address will overridden later from the email address in campus.xml file
 			tutorEmployentConfirmEmailComposer.setEnvironment("Administrator", bccEmail, receiverEmailList,
 											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getSubject(),
-											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody());
+											SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody(), bccEmailCount, bccEmail);
 	
 			tutorEmployentConfirmEmailComposer.formatEmailInstance("");
 			status = this.sendMail(tutorEmployentConfirmEmailComposer);
