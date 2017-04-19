@@ -388,9 +388,11 @@ $(document).on('keypress','#bannerCodeFilter',function(event){
  * @returns Array consisiting ids of the selected check boxes
  */
 function getSelectedBanners(){
-	$('.check-one-by-one:checked').map(function(){
+	var selectedIds=$('.check-one-by-one:checked').map(function(){
 		 return this.id;
 	}).get();
+	
+	return selectedIds;
 } 
 
 
