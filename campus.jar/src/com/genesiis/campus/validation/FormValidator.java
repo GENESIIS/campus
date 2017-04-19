@@ -3,7 +3,7 @@ package com.genesiis.campus.validation;
 //20170208 DJ c138-add-basic-programme-MP-dj Add FormValidator.java
 //20170209 DJ c138-add-basic-programme-MP-dj Add validateProgrammeDetails() for back end form validations
 //20170407 DJ c138-add-basic-programme-MP-dj Course name/Counselor name validated for spaces. Counselor telephone for length of 15.
-//20170417 DJ c138-add-basic-programme-MP-dj Counselor telephone validated for length of 255.
+//20170417 DJ c138-add-basic-programme-MP-dj Counselor Email validated for length of 255.
 
 import com.genesiis.campus.util.IDataHelper;
 
