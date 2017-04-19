@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw modified singleTutorEmploymentViewCollection filling with tutor code
 //20170403 CW c157-add-tutor-employment-details-cw re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw create tutorCode variable 
+//20170419 CW c157-add-tutor-employment-details-cw removed un wanted variable declarations & clean the code
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -37,14 +38,13 @@ public class CmdViewTutorEmploymentDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		try {
-			Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
 			String tutorCode = helper.getParameter("tutorCode");
 			if(tutorCode != null){
 				
-				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
-				allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
+				Collection<Collection<String>> allFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);
 				
 				if(allFeaturedCourseProviderList == null || allFeaturedCourseProviderList.isEmpty()){
+					Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
 					singleTutorEmploymentViewCollection.add(tutorCode);
 					allFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
 				}
