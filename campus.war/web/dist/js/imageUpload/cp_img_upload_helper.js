@@ -47,7 +47,7 @@ $(document).ready(function() {
 		var cp_img_type = "";
 		var courseProviderCode = 1; // ToBe assigned later.
 		$.each(dataSet.result, function(index, val) {
-			if (sysConfCode === val[0] || sysConfCode != "") {
+			if (sysConfCode === val[0]) {
 				$('#img-info-lbl').show();
 				$('#cp_img_desc').html(val[2]);
 				cp_img_type = $("#cp_img_type option:selected").text();
@@ -56,10 +56,12 @@ $(document).ready(function() {
 				if(actFileName != noImagetoDisplayErr){
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
 					$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+					$('#cp_img_name').html(actFileName);
 					document.getElementById("cp_img_upload_btn").disabled = true;
 				}else{
 					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
 					$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
+					$('#cp_img_name').html(createFileName("default",cp_img_type)+".jpg");
 					document.getElementById("cp_img_delete_btn").disabled = true;
 					$('#img-err-lbl').show();
 					$('#cp_img_err').html(noImagetoDisplayErr);
@@ -115,6 +117,7 @@ $(document).ready(function() {
 			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
 			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
 			    		$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
+			    		$('#cp_img_name').html(newName);
 			    	}
 				},
 				error : function(x, status, error) {
@@ -142,7 +145,7 @@ $(document).ready(function() {
 	$(document).on('click','#cp_img_delete_btn',function(event){	
 		event.stopPropagation(); 
 	    event.preventDefault(); 
-	    
+	    $('#img-err-lbl').hide();
 	    var courseProviderCode = 1;// This will be get assigned from UI element later.
 	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
 	    var uploadPathConfId = $("#cp_img_type").val();
@@ -166,9 +169,11 @@ $(document).ready(function() {
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
 			    	if(response.fileDeleteError != ""){
+			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileDeleteError);
 			    		$('#cp_img_err').css('color', 'red');
 			    	}else if(response.fileDeleteSuccess != ""){
+			    		$('#img-err-lbl').show();
 			    		$("#cp_img_type").val(uploadPathConfId);
 			    		$('#cp_img_err').html(response.fileDeleteSuccess);
 			    		$('#cp_img_err').css('color', 'green');
@@ -176,6 +181,7 @@ $(document).ready(function() {
 			    		//Display uploaded image on img tag.  		
 			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
 			    		$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
+			    		$('#cp_img_name').html(createFileName("default",uploadPathConf)+".jpg");
 			    	}
 				},
 				error : function(x, status, error) {
@@ -185,6 +191,7 @@ $(document).ready(function() {
 				}
 			});
 		}else{
+			$('#img-err-lbl').show();
 			if((uploadPathConfId == "")||(uploadPathConfId == null)){
 				$('#cp_img_err').html(fileTypeNotSelectedErr);
 	    		$('#cp_img_err').css('color', 'red');
@@ -259,6 +266,7 @@ function setCPImgData(response) {
  * @returns
  */
 function validateFile(fileuploadelm, to, submitbtn){
+	$('#img-err-lbl').hide();
 	if((fileuploadelm != null) && (fileuploadelm != "") && (fileuploadelm != undefined)){
 		// get the file name and split it to separate the extension
 		var name = fileuploadelm.value;
@@ -273,16 +281,20 @@ function validateFile(fileuploadelm, to, submitbtn){
 			fileuploadelm.value = '';
 			document.getElementById(submitbtn).disabled = true;
 			errorMsg = fileTypeErr + fileSizeErr;
+			$('#img-err-lbl').show();
 			$('#cp_img_err').html(fileName+errorMsg);
 			$('#cp_img_err').css('color', 'red');
 		}else{
 			// enable submit
 			document.getElementById(submitbtn).disabled = false;
+			$('#img-err-lbl').show();
 			$('#cp_img_err').html("");
 		}	
 	}else{
+		$('#img-err-lbl').show();
 		$('#cp_img_err').html("Selected file is not available to upload.");
 	}
+	$('#img-err-lbl').hide();
 }
 
 /**
