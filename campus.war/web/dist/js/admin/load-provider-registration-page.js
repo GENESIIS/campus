@@ -262,7 +262,7 @@ function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
 	
 	// check if the browser supports datalist function before proceeding 
-	if(document.createElement("datalist").option) {
+	if(document.createElement("datalist").options) {
 
 		$("#countries").on('click', function(e) {
 			$("#countries").val("");
@@ -759,10 +759,11 @@ function displyPhoneNumber(hintSpan, phoneNumber){
  * @param message
  * @author JH
  */
-function setErrorMessage(errorElement, errorToolTip, message){
-	
+
+function setErrorMessage(errorElement, errorToolTip, message){	
 	$(errorToolTip).attr({ "title" : message,"data-original-title" : message});
 	$(errorElement).addClass("has-error");
+	$(errorElement).removeClass("has-success");
 }
 
 /**
@@ -771,11 +772,13 @@ function setErrorMessage(errorElement, errorToolTip, message){
  * @param errorToolTip
  * @param message
  */
+
 function setSuccessMessage(successElement, successToolTip, message){
-	//has-error style class is used until a style class is created for success messages
-	
+	//has-error style class is used until a style class is created for success messages	
 	$(successToolTip).attr({ "title" : message,"data-original-title" : message});
 	$(successElement).addClass("has-success");
+	$(successElement).removeClass("has-error");
+	
 	//$(successElement).css("border", "1px solid green !important");
 }
 

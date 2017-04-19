@@ -39,10 +39,11 @@
 <jsp:useBean id="accountTypeBean"
 	class="com.genesiis.campus.validation.AccountTypeBean" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
 <!-- Page & Layout Styles -->
@@ -78,14 +79,6 @@
 
 	<!-- Main Container - Higher-Education -->
 	<div class="main-category clearfix">
-
-		<!-- page inner header -->
-		<div class="inner-header">
-			<div class="category-name">
-				<h1>| Register a Course Provider</h1>
-			</div>
-		</div>
-		<!-- end inner header -->
 
 		<div class="container course-provider-registration admin">
 			<div class="form-wrapper">
@@ -152,13 +145,10 @@
 									</div>
 								</div>
 								<div class="form-group col-sm-4">
-									<label for="unique-prefix"><span class="mandatory">*</span>
-										Unique Prefix</label>
+									<label for="unique-prefix"><span class="mandatory">*</span>	Unique Prefix</label>
 									<div class="input-wrapper" id="uniquePrefixDiv" >
-										<input name="uniquePrefix" type="text" class="form-control"
-											id="uniquePrefix" placeholder="" onblur="providerPrefixValidation();"> <a id="errorUniquePrefix"
-											class="error-info" href="#" data-toggle="tooltip"
-											title="Error! "></a>
+										<input name="uniquePrefix" type="text" class="form-control" id="uniquePrefix" placeholder="" onblur="providerPrefixValidation();"> 
+										<a id="errorUniquePrefix" class="error-info" data-toggle="tooltip" title="Error! "></a>
 									</div>
 								</div>
 							</div>
@@ -200,7 +190,8 @@
 														</div>
 													<div class="input-wrapper has-select" id="country-List">
 														<input name="countries" id="countries" class="form-control" list="countryresults">
-														<datalist id="countryresults"></datalist>
+														<datalist id="countryresults" class="select-country"></datalist>
+														
 														<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedCountry"></a>
 														<input type="hidden" name="selectedCountry"	id="selectedCountry" value=""/>
@@ -212,7 +203,7 @@
 														City</label>
 													<div class="input-wrapper has-select" id="town-List">
 													<input name="towns" id="towns" class="form-control" list="townresults">
-													<datalist id="townresults"></datalist>
+													<datalist id="townresults" class="select-city"></datalist>
 													<a class="error-info" href="#" data-toggle="tooltip"
 															title="Error! " id="errorSelectedTown"></a>
 													<input type="hidden" name="selectedTown" id="selectedTown" value=""/>		
@@ -438,40 +429,31 @@
 							</div>
 						</div>
 
-						<h4 class="form-section-title accordion-header" id="adminInfoSection">4. Admin
-							Information</h4>
+						<h4 class="form-section-title accordion-header" id="adminInfoSection">4. Admin Information</h4>
 						<div class="accordion-body" id="adminInfoSectionDiv">
 							<div class="row clearfix">
 								<div class="form-group col-sm-12 text-center">
-									<label for="course-provider-type"><span
-										class="mandatory">*</span> Course Provider Type</label>
+									<label for="course-provider-type"><span class="mandatory">*</span> Course Provider Type</label>
 									<div class="input-wrapper has-select text-center" id="providerTypeList">
-									<select id="selectedProviderType" name="selectedProviderType" ></select>
-											
-									<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"
-											title="Error! "></a> 
+										<div class="inner-input-wrapper">
+											<select id="selectedProviderType" name="selectedProviderType" ></select>											
+											<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"	title="Error! "></a>
+										</div> 
 									</div>
 									
 								</div>
 							</div>
-							<div class="row clearfix">
-								<label for="course-provider-status"
-									class="text-center center-block top-padding inline-info">
-									<span class="mandatory">*</span> Course Provider Status 
-								</label>
+							<div class="row clearfix">			
 								<div class="form-group col-sm-12 text-center center-block input-wrapper" id="providerStatusDiv">
-									
-										<c:forEach items="${applicationStatusBean.values}"
-										var="applicationStatus">
-										
+									<label for="course-provider-status"	class="text-center center-block top-padding inline-info">
+										<span class="mandatory">*</span> Course Provider Status 
+										<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderStatus" title="Error! "></a>
+									</label>
+									<c:forEach items="${applicationStatusBean.values}" var="applicationStatus">										
 										<label class="radio-inline radio-lbl">
 										<input type="radio" name="providerStatus"  id="providerStatus" value="${applicationStatus.statusValue}">${applicationStatus}</label>
-									 </c:forEach>
-									 <a
-									class="error-info" href="#" data-toggle="tooltip" id="errorProviderStatus"
-									title="Error! "></a>
+									</c:forEach>									 
 								</div>
-
 							</div>
 						</div>
 
@@ -577,15 +559,13 @@
 					</div>
 
 			 	<div class="row clearfix">
-			 	<!--
-						<button type="button" class="btn btn-register pull-right">
-							<i class="fa fa-times fa-3x" aria-hidden="true" onclick="saveCourseProvider();"></i> Add Course
-							provider
-						</button>-->
-						
-						<input type="button" id="viewNext" value="Next"
-										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
-					</div> 
+				 	<!--
+				 		<button type="button" class="btn btn-register pull-right">
+				 			<i class="fa fa-times fa-3x" aria-hidden="true" onclick="saveCourseProvider();"></i> Add Course	provider
+						</button>
+					-->				
+					<input type="button" id="viewNext" value="Proceed Next" class="btn btn-next pull-right" onclick="saveCourseProvider();" />
+				</div> 
 
 				</form>		
 				<div id="upload-logo-modal" class="modal fade">

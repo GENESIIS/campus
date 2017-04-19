@@ -2,13 +2,7 @@
 /* http://meyerweb.com/eric/tools/css/reset/
  * v2.0 | 20110126
  * License: none (public domain) */
- 
- /*
- * 20170316 JH c141-ui-integration-add-course-provider changed style for #select-city to .select-city and #select-country to .select-country
- */
- 
 @import 'https://fonts.googleapis.com/css?family=Raleway';
-@import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway';
 @import 'https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway|Slabo+27px';
 @import 'https://fonts.googleapis.com/css?family=Roboto';
 @import 'https://fonts.googleapis.com/css?family=Nixie+One';
@@ -774,6 +768,9 @@ body, html {
     font-family: "Open Sans", sans-serif;
     font-size: 2em;
     font-weight: normal;
+    clear: both;
+    display: block;
+    padding-top: 60px;
     padding-bottom: 20px;
     border-bottom: 1px solid #c8c8c8; }
     .admin .form-title .form-intro {
@@ -819,12 +816,20 @@ body, html {
     .admin .accordion-body input[type=text],
     .admin .accordion-body input[type=email],
     .admin .accordion-body input[type=tel],
-    .admin .accordion-body input[type=date] {
+    .admin .accordion-body input[type=date],
+    .admin .accordion-body input[type=url],
+    .admin .accordion-body input[type=password] {
       height: 32px;
-      padding-left: 12px; }
-    .admin .accordion-body select {
+      padding-left: 15px;
+      padding-right: 30px;
+      border-radius: 0; }
+    .admin .accordion-body select,
+    .admin .accordion-body input#countries,
+    .admin .accordion-body input#towns {
       height: 32px;
-      padding-left: 25px; }
+      padding-left: 25px;
+      border-radius: 0;
+      margin-bottom: 10px; }
     .admin .accordion-body label {
       color: #1f526c;
       font-family: "Raleway", sans-serif;
@@ -838,21 +843,20 @@ body, html {
     .admin .accordion-body .select-city {
       margin-bottom: 10px; }
 
-.btn {
+.admin-page .btn {
   color: #fff;
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
   font-size: 1.1em;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 0 !important;
   background: #174d72;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 24px;
   clear: both; }
 
-.btn:hover {
+.admin-page .btn:hover {
   color: #fff; }
 
-.btn-register {
+.btn-next {
   margin-top: 15px;
   margin-right: 15px; }
 
@@ -897,9 +901,16 @@ body, html {
   width: 18px;
   height: 18px;
   display: block;
-  background: url("../i/admin/info-ico.png"); }
+  cursor: pointer; }
 
 .has-error .error-info {
+  background: url("../i/admin/info-ico.png"); }
+
+.has-success .error-info {
+  background: url("../i/admin/success-ico.png"); }
+
+.has-error .error-info,
+.has-success .success-info {
   visibility: visible;
   z-index: 9999; }
 
@@ -921,6 +932,9 @@ body, html {
   margin-left: 5px; }
 
 /* Bootstrap Tool Tip - Customized Classes & Styles */
+.tooltip {
+  margin-top: -4px !important; }
+
 .has-error .tooltip.top > .tooltip-inner {
   background-color: #d93232;
   color: #fff;
@@ -944,6 +958,29 @@ body, html {
 .has-error .tooltip.right > .tooltip-arrow {
   border-right-color: #d93232; }
 
+.has-success .tooltip.top > .tooltip-inner {
+  background-color: #3bb54a;
+  color: #fff;
+  min-width: 100px;
+  max-width: 100%; }
+
+.has-success .tooltip.top > .tooltip-arrow {
+  border-top-color: #3bb54a; }
+
+.has-success .tooltip.bottom > .tooltip-inner {
+  background-color: #3bb54a;
+  color: #fff; }
+
+.has-success .tooltip.bottom > .tooltip-arrow {
+  border-bottom-color: #3bb54a; }
+
+.has-success .tooltip.right > .tooltip-inner {
+  background-color: #3bb54a;
+  color: #fff; }
+
+.has-success .tooltip.right > .tooltip-arrow {
+  border-right-color: #3bb54a; }
+
 .alert {
   visibility: hidden;
   display: none; }
@@ -956,6 +993,24 @@ body, html {
 .modal {
   text-align: center; }
 
+#accountStatusDiv .error-info {
+  display: inline-block;
+  position: unset;
+  right: unset;
+  top: unset;
+  margin-bottom: -4px; }
+
+#providerStatusDiv .error-info {
+  margin-bottom: -4px; }
+
+#accountStatusDiv .right-padding {
+  padding-right: 8px; }
+
+.inner-input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto; }
+
 @media screen and (min-width: 768px) {
   .modal:before {
     display: inline-block;
@@ -966,6 +1021,10 @@ body, html {
   display: inline-block;
   text-align: left;
   vertical-align: middle; }
+
+#country-List .form-control,
+#town-List .form-control {
+  padding: 5px 10px 5px 30px !important; }
 
 /* Modules */
 .btn-home {
@@ -1043,3 +1102,5 @@ body, html {
 
 .slideable {
   display: none; }
+
+/*# sourceMappingURL=style.css.map */
