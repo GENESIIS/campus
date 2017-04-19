@@ -15,8 +15,11 @@
 
 <c:if test="${sessionScope.currentSessionUser == null}">
 	<script>	
-	window.location.href = 'http://www.campus.dev:8080/dist/partials/error/error-content.jsp';
+	var myURL = document.location.host;
 	
+ //	window.location.href = myURL + "/dist/partials/error/admin-error-content.jsp";
+ //	$(location).attr('href', 'http://'+myURL + "/dist/partials/error/admin-error-content.jsp")
+ 	location.replace('http://'+myURL + "/dist/partials/error/admin-error-content.jsp");
 	</script>
 </c:if>
 
@@ -47,7 +50,7 @@
 		</c:forEach>
 		<c:if test="${conVal == 0}">
 			<%
-				response.sendRedirect("/index.jsp");
+				response.sendRedirect("/admin-login.jsp");
 			%>
 		</c:if>
 		<!-- iterating user authenticated button actions -->
