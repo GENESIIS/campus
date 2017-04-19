@@ -3,6 +3,8 @@ package com.genesiis.campus.util;
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw create the class TutorEmploymentConfirmEmailComposer
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getEmailBody method to create the mail body correctly
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw add setccBccEmailAddresses method & modified setEnvironment method to use setccBccEmailAddresses method
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw add getBccEmailAddreses, getCcEmailAddreses methods
+					// modified formatEmailInstance method to pass getCcEmailAddreses(), getBccEmailAddreses() as parameters to GeneralMail constructor
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,8 +32,8 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 	private String recieversName;
 	private String sendersEmailAddress;
 	private ArrayList<String> recieversEmailAddreses;
-	private ArrayList<String> bccEmailAddreses;
-	private ArrayList<String> ccEmailAddreses;
+	private ArrayList<String> bccEmailAddreses = new ArrayList<String>();
+	private ArrayList<String> ccEmailAddreses = new ArrayList<String>();
 	private String mailingSubject;
 	private String mailBody;
 	private IEmail generalEmail;
@@ -62,9 +64,8 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 			if(getRecieversEmailAddreses()==null||getRecieversEmailAddreses().size()==0){
 				throw new IllegalArgumentException("genRecieversEmailAddreses list is empty or undefined");
 			} else{
-				IEmail generalEmail = new GeneralMail(getRecieversEmailAddreses(),getRecieversEmailAddreses(),getRecieversEmailAddreses(),
-						getSendersEmailAddress(),
-						getMailingSubject(),getMailBody());
+				IEmail generalEmail = new GeneralMail(getRecieversEmailAddreses(), getCcEmailAddreses(), getBccEmailAddreses(),
+						getSendersEmailAddress(), getMailingSubject(), getMailBody());
 				this.setGeneralEmail(generalEmail);
 			}
 		} catch (IllegalArgumentException ilexp){
@@ -190,8 +191,7 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 			log.error("setEmailDispenser(): IllegalArgumentException"+ ilexp.toString());
 			throw ilexp;
 		}
-	}
-	
+	}	
 
 	public String getRecieversName() {
 		return recieversName;
@@ -219,27 +219,29 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 	 * @param restoftheParameters
 	 */
 	public void setccBccEmailAddresses(String... restoftheParameters){
-		if(restoftheParameters.length != 0){
-			String bccEmailCountStr = restoftheParameters[0];
-			if(!Validator.isEmptyOrHavingSpace(bccEmailCountStr)){
-				
-				int bccEmailCount = Integer.parseInt(bccEmailCountStr);
-				
-				if(bccEmailCount != 0){ // bcc emails are available
-					if(restoftheParameters.length >= bccEmailCount + 1){ // restoftheParameters consists values in bcc email indexes
-						for(int i = 1; i <= bccEmailCount; i++){
-							bccEmailAddreses.add(restoftheParameters[i]);
-						}
-						
-						if(bccEmailCount + 1 < restoftheParameters.length){ // cc emails available
-							String ccEmailCountStr = restoftheParameters[bccEmailCount + 1];
-							if(!Validator.isEmptyOrHavingSpace(ccEmailCountStr)){
-								int ccEmailCount = Integer.parseInt(ccEmailCountStr);
-								
-								if(ccEmailCount != 0){// cc emails are available
-									if(restoftheParameters.length >= bccEmailCount + ccEmailCount + 1){ // restoftheParameters consists values in cc email indexes
-										for(int i = bccEmailCount + 2; i <= bccEmailCount + ccEmailCount + 1; i++){
-											ccEmailAddreses.add(restoftheParameters[i]);
+		try{
+			if(restoftheParameters.length != 0){
+				String bccEmailCountStr = restoftheParameters[0];
+				if(!Validator.isEmptyOrHavingSpace(bccEmailCountStr)){
+					
+					int bccEmailCount = Integer.parseInt(bccEmailCountStr);
+					
+					if(bccEmailCount != 0){ // bcc emails are available
+						if(restoftheParameters.length >= bccEmailCount + 1){ // restoftheParameters consists values in bcc email indexes
+							for(int i = 1; i <= bccEmailCount; i++){
+								bccEmailAddreses.add(restoftheParameters[i]);
+							}
+							
+							if(bccEmailCount + 1 < restoftheParameters.length){ // cc emails available
+								String ccEmailCountStr = restoftheParameters[bccEmailCount + 1];
+								if(!Validator.isEmptyOrHavingSpace(ccEmailCountStr)){
+									int ccEmailCount = Integer.parseInt(ccEmailCountStr);
+									
+									if(ccEmailCount != 0){// cc emails are available
+										if(restoftheParameters.length >= bccEmailCount + ccEmailCount + 1){ // restoftheParameters consists values in cc email indexes
+											for(int i = bccEmailCount + 2; i <= bccEmailCount + ccEmailCount + 1; i++){
+												ccEmailAddreses.add(restoftheParameters[i]);
+											}
 										}
 									}
 								}
@@ -248,9 +250,19 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 					}
 				}
 			}
+		}catch (Exception exp){
+			log.error("setccBccEmailAddresses(): Exception"+ exp.toString());
+			throw exp;
 		}
-	}
-	
+	}	
+
+	public ArrayList<String> getBccEmailAddreses() {
+		return bccEmailAddreses;
+	}	
+
+	public ArrayList<String> getCcEmailAddreses() {
+		return ccEmailAddreses;
+	}	
 
 	public void setRecieversEmailAddreses(ArrayList<String> recieversEmailAddreses) {
 		this.recieversEmailAddreses = recieversEmailAddreses;
