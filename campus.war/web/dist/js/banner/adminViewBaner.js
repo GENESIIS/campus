@@ -31,7 +31,8 @@
  * 			loading resolved using response.successCode === undefined loadBanners().
  * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
  * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selecting / deselecting the check box on 'Select All'check box change has been coded
- * 			Added on click function to activate / deactivate banner records and implemented passSelectedBannersToServer(). 
+ * 			Added on click function to activate / deactivate banner records and implemented passSelectedBannersToServer().
+ * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented toggle show of activate and Deactivate banners buttons based on the selected radio button
  */
 
 var theNewScript = document.createElement("script");
@@ -79,6 +80,15 @@ $(document).ready(function(){
 	$('.radio-block').change(function(event){
 		event.preventDefault();
 		loadBanners();
+		if($('input:radio[name=bannerStatus]:checked').val()=='1'){
+			$('#inactiveBanner').show();
+			$('#activeBanner').hide();
+		} else{ // going to get inactive banners then need the Activate button to be displayed
+			$('#activeBanner').show();
+			$('#inactiveBanner').hide();
+		}
+			
+		
 	});
 });
 
@@ -94,6 +104,15 @@ $(document).ready(function(){
 function loadBanners(){
 	if(!validateDisplayingBanners())
 		return false;
+	
+	if($('input:radio[name=bannerStatus]:checked').val()=='1'){
+		$('#inactiveBanner').show();
+		$('#activeBanner').hide();
+	}else { // going to get inactive banners then need the Activate button to be displayed
+		$('#activeBanner').show();
+		$('#inactiveBanner').hide();
+	}
+	
 	$.ajax({
 		type:'POST',
 		url:adminControllerUrl,
