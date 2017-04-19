@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20170208 DJ c138-add-basic-programme-MP-dj Add FormValidator.java
 //20170209 DJ c138-add-basic-programme-MP-dj Add validateProgrammeDetails() for back end form validations
 //20170407 DJ c138-add-basic-programme-MP-dj Course name/Counselor name validated for spaces. Counselor telephone for length of 15.
+//20170417 DJ c138-add-basic-programme-MP-dj Counselor telephone validated for length of 255.
 
 import com.genesiis.campus.util.IDataHelper;
 
@@ -130,8 +131,8 @@ public class FormValidator {
 
 			String counselorEmail = helper.getParameter("counselorEmail");
 
-			if (!UtilityHelper.isNotEmpty(counselorEmail) || counselorEmail.length() > 15) {
-				helper.setAttribute("errorcounselorEmail",	"Please add counselor email address");
+			if (!UtilityHelper.isNotEmpty(counselorEmail) || counselorEmail.length() > 255) {
+				helper.setAttribute("errorcounselorEmail",	"Counselor email is empty or too long!");
 				isValid = false;
 			} else if (!UtilityHelper.isValidEmailFormat(counselorEmail)) {
 				helper.setAttribute("errorcounselorEmail",	"Invalid email format 8888!");
