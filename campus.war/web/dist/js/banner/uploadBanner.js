@@ -68,6 +68,9 @@
  * 				an user need to update a banner sooner after a banner is added.
  * 				sendBannerPaageFieldInputs() changed so that at edit mode the display test of the button changes from upload to change the banner and Upload the record button
  * 				appears in edit mode.
+ *
+ * 20170419 TR c82 added css class to Update Record Button and button append to form-body
+ * 20170419 TR c82 Removed inline css from error message label 
  */
 
 /*
@@ -351,7 +354,7 @@ function ajaxErorMessage(response,error,errorThrown){
  */
 function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	$('#'+messagePopUpId).modal('show'); // display the modal window
-	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
+	jQuery('#'+labelid).html(message);
 	
 }
 
@@ -662,7 +665,7 @@ if(elegibleToProceed){
 					$('#openModalUpload').html('Change the Banner');
 					var existelement = $('#banner-from').find('#bannerRecordUpdate');
 					if(existelement.length == 0)
-						$('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
+						$('.form-body').append('<button class="btn-update" id="bannerRecordUpdate">Update the Record</button>');
 				}
 				$('#bannerUploadPopUp').modal('hide');
 				displayBannerManagerPrerequistData();

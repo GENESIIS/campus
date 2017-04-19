@@ -28,6 +28,8 @@
  <!-- 20170418 TR c82 changed html structure -->
  <!-- 20170418 TR c82 added bootstrap grid classes -->
  <!-- 20170418 TR c82 update all inputs and text styles  -->
+ <!-- 20170419 TR c82 added css class to Update Record Button and button append to form-body   -->
+ <!-- 20170419 TR c82 changed Error massage positions and styles -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -60,19 +62,19 @@
 
 <!--  logout-popup window message -->
 <div class="modal fade" id="messagePopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-	<div class="login-dialog modal-dialog" role="document">
+	<div class="login-dialog modal-dialog warning-mdl" role="document">
 		<div class="modal-content">
 			<div class="modal-header"> <b>System Message</b>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true" id='systemMessageClose'>Close</span>
+					<span aria-hidden="true" id='systemMessageClose' class="btn-close" >Close</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-sm-6">
-							<label class="" id="displayLabel"></label> <!-- messages to be displayed -->
+						<div class="col-sm-12">
+							<label class="success-msg" id="displayLabel"></label> <!-- messages to be displayed -->
 						</div>
 					</div>
 				</div>
@@ -84,26 +86,24 @@
 
 <!--  Banner Upload-pop-up window -->
 <div class="modal fade" id="bannerUploadPopUp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-	<div class="login-dialog modal-dialog" role="document">
+	<div class="login-dialog modal-dialog img-upload-mdl" role="document">
 		<div class="modal-content">
 			<div class="modal-header"> <b>Up Load the Banner</b>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true" id='bannerModalClose'>Close</span>
-				</button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" id='bannerModalClose' class="btn-close">Close</span></button>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-sm-6">
-							<label class="" id="bannerDisplayLabel"></label> <!-- messages to be displayed -->
-							<br><br>
+						<div class="col-sm-12 upload-panel">
 							<form action="">
+							    <!-- <label for="file-select" class="custom-file-upload"><i class="fa fa-cloud-upload"></i>Choose File</label> -->
 								<input type="file" id="file-select"	name="file-select" accept="image/gif, image/jpeg, image/png">
-								<input type="hidden"	value="xyz">
+								<input type="hidden" value="xyz">
+								<label class="err-msg" id="bannerDisplayLabel"></label> <!-- messages to be displayed -->
 								<br>
-								<button type="submit" id="uploadBbutton" disabled >Upload</button>
+								<button class="btn-update" type="submit" id="uploadBbutton" disabled >Upload</button>
 							</form>
+
 						</div>
 					</div>
 				</div>
@@ -140,7 +140,6 @@
 				<div class="col-lg-12 col-md-12 input-row">
 				    <div class="col-lg-4 col-md-4">Advertiser : *</div>
 				    <div class="col-lg-8 col-md-8">
-                        <div id="advertiserInfor" style ="color:#C70039;"></div>
                         <c:choose>
                             <c:when test="${param.CCO eq 'ADMEDTBNR' }">
                                 <input id="advertiser" name="page" value="${param.advertiserName }"
@@ -157,6 +156,7 @@
                                 <input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
                             </c:otherwise>
                         </c:choose>
+                        <div id="advertiserInfor" class="err-msg"></div>
                     </div>
 				</div>
 				<!-- End Advertiser input field -->
@@ -164,7 +164,6 @@
                 <div class="col-lg-12 col-md-12 input-row">
                     <div class="col-lg-4 col-md-4">Page : *</div>
                     <div class="col-lg-8 col-md-8">
-                        <div id="pageInfor" style ="color:#C70039;"></div>
                         <c:choose>
                             <c:when test="${param.CCO eq 'ADMEDTBNR' }">
                                 <input id="page" name="page" list="pageList" value="${param.pageName}"
@@ -182,6 +181,7 @@
                                 <input type="hidden" id="sPageCode" name="sPageCode" />
                             </c:otherwise>
                         </c:choose>
+                        <div id="pageInfor" class="err-msg"></div>
                     </div>
                 </div>
                 <!-- End Page input field -->
@@ -189,7 +189,6 @@
                 <div class="col-lg-12 col-md-12 input-row">
                     <div class="col-lg-4 col-md-4">Advertising slot : *</div>
                     <div class="col-lg-8 col-md-8">
-                        <div id="advertizingSlotInfor" style ="color:#C70039;"></div>
                         <c:choose>
                             <c:when test="${param.CCO eq 'ADMEDTBNR'}">
                                 <input id="slot" name="slot" list="slotList" class="text-field" type="text" value="${param.pageSlotName}" placeholder="-- Select a Slot --" onclick="clearField('advertizingSlotInfor');">
@@ -202,14 +201,15 @@
                                 <input type="hidden" id="sSlotCode" name="sSlotCode" />
                             </c:otherwise>
                         </c:choose>
+                        <div id="advertizingSlotInfor" class="err-msg"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-12 col-md-12 input-row">
                     <div class="col-lg-4 col-md-4">Duration (Seconds) : *</div>
                     <div class="col-lg-8 col-md-8">
-                        <div id="displayDurationInfor" style ="color:#C70039;"></div>
                         <input id="duration" type='text' onclick="clearField('displayDurationInfor');" value="${param.displayDuration}">
+                        <div id="displayDurationInfor" class="err-msg"></div>
                     </div>
                 </div>
 
@@ -233,15 +233,15 @@
                     <div class="col-lg-4 col-md-4">Banner Activation date : *</div>
                     <div class="col-lg-8 col-md-8">
                         <input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')" value="${param.bannerActivateDate}">
-                        <div id="startDateInfor" style ="color:#C70039;"></div>
+                        <div id="startDateInfor" class="err-msg"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-12 col-md-12 input-row">
-                    <div class="col-lg-4 col-md-4">Banner Expire date : * </div>
+                    <div class="col-lg-4 col-md-4">Banner Expiry date : * </div>
                     <div class="col-lg-8 col-md-8">
                         <input type="date" name="endtDate" id="endtDate" onclick="clearField('startDateInfor');clearField('endtDateInfor');" value="${param.bannerDeactivateDate}">
-                        <div id="endtDateInfor" style ="color:#C70039;"></div>
+                        <div id="endtDateInfor" class="err-msg"></div>
                     </div>
                 </div>
 
@@ -261,7 +261,7 @@
                 <div class="col-lg-12 col-md-12 input-row" align="center">
                     URL :
                     <input id="bannerDispatchingUrl" type='text' onclick="clearField('urlInfor');" value="${param.urlToNavigateClickingTheBaner}" data-toggle="tooltip" title="Please enter a valid Url / Mini  web address">
-                    <div id="urlInfor" style ="color:#C70039;"></div>
+                    <div class="err-msg" id="urlInfor""></div>
 
                     <script>
                         $(document).ready(function(){
@@ -293,7 +293,7 @@
                     </div>
                     <script>
                         if($('#bannerCode').val().length != 0){
-                            $('#banner-from').append('<button id="bannerRecordUpdate">Update the Record</button>');
+                            $('.form-body').append('<button class="btn-update" id="bannerRecordUpdate">Update the Record</button>');
                         }
                     </script>
                 </div>
