@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
 //20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
 //20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call, added method comments and removed unwanted imports
 //20170320 JH c96-public-list-all-tutors fixed missing @Override annotation and method signature changes from IDCrud
+//20170418 jh c135-public-display-tutor-profile findById() method coding wip
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -43,8 +44,69 @@ public class PublicTutorDAO implements ICrud {
 
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		CallableStatement callableStatement = null;
+		ResultSet rs = null;
+		Connection conn = null;
+		Collection<Collection<String>> tutorCollection = new ArrayList<Collection<String>>();
+
+		try {
+			conn = ConnectionManager.getConnection();
+
+			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?)}");
+			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
+			callableStatement.executeQuery();
+
+			rs = callableStatement.executeQuery();
+
+			while (rs.next()) {
+				Collection<String> singleTutorList = new ArrayList<String>();
+				singleTutorList.add(rs.getString("CODE"));
+				singleTutorList.add(rs.getString("FIRSTNAME"));
+				singleTutorList.add(rs.getString("MIDDLENAME"));
+				singleTutorList.add(rs.getString("LASTNAME"));
+				singleTutorList.add(rs.getString("GENDER"));
+				singleTutorList.add(rs.getString("EMAIL"));
+				singleTutorList.add(rs.getString("LANDPHONECOUNTRYCODE"));
+				singleTutorList.add(rs.getString("LANDPHONEAREACODE"));
+				singleTutorList.add(rs.getString("LANDPHONENUMBER"));
+				singleTutorList.add(rs.getString("MOBILEPHONENETWORKCODE"));
+				singleTutorList.add(rs.getString("MOBILEPHONENUMBER"));
+				singleTutorList.add(rs.getString("DESCRIPTION"));
+				singleTutorList.add(rs.getString("EXPERIENCE"));
+				singleTutorList.add(rs.getString("WEBLINK"));
+				singleTutorList.add(rs.getString("FACEBOOKURL"));
+				singleTutorList.add(rs.getString("TWITTERURL"));
+				singleTutorList.add(rs.getString("MYSPACEURL"));
+				singleTutorList.add(rs.getString("LINKEDINURL"));
+				singleTutorList.add(rs.getString("INSTAGRAMURL"));
+				singleTutorList.add(rs.getString("WHATSAPPNUMBER"));
+				singleTutorList.add(rs.getString("VIBERNUMBER"));
+				singleTutorList.add(rs.getString("ISAPPROVED"));
+				singleTutorList.add(rs.getString("ADDRESS1"));			
+				singleTutorList.add(rs.getString("ADDRESS2"));
+				singleTutorList.add(rs.getString("ADDRESS3"));
+				singleTutorList.add(rs.getString("CRTBY"));
+				singleTutorList.add(rs.getString("MODBY"));
+				singleTutorList.add(rs.getString("TUTORSTATUS"));
+				singleTutorList.add(rs.getString(""));
+
+				tutorCollection.add(singleTutorList);
+			}
+
+		} catch (SQLException SQLException) {
+			log.error("SQL Exception : " + SQLException.toString());
+			throw SQLException;
+
+		} catch (Exception exception) {
+			log.error("Exception : " + exception.toString());
+			throw exception;
+
+		} finally {
+			DaoHelper.cleanup(conn, callableStatement, rs);
+		}
+		return tutorCollection;
+
 	}
 
 	/**
