@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 /**
- * 201702261 PN CAM-48: INIT CmdDeleteCPImg.java class and implementing execute() method to delete cp image from disk.modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
+ * 20170226 PN CAM-48: INIT CmdDeleteCPImg.java class and implementing execute() method to delete cp image from disk.modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
+ * 20170419 PN CAM-48: removed unwanted logger statement.
  */
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -48,7 +49,6 @@ public class CmdDeleteCPImg implements ICommand{
 				uploadPathConf = (String) formFielsd.get("uploadPathConf");
 				fileToDelete = (String) formFielsd.get("delete_cp_img");
 			}
-			log.info("fileToDelete"+fileToDelete);
 			Collection<Collection<String>> picUploaDpath = sysconfigDAO.findById(uploadPathConf);
 
 			// Set the image uploading path. Taken the path from SYSTEMCONFIG table.
