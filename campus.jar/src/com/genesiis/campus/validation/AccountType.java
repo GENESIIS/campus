@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161127 MM c5-corporate-training-landing-page-MP Added getAccountTypeByTypeValue(int)
 // 				method to retrieve enum constant by passing its value for "typeValue"
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw add getAccountType method
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified getAccountType method to get type value correctly
 
 /**
  * This enum class is created to manage course provider account type. 
@@ -68,11 +69,11 @@ public enum AccountType {
 	 */
 	public static int getAccountType(String accountTypeValue){
 		int AccountType=0; 	
-		if (Validator.isEmptyOrHavingSpace(accountTypeValue)) {
-			if (accountTypeValue.equalsIgnoreCase("ACTIVE")) {
+		if (!Validator.isEmptyOrHavingSpace(accountTypeValue)) {
+			if (accountTypeValue.equalsIgnoreCase("FEATURED_COURSE_PROVIDER")) {
 				AccountType = FEATURED_COURSE_PROVIDER.getTypeValue();
 			}
-			if (accountTypeValue.equalsIgnoreCase("INACTIVE")) {
+			if (accountTypeValue.equalsIgnoreCase("ONE_OFF_COURSE_PROVIDER")) {
 				AccountType = ONE_OFF_COURSE_PROVIDER.getTypeValue();
 			}
 		}
