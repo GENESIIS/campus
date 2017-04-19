@@ -12,7 +12,7 @@ package com.genesiis.campus.command;
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
 //20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
 //20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
-//20170418 CW c157-add-tutor-employment-details-cw modified employmentDetails variable creation place
+//20170419 CW c157-add-tutor-employment-details-cw modified employmentDetails variable creation place
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -68,33 +68,23 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			
 			if(status > 0){
 				message = "Selected employers successfully added ...";
-				GenerateEmail emailAtUpdate = new GenerateEmail();
 				
-				//TutorDAO tutorDao = new TutorDAO();
 				final Collection<Collection<String>> allTutorCpEmailList = TutorDAO.getListOfEmailToSendEmploymentRequest(employerCode, "SITE_ADMIN_EMAIL", tutorCode);
-				//getListOfEmailToSendEmploymentRequest(String courseProviderCode, String systemConfigCode, String tutorCode)
 				String nameOfTutor = null;
 				ArrayList<String> receiverEmailList = new ArrayList<String>();
 				String bccEmail = null;
 				
 				for(Collection<String> emailDetails : allTutorCpEmailList){
 					if(emailDetails != null || emailDetails.size() != 0){
-						nameOfTutor = emailDetails.toArray()[0].toString(); // first name
-						receiverEmailList.add(emailDetails.toArray()[1].toString()); // last name
-						bccEmail = emailDetails.toArray()[2].toString(); // last name
+						nameOfTutor = emailDetails.toArray()[0].toString(); // name
+						receiverEmailList.add(emailDetails.toArray()[1].toString()); // receivers email address list
+						bccEmail = emailDetails.toArray()[2].toString(); // Bcc email address
 					}
 				}
-				
-				
-				
-				//public String sendTutorEmploymentConfirmEmail(String firstname, String lastname, Collection<String> receiverEmailList, String bccEmail)
+
+				GenerateEmail emailAtUpdate = new GenerateEmail();
 				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail); //send email
-				//emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail("chinthaka", "Weerasinghe", "chinthaka@genesiis.com", "ccw", 2); //send email
-				
-				
-				/*emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(helper.getParameter("firstname"), helper.getParameter("lastname"), 
-						helper.getParameter("email"), helper.getParameter("username"), 2); //send email
-*/			}
+			}
 			
 			if(Validator.isNotEmpty(tutorCode)){
 				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
@@ -114,10 +104,10 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
+			helper.setAttribute("emailMessage", emailMessage);
 		}
 		return view;
-	}
-	
+	}	
 	
 	/**
 	 * This method is created to populate data into the Employment object
@@ -138,6 +128,5 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 		}
 			
 		return employment;
-	}
-	
+	}	
 }
