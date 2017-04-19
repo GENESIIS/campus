@@ -13,6 +13,7 @@ package com.genesiis.campus.util.mail;
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw add ccList, bccList & constructor with bccList & ccList & add addBccToMail, addCCToMail methods
 				// modified setEmailMessage method to add bccList & ccList to email
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw modified the code to remove un wanted spaces
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified setEmailMessage method & add method comment & remove un necessary spaces from the class
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class GeneralMail implements IEmail {
      * @param receivers to list of the email ArrayList<String>
      * @param ccList to list of the cc email ArrayList<String>
      * @param bccList to list of the bcc email ArrayList<String>
-     * @param sender String: email address of  the person who sends the email     * 
+     * @param sender String: email address of  the person who sends the email      
      * @param subject String: subject of the email
      * @param emailBody String : body content of the email
      */
@@ -99,21 +100,20 @@ public class GeneralMail implements IEmail {
     /**
      * setEmailMessage() setup sender,receiver list,subject,and the message body and the
      * date of generating the email
-     * @author DN
+     * @author DN, CW
      * @return MimeMessage formatted message
      * @throws MessagingException
      */
     @Override
 	public MimeMessage setEmailMessage() throws MessagingException {
 	    try {
-	    	// BCC and CC list has not yet implemented, it can be implemented in future 
-	    	// extensions as required
 	         addSenderToMail(this.message,this.sender); 
 	         addRecipientToMail(this.message,this.receivers);
 	         addSubjectToMail(this.message,this.subject);
 	         addBodyContentToMail(this.message,this.emailBody);
 	         setSentDateToMail(this.message);
 	         
+	        // CC & BCC list has implemented by CW
 			if(this.bccList != null || this.bccList.size() != 0){
 		         addBccToMail(this.message,this.bccList);
 			}
@@ -121,15 +121,13 @@ public class GeneralMail implements IEmail {
 		         addCCToMail(this.message,this.ccList);
 			}
 			
-	         return this.message;	        
+	        return this.message;	        
 	         
 	      }catch (MessagingException mex) {
 	    	  log.error("sendEmail(MimeMessage message):MessagingException :" +mex.toString());
 	    	  throw mex;
 	      }
-
-	}
-    
+	}    
    
     /*
      * setSystemPropertiesAndMailEnvironment sets system properties relates to mailing and creates 
@@ -244,8 +242,7 @@ public class GeneralMail implements IEmail {
      * @author DN
      * @param message message which is been composed, subject senders address
      * @Throws MessagingException
-     */
-	 
+     */	 
 	private void addSubjectToMail(MimeMessage message, String sublject)
 			throws MessagingException {
 		 message.setSubject(sublject);
@@ -262,39 +259,27 @@ public class GeneralMail implements IEmail {
 	}
 	
 	// getters and setters
-
 	public ArrayList<String> getReceivers() {
 		return receivers;
 	}
-
-
 
 	public void setReceivers(ArrayList<String> receivers) {
 		this.receivers = receivers;
 	}
 
-
-
 	public String getSender() {
 		return sender;
 	}
-
-
 
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
-
-
 	public String getHost() {
 		return host;
 	}
 
-
 	public void setHost(String host) {
 		this.host = host;
 	}
-
-
 }
