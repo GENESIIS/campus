@@ -9,7 +9,7 @@ package com.genesiis.campus.util.mail;
 //20170418 CW c157-add-tutor-employment-details-cw modified setEnvironment method call in sendTutorEmploymentConfirmEmail method
 //20170418 CW c157-add-tutor-employment-details-cw modified formatEmailInstance method call to send null String
 //20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method & add bccEmailCount variable
-//20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to remove un wanted commented lines & changed error log method name
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmail method to remove un wanted commented lines & changed error log method name
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;

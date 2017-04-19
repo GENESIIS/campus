@@ -8,7 +8,7 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw add validation messages to execute method 
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw add code comments
-//20170419 CW c157-add-tutor-employment-details-cw removed un wanted variable declarations & clean the code
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw removed un wanted variable declarations & clean the code
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;

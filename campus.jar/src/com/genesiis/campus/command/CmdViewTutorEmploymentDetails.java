@@ -6,7 +6,7 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw modified singleTutorEmploymentViewCollection filling with tutor code
 //20170403 CW c157-add-tutor-employment-details-cw re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw create tutorCode variable 
-//20170419 CW c157-add-tutor-employment-details-cw removed un wanted variable declarations & clean the code
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw removed un wanted variable declarations & clean the code
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;

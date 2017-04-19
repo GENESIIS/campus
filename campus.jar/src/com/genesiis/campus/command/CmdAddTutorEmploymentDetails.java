@@ -12,7 +12,7 @@ package com.genesiis.campus.command;
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
 //20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
 //20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
-//20170419 CW c157-add-tutor-employment-details-cw modified employmentDetails variable creation place
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified employmentDetails variable creation place
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
