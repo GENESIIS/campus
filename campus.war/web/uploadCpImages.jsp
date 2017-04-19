@@ -1,9 +1,12 @@
-<!-- 20170221 PN CAM-48: INIT test JSP page to implement CP image upload function. -->
-<!-- 20170223 PN CAM-48: modifingy UI elements to add front end validations. no script tag added to the JSP page.. -->
-<!-- 20170226 PN CAM-48: modified UI elements to display images on change event of cp_img_type dropdown. delete button created. -->
-<!-- 20170417 DK CAM-48: Orinal Code was commented to develop the BS modal structure. -->
-<!-- 20170417 DK CAM-48: Develop upload course provider logo modal. -->
-
+<%--
+20170221 PN CAM-48: INIT test JSP page to implement CP image upload function.
+20170223 PN CAM-48: modifingy UI elements to add front end validations. no script tag added to the JSP page.
+20170226 PN CAM-48: modified UI elements to display images on change event of cp_img_type dropdown. delete button created.
+20170417 DK CAM-48: Orinal Code was commented to develop the BS modal structure.
+20170417 DK CAM-48: Develop upload course provider logo modal.
+20170419 PN CAM-48: modifying new UI element IDs and NAMEs to match with the initial UI.
+ --%>
+ 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -57,7 +60,7 @@
 							</div>
 							<div class="col-sm-5">
 								<div class="form-group">
-									<label class="img-info" id="img-info">
+									<label class="img-info" id="img-info-lbl" name="img-info-lbl">
 										<i class="fa fa-info-circle" aria-hidden="true"></i>
 										<span id="cp_img_desc" name="cp_img_desc"></span>										
 									</label>
@@ -89,8 +92,8 @@
 							</div>
 							<div class="col-sm-5">
 								<div class="form-group">
-									<label class="img-info" id="img-info">
-										<i class="fa fa-danger-circle" aria-hidden="true"></i>
+									<label class="img-info" id="img-err-lbl" name="img-err-lbl">
+										<i class="fa fa-info-circle" aria-hidden="true"></i>
 										<span id="cp_img_err" name="cp_img_err"></span>										
 									</label>
 								</div>
@@ -112,7 +115,7 @@
 									<tbody>
 										<tr>
 											<td>
-												<a class="thumb-img" href="/dist/i/uploadCpImages/uploads/linkedin_large.png" title="">
+												<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="" title="">
 													<img id="cp_img_display" name="cp_img_display" alt="" />
 												</a>CourseProviderLogo_Large
 											</td>
