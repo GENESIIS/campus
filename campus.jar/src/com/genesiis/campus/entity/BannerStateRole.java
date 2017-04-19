@@ -92,7 +92,7 @@ public class BannerStateRole {
 		for(int x=0;x<treatedBannerIdArray.length;x++){
 			 bannerIds[x]= Integer.parseInt(treatedBannerIdArray[x]);
 		 }
-		return Arrays.asList(bannerIds);
+		return new ArrayList<Integer>( Arrays.asList(bannerIds));
 	} catch (StringIndexOutOfBoundsException sobexp){
 		log.error("getStringBannerIdConvertedToArryOfInt() :StringIndexOutOfBoundsException "+sobexp.toString());
 		throw sobexp;
@@ -137,11 +137,17 @@ private void statusUpdate(List<Integer> bannerIdsAndStatus) throws SQLException,
 				@SuppressWarnings("unchecked")
 				ArrayList <Integer> bannerIdsAndStatus = (ArrayList<Integer>) object;
 				int ACTIVE = bannerIdsAndStatus.get(bannerIdsAndStatus.size()-1); // last element is the active and inactive flag
-				String bannerIds = null;
-				for(int id : bannerIdsAndStatus){
-					if(bannerIds.length()==0)
-						bannerIds = bannerIds + id;
-					bannerIds = bannerIds +","+id;
+				bannerIdsAndStatus.remove(bannerIdsAndStatus.size()-1); //remove the active flag from the list
+				String bannerIds = "";
+				int totalelements = bannerIdsAndStatus.size();
+				//for(Integer id : bannerIdsAndStatus){
+				for(int x=0;x<totalelements;x++){
+					//Check this part of the code it gives errors
+					if(totalelements==1){ // zero elements in the array
+						bannerIds = bannerIds + bannerIdsAndStatus.get(x).intValue();
+					} else{
+						bannerIds = bannerIds +","+bannerIdsAndStatus.get(x).intValue();
+					}
 				}
 				
 				Connection con 			  = null;
