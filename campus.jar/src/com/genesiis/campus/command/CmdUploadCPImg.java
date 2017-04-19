@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
  * 20170222 PN CAM-48: implemented isValidFileSize() method and isValidFileType() method to validate uploaded image.
  * 20170223 PN CAM-48: implemented getFileUploadError() method implemented. modified execute method to fix incorrect validations in backend.
  * 20170226 PN CAM-48: getImageUploadConfigs() implementation changed. modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
+ * 20170226 PN CAM-48: createFileName() implementation changed.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -143,7 +144,12 @@ public class CmdUploadCPImg implements ICommand {
 		String newFileName = "";
 		try {
 			String[] uploadConfigs = uploadPathConf.split("_");
-			subName = uploadConfigs[1].toLowerCase();
+			
+			if(uploadPathConf.contains("CP")||uploadPathConf.contains("cp")){
+				subName = uploadConfigs[1].toLowerCase();
+			}else{
+				subName = uploadConfigs[0].toLowerCase();
+			}
 			newFileName = Integer.toString(courseProviderCode) + "_" + subName;
 		} catch (Exception ex) {
 			log.error("createFileName(): Exception " + ex.toString());
