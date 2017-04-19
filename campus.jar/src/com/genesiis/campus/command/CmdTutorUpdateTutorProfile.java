@@ -18,6 +18,7 @@ package com.genesiis.campus.command;
 //20170307 CW c37-tutor-update-tutor-profile-cw modified execute method comment, set tutor.setIsApproved & tutor.setTutorStatus values before update
 				//modified isValidUserAndEmailBeforeAddTutor() method to validate email if email field was updated.
 				//changed method setCompareVariables name into setCompareVariablesBeforeTutorUpdateTutor.
+//20170419 CW c157-add-tutor-employment-details-cw removed un wanted variable declarations & clean the code
 
 
 import com.genesiis.campus.entity.CountryDAO;
@@ -468,7 +469,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 		} catch (Exception e) {
-			log.error("setCompareVariables() : Exception" + e.toString());
+			log.error("setCompareVariablesBeforeTutorUpdateTutor() : Exception" + e.toString());
 			throw e;
 		}
 		
@@ -639,11 +640,10 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 	 */
 	public static int validateUsernameEmailFields(String username, String email) throws SQLException, Exception {		
 
-		Collection<Collection<String>> allUsernameEmailList = new ArrayList<Collection<String>>();
 		int validStatus = 0;
 		
 		try {
-			allUsernameEmailList = TutorDAO.getListOfUsernameEmail(username, email);
+			Collection<Collection<String>> allUsernameEmailList = TutorDAO.getListOfUsernameEmail(username, email);
 
 			final TreeSet<Integer> treeOfData = new TreeSet<Integer>();
 			
