@@ -2,6 +2,7 @@ package com.genesiis.campus.util;
 
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw create the class TutorEmploymentConfirmEmailComposer
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getEmailBody method to create the mail body correctly
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw add setccBccEmailAddresses method & modified setEnvironment method to use setccBccEmailAddresses method
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import com.genesiis.campus.util.mail.IEmail;
 import com.genesiis.campus.util.mail.IEmailComposer;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemEmail;
+import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
@@ -28,6 +30,8 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 	private String recieversName;
 	private String sendersEmailAddress;
 	private ArrayList<String> recieversEmailAddreses;
+	private ArrayList<String> bccEmailAddreses;
+	private ArrayList<String> ccEmailAddreses;
 	private String mailingSubject;
 	private String mailBody;
 	private IEmail generalEmail;
@@ -148,6 +152,10 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 		setRecieversEmailAddreses(recieversEmailAddreses);// dummy setting this value will be overridden
 		setMailingSubject(mailSubject);
 		setMailBody(emailBodyText);
+		
+		if(restoftheParameters.length != 0){
+			setccBccEmailAddresses(restoftheParameters);
+		}		
 	}
 
 	@Override
@@ -204,6 +212,45 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 	public ArrayList<String> getRecieversEmailAddreses() {
 		return recieversEmailAddreses;
 	}
+	
+	/**
+	 * this method will fill the bccEmailAddreses, ccEmailAddreses lists with the data in restoftheParameters
+	 * @author cw
+	 * @param restoftheParameters
+	 */
+	public void setccBccEmailAddresses(String... restoftheParameters){
+		if(restoftheParameters.length != 0){
+			String bccEmailCountStr = restoftheParameters[0];
+			if(!Validator.isEmptyOrHavingSpace(bccEmailCountStr)){
+				
+				int bccEmailCount = Integer.parseInt(bccEmailCountStr);
+				
+				if(bccEmailCount != 0){ // bcc emails are available
+					if(restoftheParameters.length >= bccEmailCount + 1){ // restoftheParameters consists values in bcc email indexes
+						for(int i = 1; i <= bccEmailCount; i++){
+							bccEmailAddreses.add(restoftheParameters[i]);
+						}
+						
+						if(bccEmailCount + 1 < restoftheParameters.length){ // cc emails available
+							String ccEmailCountStr = restoftheParameters[bccEmailCount + 1];
+							if(!Validator.isEmptyOrHavingSpace(ccEmailCountStr)){
+								int ccEmailCount = Integer.parseInt(ccEmailCountStr);
+								
+								if(ccEmailCount != 0){// cc emails are available
+									if(restoftheParameters.length >= bccEmailCount + ccEmailCount + 1){ // restoftheParameters consists values in cc email indexes
+										for(int i = bccEmailCount + 2; i <= bccEmailCount + ccEmailCount + 1; i++){
+											ccEmailAddreses.add(restoftheParameters[i]);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 
 	public void setRecieversEmailAddreses(ArrayList<String> recieversEmailAddreses) {
 		this.recieversEmailAddreses = recieversEmailAddreses;
