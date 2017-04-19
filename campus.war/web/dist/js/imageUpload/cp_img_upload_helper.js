@@ -11,6 +11,7 @@
  * 20170308 PN CAM-48: displayErrorMessage() method implemented. default image displaying jQuery code modified.
  * 20170308 PN CAM-48: modified 'cp_img_upload_btn' upload event to set selected image type back to the drop down. 
  * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
+ * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
  */
 
 var dataSet = null;
@@ -22,7 +23,7 @@ var listOfFiles = [];
 //Physical path of the images.
 var diskImgPath = "/education/provider/logo/";
 //Error messages to display. 
-var noImagetoDisplayErr = "No image found to display.";
+var noImagetoDisplayErr = "No image found.";
 var sizeExceededErr = " file size exceeded. Please upload a file with size less than %size.";
 var invalidFileTypeErr = " file type is invalid. Please upload a file with valid file type.";
 var invalidFileExtErr = " file has no extension. Please upload a file with valid file type.";
@@ -33,9 +34,12 @@ var invalidCourseProviderCode = "Invalid Course provider code.";
 // A $( document ).ready() block.
 $(document).ready(function() {
 	displayImgDetails();
-	
+	$('#img-info-lbl').hide();
+	$('#img-err-lbl').hide();
 	// According to the selection of drop box, image description will be appear.
 	$('#cp_img_type').on('change', function() {
+		$('#img-info-lbl').hide();
+		$('#img-err-lbl').hide();
 		$('#cp_img_err').html("");
 		document.getElementById("cp_img_upload_btn").disabled = false;
 		document.getElementById("cp_img_delete_btn").disabled = false;
@@ -43,21 +47,25 @@ $(document).ready(function() {
 		var cp_img_type = "";
 		var courseProviderCode = 1; // ToBe assigned later.
 		$.each(dataSet.result, function(index, val) {
-			if (val[0] === sysConfCode) {
+			if (sysConfCode === val[0] || sysConfCode != "") {
+				$('#img-info-lbl').show();
 				$('#cp_img_desc').html(val[2]);
 				cp_img_type = $("#cp_img_type option:selected").text();
 				var fileName = createFileName(courseProviderCode,cp_img_type);
 				var actFileName = getActualFileName(listOfFiles,fileName);
 				if(actFileName != noImagetoDisplayErr){
 					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+					$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
 					document.getElementById("cp_img_upload_btn").disabled = true;
 				}else{
 					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
+					$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
 					document.getElementById("cp_img_delete_btn").disabled = true;
+					$('#img-err-lbl').show();
 					$('#cp_img_err').html(noImagetoDisplayErr);
 					$('#cp_img_err').css('color', 'red');
-				}			
-			}
+				}
+			}		
 		});
 	})
 	
@@ -65,6 +73,7 @@ $(document).ready(function() {
 	$(document).on('click','#cp_img_upload_btn',function(event){		
 		event.stopPropagation(); 
 	    event.preventDefault(); 
+	    $('#img-err-lbl').hide();
 	    var cpImgUpload = $('input[type="file"]')[0].files[0] ;// get the files from file input file		
 	    var courseProviderCode = 1;// This will be get assigned from UI element later.
 	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
@@ -91,18 +100,21 @@ $(document).ready(function() {
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
 			    	if(response.fileUploadError != ""){
+			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadError);
 			    		$('#cp_img_err').css('color', 'red');
 			    	}else if(response.fileUploadSuccess != ""){
 			    		alert(response.fileUploadSuccess);  		
 			    		$('#cp_img_upload').val('');
 			    		$("#cp_img_type").val(uploadPathConfId);
+			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
 			    		$('#cp_img_err').css('color', 'green');
 			    		
 			    		//Display uploaded image on img tag.
 			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
-			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());	
+			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
+			    		$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
 			    	}
 				},
 				error : function(x, status, error) {
@@ -112,6 +124,7 @@ $(document).ready(function() {
 				}
 			});
 		}else{
+			$('#img-err-lbl').show();
 			if((cpImgUpload == null) || (cpImgUpload == "") || (cpImgUpload == undefined)){
 				$('#cp_img_err').html(fileNotSelectedErr);
 	    		$('#cp_img_err').css('color', 'red');
@@ -161,7 +174,8 @@ $(document).ready(function() {
 			    		$('#cp_img_err').css('color', 'green');
 			    		
 			    		//Display uploaded image on img tag.  		
-			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());	
+			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
+			    		$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
 			    	}
 				},
 				error : function(x, status, error) {
@@ -346,7 +360,13 @@ function checkFileSize(fileuploadelm, to, submitbtn){
  */
 function createFileName(courseProviderCode,uploadPathConf){
 	var fileTypes = uploadPathConf.split("_");
-	var newName = [courseProviderCode.toString() ,fileTypes[1].toString()];
+	var newName = [];
+	
+	if(uploadPathConf.indexOf('CP') >= 0){
+		newName = [courseProviderCode.toString() ,fileTypes[1].toString()];
+	}else{
+		newName = [courseProviderCode.toString() ,fileTypes[0].toString()];
+	}
 	return newName.join("_").toLowerCase(); 
 }
 
