@@ -9,6 +9,7 @@ package com.genesiis.campus.util.mail;
 //20170418 CW c157-add-tutor-employment-details-cw modified setEnvironment method call in sendTutorEmploymentConfirmEmail method
 //20170418 CW c157-add-tutor-employment-details-cw modified formatEmailInstance method call to send null String
 //20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method & add bccEmailCount variable
+//20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method to remove un wanted commented lines & changed error log method name
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -42,9 +43,7 @@ public class GenerateEmail {
 		try {
 			IEmailComposer tutorEmployentConfirmEmailComposer = new TutorEmploymentConfirmEmailComposer(nameOfTutor);
 			String bccEmailCount = "1"; // only one email address to bcc. 
-			
-		//	String recieversName = firstname.concat(" " + lastname);
-			
+						
 			//Used the same email address send to the method as the senders email address & receivers email address. 
 			//The senders email address will overridden later from the email address in campus.xml file
 			tutorEmployentConfirmEmailComposer.setEnvironment("Administrator", bccEmail, receiverEmailList,
@@ -54,14 +53,14 @@ public class GenerateEmail {
 			tutorEmployentConfirmEmailComposer.formatEmailInstance("");
 			status = this.sendMail(tutorEmployentConfirmEmailComposer);
 
-	} catch (IllegalArgumentException ilexp) {
-		log.error("execute(): IllegalArgumentException" + ilexp.toString());
-		throw ilexp;
-	} catch (Exception exp) {
-		log.error("execute():Exception " + exp.toString());
-		throw exp;
-	}
-	return systemMessage(status);	
+		} catch (IllegalArgumentException ilexp) {
+			log.error("sendTutorEmploymentConfirmEmail(): IllegalArgumentException" + ilexp.toString());
+			throw ilexp;
+		} catch (Exception exp) {
+			log.error("sendTutorEmploymentConfirmEmail():Exception " + exp.toString());
+			throw exp;
+		}
+		return systemMessage(status);	
 	}
 
 	/*
