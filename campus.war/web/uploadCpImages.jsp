@@ -104,11 +104,8 @@
 								<table class="tbl-logo-list table">
 									<thead>
 										<tr>
+											<th></th>
 											<th>Image Name</th>
-											<th>Image Type</th>
-											<th>Image Size</th>
-											<th>Display Type</th>
-											<th>Modified</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -117,13 +114,10 @@
 											<td>
 												<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="" title="">
 													<img id="cp_img_display" name="cp_img_display" alt="" />
-												</a>CourseProviderLogo_Large
+												</a>
 											</td>
-											<td>image/jpeg</td>
-											<td>1200 x 650 px</td>
-											<td>Large</td>
-											<td>3/23/2017 12:31:40 PM</td>
-											<td class="action-list">
+											<td><span id="cp_img_name" name="cp_img_name"></span></td>
+											<td class="">
 <!-- 												<a class="remove-item action-item fa fa-trash-o" aria-hidden="true" id="cp_img_upload_btn" name="cp_img_upload_btn">&nbsp;</a> -->
 												<button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn">
 													<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>
