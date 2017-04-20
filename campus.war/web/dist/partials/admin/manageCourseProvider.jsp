@@ -30,6 +30,7 @@
 <!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink, added min max password hints -->
 <!-- 20170407 JH c141-ui-integration-for-add-course-provider added a success message to display with the modal body when a course provider is registered -->
 <!-- 20170417 JH c141-ui-integration-for-add-course-provider added name attribute and the value for weblink prefix -->
+<!-- 20170420 JH c141-ui-integration-for-add-course-provider fixed error in span closing tag for id landNumber2  -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -276,7 +277,7 @@
 													placeholder="" disabled maxlength="4" size="4">
 												<input name="land2" type="tel" onkeyup="landPhoneNubmerHelper();"
 													class="col-xs-6" id="land2" placeholder=""  maxlength="12" size="12">
-												 <span class="phone-no-hint" id="landNumber2"></spans>
+												 <span class="phone-no-hint" id="landNumber2"></span>
 												<a class="error-info" href="#" data-toggle="tooltip" 
 													title="Error! " id="errorLand2"></a>
 											</div>
