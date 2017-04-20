@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170420 CW c159-courseprovider-accept-tutor-request-cw INIT CmdListTutorsForCourseProviders.java
+//20170420 CW c159-courseprovider-accept-tutor-request-cw modified execute method to use courseProviderCode variable
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * this class lists all the Course Providers details which is not already added by the tutor required by the Tutors to add employment details, 
+ * This class returns the list of tutors for given Course Provider 
  * further it implements ICommand interface
  * @author CW
  *
@@ -36,16 +37,15 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 
 		try {
 			
-			String tutorCode = helper.getParameter("tutorCode");
-			if(Validator.isNotEmpty(tutorCode)){
+			String courseProviderCode = helper.getParameter("courseProviderCode");
+			if(Validator.isNotEmpty(courseProviderCode)){
 				
 				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();				
-				Collection<Collection<String>> allFeaturedCourseProviderList = featuredCourseProviders.getFCPListForTutorToSelect(tutorCode, 
-						AccountType.getAccountType("FEATURED_COURSE_PROVIDER"));
+				Collection<Collection<String>> allEmploymentTutorsList = featuredCourseProviders.getTutorsListOfCourseprovider(courseProviderCode);
 				
-				view.setCollection(allFeaturedCourseProviderList);		
+				view.setCollection(allEmploymentTutorsList);		
 			}else{
-				message = "Tutor Code is empty. Cannot view employers list ...";
+				message = "Course Provider Code is empty. Cannot view tutor's list ...";
 			}
 			
 		} catch (Exception exception) {
