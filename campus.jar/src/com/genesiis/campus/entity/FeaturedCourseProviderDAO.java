@@ -15,6 +15,7 @@ package com.genesiis.campus.entity;
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments & modified getFCPListForTutorToSelect method's log message
 //20170406 CW c157-add-tutor-employment-details-cw add findById method
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getFCPListForTutorToSelect method to get account type as a parameter
+//20170420 CW c159-courseprovider-accept-tutor-request-cw Add getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -310,6 +311,53 @@ public class FeaturedCourseProviderDAO implements ICrud {
 	public Collection<Collection<String>> getFCPListForTutorToSelect(String tutorCode, int accountType) throws SQLException, Exception {
 		
 		final Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+					
+		StringBuilder queryBuilder = new StringBuilder("SELECT CP.CODE CODE, CP.NAME NAME FROM CAMPUS.COURSEPROVIDER CP ");
+		queryBuilder.append("WHERE CP.ACCOUNTTYPE = ? ");
+		queryBuilder.append("AND CP.CODE NOT IN (SELECT EMP.COURSEPROVIDER FROM CAMPUS.EMPLOYMENT EMP WHERE EMP.TUTOR = ? )");		
+		queryBuilder.append("ORDER BY NAME");
+			
+		try {
+			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(queryBuilder.toString());
+			stmt.setInt(1, accountType);
+			stmt.setString(2, tutorCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleFeaturedCourseProviderList = new ArrayList<String>();		
+												
+				singleFeaturedCourseProviderList.add(rs.getString("CODE"));
+				singleFeaturedCourseProviderList.add(rs.getString("NAME"));
+
+				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
+			}		
+		} catch (SQLException sqlException) {
+			log.info("getFCPListForTutorToSelect(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getFCPListForTutorToSelect(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allFeaturedCourseProviderList;
+
+	}
+	
+
+	/**
+	 * Returns the Tutors list of given course provider.
+	 * @author Chinthaka 
+	 * @return Returns a collection of collection consists the Tutors list of given course provider
+	 */
+	public Collection<Collection<String>> getTutorsListOfCourseprovider(String courseProviderCode) throws SQLException, Exception {
+		
+		final Collection<Collection<String>> allEmploymentTutorsList = new ArrayList<Collection<String>>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
