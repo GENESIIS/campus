@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 /*20170418 c54-report-course-stats-MP-dj created CmdReportCourseStats
  *20170420 c54-report-course-stats-MP-dj create:method generateCourseStatsView().
+ *20170420 c54-report-course-stats-MP-dj create:method listProgrammeWiseProvider() and generateReportResults().
  * 
  * */
 
@@ -28,14 +29,16 @@ public class CmdReportCourseStats implements ICommand{
 	public IView execute(IDataHelper helper, IView iView) throws SQLException,
 			Exception {
 		try {			
-			String cco = helper.getParameter("CCO");
-			
+			String cco = helper.getParameter("CCO");			
 			switch (Operation.getOperation(cco)) {
 			case SEARCH_VIEW_COURSE_STATS:
 				generateCourseStatsView(helper);
-				break;			
+				break;
+			case LIST_PROGRAMME_WISE_COURSE_PROVIDER:
+				listProgrammeWiseProvider(helper);				
+				break;
 			case REPORT_COURSE_STATS:	
-				//generateReportResults(helper);
+				generateReportResults(helper);
 				break;			
 			default:
 				break;
@@ -47,7 +50,8 @@ public class CmdReportCourseStats implements ICommand{
 		return iView;
 	}
 	
-	
+
+
 	/** Retrieve course providers for drop down list in search view.
 	 * @author dumani DJ
 	 * @param helper -IDataHelper object
@@ -63,6 +67,18 @@ public class CmdReportCourseStats implements ICommand{
 			log.error("generateCourseStatsView() : Exception " + exception);
 			throw exception;
 		}
+	}
+	
+	
+	private void listProgrammeWiseProvider(IDataHelper helper) {
+		//final Collection<Collection<String>> programmeList=new DistrictDAOImpl().getAllDistricts();
+		//helper.setAttribute("programmeList", programmeList);
+		
+	}
+	
+	private void generateReportResults(IDataHelper helper) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
