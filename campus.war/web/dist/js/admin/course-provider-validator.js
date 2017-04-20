@@ -452,7 +452,8 @@ function vaidateCourseProviderDeatils() {
 	}
 
 	// validation course provider account details only for featured course provider
-	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
+	var accountType = $('input[name=courseProvider]:checked').val();
+	if (accountType === "FEATURED_COURSE_PROVIDER") {
 		if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 			setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 			flag = false;
