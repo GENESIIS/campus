@@ -143,7 +143,6 @@ function providerUsernameValidation() {
 	var flag = false;
 	var integerPattern = /^[0-9]+$/; //pattern to validate for numbers
 
-//	var selectedUsername = document.getElementById('providerUsername').value;
 	var selectedUsername = $("#providerUsername").val();
 	var userEmail = document.getElementById('providerEmail').value;
 	var message = "Error";
@@ -418,7 +417,9 @@ function vaidateCourseProviderDeatils() {
 		flag = false;	
 	}
 
-	flag  = validateFormURL(weblink, '#errorWebLink', '#webLinkDiv', 0, 255);
+	if(isValidMinMaxLength(link, 1, 240)){
+		flag  = validateFormURL(weblink, '#errorWebLink', '#webLinkDiv', 0, 255);
+	}
 	flag  = validateFormURL(facebook, '#errorFacebook', '#facebookDiv', 0, 255);
 	flag  = validateFormURL(linkdedIn, '#errorLinkedIn', '#linkdedInDiv', 0, 255);
 	flag = validateFormURL(twitter, '#errorTwitter', '#twitterDiv', 0, 255);
