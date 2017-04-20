@@ -223,17 +223,21 @@ public class Validator {
 				errorString.add("Land number 1 ");
 			}
 			
-			if(isValidLength(helper.getParameter("land2"), 12, 0) && !validNumber(helper.getParameter("land2"))){
-				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
-				errorString.add("land number 2");
-			}
+//			if(isValidLength(helper.getParameter("land2"), 12, 0) && !validNumber(helper.getParameter("land2"))){
+//				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
+//				errorString.add("land number 2");
+//			}
 			
 			if( !isValidLength(helper.getParameter("land2"), 12, 0)){
 				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 12 characters).");
 				errorString.add("land number 2");
 			}
+			if(isValidLength(helper.getParameter("land2"), 12, 1) && !validNumber(helper.getParameter("land2"))){
+				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed");
+				errorString.add("land number 2");
+			}
 			
-			if(isValidLength(helper.getParameter("fax"), 12, 0) && !validNumber(helper.getParameter("fax"))){
+			if(isValidLength(helper.getParameter("fax"), 12, 1) && !validNumber(helper.getParameter("fax"))){
 				helper.setAttribute("errorFax", "Fax number is invalid. Only numbers allowed.");
 				errorString.add("fax number");
 			}
