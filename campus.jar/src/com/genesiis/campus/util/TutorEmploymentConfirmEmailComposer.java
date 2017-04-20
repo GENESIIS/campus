@@ -5,6 +5,7 @@ package com.genesiis.campus.util;
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw add setccBccEmailAddresses method & modified setEnvironment method to use setccBccEmailAddresses method
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw add getBccEmailAddreses, getCcEmailAddreses methods
 					// modified formatEmailInstance method to pass getCcEmailAddreses(), getBccEmailAddreses() as parameters to GeneralMail constructor
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw modified getEmailBody method to create correct email format.
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 	private IEmail generalEmail;
 	private EmailDispenser emailDispenser;
 	private String nameOfTutor;
+	private String courseproviderLoginUrl;
+	private String personBasedOnGender;
 	
 /**
  * No Argument Constructor for the class
@@ -53,8 +56,10 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
  * this will assign the nameOfTutor in order to use later to send the email
  * @author CHINTHAKA
  */
-	public TutorEmploymentConfirmEmailComposer(String nameOfTutor){
+	public TutorEmploymentConfirmEmailComposer(String nameOfTutor, String courseproviderLoginUrl, String personBasedOnGender){ 
 		this.nameOfTutor = nameOfTutor;
+		this.courseproviderLoginUrl = courseproviderLoginUrl;
+		this.personBasedOnGender = personBasedOnGender;
 	}
 
 	@Override
@@ -122,9 +127,12 @@ public class TutorEmploymentConfirmEmailComposer implements IEmailComposer, Emai
 		StringBuilder result = new StringBuilder();		
 		
 		result.append(System.getProperty("line.separator"));
+		result.append(nameOfTutor+" ");
 		result.append(SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY1.getMailBody());
-		result.append(" "+nameOfTutor+" ");
+		result.append(" "+personBasedOnGender+" ");
 		result.append(SystemEmail.SEND_EMPLOYMENT_CONFIRM_EMAIL_BODY2.getMailBody());
+		result.append(System.getProperty("line.separator"));
+		result.append(courseproviderLoginUrl);
 		result.append(System.getProperty("line.separator"));
 		
 		return result.toString();

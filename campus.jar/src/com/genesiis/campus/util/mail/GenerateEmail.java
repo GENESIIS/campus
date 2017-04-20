@@ -10,6 +10,7 @@ package com.genesiis.campus.util.mail;
 //20170418 CW c157-add-tutor-employment-details-cw modified formatEmailInstance method call to send null String
 //20170419 CW c157-add-tutor-employment-details-cw modified sendTutorEmploymentConfirmEmail method & add bccEmailCount variable
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmail method to remove un wanted commented lines & changed error log method name
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod & add sendTutorEmploymentConfirmEmail as a parameter
 
 import com.genesiis.campus.util.TutorEmploymentConfirmEmailComposer;
 import com.genesiis.campus.validation.SystemEmail;
@@ -37,11 +38,11 @@ public class GenerateEmail {
 	 * @return String
 	 * @throws IllegalArgumentException & Exception in any case email sending fails
 	 */
-	public String sendTutorEmploymentConfirmEmail(String nameOfTutor, ArrayList<String> receiverEmailList, String bccEmail) 
+	public String sendTutorEmploymentConfirmEmail(String nameOfTutor, ArrayList<String> receiverEmailList, String bccEmail, String courseproviderLoginUrl, String personBasedOnGender) 
 			throws IllegalArgumentException, Exception {
 		int status;
 		try {
-			IEmailComposer tutorEmployentConfirmEmailComposer = new TutorEmploymentConfirmEmailComposer(nameOfTutor);
+			IEmailComposer tutorEmployentConfirmEmailComposer = new TutorEmploymentConfirmEmailComposer(nameOfTutor, courseproviderLoginUrl, personBasedOnGender);
 			String bccEmailCount = "1"; // only one email address to bcc. 
 						
 			//Used the same email address send to the method as the senders email address & receivers email address. 
