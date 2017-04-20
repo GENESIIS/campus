@@ -30,6 +30,7 @@
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
  * 			loading resolved using response.successCode === undefined loadBanners().
  * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
+ * 20170420 DN c83-admin-manage-banner-update-banner-info-dn . onclick event on adminAddNewBanner element opens a page on new tab -initialized.
  */
 
 var theNewScript = document.createElement("script");
@@ -64,9 +65,8 @@ $(document).ready(function(){
   * by the Admin
   */
 	$('#adminAddNewBanner').click(function(){
-		if (confirm('Do You Want to Proceed ?'))
-		window.location.href="/dist/partials/banner/bannerManager.jsp";
-		
+		//if (confirm('Do You Want to Proceed ?'))		
+		window.open("/dist/partials/banner/bannerManager.jsp", '_blank');
 	});
 	
 	/**
@@ -318,7 +318,7 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
 							 "</form><div class='delete-check'><input type='checkbox'></div></td>";
-			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+"' alt='banner-Image'></div></td></tr>"; 
+			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+'?'+Math.random()+"' alt='banner-Image'></div></td></tr>"; 
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
 			 
