@@ -14,6 +14,8 @@ package com.genesiis.campus.command;
 //20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw modified employmentDetails variable creation place
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw create courseproviderLoginUrl value.
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod call & add sendTutorEmploymentConfirmEmail as a parameter
+				//add gender into getListOfEmailToSendEmploymentRequest method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -74,21 +76,33 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 				
 				final Collection<Collection<String>> allTutorCpEmailList = TutorDAO.getListOfEmailToSendEmploymentRequest(employerCode, "SITE_ADMIN_EMAIL", tutorCode);
 				String nameOfTutor = null;
+				String gender = null;;
 				ArrayList<String> receiverEmailList = new ArrayList<String>();
 				String bccEmail = null;
 				
 				for(Collection<String> emailDetails : allTutorCpEmailList){
 					if(emailDetails != null || emailDetails.size() != 0){
 						nameOfTutor = emailDetails.toArray()[0].toString(); // name
-						receiverEmailList.add(emailDetails.toArray()[1].toString()); // receivers email address list
-						bccEmail = emailDetails.toArray()[2].toString(); // Bcc email address
+						gender = emailDetails.toArray()[1].toString(); // gender
+						receiverEmailList.add(emailDetails.toArray()[2].toString()); // receivers email address list
+						bccEmail = emailDetails.toArray()[3].toString(); // Bcc email address
+					}
+				}
+				
+				String personBasedOnGender = null;
+				
+				if(!Validator.isEmptyOrHavingSpace(gender)){
+					if(gender.equals("1")){
+						personBasedOnGender = "his";
+					}if(gender.equals("2")){
+						personBasedOnGender = "her";
 					}
 				}
 				
 				String courseproviderLoginUrl = (helper.getUrl()).replace((helper.getUri()), "") + "/dist/partials/courseprovider/login.jsp";
 				 
 				GenerateEmail emailAtUpdate = new GenerateEmail();
-				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail); //send email
+				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail, courseproviderLoginUrl, personBasedOnGender); //send email
 			}
 			
 			if(Validator.isNotEmpty(tutorCode)){
