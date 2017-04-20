@@ -30,6 +30,10 @@
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
  * 			loading resolved using response.successCode === undefined loadBanners().
  * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
+ * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selecting / deselecting the check box on 'Select All'check box change has been coded
+ * 			Added on click function to activate / deactivate banner records and implemented passSelectedBannersToServer().
+ * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented toggle show of activate and Deactivate banners buttons based on the selected radio button
+ * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added. inactiveBanner on click if no records are selected add an exist statement.
  * 20170420 DN c83-admin-manage-banner-update-banner-info-dn . onclick event on adminAddNewBanner element opens a page on new tab -initialized.
  */
 
@@ -77,6 +81,15 @@ $(document).ready(function(){
 	$('.radio-block').change(function(event){
 		event.preventDefault();
 		loadBanners();
+		if($('input:radio[name=bannerStatus]:checked').val()=='1'){
+			$('#inactiveBanner').show();
+			$('#activeBanner').hide();
+		} else{ // going to get inactive banners then need the Activate button to be displayed
+			$('#activeBanner').show();
+			$('#inactiveBanner').hide();
+		}
+			
+		
 	});
 });
 
@@ -92,6 +105,15 @@ $(document).ready(function(){
 function loadBanners(){
 	if(!validateDisplayingBanners())
 		return false;
+	
+	if($('input:radio[name=bannerStatus]:checked').val()=='1'){
+		$('#inactiveBanner').show();
+		$('#activeBanner').hide();
+	}else { // going to get inactive banners then need the Activate button to be displayed
+		$('#activeBanner').show();
+		$('#inactiveBanner').hide();
+	}
+	
 	$.ajax({
 		type:'POST',
 		url:adminControllerUrl,
@@ -317,8 +339,9 @@ function populateBannerTable(allBannerRecords,bannerWarPath){
 								"<input type='hidden' id='pageName"+rowNumber+"' name='pageName' value='"+pageName+"'>"+
 								"<input type='hidden' id='pageCode"+rowNumber+"' name='pageCode' value='"+pageCode+"'>"+
 								"<input type='hidden' id='rowNumber"+rowNumber+"' name='rowNumber' value='"+rowNumber+"'>"+
-							 "</form><div class='delete-check'><input type='checkbox'></div></td>";
-			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+'?'+Math.random()+"' alt='banner-Image'></div></td></tr>"; 
+
+							 "</form><div class='delete-check'><input class='check-one-by-one' type='checkbox' id='"+bannerCode+"'><label for='"+bannerCode+"'></label></div></td>";
+			markUp = markUp +"<td class='banner-img'><div class='img-sample'><img id='bnnerImage"+rowNumber+"'src='"+url+'?'+Math.random()+"' alt='banner-Image'></div></td></tr>";
 			jQuery("table").css('overflow-x','auto');
 			jQuery("table").append(markUp);
 			 
@@ -376,4 +399,120 @@ $(document).on('keypress','#bannerCodeFilter',function(event){
 	//event.preventDefault();
 	if(event.keyCode==13)
 		loadBanners();
+
+});
+
+/**
+ * getSelectedBanners Method returns the id value of the<br>
+ * checked check boxes
+ * @author dushantha DN
+ * @returns Array consisiting ids of the selected check boxes
+ */
+function getSelectedBanners(){
+	var selectedIds=$('.check-one-by-one:checked').map(function(){
+		 return this.id;
+	}).get();
+	
+	return selectedIds;
+} 
+
+
+/**
+ * This click event allows all the selected banners to change its
+ * status from active to inactive status. It acts as a bulk inactivation
+ * function
+ * @author dushantha DN
+ */
+$(document).on('click','#inactiveBanner',function(event){
+	event.preventDefault();
+ // dedicated function call to capture all the selected records.
+	var selectedBanners =getSelectedBanners(); 
+	if(selectedBanners.length===0){
+		var msg = "None of the records have been selected. Please select one or more records ";
+		displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		return null;
+	}
+		
+ // ajax call to transfer the data to server 
+	passSelectedBannersToServer("DACT_BNR",selectedBanners,adminControllerUrl);
+	
+});
+
+
+/**
+ * This click event allows all the selected banners to change its
+ * status from inactive to active status. It acts as a bulk inactivation
+ * function
+ * @author dushantha DN
+ */
+$(document).on('click','#activeBanner',function(event){
+	event.preventDefault();
+ // dedicated function call to capture all the selected records.
+	var selectedBanners =getSelectedBanners(); 
+	if(selectedBanners.length===0){
+		var msg = "None of the records have been selected. Please select one or more records ";
+		displayLabelMessage('messagePopUp','displayLabel','red',msg);
+	}
+		
+ // ajax call to transfer the data to server 
+	passSelectedBannersToServer("ACT_BNR",selectedBanners,adminControllerUrl);
+	
+});
+
+
+
+/**
+ * method passes the selected banner codes to the server <br>
+ * and change the banner state according to the command string
+ * Then it updates the banner record table accordingly
+ * @author dushantha DN
+ * @param 
+ * command command String whcih either activate or deactvate the banner
+ * @param
+ * selectedBanners : It is an array containnig all the banner codes (ids of the check boxes)
+ * @param
+ * urlToDirect : It is the url of the servlet or the destination to where the request passes
+ * @return 
+ * 	method is a mutator function and does not return anything.
+ */
+function passSelectedBannersToServer(command,selectedBanners,urlToDirect){
+	$.ajax({
+		type:'POST',
+		url:urlToDirect,
+		data:{
+			CCO					:command,
+			selectedBannerCode	:JSON.stringify(selectedBanners)
+		},
+		dataType:'json',
+		success:function(response){
+			// call the function that populates the table based on supplied data
+			// if the server reply is a success
+			var cssColour='red';
+			if(response.successCode===1 ||response.successCode === undefined ){
+				cssColour='green';
+				if(response.result === "NO-DATA"||response.result.length===0)
+					displayLabelMessage('messagePopUp','displayLabel',cssColour,response.message);
+					loadBanners();
+			} else {
+				displayLabelMessage('messagePopUp','displayLabel',cssColour,response.message);
+			}
+		},
+		error:function(allBanners,error,errorThrown){
+			var msg = ajaxCallErorMessage(allBanners,error,errorThrown);
+			displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		}
+		
+	});
+}
+
+/**
+ * The event trigers and select all the banner records by selecting<br>
+ *  all the check boxes each belongs to a record.
+ *  If the check box is deselected then the individual check box for each
+ *  Record will be unselected
+ */
+$(document).on('change','#all-delete',function(event){
+	//if all-delete selected select all records else deselect all
+	var isCheckBoxSelected = $('#all-delete').is(':checked');
+	$('.check-one-by-one').prop('checked',isCheckBoxSelected);		
 });

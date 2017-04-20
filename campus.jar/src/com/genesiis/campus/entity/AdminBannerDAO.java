@@ -33,7 +33,8 @@ package com.genesiis.campus.entity;
  * 			   add the missing "break" statement for the getAplicationStatus()s' case statement.
  * 20170324 DN c83-admin-manage-banner-update-banner-info-dn implemented the update(Object object) method to update the banner record.
  * 20170327 DN c83-admin-manage-banner-update-banner-info-dn update(Object) method has been changed to correct the syntax errors.
- *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method. 
+ *             Commented out the  [CRTON],[CRTBY] fields in the update query of update(Object object) method.
+ * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string. 
  * 20170403 DN c86-admin-manage-banner-search-banner-dn getAll(Object object) method amended to the bannercode filter in the sql query string.
  * 20170405 DN c83-admin-manage-banner-update-banner-info-dn.The method addBannerRecordInOneTransAction() include the banner ISACTIVE int value in the sql query.
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn getAll(Object object)the sql query has been amended to return the result set in ascending order 
