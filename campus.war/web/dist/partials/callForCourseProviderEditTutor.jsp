@@ -1,4 +1,6 @@
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - created callForCourseProviderEditTutor jsp file-->
+<!-- 20170420 c159-courseprovider-accept-tutor-request-cw - add courseProviderCode text item-->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,14 +13,14 @@
 	<form action="/TutorController" method="post">
 		<table align="center">
 			<tr>
-				<td>Tutor Code <span id="tutorCode"></span></td>
-				<td><input type="text" name="tutorCode"
-					id="tutorCode" maxlength="10"/></td>
+				<td>Course Provider Code <span id="tutorCode"></span></td>
+				<td><input type="text" name="courseProviderCode"
+					id="courseProviderCode" maxlength="10"/></td>
 			</tr>
 
 			<tr>
 				<td>
-					<button type="submit" name="CCO" id="CCO" value="VIEW_CP_UPDATE_TUTOR_EMPLOYMENT"
+					<button type="submit" name="CCO" id="CCO" value="VIEW_TUTORS_FOR_CP"
 						class="btn btn-info navbar-btn">View Tutor</button>
 				</td>
 			</tr>
