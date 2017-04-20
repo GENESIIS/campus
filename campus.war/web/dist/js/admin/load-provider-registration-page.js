@@ -440,6 +440,7 @@ function landPhoneNubmerHelper() {
 		var varId = $(errorMessageList[i]).attr('id');
 		varId = '#' + varId;
 		$(varId).text("");
+		$(varId).parent().removeClass("has-error");
 		
 	}
 
@@ -472,10 +473,10 @@ function landPhoneNubmerHelper() {
 			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
 			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
 			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");		
-			if(isempty(fax)){ // show error message if fax number is not empty
+			if(isValidMinMaxLength(fax, 1, 20)){ // show error message if fax number is not empty
 				setErrorMessage('#faxDiv', '#errorFax', "Area code is empty or invalid.");
 			}
-			if(isempty(land2)){ // show error message if land phone number 2 is not empty
+			if(isValidMinMaxLength(land2, 1, 20)){ // show error message if land phone number 2 is not empty
 				setErrorMessage('#land2Div', '#errorLand2', "Area code is empty or invalid.");
 			}
 			
@@ -665,6 +666,7 @@ function saveCourseProvider() {
 									}
 									clearToolTip("#uniquePrefixDiv");
 									clearToolTip("#usernameDiv");
+									publishPrograms();
 									
 									}
 								
