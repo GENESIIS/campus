@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
 //20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
 //20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw modified employmentDetails variable creation place
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw create courseproviderLoginUrl value.
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -29,6 +30,8 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * this class used to add the tutor employment details to the database & send an email to the Course provide & Admin to approve the request. 
@@ -81,7 +84,9 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 						bccEmail = emailDetails.toArray()[2].toString(); // Bcc email address
 					}
 				}
-
+				
+				String courseproviderLoginUrl = (helper.getUrl()).replace((helper.getUri()), "") + "/dist/partials/courseprovider/login.jsp";
+				 
 				GenerateEmail emailAtUpdate = new GenerateEmail();
 				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail); //send email
 			}
