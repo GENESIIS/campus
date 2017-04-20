@@ -35,7 +35,8 @@
 //20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
 //				modified event on town input methods, clear success tool tip styles if the course provider registered, added error alert on AJAX call errors
 //20170420 JH c141-ui-integration-for-add-course-provider landPhoneNumberHelper() modified to clear previous error tooltips due to invalid area code when a valid area code is given,
-//				removed unrelated comments in country and town display methods
+//				removed unrelated comments in country and town display methods, added resetAccordion() method to reset the accordion color to default color and saveCourseProvider() method edited to 
+//				use resetAccordion()
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -580,7 +581,7 @@ function saveCourseProvider() {
 	var flag = true;
 
 	// clear all previous error messages
-	for (var i = 0; i <= errorMessageList.length; i++) {
+	for (var i = 0; i < errorMessageList.length; i++) {
 		var varId = $(errorMessageList[i]).attr('id');
 		varId = '#' + varId;
 		clearToolTip(varId);
@@ -590,6 +591,13 @@ function saveCourseProvider() {
 	clearToolTip('#uniquePrefixDiv');
 	clearToolTip('#usernameDiv');
 	
+	
+	//reset the accodion styles to default color
+	resetAccordion("#accountInfoSection");
+	resetAccordion("#generalInfoSection");
+	resetAccordion("#contactInfoSection");
+	resetAccordion("#socialMedialSection");
+	resetAccordion("#adminInfoSection");	
 	
 	// validation course provider username only for featured course provider
 	var courseProvider = $("#courseProvider").val();
@@ -668,6 +676,13 @@ function saveCourseProvider() {
 									clearToolTip("#usernameDiv");
 									publishPrograms();
 									
+									//clear accordions to reset the page
+									changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+									changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
+									changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
+									
 									}
 								
 							}
@@ -683,21 +698,27 @@ function saveCourseProvider() {
 			document.getElementById("userMessage").style.display = "block";
 			errorAlert("#userMessage");
 			$("#userMessage").html("One or more fields are invalid.");
+			
+			//highlight accordions
+			changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+			changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+			changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+			changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
+			changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 		}
 	}else{
 		document.getElementById("userMessage").style.display = "block";
 		errorAlert("#userMessage");
 		$("#userMessage").html(message);
+		
+		// highlight accordions
+		changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+		changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+		resetAccordion("#contactInfoSection");
+		resetAccordion("#socialMedialSection");
+		resetAccordion("#adminInfoSection");
 	}
 	
-	
-	
-	// highlight accordions
-	changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
-	changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
-	changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
-	changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
-	changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 }
 
 /**
@@ -806,10 +827,18 @@ function setSuccessMessage(successElement, successToolTip, message){
 function changeAccordion(element, accordion){
 	var errorList = $(accordion).find(".has-error");
 	
-//	var errorList =   $("adminInfoSectionDiv .has-error").length ;
 	if (errorList.length !== 0) {
 		$(element).css("background", "#e4aaaa");
 	}else{
 		$(element).css("background", "#adc8e8");
 	}
+}
+
+/**
+ * Created to reset the accordion styles to default color. 
+ * @param element
+ * @author JH
+ */
+function resetAccordion(element){
+	$(element).css("background", "#adc8e8");
 }
