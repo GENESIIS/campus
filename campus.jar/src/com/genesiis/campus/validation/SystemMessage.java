@@ -19,7 +19,7 @@ package com.genesiis.campus.validation;
 //20170301 c37-tutor-update-tutor-profile-cw-added TOWN_CODE_NOT_CHANGED
 //20170323 c37-tutor-update-tutor-profile-cw modified EMPTYCONFIRMPASSWORD message
 //20170324 CW c37-tutor-update-tutor-profile-cw modify old Password to Current Password
-
+//20170417 CW c158-send-email-tutor-employment-confirmation-cw copied SUCCESSFULL_CREATTION, MAIL_SUCCESS_TUTOR, MAIL_UNSUCCESS, UPDATED_BUT_MAIL_UNSUCCESS, UNKNOWN command from c103 issue
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -70,6 +70,11 @@ public enum SystemMessage {
 	MYSPACEERROR("MySpace link error."),	
 	WHATSAPPERROR("WhatsApp number error."),	
 	VIBERERROR("Viber error."),	
+	SUCCESSFULL_CREATTION("Your User account is successfully created. "),
+	MAIL_SUCCESS_TUTOR("Mail successfully submitted to Tutor's Email..."),
+	MAIL_UNSUCCESS("Mail Sending failed"),
+	UPDATED_BUT_MAIL_UNSUCCESS("Successfully updated, but email Sending failed..."),
+	UNKNOWN(""),
 	EMAIL_USED("E mail already used to create a tutor profile.");
 	
 	private String message;

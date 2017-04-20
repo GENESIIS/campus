@@ -8,10 +8,13 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements
 //20170404 CW c157-add-tutor-employment-details-cw removed un used import statements
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
+//20170418 CW c158-send-email-tutor-employment-confirmation-cw modified getFCPListForTutorToSelect method call to pass Account type
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified execute method & remove un necessary variable declarations & clean the code
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -44,10 +47,10 @@ public class CmdListCourseProvidersForTutors implements ICommand  {
 			
 			String tutorCode = helper.getParameter("tutorCode");
 			if(Validator.isNotEmpty(tutorCode)){
-				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();
-				Collection<Collection<String>> allFeaturedCourseProviderList = new ArrayList<Collection<String>>();
 				
-				allFeaturedCourseProviderList = featuredCourseProviders.getFCPListForTutorToSelect(tutorCode);
+				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();				
+				Collection<Collection<String>> allFeaturedCourseProviderList = featuredCourseProviders.getFCPListForTutorToSelect(tutorCode, 
+						AccountType.getAccountType("FEATURED_COURSE_PROVIDER"));
 				
 				view.setCollection(allFeaturedCourseProviderList);		
 			}else{
