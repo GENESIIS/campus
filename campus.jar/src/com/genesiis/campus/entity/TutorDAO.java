@@ -36,6 +36,7 @@ package com.genesiis.campus.entity;
 //20170307 CW c37-tutor-update-tutor-profile-cw modified update() method query to query by code in where clause.
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw removed password selecting from findById
 				// add getListOfEmailToSendEmploymentRequest method
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw add gender into getListOfEmailToSendEmploymentRequest method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -396,7 +397,7 @@ public class TutorDAO implements ICrud {
 		try{
 			conn = ConnectionManager.getConnection();
 			
-			String query = "SELECT T.FIRSTNAME +' '+ T.LASTNAME NAME , CPA.EMAIL EMAIL, SC.VALUE1 SYSEMAIL FROM CAMPUS.COURSEPROVIDERACCOUNT CPA, CAMPUS.SYSTEMCONFIG SC, CAMPUS.TUTOR T "
+			String query = "SELECT T.FIRSTNAME +' '+ T.LASTNAME NAME, T.GENDER GENDER , CPA.EMAIL EMAIL, SC.VALUE1 SYSEMAIL FROM CAMPUS.COURSEPROVIDERACCOUNT CPA, CAMPUS.SYSTEMCONFIG SC, CAMPUS.TUTOR T "
 					+ "WHERE CPA.COURSEPROVIDER = ? AND SC.SYSTEMCONFIGCODE = ? AND T.CODE = ?";
 
 			stmt = conn.prepareStatement(query);
@@ -408,6 +409,7 @@ public class TutorDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> TutorCpEmailList = new ArrayList<String>();
 				TutorCpEmailList.add(rs.getString("NAME"));
+				TutorCpEmailList.add(rs.getString("GENDER"));
 				TutorCpEmailList.add(rs.getString("EMAIL"));
 				TutorCpEmailList.add(rs.getString("SYSEMAIL"));
 				allTutorCpEmailList.add(TutorCpEmailList);
