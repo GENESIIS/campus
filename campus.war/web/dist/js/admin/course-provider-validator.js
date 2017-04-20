@@ -20,6 +20,7 @@
 //20170404 JH c141-ui-for-add-course-provider created providerPasswordValidation() method to validate password
 //20170405 JH c141-ui-for-add-course-provider vaidateCourseProviderDeatils(): method changed to validate account details only for featured course provider
 //20170417 JH c141-ui-for-add-course-provider validateCourseProviderDetails(): concatenate weblink prefix to the weblink input value
+//20140420 JH c141-ui-for-add-course-provider validateCourseProviderDetails(): removed validation for area code 1 and are code 2 as they are disabled
 
 window.prefixFlag = true;
 window.usernameFlag = true;
@@ -367,20 +368,20 @@ function vaidateCourseProviderDeatils() {
 		setErrorMessage('#land1Div', '#errorLand1', "Invalid Land phone number.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(fax, 0, 20) || !isPatternMatch(integerPattern, fax)) {
-		setErrorMessage('#faxDiv', '#errorFax', "Fax number invalid or exceed the length (maximum 20 characters).");
+	if (isValidMinMaxLength(fax, 1, 20) && !isPatternMatch(integerPattern, fax)) {
+		setErrorMessage('#faxDiv', '#errorFax', "Fax number invalid .");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(land2, 0, 20) || !isPatternMatch(integerPattern, land2)) {
-		setErrorMessage('#land2Div', '#errorLand2', "Land phone number 2 is not valid or exceed the length (maximum 20 characters).");
+	if (!isValidMinMaxLength(fax, 0, 20)) {
+		setErrorMessage('#faxDiv', '#errorFax', "Fax number exceed the  maximum length of 20 characters.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(areaCode1, 0, 20) && !isPatternMatch(integerPattern, areaCode1)) {
-		setErrorMessage('#land1Div', '#errorLand1', "Area code is invalid or exceed the length (maximum 20 chracters). ");
+	if (isValidMinMaxLength(land2, 1, 20) && !isPatternMatch(integerPattern, land2)) {
+		setErrorMessage('#land2Div', '#errorLand2', "Land phone number 2 is not valid.");
 		flag = false;
 	}
-	if (!isValidMinMaxLength(areaCode2, 0, 20) && !isPatternMatch(integerPattern, areaCode2)) {
-		setErrorMessage('#land2Div', '#errorLand2', "Area code is invalid or exceed the length (maximum 20 chracters). ");
+	if (!isValidMinMaxLength(land2, 0, 20)) {
+		setErrorMessage('#land2Div', '#errorLand2', "Land phone number 2 exceed the length (maximum 20 characters).");
 		flag = false;
 	}
 	if (!isValidMinMaxLength(mobile, 1, 20) || !isPatternMatch(integerPattern, mobile)) {
@@ -450,7 +451,7 @@ function vaidateCourseProviderDeatils() {
 	}
 
 	// validation course provider account details only for featured course provider
-	if (courseProvider === "FEATURED_COURSE_PROVIDER") {
+	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
 		if (!isValidMinMaxLength(providerPrivateName, 1, 100)) {
 			setErrorMessage('#providerPrivateNameDiv', '#errorPrivateName', "Personal name is empty or too long.");
 			flag = false;
