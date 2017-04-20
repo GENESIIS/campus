@@ -21,6 +21,7 @@ package com.genesiis.campus.validation;
 //20170405 JH c141-ui-integration-for-add-course-provider validateCourseProvider(IDataHelper) changes due to element id changes after UI integration
 //20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length changes, password validation methods changed, email address
 //				validation pattern changed, added method validNumber() to validate a string parameter for numbers
+//20170420 JH c141-ui-integration-for-add-course-provider validateCourseProvider(): fax number validation method changed to separately validate for null and integer
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -228,12 +229,16 @@ public class Validator {
 			}
 			
 			if( !isValidLength(helper.getParameter("land2"), 12, 0)){
-				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 212 characters).");
+				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 12 characters).");
 				errorString.add("land number 2");
 			}
 			
-			if(!isValidLength(helper.getParameter("fax"), 12, 0) || !validNumber(helper.getParameter("fax"))){
-				helper.setAttribute("errorFax", "Fax number is invalid or too long (max 12 characters). Only numbers allowed.");
+			if(isValidLength(helper.getParameter("fax"), 12, 0) && !validNumber(helper.getParameter("fax"))){
+				helper.setAttribute("errorFax", "Fax number is invalid. Only numbers allowed.");
+				errorString.add("fax number");
+			}
+			if(!isValidLength(helper.getParameter("fax"), 12, 0)){
+				helper.setAttribute("errorFax", "Fax number is too long (max 12 characters).");
 				errorString.add("fax number");
 			}
 			
