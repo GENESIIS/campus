@@ -3,6 +3,7 @@ package com.genesiis.campus.util;
 //20161024 DN c10-contacting-us-page created initial version
 //20161025 CM c13-Display course details add VIEW_PROGRAMME enum element related entry
 //20170130 CW c36-add-tutor-information re-organise the import statements.
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw create getUrl, getUri methods 
 
 
 import com.genesiis.campus.command.ICommand;
@@ -193,6 +194,22 @@ public class DataHelper implements IDataHelper {
 	public String getHeader(String name) {
 		return request.getHeader(name);
 
+	}
+
+	/**
+	 * This Method will return the requested URL
+	 */
+	@Override
+	public String getUrl() {
+		return ((HttpServletRequest)request).getRequestURL().toString();
+	}
+
+	/**
+	 * This Method will return the requested URI
+	 */
+	@Override
+	public String getUri() {
+		return ((HttpServletRequest)request).getRequestURI().toString();
 	}
 
 }
