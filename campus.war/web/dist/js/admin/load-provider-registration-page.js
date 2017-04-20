@@ -34,6 +34,7 @@
 //20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
 //20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
 //				modified event on town input methods, clear success tool tip styles if the course provider registered, added error alert on AJAX call errors
+//20170420 JH c141-ui-integration-for-add-course-provider landPhoneNumberHelper() modified to clear previous error tooltips due to invalid area code when a valid area code is given
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -471,7 +472,7 @@ function landPhoneNubmerHelper() {
 			displyPhoneNumber('#landNumber1', "Area code is empty or invalid.");
 			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
 			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
-			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");
+			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");		
 			if(isempty(fax)){ // show error message if fax number is not empty
 				setErrorMessage('#faxDiv', '#errorFax', "Area code is empty or invalid.");
 			}
@@ -491,6 +492,11 @@ function landPhoneNubmerHelper() {
 			setErrorMessage('#mobileDiv', '#errorMobile', "Network code is empty or invalid.");
 			
 		} if (isValidNumber(areaCode, integerPattern)) {
+			
+			//clearErrorMessage('#land1Div');
+			clearToolTip('#land1Div');
+			clearToolTip('#land2Div');
+			clearToolTip('#faxDiv');
 			
 			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
 			for (var i = 0; i< areaCodeSet.length; i++){
@@ -541,6 +547,7 @@ function landPhoneNubmerHelper() {
 
 		} if(isValidNumber(networkCode, integerPattern)){
 			
+			clearToolTip('#mobileDiv');		
 			lastMobileNumber += " " + networkCode;
 			
 			if (isValidNumber(mobile, integerPattern)) {
