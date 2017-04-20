@@ -3,6 +3,8 @@ package com.genesiis.campus.entity;
  * 20170418 DN c86-admin-manage-banner-search-banner-dn. The initial class BannerStateRole.java is created
  * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented updateBannerStatus(),getStringBannerIdConvertedToArryOfInt()
  * 				statusUpdate(),setResponseCridentials() methods and add the doc comments.
+ * 20170420 DN c86-admin-manage-banner-search-banner-dn.The method getStringBannerIdConvertedToArryOfInt() is included null checks 
+ * 				for the array that brings the banner ids for deactivation or activation.
  */
 
 import java.sql.Connection;
@@ -49,7 +51,7 @@ public class BannerStateRole {
  * @throws Exception
  */
 	public void updateBannerStatus() throws Exception{
-		
+		message="";
 		Operation op = Operation.getOperation(this.helper.getCommandCode());
 		List<Integer> bannerIdsAndActivDeactive = new ArrayList<Integer>();
 		try{
@@ -89,9 +91,20 @@ public class BannerStateRole {
 		StringBuilder strb = new StringBuilder(helper.getParameter("selectedBannerCode"));//-->["235","238","237"]
 		String[] treatedBannerIdArray = strb.substring(1,strb.length()-1).replaceAll("\"", "").toString().split(",");
 		Integer[] bannerIds =new Integer[treatedBannerIdArray.length];
+		
+		// if no id's are selected the array contains 1 element which is null
+		// avoid  it by checking for null element.
+		if(bannerIds.length==1 && treatedBannerIdArray[0]==null ){ 
+			
+			List<Integer> listId = new ArrayList<Integer>();
+			listId.add(null);
+			return listId;
+		}
+		
 		for(int x=0;x<treatedBannerIdArray.length;x++){
 			 bannerIds[x]= Integer.parseInt(treatedBannerIdArray[x]);
 		 }
+		
 		return new ArrayList<Integer>( Arrays.asList(bannerIds));
 	} catch (StringIndexOutOfBoundsException sobexp){
 		log.error("getStringBannerIdConvertedToArryOfInt() :StringIndexOutOfBoundsException "+sobexp.toString());
@@ -139,14 +152,21 @@ private void statusUpdate(List<Integer> bannerIdsAndStatus) throws SQLException,
 				int ACTIVE = bannerIdsAndStatus.get(bannerIdsAndStatus.size()-1); // last element is the active and inactive flag
 				bannerIdsAndStatus.remove(bannerIdsAndStatus.size()-1); //remove the active flag from the list
 				String bannerIds = "";
-				int totalelements = bannerIdsAndStatus.size();
-				//for(Integer id : bannerIdsAndStatus){
-				for(int x=0;x<totalelements;x++){
-					//Check this part of the code it gives errors
-					if(totalelements==1){ // zero elements in the array
-						bannerIds = bannerIds + bannerIdsAndStatus.get(x).intValue();
-					} else{
-						bannerIds = bannerIds +","+bannerIdsAndStatus.get(x).intValue();
+				int totalelements = bannerIdsAndStatus.size();				
+				int iterationCounter=0;
+				
+				if((bannerIdsAndStatus.get(0)==null)){
+					bannerIds=null;
+					
+				} else{
+					
+					while(iterationCounter<totalelements){
+						if(totalelements >= 1 && iterationCounter==0){
+							bannerIds =""+bannerIdsAndStatus.get(iterationCounter).intValue();
+						}else {
+							bannerIds = bannerIds +","+bannerIdsAndStatus.get(iterationCounter).intValue();
+						}
+						iterationCounter ++;
 					}
 				}
 				
