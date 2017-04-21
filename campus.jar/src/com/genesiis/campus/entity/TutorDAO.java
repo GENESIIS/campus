@@ -37,6 +37,7 @@ package com.genesiis.campus.entity;
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw removed password selecting from findById
 				// add getListOfEmailToSendEmploymentRequest method
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw add gender into getListOfEmailToSendEmploymentRequest method
+//20170421 CW c159-courseprovider-accept-tutor-request-cw Add getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -428,4 +429,56 @@ public class TutorDAO implements ICrud {
 		return allTutorCpEmailList;
 	}
 
+	/**
+	 * Returns the Tutors list for given course provider.
+	 * @author Chinthaka 
+	 * @return Returns a collection of collection consists the Tutors list of given course provider
+	 */
+	public Collection<Collection<String>> getTutorsListOfCourseprovider(String courseProviderCode) throws SQLException, Exception {
+		
+		final Collection<Collection<String>> allEmploymentTutorsList = new ArrayList<Collection<String>>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+									
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTOR, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, T.EMAIL, ");
+		queryBuilder.append("T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
+		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
+		queryBuilder.append("EMP.CODE EMPCODE, EMP.VARIFICATIONSTATUS VERIFSTATUS, EMP.COURSEPROVIDER CP ");
+		queryBuilder.append("FROM CAMPUS.TUTOR T ");
+		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
+		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
+		
+		try {
+			
+			conn = ConnectionManager.getConnection();						
+			stmt = conn.prepareStatement(queryBuilder.toString());
+			stmt.setString(1, courseProviderCode);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				final ArrayList<String> singleEmploymentTutorsList = new ArrayList<String>();		
+												
+				singleEmploymentTutorsList.add(rs.getString("TUTOR"));
+				singleEmploymentTutorsList.add(rs.getString("NAME"));
+				singleEmploymentTutorsList.add(rs.getString("EMAIL"));
+				singleEmploymentTutorsList.add(rs.getString("LANDNUMBER"));
+				singleEmploymentTutorsList.add(rs.getString("MOBILENUMBER"));
+				singleEmploymentTutorsList.add(rs.getString("EMPCODE"));
+				singleEmploymentTutorsList.add(rs.getString("VERIFSTATUS"));
+				singleEmploymentTutorsList.add(rs.getString("CP"));
+
+				allEmploymentTutorsList.add(singleEmploymentTutorsList);
+			}		
+		} catch (SQLException sqlException) {
+			log.info("getTutorsListOfCourseprovider(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getTutorsListOfCourseprovider(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return allEmploymentTutorsList;
+	}
 }
