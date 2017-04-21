@@ -4,6 +4,7 @@
 * 20170420 JH c135-public-display-tutor-profile-MP-jh changed the default value of DF_EMPLOYMENT_CONFIRMATIONSTATUS constraint
 *				assuming that the application status enum class for status pending is '2', added scirpts to create a new 
 *				column INITIATEDBY
+* 20170421 JH c135-public-display-tutor-profile-MP-jh chagned the table name as EMPLOYMENT in 'add add CONFIRMATIONSTATUS column' script
 */
 
 -- ------------------------------------------------------------------------
@@ -35,12 +36,12 @@ DROP COLUMN VARIFICATIONSTATUS
 
 
 /* Script one */
-ALTER TABLE CAMPUS.CONFIRMATIONSTATUS 
+ALTER TABLE CAMPUS.EMPLOYMENT 
 ADD CONFIRMATIONSTATUS INT;
 
 
 /* Script two */
-ALTER TABLE CAMPUS.CONFIRMATIONSTATUS 
+ALTER TABLE CAMPUS.EMPLOYMENT 
 ADD CONFIRMATIONSTATUS INT NOT NULL;
 
 
