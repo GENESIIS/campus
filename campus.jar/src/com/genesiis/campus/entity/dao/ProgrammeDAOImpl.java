@@ -51,13 +51,14 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			while (resultSet.next()) {
 				final ArrayList<String> singleProgramme = new ArrayList<String>();
 				singleProgramme.add(resultSet.getString("PROGCODE"));
-				singleProgramme.add(resultSet.getString("PROGNAME"));	
+				singleProgramme.add(resultSet.getString("PROGNAME"));
+				programmeList.add(singleProgramme);
 			}
 			}catch (SQLException sqlException) {
-				log.info("findById() sqlException" + sqlException.toString());
+				log.info("getLightProgrammes() sqlException" + sqlException.toString());
 				throw sqlException;
 			} catch (Exception e) {
-				log.info("findById() Exception" + e.toString());
+				log.info("getLightProgrammes() Exception" + e.toString());
 				throw e;
 			} finally {
 				DaoHelper.cleanup(conn, stmt, resultSet);

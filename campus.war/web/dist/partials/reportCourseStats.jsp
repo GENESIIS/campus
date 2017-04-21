@@ -67,17 +67,18 @@ tr:nth-child(even) {
 						<legend align="left">Search criteria : </legend>
 						<div class="input-wrapper has-select" id="providerlist">
 						Course Provider :
-								<input name="providerlist" id="providerlist" class="form-control" list="providerName">
-								<datalist id="providerName"></datalist>
+							<input name="providerlist" id="providerlist" class="form-control" list="providerName">
+							<datalist id="providerName"></datalist>
 							<input type="hidden" name="selectedProvider"	id="selectedProvider" value=""/>
 						</div>			
 						
 						
-						<div class="drop-holder">
-							Programme : <input type="text" name="programmelist" id="programmelist"
-									list="programmeName" placeholder="-- Select Programme --" />
+						<div class="input-wrapper has-select" >
+							Programme :
+							 <input name="programmelist" id="programmelist"	class="form-control" list="programmeName" placeholder="-- Select Programme --" />
 								<datalist id="programmeName">
 								</datalist>
+								<input type="hidden" name="selectedProgramme"	id="selectedProgramme" value=""/>
 						</div>
 						<div>
 							Start Date : <input type="date" id="startdate" name="startdate" onkeydown="return false"> <label

@@ -2,6 +2,7 @@
 /*20170418 c54-report-course-stats-MP-dj Initiated course-stats.js
  *20170418 c54-report-course-stats-MP-dj Initiated getCourseStatsSearchData and Identify selected course provider action.
  *20170421 c54-report-course-stats-MP-dj Identified the selected course provider code for listing programmes.
+ *20170421 c54-report-course-stats-MP-dj Implement listProgrammes() method and initiate search button click action.
  **/
 
 $(document).ready(function() {
@@ -52,13 +53,58 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
+	/*
+	 * Identify selected programme and set the value to a hidden variable. 
+	 */
+
+	$('#programmelist').on('change', function(event) {		
+				
+	    var value=event.target.value;
+	    var programmeCode = $('#programmeName [value="' + value + '"]').data('programme');	    	    
+	    $('#selectedProgramme').val(programmeCode);
+	});
+	
+	
+	/*
+	 * 
+	 */
+	
+	$('#searchList').on('click ', function(event) {
+		
+		alert("searchList");
+		var programmeCode=$('#selectedProgramme').val();
+		var providerCode=$('#selectedProvider').val();
+		var startDate = $('#startdate').val();
+		var endDate = $('#enddate').val();
+		
+		$.ajax({
+			url : '../../ReportController',
+			data : {
+				CCO : 'REPORT_COURSE_STATS',
+				startDate : startDate,
+				endDate : endDate,
+				providerCode : providerCode,
+				programmeCode : programmeCode
+			},
+			dataType : "json",
+			success : function(response) {
+				generateCourseStatReport(response);
+			},
+			error : function(jqXHR, exception) {
+				errorCodeGeneration(jqXHR, exception);
+			}
+		});
+		
+	});
+	
 });
 
 /*
  * This method getCourseStatsSearchData() populate data for  initial search interface for course stats report generation.
  */
-function getCourseStatsSearchData(response){
-	$('#resultPanel').hide();	
+function getCourseStatsSearchData(response){		
 	var dataList = $("#providerName");
 	dataList.empty();
 	
@@ -67,9 +113,7 @@ function getCourseStatsSearchData(response){
 			var opt = $("<option></option>").attr({"data-provider": value[0], "value" :value[1] });
 			dataList.append(opt);
 		}				
-	});
-	
-	
+	});	
 }
 
 
@@ -77,9 +121,23 @@ function getCourseStatsSearchData(response){
  * This method listProgrammes()  data for  initial search interface for course stats report generation.
  */
 
-function listProgrammes(response){
+function listProgrammes(response){	
 	
-	alert("listProgrammes");
+	var dataList = $("#programmeName");
+	dataList.empty();	
+	$.each(response.programmeList, function(index, value) {		
+		if(value != null && value.length > 0){				
+			var opt = $("<option></option>").attr({"data-programme": value[0], "value" :value[1] });
+			dataList.append(opt);
+		}				
+	});
+	
+}
+
+/*
+ * This method generateCourseStatReport() generate course stats report generation.
+ */
+function generateCourseStatReport(response){
 	
 }
 

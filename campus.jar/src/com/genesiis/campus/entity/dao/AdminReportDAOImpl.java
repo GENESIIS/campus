@@ -7,6 +7,8 @@ package com.genesiis.campus.entity.dao;
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
+import com.genesiis.campus.entity.model.CourseStatSearchDTO;
+import com.genesiis.campus.entity.model.CourseStatSearchResultDTO;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.ConnectionManager;
@@ -236,5 +238,27 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return registeredStudentList;
+	}
+
+	@Override
+	public List<CourseStatSearchResultDTO> getProgrammeStatsReport(
+			CourseStatSearchDTO searchDTO) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;		
+		final List<CourseStatSearchResultDTO> courseStatList = new ArrayList<CourseStatSearchResultDTO>();		
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("");
+		} catch (SQLException sqlException) {
+			log.info("getProgrammeStatsReport() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getProgrammeStatsReport() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}	
+		return courseStatList;
 	}
 }

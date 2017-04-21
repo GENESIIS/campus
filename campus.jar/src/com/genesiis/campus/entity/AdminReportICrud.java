@@ -1,9 +1,12 @@
 package com.genesiis.campus.entity;
 
-//20170107 c6-list-available-institutes-on-the-view Initiated AdminReportICrud.java
-//20170111 c52-report-banner-statistics-MP-dj Declare getBannerStatisticReport().
+//20170107 DJ c6-list-available-institutes-on-the-view Initiated AdminReportICrud.java
+//20170111 DJ c52-report-banner-statistics-MP-dj Declare getBannerStatisticReport().
+//20170421 DJ c54-report-course-stats-MP-dj -Init: method getProgrammeStatsReport().
 
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
+import com.genesiis.campus.entity.model.CourseStatSearchDTO;
+import com.genesiis.campus.entity.model.CourseStatSearchResultDTO;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 
@@ -19,6 +22,8 @@ public interface AdminReportICrud extends ICrud{
 	
 	Collection<Collection<String>> getBannerStatisticReport(BannerStatSearchDTO searchDTO ) throws SQLException,Exception;
 	
-	List <StudentSearchResultDTO> getRegisteredStudentReport(StudentSearchDTO searchDTO ) throws SQLException,Exception;
+	List <StudentSearchResultDTO> getRegisteredStudentReport(StudentSearchDTO searchDTO ) throws SQLException,Exception;	
+	
+	List <CourseStatSearchResultDTO> getProgrammeStatsReport(CourseStatSearchDTO searchDTO) throws SQLException,Exception;
 
 }
