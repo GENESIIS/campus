@@ -1,7 +1,7 @@
 
 <!-- 20170407 AS c23-admin-login-logout-function-as -admin-header.jsp page created to sample.   -->
 <!-- 20170419 AS c154-removed unwanted UI elements and jstl functions   -->  
-   
+<!-- 20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->      
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
@@ -38,7 +38,7 @@
 
 				<div class="login-link">
 					
-					<c:if test="${sessionScope.currentSessionUser != null}">
+					<c:if test="${sessionScope.currentSessionUsername != null}">
 						<h3>Hi ${sessionScope.user}, Login successful.</h3>
 						
 						<input type="hidden" id="userCode" name="userCode"

@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     
  <!-- 20170406 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp page created to maintain logged users session details.   -->   
+ <!-- 20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,17 +14,15 @@
 <body>
 <!-- 	checked session already created or not, if not redirect to login.jsp -->
 
-<c:if test="${sessionScope.currentSessionUser == null}">
+<c:if test="${sessionScope.currentSessionUsername == null}">
 	<script>	
 	var myURL = document.location.host;
 	
- //	window.location.href = myURL + "/dist/partials/error/admin-error-content.jsp";
- //	$(location).attr('href', 'http://'+myURL + "/dist/partials/error/admin-error-content.jsp")
  	location.replace('http://'+myURL + "/dist/partials/error/admin-error-content.jsp");
 	</script>
 </c:if>
 
-<c:if test="${sessionScope.currentUserData != null}">
+<c:if test="${sessionScope.currentSessionUsername != null}">
 
     	<c:set var="col_adminCode" value="${sessionScope.currentUserData[0][0]}" scope="session" />
     	<c:set var="col_adminName" value="${sessionScope.currentUserData[0][1]}" scope="session" />

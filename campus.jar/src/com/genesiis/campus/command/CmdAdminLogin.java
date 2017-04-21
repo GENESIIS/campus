@@ -3,7 +3,7 @@ package com.genesiis.campus.command;
 //20170316 AS c23-admin-login-logout-function-as CmdAdminLogin class coding WIP
 //20170330 AS c23-admin-login-logout-function-as login attempts handled
 //20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
-
+//20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
 
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.AdminPrivilegeDAO;
@@ -28,9 +28,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
-
-
-
 
 public class CmdAdminLogin implements ICommand{
 	static Logger log = Logger.getLogger(CmdAdminLogin.class.getName());
@@ -85,7 +82,7 @@ public class CmdAdminLogin implements ICommand{
 						session = helper.getSession(true);
 						String sessionId = session.getId();
 						adminData.setLastLoggedInSessionid(sessionId);
-						session.setAttribute("currentSessionUser",adminData.getUsername());
+						session.setAttribute("currentSessionUsername",adminData.getUsername());
 						session.setAttribute("user", adminData.getName());
 						session.setAttribute("userCode", adminData.getCode());
 						setAdminLoginDetails(adminData, helper);
