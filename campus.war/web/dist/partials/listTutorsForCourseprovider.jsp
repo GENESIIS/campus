@@ -1,4 +1,5 @@
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - created addTutorEmployment jsp file-->
+<!-- 20170421 c159-courseprovider-accept-tutor-request-cw - testing coding to get the courseProviderCode-->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -24,6 +25,16 @@
 						<h2 id="tablemessage" style="color: red">${tablemessage}</h2>
 					</td>
 				</tr>
+				
+				<%
+
+    String getmov2 = request.getParameter("courseProviderCode");
+    // DEBUG - NULL VALUE PRINTED. ERROR.
+    System.out.println("Testrec.jsp"+getmov2);
+
+%>
+				
+				
 				<div>
 					<table id="Tutors" width="80%">
 						<tr>
@@ -48,6 +59,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="\dist\bower-components\jquery\jquery.min.js"></script>
-	<script src="/dist/js/tutor/experience.js"></script>
+	<script src="/dist/js/courseprovider/tutorList.js"></script>
 </body>
 </html>
