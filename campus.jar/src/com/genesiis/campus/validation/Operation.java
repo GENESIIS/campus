@@ -3,7 +3,7 @@ package com.genesiis.campus.validation;
 //20161127 DJ c51-report-courses-by-course-provider-MP-dj add REPORT_COURSES_BY_COURSE_PROVIDER entry 
 //20161228 DJ c53-report-registered-students-MP-dj add SEARCH_VIEW_REGISTERED_STUDENTS and REPORT_REGISTERED_STUDENTS entries
 //20170418 DJ c54-report-course-stats-MP-dj add REPORT_COURSE_STATS entry.
-//20170420 DJ c54-report-course-stats-MP-dj add SEARCH_VIEW_COURSE_STATS entry and LIST_PROGRAMME_WISE_COURSE_PROVIDER.
+//20170420 DJ c54-report-course-stats-MP-dj add SEARCH_VIEW_COURSE_STATS entry and LIST_COURSE_PROVIDER_WISE_PROGRAMME.
 
 /**
  * Operation class facilitate in binding the CCO
@@ -15,7 +15,7 @@ public enum Operation {
 	SEARCH_VIEW_REGISTERED_STUDENTS("SEARCH_VIEW_REGISTERED_STUDENTS",ResponseType.JSON," "),
 	REPORT_REGISTERED_STUDENTS("REPORT_REGISTERED_STUDENTS",ResponseType.JSON," "),
 	SEARCH_VIEW_COURSE_STATS("SEARCH_VIEW_COURSE_STATS",ResponseType.JSON," "),
-	LIST_PROGRAMME_WISE_COURSE_PROVIDER("LIST_PROGRAMME_WISE_COURSE_PROVIDER",ResponseType.JSON," "),
+	LIST_COURSE_PROVIDER_WISE_PROGRAMME("LIST_COURSE_PROVIDER_WISE_PROGRAMME",ResponseType.JSON," "),
 	REPORT_COURSE_STATS("REPORT_COURSE_STATS",ResponseType.JSON," ");
 			
 	private final String commandString;
