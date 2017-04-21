@@ -1,6 +1,7 @@
 
 /*20170418 c54-report-course-stats-MP-dj Initiated course-stats.js
  *20170418 c54-report-course-stats-MP-dj Initiated getCourseStatsSearchData and Identify selected course provider action.
+ *20170421 c54-report-course-stats-MP-dj Identified the selected course provider code for listing programmes.
  **/
 
 $(document).ready(function() {
@@ -15,6 +16,8 @@ $(document).ready(function() {
 		datatype : "json",
 		success : function(response) {
 			getCourseStatsSearchData(response);
+			
+			
 		},
 		error : function(jqXHR, exception) {
 			errorCodeGeneration(jqXHR, exception);
@@ -27,20 +30,22 @@ $(document).ready(function() {
 	 * Identify selected course provider and load programmes. 
 	 */
 
-	$('#providerlist').bind('change', function(event) {		
-		alert("providerlist****");
-		var providerName = $('#providerlist').val();
-		var providerCode = 0;
+	$('#providerlist').on('change', function(event) {		
+				
+	    var value=event.target.value;
+	    var providerCode = $('#providerName [value="' + value + '"]').data('provider');
+	    	    
+	    $('#selectedProvider').val(providerCode);	    
 		
 		$.ajax({
 			url : '../../ReportController',
 			data : {
-				CCO : 'LIST_PROGRAMME_WISE_COURSE_PROVIDER',
+				CCO : 'LIST_COURSE_PROVIDER_WISE_PROGRAMME',
 				providerCode : providerCode
 			},
 			dataType : "json",
 			success : function(response) {
-				getCourseStats(response);
+				listProgrammes(response);
 			},
 			error : function(jqXHR, exception) {
 				errorCodeGeneration(jqXHR, exception);
@@ -53,18 +58,29 @@ $(document).ready(function() {
  * This method getCourseStatsSearchData() populate data for  initial search interface for course stats report generation.
  */
 function getCourseStatsSearchData(response){
-	$('#resultPanel').hide();
-	//$('input:radio[name="studentStatus"]').filter('[value="ACTIVE"]').attr('checked', true);
-
-	var htmlstr="";	
+	$('#resultPanel').hide();	
+	var dataList = $("#providerName");
+	dataList.empty();
+	
 	$.each(response.courseProviderList, function(index, value) {		
-		if(value!=null && value.length>0){
-			if(value!=null && value.length>0){		
-				htmlstr += '<option val="' + value[0] + '">' + value[1] + '</option>';
-			}
-		}		
-	});		
-	$('#providerName').html(htmlstr);	
+		if(value != null && value.length > 0){				
+			var opt = $("<option></option>").attr({"data-provider": value[0], "value" :value[1] });
+			dataList.append(opt);
+		}				
+	});
+	
+	
+}
+
+
+/*
+ * This method listProgrammes()  data for  initial search interface for course stats report generation.
+ */
+
+function listProgrammes(response){
+	
+	alert("listProgrammes");
+	
 }
 
 /**
