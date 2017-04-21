@@ -2,9 +2,11 @@ package com.genesiis.campus.command;
 
 //20170420 CW c159-courseprovider-accept-tutor-request-cw INIT CmdListTutorsForCourseProviders.java
 //20170420 CW c159-courseprovider-accept-tutor-request-cw modified execute method to use courseProviderCode variable
+//20170421 CW c159-courseprovider-accept-tutor-request-cw add tutorsForCP variable into execute method
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.AccountType;
 import com.genesiis.campus.validation.Validator;
@@ -40,8 +42,8 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 			String courseProviderCode = helper.getParameter("courseProviderCode");
 			if(Validator.isNotEmpty(courseProviderCode)){
 				
-				final FeaturedCourseProviderDAO featuredCourseProviders = new FeaturedCourseProviderDAO();				
-				Collection<Collection<String>> allEmploymentTutorsList = featuredCourseProviders.getTutorsListOfCourseprovider(courseProviderCode);
+				final TutorDAO tutorsForCP = new TutorDAO();				
+				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode);
 				
 				view.setCollection(allEmploymentTutorsList);		
 			}else{
