@@ -3,13 +3,16 @@ package com.genesiis.campus.command;
 /*20170418 c54-report-course-stats-MP-dj created CmdReportCourseStats
  *20170420 c54-report-course-stats-MP-dj create:method generateCourseStatsView().
  *20170420 c54-report-course-stats-MP-dj create:method listProgrammeWiseProvider() and generateReportResults().
- * 
+ *20170421 c54-report-course-stats-MP-dj create:implement listProgrammeWiseProvider().
  * */
 
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
 import com.genesiis.campus.entity.dao.DistrictDAOImpl;
+import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
+import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
@@ -34,7 +37,7 @@ public class CmdReportCourseStats implements ICommand{
 			case SEARCH_VIEW_COURSE_STATS:
 				generateCourseStatsView(helper);
 				break;
-			case LIST_PROGRAMME_WISE_COURSE_PROVIDER:
+			case LIST_COURSE_PROVIDER_WISE_PROGRAMME:
 				listProgrammeWiseProvider(helper);				
 				break;
 			case REPORT_COURSE_STATS:	
@@ -69,11 +72,22 @@ public class CmdReportCourseStats implements ICommand{
 		}
 	}
 	
-	
-	private void listProgrammeWiseProvider(IDataHelper helper) {
-		//final Collection<Collection<String>> programmeList=new DistrictDAOImpl().getAllDistricts();
-		//helper.setAttribute("programmeList", programmeList);
-		
+	/** Retrieve programmes of selected course provider.
+	 * @author dumani DJ
+	 * @param helper -IDataHelper object
+	 * @throws Exception
+	 */
+	private void listProgrammeWiseProvider(IDataHelper helper)throws Exception {				
+		try {
+			final ProgrammeICrud programmeDAO=new ProgrammeDAOImpl();
+			final ProgrammeSearchDTO searchDTO=new ProgrammeSearchDTO();
+			final Collection<Collection<String>> programmeList = programmeDAO.getLightProgrammes(searchDTO);
+			helper.setAttribute("programmeList", programmeList);
+			
+		} catch (Exception exception) {
+			log.error("listProgrammeWiseProvider() : Exception " + exception);
+			throw exception;
+		}		
 	}
 	
 	private void generateReportResults(IDataHelper helper) {
