@@ -33,7 +33,7 @@ function displaySignUpPrerequisitDetails(){
 	$.ajax({
 		url:"../../../StudentController",
 		data:{
-			CCO:'DPRD'
+			CCO:'DPRD' //DISPLAY_PREREQUISITE_DATA
 		},
 		dataType: "json",
 		success: function(preRequistData){
@@ -298,7 +298,7 @@ function validateSignUpWoThirdPartyPageEmbedData(){
  * @author dushantha DN
  * @returns {___anonymous2641_2981}
  */
-
+//  this should be changed according to the page data.Add Advertiser.jsp
 function createJasonObject(){
 	managePhoneNumber($('#contactNumber').val(),$('#mobileCountryCode').val());
 	var jsonData ={
