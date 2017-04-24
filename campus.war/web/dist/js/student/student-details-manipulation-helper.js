@@ -8,6 +8,7 @@
  * 20170310 PN CAM-150: addStudentPersonalDetails() method modified by adding if-else condition.
  * 20170313 PN CAM-150: addStudentPersonalDetails() method modified to pass locale details in to the command class.
  * 20170331 PN CAM-150: error message span class renamed into 'std-mdl-error-msg' in clearPersonalDetailsForm().
+ * 20170424 PN CAM-150: clearPersonalDetailsForm() method modified by improving the readability by removing unwanted code lines.
  */
 
 
@@ -80,13 +81,10 @@ function addHigherEducationDetails() {
 					success : function(response) {
 						if (response.saveChangesHigherEduStatus) {
 							if (response.saveChangesHigherEduStatus === "Unsuccessful.") {
-								//$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text(response.saveChangesHigherEduStatus).fadeIn();
+								$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text(response.saveChangesHigherEduStatus).fadeIn();
 							} else if (response.saveChangesHigherEduStatus === "Invalid Information") {
-								//$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
+								$("#saveChangesHigherEduStatus").addClass("alert alert-danger").text("Invalid Information.").fadeIn();
 							}
-							//clearSchoolEducationForm();
-							//$("#saveChangesHigherEduStatus").addClass("alert alert-success").text(response.saveChangesHigherEduStatus).fadeIn();
-							
 							
 							var higherEdutbl = $('#higherEdutbl').DataTable();
 							higherEdutbl.clear().draw();
@@ -619,31 +617,9 @@ function validateStudentPersonalDetails() {
  * @returns
  */
 function clearPersonalDetailsForm() {
-	$('#sFullName').val("");
-	$('#sMiddleName').val("");
-	$('#sLastName').val("");
-	$('#sBirthDate').val("");
-	$('#sAboutMe').val("");
-	$('#sCountry').val("");
-	$('#sTown').val("");
-	$('#sAddressLine1').val("");
-	$('#sAddressLine2').val("");
-	$('#sAddressLine3').val("");
+	$('#studentPersonalDetailsModal input[type="text"]').val('');
 	$('.input-group-addon').text("");
 	$('.std-mdl-error-msg').text("");
-	$('#sMobileNumber').val("");
-	$('#sHomeNumber').val("");
-	$('#sOtherNumber').val("");
-	$('#sEmail').val("");
-	$('#sFacebookUrl').val("");
-	$('#stwitterUrl').val("");
-	$('#sLinkedInUrl').val("");
-	$('#sInstergramUrl').val("");
-	$('#smySpace').val("");
-	$('#sWhatsApp').val("");
-	$('#sViber').val("");
-	$('#sTownCode').val("");
-	$('#sCountryCode').val("");
 	$("#studentPersonalStatus").hide();
 }
 
