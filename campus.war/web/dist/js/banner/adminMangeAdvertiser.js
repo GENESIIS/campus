@@ -2,8 +2,10 @@
  * 20170421 DN c88-admin-manage-advertiser-add-new-advertiser-dn created the initial js script for the issue.
  * 20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn . created the global variable adminControllerUrl 
  * 				and add to the ajax calls which requests Prerequisite data.
- * 				
- * 
+ * 				populateDataList() is created to so that the IE browser shows the data list correctly
+ * 				The method getPreRequisitPageData() has been modified to list town, country,and Course provider,
+ * 				and their code are included to hidden input fields accurately.
+ * 				Removed the method manageTownListing() from the script.
  */
 
 
@@ -19,13 +21,14 @@ $(document).ready(function() {
 });
 
 
-var mobilePhoneNumber ="";
-var mobilePhoneCountryCode="";
-var mobilePhoneNetWorkCode="";
-var selectedCountryCode ="";
-var selectedTownCode = "";
-var userTypeCode = "";
-var adminControllerUrl = '../../../AdminController';
+var mobilePhoneNumber 			= "";
+var mobilePhoneCountryCode		= "";
+var mobilePhoneNetWorkCode		= "";
+var selectedCountryCode 		= "";
+var selectedTownCode			= "";
+var selectedCourseProviderCode 	= "";
+var userTypeCode 				= "";
+var adminControllerUrl 			= '../../../AdminController';
 
 /**
  * displaySignUpPrerequisitDetails() function is meant to pass an ajax 
@@ -58,33 +61,44 @@ function displaySignUpPrerequisitDetails(){
  * @param preRequistData response send from the server side
  */
 function getPreRequisitPageData(preRequistData){
-	// Set Country details 
-	var countryList = $('#countryList');
-	countryList.find('option').remove();
-	$.each(preRequistData.result, function(index, value){
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(y).text(x).appendTo(countryList);
-		
+	
+	// populating the available active course provider list.
+	populateDataList(preRequistData.advertisers,'courseProviderList');	
+	
+	// get the selected code of the course provider
+	$('#courseProvider').on('input', function(){
+		var status = false;
+		var val = this.value; //select what is changed from the input field.
+		var dValue =$('#courseProviderList option').
+									filter( function(){
+												if($(this).val()===val){
+													status = true;
+													return $(this).val();													
+												}
+									 		}).attr("data-code");
+		selectedCourseProviderCode = dValue;
+	//Setting the course provider code to the hidden field.
+	if(status){		
+		$('#sCourseProviderCode').val(selectedCourseProviderCode); // set the country code in the none editable field
+	  }
 	});
 	
 	
-	// set the USERTYPE CODE to the hidden field
-	//$('#userTypeCode').text(preRequistData.userType[0][0]);
+// Set Country details 
+ populateDataList(preRequistData.result,'countryList');
 	
-	//getting the selected country code 
+//getting the selected country code 
 	$('#country').on('input', function(){
 		var status = false;
 		var val = this.value; //select what is changed from the input field.
+		//if($('#countryList option').filter()
 		var dValue =$('#countryList option').
 									filter( function(){
 												if($(this).val()===val){
 													status = true;
-													return $(this).val();
+													return $(this).val();													
 												}
-									 		}).text();
+									 		}).attr("data-code");
 	selectedCountryCode = dValue;
 	//populating the town list 
 	if(status){
@@ -109,7 +123,7 @@ function getPreRequisitPageData(preRequistData){
 													status = true;
 													return $(this).val();
 												}
-									 		}).text();
+									 		}).attr("data-code");
 		selectedTownCode = dValue;
 		//setting the hidden field with the town value in the input field
 	if(status){
@@ -141,7 +155,7 @@ function getPreRequisitPageData(preRequistData){
 	 * and the text will be cleared off.
 	 */
 	$('#town').on("change",function(){
-		if(selectedTownCode ==""){
+		if(selectedTownCode ===""|| selectedTownCode ===undefined){
 			$('#townError').html("Please select a valid Town");
 			$('#town').val("");
 		}
@@ -158,9 +172,11 @@ function getPreRequisitPageData(preRequistData){
 	 */
 	
 	$('#country').on("change",function(){
-		if(selectedCountryCode ==""){
+		if(selectedCountryCode ==="" || selectedCountryCode=== undefined){
 			$('#countryError').html("Please select a valid Country from the populated list");
 			$('#country').val("");
+		} else {
+			$("#town").val(""); // clear the fields
 		}
 		
 		
@@ -178,6 +194,62 @@ function getPreRequisitPageData(preRequistData){
 	
 
 }
+
+
+/**
+ * Populates the data list, The data list to be populate must accept a response 
+ * which is of the form {[a,b],[a1,b1],[a2,b2]} where first element being the code which
+ * is the text of the <option> and second 
+ * element being the value of the <option> part of the data list.
+ * @param response what comes as the ajax success call
+ * @param elementId data list 'id'.
+ */
+
+function populateDataList(responseAttribute,elementId){
+	
+	// get the  data list element wrapper set
+	var elementWrapperSet = $('#'+elementId);
+	// visually remove all the option element
+	elementWrapperSet.find('option').remove();
+	// visually remove all the input element
+	elementWrapperSet.find('input').remove();
+	
+	/* use the response and process the banner slot list
+	* this brings the collection that contains the Collection<collection<String>>
+	*which sends from the server as an Array, then iterate over, the array gets the form 
+	* {[a,b],[a1,b1],[a2,b2]}
+	*/
+	$.each(responseAttribute,function(index,value){
+		var record= value.toString();
+		var recordArray =record.split(","); // convert the string to an Array
+		var recordNameCompornentArray = null;
+		
+		var recordCode = recordArray[0].toString();
+		var recordName = recordArray[1].toString();
+		
+		/*
+		 * 	create option list on the fly and attach to the data list 
+		 	create a new custom attribute called data-code and data-value then attach the code and treated name to the option list as attributes
+		 	later these values can be used to extract the code
+		 	e.g. <option data-code="1" value="Advertiser 0" data-value="Advertiser0"></option>
+		 */
+		$("<option></option>")
+								.attr({
+									 "data-code": recordCode,
+									 "value" : recordName ,
+									 "data-value":recordName.replace(/\s+/g, "").split(".")
+									 })
+									 .appendTo(elementWrapperSet);	
+	});
+}
+
+
+
+
+
+
+
+
 /**
  * accepts the country code and extract the available town information
  * that belongs to the country and bring it to the client side form 
@@ -195,7 +267,8 @@ function extractRelaventTownList(countryCode){
 		},
 		dataType:"json",
 		success: function(townObject){
-			manageTownListing(townObject);
+			//manageTownListing(townObject);
+			populateDataList(townObject.result,'townList');
 		},
 		error: function(townObject){
 			alert("Error: "+townObject);
@@ -203,24 +276,6 @@ function extractRelaventTownList(countryCode){
 	});
 	
 }
-
-/**
- * manageTownListing supposes to populate the town data list
- * from the response sent from the server
- * @param townObject the response received from the server.
- */
-function manageTownListing(townObject){
-	$('#townList').find('option').remove();
-	$.each(townObject.result,function(index,town){
-		var townString = town.toString();
-		var data = townString.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(y).text(x).appendTo($('#townList'));
-	});
-	
-}
-
 
 /**
  * method validates if the user inputs are correct and according to agreed
@@ -244,8 +299,6 @@ function sendSignUpCredentialsToBckEnd() {
 		return postaSessation;
 	}
 }
-
-
 
 /**
  * validateSignUpWoThirdPartyPageEmbedData() validates all the current  critical fields
@@ -338,8 +391,6 @@ function isNotvalidMobileFormat(firstDigit){
 	var patern = /^[0|\+]([a-zA-Z0-9])*/g; 		//matches the leading zero and leading + sin with alpha numeric character combinations
 	return(isPatternMatch(patern,firstDigit));
 }
-
-
 
 /**
  * Method :managePhoneNumber sets the mobilephone number,mobile phone
@@ -434,6 +485,4 @@ function splitPhoneNumber(phoneNumber,length){
  */
 function clearAllFields(){
 	$('input.text-field').val("");
-	//$('.validationInputFields').html("");
-
 }
