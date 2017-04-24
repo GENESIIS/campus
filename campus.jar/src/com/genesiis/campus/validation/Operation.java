@@ -13,8 +13,8 @@ public enum Operation {
 	
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""), 
-	PUBLIC_LIST_ALL_TUTORS("PUBLIC_LIST_ALL_TUTORS", ResponseType.JSON, "/dist/public/display-tutors.jsp"),
-	DISPLAY_PUBLIC_TUTOR_PROFILE("DISPLAY_PUBLIC_TUTOR_PROFILE", ResponseType.JSON, "/dist/public/display-tutor-profile.jsp");
+	PUBLIC_LIST_ALL_TUTORS("PUBLIC_LIST_ALL_TUTORS", ResponseType.JSON, ""),
+	DISPLAY_PUBLIC_TUTOR_PROFILE("DISPLAY_PUBLIC_TUTOR_PROFILE", ResponseType.JSP, "/dist/partials/public/display-tutor-profile.jsp");
 			
 	private final String commandString;
 	private final ResponseType responseType;
