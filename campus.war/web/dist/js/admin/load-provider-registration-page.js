@@ -37,6 +37,7 @@
 //20170420 JH c141-ui-integration-for-add-course-provider landPhoneNumberHelper() modified to clear previous error tooltips due to invalid area code when a valid area code is given,
 //				removed unrelated comments in country and town display methods, added resetAccordion() method to reset the accordion color to default color and saveCourseProvider() method edited to 
 //				use resetAccordion()
+//20170424 JH c141-ui-integration-for-add-course-provider coding wip to send the focus to the next accordion from the last input of the previous accordion
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -842,3 +843,27 @@ function changeAccordion(element, accordion){
 function resetAccordion(element){
 	$(element).css("background", "#adc8e8");
 }
+
+/**
+ * used to send the foucus to the next accordion from the last input of the 
+ * previous accordion
+ */
+$('body').on('keydown', function(e) {
+    if (e.which == 9) {
+        e.preventDefault();
+        var currentElement = $(':focus').attr('id');
+        var accordionList = $('#basicForm').find('.accordion-body');
+    	
+    	var accordionName = $('#' +currentElement).parent().closest(".accordion-body");
+    	alert(accordionName.attr('id'));
+    	var accordionId = accordionName.attr('id');
+    	var inputs = $('#' + accordionId).find('.form-control');
+    	var last = inputs.last().attr('id');
+    	
+    	if(currentElement === last){
+    		alert("equals");
+    	var nextAccordion = accordionId.next();
+    	}
+        // do your code
+    }
+});
