@@ -14,6 +14,11 @@ package com.genesiis.campus.util.mail;
 				// modified setEmailMessage method to add bccList & ccList to email
 //20170418 CW c158-send-email-tutor-employment-confirmation-cw modified the code to remove un wanted spaces
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw modified setEmailMessage method & add method comment & remove un necessary spaces from the class
+//20170424 CW c158-send-email-tutor-employment-confirmation-cw re arrange the import statements
+
+import com.genesiis.campus.util.MailServerManager; 
+
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,9 +31,6 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
-
-import com.genesiis.campus.util.MailServerManager; 
 
 /**
  * GeneralMail class captures the essence of an email
