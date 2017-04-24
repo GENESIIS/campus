@@ -5,7 +5,7 @@ package com.genesiis.campus.entity;
 //20170331 AS c23-admin-login-logout-function-as - loginDataUpdate() method coding WIP
 //20170403 AS c23-admin-login-logout-function-as - findById() sql query modification and userTypeString set to the dataColletction 
 //20170404 AS c23-admin-login-logout-function-as - loginDataUpdate() sql query modified
-
+//20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
