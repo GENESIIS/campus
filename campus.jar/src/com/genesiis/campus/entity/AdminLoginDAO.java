@@ -88,14 +88,62 @@ public class AdminLoginDAO implements ICrud {
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
+	//Incorrect logging attempts, update the DB
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		String query = "UPDATE CAMPUS.ADMIN SET ATTEMPTS = ?,  LASTATTEMPTTIME = ?, MODON= ? WHERE CODE = ? ";
+		PreparedStatement ps = null;
+		int rowInserted = -1;
+
+		try {
+			Admin adminData = (Admin) object;
+			conn = ConnectionManager.getConnection();
+
+			// modification date
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date modDate = new java.sql.Date(utilDate.getTime());
+			// attempt timestamp
+			long time = System.currentTimeMillis();
+			java.sql.Timestamp attemptTime = new java.sql.Timestamp(time);
+
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, adminData.getAttempts());
+			ps.setTimestamp(2, attemptTime);
+			ps.setDate(3, modDate);
+			ps.setInt(4, adminData.getAdminCode());
+
+			rowInserted = ps.executeUpdate();
+
+			if (rowInserted > 0) {
+				rowInserted = 1;
+			} else {
+				rowInserted = 0;
+			}
+
+		} catch (SQLException e) {
+			log.info("update(): SQLexception" + e.toString());
+			throw e;
+		} catch (Exception ex) {
+			log.info("update(): Exception" + ex.toString());
+			throw ex;
+		} finally {
+
+			if (ps != null) {
+				ps.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+		log.info(rowInserted);
+		return rowInserted;
 	}
 
 	@Override
@@ -116,7 +164,7 @@ public class AdminLoginDAO implements ICrud {
 		String message = SystemMessage.NOTREGISTERD.message();
 
 		ResultSet rs = null;
-		String query = "SELECT ADMIN.CODE, ADMIN.NAME, ADMIN.USERNAME, ADMIN.PASSWORD, ADMIN.EMAIL, ADMIN.ISACTIVE, ADMIN.USERTYPE, USERTYPE.USERTYPESTRING FROM CAMPUS.ADMIN INNER JOIN CAMPUS.USERTYPE ON CAMPUS.ADMIN.USERTYPE = CAMPUS.USERTYPE.CODE WHERE USERNAME=? COLLATE Latin1_General_CS_AS AND ISACTIVE = ? OR EMAIL =?  AND ISACTIVE = ?";
+		String query = "SELECT ADMIN.CODE, ADMIN.NAME, ADMIN.USERNAME, ADMIN.PASSWORD, ADMIN.EMAIL, ADMIN.ISACTIVE, ADMIN.USERTYPE, USERTYPE.USERTYPESTRING, ADMIN.ATTEMPTS, DATEDIFF(MINUTE , ADMIN.LASTATTEMPTTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.ADMIN INNER JOIN CAMPUS.USERTYPE ON CAMPUS.ADMIN.USERTYPE = CAMPUS.USERTYPE.CODE WHERE USERNAME=? COLLATE Latin1_General_CS_AS AND ISACTIVE = ? OR EMAIL =?  AND ISACTIVE = ?";
 		String code = "";
 		String name = "";
 		String userName = "";
@@ -125,10 +173,12 @@ public class AdminLoginDAO implements ICrud {
 		String userType = "";
 		String userTypeString = "";
 		boolean passwordMatch = false;
+		int minitDiff = 0;
+		int attempt = 0;
 		try {
 			final Admin admin = (Admin) object;
-			
-			//user input password encryption 
+
+			// user input password encryption
 			Encryptable passwordEncryptor = new TripleDesEncryptor(admin.getPassword().trim());
 			encryptPassword = passwordEncryptor.encryptSensitiveDataToString().trim();
 
@@ -143,7 +193,7 @@ public class AdminLoginDAO implements ICrud {
 
 			if (check) {
 				password = rs.getString("PASSWORD");
-				//match with user encryption password and db password. 
+				// match with user encryption password and db password.
 				passwordMatch = encryptPassword.equals(password);
 
 				code = rs.getString("CODE");
@@ -153,33 +203,45 @@ public class AdminLoginDAO implements ICrud {
 				userType = rs.getString("USERTYPE");
 				userTypeString = rs.getString("USERTYPESTRING");
 				password = rs.getString("PASSWORD");
+				minitDiff = rs.getInt("MinuteDiff");
+				attempt = rs.getInt("ATTEMPTS");
 
-				if (check && passwordMatch) {
-					admin.setAdminCode(Integer.parseInt(code));
-					admin.setName(name);
-					admin.setUsername(userName);
-					admin.setEmail(email);
-					admin.setUserType(userType);
-					admin.setUserTypeString(userTypeString);
-					admin.setValid(true);
+			//	if (minitDiff >= 30 && attempt == 3) {
 
-					final ArrayList<String> singleAdmin = new ArrayList<String>();
-					final Collection<String> adminDatabundel = singleAdmin;
+					if ((check && passwordMatch) && (minitDiff >= 30 || attempt == 3)) {
+						admin.setAdminCode(Integer.parseInt(code));
+						admin.setName(name);
+						admin.setUsername(userName);
+						admin.setEmail(email);
+						admin.setUserType(userType);
+						admin.setUserTypeString(userTypeString);
+						admin.setValid(true);
 
-					singleAdmin.add(code);
-					singleAdmin.add(name);
-					singleAdmin.add(userName);
-					singleAdmin.add(email);
-					singleAdmin.add(userType);
-					singleAdmin.add(userTypeString);
+						final ArrayList<String> singleAdmin = new ArrayList<String>();
+						final Collection<String> adminDatabundel = singleAdmin;
 
-					dataBundel.add(adminDatabundel);
-					message = SystemMessage.VALIDUSER.message();
+						singleAdmin.add(code);
+						singleAdmin.add(name);
+						singleAdmin.add(userName);
+						singleAdmin.add(email);
+						singleAdmin.add(userType);
+						singleAdmin.add(userTypeString);
 
-				} else {
-					message = SystemMessage.INVALIDPASSWORD.message();
-					admin.setValid(false);
-				}
+						dataBundel.add(adminDatabundel);
+						message = SystemMessage.VALIDUSER.message();
+
+					} else {
+						message = SystemMessage.INVALIDPASSWORD.message();
+						admin.setAdminCode(Integer.parseInt(code));
+						admin.setValid(false);
+			
+					}
+
+//				} else {
+//					message = SystemMessage.LOGGINATTEMPT3.message();
+//					admin.setAdminCode(Integer.parseInt(code));
+//					log.info(message);
+//				}
 
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
@@ -204,7 +266,7 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		}
-		
+
 		singleMessageList = new ArrayList<String>();
 		singleMessageList.add(message);
 
