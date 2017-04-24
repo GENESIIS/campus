@@ -1,5 +1,6 @@
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - created addTutorEmployment jsp file-->
 <!-- 20170421 c159-courseprovider-accept-tutor-request-cw - testing coding to get the courseProviderCode-->
+<!-- 20170424 c159-courseprovider-accept-tutor-request-cw - remove un wanted scriptlets & add cpCode field -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -26,15 +27,8 @@
 					</td>
 				</tr>
 				
-				<%
-
-    String getmov2 = request.getParameter("courseProviderCode");
-    // DEBUG - NULL VALUE PRINTED. ERROR.
-    System.out.println("Testrec.jsp"+getmov2);
-
-%>
-				
-				
+				<input type="hidden" name="cpCode" id="cpCode" value="${param.courseProviderCode}"/>
+								
 				<div>
 					<table id="Tutors" width="80%">
 						<tr>
