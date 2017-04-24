@@ -32,6 +32,8 @@
 <!-- 20170329 TR CAM-150: Removed inline styles from error-msg span and added styles to error-msg class -->
 <!-- 20170329 TR CAM-150: fixed error messages styles and display position in 'About Me modal'  -->
 <!-- 20170331 PN CAM-150 onclick event added to sEmail textFiled. -->
+<!-- 20170424 PN CAM-150 the placeholder value 'Select Town' changed into 'Select Country' in country data list.. -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -427,7 +429,7 @@
 			<div class="well">
 			    <div class="show modal-input-field clearfix">
                     <label>Country : <span style="color:red">*</span></label>
-                    <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Town --" onclick="clearField('sCountryError')"/>
+                    <input type="text" id="sCountry" name="sCountry" list="sCountryList" placeholder="-- Select Country --" onclick="clearField('sCountryError')"/>
                         <datalist name="sCountryList" id="sCountryList">
                         </datalist>
                     <input hidden type="text" id="sCountryCode" name="sCountryCode"/><br>
