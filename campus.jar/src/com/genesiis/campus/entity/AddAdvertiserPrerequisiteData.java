@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 /**
  * 20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn. created the initial 
  * 				class deceleration of AddAdvertiserPrerequisiteData.java.
+ * 			execute() modified to retrieve all the registered active course providers.
  */
 
 import java.sql.SQLException;
@@ -60,11 +61,14 @@ public class AddAdvertiserPrerequisiteData {
 				case DISPLAY_PREREQUISITE_DATA:
 					ICrud country2Dao = new Country2DAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
-					// another call goes to extract all available advertiser code as it did in CAM-81 and added 
-					//as a request attribute.
+					// retrieve all the registered active advertisers.
+					ICrud registeredActivatedAdverTiser = new AdvertiserDAO();
+					helper.setAttribute("advertisers", registeredActivatedAdverTiser.getAll());
+					
 					this.setSuccessCode(1);
 					
 					country2Dao =null;
+					registeredActivatedAdverTiser=null;
 					break;
 				case DISPLAY_TOWN_DATA :					
 					ICrud townDao = new TownDAO();
