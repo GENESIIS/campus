@@ -16,6 +16,7 @@ package com.genesiis.campus.command;
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw create courseproviderLoginUrl value.
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod call & add sendTutorEmploymentConfirmEmail as a parameter
 				//add gender into getListOfEmailToSendEmploymentRequest method
+//20170424 CW c158-send-email-tutor-employment-confirmation-cw modified execute method & used Gender enum to set value to personBasedOnGender variable
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -25,6 +26,7 @@ import com.genesiis.campus.entity.model.Employment;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.mail.GenerateEmail;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Gender;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -33,7 +35,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * this class used to add the tutor employment details to the database & send an email to the Course provide & Admin to approve the request. 
@@ -89,15 +90,7 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 					}
 				}
 				
-				String personBasedOnGender = null;
-				
-				if(!Validator.isEmptyOrHavingSpace(gender)){
-					if(gender.equals("1")){
-						personBasedOnGender = "his";
-					}if(gender.equals("2")){
-						personBasedOnGender = "her";
-					}
-				}
+				String personBasedOnGender = Gender.getPersonBasedOnGender(gender);
 				
 				String courseproviderLoginUrl = (helper.getUrl()).replace((helper.getUri()), "") + "/dist/partials/courseprovider/login.jsp";
 				 
