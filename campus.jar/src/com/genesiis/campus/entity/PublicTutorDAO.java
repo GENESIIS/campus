@@ -5,7 +5,8 @@ package com.genesiis.campus.entity;
 //20170308 JH c96-public-list-all-tutors getAll() query updated to get details with category, major and qualification 
 //20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call, added method comments and removed unwanted imports
 //20170320 JH c96-public-list-all-tutors fixed missing @Override annotation and method signature changes from IDCrud
-//20170418 jh c135-public-display-tutor-profile findById() method coding wip
+//20170418 JH c135-public-display-tutor-profile findById() method coding wip
+//20170424 JH c135-public-display-tutor-profile return result set data in findById() wip
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -89,7 +90,25 @@ public class PublicTutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("CRTBY"));
 				singleTutorList.add(rs.getString("MODBY"));
 				singleTutorList.add(rs.getString("TUTORSTATUS"));
-				singleTutorList.add(rs.getString(""));
+				singleTutorList.add(rs.getString("TOWN"));
+				singleTutorList.add(rs.getString("COUNTRY"));
+				singleTutorList.add(rs.getString("QUALIFICATIONCODE"));
+				singleTutorList.add(rs.getString("QUALIFICATION"));
+				singleTutorList.add(rs.getString("QDESCRIPTION"));
+				singleTutorList.add(rs.getString("QLEVEL"));
+				singleTutorList.add(rs.getString("TUTOREX"));
+				singleTutorList.add(rs.getString("ORGANIZATION"));
+				singleTutorList.add(rs.getString("INDUSTRY"));
+				singleTutorList.add(rs.getString("JOBCATEGORY"));
+				singleTutorList.add(rs.getString("COMMENCEDON"));
+				singleTutorList.add(rs.getString("COMPLETIONON"));
+				singleTutorList.add(rs.getString("MODULENAME"));
+				singleTutorList.add(rs.getString("MODULECODE"));
+				singleTutorList.add(rs.getString("MTUTOR"));
+				singleTutorList.add(rs.getString("PROGRAMNAME"));
+				singleTutorList.add(rs.getString("CPCODE"));
+				singleTutorList.add(rs.getString("COURSEPROVIDRE"));
+				singleTutorList.add(rs.getString("EMPTUTOR"));
 
 				tutorCollection.add(singleTutorList);
 			}
