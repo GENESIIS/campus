@@ -32,7 +32,6 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				
 				
 				if(tutorCollection.size() > 0){
-					log.info(">>>>>>>>>>>>>>not empty");
 				}
 			}
 
