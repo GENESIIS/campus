@@ -6,7 +6,7 @@ package com.genesiis.campus.entity;
 //20170314 JH c96-public-list-all-tutors getAll() method changed to implement a stored procedure call, added method comments and removed unwanted imports
 //20170320 JH c96-public-list-all-tutors fixed missing @Override annotation and method signature changes from IDCrud
 //20170418 JH c135-public-display-tutor-profile findById() method coding wip
-//20170424 JH c135-public-display-tutor-profile return result set data in findById() wip, fixed index out of bound error and fixing has too many arguments specified error wip
+//20170424 JH c135-public-display-tutor-profile return result set data in findById() wip, fixed index out of bound error and fixed error 'too many arguments specified' 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -55,7 +55,7 @@ public class PublicTutorDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			String tutorCode = (String) code;
 
-			callableStatement = conn.prepareCall("{call [CAMPUS].[public_list_all_tutors](?,?,?,?)}");
+			callableStatement = conn.prepareCall("{call [CAMPUS].[select-tutor-public-profile-details](?,?,?,?)}");
 			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			callableStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
 			callableStatement.setInt(3, ApplicationStatus.ACTIVE.getStatusValue());
@@ -66,8 +66,9 @@ public class PublicTutorDAO implements ICrud {
 
 			while (rs.next()) {
 				Collection<String> singleTutorList = new ArrayList<String>();
-				log.info("<<<<<<<  " + rs.getString("FIRSTNAME"));
-				singleTutorList.add(rs.getString("CODE"));
+
+				singleTutorList.add(rs.getString("USERNAME"));
+				singleTutorList.add(rs.getString("PASSWORD"));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
 				singleTutorList.add(rs.getString("MIDDLENAME"));
 				singleTutorList.add(rs.getString("LASTNAME"));
