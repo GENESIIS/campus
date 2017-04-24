@@ -243,13 +243,6 @@ function populateDataList(responseAttribute,elementId){
 	});
 }
 
-
-
-
-
-
-
-
 /**
  * accepts the country code and extract the available town information
  * that belongs to the country and bring it to the client side form 
@@ -486,3 +479,17 @@ function splitPhoneNumber(phoneNumber,length){
 function clearAllFields(){
 	$('input.text-field').val("");
 }
+
+/**
+ * this events gets triggered every time the courseprovider
+ * input is changed. If the hidden field if field with a value
+ * then trigger the call to server to get the recirds related to
+ * selected id of the course provider
+ */
+$(document).on('change','#courseProvider',function(event){	
+ if(sCourseProviderCode !=""||sCourseProviderCode!=undefined){
+	 //code the ajax call to retrieve the Courseprovider data
+	 // and populate the page.
+ }	
+});
+
