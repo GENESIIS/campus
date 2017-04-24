@@ -6,11 +6,7 @@ package com.genesiis.campus.util;
 //20170419 CW c158-send-email-tutor-employment-confirmation-cw add getBccEmailAddreses, getCcEmailAddreses methods
 					// modified formatEmailInstance method to pass getCcEmailAddreses(), getBccEmailAddreses() as parameters to GeneralMail constructor
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw modified getEmailBody method to create correct email format.
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+//20170424 CW c158-send-email-tutor-employment-confirmation-cw re arrange the import statements
 
 import com.genesiis.campus.util.mail.EmailContentCreator;
 import com.genesiis.campus.util.mail.EmailDispenser;
@@ -22,6 +18,11 @@ import com.genesiis.campus.validation.SystemEmail;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 /**
  * TutorEmploymentConfirmEmailComposer class handles the composing & formatting the email to be sent
