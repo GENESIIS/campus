@@ -1,5 +1,8 @@
 /**
  * 20170421 DN c88-admin-manage-advertiser-add-new-advertiser-dn created the initial js script for the issue.
+ * 20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn . created the global variable adminControllerUrl 
+ * 				and add to the ajax calls which requests Prerequisite data.
+ * 				
  * 
  */
 
@@ -22,6 +25,7 @@ var mobilePhoneNetWorkCode="";
 var selectedCountryCode ="";
 var selectedTownCode = "";
 var userTypeCode = "";
+var adminControllerUrl = '../../../AdminController';
 
 /**
  * displaySignUpPrerequisitDetails() function is meant to pass an ajax 
@@ -31,7 +35,7 @@ var userTypeCode = "";
 
 function displaySignUpPrerequisitDetails(){
 	$.ajax({
-		url:"../../../StudentController",
+		url:adminControllerUrl,
 		data:{
 			CCO:'DPRD' //DISPLAY_PREREQUISITE_DATA
 		},
@@ -184,7 +188,7 @@ function getPreRequisitPageData(preRequistData){
 function extractRelaventTownList(countryCode){
 	$.ajax({
 		
-		url:"../../../StudentController",
+		url:adminControllerUrl,
 		data:{
 			country : countryCode,
 			CCO:'DPTWN'
