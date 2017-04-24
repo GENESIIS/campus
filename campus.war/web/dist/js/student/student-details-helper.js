@@ -36,6 +36,7 @@
 //					  openPersonalDataModel();openEduDataModel();openProfExpDataModel(); implemented.
 //20170306 PN CAM-150: email validation method added to sEmail text field onKeyup event.
 //20170309 PN CAM-150: declared studentPersonalDataSet variable to hold Student's data collection.
+//20170424 PN CAM-150: validations added to sEmail keyup event to remove type-in spaces.
 
 var extStudentSkills = [];
 var extStudentInterests = [];
@@ -486,6 +487,8 @@ function getStudentData(response) {
 	$('.editformdatabtn').prop("disabled", false); // edit buttons are now enabled.
 	
 	$("#sEmail").first().keyup(function () {
+		var fmtEmail = $(this).val().replace(/ /g, "");
+		$(this).val(fmtEmail);
 		var email = this.value;
 		var isValid = isValidEmailFormat(email);
 		if (!isValid){
