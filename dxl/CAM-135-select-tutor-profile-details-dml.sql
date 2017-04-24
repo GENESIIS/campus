@@ -1,6 +1,6 @@
 /*
 * 20170421 JH c135-public-display-tutor-profile-MP-jh CAM-135-select-tutor-public-profile-details-dml.sql created
-* 20170424 JH c135-public-display-tutor-profile-MP-jh changed town and country code data type from INT to VARCHAR
+* 20170424 JH c135-public-display-tutor-profile-MP-jh changed town and country code data type from INT to VARCHAR, added select query to return result set
 */
 
 
@@ -140,6 +140,8 @@ BEGIN
 
 	END
 
+		SELECT * FROM @TutorResult
+		
 END
 
 
