@@ -249,7 +249,8 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 		final List<CourseStatSearchResultDTO> courseStatList = new ArrayList<CourseStatSearchResultDTO>();		
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("");
+			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE, PROG.NAME, PROSTAT.CALLERPAGE ");  
+            sb.append("FROM CAMPUS.PROGRAMME PROG INNER JOIN CAMPUS.PROGRAMMESTAT PROSTAT ON PROG.CODE=PROSTAT.PROGRAMME WHERE PROG.COURSEPROVIDER=1");
 		} catch (SQLException sqlException) {
 			log.info("getProgrammeStatsReport() sqlException" + sqlException.toString());
 			throw sqlException;

@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
  *20170420 DJ c54-report-course-stats-MP-dj create:method listProgrammeWiseProvider() and generateReportResults().
  *20170421 DJ c54-report-course-stats-MP-dj create:implement listProgrammeWiseProvider().
  *20170421 DJ c54-report-course-stats-MP-dj create:implement generateReportResults().
+ *20170421 DJ c54-report-course-stats-MP-dj Identify the input fields in generateReportResults.
  * */
 
 import com.genesiis.campus.entity.IView;
@@ -26,7 +27,9 @@ import com.genesiis.campus.validation.UtilityHelper;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 
@@ -123,6 +126,39 @@ public class CmdReportCourseStats implements ICommand{
 			String endDateString = helper.getParameter("endDate");
 
 			final CourseStatSearchDTO searchDTO = new CourseStatSearchDTO();
+			//int providerCode = 0;
+			if (UtilityHelper.isNotEmpty(providerCodeString)) {
+				if (UtilityHelper.isInteger(providerCodeString)) {
+					int providerCode = Integer.parseInt(providerCodeString);
+					searchDTO.setProviderCode(providerCode);
+				}
+			}
+			if (UtilityHelper.isNotEmpty(programmeCodeString)) {
+				if (UtilityHelper.isInteger(programmeCodeString)) {
+					int programmeCode = Integer.parseInt(programmeCodeString);
+					searchDTO.setProgrammeCode(programmeCode);
+				}
+			}
+			if (UtilityHelper.isNotEmpty(providerCodeString)) {
+				if (UtilityHelper.isInteger(providerCodeString)) {
+					int providerCode = Integer.parseInt(providerCodeString);
+					searchDTO.setProviderCode(providerCode);
+				}
+			}
+			
+			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			
+			if (UtilityHelper.isNotEmpty(startDateString)) {
+				searchDTO.setFromDate(df.parse((startDateString)));
+			} else {
+				
+			}
+			if (UtilityHelper.isNotEmpty(endDateString)) {
+				searchDTO.setToDate(df.parse((endDateString)));
+			} else {
+				
+			}
+						
 
 			final List<CourseStatSearchResultDTO> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
 
