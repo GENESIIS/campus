@@ -10,13 +10,23 @@ package com.genesiis.campus.command;
 //20170403 CW c157-add-tutor-employment-details-cw removed un used import statements & re-order Import Statements
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
 //20170404 CW c157-add-tutor-employment-details-cw add validations to allFeaturedCourseProviderList in execute method
+//20170406 CW c157-add-tutor-employment-details-cw add email sending method calls into the execute method
+//20170418 CW c157-add-tutor-employment-details-cw modified execute method to create allTutorCpEmailList & create relevant variables to call sendTutorEmploymentConfirmEmail method
+//20170419 CW c158-send-email-tutor-employment-confirmation-cw modified employmentDetails variable creation place
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw create courseproviderLoginUrl value.
+//20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod call & add sendTutorEmploymentConfirmEmail as a parameter
+				//add gender into getListOfEmailToSendEmploymentRequest method
+//20170424 CW c158-send-email-tutor-employment-confirmation-cw modified execute method & used Gender enum to set value to personBasedOnGender variable
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
+import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.model.Employment;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.mail.GenerateEmail;
 import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Gender;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -24,6 +34,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
 
 /**
  * this class used to add the tutor employment details to the database & send an email to the Course provide & Admin to approve the request. 
@@ -44,16 +55,16 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		String message = "";
+		String emailMessage = "";
 		int status = 0;
 		try {			
-			Employment employmentDetails = new Employment();
 			String tutorCode = helper.getParameter("tutorcodelist");
 			String employerCode = helper.getParameter("employerDetails");			
 			
 			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){// employer code is selected
 				if(Validator.isNotEmpty(tutorCode)){
-					employmentDetails = setEmploymentDetails(tutorCode, employerCode);
-								
+					
+					Employment employmentDetails = setEmploymentDetails(tutorCode, employerCode);		
 					EmploymentDAO addEmployment = new EmploymentDAO();
 					status = addEmployment.add(employmentDetails);					
 				}
@@ -63,6 +74,28 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			
 			if(status > 0){
 				message = "Selected employers successfully added ...";
+				
+				final Collection<Collection<String>> allTutorCpEmailList = TutorDAO.getListOfEmailToSendEmploymentRequest(employerCode, "SITE_ADMIN_EMAIL", tutorCode);
+				String nameOfTutor = null;
+				String gender = null;;
+				ArrayList<String> receiverEmailList = new ArrayList<String>();
+				String bccEmail = null;
+				
+				for(Collection<String> emailDetails : allTutorCpEmailList){
+					if(emailDetails != null || emailDetails.size() != 0){
+						nameOfTutor = emailDetails.toArray()[0].toString(); // name
+						gender = emailDetails.toArray()[1].toString(); // gender
+						receiverEmailList.add(emailDetails.toArray()[2].toString()); // receivers email address list
+						bccEmail = emailDetails.toArray()[3].toString(); // Bcc email address
+					}
+				}
+				
+				String personBasedOnGender = Gender.getPersonBasedOnGender(gender);
+				
+				String courseproviderLoginUrl = (helper.getUrl()).replace((helper.getUri()), "") + "/dist/partials/courseprovider/login.jsp";
+				 
+				GenerateEmail emailAtUpdate = new GenerateEmail();
+				emailMessage = emailAtUpdate.sendTutorEmploymentConfirmEmail(nameOfTutor, receiverEmailList, bccEmail, courseproviderLoginUrl, personBasedOnGender); //send email
 			}
 			
 			if(Validator.isNotEmpty(tutorCode)){
@@ -83,10 +116,10 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			throw exception;
 		} finally {
 			helper.setAttribute("message", message);
+			helper.setAttribute("emailMessage", emailMessage);
 		}
 		return view;
-	}
-	
+	}	
 	
 	/**
 	 * This method is created to populate data into the Employment object
@@ -107,6 +140,5 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 		}
 			
 		return employment;
-	}
-	
+	}	
 }

@@ -22,6 +22,7 @@
  * 20170404 CW c157-add-tutor-employment-details-cw modified doc comments of fillSelectedCourseProviderData method & modified clearField method to clear tablemessage
  * 20170404 CW c157-add-tutor-employment-details-cw modified ready method & assign tutor code value into tutorCodeTable
  * 				modified fillSelectedCourseProviderData method & remove data filling to tutorCodeTable variable
+ * 20170419 CW c158-send-email-tutor-employment-confirmation-cw add emailMessage clear functions into clearField method 
  */
 
 $(document).ready(function() {
@@ -129,4 +130,5 @@ function clearField(elementId) {
 	$(document).find('#' + elementId).text('');
 	$(document).find('#message').text('');
 	$(document).find('#tablemessage').text('');
+	$(document).find('#emailMessage').text('');
 }
