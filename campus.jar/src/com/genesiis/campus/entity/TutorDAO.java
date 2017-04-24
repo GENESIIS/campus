@@ -38,6 +38,7 @@ package com.genesiis.campus.entity;
 				// add getListOfEmailToSendEmploymentRequest method
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw add gender into getListOfEmailToSendEmploymentRequest method
 //20170421 CW c159-courseprovider-accept-tutor-request-cw Add getTutorsListOfCourseprovider method
+//20170424 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method to get the gender correctly
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -441,10 +442,11 @@ public class TutorDAO implements ICrud {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 									
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTOR, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, T.EMAIL, ");
-		queryBuilder.append("T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTORCODE, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, "); 
+		queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
+		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
-		queryBuilder.append("EMP.CODE EMPCODE, EMP.VARIFICATIONSTATUS VERIFSTATUS, EMP.COURSEPROVIDER CP ");
+		queryBuilder.append("EMP.CODE EMPCODE, EMP.VARIFICATIONSTATUS VERIFSTATUS, EMP.COURSEPROVIDER CPCODE ");
 		queryBuilder.append("FROM CAMPUS.TUTOR T ");
 		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
 		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
@@ -459,14 +461,15 @@ public class TutorDAO implements ICrud {
 			while (rs.next()) {
 				final ArrayList<String> singleEmploymentTutorsList = new ArrayList<String>();		
 												
-				singleEmploymentTutorsList.add(rs.getString("TUTOR"));
+				singleEmploymentTutorsList.add(rs.getString("TUTORCODE"));
 				singleEmploymentTutorsList.add(rs.getString("NAME"));
+				singleEmploymentTutorsList.add(rs.getString("GENDER"));
 				singleEmploymentTutorsList.add(rs.getString("EMAIL"));
 				singleEmploymentTutorsList.add(rs.getString("LANDNUMBER"));
 				singleEmploymentTutorsList.add(rs.getString("MOBILENUMBER"));
 				singleEmploymentTutorsList.add(rs.getString("EMPCODE"));
 				singleEmploymentTutorsList.add(rs.getString("VERIFSTATUS"));
-				singleEmploymentTutorsList.add(rs.getString("CP"));
+				singleEmploymentTutorsList.add(rs.getString("CPCODE"));
 
 				allEmploymentTutorsList.add(singleEmploymentTutorsList);
 			}		
