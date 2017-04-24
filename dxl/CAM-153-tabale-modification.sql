@@ -2,12 +2,19 @@
 //20170331 AS CAM-153 login data update query added
 //20170403 AS CAM-153 AdminLogin Query modification updated
 //20170405 AS CAM-153 admin privilege query updated
-
+//20170424 AS CAM-153 table alter ATTEMPTS and LASTATTEMPTTIME fildes added. 
 
 //Admin tabale alter
 
 ALTER TABLE CAMPUS.ADMIN ADD
 EMAIL varchar(255) DEFAULT ('');
+
+ALTER TABLE CAMPUS.ADMIN ADD
+ATTEMPTS tinyint;
+
+ALTER TABLE CAMPUS.ADMIN ADD
+LASTATTEMPTTIME datetime ;
+
 
 //Admin Login Query
 
