@@ -1,6 +1,7 @@
 /**
  * 20170206 PN CAM-137 INIT file to implement error handling methods
  * 20170215 PN CAM-137 removed unwanted alert message.
+ * 20170424 PN CAM-137 formatted returning error message in displayErrorMessage() method.
  */
 
 /*This method will format the error message and will display it to the user.
@@ -17,7 +18,17 @@ function displayErrorMessage(x, status, error) {
 	} else if (startingValue == '5') {
 		errorMessage = errorCode + ": " + getServerErrorMessage(errorCode);
 	} else {
-		errorMessage = error+ ":" +status;
+		if(errorCode){		
+			if(error){
+				errorMessage = errorCode+":"+errorMessage+ ":" +error;
+			}else{
+				errorMessage = errorCode+":"+errorMessage;
+			}
+		}else{
+			if(error){
+				errorMessage = errorMessage+ ":" +error;
+			}
+		}		
 	}
 	return errorMessage;
 }
