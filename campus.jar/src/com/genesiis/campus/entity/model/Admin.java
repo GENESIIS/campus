@@ -1,8 +1,12 @@
 package com.genesiis.campus.entity.model;
+
+import java.sql.Timestamp;
+
 //20170315 AS CAM-23-admin-login-logout-function-as Admin pojo class created and attributes  
 //20170316 AS CAM-23-admin-login-logout-function-as LoginHistory pojo extended
 //20170321 AS CAM-23-admin-login-logout-function-as code and isActive Attributes changed to adminCode and adminIsActive
 //20170404 AS CAM-23-admin-login-logout-function-as - userTypeString attribute added
+//20170424 AS CAM-154-admin-privilege-handling-as - attempts,lastAttempt attribute added
 
 public class Admin extends LoginHistory {
 
@@ -24,6 +28,22 @@ public class Admin extends LoginHistory {
 	private String modBy;
 	private boolean valid;
 	private boolean remember;
+	private int attempts;
+	private Timestamp lastAttempt;
+	
+	
+	public int getAttempts() {
+		return attempts;
+	}
+	public void setAttempts(int attempts) {
+		this.attempts = attempts;
+	}
+	public Timestamp getLastAttempt() {
+		return lastAttempt;
+	}
+	public void setLastAttempt(Timestamp lastAttempt) {
+		this.lastAttempt = lastAttempt;
+	}
 	
 	public String getUserTypeString() {
 		return userTypeString;
