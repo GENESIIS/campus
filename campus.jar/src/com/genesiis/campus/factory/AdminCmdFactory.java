@@ -21,12 +21,16 @@ package com.genesiis.campus.factory;
 //20170313 DN c81-admin-manage-banner-add-and-view-banner-dn add the ADMIN_DISPLAY_BANNERS enum to switch structure.
 //20170327 DN c83-admin-manage-banner-update-banner-info-dn add UPDATE_ONLY_THE_BANNER_RECORD  enum to switch structure.
 //20170418/19 DN c86-admin-manage-banner-search-banner-dn. ACTIVATE_BANNER/DEACTIVATE_BANNER keys to the map and switch case has been added.
-//				and associate the above entries to  new CmdAmendBannerState().
+//				and associate the above entries to  new CmdAmendBannerState()
+//20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn add DISPLAY_PREREQUISITE_DATA,DISPLAY_TOWN_DATA  entries to the map
+//				and both to getCommand()
 
+import com.genesiis.campus.command.CmdAddAdvertiserPrerequisiteData;
 import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdAmendBannerState;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
 import com.genesiis.campus.command.CmdListBanner;
+import com.genesiis.campus.command.CmdListPrereqSignUpWithoutThirdParty;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -47,6 +51,8 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.UPDATE_ONLY_THE_BANNER_RECORD, new CmdAdminBannerUpload());
 		map.put(Operation.ACTIVATE_BANNER, new CmdAmendBannerState());
 		map.put(Operation.DEACTIVATE_BANNER, new CmdAmendBannerState());
+		map.put(Operation.DISPLAY_PREREQUISITE_DATA, new CmdAddAdvertiserPrerequisiteData());
+		map.put(Operation.DISPLAY_TOWN_DATA,new CmdAddAdvertiserPrerequisiteData());
 		
 	}
 
@@ -77,6 +83,12 @@ public class AdminCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case DEACTIVATE_BANNER:
+			command = map.get(o);
+			break;
+		case DISPLAY_PREREQUISITE_DATA:
+			command = map.get(o);
+			break;
+		case DISPLAY_TOWN_DATA:
 			command = map.get(o);
 			break;
 		default:
