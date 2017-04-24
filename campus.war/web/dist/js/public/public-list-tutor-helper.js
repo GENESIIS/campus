@@ -8,6 +8,7 @@
  * 20170314 JH c96 DisplayTutorTable(): added styles to html labels, removed commented and codes in listPublicTutors() and selectTutorRecord(),
  * 				created selectTutorMajor() and selectTutorCategory() methods, added onclick function to tutor name
  * 20170320 JH c96 added getCategoryData() method to window.onload function to call header populate methods
+ * 20170424 JH c135-public-display-tutor-profile selectTutorRecord() modified to load tutor profile page
  */
 
 window.tutorList = null;
@@ -60,8 +61,8 @@ function listPublicTutors(){
 
 
 /**
- * used to select a specific record of a tutor and alert the tutor code value until
- * the public profile page is created.
+ * used to select a specific record of a tutor and pass the tutor
+ * code value to the profile page
  * @param code
  * @returns
  * @author JH
@@ -69,6 +70,13 @@ function listPublicTutors(){
 function selectTutorRecord(code){
 
 	   alert("will direct to tutor public profile. And the tutor is "  + code);
+	   
+	   var url = '/dist/partials/public/display-tutor-profile.jsp';
+	   var form = $('<form action="' + url + '" method="post">' +
+	     '<input type="hidden" name="tutorCode" value="' + code+ '" />' +
+	     '</form>');
+	   $('body').append(form);
+	   $(form).submit();
 }
 
 /**
@@ -89,7 +97,8 @@ function selectTutorMajor(code){
  */
 function selectTutorCateogry(code){
 	   alert("This will redirect to Category description page. The selected categopry code is "  + code);
-}
+
+	  }
 
 /**
  * Used to generate the tutor table using datatables
