@@ -5,6 +5,7 @@
  *20170421 c54-report-course-stats-MP-dj Implement listProgrammes() method and initiate search button click action.
  *20170425 c54-report-course-stats-MP-dj Implement populateCourseStatReportTable() and populate data.
  *20170425 c54-report-course-stats-MP-dj Implement clearParameters()-Clear form.
+ *20170425 c54-report-course-stats-MP-dj validate the from date and to date when picking the calandar.fromdate<today and todate>fromdate
  **/
 
 $(document).ready(function() {
@@ -109,6 +110,25 @@ $(document).ready(function() {
 		clearParameters(event);
 	});
 	
+	
+	/*
+	 * validate fromDate< current date
+	 */	
+	$('#startdate').on('click', function(event) {	
+		var today=getCurrentDate();
+		document.getElementById("startdate").setAttribute("max", today);
+	});
+	
+	/*
+	 * validate toDate>from date
+	 */	
+	$('#enddate').on('click', function(event) {		
+		var fromDate= $('#startdate').val();		
+		document.getElementById("enddate").setAttribute("min", fromDate);	
+		var today=getCurrentDate();
+		document.getElementById("enddate").setAttribute("max", today);	
+		 
+	});
 });
 
 /*
@@ -210,4 +230,23 @@ function clearParameters(event){
 	$('#providerlist').val("");	
 	$('#programmelist').val("");	
 	$('#errorToDate').text("");	
+}
+
+/**
+ * This method getCurrentDate() get current date(format 2017-02-08).
+ */
+function getCurrentDate() {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd
+	}
+	if (mm < 10) {
+		mm = '0' + mm
+	}
+
+	today = yyyy + '-' + mm + '-' + dd;
+	return today;
 }
