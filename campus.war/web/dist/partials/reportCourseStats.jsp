@@ -1,6 +1,7 @@
 <!-- 20170418 c54-report-course-stats-MP-dj view Course Stats-->
 <!-- 20170421 c54-report-course-stats-MP-dj add hidden attribute selectedProvider-->
 <!-- 20170425 c54-report-course-stats-MP-dj set placeholder for course provider drop down-->
+<!-- 20170425 c54-report-course-stats-MP-dj add 'errorProviderList' to set the error message on provider selection-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -70,6 +71,7 @@ tr:nth-child(even) {
 						Course Provider :
 							<input name="providerlist" id="providerlist" class="form-control" list="providerName" placeholder="-- Select Provider --">
 							<datalist id="providerName"></datalist>
+							 <label	id="errorProviderList" for=""></label>
 							<input type="hidden" name="selectedProvider"	id="selectedProvider" value=""/>
 						</div>			
 						

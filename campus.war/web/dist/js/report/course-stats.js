@@ -7,6 +7,7 @@
  *20170425 c54-report-course-stats-MP-dj Implement clearParameters()-Clear form.
  *20170425 c54-report-course-stats-MP-dj validate the from date and to date when picking the calandar.fromdate<today and todate>fromdate
  *20170425 c54-report-course-stats-MP-dj create loadResultSet() and modularize the implementation-Validate date for 30 days of period.
+ *20170425 c54-report-course-stats-MP-dj validate course provider as a mandatory field, and clear hidden keys in form clearing.
  **/
 
 $(document).ready(function() {
@@ -36,7 +37,7 @@ $(document).ready(function() {
 	 */
 
 	$('#providerlist').on('change', function(event) {		
-				
+		$('#errorProviderList').text("");		
 	    var value=event.target.value;
 	    var providerCode = $('#providerName [value="' + value + '"]').data('provider');
 	    	    
@@ -76,7 +77,6 @@ $(document).ready(function() {
 	 */
 	
 	$('#searchList').on('click ', function(event) {			
-		alert("searchList");
 		loadResultSet(event);		
 	});
 	
@@ -152,6 +152,12 @@ function loadResultSet(event){
 	var providerCode=$('#selectedProvider').val();
 	var startDate = $('#startdate').val();
 	var endDate = $('#enddate').val();
+	
+	if(providerCode === undefined || providerCode === ""  ||	providerCode === null){
+		$('#errorProviderList').text("Please select a course provider!");
+		document.getElementById('errorProviderList').style.color = "red";
+		return false;
+	}
 	
 	$('#errorToDate').text("");
 	if (Date.parse(startDate)> Date.parse(endDate)) {		
@@ -250,8 +256,12 @@ function clearParameters(event){
 	$('#startdate').val(""); 
 	$('#enddate').val(""); 	
 	$('#providerlist').val("");	
+	$('#selectedProvider').val("");	
 	$('#programmelist').val("");	
-	$('#errorToDate').text("");	
+	$('#selectedProgramme').val("");	
+	$('#errorToDate').text("");
+	$('#errorProviderList').text("");	
+	$("#programmeName").empty();
 }
 
 /**
