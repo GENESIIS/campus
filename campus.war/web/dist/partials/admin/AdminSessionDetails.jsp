@@ -35,27 +35,29 @@
    </c:if>
 
 	<c:set var="currentUrl" value="${pageContext.request.requestURI}"></c:set>
-	<!-- logged student authenticated listed interfaces iteration -->
-	<c:if test="${sessionScope.currentUserData[1] != null }">
+	<!-- logged admin authenticated listed interfaces iteration -->
+	<c:if test="${sessionScope.currentUserData[2] != null }">
 		<c:set var="conVal" value="0" />
-		<c:forEach var="userDataCollection"
-			items="${sessionScope.currentUserData[1]}" varStatus="rowCount"
-			begin="5" step="8">
+		<c:forEach var="userDataCollection"	items="${sessionScope.currentUserData[2]}" varStatus="rowCount"	begin="0" step="2"> 
+		
 			<c:set var="url" value="${userDataCollection}" />
 
 			<c:if test="${currentUrl == url}">
 				<c:set var="conVal" value="1" />
 			</c:if>
+			
 		</c:forEach>
 		<c:if test="${conVal == 0}">
 			<%
-				response.sendRedirect("/admin-login.jsp");
+				response.sendRedirect("/dist/partials/admin/admin-login.jsp");
 			%>
 		</c:if>
 		<!-- iterating user authenticated button actions -->
 		<c:forEach var="userDataCollection2"
-			items="${sessionScope.currentUserData[1]}" varStatus="rowCount"
-			begin="6" step="8">
+		
+			items="${sessionScope.currentUserData[2]}" varStatus="rowCount"
+			begin="1" step="2">
+
 			<c:set var="buttionAction" value="${userDataCollection2}"
 				scope="request" />
 			<c:set var="action" value="${action},${buttionAction}"
