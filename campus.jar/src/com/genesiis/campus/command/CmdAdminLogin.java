@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
 //20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update
+//20170425 AS CAM-154-admin-privilege-handling-as - attempts handling modification done
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.AdminPrivilegeDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -88,8 +89,9 @@ public class CmdAdminLogin implements ICommand{
 						setAdminLoginDetails(adminData, helper);
 						int status = AdminLoginDAO.loginDataUpdate(adminData);
 						if(status >0){
+							adminData.setAttempts(0);
+							adminLoginDAO.update(adminData);
 							//admin privacy privilege list
-							//CAM-154 doing the admin privilege handling 
 							AdminPrivilegeDAO adminPrivilegeDAO = new AdminPrivilegeDAO();
 							privilegeList = adminPrivilegeDAO.adminPrivileges(adminData);
 							dataCollection.add(privilegeList);
