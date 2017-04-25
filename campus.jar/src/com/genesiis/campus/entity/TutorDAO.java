@@ -39,6 +39,7 @@ package com.genesiis.campus.entity;
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw add gender into getListOfEmailToSendEmploymentRequest method
 //20170421 CW c159-courseprovider-accept-tutor-request-cw Add getTutorsListOfCourseprovider method
 //20170424 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method to get the gender correctly
+//20170425 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method query to decode VARIFICATIONSTATUS
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -446,7 +447,8 @@ public class TutorDAO implements ICrud {
 		queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
 		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
-		queryBuilder.append("EMP.CODE EMPCODE, EMP.VARIFICATIONSTATUS VERIFSTATUS, EMP.COURSEPROVIDER CPCODE ");
+		queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
+		queryBuilder.append("CASE EMP.VARIFICATIONSTATUS WHEN 1 then 'Inactive' WHEN 2 then 'Active' WHEN 3 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END VERIFSTATUS ");
 		queryBuilder.append("FROM CAMPUS.TUTOR T ");
 		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
 		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
