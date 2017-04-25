@@ -78,7 +78,7 @@
       &nbsp; &nbsp;
        <div >
        	 <label>Description</label>
-         <textarea name="Text1" cols="40" rows="5" ></textarea>
+         <textarea id="courseProviderDescription" name="Text1" cols="40" rows="5" ></textarea>
          <hr>
       </div>
       <!-- End od Description div -->
@@ -96,11 +96,11 @@
         <!-- End of Land/Mobile Phone Number -->
        <div>
          <label> Adrees Line 1</label>
-         <input type="text" id=""><br>
+         <input type="text" id="address1"><br>
          <label> Adrees Line 2</label> 
-         <input type="text" id=""> <br>
+         <input type="text" id="address2"> <br>
          <label> Adrees Line 3</label> 
-         <input type="text" id=""> <br>
+         <input type="text" id="address3"> <br>
        </div>
         <br><br>
          <!-- End of Address lines -->
