@@ -850,20 +850,54 @@ function resetAccordion(element){
  */
 $('body').on('keydown', function(e) {
     if (e.which == 9) {
-        e.preventDefault();
+
         var currentElement = $(':focus').attr('id');
         var accordionList = $('#basicForm').find('.accordion-body');
     	
     	var accordionName = $('#' +currentElement).parent().closest(".accordion-body");
+    	var currentInputWrapper = $('#' +currentElement).parent().closest(".input-wrapper");
     	alert(accordionName.attr('id'));
     	var accordionId = accordionName.attr('id');
-    	var inputs = $('#' + accordionId).find('.form-control');
-    	var last = inputs.last().attr('id');
     	
-    	if(currentElement === last){
-    		alert("equals");
-    	var nextAccordion = accordionId.next();
+    	var accordionIndex = accordionList.index(accordionName);
+    	
+    	// check if this is the last accordion
+    	if((accordionIndex + 1)  === accordionList.length){//last accordion
+    		
+    		/* send focus to the submit button */
+    		
+    		
+    	}else{//not the last accordion
+    	      e.preventDefault();
+        	var inputs = $('#' + accordionId).find('.input-wrapper');
+        	var last = inputs.last().attr('id');
+        	
+        	if(currentInputWrapper.attr('id') === last){
+        		
+        		var nextAccordion = accordionList[accordionIndex + 1];
+        		alert(nextAccordion);
+        		
+        		// send focus to the next accordion
+        		$(".admin .accordion").accordion({		 
+        			active: accordionList.index(nextAccordion),
+        			header: ".accordion-header",
+        			collapsible: false,
+        			heightStyle: "content", 
+        			autoHeight: false,
+        			navigation: true	
+        		});
+        		
+        		var newInputs = $( nextAccordion).find('.form-control');
+        		var firstInputId = newInputs.first().attr('id');
+        		
+        		$('#' + firstInputId).focus();
+//        			document.getElementById('errorSelectedTown').focus();
+
+        	}else{
+        		/* send focus to the next input */
+        	}
     	}
-        // do your code
+
+    
     }
 });
