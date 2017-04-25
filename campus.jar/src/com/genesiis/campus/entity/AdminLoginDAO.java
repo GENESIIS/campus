@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
 //20170403 AS c23-admin-login-logout-function-as - findById() sql query modification and userTypeString set to the dataColletction 
 //20170404 AS c23-admin-login-logout-function-as - loginDataUpdate() sql query modified
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
+//20170425 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified the logic. 
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
@@ -142,7 +143,7 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		}
-		log.info(rowInserted);
+		
 		return rowInserted;
 	}
 
@@ -164,7 +165,7 @@ public class AdminLoginDAO implements ICrud {
 		String message = SystemMessage.NOTREGISTERD.message();
 
 		ResultSet rs = null;
-		String query = "SELECT ADMIN.CODE, ADMIN.NAME, ADMIN.USERNAME, ADMIN.PASSWORD, ADMIN.EMAIL, ADMIN.ISACTIVE, ADMIN.USERTYPE, USERTYPE.USERTYPESTRING, ADMIN.ATTEMPTS, DATEDIFF(MINUTE , ADMIN.LASTATTEMPTTIME , SYSDATETIME()) AS MinuteDiff FROM CAMPUS.ADMIN INNER JOIN CAMPUS.USERTYPE ON CAMPUS.ADMIN.USERTYPE = CAMPUS.USERTYPE.CODE WHERE USERNAME=? COLLATE Latin1_General_CS_AS AND ISACTIVE = ? OR EMAIL =?  AND ISACTIVE = ?";
+		String query = "SELECT ADMIN.CODE, ADMIN.NAME, ADMIN.USERNAME, ADMIN.PASSWORD, ADMIN.EMAIL, ADMIN.ISACTIVE, ADMIN.USERTYPE, USERTYPE.USERTYPESTRING, ADMIN.ATTEMPTS, DATEDIFF(MINUTE , SYSDATETIME() , ADMIN.LASTATTEMPTTIME) AS MinuteDiff FROM CAMPUS.ADMIN INNER JOIN CAMPUS.USERTYPE ON CAMPUS.ADMIN.USERTYPE = CAMPUS.USERTYPE.CODE WHERE USERNAME=? COLLATE Latin1_General_CS_AS AND ISACTIVE = ? OR EMAIL =?  AND ISACTIVE = ?";
 		String code = "";
 		String name = "";
 		String userName = "";
@@ -206,9 +207,9 @@ public class AdminLoginDAO implements ICrud {
 				minitDiff = rs.getInt("MinuteDiff");
 				attempt = rs.getInt("ATTEMPTS");
 
-			//	if (minitDiff >= 30 && attempt == 3) {
 
-					if ((check && passwordMatch) && (minitDiff >= 30 || attempt == 3)) {
+
+					if ((check && passwordMatch) && (minitDiff >= 30 && attempt == 3) || (check && passwordMatch) && (attempt == 2) || (check && passwordMatch) && ( attempt == 1) || (check && passwordMatch) && ( attempt == 0)) {
 						admin.setAdminCode(Integer.parseInt(code));
 						admin.setName(name);
 						admin.setUsername(userName);
@@ -234,14 +235,11 @@ public class AdminLoginDAO implements ICrud {
 						message = SystemMessage.INVALIDPASSWORD.message();
 						admin.setAdminCode(Integer.parseInt(code));
 						admin.setValid(false);
-			
+						if(attempt == 3){
+							message = SystemMessage.LOGGINATTEMPT3.message();
+						}
 					}
 
-//				} else {
-//					message = SystemMessage.LOGGINATTEMPT3.message();
-//					admin.setAdminCode(Integer.parseInt(code));
-//					log.info(message);
-//				}
 
 			} else {
 				message = SystemMessage.INVALIDUSERNAME.message();
