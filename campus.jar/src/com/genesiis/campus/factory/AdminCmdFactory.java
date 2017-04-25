@@ -24,6 +24,8 @@ package com.genesiis.campus.factory;
 //				and associate the above entries to  new CmdAmendBannerState()
 //20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn add DISPLAY_PREREQUISITE_DATA,DISPLAY_TOWN_DATA  entries to the map
 //				and both to getCommand()
+//20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn.The enum GET_ADVERTISER_CREDENTIALS has been added to the map and the getCommand(String) method.
+//
 
 import com.genesiis.campus.command.CmdAddAdvertiserPrerequisiteData;
 import com.genesiis.campus.command.CmdAdminBannerUpload;
@@ -31,6 +33,7 @@ import com.genesiis.campus.command.CmdAmendBannerState;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
 import com.genesiis.campus.command.CmdListBanner;
 import com.genesiis.campus.command.CmdListPrereqSignUpWithoutThirdParty;
+import com.genesiis.campus.command.CmdAdvertiserCredentialRetriever;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
@@ -53,6 +56,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.DEACTIVATE_BANNER, new CmdAmendBannerState());
 		map.put(Operation.DISPLAY_PREREQUISITE_DATA, new CmdAddAdvertiserPrerequisiteData());
 		map.put(Operation.DISPLAY_TOWN_DATA,new CmdAddAdvertiserPrerequisiteData());
+		map.put(Operation.GET_ADVERTISER_CREDENTIALS, new CmdAdvertiserCredentialRetriever());
 		
 	}
 
@@ -89,6 +93,9 @@ public class AdminCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case DISPLAY_TOWN_DATA:
+			command = map.get(o);
+			break;
+		case GET_ADVERTISER_CREDENTIALS:
 			command = map.get(o);
 			break;
 		default:
