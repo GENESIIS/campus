@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170420 CW c159-courseprovider-accept-tutor-request-cw modified execute method to use courseProviderCode variable
 //20170421 CW c159-courseprovider-accept-tutor-request-cw add tutorsForCP variable into execute method
 //20170424 CW c159-courseprovider-accept-tutor-request-cw modified execute method to set values of courseProviderCode from cpCode
+//20170425 CW c159-courseprovider-accept-tutor-request-cw add applicationStatusMap
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -44,6 +45,15 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 				
 				final TutorDAO tutorsForCP = new TutorDAO();				
 				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode);
+				
+
+				Map<int, String> applicationStatusMap = new Map<int, String>();
+				
+				for (String name : ApplicationStatus.value()) {
+					someMap.put(ApplicationStatus.getValue(name), name);
+				}
+				
+				helper.setAttribute("enumList", someMap);
 				
 				view.setCollection(allEmploymentTutorsList);		
 			}else{
