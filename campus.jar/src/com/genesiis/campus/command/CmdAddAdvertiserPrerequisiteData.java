@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 /**
  * 20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn created the initial 
  * 				class CmdAddAdvertiserPrerequisiteData.java class.
+ * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. made the log attribute a private field
  */
 
 
@@ -31,7 +32,7 @@ import java.util.Collection;
  */
 public class CmdAddAdvertiserPrerequisiteData implements ICommand {
 	
-	static Logger log = Logger.getLogger(CmdAddAdvertiserPrerequisiteData.class.getName());
+	private static Logger log = Logger.getLogger(CmdAddAdvertiserPrerequisiteData.class.getName());
 	private AddAdvertiserPrerequisiteData pagePrerequiaiteData = null;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
