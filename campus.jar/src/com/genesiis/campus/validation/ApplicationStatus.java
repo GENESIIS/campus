@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
 //20170403 CW c157-add-tutor-employment-details-cw copied the ApplicationStatus from c51-report-courses-by-course-provider-MP-dj issue
+//20170425 CW c159-courseprovider-accept-tutor-request-cw command DELETED added
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -16,7 +17,8 @@ public enum ApplicationStatus {
 	INACTIVE(0),
 	ACTIVE(1),	
 	PENDING(2),
-	EXPIRED(3);	
+	EXPIRED(3),
+	DELETED(4);	
 	
 	private final int statusValue;
 
@@ -52,6 +54,9 @@ public enum ApplicationStatus {
 		}
 		if(statusValue==EXPIRED.statusValue ){
 			applicationStatus = "Expired";
+		}
+		if(statusValue==DELETED.statusValue ){
+			applicationStatus = "Deleted";
 		}
 		
 		return applicationStatus;
