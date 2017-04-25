@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170425 CW c159-courseprovider-accept-tutor-request-cw INIT CmdApproveRejectRemoveTutors.java
+//20170425 CW c159-courseprovider-accept-tutor-request-cw created approveList & rejcetList variables
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -40,46 +41,51 @@ public class CmdApproveRejectRemoveTutors implements ICommand {
 						bothSelected = true;			
 					}
 				}
-			}
-			
-			if(!bothSelected){
-				log.info("both not selected");
-				/*if(Validator.isNotEmpty(maxSequence)){
-					int maxIndex = Integer.parseInt(maxSequence);				
-	
+				
+				if(!bothSelected){
+					
 					for(int i = 1; i <= maxIndex+1; i++){ // creating the comma separated list of employment codes needed to remove
 	
-						if(Validator.isNotEmpty(helper.getParameter("isSelected"+i)) && helper.getParameter("isSelected"+i).equals("1")){
-							if(deleteList == ""){
-								deleteList = helper.getParameter("employmentCode"+i);
+						if(Validator.isNotEmpty(helper.getParameter("isApprove"+i)) && helper.getParameter("isApprove"+i).equals("1")){
+							if(approveList == ""){
+								approveList = helper.getParameter("employmentCode"+i);
 							}else{
-								deleteList = deleteList + "," + helper.getParameter("employmentCode"+i);
+								approveList = approveList + "," + helper.getParameter("employmentCode"+i);
+							}			
+						}
+						
+						if(Validator.isNotEmpty(helper.getParameter("isRemove"+i)) && helper.getParameter("isRemove"+i).equals("1")){
+							if(rejcetList == ""){
+								rejcetList = helper.getParameter("employmentCode"+i);
+							}else{
+								rejcetList = rejcetList + "," + helper.getParameter("employmentCode"+i);
 							}			
 						}
 					}
+					
+					if(deleteList != ""){
+						final EmploymentDAO employment = new EmploymentDAO();
+						status = employment.deleteMultiple(deleteList);
+					}else{
+						tablemessage = "Please select Employment Details to delete ...";				
+					}
+					
+					if(status > 0){
+						tablemessage = "Selected employers successfully removed ...";
+					}
+					
+					String tutorCode = helper.getParameter("tutorCodeTable");		
+					Collection<Collection<String>> allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);			
+					
+					if(allSelectedFeaturedCourseProviderList == null || allSelectedFeaturedCourseProviderList.isEmpty()){
+						Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
+						singleTutorEmploymentViewCollection.add(tutorCode);
+						allSelectedFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
+					}
+					
+					view.setCollection(allSelectedFeaturedCourseProviderList);	
+	
 				}
-				if(deleteList != ""){
-					final EmploymentDAO employment = new EmploymentDAO();
-					status = employment.deleteMultiple(deleteList);
-				}else{
-					tablemessage = "Please select Employment Details to delete ...";				
-				}
-				
-				if(status > 0){
-					tablemessage = "Selected employers successfully removed ...";
-				}
-				
-				String tutorCode = helper.getParameter("tutorCodeTable");		
-				Collection<Collection<String>> allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);			
-				
-				if(allSelectedFeaturedCourseProviderList == null || allSelectedFeaturedCourseProviderList.isEmpty()){
-					Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
-					singleTutorEmploymentViewCollection.add(tutorCode);
-					allSelectedFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
-				}
-				
-				view.setCollection(allSelectedFeaturedCourseProviderList);	
-				*/
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
