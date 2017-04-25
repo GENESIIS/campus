@@ -1,5 +1,6 @@
 <!-- 20170418 c54-report-course-stats-MP-dj view Course Stats-->
 <!-- 20170421 c54-report-course-stats-MP-dj add hidden attribute selectedProvider-->
+<!-- 20170425 c54-report-course-stats-MP-dj set placeholder for course provider drop down-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -67,7 +68,7 @@ tr:nth-child(even) {
 						<legend align="left">Search criteria : </legend>
 						<div class="input-wrapper has-select" id="providerlist">
 						Course Provider :
-							<input name="providerlist" id="providerlist" class="form-control" list="providerName">
+							<input name="providerlist" id="providerlist" class="form-control" list="providerName" placeholder="-- Select Provider --">
 							<datalist id="providerName"></datalist>
 							<input type="hidden" name="selectedProvider"	id="selectedProvider" value=""/>
 						</div>			
@@ -107,13 +108,9 @@ tr:nth-child(even) {
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Student Code</th>
-								<th>Student Name</th>
-								<th>Interest</th>
-								<th>Town Name</th>
-								<th>Status</th>
-								<th>Registered date</th>
-								<th>Last login date</th>								
+								<th>PROGNAME NAME</th>
+								<th>VIEW</th>
+								<th>INQUIRECOUNT</th>								 								
 							</tr>
 						</thead>
 						<tbody id="tBody">

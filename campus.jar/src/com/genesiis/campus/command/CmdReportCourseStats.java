@@ -154,7 +154,7 @@ public class CmdReportCourseStats implements ICommand{
 				
 			}				
 
-			final List<CourseStatSearchResultDTO> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
+			final  Collection<Collection<String>> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
 
 			helper.setAttribute("courseStatList", courseStatList);
 			

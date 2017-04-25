@@ -6,6 +6,7 @@ package com.genesiis.campus.entity.dao;
 //20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
 //20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
 //20170425 DJ c54-report-course-stats-MP-dj implement:getProgrammeStatsReport() 
+//20170425 DJ c54-report-course-stats-MP-dj changed the return type of getProgrammeStatsReport() to list of collection.
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
@@ -243,15 +244,16 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 	}
 
 	@Override
-	public List<CourseStatSearchResultDTO> getProgrammeStatsReport(
+	public  Collection<Collection<String>> getProgrammeStatsReport(
 			CourseStatSearchDTO searchDTO) throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;		
-		final List<CourseStatSearchResultDTO> courseStatList = new ArrayList<CourseStatSearchResultDTO>();		
+		//final List<CourseStatSearchResultDTO> courseStatList = new ArrayList<CourseStatSearchResultDTO>();
+		Collection<Collection<String>> courseStatList = new ArrayList<Collection<String>>();
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT COUNT(PROG.CODE) INQUIRECOUNT,  PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME, PROSTAT.CALLERPAGE AS CALLEROAGE "); 
+			final StringBuilder sb = new StringBuilder("SELECT COUNT(PROG.CODE) INQUIRECOUNT,  PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME, PROSTAT.CALLERPAGE AS CALLERPAGE "); 
 			sb.append(" FROM CAMPUS.PROGRAMME PROG INNER JOIN CAMPUS.PROGRAMMESTAT PROSTAT ON PROG.CODE=PROSTAT.PROGRAMME WHERE 1=1 ");
 			if(searchDTO.getProviderCode() >0){
 				sb.append(" AND PROG.COURSEPROVIDER = ");
@@ -281,8 +283,11 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			stmt=conn.prepareStatement(sb.toString());
 			resultSet=stmt.executeQuery();			
 			while (resultSet.next()) {
-				final CourseStatSearchResultDTO resultDTO=new CourseStatSearchResultDTO();				
-				courseStatList.add(resultDTO);					
+				final ArrayList<String> singleCourseStatList = new ArrayList<String>();					
+				singleCourseStatList.add(resultSet.getString("PROGNAME"));
+				singleCourseStatList.add(resultSet.getString("CALLERPAGE"));
+				singleCourseStatList.add(resultSet.getString("INQUIRECOUNT"));
+				courseStatList.add(singleCourseStatList);					
 			}
 		} catch (SQLException sqlException) {
 			log.info("getProgrammeStatsReport() sqlException" + sqlException.toString());

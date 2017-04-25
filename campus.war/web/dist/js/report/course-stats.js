@@ -3,6 +3,7 @@
  *20170418 c54-report-course-stats-MP-dj Initiated getCourseStatsSearchData and Identify selected course provider action.
  *20170421 c54-report-course-stats-MP-dj Identified the selected course provider code for listing programmes.
  *20170421 c54-report-course-stats-MP-dj Implement listProgrammes() method and initiate search button click action.
+ *20170425 c54-report-course-stats-MP-dj Implement populateCourseStatReportTable() and populate data.
  **/
 
 $(document).ready(function() {
@@ -90,7 +91,7 @@ $(document).ready(function() {
 			},
 			dataType : "json",
 			success : function(response) {
-				generateCourseStatReport(response);
+				populateCourseStatReportTable(response);
 			},
 			error : function(jqXHR, exception) {
 				errorCodeGeneration(jqXHR, exception);
@@ -137,8 +138,36 @@ function listProgrammes(response){
 /*
  * This method generateCourseStatReport() generate course stats report generation.
  */
-function generateCourseStatReport(response){
+function populateCourseStatReportTable(response){
+	$('#resultPanel').show();
+	$('#resultSetDiv').hide();
+	var studentListTable = $("#tBody");
+	studentListTable.find('tr').remove();
+	var totalResultCount = 0;	
 	
+	$.each(response.courseStatList, function(index, value) {
+		$('#resultSetDiv').show();
+		if (value != null && value.length > 0) {
+			totalResultCount ++;
+			var name = value[0];
+			var view = value[1];			
+			var inquireCount = value[2];
+			
+			var tr = '<tr>';
+			tr += '<td>' + totalResultCount + '</td>';
+			tr += '<td>' + name  + '</td>';
+			tr += '<td>' + view  + '</td>';			
+			tr += '<td>' + inquireCount  + '</td>';
+			
+			studentListTable.append(tr);
+		}
+	});
+	if (totalResultCount > 0) {
+		$('#totalResultsCount').text("Result Count " +totalResultCount);
+	} else {
+		$('#totalResultsCount').text(
+				"No results found for selected search criteria");
+	}
 }
 
 /**
