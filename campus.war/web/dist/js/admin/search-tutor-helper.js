@@ -4,6 +4,7 @@
  * 				removed displayTutotList() unwanted method, added AJAX on error method
  * 20170321 JH c134-admin-list-new-tutor-requests remove code used to select table record details and added new event to select tutor code
  * 				on click, show error messages on AJAX call error 
+ * 20170425 JH c134-admin-list-new-tutor-requests added styles for approval status and tutor status when they are null or not defined
  */
 
 window.tutorList = null;
@@ -124,9 +125,13 @@ function tutorDataTable(){
 							else if (value[11] == statusValues["PENDING"]) {
 								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;">'
 								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>'
+							}else{
+								value11 = ' <span class="glyphicon question-sign" style="color:reds;">'
+								value11 += '<label class="hide-value"> NULL </label></span>'
 							}
 							
 							var value17 = null; 
+							var element = value[17];
 							if( value[17] == statusValues["ACTIVE"]){
 								value17 = ' <span style="color:green;">Active</span></td>';
 							}else if( value[17] == statusValues["INACTIVE"]){
@@ -135,6 +140,8 @@ function tutorDataTable(){
 								value17 = ' <span style="color:blue;">Pending </span></td>';
 							}else if( value[17] == statusValues["EXPIRED"]){
 								value17 = ' <span style="color:red;">Expired </span></td>';
+							}else{
+								value17 = ' <span style="color:red;"> -  </span></td>';
 							}
 							
 t.row.add(
