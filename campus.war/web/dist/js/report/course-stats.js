@@ -4,6 +4,7 @@
  *20170421 c54-report-course-stats-MP-dj Identified the selected course provider code for listing programmes.
  *20170421 c54-report-course-stats-MP-dj Implement listProgrammes() method and initiate search button click action.
  *20170425 c54-report-course-stats-MP-dj Implement populateCourseStatReportTable() and populate data.
+ *20170425 c54-report-course-stats-MP-dj Implement clearParameters()-Clear form.
  **/
 
 $(document).ready(function() {
@@ -100,12 +101,21 @@ $(document).ready(function() {
 		
 	});
 	
+	
+	/*
+	 * trigger Clear button click. 
+	 */
+	$('#clearParam').on('click', function(event) {
+		clearParameters(event);
+	});
+	
 });
 
 /*
  * This method getCourseStatsSearchData() populate data for  initial search interface for course stats report generation.
  */
-function getCourseStatsSearchData(response){		
+function getCourseStatsSearchData(response){	
+	$('#resultSetDiv').hide();
 	var dataList = $("#providerName");
 	dataList.empty();
 	
@@ -123,7 +133,7 @@ function getCourseStatsSearchData(response){
  */
 
 function listProgrammes(response){	
-	
+	$('#resultSetDiv').hide();	
 	var dataList = $("#programmeName");
 	dataList.empty();	
 	$.each(response.programmeList, function(index, value) {		
@@ -187,4 +197,17 @@ function errorCodeGeneration(jqXHR, exception){
          msg = 'Uncaught Error.\n' + jqXHR.responseText;
      }	        
  alert(msg);	
+}
+
+
+/**
+ * This method clearParameters() clear load form.
+ */
+function clearParameters(event){	
+	$('#resultPanel').hide();	
+	$('#startdate').val(""); 
+	$('#enddate').val(""); 	
+	$('#providerlist').val("");	
+	$('#programmelist').val("");	
+	$('#errorToDate').text("");	
 }
