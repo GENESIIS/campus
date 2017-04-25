@@ -30,9 +30,11 @@
 
 </head>
 <body>
-	<header> <jsp:include
-		page="/dist/partials/layout/admin-header.jsp"></jsp:include> <jsp:include
-		page="/dist/partials/admin/AdminSessionDetails.jsp"></jsp:include> </header>
+	<header> 
+	<jsp:include
+		page="/dist/partials/admin/AdminSessionDetails.jsp"></jsp:include> 
+	<jsp:include
+		page="/dist/partials/layout/admin-header.jsp"></jsp:include> </header>
 
 <!-- Main Container - Higher-Education -->
 	<div class="admin-content clearfix">

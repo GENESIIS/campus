@@ -27,8 +27,9 @@
 </head>
 <body>
 <header>
+<jsp:include page="/dist/partials/admin/AdminSessionDetails.jsp"></jsp:include> 
 	<jsp:include page="/dist/partials/layout/admin-header.jsp"></jsp:include>
-	<jsp:include page="/dist/partials/admin/AdminSessionDetails.jsp"></jsp:include>
+	
 </header>
  	Welcome to Admin Dashboard 
 
