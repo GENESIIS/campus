@@ -1,6 +1,7 @@
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - created addTutorEmployment jsp file-->
 <!-- 20170421 c159-courseprovider-accept-tutor-request-cw - testing coding to get the courseProviderCode-->
 <!-- 20170424 c159-courseprovider-accept-tutor-request-cw - remove un wanted scriptlets & add cpCode field -->
+<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add Reject/Remove to the table -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -40,6 +41,7 @@
 							<th>Mobile Number</th>
 							<th>Status</th>
 							<th>Approve</th>
+							<th>Reject/Remove</th>
 							<th></th>
 						</tr>
 					</table>
