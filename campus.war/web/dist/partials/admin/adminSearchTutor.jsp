@@ -5,6 +5,7 @@
 <!-- 20170321 TR c106- remove CDN links and added jquery.dataTables.css and jquery.dataTables.js  -->
 <!-- 20170321 JH c134-admin-list-new-tutor-requests removed commented cdn files, imported error handling javascript file, added div to display error messages -->
 <!-- 20170322 JH c134-admin-list-new-tutor-requests modified style tag to hide only the error message when empty -->
+<!-- 20170425 JH c134-admin-list-new-tutor-requests fixed errors related to datatable imports -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -26,14 +27,14 @@
 	<!-- Data Table CSS -->
 	<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="/dist/bower-components/datatable/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="/dist/bower-components/dataTable/jquery.dataTables.css">
 
 
 	<!-- jQuery & Other js -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script> 
 	<script src="/dist/js/main.js"></script>
-	<script src="/dist/bower-components/datatable/jquery.dataTables.js"></script>
+	<script src="/dist/bower-components/dataTable/jquery.dataTables.js"></script>
 
 	<style type="text/css">
 	#userMessage:empty {
