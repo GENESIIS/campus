@@ -6,6 +6,7 @@
  *20170425 c54-report-course-stats-MP-dj Implement populateCourseStatReportTable() and populate data.
  *20170425 c54-report-course-stats-MP-dj Implement clearParameters()-Clear form.
  *20170425 c54-report-course-stats-MP-dj validate the from date and to date when picking the calandar.fromdate<today and todate>fromdate
+ *20170425 c54-report-course-stats-MP-dj create loadResultSet() and modularize the implementation-Validate date for 30 days of period.
  **/
 
 $(document).ready(function() {
@@ -74,32 +75,9 @@ $(document).ready(function() {
 	 * 
 	 */
 	
-	$('#searchList').on('click ', function(event) {
-		
+	$('#searchList').on('click ', function(event) {			
 		alert("searchList");
-		var programmeCode=$('#selectedProgramme').val();
-		var providerCode=$('#selectedProvider').val();
-		var startDate = $('#startdate').val();
-		var endDate = $('#enddate').val();
-		
-		$.ajax({
-			url : '../../ReportController',
-			data : {
-				CCO : 'REPORT_COURSE_STATS',
-				startDate : startDate,
-				endDate : endDate,
-				providerCode : providerCode,
-				programmeCode : programmeCode
-			},
-			dataType : "json",
-			success : function(response) {
-				populateCourseStatReportTable(response);
-			},
-			error : function(jqXHR, exception) {
-				errorCodeGeneration(jqXHR, exception);
-			}
-		});
-		
+		loadResultSet(event);		
 	});
 	
 	
@@ -163,6 +141,50 @@ function listProgrammes(response){
 		}				
 	});
 	
+}
+
+
+/*
+ * This method loadResultSet() identify input parameters for report search.
+ */
+function loadResultSet(event){
+	var programmeCode=$('#selectedProgramme').val();
+	var providerCode=$('#selectedProvider').val();
+	var startDate = $('#startdate').val();
+	var endDate = $('#enddate').val();
+	
+	$('#errorToDate').text("");
+	if (Date.parse(startDate)> Date.parse(endDate)) {		
+		$('#errorToDate').text("Invalid Date Range! From Date cannot be after To Date!");
+		document.getElementById('errorToDate').style.color = "red";
+		return false;
+	}	
+	var tempDate=new Date(document.getElementById("startdate").value);	
+	tempDate.setDate(tempDate.getDate()+ 30);
+
+	 if(Date.parse(endDate)>tempDate){
+		 $('#errorToDate').text("Invalid Date Range! Date range should be within 30 days");
+			document.getElementById('errorToDate').style.color = "red";
+			return false;
+	 }	
+	
+	$.ajax({
+		url : '../../ReportController',
+		data : {
+			CCO : 'REPORT_COURSE_STATS',
+			startDate : startDate,
+			endDate : endDate,
+			providerCode : providerCode,
+			programmeCode : programmeCode
+		},
+		dataType : "json",
+		success : function(response) {
+			populateCourseStatReportTable(response);
+		},
+		error : function(jqXHR, exception) {
+			errorCodeGeneration(jqXHR, exception);
+		}
+	});
 }
 
 /*

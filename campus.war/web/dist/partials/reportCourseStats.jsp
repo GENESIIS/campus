@@ -66,7 +66,7 @@ tr:nth-child(even) {
 				<div class="container">
 					<fieldset>
 						<legend align="left">Search criteria : </legend>
-						<div class="input-wrapper has-select" id="providerlist">
+						<div class="input-wrapper has-select">
 						Course Provider :
 							<input name="providerlist" id="providerlist" class="form-control" list="providerName" placeholder="-- Select Provider --">
 							<datalist id="providerName"></datalist>
@@ -77,8 +77,7 @@ tr:nth-child(even) {
 						<div class="input-wrapper has-select" >
 							Programme :
 							 <input name="programmelist" id="programmelist"	class="form-control" list="programmeName" placeholder="-- Select Programme --" />
-								<datalist id="programmeName">
-								</datalist>
+								<datalist id="programmeName"></datalist>
 								<input type="hidden" name="selectedProgramme"	id="selectedProgramme" value=""/>
 						</div>
 						<div>
