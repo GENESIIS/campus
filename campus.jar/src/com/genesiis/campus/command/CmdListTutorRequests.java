@@ -5,13 +5,13 @@ package com.genesiis.campus.command;
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments, changed tutor status INACTIVE to PENDING when listing for new tutor requests
 //20170317 JH c134-admin-list-new-tutor-requests get ApplicationStatus values to use in javascript for styling
 //20170402 JH c134-admin-list-new-tutor-requests removed system message codes from catch blocks
+//20170425 JH c134-admin-list-new-tutor-requests changed the method findById() to getAll() method and removed unwanted ApplicationStatus enum import
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.TutorRequestsDAO;
 import com.genesiis.campus.util.IDataHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
@@ -41,7 +41,7 @@ public class CmdListTutorRequests implements ICommand{
 
 		try {
 			// get tutors with pending status
-			 tutorCollection = tutorRequestsDAO.findById(ApplicationStatus.PENDING.getStatusValue());
+			 tutorCollection = tutorRequestsDAO.getAll();
 			 
 			 //if result is empty send a user message
 			 if(tutorCollection.size() >0){
