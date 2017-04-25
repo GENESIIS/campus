@@ -38,6 +38,7 @@
 //				removed unrelated comments in country and town display methods, added resetAccordion() method to reset the accordion color to default color and saveCourseProvider() method edited to 
 //				use resetAccordion()
 //20170424 JH c141-ui-integration-for-add-course-provider coding wip to send the focus to the next accordion from the last input of the previous accordion
+//20170425 JH c141-ui-integration-for-add-course-provider send input focus to the next accordion first input
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -852,49 +853,66 @@ $('body').on('keydown', function(e) {
     if (e.which == 9) {
 
         var currentElement = $(':focus').attr('id');
+        
+        if(currentElement === undefined){
+        	return;
+        }
         var accordionList = $('#basicForm').find('.accordion-body');
     	
     	var accordionName = $('#' +currentElement).parent().closest(".accordion-body");
     	var currentInputWrapper = $('#' +currentElement).parent().closest(".input-wrapper");
-    	alert(accordionName.attr('id'));
+
     	var accordionId = accordionName.attr('id');
+    	
+    	// get all inputs and the last input 
+    	var inputs = $('#' + accordionId).find('.input-wrapper');
+    	var last = inputs.last().attr('id');
     	
     	var accordionIndex = accordionList.index(accordionName);
     	
     	// check if this is the last accordion
-    	if((accordionIndex + 1)  === accordionList.length){//last accordion
+    	if((accordionIndex + 1)  === accordionList.length && (currentInputWrapper.attr('id') === last)){//last accordion
     		
     		/* send focus to the submit button */
+//			$('#viewNext').focus();
     		
     		
     	}else{//not the last accordion
-    	      e.preventDefault();
-        	var inputs = $('#' + accordionId).find('.input-wrapper');
-        	var last = inputs.last().attr('id');
+    	  
         	
         	if(currentInputWrapper.attr('id') === last){
+        	    e.preventDefault();
         		
         		var nextAccordion = accordionList[accordionIndex + 1];
-        		alert(nextAccordion);
+        		var publishProgram = $('input[name=courseProvider]:checked').val();
         		
-        		// send focus to the next accordion
-        		$(".admin .accordion").accordion({		 
-        			active: accordionList.index(nextAccordion),
-        			header: ".accordion-header",
-        			collapsible: false,
-        			heightStyle: "content", 
-        			autoHeight: false,
-        			navigation: true	
-        		});
-        		
-        		var newInputs = $( nextAccordion).find('.form-control');
-        		var firstInputId = newInputs.first().attr('id');
-        		
-        		$('#' + firstInputId).focus();
-//        			document.getElementById('errorSelectedTown').focus();
+        		/* This condition will need modified if there are any other accordions with display none style */
+        		if (accordionList.index(nextAccordion) === 4 && (publishProgram !== "FEATURED_COURSE_PROVIDER") ){
+            		
+        			$('#viewNext').focus();
+        		}else{
+        			
+            		// send focus to the next accordion
+            		$(".admin .accordion").accordion({		 
+            			active: accordionList.index(nextAccordion),
+            			header: ".accordion-header",
+            			collapsible: false,
+            			heightStyle: "content", 
+            			autoHeight: false,
+            			navigation: true	
+            		});
+            		
+            		var newInputs = $( nextAccordion).find('.form-control');
+            		var firstInputId = newInputs.first().attr('id');
+            		
+            		$('#' + firstInputId).focus();
+  
+        		}
 
-        	}else{
-        		/* send focus to the next input */
+
+        	}else{// do default
+       		/* send focus to the next input. */
+
         	}
     	}
 
