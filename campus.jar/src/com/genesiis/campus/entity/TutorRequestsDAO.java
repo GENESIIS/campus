@@ -4,6 +4,8 @@ package com.genesiis.campus.entity;
 //20170130 JH c134-admin-list-new-tutor-requests findById() method coding 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments
+//20170425 JH c134-admin-list-new-tutor-requests moved findById() method implementation to getAll() method as it will list all the new tutor requests,
+//				getAll() query updated to check tutor status in the query  
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -46,8 +48,15 @@ public class TutorRequestsDAO implements ICrud{
 		return 0;
 	}
 
+	@Override
+	public Collection<Collection<String>> findById(Object code)
+			throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
-	 * findById(Object) method lists all new tutor requests. TUTORSTATUS value for the query 
+	 * getAll method lists all new tutor requests. TUTORSTATUS value for the query 
 	 * is passed as the object value using the ApplicationStatus enum ( the value for the PENDING status ). 
 	 * @param Object
 	 * @return new tutor request collection
@@ -55,11 +64,11 @@ public class TutorRequestsDAO implements ICrud{
 	 * @exception SQLException, Exception
 	 */
 	@Override
-	public Collection<Collection<String>> findById(Object code)
+	public Collection<Collection<String>> getAll()
 			throws SQLException, Exception {
 		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, MOBILEPHONENUMBER, "
 				+ " ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY, TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN "
-				+ "[CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) WHERE ISAPPROVED = ? ORDER BY TUTOR.CODE DESC ";
+				+ "[CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) WHERE ISAPPROVED = ? AND TUTORSTATUS = ? ORDER BY TUTOR.CODE DESC ";
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
@@ -69,9 +78,8 @@ public class TutorRequestsDAO implements ICrud{
 			conn = ConnectionManager.getConnection();
 			preparedStatement = conn.prepareStatement(query);
 			
-			int status = (Integer) code;
-			
-			preparedStatement.setInt(1, status);
+			preparedStatement.setInt(1, ApplicationStatus.PENDING.getStatusValue());
+			preparedStatement.setInt(2, ApplicationStatus.INACTIVE.getStatusValue());
 			
 			rs = preparedStatement.executeQuery();
 			
@@ -115,13 +123,6 @@ public class TutorRequestsDAO implements ICrud{
 	}
 
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int add(Object object, Connection conn) throws SQLException,
 			Exception {
 		// TODO Auto-generated method stub
@@ -141,5 +142,7 @@ public class TutorRequestsDAO implements ICrud{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
