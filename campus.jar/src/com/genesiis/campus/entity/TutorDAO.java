@@ -449,12 +449,12 @@ public class TutorDAO implements ICrud {
 		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
 		queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
-		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 1 then 'Inactive' WHEN 2 then 'Active' WHEN 3 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END CONFIRMSTATUS ");
+		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END CONFIRMSTATUS ");
 		queryBuilder.append("FROM CAMPUS.TUTOR T ");
 		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
 		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
 		
-		try {
+		try {	
 			
 			conn = ConnectionManager.getConnection();						
 			stmt = conn.prepareStatement(queryBuilder.toString());
