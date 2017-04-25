@@ -6,6 +6,8 @@
  * 				The method getPreRequisitPageData() has been modified to list town, country,and Course provider,
  * 				and their code are included to hidden input fields accurately.
  * 				Removed the method manageTownListing() from the script.
+ * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,courseProviderCode) 
+ * 				is implemented.
  */
 
 
@@ -271,29 +273,6 @@ function extractRelaventTownList(countryCode){
 }
 
 /**
- * method validates if the user inputs are correct and according to agreed
- * format, then collect the data and forms a java script object finally
- * the JASON data is passed to the server end.
- * @author dushantha DN
- * @returns {Boolean} if validation fails returns false
- */
-function sendSignUpCredentialsToBckEnd() {	
-	var postaSessation = false;
-	if (validateSignUpWoThirdPartyPageEmbedData()) {
-		var jsonDataObject = createJasonObject();
-				jsonDataExchange(
-						jsonDataObject,
-						"post",
-						"../../../StudentController", // path is provided related to the jsp page
-						"SIWOTP",
-						"json");
-		
-		} else {
-		return postaSessation;
-	}
-}
-
-/**
  * validateSignUpWoThirdPartyPageEmbedData() validates all the current  critical fields
  * placed on /dist/partials/signUpWoThirdParty.jsp page. It's the custom field validator
  * dedicated for the page above.
@@ -486,10 +465,73 @@ function clearAllFields(){
  * then trigger the call to server to get the recirds related to
  * selected id of the course provider
  */
-$(document).on('change','#courseProvider',function(event){	
- if(sCourseProviderCode !=""||sCourseProviderCode!=undefined){
+$(document).on('input','#courseProvider',function(event){	
+	var courseProviderCode = $('#sCourseProviderCode').val();
+ if(courseProviderCode !=""||courseProviderCode!=undefined){
 	 //code the ajax call to retrieve the Courseprovider data
-	 // and populate the page.
+	 // and populate the page.	
+	 var selectedCourseProviderCode = $('#sCourseProviderCode').val();
+	 getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,selectedCourseProviderCode);	 
  }	
 });
+
+/**
+ * Mehtod passes the parameters to the server and <br>
+ * gets the details of the Advertiser linked to the selected <br>
+ * courseprovider id.
+ * @param adminControllerUrl : destination url of String this is the servlet address<br>
+ * e.g '../../../AdminController'. It is relative to the jsp page where this js is embeded<br>
+ * that is relative to the jsp
+ * @param courseProviderCode  selected id of the course provider.
+ */
+function getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,courseProviderCode){
+	
+$.ajax({		
+		url:adminControllerUrl,
+		data:{
+			courseProvider : courseProviderCode,
+			CCO:'GADLCP'  //GET_ADVERTISER_CREDENTIALS
+		},
+		dataType:"json",
+		success: function(response){			
+			if(response['successCode']==1){
+				//call the function that arrange the data in right place..
+				populatePageWithAdvertisersCredential(response.result);
+			}
+			
+		},
+		error: function(allBanners,error,errorThrown){
+			var msg = ajaxCallErorMessage(allBanners,error,errorThrown);
+			displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		}
+	});	
+}
+
+/**
+ * Method intend to populate the page that holds the new 
+ * advertisers data.
+ * @param arrayOfArray : Array of String array
+ */
+function populatePageWithAdvertisersCredential(arrayOfArray){
+	var courseProviderArray = arrayOfArray[0];
+	
+	$('#sCourseProviderCode').val(courseProviderArray[0]);
+	$("#advertiserName").val(courseProviderArray[1]);
+	$("#advertiserEmail").val(courseProviderArray[2]);
+	$('#courseProviderDescription').text(courseProviderArray[9]);
+	$('#landCountryCode').val(courseProviderArray[3]);
+	$('#landAreaCode').val(courseProviderArray[4]);
+	$('#landPhoneNumber').val(courseProviderArray[5]);
+	$('#mobileCountryCode').val(courseProviderArray[6]);
+	$('#mobileAreaCode').val(courseProviderArray[7]);
+	$('#mobilePhoneNumber').val(courseProviderArray[8]);
+	$('#address1').val(courseProviderArray[10]);
+	$('#address2').val(courseProviderArray[11]);
+	$('#address3').val(courseProviderArray[12]);
+	if(courseProviderArray[13]===0){
+		$('#statusInactive').attr('checked',true);
+	}
+	
+}
+
 
