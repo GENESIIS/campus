@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
  *20170421 DJ c54-report-course-stats-MP-dj create:implement listProgrammeWiseProvider().
  *20170421 DJ c54-report-course-stats-MP-dj create:implement generateReportResults().
  *20170421 DJ c54-report-course-stats-MP-dj Identify the input fields in generateReportResults.
+ *20170424 DJ c54-report-course-stats-MP-dj refactored code in method generateReportResults().
  * */
 
 import com.genesiis.campus.entity.IView;
@@ -138,13 +139,7 @@ public class CmdReportCourseStats implements ICommand{
 					int programmeCode = Integer.parseInt(programmeCodeString);
 					searchDTO.setProgrammeCode(programmeCode);
 				}
-			}
-			if (UtilityHelper.isNotEmpty(providerCodeString)) {
-				if (UtilityHelper.isInteger(providerCodeString)) {
-					int providerCode = Integer.parseInt(providerCodeString);
-					searchDTO.setProviderCode(providerCode);
-				}
-			}
+			}			
 			
 			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			
@@ -157,8 +152,7 @@ public class CmdReportCourseStats implements ICommand{
 				searchDTO.setToDate(df.parse((endDateString)));
 			} else {
 				
-			}
-						
+			}				
 
 			final List<CourseStatSearchResultDTO> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
 

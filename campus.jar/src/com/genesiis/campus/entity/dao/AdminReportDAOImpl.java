@@ -4,6 +4,8 @@ package com.genesiis.campus.entity.dao;
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getBannerStatisticReport() method.
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getRegisteredStudentReport() method.
 //20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
+//20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
+//20170425 DJ c54-report-course-stats-MP-dj implement:getProgrammeStatsReport() 
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
@@ -249,8 +251,39 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 		final List<CourseStatSearchResultDTO> courseStatList = new ArrayList<CourseStatSearchResultDTO>();		
 		try {
 			conn = ConnectionManager.getConnection();
-			final StringBuilder sb = new StringBuilder("SELECT PROG.CODE, PROG.NAME, PROSTAT.CALLERPAGE ");  
-            sb.append("FROM CAMPUS.PROGRAMME PROG INNER JOIN CAMPUS.PROGRAMMESTAT PROSTAT ON PROG.CODE=PROSTAT.PROGRAMME WHERE PROG.COURSEPROVIDER=1");
+			final StringBuilder sb = new StringBuilder("SELECT COUNT(PROG.CODE) INQUIRECOUNT,  PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME, PROSTAT.CALLERPAGE AS CALLEROAGE "); 
+			sb.append(" FROM CAMPUS.PROGRAMME PROG INNER JOIN CAMPUS.PROGRAMMESTAT PROSTAT ON PROG.CODE=PROSTAT.PROGRAMME WHERE 1=1 ");
+			if(searchDTO.getProviderCode() >0){
+				sb.append(" AND PROG.COURSEPROVIDER = ");
+				sb.append(searchDTO.getProviderCode());
+			}
+			if(searchDTO.getProgrammeCode() >0){
+				sb.append(" AND PROG.CODE=  ");
+				sb.append(searchDTO.getProgrammeCode());
+			}			
+			if ((searchDTO.getFromDate() != null && searchDTO.getFromDate()	.getTime() > 0)	&& (searchDTO.getToDate() != null && searchDTO.getToDate().getTime() > 0)) {
+				sb.append("AND PROSTAT.VIEWDATE BETWEEN ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append(" ' AND ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append(" '  ");
+			} else if (searchDTO.getFromDate() != null && searchDTO.getFromDate().getTime() > 0) {
+				sb.append("AND PROSTAT.VIEWDATE >= ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append("'");
+			} else if (searchDTO.getToDate() != null	&& searchDTO.getToDate().getTime() > 0) {
+				sb.append("AND PROSTAT.VIEWDATE <= ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append("'");			
+			}
+			sb.append(" group by  PROG.CODE,PROG.NAME, PROSTAT.CALLERPAGE ");
+			
+			stmt=conn.prepareStatement(sb.toString());
+			resultSet=stmt.executeQuery();			
+			while (resultSet.next()) {
+				final CourseStatSearchResultDTO resultDTO=new CourseStatSearchResultDTO();				
+				courseStatList.add(resultDTO);					
+			}
 		} catch (SQLException sqlException) {
 			log.info("getProgrammeStatsReport() sqlException" + sqlException.toString());
 			throw sqlException;
