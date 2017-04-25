@@ -20,6 +20,11 @@ package com.genesiis.campus.command;
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
 //20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
+//20170404 JH c141-ui-integration-for-add-course-provider code modified to use AccountType enum class values to validate user type
+//20170405 JH c141-ui-integration-for-add-course-provider fixed exception due to account status code selection
+//20170406 JH c141-ui-integration-for-add-course-provider build contact number and web link hint messages
+//20170407 JH c141-ui-integration-for-add-course-provider removed commented old expiration date implementation and added codes to get web link prefix
+//20170417 JH c141-ui-integration-for-add-course-provider added "http://" as the webLinkPrefix value and build the last weblink
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -183,47 +188,6 @@ public class CmdAddFeaturedProvider implements ICommand {
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
 						
-						/*
-						 * commented the following code until the actual implementation (one off provider) confirms
-						 */
-						
-//						java.sql.Date sql = null;
-//
-//						SimpleDateFormat format = new SimpleDateFormat(
-//								"dd-MM-yyyy");
-//						
-//						/**
-//						 * publishProgram parameter is used to select whether
-//						 * the registered course provider will publish programs or not.
-//						 * 
-//						 */
-//						if (Integer.parseInt(helper.getParameter("publishProgram")) == 0) {
-//							sql = java.sql.Date.valueOf(expireDate);
-//						} else {
-//
-//							/**
-//							 * course providers without program publishing
-//							 * functionality will need an expiration date. And
-//							 * that date needs to be selected by the admin at
-//							 * the course provider registration.
-//							 * 
-//							 * for those who has the full functionality, need
-//							 * not to have an expiration date. (The requirements
-//							 * given by the marketing team). Therefore a static
-//							 * value is assigned to those course providers. Then
-//							 * it would be easy to select those course providers
-//							 * and perform a bulk update.
-//							 * 
-//							 * Therefore a common expiration date, which is stored in 
-//							 * the system configuration enum class is used to support both
-//							 * the requirements.
-//							 * 
-//							 */
-//
-//							expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
-//							sql = java.sql.Date.valueOf(expireDate);
-//						}
-
 						
 						/*
 						 * Course provider expiration date is related and will depend on their payments. 
@@ -236,6 +200,9 @@ public class CmdAddFeaturedProvider implements ICommand {
 
 						expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
 						sql = java.sql.Date.valueOf(expireDate);
+						String webLinkPrefix = "http://";
+						String webLink = helper.getParameter("webLink");
+						String lastWebAddress = webLinkPrefix + webLink;
 						
 						// set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
@@ -256,7 +223,7 @@ public class CmdAddFeaturedProvider implements ICommand {
 						courseProvider.setFaxNo(helper.getParameter("fax"));
 						courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
 						courseProvider.setExpirationDate(sql);
-						courseProvider.setWeblink(helper.getParameter("webLink"));
+						courseProvider.setWeblink(lastWebAddress);
 						courseProvider.setFacebookURL(helper.getParameter("facebook"));
 						courseProvider.setTwitterURL(helper.getParameter("twitter"));
 						courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
@@ -290,18 +257,15 @@ public class CmdAddFeaturedProvider implements ICommand {
 						map.put("provider", courseProvider);
 						map.put("town", courseProviderTown);
 
-						int providerType = Integer.parseInt(helper
-								.getParameter("courseProvider"));
+						String providerType = helper.getParameter("courseProvider");
 
 						/**
 						 * selects the account type of the course provider and
 						 * calls different DAO classes depending on the
 						 * course provider type
 						 */
-						if (providerType == AccountType.FEATURED_COURSE_PROVIDER
-								.getTypeValue()) {
-							courseProvider
-									.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
+						if (providerType.equals(AccountType.FEATURED_COURSE_PROVIDER.name())) {
+							courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
 											.getTypeValue());
 							courseProvider.setTutorRelated(false);
 
@@ -309,24 +273,24 @@ public class CmdAddFeaturedProvider implements ICommand {
 									.getParameter("accountStatus");
 							
 							//compare account status with enum class values
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.ACTIVE)) {
+							if ( Integer.parseInt(accountStatus)  == ApplicationStatus.ACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(true);
 							}
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.INACTIVE)) {
+							if (Integer.parseInt(accountStatus)  == ApplicationStatus.INACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(false);
 							}
-
+							String contactNumber = countryCode + helper.getParameter("providerContactNumber");
 							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
-							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
+							courseProviderAccount.setContactNumber(contactNumber);
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
 
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
 
-						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
+						} else if (providerType.equals(AccountType.ONE_OFF_COURSE_PROVIDER.name())) {
 							courseProvider.setTutorRelated(false);
 							courseProvider.setAdminAllowed(false);
 

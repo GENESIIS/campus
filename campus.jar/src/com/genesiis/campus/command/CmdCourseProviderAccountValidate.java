@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170201 JH c39-add-course-provider arranged imports according to the style guide
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way 
 //20170221 JH c141-add-course-provider-issue-improvements added doc comments
+//20170420 JH c141-ui-integration-for-add-course-provider removed meail validation from the username validation method
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -51,8 +52,7 @@ public class CmdCourseProviderAccountValidate implements ICommand {
 
 					ICrud usernameDAO = new CourseProviderUsernameDAO();
 
-					if (!Validator.isEmptyString(helper.getParameter("username"))
-							|| !Validator.isEmptyString(helper.getParameter("email"))) {
+					if (!Validator.isEmptyString(helper.getParameter("username"))) {
 
 						String username = helper.getParameter("username");
 						final CourseProviderAccount courseProviderAccount = new CourseProviderAccount();

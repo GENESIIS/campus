@@ -17,6 +17,11 @@ package com.genesiis.campus.validation;
 //20170226 JH c141-add-course-provider-issue-improvements featuredAccountValidation(): password validation methods changed
 //20170228 JH c141-add-course-provider-issue-improvements commented implementation until one off course provider implementation completed
 //20170301 JH c141-add-course-provider-issue-improvements username and other validation methods changed
+//20170404 JH c141-ui-integration-for-add-course-provider validateCourseProvider() method changed to use AccountType enum class name instead of the enum value
+//20170405 JH c141-ui-integration-for-add-course-provider validateCourseProvider(IDataHelper) changes due to element id changes after UI integration
+//20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length changes, password validation methods changed, email address
+//				validation pattern changed, added method validNumber() to validate a string parameter for numbers
+//20170420 JH c141-ui-integration-for-add-course-provider validateCourseProvider(): fax number validation method changed to separately validate for null and integer
 
 import com.genesiis.campus.command.CmdAddFeaturedProvider;
 import com.genesiis.campus.entity.model.CourseProvider;
@@ -80,11 +85,28 @@ public class Validator {
 	 * @return boolean to validate email address.
 	 **/
 	public static boolean validateEmail(String email) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})",
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
 
+	}
+	
+	/**
+	 * Check if the given string is a number
+	 * @param number
+	 * @return true if string is a number, else false
+	 * @author JH
+	 */
+	public static boolean validNumber(String number){
+		try {
+			Long.parseLong(number);
+		} catch (NumberFormatException e) {
+			return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -160,34 +182,6 @@ public class Validator {
 			errorString.add("About Me ");
 		}
 		
-		//following code is commented until one off course provider feature implemented
-		/*
-		 * if course provider does not need privileges to publish programs, it is indicated
-		 * by the value '0'. Therefore the validations which belongs to that category
-		 * is carried out 
-		 */
-
-//		if(!isEmptyString(helper.getParameter("publishProgram"))){
-//			if(Integer.parseInt(helper.getParameter("publishProgram")) == 0){
-//				String date = helper.getParameter("expirationDate");
-//       
-//		        
-//				if(isEmptyString(date)){
-//					helper.setAttribute("errorExpiration", "Select an expiration date");
-//					errorString.add("Expiration Date ");
-//				}else{
-//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//					Date date1 = sdf.parse(date);
-//			        Date date2 = new Date();
-//			        
-//			        if(date1.before(date2)){
-//						helper.setAttribute("errorExpiration", "Invlid date (Date should be greater than today's date.");
-//						errorString.add("Expiration Date ");
-//					}
-//				}
-//			}	
-//		}
-		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
 			helper.setAttribute("errorSelectedCountry", "Select a country");
 			errorString.add("Country ");
@@ -203,39 +197,73 @@ public class Validator {
 			errorString.add("Course Provider status ");
 		}
 		
-		if(!isValidLength(helper.getParameter("areaCode"), 20, 1) || !isInteger(helper.getParameter("areaCode")) ){
-			helper.setAttribute("errorAreaCode", "Area code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+		if(!isValidLength(helper.getParameter("areaCode"), 4, 1) || !validNumber(helper.getParameter("areaCode")) ){
+			
+			helper.setAttribute("errorLand1", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorLand2", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+			
+			if(isValidLength(helper.getParameter("fax"), 12, 0) ){
+				
+				if(!isEmptyString(helper.getParameter("fax"))){
+					helper.setAttribute("errorFax", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+				}
+			}
+			
 			errorString.add("Area Code ");
 		}
 		
-		if((!isValidLength(helper.getParameter("land1"), 20, 1)) || !isInteger(helper.getParameter("land1"))){
-			helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
-			errorString.add("Land number 1 ");
+		// proceed with phone number validations only if the area code is valid
+		if(isValidLength(helper.getParameter("areaCode"), 4, 1) && validNumber(helper.getParameter("areaCode")) ){
+
+			int land1 = helper.getParameter("land1").length();
+			int land2 = helper.getParameter("land2").length();
+			int land3 = helper.getParameter("fax").length();
+			if((!isValidLength(helper.getParameter("land1"), 12, 1)) || !validNumber(helper.getParameter("land1"))){
+				helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 12 characters) or invalid. Only numbers allowed.");
+				errorString.add("Land number 1 ");
+			}
+			
+//			if(isValidLength(helper.getParameter("land2"), 12, 0) && !validNumber(helper.getParameter("land2"))){
+//				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed.");
+//				errorString.add("land number 2");
+//			}
+			
+			if( !isValidLength(helper.getParameter("land2"), 12, 0)){
+				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 12 characters).");
+				errorString.add("land number 2");
+			}
+			if(isValidLength(helper.getParameter("land2"), 12, 1) && !validNumber(helper.getParameter("land2"))){
+				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed");
+				errorString.add("land number 2");
+			}
+			
+			if(isValidLength(helper.getParameter("fax"), 12, 1) && !validNumber(helper.getParameter("fax"))){
+				helper.setAttribute("errorFax", "Fax number is invalid. Only numbers allowed.");
+				errorString.add("fax number");
+			}
+			if(!isValidLength(helper.getParameter("fax"), 12, 0)){
+				helper.setAttribute("errorFax", "Fax number is too long (max 12 characters).");
+				errorString.add("fax number");
+			}
+			
 		}
-		
-		if( !isValidLength(helper.getParameter("land2"), 20, 0) || !isInteger(helper.getParameter("land2"))){
-			helper.setAttribute("errorLand2", "Phone number 2 is too long(max 20 characters) or invalid. Only numbers allowed.");
-			errorString.add("land number 2");
-		}
-		
-		if(!isValidLength(helper.getParameter("networkCode"), 20, 1) || !isInteger(helper.getParameter("networkCode"))){
-			helper.setAttribute("errorNetworkCode", "Network code is empty, too long(max 20 characters) or invalid. Only numbers allowed.");
+	
+		if(!isValidLength(helper.getParameter("networkCode"), 4, 1) || !validNumber(helper.getParameter("networkCode"))){
+			helper.setAttribute("errorMobile", "Network code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
 			errorString.add("Network code ");
 		}
-		
-		if(!isValidLength(helper.getParameter("mobile"), 20, 1) || !isInteger(helper.getParameter("mobile"))){
-			helper.setAttribute("errorMobile", "Mobile number is empty or invalid. Only numbers allowed.");
-			errorString.add("Mobile code ");
+		//if network code is valid, validate the mobile number
+		if(isValidLength(helper.getParameter("networkCode"), 4, 1) && validNumber(helper.getParameter("networkCode"))){
+			
+			if(!isValidLength(helper.getParameter("mobile"), 12, 1) || !validNumber(helper.getParameter("mobile"))){
+				helper.setAttribute("errorMobile", "Mobile number is empty or invalid. Only numbers allowed.");
+				errorString.add("Mobile code ");
+			}
 		}
 		
 		if(isEmptyString(helper.getParameter("selectedProviderType"))){
 			helper.setAttribute("errorProviderType", "Select a course provier type");
 			errorString.add("Course Provider Type ");
-		}
-		
-		if(!isValidLength(helper.getParameter("fax"), 20, 0) && !isInteger(helper.getParameter("fax"))){
-			helper.setAttribute("errorFax", "Fax number is too long(max 20 characters), or invalid");
-			errorString.add("Invalid Fax number");
 		}
 		
 		if(!isValidLength(helper.getParameter("address1"), 50, 1)){
@@ -284,10 +312,10 @@ public class Validator {
 		 * type. Therefore, depending on the course provider type it will relevant validations
 		 */
 		if(!isEmptyString(helper.getParameter("courseProvider"))){	
-			int courseProviderType = Integer.parseInt(helper.getParameter("courseProvider"));
+			String courseProviderType =helper.getParameter("courseProvider");
 			
 			//validate details related to featured course provider account
-			if(courseProviderType == AccountType.FEATURED_COURSE_PROVIDER.getTypeValue()){
+			if(courseProviderType.equals(AccountType.FEATURED_COURSE_PROVIDER.name())){
 				
 				errorString = featuredAccountValidation(helper, errorString);
 			}
@@ -320,7 +348,8 @@ public class Validator {
 				errorString.add("Private Email");
 			}
 
-		} else {
+		}
+		if (!isValidLength(helper.getParameter("providerEmail"), 255, 1)){
 			helper.setAttribute("errorPrivateEmail", "Email address is empty of too long (Only 255 characters allowed). ");
 			errorString.add("Private Email");
 		}
@@ -329,32 +358,32 @@ public class Validator {
 		if(!isValidLength(helper.getParameter("providerUsername"), 100, 5)){
 			helper.setAttribute("errorUsername", "Username too small or exceed the max length. It must have min 5 and max 100 characters");
 			errorString.add("Username");
-		}else{
+		}
+		if(isValidLength(helper.getParameter("providerUsername"), 100, 5)){
 			//check if the username has only numbers
-			if(isInteger(helper.getParameter("providerUsername"))){
+			if(validNumber(helper.getParameter("providerUsername"))){
 				helper.setAttribute("errorUsername", "Only numbers are not allowed for username. ");
 				errorString.add("Username");				
 			}
 		}
 		
 		//validate password
-		if(!isValidLength(helper.getParameter("providerPassword"), 100, 6) || 
-				!isValidLength(helper.getParameter("cProviderPassword"), 100, 6)){ 	
-				
-			errorString.add("Password fields are empty");
-			helper.setAttribute("errorProviderPassword", "Password filed should be with in 6 to 100 characters.");
-		}else{
+		if(isValidLength(helper.getParameter("providerPassword"), 100, 6)){
 			if(!helper.getParameter("providerPassword").equals(helper.getParameter("cProviderPassword"))){
 				helper.setAttribute("errorProviderPassword", "Password fields does not match");
 				errorString.add("Password fields does not match");
-			}else{
-				
 			}
 		}
+		
+		if(!isValidLength(helper.getParameter("providerPassword"), 100, 6) || 
+				!isValidLength(helper.getParameter("cProviderPassword"), 100, 6)){ 				
+			errorString.add("Password fields are empty");
+			helper.setAttribute("errorProviderPassword", "Password filed(s) should have 6 to 100 characters.");
+		}
 			
-		if(!isValidLength(helper.getParameter("providerContactNumber"), 30, 0)  || !isInteger(helper.getParameter("providerContactNumber"))){
+		if(!isValidLength(helper.getParameter("providerContactNumber"), 12, 1)  || !validNumber(helper.getParameter("providerContactNumber"))){
 			helper.setAttribute("errorContactNumber", "Empty or invalid contact number.");
-			errorString.add("Empty or invalid contact number.");
+			errorString.add("Empty, too long or invalid contact number. Maximum 12 characters.");
 		}
 		
 		if(isEmptyString(helper.getParameter("accountStatus"))){
@@ -375,9 +404,13 @@ public class Validator {
 	 */
 	public static ArrayList<String> courseProviderURLValidation(IDataHelper helper, ArrayList<String> errorString,
 			int maxLength, int minLength, String element, String errorElement){
+		element = helper.getParameter(element);
 		
-		if(!isValidLength(helper.getParameter(element), maxLength, minLength)){
+		if(!isValidLength(element, maxLength, minLength)){
 			helper.setAttribute( errorElement, "URL exceeds the maximum length. Only " + minLength +" to " + maxLength + " characters allowed");
+			errorString.add( element + " URL invalid.");
+		}else if(!isEmptyString(element) && validNumber(element)){
+			helper.setAttribute( errorElement, "Only numbers are not allowed.");
 			errorString.add( element + " URL invalid.");
 		}
 		

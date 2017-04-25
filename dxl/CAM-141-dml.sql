@@ -1,11 +1,17 @@
+/*
+* 20170417 JH c141-ui-integration-for-add-course-provider dml file CAM-141-dml.sql created
+*/
+
+
 ----------------------------------------------------------------------
 -- dml to create a default course provider and default user types
--- for some of the system actors
+-- use the following scripts
 ----------------------------------------------------------------------
 
 -- -----------------------------------------------------------------
 -- to create a default course provider you have to remove the foreign 
--- key constraint COURSEPROVDER_COURSEPROVIDERTOWN
+-- key constraint COURSEPROVDER_COURSEPROVIDERTOWN in COURSEPROVIDER 
+-- table. 
 -- -----------------------------------------------------------------
 
 
@@ -16,6 +22,9 @@ VALUES (-1, '', '', 'Default', 'Default record for external advertisers', '', ''
 SET IDENTITY_INSERT [CAMPUS].[COURSEPROVIDER] OFF
 GO
 
+-- -----------------------------------------------------------------
+-- Then create default usertypes
+-- -----------------------------------------------------------------
 
 
 SET IDENTITY_INSERT [CAMPUS].[USERTYPE] ON
@@ -56,27 +65,3 @@ INSERT INTO [CAMPUS].[USERTYPE] (CODE, NAME,USERTYPESTRING, DESCRIPTION, COURSEP
 SET IDENTITY_INSERT [CAMPUS].[USERTYPE] OFF
 GO
 
-
-
-
-
--- ----------------------------------------------------------------------------------
-
--- add address lines to the courseprovidertown table
-
--- ----------------------------------------------------------------------------------
-
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-[ADDRESS1] [varchar](50) NULL;
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-[ADDRESS2] [varchar](50) NULL;
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-[ADDRESS3] [varchar](50) NULL;
-
-
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-CONSTRAINT [DF_COURSEPROVIDERTOWN_ADDRESS1]  DEFAULT ('') FOR [ADDRESS1];
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-CONSTRAINT [DF_COURSEPROVIDERTOWN_ADDRESS2]  DEFAULT ('') FOR [ADDRESS2];
-ALTER TABLE [CAMPUS].[COURSEPROVIDERTOWN] ADD 
-CONSTRAINT [DF_COURSEPROVIDERTOWN_ADDRESS3]  DEFAULT ('') FOR [ADDRESS3];
