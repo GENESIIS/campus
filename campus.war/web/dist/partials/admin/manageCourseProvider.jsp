@@ -31,6 +31,7 @@
 <!-- 20170407 JH c141-ui-integration-for-add-course-provider added a success message to display with the modal body when a course provider is registered -->
 <!-- 20170417 JH c141-ui-integration-for-add-course-provider added name attribute and the value for weblink prefix -->
 <!-- 20170420 JH c141-ui-integration-for-add-course-provider fixed error in span closing tag for id landNumber2  -->
+<!-- 20170425 JH c141-ui-integration-for-add-course-provider added form-control class to selectedProviderType input -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -437,7 +438,7 @@
 									<label for="course-provider-type"><span class="mandatory">*</span> Course Provider Type</label>
 									<div class="input-wrapper has-select text-center" id="providerTypeList">
 										<div class="inner-input-wrapper">
-											<select id="selectedProviderType" name="selectedProviderType" ></select>											
+											<select id="selectedProviderType" name="selectedProviderType" class="form-control"></select>											
 											<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"	title="Error! "></a>
 										</div> 
 									</div>
