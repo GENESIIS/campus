@@ -2,6 +2,8 @@
 <!-- 20170421 c159-courseprovider-accept-tutor-request-cw - testing coding to get the courseProviderCode-->
 <!-- 20170424 c159-courseprovider-accept-tutor-request-cw - remove un wanted scriptlets & add cpCode field -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add Reject/Remove to the table -->
+<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - remove Remove button & Add Save button -->
+
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -47,7 +49,7 @@
 					</table>
 					<div style="text-align:right">  
 						<input type="hidden" name="tutorCodeTable" id="tutorCodeTable"/>
-    					<button type="submit" name="CCO" id="CCO" value="REMOVE_SELECTED_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Remove</button>
+    					<button type="submit" name="CCO" id="CCO" value="APPROVE_REMOVE_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Save</button>
     					<input type="hidden" name="maxSequence" id="maxSequence"/>
 					</div>
 				</div>
