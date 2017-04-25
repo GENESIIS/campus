@@ -11,6 +11,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.AccountType;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -47,10 +48,10 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode);
 				
 
-				Map<int, String> applicationStatusMap = new Map<int, String>();
+				Map<Integer, String> applicationStatusMap = new HashMap<Integer, String>();
 				
-				for (String name : ApplicationStatus.value()) {
-					someMap.put(ApplicationStatus.getValue(name), name);
+				for (ApplicationStatus statusValues : ApplicationStatus.values()) {
+					applicationStatusMap.put(ApplicationStatus.getValue(statusValues). , statusValues);
 				}
 				
 				helper.setAttribute("enumList", someMap);
