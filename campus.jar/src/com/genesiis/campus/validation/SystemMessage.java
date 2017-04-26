@@ -2,6 +2,7 @@ package com.genesiis.campus.validation;
 
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
+//20170426 DJ c54-report-course-stats-MP-dj add:INVALIDFROMDATE,INVALIDCOURSEPROVIDERSELECTION,INVALIDDATERANGE,INVALIDDATERANGETHIRTY enums.
 
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
@@ -22,6 +23,7 @@ public enum SystemMessage {
 	EMPTYVALUES("Empty data Fields."),
 	INVALIDBIRTDAY("Invalid Birthdate."),
 	INVALIDENDDATE("Invalid End date."),
+	INVALIDFROMDATE("Invalid From date."),
 	INVALIDAMOUNT("Invalid Amount."),
 	NOTADDED("Problem when inserting data."), 	
 	NOTUPDATED("Problem when updating data."), 	
@@ -35,7 +37,10 @@ public enum SystemMessage {
 	MEDICALREPORTDESCRIPTIONNOTVALID("Medical Report Description not valid."),
 	MEDICALREPORTPATHNOTVALID("Medical Report path not valid."),
 	MEDICALREPORTNOTVALID("Medical Report not valid"),
-	INVALIDPAGESELECTION("Please select a page");
+	INVALIDPAGESELECTION("Please select a page"),
+	INVALIDCOURSEPROVIDERSELECTION("Please select a course provider!"),
+	INVALIDDATERANGE("Invalid Date Range! From Date cannot be after To Date!"),
+	INVALIDDATERANGETHIRTY("Invalid Date Range! Date range should be within 30 days!");
 
 	
 	private String message;
