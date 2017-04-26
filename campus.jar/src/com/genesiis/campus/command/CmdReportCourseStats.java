@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
  *20170421 DJ c54-report-course-stats-MP-dj create:implement generateReportResults().
  *20170421 DJ c54-report-course-stats-MP-dj Identify the input fields in generateReportResults.
  *20170424 DJ c54-report-course-stats-MP-dj refactored code in method generateReportResults().
+ *20170426 DJ c54-report-course-stats-MP-dj create:isCourseStatFormValidate() and  back end form validation implementation.
  * */
 
 import com.genesiis.campus.entity.IView;
@@ -23,6 +24,7 @@ import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
@@ -31,7 +33,12 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**The class {@code CmdReportCourseStats} is a form of command handling class.Created for the purpose of handling commands of course 
@@ -120,48 +127,87 @@ public class CmdReportCourseStats implements ICommand{
 	 * @throws  Exception
 	 */
 	private void generateReportResults(IDataHelper helper)throws Exception {
-		try {
-			String providerCodeString = helper.getParameter("providerCode");
-			String programmeCodeString = helper.getParameter("programmeCode");
-			String startDateString = helper.getParameter("startDate");
-			String endDateString = helper.getParameter("endDate");
-
+		try {			
+			final List<String> msgList = new ArrayList<String>();			
 			final CourseStatSearchDTO searchDTO = new CourseStatSearchDTO();
-			//int providerCode = 0;
-			if (UtilityHelper.isNotEmpty(providerCodeString)) {
-				if (UtilityHelper.isInteger(providerCodeString)) {
-					int providerCode = Integer.parseInt(providerCodeString);
-					searchDTO.setProviderCode(providerCode);
-				}
-			}
-			if (UtilityHelper.isNotEmpty(programmeCodeString)) {
-				if (UtilityHelper.isInteger(programmeCodeString)) {
-					int programmeCode = Integer.parseInt(programmeCodeString);
-					searchDTO.setProgrammeCode(programmeCode);
-				}
-			}			
 			
-			final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			boolean flag=isCourseStatFormValidate(msgList,searchDTO,helper);			
 			
-			if (UtilityHelper.isNotEmpty(startDateString)) {
-				searchDTO.setFromDate(df.parse((startDateString)));
-			} else {
-				
+			if(isCourseStatFormValidate(msgList,searchDTO,helper)){
+				final  Collection<Collection<String>> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
+				helper.setAttribute("courseStatList", courseStatList);
+			}else{
+				helper.setAttribute("message", msgList);
 			}
-			if (UtilityHelper.isNotEmpty(endDateString)) {
-				searchDTO.setToDate(df.parse((endDateString)));
-			} else {
-				
-			}				
-
-			final  Collection<Collection<String>> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
-
-			helper.setAttribute("courseStatList", courseStatList);
 			
 		} catch (Exception exception) {
 			log.error("generateReportResults() : Exception " + exception);
 			throw exception;
 		}
+	}
+
+	/** Validate input values for course stat report search form.
+	 * @author dumani DJ
+	 * @param helper IDataHelper object
+	 * @param msgList List<String> object
+	 * @param searchDTO CourseStatSearchDTO object
+	 */
+
+	private boolean isCourseStatFormValidate(final List<String> msgList,
+			final CourseStatSearchDTO searchDTO, final IDataHelper helper)throws Exception {
+		
+		String providerCodeString = helper.getParameter("providerCode");
+		String programmeCodeString = helper.getParameter("programmeCode");
+		String startDateString = helper.getParameter("startDate");
+		String endDateString = helper.getParameter("endDate");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");			
+		
+		
+		if (UtilityHelper.isNotEmpty(providerCodeString)) {
+			if (UtilityHelper.isInteger(providerCodeString)) {
+				int providerCode = Integer.parseInt(providerCodeString);
+				searchDTO.setProviderCode(providerCode);
+			}else{
+				msgList.add(SystemMessage.INVALIDCOURSEPROVIDERSELECTION.message());
+				return false;
+			}
+		}else{				
+			msgList.add(SystemMessage.INVALIDCOURSEPROVIDERSELECTION.message());
+			return false;
+		}
+		if (UtilityHelper.isNotEmpty(programmeCodeString)) {
+			if (UtilityHelper.isInteger(programmeCodeString)) {
+				int programmeCode = Integer.parseInt(programmeCodeString);
+				searchDTO.setProgrammeCode(programmeCode);
+			}
+		}		
+		
+		LocalDate localStartDate;
+		LocalDate localEndDate;
+		
+		if (UtilityHelper.isNotEmpty(startDateString)) {				
+			localStartDate = LocalDate.parse(startDateString, formatter);				
+		} else {
+			msgList.add(SystemMessage.INVALIDFROMDATE.message());
+			return false;
+		}
+		
+		if (UtilityHelper.isNotEmpty(endDateString)) {				
+			localEndDate= LocalDate.parse(endDateString, formatter);
+		} else {
+			msgList.add(SystemMessage.INVALIDENDDATE.message());
+			return false;
+		}
+		
+		if(localStartDate.isAfter(localEndDate)){
+			msgList.add(SystemMessage.INVALIDDATERANGE.message());			
+			return false;
+		}
+		if( localEndDate.isAfter(localStartDate.plusDays(30))){
+			msgList.add(SystemMessage.INVALIDDATERANGETHIRTY.message());			
+			return false;
+		}
+		return true;
 	}
 
 }
