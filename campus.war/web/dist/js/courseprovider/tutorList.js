@@ -5,6 +5,7 @@
  * 20170424 CW c159-courseprovider-accept-tutor-request-cw modify populateTuterData function to populate data in the Tutors table
  * 20170425 CW c159-courseprovider-accept-tutor-request-cw finalize the populateTuterData function after adding check boxes & hidden items
  * 20170425 CW c159-courseprovider-accept-tutor-request-cw add confirmationStatus into the table & fillListItems method
+ * 20170426 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode WIP
  */
 
 $(document).ready(function() {
@@ -62,10 +63,55 @@ function populateTuterData(response){
     $('#Tutors').append(trHTML);	    
     document.getElementById('maxSequence').value = maxIndex;
     
-    fillListItems(maxIndex); 
+    fillListItems(maxIndex, response); 
 }
 
-function fillListItems(maxIndex, confirmationStatus){
+function fillListItems(maxIndex, response){
+	for(i = 0; i <= maxIndex; i++){
+		
+		listId = "confirmationStatus" + "i";
+		var status = $("#" + listId);
+		status.find('option').remove();
+	}
+	
+	
+	
+	
+	var categories = $("#townDetails");
+	categories.find('option').remove();
+	
+	$.each(response.applicationStatusMap, function (index, value) {
+		
+	})
+	
+	
 	var test  = new com.genesiis.campus.validation.ApplicationStatus.ACTIVE();
 	log(test.testEnum.TEST_VALUE)
 }
+
+/*
+function getTownData(response, selected) {
+	var categories = $("#townDetails");
+	categories.find('option').remove();
+	$('<option>').val("0").text("--- Select town ---").appendTo(categories);
+	$.each(response.result, function(index, value) {
+		var res = value.toString();
+		var data = res.split(",");
+		var x = data[0].toString();
+		var y = data[1].toString();
+		var z = data[2].toString();
+		if(z == selected){
+			$('<option>').val(x).text(y).appendTo(categories);
+		}
+	});
+}*/
+
+
+
+
+
+
+
+
+
+
