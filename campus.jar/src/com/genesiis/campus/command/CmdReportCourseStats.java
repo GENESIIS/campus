@@ -8,7 +8,9 @@ package com.genesiis.campus.command;
  *20170421 DJ c54-report-course-stats-MP-dj Identify the input fields in generateReportResults.
  *20170424 DJ c54-report-course-stats-MP-dj refactored code in method generateReportResults().
  *20170426 DJ c54-report-course-stats-MP-dj create:isCourseStatFormValidate() and  back end form validation implementation.
- * */
+ *20170426 DJ c54-report-course-stats-MP-dj add LocalDate class and validate date range. If only one date is entered set other date plus or minus 30 accordingly in order to
+ *											to create 30 days of date range.
+  * */
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
@@ -33,6 +35,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -131,7 +134,7 @@ public class CmdReportCourseStats implements ICommand{
 			final List<String> msgList = new ArrayList<String>();			
 			final CourseStatSearchDTO searchDTO = new CourseStatSearchDTO();
 			
-			boolean flag=isCourseStatFormValidate(msgList,searchDTO,helper);			
+			//boolean flag=isCourseStatFormValidate(msgList,searchDTO,helper);			
 			
 			if(isCourseStatFormValidate(msgList,searchDTO,helper)){
 				final  Collection<Collection<String>> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);
@@ -182,31 +185,46 @@ public class CmdReportCourseStats implements ICommand{
 			}
 		}		
 		
-		LocalDate localStartDate;
-		LocalDate localEndDate;
-		
-		if (UtilityHelper.isNotEmpty(startDateString)) {				
-			localStartDate = LocalDate.parse(startDateString, formatter);				
-		} else {
-			msgList.add(SystemMessage.INVALIDFROMDATE.message());
-			return false;
-		}
-		
-		if (UtilityHelper.isNotEmpty(endDateString)) {				
-			localEndDate= LocalDate.parse(endDateString, formatter);
-		} else {
-			msgList.add(SystemMessage.INVALIDENDDATE.message());
-			return false;
-		}
-		
-		if(localStartDate.isAfter(localEndDate)){
-			msgList.add(SystemMessage.INVALIDDATERANGE.message());			
-			return false;
-		}
-		if( localEndDate.isAfter(localStartDate.plusDays(30))){
-			msgList.add(SystemMessage.INVALIDDATERANGETHIRTY.message());			
-			return false;
-		}
+		if(UtilityHelper.isNotEmpty(startDateString) && UtilityHelper.isNotEmpty(endDateString)){
+			final LocalDate localStartDate =LocalDate.parse(startDateString, formatter);
+			final LocalDate localEndDate=LocalDate.parse(endDateString, formatter);
+			
+			if(localStartDate.isAfter(localEndDate)){
+				msgList.add(SystemMessage.INVALIDDATERANGE.message());			
+				return false;
+			}
+			if( localEndDate.isAfter(localStartDate.plusDays(30))){
+				msgList.add(SystemMessage.INVALIDDATERANGETHIRTY.message());			
+				return false;
+			}
+			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			searchDTO.setFromDate(Date.from(localStartInstant));
+			searchDTO.setToDate(Date.from(localEndDateInstant));
+			
+			
+		}else if(!UtilityHelper.isNotEmpty(startDateString) && UtilityHelper.isNotEmpty(endDateString)){
+			
+			final LocalDate localEndDate=LocalDate.parse(endDateString, formatter);
+			final LocalDate localStartDate =localEndDate.minusDays(30);			
+			
+			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			
+			searchDTO.setFromDate(Date.from(localStartInstant));
+			searchDTO.setToDate(Date.from(localEndDateInstant));
+			
+		}else if(UtilityHelper.isNotEmpty(startDateString) && !UtilityHelper.isNotEmpty(endDateString)){
+			
+			final LocalDate localStartDate =LocalDate.parse(startDateString, formatter);
+			final LocalDate localEndDate=localStartDate.plusDays(30);	
+			
+			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			
+			searchDTO.setFromDate(Date.from(localStartInstant));
+			searchDTO.setToDate(Date.from(localEndDateInstant));			
+		}		
 		return true;
 	}
 
