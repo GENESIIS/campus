@@ -10,6 +10,8 @@ package com.genesiis.campus.command;
  *20170426 DJ c54-report-course-stats-MP-dj create:isCourseStatFormValidate() and  back end form validation implementation.
  *20170426 DJ c54-report-course-stats-MP-dj add LocalDate class and validate date range. If only one date is entered set other date plus or minus 30 accordingly in order to
  *											to create 30 days of date range.
+ *20170426 DJ c54-report-course-stats-MP-dj Method:populateDates() -to populate dates to searhDTO.
+ *20170426 DJ c54-report-course-stats-MP-dj if no date is not selected configure application to list result for 30 days back.
   * */
 
 import com.genesiis.campus.entity.IView;
@@ -197,35 +199,46 @@ public class CmdReportCourseStats implements ICommand{
 				msgList.add(SystemMessage.INVALIDDATERANGETHIRTY.message());			
 				return false;
 			}
-			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			searchDTO.setFromDate(Date.from(localStartInstant));
-			searchDTO.setToDate(Date.from(localEndDateInstant));
-			
+			populateDates(searchDTO, localStartDate, localEndDate);			
 			
 		}else if(!UtilityHelper.isNotEmpty(startDateString) && UtilityHelper.isNotEmpty(endDateString)){
 			
 			final LocalDate localEndDate=LocalDate.parse(endDateString, formatter);
 			final LocalDate localStartDate =localEndDate.minusDays(30);			
 			
-			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			
-			searchDTO.setFromDate(Date.from(localStartInstant));
-			searchDTO.setToDate(Date.from(localEndDateInstant));
+			populateDates(searchDTO, localStartDate, localEndDate);
 			
 		}else if(UtilityHelper.isNotEmpty(startDateString) && !UtilityHelper.isNotEmpty(endDateString)){
 			
 			final LocalDate localStartDate =LocalDate.parse(startDateString, formatter);
 			final LocalDate localEndDate=localStartDate.plusDays(30);	
 			
-			final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			populateDates(searchDTO, localStartDate, localEndDate);	
 			
-			searchDTO.setFromDate(Date.from(localStartInstant));
-			searchDTO.setToDate(Date.from(localEndDateInstant));			
+		}else if(!UtilityHelper.isNotEmpty(startDateString) && !UtilityHelper.isNotEmpty(endDateString)){
+			final LocalDate localEndDate=LocalDate.now();
+			final LocalDate localStartDate =localEndDate.minusDays(30);				
+			
+			populateDates(searchDTO, localStartDate, localEndDate);			
 		}		
 		return true;
+	}
+
+
+
+	/**Populate date instants for searchDTO.
+	 * @author dumani DJ
+	 * @param searchDTO
+	 * @param localStartDate
+	 * @param localEndDate
+	 */
+	private void populateDates(final CourseStatSearchDTO searchDTO,
+			final LocalDate localStartDate, final LocalDate localEndDate) {
+		final Instant localStartInstant = localStartDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+		final Instant localEndDateInstant = localEndDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+		
+		searchDTO.setFromDate(Date.from(localStartInstant));
+		searchDTO.setToDate(Date.from(localEndDateInstant));
 	}
 
 }

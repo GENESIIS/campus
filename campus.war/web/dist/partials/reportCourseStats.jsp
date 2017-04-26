@@ -3,6 +3,7 @@
 <!-- 20170425 c54-report-course-stats-MP-dj set placeholder for course provider drop down-->
 <!-- 20170425 c54-report-course-stats-MP-dj add 'errorProviderList' to set the error message on provider selection-->
 <!-- 20170426 c54-report-course-stats-MP-dj add 'displayErrorMessage' to set the error message on provider selection-back end validation-->
+<!-- 20170426 c54-report-course-stats-MP-dj fixed the typo in PROGRAMME-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -112,7 +113,7 @@ tr:nth-child(even) {
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>PROGNAME NAME</th>
+								<th>PROGRAMME NAME</th>
 								<th>VIEW</th>
 								<th>INQUIRECOUNT</th>								 								
 							</tr>
