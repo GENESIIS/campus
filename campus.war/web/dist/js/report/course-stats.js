@@ -8,6 +8,7 @@
  *20170425 c54-report-course-stats-MP-dj validate the from date and to date when picking the calandar.fromdate<today and todate>fromdate
  *20170425 c54-report-course-stats-MP-dj create loadResultSet() and modularize the implementation-Validate date for 30 days of period.
  *20170425 c54-report-course-stats-MP-dj validate course provider as a mandatory field, and clear hidden keys in form clearing.
+ *20170426 c54-report-course-stats-MP-dj 'displayErrorMessage' implementation to set the error message on provider selection-back end validation
  **/
 
 $(document).ready(function() {
@@ -197,6 +198,17 @@ function loadResultSet(event){
  * This method generateCourseStatReport() generate course stats report generation.
  */
 function populateCourseStatReportTable(response){
+	
+	$('#displayErrorMessage').show();
+	var errorMessageList = $("#displayErrorMessage");
+	errorMessageList.find('li').remove();
+	$.each(response.message, function(index, value) {
+		if (value != null && value.length > 0) {
+			var msg = value.toString();
+			errorMessageList.append("<li>"+msg+"</li>");
+		}		
+	});
+	
 	$('#resultPanel').show();
 	$('#resultSetDiv').hide();
 	var studentListTable = $("#tBody");
