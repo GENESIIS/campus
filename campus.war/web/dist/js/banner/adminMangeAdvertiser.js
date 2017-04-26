@@ -8,6 +8,7 @@
  * 				Removed the method manageTownListing() from the script.
  * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,courseProviderCode) 
  * 				is implemented.
+ * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn.the click event for advertiser record creation has been coded
  */
 
 
@@ -525,13 +526,60 @@ function populatePageWithAdvertisersCredential(arrayOfArray){
 	$('#mobileCountryCode').val(courseProviderArray[6]);
 	$('#mobileAreaCode').val(courseProviderArray[7]);
 	$('#mobilePhoneNumber').val(courseProviderArray[8]);
-	$('#address1').val(courseProviderArray[10]);
+	courseProviderArray[10]);
 	$('#address2').val(courseProviderArray[11]);
-	$('#address3').val(courseProviderArray[12]);
+	$('#address3').val(c$('#address1').val(ourseProviderArray[12]);
 	if(courseProviderArray[13]===0){
 		$('#statusInactive').attr('checked',true);
 	}
 	
 }
 
+/**
+ * this method will triger the call to the server onc e the create advertiser <br>
+ * is selected.
+ */
+$(document).on("click",'#createAdvertiser',function(event){
+	event.preventdefault();
+	
+		$.ajax({
+			type:"POST",
+			url:adminControllerUrl,
+			data:{
+				courseProviderCode : $('#sCourseProviderCode').val(),
+				advertiserName :$("#advertiserName").val(),
+				advertiserEmail:$("#advertiserEmail").val(),
+				advertiserDescription:$('#courseProviderDescription').text(),
+				landCountryCode:$('#landCountryCode').val(),
+				landAreaCode:$('#landAreaCode').val(),
+				landPhoneNumber:$('#landPhoneNumber').val(),
+				mobileCountryCode:$('#mobileCountryCode').val(),
+				mobileAreaCode:$('#mobileAreaCode').val(),
+				mobilePhoneNumber:$('#mobilePhoneNumber').val(),
+				address1:$('#address1').val(),
+				address2:$('#address2').val(),
+				address3:$('#address3').val(),
+				//countryCode:$('#sTownCode').val(),
+				townCode:$('#sTownCode').val(),
+				AdvertiserStatus:$('input[name=advertiserStatus]:checked').val(),
+				CCO:'CNADVR' , //create an new advertiser
+			},
+			dataType:"json",
+			success: function(response){
+				var cssColour='red';
+				if(response['successCode']==1){
+				//call the function that arrange the data in right place..
+					cssColour='green';
+			}
+			displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
+			
+		},
+		error: function(allBanners,error,errorThrown){
+			var msg = ajaxCallErorMessage(allBanners,error,errorThrown);
+			displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		}
+		});
+		
 
+	
+});

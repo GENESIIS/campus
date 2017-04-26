@@ -29,6 +29,7 @@ package com.genesiis.campus.factory;
 
 import com.genesiis.campus.command.CmdAddAdvertiserPrerequisiteData;
 import com.genesiis.campus.command.CmdAdminBannerUpload;
+import com.genesiis.campus.command.CmdAdminMangeAdvertiser;
 import com.genesiis.campus.command.CmdAmendBannerState;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
 import com.genesiis.campus.command.CmdListBanner;
@@ -57,7 +58,7 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.DISPLAY_PREREQUISITE_DATA, new CmdAddAdvertiserPrerequisiteData());
 		map.put(Operation.DISPLAY_TOWN_DATA,new CmdAddAdvertiserPrerequisiteData());
 		map.put(Operation.GET_ADVERTISER_CREDENTIALS, new CmdAdvertiserCredentialRetriever());
-		
+		map.put(Operation.CREATE_NEW_ADVERTISER, new CmdAdminMangeAdvertiser());
 	}
 
 	@Override

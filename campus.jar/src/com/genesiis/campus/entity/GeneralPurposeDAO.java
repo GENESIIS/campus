@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 /*
  * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Class AllPurposeDAO has been implemented.
+ * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Class AllPurposeDAO has been renamed to GeneralPurposeDAO.java
  */
 
 
@@ -25,8 +26,8 @@ import java.util.Collection;
  * @author dushantha DN.
  * 
  */
-public class AllPurposeDAO implements ICrud {
-	private static Logger log = Logger.getLogger(AllPurposeDAO.class.getName());
+public class GeneralPurposeDAO implements ICrud {
+	private static Logger log = Logger.getLogger(GeneralPurposeDAO.class.getName());
 
 	/** (non-Javadoc)
 	 * @see com.genesiis.campus.entity.ICrud#add(java.lang.Object)

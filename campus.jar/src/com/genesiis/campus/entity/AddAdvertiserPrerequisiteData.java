@@ -69,7 +69,7 @@ public class AddAdvertiserPrerequisiteData {
 					ICrud country2Dao = new Country2DAO();
 					preRequisteCollnWrapper = country2Dao.getAll();
 					// retrieve all the registered active advertisers.
-					ICrud registeredActivatedAdverTiser =new AllPurposeDAO(){
+					ICrud registeredActivatedAdverTiser =new GeneralPurposeDAO(){
 						
 						/**
 						 * getAll() method bears the responsibility of extracting all the course providers
@@ -163,7 +163,7 @@ public class AddAdvertiserPrerequisiteData {
 		Collection<Collection<String>> adviserCredentials = new ArrayList<Collection<String>>();
 		try{
 			
-			adviserCredentials = new AllPurposeDAO(){				
+			adviserCredentials = new GeneralPurposeDAO(){				
 				public Collection<Collection<String>> findById(Object object) throws SQLException, Exception {
 					
 					Collection<Collection<String>> outerWrapper = new ArrayList<Collection<String>>();					
