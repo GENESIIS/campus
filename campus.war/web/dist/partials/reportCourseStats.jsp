@@ -2,6 +2,7 @@
 <!-- 20170421 c54-report-course-stats-MP-dj add hidden attribute selectedProvider-->
 <!-- 20170425 c54-report-course-stats-MP-dj set placeholder for course provider drop down-->
 <!-- 20170425 c54-report-course-stats-MP-dj add 'errorProviderList' to set the error message on provider selection-->
+<!-- 20170426 c54-report-course-stats-MP-dj add 'displayErrorMessage' to set the error message on provider selection-back end validation-->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -94,7 +95,9 @@ tr:nth-child(even) {
 						<div>
 							<button type="submit" id="clearParam">Clear</button>
 							<button type="submit" id="searchList">Search List</button>
+							<label	id="displayErrorMessage" for=""></label>
 						</div>
+						
 					</fieldset>
 				</div>
 			</div>
