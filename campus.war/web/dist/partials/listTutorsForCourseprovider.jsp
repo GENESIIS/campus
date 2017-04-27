@@ -4,6 +4,9 @@
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add Reject/Remove to the table -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - remove Remove button & Add Save button -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add datatable source paths -->
+<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Remove Reject/Remove, Approve from the table & add Change Status & changed 
+				CCO value of the button from APPROVE_REMOVE_EMPLOYMENT TO SAVE_EMPLOYMENT_STATUS_CP -->
+
 
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -51,14 +54,13 @@
 							<th>Land Number</th>
 							<th>Mobile Number</th>
 							<th>Status</th>
-							<th>Approve</th>
-							<th>Reject/Remove</th>
+							<th>Change Status</th>
 							<th></th>
 						</tr>
 					</table>
 					<div style="text-align:right">  
 						<input type="hidden" name="tutorCodeTable" id="tutorCodeTable"/>
-    					<button type="submit" name="CCO" id="CCO" value="APPROVE_REMOVE_EMPLOYMENT" class="pure-button pure-button-primary" align = right>Save</button>
+    					<button type="submit" name="CCO" id="CCO" value="SAVE_EMPLOYMENT_STATUS_CP" class="pure-button pure-button-primary" align = right>Save</button>
     					<input type="hidden" name="maxSequence" id="maxSequence"/>
 					</div>
 				</div>
