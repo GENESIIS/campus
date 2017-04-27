@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified the logic. 
 import com.genesiis.campus.entity.model.Admin;
+import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
@@ -87,6 +88,48 @@ public class AdminLoginDAO implements ICrud {
 
 	}
 
+	
+	public static int logoutDataUpdate(Object object) throws SQLException, Exception {
+		Connection conn = null;
+		String query = "";
+		PreparedStatement ps = null;
+
+		int rowInserted = -1;
+		try {
+			Admin admin = (Admin) object;
+			conn = ConnectionManager.getConnection();
+			ps = conn.prepareStatement(query);
+
+			ps.setString(1, admin.getLastLoggedOutDate());
+			ps.setString(2, admin.getLastLoggedOutTime());
+			ps.setInt(3, admin.getCode());
+			rowInserted = ps.executeUpdate();
+
+			if (rowInserted > 0) {
+				rowInserted = 1;
+			} else {
+				rowInserted = 0;
+			}
+		} catch (SQLException e) {
+			log.info("logoutDataUpdate(): SQLexception" + e.toString());
+			throw e;
+		} catch (Exception ex) {
+			log.info("logoutDataUpdate(): Exception" + ex.toString());
+			throw ex;
+		} finally {
+
+			if (ps != null) {
+				ps.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+		}
+		return rowInserted;
+	}
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		
