@@ -12,6 +12,7 @@ import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorDAO;
 import com.genesiis.campus.entity.TutorRequestsDAO;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
