@@ -3,9 +3,10 @@
 <!-- 20170424 c159-courseprovider-accept-tutor-request-cw - remove un wanted scriptlets & add cpCode field -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add Reject/Remove to the table -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - remove Remove button & Add Save button -->
-<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add datatable source paths -->
-<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Remove Reject/Remove, Approve from the table & add Change Status & changed 
+<!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Add datatable source paths -->
+<!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Remove Reject/Remove, Approve from the table & add Change Status & changed 
 				CCO value of the button from APPROVE_REMOVE_EMPLOYMENT TO SAVE_EMPLOYMENT_STATUS_CP -->
+<!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Removed tutorCodeTable hidden variable -->
 
 
 
@@ -59,7 +60,6 @@
 						</tr>
 					</table>
 					<div style="text-align:right">  
-						<input type="hidden" name="tutorCodeTable" id="tutorCodeTable"/>
     					<button type="submit" name="CCO" id="CCO" value="SAVE_EMPLOYMENT_STATUS_CP" class="pure-button pure-button-primary" align = right>Save</button>
     					<input type="hidden" name="maxSequence" id="maxSequence"/>
 					</div>
