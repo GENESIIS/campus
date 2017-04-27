@@ -11,7 +11,12 @@ import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
-import java.sql.SQLException;
+/**
+ * The CmdAdminMangeAdvertiser class
+ * 
+ * @author dushantha
+ *
+ */
 
 public class CmdAdminMangeAdvertiser implements ICommand {
 
