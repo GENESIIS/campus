@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 // 20170330 CW c157-add-tutor-employment-details-cw create deleteMultiple method
 // 20170331 CW c157-add-tutor-employment-details-cw add method comments into add method
 // 20170404 CW c157-add-tutor-employment-details-cw modified doc comments
+// 20170427 CW c159-courseprovider-accept-tutor-request-cw add update method tu do a batch update in the status
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -15,7 +16,9 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * this class used to manage all the employment details with the database. 
@@ -73,8 +76,52 @@ public class EmploymentDAO implements ICrud {
 
 	@Override
 	public int update(Object object) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		PreparedStatement ps = null;
+		Connection con = null; 
+		int totalNumOfRecordsAffected = 0;
+		
+		try {			
+			List<String> employmentStatusChangeCollection = (ArrayList<String>) object; 
+			
+			String query = "UPDATE [campus].[EMPLOYMENT] SET CONFIRMATIONSTATUS = ?, MODBY = ?, MODON = ? WHERE CODE = ?";
+			
+			con = ConnectionManager.getConnection();
+			ps = con.prepareStatement(query);
+						
+			for(employmentStatus EMP : employmentStattusChangeCollection) {
+				
+				ps.setInt(1, bvs.getViewCount());
+				ps.setDate(2, bvs.getLastViewDate());			
+				ps.setTime(3, bvs.getLastViewTime());			
+				ps.setString(4, bvs.getModBy());
+				ps.setInt(5, bvs.getCode());
+				
+			    ps.addBatch();
+			}			
+			
+			 int[] affectedRecords = ps.executeBatch();	
+			 
+			 for (int numOfRecordsAffected : affectedRecords) {
+				 totalNumOfRecordsAffected += numOfRecordsAffected;
+			 }
+			
+		} catch (SQLException sqle) {
+			Log.info("update(Object): SQLException: " + sqle.toString());
+			throw sqle;
+		} catch (Exception ex) {
+			Log.info("update(Object): Exception:" + ex.toString());
+			throw ex;
+		} finally {
+			if (ps != null) {
+				ps.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}	
+		
+		return totalNumOfRecordsAffected;
 	}
 
 	@Override
