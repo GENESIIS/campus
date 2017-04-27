@@ -7,8 +7,8 @@ import java.sql.Timestamp;
 //20170321 AS CAM-23-admin-login-logout-function-as code and isActive Attributes changed to adminCode and adminIsActive
 //20170404 AS CAM-23-admin-login-logout-function-as - userTypeString attribute added
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts,lastAttempt attribute added
-
-public class Admin extends LoginHistory {
+//20170427 AS CAM-155-admin-logout-function-as- code change to adminCode
+public class Admin extends LoginHistory{
 
 	private int adminCode;
 	private String name;
