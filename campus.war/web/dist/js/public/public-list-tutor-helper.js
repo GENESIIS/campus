@@ -9,6 +9,7 @@
  * 				created selectTutorMajor() and selectTutorCategory() methods, added onclick function to tutor name
  * 20170320 JH c96 added getCategoryData() method to window.onload function to call header populate methods
  * 20170424 JH c135-public-display-tutor-profile selectTutorRecord() modified to load tutor profile page, added loadTutor() method to load tutor profile details wip
+ * 20170427 JH 135-public-display-tutor-profile removed loadTutor() method 
  */
 
 window.tutorList = null;
@@ -68,8 +69,8 @@ function listPublicTutors(){
  * @author JH
  */
 function selectTutorRecord(code){
-	   
-	  var url = '/PublicController';
+
+	  var url = '/dist/partials/public/display-tutor-profile.jsp';
 	  var form = $('<form action="' + url + '" method="post">' +
 			  	'<input type="hidden" name="tutorCode" value="' + code+ '" />' +
 			  	'<input type="hidden" name="CCO" value="DISPLAY_PUBLIC_TUTOR_PROFILE" />' +
@@ -78,41 +79,6 @@ function selectTutorRecord(code){
 	  			$(form).submit();
 	//window.location.assign("/dist/partials/public/display-tutor-profile.jsp");
 	   
-}
-
-function loadTutor(){
-	
-	$.ajax({
-		url : '/PublicController',
-		method : 'POST',
-		data : {
-			'CCO' : 'DISPLAY_PUBLIC_TUTOR_PROFILE',
-			'tutorCode' : code
-		},
-		dataType : "json",
-		async : false,
-		success : function(response) {
-
-
-//			if (response !== undefined && response !== null) {
-//				window.tutorList = response.result;
-//				window.tutorProfileImagePath = response.tutorProfileImagePath;
-//				window.majorList =  response.majorMap;
-//				window.categoryList = response.categoryMap;
-//				window.qualificationList = response.qualificationMap;
-//
-//				DisplayTutorTable();
-//
-//			}
-			
-			alert("sdfjkldsf");
-		},
-		error : function(x, status, error) {
-			var err = displayErrorMessage(x, status, error);
-			document.getElementById("userMessage").style.display = "block";
-			$("#userMessage").html(err);
-		}
-	});
 }
 
 /**
