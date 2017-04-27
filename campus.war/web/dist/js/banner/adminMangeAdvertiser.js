@@ -526,9 +526,9 @@ function populatePageWithAdvertisersCredential(arrayOfArray){
 	$('#mobileCountryCode').val(courseProviderArray[6]);
 	$('#mobileAreaCode').val(courseProviderArray[7]);
 	$('#mobilePhoneNumber').val(courseProviderArray[8]);
-	courseProviderArray[10]);
+	$('#address1').val(courseProviderArray[10]);
 	$('#address2').val(courseProviderArray[11]);
-	$('#address3').val(c$('#address1').val(ourseProviderArray[12]);
+	$('#address3').val($('#address1').val(courseProviderArray[12]));
 	if(courseProviderArray[13]===0){
 		$('#statusInactive').attr('checked',true);
 	}
